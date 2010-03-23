@@ -8,6 +8,7 @@ import java.awt.*;
 import java.util.List;
 import org.jdom.Element;
 import org.jdom.Attribute;
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Provide a graphical representation of the NMRA S&RP mapping between cab functions
@@ -30,7 +31,7 @@ import org.jdom.Attribute;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -214,16 +215,16 @@ public class FnMapPanel extends JPanel {
                 int outputNum = Integer.valueOf(name).intValue();
                 // yes, since it was converted.  All we do with
                 // these are store the label index (if it exists)
-                Attribute at;
-                if ((at=e.getAttribute("label"))!=null && outputNum<=numOut)
-                    outLabel[outputNum-1]=at.getValue();
+                String at = LocaleSelector.getAttribute(e, "label");
+                if ( at!=null && outputNum<=numOut)
+                    outLabel[outputNum-1] = at;
             } catch (java.lang.NumberFormatException ex) {
                 // not a number, must be a name
                 if (numOut<maxOut) {
                     outName[numOut] = name;
-                    Attribute at;
-                    if ((at=e.getAttribute("label"))!=null)
-                        outLabel[numOut] = at.getValue();
+                    String at;
+                    if ((at=LocaleSelector.getAttribute(e, "label"))!=null)
+                        outLabel[numOut] = at;
                     else
                         outLabel[numOut] ="";
                     numOut++;

@@ -12,14 +12,14 @@ import javax.swing.JButton;
 import java.beans.PropertyChangeListener;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import jmri.util.jdom.LocaleSelector;
 
 /**
  * Creates a table of the available factory resets available for a
  * particular decoder.
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
     private String headers[] = {"Label", "Name",
@@ -116,7 +116,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     public void setRow(int row, Element e) {
-        String label = e.getAttribute("label").getValue(); // Note the name variable is actually the label attribute
+        String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
         if (log.isDebugEnabled()) log.debug("Starting to setRow \"" +
                                             label + "\"");
         int cv   = Integer.valueOf(e.getAttribute("CV").getValue()).intValue();
@@ -133,7 +133,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     public void setIndxRow(int row, Element e) {
         if (_piCv >=0 && _siCv >= 0) {
             // get the values for the VariableValue ctor
-            String label = e.getAttribute("label").getValue(); // Note the name variable is actually the label attribute
+            String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
             if (log.isDebugEnabled()) log.debug("Starting to setIndxRow \"" +
                                                 label + "\"");
             String cvName = e.getAttributeValue("CVname");

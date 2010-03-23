@@ -12,6 +12,7 @@ import jmri.jmrit.symbolicprog.ValueEditor;
 import jmri.jmrit.symbolicprog.ValueRenderer;
 import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.VariableValue;
+import jmri.util.jdom.LocaleSelector;
 
 import java.awt.Dimension;
 import java.awt.Font;
@@ -63,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.70 $
+ * @version   $Revision: 1.71 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1336,7 +1337,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 cs.gridheight = 1;
             }
             else if (name.equals("label")) { // its  a label
-                JLabel l = new JLabel(e.getAttribute("label").getValue());
+                JLabel l = new JLabel(LocaleSelector.getAttribute(e, "label"));
                 l.setAlignmentX(1.0f);
                 cs.gridheight = GridBagConstraints.REMAINDER;
                 g.setConstraints(l, cs);
@@ -1463,10 +1464,8 @@ public class PaneProgPane extends javax.swing.JPanel
             // get name attribute from variable, as that's the mfg name
             label = _varModel.getLabel(i);
         }
-        String temp ="";
-        if ( (attr = var.getAttribute("label")) != null
-             && (temp = attr.getValue()) != null )
-            label = temp;
+        String temp = LocaleSelector.getAttribute(var, "label");
+        if (temp != null) label = temp;
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
@@ -1922,8 +1921,9 @@ public class PaneProgPane extends javax.swing.JPanel
 
     private JPanel addDccAddressPanel(Element e) {
         JPanel l;
-        if (e.getAttribute("label")!=null)
-            l = new DccAddressPanel(_varModel, e.getAttribute("label").getValue());
+        String at = LocaleSelector.getAttribute(e, "label");
+        if (at!=null)
+            l = new DccAddressPanel(_varModel, at);
         else
             l = new DccAddressPanel(_varModel);
         panelList.add(l);
