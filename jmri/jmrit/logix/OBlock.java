@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -102,7 +102,7 @@ public class OBlock extends jmri.Block {
         if (warrant!=null) {
             Sensor sensor = getSensor();
             if (sensor != null ) {
-                sensor.removePropertyChangeListener((PropertyChangeListener)warrant);
+                sensor.removePropertyChangeListener(warrant);
             }
             if (_warrant.equals(warrant)) {  // allocated to caller, so deallocate
                 _warrant = null;
