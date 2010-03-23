@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -241,9 +241,15 @@ public class DefaultConditional extends AbstractNamedBean
             String sysName = ((NamedBean)evt.getSource()).getSystemName();
             String userName = ((NamedBean)evt.getSource()).getUserName();
             for (int i=0; i<_variableList.size(); i++) {
-                if (sysName.equals(_variableList.get(i).getName()) || 
-                            userName.equals(_variableList.get(i).getName())) {
+                if (sysName.equals(_variableList.get(i).getName())) {
                     return _variableList.get(i).doTriggerActions();
+                }
+            }
+            if (userName != null) {
+                for (int i=0; i<_variableList.size(); i++) {
+                    if (userName.equals(_variableList.get(i).getName())) {
+                        return _variableList.get(i).doTriggerActions();
+                    }
                 }
             }
         } catch ( ClassCastException e) {
