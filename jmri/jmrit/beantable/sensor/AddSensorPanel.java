@@ -15,10 +15,10 @@ import java.util.ResourceBundle;
  * JPanel to create a new Sensor
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.6 $
- * @deprecated  Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevice.java}
+ * @version     $Revision: 1.7 $
+ * @deprecated  Replaced by {@link jmri.jmrit.beantable.AddNewHardwareDevicePanel}
  */
-
+@Deprecated
 public class AddSensorPanel extends jmri.util.swing.JmriPanel {
 
     public AddSensorPanel() {
