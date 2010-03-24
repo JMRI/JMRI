@@ -12,7 +12,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -85,6 +85,45 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
     }
 
     static SerialSensorManager _instance = null;
+    
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        Sensor s = getBySystemName(prefix+typeLetter()+curAddress);
+        if(s==null){
+            return curAddress;
+        }
+        
+        // This bit deals with handling the curAddress, and how to get the next address.
+        int iName = 0;
+        //Address starts with a single letter called a house code.
+        String houseCode = curAddress.substring(0,1);
+        try {
+            iName = Integer.parseInt(curAddress.substring(1));
+        } catch (NumberFormatException ex) {
+            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+            return null;
+        }
+        
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        s = getBySystemName(prefix+typeLetter()+curAddress);
+        if(s!=null){
+            for(int x = 1; x<10; x++){
+                iName++;
+                s = getBySystemName(prefix+typeLetter()+houseCode+(iName));
+                if(s==null)
+                    return houseCode+iName;
+            }
+            return null;
+        } else {
+            return houseCode+iName;
+        }
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
 }
