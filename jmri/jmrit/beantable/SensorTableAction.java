@@ -4,6 +4,7 @@ package jmri.jmrit.beantable;
 
 import jmri.util.JmriJFrame;
 
+
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
@@ -26,7 +27,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -65,6 +66,7 @@ public class SensorTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
+
     JTextField sysName = new JTextField(10);
     JTextField userName = new JTextField(20);
     JComboBox prefixBox = new JComboBox();
@@ -129,13 +131,13 @@ public class SensorTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to turnouts to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Number to Sensors to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         } 
         if (numberOfSensors>=65){
             if(JOptionPane.showConfirmDialog(addFrame,
-                                                 "You are about to add " + numberOfSensors + " Turnouts into the configuration\nAre you sure?","Warning",
+                                                 "You are about to add " + numberOfSensors + " Sensors into the configuration\nAre you sure?","Warning",
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
@@ -219,7 +221,7 @@ public class SensorTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                    rb.getString("ErrorTurnoutAddFailed"),  
+                    rb.getString("ErrorSensorAddFailed"),  
                     new Object[] {sysName}),
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
