@@ -4,7 +4,7 @@
 <!-- Schema for elements include in JMRI XML schema direct, not elements    -->
 <!-- in the resulting XML documents.                                        -->
 
-<!-- $Id: JMRIschema.xsd,v 1.5 2010-03-24 22:01:23 jacobsen Exp $ -->
+<!-- $Id: JMRIschema.xsd,v 1.6 2010-03-24 22:06:30 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -27,12 +27,16 @@
         <xs:annotation><xs:documentation>
         Indicate a JMRI class that reads and/or writes this element.
         </xs:documentation></xs:annotation>
-        <xs:complexType type="xs:string">
-            <xs:attribute name="configurexml" type="xs:boolean" default="false">
+        <xs:complexType>
+          <xs:simpleContent>
+            <xs:extension base="xs:string">
+              <xs:attribute name="configurexml" type="xs:boolean" default="false">
                 <xs:annotation><xs:documentation>
                 Is this element used as part of the ConfigureXML system?
                 </xs:documentation></xs:annotation>
-            </xs:attribute>
+              </xs:attribute>
+            </xs:extension>
+          </xs:simpleContent>
         </xs:complexType>
     </xs:element>
 
