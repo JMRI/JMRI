@@ -3,8 +3,10 @@
 package apps.gui3;
 
 import apps.AppConfigBase;
+import apps.GuiLafConfigPane;
+
 import jmri.jmrix.JmrixConfigPane;
-//import jmri.util.swing.ButtonTabComponent;
+
 import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -22,7 +24,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -128,7 +130,7 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.setLayout(new CardLayout());
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
         detailpanel.add(connectionPanel, "CONNECTIONS");
-        jmri.GuiLafConfigPane gui;
+        GuiLafConfigPane gui;
 
         JTabbedPane startupPanel = new JTabbedPane();
         JTabbedPane displayPanel = new JTabbedPane();
@@ -152,7 +154,7 @@ public class TabbedPreferences extends AppConfigBase {
         addItem(startupPanel, rb.getString("TabbedLayoutStartupScripts"),
                     "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutGUI"),
-                    "LabelTabbedLayoutGUI", gui = new jmri.GuiLafConfigPane(), true, null);
+                    "LabelTabbedLayoutGUI", gui = new GuiLafConfigPane(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutLocale"),
                     "LabelTabbedLayoutLocale", gui.doLocale(), false, null);
         addItem(rosterPanel, rb.getString("TabbedLayoutRoster"),
@@ -275,7 +277,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     jmri.jmrix.JmrixConfigPane comm1;
-    jmri.GuiLafConfigPane guiPrefs;
+    GuiLafConfigPane guiPrefs;
         
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
     //Unable to do remove tab, via a component in 1.5 but is supported in 1.6

@@ -2,6 +2,8 @@
 
 package apps.gui3;
 
+import apps.GuiLafConfigPane;
+
 import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
@@ -24,7 +26,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class Apps3 extends apps.AppsBase {
 
@@ -116,7 +118,7 @@ public abstract class Apps3 extends apps.AppsBase {
         JTabbedPane p = new JTabbedPane();
         
         p.add("Connection 1", jmri.jmrix.JmrixConfigPane.instance(1));
-        p.add("GUI", guiPrefs = new jmri.GuiLafConfigPane());
+        p.add("GUI", guiPrefs = new GuiLafConfigPane());
         p.add("Programmer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
         p.add("Actions", new apps.PerformActionPanel());
         p.add("Buttons", new apps.CreateButtonPanel());
@@ -141,7 +143,7 @@ public abstract class Apps3 extends apps.AppsBase {
         frame.setVisible(true);
     }
     
-    jmri.GuiLafConfigPane guiPrefs;
+    GuiLafConfigPane guiPrefs;
     
     void preferencesSavePressed() {
         saveContents();

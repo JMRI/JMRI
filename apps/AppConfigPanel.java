@@ -2,7 +2,6 @@
 
 package apps;
 
-import jmri.GuiLafConfigPane;
 import jmri.jmrix.JmrixConfigPane;
 
 import java.awt.Component;
@@ -17,7 +16,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  */
 public class AppConfigPanel extends AppConfigBase {
 

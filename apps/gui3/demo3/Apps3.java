@@ -6,6 +6,8 @@ import jmri.*;
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
+import apps.GuiLafConfigPane;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -24,7 +26,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class Apps3 {
 
@@ -306,7 +308,7 @@ public class Apps3 {
         JTabbedPane p = new JTabbedPane();
         
         p.add("Connection 1", jmri.jmrix.JmrixConfigPane.instance(1));
-        p.add("GUI", guiPrefs = new jmri.GuiLafConfigPane());
+        p.add("GUI", guiPrefs = new GuiLafConfigPane());
         p.add("Programmer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane());
         p.add("Actions", new apps.PerformActionPanel());
         p.add("Buttons", new apps.CreateButtonPanel());
@@ -339,7 +341,7 @@ public class Apps3 {
         frame.moveToFront();
     }
     
-    jmri.GuiLafConfigPane guiPrefs;
+    GuiLafConfigPane guiPrefs;
     
     void preferencesSavePressed() {
         saveContents();
