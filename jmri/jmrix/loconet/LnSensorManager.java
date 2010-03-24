@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
@@ -99,9 +99,74 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
     public void setUpdateNotBusy() {
 		busy = false;
 	}
-	
-	private boolean busy = false;
 
+    private boolean busy = false;
+
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+
+    public String getNextValidAddress(String curAddress, String prefix){
+        int board = 0;
+        int seperator=0;
+        int channel = 0;
+        int iName;
+        if(curAddress.contains(":")){
+            //Address format passed is in the form of board:channel or T:turnout address
+            seperator = curAddress.indexOf(":");
+            boolean turnout = false;
+            if (curAddress.substring(0,seperator).toUpperCase().equals("T")){
+                turnout = true;
+            } else {
+                try {
+                    board = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                } catch (NumberFormatException ex) { 
+                    log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                    return null;
+                }
+            }
+            try {
+                channel = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            if (turnout){
+                iName = 2 * (channel-1)+1;
+            } else {
+                iName = 16*board + channel - 16;
+            }
+        } else {
+            //Entered in using the old format
+            try {
+                iName = Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+        }
+        
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        Sensor s = getBySystemName(prefix+typeLetter()+iName);
+        if(s!=null){
+            for(int x = 1; x<10; x++){
+                iName=iName+1;
+                s = getBySystemName(prefix+typeLetter()+iName);
+                if(s==null){
+                    return Integer.toString(iName);
+                }
+            }
+            return null;
+        } else {
+            return Integer.toString(iName);
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnSensorManager.class.getName());
 
 }
@@ -147,7 +212,7 @@ class LnSensorUpdateThread extends Thread
 	
 	private LnSensorManager sm = null;
 	private LnTrafficController tc = null;
-
+    
 }
 
 /* @(#)LnSensorManager.java */
