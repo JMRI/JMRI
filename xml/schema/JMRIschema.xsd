@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- Schema for elements include in JMRI XML schema.                        -->
+<!-- Schema for elements include in JMRI XML schema direct, not elements    -->
+<!-- in the resulting XML documents.                                        -->
 
-<!-- $Id: JMRIschema.xsd,v 1.4 2010-03-24 21:50:17 jacobsen Exp $ -->
+<!-- $Id: JMRIschema.xsd,v 1.5 2010-03-24 22:01:23 jacobsen Exp $ -->
 
-<!-- This schema is part of JMRI. Copyright 2009.                           -->
+<!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -26,7 +27,7 @@
         <xs:annotation><xs:documentation>
         Indicate a JMRI class that reads and/or writes this element.
         </xs:documentation></xs:annotation>
-        <xs:complexType>
+        <xs:complexType type="xs:string">
             <xs:attribute name="configurexml" type="xs:boolean" default="false">
                 <xs:annotation><xs:documentation>
                 Is this element used as part of the ConfigureXML system?
