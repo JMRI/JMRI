@@ -8,6 +8,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import jmri.jmrix.JmrixConfigPane;
+
 /**
  * Definition of objects to handle configuring a LocoNetOverTcp layout connection
  * via a LnTcpDriverAdapter object.
@@ -15,7 +17,7 @@ import javax.swing.JComboBox;
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Stephen Williams Copyright (C) 2008
  *
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -101,7 +103,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String getInfo() {
         String t = host.getText();
         if (t != null && !t.equals("")) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
     protected void setInstance() {
         adapter = LnTcpDriverAdapter.instance();

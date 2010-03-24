@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.70 $
+ * @version	$Revision: 1.71 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -93,6 +93,7 @@ public class JmrixConfigPane extends JPanel {
     
     public static final String NONE_SELECTED = rb.getString("noneSelected");
     public static final String NO_PORTS_FOUND = rb.getString("noPortsFound");
+    public static final String NONE = rb.getString("none");
     
     JComboBox modeBox = new JComboBox();
     JComboBox manuBox = new JComboBox();
@@ -269,18 +270,18 @@ public class JmrixConfigPane extends JPanel {
     
     public String getCurrentManufacturerName() {
         int current = modeBox.getSelectedIndex();
-        if (current==0) return "(none)";
+        if (current==0) return NONE;
         return classConnectionList[current].getManufacturer();
     }
 
     public String getCurrentProtocolName() {
         int current = modeBox.getSelectedIndex();
-        if (current==0) return "(none)";
+        if (current==0) return NONE;
         return classConnectionList[current].name();
     }
     public String getCurrentProtocolInfo() {
         int current = modeBox.getSelectedIndex();
-        if (current==0) return "(none)";
+        if (current==0) return NONE;
         return classConnectionList[current].getInfo();
     }
 

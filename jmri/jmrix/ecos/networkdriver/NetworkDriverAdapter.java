@@ -3,6 +3,7 @@
 package jmri.jmrix.ecos.networkdriver;
 
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrix.ecos.*;
 
 import java.io.*;
@@ -16,7 +17,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NetworkDriverAdapter extends EcosPortController {
 
@@ -111,7 +112,7 @@ public class NetworkDriverAdapter extends EcosPortController {
     String hostName = null;
     public void setHostName (String hostName){
     	this.hostName = hostName;
-        if (this.hostName.equals("")) this.hostName = "(none)";
+        if (this.hostName.equals("")) this.hostName = JmrixConfigPane.NONE;
      }
     
     Vector<String> portNameVector = null;

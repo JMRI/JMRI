@@ -9,6 +9,7 @@ import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.XmlFile;
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.JmrixConfigPane;
 import jmri.util.JmriJFrame;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
@@ -37,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.113 $
+ * @version     $Revision: 1.114 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -415,7 +416,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void buildLine(int number, JLabel cs, JPanel pane){
-    	if (AppConfigPanel.getConnection(number).equals("(none)")){
+    	if (AppConfigPanel.getConnection(number).equals(JmrixConfigPane.NONE)){
     		cs.setText(" ");
     		return;
     	}

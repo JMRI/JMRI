@@ -3,6 +3,7 @@
 package jmri.jmrix.nce.networkdriver;
 
 import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceProgrammer;
@@ -21,7 +22,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -136,7 +137,7 @@ public class NetworkDriverAdapter extends NcePortController {
     String hostName = null;
     public void setHostName (String hostName){
     	this.hostName = hostName;
-        if (this.hostName.equals("")) this.hostName = "(none)";
+        if (this.hostName.equals("")) this.hostName = JmrixConfigPane.NONE;
      }
     
     Vector<String> portNameVector = null;

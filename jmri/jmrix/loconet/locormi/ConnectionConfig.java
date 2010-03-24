@@ -7,12 +7,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.jmrix.JmrixConfigPane;
+
 /**
  * Definition of objects to handle configuring  the layout connection
  * via LocoNet RMI.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -58,7 +60,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String getInfo() {
         String t = host.getText();
         if (t != null && !t.equals("")) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
     
     public boolean isOptList2Advanced() { return false; }

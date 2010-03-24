@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -78,7 +78,7 @@ public class AppConfigBase extends JmriPanel {
             /*We need to test to make sure that the connection port is not set to (none)
             If it is set to none, then it is likely that the connection has been removed
             and therefore we should not be checking against it.*/
-            if(!port.equals("(none)")){
+            if(!port.equals(JmrixConfigPane.NONE)){
                 if (ports.contains(port)){
                     return false;
                 }
@@ -107,17 +107,18 @@ public class AppConfigBase extends JmriPanel {
         return true;
     }
 
-    //private final static String none = "(none)";  // for later I8N?
-
     /**
      * Checks to see if user selected a valid serial port
      * @return true if okay
      */
-    private boolean checkPortName() {
-        if (getPort(0).equals(JmrixConfigPane.NONE_SELECTED) || getPort(0).equals(JmrixConfigPane.NO_PORTS_FOUND)) {
-            return false;
-        }
-        return true;
+    private boolean checkPortNames() {
+    	for (int i=0; i<items.size(); i++){
+    		if (getPort(i).equals(JmrixConfigPane.NONE_SELECTED) || getPort(i).equals(JmrixConfigPane.NO_PORTS_FOUND)) {
+    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{getPort(i), Integer.toString(i+1)}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
+    			return false;
+    		}
+    	}
+    	return true;
     }
 
     public void dispose() {
@@ -142,89 +143,81 @@ public class AppConfigBase extends JmriPanel {
      * box prompting the user to end the program.
      */
     public void savePressed() {
-
-        if (!checkPortName()) {            
-            if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{getPort(0)}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION) {
+        // true if port name OK
+        if (!checkPortNames())           
                 return;
-            }
-        }
 
-        boolean dups = checkDups();
-        // true if OK, which is a little confusing
-        if (!dups) {
-            dups = JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION;
-            if (!dups) {
-                return;
-            }
-        }
-        if (dups) {
-            saveContents();
-            final UserPreferencesManager p;
-            p = InstanceManager.getDefault(UserPreferencesManager.class);
-            p.resetChangeMade();
-            if (p.getQuitAfterSave() == 0) {
-                final JDialog dialog = new JDialog();
-                dialog.setTitle(rb.getString("MessageShortQuitWarning"));
-                dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-                JPanel container = new JPanel();
-                container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
-                container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
-                Icon icon = UIManager.getIcon("OptionPane.questionIcon");
-                JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
-                question.setAlignmentX(Component.CENTER_ALIGNMENT);
-                question.setIcon(icon);
-                container.add(question);
-                final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
-                remember.setFont(remember.getFont().deriveFont(10.0F));
-                remember.setAlignmentX(Component.CENTER_ALIGNMENT);
-                JButton yesButton = new JButton("Yes");
-                JButton noButton = new JButton("No");
-                JPanel button = new JPanel();
-                button.setAlignmentX(Component.CENTER_ALIGNMENT);
-                button.add(yesButton);
-                button.add(noButton);
-                container.add(button);
-                noButton.addActionListener(new ActionListener() {
+        // true if there arn't any duplicates
+        if (!checkDups())
+        	if (!(JOptionPane.showConfirmDialog(null, rb.getString("MessageLongDupsWarning"), rb.getString("MessageShortDupsWarning"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION))
+        		return;
 
-                    public void actionPerformed(ActionEvent e) {
-                        if (remember.isSelected()) {
-                            p.setQuitAfterSave(1);
-                        }
-                        dialog.dispose();
-                    }
-                });
-                yesButton.addActionListener(new ActionListener() {
+        saveContents();
+        final UserPreferencesManager p;
+        p = InstanceManager.getDefault(UserPreferencesManager.class);
+        p.resetChangeMade();
+        if (p.getQuitAfterSave() == 0) {
+        	final JDialog dialog = new JDialog();
+        	dialog.setTitle(rb.getString("MessageShortQuitWarning"));
+        	dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        	JPanel container = new JPanel();
+        	container.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        	container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
+        	Icon icon = UIManager.getIcon("OptionPane.questionIcon");
+        	JLabel question = new JLabel(rb.getString("MessageLongQuitWarning"));
+        	question.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	question.setIcon(icon);
+        	container.add(question);
+        	final JCheckBox remember = new JCheckBox(rb.getString("MessageRemenberSetting"));
+        	remember.setFont(remember.getFont().deriveFont(10.0F));
+        	remember.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	JButton yesButton = new JButton(rb.getString("Yes"));
+        	JButton noButton = new JButton(rb.getString("No"));
+        	JPanel button = new JPanel();
+        	button.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	button.add(yesButton);
+        	button.add(noButton);
+        	container.add(button);
+        	noButton.addActionListener(new ActionListener() {
 
-                    public void actionPerformed(ActionEvent e) {
-                        if (remember.isSelected()) {
-                            p.setQuitAfterSave(2);
-                            saveContents();
-                        }
-                        dialog.dispose();
-                        dispose();
-                        Apps.handleQuit();
-                    }
-                });
-                container.add(remember);
-                container.setAlignmentX(Component.CENTER_ALIGNMENT);
-                container.setAlignmentY(Component.CENTER_ALIGNMENT);
-                dialog.getContentPane().add(container);
-                dialog.pack();
-                dialog.setModal(true);
-                int w = dialog.getSize().width;
-                int h = dialog.getSize().height;
-                int x = (p.getScreen().width - w) / 2;
-                int y = (p.getScreen().height - h) / 2;
-                dialog.setLocation(x, y);
-                dialog.setVisible(true);
-            } else if (p.getQuitAfterSave() == 2) {
-                // end the program
-                dispose();
-                // do orderly shutdown.  Note this
-                // invokes Apps.handleQuit, even if this
-                // panel hasn't been created by an Apps subclass.
-                Apps.handleQuit();
-            }
+        		public void actionPerformed(ActionEvent e) {
+        			if (remember.isSelected()) {
+        				p.setQuitAfterSave(1);
+        			}
+        			dialog.dispose();
+        		}
+        	});
+        	yesButton.addActionListener(new ActionListener() {
+
+        		public void actionPerformed(ActionEvent e) {
+        			if (remember.isSelected()) {
+        				p.setQuitAfterSave(2);
+        				saveContents();
+        			}
+        			dialog.dispose();
+        			dispose();
+        			Apps.handleQuit();
+        		}
+        	});
+        	container.add(remember);
+        	container.setAlignmentX(Component.CENTER_ALIGNMENT);
+        	container.setAlignmentY(Component.CENTER_ALIGNMENT);
+        	dialog.getContentPane().add(container);
+        	dialog.pack();
+        	dialog.setModal(true);
+        	int w = dialog.getSize().width;
+        	int h = dialog.getSize().height;
+        	int x = (p.getScreen().width - w) / 2;
+        	int y = (p.getScreen().height - h) / 2;
+        	dialog.setLocation(x, y);
+        	dialog.setVisible(true);
+        } else if (p.getQuitAfterSave() == 2) {
+        	// end the program
+        	dispose();
+        	// do orderly shutdown.  Note this
+        	// invokes Apps.handleQuit, even if this
+        	// panel hasn't been created by an Apps subclass.
+        	Apps.handleQuit();
         }
         // don't end the program, just close the window
         if (getTopLevelAncestor() != null) {

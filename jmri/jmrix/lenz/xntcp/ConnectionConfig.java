@@ -13,6 +13,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.jmrix.JmrixConfigPane;
+
 /**
  * Handle configuring an XPressNet layout connection
  * via a XnTcp adapter.
@@ -21,7 +23,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
@@ -105,7 +107,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
         if (t!=null) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
 
     public void loadDetails(JPanel details) {
@@ -130,7 +132,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         portBox.removeAllItems();
 		String oldName = adapter.getCurrentPortName();
 		int indSel = -1;
-		if(oldName == null) oldName = "(none)";
+		if(oldName == null) oldName = JmrixConfigPane.NONE;
         for (int i=0; i<v.size(); i++) {
 			if(v.elementAt(i).equals(oldName)) indSel = i;
 			portBox.addItem(v.elementAt(i));

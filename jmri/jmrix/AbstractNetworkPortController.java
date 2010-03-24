@@ -15,7 +15,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -58,7 +58,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      */
     public void setHostName(String s){
         m_HostName=s;
-        if (s.equals("")) m_HostName = "(none)";
+        if (s.equals("")) m_HostName = JmrixConfigPane.NONE;
     }
 
     public String getHostName(){

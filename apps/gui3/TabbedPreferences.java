@@ -24,7 +24,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -86,7 +86,7 @@ public class TabbedPreferences extends AppConfigBase {
                 int newinstance = jmri.jmrix.JmrixConfigPane.getInstanceNumber((jmri.jmrix.JmrixConfigPane)connList.get(x));
                 /*This extra check is here a some of the original code automatically created four connection instances
                 therefore we need to filter out those that are set to none.*/
-                if(!((jmri.jmrix.JmrixConfigPane)connList.get(x)).getCurrentProtocolName().equals("(none)")){
+                if(!((jmri.jmrix.JmrixConfigPane)connList.get(x)).getCurrentProtocolName().equals(JmrixConfigPane.NONE)){
                     addConnection(count, newinstance);
                     count++;
                 }
@@ -98,7 +98,7 @@ public class TabbedPreferences extends AppConfigBase {
                 for (int x = 0; x<connList.size(); x++){
                     /*This extra check is here a some of the original code automatically created four connection instances
                     therefore we need to filter out those that are set to none.*/
-                    if(!(jmri.jmrix.JmrixConfigPane.instance(x).getCurrentProtocolName().equals("(none)"))){
+                    if(!(jmri.jmrix.JmrixConfigPane.instance(x).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
                         addConnection(count, x);
                         count++;
                     }
@@ -232,7 +232,7 @@ public class TabbedPreferences extends AppConfigBase {
         String title;
         if (JmrixConfigPane.instance(instance).getConnectionName()!=null){
             title=JmrixConfigPane.instance(instance).getConnectionName();
-        } else if((JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null) && (!JmrixConfigPane.instance(instance).getCurrentProtocolName().equals("(none)"))){
+        } else if((JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null) && (!JmrixConfigPane.instance(instance).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
             title = JmrixConfigPane.instance(instance).getCurrentProtocolName();
         } else {
             title = rb.getString("TabbedLayoutConnection")+(tabPosition+1);

@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 //
@@ -145,7 +145,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
         if (t!=null) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
 
     static java.util.ResourceBundle rb = 

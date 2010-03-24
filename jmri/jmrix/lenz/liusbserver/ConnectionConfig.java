@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.jmrix.JmrixConfigPane;
+
 
 /**
  * Handle configuring an XPressNet layout connection
@@ -16,7 +18,7 @@ import javax.swing.JTextField;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  * @see LIUSBServerAdapter
  */
@@ -54,7 +56,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
         if (t!=null) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
 
     public void loadDetails(JPanel details) {

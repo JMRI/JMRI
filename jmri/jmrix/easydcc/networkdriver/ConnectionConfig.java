@@ -4,12 +4,14 @@ package jmri.jmrix.easydcc.networkdriver;
 
 import javax.swing.*;
 
+import jmri.jmrix.JmrixConfigPane;
+
 /**
  * Definition of objects to handle configuring an EasyDCC layout connection
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -61,7 +63,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String getInfo() {
         String t = host.getText();
         if (t != null && !t.equals("")) return t;
-        else return "(none)";
+        else return JmrixConfigPane.NONE;
     }
     protected void setInstance() {
         log.error("Unexpected call to setInstance");
