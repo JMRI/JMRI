@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -115,8 +115,8 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 	public void updateAll() { }
     
    /**
-    * A temporary method that determines if it is possible to add a range
-    * of sensors in numerical order eg 10 to 30
+    * A method that determines if it is possible to add a range of sensors in numerical
+    * order eg 10 to 30, primarily used to enable/disable the add range box in the add sensor panel
     **/
     
     public boolean allowMultipleAdditions(String systemName) { return false;  }
@@ -145,6 +145,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         s = getBySystemName(prefix+typeLetter()+iName);
         if(s!=null){
             for(int x = 1; x<10; x++){
+                iName++;
                 s = getBySystemName(prefix+typeLetter()+iName);
                 if(s==null)
                     return Integer.toString(iName);
