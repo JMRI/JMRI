@@ -18,7 +18,7 @@ import jmri.jmris.srcp.parser.*;
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -124,7 +124,7 @@ public class JmriSRCPServer extends JmriServer{
 
               if(parser==null) parser = new SRCPParser(inStream); 
               try {
-                  SimpleNode e = SRCPParser.command();
+                  SimpleNode e = parser.command();
                   SRCPVisitor v = new SRCPVisitor();
                   e.jjtAccept(v,sh);
               } catch (ParseException pe){

@@ -2,6 +2,7 @@
 with javacc */
 
 options {
+  STATIC=false;
   MULTI=true;
   VISITOR=true;
 }
@@ -15,7 +16,7 @@ package jmri.jmris.srcp.parser;
  * the SRCP protocol.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 
