@@ -122,7 +122,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -241,6 +241,10 @@ public class SimulatorAdapter extends NcePortController implements
 
 	public void setManufacturer(String manu) {
 		manufacturerName = manu;
+	}
+	
+	public String getCurrentPortName(){
+		return "(none)";
 	}
 
 	public void run() { // start a new thread
