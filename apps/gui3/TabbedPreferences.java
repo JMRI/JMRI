@@ -10,6 +10,8 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
+
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
@@ -20,7 +22,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -28,8 +30,8 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
     
-    String choices[] = {"Connections", "Start Up", "Display", "Messages", "Roster", "Throttle"};
-    String listRefValues[] = { "CONNECTION", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE"};
+    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle")};
+    String listRefValues[] = { "CONNECTIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -63,7 +65,7 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 3));
         buttonpanel.add(listScroller);
         
-        JButton save = new JButton("Save");
+        JButton save = new JButton(rb.getString("ButtonSave"));
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     throttlePreferences.jbSaveActionPerformed(e);
@@ -125,7 +127,7 @@ public class TabbedPreferences extends AppConfigBase {
         }); 
         detailpanel.setLayout(new CardLayout());
         detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
-        detailpanel.add(connectionPanel, "CONNECTION");
+        detailpanel.add(connectionPanel, "CONNECTIONS");
         jmri.GuiLafConfigPane gui;
 
         JTabbedPane startupPanel = new JTabbedPane();
@@ -213,10 +215,10 @@ public class TabbedPreferences extends AppConfigBase {
         
         p.add(JmrixConfigPane.instance(instance));
         p.add(Box.createVerticalGlue());
-        p.setToolTipText(JmrixConfigPane.instance(instance).getCurrentProtocolName());
+        //p.setToolTipText(JmrixConfigPane.instance(instance).getCurrentProtocolName());
         JPanel b = new JPanel();
         b.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
-        JButton deleteButton = new JButton("Delete Connection");
+        JButton deleteButton = new JButton(rb.getString("ButtonDeleteConnection"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e){
                 removeTab(e, null, connectionPanel.getSelectedIndex());
@@ -243,7 +245,7 @@ public class TabbedPreferences extends AppConfigBase {
         connectionTabInstance.add(instance);
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
-        connectionPanel.setToolTipTextAt(tabPosition, JmrixConfigPane.instance(instance).getCurrentProtocolName());
+        connectionPanel.setToolTipTextAt(tabPosition, title);
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
 //        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
         items.add(JmrixConfigPane.instance(instance));
@@ -265,8 +267,8 @@ public class TabbedPreferences extends AppConfigBase {
         JComponent p = new JPanel();
         p.add(Box.createVerticalGlue());
 
-        p.setToolTipText("Add New Connection");
         connectionPanel.add("+", p);
+        connectionPanel.setToolTipTextAt(connectionPanel.getTabCount()-1, rb.getString("ToolTipAddNewConnection"));
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
         //connectionPanel.setTabComponentAt(connectionPanel.getTabCount()-1, null);
         connectionPanel.setSelectedIndex(connectionPanel.getTabCount()-2);
@@ -287,10 +289,10 @@ public class TabbedPreferences extends AppConfigBase {
         if (i != -1) {
             int n = JOptionPane.showConfirmDialog(
                 null,
-                "Do you really want to delete connection " + connectionPanel.getTitleAt(i) + "?",
-                "Delete Connection",
+                MessageFormat.format(rb.getString("MessageDoDelete"), new Object[]{connectionPanel.getTitleAt(i)}),
+                rb.getString("MessageDeleteConnection"),
                 JOptionPane.YES_NO_OPTION);
-            if(n!=0)
+            if(n!=JOptionPane.YES_OPTION)
                 return;
             if(connectionPanel.getChangeListeners().length >0)
                 connectionPanel.removeChangeListener(connectionPanel.getChangeListeners()[0]);
