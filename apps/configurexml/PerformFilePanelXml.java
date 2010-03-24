@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @see apps.PerformFilePanel
  */
 public class PerformFilePanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -21,7 +21,7 @@ public class PerformFilePanelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Arrange for all the model objects to be stored
-     * @param o Object to store, of type GuiLafConfigPane
+     * @param o Object to store, of type PerformFilePanel
      * @return null, after updating state so others are stored
      */
     public Element store(Object o) {

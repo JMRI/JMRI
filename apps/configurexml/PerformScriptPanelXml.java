@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformScriptModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see apps.PerformScriptPanel
  */
 public class PerformScriptPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -21,7 +21,7 @@ public class PerformScriptPanelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Arrange for all the model objects to be stored
-     * @param o Object to store, of type GuiLafConfigPane
+     * @param o Object to store, of type PerformScriptPanel
      * @return null, after updating state so others are stored
      */
     public Element store(Object o) {
