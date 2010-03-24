@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -136,6 +136,55 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     static SerialSensorManager _instance = null;
+    
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        int sysNode = 0;
+        int seperator=0;
+        int address = 0;
+        int iName;
+        if(curAddress.contains(":")){
+            //Address format passed is in the form of sysNode:address or T:turnout address
+            seperator = curAddress.indexOf(":");
+            try {
+                sysNode = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                address = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " into the cab and address format of nn:xx");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            iName = (sysNode*1000)+address;
+        } else {
+            //Entered in using the old format
+            try {
+                iName = Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+        }
+        
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        Sensor s = getBySystemName(prefix+typeLetter()+iName);
+        if(s!=null){
+            for(int x = 1; x<10; x++){
+                iName=iName+1;
+                s = getBySystemName(prefix+typeLetter()+iName);
+                if(s==null){
+                    return Integer.toString(iName);
+                }
+            }
+            return null;
+        } else {
+            return Integer.toString(iName);
+        }
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
 }
