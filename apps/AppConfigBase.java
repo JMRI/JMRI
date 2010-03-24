@@ -25,7 +25,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -114,7 +114,7 @@ public class AppConfigBase extends JmriPanel {
     private boolean checkPortNames() {
     	for (int i=0; i<items.size(); i++){
     		if (getPort(i).equals(JmrixConfigPane.NONE_SELECTED) || getPort(i).equals(JmrixConfigPane.NO_PORTS_FOUND)) {
-    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{getPort(i), Integer.toString(i+1)}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
+    	           if (JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("MessageSerialPortWarning"), new Object[]{getPort(i), getConnection(i)}), rb.getString("MessageSerialPortNotValid"), JOptionPane.YES_NO_OPTION, JOptionPane.ERROR_MESSAGE) != JOptionPane.YES_OPTION)
     			return false;
     		}
     	}
