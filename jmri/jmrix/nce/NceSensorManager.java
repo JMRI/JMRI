@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
@@ -238,6 +238,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     	}
     }
     
+    
     /**
      * Handle an unsolicited sensor (AIU) state message
      * @param r	sensor message
@@ -286,6 +287,59 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         } else {
             log.warn("incorrect sensor message: "+r.toString());
         }
+    }
+    
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        int aiucab = 0;
+        int seperator=0;
+        int pin = 0;
+        int iName;
+        if(curAddress.contains(":")){
+            //Sensor address is presented in the format AIU Cab Address:Pin Number On AIU
+            //Should we be validating the values of aiucab address and pin number?
+            seperator = curAddress.indexOf(":");
+            try {
+                aiucab = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                pin = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " into the cab and pin format of nn:xx");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            iName = (aiucab-1)*16+pin-1;
+        
+        } else {
+            //Entered in using the old format
+            try {
+                iName = Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) { 
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+        }
+        
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        Sensor s = getBySystemName(prefix+typeLetter()+iName);
+        System.out.println(s);
+        if(s!=null){
+            for(int x = 1; x<10; x++){
+                iName=iName+1;
+                s = getBySystemName(prefix+typeLetter()+iName);
+                if(s==null){
+                    return Integer.toString(iName);
+                }
+            }
+            return null;
+        } else {
+            return Integer.toString(iName);
+        }
+        
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceSensorManager.class.getName());
 }
