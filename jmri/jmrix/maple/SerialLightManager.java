@@ -13,8 +13,8 @@ import jmri.Light;
  * Based in part on SerialTurnoutManager.java
  *
  * @author  Bob Jacobsen Copyright (C) 2008
- * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @author	Dave Duchamp Copyright (C) 2004, 2010
+ * @version	$Revision: 1.7 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
@@ -105,17 +105,6 @@ public class SerialLightManager extends AbstractLightManager {
         return (SerialAddress.normalizeSystemName(systemName));
     }
 
-// djd debugging    
-//    /**
-//     * Public method to convert system name to its alternate format
-//     * <P>
-//     * Returns a normalized system name if system name is valid and has a 
-//     *      valid alternate representation, else return "".
-//     */
-//    public String convertSystemNameToAlternate(String systemName) {
-//        return (SerialAddress.convertSystemNameToAlternate(systemName));
-//    }
-    
     /** 
      * Allow access to SerialLightManager
      */

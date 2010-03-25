@@ -14,82 +14,13 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialAddress {
 
     public SerialAddress() {
     }
-	
-// djd debugging
-
-//    /**
-//     * Public static method to parse a Maple system name and return the Serial Node Address
-//     *  Note:  Returns '-1' if illegal systemName format or if the node is not found.
-//	 *         Nodes are numbered from 0 - 127.
-//     */
-//    public static int getNodeAddressFromSystemName(String systemName) {
-//        // validate the system Name leader characters
-//        if ( (systemName.charAt(0) != 'K') || ( (systemName.charAt(1) != 'L') &&
-//                (systemName.charAt(1) != 'S') && (systemName.charAt(1) != 'T') ) ) {
-//            // here if an illegal format 
-//            log.error("illegal character in header field of system name: "+systemName);
-//            return (-1);
-//        }
-//        String s = "";
-//        boolean noB = true;
-//        for (int i = 2; (i<systemName.length()) && noB; i++) {
-//            if (systemName.charAt(i) == 'B') {
-//                s = systemName.substring(2,i);
-//                noB = false;
-//            }
-//        }
-//        int ua;
-//        if (noB) {
-//            // This is a CLnnxxx address
-//            int num = Integer.valueOf(systemName.substring(2)).intValue();
-//            if (num>0) {
-//                ua = num/1000;
-//            }
-//            else {
-//                log.error("invalid system name: "+systemName);
-//                return (-1);
-//            }
-//        }
-//        else {
-//            if (s.length()==0) {
-//                log.error("no node address before 'B' in system name: "+systemName);
- //               return (-1);
-//            }
-//            else {
-//                try {
-//                    ua = Integer.parseInt(s);
-//                }
-//                catch (Exception e) {
-//                    log.error("illegal character in system name: "+systemName);
-//                    return (-1);
-//                }
-//            }
-//        }
-//		
-//		return (ua);
-//	}
-
-//    /**
-//     * Public static method to parse a system name and return the Serial Node
-//     *  Note:  Returns 'null' if illegal systemName format or if the node is not found
-//     */
-//    public static AbstractNode getNodeFromSystemName(String systemName) {
-//        // get the node address
-//        int ua;
-//        ua = getNodeAddressFromSystemName(systemName);
-//        if (ua == -1)
-//            // error messages have already been issued by getNodeAddressFromSystemName
-//            return null;
-//        
-//        return (SerialTrafficController.instance().getNodeFromAddress(ua));
-//    }
-    
+	    
     /**
      * Public static method to parse a system name and return the bit number
      *   Notes: Bits are numbered from 1.
