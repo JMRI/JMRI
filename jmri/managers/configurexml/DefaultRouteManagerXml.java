@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -473,20 +473,22 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
     /**
      * Replace the current RouteManager, if there is one, with
      * one newly created during a load operation. This is skipped
-     * if they are of the same absolute type.
+     * if the present one is already of the right type
      */
     protected void replaceRouteManager() {
-        if (InstanceManager.routeManagerInstance().getClass().getName()
+        RouteManager current = InstanceManager.routeManagerInstance();
+        if (current != null && current.getClass().getName()
                 .equals(DefaultRouteManager.class.getName()))
             return;
         // if old manager exists, remove it from configuration process
-        if (InstanceManager.routeManagerInstance() != null)
+        if (current != null)
             InstanceManager.configureManagerInstance().deregister(
-                InstanceManager.routeManagerInstance() );
+                    current );
 
         // register new one with InstanceManager
+        InstanceManager.deregister(current, RouteManager.class);
         DefaultRouteManager pManager = DefaultRouteManager.instance();
-        InstanceManager.setRouteManager(pManager);
+        InstanceManager.store(pManager, RouteManager.class);
         // register new one for configuration
         InstanceManager.configureManagerInstance().registerConfig(pManager);
     }
