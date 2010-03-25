@@ -22,7 +22,7 @@ import jmri.BeanSetting;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutEditorAuxTools 
@@ -504,7 +504,7 @@ public class LayoutEditorAuxTools
 		// delete any LayoutConnectivity objects no longer needed
 		for (int i = sz-1;i>=0;i--) {
 			if (!found[i]) {
-// djd debugging
+// djd debugging - message to list connectivity being removed
 //				LayoutConnectivity xx = (LayoutConnectivity)cList.get(i);
 //				log.error("  Deleting Layout Connectivity - "+xx.getBlock1().getID()+", "+
 //													xx.getBlock2().getID());

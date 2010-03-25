@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -190,6 +190,12 @@ public class LayoutBlockManager extends AbstractManager {
 	 * If the signal at the block boundary has two heads--is located at the facing point of a turnout--
 	 *	  the Signal Head that applies for the current setting of turnout (THROWN or CLOSED) is returned. 
 	 *    If the turnout state is UNKNOWN or INCONSISTENT, an error message is logged, and "null" is returned.
+	 * If the signal at the block boundary has three heads--the facing point of a 3-way turnout--the 
+	 *	  Signal Head that applies for the current settings of the two turnouts of the 3-way turnout is returned.
+	 *	  If the turnout state of either turnout is UNKNOWN or INCONSISTENT, an error is logged and "null" is returned.
+	 * "null" is returned if the block boundary is between the two turnouts of a THROAT_TO_THROAT turnout or a 3-way
+	 *    turnout. "null" is returned for block boundaries exiting a THROAT_TO_THROAT turnout block, since there are 
+	 *    no signals that apply there.
 	 */
 	public SignalHead getFacingSignalHead (Block facingBlock, Block protectedBlock) {
 		// check input
@@ -197,7 +203,7 @@ public class LayoutBlockManager extends AbstractManager {
 			log.error ("null block in call to getFacingSignalHead");
 			return null;
 		}
-		// non-null - check if input corresponds to Blacks in a Layout Editor panel.
+		// non-null - check if input corresponds to Blocks in a Layout Editor panel.
 		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
 		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
 		if ( (fLayoutBlock==null) || (pLayoutBlock==null) ) {
@@ -299,97 +305,166 @@ public class LayoutBlockManager extends AbstractManager {
 		if (cType==LayoutEditor.TURNOUT_A) {
 			// block boundary is at the facing point of a turnout or A connection of a crossover turnout
 			lt = (LayoutTurnout)connected;
-			if (facingIsBlock1) {
-				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
-					//there is no signal head for diverging 
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
-				else {
-					// check if track segments at B or C are in protected block (block 2)
-					if ( ((TrackSegment)(lt.getConnectB())).getBlockName().equals(protectedBlock.getUserName()) ) {
-						// track segment connected at B matches block 2, check C
-						if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) {
-							// track segment connected at C is not in block2, return continuing signal head at A
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
-						}
-						else {
-							// B and C both in block2, check turnout position to decide which signal head to return
-							int state = lt.getTurnout().getKnownState();
-							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
-									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
-								// continuing  
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
-							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
-									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
-								// diverging
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+			if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
+				// standard turnout or A connection of a crossover turnout
+				if (facingIsBlock1) {
+					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+						//there is no signal head for diverging 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					else {
+						// check if track segments at B or C are in protected block (block 2)
+						if ( ((TrackSegment)(lt.getConnectB())).getBlockName().equals(protectedBlock.getUserName()) ) {
+							// track segment connected at B matches block 2, check C
+							if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) {
+								// track segment connected at C is not in block2, return continuing signal head at A
+								if (lt.getContinuingSense()==Turnout.CLOSED) 
+									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								else 
+									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+							}
 							else {
-								// turnout state is UNKNOWN or INCONSISTENT
-								log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
+								// B and C both in block2, check turnout position to decide which signal head to return
+								int state = lt.getTurnout().getKnownState();
+								if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
+										( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
+									// continuing
+										return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+								else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
+										( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) 
+									// diverging
+									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+								else {
+									// turnout state is UNKNOWN or INCONSISTENT
+									log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
 										" is in an UNKNOWN or INCONSISTENT state.");
-								return null;
+									return null;
+								}
 							}
 						}
-					}
-					// track segment connected at B is not in block 2
-					if ( (((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) 
-						// track segment connected at C is in block 2, return diverging signal head
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
-					else {
-						// neither track segment is in block 2 - should never get here unless layout turnout is 
-						//      the only item in block 2
-						if (!(lt.getBlockName().equals(protectedBlock.getUserName())))
-							log.error("neither signal at A protects block "+protectedBlock.getUserName()+
-											", and turnout is not in block either");
-						return null;
-					}
-				}
-			}
-			else {
-				// check if track segments at B or C are in facing block (block 1)
-				if ( ((TrackSegment)(lt.getConnectB())).getBlockName().equals(facingBlock.getUserName()) ) {
-					// track segment connected at B matches block 1, check C
-					if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName())) ) 
-						// track segment connected at C is not in block 2, return signal head at continuing end
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
-					else {
-						// B and C both in block 1, check turnout position to decide which signal head to return
-						int state = lt.getTurnout().getKnownState();
-						if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
-									( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
-							// continuing  
-							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
-						else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
-									( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
-							// diverging, check for second head
-							if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						// track segment connected at B is not in block 2
+						if ( (((TrackSegment)lt.getConnectC()).getBlockName().equals(protectedBlock.getUserName())) ) {
+							// track segment connected at C is in block 2, return diverging signal head
+							if (lt.getContinuingSense()==Turnout.CLOSED)
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
 							else 
-								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));							
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
 						}
 						else {
-							// turnout state is UNKNOWN or INCONSISTENT
-							log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
-										" is in an UNKNOWN or INCONSISTENT state.");
+							// neither track segment is in block 2 - should never get here unless layout turnout is 
+							//      the only item in block 2
+							if (!(lt.getBlockName().equals(protectedBlock.getUserName())))
+								log.error("neither signal at A protects block "+protectedBlock.getUserName()+
+												", and turnout is not in block either");
 							return null;
 						}
 					}
 				}
-				// track segment connected at B is not in block 1
-				if ( ((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName()) ) {
-					// track segment connected at C is in block 1, return diverging signal head, check for second head
-					if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
-					else 
-						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
-				}
 				else {
-					// neither track segment is in block 1 - should never get here unless layout turnout is 
-					//    the only item in block 1
-					if (!(lt.getBlockName().equals(facingBlock.getUserName())))
-						log.error("no signal faces block "+facingBlock.getUserName()+
-											", and turnout is not in block either");
+					// check if track segments at B or C are in facing block (block 1)
+					if ( ((TrackSegment)(lt.getConnectB())).getBlockName().equals(facingBlock.getUserName()) ) {
+						// track segment connected at B matches block 1, check C
+						if ( !(((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName())) ) 
+							// track segment connected at C is not in block 2, return signal head at continuing end
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+						else {
+							// B and C both in block 1, check turnout position to decide which signal head to return
+							int state = lt.getTurnout().getKnownState();
+							if ( ( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
+										( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.THROWN) ) )
+								// continuing  
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+							else if ( ( (state==Turnout.THROWN) && (lt.getContinuingSense()==Turnout.CLOSED) ) ||
+										( (state==Turnout.CLOSED) && (lt.getContinuingSense()==Turnout.THROWN) ) ) {
+								// diverging, check for second head
+								if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
+									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+								else 
+									return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));							
+							}
+							else {
+								// turnout state is UNKNOWN or INCONSISTENT
+								log.error("Cannot choose signal head because turnout "+lt.getTurnout().getSystemName()+
+											" is in an UNKNOWN or INCONSISTENT state.");
+								return null;
+							}
+						}
+					}
+					// track segment connected at B is not in block 1
+					if ( ((TrackSegment)lt.getConnectC()).getBlockName().equals(facingBlock.getUserName()) ) {
+						// track segment connected at C is in block 1, return diverging signal head, check for second head
+						if ( (lt.getSignalC2Name()==null) || (lt.getSignalC2Name().equals("")) )
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+						else 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+					}
+					else {
+						// neither track segment is in block 1 - should never get here unless layout turnout is 
+						//    the only item in block 1
+						if (!(lt.getBlockName().equals(facingBlock.getUserName())))
+							log.error("no signal faces block "+facingBlock.getUserName()+
+												", and turnout is not in block either");
+						return null;
+					}
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
+				//  There are no signals at the throat of a THROAT_TO_THROAT
+				//  There should not be a block boundary here
+				return null;
+			}
+			else if (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY) {
+				// 3-way turnout is in its own block - block boundary is at the throat of the 3-way turnout
+				if (!facingIsBlock1) {				
+					// facing block is within the three-way turnout's block - no signals for exit of the block
 					return null;
 				}
+				else {
+					// select throat signal according to state of the 3-way turnout
+					int state = lt.getTurnout().getKnownState();
+					if (state==Turnout.THROWN) {
+						if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) ) 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+						else 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+					}
+					else if (state==Turnout.CLOSED) {
+						LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
+						state = tLinked.getTurnout().getKnownState();
+						if (state==Turnout.CLOSED) {						
+							if (tLinked.getContinuingSense()==Turnout.CLOSED) 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));								
+							else if ( (lt.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+							else 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA3Name()));
+						}
+						else if (state==Turnout.THROWN) {						
+							if (tLinked.getContinuingSense()==Turnout.THROWN) 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));								
+							else if ( (lt.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+							else 
+								return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA3Name()));
+						}
+						else {
+							// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
+							log.error("Cannot choose 3-way signal head to return because turnout "+tLinked.getTurnout().
+									getSystemName()+" is in an UNKNOWN or INCONSISTENT state.");
+							return null;
+						}
+					}
+					else {
+						// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
+						log.error("Cannot choose 3-way signal head to return because turnout "+lt.getTurnout().
+									getSystemName()+" is in an UNKNOWN or INCONSISTENT state.");
+						return null;
+					}
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
+				// There are no signals at the throat of the SECOND_3_WAY turnout of a 3-way turnout
+				// There should not be a block boundary here
+				return null;
 			}
 		}
 		if (cType==LayoutEditor.TURNOUT_B) {
@@ -488,13 +563,86 @@ public class LayoutBlockManager extends AbstractManager {
 						return null;
 					}
 				}
-
 			}
-			// not double crossover or LH crossover, this track is continuing track for A connection
-			if (facingIsBlock1)
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
-			else {
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+			// not double crossover or LH crossover
+			if (  (lt.getLinkType()==LayoutTurnout.NO_LINK) && (lt.getContinuingSense()==Turnout.CLOSED) ) {
+				if (facingIsBlock1)
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+				else 
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+			}
+			else if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
+				if (facingIsBlock1)
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+				else {
+					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
+				if (!facingIsBlock1) {
+					//  There are no signals at the throat of a THROAT_TO_THROAT 
+					return null;
+				}
+				// facing block is outside of the THROAT_TO_THROAT
+				if ( (lt.getContinuingSense()==Turnout.CLOSED) && ((lt.getSignalB2Name()==null) || 
+														(lt.getSignalB2Name().equals(""))) ) 
+					// there is only one signal head here - return it
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+				else if ( (lt.getContinuingSense()==Turnout.THROWN) && ((lt.getSignalC2Name()==null) || 
+														(lt.getSignalC2Name().equals(""))) ) 
+					// there is only one signal head here - return it
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+				// There are two signals here get linked turnout and decide which to return from linked turnout state
+				LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
+				int state = tLinked.getTurnout().getKnownState();
+				if (state==Turnout.CLOSED) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));					
+				}
+				else if (state==Turnout.THROWN) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));					
+				}
+				else 
+					// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
+					log.error("Cannot choose signal head to return because turnout "+tLinked.getTurnout().getSystemName()+
+										" is in an UNKNOWN or INCONSISTENT state.");
+					return null;
+			}
+			else if (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY) {
+				// there is no signal at the FIRST_3_WAY turnout continuing track of a 3-way turnout
+				// there should not be a block boundary here				
+				return null;
+			}
+			else if (lt.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
+				if (facingIsBlock1) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) {				
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					}
+					else {
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					}
+				}
+				else {
+					// signal is at the linked turnout - the throat of the 3-way turnout
+					LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
+					if (lt.getContinuingSense()==Turnout.CLOSED) {				
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+					}
+					else {
+						if ( (tLinked.getSignalA3Name()==null) || (lt.getSignalA3Name().equals("")) ) 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						else 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA3Name()));
+					}					
+				}
 			}
 		}
 		if (cType==LayoutEditor.TURNOUT_C) {
@@ -595,19 +743,100 @@ public class LayoutBlockManager extends AbstractManager {
 				}
 			}
 			// not double crossover or RH crossover
-			if (facingIsBlock1)
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
-			else if (lt.getTurnoutType()==LayoutTurnout.LH_XOVER) 
-				// LH turnout - this is continuing track for D connection
-				return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
-			else {
-				// RH, LH or WYE turnout, this is diverging track for A connection
-				if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
-					// there is no signal head at the throat for diverging 
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+			if ( (lt.getLinkType()==LayoutTurnout.NO_LINK) && (lt.getContinuingSense()==Turnout.CLOSED) ) {
+				if (facingIsBlock1)
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+				else if (lt.getTurnoutType()==LayoutTurnout.LH_XOVER) 
+					// LH turnout - this is continuing track for D connection
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalD1Name()));
+				else {
+					// RH, LH or WYE turnout, this is diverging track for A connection
+					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) )
+						// there is no signal head at the throat for diverging 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					else 
+						// there is a diverging head at the throat, return it
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.NO_LINK) {
+				if (facingIsBlock1)
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
 				else 
-					// there is a diverging head at the throat, return it
-					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+			}
+			else if (lt.getLinkType()==LayoutTurnout.THROAT_TO_THROAT) {
+				if (!facingIsBlock1) {
+					//  There are no signals at the throat of a THROAT_TO_THROAT 
+					return null;
+				}
+				// facing block is outside of the THROAT_TO_THROAT
+				if ( (lt.getContinuingSense()==Turnout.CLOSED) && ((lt.getSignalC2Name()==null) || 
+														(lt.getSignalC2Name().equals(""))) ) 
+					// there is only one signal head here - return it
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+				else if ( (lt.getContinuingSense()==Turnout.THROWN) && ((lt.getSignalB2Name()==null) || 
+														(lt.getSignalB2Name().equals(""))) ) 
+					// there is only one signal head here - return it
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+				// There are two signals here get linked turnout and decide which to return from linked turnout state
+				LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
+				int state = tLinked.getTurnout().getKnownState();
+				if (state==Turnout.CLOSED) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));					
+				}
+				else if (state==Turnout.THROWN) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC2Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB2Name()));					
+				}
+				else {
+					// should never get here - linked turnout state is UNKNOWN or INCONSISTENT
+					log.error("Cannot choose signal head to return because turnout "+tLinked.getTurnout().getSystemName()+
+										" is in an UNKNOWN or INCONSISTENT state.");
+					return null;
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.FIRST_3_WAY) {
+				if (facingIsBlock1) {
+					return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+				}
+				else {
+					if ( (lt.getSignalA2Name()==null) || (lt.getSignalA2Name().equals("")) ) 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA1Name()));
+					else 
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalA2Name()));
+				}
+			}
+			else if (lt.getLinkType()==LayoutTurnout.SECOND_3_WAY) {
+				if  (facingIsBlock1) {
+					if (lt.getContinuingSense()==Turnout.CLOSED) {				
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalC1Name()));
+					}
+					else {
+						return (InstanceManager.signalHeadManagerInstance().getSignalHead(lt.getSignalB1Name()));
+					}
+				}
+				else {
+					// signal is at the linked turnout - the throat of the 3-way turnout
+					LayoutTurnout tLinked = getLayoutTurnoutFromTurnoutName(lt.getLinkedTurnoutName(),panel);
+					if (lt.getContinuingSense()==Turnout.CLOSED) {				
+						if ( (tLinked.getSignalA3Name()==null) || (tLinked.getSignalA3Name().equals("")) ) 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						else 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA3Name()));
+					}
+					else {
+						if ( (tLinked.getSignalA2Name()==null) || (tLinked.getSignalA2Name().equals("")) ) 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA1Name()));
+						else 
+							return (InstanceManager.signalHeadManagerInstance().getSignalHead(tLinked.getSignalA2Name()));
+					}					
+				}
 			}
 		}
 		if (cType==LayoutEditor.TURNOUT_D) {
@@ -749,6 +978,16 @@ public class LayoutBlockManager extends AbstractManager {
 				return (InstanceManager.signalHeadManagerInstance().getSignalHead(xing.getSignalBName()));
 		}
 		return null;		
+	}
+	private LayoutTurnout getLayoutTurnoutFromTurnoutName(String turnoutName, LayoutEditor panel) {
+		Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(turnoutName);
+		if (t==null) return null;
+		LayoutTurnout lt = null;
+		for (int i=0; i<panel.turnoutList.size(); i++) {
+			lt = panel.turnoutList.get(i);
+			if (lt.getTurnout()==t) return lt;
+		}
+		return null;
 	}
 	
 	private boolean warnConnectivity = true;

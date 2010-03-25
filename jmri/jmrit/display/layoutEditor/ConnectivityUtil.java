@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class ConnectivityUtil 
@@ -668,7 +668,7 @@ public class ConnectivityUtil
 			else if ( (t.getConnectD()!=null) && (((TrackSegment)t.getConnectD()).getLayoutBlock()==lBlock) ) 
 				list.add(t);
 		}
-// djd debugging
+// djd debugging - lists turnouts for a block
 // debugging code - comment out when not debugging something involving this method
 //		String txt = "Turnouts for Block "+block.getUserName()+" - ";
 //		for (int k = 0; k<list.size(); k++) {
@@ -1048,6 +1048,10 @@ public class ConnectivityUtil
 				if ( (bbLogic.getWatchedSensor2Alt()!=null) && (bbLogic.getWatchedSensor2Alt()).equals(name) )
 					bbLogic.setWatchedSensor2Alt(null);	
 			}							
+		}
+		if (bbLogic.getMode()==0) {
+			// this to avoid Unexpected mode ERROR message at startup
+			bbLogic.setMode(BlockBossLogic.SINGLEBLOCK);
 		}
 		bbLogic.retain();
 		bbLogic.start();
