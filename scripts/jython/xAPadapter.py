@@ -14,7 +14,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 import jarray
 import jmri
@@ -85,14 +85,14 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = CLOSED
     if (state == "ON") :
         value = THROWN
-    turnout = turnouts.getTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
+    turnout = turnouts.getTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
     if (turnout == None) :
-        print "    create turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()
-        turnout = turnouts.provideTurnout("IT:xPA:xAPBSC:"+fmtMsg.getSource())
+        print "    create turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()
+        turnout = turnouts.provideTurnout("IT:xAP:xAPBSC:"+fmtMsg.getSource())
         if (name != None) :
             turnout.setUserName(name)
     turnout.setCommandedState(value)
-    print "    set turnout IT:xPA:xAPBSC:"+fmtMsg.getSource()+" to", value
+    print "    set turnout IT:xAP:xAPBSC:"+fmtMsg.getSource()+" to", value
     return
     
   def processSensor(self, fmtMsg, message) :
@@ -118,13 +118,13 @@ class InputListener(xAPlib.xAPRxEventListener):
     value = INACTIVE
     if (state == "ON") :
         value = ACTIVE
-    sensor = sensors.getSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
+    sensor = sensors.getSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
     if (sensor == None) :
-        print "    create sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()
-        sensor = sensors.provideSensor("IS:xPA:xAPBSC:"+fmtMsg.getSource())
+        print "    create sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()
+        sensor = sensors.provideSensor("IS:xAP:xAPBSC:"+fmtMsg.getSource())
         sensor.setUserName(name)
     sensor.setState(value)
-    print "    set sensor IS:xPA:xAPBSC:"+fmtMsg.getSource()+" to ", value
+    print "    set sensor IS:xAP:xAPBSC:"+fmtMsg.getSource()+" to ", value
     
     return
     
