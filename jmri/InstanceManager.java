@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.63 $
+ * @version			$Revision: 1.64 $
  */
 public class InstanceManager {
 
@@ -79,6 +79,20 @@ public class InstanceManager {
         if (l == null) return null;
         if (l.size()<1) return null;
         return (T)l.get(l.size()-1);
+    }
+    
+    /**
+     * Dump generic content of InstanceManager
+     * by type.
+     */
+    static public String contentsToString() {
+        String retval = "";
+        for (Class c : managerLists.keySet()) {
+            retval+= "List of "+c+" with "+getList(c).size()+" objects\n";
+            for (Object o : getList(c))
+                retval += "    "+o.getClass().toString()+"\n";
+        }
+        return retval;
     }
     
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
@@ -195,9 +209,11 @@ public class InstanceManager {
     }
 
     static public RouteManager routeManagerInstance()  {
-        if (instance().routeManager != null) return instance().routeManager;
-        instance().routeManager = (RouteManager)initializer.getDefault(RouteManager.class);
-        return instance().routeManager;
+        RouteManager r = getDefault(RouteManager.class);
+        if (r != null) return r;
+        r = (RouteManager)initializer.getDefault(RouteManager.class);
+        store(r, RouteManager.class);
+        return r;
     }
 
     static public LayoutBlockManager layoutBlockManagerInstance()  {
@@ -346,18 +362,16 @@ public class InstanceManager {
     private OBlockManager oBlockManager = null;
     private WarrantManager warrantManager = null;
 	
-	private SectionManager sectionManager = null;
+    private SectionManager sectionManager = null;
 	
-	private TransitManager transitManager = null;
+    private TransitManager transitManager = null;
 
-    private RouteManager routeManager = null;
+    /**
+     * @deprecated 2.9.5
+     */
+    @Deprecated
     static public void setRouteManager(RouteManager p) {
-        instance().addRouteManager(p);
-    }
-    protected void addRouteManager(RouteManager p) {
-        if (p!=routeManager && routeManager!=null && log.isDebugEnabled()) log.debug("RouteManager instance is being replaced: "+p);
-        if (p!=routeManager && routeManager==null && log.isDebugEnabled()) log.debug("RouteManager instance is being installed: "+p);
-        routeManager = p;
+        store(p, RouteManager.class);
     }
 
     private LayoutBlockManager layoutBlockManager = null;
@@ -402,7 +416,7 @@ public class InstanceManager {
 
     private Timebase timebase = null;
 	
-	private ClockControl clockControl = null;
+    private ClockControl clockControl = null;
 
     private ConsistManager consistManager = null;
 
