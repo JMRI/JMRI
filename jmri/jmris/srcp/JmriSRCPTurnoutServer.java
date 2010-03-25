@@ -12,7 +12,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * SRCP Server interface between the JMRI Turnout manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
@@ -102,7 +102,6 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // If the Commanded State changes, show transition state as "<inconsistent>"
         if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
             try {
                String Name=((jmri.Turnout)e.getSource()).getSystemName();
                java.util.List<Object> List=jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
@@ -116,6 +115,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
                       sendStatus(i,address);
                       break;
                    }
+                   i++;
                }
             } catch(java.io.IOException ie) {
                   log.error("Error Sending Status");
