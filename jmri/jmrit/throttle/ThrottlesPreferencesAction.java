@@ -3,9 +3,6 @@ package jmri.jmrit.throttle;
 import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFrame;
-
-import jmri.util.JmriJFrame;
 
 public class ThrottlesPreferencesAction extends AbstractAction {
     /**
@@ -25,13 +22,6 @@ public class ThrottlesPreferencesAction extends AbstractAction {
     }
     
 	public void actionPerformed(ActionEvent e) {
-		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane( );
-		JmriJFrame f = new JmriJFrame("Throttles preferences");
-		f.add(tpP);
-		tpP.setContainer(f);
-		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		f.pack();
-		f.setVisible(true);
+		jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesPreferences();
 	}
-
 }

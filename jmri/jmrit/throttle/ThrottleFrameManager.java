@@ -5,6 +5,8 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.swing.JFrame;
+
 import jmri.jmrit.XmlFile;
 import jmri.util.JmriJFrame;
 
@@ -13,7 +15,7 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.20 $
+ * @version    $Revision: 1.21 $
  */
 public class ThrottleFrameManager
 {
@@ -31,14 +33,15 @@ public class ThrottleFrameManager
 	private FunctionButtonPropertyEditor functionButtonEditor;
 	private ThrottleFramePropertyEditor throttleFramePropertyEditor;
 	
-	private ThrottlesPreferences throttlesPref ;
-	private JmriJFrame throttlesListFrame ;
+	private ThrottlesPreferences throttlesPref;
+	private JmriJFrame throttlePreferencesFrame;
+	private JmriJFrame throttlesListFrame;
 	private ThrottlesListPanel throttlesListPanel;
 
 	/**
 	 *  Constructor for the ThrottleFrameManager object
 	 */
-	public ThrottleFrameManager()
+	private ThrottleFrameManager() // can only be created by instance() => private
 	{
 		throttleCycler = new ThrottleCyclingKeyListener();
 		throttleWindows = new ArrayList<ThrottleWindow>(0);
@@ -50,6 +53,13 @@ public class ThrottleFrameManager
 		throttlesListPanel = new ThrottlesListPanel();
 		throttlesListFrame.setContentPane(throttlesListPanel);
 		throttlesListFrame.pack();
+		
+		throttlePreferencesFrame = new JmriJFrame("Throttles preferences");
+		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane(throttlesPref);
+		throttlePreferencesFrame.add(tpP);
+		tpP.setContainer(throttlePreferencesFrame);
+		throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		throttlePreferencesFrame.pack();
 	}
 
 	/**
@@ -215,11 +225,15 @@ public class ThrottleFrameManager
 	
 	public ThrottlesListPanel getThrottlesListPanel() {
 		return throttlesListPanel ;
-
 	}
 
 	public void showThrottlesList() {
 		throttlesListFrame.setVisible( ! throttlesListFrame.isVisible() );
+	}
+	
+	public void showThrottlesPreferences() {
+		throttlePreferencesFrame.setVisible( true );
+		throttlePreferencesFrame.requestFocus();
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleFrameManager.class.getName());

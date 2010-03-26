@@ -44,7 +44,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     private JFrame m_container = null;
        
     /** Creates new form ThrottlesPreferencesPane */
-    private ThrottlesPreferencesPane(ThrottlesPreferences tp) {
+    public ThrottlesPreferencesPane(ThrottlesPreferences tp) {
         initComponents();
         setComponents(tp);
         checkConsistancy();
