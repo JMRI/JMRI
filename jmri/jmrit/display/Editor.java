@@ -967,6 +967,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void putLocoIcon(LocoIcon l) {
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setEditable(false);
     	putItem(l);
     }
 
