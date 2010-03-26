@@ -20,14 +20,14 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
 	NamedIcon defaultIcon = null;
     // the associated Memory object
-    Memory memory = null;
+    protected Memory memory = null;
     // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
@@ -65,7 +65,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 	private void setMap() {
         if (map==null) map = new java.util.HashMap<String, NamedIcon>();
 	}
-	
+
     /**
      * Attached a named Memory to this display item
       * @param pName Used as a system/user name to lookup the Memory object
@@ -99,9 +99,9 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
             namedMemory = m;
         }
     }
-
-    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
     
+    public NamedBeanHandle<Memory> getMemory() { return namedMemory; }
+
     public java.util.HashMap<String, NamedIcon> getMap() { return map; }
 
     // display icons
@@ -179,8 +179,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         });
         return true;
     }
-
-    protected String defaultText = "   ";
 
     /**
      * Drive the current state of the display from the state of the

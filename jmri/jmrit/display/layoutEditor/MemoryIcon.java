@@ -2,8 +2,12 @@ package jmri.jmrit.display.layoutEditor;
 /**
  * An icon to display a status of a Memory.<P>
  */
+import jmri.jmrit.catalog.NamedIcon;
+import jmri.Memory;
 
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
+
+    String defaultText = "   ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
@@ -18,18 +22,71 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
     }
 
     public void displayState() {
-        setDefaultIcon(null);
-        if (getMemory() == null || getMemory().getBean()==null || getMemory().getBean().getValue()==null
-            || getMemory().getBean().getValue().toString().trim().length()==0) {
-            if (log.isDebugEnabled()) log.debug("displayState: no value");
+        log.debug("displayState");
+    	if (memory == null) {  // use default if not connected yet
+            setText(defaultText);
+    		updateSize();
+    		return;
+    	}
+		Object key = memory.getValue();
+		if (key != null) {
+            java.util.HashMap<String, NamedIcon> map = getMap();
+		    if (map == null) {
+		        // no map, attempt to show object directly
+                Object val = key;
+                if (val instanceof String) {
+                    if (val.equals(""))
+                        setText(defaultText);
+                    else
+                        setText((String) val);
+                    setIcon(null);
+                    _text = true;
+                    _icon = false;
+    		        updateSize();
+                    return;
+                } else if (val instanceof javax.swing.ImageIcon) {
+                    setIcon((javax.swing.ImageIcon) val);
+                    setText(null);
+                    _text = false;
+                    _icon = true;
+    		        updateSize();
+                    return;
+                } else if (val instanceof Number) {
+                    setText(val.toString());
+                    setIcon(null);
+                    _text = true;
+                    _icon = false;
+    		        updateSize();
+                    return;
+                } else log.warn("can't display current value of "+memory.getSystemName()+
+                                ", val= "+val+" of Class "+val.getClass().getName());
+		    } else {
+		        // map exists, use it
+			    NamedIcon newicon = map.get(key.toString());
+			    if (newicon!=null) {
+                    
+                    setText(null);
+				    super.setIcon(newicon);
+                    _text = false;
+                    _icon = true;
+    		        updateSize();
+				    return;
+			    } else {
+			        // no match, use default
+		            setIcon(getDefaultIcon());
+                    
+                    setText(null);
+                    _text = false;
+                    _icon = true;
+    		        updateSize();
+			    }
+		    }
+		} else {
             setIcon(null);
             setText(defaultText);
             _text = true;
             _icon = false;
             updateSize();
-        } else {
-            if (log.isDebugEnabled()) log.debug("displayState: value= \""+getMemory().getBean().getValue().toString()+"\"");
-            super.displayState();
         }
     }
 
