@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2869,15 +2869,14 @@ public class LayoutEditor extends Editor {
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-        }else {
-            List <Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
-                showToolTip(selections.get(0), event); 
-            } else {
-                super.setToolTip(null);
-            }
-            repaint();
         }
+        List <Positionable> selections = getSelectedItems(event);
+        if (selections.size() > 0) {
+            showToolTip(selections.get(0), event); 
+        } else {
+            super.setToolTip(null);
+        }
+        repaint();
         return;
     }
 
