@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.64 $
+ * @version			$Revision: 1.65 $
  */
 public class InstanceManager {
 
@@ -85,6 +85,7 @@ public class InstanceManager {
      * Dump generic content of InstanceManager
      * by type.
      */
+    @SuppressWarnings("unchecked")   // checked by construction
     static public String contentsToString() {
         String retval = "";
         for (Class c : managerLists.keySet()) {
