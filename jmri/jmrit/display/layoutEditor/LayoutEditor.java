@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LayoutEditor extends Editor {
@@ -81,6 +81,7 @@ public class LayoutEditor extends Editor {
 	final public static  int LAYOUT_POS_JCOMP = 15;
 	final public static  int MULTI_SENSOR = 16;
 	final public static  int MARKER = 17;
+    final public static  int TRACK_CIRCLE_CENTRE = 18;
 	final public static  int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 	// dashed line parameters
 	//private static int minNumDashes = 3;
@@ -279,7 +280,7 @@ public class LayoutEditor extends Editor {
 			RenderingHints.VALUE_ANTIALIAS_ON);
     
     public LayoutEditor() { this("My Layout");}
-
+    
     public LayoutEditor(String name) {
         super(name);
         layoutName = name;
@@ -2389,6 +2390,22 @@ public class LayoutEditor extends Editor {
 			}
 		}
 		
+		for (int i = 0; i<trackList.size();i++) {
+			TrackSegment t = trackList.get(i);
+            if (t.getCircle()){
+                Point2D pt = t.getCoordsCenterCircle();
+                Rectangle2D r = new Rectangle2D.Double(
+                        pt.getX() - SIZE2,pt.getY() - SIZE2,SIZE2+SIZE2,SIZE2+SIZE2);
+                if (r.contains(loc)) {
+                    // mouse was pressed on this connection point
+                    foundLocation = pt;
+                    foundObject = t;
+                    foundPointType = TRACK_CIRCLE_CENTRE;
+                    foundNeedsConnect = false;
+                    return true;
+                }
+            }
+		}
 		// no connection point found
 		foundObject = null;
 		return false;
@@ -3000,6 +3017,9 @@ public class LayoutEditor extends Editor {
 							isDragging = true;
 						}
 						break;
+                    case TRACK_CIRCLE_CENTRE: TrackSegment t = (TrackSegment)selectedObject;
+                                                reCalculateTrackSegmentAngle(t, newPos.getX(), newPos.getY());
+                                            break;
 					default:
 						if (selectedPointType>=TURNTABLE_RAY_OFFSET) {
 							LayoutTurntable turn = (LayoutTurntable)selectedObject;
@@ -4491,6 +4511,7 @@ public class LayoutEditor extends Editor {
             drawSelectionRect(g2);
             drawTurntableRects(g2);
             drawMemoryRects(g2);
+            drawTrackCircleCentre(g2);
         }
     }
 	
@@ -5302,6 +5323,7 @@ public class LayoutEditor extends Editor {
                         a = pt2x - pt1x;
                         o = pt2y - pt1y;
                         chord=java.lang.Math.sqrt(((a*a)+(o*o)));
+                        t.setChordLength(chord);
                         // Make sure chord is not null 
                         // In such a case (pt1 == pt2), there is no arc to draw
                         if (chord > 0.0D) {
@@ -5348,8 +5370,58 @@ public class LayoutEditor extends Editor {
                 t.trackRedrawn();
 			}
 		}
-	}	
-	private void drawTrackInProgress(Graphics2D g2)
+	}
+    
+    private void reCalculateTrackSegmentAngle(TrackSegment t, double x, double y){
+        
+        double pt2x;
+        double pt2y;
+        double pt1x;
+        double pt1y;
+
+        pt2x = t.getTmpPt2().getX();
+        pt2y = t.getTmpPt2().getY();
+        pt1x = t.getTmpPt1().getX();
+        pt1y = t.getTmpPt1().getY();
+        if (t.getFlip()){
+            pt1x = t.getTmpPt2().getX();
+            pt1y = t.getTmpPt2().getY();
+            pt2x = t.getTmpPt1().getX();
+            pt2y = t.getTmpPt1().getY();
+        }
+        //Point 1 to new point length
+        double a;
+        double o;
+        double la;
+        // Compute arc's chord
+        a = pt2x - x;
+        o = pt2y - y;
+        la=java.lang.Math.sqrt(((a*a)+(o*o)));
+        
+        double lb;
+        a = pt1x - x;
+        o = pt1y - y;
+        lb=java.lang.Math.sqrt(((a*a)+(o*o)));
+
+        double newangle=Math.toDegrees(Math.acos((-t.getChordLength()*t.getChordLength()+la*la+lb*lb)/(2*la*lb)));
+        t.setAngle(newangle);
+        
+    }
+	
+	private void drawTrackCircleCentre(Graphics2D g2)
+	{
+		// loop over all defined turnouts
+		for (int i = 0; i<trackList.size();i++) {
+			TrackSegment t = trackList.get(i);
+            if (t.getCircle()){
+                Point2D pt = t.getCoordsCenterCircle();
+                g2.setColor(Color.black);
+                g2.draw(new Rectangle2D.Double (
+							pt.getX()-SIZE, pt.getY()-SIZE, SIZE2, SIZE2));
+            }
+		}
+	}
+    private void drawTrackInProgress(Graphics2D g2)
 	{
 		// check for segment in progress
 		if ( isEditable() && (beginObject!=null) && trackBox.isSelected() ) {

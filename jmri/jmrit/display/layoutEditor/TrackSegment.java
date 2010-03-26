@@ -30,7 +30,7 @@ import javax.swing.*;
  *		may be hidden when the panel is not in EditMode. 
  *
  * @author Dave Duchamp Copyright (c) 2004-2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrackSegment 
@@ -679,6 +679,12 @@ public class TrackSegment
     public void setTmpAngle(double TmpAngle){
         tmpangle = TmpAngle;
     }
+    
+    public Point2D getCoordsCenterCircle() { return new Point2D.Double(getCentreX(),getCentreY()); }
+
+    private double chordLength;
+    public double getChordLength() { return chordLength; }
+    public void setChordLength(double chord) { chordLength=chord;}
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackSegment.class.getName());
 
 }
