@@ -1,7 +1,10 @@
 package jmri.jmrit.throttle;
 
 import java.awt.Dimension;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.util.ArrayList;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -21,6 +24,7 @@ public class ThrottlesPreferences {
     private boolean _ignoreThrottlePosition = true;
     private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
+	private ArrayList<PropertyChangeListener> listeners;
     
     public ThrottlesPreferences(String sfile)
     {
@@ -101,6 +105,12 @@ public class ThrottlesPreferences {
     	setAutoLoad(tp.isAutoLoading());
     	setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
     	setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
+
+		for (int i = 0; i < listeners.size(); i++) {
+			PropertyChangeListener l = listeners.get(i);
+			PropertyChangeEvent e = new PropertyChangeEvent(this, "ThrottlePreferences", null, this );
+			l.propertyChange(e);
+		}
     }
     
     public boolean compareTo(ThrottlesPreferences tp)
@@ -155,7 +165,7 @@ public class ThrottlesPreferences {
     	return _winDim ;
     }    
     public void setWindowDimension(Dimension d) {
-    	_winDim = d;
+    	_winDim = d;	
     }    
 	public boolean isUsingExThrottle() { 
 		return _useExThrottle;
@@ -216,6 +226,31 @@ public class ThrottlesPreferences {
 	}    
 	public boolean isIgnoringThrottlePosition() {
 		return _ignoreThrottlePosition;
+	}
+	
+	/**
+	 * Add an AddressListener. AddressListeners are notified when the user
+	 * selects a new address and when a Throttle is acquired for that address
+	 * 
+	 * @param l
+	 */
+	public void addPropertyChangeListener(PropertyChangeListener l) {
+		if (listeners == null)
+			listeners = new ArrayList<PropertyChangeListener>(2);		
+		if (!listeners.contains(l)) 
+			listeners.add(l);
+	}
+	
+	/**
+	 * Remove an AddressListener. 
+	 * 
+	 * @param l
+	 */
+	public void removePropertyChangeListener(PropertyChangeListener l) {
+		if (listeners == null) 
+			return;
+		if (listeners.contains(l)) 
+			listeners.remove(l);		
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferences.class.getName());

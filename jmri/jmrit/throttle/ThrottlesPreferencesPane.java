@@ -16,12 +16,14 @@ import javax.swing.JFrame;
 import java.awt.Insets;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 /**
  *
  * @author lionel
  */
-public class ThrottlesPreferencesPane extends javax.swing.JPanel {
+public class ThrottlesPreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -5473594799045080011L;
 	
 	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
@@ -40,15 +42,13 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
     private javax.swing.JButton jbCancel;
     private javax.swing.JButton jbSave;
     private JFrame m_container = null;
-    
-    private ThrottlesPreferences orig;
-    
+       
     /** Creates new form ThrottlesPreferencesPane */
-    public ThrottlesPreferencesPane(ThrottlesPreferences tp) {
+    private ThrottlesPreferencesPane(ThrottlesPreferences tp) {
         initComponents();
-        orig = tp;
         setComponents(tp);
         checkConsistancy();
+        tp.addPropertyChangeListener(this);
     }
     
     public ThrottlesPreferencesPane() {
@@ -257,23 +257,23 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 
     private void jbApplyActionPerformed(java.awt.event.ActionEvent evt) {
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
-    	orig = getThrottlesPreferences();
     }
 
     public void jbSaveActionPerformed(java.awt.event.ActionEvent evt) {
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().set(getThrottlesPreferences());
     	jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().save();
-    	orig = getThrottlesPreferences();
     	if (m_container != null) {
+    		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().removePropertyChangeListener(this);
     		m_container.setVisible(false); // should do with events...
     		m_container.dispose();
     	}
     }
 
     private void jbCancelActionPerformed(java.awt.event.ActionEvent evt) {
-        setComponents(orig);
+        setComponents(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences());
         checkConsistancy();
     	if (m_container != null) {
+    		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().removePropertyChangeListener(this);
     		m_container.setVisible(false); // should do with events...
     		m_container.dispose();
     	}
@@ -286,4 +286,10 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel {
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferencesPane.class.getName());
+
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (! (evt.getNewValue() instanceof ThrottlesPreferences)) return;
+		setComponents((ThrottlesPreferences)evt.getNewValue());
+		checkConsistancy();
+	}
 }
