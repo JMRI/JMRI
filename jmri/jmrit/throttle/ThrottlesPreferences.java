@@ -105,12 +105,13 @@ public class ThrottlesPreferences {
     	setAutoLoad(tp.isAutoLoading());
     	setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
     	setIgnoreThrottlePosition(tp.isIgnoringThrottlePosition());
-
-		for (int i = 0; i < listeners.size(); i++) {
-			PropertyChangeListener l = listeners.get(i);
-			PropertyChangeEvent e = new PropertyChangeEvent(this, "ThrottlePreferences", null, this );
-			l.propertyChange(e);
-		}
+    	
+    	if (listeners != null)
+    		for (int i = 0; i < listeners.size(); i++) {
+    			PropertyChangeListener l = listeners.get(i);
+    			PropertyChangeEvent e = new PropertyChangeEvent(this, "ThrottlePreferences", null, this );
+    			l.propertyChange(e);
+    		}
     }
     
     public boolean compareTo(ThrottlesPreferences tp)

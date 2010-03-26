@@ -1,15 +1,13 @@
 package jmri.jmrit.throttle;
 
 import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-
 import javax.swing.AbstractAction;
 
 /**
  * Create a new throttle.
  *
  * @author			Glen Oberhauser
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class ThrottleCreationAction extends AbstractAction {
 
@@ -37,8 +35,4 @@ public class ThrottleCreationAction extends AbstractAction {
     	ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
 		tf.toFront();
     }
-
-    // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleCreationAction.class.getName());
-
 }

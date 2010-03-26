@@ -288,8 +288,11 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottlesPreferencesPane.class.getName());
 
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (! (evt.getNewValue() instanceof ThrottlesPreferences)) return;
-		setComponents((ThrottlesPreferences)evt.getNewValue());
-		checkConsistancy();
+		if ((evt == null) || (evt.getPropertyName() == null)) return;
+		if (evt.getPropertyName().compareTo("ThrottlePreferences") == 0) {
+			if ((evt.getNewValue() == null) || (! (evt.getNewValue() instanceof ThrottlesPreferences))) return;
+			setComponents((ThrottlesPreferences)evt.getNewValue());
+			checkConsistancy();
+		}
 	}
 }

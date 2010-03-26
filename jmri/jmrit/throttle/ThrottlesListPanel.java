@@ -63,12 +63,22 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	    	}
 	    });
 	    throttleToolBar.add(jbNew);
+	    
 	    throttleToolBar.addSeparator();
 	    throttleToolBar.add(new StopAllButton());
 	    throttleToolBar.add(new LargePowerManagerButton());
 
 	    add( throttleToolBar, BorderLayout.PAGE_START);
 	    add( scrollPane1, BorderLayout.CENTER);
+
+	    throttleToolBar.addSeparator();
+	    JButton jbPreferences = new JButton();
+	    jbPreferences.setIcon(new NamedIcon("resources/icons/throttles/Preferences24.gif","resources/icons/throttles/Preferences24.gif"));
+	    jbPreferences.setToolTipText(throttleBundle.getString("ThrottleToolBarPreferencesToolTip"));
+	    jbPreferences.setVerticalTextPosition(JButton.BOTTOM);
+	    jbPreferences.setHorizontalTextPosition(JButton.CENTER);
+	    jbPreferences.addActionListener( new ThrottlesPreferencesAction() );
+	    throttleToolBar.add(jbPreferences);
 	}
 	
 	@SuppressWarnings("unchecked")

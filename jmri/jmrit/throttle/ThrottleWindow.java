@@ -218,11 +218,7 @@ public class ThrottleWindow extends JmriJFrame {
     	jbThrottleList.setToolTipText(throttleBundle.getString("ThrottleToolBarOpenThrottleListToolTip"));
     	jbThrottleList.setVerticalTextPosition(JButton.BOTTOM);
     	jbThrottleList.setHorizontalTextPosition(JButton.CENTER);
-    	jbThrottleList.addActionListener(new ActionListener() {
-    		public void actionPerformed(ActionEvent e) {
-    			jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
-    		}
-    	});
+    	jbThrottleList.addActionListener(new ThrottlesListAction() );
     	throttleToolBar.add(jbThrottleList);
 
     	new FileDrop(throttleToolBar, new Listener() {
