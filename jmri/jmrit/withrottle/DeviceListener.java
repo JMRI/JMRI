@@ -8,7 +8,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 11/18/09.
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 
@@ -36,5 +36,12 @@ public interface DeviceListener extends EventListener{
      * @param currentAddress
      */
     public void notifyDeviceAddressChanged(DccLocoAddress currentAddress);
+
+    /**
+     * Some info (name, UDID) about the device has changed.
+     * Also used to detect duplicate of same device.
+     * @param device
+     */
+    public void notifyDeviceInfoChanged(DeviceServer device);
 
 }

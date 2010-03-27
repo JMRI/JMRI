@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.13 $
+ *	@version $Revision: 1.14 $
  */
 
 import java.awt.event.*;
@@ -33,16 +33,18 @@ import javax.jmdns.*;
 import jmri.DccLocoAddress;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfUtil;
+import jmri.jmrit.throttle.LargePowerManagerButton;
+import jmri.jmrit.throttle.StopAllButton;
 
 
-public class UserInterface extends JmriJFrame implements ActionListener, DeviceListener{
+public class UserInterface extends JmriJFrame implements DeviceListener{
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
+    JMenuItem serverOnOff;
     JPanel panel;
-    JButton button;
     JLabel portLabel = new JLabel(rb.getString("LabelPending"));
     JLabel manualPortLabel = new JLabel();
     JLabel numConnected;
@@ -70,6 +72,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
                 log.error("JmDNS creation failed.");
         }
 
+        setShutDownTask();
         createServerThread();
     }	//	End of constructor
 
@@ -81,7 +84,7 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 
 
 
-    private void createWindow(){
+    protected void createWindow(){
         panel = new JPanel();
         panel.setLayout(new GridBagLayout());
         GridBagConstraints con = new GridBagConstraints();
@@ -112,13 +115,16 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
         con.gridwidth = 1;
         panel.add(numConnected, con);
 
-        button = new JButton(rb.getString("ButtonStopServer"));
+        JToolBar withrottleToolBar = new JToolBar();
+        withrottleToolBar.setFloatable(false);
+        withrottleToolBar.add(new StopAllButton());
+	withrottleToolBar.add(new LargePowerManagerButton());
         con.weightx = 0.5;
         con.ipadx = 0;
         con.gridx = 1;
         con.gridy = 3;
         con.gridwidth = 1;
-        panel.add(button, con);
+        panel.add(withrottleToolBar, con);
 
         JLabel vLabel = new JLabel("v"+DeviceServer.getWiTVersion());
         con.weightx = 0;
@@ -142,7 +148,6 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 
 
 
-        button.addActionListener(this);
 
 
 //  Add a list of connected devices and the address they are set to.
@@ -167,11 +172,8 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 		
 //  Create the menu to use with WiThrottle window. Has to be before pack() for Windows.
 
-        this.setJMenuBar(new JMenuBar());
-
-        // add help menu
-        addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
-                
+        buildMenu();
+        
 //  Set window size & location
         this.setTitle("WiThrottle");
         this.pack();
@@ -188,9 +190,52 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 
     }
 
+    protected void buildMenu(){
+        this.setJMenuBar(new JMenuBar());
+
+        JMenu menu = new JMenu(rb.getString("MenuMenu"));
+        serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
+        serverOnOff.addActionListener(new AbstractAction() {
+            public void actionPerformed(ActionEvent event) {
+                if (isListen){	//	Stop server
+                    disableServer();
+                    serverOnOff.setText(rb.getString("MenuMenuStart"));
+                    portLabel.setText(rb.getString("LabelNone"));
+                    manualPortLabel.setText(null);
+                }else{	//	Restart server
+                    serverOnOff.setText(rb.getString("MenuMenuStop"));
+                    isListen = true;
+
+                    createServerThread();
+                }
+            };
+        });
+
+        menu.add(serverOnOff);
+
+        JMenuItem prefs = new JMenuItem(rb.getString("MenuMenuPrefs"));
+        prefs.addActionListener(new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                WiThrottlePrefsFrame prefsFrame = new WiThrottlePrefsFrame();
+            }
+        });
+
+        menu.add(prefs);
+
+        this.getJMenuBar().add(menu);
+
+        // add help menu
+        addHelpMenu("package.jmri.jmrit.withrottle.UserInterface", true);
+    }
+
     public void listen(){
+        int socketPort = 0;
+        if (WiThrottleManager.withrottlePreferencesInstance().isUseFixedPort()){
+            socketPort = Integer.parseInt(WiThrottleManager.withrottlePreferencesInstance().getPort());
+        }
+
         try{	//Create socket on available port
-            socket = new ServerSocket(0);
+            socket = new ServerSocket(socketPort);
         } catch(IOException e1){
             log.error("New ServerSocket Failed during listen()");
             return;
@@ -278,36 +323,25 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
     public void notifyDeviceAddressChanged(DccLocoAddress currentAddress){
         withrottlesListModel.updateDeviceList(deviceList);
     }
+/**
+ * Received an UDID, filter out any duplicate.
+ * @param device
+ */
+    public void notifyDeviceInfoChanged(DeviceServer device){
 
-
-
-//	Button in WiThrottle window
-    public void actionPerformed(ActionEvent event){
-        Object eventSource = event.getSource();
-        if ((eventSource == button)){
-            if (isListen){	//	Stop server
-                isListen = false;
-                stopDevices();
-                try{
-                        socket.close();
-                        log.debug("UI socket just closed");
-                        jmdns.unregisterService(serviceInfo);
-                } catch (IOException e){
-                        log.error("socket in ThreadedServer won't close");
-                        return;
+        //  Filter duplicate connections
+        if ((device.getUDID() != null) && (deviceList.size() > 0)){
+            for (int i = 0;i < deviceList.size();i++){
+                DeviceServer listDevice = deviceList.get(i);
+                if ((device != listDevice) && (listDevice.getUDID() != null) && (listDevice.getUDID().equals(device.getUDID()))){
+                    //  If in here, array contains duplicate of a device
+                    log.debug("Has duplicate of device, clearing old one.");
+                    listDevice.closeThrottles();
+                    break;
                 }
-
-                button.setText(rb.getString("ButtonStartServer"));
-
-                portLabel.setText(rb.getString("LabelNone"));
-                manualPortLabel.setText(null);
-            }else{	//	Restart server
-                button.setText(rb.getString("ButtonStopServer"));
-                isListen = true;
-
-                createServerThread();
             }
         }
+        withrottlesListModel.updateDeviceList(deviceList);
     }
 
 //	Clear out the deviceList array and close each device thread
@@ -332,9 +366,42 @@ public class UserInterface extends JmriJFrame implements ActionListener, DeviceL
 
     }
 
+    private jmri.implementation.AbstractShutDownTask task = null;
+    protected void setShutDownTask() {
+        if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
+            task =
+                    new jmri.implementation.AbstractShutDownTask(getTitle()){
+                        public boolean execute() {
+                            disableServer();
+                            return true;
+                        }
+            };
+            jmri.InstanceManager.shutDownManagerInstance().register(task);
+        }
+    }
+
+
+    private void disableServer(){
+        isListen = false;
+        stopDevices();
+        try{
+            socket.close();
+            log.debug("UI socket just closed");
+            try{
+                jmdns.unregisterService(serviceInfo);
+            }
+            catch (NullPointerException ea){
+                log.warn("JmDNS null pointer when closing");
+            }
+            catch (IllegalStateException eb){
+                log.warn("JmDNS Timer error when closing");
+            }
+        } catch (IOException ex){
+            log.error("socket in ServerThread won't close");
+            return;
+        }
+    }
 }
-
-
 
 
 //	listen() has to run in a separate thread.
