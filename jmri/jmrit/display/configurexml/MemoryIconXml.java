@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -127,6 +127,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
         ed.putItem(l);
+        l.displayState();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryIconXml.class.getName());
