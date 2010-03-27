@@ -614,20 +614,21 @@ public class ControlPanelEditor extends Editor {
     * types.
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
-        if (!p.doPopupMenu()) { return; }
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {
             // items common to all
-            popup.add(p.getNameString());
-            setPositionableMenu(p, popup);
-            if (p.isPositionable()) {
-                setShowCoordinatesMenu(p, popup);
-                setShowAlignmentMenu(p, popup);
+            if (p.doViemMenu()) {
+                popup.add(p.getNameString());
+                setPositionableMenu(p, popup);
+                if (p.isPositionable()) {
+                    setShowCoordinatesMenu(p, popup);
+                    setShowAlignmentMenu(p, popup);
+                }
+                setDisplayLevelMenu(p, popup);
+                setHiddenMenu(p, popup);
+                popup.addSeparator();
             }
-            setDisplayLevelMenu(p, popup);
-            setHiddenMenu(p, popup);
-            popup.addSeparator();
 
             // items with defaults or using overrides
             boolean popupSet =false;

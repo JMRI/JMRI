@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2809,13 +2809,14 @@ public class LayoutEditor extends Editor {
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {
-            popup.add(p.getNameString());
-
-            if (p.isPositionable()) {
-                setShowCoordinatesMenu(p, popup);
+            if (p.doViemMenu()) {
+                popup.add(p.getNameString());
+                if (p.isPositionable()) {
+                    setShowCoordinatesMenu(p, popup);
+                }
+                setDisplayLevelMenu(p, popup);
+                setPositionableMenu(p, popup);
             }
-            setDisplayLevelMenu(p, popup);
-            setPositionableMenu(p, popup);
 
             boolean popupSet =false;
             popupSet = p.setRotateOrthogonalMenu(popup);        
@@ -2845,7 +2846,9 @@ public class LayoutEditor extends Editor {
             p.showPopUp(popup);
 
             setRemoveMenu(p, popup);
-            setHiddenMenu(p, popup);
+            if (p.doViemMenu()) {
+                setHiddenMenu(p, popup);
+            }
         } else {
             p.showPopUp(popup);
         }        
