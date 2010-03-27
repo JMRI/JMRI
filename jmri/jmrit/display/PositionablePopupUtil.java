@@ -143,6 +143,7 @@ public class PositionablePopupUtil {
     }
     public void setFixedWidth(int w) {
         fixedWidth = w;
+        if (log.isDebugEnabled()) log.debug("setFixedWidth()="+getFixedWidth());
         _parent.updateSize();
     }
     public int getFixedHeight() {
@@ -150,11 +151,13 @@ public class PositionablePopupUtil {
     }
     public void setFixedHeight(int h) {
         fixedHeight = h;
+        if (log.isDebugEnabled()) log.debug("setFixedHeight()="+getFixedHeight());
         _parent.updateSize();
     }
     public void setFixedSize(int w, int h) {
         fixedWidth = w;
         fixedHeight = h;
+        if (log.isDebugEnabled()) log.debug("setFixedSize()="+"("+getFixedWidth()+","+getFixedHeight()+")");
         _parent.updateSize();
     }
 

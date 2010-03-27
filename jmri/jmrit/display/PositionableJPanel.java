@@ -21,7 +21,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -124,7 +124,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public boolean storeItem() {
         return true;
     }
-    public boolean doPopupMenu() {
+    public boolean doViemMenu() {
         return true;
     }
     /**

@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -38,9 +38,14 @@ public class LocoIcon extends PositionableLabel {
                             "resources/icons/markers/loco-white.gif"), editor);
         setDisplayLevel(Editor.MARKERS);
         setShowTooltip(false);
-        setEditable(false);
+        //setEditable(false);
         _text = true;	//Markers are an icon with text
-        setPopupUtility(null);
+        setPopupUtility(new PositionablePopupUtil(this, this) {       // need this class for Font Edit
+            public void setFixedTextMenu(JPopupMenu popup) {}
+            public void setTextMarginMenu(JPopupMenu popup) {}
+            public void setTextBorderMenu(JPopupMenu popup) {}
+            public void setTextJustificationMenu(JPopupMenu popup) {}
+        });
     }
 	
 	// Marker tool tips are always disabled
@@ -49,28 +54,12 @@ public class LocoIcon extends PositionableLabel {
     // Markers are always positionable 
     public void setPositionable(boolean enabled) {super.setPositionable(true);}
     
-    // Markers are always operation mode 
-   // public void setEditable(boolean enabled) {super.setEditable(false);}
-    
     // Markers always have a popup menu
-    public boolean doPopupMenu() {
-        return true;
+    public boolean doViemMenu() {
+        return false;
     }
     
     jmri.jmrit.throttle.ThrottleFrame tf = null;
-    
-    /*
-    public void doMouseReleased(MouseEvent e) {
-    	if (e.isPopupTrigger()){
-    		if(log.isDebugEnabled())
-    			log.debug("mouse released create mini locoicon popup menu");
-    		JPopupMenu popup = new JPopupMenu();
-    		showPopUp(popup);
-    		setRemoveMenu(popup);
-            popup.show(this, this.getWidth()/2, this.getHeight()/2);
-    	}  	
-    }
-    */
     
     /**
      * Pop-up only if right click and not dragged 
@@ -86,7 +75,12 @@ public class LocoIcon extends PositionableLabel {
             });
         }
         popup.add(makeLocoIconMenu());
-        setRemoveMenu(popup);
+        if (isEditable()) {
+            getEditor().setShowCoordinatesMenu(this, popup);
+        } else {
+            getPopupUtility().setTextFontMenu(popup);
+            getEditor().setRemoveMenu(this, popup);
+        }
         return true;
 	}
     
@@ -159,17 +153,7 @@ public class LocoIcon extends PositionableLabel {
     	String[] colors = {WHITE,GREEN,GRAY,RED,BLUE,YELLOW};
     	return colors;
     }
-                  
-    protected void setRemoveMenu(JPopupMenu popup) {
-        if (isEditable())
-        	return;
-    	popup.add(new AbstractAction(rb.getString("Remove")) {
-    		public void actionPerformed(ActionEvent e) { 
-    			remove();
-    		}
-    	});
-    }
-                  
+    
     protected RosterEntry entry = null;
     
     public void setRosterEntry (RosterEntry entry){

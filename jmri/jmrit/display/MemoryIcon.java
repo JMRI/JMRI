@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -39,14 +39,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         resetDefaultIcon();
         //setIcon(defaultIcon);
         _namedIcon=defaultIcon;
-        updateSize();
+        //updateSize();
     }
 
     public MemoryIcon(NamedIcon s, Editor editor) {
         super(s, editor);
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
-        updateSize();
+        //updateSize();
     }
 
     public void resetDefaultIcon() {
@@ -82,6 +82,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
          } else {
              log.error("No MemoryManager for this protocol, icon won't see changes");
          }
+         updateSize();
      }
 
     /**
@@ -201,8 +202,10 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     setText(str);
                     if (log.isDebugEnabled()) log.debug("String str= \""+str+"\" str.trim().length()= "+str.trim().length());
                     /*  MemoryIconTest says empty strings should show blank */
-                    // use a temp border to keep item visible
-                    if (str.trim().length()==0) {
+                    // use a temp border to keep item selectable 
+                    if (str.trim().length()==0 && 
+                                (maxWidth() < (PositionablePopupUtil.MIN_SIZE+2) ||
+                                    maxHeight() < (PositionablePopupUtil.MIN_SIZE+2)) ) {
                         if (getPopupUtility().getMargin()==0) {
                            _tmpBorder = true;
                            getPopupUtility().setMargin(1);

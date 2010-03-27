@@ -960,6 +960,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     	l.setText(name);
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+        l.setEditable(isEditable());    // match popup mode to editor mode
     	putItem(l);
     }
 

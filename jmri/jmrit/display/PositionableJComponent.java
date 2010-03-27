@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -122,7 +122,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public boolean storeItem() {
         return true;
     }
-    public boolean doPopupMenu() {
+    public boolean doViemMenu() {
         return true;
     }
     /**

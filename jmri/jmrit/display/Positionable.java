@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -92,11 +92,10 @@ public interface Positionable  {
     /**
      * Use the 'Standard' presentation of the popup menu items.
      * The editor will call this method to find out whether it
-     * should creates any popup menu items.
+     * should creates any popup viewing menu items.
      * @return true if Editor may add the standardpopup menu items
-     * @return false if this Positionable will do all the popup menu items
     */
-    public boolean doPopupMenu();
+    public boolean doViemMenu();
     /*
     * Utility to handle Margins, Borders and other common popup items
     * @return null if these item do not apply
