@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LayoutEditor extends Editor {
@@ -4022,14 +4022,13 @@ public class LayoutEditor extends Editor {
     	LocoIcon l = new LocoIcon(this);
 		Point2D pt = windowCenter();
         l.setLocation( (int)pt.getX(), (int)pt.getY() );
-        l.setText(name);
-        putLocoIcon(l);
+        putLocoIcon(l, name);
         l.setPositionable(true);
         return l;
      }
     
-    public void putLocoIcon(LocoIcon l) {
-    	super.putLocoIcon(l);
+    public void putLocoIcon(LocoIcon l, String name) {
+    	super.putLocoIcon(l, name);
 		markerImage.add(l);  
     }
     

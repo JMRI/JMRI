@@ -946,28 +946,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     
     public TrainIcon addTrainIcon (String name){
     	TrainIcon l = new TrainIcon(this);
-        l.setText(name);
-        putTrainIcon(l);
+        putLocoIcon(l, name);
     	return l;
     }
     
-    public void putTrainIcon(TrainIcon l) {
-        l.setHorizontalTextPosition(SwingConstants.CENTER);
-    	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-    	putItem(l);
-    }
-
     public LocoIcon addLocoIcon (String name){
-    	LocoIcon l = new LocoIcon(this);
-        l.setText(name);
-        putLocoIcon(l);
+    	LocoIcon l = new LocoIcon(this);       
+        putLocoIcon(l, name);
         return l;
     }
 	
-    public void putLocoIcon(LocoIcon l) {
+    public void putLocoIcon(LocoIcon l, String name) {
+    	l.setText(name);
         l.setHorizontalTextPosition(SwingConstants.CENTER);
     	l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
-        l.setEditable(false);
     	putItem(l);
     }
 

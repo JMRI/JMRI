@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -62,14 +62,13 @@ public class LocoIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.MARKERS, element);
         
        // create the objects
-        String name = "error";
+        String TextName = "error";
         try {
-            name = element.getAttribute("text").getValue();
+        	TextName = element.getAttribute("text").getValue();
          } catch ( Exception e) {
             log.error("failed to get loco text attribute ex= "+e);
         }
-        l.setText (name);
-        
+        String name = "error";
         NamedIcon icon;
         try {
 			name = element.getAttribute("icon").getValue();
@@ -91,7 +90,7 @@ public class LocoIconXml extends PositionableLabelXml {
 		} catch (Exception e) {
 			log.debug("no roster entry for "+rosterId+", ex= "+e);
 		}
-        ed.putLocoIcon(l);
+        ed.putLocoIcon(l, TextName);
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());
