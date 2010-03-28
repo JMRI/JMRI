@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -47,18 +47,22 @@ public class TrainIcon extends LocoIcon {
 				}
 			});
 			popup.add(makeTrainRouteMenu()); 
-			popup.add(new AbstractAction("Set X&Y") {
-				public void actionPerformed(ActionEvent e) {
-					if(!train.setTrainIconCoordinates())
-						JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
-								"Set X&Y is disabled",
-								JOptionPane.ERROR_MESSAGE);
-				}
-			});
+            if (!isEditable()) {
+                popup.add(new AbstractAction("Set X&Y") {
+                    public void actionPerformed(ActionEvent e) {
+                        if(!train.setTrainIconCoordinates())
+                            JOptionPane.showMessageDialog(null, "See Operations -> Settings to enable Set X&Y",
+                                    "Set X&Y is disabled",
+                                    JOptionPane.ERROR_MESSAGE);
+                    }
+                });
+            }
 		}
 		popup.add(new ThrottleAction("Throttle")); 
 		popup.add(makeLocoIconMenu());
-		setRemoveMenu(popup);
+        if (!isEditable()) {
+            getEditor().setRemoveMenu(this, popup);
+        }
         return true;
 	}
 
