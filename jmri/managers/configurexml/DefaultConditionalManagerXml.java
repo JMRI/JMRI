@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -294,11 +294,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     }
                     attr = conditionalActionList.get(n).getAttribute("string");
                     if ( attr != null) {
-                        String str = attr.getValue().trim();
-                        if (str.length() > 0 )
-                        {
-                            action.setActionString(str);
-                        }
+                        action.setActionString(attr.getValue());
                     }
                     else {
                         log.warn("unexpected null in action string "+conditionalActionList.get(n)+
