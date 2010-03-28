@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 import java.awt.Color;
@@ -134,7 +134,9 @@ public class WiThrottlePrefsPanel extends JPanel{
     }
 
     protected void cancelValues(){
-        
+        if (parentFrame != null){
+            parentFrame.dispose();
+        }
     }
 
 
