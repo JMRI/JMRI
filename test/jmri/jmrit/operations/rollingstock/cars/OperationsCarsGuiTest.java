@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -257,6 +257,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
 		// create the CarEditFrame
         getHelper().enterClickAndLeave( new MouseEventData( this, ctf.addButton ) );
+        
+        ctf.dispose();
 		
 	}
 
@@ -319,6 +321,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// should have 6 cars now
 		Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
+		
+		f.dispose();
 	}
 	
 	public void testCarEditFrameRead(){
@@ -350,6 +354,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		
 		// should have 5 cars now
 		Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
+		
+		f.dispose();
 	}
 	
 	public void testCarAttributeEditFrameColor(){
@@ -374,6 +380,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		// black is the first default color
 		Assert.assertEquals("old color","Black",f.comboBox.getItemAt(0));
 		
+		f.dispose();
 	}
 	
 	public void testCarAttributeEditFrameKernel(){
@@ -411,18 +418,24 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteButton ) );
 		// blank is the first default kernel
 		Assert.assertEquals("space 2","",f.comboBox.getItemAt(0));
-		Assert.assertEquals("previous kernel 2","TwoCars", f.comboBox.getItemAt(1));	
+		Assert.assertEquals("previous kernel 2","TwoCars", f.comboBox.getItemAt(1));
+		
+		f.dispose();
 	}
 	
 	public void testCarAttributeEditFrame2(){
 		CarAttributeEditFrame f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.LENGTH);
+		f.dispose();
 		f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.OWNER);
+		f.dispose();
 		f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.ROAD);
+		f.dispose();
 		f = new CarAttributeEditFrame();
 		f.initComponents(CarEditFrame.TYPE);
+		f.dispose();
 	}
 	
 	public void testCarLoadEditFrame(){
@@ -432,6 +445,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new load should appear at start of list
 		Assert.assertEquals("new load","New Load",f.comboBox.getItemAt(0));
+		
+		f.dispose();
 	}
 	
 	public void testCarSetFrame(){
@@ -441,6 +456,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		CarManager cManager = CarManager.instance();
 		Car c3 = cManager.getCarByRoadAndNumber("AA", "3");
 		f.loadCar(c3);
+		
+		f.dispose();
 	}
 	
 	@SuppressWarnings("unchecked")

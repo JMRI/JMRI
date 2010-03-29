@@ -8,6 +8,7 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.util.JmriJFrame;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -20,7 +21,7 @@ import java.util.List;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 	
@@ -54,9 +55,15 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		// create add route frame
 		//f.addButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
-		
+	    // confirm panel creation
+		JmriJFrame ref = JmriJFrame.getFrame("Add Route");
+        Assert.assertNotNull("route edit frame", ref);
+
 		// create edit route frame
 		f.routesModel.setValueAt(null, 2, RoutesTableModel.EDITCOLUMN);
+		
+		ref.dispose();
+		f.dispose();
 	}
 
 	public void testRouteEditFrame(){
@@ -115,6 +122,8 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		//f.deleteRouteButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteRouteButton ) );
 		Assert.assertEquals("should be 5 routes", 5, rManager.getRoutesByNameList().size());
+		
+		f.dispose();
 	}
 	
 	public void testRouteEditFrameRead(){
@@ -127,6 +136,8 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		
 		Assert.assertEquals("route name", "Test Route C", f.routeNameTextField.getText());
 		Assert.assertEquals("route comment", "Comment test route C", f.commentTextField.getText());
+		
+		f.dispose();
 	}
 	
 	// Ensure minimal setup for log4J

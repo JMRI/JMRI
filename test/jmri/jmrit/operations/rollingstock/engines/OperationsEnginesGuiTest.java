@@ -25,7 +25,7 @@ import java.util.List;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 
@@ -222,6 +222,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		// create the EngineEditFrame
         getHelper().enterClickAndLeave( new MouseEventData( this, etf.addButton ) );
 		
+        etf.dispose();
 	}
 
 	List<String> tempEngines;
@@ -254,6 +255,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );		
 		// should have 6 Engines now
 		Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
+		
+		f.dispose();
 	}
 	
 	public void testEngineEditFrameRead(){
@@ -279,6 +282,8 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		
 		// should have 5 Engines now
 		Assert.assertEquals("number of Engines", 5, cManager.getNumEntries());
+		
+		f.dispose();
 	}
 	
 	public void testEngineAttributeEditFrameModel(){
@@ -303,17 +308,22 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		// new model was next
 		Assert.assertEquals("new model after delete","New Model",f.comboBox.getItemAt(0));
 		
+		f.dispose();
 	}
 	
 	public void testEngineAttributeEditFrame2(){
 		EngineAttributeEditFrame f = new EngineAttributeEditFrame();
 		f.initComponents(EngineEditFrame.LENGTH);
+		f.dispose();
 		f = new EngineAttributeEditFrame();
 		f.initComponents(EngineEditFrame.OWNER);
+		f.dispose();
 		f = new EngineAttributeEditFrame();
 		f.initComponents(EngineEditFrame.ROAD);
+		f.dispose();
 		f = new EngineAttributeEditFrame();
 		f.initComponents(EngineEditFrame.TYPE);
+		f.dispose();
 	}
 	
 	public void testEngineSetFrame(){
@@ -323,6 +333,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		EngineManager cManager = EngineManager.instance();
 		Engine e3 = cManager.getEngineByRoadAndNumber("AA", "3");
 		f.loadEngine(e3);
+		f.dispose();
 	}
 	
 	@SuppressWarnings("unchecked")

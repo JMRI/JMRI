@@ -22,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -53,7 +53,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
-		Assert.assertFalse("Build Messages", tmanager.getBuildMessages());
+		Assert.assertTrue("Build Messages", tmanager.getBuildMessages());
 		Assert.assertFalse("Build Report", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review", tmanager.getPrintPreview());
 		
@@ -70,7 +70,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		f.validate();
 		
 		Assert.assertEquals("sort by time", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
-		Assert.assertTrue("Build Messages 2", tmanager.getBuildMessages());
+		Assert.assertFalse("Build Messages 2", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 2", tmanager.getBuildReport());
 		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
 
@@ -89,15 +89,26 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
-		Assert.assertFalse("Build Messages 3", tmanager.getBuildMessages());
+		Assert.assertTrue("Build Messages 3", tmanager.getBuildMessages());
 		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
 		Assert.assertTrue("Print Review 3", tmanager.getPrintPreview());
 
 		// create the TrainEditFrame
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );		
+	    // confirm panel creation
+		JmriJFrame tef = JmriJFrame.getFrame("Add Train");
+        Assert.assertNotNull("train edit frame", tef);
 		
 		// create the TrainSwichListEditFrame
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printSwitchButton ) );
+	    // confirm panel creation
+		JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
+        Assert.assertNotNull("train switchlist edit frame", tsle);
+		
+        // kill panels
+        tef.dispose();
+        tsle.dispose();
+		f.dispose();
 	}
 	
 	/**
@@ -141,6 +152,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
 		// test route edit button
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.editButton ) );
+	    // confirm panel creation
+		JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
+        Assert.assertNotNull("route add frame", ref);
 		
 		// test car types using the clear and set buttons
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.clearButton ) );
@@ -201,6 +215,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// don't delete, we need this train for the next two tests 
 		// testTrainBuildOptionFrame() and testTrainEditFrameRead()
 		pressDialogButton(trainEditFrame, "No");
+		
+		ref.dispose();
+		trainEditFrame.dispose();
 	}
 	
 	public void testTrainEditFrameBuildOptionFrame(){
@@ -255,6 +272,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
 		Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());		
 
+		trainEditFrame.dispose();
+		f.dispose();
 	}
 	
 	public void testTrainEditFrameRead(){
@@ -287,6 +306,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// test frame size and location
 		//Assert.assertEquals("location 1", new Point(25,30), tmanager.getTrainEditFramePosition());
 		Assert.assertEquals("size 1", new Dimension(650,600), tmanager.getTrainEditFrameSize());
+		
+		f.dispose();
 	}
 	
 	public void testTrainModifyFrame(){
@@ -307,6 +328,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
+		
+		f.dispose();
 	}
 	
 	public void testTrainSwitchListEditFrame(){
@@ -335,6 +358,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertTrue("print switchlist 3", l.getSwitchList());
 		}
+		
+		f.dispose();
 	}
 	
 	/**
@@ -359,6 +384,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.addTrainButton ) );
 		t = tmanager.getTrainByName("Test Train Name");
 		Assert.assertNotNull("train added", t);
+		
+		trainEditFrame.dispose();
 	}
 	
 	@SuppressWarnings("unchecked")

@@ -34,6 +34,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.util.JmriJFrame;
 
 /**
  * Tests for the Operations Trains class
@@ -59,7 +60,7 @@ import jmri.jmrit.operations.routes.RouteManager;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -138,6 +139,7 @@ public class OperationsTrainsTest extends TestCase {
 		for (int i=0; i<colors.length; i++){
 			trainicon1.setLocoColor(colors[i]);
 		}
+		editor.getTargetFrame().dispose();
 	}
 
 	// test Train attributes
@@ -3988,7 +3990,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("e2 location 24", "Boston Engine Yard", e2.getTrackName());
 	}
 	
+	public void testTrainTestPanel(){
+	    // confirm panel creation
+		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+        Assert.assertNotNull(f);
 
+        // kill panel
+        
+	}
 
 	// test location Xml create support
 	public void testXMLCreate() throws Exception {

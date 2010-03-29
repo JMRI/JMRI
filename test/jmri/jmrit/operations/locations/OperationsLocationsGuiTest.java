@@ -9,6 +9,8 @@ import jmri.jmrit.operations.setup.OperationsXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 
+import jmri.util.JmriJFrame;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -21,7 +23,7 @@ import java.util.List;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -43,7 +45,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Location l5 = lManager.newLocation("Test Loc A");
 		l5.setLength(1005);
 		LocationsTableFrame f = new LocationsTableFrame();
-		//f.setVisible(true);
+		f.setVisible(true);
 		
 		// should be 5 rows
 		Assert.assertEquals("number of rows", 5, f.locationsModel.getRowCount());
@@ -65,8 +67,16 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		//f.addButton.doClick();
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		
-		// create edit location frame
+        // confirm location add frame creation
+        JmriJFrame lef = JmriJFrame.getFrame("Add Location");
+        Assert.assertNotNull(lef);
+        
+        // create edit location frame
 		f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
+		
+		// close windows
+		f.dispose();
+		lef.dispose();
 	}
 
 	public void testLocationEditFrame(){
@@ -111,6 +121,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		//f.deleteLocationButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteLocationButton ) );
 		Assert.assertEquals("should be 5 locations", 5, lManager.getLocationsByNameList().size());
+		
+		f.dispose();
 	}
 	
 	public void testInterchangeEditFrame(){
@@ -180,6 +192,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		Assert.assertTrue("2nd interchange track accepts Boxcars again", t.acceptsTypeName("Boxcar"));	
+		
+		f.dispose();
 	}
 	
 	public void testSidingEditFrame(){		
@@ -249,6 +263,14 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		// create the schedule edit frame
 		//f.editScheduleButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.editScheduleButton ) );
+		
+        // confirm schedule add frame creation
+        JmriJFrame sef = JmriJFrame.getFrame("Add Schedule for Siding 3rd siding track");
+        Assert.assertNotNull(sef);
+		
+        // kill all frames
+		f.dispose();
+		sef.dispose();
 	}
 	
 	/**
@@ -318,6 +340,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull("4th staging track", t);
 		Assert.assertEquals("4th staging track length", 12, t.getLength());		
 		Assert.assertEquals("only east", Track.EAST, t.getTrainDirections());	
+		
+		f.dispose();
 	}
 	
 	public void testYardEditFrame(){
@@ -385,6 +409,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("4th yard track length", 21, t.getLength());		
 		Assert.assertEquals("only north", Track.NORTH, t.getTrainDirections());
 		
+		f.dispose();
 	}
 	
 	/**
@@ -406,6 +431,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("number of interchanges", 2, f.interchangeModel.getRowCount());
 		Assert.assertEquals("number of yards", 4, f.yardModel.getRowCount());
 		Assert.assertEquals("number of staging tracks", 0, f.stagingModel.getRowCount());
+		
+		f.dispose();
 	}
 	
 	public void testLocationEditFrameReadStaging(){
@@ -426,6 +453,8 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		
 		// is the staging only button selected?
 		Assert.assertTrue("staging selected", f.stageRadioButton.isSelected());
+		
+		f.dispose();
 	}
 
 	
@@ -481,11 +510,14 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.deleteScheduleButton ) );
 		s = m.getScheduleByName("Test Schedule A");	
 		Assert.assertNull("Test Schedule A exists", s);
+		
+		f.dispose();
 	}
 	
 	public void testScheduleTableFrame(){
 		SchedulesTableFrame f = new SchedulesTableFrame();
 		f.setVisible(true);
+		f.dispose();
 	}
 	
 	// Ensure minimal setup for log4J
