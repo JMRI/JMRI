@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.92 $
+ * @version $Revision: 1.93 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -313,9 +313,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     protected void edit() {
-        if (_iconEditorFrame != null) {
-            _iconEditorFrame.setLocationRelativeTo(null);
-            _iconEditorFrame.toFront();
+        if (debug) log.debug("Has _iconEditorFrame? "+!(_iconEditorFrame==null));
+        if (showIconEditorFrame(this)) {
             return;
         }
         _iconEditor = new IconAdder();
