@@ -19,6 +19,9 @@
         <!-- ver1 new file -->
 		<version author="Michael Mosher"
 			version="1" lastUpdated="20100301"/>
+		<!-- ver2 correction to CV124 definition -->
+        <version author="Matthew Harris"
+			version="2" lastUpdated="20100329"/>
 
 <decoder>
 	<family name="ESU LokSound Select"
@@ -1010,7 +1013,7 @@
 			<decVal/>
 		</variable>		
 
-		<variable label="Prime Mover Startup Delay" CV="124" mask="XXXXXVXX" default="1"
+		<variable label="Prime Mover Startup Delay" CV="124" mask="XXXXVXXX" default="1"
 				item="Sound Group 1 Control">
 			<enumVal>                      
 				<enumChoice choice="Off"/>
