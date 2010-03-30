@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml,v 1.4 2010-03-30 18:10:54 dan_boudreau Exp $ -->
+<!-- $Id: BLI_Blueline_Paragon2_Diesel.xml,v 1.5 2010-03-30 21:50:13 dan_boudreau Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -20,7 +20,8 @@
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
 >
 
-        <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
+        <version author="Bob Jacobsen" version="1" lastUpdated="20090407"/>
+        <version author="Steve Williams" version="2" lastUpdated="20100225"/>
         
         <!-- Version 1 New file from 1.03 manual and BLI_Blueline_diesel v5 -->
         
@@ -28,7 +29,7 @@
         
 <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
-        <model model="Diesel" numOuts="3" numFns="27" connector="9pin" >
+        <model model="Diesel" numOuts="3" numFns="28" connector="9pin" >
             <versionCV lowVersionID="0" highVersionID="31"/>
             <output name="1" label="headlight"/>              
             <output name="2" label="rearlight"/>              
@@ -62,7 +63,7 @@
         </functionlabels>
     </family>                                                   
                                                                
-    <programming direct="yes" paged="no" 
+    <programming direct="yes" paged="yes" 
                          register="yes" ops="yes"></programming>
 
     <variables>
@@ -96,6 +97,9 @@
 
 		<variable label="Packet Time-out Value" CV="11">	<decVal/></variable>
 
+        <variable label="UnLock ID Code" CV="15" mask="XXXXXVVV" default="0">
+            <decVal/>
+            </variable>
         <variable label="Decoder Lock ID number" CV="16" mask="XXXXXVVV" default="0">
             <decVal/>
             </variable>
@@ -1361,7 +1365,7 @@
 
 
         <variable label="KpSlow" CV="118" 
-                item="EMF Option 1" default="2">
+                item="EMF Option 1" default="60">
             <decVal/>
         </variable>
 
@@ -1371,15 +1375,98 @@
         </variable>
 
         <variable label="Speed Step Smoothing" CV="120" 
-                item="EMF Option 3" default="7">
+                item="EMF Option 3" default="25">
             <decVal/>
         </variable>
 
+        <variable label="Consist Address Active For F13" CV="121" mask="XXXXXXXV" default="0" minFn="1">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F14" CV="121" mask="XXXXXXVX" default="0" minFn="2">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F15" CV="121" mask="XXXXXVXX" default="0" minFn="3">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F16" CV="121" mask="XXXXVXXX" default="0" minFn="4">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F17" CV="121" mask="XXXVXXXX" default="0" minFn="5">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F18" CV="121" mask="XXVXXXXX" default="0" minFn="6">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F19" CV="121" mask="XVXXXXXX" default="0" minFn="7">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F20" CV="121" mask="VXXXXXXX" default="0" minFn="8">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+
+        <variable label="Consist Address Active For F21" CV="122" mask="XXXXXXXV" default="0" minFn="1">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F22" CV="122" mask="XXXXXXVX" default="0" minFn="2">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F23" CV="122" mask="XXXXXVXX" default="0" minFn="3">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F24" CV="122" mask="XXXXVXXX" default="0" minFn="4">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F25" CV="122" mask="XXXVXXXX" default="0" minFn="5">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F26" CV="122" mask="XXVXXXXX" default="0" minFn="6">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F27" CV="122" mask="XVXXXXXX" default="0" minFn="7">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+        <variable label="Consist Address Active For F28" CV="122" mask="VXXXXXXX" default="0" minFn="8">
+            <enumVal>
+                <enumChoice choice="Locomotive Address Only"/>
+                <enumChoice choice="Respond to Consist Address"/>
+                </enumVal></variable>
+
+            
         <variable label="Master Volume Sound Increment" CV="130" 
                 item="Sound Setting 1" default="16">
             <decVal />
         </variable>
-            
+
         <variable label="DC Sound Unit Startup Voltage"
             item="Analog Startup Voltage" CV="131" default="72">
             <decVal/>
@@ -2221,3 +2308,5 @@
 
 </decoder-config>
 
+
+ 	  	 
