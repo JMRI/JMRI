@@ -19,9 +19,12 @@ import jmri.*;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
+
+	static final java.util.ResourceBundle rbt 
+	    = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
     private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 256;
@@ -95,15 +98,15 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
 
     public String getColumnName(int col) {
         switch (col) {
-        case NAMECOLUMN:  return "Name";
+        case NAMECOLUMN:  return rbt.getString("ColumnNameNumber");
         case PICOLUMN:    return "PI Val";
         case SICOLUMN:    return "SI Val";
         case CVCOLUMN:    return "CV Num";
-        case VALCOLUMN:   return "Value";
-        case STATECOLUMN: return "State";
-        case READCOLUMN:  return "Read";
-        case WRITECOLUMN: return "Write";
-        case COMPARECOLUMN: return "Compare";
+        case VALCOLUMN:   return rbt.getString("ColumnNameValue");
+        case STATECOLUMN: return rbt.getString("ColumnNameState");
+        case READCOLUMN:  return rbt.getString("ColumnNameRead");
+        case WRITECOLUMN: return rbt.getString("ColumnNameWrite");
+        case COMPARECOLUMN: return rbt.getString("ColumnNameCompare");
         default: return "unknown";
         }
     }
@@ -184,18 +187,18 @@ public class IndexedCvTableModel extends javax.swing.table.AbstractTableModel im
             case VALCOLUMN:
                 return (_indxCvDisplayVector.elementAt(row)).getTableEntry();
             case STATECOLUMN:
-                int state = (_indxCvDisplayVector.elementAt(row)).getState();
-                switch (state) {
-                    case CvValue.UNKNOWN:  return "Unknown";
-                    case CvValue.READ:     return "Read";
-                    case CvValue.EDITED:   return "Edited";
-                    case CvValue.STORED:   return "Stored";
-                    case CvValue.FROMFILE: return "From file";
-                    case CvValue.SAME:  	return "Same";
-                    case CvValue.DIFF:  	return "Decoder = " + 
-                    						(_indxCvDisplayVector.elementAt(row)).getDecoderValue();
-                    default: return "inconsistent";
-                }
+            	int state = (_indxCvDisplayVector.elementAt(row)).getState();
+            	switch (state) {
+            		case CvValue.UNKNOWN:  		return rbt.getString("CvStateUnknown");
+            		case CvValue.READ:  		return rbt.getString("CvStateRead");
+            		case CvValue.EDITED:  		return rbt.getString("CvStateEdited");
+            		case CvValue.STORED:  		return rbt.getString("CvStateStored");
+            		case CvValue.FROMFILE:  	return rbt.getString("CvStateFromFile");
+            		case CvValue.SAME:  		return rbt.getString("CvStateSame");
+            		case CvValue.DIFF:  		return rbt.getString("CvStateDiff")+ " " +
+            									(_indxCvDisplayVector.elementAt(row)).getDecoderValue();
+            		default: return "inconsistent";
+            	}
             case READCOLUMN:
                 return _indxReadButtons.elementAt(row);
             case WRITECOLUMN:

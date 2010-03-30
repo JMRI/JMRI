@@ -18,11 +18,14 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
+	
+    static final java.util.ResourceBundle rbt 
+    = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
 
-    private int _numRows = 0;                // must be zero until Vectors are initialized
+	private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1024;
     private Vector<CvValue> _cvDisplayVector = new Vector<CvValue>();  // vector of CvValue objects, in display order
     private Vector<CvValue> _cvAllVector = new Vector<CvValue>(MAXCVNUM+1);  // vector of all possible CV objects
@@ -83,12 +86,12 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
 
     public String getColumnName(int col) {
         switch (col) {
-        case NUMCOLUMN: return "Number";
-        case VALCOLUMN: return "Value (Decimal)";
-        case STATECOLUMN: return "State";
-        case READCOLUMN: return "Read";
-        case WRITECOLUMN: return "Write";
-        case COMPARECOLUMN: return "Compare";
+        case NUMCOLUMN: return rbt.getString("ColumnNameNumber");
+        case VALCOLUMN: return rbt.getString("ColumnNameValue");
+        case STATECOLUMN: return rbt.getString("ColumnNameState");
+        case READCOLUMN: return rbt.getString("ColumnNameRead");
+        case WRITECOLUMN: return rbt.getString("ColumnNameWrite");
+        case COMPARECOLUMN: return rbt.getString("ColumnNameCompare");
         default: return "unknown";
         }
     }
@@ -143,13 +146,13 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
         case STATECOLUMN:
             int state = _cvDisplayVector.elementAt(row).getState();
             switch (state) {
-            case CvValue.UNKNOWN:  		return "Unknown";
-            case CvValue.READ:  		return "Read";
-            case CvValue.EDITED:  		return "Edited";
-            case CvValue.STORED:  		return "Stored";
-            case CvValue.FROMFILE:  	return "From file";
-            case CvValue.SAME:  		return "Same";
-            case CvValue.DIFF:  		return "Decoder = " + 
+            case CvValue.UNKNOWN:  		return rbt.getString("CvStateUnknown");
+            case CvValue.READ:  		return rbt.getString("CvStateRead");
+            case CvValue.EDITED:  		return rbt.getString("CvStateEdited");
+            case CvValue.STORED:  		return rbt.getString("CvStateStored");
+            case CvValue.FROMFILE:  	return rbt.getString("CvStateFromFile");
+            case CvValue.SAME:  		return rbt.getString("CvStateSame");
+            case CvValue.DIFF:  		return rbt.getString("CvStateDiff")+ " " +
             							_cvDisplayVector.elementAt(row).getDecoderValue();
             default: return "inconsistent";
             }
@@ -205,11 +208,11 @@ public class CvTableModel extends javax.swing.table.AbstractTableModel implement
             _cvDisplayVector.addElement(cv);
             // connect to this CV to ensure the table display updates
             cv.addPropertyChangeListener(this);
-            JButton bw = new JButton("Write");
+            JButton bw = new JButton(rbt.getString("ButtonWrite"));
             _writeButtons.addElement(bw);
-            JButton br = new JButton("Read");
+            JButton br = new JButton(rbt.getString("ButtonRead"));
             _readButtons.addElement(br);
-            JButton bc = new JButton("Compare");
+            JButton bc = new JButton(rbt.getString("ButtonCompare"));
             _compareButtons.addElement(bc);
             if (infoOnly || readOnly) {
                 if (writeOnly) {
