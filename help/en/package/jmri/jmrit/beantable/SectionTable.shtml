@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: SectionTable.shtml,v 1.5 2009-05-25 15:37:58 djduchamp Exp $ -->
+<!-- $Id: SectionTable.shtml,v 1.6 2010-03-30 15:47:52 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,45 +23,54 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Section Table
+<H1>Sections and the Section Table
 </H1>
 <H2> What is a Section?
 </H2>
 <P>A <b>Section</b> is a group of one or more connected <b>Blocks</b> that may be 
-allocated to a train traveling in a given direction. A Block may be 
-in multiple Sections. All Blocks contained in a given Section must be different. 
+allocated to a train traveling in a given direction. Sections were created to solve 
+the direction problem that can occur when using Blocks directly. A Section has only 
+two directions, "forward" or "reverse". Sections can be traversed by a train in either 
+direction. Section direction is independent of the direction set for the locomotive by 
+a throttle. In addition to solving the direction problem, Sections offer the user 
+other useful features.</p>
+<p>Sections can be considered an extension of Blocks. Many Sections contain only one 
+Block. All Blocks contained in a multi-Block Section must be different. 
 Blocks are kept in order--the first block is connected to the second, the second 
 is connected to the third, etc. That means a Block in a Section must be connected 
 to the Block before it (if there is one) and to the Block after it (if there is 
 one), but may not be connected to any other Block in the Section. A Section may 
 not contain any reverse loops.</P>
 <p>Sections and their associated <b><a href="TransitTable.shtml">Transits</a></b> 
-are designed to be used for dispatching, either manual dispatching (by a dispatcher 
-sitting at a panel), or automatic dispatching by the computer. Dispatching may be 
-used for trains run by engineers with a throttle, and/or for trains run 
-automatically by the computer.</p>
-<P>A Section has a <b>direction</b> defined by the sequence in which Blocks are 
-added to the Section. A train may run through a Section in either the <b>forward</b> 
-direction (from first block to last block) or <b>reverse</b> direction (from last 
-block to first block). If a Section has only one Block, the "direction" of that  
-Section is defined when setting up its <b>Entry Points</b> (see below).</p>
-<P>A Section has two or more <b>Entry Points</b>. An Entry Point defines a 
-connection to a Block outside of the Section. Entry Points are derived from Paths of 
-Blocks in the Section--Paths that represent connections to Blocks not contained in 
-the Section. Entry Points are grouped according to whether entering 
-the Section at that Entry Point will result in a train traveling in the "forward" 
+are designed to provide support for dispatching, either manual dispatching (by a 
+dispatcher sitting at a panel), or automatic dispatching by the computer. Dispatching 
+is the temporary allocation of Sections for the exclusive use of trains, either
+run by engineers with a throttle, and/or run automatically by the computer. Support for 
+dispatching is provided by <A HREF="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>, 
+which also provides for set up and running of trains automatically.</p>
+<P>A Section's <b>direction</b> is defined by the sequence in which Blocks are 
+added to a multi-Block Section. For a single Block Section the direction is chosen
+arbitrarily when the Section is created. A train may run through a Section in either 
+the <b>forward</b> direction (from first block to last block) or <b>reverse</b> 
+direction (from last block to first block). If a Section has only one Block, the 
+<b>direction</b> of that Section is chosen when setting up its <b>Entry Points</b> 
+(see below).</p>
+<p>A Section has one or more <b>Entry Points</b>. An Entry Point defines a 
+connection from a Block inside the Section to a Block outside of the Section. Entry 
+Points are set up using Paths of Blocks in the Section--Paths that represent connections 
+to Blocks not contained in the Section. Entry Points are grouped according to whether 
+entering the Section at that Entry Point will result in a train traveling in the "forward" 
 direction, or whether entering at that Entry Point will result in a train 
 traveling in the "reverse" direction.</P>
-<p> Sections are designed so that a Section of sufficient length may be allocated 
-to more than one train provided the trains are traveling in the same direction. 
-There must be at least one block between trains traveling in the same direction 
-in a Section. Note: Allocating a Section to two trains at the same time is not 
-currently supported by <A HREF="../dispatcher/Dispatcher.shtml">Dispatcher.</a></p>
+<p> Sections are designed to be allocated to one train at a time. If a portion of 
+connected track is long enough to support multiple trains simultaneously traveling in 
+the same direction, one following the other, that connected track should be divided into 
+two or more Sections, if the user wants to run following trains in that area.</p>
 <H2> Requirements for using Sections
 </H2>
 <P>Sections may be used with a Panel Editor panel, with a Layout Editor panel, with 
 a CTC machine, or directly without any panel provided. Sections build on JMRI's 
-Blocks and Paths structure. So Before attempting to create any Sections, you should 
+Blocks and Paths structure. So before attempting to create any Sections, you should 
 have Blocks and Paths fully initialized for your layout. (An easy way to 
 automatically initialize your Blocks and Paths is to sketch out a Layout Editor panel 
 of your layout, with blocks assigned.)</p>
@@ -78,21 +87,29 @@ for Sections also.</p>
 <p>Signals are not required for using Sections, but Sections will work fine with 
 signals installed. If signals are installed, the direction sensors included in 
 Sections provide an easy way to set up simple APB signaling (see below).</p>  
-<H2> Support for Optional Sensors
+<H2> Support for Optional Direction and Stopping Sensors
 </H2>
 <P>Optionally each Section may have two <i>direction sensors</i>, one for the forward 
 direction and one for the reverse direction. These are normally internal Sensors, 
 bearing system names that begin with IS. They automatically follow the state of their 
-Section, i.e. when the state of the Section is FORWARD, the Forward Sensor is 
-<b>INACTIVE</b> and the Reverse Sensor is <b>ACTIVE</b>. These sensors may be used 
-to force signals for travel in their respective directions to <b>RED</b> when they 
-are ACTIVE. When a Section is FREE, both of its direction Sensors are ACTIVE. Tools 
-are provided to automatically add direction sensors to signal logic (<a href="#tools">
-see below</a>). </P>
+Section. A Section has three states, <b>FREE</b> (not allocated to a train), <b>FORWARD</b> 
+(allocated for travel in the forward direction), and <b>REVERSE</b> (allocated for travel in 
+the reverse direction. When the state of the Section is <b>FREE</b> both direction 
+sensors are set <b>ACTIVE</b>. When the state of the Section is <b>FORWARD</b>, the 
+forward direction sensor is <b>INACTIVE</b> and the reverse direction sensor is 
+<b>ACTIVE</b>. Similarly, when the state of the Section is <b>REVERSE</b>, the forward 
+direction sensor is <b>ACTIVE</b> and the reverse direction sensor is <b>INACTIVE</b>. 
+These sensors may be used in signal logic to force signals for travel in the direction 
+opposite to the allocated direction to <b>RED</b>. Tools are provided here in the 
+Section Table to automatically add add direction sensors to signal logic or to 
+automatically remove all direction sensors from signal logic, (<a href="#tools">
+see below</a>). Alternatively, if <A HREF="../dispatcher/Dispatcher.shtml"><b>Dispatcher</b></a>
+is being used, it can add direction sensors to signal logic as needed.</P>
 <P>Also optionally each Section may have two <i>stopping sensors</i> that indicate
 when a train in the Section has reached the end of the Section by traveling in 
-the forward direction or in the reverse direction. For manual dispatching, these 
-sensors may be displayed on a panel to indicate to the dispatcher when a train 
+the forward direction or in the reverse direction. Stopping sensors should be physical 
+sensors on the layout, for example infrared point detectors. For manual dispatching, 
+these sensors may be displayed on a panel to indicate to the dispatcher when a train 
 has reached the end of its allocation. For automatic running, these sensors may 
 be used to stop a train before it reaches the end of its allocated Section, and 
 before it overruns a red signal, if signals are present.</>
@@ -115,14 +132,14 @@ for travel in the opposite direction, the state is <b>REVERSE</b>.</LI>
 <LI><b>Comment</b> - This column is for your use to record any comment you may want
 to use to keep track of your Sections. It is for information only.</LI>
 <LI>Click the <b>Delete</b> button in a specific row to delete the Section in that row. 
-Remember to remove any Transits associated using this Section. Any Transit that 
+Remember to remove any Transits using this Section. Any Transit that 
 uses a deleted Section will be broken! Use this button with caution!</LI>
 <LI><b>First Block</b> - This column displays the first block in the Section. 
 Since a section is a group of one or more connected blocks, there is always an
 entry.</LI> 
 <LI><b>Last Block</b> - This column shows the final block in the Section. 
-Since a section may contain only one block, this entry may be the same as the Begin
-Block entry.</LI>
+Since a section may contain only one block, the Last Block may be the same as the First 
+Block.</LI>
 <LI>Click the <b>Edit</b> button in a row to view or change entered information
 for a Section. System name cannot be changed. User name may be changed, 
 blocks may be redefined, entry points may be reconfigured, etc. Only one Section 
@@ -146,9 +163,8 @@ a higher-numbered block is FORWARD travel. Stated a different way, moving from a
 block higher in the block list to a block lower in the list is FORWARD travel. 
 Similarly moving from a higher-numbered block to a lower-numbered block is REVERSE 
 travel. For Sections with only one block, it doesn't make any difference which 
-direction through the Section is designated FORWARD, as long as 
-
-<p>All Entry Points must be consistent. That is: 
+direction through the Section is designated FORWARD, as long as Entry Point travel
+directions are consistent. That is: 
 <UL>
 <LI>REVERSE and FORWARD directions of travel must be opposite.</li> 
 <LI>Entering at any FORWARD Entry Point must result in travel in the same 
@@ -156,7 +172,7 @@ direction as entering at all other FORWARD Entry Points.</li>
 <li>Entering at any REVERSE Entry Point must result in travel 
 in the same direction as entering at all other REVERSE Entry Points.</li>
 </UL>
-<p><b>WARNING: if Entry Points are not consistent strange behavior may result 
+<p><b>WARNING: If Entry Points are not consistent strange behavior may result 
 when using the Section.</b></p>
 <a name="tools"><H2> Section Table Tools
 </H2>
@@ -171,7 +187,7 @@ extra Entry Points, and, if a Layout Editor panel is available, checking that
 Paths are correctly set up for the Blocks in the Sections.  <b>This tool does 
 not check if the FORWARD and REVERSE directions are correctly set for each 
 Entry Point</b>, but that feature is a planned future addition.  After testing is 
-complete a message is displayed giving the results of the testing. Detailed error 
+complete, a message is displayed giving the results of the testing. Detailed error 
 messages, if any, are placed in the JMRI error log.</p>
 </li>
 <li><p><b>Set Direction Sensors in Logic...</b> - When this item is selected, 
@@ -188,16 +204,21 @@ the Section in the FORWARD direction, but keeping signals governing travel in
 the REVERSE direction set RED. Similarly, when the Section is allocated for travel 
 in the REVERSE direction, the reverse direction sensor is set INACTIVE, and the 
 forward direction sensor is set ACTIVE, allowing signals to clear travel in the 
-REVERSE direction, but to block travel in the FORWARD direction. Setting of 
+REVERSE direction, but to block travel in the FORWARD direction. Setting the state of
 direction sensors is done automatically by software in 
 <A HREF="../dispatcher/Dispatcher.shtml">Dispatcher</a> that allocates 
 Sections.</p>
+<p>Note: Dispatcher can place direction sensors in SSL signal logic automatically 
+when a train is activated. Dispatcher will place direction sensors if it is provided 
+with a Layout Editor panel and allowed to use its connectivity (required for automatic 
+running). This allows using direction-based signaling even if the panel is stored 
+with these sensors removed from signal logic.</p>
 <p> This tool should only be used after all Sections have been defined and all 
 signal head logic has been set up. A Layout Editor panel is required, because 
 the software needs the panel's connectivity to figure out which signal 
 heads need which direction sensor.  If a direction sensor is already in the 
 Simple Signal Logic (SSL) for a signal head, it is not duplicated.  However, if 
-an incorrect direction sensor is in the SSL, it is not removed. (Use the tool 
+an incorrect direction sensor is present in the SSL, it is not removed. (Use the tool 
 described below to remove direction sensors.) After placing direction sensors is 
 complete a message is displayed giving results. Detailed 
 error messages, if any, are placed in the JMRI error log. When an error occurs, 
@@ -209,7 +230,9 @@ directions.</p>
 of all direction sensors defined in Sections currently in the Section Table, then 
 removes all sensors that are contained in this list from the Simple Signal Logic 
 (SSL) of all signal heads. This tool cancels the effect of the <b>Set Direction 
-Sensors in Logic...</b> tool, and in addition removes any defined direction sensors 
+Sensors in Logic...</b> tool, removes any direction sensors that may have been placed 
+by <A HREF="../dispatcher/Dispatcher.shtml">Dispatcher</a>, and in addition removes 
+any defined direction sensors 
 that might be in an incorrect SSL. If errors were noted while setting direction 
 sensors using the above tool, then corrected, running this tool before attempting 
 to set direction sensors again is sometimes useful.</li>

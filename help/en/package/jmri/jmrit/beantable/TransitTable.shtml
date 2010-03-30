@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitTable.shtml,v 1.6 2009-10-11 19:25:38 djduchamp Exp $ -->
+<!-- $Id: TransitTable.shtml,v 1.7 2010-03-30 15:47:52 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,7 +23,7 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>The Transit Table
+<H1>Transits and the Transit Table
 </H1>
 <H2>What is a Transit?
 </H2
@@ -44,13 +44,13 @@ be multiple "3rd" Sections, any of which might be used to travel between the 2nd
 Transits also provide for reverse loops. Currently Transits do not provide for an 
 operator reversing the direction of a train.</P>
 <p>Transits support both manual and automatic operation of trains.  When a train 
-is running in automatic mode, Transits provide for <b>Special Actions</b> to be 
-performed when a train reaches a designated Section in the Transit. A 
-Special Action may be initiated by a number of events, for 
+is running in automatic mode, Transits provide for <b>Actions</b> to be 
+activated when a train reaches a designated Section in the Transit. A 
+Action may be initiated by a number of events, for 
 example, when the train enters a Section, or when the train stops. A variety of 
 actions are possible, such as pausing the train for a user-designated 
-number of fast clock minutes, reverting to manual mode for local manual operation, 
-or sounding the horn on a sound decoder.</p>
+number of fast clock minutes (a station stop), reverting to manual mode for local manual 
+operation, or sounding the horn on a sound decoder.</p>
 <H2>How are Transits Activated and Used?
 </H2
 <p>Transits are static objects. They specify routes for trains to follow around the 
@@ -64,13 +64,13 @@ set up each time they are used.</p>
 <a href="../dispatcher/DispatcherFrame.shtml">Dispatcher</a> window, where a Transit is 
 linked to a train to create an Active Train. When an Active Train is created, a 
 Transit is selected, a Train is selected, and a starting Block (train location 
-at start) and ending Block (train location when travel is complete) are 
-specified. This process results in an <b>Active Train</b>, which can then be 
-dispatched. A Transit may be in only one Active Train at a time. When an Active 
+at start) and ending Block (train location when travel is complete) are specified, along 
+with options. This process results in an <b>Active Train</b>, which can then be 
+dispatched. A Transit may be used by only one Active Train at a time. When an Active 
 Train is done, its Transit is <i>deactivated</i>, and may be reused for a subsequent 
 Active Train.</p>
-<p>A train usually starts from a Block outside of the Transit, but connected 
-to a Block within the Transit. Optionally a train may start from a Block within a Section 
+<p>A train may start from a Block outside of the Transit, but connected 
+to a Block within the Transit, or a train may start from a Block within a Section 
 in the Transit. A train moves through a Transit in only one direction--defined by 
 the order in which Sections are included in the Transit. Trains move from lower 
 sequence number Sections toward higher sequence number Sections. When an Active 
@@ -82,11 +82,11 @@ train is authorized by the dispatcher to proceed to the end of that Section.</p>
 using a throttle, or automatically by a <i>virtual engineer</i>. Dispatching 
 consists of <i>allocating</i> Sections, one by one, to the Active Train. The 
 actual dispatching may be done by a dispatcher sitting at the computer running JMRI, 
-or automatically by the computer. If a requested Section is currently in 
+or semi-automatically by the computer. If a requested Section is currently in 
 use, a request for assignment is placed in the dispatcher's queue. When a Section 
 is freed, the queue is scanned for the highest priority train requesting it.</p>
-<p><b>Note: Automated dispatching and automatic running of Active Trains are not 
-currently supported!</b> They will be in a future version of JMRI.</p>
+<p><b>Note: Automated dispatching of Active Trains is not 
+currently supported by Dispatcher.</b></p>
 <H2>Using the Transit Table to Set Up Transits
 </H2
 <p>Transits are set up in the Transit Table.  When set up, Transits are independent 
@@ -141,6 +141,17 @@ and both must be set up for running in the same direction. This applies to
 both manual running of trains and automatic running of trains. For more 
 information on setting the continuous running option, visit the help file for 
 the <a href="../dispatcher/NewTrain.shtml">Activate New Train</a> window.</p>
+<H2>Specifying Actions for Automatic Running 
+</H2>
+<p>Transits support a variety of <b>Actions</b> that automatically happen when a train is 
+run through the Transit in Automatic mode.  One or more <b>Actions</b> may be specified 
+with each Section in the Transit. <b>Action</b> are initiated when their associated 
+Section in the Transit is entered by the automatically running train.</p>
+<p>Each <b>Action</b> has two parts: a <i>When</i> part, that specifies 
+when the <b>Action</b> is to be performed, and a <i>What</i> part, that specifies what 
+task is to be performed. A commonly used Action, for example, is "When the train starts, 
+turn on its headlight." More information on Actions is located in the Actions
+
 <H2>Saving Transits to Disk
 </H2>
 <P> Use the Store item in the File menu to save Transit information to disk. This 

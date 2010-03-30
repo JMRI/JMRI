@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AddEditAction.shtml,v 1.1 2009-10-11 19:22:30 djduchamp Exp $ -->
+<!-- $Id: AddEditAction.shtml,v 1.2 2010-03-30 15:47:52 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -23,26 +23,26 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Add/Edit Special Action</H1>
+<H1>Add/Edit Action</H1>
 <H2>The Add/Edit Action Window</H2>
 
-<p><b><a href="ViewSpecialActions.shtml">Special Actions</a></b> are things that 
+<p><b><a href="ViewSpecialActions.shtml">Actions</a></b> are tasks that 
 can be initiated automatically as a train running in automatic mode traverses 
 the layout. The Add/Edit Action window (see below for "Add" version) provides for 
-creating new Special Actions and for editing current Special Actions. The "Edit"
+creating new Actions and for editing current Actions. The "Edit"
 version of this window is the same as the one shown below, except the <b>Create 
 New Action</b> button is replaced by an <b>Update Action</b> button and the 
-selections and data are filled in to current values of the Special Action being 
+selections and data are filled in to current values of the Action being 
 edited.</p> 
 <img src="AddEditAction.jpg" height="236" width="307"></li>
-<p>A Special Action is defined by specifying <b>What</b> action is requested and 
+<p>An Action is defined by specifying <b>What</b> action is requested and 
 <b>When</b> that action should be initiated.</p>
 <p>To specify the <b>When</b> part, select an option in the <b>When</b> popup 
 menu, and fill in any data that might be required. Data item fields or menus 
 will appear when the item needing them is selected. Each data item is supplied 
-with a text description that may be summoned by hovering the cursor over the 
-field. Each <b>When</b> option is described in more detail in the 
-<b><a href="ViewSpecialActions.shtml">View Special Actions help file</a></b>.</p>
+with a text description (tooltip) that may be summoned by hovering the cursor over 
+the item. Each <b>When</b> option is described in more detail in  
+<b><a href="ViewSpecialActions.shtml">Actions</a></b>.</p>
 <p>An optional delay, specified in milliseconds, is available for each <b>When</b> 
 option. No delay is the default.  If an optional delay time is not entered (or a 
 delay time of zero is entered), the action will be initiated immediately after 
@@ -52,20 +52,19 @@ action.</p>
 <p>To specify <b>What</b> action is requested, select an option in the <b>What</b> 
 popup menu, and fill in any data that might be required. Data item fields 
 will appear when the item needing them is selected. Each data item is supplied 
-with a text description that may be summoned by hovering the cursor over the 
-field. Each <b>What</b> action is described in more detail in the 
-<b><a href="ViewSpecialActions.shtml">View Special Actions help file</a></b>.</p>
+with a text description (tooltip) that may be summoned by hovering the cursor over
+the item. Each <b>What</b> action is described in more detail in 
+<b><a href="ViewSpecialActions.shtml">Actions</a></b>.</p>
 
-<p>When the Special Action is completely defined, click the <b>Create New 
+<p>When the Action is completely defined, click the <b>Create New 
 Action</b> button (or the <b>Update Action</b> button if editing). Any required 
 data will be validated. If a problem is found, a message will appear, and 
 the Add/Edit Action window will remain to allow correction of the problem. If 
 everything checks out, the Add/Edit Action window will disappear and the new (or 
-edited) Special Action will appear in the <b>View Special Actions</b> window.
-</p>
+edited) Action will appear in the <b>View Actions</b> window.</p>
 
 <p> Click the <b>Cancel</b> button to dismiss the Add/Edit Action window without 
-creating a new Special Action or completing the edit of an existing Special 
+creating a new Action or completing the edit of an existing  
 Action. Closing the Add/Edit Action window is equivalent to clicking the 
 <b>Cancel</b> button.</p>
 
