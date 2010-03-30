@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -294,10 +294,18 @@ public class SplitVariableValue extends VariableValue
                 if (log.isDebugEnabled()) log.error("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state IDLE");
                 return;
             case READING_FIRST:   // read first CV, now read second
-                if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state READING_FIRST");
-                _progState = READING_SECOND;
-                (_cvVector.elementAt(getSecondCvNum())).read(_status);
-                return;
+            	if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state READING_FIRST");
+            	// was the first read successful?
+            	if (getState() != UNKNOWN){
+            		_progState = READING_SECOND;
+            		(_cvVector.elementAt(getSecondCvNum())).read(_status);
+            	// first read failed we're done!
+            	} else {
+            		if (log.isDebugEnabled()) log.debug("First read failed, abort second read");
+            		_progState = IDLE;
+            		setBusy(false);
+            	}
+            	return;
             case READING_SECOND:  // finally done, set not busy
                 if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" Busy goes false with state READING_SECOND");
                 _progState = IDLE;
@@ -367,7 +375,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.24 $
+     * @version     $Revision: 1.25 $
      */
     public class VarTextField extends JTextField {
 
