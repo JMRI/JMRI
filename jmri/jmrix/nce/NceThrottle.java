@@ -14,10 +14,17 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
-public class NceThrottle extends AbstractThrottle
-{
+public class NceThrottle extends AbstractThrottle{
+	
+	/* Note the NCE USB doesn't support the NMRA packet format.
+	 * Before April 2010, this code would send NMRA packets if connected
+	 * to the NCE command station.  Now it always sends the A2 loco
+	 * commands if the command station eprom was built after 2004. 
+	 */
+	public boolean sendA2command = true; 
+	
     /**
      * Constructor.
      */
@@ -60,7 +67,10 @@ public class NceThrottle extends AbstractThrottle
         this.f28           = false;
         this.address      = address;
         this.isForward    = true;
-
+        
+        // send NMRA style packets to old versions of NCE eprom
+        if (NceMessage.getCommandOptions() <= NceMessage.OPTION_2004)
+        	sendA2command = false;
     }
 
     DccLocoAddress address;
@@ -71,8 +81,8 @@ public class NceThrottle extends AbstractThrottle
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+    	// The NCE USB doesn't support the NMRA packet format
+		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -105,7 +115,7 @@ public class NceThrottle extends AbstractThrottle
 	 */
 	protected void sendFunctionGroup2() {
 		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -137,7 +147,7 @@ public class NceThrottle extends AbstractThrottle
 	 */
     protected void sendFunctionGroup3() {
 		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -169,7 +179,7 @@ public class NceThrottle extends AbstractThrottle
 	 */
     protected void sendFunctionGroup4() {
 		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -204,7 +214,7 @@ public class NceThrottle extends AbstractThrottle
 	 */
     protected void sendFunctionGroup5() {
 		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+		if (sendA2command) {
 			int locoAddr = address.getNumber();
 			if (address.isLongAddress())
 				locoAddr += 0xC000;
@@ -245,7 +255,7 @@ public class NceThrottle extends AbstractThrottle
 		this.speedSetting = speed;
 		
 		// The NCE USB doesn't support the NMRA packet format
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
+		if (sendA2command) {
 			
 	        byte[] bl;
 	        int value;
