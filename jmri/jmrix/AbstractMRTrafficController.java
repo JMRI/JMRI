@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.78 $
+ * @version         $Revision: 1.79 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -275,8 +275,10 @@ abstract public class AbstractMRTrafficController {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("transmitLoop interrupted"); 
                         }
-                        if (mCurrentState != OKSENDMSGSTATE)
+                        checkReplyInDispatch();
+                        if (mCurrentState != OKSENDMSGSTATE){
                             handleTimeout(modeMsg,l);
+                        }
                         mCurrentState = WAITMSGREPLYSTATE;
                     }
                 }
@@ -346,6 +348,7 @@ abstract public class AbstractMRTrafficController {
                                 Thread.currentThread().interrupt(); // retain if needed later
                                 log.error("interrupted while leaving programming mode");
                             }
+                            checkReplyInDispatch();
                             // exit program mode timeout?
                             if (mCurrentState == WAITREPLYINNORMMODESTATE){
                                 // entering normal mode via timeout
@@ -428,6 +431,7 @@ abstract public class AbstractMRTrafficController {
     private int timeouts = 0;
     protected boolean flushReceiveChars = false;
     protected void handleTimeout(AbstractMRMessage msg,AbstractMRListener l) {
+       	log.debug("Timeout mCurrentState:" + mCurrentState);
         log.warn("Timeout on reply to message: "+msg.toString()+
                  " consecutive timeouts = "+timeouts);
         timeouts++;
