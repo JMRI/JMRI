@@ -3,7 +3,7 @@
 package jmri;
 
 /**
- * This class holds information and options for a Special Action to be applied when an automated train 
+ * This class holds information and options for a Action to be applied when an automated train 
  *		enters, exits, or is inside of a Section in a Transit. 
  * <P>
  * A TransitSection holds specified TrainsitSectionActions.  A TransitSection may have as many 
@@ -17,15 +17,29 @@ package jmri;
  * <P>
  * TransitSectionActions are created and editted in the Transit Table, when Transits are defined. 
  * <P>
+ * This class provides support for SENSORACTIVE and SENSORINACTIVE "when"'s.
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it 
+ * under the terms of version 2 of the GNU General Public License as 
+ * published by the Free Software Foundation. See the "COPYING" file for 
+ * a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ * <P>
  *
- * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.1 $
+ * @author	Dave Duchamp  Copyright (C) 2009, 2010
+ * @version	$Revision: 1.2 $
  */
 public class TransitSectionAction {
 	/**
-	 * Constants representing the "when" (when the action is to be initiated) of the Special Action
+	 * Constants representing the "when" (when the action is to be initiated) of the Action
 	 */
-	public static final int NUM_WHENS = 9; // Must correspond to the number of entries below
+	public static final int NUM_WHENS = 8; // Must correspond to the number of entries below
 	public static final int ENTRY  = 1;   // On entry to Section
 	public static final int EXIT   = 2;	  // On exit from Section
 	public static final int BLOCKENTRY = 3; // On entry to specified Block in the Section
@@ -34,26 +48,27 @@ public class TransitSectionAction {
 	public static final int TRAINSTART = 6; // When train starts 
 	public static final int SENSORACTIVE = 7; // When specified Sensor changes to Active
 	public static final int SENSORINACTIVE = 8; // When specified Sensor changtes to Inactive
-	public static final int CONTAINED = 9; // When train is entirely within the Section 
-	// other special action 'whens" may be defined here
+	// other action 'whens" may be defined here
 	/**
-	 * Constants designating the "what" (the action to be taken) of the Special Action
+	 * Constants designating the "what" (the action to be taken) of the Action
 	 */ 
 	public static final int NUM_WHATS = 13; // Must correspond to the number of entries below
 	public static final int PAUSE = 1;    // pause for the number of fast minutes in mDataWhat (e.g. station stop)
 	public static final int SETMAXSPEED = 2; // set maximum train speed to value entered
-	public static final int SETCURRENTSPEED = 3; // set current speed either higher or lower that current value
-	public static final int RAMPTRAINSPEED = 4; // set current speed to target over specified time period
+	public static final int SETCURRENTSPEED = 3; // set current speed to target speed immediately - no ramping
+	public static final int RAMPTRAINSPEED = 4; // set current speed to target with ramping
 	public static final int TOMANUALMODE = 5; // drop out of automated mode, and allow manual throttle control
-	public static final int RESUMEAUTO = 6; // resume automatic throttle operation
-	public static final int STARTBELL = 7;  // start bell (only works with sound decoder)
-	public static final int STOPBELL = 8;   // stop bell (only works with sound decoder)
-	public static final int SOUNDHORN = 9;  // sound horn for specified number of milliseconds
+	public static final int SETLIGHT = 6; // set light on or off
+	public static final int STARTBELL = 7;  // start bell (only works with sound decoder, function 1 ON)
+	public static final int STOPBELL = 8;   // stop bell (only works with sound decoder, function 1 OFF)
+	public static final int SOUNDHORN = 9;  // sound horn for specified number of milliseconds 
+	//													(only works with sound decoder, function 2)
 	public static final int SOUNDHORNPATTERN = 10; // sound horn according to specified pattern
+	//													(only works with sound decoder, function 2)
 	public static final int LOCOFUNCTION = 11;  // execute the specified decoder function
 	public static final int SETSENSORACTIVE = 12; // set specified sensor active (offers access to Logix)
 	public static final int SETSENSORINACTIVE = 13; // set specified sensor inactive
-	// other special action 'whats" may be defined here
+	// other action 'whats" may be defined here
 
 	/**
 	 * Main constructor method
@@ -102,9 +117,54 @@ public class TransitSectionAction {
 	public void setStringWhen( String s ) { mStringWhen = s; }
 	public String getStringWhat() { return mStringWhat; }
 	public void setStringWhat( String s ) { mStringWhat = s; }
+	
+	/** 
+	 * operational instance variables - flags and data for executing the action 
+	 *    (see jmri.jmrit.dispatcher.AutoActiveTrain.java)
+	 */
+	private Thread _waitingThread = null;
+	private boolean _waitingForSectionExit = false;
+	private TransitSection _targetTransitSection = null;
+	private boolean _waitingForBlock = false;
+	private boolean _waitingForSensor = false;
+	private Sensor _triggerSensor = null;
+	private java.beans.PropertyChangeListener _sensorListener = null;
+	/**
+	 * initialize all operational instance variables (not saved between runs)
+	 */
+	public void initialize() {
+		_waitingThread = null;
+		_waitingForSectionExit = false;
+		_targetTransitSection = null;		
+		_waitingForBlock = false;
+		_waitingForSensor = false;
+		_triggerSensor = null;
+		_sensorListener = null;
+	}	
+	/**
+	 * Operational access methods
+	 */
+	public Thread getWaitingThread() {return _waitingThread;}
+	public void setWaitingThread(Thread t) {_waitingThread = t;}
+	public boolean getWaitingForSectionExit() {return _waitingForSectionExit;}
+	public void setWaitingForSectionExit(boolean w) {_waitingForSectionExit = w;}
+	public TransitSection getTargetTransitSection() {return _targetTransitSection;}
+	public void setTargetTransitSection(TransitSection ts) {_targetTransitSection = ts;}
+	public boolean getWaitingForBlock() {return _waitingForBlock;}
+	public void setWaitingForBlock(boolean w) {_waitingForBlock = w;}
+	public boolean getWaitingForSensor() {return _waitingForSensor;}
+	public void setWaitingForSensor(boolean w) {_waitingForSensor = w;}
+	public Sensor getTriggerSensor() {return _triggerSensor;}
+	public void setTriggerSensor(Sensor s) {_triggerSensor = s;}
+	public java.beans.PropertyChangeListener getSensorListener() {return _sensorListener;}
+	public void setSensorListener(java.beans.PropertyChangeListener l) {_sensorListener = l;}
 
 	public void dispose() {
-		// if this object has registered any listeners, dispose of them
+		// if this object has registered a listener, dispose of it
+		if (_sensorListener != null) {
+			_triggerSensor.removePropertyChangeListener(_sensorListener);
+			_sensorListener = null;
+		}
 	}
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitSectionAction.class.getName());

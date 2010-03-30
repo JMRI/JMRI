@@ -22,7 +22,7 @@ import java.util.ArrayList;
  *	dependent on order of items in the panel file.
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class TransitSection {
 
@@ -43,12 +43,6 @@ public class TransitSection {
         mSequence = seq;
 		mDirection = direction;
 		mAlternate = alt;
-// djd debugging
-// String alternateString = "false";
-// if (alt) alternateString = "true";
-// log.warn("TransitSection Section,seq,direction,action,data,alternate - "+s.getSystemName()+", "+seq+", "+
-//				direction+", "+act+", "+data+", "+alternateString);
-// end debugging					
     }
 	
 	/**

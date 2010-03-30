@@ -47,8 +47,8 @@ import java.util.ArrayList;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  *
- * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.17 $
+ * @author	Dave Duchamp    Copyright (C) 2008, 2010
+ * @version     $Revision: 1.18 $
  */
 
 
@@ -598,7 +598,7 @@ public class TransitTableAction extends AbstractTableAction {
 					javax.swing.JOptionPane.ERROR_MESSAGE);			
 			return false;
 		}		
-// djd debugging
+// djd debugging - need to add code to check Transit Information
 // add code here as needed
 		return true;
 	}
@@ -613,7 +613,6 @@ public class TransitTableAction extends AbstractTableAction {
 				log.error("Trouble creating TransitSection");
 				return false;
 			}
-//			@SuppressWarnings("raw")
 			ArrayList<TransitSectionAction> list = action[i];
 			for (int j=0; j<list.size(); j++) {
 				ts.addAction(list.get(j));
@@ -892,7 +891,7 @@ public class TransitTableAction extends AbstractTableAction {
 		addEditActionWindow();
 	}
 
-	// variables for add/edit actions window
+	// variables for add/edit action window
 	private boolean editActionMode = false;
 	private JmriJFrame addEditActionFrame = null;
 	private TransitSectionAction curTSA = null;
@@ -908,6 +907,10 @@ public class TransitTableAction extends AbstractTableAction {
 	private JButton cancelAddEditActionButton = null;
 	private JComboBox blockBox = new JComboBox();
 	private ArrayList<Block> blockList = new ArrayList<Block>();
+	private JRadioButton onButton = new JRadioButton(rbx.getString("On"));
+	private JRadioButton offButton = new JRadioButton(rbx.getString("Off"));
+	private JLabel doneSensorLabel = new JLabel(rbx.getString("DoneSensorLabel"));
+	private JTextField doneSensorField = new JTextField(17);
 	
 	private void addEditActionWindow() {
 		if (addEditActionFrame == null) {
@@ -963,6 +966,13 @@ public class TransitTableAction extends AbstractTableAction {
 			panel21.setLayout(new FlowLayout());				
 			panel21.add(whatData1Field);
 			panel21.add(whatData2Field);
+			ButtonGroup onOffGroup = new ButtonGroup();
+			onOffGroup.add(onButton);
+			onOffGroup.add(offButton);
+			panel21.add(onButton);
+			panel21.add(offButton);
+			panel21.add(doneSensorLabel);
+			panel21.add(doneSensorField);
 			panelx.add(panel21);
 			contentPane.add(panelx);
 			contentPane.add(new JSeparator());
@@ -1003,6 +1013,8 @@ public class TransitTableAction extends AbstractTableAction {
 			whatData1Field.setText(""+curTSA.getDataWhat1());
 			whatData2Field.setText(""+curTSA.getDataWhat2());
 			whatStringField.setText(curTSA.getStringWhat());
+			onButton.setSelected(true);
+			if (curTSA.getStringWhat().equals("Off")) offButton.setSelected(true);
 			setWhen(curTSA.getWhenCode());
 			setWhat(curTSA.getWhatCode());
 			setBlockBox();
@@ -1014,6 +1026,7 @@ public class TransitTableAction extends AbstractTableAction {
 			whatData1Field.setText("");
 			whatData2Field.setText("");
 			whatStringField.setText("");
+			onButton.setSelected(true);
 			setWhen(1);
 			setWhat(1);
 			updateActionButton.setVisible(false);
@@ -1037,7 +1050,6 @@ public class TransitTableAction extends AbstractTableAction {
 			case TransitSectionAction.EXIT:
 			case TransitSectionAction.TRAINSTOP:
 			case TransitSectionAction.TRAINSTART:
-			case TransitSectionAction.CONTAINED:
 				break;
 			case TransitSectionAction.BLOCKENTRY:
 			case TransitSectionAction.BLOCKEXIT:
@@ -1058,6 +1070,10 @@ public class TransitTableAction extends AbstractTableAction {
 		whatStringField.setVisible(false);
 		whatData1Field.setVisible(false);
 		whatData2Field.setVisible(false);
+		onButton.setVisible(false);
+		offButton.setVisible(false);
+		doneSensorLabel.setVisible(false);
+		doneSensorField.setVisible(false);
 		switch (code) {
 			case TransitSectionAction.PAUSE:
 				whatData1Field.setVisible(true);
@@ -1074,12 +1090,17 @@ public class TransitTableAction extends AbstractTableAction {
 			case TransitSectionAction.RAMPTRAINSPEED:
 				whatData1Field.setVisible(true);
 				whatData1Field.setToolTipText(rbx.getString("HintSetSpeedData1"));
-				whatData2Field.setVisible(true);
-				whatData2Field.setToolTipText(rbx.getString("HintSetTrainSpeedData2"));
 				break;
 			case TransitSectionAction.TOMANUALMODE:
+				doneSensorLabel.setVisible(true);
+				doneSensorField.setVisible(true);
+				doneSensorField.setToolTipText(rbx.getString("HintDoneSensor"));
 				break;
-			case TransitSectionAction.RESUMEAUTO:
+			case TransitSectionAction.SETLIGHT:
+				onButton.setVisible(true);
+				offButton.setVisible(true);
+				onButton.setToolTipText(rbx.getString("HintSetLight"));
+				offButton.setToolTipText(rbx.getString("HintSetLight"));
 				break;
 			case TransitSectionAction.STARTBELL:
 				break;
@@ -1100,6 +1121,10 @@ public class TransitTableAction extends AbstractTableAction {
 			case TransitSectionAction.LOCOFUNCTION:
 				whatData1Field.setVisible(true);
 				whatData1Field.setToolTipText(rbx.getString("HintLocoFunctionData1"));
+				onButton.setVisible(true);
+				offButton.setVisible(true);
+				onButton.setToolTipText(rbx.getString("HintLocoFunctionOnOff"));
+				offButton.setToolTipText(rbx.getString("HintLocoFunctionOnOff"));
 				break;
 			case TransitSectionAction.SETSENSORACTIVE:
 			case TransitSectionAction.SETSENSORINACTIVE:
@@ -1220,10 +1245,19 @@ public class TransitTableAction extends AbstractTableAction {
 				break;
 			case TransitSectionAction.RAMPTRAINSPEED:
 				if (!readWhatData1(rbx.getString("SpeedPercentage"),1,99)) return false;
-				if (!readWhatData2(rbx.getString("RampLengthTime"),100,20000)) return false;
 				break;
 			case TransitSectionAction.TOMANUALMODE:
-			case TransitSectionAction.RESUMEAUTO:
+				tWhatString = doneSensorField.getText();
+				if (tWhatString.length()>=1) {
+					if (!validateSensor(tWhatString,false)) {
+						tWhatString = "";
+					}
+				}
+				break;
+			case TransitSectionAction.SETLIGHT:
+				tWhatString = "On";
+				if (offButton.isSelected()) tWhatString = "Off";
+				break;
 			case TransitSectionAction.STARTBELL:
 			case TransitSectionAction.STOPBELL:
 				break;
@@ -1252,6 +1286,8 @@ public class TransitTableAction extends AbstractTableAction {
 				break;
 			case TransitSectionAction.LOCOFUNCTION:
 				if (!readWhatData1(rbx.getString("FunctionNumber"),0,28)) return false;
+				tWhatString = "On";
+				if (offButton.isSelected()) tWhatString = "Off";
 				break;
 			case TransitSectionAction.SETSENSORACTIVE:
 			case TransitSectionAction.SETSENSORINACTIVE:
@@ -1345,8 +1381,6 @@ public class TransitTableAction extends AbstractTableAction {
 				return rbx.getString("OnSensorActive");
 			case TransitSectionAction.SENSORINACTIVE:
 				return rbx.getString("OnSensorInactive");
-			case TransitSectionAction.CONTAINED:
-				return rbx.getString("WithinSection");
 		}		
 		return "WHEN";
 	}
@@ -1368,8 +1402,8 @@ public class TransitTableAction extends AbstractTableAction {
 				return rbx.getString("RampTrainSpeed");
 			case TransitSectionAction.TOMANUALMODE:
 				return rbx.getString("ToManualMode");
-			case TransitSectionAction.RESUMEAUTO:
-				return rbx.getString("ResumeAuto");
+			case TransitSectionAction.SETLIGHT:
+				return rbx.getString("SetLight");
 			case TransitSectionAction.STARTBELL:
 				return rbx.getString("StartBell");	
 			case TransitSectionAction.STOPBELL:
@@ -1474,11 +1508,6 @@ public class TransitTableAction extends AbstractTableAction {
 							new Object[] {""+tsa.getDataWhen(),tsa.getStringWhen()});
 				return java.text.MessageFormat.format(rbx.getString("OnSensorInactiveFull"),  
 							new Object[] {tsa.getStringWhen()});
-			case TransitSectionAction.CONTAINED:
-				if (tsa.getDataWhen()>0) 
-					return java.text.MessageFormat.format(rbx.getString("WithinSectionDelayedFull"),  
-							new Object[] {""+tsa.getDataWhen()});
-				return rbx.getString("WithinSectionFull");
 		}		
 		return "WHEN";
 	}
@@ -1500,11 +1529,16 @@ public class TransitTableAction extends AbstractTableAction {
 							new Object[] {tsa.getDataWhat1()});	
 			case TransitSectionAction.RAMPTRAINSPEED:
 				return java.text.MessageFormat.format(rbx.getString("RampTrainSpeedFull"),  
-							new Object[] {""+tsa.getDataWhat1(),""+tsa.getDataWhat2()});
+							new Object[] {""+tsa.getDataWhat1()});
 			case TransitSectionAction.TOMANUALMODE:
+				if (tsa.getStringWhat().length()>0) {
+					return java.text.MessageFormat.format(rbx.getString("ToManualModeAltFull"),  
+							new Object[] {tsa.getStringWhat()});
+				}
 				return rbx.getString("ToManualModeFull");
-			case TransitSectionAction.RESUMEAUTO:
-				return rbx.getString("ResumeAutoFull");
+			case TransitSectionAction.SETLIGHT:
+				return java.text.MessageFormat.format(rbx.getString("SetLightFull"),  
+							new Object[] {rbx.getString(tsa.getStringWhat())});
 			case TransitSectionAction.STARTBELL:
 				return rbx.getString("StartBellFull");	
 			case TransitSectionAction.STOPBELL:
@@ -1517,7 +1551,7 @@ public class TransitTableAction extends AbstractTableAction {
 						new Object[] {tsa.getStringWhat(),""+tsa.getDataWhat1(),""+tsa.getDataWhat2()});
 			case TransitSectionAction.LOCOFUNCTION:
 				return java.text.MessageFormat.format(rbx.getString("LocoFunctionFull"),  
-							new Object[] {tsa.getDataWhat1()});
+							new Object[] {""+tsa.getDataWhat1(),rbx.getString(tsa.getStringWhat())});
 			case TransitSectionAction.SETSENSORACTIVE:
 				return java.text.MessageFormat.format(rbx.getString("SetSensorActiveFull"),  
 							new Object[] {tsa.getStringWhat()});	

@@ -49,7 +49,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -228,6 +228,19 @@ public class Transit extends AbstractNamedBean
 			}
 		}
 		return 0;
+	}
+	/**
+	 * Gets a TransitSection in the transit from its Section and Section sequence number
+	 *    Returns null if TransitSection was not found.
+	 */
+	public TransitSection getTransitSectionFromSectionAndSeq(Section s, int seq) {
+		for (int i = 0; i<mTransitSectionList.size(); i++) {
+			TransitSection ts = mTransitSectionList.get(i);
+			if ( (ts.getSection() == s) && (ts.getSequenceNumber() == seq) ) {
+				return ts;
+			}
+		}
+		return null;
 	}
 	
 	/** 

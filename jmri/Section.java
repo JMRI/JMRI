@@ -23,7 +23,7 @@ import java.beans.PropertyChangeListener;
 
 /**
  * Sections represent a group of one or more connected Blocks that may be 
- *	allocated to one or more trains travelling in a given direction.
+ *	allocated to a train travelling in a given direction.
  * <P>
  * A Block may be in multiple Sections. All Blocks contained in a given 
  *	section must be unique. Blocks are kept in order--the first block is 
@@ -39,7 +39,7 @@ import java.beans.PropertyChangeListener;
  *	forward direction (from first block to last block) or reverse direction
  *	(from last block to first block).
  * <P>
- * A Section has two or more EntryPoints. Each EntryPoint is a Path of one 
+ * A Section has one or more EntryPoints. Each EntryPoint is a Path of one 
  *	of the Blocks in the Section that defines a connection to a Block outside
  *	of the Section. EntryPoints are grouped into two lists: 
  *		"forwardEntryPoints" - entry through which will result in a train 
@@ -56,9 +56,10 @@ import java.beans.PropertyChangeListener;
  * A Section has an occupancy.  A Section is OCCUPIED if any of its Blocks is 
  *  OCCUPIED. A Section is UNOCCUPIED if all  of its Blocks are UNOCCUPIED
  * <P>
- * A Section of sufficient length may be allocated to more than one train provided 
- *	the trains are travelling in the same direction. There must be at least one block
- *  between trains travelling in the same direction in a section.
+ * A Section of may be allocated to only one train at a time, even if the trains are 
+ *  travelling in the same direction. If a Section has sufficient space for multiple
+ *  trains travelling in the same direction it should be broken up into multiple 
+ *  Sections so the trains can follow each other through the original Section.
  * <P>
  * A Section may not contain any reverse loops. The track that is reversed in a 
  *	reverse loop must be in a separate Section.
@@ -82,8 +83,6 @@ import java.beans.PropertyChangeListener;
  * <P>
  * This Section implementation provides for delayed initialization of blocks and 
  *	direction sensors to be independent of order of items in panel files. 
- * <p>
- * Section system names are always upper case.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -98,9 +97,9 @@ import java.beans.PropertyChangeListener;
  * for more details.
  * <P>
  *
- * @author			Dave Duchamp Copyright (C) 2008
+ * @author			Dave Duchamp Copyright (C) 2008,2010
  * 
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -483,6 +482,37 @@ public class Section extends AbstractNamedBean
 		}
 		return a;
 	}
+	
+	/**
+	 * Gets the number of Blocks in this Section
+	 */
+	public int getNumBlocks() {
+		if (initializationNeeded) initializeBlocks();
+		return mBlockEntries.size();
+	}
+	
+	/**
+	 * Gets length of Section in scale feet or scale meters.  
+	 *    Length of the Section is calculated by summing the lengths of
+	 *        all Blocks in the section.  If all Block lengths have not been
+	 *        entered, length will not be correct.
+	 *    If meters = true, units of returned length is scale meters
+	 *    If meters = false, units of returned length is scale feet
+	 *	  scale = layout scale according to definitions in jmri.Scale.java
+	 */
+	public float getLengthF(boolean meters, int scale) {
+		if (initializationNeeded) initializeBlocks();
+		float length = 0.0f;
+		for (int i = 0; i<mBlockEntries.size(); i++) {
+			length = length + mBlockEntries.get(i).getLengthMm();
+		}
+		length = length/(float)(Scale.getScaleFactor(scale));
+		if (meters) return (length*0.001f);			
+		return (length*0.00328084f);
+	}
+	public int getLengthI(boolean meters, int scale) {
+		return ((int)((getLengthF(meters,scale)+0.5f)));
+	}
 			
 	/**
 	 * Get Block by its Sequence number in the Block list
@@ -657,7 +687,7 @@ public class Section extends AbstractNamedBean
 				if (s.containsBlock(ep.getFromBlock())) return ep;
 			}
 		}
-		return ep;
+		return null;
 	}
 	/** 
 	 * Returns the EntryPoint for exit to specified Section for travel in specified direction
@@ -677,7 +707,7 @@ public class Section extends AbstractNamedBean
 				if (s.containsBlock(ep.getFromBlock())) return ep;
 			}
 		}
-		return ep;
+		return null;
 	}
 	/** 
 	 * Returns the EntryPoint for entry from specified Block for travel in specified direction
@@ -697,7 +727,7 @@ public class Section extends AbstractNamedBean
 				if (b == ep.getFromBlock()) return ep;
 			}
 		}
-		return ep;
+		return null;
 	}
 	/** 
 	 * Returns the EntryPoint for exit to specified Block for travel in specified direction
@@ -717,7 +747,7 @@ public class Section extends AbstractNamedBean
 				if (b == ep.getFromBlock()) return ep;
 			}
 		}
-		return ep;
+		return null;
 	}
 	
 	/**
@@ -1127,7 +1157,6 @@ public class Section extends AbstractNamedBean
 		}
 		return successful;
 	}
-
 	
 	/** 
 	 * Places direction sensors in SSL for all Signal Heads in this Section if the Sensors
@@ -1182,10 +1211,10 @@ public class Section extends AbstractNamedBean
 							Block otherBlock = ((p.getConnect1()).getLayoutBlock()).getBlock();
 							if (otherBlock==cBlock) otherBlock = ((p.getConnect2()).getLayoutBlock()).getBlock();
 							if (getBlockSequenceNumber(cBlock) < getBlockSequenceNumber(otherBlock)) { 
-								direction = EntryPoint.REVERSE;
+								direction = EntryPoint.FORWARD;
 							}
 							else {
-								direction = EntryPoint.FORWARD;
+								direction = EntryPoint.REVERSE;
 							}
 						}
 						if (!checkDirectionSensor(sh, direction, ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
@@ -1328,14 +1357,6 @@ public class Section extends AbstractNamedBean
 						int direction = getDirectionStandardTurnout(t,cUtil);
 						int altDirection = EntryPoint.FORWARD;
 						if (direction == EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
-// djd debugging
-// if (direction==EntryPoint.FORWARD)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - FORWARD");
-// if (direction==EntryPoint.REVERSE)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - REVERSE");
-// if (direction==EntryPoint.UNKNOWN)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - UNKNOWN");
-// end debugging
 						if (direction==EntryPoint.UNKNOWN) errorCount ++;
 						else {
 							SignalHead aHead = InstanceManager.signalHeadManagerInstance().getSignalHead(
@@ -1371,7 +1392,7 @@ public class Section extends AbstractNamedBean
 									if (!checkDirectionSensor(cHead, altDirection, 
 														ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 								}
-								if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
+								else if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
 										(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) ) ||
 										( (t.getContinuingSense()==Turnout.THROWN) && 
 										(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) )	) {
@@ -1386,9 +1407,11 @@ public class Section extends AbstractNamedBean
 										// two heads at throat
 										if (!checkDirectionSensor(aHead, direction, 
 													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
-									}									
+									}
+									if (!checkDirectionSensor(bHead, altDirection, 
+														ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 								}
-								if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
+								else if ( ( (t.getContinuingSense()==Turnout.CLOSED) && 
 										(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) ) ||
 										( (t.getContinuingSense()==Turnout.THROWN) && 
 										(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) )	) {
@@ -1404,6 +1427,8 @@ public class Section extends AbstractNamedBean
 										if (!checkDirectionSensor(a2Head, direction, 
 													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 									}
+									if (!checkDirectionSensor(cHead, altDirection, 
+													ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 								}
 							}
 						}
@@ -1461,7 +1486,10 @@ public class Section extends AbstractNamedBean
 									if ( (hName!=null) && (!hName.equals("")) ) {
 										c2Head = InstanceManager.signalHeadManagerInstance().getSignalHead(hName);
 									}									
-									if (((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock) {
+									if ( ((t.getContinuingSense()==Turnout.CLOSED) && 
+										(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock)) ||
+											((t.getContinuingSense()==Turnout.THROWN) &&  
+											(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock)) ) {
 										// continuing track segment is in this block
 										if (b2Head!=null) {
 											if (!checkDirectionSensor(b1Head, direction, 
@@ -1470,7 +1498,7 @@ public class Section extends AbstractNamedBean
 										else {
 											if (!checkDirectionSensor(b1Head, direction, 
 															ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
-										}	
+										}
 										if (c2Head!=null) {
 											if (!checkDirectionSensor(c1Head, direction, 
 															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
@@ -1480,7 +1508,10 @@ public class Section extends AbstractNamedBean
 															ConnectivityUtil.CONTINUING, cUtil)) errorCount ++;
 										}
 									}
-									else if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
+									else if ( ((t.getContinuingSense()==Turnout.CLOSED) && 
+										(((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock)) ||
+											((t.getContinuingSense()==Turnout.THROWN) && 
+											(((TrackSegment)t.getConnectB()).getLayoutBlock().getBlock()==cBlock)) ) {
 										// diverging track segment is in this block
 										if (b2Head!=null) {
 											if (!checkDirectionSensor(b2Head, direction, 
@@ -1489,7 +1520,7 @@ public class Section extends AbstractNamedBean
 										else {
 											if (!checkDirectionSensor(b1Head, direction, 
 															ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
-										}	
+										}
 										if (c2Head!=null) {
 											if (!checkDirectionSensor(c2Head, direction, 
 															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
@@ -1545,11 +1576,11 @@ public class Section extends AbstractNamedBean
 									else if (((TrackSegment)t.getConnectC()).getLayoutBlock().getBlock()==cBlock) {
 										// diverging track segment is in this Block
 										if (a2Head!=null) {
-											if (!checkDirectionSensor(a2Head, altDirection, 
+											if (!checkDirectionSensor(a2Head, direction, 
 															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 										}
 										else {
-											if (!checkDirectionSensor(a1Head, altDirection, 
+											if (!checkDirectionSensor(a1Head, direction, 
 															ConnectivityUtil.DIVERGING, cUtil)) errorCount ++;
 										}
 									}
@@ -1587,7 +1618,7 @@ public class Section extends AbstractNamedBean
 															ConnectivityUtil.OVERALL, cUtil)) errorCount ++;
 									}
 									else {
-										log.error("Turnout "+tLinked.getTurnoutName()+" - SSL for head "+a1Head.getSystemName()+
+										log.warn("Turnout "+tLinked.getTurnoutName()+" - SSL for head "+a1Head.getSystemName()+
 											" cannot handle direction sensor for second diverging track.");
 										errorCount ++;
 									}										
@@ -1614,14 +1645,6 @@ public class Section extends AbstractNamedBean
 						int direction = getDirectionXoverTurnout(t,cUtil);
 						int altDirection = EntryPoint.FORWARD;
 						if (direction==EntryPoint.FORWARD) altDirection = EntryPoint.REVERSE;
-// djd debugging
-// if (direction==EntryPoint.FORWARD)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - FORWARD");
-// if (direction==EntryPoint.REVERSE)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - REVERSE");
-// if (direction==EntryPoint.UNKNOWN)
-// 	log.error(getSystemName()+" - "+t.getTurnout().getSystemName()+" - UNKNOWN");
-// end debugging
 						if (direction==EntryPoint.UNKNOWN) errorCount ++;
 						else {
 							if (((TrackSegment)t.getConnectA()).getLayoutBlock().getBlock()==cBlock) {
@@ -1741,8 +1764,7 @@ public class Section extends AbstractNamedBean
 		ArrayList<EntryPoint> epList = getListOfForwardBlockEntryPoints(eBlock);
 		if (epList.size() > 0) {
 			
-// djd debugging		
-// add code here
+// djd debugging - need code to fully implement checkSignals		
 		}
 		return true;
 	}
