@@ -50,7 +50,11 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.21 $
+<<<<<<< LayoutEditor.java
+ * @version $Revision: 1.22 $
+=======
+ * @version $Revision: 1.22 $
+>>>>>>> 1.21
  */
 
 public class LayoutEditor extends Editor {
@@ -2889,14 +2893,15 @@ public class LayoutEditor extends Editor {
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
+        }else {
+            List <Positionable> selections = getSelectedItems(event);
+            if (selections.size() > 0) {
+                showToolTip(selections.get(0), event); 
+            } else {
+                super.setToolTip(null);
+            }
+            repaint();
         }
-        List <Positionable> selections = getSelectedItems(event);
-        if (selections.size() > 0) {
-            showToolTip(selections.get(0), event); 
-        } else {
-            super.setToolTip(null);
-        }
-        repaint();
         return;
     }
 
@@ -5258,25 +5263,36 @@ public class LayoutEditor extends Editor {
 				if (b!=null) g2.setColor(b.getBlockColor());
 				else g2.setColor(defaultTrackColor);
 				setTrackStrokeWidth(g2,mainline);
-				Point2D end1 = getCoords(t.getConnect1(),t.getType1());
-				Point2D end2 = getCoords(t.getConnect2(),t.getType2());
-				double delX = end1.getX() - end2.getX();
-				double delY = end1.getY() - end2.getY();
-				double cLength = Math.sqrt( (delX*delX) + (delY*delY) );
-				// note: The preferred dimension of a dash (solid + blank space) is 
-				//         5 * the track width - about 60% solid and 40% blank.
-				int nDashes = (int)( cLength / ((trackWidth)*5.0) );
-				if (nDashes < 3) nDashes = 3;
-				double delXDash = -delX/( (nDashes) - 0.5 );
-				double delYDash = -delY/( (nDashes) - 0.5 );
-				double begX = end1.getX();
-				double begY = end1.getY();
-				for (int k = 0; k<nDashes; k++) {
-					g2.draw(new Line2D.Double(new Point2D.Double(begX,begY),
-						new Point2D.Double((begX+(delXDash*0.5)),(begY+(delYDash*0.5)))));
-					begX += delXDash;
-					begY += delYDash;
-				}
+                if (t.getArc()){
+                    CalculateTrackSegmentAngle(t);
+                    Stroke drawingStroke;
+                    if (mainline)
+                        drawingStroke = new BasicStroke(mainlineTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+                    else
+                        drawingStroke = new BasicStroke(sideTrackWidth, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 0, new float[]{9}, 0);
+                    g2.setStroke(drawingStroke);
+                    g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
+                } else {
+                    Point2D end1 = getCoords(t.getConnect1(),t.getType1());
+                    Point2D end2 = getCoords(t.getConnect2(),t.getType2());
+                    double delX = end1.getX() - end2.getX();
+                    double delY = end1.getY() - end2.getY();
+                    double cLength = Math.sqrt( (delX*delX) + (delY*delY) );
+                    // note: The preferred dimension of a dash (solid + blank space) is 
+                    //         5 * the track width - about 60% solid and 40% blank.
+                    int nDashes = (int)( cLength / ((trackWidth)*5.0) );
+                    if (nDashes < 3) nDashes = 3;
+                    double delXDash = -delX/( (nDashes) - 0.5 );
+                    double delYDash = -delY/( (nDashes) - 0.5 );
+                    double begX = end1.getX();
+                    double begY = end1.getY();
+                    for (int k = 0; k<nDashes; k++) {
+                        g2.draw(new Line2D.Double(new Point2D.Double(begX,begY),
+                            new Point2D.Double((begX+(delXDash*0.5)),(begY+(delYDash*0.5)))));
+                        begX += delXDash;
+                        begY += delYDash;
+                    }
+                }
 			}
 		}
 	}
@@ -5291,82 +5307,9 @@ public class LayoutEditor extends Editor {
 				else g2.setColor(defaultTrackColor);
 				//setTrackStrokeWidth(g2,mainline);
                 if(t.getArc()){
-//                    setTrackStrokeWidth(g2,false);
-                    Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
-                    Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
-                    if (t.getFlip()){
-                        pt1 = getCoords(t.getConnect2(),t.getType2());
-                        pt2 = getCoords(t.getConnect1(),t.getType1());
-                    }
-                    if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2) || t.trackNeedsRedraw()){
-                        t.setTmpPt1(pt1);
-                        t.setTmpPt2(pt2);
-                        //setTrackStrokeWidth(g2,false);
-                        double pt2x;
-                        double pt2y;
-                        double pt1x;
-                        double pt1y;
-                        pt2x = pt2.getX();
-                        pt2y = pt2.getY();
-                        pt1x = pt1.getX();
-                        pt1y = pt1.getY();
-
-                        if (t.getAngle() == 0.0D)
-                            t.setTmpAngle(90.0D);
-                        else
-                            t.setTmpAngle(t.getAngle());
-                        // Convert angle to radiants in order to speed up maths
-                        double halfAngle = java.lang.Math.toRadians(t.getTmpAngle())/2.0D;
-                        double chord;
-                        double a;
-                        double o;
-                        double radius;
-                        // Compute arc's chord
-                        a = pt2x - pt1x;
-                        o = pt2y - pt1y;
-                        chord=java.lang.Math.sqrt(((a*a)+(o*o)));
-                        t.setChordLength(chord);
-                        // Make sure chord is not null 
-                        // In such a case (pt1 == pt2), there is no arc to draw
-                        if (chord > 0.0D) {
-                            radius = (chord/2)/(java.lang.Math.sin(halfAngle));
-                            // Circle
-                            double startRad = java.lang.Math.atan2(a, o) - halfAngle;
-                            t.setStartadj(java.lang.Math.toDegrees(startRad));
-                            if(t.getCircle()){
-                                // Circle - Compute center
-                                t.setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
-                                t.setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
-                                // Circle - Compute rectangle required by Arc2D.Double
-                                t.setCW(radius * 2.0D);
-                                t.setCH(radius * 2.0D);
-                                t.setCX(t.getCentreX()-(radius));
-                                t.setCY(t.getCentreY()-(radius));
-                            } 
-                            else {
-                                // Elipse - Round start angle to the closest multiple of 90
-                                t.setStartadj(java.lang.Math.round(t.getStartadj() / 90.0D) * 90.0D);
-                                // Elipse - Compute rectangle required by Arc2D.Double
-                                t.setCW(java.lang.Math.abs(a)*2.0D);
-                                t.setCH(java.lang.Math.abs(o)*2.0D);
-                                // Elipse - Adjust rectangle corner, depending on quadrant
-                                if (o * a < 0.0D)
-                                    a = -a;
-                                else
-                                    o = -o;
-                                t.setCX(java.lang.Math.min(pt1x, pt2x)-java.lang.Math.max(a, 0.0D));
-                                t.setCY(java.lang.Math.min(pt1y, pt2y)-java.lang.Math.max(o, 0.0D));
-                            }
-                        }
-                    // Make sure stroke width get restored!
-					}
-                    //main = !mainline;
-                    
+                    CalculateTrackSegmentAngle(t);
                     g2.draw(new Arc2D.Double(t.getCX(), t.getCY(), t.getCW(), t.getCH(), t.getStartadj(), t.getTmpAngle(), Arc2D.OPEN));
-                    //setTrackStrokeWidth(g2, mainline);
-				} 
-                else {
-                    //setTrackStrokeWidth(g2, mainline);
+                } else {
                     g2.draw(new Line2D.Double(getCoords(t.getConnect1(),t.getType1()), getCoords(t.getConnect2(),t.getType2())));
                 }
                 t.trackRedrawn();
@@ -5374,6 +5317,82 @@ public class LayoutEditor extends Editor {
 		}
 	}
     
+    /*
+     * Calculates the initally parameters for drawing a circular track segment.
+     */
+    private void CalculateTrackSegmentAngle(TrackSegment t){
+        Point2D pt1 = getCoords(t.getConnect1(),t.getType1());
+        Point2D pt2 = getCoords(t.getConnect2(),t.getType2());
+        if (t.getFlip()){
+            pt1 = getCoords(t.getConnect2(),t.getType2());
+            pt2 = getCoords(t.getConnect1(),t.getType1());
+        }
+        if((t.getTmpPt1()!=pt1) || (t.getTmpPt2()!=pt2) || t.trackNeedsRedraw()){
+            t.setTmpPt1(pt1);
+            t.setTmpPt2(pt2);
+            //setTrackStrokeWidth(g2,false);
+            double pt2x;
+            double pt2y;
+            double pt1x;
+            double pt1y;
+            pt2x = pt2.getX();
+            pt2y = pt2.getY();
+            pt1x = pt1.getX();
+            pt1y = pt1.getY();
+
+            if (t.getAngle() == 0.0D)
+                t.setTmpAngle(90.0D);
+            else
+                t.setTmpAngle(t.getAngle());
+            // Convert angle to radiants in order to speed up maths
+            double halfAngle = java.lang.Math.toRadians(t.getTmpAngle())/2.0D;
+            double chord;
+            double a;
+            double o;
+            double radius;
+            // Compute arc's chord
+            a = pt2x - pt1x;
+            o = pt2y - pt1y;
+            chord=java.lang.Math.sqrt(((a*a)+(o*o)));
+            t.setChordLength(chord);
+            // Make sure chord is not null 
+            // In such a case (pt1 == pt2), there is no arc to draw
+            if (chord > 0.0D) {
+                radius = (chord/2)/(java.lang.Math.sin(halfAngle));
+                // Circle
+                double startRad = java.lang.Math.atan2(a, o) - halfAngle;
+                t.setStartadj(java.lang.Math.toDegrees(startRad));
+                if(t.getCircle()){
+                    // Circle - Compute center
+                    t.setCentreX(pt2x - java.lang.Math.cos(startRad) * radius);
+                    t.setCentreY(pt2y + java.lang.Math.sin(startRad) * radius);
+                    // Circle - Compute rectangle required by Arc2D.Double
+                    t.setCW(radius * 2.0D);
+                    t.setCH(radius * 2.0D);
+                    t.setCX(t.getCentreX()-(radius));
+                    t.setCY(t.getCentreY()-(radius));
+                } 
+                else {
+                    // Elipse - Round start angle to the closest multiple of 90
+                    t.setStartadj(java.lang.Math.round(t.getStartadj() / 90.0D) * 90.0D);
+                    // Elipse - Compute rectangle required by Arc2D.Double
+                    t.setCW(java.lang.Math.abs(a)*2.0D);
+                    t.setCH(java.lang.Math.abs(o)*2.0D);
+                    // Elipse - Adjust rectangle corner, depending on quadrant
+                    if (o * a < 0.0D)
+                        a = -a;
+                    else
+                        o = -o;
+                    t.setCX(java.lang.Math.min(pt1x, pt2x)-java.lang.Math.max(a, 0.0D));
+                    t.setCY(java.lang.Math.min(pt1y, pt2y)-java.lang.Math.max(o, 0.0D));
+                }
+            }
+        }
+    }
+    /*
+     * The recalculation method is used when the user changes the angle dynamically in edit mode
+     * by dragging the centre of the cirle
+     */
     private void reCalculateTrackSegmentAngle(TrackSegment t, double x, double y){
         
         double pt2x;
@@ -5410,6 +5429,10 @@ public class LayoutEditor extends Editor {
         
     }
 	
+    /*
+     * Draws a square at the circles centre, that then allows the user to dynamically change
+     * the angle by dragging the mouse.
+     */
 	private void drawTrackCircleCentre(Graphics2D g2)
 	{
 		// loop over all defined turnouts
