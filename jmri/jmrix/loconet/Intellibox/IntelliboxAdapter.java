@@ -14,8 +14,8 @@ import jmri.jmrix.loconet.*;
  * the command station prompt is suppressed.
  *
  * @author			Alex Shepherd   Copyright (C) 2004
- * @author          Bob Jacobsen    Copyright (C) 2005
- * @version			$Revision: 1.12 $
+ * @author          Bob Jacobsen    Copyright (C) 2005, 2010
+ * @version			$Revision: 1.13 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 
@@ -23,8 +23,8 @@ public class IntelliboxAdapter extends LocoBufferAdapter {
     public IntelliboxAdapter() {
         super();
 
-        validSpeeds = new String[]{"19200", "38400"};
-        validSpeedValues = new int[]{19200, 38400};
+        validSpeeds = new String[]{"19200", "38400", "115200"};
+        validSpeedValues = new int[]{19200, 38400, 115200};
     }
 
     /**
