@@ -26,7 +26,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.5 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.6 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked
@@ -75,7 +75,7 @@ fi
 
 if [ -z "$ARCH" ]
 then
-    for cmd in "arch" "uname -i" "uname -p"
+    for cmd in "arch" "uname -i" "uname -p" "uname -m"
     do
       ARCH=`$cmd 2>/dev/null`
       if [ -n "$ARCH" ]
