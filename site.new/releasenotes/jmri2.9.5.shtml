@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.13 2010-03-31 15:05:26 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.14 2010-03-31 16:35:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -281,6 +281,7 @@ Michael Mosher provided an MTH decoder definition.
 First support for internationalization of decoder definitions is in place.
 In future releases, we expect to be able to provide DecoderPro in 
 multiple languages, but we'll need a lot of help doing the needed translations.
+
 <p>
 Stephen Williams and Dan Boudreau made changes to the NCE throttle.
 Previously throttle commands bypassed the NCE command station software
@@ -288,6 +289,33 @@ and were sent directly to the track (NMRA format). Now if you have the
 "2006 or later" eprom installed, throttle commands will behave like the
 a NCE throttle. For example, you can now address a locomotive in a
 consist by its address rather than its consist number. 
+
+<p>
+The Throttle menu and preferences have been reorganized, hopefully to
+make their easier to understand and use.
+
+<p>
+Brett Hoffman updated the WiThrottle support:
+Added heartbeat for loss of connection, UDID for device ID, track power control.
+Added basic preferences support including using a fixed port #.
+Improved JmDNS shutdown.
+
+<p>
+The throttle preferences have been improved and updated.
+
+<p>
+Dan Boudreau and Steve Williams improved how consists are handled
+when using a JMRI throttle with an NCE PowerHouse Pro.
+
+<p>
+Matt Harris fixed a problem with CV124 in the ESU LokSound Select decoder definition.
+
+<p>
+David Duchamp updated Sections, Transits and related classes for automated running.
+
+<p>
+LocoNet/Intellibox connections can now also work at 115200 baud, though
+we continue to recommend lower speeds due to issues in the Intellibox flow control.
 
 <!--#include virtual="/Footer" -->
 
