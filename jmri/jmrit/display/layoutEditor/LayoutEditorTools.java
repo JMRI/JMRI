@@ -35,7 +35,7 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutEditorTools 
@@ -1408,6 +1408,8 @@ public class LayoutEditorTools
 				// Reached turnout continuing, should be signalled
 				LayoutTurnout to = (LayoutTurnout)connect;
 				String signalName = to.getSignalB2Name();
+				if (to.getContinuingSense()==Turnout.THROWN)
+					signalName = to.getSignalC2Name();
 				if ((!(signalName==null))&&(!(signalName.equals("")))) 
 					auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
 									getSignalHead(signalName);
@@ -1433,6 +1435,8 @@ public class LayoutEditorTools
 				// Reached turnout diverging, should be signalled
 				LayoutTurnout to = (LayoutTurnout)connect;
 				String signalName = to.getSignalC2Name();
+				if (to.getContinuingSense()==Turnout.THROWN)
+					signalName = to.getSignalB2Name();
 				if ((!(signalName==null))&&(!(signalName.equals("")))) 
 					auxSignal = jmri.InstanceManager.signalHeadManagerInstance().
 									getSignalHead(signalName);
