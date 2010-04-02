@@ -51,9 +51,9 @@ import java.util.ResourceBundle;
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
 <<<<<<< LayoutEditor.java
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
 =======
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
 >>>>>>> 1.21
  */
 
@@ -180,6 +180,7 @@ public class LayoutEditor extends Editor {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
+    private JCheckBoxMenuItem showTooltipItem;
     private JMenu scrollMenu = null;
     private JRadioButtonMenuItem scrollBoth = null;
     private JRadioButtonMenuItem scrollNone = null;
@@ -420,24 +421,15 @@ public class LayoutEditor extends Editor {
 		top4.add (new JLabel("    "));
         JButton changeIcon = new JButton(rb.getString("ChangeIcons")+"...");
         changeIcon.addActionListener( new ActionListener() {
-                Editor ed;
                 public void actionPerformed(ActionEvent a) {
-                    String name = null;
 					if (sensorBox.isSelected())
-                        name = "SensorEditor";
+						sensorFrame.setVisible(true);
 					else if (signalBox.isSelected())
-						name = "SignalHeadEditor";
+						signalFrame.setVisible(true);
 					else if (iconLabelBox.isSelected())
-						name = "IconEditor";
-                    JFrameItem frame = ed.getIconFrame(name);
-                    if (frame!=null) 
-                        frame.setVisible(true);
+						iconFrame.setVisible(true);
                 }
-                ActionListener init(Editor e) {
-                    ed = e;
-                    return this;
-                }
-            }.init(this));
+            } );
         top4.add(changeIcon);
 		changeIcon.setToolTipText(rb.getString("ChangeIconToolTip"));
 		// sensor icon
@@ -552,6 +544,7 @@ public class LayoutEditor extends Editor {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
         controlItem.setSelected(allControlling());
+        showTooltipItem.setSelected(showTooltip());
         switch (_scrollState) {
             case SCROLL_NONE:
                 scrollNone.setSelected(true);
@@ -763,6 +756,15 @@ public class LayoutEditor extends Editor {
                 }
             });                    
         showHelpItem.setSelected(showHelpBar);
+		// show tooltip item
+		showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
+        optionMenu.add(showTooltipItem);
+        showTooltipItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setAllShowTooltip(showTooltipItem.isSelected());
+                }
+            });                    
+        showTooltipItem.setSelected(showTooltip());
 		// show grid item
 		showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
         optionMenu.add(showGridItem);
@@ -2824,7 +2826,6 @@ public class LayoutEditor extends Editor {
 
             boolean popupSet =false;
             popupSet = p.setRotateOrthogonalMenu(popup);        
-            popupSet = p.setEditIconMenu(popup);        
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -2848,6 +2849,7 @@ public class LayoutEditor extends Editor {
 
             // for Positionables with unique settings
             p.showPopUp(popup);
+            setShowTooltipMenu(p, popup);
 
             setRemoveMenu(p, popup);
             if (p.doViemMenu()) {
@@ -2893,15 +2895,14 @@ public class LayoutEditor extends Editor {
         if (isEditable()) {
             xLabel.setText(Integer.toString(xLoc));
             yLabel.setText(Integer.toString(yLoc));
-        }else {
-            List <Positionable> selections = getSelectedItems(event);
-            if (selections.size() > 0) {
-                showToolTip(selections.get(0), event); 
-            } else {
-                super.setToolTip(null);
-            }
-            repaint();
         }
+        List <Positionable> selections = getSelectedItems(event);
+        if (selections.size() > 0 && selections.get(0).showTooltip()) {
+            showToolTip(selections.get(0), event); 
+        } else {
+            super.setToolTip(null);
+        }
+        repaint();
         return;
     }
 
@@ -3539,6 +3540,10 @@ public class LayoutEditor extends Editor {
 		}
         return found;
 	}
+
+    public boolean removeFromContents(Positionable l) {
+        return remove(l);
+    }
 
 	boolean noWarnPositionablePoint = false;
 	
@@ -5620,7 +5625,7 @@ public class LayoutEditor extends Editor {
 	
     /**
     * override
-    */
+    *
     public void showToolTip(Positionable selection, MouseEvent event) {
         if (selection.getDisplayLevel()>BKG) {
             ToolTip tip = selection.getTooltip();
@@ -5631,6 +5636,12 @@ public class LayoutEditor extends Editor {
         } else {
             setToolTip(null);
         }
+    } */
+    public void showToolTip(Positionable selection, MouseEvent event) {
+        ToolTip tip = selection.getTooltip();
+        tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
+        tip.setText(selection.getNameString());
+        setToolTip(tip);
     }
 
     // initialize logging
