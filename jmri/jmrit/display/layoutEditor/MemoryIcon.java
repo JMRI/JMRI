@@ -11,6 +11,7 @@ public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
+        log.debug("MemoryIcon ctor= "+MemoryIcon.class.getName());
     }
 
     public void setText(String text) {
