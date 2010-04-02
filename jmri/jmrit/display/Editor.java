@@ -1733,7 +1733,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /********************* cleanup *************************/
 
-    protected void removeFromTarget(Positionable l) {
+    private void removeFromTarget(Positionable l) {
         _targetPanel.remove((Component)l);
     }
 
@@ -1805,7 +1805,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             tip.setText(txt);
         }
         tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
-//        tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
         setToolTip(tip);
     }
 
@@ -1859,14 +1858,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
         }
-        if (_debug) {
+      /*  if (_debug) {
             log.debug("getSelectedItems at ("+x+","+y+") "+selections.size()+" found,");
-          /*  for (int i=0; i<selections.size(); i++) {
+            for (int i=0; i<selections.size(); i++) {
                 Positionable comp = selections.get(i);
                 log.debug("getSelectedItems: selection: "+ comp.getNameString()+
                             ", class= "+comp.getClass().getName());
-            } */
-        }
+            }
+        } */
         return selections;
     }
 
