@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -63,7 +63,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
             return;
         } else {
             name = attr.getValue();
-            System.out.println(name);
+            if (log.isDebugEnabled()) log.debug("Load SignalMast "+name);
         }
         
         SignalMast sh = jmri.InstanceManager.signalMastManagerInstance().getSignalMast(name);
