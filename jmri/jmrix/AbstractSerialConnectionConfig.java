@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 //
@@ -315,6 +315,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         _details.validate();
         if (_details.getTopLevelAncestor()!=null){
             ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
         }
         _details.repaint();
     }
