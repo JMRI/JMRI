@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -31,7 +31,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         LayoutEditor p = (LayoutEditor)o;
         Element panel = new Element("LayoutEditor");
 
-        panel.setAttribute("class", "jmri.jmrit.display.configurexml.LayoutEditorXml");
+        panel.setAttribute("class", "jmri.jmrit.display.layoutEditor.configurexml.LayoutEditorXml");
         panel.setAttribute("name", p.getLayoutName());
         panel.setAttribute("x", ""+p.getUpperLeftX());
         panel.setAttribute("y", ""+p.getUpperLeftY());
