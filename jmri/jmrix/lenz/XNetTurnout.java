@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.22 $
+ * @version			$Revision: 2.23 $
  */
 
 package jmri.jmrix.lenz;
@@ -257,24 +257,19 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     synchronized public void message(XNetReply l) {
 	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
         if(InternalState==OFFSENT) {
-	  // If an OFF was sent, we want to check for Communications 
-          // errors before we try to do anything else. 
-	  if(l.isCommErrorMessage()) {
-            /* this is a communications error */
-            log.error("Communications error occured - message recieved was: " + l);
-            return;
-	  } else  if(l.isCSBusyMessage()) {
-            /* this is a communications error */
-            log.error("Command station busy - message recieved was: " + l);
-            return;
-	  } else if(l.isOkMessage()) {
+	  if(l.isOkMessage()) {
 	    /* the command was successfully recieved */
             synchronized(this) {
 	       newKnownState(getCommandedState());
 	       InternalState=IDLE;
             }
 	    return;
-	  }
+	  } else {
+            /* Default Behavior: If anything other than an OK message
+               is received, Send another OFF message. */
+            if(log.isDebugEnabled()) log.debug("Message is not OK message.  Message received was: " + l);
+            sendOffMessage();
+          }
         }
 
 	switch(getFeedbackMode()) {
@@ -299,6 +294,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     public void notifyTimeout(XNetMessage msg)
     {
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
+       // If we're in the OFFSENT state, we need to send another OFF message.
+       if(InternalState==OFFSENT) sendOffMessage();
+
     }
 
     /*
@@ -339,6 +337,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 		      // This message includes feedback for this turnout  
                       if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " DIRECT feedback mode - directed reply received."); 
 		      sendOffMessage();
+                      // Explicitly send two off messages in Direct Mode
+		      sendOffMessage();
 		      break;
                    }
                 }  
@@ -346,6 +346,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
           } else if(l.isOkMessage()) {
              // Finally, we may just recieve an OK message.
              if(log.isDebugEnabled()) log.debug("Turnout " + mNumber + " DIRECT feedback mode - OK message triggering OFF message."); 
+	     sendOffMessage();
+             // Explicitly send two off messages in Direct Mode
 	     sendOffMessage();
 	  } else return;
        }
@@ -505,12 +507,21 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   getCommandedState()==_mClosed,
                                                   getCommandedState()==_mThrown,
                                                   false ); 
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
 	    // Set the known state to the commanded state.
             synchronized(this) {
+               try{
+                   // To avoid some of the command station busy 
+                   // messages, add a short delay before sending the 
+                   // first off message.  
+                   if(InternalState != OFFSENT) wait(250);
+               } catch(java.lang.InterruptedException ie) {
+                   log.debug("wait interrupted");
+               }
 	       newKnownState(getCommandedState());
 	       InternalState = OFFSENT;
             }
+            // Then send the message.
+            XNetTrafficController.instance().sendXNetMessage(msg, this);
     }
 
 
