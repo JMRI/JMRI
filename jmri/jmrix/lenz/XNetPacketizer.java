@@ -21,7 +21,7 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.8 $
+ * @version 		$Revision: 2.9 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -67,7 +67,7 @@ public class XNetPacketizer extends XNetTrafficController {
      * returns true if ready, false otherwise
      * May throw an Exception.   
      */
-    public boolean portReadyToSend(jmri.jmrix.AbstractSerialPortController p) throws Exception {
+    public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
         if (((XNetPortController)p).okToSend()) {
          ((XNetPortController)p).setOutputBufferEmpty(false);
 	 return true;
