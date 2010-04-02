@@ -15,7 +15,7 @@ import jmri.NmraPacket;
  *
  * Description:		extend jmri.AbstractTurnout for EasyDcc layouts
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class EasyDccTurnout extends AbstractTurnout {
 
@@ -29,6 +29,10 @@ public class EasyDccTurnout extends AbstractTurnout {
 	}
 
 	public int getNumber() { return _number; }
+
+    // Turnouts do support inversion
+    @Override
+    public boolean canInvert(){return true;}
 
 	// Handle a request to change state by sending a formatted DCC packet
 	protected void forwardCommandChangeToLayout(int s) {
