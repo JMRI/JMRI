@@ -225,6 +225,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
+  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCmp 1 $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
