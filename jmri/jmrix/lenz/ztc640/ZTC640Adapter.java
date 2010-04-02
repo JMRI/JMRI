@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -32,7 +32,6 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
-    private boolean CheckBuffer = true;
     
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
@@ -261,8 +260,8 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
         if (!mOpt1.equals(validOption1[0]))
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
-        if (!mOpt2.equals(validOption2[0]))
-            CheckBuffer = false;    
+        if (mOpt2.equals(validOption2[0]))
+            CheckBuffer = true;    
     }
     
     

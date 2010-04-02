@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LI101 on an attached serial comm port.
  * Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 2.16 $
+ * @version			$Revision: 2.17 $
  */
 
 public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -32,7 +32,6 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
     SerialPort activeSerialPort = null;
     
     private boolean OutputBufferEmpty = true;
-    private boolean CheckBuffer = true;
     
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
@@ -262,8 +261,8 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
         if (!mOpt1.equals(validOption1[0]))
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
-        if (!mOpt2.equals(validOption2[0]))
-            CheckBuffer = false;    
+        if (mOpt2.equals(validOption2[0]))
+            CheckBuffer = true;    
     }
     
     

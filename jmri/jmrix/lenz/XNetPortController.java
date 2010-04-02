@@ -13,7 +13,7 @@ import jmri.util.SystemType;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -42,32 +42,17 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortCo
      * We need a way to say if the output buffer is empty or not
      */
     public abstract void setOutputBufferEmpty(boolean s);
-    
-    /**
-     * Option 2 controls if the buffer status will be checked when 
-     * sending data
-     */
-    public String option2Name() { return "Check Buffer Status when sending? "; }
-    public String[] validOption2() { 
-        // if first time invoked, set default
-        if (mOpt2 == null) {
-            switch (SystemType.getType()) {
-                case SystemType.MACCLASSIC:
-                case SystemType.MACOSX:
-                    mOpt2="no";
-                    break;
-                default:
-                    mOpt2="yes";
-                    break;                
-            }
-        }
-        // return options
-        return validOption2;
-    }
-    // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption2 = new String[]{"yes", "no"};
-    
+   
 
+    /* Option 2 is not currently used with RxTx 2.0.  In the past, it
+       was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
+    public String getCurrentOption2Setting() {
+        if(mOpt2==null) return(new String("no"));
+        else return mOpt2;
+    }
+
+    protected String [] validOption2 = new String[]{"yes", "no"};
+    protected boolean CheckBuffer = false;
 }
 
 
