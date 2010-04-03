@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Diesel_Ver7.xml,v 1.18 2010-04-03 19:45:48 jacobsen Exp $ -->
+<!-- $Id: QSI_Diesel_Ver7.xml,v 1.19 2010-04-03 23:05:09 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -846,14 +846,6 @@
         <enumChoice choice="NMRA Digital only"/>
         <enumChoice choice="DC conversion enabled"/>
       </enumVal></variable>
-<!-- This bit is not used by QSI
-    <variable label="Advanced Decoder Acknowledgement" CV="29" mask="XXXXVXXX"
-          item="Advanced Ack">
-      <enumVal>
-        <enumChoice choice="disabled"/>
-        <enumChoice choice="enabled"/>
-      </enumVal></variable>
--->
     <variable label="Speed Table Definition" CV="29" mask="XXXVXXXX">
       <enumVal>
         <enumChoice choice="Use Straight-Line Response"/>
@@ -1204,7 +1196,7 @@
     <ivariable label="Turbo" CVname="52.14" CV="52" PI="14" default="11" comment="QSI" item="CV52.14"
     	include="102,103,111,113,123,124,125,126,12610,127,12710,128,130,131,132,134,137,140,149,150,154,163,168,171,173,174,182,183,184,185,1008,1014,1015,1018,1019,1020,1024,1032,1034,1050">
       <indexedVal max="15"/> </ivariable>
-6    <ivariable label="Air Pump" CVname="52.16" CV="52" PI="16" default="11" comment="QSI" item="CV52.16">
+    <ivariable label="Air Pump" CVname="52.16" CV="52" PI="16" default="11" comment="QSI" item="CV52.16">
       <indexedVal max="15"/> </ivariable>
     <ivariable label="Cooling Fan" CVname="52.19" CV="52" PI="19" default="11" comment="QSI" item="CV52.19">
       <indexedVal max="15"/> </ivariable>
@@ -3201,99 +3193,8 @@
 		<indexedVal/>	               
     </ivariable>
     
-<!-- 55.112.x & 55.114.x no longer supported replaced by 55.134.0
-    <ivariable label="Front Step Lights Initial State" CVname="55.112.0" CV="55" PI="112" SI="0"
-               default="1" item="CV55.112.0" mask="XXXXXXVV"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" value="0"/>
-        <ienumChoice choice="Automatic" value="1"/>
-        <ienumChoice choice="On" value="2"/>
-      </ienumVal>
-    </ivariable>
+<!-- 55.112.x & 55.114.x no longer supported replaced by 55.134.0 -->
 
-    <ivariable label="Auto Front Step Lights FWD" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 FWD" mask="XXXXXXXV"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights NFF" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 NFF" mask="XXXXXVXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-    
-    <ivariable label="Auto Front Step Lights REV" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 REV" mask="XXXVXXXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Front Step Lights NFR" CVname="55.112.1" CV="55" PI="112" SI="1"
-               default="1" item="CV55.112.1 NFR" mask="XVXXXXXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Rear Step Lights Initial State" CVname="55.114.0" CV="55" PI="114" SI="0"
-               default="1" item="CV55.114.0" mask="XXXXXXVV"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" value="0"/>
-        <ienumChoice choice="Automatic" value="1"/>
-        <ienumChoice choice="On" value="2"/>
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights FWD" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 FWD" mask="XXXXXXXV"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights NFF" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 NFF" mask="XXXXXVXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights REV" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 REV" mask="XXXVXXXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
-
-    <ivariable label="Auto Rear Step Lights NFR" CVname="55.114.1" CV="55" PI="114" SI="1"
-               default="1" item="CV55.114.1 NFR" mask="XVXXXXXX"
-               include="1008">
-      <ienumVal>
-        <ienumChoice choice="Off" />
-        <ienumChoice choice="On" />
-      </ienumVal>
-    </ivariable>
--->
     <ivariable label="Front Cab Lights Initial State" CVname="55.116.0" CV="55" PI="116" SI="0"
                default="1" item="CV55.116.0" mask="XXXXXXVV"
                include="102,104,134,139,143,144,149,150,163,179,1008,1014,1015,1018,1019,1022,1024,1032,1033,1034,1036,1037,1038,1050">
@@ -4179,7 +4080,6 @@
                opsOnly="yes" writeOnly="yes" infoOnly="yes"
                item="CV56.255_4" default="4">
     <indexedVal/> </ivariable>
-
   </variables>
 
   <resets>
