@@ -24,7 +24,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -32,8 +32,8 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
     
-    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle")};
-    String listRefValues[] = { "CONNECTIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE"};
+    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"),"WiThrottle"};
+    String listRefValues[] = { "CONNECTIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -41,6 +41,7 @@ public class TabbedPreferences extends AppConfigBase {
     JPanel detailpanel = new JPanel();
     final JTabbedPane connectionPanel = new JTabbedPane();
     final jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
+    final jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
     
     ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
     
@@ -71,6 +72,7 @@ public class TabbedPreferences extends AppConfigBase {
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     throttlePreferences.jbSaveActionPerformed(e);
+                    withrottlePrefsPanel.storeValues();
                     savePressed();
                 }
             });
@@ -139,6 +141,7 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
         detailpanel.add(throttlePreferences, "THROTTLE");
+        detailpanel.add(withrottlePrefsPanel, "WITHROTTLE");
         detailpanel.add(rosterPanel, "ROSTER");
         detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
 
