@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Sound  {
 
@@ -62,7 +62,7 @@ public class Sound  {
             URL url = (new java.io.File(filename)).toURI().toURL();
 
             // create a loader and start asynchronous sound loading
-            audioClip = new sun.applet.AppletAudioClip(url);
+            audioClip = new java.applet.Applet().getAudioClip(url);
 
         } catch (MalformedURLException e) {
             log.error("Error creating sound address: "+e.getMessage());
