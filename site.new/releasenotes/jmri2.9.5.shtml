@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.14 2010-03-31 16:35:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.15 2010-04-03 20:07:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -316,6 +316,27 @@ David Duchamp updated Sections, Transits and related classes for automated runni
 <p>
 LocoNet/Intellibox connections can now also work at 115200 baud, though
 we continue to recommend lower speeds due to issues in the Intellibox flow control.
+
+<p>
+You can now invert EasyDCC turnouts.
+
+<p>
+Walt Thompson updated the help pages for adding Blocks, the speedometer, 
+and the main DecoderPro in-program pages.
+
+<p>
+Peter Ulvestad updated the MRC 1665decoder definition
+and added a MRC 1825 definition.
+
+<p>
+Mike Mosher updated the QSI Version 7 definitions
+with a number of improvements, including hiding certain
+non-present variables and CVs so DecoderPro won't try to read them
+when they are not present. This is meant to reduce the problem
+with QSI decoders stalling while being read.
+
+<p>
+Peter Ulvestad updated the ESU Bachman 3 function decoder definition.
 
 <!--#include virtual="/Footer" -->
 
