@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 import java.awt.Color;
@@ -45,7 +45,8 @@ public class WiThrottlePrefsPanel extends JPanel{
     boolean enableSave;
 
     public WiThrottlePrefsPanel(){
-        localPrefs = WiThrottleManager.withrottlePreferencesInstance();
+        //  set local prefs to match instance prefs
+        localPrefs.apply(WiThrottleManager.withrottlePreferencesInstance());
         initGUI();
         setGUI();
     }
@@ -57,12 +58,11 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     public void initGUI(){
         lineBorder = BorderFactory.createLineBorder(Color.black);
-        //JPanel mainPanel = new JPanel();
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.add(eStopDelayPanel());
-        this.add(socketPortPanel());
-        this.add(allowedControllers());
-        this.add(cancelApplySave());
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        add(eStopDelayPanel());
+        add(socketPortPanel());
+        add(allowedControllers());
+        add(cancelApplySave());
 
     }
 
@@ -77,12 +77,18 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     }
 
-
+/**
+ * Show the save and cancel buttons if displayed in its own frame.
+ */
     public void enableSave(){
         saveB.setVisible(true);
         cancelB.setVisible(true);
     }
-
+/**
+ * set the local prefs to match the GUI
+ * Local prefs are independant from the singleton instance prefs.
+ * @return true if set, false if values are unacceptable.
+ */
     private boolean setValues(){
         boolean didSet = true;
         localPrefs.setUseEStop(eStopCB.isSelected());
@@ -93,11 +99,11 @@ public class WiThrottlePrefsPanel extends JPanel{
             int portNum;
             try{
                 portNum = Integer.parseInt(port.getText());
-            }catch (NumberFormatException NFE){
+            }catch (NumberFormatException NFE){ //  Not a number
                 portNum = 0;
             }
             if ((portNum < 1024) || (portNum > 65535)){ //  Invalid port value
-                javax.swing.JOptionPane.showMessageDialog(parentFrame,
+                javax.swing.JOptionPane.showMessageDialog(this,
                     rb.getString("WarningInvalidPort"),
                     rb.getString("TitlePortWarningDialog"),
                     JOptionPane.WARNING_MESSAGE);
@@ -112,12 +118,11 @@ public class WiThrottlePrefsPanel extends JPanel{
         return didSet;
     }
 
-    protected void storeValues() {
+    public void storeValues() {
         if (setValues()){
             WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
-
             WiThrottleManager.withrottlePreferencesInstance().save();
-
+            
             if (parentFrame != null){
                 parentFrame.dispose();
             }
@@ -125,17 +130,21 @@ public class WiThrottlePrefsPanel extends JPanel{
 
         
     }
-
+/**
+ * Update the singleton instance of prefs,
+ * then mark (isDirty) that the
+ * values have changed and needs to save to xml file.
+ */
     protected void applyValues(){
         if (setValues()){
             WiThrottleManager.withrottlePreferencesInstance().apply(localPrefs);
-
+            WiThrottleManager.withrottlePreferencesInstance().setIsDirty(true); //  mark to save later
         }
     }
 
     protected void cancelValues(){
-        if (parentFrame != null){
-            parentFrame.dispose();
+        if (getTopLevelAncestor() != null) {
+            ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }
 
@@ -148,9 +157,9 @@ public class WiThrottlePrefsPanel extends JPanel{
         panel.setBorder(border);
         eStopCB = new JCheckBox(rb.getString("LabelUseEStop"));
         eStopCB.setToolTipText(rb.getString("ToolTipUseEStop"));
-        SpinnerNumberModel spinMod = new SpinnerNumberModel(10,2,30,2);
+        SpinnerNumberModel spinMod = new SpinnerNumberModel(10,4,30,2);
         delaySpinner = new JSpinner(spinMod);
-        delaySpinner.getEditor().setEnabled(false);
+        ((JSpinner.DefaultEditor)delaySpinner.getEditor()).getTextField().setEditable(false);
         panel.add(eStopCB);
         panel.add(delaySpinner);
         panel.add(new JLabel(rb.getString("LabelEStopDelay")));
@@ -165,7 +174,14 @@ public class WiThrottlePrefsPanel extends JPanel{
         SPPanel.setBorder(networkBorder);
         portCB = new JCheckBox(rb.getString("LabelUseFixedPortNumber"));
         portCB.setToolTipText(rb.getString("ToolTipUseFixedPortNumber"));
+        portCB.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event){
+                updatePortField();
+            }
+        });
         port = new JTextField();
+        port.setText(rb.getString("LabelNotFixed"));
+        port.setPreferredSize(port.getPreferredSize());
         SPPanel.add(portCB);
         SPPanel.add(port);
         return SPPanel;
@@ -208,9 +224,8 @@ public class WiThrottlePrefsPanel extends JPanel{
         });
         panel.add(cancelB);
         panel.add(saveB);
+        panel.add(new JLabel(rb.getString("LabelApplyWarning")));
         panel.add(applyB);
-        panel.setBorder(lineBorder);
-        
         return panel;
     }
 

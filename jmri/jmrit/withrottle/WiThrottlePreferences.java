@@ -6,12 +6,14 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
-    
-    
+    //  Flag that prefs have not been saved:
+    private boolean isDirty = false;
+
+
     private boolean useEStop = true;
     private int eStopDelay = 10;
     
@@ -45,6 +47,17 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
 
     }
 
+    public boolean compareValuesDifferent(WiThrottlePreferences prefs){
+        WiThrottlePreferences stored = WiThrottleManager.withrottlePreferencesInstance();
+        if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
+        if (isUseEStop() != prefs.isUseEStop()) return true;
+        if (getEStopDelay() != prefs.getEStopDelay()) return true;
+        if (isUseFixedPort() != prefs.isUseFixedPort()) return true;
+        if (!(getPort().equals(prefs.getPort()))) return true;
+        if (isUseJmdns() != prefs.isUseJmdns()) return true;
+        return false;
+    }
+
     public void apply(WiThrottlePreferences prefs){
         setUseEStop(prefs.isUseEStop());
         setEStopDelay(prefs.getEStopDelay());
@@ -62,11 +75,16 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         element.setAttribute("isUseFixedPort", "" + isUseFixedPort());
         element.setAttribute("getPort", "" + getPort());
         element.setAttribute("isAllowTrackPower", "" + isAllowTrackPower());
-//        element.setAttribute("isUsingExThrottle", ""+isUsingExThrottle());
+        setIsDirty(false);  //  Resets only when stored
         return element;
     }
     
-    
+    public boolean getIsDirty(){
+        return isDirty;
+    }
+    public void setIsDirty(boolean value){
+        isDirty = value;
+    }
 
 
     public boolean isUseEStop(){
