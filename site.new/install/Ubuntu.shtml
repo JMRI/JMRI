@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: Ubuntu.shtml,v 1.13 2010-01-24 20:31:48 jacobsen Exp $ -->
+<!-- $Id: Ubuntu.shtml,v 1.14 2010-04-03 20:07:39 jacobsen Exp $ -->
 <title>Installing JMRI on Ubuntu GNU/Linux</title><meta name="GENERATOR" content="OpenOffice.org 2.2  (Linux)">
 
 <!-- Style -->
@@ -60,7 +60,7 @@ Details</a></p>
 <p style="margin-left: 1.34cm;">Follow the Path
 "Download" then I suggest you read up on the help page which is
 offered which gives advice on how to download the iso image and
-then create a bookable CD to install Ubuntu.</p>
+then create a bootable CD to install Ubuntu.</p>
 Details for <a href="http://jmri.sourceforge.net/install/decTop.shtml">installing Xubuntu</a> have also been written.
 
 
