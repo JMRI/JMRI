@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: LayoutEditor.shtml,v 1.20 2010-02-12 17:17:19 jacobsen Exp $ -->
+<!-- $Id: LayoutEditor.shtml,v 1.21 2010-04-03 00:32:36 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -394,14 +394,18 @@ selection is described below.
 	points of turnouts or level crossings are moved, their coordinates are also 
 	constrained to grid points. For icons and labels, the coordinates of upper 
 	left corners are constrained to grid points.</li>
-	<li><b>Scroll Bars Off (JMRI 2.5.1 and earlier)</b> - If this item is checked, the horizontal and
-	vertical scroll bars are removed. You can still pan the display by holding
-	down the left mouse button and dragging outside the window in the direction you
-	want to pan. The scroll bars are always enabled during edit mode.</li>
-	<li><b>Show scrollbars (JMRI 2.5.2 and later)</b> - This sub-menu allows you
+	<li><b>Show scrollbars</b> - This sub-menu allows you
 	to choose which scrollbars to display. You can still pan the display by
 	holding down the left mouse button and dragging outside the window in the
 	direction you want to pan. The scrollbars are always enabled during edit mode.</li>
+	<li><b>Show Icon tooltips</b> - This submenu allows you to select whether icon 
+	tooltips are displayed when in Edit Mode and when not in Edit Mode. When the mouse 
+	is hovered over an icon, and tooltips are on, the name of the icon is displayed 
+	while the mouse remains over the icon. Drawn track items do not have tooltips.</li>
+	<li><b>Show Turnout Circles</b> - When this item is checked, circles at the center 
+	of turnouts are shown when not in Edit Mode.  Turnout circles are always 
+	shown when in Edit Mode.  When not in Edit Mode, turnout circles can be useful 
+	if you are toggling turnouts by clicking on them.
 	<li> <b>Enable antialiasing (Smoother lines)</b> - If this item is selected,
 	the panel is displayed (rendered) with antialiasing enabled. Antialiasing 
 	smoothes out lines in the drawn panel, but it does take longer to refresh
@@ -440,6 +444,8 @@ selection is described below.
 	track is in a block, the color set by the block is used instead of the default
 	track color when drawing that track. This color is also used for lines of 
 	the selection rectangle.</li>
+	<li><b>Set Default Text Color</b> - This item's submenu allows one of 
+	thirteen colors to be selected as the default text color. </li>
 </ul></p>
 
 <a name="toolsmenu"><h2>Using Layout Editor's Tools Menu</h2>

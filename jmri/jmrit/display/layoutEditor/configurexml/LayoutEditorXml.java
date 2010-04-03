@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -55,6 +55,9 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setAttribute("snaponadd", ""+(p.getSnapOnAdd()?"yes":"no"));
 		panel.setAttribute("snaponmove", ""+(p.getSnapOnMove()?"yes":"no"));
 		panel.setAttribute("antialiasing", ""+(p.getAntialiasingOn()?"yes":"no"));
+		panel.setAttribute("turnoutcircles", ""+(p.getTurnoutCircles()?"yes":"no"));
+		panel.setAttribute("tooltipsnotedit", ""+(p.getTooltipsNotEdit()?"yes":"no"));
+		panel.setAttribute("tooltipsinedit", ""+(p.getTooltipsInEdit()?"yes":"no"));
 		panel.setAttribute("mainlinetrackwidth", ""+p.getMainlineTrackWidth());
 		panel.setAttribute("xscale", Float.toString((float)p.getXScale()));
 		panel.setAttribute("yscale", Float.toString((float)p.getYScale()));
@@ -384,6 +387,21 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
        boolean aaValue = false;
         if ((a = element.getAttribute("antialiasing"))!=null && a.getValue().equals("yes"))
             aaValue = true;
+
+		value = false;
+		if ((a = element.getAttribute("turnoutcircles"))!=null && a.getValue().equals("yes"))
+            value = true;
+		panel.setTurnoutCircles(value);
+
+		value = false;
+        if ((a = element.getAttribute("tooltipsnotedit"))!=null && a.getValue().equals("yes"))
+            value = true;
+		panel.setTooltipsNotEdit(value);
+
+		value = true;
+        if ((a = element.getAttribute("tooltipsinedit"))!=null && a.getValue().equals("no"))
+            value = false;
+		panel.setTooltipsInEdit(value);
 
 		// set default track color
 		if ((a = element.getAttribute("defaultTrackColor"))!=null) {

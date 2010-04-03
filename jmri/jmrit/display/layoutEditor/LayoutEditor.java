@@ -50,11 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
-<<<<<<< LayoutEditor.java
- * @version $Revision: 1.23 $
-=======
- * @version $Revision: 1.23 $
->>>>>>> 1.21
+ * @version $Revision: 1.24 $
  */
 
 public class LayoutEditor extends Editor {
@@ -180,15 +176,20 @@ public class LayoutEditor extends Editor {
     private JCheckBoxMenuItem animationItem = null;
     private JCheckBoxMenuItem showHelpItem = null;
     private JCheckBoxMenuItem showGridItem = null;
-    private JCheckBoxMenuItem showTooltipItem;
     private JMenu scrollMenu = null;
     private JRadioButtonMenuItem scrollBoth = null;
     private JRadioButtonMenuItem scrollNone = null;
     private JRadioButtonMenuItem scrollHorizontal = null;
     private JRadioButtonMenuItem scrollVertical = null;
+    private JMenu tooltipMenu = null;
+    private JRadioButtonMenuItem tooltipAlways = null;
+    private JRadioButtonMenuItem tooltipNone = null;
+    private JRadioButtonMenuItem tooltipInEdit = null;
+    private JRadioButtonMenuItem tooltipNotInEdit = null;
 	private JCheckBoxMenuItem snapToGridOnAddItem = null;
 	private JCheckBoxMenuItem snapToGridOnMoveItem = null;
 	private JCheckBoxMenuItem antialiasingOnItem = null;
+	private JCheckBoxMenuItem turnoutCirclesOnItem = null;
 	private JCheckBoxMenuItem skipTurnoutItem = null;
 	//private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
@@ -265,6 +266,9 @@ public class LayoutEditor extends Editor {
 	private boolean snapToGridOnAdd = false;
 	private boolean snapToGridOnMove = false;
 	private boolean antialiasingOn = false;
+	private boolean turnoutCirclesWithoutEditMode = false;
+	private boolean tooltipsWithoutEditMode = false;
+	private boolean tooltipsInEditMode = true;
 	// turnout size parameters - saved with panel
 	private double turnoutBX = turnoutBXDefault;  // RH, LH, WYE
 	private double turnoutCX = turnoutCXDefault;
@@ -544,7 +548,8 @@ public class LayoutEditor extends Editor {
         editModeItem.setSelected(isEditable());
         positionableItem.setSelected(allPositionable());
         controlItem.setSelected(allControlling());
-        showTooltipItem.setSelected(showTooltip());
+		if (isEditable()) setAllShowTooltip(tooltipsInEditMode);
+		else setAllShowTooltip(tooltipsWithoutEditMode);
         switch (_scrollState) {
             case SCROLL_NONE:
                 scrollNone.setSelected(true);
@@ -710,6 +715,10 @@ public class LayoutEditor extends Editor {
                     setAllEditable(editModeItem.isSelected());
 					if (isEditable()) {
 						helpBar.setVisible(showHelpBar);
+						setAllShowTooltip(tooltipsInEditMode);
+					}
+					else {
+						setAllShowTooltip(tooltipsWithoutEditMode);
 					}
 					awaitingIconChange = false;
                 }
@@ -756,15 +765,6 @@ public class LayoutEditor extends Editor {
                 }
             });                    
         showHelpItem.setSelected(showHelpBar);
-		// show tooltip item
-		showTooltipItem = new JCheckBoxMenuItem(rb.getString("ShowTooltip"));
-        optionMenu.add(showTooltipItem);
-        showTooltipItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    setAllShowTooltip(showTooltipItem.isSelected());
-                }
-            });                    
-        showTooltipItem.setSelected(showTooltip());
 		// show grid item
 		showGridItem = new JCheckBoxMenuItem(rb.getString("ShowEditGrid"));
         optionMenu.add(showGridItem);
@@ -845,6 +845,64 @@ public class LayoutEditor extends Editor {
                 }
             });
 
+		// Tooltip options
+        tooltipMenu = new JMenu(rb.getString("TooltipSubMenu"));
+        optionMenu.add(tooltipMenu);
+        ButtonGroup tooltipGroup = new ButtonGroup();
+        tooltipNone = new JRadioButtonMenuItem(rb.getString("TooltipNone"));
+        tooltipGroup.add(tooltipNone);
+        tooltipMenu.add(tooltipNone);
+        tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipNone.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    tooltipsInEditMode = false;
+                    tooltipsWithoutEditMode = false;
+                    setAllShowTooltip(false);
+                }
+            });
+        tooltipAlways = new JRadioButtonMenuItem(rb.getString("TooltipAlways"));
+        tooltipGroup.add(tooltipAlways);
+        tooltipMenu.add(tooltipAlways);
+        tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipAlways.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    tooltipsInEditMode = true;
+                    tooltipsWithoutEditMode = true;
+                    setAllShowTooltip(true);
+                }
+            });
+        tooltipInEdit = new JRadioButtonMenuItem(rb.getString("TooltipEdit"));
+        tooltipGroup.add(tooltipInEdit);
+        tooltipMenu.add(tooltipInEdit);
+        tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipInEdit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    tooltipsInEditMode = true;
+                    tooltipsWithoutEditMode = false;
+                    setAllShowTooltip(isEditable());
+                }
+            });
+        tooltipNotInEdit = new JRadioButtonMenuItem(rb.getString("TooltipNotEdit"));
+        tooltipGroup.add(tooltipNotInEdit);
+        tooltipMenu.add(tooltipNotInEdit);
+        tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipNotInEdit.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    tooltipsInEditMode = false;
+                    tooltipsWithoutEditMode = true;
+                    setAllShowTooltip(!isEditable());
+                }
+            });
+        // circle on Turnouts 
+		turnoutCirclesOnItem = new JCheckBoxMenuItem(rb.getString("TurnoutCirclesOn"));
+        optionMenu.add(turnoutCirclesOnItem);
+        turnoutCirclesOnItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    turnoutCirclesWithoutEditMode = turnoutCirclesOnItem.isSelected();
+					repaint();
+                }
+            });                    
+        turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
         // antialiasing
 		antialiasingOnItem = new JCheckBoxMenuItem(rb.getString("AntialiasingOn"));
         optionMenu.add(antialiasingOnItem);
@@ -4233,6 +4291,9 @@ public class LayoutEditor extends Editor {
 	public boolean getSnapOnAdd() {return snapToGridOnAdd;}
 	public boolean getSnapOnMove() {return snapToGridOnMove;}
 	public boolean getAntialiasingOn() {return antialiasingOn;}
+	public boolean getTurnoutCircles() {return turnoutCirclesWithoutEditMode;}
+	public boolean getTooltipsNotEdit() {return tooltipsWithoutEditMode;}
+	public boolean getTooltipsInEdit() {return tooltipsInEditMode;}
 	public void setLayoutDimensions(int windowW, int windowH, int x, int y, int panelW, int panelH) {
 		upperLeftX = x;
 		upperLeftY = y;
@@ -4290,6 +4351,30 @@ public class LayoutEditor extends Editor {
 			antialiasingOn = state;
 			antialiasingOnItem.setSelected(antialiasingOn);
 		}
+	}
+	public void setTurnoutCircles(boolean state) {
+		if (turnoutCirclesWithoutEditMode != state) {
+			turnoutCirclesWithoutEditMode = state;
+			turnoutCirclesOnItem.setSelected(turnoutCirclesWithoutEditMode);
+		}
+	}
+	public void setTooltipsNotEdit(boolean state) {
+		if (tooltipsWithoutEditMode != state) {
+			tooltipsWithoutEditMode = state;
+			setTooltipSubMenu();
+		}
+	}
+	public void setTooltipsInEdit(boolean state) {
+		if (tooltipsInEditMode != state) {
+			tooltipsInEditMode = state;
+			setTooltipSubMenu();
+		}
+	}
+	private void setTooltipSubMenu() {
+        tooltipNone.setSelected((!tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipAlways.setSelected((tooltipsInEditMode) && (tooltipsWithoutEditMode));
+        tooltipInEdit.setSelected((tooltipsInEditMode) && (!tooltipsWithoutEditMode));
+        tooltipNotInEdit.setSelected((!tooltipsInEditMode) && (tooltipsWithoutEditMode));
 	}
 	// accessor routines for turnout size parameters	
 	public void setTurnoutBX(double bx) {
@@ -4525,6 +4610,9 @@ public class LayoutEditor extends Editor {
             drawMemoryRects(g2);
             drawTrackCircleCentre(g2);
         }
+		else if (turnoutCirclesWithoutEditMode) {
+			drawTurnoutCircles(g2);
+		}
     }
 	
 	boolean main = true;
@@ -5087,6 +5175,18 @@ public class LayoutEditor extends Editor {
 		g2.draw(new Line2D.Double(x.getCoordsB(),x.getCoordsD()));
 	}
 	
+	private void drawTurnoutCircles(Graphics2D g2)
+	{
+		// loop over all defined turnouts
+		for (int i = 0; i<turnoutList.size();i++) {
+			LayoutTurnout t = turnoutList.get(i);
+			Point2D pt = t.getCoordsCenter();
+			g2.setColor(defaultTrackColor);
+			g2.draw(new Ellipse2D.Double (
+							pt.getX()-SIZE2, pt.getY()-SIZE2, SIZE2+SIZE2, SIZE2+SIZE2));
+		}
+	}
+
 	private void drawTurnoutRects(Graphics2D g2)
 	{
 		// loop over all defined turnouts
@@ -5623,20 +5723,6 @@ public class LayoutEditor extends Editor {
         return false;
     }
 	
-    /**
-    * override
-    *
-    public void showToolTip(Positionable selection, MouseEvent event) {
-        if (selection.getDisplayLevel()>BKG) {
-            ToolTip tip = selection.getTooltip();
-            tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
-//            tip.setLocation(selection.getX() + selection.getWidth()/2, event.getY());
-            tip.setText(selection.getNameString());
-            setToolTip(tip);
-        } else {
-            setToolTip(null);
-        }
-    } */
     public void showToolTip(Positionable selection, MouseEvent event) {
         ToolTip tip = selection.getTooltip();
         tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
