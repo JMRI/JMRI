@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Articulated_Steam_ver7.xml,v 1.13 2010-01-28 07:26:05 jacobsen Exp $ -->
+<!-- $Id: QSI_Articulated_Steam_ver7.xml,v 1.14 2010-04-03 19:45:47 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19,6 +19,7 @@
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
 >
+  <version author="Michael Mosher" version="9" lastUpdated="20100323"/>
   <version author="Michael Mosher" version="8" lastUpdated="20100115"/>
   <version author="Michael Mosher" version="7" lastUpdated="20090819"/>
   <version author="Michael Mosher" version="6" lastUpdated="20090302"/>
@@ -37,6 +38,7 @@
 <!-- version 6 - Add model 4004, CV 55.70.12,55.73.12,55.76.6,11,12,13,56.18.1,56.19.1,56.20.1,56.21.1 -->
 <!-- version 7 - Added CV 55.21.0,CV53.15.0 thru CV53.30.0, CV55.154.SI CV56.9 CV55.3.5 CV55.84.SI CV55.70.12 CV55.76.6,11,12,13 CV51.2 -->
 <!-- version 8 - Use nested files & CV 55.PI.15, CV 55.PI.16, CV55.122.SI -->
+<!-- version 9 - Use subversion CV display (Q1a & Q2 have differing subversions) -->
 
 <decoder>
   <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7">
@@ -136,6 +138,10 @@
                register="yes" ops="yes"></programming>
 
   <variables>
+    <!-- Moved to front because controls presence of others -->
+    <ivariable label="Minor Version" CVname="56.254.6" CV="56" PI="254" SI="6"
+                item="CV56.254.6" default="0"> <indexedVal/> </ivariable>   <!-- readOnly="yes" -->
+
     <variable label="Primary Address" CV="1" comment="Short address"
               item="Short Address"  default="03">
       <shortAddressVal/></variable>
@@ -309,7 +315,7 @@
         <enumChoice choice="28/128 speed step format"/>
       </enumVal></variable>
     <variable label="Power Source Conversion" CV="29" mask="XXXXXVXX"
-              item="Analog (DC) Operation" >
+              item="Analog (DC) Operation" default="1" >
       <enumVal>
         <enumChoice choice="NMRA Digital only"/>
         <enumChoice choice="DC conversion enabled"/>
@@ -661,6 +667,18 @@
     </ivariable>
 
     <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0"
+    		include="400,401,402,403,404,406,407,408,410"
+               comment="QSI" item="CV51.5">
+      <indexedVal/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>19</value>
+      </qualifier>
+    </ivariable>
+
+    <ivariable label="Auto Mute Timeout" CVname="51.5" CV="51" PI="5" default="0"
+    		include="4000,4002,4004,4050"
                comment="QSI" item="CV51.5">
       <indexedVal/>
     </ivariable>
@@ -869,97 +887,274 @@
     </ivariable>
 
     <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+        default="10" item="CV53.15.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 15" CVname="53.15.0" CV="53" PI="15" SI="0"
+    	include="4000,4004,4050"	
         default="10" item="CV53.15.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.16.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 16" CVname="53.16.0" CV="53" PI="16" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.16.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.17.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 17" CVname="53.17.0" CV="53" PI="17" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.17.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.18.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 18" CVname="53.18.0" CV="53" PI="18" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.18.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.19.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 19" CVname="53.19.0" CV="53" PI="19" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.19.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.20.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 20" CVname="53.20.0" CV="53" PI="20" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.20.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.21.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 21" CVname="53.21.0" CV="53" PI="21" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.21.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.22.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 22" CVname="53.22.0" CV="53" PI="22" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.22.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.23.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 23" CVname="53.23.0" CV="53" PI="23" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.23.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.24.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 24" CVname="53.24.0" CV="53" PI="24" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.24.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.25.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 25" CVname="53.25.0" CV="53" PI="25" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.25.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
                default="10" item="CV53.26.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 26" CVname="53.26.0" CV="53" PI="26" SI="0"
+    	include="44000,4004,4050"	
+               default="10" item="CV53.26.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+
+	        </ivariable>
+    
+    <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0"
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.27.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
     </ivariable>
     
     <ivariable label="Output 27" CVname="53.27.0" CV="53" PI="27" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="44000,4004,4050"	
                default="10" item="CV53.27.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.28.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 28" CVname="53.28.0" CV="53" PI="28" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.28.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.29.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Output 29" CVname="53.29.0" CV="53" PI="29" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.29.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
     
     <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0"
-    	include="400,401,402,403,404,406,407,408,410,4000,4004,4050"	
+    	include="400,401,402,403,404,406,407,408,410"	
+               default="10" item="CV53.30.0">
+	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+
+    <ivariable label="Output 30" CVname="53.30.0" CV="53" PI="30" SI="0"
+    	include="4000,4004,4050"	
                default="10" item="CV53.30.0">
 	    <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
     </ivariable>
@@ -986,7 +1181,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Headlight Config FWD" CVname="55.70.1" CV="55" PI="70" SI="1"
+    <ivariable label="Auto Headlight FWD" CVname="55.70.1" CV="55" PI="70" SI="1"
                default="2" item="CV55.70.1 FWD" mask="XXXXXXVV">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -995,7 +1190,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Headlight Config NFF" CVname="55.70.1" CV="55" PI="70" SI="1"
+    <ivariable label="Auto Headlight NFF" CVname="55.70.1" CV="55" PI="70" SI="1"
                default="1" item="CV55.70.1 NFF" mask="XXXXVVXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1004,7 +1199,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Headlight Config REV" CVname="55.70.1" CV="55" PI="70" SI="1"
+    <ivariable label="Auto Headlight REV" CVname="55.70.1" CV="55" PI="70" SI="1"
                default="1" item="CV55.70.1 REV" mask="XXVVXXXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1013,7 +1208,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Headlight Config NFR" CVname="55.70.1" CV="55" PI="70" SI="1"
+    <ivariable label="Auto Headlight NFR" CVname="55.70.1" CV="55" PI="70" SI="1"
                default="1" item="CV55.70.1 NFR" mask="VVXXXXXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1023,25 +1218,48 @@
     </ivariable>
 
     <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10"
+    		include="400,401,402,403,404,406,407,408,410"
+              default="48" item="CV55.70.10" >
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>4</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Headlight Dim Intensity" CVname="55.70.10" CV="55" PI="70" SI="10"
+    		include="4000,4002,4004,4050"
               default="48" item="CV55.70.10" >
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12"
               default="255" item="CV55.70.12" 
-              include ="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+              include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Headlight Max Intensity" CVname="55.70.12" CV="55" PI="70" SI="12"
+              default="255" item="CV55.70.12" 
+              include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Headlight Ramp Up Rate" CVname="55.70.15" CV="55" PI="70" SI="15"
               default="25" item="CV55.70.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Headlight Ramp Down Rate" CVname="55.70.16" CV="55" PI="70" SI="16"
               default="25" item="CV55.70.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1055,7 +1273,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Reverse Light Config FWD" CVname="55.73.1" CV="55" PI="73" SI="1"
+    <ivariable label="Auto Reverse Light FWD" CVname="55.73.1" CV="55" PI="73" SI="1"
                default="1" item="CV55.73.1 FWD" mask="XXXXXXVV">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1064,7 +1282,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Reverse Light Config NFF" CVname="55.73.1" CV="55" PI="73" SI="1"
+    <ivariable label="Auto Reverse Light NFF" CVname="55.73.1" CV="55" PI="73" SI="1"
                default="1" item="CV55.73.1 NFF" mask="XXXXVVXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1073,7 +1291,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Reverse Light Config REV" CVname="55.73.1" CV="55" PI="73" SI="1"
+    <ivariable label="Auto Reverse Light REV" CVname="55.73.1" CV="55" PI="73" SI="1"
                default="2" item="CV55.73.1 REV" mask="XXVVXXXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1082,7 +1300,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Reverse Light Config NFR" CVname="55.73.1" CV="55" PI="73" SI="1"
+    <ivariable label="Auto Reverse Light NFR" CVname="55.73.1" CV="55" PI="73" SI="1"
                default="1" item="CV55.73.1 NFR" mask="VVXXXXXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -1093,31 +1311,31 @@
 
     <ivariable label="Reverse Light Dim Intensity" CVname="55.73.10" CV="55" PI="73" SI="10"
               default="32" item="CV55.73.10" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Reverse Light Max Intensity" CVname="55.73.12" CV="55" PI="73" SI="12"
               default="255" item="CV55.73.12" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Reverse Light Ramp Up Rate" CVname="55.73.15" CV="55" PI="73" SI="15"
               default="25" item="CV55.73.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Reverse Light Ramp Down Rate" CVname="55.73.16" CV="55" PI="73" SI="16"
               default="25" item="CV55.73.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Mars Light Initial State" CVname="55.76.0" CV="55" PI="76" SI="0"
                default="1" item="CV55.76.0" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" value="0"/>
         <ienumChoice choice="Automatic" value="1"/>
@@ -1127,9 +1345,9 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Mars Light Config FWD" CVname="55.76.1" CV="55" PI="76" SI="1"
+    <ivariable label="Auto Mars Light FWD" CVname="55.76.1" CV="55" PI="76" SI="1"
                default="3" item="CV55.76.1" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -1138,9 +1356,9 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Mars Light Config NFF" CVname="55.76.2" CV="55" PI="76" SI="2"
+    <ivariable label="Auto Mars Light NFF" CVname="55.76.2" CV="55" PI="76" SI="2"
                default="1" item="CV55.76.2" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -1149,9 +1367,9 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Mars Light Config REV" CVname="55.76.3" CV="55" PI="76" SI="3"
+    <ivariable label="Auto Mars Light REV" CVname="55.76.3" CV="55" PI="76" SI="3"
                default="1" item="CV55.76.3" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -1160,9 +1378,9 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Mars Light Config NFR" CVname="55.76.4" CV="55" PI="76" SI="4"
+    <ivariable label="Auto Mars Light NFR" CVname="55.76.4" CV="55" PI="76" SI="4"
                default="1" item="CV55.76.4" 
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="Dim" />
@@ -1179,7 +1397,7 @@
 
     <ivariable label="Mars Light Dim Intensity" CVname="55.76.10" CV="55" PI="76" SI="10"
               default="0" item="CV55.76.10"
-              include ="4000,4004,4050">
+              include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1203,13 +1421,13 @@
 
     <ivariable label="Mars Light Ramp Up Rate" CVname="55.76.15" CV="55" PI="76" SI="15"
               default="25" item="CV55.76.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Mars Light Ramp Down Rate" CVname="55.76.16" CV="55" PI="76" SI="16"
               default="25" item="CV55.76.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1223,7 +1441,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Number Board Lights Config FWD" CVname="55.100.1" CV="55" PI="100" SI="1"
+    <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 FWD" mask="XXXXXXXV"
                include="408,4000,4004,4050">
       <ienumVal>
@@ -1232,7 +1450,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Number Board Lights Config NFF" CVname="55.100.1" CV="55" PI="100" SI="1"
+    <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 NFF" mask="XXXXXVXX"
                include="408,4000,4004,4050">
       <ienumVal>
@@ -1241,7 +1459,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Number Board Lights Config REV" CVname="55.100.1" CV="55" PI="100" SI="1"
+    <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 REV" mask="XXXVXXXX"
                include="408,4000,4004,4050">
       <ienumVal>
@@ -1250,7 +1468,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Number Board Lights Config NFR" CVname="55.100.1" CV="55" PI="100" SI="1"
+    <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1"
                default="1" item="CV55.100.1 NFR" mask="XVXXXXXX"
                include="408,4000,4004,4050">
       <ienumVal>
@@ -1261,19 +1479,19 @@
 
     <ivariable label="Front Number Board Max Intensity" CVname="55.100.12" CV="55" PI="100" SI="12"
               default="255" item="CV55.100.12" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Number Board Ramp Up Rate" CVname="55.100.15" CV="55" PI="100" SI="15"
               default="25" item="CV55.100.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Number Board Ramp Down Rate" CVname="55.100.16" CV="55" PI="100" SI="16"
               default="25" item="CV55.100.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1287,7 +1505,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Marker Lights Config FWD" CVname="55.104.1" CV="55" PI="104" SI="1"
+    <ivariable label="Auto Front Marker Lights FWD" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 FWD" mask="XXXXXXXV"
                include="4000,4004,4050">
       <ienumVal>
@@ -1296,7 +1514,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Marker Lights Config NFF" CVname="55.104.1" CV="55" PI="104" SI="1"
+    <ivariable label="Auto Front Marker Lights NFF" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 NFF" mask="XXXXXVXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1305,7 +1523,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Marker Lights Config REV" CVname="55.104.1" CV="55" PI="104" SI="1"
+    <ivariable label="Auto Front Marker Lights REV" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 REV" mask="XXXVXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1314,7 +1532,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Marker Lights Config NFR" CVname="55.104.1" CV="55" PI="104" SI="1"
+    <ivariable label="Auto Front Marker Lights NFR" CVname="55.104.1" CV="55" PI="104" SI="1"
                default="1" item="CV55.104.1 NFR" mask="XVXXXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1325,19 +1543,19 @@
 
     <ivariable label="Front Marker Lights Max Intensity" CVname="55.104.12" CV="55" PI="104" SI="12"
               default="255" item="CV55.104.12" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Marker Lights Ramp Up Rate" CVname="55.104.15" CV="55" PI="104" SI="15"
               default="25" item="CV55.104.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Marker Lights Ramp Down Rate" CVname="55.104.16" CV="55" PI="104" SI="16"
               default="25" item="CV55.104.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1351,7 +1569,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Marker Lights Config FWD" CVname="55.106.1" CV="55" PI="106" SI="1"
+    <ivariable label="Auto Rear Marker Lights FWD" CVname="55.106.1" CV="55" PI="106" SI="1"
                default="1" item="CV55.106.1 FWD" mask="XXXXXXXV"
                include="4000,4004,4050">
       <ienumVal>
@@ -1360,7 +1578,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Marker Lights Config NFF" CVname="55.106.1" CV="55" PI="106" SI="1"
+    <ivariable label="Auto Rear Marker Lights NFF" CVname="55.106.1" CV="55" PI="106" SI="1"
                default="1" item="CV55.106.1 NFF" mask="XXXXXVXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1369,7 +1587,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Marker Lights Config REV" CVname="55.106.1" CV="55" PI="106" SI="1"
+    <ivariable label="Auto Rear Marker Lights REV" CVname="55.106.1" CV="55" PI="106" SI="1"
                default="1" item="CV55.106.1 REV" mask="XXXVXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1378,7 +1596,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Marker Lights Config NFR" CVname="55.106.1" CV="55" PI="106" SI="1"
+    <ivariable label="Auto Rear Marker Lights NFR" CVname="55.106.1" CV="55" PI="106" SI="1"
                default="1" item="CV55.106.1 NFR" mask="XVXXXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1389,19 +1607,19 @@
 
     <ivariable label="Rear Marker Lights Max Intensity" CVname="55.106.12" CV="55" PI="106" SI="12"
               default="255" item="CV55.106.12" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Rear Marker Lights Ramp Up Rate" CVname="55.106.15" CV="55" PI="106" SI="15"
               default="25" item="CV55.106.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Rear Marker Lights Ramp Down Rate" CVname="55.106.16" CV="55" PI="106" SI="16"
               default="25" item="CV55.106.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1415,7 +1633,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Cab Lights Config FWD" CVname="55.116.1" CV="55" PI="116" SI="1"
+    <ivariable label="Auto Front Cab Lights FWD" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 FWD" mask="XXXXXXXV"
                include="4050">
       <ienumVal>
@@ -1424,7 +1642,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Cab Lights Config NFF" CVname="55.116.1" CV="55" PI="116" SI="1"
+    <ivariable label="Auto Front Cab Lights NFF" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 NFF" mask="XXXXXVXX"
                include="4050">
       <ienumVal>
@@ -1433,7 +1651,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Cab Lights Config REV" CVname="55.116.1" CV="55" PI="116" SI="1"
+    <ivariable label="Auto Front Cab Lights REV" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 REV" mask="XXXVXXXX"
                include="4050">
       <ienumVal>
@@ -1442,7 +1660,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Front Cab Lights Config NFR" CVname="55.116.1" CV="55" PI="116" SI="1"
+    <ivariable label="Auto Front Cab Lights NFR" CVname="55.116.1" CV="55" PI="116" SI="1"
                default="1" item="CV55.116.1 NFR" mask="XVXXXXXX"
                include="4050">
       <ienumVal>
@@ -1453,19 +1671,19 @@
 
     <ivariable label="Front Cab Lights Max Intensity" CVname="55.116.12" CV="55" PI="116" SI="12"
               default="255" item="CV55.116.12" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Cab Lights Ramp Up Rate" CVname="55.116.15" CV="55" PI="116" SI="15"
               default="25" item="CV55.116.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Front Cab Lights Ramp Down Rate" CVname="55.116.16" CV="55" PI="116" SI="16"
               default="25" item="CV55.116.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1479,7 +1697,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Cab Lights Config FWD" CVname="55.118.1" CV="55" PI="118" SI="1"
+    <ivariable label="Auto Rear Cab Lights FWD" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 FWD" mask="XXXXXXXV"
                include="4000,4004,4050">
       <ienumVal>
@@ -1488,7 +1706,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Cab Lights Config NFF" CVname="55.118.1" CV="55" PI="118" SI="1"
+    <ivariable label="Auto Rear Cab Lights NFF" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFF" mask="XXXXXVXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1497,7 +1715,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Cab Lights Config REV" CVname="55.118.1" CV="55" PI="118" SI="1"
+    <ivariable label="Auto Rear Cab Lights REV" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 REV" mask="XXXVXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1506,7 +1724,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Auto Rear Cab Lights Config NFR" CVname="55.118.1" CV="55" PI="118" SI="1"
+    <ivariable label="Auto Rear Cab Lights NFR" CVname="55.118.1" CV="55" PI="118" SI="1"
                default="1" item="CV55.118.1 NFR" mask="XVXXXXXX"
                include="4000,4004,4050">
       <ienumVal>
@@ -1517,19 +1735,19 @@
 
     <ivariable label="Rear Cab Lights Max Intensity" CVname="55.118.12" CV="55" PI="118" SI="12"
               default="255" item="CV55.118.12" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Rear Cab Lights Ramp Up Rate" CVname="55.118.15" CV="55" PI="118" SI="15"
               default="25" item="CV55.118.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Rear Cab Lights Ramp Down Rate" CVname="55.118.16" CV="55" PI="118" SI="16"
               default="25" item="CV55.118.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1553,13 +1771,13 @@
 
     <ivariable label="Firebox Ramp Up Rate" CVname="55.122.15" CV="55" PI="122" SI="15"
               default="4" item="CV55.122.15" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Firebox Ramp Down Rate" CVname="55.122.16" CV="55" PI="122" SI="16"
               default="4" item="CV55.122.16" 
-              include ="4050">
+              include="4050">
 		<indexedVal/>	               
     </ivariable>
     
@@ -1572,6 +1790,8 @@
       </ienumVal>
     </ivariable>
 
+    <!-- not done CV55.135.0 listed in file from QSI but not in manual -->
+    
     <ivariable label="Headlight" CVname="55.136.0" CV="55" PI="136" SI="0"
                default="1" item="CV55.136.0 70" mask="XXXXXXXV">
       <ienumVal>
@@ -1765,7 +1985,7 @@
     </ivariable>
 
     <ivariable label="Multi Auto Lights 2, Front Number Board Lights" CVname="55.137.1" CV="55" PI="137" SI="1"
-               default="0" item="CV55.137.1 100" mask="XXXXXXXV">
+               default="1" item="CV55.137.1 100" mask="XXXXXXXV">
       <ienumVal>
         <ienumChoice choice="Off" />
         <ienumChoice choice="On" />
@@ -1958,47 +2178,124 @@
 
     <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0"
               default="30" item="CV55.154.0"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Blast 1" CVname="55.154.0" CV="55" PI="154" SI="0"
+              default="30" item="CV55.154.0"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1"
               default="15" item="CV55.154.1"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Silence 1" CVname="55.154.1" CV="55" PI="154" SI="1"
+              default="15" item="CV55.154.1"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2"
               default="30" item="CV55.154.2"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Blast 2" CVname="55.154.2" CV="55" PI="154" SI="2"
+              default="30" item="CV55.154.2"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3"
               default="15" item="CV55.154.3"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Silence 2" CVname="55.154.3" CV="55" PI="154" SI="3"
+              default="15" item="CV55.154.3"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4"
               default="10" item="CV55.154.4"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Blast 3" CVname="55.154.4" CV="55" PI="154" SI="4"
+              default="10" item="CV55.154.4"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5"
               default="15" item="CV55.154.5"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Silence 3" CVname="55.154.5" CV="55" PI="154" SI="5"
+              default="15" item="CV55.154.5"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
     <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6"
               default="30" item="CV55.154.6"
-               include="400,401,402,403,404,406,407,408,410,4000,4004,4050">
+               include="400,401,402,403,404,406,407,408,410">
+		<indexedVal/>	               
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Crossing Blast 4" CVname="55.154.6" CV="55" PI="154" SI="6"
+              default="30" item="CV55.154.6"
+               include="4000,4004,4050">
 		<indexedVal/>	               
     </ivariable>
     
-    <ivariable label="Status Report Config MPH" CVname="55.178.0" CV="55" PI="178" SI="0"
+    <ivariable label="Status Report MPH" CVname="55.178.0" CV="55" PI="178" SI="0"
                default="1" item="CV55.178.0 MPH" mask="XXXXXXXV">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -2006,7 +2303,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Status Report Config BEMF" CVname="55.178.0" CV="55" PI="178" SI="0"
+    <ivariable label="Status Report BEMF" CVname="55.178.0" CV="55" PI="178" SI="0"
                default="0" item="CV55.178.0 BEMF" mask="XXXXXXVX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -2014,7 +2311,7 @@
       </ienumVal>
     </ivariable>
 
-    <ivariable label="Status Report Config PWM" CVname="55.178.0" CV="55" PI="178" SI="0"
+    <ivariable label="Status Report PWM" CVname="55.178.0" CV="55" PI="178" SI="0"
                default="0" item="CV55.178.0 PWM" mask="XXXXXVXX">
       <ienumVal>
         <ienumChoice choice="Off" />
@@ -2047,7 +2344,7 @@
     </ivariable>
 
     <ivariable label="Sounds on Power Up" CVname="56.0" CV="56" PI="0" 
-               default="0" item="CV56.0 Power" mask="XXXXXXXV">
+               default="1" item="CV56.0 Power" mask="XXXXXXXV">
       <ienumVal>
         <ienumChoice choice="When a valid DCC ops packet to locomotive address received" />
         <ienumChoice choice="When any valid DCC ops packet received" />
@@ -2107,9 +2404,20 @@
       </ienumVal>
     </ivariable>
         
-    <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="3"
+    <ivariable label="RTC Minimum BEMF" CVname="56.5" CV="56" PI="5" default="1"
                item="CV56.5">
       <indexedVal max="7"/> 
+    </ivariable>
+
+    <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128"
+    			include="400,401,402,403,404,406,407,408,410"
+               item="CV56.9">
+      <indexedVal /> 
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
     </ivariable>
 
     <ivariable label="BEMF to SMPH trim" CVname="56.9" CV="56" PI="9" default="128"
@@ -2124,6 +2432,18 @@
     </ivariable>
 
     <ivariable label="Chuff Interval Trim" CVname="56.13" CV="56" PI="13" default="128"
+    			include="400,401,402,403,404,406,407,408,410"
+               item="CV56.13">
+      <indexedVal /> 
+      <qualifier>
+      	<variableref>Minor Version</variableref>
+      	<relation>ge</relation>
+      	<value>40</value>
+      </qualifier>
+    </ivariable>
+    
+    <ivariable label="Chuff Interval Trim" CVname="56.13" CV="56" PI="13" default="128"
+    			include="4000,4002,4004,4050"
                item="CV56.13">
       <indexedVal /> 
     </ivariable>
@@ -2233,9 +2553,7 @@
                readOnly="yes" item="CV56.254.4"> <indexedVal/> </ivariable>
     <ivariable label="Product Model Low Byte" CVname="56.254.5" CV="56" PI="254" SI="5"
                readOnly="yes" item="CV56.254.5"> <indexedVal/> </ivariable>
-    <ivariable label="Minor Version Number" CVname="56.254.6" CV="56" PI="254" SI="6"
-               readOnly="yes" item="CV56.254.6"> <indexedVal/> </ivariable>
-    <ivariable label="Firmware Build Number" CVname="56.254.8" CV="56" PI="254" SI="8"
+    <ivariable label="Firmware Build" CVname="56.254.8" CV="56" PI="254" SI="8"
                readOnly="yes" item="CV56.254.8"> <indexedVal/> </ivariable>
     <ivariable label="Firmware Build Date.Month" CVname="56.254.10" CV="56" PI="254" SI="10"
                readOnly="yes" item="CV56.254.10"> <indexedVal/> </ivariable>
@@ -2262,7 +2580,7 @@
     			include="4000,4002,4050"
                readOnly="yes" item="CV56.254.18"> <indexedVal/> </ivariable>
 
-    <ivariable label="Product Number" CVname="56.254.5" CV="56" PI="254" SI="5"
+    <ivariable label="Product Model" CVname="56.254.5" CV="56" PI="254" SI="5"
                readOnly="yes" item="Product Number" >
         <indexedPairVal highCVname="56.254.4" factor="256" />
     </ivariable>

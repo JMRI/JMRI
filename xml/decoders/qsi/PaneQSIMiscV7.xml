@@ -18,7 +18,7 @@
 
 <pane name="QSI Misc.">
   <column>
-   	<label label="JMRI 2.8 or later is required to use this definition"/>
+       	<label label="JMRI 2.9.5 or later is required to use this definition"/>
    	<label label=" "/>
 	<display item="Decoder Version" />
     <display item="CV56.254.6"/>
