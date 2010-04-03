@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2007 All rights reserved -->
-<!-- $Id: MRC_sounder1665.xml,v 1.1 2009-09-26 22:33:28 jacobsen Exp $ -->
+<!-- $Id: MRC_sounder1665.xml,v 1.2 2010-04-03 19:38:01 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,9 +16,10 @@
 <!-- for more details.                                                      -->
 
 <decoder-config>
-		<version author="Peter Ulvestad"
-			version="1" lastUpdated="20080307" />
-<!-- made from the MRC_1666 file by Pete Cesaro -->
+		<version author="Peter Ulvestad" version="2" lastUpdated="20100110" />
+		<version author="Peter Ulvestad" version="1" lastUpdated="20080307" />
+<!--   version 1 made from the MRC_1666 file by Pete Cesaro -->
+<!--   version 2 Corrected defaults, modified formatting and added MRC pane-->
 
 <decoder>
 	<family name="MRC Sounder Decoders" mfg="MRC"
@@ -28,8 +29,7 @@
                 </model>
  	</family>
 
-	<programming direct="yes" paged="yes"
-	                     register="yes" ops="yes"/>
+	<programming direct="yes" paged="yes" register="yes" ops="yes"/>
 
 	<variables>
 
@@ -165,7 +165,7 @@
 			</enumVal>
 		</variable>
 
-		<variable label="Bell volume" CV="53" item="Sound Setting 2" default="3" tooltip="CV53, range 0-3 Note: Bell and Rail Wheel Clack cannot play at the same time"
+		<variable label="Bell volume" CV="53" item="Sound Setting 2" default="3" tooltip="CV53, range 0-7 Note: Bell and Rail Wheel Clack cannot play at the same time"
 				comment="Range 0-7">
 			<decVal max="7"/>
 		</variable>
@@ -175,9 +175,22 @@
 			<decVal max="50"/>
 		</variable>
 			
-		<variable label="Chuff Type" CV="55" item="Sound Option 4" default="3" tooltip="CV55, range 0-11"
+		<variable label="Chuff Type" CV="55" item="Sound Option 4" default="3" tooltip="CV55"
 				comment="Range 0-11">
-			<decVal max="11"/>
+			<enumVal>
+				<enumChoice choice="Chuff Type 1"/>
+				<enumChoice choice="Chuff Type 2"/>
+				<enumChoice choice="Chuff Type 3"/>
+				<enumChoice choice="Chuff Type 4"/>
+				<enumChoice choice="Chuff Type 5"/>
+				<enumChoice choice="Chuff Type 6"/>
+				<enumChoice choice="Chuff Type 7"/>
+				<enumChoice choice="Chuff Type 8"/>
+				<enumChoice choice="Chuff Type 9"/>
+				<enumChoice choice="Chuff Type 10"/>
+				<enumChoice choice="Chuff Type 11"/>
+				<enumChoice choice="Chuff Type 12"/>
+			</enumVal>
 		</variable>
 			
 		<variable label="Chuff Volume" CV="56" item="Sound Setting 3" default="3" tooltip="CV56, range 0-3"
@@ -195,32 +208,32 @@
 			<decVal max="3"/>
 		</variable>
 
-		<variable label="Blower hiss volume" CV="59" item="Sound Setting 6" default="3" tooltip="CV59, range 0-3"
+		<variable label="Blower hiss volume" CV="59" item="Sound Setting 11" default="3" tooltip="CV59, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
-		<variable label="Firebox door volume" CV="60" item="Sound Setting 7" default="3" tooltip="CV60, range 0-3"
+		<variable label="Firebox door volume" CV="60" item="Sound Setting 12" default="3" tooltip="CV60, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
-		<variable label="Injector volume" CV="61" item="Sound Setting 8" default="3" tooltip="CV61, range 0-3"
+		<variable label="Injector volume" CV="61" item="Sound Setting 13" default="3" tooltip="CV61, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
-		<variable label="Coupling volume" CV="62" item="Sound Setting 9" default="3" tooltip="CV62, range 0-3"
+		<variable label="Coupling volume" CV="62" item="Sound Setting 14" default="3" tooltip="CV62, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
-		<variable label="Air pump volume" CV="63" item="Sound Setting 10" default="3" tooltip="CV63, range 0-3"
+		<variable label="Air pump volume" CV="63" item="Sound Setting 15" default="3" tooltip="CV63, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 			
-		<variable label="Rail clack volume" CV="64" item="Sound Setting 11" default="3" tooltip="CV64, range 0-3 Note: Bell 
+		<variable label="Rail clack volume" CV="64" item="Sound Setting 21" default="3" tooltip="CV64, range 0-3 Note: Bell 
 		and Rail Wheel Clack cannot play at the same time. Rail Wheel Clack cannot play while loco is idle."
 				comment="Range 0-3">
 			<decVal max="3"/>
@@ -236,41 +249,53 @@
 			<decVal max="255"/>
 		</variable>
 
-		<variable label="Conductor volume" CV="112" item="Sound Setting 12" default="3" tooltip="CV112, range 0-3"
+		<variable label="Conductor volume" CV="112" item="Sound Setting 22" default="3" tooltip="CV112, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 
-		<variable label="Random sound enable" CV="113" item="Sound Option 5" default="3" tooltip="CV113, Off(0) or On(1)(default)">
+		<variable label="Random sound enable" CV="113" item="Sound Option 8" default="1" tooltip="CV113, Off(0) or On(1)(default)">
 			<enumVal>
 		         	<enumChoice choice="Off"/>
 				<enumChoice choice="On"/>
 			</enumVal>
 		</variable>
 
-		<variable label="Brake release volume" CV="114" item="Sound Setting 13" default="3" tooltip="CV114, range 0-3"
+		<variable label="Brake release volume" CV="114" item="Sound Setting 23" default="2" tooltip="CV114, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 
-		<variable label="Chuff Rate" item="Sound Setting 14" CV="117" default="1" tooltip="CV117, range 0-10"
+		<variable label="Chuff Rate" item="Sound Option 5" CV="117" default="1" tooltip="CV117, range 0-10"
 		     		comment="Range 0-10">
-			<decVal max="10"/>
+			<enumVal>
+		         	<enumChoice choice="1"/>
+				<enumChoice choice="2"/>
+				<enumChoice choice="3"/>
+				<enumChoice choice="4"/>
+				<enumChoice choice="5"/>
+				<enumChoice choice="6"/>
+				<enumChoice choice="7"/>
+				<enumChoice choice="8"/>
+				<enumChoice choice="9"/>
+				<enumChoice choice="10"/>
+				<enumChoice choice="11"/>
+			</enumVal>
 		</variable>
 
-		<variable label="Coupler fire volume" CV="119" item="Sound Setting 15" default="3" tooltip="CV119, range 0-3"
+		<variable label="Coupler fire volume" CV="119" item="Sound Setting 24" default="3" tooltip="CV119, range 0-3"
 				comment="Range 0-3">
 			<decVal max="3"/>
 		</variable>
 
 		<variable label="Acceleration" CV="120" item="Accel" default="0" 
-				tooltip="Note: Sets the acceleration rate (delay) in CV120, range 0(default)-32"  
+				tooltip="Sets the acceleration rate (delay) in CV120, range 0(default)-32"  
 				comment="Range 0-32">
 			<decVal max="32"/>
 		</variable>
 
 		<variable label="Deceleration" CV="121" item="Decel" default="0" 
-				tooltip="Note: Sets the deceleration rate (delay) in CV121, range 0(default)-32"
+				tooltip="Sets the deceleration rate (delay) in CV121, range 0(default)-32"
 				comment="Range 0-32">
 			<decVal max="32"/>
 		</variable>
@@ -282,9 +307,13 @@
 			</enumVal>
 		</variable>
 		
-		<variable label="Chuff start rate adjustment" item="Sound Setting 16" CV="123" default="1" tooltip="CV123, range 0-4"
+		<variable label="Chuff start rate adjustment" item="Sound Option 7" CV="123" default="1" tooltip="CV123"
 				comment="Range 0-4">
-			<decVal max="4"/>
+				<enumChoice choice="1"/>
+				<enumChoice choice="2"/>
+				<enumChoice choice="3"/>
+				<enumChoice choice="4"/>
+				<enumChoice choice="5"/>
 		</variable>
 			
 	</variables>
@@ -295,11 +324,18 @@
 
 </decoder>
 
+	<pane name="MRC">
+		<column>
+			<label label="MRC NOTE: This sound only decoder does NOT support 'Read Back'"/>
+		</column>
+	</pane>
 
 </decoder-config>
 
 
 
+
+ 	  	 
 
  	  	 
 
