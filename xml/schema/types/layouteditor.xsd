@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layouteditor.xsd,v 1.8 2010-02-16 08:16:30 jacobsen Exp $ -->
+<!-- $Id: layouteditor.xsd,v 1.9 2010-04-04 07:19:24 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -82,6 +82,9 @@
       <xs:attribute name="snaponadd" type="yesNoType" default="yes" />
       <xs:attribute name="snaponmove" type="yesNoType" default="yes" />
       <xs:attribute name="antialiasing" type="yesNoType" default="yes" />
+      <xs:attribute name="turnoutcircles" type="yesNoType" default="yes" />
+      <xs:attribute name="tooltipsnotedit" type="yesNoType" default="yes" />
+      <xs:attribute name="tooltipsinedit" type="yesNoType" default="yes" />
       <xs:attribute name="mainlinetrackwidth" type="xs:integer" use="required" />
       <xs:attribute name="sidetrackwidth" type="xs:integer" use="required" />
       <xs:attribute name="xscale" type="xs:float"/>
