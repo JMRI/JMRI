@@ -90,8 +90,9 @@ Window title:<br >
 <br >
 </a><h3><a name="EditMenu">Reset function buttons</a></h3>
 
-<a name="EditMenu">Reset the function buttons content to default.<br >
-<br >
+<a name="EditMenu">Reset the function buttons content to default and reset their visibility.<br ><br >
+If a roster is selected, default button content will be loaded from roster entry; further more, if the matching preference is enabled, buttons undefined is the roster entry will be hidden.
+<br>
 </a><h3><a name="EditMenu">Export current throttles customization to roster</a></h3>
 
 Push curent throttle window customizations to the Roster particularly Function Buttons customizations. See <a href="RostersMediaPane.shtml" name="EditMenu">Roster Functions Labels Pane.<br >
@@ -118,11 +119,8 @@ Push curent throttle window customizations to the Roster particularly Function B
 							Control Panel.  Be a little creative with the window resizing, and you
 							could have several of these custom throttle windows in the same area as one
 							single complete throttle window would take up.</a></p>
-<h3><a name="ViewMenu">Show all function buttons</a></h3>
+<h3><a name="ViewMenu">Show all function buttons - ! Functionality moved to "Reset Button" entry in "Edit" menu</a></h3>
 
-
-<a name="ViewMenu">Reset function buttons visibility, all buttons will be made visible.<br >
-<br >
 </a><h3><a name="ViewMenu">Get all current throttle components in bounds</a></h3>
 
 <a name="ViewMenu">Make sure that all inner windows of the curent Throttle are inside the Throttle Window bounds.<br >
