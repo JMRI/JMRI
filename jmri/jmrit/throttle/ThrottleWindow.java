@@ -301,7 +301,7 @@ public class ThrottleWindow extends JmriJFrame {
 		viewAllButtons = new JMenuItem(throttleBundle.getString("ThrottleMenuViewAllFunctionButtons"));
 		viewAllButtons.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent ev) {
-				getCurentThrottleFrame().getFunctionPanel().showAllFnButtons();
+				getCurentThrottleFrame().getFunctionPanel().resetFnButtons();
 				getCurentThrottleFrame().getFunctionPanel().setEnabled();
 			}
 		});

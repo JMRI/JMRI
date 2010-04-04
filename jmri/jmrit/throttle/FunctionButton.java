@@ -53,7 +53,7 @@ public class FunctionButton extends JToggleButton implements ActionListener
     }
     
     private JPopupMenu popup;
-
+    private MouseListener popupListener;
     /**
      * Construct the FunctionButton.
      */
@@ -66,12 +66,18 @@ public class FunctionButton extends JToggleButton implements ActionListener
         popup.add(propertiesItem);
 
         //Add listener to components that can bring up popup menus.
-        MouseListener popupListener = new PopupListener();
-        this.addMouseListener(popupListener);
-        this.setFont(new Font("Monospaced",Font.PLAIN, 12));
-        this.setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
-
-        this.setMargin(new Insets(2,2,2,2));
+        popupListener = new PopupListener();
+        setFont(new Font("Monospaced",Font.PLAIN, 12));
+        setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
+        setMargin(new Insets(2,2,2,2));
+    }
+    
+    public void setEnabled(boolean b) {
+    	super.setEnabled(b);
+    	if (b)
+    		this.addMouseListener(popupListener);
+    	else
+    		this.removeMouseListener(popupListener);
     }
 
 
