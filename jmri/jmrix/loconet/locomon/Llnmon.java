@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.45 $
+ * @version			$Revision: 1.46 $
  */
 public class Llnmon {
 
@@ -661,7 +661,11 @@ public class Llnmon {
                 default: zone="<unknown "+(l.getElement(2)&0x0F)+">"; break;
             }
 
-			int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16;
+           /*  Change by Bob Milhaupt                                                  *
+            *  Corrected computation of detection section number to be consistent for  *
+            *  BDL16x board IDs greater than 8.                                        */
+           /* int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*16; */
+            int section = (l.getElement(2)/16)+(l.getElement(1)&0x1F)*8;
 
             switch (type) {
             case LnConstants.OPC_MULTI_SENSE_POWER:
