@@ -224,13 +224,19 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      */
     private void initGUI(){
         mainPanel.removeAll();
-        this.setContentPane(mainPanel);
-        this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+        setContentPane(mainPanel);
+        setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         mainPanel.setLayout(new FlowLayout(FlowLayout.CENTER,5,5));
         functionButton = new FunctionButton[NUM_FUNCTION_BUTTONS];
-        for (int i=0; i<NUM_FUNCTION_BUTTONS; i++)
-            functionButton[i] = new FunctionButton();
-
+        for (int i=0; i<NUM_FUNCTION_BUTTONS; i++) {
+        	functionButton[i] = new FunctionButton();
+        	if (i > 0) {
+        		mainPanel.add(functionButton[i]);
+        		if (i >= NUM_FUNC_BUTTONS_INIT) {
+        			functionButton[i].setVisible(false);
+        		}
+        	}
+        }
         alt1Button.setText("*");
         alt1Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
         alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
@@ -247,6 +253,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         alt2Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
         alt2Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("currently_not_used"));
         mainPanel.add(alt2Button);
+        
         resetFnButtons();
 		KeyListenerInstaller.installKeyListenerOnAllComponents(	new FunctionButtonKeyListener(), this);
     }
@@ -255,7 +262,6 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     public void buttonActionCmdPerformed(){
 		// swap f3 through f15 with f16 through f28
 		for (int i = 3; i < NUM_FUNCTION_BUTTONS; i++) {
-
 			if (alt1Button.isSelected()) {
 				if (i < NUM_FUNC_BUTTONS_INIT) {
 					functionButton[i].setVisible(false);
@@ -285,12 +291,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
     			functionButton[i].setText(rb.getString("F"+String.valueOf(i)));
     		else
     			functionButton[i].setText("F"+String.valueOf(i));
-    		if (i > 0) {
-    			mainPanel.add(functionButton[i]);
-    			if (i >= NUM_FUNC_BUTTONS_INIT) {
-    				functionButton[i].setVisible(false);
-    			}
-    		}
+
     		functionButton[i].setDisplay(true);
     		if (i<3)
     			functionButton[i].setVisible(true);
@@ -393,7 +394,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.57 $
+	 * @version $Revision: 1.58 $
 	 */
     class FunctionButtonKeyListener extends KeyAdapter {
     	private boolean keyReleased = true;
