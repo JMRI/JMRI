@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.41 $
+ * @version     $Revision: 1.42 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -71,8 +71,8 @@ public class ToolsMenu extends JMenu {
         throttleMenu.addSeparator();
         throttleMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(rb.getString("MenuItemSaveAsDefaultThrottleLayout" )));
         throttleMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(rb.getString("MenuItemLoadDefaultThrottleLayout" )));
-        throttleMenu.addSeparator();
-        throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(rb.getString("MenuItemThrottlesPreferences")));
+        //throttleMenu.addSeparator();
+        //throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(rb.getString("MenuItemThrottlesPreferences"))); // now in tabbed preferences
         throttleMenu.add(new JSeparator());
         throttleMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(rb.getString("MenuItemStartWiThrottle")));
         add(throttleMenu);
