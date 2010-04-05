@@ -550,6 +550,7 @@ public class ThrottleWindow extends JmriJFrame {
         			tf = addThrottleFrame();
         		tf.setXml(tfes.get(i));
         	}
+        updateGUI();
 	}
 	
 	/**

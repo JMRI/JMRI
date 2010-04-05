@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -560,7 +560,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     }
     
     public Element getXmlFile() {
-    	if ((getLastUsedSaveFile() == null) || (getRosterEntry()==null))
+    	if (getLastUsedSaveFile() == null) // || (getRosterEntry()==null))
     		return null;
         Element me = new Element("ThrottleFrame");
         me.setAttribute("ThrottleXMLFile", FileUtil.getPortableFilename( getLastUsedSaveFile() ));

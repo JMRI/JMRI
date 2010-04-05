@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -90,8 +90,10 @@ public class ThrottleFramePropertyEditor extends JDialog
         titleType.setVisibleRowCount(titleTextTypeNames.length);
         titleType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         for (int i = 0; i < titleTextTypes.length; i++) {
-        	if (titleTextTypes[i] == frame.getTitleTextType())
+        	if (titleTextTypes[i].compareTo( frame.getTitleTextType()) ==0) {
             	titleType.setSelectedIndex(i);
+            	break;
+        	}
         }
         constraints.gridy++;
         constraints.gridx = 0;
