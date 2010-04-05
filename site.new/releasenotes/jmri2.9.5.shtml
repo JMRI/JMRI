@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.15 2010-04-03 20:07:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.16 2010-04-05 06:13:37 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -337,6 +337,16 @@ with QSI decoders stalling while being read.
 
 <p>
 Peter Ulvestad updated the ESU Bachman 3 function decoder definition.
+
+<p>
+Giorgio Terdina's AutoDispatcher script is now distributed with JMRI.
+
+<p>
+Joan Carrancà updated the JInput library for better access to RailDriver units
+on Windows.
+
+<p>
+Bob Milhaupt fixed a bug in transponder messages in the LocoNet monitor.
 
 <!--#include virtual="/Footer" -->
 

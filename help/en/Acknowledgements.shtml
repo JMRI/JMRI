@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.107 2010-03-20 19:53:13 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.108 2010-04-05 06:13:37 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -285,6 +285,7 @@
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
+    <LI>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor
 	<LI>Dennis Miller, who greatly improved the CV printing, added the
 	run-time help system and repackaged the window icons
 	<LI>Jon Miller, who has been doing user support and decoder testing, plus contributing 
