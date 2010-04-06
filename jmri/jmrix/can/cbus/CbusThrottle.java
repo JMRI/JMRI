@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Andrew Crosland Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
@@ -176,6 +176,7 @@ public class CbusThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed < 0) {
             this.speedSetting = -1.f;
@@ -192,6 +193,8 @@ public class CbusThrottle extends AbstractThrottle {
         mRefreshTimer.stop();
         mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
         mRefreshTimer.start();
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     /**
@@ -199,8 +202,11 @@ public class CbusThrottle extends AbstractThrottle {
      */
     public void setIsForward(boolean forward)
     {
+        boolean old = isForward; 
         isForward = forward;
         setSpeedSetting(speedSetting);
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     /**
