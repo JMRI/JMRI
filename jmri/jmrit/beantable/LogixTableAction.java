@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3971,16 +3971,20 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSignalMastReference(String name) {
         SignalMast h = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
-            h = InstanceManager.signalMastManagerInstance().getByUserName(name);
-            if (h != null) {
-                //return h.getSystemName();
-                return name;
+        try {
+            if ((name != null) && (name != "")) {
+                h = InstanceManager.signalMastManagerInstance().getByUserName(name);
+                if (h != null) {
+                    //return h.getSystemName();
+                    return name;
+                }
+                h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
             }
-            h = InstanceManager.signalMastManagerInstance().provideSignalMast(name);
+        } catch (IllegalArgumentException iae) {
+            log.info(iae.getMessage());
         }
         if (h == null) {
-            messageInvalidActionItemName(name, "SignalHead");
+            messageInvalidActionItemName(name, "SignalMast");
             return null;
         }
         return name;

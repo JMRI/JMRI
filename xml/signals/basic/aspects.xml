@@ -18,6 +18,9 @@
         <personname><firstname>Dick</firstname><surname>Bronson</surname></personname>
     </author>    
     <author>
+        <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
+    </author>    
+    <author>
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
     </author>    
@@ -30,32 +33,43 @@
         <authorinitials>RGJ</authorinitials>
         <revremark>Initial version</revremark>
     </revision>    
+    <revision>
+        <revnumber>2</revnumber>
+        <date>2010-3-25</date>
+        <authorinitials>PWC</authorinitials>
+        <revremark>Add speed element</revremark>
+    </revision>    
   </revhistory>
 
   <aspects>
     <aspect>
       <name>Clear</name>
       <indication>Proceed</indication>
+      <speed>Normal</speed>
     </aspect>
 
     <aspect>
       <name>Approach</name>
       <indication>Proceed preparing to stop at next signal</indication>
+      <speed>Medium</speed>
     </aspect>
 
     <aspect>
       <name>Stop</name>
       <indication>Stop</indication>
+      <speed>Stop</speed>
     </aspect>
 
     <aspect>
       <name>Diverging Clear</name>
       <indication>Proceed through diverging route</indication>
+      <speed>Limited</speed>
     </aspect>
 
     <aspect>
       <name>Diverging Approach</name>
       <indication>Proceed through diverging route preparing to stop at next signal</indication>
+      <speed>Slow</speed>
     </aspect>
 
   </aspects>
