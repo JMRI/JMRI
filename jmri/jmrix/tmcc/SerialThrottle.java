@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * over 100 are considered long addresses. 
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SerialThrottle extends AbstractThrottle
 {
@@ -116,6 +116,7 @@ public class SerialThrottle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         int value = (int)(32*speed);     // -1 for rescale to avoid estop
         if (value>31) value = 31;    // max possible speed
@@ -134,9 +135,12 @@ public class SerialThrottle extends AbstractThrottle
         SerialTrafficController.instance().sendSerialMessage(m, null);
         SerialTrafficController.instance().sendSerialMessage(m, null);
         SerialTrafficController.instance().sendSerialMessage(m, null);
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
 
         // notify layout
@@ -150,7 +154,8 @@ public class SerialThrottle extends AbstractThrottle
         SerialTrafficController.instance().sendSerialMessage(m, null);
         SerialTrafficController.instance().sendSerialMessage(m, null);
         SerialTrafficController.instance().sendSerialMessage(m, null);
-        
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );        
     }
 
     protected void sendToLayout(int value) {

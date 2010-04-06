@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class Throttle extends AbstractThrottle
 {
@@ -87,6 +87,7 @@ public class Throttle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
         if (value>0) value = value+1;  // skip estop
@@ -103,13 +104,18 @@ public class Throttle extends AbstractThrottle
         for (int j = 0; j<step.length(); j++) {
             m.setElement(i++, step.charAt(j));
         }
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
 
         // TrafficController.instance().sendMessage(m, null);
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     public LocoAddress getLocoAddress() {

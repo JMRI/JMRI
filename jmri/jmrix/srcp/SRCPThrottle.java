@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * standard, but is used as an expedient here.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2008
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SRCPThrottle extends AbstractThrottle
 {
@@ -83,13 +83,19 @@ public class SRCPThrottle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         sendUpdate();
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
         sendUpdate();
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     private DccLocoAddress address;

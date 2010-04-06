@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Bob Jacobsen  Copyright (C) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class Pr2Throttle extends AbstractThrottle {
     private int addr;
@@ -135,10 +135,13 @@ public class Pr2Throttle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
         if (speed<0) this.speedSetting = -1.f;
 
         writeData();
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     /**
@@ -147,8 +150,11 @@ public class Pr2Throttle extends AbstractThrottle {
      */
     public void setIsForward(boolean forward)
     {
+        boolean old = isForward; 
         isForward = forward;
         sendFunctionGroup1();
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     /**

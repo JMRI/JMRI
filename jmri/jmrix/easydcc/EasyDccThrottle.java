@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
@@ -138,6 +138,7 @@ public class EasyDccThrottle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
 
         byte[] result;
@@ -173,11 +174,16 @@ public class EasyDccThrottle extends AbstractThrottle
         }
 
         EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     private DccLocoAddress address;

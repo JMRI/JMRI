@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class NceThrottle extends AbstractThrottle{
 	
@@ -252,7 +252,9 @@ public class NceThrottle extends AbstractThrottle{
 	 *            Number from 0 to 1; less than zero is emergency stop
 	 */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
 		this.speedSetting = speed;
+        if (log.isDebugEnabled()) log.debug("setSpeedSetting= "+speed);
 		
 		// The NCE USB doesn't support the NMRA packet format
 		if (sendA2command) {
@@ -311,12 +313,19 @@ public class NceThrottle extends AbstractThrottle{
 			}
 			NceMessage m = NceMessage.queuePacketMessage(bl);
 			NceTrafficController.instance().sendNceMessage(m, null);
+
 		}
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
+        if (log.isDebugEnabled()) log.debug("setIsForward= "+forward);
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     /**
