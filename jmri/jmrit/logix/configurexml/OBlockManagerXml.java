@@ -12,7 +12,7 @@ import jmri.InstanceManager;
 import jmri.BeanSetting;
 import jmri.Path;
 import jmri.Sensor;
-import jmri.SignalHead;
+import jmri.NamedBean;
 import jmri.Turnout;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
@@ -101,7 +101,7 @@ public class OBlockManagerXml // extends XmlFile
             }
             elem.addContent(fromElem);
         }
-        SignalHead signal = portal.getFromSignal();
+        NamedBean signal = portal.getFromSignal();
         if (signal!=null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
@@ -395,15 +395,13 @@ public class OBlockManagerXml // extends XmlFile
         if (eSignals.size()>1) log.error("More than one fromSignal present: "+eSignals.size());
         if (eSignals.size()>0) {
             Element eSig = eSignals.get(0); 
-            String signalName = eSig.getAttribute("signalName").getValue();
-            portal.setFromSignal(InstanceManager.signalHeadManagerInstance().getSignalHead(signalName));
+            portal.setFromSignal(eSig.getAttribute("signalName").getValue());
         }
         eSignals = elem.getChildren("toSignal");
         if (eSignals.size()>1) log.error("More than one toSignal present: "+eSignals.size());
         if (eSignals.size()>0) {
             Element eSig = eSignals.get(0); 
-            String signalName = eSig.getAttribute("signalName").getValue();
-            portal.setToSignal(InstanceManager.signalHeadManagerInstance().getSignalHead(signalName));
+            portal.setToSignal(eSig.getAttribute("signalName").getValue());
         }
         if (log.isDebugEnabled()) log.debug("Load portal "+portalName);
         return portal;
