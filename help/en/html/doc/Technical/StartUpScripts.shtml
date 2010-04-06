@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.9 2010-01-31 20:54:11 zoo Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.10 2010-04-06 10:03:20 matthewharris Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -255,6 +255,24 @@ If no argument is provided, the configuration file name is defaulted in the appl
 <br>
 This allows you to create as many specialized configurations you'd like by creating a new Start Menu and/or Desktop shortcut to 'LaunchJMRI.exe' file and adding the preferences file as a parameter.
 </dl>
+
+<h3>Environment variables</h3>
+
+As from JMRI version 2.9.5, it is possible to influence the settings used to launch JMRI via the use of Environment Variables.
+
+The Environment Variables used are:
+
+<dl>
+<dt>JMRI_HOME
+<dd>This determines the program location
+<dt>JMRI_OPTIONS
+<dd>This specifies additional JVM options
+<dt>JMRI_PREFSDIR
+<dd>This specifies the location of an alternative preferences directory
+<dt>JMRI_USERHOME
+<dd>This specifies the location of an alternative user home directory
+</dl>
+If both JMRI_PREFSDIR and JMRI_USERHOME are defined, the location defined by JMRI_PREFSDIR will take precedence over the location defined by JMRI_USERHOME for determining the location of the preferences file.
 
 <h3>Launcher details</h3>
 
