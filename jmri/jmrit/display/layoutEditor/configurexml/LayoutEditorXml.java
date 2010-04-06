@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -246,8 +246,8 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         String name = "";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
-        String defaultColor = "";
-        String defaultTextColor = "";
+        String defaultColor = "black";
+        String defaultTextColor = "black";
         if (element.getAttribute("defaulttrackcolor")!=null)
             defaultColor = element.getAttribute("defaulttrackcolor").getValue();
         if (element.getAttribute("defaulttextcolor")!=null)
