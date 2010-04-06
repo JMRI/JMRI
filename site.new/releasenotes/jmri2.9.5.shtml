@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.16 2010-04-05 06:13:37 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.17 2010-04-06 18:16:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -347,6 +347,15 @@ on Windows.
 
 <p>
 Bob Milhaupt fixed a bug in transponder messages in the LocoNet monitor.
+
+<p>
+Matt Harris updated the Windows launch tool to allow more customization.
+
+<p>
+Matjaz Krajnc provided better code and icons for the web throttle.
+
+<p>
+Tom Stack updated the Tsunami Diesel definition with more models.
 
 <!--#include virtual="/Footer" -->
 
