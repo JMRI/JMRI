@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.9.4 on Sun Feb 21 09:59:11 PST 2010 $Id: decoderIndex.xml,v 1.158 2010-02-21 18:00:53 jacobsen Exp $-->
-  <decoderIndex version="188">
+  <!--Written by JMRI version 2.9.5 on Tue Apr 06 11:22:01 PDT 2010 $Id: decoderIndex.xml,v 1.159 2010-04-06 18:23:16 jacobsen Exp $-->
+  <decoderIndex version="190">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -131,7 +131,7 @@
         <model model="VO1000 (Part #500099)" numOuts="2" numFns="0" lowVersionID="46" highVersionID="46" />
       </family>
       <family name="Paragon 2" mfg="Broadway Limited Imports, LLC" file="BLI_Blueline_Paragon2_Diesel.xml">
-        <model model="Diesel" numOuts="3" numFns="27" connector="9pin">
+        <model model="Diesel" numOuts="3" numFns="28" connector="9pin">
           <versionCV lowVersionID="0" highVersionID="31" />
           <output name="1" label="headlight" />
           <output name="2" label="rearlight" />
@@ -1148,6 +1148,416 @@
           <functionlabel num="15" lockable="false">Smash</functionlabel>
         </functionlabels>
       </family>
+      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" type="locomotive" file="ESU_LokSound_Select.xml">
+        <model model="LokSound Select Alco 244" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73401" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Alco 251" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73402" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73403" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select GE 7FDL" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73404" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Baldwin" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73405" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 567" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73406" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 645E" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73407" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 645E/F" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73408" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 645 turbo" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73409" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select EMD 710GB" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73410" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Switcher" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73411" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Special" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73412" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="Headlight" maxcurrent="250mA" connection="unspecified" />
+          <output name="2" label="Rear light" maxcurrent="250mA" connection="unspecified" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" connection="unspecified" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" connection="unspecified" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" connection="unspecified" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" connection="unspecified" />
+          <output name="7" label="Acc" connection="unspecified" />
+          <output name="8" label="Sw" connection="unspecified" />
+          <output name="9" label="DB" connection="unspecified" />
+          <output name="10" label="Dim" connection="unspecified" />
+          <output name="11" label="Cross" connection="unspecified" />
+          <output name="12" label="Notch" connection="unspecified" />
+          <output name="13" label="Dop" connection="unspecified" />
+          <output name="14" label="Shift" connection="unspecified" />
+          <output name="15" label="Prime" connection="unspecified" />
+          <output name="16" label="Horn" connection="unspecified" />
+          <output name="17" label="Bell" connection="unspecified" />
+          <output name="18" label="Coup" connection="unspecified" />
+          <output name="19" label="DB" connection="unspecified" />
+          <output name="20" label="Comp" connection="unspecified" />
+          <output name="21" label="Fan" connection="unspecified" />
+          <output name="22" label="Det" connection="unspecified" />
+          <output name="23" label="Comm" connection="unspecified" />
+          <output name="24" label="Clak" connection="unspecified" />
+          <output name="25" label="Brake" connection="unspecified" />
+          <output name="26" label="Sand" connection="unspecified" />
+          <output name="27" label="Air" connection="unspecified" />
+          <output name="28" label="Pop" connection="unspecified" />
+          <output name="29" label="S Horn" connection="unspecified" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="false">AUX3</functionlabel>
+          <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
+          <functionlabel num="7" lockable="true">Switching</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="10" lockable="false">Compressor</functionlabel>
+          <functionlabel num="11" lockable="true">Fan</functionlabel>
+          <functionlabel num="12" lockable="false">Notching</functionlabel>
+          <functionlabel num="13" lockable="false">AUX4</functionlabel>
+          <functionlabel num="14" lockable="false">Detector</functionlabel>
+          <functionlabel num="15" lockable="false">Crossing</functionlabel>
+          <functionlabel num="16" lockable="false">Rail Clack</functionlabel>
+          <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
+          <functionlabel num="18" lockable="false">Sanding</functionlabel>
+          <functionlabel num="19" lockable="false">Air</functionlabel>
+          <functionlabel num="20" lockable="false">Short Horn</functionlabel>
+          <functionlabel num="21" lockable="false">pop Valve</functionlabel>
+        </functionlabels>
+      </family>
       <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH" type="locomotive" file="Haber_u_Koenig.xml">
         <model model="NFA" numOuts="8" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="1.2 A" comment="NFA=Niederfrequenzansteuerung" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
           <versionCV lowVersionID="32" highVersionID="47" />
@@ -1531,6 +1941,9 @@
           <size length="90" width="14" height="4.2" units="mm" />
         </model>
       </family>
+      <family name="Athearn" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Athearn_SD45_60_1825.xml">
+        <model model="Athearn SD45/SD60 MRC-1825" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no" />
+      </family>
       <family name="Athearn Genesis Challenger" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_Challenger.xml">
         <model model="Athearn Genesis Challenger" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsNmraF13="yes" nmraWarrant="no" connector="unspecified" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
@@ -1664,6 +2077,11 @@
           <size length="66" width="14" height="3.5" units="mm" />
         </model>
       </family>
+      <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60" type="locomotive" file="MRC_soundbrilliance1812.xml">
+        <model model="Synch Diesel Sound 1812 - N Scale Atlas Short Board Dropin" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
+          <size length="" width="" height="" units="mm" />
+        </model>
+      </family>
       <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" type="locomotive" file="MRC_soundbrilliance1819.xml">
         <model model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" extFnsMRC="yes" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no">
           <!-- note All 28 functions are NMRA compatible -->
@@ -1700,6 +2118,9 @@
         <model model="Diesel Sound Decoder 1666 Alco244SD60-70" numOuts="2" numFns="12" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
           <size length="17.4" width="17.4" height="4.0" units="mm" />
         </model>
+      </family>
+      <family name="MTH HO PS3" mfg="Mikes Train House" type="locomotive" file="MTH.xml">
+        <model model="MTH HO PS3" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="LGB" mfg="Massoth Elektronik, GmbH" type="locomotive" file="Massoth_LGB.xml">
         <model model="LGB MTS I 55020 loco decoders" lowVersionID="10" highVersionID="29" maxInputVolts="24 V" maxMotorCurrent="1.5 A" maxTotalCurrent="2.0 A" numOuts="3" numFns="10" formFactor="G" connector="other" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
@@ -3581,6 +4002,36 @@
           <output name="Brakes" connection="unspecified" />
           <output name="Coupler" connection="unspecified" />
         </model>
+        <model model="TSU-750 EMD 645 (Turbo)" numOuts="2" numFns="14" connector="other" productID="827002" comment="Model 827002" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-750 EMD 710" numOuts="2" numFns="14" connector="other" productID="827003" comment="Model 827003" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
         <model model="TSU-750 Fairbanks-Morse H-12" numOuts="2" numFns="14" connector="other" productID="827008" comment="Model 827008" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
@@ -3597,6 +4048,21 @@
           <output name="Coupler" connection="unspecified" />
         </model>
         <model model="TSU-750 Galloping Goose" numOuts="2" numFns="14" connector="other" productID="827010" comment="Model 827010" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" connection="unspecified" />
+          <output name="Bell" connection="unspecified" />
+          <output name="FX5" label=" Rule 17" connection="unspecified" />
+          <output name="FX6" label="Mode" connection="unspecified" />
+          <output name="Dynamics" connection="unspecified" />
+          <output name="Short Horn" connection="unspecified" />
+          <output name="Fans(+)" connection="unspecified" />
+          <output name="Dimming" connection="unspecified" />
+          <output name="Mute" connection="unspecified" />
+          <output name="Comp(-)" connection="unspecified" />
+          <output name="Brakes" connection="unspecified" />
+          <output name="Coupler" connection="unspecified" />
+        </model>
+        <model model="TSU-750 GE Cummins" numOuts="2" numFns="14" connector="other" productID="827014" comment="Model 827014" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" connection="unspecified" />
           <output name="Bell" connection="unspecified" />
@@ -4637,212 +5103,6 @@
           <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
           <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
           <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-      </family>
-      <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="46" type="locomotive" file="TCS_bemf.xml">
-        <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="2.860" width="0.680" height="0.145" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="2.860" width="0.680" height="0.145" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="200 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="200 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="200 mA" />
-          <output name="5" label="Brown" connection="solder" maxcurrent="200 mA" />
-          <output name="6" label="Pink" connection="solder" maxcurrent="200 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="2.83" width="0.351" height="0.13" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="2.73" width="0.349" height="0.13" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="50 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="50 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.834" width="0.361" height="0.101" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.73" width="0.36" height="0.15" units="inches" />
-          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="DP2X" numOuts="2" numFns="8" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0845" width="0.680" height="0.165" units="inches" />
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="K3D3" numOuts="3" numFns="8" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="2.860" width="0.680" height="0.145" units="inches" />
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M1" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.57" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M1P-15" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.57" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M1P-MH" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.57" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M1P-UK" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.57" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.570" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.570" width="0.355" height="0.132" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="MC2" numOuts="2" numFns="8" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.71" width="0.41" height="0.19" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.71" width="0.41" height="0.19" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.71" width="0.41" height="0.19" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="T1" numOuts="2" numFns="8" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="0.956" width="0.665" height="0.207" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="1.010" width="0.665" height="0.250" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="1.00" width="0.680" height="0.250" units="inches" />
-          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
-          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
-          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
-          <output name="Dim" connection="unspecified" />
-          <output name="Ditch" connection="unspecified" />
-          <output name="Motor" connection="unspecified" />
-        </model>
-        <model model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
-          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />

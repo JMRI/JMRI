@@ -3,7 +3,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.9.4 of JMRI.
+ * These JavaDocs are for Version 2.9.5 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -19,7 +19,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.125 $
+ * @version $Revision: 1.126 $
  */
 
 public class Version {
@@ -39,13 +39,13 @@ public class Version {
     /* Test number changes with individual releases,
      * general fastest for test releases.
      */
-     static final public int test = 4;
+     static final public int test = 5;
      
     /**
      * Modifier is used to denote specific builds.
      * It should be the empty string "" for released versions.
      */
-     static final public String modifier = "+dev";
+     static final public String modifier = "";
 
     /**
      * Provide the current version string in I.J.Kmod format.
