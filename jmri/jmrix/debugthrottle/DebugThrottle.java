@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class DebugThrottle extends AbstractThrottle
 {
@@ -76,15 +76,21 @@ public class DebugThrottle extends AbstractThrottle
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        float oldSpeed = this.speedSetting;
         if (speed>1.0) {
             log.warn("Speed was set too high: "+speed);
         }
         this.speedSetting = speed;
+        if (oldSpeed != this.speedSetting)
+            notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
     public void setIsForward(boolean forward) {
+        boolean old = isForward; 
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
+        if (old != isForward)
+            notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
     /**
