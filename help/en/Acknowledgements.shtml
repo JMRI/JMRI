@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.108 2010-04-05 06:13:37 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.109 2010-04-06 17:22:54 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -257,7 +257,8 @@
     MacOS X
 	<LI>Tony Koester, who helped with signalling
 	<LI>James Koretsky, who contributed the Burlington Northern 1989 signal definition
-	<LI>Ross Kudlick researched options switches on Digitrax command stations
+    <LI>Matjaz Krajnc, who provided better code and icons for the web throttle
+	<LI>Ross Kudlick, who researched options switches on Digitrax command stations
 	<LI>Nick Kulp, who helped test much of the C/MRI and signaling logic, presented
 	<A href="http://jmri.org/community/clinics/NickKulpMarch2004/index.html">a nice clinic</a> on
 	how to start making panels, and contributed numerous icons
