@@ -23,7 +23,7 @@ IF:basic:one-searchlight:IH1
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -72,8 +72,8 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
                         InstanceManager.signalHeadManagerInstance().getSignalHead(parts[i]));
             heads.add(s);
         }
-    }
-    
+    }   
+
     public void setAspect(String aspect) { 
         // check it's a choice
         if ( !map.checkAspect(aspect)) {
@@ -83,6 +83,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
         
         // set the outputs
+        if (log.isDebugEnabled()) log.debug("setAspect \""+aspect+"\", numHeads= "+heads.size());
         map.setAppearances(aspect, heads);
         // do standard processing
         super.setAspect(aspect);

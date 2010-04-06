@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -36,6 +36,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
+        if (log.isDebugEnabled()) log.debug("getMap signalSystem= \""+signalSystemName+"\", aspectMap= \""+aspectMapName+"\"");
         DefaultSignalAppearanceMap map = maps.get("map:"+signalSystemName+":"+aspectMapName);
         if (map == null) {
             map = loadMap(signalSystemName, aspectMapName);
@@ -150,7 +151,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         for (int i = 0; i < heads.size(); i++) {
             heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
-            if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+table.get(aspect)[i]);
+            if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+
+                                                heads.get(i).getBean().getAppearanceName(table.get(aspect)[i]));
         }
         return;
     }
