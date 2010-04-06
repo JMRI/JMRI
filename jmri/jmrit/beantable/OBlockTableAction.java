@@ -66,6 +66,7 @@ import jmri.NamedBean;
 import jmri.Path;
 import jmri.Sensor;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.Turnout;
 
 import jmri.util.table.ButtonEditor;
@@ -110,7 +111,7 @@ public class OBlockTableAction extends AbstractAction {
 
     static int ROW_HEIGHT;
     static int STRUT_SIZE = 10;
-	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
 
     static String noneText = AbstractTableAction.rb.getString("BlockNone");
     static String gradualText = AbstractTableAction.rb.getString("BlockGradual");
@@ -153,8 +154,6 @@ public class OBlockTableAction extends AbstractAction {
 
         JDesktopPane _desktop;
         JInternalFrame _blockTableFrame;
-        JCheckBox _inchBox = new JCheckBox(AbstractTableAction.rb.getString("LengthInches"));
-        JCheckBox _centimeterBox = new JCheckBox(AbstractTableAction.rb.getString("LengthCentimeters"));
 
         JInternalFrame _portalTableFrame;
         JInternalFrame _blockPortalXRefFrame;
@@ -172,7 +171,7 @@ public class OBlockTableAction extends AbstractAction {
         }
 
         public void initComponents() {
-            setTitle(rbx.getString("TitleOBlocks"));
+            setTitle(rbo.getString("TitleOBlocks"));
             JMenuBar menuBar = new JMenuBar();
             ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
             JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
@@ -208,8 +207,8 @@ public class OBlockTableAction extends AbstractAction {
             editMenu.add(menuItem);
             menuBar.add(editMenu);
 
-            JMenu optionMenu = new JMenu(rbx.getString("MenuOptions"));
-            _showWarnItem = new JMenuItem(rbx.getString("SuppressWarning"));
+            JMenu optionMenu = new JMenu(rbo.getString("MenuOptions"));
+            _showWarnItem = new JMenuItem(rbo.getString("SuppressWarning"));
             _showWarnItem.addActionListener(new ActionListener(){
                     public void actionPerformed(ActionEvent event) {
                         String cmd = event.getActionCommand();
@@ -220,7 +219,7 @@ public class OBlockTableAction extends AbstractAction {
             setShowWarnings("ShowWarning");
             menuBar.add(optionMenu);
 
-            _openMenu = new JMenu(rbx.getString("OpenMenu"));
+            _openMenu = new JMenu(rbo.getString("OpenMenu"));
             updateOpenMenu();   // replaces the last item with appropriate
             menuBar.add(_openMenu);
 
@@ -253,11 +252,11 @@ public class OBlockTableAction extends AbstractAction {
             if (cmd.equals("ShowWarning")) {
                 _showWarnings = true;
                 _showWarnItem.setActionCommand("SuppressWarning");
-                _showWarnItem.setText(rbx.getString("SuppressWarning"));
+                _showWarnItem.setText(rbo.getString("SuppressWarning"));
             } else {
                 _showWarnings = false;
                 _showWarnItem.setActionCommand("ShowWarning"); 
-                _showWarnItem.setText(rbx.getString("ShowWarning"));
+                _showWarnItem.setText(rbo.getString("ShowWarning"));
             }
             if (log.isDebugEnabled()) log.debug("setShowWarnings: _showWarnings= "+_showWarnings);
         }
@@ -290,7 +289,7 @@ public class OBlockTableAction extends AbstractAction {
 
         void updateOpenMenu() {
             _openMenu.removeAll();
-            JMenuItem openBlock = new JMenuItem(rbx.getString("OpenBlockMenu"));
+            JMenuItem openBlock = new JMenuItem(rbo.getString("OpenBlockMenu"));
             _openMenu.add(openBlock);
             openBlock.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -303,7 +302,7 @@ public class OBlockTableAction extends AbstractAction {
                         _blockTableFrame.moveToFront();
                     }
                 });
-            JMenuItem openPortal = new JMenuItem(rbx.getString("OpenPortalMenu"));
+            JMenuItem openPortal = new JMenuItem(rbo.getString("OpenPortalMenu"));
             _openMenu.add(openPortal);
             openPortal.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -316,7 +315,7 @@ public class OBlockTableAction extends AbstractAction {
                         _portalTableFrame.moveToFront();
                     }
                 });
-            JMenuItem openXRef = new JMenuItem(rbx.getString("OpenXRefMenu"));
+            JMenuItem openXRef = new JMenuItem(rbo.getString("OpenXRefMenu"));
             _openMenu.add(openXRef);
             openXRef.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -330,7 +329,7 @@ public class OBlockTableAction extends AbstractAction {
                     }
                 });
 
-            JMenu openBlockPath = new JMenu(rbx.getString("OpenBlockPathMenu")); 
+            JMenu openBlockPath = new JMenu(rbo.getString("OpenBlockPathMenu")); 
             ActionListener openFrameAction = new ActionListener()
             {
                 public void actionPerformed(ActionEvent e)
@@ -344,19 +343,19 @@ public class OBlockTableAction extends AbstractAction {
             for (int i = 0; i < sysNames.length; i++) {
                 OBlock block = manager.getBySystemName(sysNames[i]);
                 JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                        rbx.getString("OpenPathMenu"), block.getDisplayName()));
+                        rbo.getString("OpenPathMenu"), block.getDisplayName()));
                 mi.setActionCommand(sysNames[i]);
                 mi.addActionListener(openFrameAction);
                 openBlockPath.add(mi);                                                  
             }
             _openMenu.add(openBlockPath);
 
-            JMenu openTurnoutPath = new JMenu(rbx.getString("OpenBlockPathTurnoutMenu")); 
+            JMenu openTurnoutPath = new JMenu(rbo.getString("OpenBlockPathTurnoutMenu")); 
             sysNames = manager.getSystemNameArray();
             for (int i = 0; i < sysNames.length; i++) {
                 OBlock block = manager.getBySystemName(sysNames[i]);
                 JMenu openTurnoutMenu = new JMenu(java.text.MessageFormat.format(
-                        rbx.getString("OpenTurnoutMenu"), block.getDisplayName()));
+                        rbo.getString("OpenTurnoutMenu"), block.getDisplayName()));
                 openTurnoutPath.add(openTurnoutMenu);
                 openFrameAction = new ActionListener()
                 {
@@ -370,7 +369,7 @@ public class OBlockTableAction extends AbstractAction {
                 while (iter.hasNext()) {
                     OPath path = (OPath)iter.next();
                     JMenuItem mi = new JMenuItem(java.text.MessageFormat.format(
-                                                 rbx.getString("OpenPathTurnoutMenu"), path.getName()));
+                                                 rbo.getString("OpenPathTurnoutMenu"), path.getName()));
                     mi.setActionCommand(makePathTurnoutName(sysNames[i], path.getName()));
                     mi.addActionListener(openFrameAction);
                     openTurnoutMenu.add(mi);                                                  
@@ -381,7 +380,7 @@ public class OBlockTableAction extends AbstractAction {
 
         /***********************  BlockFrame ******************************/
         JInternalFrame makeBlockFrame() {
-            JInternalFrame frame = new JInternalFrame(rbx.getString("TitleBlockTable"), true, false, false, true);
+            JInternalFrame frame = new JInternalFrame(rbo.getString("TitleBlockTable"), true, false, false, true);
             _oBlockModel = new OBlockTableModel(this);
             _oBlockModel.init();
             JTable blockTable = new DnDJTable(_oBlockModel);
@@ -390,10 +389,9 @@ public class OBlockTableAction extends AbstractAction {
             blockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
             blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
             blockTable.getColumnModel().getColumn(OBlockTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
+            blockTable.getColumnModel().getColumn(OBlockTableModel.UNITSCOL).setCellRenderer(new MyBooleanRenderer());
             JComboBox box = new JComboBox(curveOptions);
             blockTable.getColumnModel().getColumn(OBlockTableModel.CURVECOL).setCellEditor(new DefaultCellEditor(box));
-            //blockTable.getColumnModel().getColumn(OBockTableModel.CURVECOL).setCellRenderer(new DefaultCellEditor(box));
-            //blockTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
             for (int i=0; i<_oBlockModel.getColumnCount(); i++) {
                 int width = _oBlockModel.getPreferredWidth(i);
                 blockTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -411,48 +409,23 @@ public class OBlockTableAction extends AbstractAction {
 
             JPanel contentPane = new JPanel();
             contentPane.setLayout(new BorderLayout(5,5));
-            JLabel prompt = new JLabel(rbx.getString("AddBlockPrompt"));
+            JLabel prompt = new JLabel(rbo.getString("AddBlockPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
             contentPane.add(_blockTablePane, BorderLayout.CENTER);
 
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
-            panel.add(_inchBox);
-            _inchBox.setToolTipText(AbstractTableAction.rb.getString("InchBoxToolTip"));
-            _inchBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        inchBoxChanged();
-                    }
-                });
-            panel.add(Box.createVerticalStrut(STRUT_SIZE));
-            _centimeterBox.setSelected(true);
-            panel.add(_centimeterBox);
-            _centimeterBox.setToolTipText(AbstractTableAction.rb.getString("CentimeterBoxToolTip"));
-            _centimeterBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        centimeterBoxChanged();
-                    }
-                });
-            panel.add(Box.createVerticalStrut(STRUT_SIZE));
+
             contentPane.add(panel, BorderLayout.SOUTH);
             frame.setContentPane(contentPane);
             frame.pack();
             return frame;
         }
-        
-        void inchBoxChanged() {
-            _centimeterBox.setSelected(!_inchBox.isSelected());
-            _oBlockModel.setInches(_inchBox.isSelected());
-        }
-        void centimeterBoxChanged() {
-            _inchBox.setSelected(!_centimeterBox.isSelected());
-            _oBlockModel.setInches(_inchBox.isSelected());
-        }
 
         /***********************  PortalFrame ******************************/
         JInternalFrame makePortalFrame() {
-            JInternalFrame frame = new JInternalFrame(rbx.getString("TitlePortalTable"), true, false, false, true);
+            JInternalFrame frame = new JInternalFrame(rbo.getString("TitlePortalTable"), true, false, false, true);
             _portalModel = new PortalTableModel();
             _portalModel.init();
             JTable portalTable = new DnDJTable(_portalModel);
@@ -475,7 +448,7 @@ public class OBlockTableAction extends AbstractAction {
 
             JPanel contentPane = new JPanel();
             contentPane.setLayout(new BorderLayout(5,5));
-            JLabel prompt = new JLabel(rbx.getString("AddPortalPrompt"));
+            JLabel prompt = new JLabel(rbo.getString("AddPortalPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
             contentPane.add(_portalTablePane, BorderLayout.CENTER);
 
@@ -487,7 +460,7 @@ public class OBlockTableAction extends AbstractAction {
 
         /***********************  BlockPortalFrame ******************************/
         JInternalFrame makeBlockPortalFrame() {
-            JInternalFrame frame = new JInternalFrame(rbx.getString("TitleBlockPortalXRef"), true, false, false, true);
+            JInternalFrame frame = new JInternalFrame(rbo.getString("TitleBlockPortalXRef"), true, false, false, true);
             _blockPortalXRefModel = new BlockPortalTableModel();
             JTable blockPortalTable = new DnDJTable(_blockPortalXRefModel);
             blockPortalTable.setDefaultRenderer(String.class, new jmri.jmrit.symbolicprog.ValueRenderer());
@@ -537,7 +510,7 @@ public class OBlockTableAction extends AbstractAction {
         /***********************  BlockPathFrame ******************************/
         BlockPathFrame makeBlockPathFrame(OBlock block) {
             String title = java.text.MessageFormat.format(
-                            rbx.getString("TitleBlockPathTable"), block.getDisplayName());
+                            rbo.getString("TitleBlockPathTable"), block.getDisplayName());
             BlockPathFrame frame = new BlockPathFrame(title, true, true, false, true);
             if (log.isDebugEnabled()) log.debug("makeBlockPathFrame for Block "+block.getDisplayName());
             frame.setName(block.getSystemName());
@@ -567,7 +540,7 @@ public class OBlockTableAction extends AbstractAction {
 
             JPanel contentPane = new JPanel();
             contentPane.setLayout(new BorderLayout(5,5));
-            JLabel prompt = new JLabel(rbx.getString("AddPathPrompt"));
+            JLabel prompt = new JLabel(rbo.getString("AddPathPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
             contentPane.add(tablePane, BorderLayout.CENTER);
 
@@ -581,7 +554,7 @@ public class OBlockTableAction extends AbstractAction {
             /***********************  PathTurnoutFrame ******************************/
         JInternalFrame makePathTurnoutFrame(OBlock block, String pathName) {
             String title = java.text.MessageFormat.format(
-                            rbx.getString("TitlePathTurnoutTable"), block.getDisplayName(), pathName);
+                            rbo.getString("TitlePathTurnoutTable"), block.getDisplayName(), pathName);
             JInternalFrame frame = new JInternalFrame(title, true, true, false, true);
             if (log.isDebugEnabled()) log.debug("makePathTurnoutFrame for Block "+block.getDisplayName()+" and Path "+pathName);
             frame.setName(makePathTurnoutName(block.getSystemName(), pathName));
@@ -612,7 +585,7 @@ public class OBlockTableAction extends AbstractAction {
 
             JPanel contentPane = new JPanel();
             contentPane.setLayout(new BorderLayout(5,5));
-            JLabel prompt = new JLabel(rbx.getString("AddTurnoutPrompt"));
+            JLabel prompt = new JLabel(rbo.getString("AddTurnoutPrompt"));
             contentPane.add(prompt, BorderLayout.NORTH);
             contentPane.add(tablePane, BorderLayout.CENTER);
 
@@ -735,6 +708,28 @@ public class OBlockTableAction extends AbstractAction {
         }
     }
 
+    class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
+        //implements javax.swing.table.TableCellRenderer {
+
+        public java.awt.Component getTableCellRendererComponent(JTable table, 
+                                                       Object value, boolean isSelected, 
+                                                       boolean hasFocus, int row, int column) {
+
+            JLabel val;
+            if (value instanceof Boolean) {
+                if ( ((Boolean)value).booleanValue()) {
+                    val = new JLabel("cm");
+                } else {
+                    val = new JLabel("in");
+                }
+            } else {
+                val = new JLabel("");
+            }
+            val.setFont(table.getFont().deriveFont(java.awt.Font.PLAIN));
+            return val;
+        }
+    }
+
     /****************************** Table Models **********************************/
     /**
      * Duplicates the JTable model for BlockTableAction and adds a column
@@ -747,14 +742,14 @@ public class OBlockTableAction extends AbstractAction {
         static public final int COMMENTCOL = 2;
         static public final int SENSORCOL = 3;
         static public final int LENGTHCOL = 4;
-        static public final int CURVECOL = 5;
-        static public final int EDIT_COL = 6;
-        static public final int DELETE_COL = 7;
-        static public final int NUMCOLS = 8;
+        static public final int UNITSCOL = 5;
+        static public final int CURVECOL = 6;
+        static public final int EDIT_COL = 7;
+        static public final int DELETE_COL = 8;
+        static public final int NUMCOLS = 9;
 
         DecimalFormat twoDigit = new DecimalFormat("0.00");
 
-        boolean _inches;
         OBlockManager manager;
         private String[] tempRow= new String[NUMCOLS];
         OBlockTableFrame _parent;
@@ -771,6 +766,7 @@ public class OBlockTableAction extends AbstractAction {
                 tempRow[i] = null;
             }
             tempRow[LENGTHCOL] = twoDigit.format(0.0);
+            tempRow[UNITSCOL] = "";
             tempRow[CURVECOL] = noneText;
         }
 
@@ -792,11 +788,6 @@ public class OBlockTableAction extends AbstractAction {
             return super.getRowCount() + 1;
         }
 
-        public void setInches(boolean inches) {
-            _inches = inches;
-            fireTableDataChanged();  // update view
-        }
-
         String _saveBlockName;
         public Object getValueAt(int row, int col) 
         {
@@ -815,7 +806,7 @@ public class OBlockTableAction extends AbstractAction {
                 }
                 return tempRow[col];
             }
-            Block b = (Block)getBeanAt(row);
+            OBlock b = (OBlock)getBeanAt(row);
             if (b == null) {
                 //log.debug("requested getValueAt(\""+row+"\"), Block doesn't exist");
                 return "(no Block)";
@@ -836,6 +827,14 @@ public class OBlockTableAction extends AbstractAction {
                         name = s.getSystemName();
                     }
                     return name;
+                case LENGTHCOL:
+                    if (b.isMetric()) {
+                        return (twoDigit.format(b.getLengthCm()));
+                    } else {
+                        return (twoDigit.format(b.getLengthIn()));
+                    }
+                case UNITSCOL:
+                    return b.isMetric();
                 case CURVECOL:
                     String c = "";
                     if (b.getCurvature()==Block.NONE) c = noneText;
@@ -843,15 +842,8 @@ public class OBlockTableAction extends AbstractAction {
                     else if (b.getCurvature()==Block.TIGHT) c = tightText;
                     else if (b.getCurvature()==Block.SEVERE) c = severeText;
                     return c;
-                case LENGTHCOL:
-                    double len = 0.0;
-                    if (_inches)
-                        len = b.getLengthIn();
-                    else 
-                        len = b.getLengthCm();
-                    return (twoDigit.format(len));
                 case EDIT_COL:
-                    return rbx.getString("ButtonEditPath");
+                    return rbo.getString("ButtonEditPath");
                 case DELETE_COL:
                     return AbstractTableAction.rb.getString("ButtonDelete");
             }
@@ -862,8 +854,12 @@ public class OBlockTableAction extends AbstractAction {
             if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", col= "+col+", value= "+(String)value);
             if (super.getRowCount() == row) 
             {
-                if (col==SYSNAMECOL) {
-                    tempRow[SYSNAMECOL] = (String)value;
+                if (col==SYSNAMECOL || col==USERNAMECOL) {
+                    if (col==SYSNAMECOL) {
+                        tempRow[SYSNAMECOL] = (String)value;
+                    } else {
+                        tempRow[USERNAMECOL] = (String)value;
+                    }
                     _saveBlockName = tempRow[SYSNAMECOL];
                     OBlock block = manager.createNewOBlock((String)value, tempRow[USERNAMECOL]);
                     if (block==null) {
@@ -873,8 +869,9 @@ public class OBlockTableAction extends AbstractAction {
                             name = block.getDisplayName();
                         }
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("CreateDuplBlockErr"), name),
+                            rbo.getString("CreateDuplBlockErr"), name),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
+                        return;
                     }
                     if (block!=null) {
                         if (tempRow[SENSORCOL] != null) {
@@ -889,16 +886,19 @@ public class OBlockTableAction extends AbstractAction {
                             }
                             if (sensor==null) {
                                 JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                    rbx.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
+                                    rbo.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
                                     AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                             }
                         }
                         block.setComment(tempRow[COMMENTCOL]);
                         float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                        if (_inches) 
+                        if (tempRow[UNITSCOL].equals("in")) {
                             block.setLength(len*25.4f);
-                        else
+                            block.setMetricUnits(false);
+                        } else {
                             block.setLength(len*10.0f);
+                            block.setMetricUnits(true);
+                        }
                         if (tempRow[CURVECOL].equals(noneText)) block.setCurvature(Block.NONE);
                         else if (tempRow[CURVECOL].equals(gradualText)) block.setCurvature(Block.GRADUAL);
                         else if (tempRow[CURVECOL].equals(tightText)) block.setCurvature(Block.TIGHT);
@@ -908,7 +908,15 @@ public class OBlockTableAction extends AbstractAction {
                     initTempRow();
                     fireTableDataChanged();
                 } else {
-                    tempRow[col] = (String)value;
+                    if (col==UNITSCOL) {
+                        if (tempRow[UNITSCOL].equals("in")) {
+                            tempRow[UNITSCOL] = "cm";
+                        } else {
+                            tempRow[UNITSCOL] = "in";
+                        }
+                    } else {
+                        tempRow[col] = (String)value;
+                    }
                 }
                 return;
             }
@@ -918,7 +926,7 @@ public class OBlockTableAction extends AbstractAction {
                     OBlock b = manager.provideOBlock((String)value);
                     if (b != null) {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("CreateDuplBlockErr"), block.getDisplayName()),
+                            rbo.getString("CreateDuplBlockErr"), block.getDisplayName()),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                         return;
                     }
@@ -945,15 +953,20 @@ public class OBlockTableAction extends AbstractAction {
                         log.error("provideSensor("+(String)value+") threw exception: "+ ex);
                     }
                     JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("NoSuchSensorErr"), (String)value),
+                            rbo.getString("NoSuchSensorErr"), (String)value),
                             AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 case LENGTHCOL:
                     float len = Float.valueOf((String)value).floatValue();
-                    if (_inches) 
-                        block.setLength(len*25.4f);
-                    else
+                    if (block.isMetric()) {
                         block.setLength(len*10.0f);
+                    } else {
+                        block.setLength(len*25.4f);
+                    }
+                    fireTableRowsUpdated(row,row);
+                    return;
+                case UNITSCOL:
+                    block.setMetricUnits(((Boolean)value).booleanValue());
                     fireTableRowsUpdated(row,row);
                     return;
                 case CURVECOL:
@@ -981,6 +994,7 @@ public class OBlockTableAction extends AbstractAction {
                 case SENSORCOL: return AbstractTableAction.rbean.getString("BeanNameSensor");
                 case CURVECOL: return AbstractTableAction.rb.getString("BlockCurveColName");
                 case LENGTHCOL: return AbstractTableAction.rb.getString("BlockLengthColName");
+                case UNITSCOL: return "";
                 case EDIT_COL: return "";
                 case DELETE_COL: return "";
             }
@@ -1040,18 +1054,21 @@ public class OBlockTableAction extends AbstractAction {
                 return JComboBox.class;
             } else if (col==DELETE_COL || col==EDIT_COL) {
                 return JButton.class;
+            } else if (col==UNITSCOL) {
+                return Boolean.class;
             }
             return String.class;
         }
 
         public int getPreferredWidth(int col) {
             switch (col) {
-                case SYSNAMECOL: return new JTextField(13).getPreferredSize().width;
-                case USERNAMECOL: return new JTextField(13).getPreferredSize().width;
+                case SYSNAMECOL: return new JTextField(15).getPreferredSize().width;
+                case USERNAMECOL: return new JTextField(15).getPreferredSize().width;
                 case COMMENTCOL: return new JTextField(8).getPreferredSize().width;
                 case SENSORCOL: return new JTextField(13).getPreferredSize().width;
-                case CURVECOL: return new JTextField(8).getPreferredSize().width;
-                case LENGTHCOL: return new JTextField(7).getPreferredSize().width;
+                case CURVECOL: return new JTextField(5).getPreferredSize().width;
+                case LENGTHCOL: return new JTextField(5).getPreferredSize().width;
+                case UNITSCOL: return new JTextField(2).getPreferredSize().width;
                 case EDIT_COL: return new JButton("DELETE").getPreferredSize().width;
                 case DELETE_COL: return new JButton("DELETE").getPreferredSize().width;
             }
@@ -1129,9 +1146,7 @@ public class OBlockTableAction extends AbstractAction {
                         // with no blocks by the second file (it's just how things are loaded with
                         // forward and backward references to each other.  These objects cannot
                         // be created with complete specifications on their instantiation.
-                        msg = java.text.MessageFormat.format(rbx.getString("PortalNeedsBlock"), pName);
-                        //msg = java.text.MessageFormat.format(
-                        //               rbx.getString("SuppressWarning"), msg);
+                        msg = java.text.MessageFormat.format(rbo.getString("PortalNeedsBlock"), pName);
                     }
                     boolean skip = false;
                     for (int j=0; j<tempList.size(); j++) {
@@ -1175,11 +1190,11 @@ public class OBlockTableAction extends AbstractAction {
 
         public String getColumnName(int col) {
             switch (col) {
-                case FROM_SIGNAL_COL: return rbx.getString("FromSignalName");
-                case FROM_BLOCK_COLUMN: return rbx.getString("FromBlockName");
-                case NAME_COLUMN: return rbx.getString("PortalName");
-                case TO_BLOCK_COLUMN: return rbx.getString("ToBlockName");
-                case TO_SIGNAL_COL: return rbx.getString("ToSignalName");
+                case FROM_SIGNAL_COL: return rbo.getString("FromSignalName");
+                case FROM_BLOCK_COLUMN: return rbo.getString("FromBlockName");
+                case NAME_COLUMN: return rbo.getString("PortalName");
+                case TO_BLOCK_COLUMN: return rbo.getString("ToBlockName");
+                case TO_SIGNAL_COL: return rbo.getString("ToSignalName");
             }
             return "";
         }
@@ -1223,23 +1238,21 @@ public class OBlockTableAction extends AbstractAction {
                     if (getPortalByName(name)==null) {
                         _savePortalName = name;
                         // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Block.
-                        SignalHead fromSignal = InstanceManager.signalHeadManagerInstance()
-                                                    .getSignalHead(tempRow[FROM_SIGNAL_COL]);
                         OBlock fromBlock = InstanceManager.oBlockManagerInstance()
                                                     .provideOBlock(tempRow[FROM_BLOCK_COLUMN]);
                         OBlock toBlock = InstanceManager.oBlockManagerInstance()
                                                     .provideOBlock(tempRow[TO_BLOCK_COLUMN]);
-                        SignalHead toSignal = InstanceManager.signalHeadManagerInstance()
-                                                    .getSignalHead(tempRow[TO_SIGNAL_COL]);
                         if (fromBlock != null && 
                                 fromBlock.equals(toBlock)) {
                             JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), value, fromBlock.getDisplayName()),
+                                rbo.getString("SametoFromBlock"), value, fromBlock.getDisplayName()),
                                     AbstractTableAction.rb.getString("WarningTitle"),
                                     JOptionPane.WARNING_MESSAGE);
                             tempRow[FROM_SIGNAL_COL] = null;
                         } else if (name != null && name.length()>0) {
-                            Portal portal = new Portal(fromSignal, fromBlock, name, toBlock, toSignal);
+                            Portal portal = new Portal(tempRow[FROM_SIGNAL_COL],
+                                                       fromBlock, name, toBlock,
+                                                       tempRow[TO_SIGNAL_COL]);
                             _portalList.add(portal);
                             makeList();
                             initTempRow();
@@ -1247,7 +1260,7 @@ public class OBlockTableAction extends AbstractAction {
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("DuplPortalName"), (String)value),
+                            rbo.getString("DuplPortalName"), (String)value),
                                 AbstractTableAction.rb.getString("WarningTitle"),
                                 JOptionPane.WARNING_MESSAGE);
                         //tempRow[col] = name;
@@ -1262,30 +1275,28 @@ public class OBlockTableAction extends AbstractAction {
 
             switch(col) {
                 case FROM_SIGNAL_COL:
-                    SignalHead signal = InstanceManager.signalHeadManagerInstance().getSignalHead((String)value);
-                    if (signal==null) {
+                    if (!portal.setFromSignal((String)value)) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("NoSuchSignal"), (String)value);
+                            rbo.getString("NoSuchSignal"), (String)value);
                         break;
                     }
-                    portal.setFromSignal(signal);
                     fireTableRowsUpdated(row,row);
                     break;
                 case FROM_BLOCK_COLUMN:
                     OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("NoSuchBlock"), (String)value);
+                            rbo.getString("NoSuchBlock"), (String)value);
                         break;
                     }
                     if (block.equals(portal.getToBlock())){
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), value, block.getDisplayName());
+                                rbo.getString("SametoFromBlock"), value, block.getDisplayName());
                         break;
                     }
                     if ( !portal.setFromBlock(block, false)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
+                            rbo.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1299,12 +1310,12 @@ public class OBlockTableAction extends AbstractAction {
                 case NAME_COLUMN:
                     if (getPortalByName((String)value)!=null) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("DuplPortalName"), (String)value);
+                            rbo.getString("DuplPortalName"), (String)value);
                         break;
                     }
                     if ( listContains((String)value) ) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("PortalNameConflict"), (String)value);
+                            rbo.getString("PortalNameConflict"), (String)value);
                     } else {
                         portal.setName((String)value);
                         fireTableRowsUpdated(row,row);
@@ -1314,17 +1325,17 @@ public class OBlockTableAction extends AbstractAction {
                     block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("NoSuchBlock"), (String)value);
+                            rbo.getString("NoSuchBlock"), (String)value);
                         break;
                     }
                     if (block.equals(portal.getFromBlock())){
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("SametoFromBlock"), value, block.getDisplayName());
+                                rbo.getString("SametoFromBlock"), value, block.getDisplayName());
                         break;
                     }
                     if ( !portal.setToBlock(block, false)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPathsConflict"), value, portal.getToBlockName()),
+                            rbo.getString("BlockPathsConflict"), value, portal.getToBlockName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1336,13 +1347,11 @@ public class OBlockTableAction extends AbstractAction {
                     fireTableRowsUpdated(row,row);
                     break;
                 case TO_SIGNAL_COL:
-                    signal = InstanceManager.signalHeadManagerInstance().getSignalHead((String)value);
-                    if (signal==null) {
+                    if (!portal.setToSignal((String)value)) {
                         msg = java.text.MessageFormat.format(
-                            rbx.getString("NoSuchSignal"), (String)value);
+                            rbo.getString("NoSuchSignal"), (String)value);
                         break;
                     }
-                    portal.setToSignal(signal);
                     fireTableRowsUpdated(row,row);
                     break;
                 case DELETE_COL:
@@ -1366,7 +1375,7 @@ public class OBlockTableAction extends AbstractAction {
 
         private boolean deletePortal(Portal portal) {
             if (JOptionPane.showConfirmDialog(null, 
-                            java.text.MessageFormat.format(rbx.getString("DeletePortalConfirm"),
+                            java.text.MessageFormat.format(rbo.getString("DeletePortalConfirm"),
                             portal.getName()), AbstractTableAction.rb.getString("WarningTitle"),
                             JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                         ==  JOptionPane.YES_OPTION) {
@@ -1447,25 +1456,8 @@ public class OBlockTableAction extends AbstractAction {
                                                 _portalList.size()+" rows.");
             fireTableDataChanged();
         }
-/*
-        private void removePortalFromPaths(Portal portal, List <OPath> list) {
-            String name = portal.getName();
-            for (int j=0; j<list.size(); j++) {
-                OPath path = list.get(j);
-                if (name.equals(path.getFromPortalName())) {
-                    path.setFromPortalName(null);
-                    OBlock block = (OBlock)path.getBlock();
-                    block.removePortal(portal);
-                }
-                if (name.equals(path.getToPortalName())) {
-                    OBlock block = (OBlock)path.getBlock();
-                    block.removePortal(portal);
-                    path.setToPortalName(null);
-                }
-            }
-        }
-*/
-        public void propertyChange(PropertyChangeEvent e) {
+        
+    public void propertyChange(PropertyChangeEvent e) {
             String property = e.getPropertyName();
             if (property.equals("length") || property.equals("portalCount")
                                 || property.equals("UserName")) {
@@ -1501,8 +1493,8 @@ public class OBlockTableAction extends AbstractAction {
 
         public String getColumnName(int col) {
             switch (col) {
-                case BLOCK_NAME_COLUMN: return rbx.getString("BlockName");
-                case PORTAL_NAME_COLUMN: return rbx.getString("PortalName");
+                case BLOCK_NAME_COLUMN: return rbo.getString("BlockName");
+                case PORTAL_NAME_COLUMN: return rbo.getString("PortalName");
             }
             return "";
         }
@@ -1612,9 +1604,9 @@ public class OBlockTableAction extends AbstractAction {
 
         public String getColumnName(int col) {
             switch (col) {
-                case FROM_PORTAL_COLUMN: return rbx.getString("FromPortal");
-                case NAME_COLUMN: return rbx.getString("PathName");
-                case TO_PORTAL_COLUMN: return rbx.getString("ToPortal");
+                case FROM_PORTAL_COLUMN: return rbo.getString("FromPortal");
+                case NAME_COLUMN: return rbo.getString("PathName");
+                case TO_PORTAL_COLUMN: return rbo.getString("ToPortal");
             }
             return "";
         }
@@ -1632,7 +1624,7 @@ public class OBlockTableAction extends AbstractAction {
                 case TO_PORTAL_COLUMN:
                     return path.getToPortalName();
                 case EDIT_COL:
-                    return rbx.getString("ButtonEditTO");
+                    return rbo.getString("ButtonEditTO");
                 case DELETE_COL:
                     return AbstractTableAction.rb.getString("ButtonDelete");
             }
@@ -1645,7 +1637,7 @@ public class OBlockTableAction extends AbstractAction {
                 if (col==NAME_COLUMN) {
                     if (_block.getPathByName((String)value)!=null) {
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("DuplPathName"), (String)value);
+                                rbo.getString("DuplPathName"), (String)value);
                         tempRow[col] = (String)value;
                     } else {
                         Portal fromPortal = _block.getPortalByName(tempRow[FROM_PORTAL_COLUMN]);
@@ -1659,7 +1651,7 @@ public class OBlockTableAction extends AbstractAction {
                         OPath path = new OPath((String)value, _block, fromName, 0, toName, 0);
                         if (!_block.addPath(path)) {
                             msg = java.text.MessageFormat.format(
-                                    rbx.getString("AddPathFailed"), (String)value);
+                                    rbo.getString("AddPathFailed"), (String)value);
                             tempRow[col] = (String)value;
                         } else {
                             //if (fromPortal!=null) { fromPortal.addPath(path); }
@@ -1688,7 +1680,7 @@ public class OBlockTableAction extends AbstractAction {
                     Portal portal = _block.getPortalByName((String)value);
                     if (portal == null || !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
+                            rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1700,7 +1692,7 @@ public class OBlockTableAction extends AbstractAction {
                         } else {
                             if ( !portal.setFromBlock(_block, false)) {
                                 response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                                    rbx.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
+                                    rbo.getString("BlockPathsConflict"), value, portal.getFromBlockName()),
                                     AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                                     JOptionPane.WARNING_MESSAGE);
                                 if (response==JOptionPane.NO_OPTION) {
@@ -1715,14 +1707,14 @@ public class OBlockTableAction extends AbstractAction {
                     path.setFromPortalName((String)value);
                     if (!portal.addPath(path)) {
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("AddPathFailed"), (String)value);
+                                rbo.getString("AddPathFailed"), (String)value);
                     }
                     fireTableRowsUpdated(row,row);
                     break;
                 case NAME_COLUMN:
                     if (_block.getPathByName((String)value)!=null) {
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("DuplPathName"), (String)value); 
+                                rbo.getString("DuplPathName"), (String)value); 
                     } else {
                         path.setName((String)value);
                         fireTableRowsUpdated(row,row);
@@ -1732,7 +1724,7 @@ public class OBlockTableAction extends AbstractAction {
                     portal = _block.getPortalByName((String)value);
                     if (portal == null || !_portalList.contains(portal)) {
                         int response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                            rbx.getString("BlockPortalConflict"), value, _block.getDisplayName()),
+                            rbo.getString("BlockPortalConflict"), value, _block.getDisplayName()),
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                             JOptionPane.WARNING_MESSAGE);
                         if (response==JOptionPane.NO_OPTION) {
@@ -1744,7 +1736,7 @@ public class OBlockTableAction extends AbstractAction {
                         } else {
                             if ( !portal.setToBlock(_block, false)) {
                                 response = JOptionPane.showConfirmDialog(null, java.text.MessageFormat.format(
-                                    rbx.getString("BlockPathsConflict"), value, portal.getToBlockName()),
+                                    rbo.getString("BlockPathsConflict"), value, portal.getToBlockName()),
                                     AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                                     JOptionPane.WARNING_MESSAGE);
                                 if (response==JOptionPane.NO_OPTION) {
@@ -1760,7 +1752,7 @@ public class OBlockTableAction extends AbstractAction {
                     fireTableRowsUpdated(row,row);
                     if (!portal.addPath(path)) {
                         msg = java.text.MessageFormat.format(
-                                rbx.getString("AddPathFailed"), (String)value);
+                                rbo.getString("AddPathFailed"), (String)value);
                     }
                     break;
                 case EDIT_COL:
@@ -1781,7 +1773,7 @@ public class OBlockTableAction extends AbstractAction {
 
         boolean deletePath(OPath path) {
             if (JOptionPane.showConfirmDialog(null, 
-                        java.text.MessageFormat.format(rbx.getString("DeletePathConfirm"),
+                        java.text.MessageFormat.format(rbo.getString("DeletePathConfirm"),
                         path.getName()), AbstractTableAction.rb.getString("WarningTitle"),
                         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                     ==  JOptionPane.YES_OPTION) {
@@ -1877,8 +1869,8 @@ public class OBlockTableAction extends AbstractAction {
 
         public String getColumnName(int col) {
             switch (col) {
-                case TURNOUT_NAME_COL: return rbx.getString("LabelItemName");
-                case SETTINGCOLUMN: return rbx.getString("ColumnSetting");
+                case TURNOUT_NAME_COL: return rbo.getString("LabelItemName");
+                case SETTINGCOLUMN: return rbo.getString("ColumnSetting");
             }
             return "";
         }
@@ -1943,7 +1935,7 @@ public class OBlockTableAction extends AbstractAction {
                             fireTableRowsUpdated(row,row);
                         } else {
                             JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                    rbx.getString("NoSuchTurnout"), name),
+                                    rbo.getString("NoSuchTurnout"), name),
                                     AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                             return;
                         }
@@ -1967,7 +1959,7 @@ public class OBlockTableAction extends AbstractAction {
                          }
                     } else {
                         JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbx.getString("NoSuchTurnout"), (String)value),
+                                rbo.getString("NoSuchTurnout"), (String)value),
                                 AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                         return;
                     }
@@ -1987,7 +1979,7 @@ public class OBlockTableAction extends AbstractAction {
                     fireTableRowsUpdated(row,row);
                     break;
                 case DELETE_COL:
-                    if (JOptionPane.showConfirmDialog(null, rbx.getString("DeleteTurnoutConfirm"),
+                    if (JOptionPane.showConfirmDialog(null, rbo.getString("DeleteTurnoutConfirm"),
                                                       AbstractTableAction.rb.getString("WarningTitle"),
                                                       JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE)
                                         ==  JOptionPane.YES_OPTION) {

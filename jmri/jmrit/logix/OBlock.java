@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -45,6 +45,8 @@ public class OBlock extends jmri.Block {
     static final public int DARK = 0x20;        // Block has no Sensor
 
     private Warrant _warrant;       // when not null, block is allocateds to this warrant
+    private float _scaleRatio   = 87.1f;
+    private boolean _metric     = false; // desired display mode
     
     public OBlock(String systemName) {
         super(systemName);
@@ -62,10 +64,25 @@ public class OBlock extends jmri.Block {
 
     protected Warrant getWarrant() { return _warrant; }
 
-    protected void setWarrant(Warrant warrant) {
-        Warrant old = _warrant;
-        _warrant = warrant; 
-        firePropertyChange("value", old, _warrant);
+    public float getLengthScaleFeet() {
+        return getLengthIn()/12*_scaleRatio;
+    }
+    public float getLengthMeters() {
+        return getLengthMm()/1000*_scaleRatio;
+    }
+
+    public void setMetricUnits(boolean type) {
+        _metric = type;
+    }
+    public boolean isMetric() {
+        return _metric;
+    }
+
+    public void setScaleRatio(float sr) {
+        _scaleRatio = sr;
+    }
+    public float getScaleRatio() {
+        return _scaleRatio;
     }
 
     /**
@@ -78,12 +95,14 @@ public class OBlock extends jmri.Block {
 
     /**
     * Allocate (reserves) the block for the Warrant that is the 'value' object
-    * Note the block may be OCCUPIED by a non-warranted train.
-    * @return false if block is already allocated to another warrant
+    * Note the block may be OCCUPIED by a non-warranted train, but the allocation is permitted.
+    * @param warrant
+    * @return name of block if block is already allocated to another warrant
     */
     public String allocate(Warrant warrant) {
         if (warrant==null) {
-            return "Error";
+            log.error("allocate called with null warrant!");
+            return null;
         } else if (_warrant!=null && !_warrant.equals(warrant)) {
             // allocated to another warrant
             return _warrant.getDisplayName();
@@ -104,9 +123,9 @@ public class OBlock extends jmri.Block {
             if (sensor != null ) {
                 sensor.removePropertyChangeListener(warrant);
             }
-            if (_warrant.equals(warrant)) {  // allocated to caller, so deallocate
+            if (warrant.equals(_warrant)) {  // allocated to caller, so deallocate
                 _warrant = null;
-                firePropertyChange("value", warrant, _warrant);
+                firePropertyChange("deallocate", warrant, _warrant);
                 if (sensor != null)  {
                     setState(sensor.getState());  // unset allocated bit
                 }
@@ -182,7 +201,7 @@ public class OBlock extends jmri.Block {
     }
 
     public Portal getPortalByName(String name) {
-        if (log.isDebugEnabled()) log.debug("getPortalByName: name= \""+name+"\"." ); 
+        //if (log.isDebugEnabled()) log.debug("getPortalByName: name= \""+name+"\"." ); 
         for (int i=0; i<_portals.size(); i++)  {
             if (_portals.get(i).getName().equals(name)) {
                 return _portals.get(i);
@@ -261,13 +280,17 @@ public class OBlock extends jmri.Block {
      * Called by handleSensorChange
      */
     public void goingInactive() {
+        //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
+        //                                    "\" goes UNOCCUPIED. from state= "+getState());
         if (_warrant == null) {
             // this block is not under warrant, comply with old Block code.
             super.goingInactive();
             return;
         }
-        if (log.isDebugEnabled()) log.debug("Allocated OBlock "+getSystemName()+" goes UNOCCUPIED");
-        setState(getState() & ~OCCUPIED);
+        setState((getState() & ~OCCUPIED) | UNOCCUPIED);
+        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
+                                            "\" goes UNOCCUPIED. from state= "+getState());
+        _warrant.goingInactive(this);
     }
 
      /**
@@ -275,17 +298,17 @@ public class OBlock extends jmri.Block {
      * figure out from who and copy their value. Called by handleSensorChange
      */
 	public void goingActive() {
+        //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
+        //                                    "\" goes OCCUPIED. from state= "+getState());
         if (_warrant == null) {
             // this block is not under warrant, comply with old Block code.
             super.goingActive();
             return;
         }
-        int state = getState();
-        super.setState(OCCUPIED | state);
-        if (log.isDebugEnabled()) {
-            log.debug("OBlock \""+getUserName()+"\" ("+getSystemName()+
-                         ") is going OCCUPIED from current state= "+state);
-        }
+        setState((getState() & ~UNOCCUPIED) | OCCUPIED);
+        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
+                                            "\" goes OCCUPIED. state= "+getState());
+        _warrant.goingActive(this);
     }
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlock.class.getName());

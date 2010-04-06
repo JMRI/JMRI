@@ -35,7 +35,7 @@ import javax.swing.event.ChangeListener;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener
 {
@@ -132,6 +132,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 
     // update the state of this panel if any of the properties change
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if(log.isDebugEnabled()) log.debug("propertyChange: "+e.getPropertyName()+", newValue= "+
+                                           e.getNewValue().toString());
         if (e.getPropertyName().equals("SpeedSetting")) {
             internalAdjust=true;
             float speed=((Float) e.getNewValue()).floatValue();
@@ -150,6 +152,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         } else if (e.getPropertyName().equals("IsForward")) {
             boolean Forward=((Boolean) e.getNewValue()).booleanValue();
             _throttleFrame.setButtonForward(Forward);
+        } else {
         }
     }
     

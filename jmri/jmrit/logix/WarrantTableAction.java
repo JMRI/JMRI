@@ -722,14 +722,14 @@ public class WarrantTableAction extends AbstractAction {
                 case TRAIN_ID_COLUMN:
                     return new JTextField(13).getPreferredSize().width;
                 case ADDRESS_COLUMN:
-                    return new JTextField(8).getPreferredSize().width;
+                    return new JTextField(5).getPreferredSize().width;
                 case ALLOCATE_COLUMN:
                 case DEALLOC_COLUMN:
                 case SET_COLUMN:
                 case RUN_TRAIN_COLUMN:
                     return new JButton("XX").getPreferredSize().width;
                 case CONTROL_COLUMN:
-                    return new JTextField(20).getPreferredSize().width;
+                    return new JTextField(25).getPreferredSize().width;
                 case EDIT_COLUMN:
                 case DELETE_COLUMN:
                     return new JButton("DELETE").getPreferredSize().width;
@@ -793,7 +793,6 @@ public class WarrantTableAction extends AbstractAction {
                     }
                 case CONTROL_COLUMN:
                     String msg = "Error";
-                    WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
                     switch (w.getRunMode()) {
                         case Warrant.MODE_NONE:
                             if (w.getOrders().size()==0) {
@@ -813,23 +812,10 @@ public class WarrantTableAction extends AbstractAction {
                                                        w.getCurrentBlockOrder().getBlock().getDisplayName());
                             break;
                         case Warrant.MODE_RUN:
-                            String key;
-                            if (w.isWaiting()) {
-                                key = "Waiting";
-                            } else { 
-                                key = "Issued";
-                            }
-                            bo = w.getCurrentBlockOrder();
-                            int idx = w.getCurrentCommandIndex();
-                            if (bo!=null) {
-                                msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString(key),
-                                            bo.getBlock().getDisplayName(), idx+1);
-                                if (frame !=null) {
-                                    frame.scrollCommandTable(idx);
-                                }
-                            }
+                            msg = w.getRunningMessage();
                             break;
                     }
+                    WarrantFrame frame = getOpenWarrantFrame(w.getDisplayName());
                     if (frame !=null) {
                         frame._statusBox.setText(msg);
                     }
@@ -884,6 +870,7 @@ public class WarrantTableAction extends AbstractAction {
                             break;
                         }
                         msg = w.setRoute(0, null);
+                        if (log.isDebugEnabled()) log.debug("w.setRoute= "+msg);
                         if (msg!=null) {
                             BlockOrder bo = w.getfirstOrder();
                             OBlock block = bo.getBlock();
@@ -892,17 +879,20 @@ public class WarrantTableAction extends AbstractAction {
                                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
                                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                                    w.deAllocate();
                                     return;
                                 }
                                 block.setPath(bo.getPathName(), 0);
                                 msg = null;
                             } else {
+                                if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+block.allocate(w));
                                 msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
                                         block.getDisplayName());
                                 break;
                             } 
                         }
                         msg = w.runAutoTrain(true);
+                        if (log.isDebugEnabled()) log.debug("w.runAutoTrain= "+msg);
                     } else {
                         msg = java.text.MessageFormat.format(
                                 WarrantTableAction.rb.getString("TrainRunning"), w.getDisplayName());

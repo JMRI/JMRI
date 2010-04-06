@@ -461,7 +461,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                                            _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                 break;
             case Warrant.MODE_RUN:
-                status = java.text.MessageFormat.format(WarrantTableAction.rb.getString("Issued"),
+                status = java.text.MessageFormat.format(WarrantTableAction.rb.getString("Running"),
                                            _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
                 break;
         }
@@ -1478,6 +1478,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
+                        _warrant.deAllocate();
                         return;
                     }
                     block.setPath(bo.getPathName(), 0);
@@ -1548,9 +1549,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     *   "controlChange" - from controlRunTrain
     *   "blockChange" - from goingActive
     *   "Command" - from Engineer run
-    *   
     */
-	@SuppressWarnings("fallthrough")
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName());
         if (e.getPropertyName().equals("RouteSearch"))  {
@@ -1567,23 +1566,12 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     if (e.getPropertyName().equals("blockChange")) {
                         setThrottleCommand("NoOp", rb.getString("Mark"));
                     }
-                // fall through
+                    item = java.text.MessageFormat.format(rb.getString("Learning"),
+                                _warrant.getCurrentBlockOrder().getBlock().getDisplayName());
+                    break;
                 case Warrant.MODE_RUN:
-                    String key;
-                    if (_warrant.isWaiting()) {
-                        key = "Waiting";
-                    } else { 
-                        key = "Issued";
-                    }
-                    BlockOrder bo = _warrant.getCurrentBlockOrder();
-                    int idx = _warrant.getCurrentCommandIndex();
-                    if (bo!=null) {
-                        item = java.text.MessageFormat.format(rb.getString(key),
-                                    bo.getBlock().getDisplayName(), idx+1);
-                        scrollCommandTable(idx);
-                    } else {
-                        log.error("Current BlockOrder is null!");
-                    }
+                    item = _warrant.getRunningMessage();
+                    scrollCommandTable(_warrant.getCurrentCommandIndex());
                     break;
             }
             _statusBox.setText(item);

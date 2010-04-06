@@ -87,6 +87,10 @@ public class BlockOrder  {
 
     public OPath getPath() { return _block.getPathByName(_pathName); }
 
+    public void setPath() {
+        _block.setPath(getPathName(), 0);
+    }
+
     public void setBlock(OBlock block) { _block = block; }
 
     public OBlock getBlock() { return _block; }
@@ -102,24 +106,25 @@ public class BlockOrder  {
     }
 
     /**
-    * Set all entry portal signals 'Stop' and exit portals 'approach'
-    * set path portal signals 'clear' and opposing path portal signals 'stop'
+    *  Check signals for entrance into next block.
+    * @return speed
     */
-    public int setPathAndGetPermissibleSpeed() {
-        OBlock block = getBlock();
-        if ((block.getState() & OBlock.OCCUPIED) != 0) {
-            return Warrant.STOP_SPEED;
-        }
-        Portal portal = block.getPortalByName(getEntryName());
+    public String getPermissibleEntranceSpeed() {
+        Portal portal = _block.getPortalByName(getEntryName());
         if (portal!=null) {
-            int speed = portal.getPermissibleSpeedFromOpposingSignal(block);
-            if (speed != Warrant.STOP_SPEED) {
-                block.setPath(getPathName(), 0);
+            String speed = portal.getPermissibleSpeedForBlock(_block);
+            if (speed==null) {
+                log.error("getPermissibleEntranceSpeed, speed is null! "+this.toString());
+                speed = "Normal";
             }
             return speed;
         }
-        if (log.isDebugEnabled()) log.debug("setPathAndGetPermissibleSpeed for "+this.toString());
-        return Warrant.STOP_SPEED;
+        log.warn("getPermissibleEntranceSpeed, no entry portal! "+this.toString());
+        return "Normal";
+    }
+
+    public jmri.NamedBean getSignal() {
+        return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);
     }
 
     public String hash() {

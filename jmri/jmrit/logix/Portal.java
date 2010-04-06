@@ -4,7 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.Block;
+import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.SignalHead;
+import jmri.SignalMast;
+import jmri.SignalSystem;
 //import jmri.Path;
 
 /**
@@ -19,10 +23,10 @@ public class Portal  {
 
     private ArrayList <OPath> _fromPaths = new ArrayList <OPath>();
     private OBlock _fromBlock;
-    private SignalHead _fromSignal;
+    private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
     private ArrayList <OPath> _toPaths = new ArrayList <OPath>();
     private OBlock _toBlock;
-    private SignalHead _toSignal;
+    private NamedBean _toSignal;
     private String _portalName;
     /*
     public Portal(String name) {
@@ -34,15 +38,15 @@ public class Portal  {
         _toBlock = toBlock;
         if (_fromBlock!=null) _fromBlock.addPortal(this);
         if (_toBlock!=null) _toBlock.addPortal(this);
-        if (log.isDebugEnabled()) log.debug("Ctor: name= "+_portalName+", fromBlock= "+
-                   getFromBlockName()+", toBlock= "+getToBlockName()); 
+        //if (log.isDebugEnabled()) log.debug("Ctor: name= "+_portalName+", fromBlock= "+
+        //           getFromBlockName()+", toBlock= "+getToBlockName()); 
     }
 
-    public Portal(SignalHead fromSig, OBlock fromBlock, String portalName, 
-                  OBlock toBlock, SignalHead toSig) {
+    public Portal(String fromSig, OBlock fromBlock, String portalName, 
+                  OBlock toBlock, String toSig) {
         this(fromBlock, portalName, toBlock);
-        _fromSignal = fromSig;
-        _toSignal = toSig;
+        setFromSignal(fromSig);
+        setToSignal(toSig);
     }
 
     /**
@@ -191,13 +195,25 @@ public class Portal  {
     public String getFromBlockName() { return (_fromBlock!=null ? _fromBlock.getDisplayName() : null);  }
     public List <OPath> getFromPaths() { return _fromPaths;  }
 
-    public SignalHead getFromSignal() {  return _fromSignal; }
+    public NamedBean getFromSignal() {  return _fromSignal; }
     public String getFromSignalName() {  return (_fromSignal!=null ? _fromSignal.getDisplayName() : null);  }
-    public void setFromSignal(SignalHead signal) {  _fromSignal = signal;  }
-
-    public SignalHead getToSignal() { return _toSignal; }
+    public boolean setFromSignal(String name) {
+        _fromSignal = getSignal(name);
+        return (_fromSignal != null);
+    }
+    public NamedBean getToSignal() { return _toSignal; }
     public String getToSignalName() { return (_toSignal!=null ? _toSignal.getDisplayName() : null);  }
-    public void setToSignal(SignalHead signal) { _toSignal = signal; }
+    public boolean setToSignal(String name) {
+        _toSignal = getSignal(name);
+        return (_toSignal != null);
+    }
+    private NamedBean getSignal(String name) {
+        NamedBean signal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+        if (signal==null) {
+            signal = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+        }
+        return signal;
+    }
 
     /**
     * Get the paths to the portal within the connected Block
@@ -244,118 +260,76 @@ public class Portal  {
         return null; 
     }
 
-    public int getPermissibleSpeedFromSignal(OBlock block) {
-        int appearance = Warrant.NORMAL_SPEED;
-        if (block.equals(_fromBlock)) {
-            if (_fromSignal!=null) {
-                appearance = _fromSignal.getAppearance();
-            }
-        } else if (block.equals(_toBlock)) {
-            if (_toSignal!=null) {
-                appearance = _toSignal.getAppearance();
-            }
+    /**
+    * @param block is the direction of entry
+    * @return signal protecting block
+    */
+    public NamedBean getSignalProtectingBlock(OBlock block) {
+        if (block.equals(_toBlock)) {
+            return _fromSignal;
+        } else if (block.equals(_fromBlock)) {
+            return _toSignal;
         }
-        if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" has appearance= "+appearance);
-        switch (appearance) {
-            case SignalHead.RED:
-                return Warrant.STOP_SPEED;
-            case SignalHead.FLASHRED:
-                return Warrant.SLOW_SPEED;
-            case SignalHead.YELLOW:
-                return Warrant.MEDIUM_SPEED;
-            case SignalHead.FLASHYELLOW:
-                return Warrant.LIMITED_SPEED;
-            default:
-                return Warrant.NORMAL_SPEED;
-        }
+        return null;
     }
-/*
-    public void setSignal(OBlock block, int appearance) {
-        if (block.equals(_fromBlock)) {
+
+    /**
+    * Check signals, if any, for speed into next block. The signal that protects the
+    * "to" block is the signal facing the "from" Block, i.e. the "from" signal.
+    * (and vice-versa) 
+    * @param block is the direction of entry, "from" block
+    * @return permissible speed
+    */
+    public String getPermissibleSpeedForBlock(OBlock block) {
+        String speed = "Normal";
+        if (block.equals(_toBlock)) {
             if (_fromSignal!=null) {
-                _fromSignal.setAppearance(appearance);
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" set _fromSignal= "+appearance);
+                if (_fromSignal instanceof SignalHead) {
+                    speed = getPermissibleSpeedFromSignal((SignalHead)_fromSignal);
+                } else {
+                    speed = getPermissibleSpeedFromSignal((SignalMast)_fromSignal);
+                }
             }
-        } else if (block.equals(_toBlock)) {
+        } else if (block.equals(_fromBlock)) {
             if (_toSignal!=null) {
-                _toSignal.setAppearance(appearance);
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" set _toSignal= "+appearance);
+                if (_toSignal instanceof SignalHead) {
+                    speed = getPermissibleSpeedFromSignal((SignalHead)_toSignal);
+                } else {
+                    speed = getPermissibleSpeedFromSignal((SignalMast)_toSignal);
+                }
             }
+        } else {
+            log.error("Block \""+block.getDisplayName()+"\" is not in Portal \""+_portalName+"\".");
         }
+        // no signals, proceed at recorded speed
+        return speed;
     }
-    
-    public int getSignalAppearance(OBlock block) {
-        int appearance = SignalHead.DARK;
-        if (block.equals(_fromBlock)) {
-            if (_fromSignal!=null) {
-                appearance =_fromSignal.getAppearance();
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" get _fromSignal= "+appearance);
-            }
-        } else if (block.equals(_toBlock)) {
-            if (_toSignal!=null) {
-                appearance = _toSignal.getAppearance();
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" get _toSignal= "+appearance);
-            }
+
+    private String getPermissibleSpeedFromSignal(SignalHead signal) {
+        int appearance = signal.getAppearance();
+        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
+        if (speed==null) {
+            log.info("SignalHead \""+ signal.getDisplayName()+"\" has no speed specified for appearance "+
+                            signal.getAppearanceName(appearance)+"! - Restricting Movement!");
+            speed = "Restricted";
         }
-        return appearance;
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed "+speed+" from appearance "+
+                                                signal.getAppearanceName(appearance)); 
+        return speed;
     }
-*/    
-    public int getPermissibleSpeedFromOpposingSignal(OBlock block) {
-        int appearance = Warrant.NORMAL_SPEED;
-        if (block.equals(_fromBlock)) {
-            if (_toSignal!=null) {
-                appearance = _toSignal.getAppearance();
-            }
-        } else if (block.equals(_toBlock)) {
-            if (_fromSignal!=null) {
-                appearance = _fromSignal.getAppearance();
-            }
+
+    private String getPermissibleSpeedFromSignal(SignalMast signal) {
+        String aspect = signal.getAspect();
+        String speed = Warrant.getSpeedMap().getAspectSpeed(aspect, signal.getSignalSystem());
+        if (speed==null) {
+            log.info("SignalMast \""+ signal.getDisplayName()+"\" has no speed specified for aspect "+
+                                                aspect+"! - Restricting Movement!");
+            speed = "Restricted";
         }
-        if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" has appearance= "+appearance);
-        switch (appearance) {
-            case SignalHead.RED:
-                return Warrant.STOP_SPEED;
-            case SignalHead.FLASHRED:
-                return Warrant.SLOW_SPEED;
-            case SignalHead.YELLOW:
-                return Warrant.MEDIUM_SPEED;
-            case SignalHead.FLASHYELLOW:
-                return Warrant.LIMITED_SPEED;
-            default:
-                return Warrant.NORMAL_SPEED;
-        }
-    }
-/*    
-    public void setOpposingSignal(OBlock block, int appearance) {
-        if (block.equals(_fromBlock)) {
-            if (_toSignal!=null) {
-                _toSignal.setAppearance(appearance);
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" set Opposing _toSignal= "+appearance);
-            }
-        } else if (block.equals(_toBlock)) {
-            if (_fromSignal!=null) {
-                _fromSignal.setAppearance(appearance);
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" set Opposing _fromSignal= "+appearance);
-            }
-        }
+        if (log.isDebugEnabled()) log.debug(signal.getDisplayName()+" has speed= "+speed+" from aspect "+aspect);
+        return speed;
     }
     
-    public int getOpposingSignalAppearance(OBlock block) {
-        int appearance = SignalHead.DARK;
-        if (block.equals(_fromBlock)) {
-            if (_toSignal!=null) {
-                appearance = _toSignal.getAppearance();
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" get Opposing _toSignal= "+appearance);
-            }
-        } else if (block.equals(_toBlock)) {
-            if (_fromSignal!=null) {
-                appearance = _fromSignal.getAppearance();
-                if (log.isDebugEnabled()) log.debug(block.getDisplayName()+" get Opposing _fromSignal= "+appearance);
-            }
-        }
-        return appearance;
-    }
-*/    
     private boolean verify(List <OPath> paths, OBlock block) {
         String name = block.getSystemName();
         for (int i=0; i<paths.size(); i++) {
