@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.18 2010-04-06 18:38:51 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.19 2010-04-07 01:28:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -8,7 +8,7 @@
  </title>
     <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <meta content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="java model railroad JMRI 2.9.1 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
+    <meta name="keywords" content="java model railroad JMRI 2.9.5 decoderpro panelpro locotools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
   <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
@@ -49,6 +49,12 @@ It contains
 many new features, including:
 
 <ul>
+<li>Many improvements to throttles
+<li>You can have more than one LocoNet connection, 
+    for example one for signals and another for throttle connections
+<li>A new preferences dialog that's simpler to use
+<li>Improved RailDriver support on Windows
+<li>Easier dialogs for adding sensors and turnouts
 <li>
 <li>
 </ul>
@@ -219,7 +225,8 @@ has been added on the GUI preferences pane to "use non-standard mouse events".
 Matt Harris set the default backup option in the Windows installer.
 
 <p>
-Paul Bender fixed an error when starting with the LIUSBServer option configured.  The LIUSBServer option works again after several releases where it did not.
+Paul Bender fixed an error when starting with the LIUSBServer option configured.  
+The LIUSBServer option works again after several releases where it did not.
 
 <p>
 Many improvements to the preferences window to make it more usable. The "tabbed" form
@@ -245,7 +252,8 @@ a script for setting Zimo function options.
 JMRI now has initial support for home automation devices that use the
 <a href="http://jmri.org/help/en/html/hardware/xap/index.shtml">xAP protocol</a>. 
 Input sensors are available as JMRI sensors, 
-and output devices are JMRI turnouts.
+and output devices as JMRI turnouts. We're very interested in finding
+more people to test this with their xAP home automation systems.
 
 <p>
 JMRI can now provide two LocoNet connections at the same time. You can configure two
