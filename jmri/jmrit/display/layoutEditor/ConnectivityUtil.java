@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class ConnectivityUtil 
@@ -349,7 +349,7 @@ public class ConnectivityUtil
 					else {
 						tr = ((PositionablePoint)cObject).getConnect1();
 					}
-					if (tr.getLayoutBlock() != lb) {
+					if ((tr==null) || (tr.getLayoutBlock() != lb)) {
 						// track segment is not in this block
 						tr = null;
 					}
