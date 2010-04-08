@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.55 2010-01-23 04:08:22 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.56 2010-04-08 01:10:46 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -658,10 +658,11 @@ with coal, and HopCoal-E for the empties, the program can use this
 information to assign and deliver cars to their appropriate trains and
 locations respectively.</P>
 
-<H3>Caboose, FRED, Hazardous</H3>
+<A	NAME="CabooseFredHazardous"></A>
+<H3>Caboose, FRED, Hazardous Checkboxes</H3>
 
 If the car is a caboose, has a FRED (Flashing Rear End Device), or is
-hazardous, select the proper box. The program uses the caboose and FRED
+hazardous, select the proper checkbox. The program uses the caboose and FRED
 functions to place the car at the end of a train when the train requires
 a caboose or car with FRED. The hazardous checkbox will cause the
 program to add a note to the switch list that the car is transporting
@@ -968,7 +969,7 @@ Selected Trains</A> button.
 
 You can determine what type of cars and engines the train will service.
 Select the rolling stock the train will carry by clicking on the
-appropriate check boxes. A checked box means the train will service this
+appropriate checkboxes. A checked box means the train will service this
 type of rolling stock.
 
 <A NAME="TrainRequires"></A>
@@ -981,8 +982,8 @@ consist. If you select "Auto", the program will calculate the number of
 engines required for this train based on the weight of the train, the
 track grade, and the horsepower of the engines.
 
-<P>You can also require a caboose or car with FRED (Flashing Rear
-End Device) as the last car in the train, and you can optionally specify
+<P>You can also require a <A HREF="#CabooseFredHazardous">caboose or car with FRED (Flashing Rear
+End Device)</A> as the last car in the train, and you can optionally specify
 the road name for the caboose or car with FRED.  If you leave the road name
 blank, the program will try and find a caboose with the same road name as the
 engine.</P>
