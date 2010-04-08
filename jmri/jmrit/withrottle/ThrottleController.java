@@ -18,20 +18,20 @@ package jmri.jmrit.withrottle;
  *	di'R'ection (0=reverse, 1=forward)
  *	'L'ong address #, 'S'hort address #     e.g. L1234
  *      'r'elease, 'd'ispatch
- *	'I'dle (defaults to this if it falls through the tree)
+ *	'I'dle (defaults to this if it falls through the tree) !! Needs to change to nothing on default
+ *          idle needs to be called specifically
  *
- *	@author Brett Hoffman   Copyright (C) 2009
+ *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
+import java.lang.reflect.Method;
 import jmri.DccThrottle;
 import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.AddressListener;
 import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.throttle.ControlPanel;
-import jmri.jmrit.throttle.FunctionPanel;
-import jmri.jmrit.throttle.FunctionButton;
 
 import javax.swing.JSlider;
 import java.util.ArrayList;
@@ -39,16 +39,15 @@ import java.util.ArrayList;
 
 public class ThrottleController implements AddressListener{
 
-	private int speedIncrement;
-	AddressPanel addressPanel;
-	ControlPanel controlPanel;
-	FunctionPanel functionPanel;
-	private FunctionButton functionButton[];
-	JSlider speedSlider;
-        float speedMultiplier;
-	private boolean isAddressSet;
-	public boolean confirm = false;
-        private ArrayList<ThrottleControllerListener> listeners;
+    private DccThrottle throttle;
+    private int speedIncrement;
+    AddressPanel addressPanel;
+    ControlPanel controlPanel;
+    JSlider speedSlider;
+    float speedMultiplier;
+    private boolean isAddressSet;
+    public boolean confirm = false;
+    private ArrayList<ThrottleControllerListener> listeners;
 
 /**
  *  Constructor.
@@ -59,14 +58,6 @@ public class ThrottleController implements AddressListener{
 
         addressPanel = throttleFrame.getAddressPanel();
         controlPanel = throttleFrame.getControlPanel();
-        functionPanel = throttleFrame.getFunctionPanel();
-        //	Function buttons will only show actions if their frame is the active one.
-        try{
-                functionPanel.setSelected(true);
-        }catch (java.beans.PropertyVetoException e) {
-                //	Oh well, we tried.
-        }
-        functionButton = functionPanel.getFunctionButtons();
         speedSlider = controlPanel.getSpeedSlider();
         speedMultiplier = speedSlider.getMaximum()/126;
 
@@ -100,6 +91,7 @@ public class ThrottleController implements AddressListener{
      */
     public void notifyAddressReleased(int address, boolean isLong){
         isAddressSet = false;
+        throttle = null;
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressReleased(this);
@@ -114,6 +106,7 @@ public class ThrottleController implements AddressListener{
      */
     public void notifyAddressThrottleFound(DccThrottle throttle){
 	if (throttle != null) {
+            this.throttle = throttle;
             speedIncrement = (int)throttle.getSpeedIncrement();
             isAddressSet = true;
         }else {
@@ -269,24 +262,65 @@ public class ThrottleController implements AddressListener{
 //	FunctionPanel methods
     private void handleFunction(String inPackage){
         //	get the function # sent from device
-        int receivedFunction = Integer.parseInt(inPackage.substring(2));
-
+        String receivedFunction = inPackage.substring(2);
+        Boolean state = false;
+        
         if (inPackage.charAt(1) == '1'){	//	Function Button down
-            //	Toggle button state:
             if(log.isDebugEnabled()) log.debug("Trying to set function " + receivedFunction);
-            functionButton[receivedFunction].changeState(!functionButton[receivedFunction].getState());
-        }else {	//	Function Button up
-            //	Do nothing if lockable, turn off if momentary
-            if(!functionButton[receivedFunction].getIsLockable()){
-                if(log.isDebugEnabled()) log.debug("is not lockable " + receivedFunction);
-                functionButton[receivedFunction].changeState(false);
+            //	Toggle button state:
+            try{
+                Method getF = throttle.getClass().getMethod("getF"+receivedFunction,(Class[])null);
+
+                Class partypes[] = {Boolean.TYPE};
+                Method setF = throttle.getClass().getMethod("setF"+receivedFunction, partypes);
+                
+                state = (Boolean)getF.invoke(throttle, (Object[])null);
+                Object data[] = {new Boolean(!state)};
+
+                setF.invoke(throttle, data);
+            
+            
+            }catch (NoSuchMethodException ea){
+                log.warn(ea);
+            }catch (IllegalAccessException eb){
+                log.warn(eb);
+            }catch (java.lang.reflect.InvocationTargetException ec){
+                log.warn(ec);
             }
+            
+        }else {	//	Function Button up
+
+            //  F2 is momentary for horn
+            //  Need to figure out what to do, Should this be in prefs?
+
+            if (receivedFunction.equals("2")){
+                throttle.setF2(false);
+                return;
+            }
+
+            //	Do nothing if lockable, turn off if momentary
+            try{
+                Method getFMom = throttle.getClass().getMethod("getF"+receivedFunction+"Momentary",(Class[])null);
+
+                Class partypes[] = {Boolean.TYPE};
+                Method setF = throttle.getClass().getMethod("setF"+receivedFunction, partypes);
+                
+                if ((Boolean)getFMom.invoke(throttle, (Object[])null)){
+                    Object data[] = {new Boolean(false)};
+
+                    setF.invoke(throttle, data);
+                }
+            
+            }catch (NoSuchMethodException ea){
+                log.warn(ea);
+            }catch (IllegalAccessException eb){
+                log.warn(eb);
+            }catch (java.lang.reflect.InvocationTargetException ec){
+                log.warn(ec);
+            }
+            
         }
-        if(log.isDebugEnabled()){
-            if (functionButton[receivedFunction].getState()){
-                log.debug(inPackage + " ON");
-            }else log.debug(inPackage + " OFF");
-        }
+
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleController.class.getName());
