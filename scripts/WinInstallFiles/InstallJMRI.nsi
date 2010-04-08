@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.12.0
+; - Update to remove comm.jar if found in JMRI\lib folder
+; -------------------------------------------------------------------------
 ; - Version 0.1.11.0
 ; - Update to remove WiThrottle plug-in if previously installed
 ; - Modify backup check to default to off when installing over newer or
@@ -154,7 +157,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.5"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.11.0"                    ; Installer version
+!define INST_VER  "0.1.12.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -328,6 +331,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old .jar & support files in lib/ directory
     Delete "$OUTDIR\lib\crimson.jar"
+    Delete "$OUTDIR\lib\comm.jar"
 
     ; -- Delete .jar & support files installed using previous layout
     Delete "$OUTDIR\activation.jar"
