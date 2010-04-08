@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -907,13 +907,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_speedType.equals(endSpeedType)) {
                 return;
             }
-            /*
             try {
                 this.notify();
             } catch (java.lang.IllegalMonitorStateException imse) {
-                log.error("synchNotify("+block.getDisplayName()+"): IllegalMonitorStateException "+imse);
+                log.error("rampSpeedTo: IllegalMonitorStateException "+imse);
             }
-            */
             ThrottleRamp ramp = new ThrottleRamp(endSpeedType);
             new Thread(ramp).start();
         }
