@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.19 2010-04-07 01:28:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.20 2010-04-09 06:31:41 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -384,6 +384,12 @@ Matjaz Krajnc provided better code and icons for the web throttle.
 
 <p>
 Tom Stack updated the Tsunami Diesel definition with more models.
+
+<p>
+Pete Cressman fixed a threading problem in warrants.
+
+<p>
+Fixed a threading problem when invoking sensor listeners from a waiting script.
 
 <!--#include virtual="/Footer" -->
 
