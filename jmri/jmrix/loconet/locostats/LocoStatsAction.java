@@ -6,5 +6,5 @@ package jmri.jmrix.loconet.locostats;
  * @deprecated 2.9.4
  */
 @Deprecated
-public class LocoStatsAction extends LocoStatsPanel$Default  {
+public class LocoStatsAction extends LocoStatsPanel.Default  {
 }

@@ -6,5 +6,5 @@ package jmri.jmrix.loconet.slotmon;
  * @deprecated 2.9.4
  */
 @Deprecated
-public class SlotMonAction extends SlotMonPane$Default  {
+public class SlotMonAction extends SlotMonPane.Default  {
 }

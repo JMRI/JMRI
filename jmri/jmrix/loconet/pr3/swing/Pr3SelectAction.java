@@ -6,5 +6,5 @@ package jmri.jmrix.loconet.pr3.swing;
  * @deprecated 2.9.4
  */
 @Deprecated
-public class Pr3SelectAction extends Pr3SelectPane$Default  {
+public class Pr3SelectAction extends Pr3SelectPane.Default  {
 }

@@ -6,5 +6,5 @@ package jmri.jmrix.loconet.locomon;
  * @deprecated 2.9.4
  */
 @Deprecated
-public class LocoMonAction extends LocoMonPane$Default  {
+public class LocoMonAction extends LocoMonPane.Default  {
 }

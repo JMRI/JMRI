@@ -6,5 +6,5 @@ package jmri.jmrix.loconet.clockmon;
  * @deprecated 2.9.4
  */
 @Deprecated
-public class ClockMonAction extends ClockMonPane$Default  {
+public class ClockMonAction extends ClockMonPane.Default  {
 }
