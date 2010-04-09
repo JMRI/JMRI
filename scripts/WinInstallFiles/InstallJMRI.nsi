@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.13.0
+; - Removal of obsolete .bat and resource files
+; -------------------------------------------------------------------------
 ; - Version 0.1.12.0
 ; - Update to remove comm.jar if found in JMRI\lib folder
 ; -------------------------------------------------------------------------
@@ -157,7 +160,7 @@
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
 !define JMRI_VER  "2.9.5"                       ; Application version
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.12.0"                    ; Installer version
+!define INST_VER  "0.1.13.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -379,8 +382,22 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\jinput-wintab.dll"
     Delete "$OUTDIR\lib\joal_native.dll"
 
-    ; -- Delete old messages.log file from program folder
+    ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
+    Delete "$OUTDIR\uninstal.log" ; from InstallerVise installer
+
+    ; -- Delete obsolete .bat files from program folder
+    Delete "$OUTDIR\CornwallRR.bat"
+    Delete "$OUTDIR\DecoderPro.bat"
+    Delete "$OUTDIR\JmriDemo.bat"
+    Delete "$OUTDIR\LocoTools.bat"
+    Delete "$OUTDIR\PacketPro.bat"
+    Delete "$OUTDIR\PanelPro.bat"
+    
+    ; -- Delete obsolete resource files
+    Delete "$OUTDIR\resources\GreenPowerLED.gif"
+    Delete "$OUTDIR\resources\RedPowerLED.gif"
+    Delete "$OUTDIR\resources\YellowPowerLED.gif"
 
   SectionEnd ; SEC_CLEANUP
   
