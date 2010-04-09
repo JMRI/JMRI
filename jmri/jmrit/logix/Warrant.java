@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -792,8 +792,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         private boolean _wait = false;  // waits for signals/occupancy/allocation to clear
         private boolean _waitForSync = false;  // waits for train to catch up to commands
         private int     _syncIdx;
-        private String  _currBlk = null;
-        private String  _cmdBlk = null;
+        //private String  _currBlk = null;
+        //private String  _cmdBlk = null;
         private List <ThrottleSetting> _throttleCommands;
 
         final ReentrantLock _lock = new ReentrantLock();
@@ -802,7 +802,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         Engineer(List <ThrottleSetting> commands) {
             _idxCurrentCommand = -1;
             _throttleCommands = commands;
-            _currBlk = getBlockOrderAt(0).getBlock().getDisplayName();
+            //_currBlk = getBlockOrderAt(0).getBlock().getDisplayName();
             _syncIdx = 0;
             setSpeedStepMode(_throttle.getSpeedStepMode());
         }
@@ -923,6 +923,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         * @param Index of block train has just entered.
         */
         synchronized public void synchNotify(OBlock block) {
+            /*
             if (_currBlk!=null && !_halt && !_wait) {
                 //if (_syncIdx <= _idxCurrentOrder) { }
                 try {
@@ -931,6 +932,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     log.error("synchNotify("+block.getDisplayName()+"): IllegalMonitorStateException "+imse);
                 }
             }
+            */
         }
 
         /**
