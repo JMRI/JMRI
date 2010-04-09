@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -32,7 +32,9 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
 
     static final java.util.regex.Matcher numberMatcher = java.util.regex.Pattern.compile("\\d++").matcher("");
     boolean isNumber(String s) {
-        return numberMatcher.reset(s).matches();
+        synchronized(numberMatcher) {
+            return numberMatcher.reset(s).matches();
+        }
     }
     
     public Sensor getBySystemName(String key) {
