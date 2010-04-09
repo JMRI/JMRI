@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Sound  {
 
@@ -61,8 +61,11 @@ public class Sound  {
             // create a base URL for the sound file location
             URL url = (new java.io.File(filename)).toURI().toURL();
 
-            // create a loader and start asynchronous sound loading
-            audioClip = new java.applet.Applet().getAudioClip(url);
+            // Create a loader and start asynchronous sound loading.
+            // The next line is the long term form, but it
+            // caused a NPE when deployed in JMRI 2.9.5
+            //audioClip = new java.applet.Applet().getAudioClip(url);
+            audioClip = new sun.applet.AppletAudioClip(url);
 
         } catch (MalformedURLException e) {
             log.error("Error creating sound address: "+e.getMessage());
