@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: UserInterface.shtml,v 1.9 2010-03-05 00:05:13 jacobsen Exp $ -->
+<!-- Copyright ($Author: bhoffman351 $) 2009 -->
+<!-- $Id: UserInterface.shtml,v 1.10 2010-04-11 16:38:12 bhoffman351 Exp $ -->
 <title>JMRI: WiFi Throttle</title>
 
 <!-- Style -->
@@ -37,6 +37,11 @@ It can be set to start automatically with the
 "<a href="../../../apps/TabbedPreferences.shtml#actions">Action at Startup</a>" section in the 
 "<a href="../../../apps/TabbedPreferences.shtml">Show Advanced Preferences</a>"
 section of JMRI Preferences.
+
+<p>
+<a href="../../../apps/TabbedPreferences.shtml#WiThrottle">Preferences</a>
+for the WiFi throttles can also be found in the JMRI Preferences
+under the heading WiThrottle.
 
 <p>
 This utility broadcasts its connection information across the local 
