@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.5 2010-03-12 15:50:10 kevin-dickerson Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.6 2010-04-11 16:37:10 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,6 +38,7 @@ Clicking on each preference will then populate the right hand side, with the var
 <a href="#Display">Display</a><br>
 <a href="#Messages">Messages</a><br>
 <a href="#Roster">Roster</a><br>
+<a href="#WiThrottle">WiThrottle</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
 <p>
@@ -57,7 +58,7 @@ on some
 <dl>
 <dt>Layout Connection
 <dd>You can select any of the various JMRI layout connections here.<p>
-Each connection has its own unquie tab, to get started, first select your DCC System Manufacturer, 
+Each connection has its own unique tab, to get started, first select your DCC System Manufacturer,
 followed by the type of connection that you are using.  You will then be presented with a series of 
 most commonly required settings that need to be set.  If you need to change some of the more advanced 
 settings then connection then check the "Additional Connection Settings" box and this will provide you with 
@@ -206,6 +207,40 @@ roster entries here.  This fills in the value for new entries, which
 can save you a little bit of typing. It has no effect on 
 existing entries, even if changed.
 
+</dl>
+
+<dl>
+<a name="WiThrottle">
+<h2>WiThrottle</h2></a>
+<dt>WiFi throttles
+<dd>"Apply" will change the preferences temporarily, until JMRI is quit.
+<p>
+"Save" will store the changes for future sessions of JMRI.
+
+<dt>eStop
+
+<dd>If selected,
+listens for a packet to be sent from the connected mobile device.
+If the server does not receive any communication in the
+chosen time, the affected JMRI throttle will idle its train.
+
+<p>
+The chosen time is approximate, the response may be a few seconds
+earlier or later.
+
+<dt>Network
+
+<dd>Select the check box to assign a specific port number to use.
+Automatic will allow the computer to select an available port number.
+<p>
+<dt>Allowed Controls
+
+<dd>Check boxes to allow specific features to be controlled by mobile devices.
+This will let you to limit what users have the ability to control.
+<ul>
+    <li>Track Power - Select whether mobile devices connected through
+        this WiFi interface can control track power.
+</ul>
 </dl>
 <!--#include virtual="/Footer" -->
 </body>
