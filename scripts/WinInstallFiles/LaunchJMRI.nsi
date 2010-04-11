@@ -23,6 +23,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.11.0
+; - Reverse out jinput.plugins option for now as it is causing problems
+; - with some configurations
+; -------------------------------------------------------------------------
 ; - Version 0.1.10.0
 ; - Reversed out environment variable modifications for now
 ; -------------------------------------------------------------------------
@@ -83,7 +87,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2010 JMRI Community"   ; Copyright string
-!define VER        "0.1.10.0"                     ; Launcher version
+!define VER        "0.1.11.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -250,7 +254,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
-  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
+#  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCmp 1 $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
