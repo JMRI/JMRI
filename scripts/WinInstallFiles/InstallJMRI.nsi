@@ -393,7 +393,8 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\LocoTools.bat"
     Delete "$OUTDIR\PacketPro.bat"
     Delete "$OUTDIR\PanelPro.bat"
-    
+    Delete "$OUTDIR\SoundPro.bat"
+
     ; -- Delete obsolete resource files
     Delete "$OUTDIR\resources\GreenPowerLED.gif"
     Delete "$OUTDIR\resources\RedPowerLED.gif"

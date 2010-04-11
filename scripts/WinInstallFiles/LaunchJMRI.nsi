@@ -23,6 +23,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.10.0
+; - Reversed out environment variable modifications for now
+; -------------------------------------------------------------------------
 ; - Version 0.1.9.0
 ; - Add jinput.plugins option to Java command line.
 ; - Add the possibility to modify launcher behaviour using environment
@@ -80,7 +83,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2010 JMRI Community"   ; Copyright string
-!define VER        "0.1.9.0"                      ; Launcher version
+!define VER        "0.1.10.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -99,10 +102,10 @@ Var JAVAPATH   ; holds the path to the location where JAVA files can be found
 Var CLASSPATH  ; holds the class path for JMRI .jars
 Var EXESTRING  ; holds the whole exe string
 Var OPTIONS    ; holds the JRE options
-Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
-Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
-Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
-Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
+#Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
+#Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
+#Var JMRIHOME   ; holds the path to JMRI program files (read from JMRI_HOME)
+#Var JMRIUSERHOME ; holds the path to user files (read from JMRI_USERHOME)
 Var CALCMAXMEM ; holds the calculated maximum memory
 Var PARAMETERS ; holds the commandline parameters (class and config file)
 Var NOISY      ; used to determine if console should be visible or not
@@ -238,12 +241,13 @@ Section "Main"
   ; -- Build options string
   ; -- JVM and RMI options
 
-  ; -- Read environment variable
-  ; -- JMRI_OPTIONS - additional JMRI options
-  ; -- If not defined, it returns an empty value
-  ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
+#  ; -- Read environment variable
+#  ; -- JMRI_OPTIONS - additional JMRI options
+#  ; -- If not defined, it returns an empty value
+#  ReadEnvStr $JMRIOPTIONS "JMRI_OPTIONS"
 
-  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
+#  StrCpy $OPTIONS "$JMRIOPTIONS -noverify"
+  StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
   StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
@@ -263,59 +267,64 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -Xms${MINMEM}m"
   StrCpy $OPTIONS "$OPTIONS -Xmx$CALCMAXMEMm"
   
-  ; -- Read environment variable
-  ; -- JMRI_USERHOME - user files location
-  ClearErrors
-  ReadEnvStr $JMRIUSERHOME "JMRI_USERHOME"
-  ; -- If defined, set user.home property
-  IfErrors ReadPrefsDir
-    StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
-  
-  ReadPrefsDir:
-  ; -- Read environment variable
-  ; -- JMRI_PREFSDIR - user preferences location
-  ClearErrors
-  ReadEnvStr $JMRIPREFS "JMRI_PREFSDIR"
-  ; -- If defined, set jmri.prefsdir property
-  IfErrors 0 SetPrefsDir
-
-    StrCmp $PROFILE "" Prefs98
-      StrCpy $JMRIPREFS "$PROFILE\JMRI"
-      Goto PathOptions
-    Prefs98:
-      StrCpy $JMRIPREFS "$WINDIR\JMRI"
-      Goto PathOptions
-
-    SetPrefsDir:
-      StrCpy $OPTIONS `$OPTIONS -Djmri.prefsdir="$JMRIPREFS"`
-
-  PathOptions:
+#  ; -- Read environment variable
+#  ; -- JMRI_USERHOME - user files location
+#  ClearErrors
+#  ReadEnvStr $JMRIUSERHOME "JMRI_USERHOME"
+#  ; -- If defined, set user.home property
+#  IfErrors ReadPrefsDir
+#    StrCpy $OPTIONS `$OPTIONS -Duser.home="$JMRIUSERHOME"`
+#
+#  ReadPrefsDir:
+#  ; -- Read environment variable
+#  ; -- JMRI_PREFSDIR - user preferences location
+#  ClearErrors
+#  ReadEnvStr $JMRIPREFS "JMRI_PREFSDIR"
+#  ; -- If defined, set jmri.prefsdir property
+#  IfErrors 0 SetPrefsDir
+#
+#    StrCmp $PROFILE "" Prefs98
+#      StrCpy $JMRIPREFS "$PROFILE\JMRI"
+#      Goto PathOptions
+#    Prefs98:
+#      StrCpy $JMRIPREFS "$WINDIR\JMRI"
+#      Goto PathOptions
+#
+#    SetPrefsDir:
+#      StrCpy $OPTIONS `$OPTIONS -Djmri.prefsdir="$JMRIPREFS"`
+#
+#  PathOptions:
   ; -- set paths for Jython and message log
   ; -- Creates the necessary directory if not existing
   ; -- User Profile is only valid for Win2K and later
   ; -- so skip on earlier versions
   StrCmp $PROFILE "" OptionsDone
-    IfFileExists "$JMRIPREFS\systemfiles\*.*" SetPaths
-      CreateDirectory "$JMRIPREFS\systemfiles"
+#    IfFileExists "$JMRIPREFS\systemfiles\*.*" SetPaths
+#      CreateDirectory "$JMRIPREFS\systemfiles"
+    IfFileExists "$PROFILE\JMRI\systemfiles\*.*" SetPaths
+      CreateDirectory "$PROFILE\JMRI\systemfiles"
     SetPaths:
-    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
-    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
+#    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$JMRIPREFS\systemfiles"'
+#    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$JMRIPREFS\systemfiles\\"'
+    StrCpy $OPTIONS '$OPTIONS -Dpython.home="$PROFILE\JMRI\systemfiles"'
+    StrCpy $OPTIONS '$OPTIONS -Djmri.log.path="$PROFILE\JMRI\systemfiles\\"'
     ; -- jmri.log.path needs a double trailing backslash to ensure a valid command-line
   OptionsDone:
   DetailPrint "Options: $OPTIONS"
 
-  ; -- Read environment variable
-  ; -- JMRI_HOME - location of JMRI program files
-  ClearErrors
-  ReadEnvStr $JMRIHOME "JMRI_HOME"
-  IfErrors 0 EnvJmriHomeDone
-    ; -- If not defined, use the launcher location
-    StrCpy $JMRIHOME $EXEDIR
-  EnvJmriHomeDone:
+#  ; -- Read environment variable
+#  ; -- JMRI_HOME - location of JMRI program files
+#  ClearErrors
+#  ReadEnvStr $JMRIHOME "JMRI_HOME"
+#  IfErrors 0 EnvJmriHomeDone
+#    ; -- If not defined, use the launcher location
+#    StrCpy $JMRIHOME $EXEDIR
+#  EnvJmriHomeDone:
 
   ; -- Build the ClassPath
   StrCpy $CLASSPATH ".;classes"
-  StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
+#  StrCpy $0 "$JMRIHOME" ; normally 'C:\Program Files\JMRI'
+  StrCpy $0 "$EXEDIR" ; normally 'C:\Program Files\JMRI'
   StrCpy $3 "jmri.jar" ; set to jmri.jar to skip jmri.jar
   StrCpy $4 "" ; no prefix required
   Call GetClassPath
@@ -324,7 +333,8 @@ Section "Main"
   StrCpy $CLASSPATH "$CLASSPATH;jmri.jar"
   StrCpy $3 "" ; set to blank to include all .jar files
   StrCpy $4 "lib\" ; lib prefix
-  StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
+#  StrCpy $0 "$JMRIHOME\lib" ; normally 'C:\Program Files\JMRI\lib'
+  StrCpy $0 "$EXEDIR\lib" ; normally 'C:\Program Files\JMRI\lib'
   Call GetClassPath
   StrCmp $9 "" +2 0
   StrCpy $CLASSPATH "$CLASSPATH;$9"
@@ -334,7 +344,8 @@ Section "Main"
   DetailPrint "Exestring: $EXESTRING"
 
   ; -- Finally get ready to run the application
-  SetOutPath $JMRIHOME
+#  SetOutPath $JMRIHOME
+  SetOutPath $EXEDIR
   ; -- Launch the Java class.
   ; -- use $5 to hold STARTUPINFO structure
   ; -- use $6 to hold PROCESS_INFORMATION structure
