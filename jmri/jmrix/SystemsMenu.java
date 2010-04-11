@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 
 import javax.swing.JMenu;
 
+import jmri.jmrix.swing.ComponentFactory;
+
 /**
  * Provide a "Systems" menu containing the Jmri system-specific tools in submenus.
  * <P>
@@ -15,7 +17,7 @@ import javax.swing.JMenu;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -31,6 +33,18 @@ public class SystemsMenu extends JMenu {
 
         setText(rb.getString("MenuSystems"));
 
+        // Put configured menus at top
+        // get ComponentFactory object(s) and create menus
+        java.util.List<Object> list 
+                = jmri.InstanceManager.getList(ComponentFactory.class);
+        if (list != null) {
+            for (Object memo : list) {
+                JMenu menu = ((ComponentFactory)memo).getMenu();
+                if (menu != null) add(menu);
+            }
+            add(new javax.swing.JSeparator());
+        }
+
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
         addMenu("jmri.jmrix.can.CanMenu");
@@ -38,7 +52,11 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.cmri.CMRIMenu");
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
-        addMenu("jmri.jmrix.loconet.LocoNetMenu");
+        
+        // LocoNet is now special
+        add(new jmri.jmrix.loconet.swing.LocoNetMenu(null));
+        //addMenu("jmri.jmrix.loconet.swing.LocoNetMenu");
+        
         addMenu("jmri.jmrix.nce.NceMenu");
         addMenu("jmri.jmrix.oaktree.OakTreeMenu");
         addMenu("jmri.jmrix.powerline.SystemMenu");

@@ -4,7 +4,7 @@ package jmri.jmrix.loconet.swing;
 
 import java.util.ResourceBundle;
 
-import javax.swing.JMenu;
+import javax.swing.*;
 
 import jmri.jmrix.loconet.LocoNetBundle;
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
@@ -13,21 +13,25 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class LocoNetMenu extends JMenu {
 
     /**
      * Create a LocoNet menu.
-     * Preloads the TrafficController to certain actions
+     * Preloads the TrafficController to certain actions.
+     * Actions will open new windows.
      */
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
         ResourceBundle rb = LocoNetBundle.bundle();
 
-        setText(memo.getUserName());
-
+        if (memo != null)
+            setText(memo.getUserName());
+        else
+            setText(rb.getString("MenuLocoNet"));
+            
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
         
         for (Item item : panelItems) {
@@ -38,7 +42,7 @@ public class LocoNetMenu extends JMenu {
             }
         }
     }
-    
+        
     Item[] panelItems = new Item[] {
         new Item("MenuItemLocoNetMonitor",      "jmri.jmrix.loconet.locomon.LocoMonPane"),
         new Item("MenuItemSlotMonitor",         "jmri.jmrix.loconet.slotmon.SlotMonPane"),
