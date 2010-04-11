@@ -30,18 +30,18 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public interface Throttle {
 
     /** Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound parameter.
+     * This is an bound property.
      */
     public float getSpeedSetting();
     public void setSpeedSetting(float speed);
 
     /** direction
-     * This is an bound parameter.
+     * This is an bound property.
      */
     public boolean getIsForward();
     public void setIsForward(boolean forward);
@@ -230,7 +230,7 @@ public interface Throttle {
      * specific implementation, as subclasses of LocoAddress will contain
      * different information.
      *
-     * This is an unbound parameter.
+     * This is an unbound property.
      */
     public LocoAddress getLocoAddress();
 
