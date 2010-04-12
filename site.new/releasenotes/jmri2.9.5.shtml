@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.20 2010-04-09 06:31:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.21 2010-04-12 16:44:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.9.5 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: April 12, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.5 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -49,14 +51,12 @@ It contains
 many new features, including:
 
 <ul>
-<li>Many improvements to throttles
+<li>Many improvements and fixes to throttles
 <li>You can have more than one LocoNet connection, 
     for example one for signals and another for throttle connections
 <li>A new preferences dialog that's simpler to use
-<li>Improved RailDriver support on Windows
+<li>AutoDispatcher script now included
 <li>Easier dialogs for adding sensors and turnouts
-<li>
-<li>
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -75,7 +75,7 @@ see our
 JMRI system names start with two capital letters, e.g. LT10 or NS23 or PLA5.
 Past versions have tried to cope when people enter lower cases letters,
 e.g. lt10 or Ns23 or pLA5, with various degrees of success. 
-Unfortunately, this code isn't compatible with some new systems that are
+Unfortunately, the coping code isn't compatible with some new features that are
 being working on, and we have to remove it.  Starting with this version,
 JMRI requires that you enter consistent system names, including using the right case.
 If you use system names, and haven't been using consistent names, you'll
@@ -83,6 +83,11 @@ probably have to practice a little to get in the habit. If you have any problems
 reading old files, etc, please post a note on the 
 <a href="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a>
 and somebody will help you.
+
+<p>
+The LocoTools application is no longer supported, and is being removed.
+Some parts of it are still present, but you should use e.g. PanelPro or
+DecoderPro instead.  They can do everything that LocoTools can.
 
 <p>
 The preferences have been significantly reworked. In some cases,
@@ -390,6 +395,12 @@ Pete Cressman fixed a threading problem in warrants.
 
 <p>
 Fixed a threading problem when invoking sensor listeners from a waiting script.
+
+<p>
+Pete Cressman made some internal improvements to the throttle implementation classes.
+
+<p>
+Pete Cressman implemented following signal mast and head indications.
 
 <!--#include virtual="/Footer" -->
 
