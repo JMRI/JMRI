@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.2 2010-04-09 06:31:41 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.3 2010-04-12 12:08:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -83,6 +83,11 @@ reading old files, etc, please post a note on the
 and somebody will help you.
 
 <p>
+The LocoTools application is no longer supported, and is being removed.
+Some parts of it are still present, but you should use e.g. PanelPro or
+DecoderPro instead.  They can do everything that LocoTools can.
+
+<p>
 The preferences have been significantly reworked. In some cases,
 preferences to add a button or do an action at startup may have to be 
 deleted and re-entered before they will work.
@@ -152,10 +157,6 @@ To make these stop, just store the file again so that it's rewritten in the most
 
 <h3>Changes since test version 2.9.5</h3>
 
-Pete Cressman made some internal improvements to the throttle implementation classes.
-
-<p>
-Pete Cressman implemented following signal mast and head indications.
 
 <!--#include virtual="/Footer" -->
 
