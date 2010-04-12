@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI signaling support of speeds regulatipn             -->
 
-<!-- $Id: speedtable.xsd,v 1.1 2010-04-06 21:08:11 pete_cressman Exp $ -->
+<!-- $Id: speedtable.xsd,v 1.2 2010-04-12 12:14:45 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -70,7 +70,7 @@
         <xs:element name="interpretation" minOccurs="1" maxOccurs="1">
           <xs:annotation><xs:documentation>
                 Required to interpret of the content of the Speed Aspect Table.
-                percentNormal = number is a percentage of the recorded speed (the "normal" speed. 
+                percentNormal = number is a percentage of the recorded speed (the "normal" speed). 
                 percentThrottle = number is a percentage of the full throttle speed. 
           </xs:documentation></xs:annotation>
           <xs:simpleType>
@@ -116,6 +116,24 @@
                  ******** Required Speed Appearance Table  **********
                  Maps appearance to speed name.
              </xs:documentation></xs:annotation>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="SignalHeadStateRed" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateFlashingRed" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateGreen" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateFlashingGreen" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateYellow" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateFlashingYellow" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateLunar" minOccurs="0" maxOccurs="1">
+                </xs:element>
+                <xs:element name="SignalHeadStateFlashingLunar" minOccurs="0" maxOccurs="1">
+                </xs:element>
+            </xs:sequence>
         </xs:element>
 
       <xs:any minOccurs="0" maxOccurs="unbounded" processContents="lax"/>
