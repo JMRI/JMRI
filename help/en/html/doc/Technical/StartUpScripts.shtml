@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.11 2010-04-11 16:17:22 matthewharris Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.12 2010-04-12 12:07:28 jacobsen Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -158,7 +158,7 @@ JMRI has registered five application signatures:
 <dt>JMRD<dd>DecoderPro
 <dt>JMRP<dd>PanelPro
 <dt>JMRI<dd>JmriDemo
-<dt>JMRL<dd>LocoTools
+<dt>JMRL<dd>LocoTools (no longer used)
 <dt>JMRC<dd>Cornwall demo
 </dl>
 

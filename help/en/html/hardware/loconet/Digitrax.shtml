@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Digitrax.shtml,v 1.9 2009-01-13 22:52:40 jacobsen Exp $ -->
+<!-- $Id: Digitrax.shtml,v 1.10 2010-04-12 12:07:29 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <title>JMRI Hardware Guide: Digitrax DCC </title>
@@ -160,7 +160,7 @@ in the command station using a Digitrax throttle. </p>
 There are a number of pages that discuss how to use JMRI with LocoNet: 
 <ul>
   <li>For information on LocoNet-specific JMRI tools, please see the <a
-    href="../../apps/LocoTools/index.shtml">LocoTools page</a>. </li>
+    href="../../apps/LocoTools/index.shtml">LocoNet tools page</a>. </li>
   <li>Many LocoNet devices can be directly addressed by JMRI. For more
     information on how to find those addresses, see <a
     href="Addressing.shtml">this page</a>. </li>

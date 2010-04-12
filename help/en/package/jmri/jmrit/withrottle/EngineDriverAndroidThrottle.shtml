@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.3 2010-03-20 19:48:06 jacobsen Exp $ -->
+<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.4 2010-04-12 12:07:29 jacobsen Exp $ -->
 <title>JMRI: Engine Driver Throttle for Android</title>
 
 <!-- Style -->
@@ -57,7 +57,7 @@ You will also need to know the TCP port that the JMRI WiThrottle is listening on
 In order to do this, first download the latest version of JMRI (2.9.1 at the time of writing). 
 Then modify the default.lcf file that comes with JMRI in a text editor. 
 Where it says log4j.rootCategory= INFO, change INFO to DEBUG. 
-Otherwise install JMRI as normal. Start JMRI (LocoTools is fine), 
+Otherwise install JMRI as normal. Start JMRI (DecoderPro is fine), 
 and then start the WiThrottle server in Debug->Start WiThrottle Server (last menu entry). 
 Log output will include the TCP port that this server is listening on.
 

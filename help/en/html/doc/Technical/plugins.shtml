@@ -1,6 +1,6 @@
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: plugins.shtml,v 1.6 2010-03-05 00:05:12 jacobsen Exp $ -->
+<!-- $Id: plugins.shtml,v 1.7 2010-04-12 12:07:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -35,7 +35,7 @@
 
 The original goal of the JMRI project was to produce a library upon which people
 could use to build their own applications.  Although some people do that, more
-use the existing applications such as DecoderPro, PanelPro, LocoTools and
+use the existing applications such as DecoderPro, PanelPro and
 JmriDemo.  We want to make this more flexible by providing a way to extend
 those programs without having to rebuild them from scratch.  This note describes
 mechanisms for that which will is included in JMRI 2.4 and later.

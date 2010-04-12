@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: EeePC.shtml,v 1.4 2008-09-11 18:42:36 matthewharris Exp $ -->
+<!-- $Id: EeePC.shtml,v 1.5 2010-04-12 12:04:50 jacobsen Exp $ -->
 <html lang="en">
 <HEAD>
 	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -158,10 +158,7 @@ Repeat this modification for:
 and optionally for:
 
 <code><pre>
-  cornwall
   JmriDemo
-  LocoTools
-  PacketPro
 </pre></code>
 
 This completes the necessary start-up file modifications.
