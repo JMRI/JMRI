@@ -36,7 +36,7 @@
 <!-- Speed changes are ramped from the current indication to the next.          -->
 <!-- Throttle speed commands are sent incrementally with a delay between them.  -->
 <!-- The delay in milliseconds between speed increments sent to the throttle.   -->
-  <msPerIncrement>200</msPerIncrement>
+  <msPerIncrement>750</msPerIncrement>
 <!-- Time needed to ramp a speed change can be shortened    -->
 <!-- Increase number of steps per throttle commands         -->   
   <stepsPerIncrement>1</stepsPerIncrement>
