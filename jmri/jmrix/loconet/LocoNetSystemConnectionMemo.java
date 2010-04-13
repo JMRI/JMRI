@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -26,7 +26,7 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
         // create and register the ComponentFactory
-        InstanceManager.store(new jmri.jmrix.loconet.swing.ComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.ComponentFactory(this), 
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     
@@ -36,9 +36,11 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
         // create and register the ComponentFactory
-        InstanceManager.store(new jmri.jmrix.loconet.swing.ComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.ComponentFactory(this), 
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
+    
+    jmri.jmrix.swing.ComponentFactory cf = null;
     
     /**
      * Provides access to the SlotManager for this
@@ -119,6 +121,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         lt = null;
         sm = null;
         InstanceManager.deregister(this, LocoNetSystemConnectionMemo.class);
+        if (cf != null) 
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         super.dispose();
     }
     
