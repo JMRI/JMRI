@@ -3,7 +3,7 @@ package jmri.jmrit.logix;
 
 public class ThrottleSetting {
 
-    Object  _time;
+    long    _time;
     String  _command;
     String  _value;
     String  _blockName;
@@ -11,7 +11,7 @@ public class ThrottleSetting {
     public ThrottleSetting() {
     }
 
-    public ThrottleSetting(Object time, String command, String value, String blockName) {
+    public ThrottleSetting(long time, String command, String value, String blockName) {
         _time = time;
         _command = command;
         _value = value;
@@ -25,8 +25,8 @@ public class ThrottleSetting {
     * Time is an object so that a "synch to block entry" notation can be used 
     * rather than elapsed time.
     */
-    public void setTime(Object time) { _time = time; }
-    public Object getTime() { return _time; }
+    public void setTime(long time) { _time = time; }
+    public long getTime() { return _time; }
 
     public void setCommand(String command) { _command = command; }
     public String getCommand() { return _command; }

@@ -427,7 +427,7 @@ public class WarrantTableAction extends AbstractAction {
                     for (int i=0; i<commands.size(); i++) {
                         w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
                     }
-                    commands = _startW.getThrottleCommands();
+                    commands = _endW.getThrottleCommands();
                     for (int i=0; i<commands.size(); i++) {
                         w.addThrottleCommand(new ThrottleSetting(commands.get(i)));
                     }

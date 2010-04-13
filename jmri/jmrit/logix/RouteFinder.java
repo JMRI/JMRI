@@ -89,11 +89,10 @@ public class RouteFinder implements Runnable {
         }
         if (_destNodes.size()==0) {
             _caller.debugRoute(_tree);
-        } else if (_destNodes.size()==1) {
-            _caller.showRoute(_destNodes.get(0), _tree);
         } else {
             _caller.pickRoute(_destNodes, _tree);
         }
+        _pcs.removePropertyChangeListener(_caller);
     }
 
     /**

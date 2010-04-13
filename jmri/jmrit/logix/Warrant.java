@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -83,7 +83,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_speedMap==null) {
             _speedMap = jmri.implementation.SignalSpeedMap.getMap();
         }
-        //if (log.isDebugEnabled()) log.debug("getSpeedMap "+(_speedMap!=null));
         return _speedMap;
     }
 
@@ -265,15 +264,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return false;
     }
 
-    boolean checkCommands(List <ThrottleSetting> commands) {
-        for (int i=0; i<commands.size(); i++) {
-            if (commands.get(i).getTime() instanceof String) {
-                return false;   // must be a synch command
-            }
-        }
-        return true;
-    }
-    
     /*************** Methods for running trains ****************/
 
     public int getRunMode() { return _runMode; }
@@ -402,13 +392,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                      msg = java.text.MessageFormat.format(rb.getString("NoCommands"),getDisplayName());
                      log.error(msg);
                      return msg;
-                 }
-                 if (!checkCommands(commands)) {
-                    if ( runBlind ) {
-                        msg = java.text.MessageFormat.format(rb.getString("CannotSynchBlind"),getDisplayName());
-                        log.error(msg);
-                         return msg;
-                     }
                  }
                  _commands = commands;
              }
@@ -792,8 +775,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         private boolean _wait = false;  // waits for signals/occupancy/allocation to clear
         private boolean _waitForSync = false;  // waits for train to catch up to commands
         private int     _syncIdx;
-        //private String  _currBlk = null;
-        //private String  _cmdBlk = null;
         private List <ThrottleSetting> _throttleCommands;
 
         final ReentrantLock _lock = new ReentrantLock();
@@ -802,7 +783,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         Engineer(List <ThrottleSetting> commands) {
             _idxCurrentCommand = -1;
             _throttleCommands = commands;
-            //_currBlk = getBlockOrderAt(0).getBlock().getDisplayName();
             _syncIdx = 0;
             setSpeedStepMode(_throttle.getSpeedStepMode());
         }
@@ -814,32 +794,29 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             while (_idxCurrentCommand+1 < _throttleCommands.size() && !_abort) {
                 long et = System.currentTimeMillis();
                 ThrottleSetting ts = _throttleCommands.get(_idxCurrentCommand+1);
-                Object time = ts.getTime();
+                long time = ts.getTime();
                 String command = ts.getCommand().toUpperCase();
-                // playback time is ts.getTime() before record time.
+                // actual playback total elapsed time is "ts.getTime()" before record time.
                 // current block at playback may also be before current block at record
                 _syncIdx = getIndexOfBlock(ts.getBlockName());
-                if (!command.equals("NOOP"))  {
-                    synchronized(this) {
-                        try {
-                            if (time instanceof Long) {
-                                long t = ((Long)time).longValue();
-                                if (t > 0){
-                                    wait(t);
-                                }
-                            }
-                            if (_abort) { break; }
-                            /* Having waited ts.getTime(), blocks should agree
-                            if (_syncIdx > _idxCurrentOrder) {
-                                // commands are ahead of current train position 
-                                wait();
-                            }
-                            */
-                        } catch (InterruptedException ie) {
-                            log.error("InterruptedException "+ie);
-                        } catch (java.lang.IllegalArgumentException iae) {
-                            log.error("IllegalArgumentException "+iae);
+                synchronized(this) {
+                    try {
+                        if (time > 0) {
+                            wait(time);
                         }
+                        if (_abort) { break; }
+                        // Having waited, time=ts.getTime(), blocks should agree.  if not, wait.
+                        // blind runs cannot detect entrance
+                        if (!_tempRunBlind && _syncIdx > _idxCurrentOrder) {
+                            // commands are ahead of current train position 
+                            if (log.isDebugEnabled()) log.debug("Command Block "+ts.getBlockName()+
+                                                                " wait for train to enter.");
+                            wait();  //
+                        }
+                    } catch (InterruptedException ie) {
+                        log.error("InterruptedException "+ie);
+                    } catch (java.lang.IllegalArgumentException iae) {
+                        log.error("IllegalArgumentException "+iae);
                     }
                 }
                 if (_abort) { break; }
@@ -880,7 +857,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     }
                     firePropertyChange("Command", new Integer(_idxCurrentCommand-1), new Integer(_idxCurrentCommand));
                     et = System.currentTimeMillis()-et;
-                    if (log.isDebugEnabled()) log.debug("Command #"+_idxCurrentCommand+": "+
+                    if (log.isDebugEnabled()) log.debug("Cmd #"+_idxCurrentCommand+": "+
                                                         ts.toString()+" et= "+et);
                 } catch (Exception e) {
                       log.error("Command failed! "+ts.toString()+" - "+e);
@@ -918,21 +895,20 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
 
         /**
-        * If waiting to issue a command on a block boundary - cancel wait if
-        * blocks match.
-        * @param Index of block train has just entered.
+        * If waiting to sync entrance to a block boundary with record time,
+        * this call will free the wait.
+        * @param  block train has just entered.
         */
         synchronized public void synchNotify(OBlock block) {
-            /*
-            if (_currBlk!=null && !_halt && !_wait) {
-                //if (_syncIdx <= _idxCurrentOrder) { }
-                try {
-                    this.notify();
-                } catch (java.lang.IllegalMonitorStateException imse) {
-                    log.error("synchNotify("+block.getDisplayName()+"): IllegalMonitorStateException "+imse);
+            if (!_halt && !_wait) {
+                if (_syncIdx <= _idxCurrentOrder) { 
+                    try {
+                        this.notify();
+                    } catch (java.lang.IllegalMonitorStateException imse) {
+                        log.error("synchNotify("+block.getDisplayName()+"): IllegalMonitorStateException "+imse);
+                    }
                 }
             }
-            */
         }
 
         /**
