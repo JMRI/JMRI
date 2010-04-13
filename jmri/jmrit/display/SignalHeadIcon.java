@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -568,7 +568,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     //private static boolean warned = false;
 
     public void dispose() {
-        getSignalHead().removePropertyChangeListener(this);
+        if (getSignalHead()!=null){
+            getSignalHead().removePropertyChangeListener(this);
+        }
         namedHead = null;
 
         red = null;
