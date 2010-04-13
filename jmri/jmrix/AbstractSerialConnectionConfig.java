@@ -25,7 +25,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 //
@@ -236,7 +236,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             NUMOPTIONS++;
             opt2Box.setToolTipText("");
             opt2Box.setEnabled(true);
-            opt2Box.setSelectedItem(adapter.getCurrentOption1Setting());
+            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
         } else {
             opt2Box.setToolTipText("There are no options for this protocol");
             opt2Box.setEnabled(false);
