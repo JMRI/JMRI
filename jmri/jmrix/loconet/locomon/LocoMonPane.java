@@ -8,7 +8,7 @@ import jmri.jmrix.loconet.swing.*;
 /**
  * LocoNet Monitor pane displaying (and logging) LocoNet messages
  * @author	   Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetListener, LnPanelInterface {
 
@@ -63,7 +63,7 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
         public Default() {
-            super("test", 
+            super(LocoNetBundle.bundle().getString("MenuItemLocoNetMonitor"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 LocoMonPane.class.getName(), 
                 jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));

@@ -30,7 +30,7 @@ import javax.swing.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2003
  * @author			Bob Jacobsen   Copyright (C) 2008, 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since 2.1.5
  */
 public class LocoStatsPanel extends LnPanel implements LocoNetListener {
@@ -277,7 +277,7 @@ public class LocoStatsPanel extends LnPanel implements LocoNetListener {
      */
     static public class Default extends jmri.jmrix.loconet.swing.LnNamedPaneAction {
         public Default() {
-            super("test", 
+            super(LocoNetBundle.bundle().getString("MenuItemLocoStats"), 
                 new jmri.util.swing.sdi.JmriJFrameInterface(), 
                 LocoStatsPanel.class.getName(), 
                 jmri.InstanceManager.getDefault(LocoNetSystemConnectionMemo.class));
