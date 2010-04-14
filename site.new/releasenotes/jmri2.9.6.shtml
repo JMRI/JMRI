@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.4 2010-04-13 05:36:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.5 2010-04-14 01:15:23 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,6 +159,19 @@ To make these stop, just store the file again so that it's rewritten in the most
 
 Pete Cressman updated the 
 <a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">warrant support</a>.
+
+<p>
+Kevin Dickerson fixed an occasional problem when deleting a signal head icon.
+
+<p>
+Fixed a problem what would result in an extra LocoNet menu when the preferences are set for certain
+Digitrax PR3 modes.
+
+<p>
+Fixed a problem with certain options not properly being loaded into the preferences dialog.
+
+<p>
+Fixed a problem where buttons created at startup don't have the right labels.
 
 
 <!--#include virtual="/Footer" -->
