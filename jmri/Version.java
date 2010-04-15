@@ -21,7 +21,7 @@ import java.util.Calendar;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.127 $
+ * @version $Revision: 1.128 $
  */
 
 public class Version {
@@ -48,27 +48,7 @@ public class Version {
      * It should be the empty string "" for released versions.
      */
      static final boolean released = true;
-     static final public String modifier = released?"":"+dev_"+getDate();
-
-     /*
-      * Provides the month and day of a development build
-      * @return month and day
-      */
-     private static String getDate() {
-    	 Calendar now = Calendar.getInstance();
-    	 int month = now.get(Calendar.MONTH) + 1;
-    	 String m = Integer.toString(month);
-    	 if (month < 10){
-    		 m = "0"+Integer.toString(month);
-    	 }
-    	 int day = now.get(Calendar.DATE);
-    	 String d = Integer.toString(day);
-    	 if (day < 10){
-    		 d = "0"+Integer.toString(day);
-    	 }
-    	 String date = m +"."+ d;
-    	 return date;
-     }
+     static final public String modifier = released?"":"+dev";
 
     /**
      * Provide the current version string in I.J.Kmod format.
