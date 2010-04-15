@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.jdom.Element;
+
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -41,7 +43,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -73,7 +75,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _builtStartYear = "";	// built start year 
 	protected String _builtEndYear = "";	// built end year
 	protected String _ownerOption = ALLOWNERS;// train road name restrictions
-	
+	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
+	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved
 	
 	protected String _comment = "";
 	
@@ -830,6 +833,46 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _comment;
 	}
 	
+	/**
+	 * Add a script to run when train is moved
+	 * @param pathname The script's pathname
+	 */
+	public void addMoveScript(String pathname){
+		_moveScripts.add(pathname);
+	}
+	
+	public void deleteMoveScript(String pathname){
+		_moveScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames to run when this train moved
+	 * @return A list of pathnames to run when this train moved
+	 */
+	public List<String> getMoveScripts(){
+		return _moveScripts;
+	}
+	
+	/**
+	 * Add a script to run when train is terminated
+	 * @param pathname The script's pathname
+	 */
+	public void addTerminationScript(String pathname){
+		_terminationScripts.add(pathname);
+	}
+	
+	public void deleteTerminationScript(String pathname){
+		_terminationScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames to run when this train terminates
+	 * @return A list of pathnames to run when this train terminates
+	 */
+	public List<String> getTerminationScripts(){
+		return _terminationScripts;
+	}
+	
 	public void setBuilt(boolean built) {
 		boolean old = _built;
 		_built = built;
@@ -1241,10 +1284,18 @@ public class Train implements java.beans.PropertyChangeListener {
 	private void updateStatus(RouteLocation old, RouteLocation next){
 		if (next != null){
 			setStatus(TRAININROUTE+" "+getNumberCarsInTrain(next)+" "+rb.getString("cars"));
+			// run move scripts
+			for (int i=0; i<getMoveScripts().size(); i++){
+				jmri.util.PythonInterp.runScript(getMoveScripts().get(i));
+			}
 		}else{
 			log.debug("Train ("+getName()+")terminated");
 			setStatus(TERMINATED);
 			setBuilt(false);
+			// run termination scripts
+			for (int i=0; i<getTerminationScripts().size(); i++){
+				jmri.util.PythonInterp.runScript(getTerminationScripts().get(i));
+			}
 		}
 	}
 	
@@ -1362,6 +1413,25 @@ public class Train implements java.beans.PropertyChangeListener {
         		_current = _route.getLocationById(a.getValue());
         	}
         }
+        // check for scripts
+        if (e.getChild("scripts") != null){
+            @SuppressWarnings("unchecked")
+        	List<Element> lm = e.getChild("scripts").getChildren("move");
+        	for (int i=0; i<lm.size(); i++){
+        		Element es = lm.get(i);
+        		if ((a = es.getAttribute("name")) != null ){
+        			addMoveScript(a.getValue());
+        		}
+        	}
+        	@SuppressWarnings("unchecked")
+           	List<Element> lt = e.getChild("scripts").getChildren("terminate");
+        	for (int i=0; i<lt.size(); i++){
+        		Element es = lt.get(i);
+        		if ((a = es.getAttribute("name")) != null ){
+        			addTerminationScript(a.getValue());
+        		}
+        	}
+        }
     }
 
     /**
@@ -1369,8 +1439,8 @@ public class Train implements java.beans.PropertyChangeListener {
      * detailed DTD in operations-trains.dtd.
      * @return Contents in a JDOM Element
      */
-    public org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("train");
+    public Element store() {
+        Element e = new Element("train");
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("description", getDescription());
@@ -1433,6 +1503,26 @@ public class Train implements java.beans.PropertyChangeListener {
         		ownerNames = ownerNames + owners[i]+"%%";
         	}
         	e.setAttribute("carOwners", ownerNames);
+        }
+        // save list of move scripts for this train
+        if (getMoveScripts().size()>0 || getTerminationScripts().size()>0){
+        	Element es = new Element("scripts");
+        	if (getMoveScripts().size()>0){ 
+        		for (int i=0; i<getMoveScripts().size(); i++){
+        			Element em = new Element("move");
+        			em.setAttribute("name", getMoveScripts().get(i));
+        			es.addContent(em);
+        		}
+        	}
+        	// save list of termination scripts for this train
+        	if (getTerminationScripts().size()>0){
+        		for (int i=0; i<getTerminationScripts().size(); i++){
+        			Element et = new Element("terminate");
+        			et.setAttribute("name", getTerminationScripts().get(i));
+        			es.addContent(et);
+        		}
+        	}
+        	e.addContent(es);
         }
         return e;
     }

@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.12 2010-01-17 20:22:57 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.13 2010-04-15 01:17:35 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -36,8 +36,10 @@
 <!ATTLIST trainEditOptions width			CDATA #IMPLIED>
 
 <!ELEMENT trains (train)*>
-
-<!ELEMENT train EMPTY>
+<!ELEMENT train (scripts)*>
+<!ELEMENT scripts (move | terminate)*>
+<!ELEMENT move EMPTY>
+<!ELEMENT terminate EMPTY>
 
 <!ATTLIST train id					CDATA #REQUIRED>          
 <!ATTLIST train name				CDATA #IMPLIED>
@@ -68,4 +70,7 @@
 <!ATTLIST train current				CDATA #IMPLIED>
 <!ATTLIST train skip				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
+
+<!ATTLIST move name					CDATA #IMPLIED>
+<!ATTLIST terminate name			CDATA #IMPLIED>
 

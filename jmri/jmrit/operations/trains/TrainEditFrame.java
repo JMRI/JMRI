@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -63,7 +63,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteManager routeManager;
 
 	Train _train = null;
-	Frame _trainEditBuildOptionsFrame = null;
+	Frame _childFrame = null;
 	List<JCheckBox> typeCarCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> typeEngineCheckBoxes = new ArrayList<JCheckBox>();
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
@@ -355,6 +355,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new TrainEditBuildOptionsAction(rb.getString("MenuItemBuildOptions"), this));
+		toolMenu.add(new TrainScriptAction(rb.getString("MenuItemScripts"), this));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new PrintTrainManifestAction(rb.getString("MenuItemPrintManifest"), false, this));
@@ -427,8 +428,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			}	
 			routeBox.setSelectedItem("");
 			manager.deregister(train);
-			if (_trainEditBuildOptionsFrame != null)
-				_trainEditBuildOptionsFrame.dispose();
+			if (_childFrame != null)
+				_childFrame.dispose();
 			_train = null;
 
 			enableButtons(false);
@@ -940,7 +941,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     }
     
     public void setChildFrame(Frame frame){
-    	_trainEditBuildOptionsFrame = frame;
+    	_childFrame = frame;
     }
 	
 	public void dispose() {
@@ -950,8 +951,8 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarRoads.instance().removePropertyChangeListener(this);	
 		routeManager.removePropertyChangeListener(this);
-		if (_trainEditBuildOptionsFrame != null)
-			_trainEditBuildOptionsFrame.dispose();
+		if (_childFrame != null)
+			_childFrame.dispose();
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
 			Route route = _train.getRoute();
