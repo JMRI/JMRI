@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutFeedback.shtml,v 1.4 2008-07-05 02:13:33 jacobsen Exp $ -->
+<!-- $Id: TurnoutFeedback.shtml,v 1.5 2010-04-15 14:10:43 pbender Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -112,23 +112,23 @@ either end of the turnout's throw bar. When Sensor 1 is active, the
 turnout is known to be thrown.  When Sensor 2 is active, the turnout 
 is known to be closed (normal).</DD>
 
-<DT>MONITORING</DT><DD>Default for LocoNet turnouts (and probably XpressNet 
-soon), this means the network is monitored for messages about the 
+<DT>MONITORING</DT><DD>Default for LocoNet and XPressNet turnouts, 
+this means the network is monitored for messages about the 
 status of the turnout.  This mode is only available for certain 
 protocols, i.e. some protocols can't do the monitoring properly, 
 and don't have this choice.</DD>
 
-<DT>INDIRECT</DT><DD>Currently only available for LocoNet
-turnouts, this informs the program that the turnout is
-being driven by a Digitrax DS54 with a microswitch attached
+<DT>INDIRECT</DT><DD>Currently only available for LocoNet 
+turnouts, this informs the program that the turnout is 
+being driven by a Digitrax DS54 with a microswitch attached 
 to the switch lead.  For more information, see the
 <A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>.</DD>
 
-<DT>EXACT</DT><DD>Currently only available for LocoNet
-turnouts, this informs the program that the turnout is
+<DT>EXACT</DT><DD>Currently only available for LocoNet and XPressNet 
+turnouts.  For LocoNet turnouts, this informs the program that the turnout is
 being driven by a Digitrax DS54 with two microswitches attached
 to the switch and aux leads.  For more information, see the
-<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>.</DD>
+<A HREF="../../hardware/loconet/DS54.shtml">DS54 page</a>. For XPressNet turnouts, this informs the program that the turnout is being driven by an LS100 and te feedback inputs have been connected as described in the <a href="http://www.lenz.com/manuals/accessorydecoders/ls100110.pdf">LS100 manual (external link, PDF)</a>.</DD>
 
 </DL>
 
