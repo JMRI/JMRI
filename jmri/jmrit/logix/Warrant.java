@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -36,6 +36,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private String _trainId;
     private DccLocoAddress _dccAddress;
     private boolean _runBlind;              // don't use block detection
+    private float _throttleFactor = 1.0f;
 
     // transient members
     private List <BlockOrder> _orders;          // temp orders used in run mode
@@ -229,6 +230,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public boolean getRunBlind() {return _runBlind; }
     public void setRunBlind(boolean runBlind) { _runBlind = runBlind; }
 
+    public String setThrottleFactor(String sFactor) {
+        try {
+            _throttleFactor = Float.parseFloat(sFactor);
+        } catch (NumberFormatException nfe) {
+            return rb.getString("MustBeFloat");
+        }
+        return null;
+    }
+
     /******************************** state queries *****************/
     /**
     * Listeners are installed for the route
@@ -361,6 +371,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _idxCurrentOrder = 0;
             _idxTrailingOrder = -1;
             _orders = _savedOrders;
+            _throttleFactor = 1.0f;
         } else if (_runMode==MODE_LEARN || _runMode==MODE_RUN) {
             msg = java.text.MessageFormat.format(rb.getString("WarrantInUse"),
                         (_runMode==Warrant.MODE_RUN ? 
@@ -992,7 +1003,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+speed+" _wait= "+_wait);
             _speed = speed;
-            _throttle.setSpeedSetting(speed);
+            _throttle.setSpeedSetting(speed*_throttleFactor);
         }
 
         public int getRunState() {
