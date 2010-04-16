@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.23 $
+ * @version			$Revision: 2.24 $
  */
 
 package jmri.jmrix.lenz;
@@ -513,7 +513,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    // To avoid some of the command station busy 
                    // messages, add a short delay before sending the 
                    // first off message.  
-                   if(InternalState != OFFSENT) wait(250);
+                   if(InternalState != OFFSENT) wait(30);
                } catch(java.lang.InterruptedException ie) {
                    log.debug("wait interrupted");
                }
