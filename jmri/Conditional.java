@@ -166,6 +166,7 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_CONTROL_TRAIN = 35;
     public static final int ACTION_SET_TRAIN_ID = 36;
 	public static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
+    public static final int ACTION_THROTTLE_FACTOR = 38;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -301,7 +302,8 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_WARRANT,      // ACTION_RUN_WARRANT       34
                                         ITEM_TYPE_WARRANT,      // ACTION_CONTROL_TRAIN     35
                                         ITEM_TYPE_WARRANT,      // ACTION_SET_TRAIN_ID      36
-                                        ITEM_TYPE_SIGNALMAST    // ACTION_SET_SIGNALMAST_ASPECT 37                                        ITEM_TYPE_SIGNALHEAD,
+                                        ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_ASPECT 37                                        ITEM_TYPE_SIGNALHEAD,
+                                        ITEM_TYPE_WARRANT       // ACTION_THROTTLE_FACTOR   38
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -327,8 +329,9 @@ public interface Conditional extends NamedBean {
     public static int[] ITEM_TO_LOGIX_ACTION = {ACTION_ENABLE_LOGIX, ACTION_DISABLE_LOGIX};
 
     // Map Warrant Type comboBox items to Warrant action types
-    public static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE, ACTION_DEALLOCATE_WARRANT_ROUTE,
-                ACTION_SET_ROUTE_TURNOUTS, ACTION_RUN_WARRANT, ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID};
+    public static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE, 
+                ACTION_DEALLOCATE_WARRANT_ROUTE, ACTION_SET_ROUTE_TURNOUTS, ACTION_RUN_WARRANT, 
+                ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID, ACTION_THROTTLE_FACTOR};
 
     // Map Signal Head Type comboBox items to Signal Head action types
     public static int[] ITEM_TO_SIGNAL_HEAD_ACTION = {ACTION_SET_SIGNAL_APPEARANCE, ACTION_SET_SIGNAL_HELD, 

@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -997,6 +997,19 @@ public class DefaultConditional extends AbstractNamedBean
                             String msg = w.setRoute(0, null);
 							if (msg!=null) {
                                 log.error(action.getDeviceName()+" unable to Set Route - "+msg);
+                            }
+                            actionCount++;
+						}
+                        break; 
+                    case Conditional.ACTION_THROTTLE_FACTOR:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+						if (w == null) {
+							log.error("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            String msg = w.setThrottleFactor(action.getActionString());
+							if (msg!=null) {
+                                log.error(action.getDeviceName()+" unable to Set Throttle Factor - "+msg);
                             }
                             actionCount++;
 						}

@@ -20,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 
@@ -327,6 +327,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                return (rbx.getString("ActionSetTrainId"));
            case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
                return (rbx.getString("ActionSetSignalMastAspect"));                
+            case Conditional.ACTION_THROTTLE_FACTOR:
+                return (rbx.getString("ActionSetThrottleFactor"));                
 		}
         log.warn("Unexpected parameter to getActionTypeString("+t+")");
 		return ("");
@@ -645,6 +647,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + " " + rbx.getString("ExecJythonCmd")+ " "+ _actionString+ ".";
                     break;
                 case Conditional.ACTION_SET_TRAIN_ID:
+                case Conditional.ACTION_THROTTLE_FACTOR:
                     str = str + ", \""+_actionString+"\" "+rbx.getString("onWarrant")+
                         " \""+_deviceName+"\".";
                     break;

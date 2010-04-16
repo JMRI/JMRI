@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2714,7 +2714,8 @@ public class LogixTableAction extends AbstractTableAction {
                     } else if (_curAction.getActionData() == Warrant.ABORT) {
                         _actionBox.setSelectedIndex(2);
                     }
-                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
+                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
                 break;
@@ -3049,11 +3050,17 @@ public class LogixTableAction extends AbstractTableAction {
                     _actionBox.addItem(rbx.getString("WarrantResume"));
                     _actionBox.addItem(rbx.getString("WarrantAbort"));
                     _actionPanel.setVisible(true);
-                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
+                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_THROTTLE_FACTOR ) {
                     p = (JPanel)_shortTextPanel.getComponent(0);
                     l = (JLabel)p.getComponent(0);
-                    _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainId"));
-                    l.setText(rbx.getString("LabelTrainId"));
+                    if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
+                        _shortTextPanel.setToolTipText(rbx.getString("DataHintTrainId"));
+                        l.setText(rbx.getString("LabelTrainId"));
+                    } else if (actionType==Conditional.ACTION_THROTTLE_FACTOR) {
+                        _shortTextPanel.setToolTipText(rbx.getString("DataHintThrottleFactor"));
+                        l.setText(rbx.getString("LabelThrottleFactor"));
+                    }
                     _shortTextPanel.setVisible(true);
                 }
                 break;
@@ -3671,7 +3678,8 @@ public class LogixTableAction extends AbstractTableAction {
                         _curAction.setActionData(Warrant.RESUME);
                     else
                         _curAction.setActionData(Warrant.ABORT);
-                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
+                } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
+                                actionType==Conditional.ACTION_THROTTLE_FACTOR ) {
                     _curAction.setActionString(actionString);
                 }
                 break;
