@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
+import java.io.File;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -11,6 +12,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,7 +25,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -38,9 +40,13 @@ public class PrintOptionFrame extends OperationsFrame{
 	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
 	JLabel textManifest = new JLabel(rb.getString("Manifest"));
 	JLabel textPad = new JLabel("   ");
+	JLabel textPad2 = new JLabel("   ");
+	JLabel logoURL = new JLabel("");
 
 	// major buttons	
 	JButton saveButton = new JButton(rb.getString("Save"));
+	JButton addLogoButton = new JButton(rb.getString("AddLogo"));
+	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
 
 	// radio buttons		
     JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
@@ -81,6 +87,8 @@ public class PrintOptionFrame extends OperationsFrame{
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
+		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
+		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
 			
 		// Manifest panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -118,7 +126,13 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItemLeft (pManifest, textPickupColor, 0, 16);		
 		addItemLeft (pManifest, pickupComboBox, 2, 16);
 		dropComboBox.setSelectedItem(Setup.getDropTextColor());
-		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());
+		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());		
+		// manifest logo
+		addItem (pManifest, textPad, 2, 18);
+		addItemLeft (pManifest, addLogoButton, 2, 20);
+		addItemLeft (pManifest, removeLogoButton, 0, 21);
+		addItemWidth (pManifest, logoURL, 6, 1, 21);
+		updateLogoButtons();
 		
 		// build report options
 		addItem (pReport, textBuildReport, 0, 16);
@@ -140,8 +154,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pControl);
 
 		// setup buttons
+		addButtonAction(addLogoButton);
+		addButtonAction(removeLogoButton);
 		addButtonAction(saveButton);
-
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
@@ -151,8 +166,20 @@ public class PrintOptionFrame extends OperationsFrame{
 		setVisible(true);
 	}
 	
-	// Save button
+	// Add Remove Logo and Save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
+		if (ae.getSource() == addLogoButton){
+			log.debug("add logo button pressed");
+			File f = selectFile();
+			if (f != null)
+				Setup.setManifestLogoURL(f.getAbsolutePath());
+			updateLogoButtons();
+		}
+		if (ae.getSource() == removeLogoButton){
+			log.debug("remove logo button pressed");
+			Setup.setManifestLogoURL("");
+			updateLogoButtons();
+		}
 		if (ae.getSource() == saveButton){
 			if (mono.isSelected())
 				Setup.setFontName(Setup.MONOSPACED);
@@ -180,7 +207,39 @@ public class PrintOptionFrame extends OperationsFrame{
 			OperationsXml.instance().writeOperationsFile();
 		}
 	}
-	
+
+	/**
+	 * We always use the same file chooser in this class, so that the user's
+	 * last-accessed directory remains available.
+	 */
+	JFileChooser fc = jmri.jmrit.XmlFile.userFileChooser("Images");
+
+	private File selectFile() {
+		if (fc==null) {
+			log.error("Could not find user directory");
+		} else {
+			fc.setDialogTitle("Find desired image");
+			// when reusing the chooser, make sure new files are included
+			fc.rescanCurrentDirectory();
+		}
+
+		int retVal = fc.showOpenDialog(null);
+		// handle selection or cancel
+		if (retVal == JFileChooser.APPROVE_OPTION) {
+			File file = fc.getSelectedFile();
+			return file;
+		}
+		return null;
+	}
+
+	private void updateLogoButtons(){
+		boolean flag = Setup.getManifestLogoURL().equals("");
+		addLogoButton.setVisible(flag);
+		removeLogoButton.setVisible(!flag);
+		logoURL.setText(Setup.getManifestLogoURL());
+		pack();
+	}
+
 	private void setPrinterFontRadioButton(){
 		mono.setSelected(Setup.getFontName().equals(Setup.MONOSPACED));
 		sanSerif.setSelected(Setup.getFontName().equals(Setup.SANSERIF));

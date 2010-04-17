@@ -15,6 +15,9 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+
 import org.jdom.Element;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -43,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1002,7 +1005,13 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		String newLine = "\n";
 		String line = " ";
-
+		
+		if (!isBuildReport && !Setup.getManifestLogoURL().equals("")) {
+			// add the image
+			ImageIcon icon = new ImageIcon(Setup.getManifestLogoURL());
+			writer.write(icon.getImage(), new JLabel(icon));
+		}
+        
 		while (true) {
 			try {
 				line = in.readLine();

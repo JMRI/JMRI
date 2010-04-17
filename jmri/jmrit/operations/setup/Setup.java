@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -126,6 +126,7 @@ public class Setup {
 	private static String fontName = MONOSPACED;
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
+	private static String logoURL ="";
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;
 	private static int carSwitchTime = 3;		// how long it take to move a car
@@ -401,7 +402,6 @@ public class Setup {
 		pickupColor = color;
 	}
 	
-	
 	public static Color getPickupColor(){
 		if (pickupColor.equals(BLUE))
 			return Color.blue;
@@ -420,6 +420,14 @@ public class Setup {
 		if (dropColor.equals(RED))
 			return Color.red;
 		return Color.black;	// default
+	}
+	
+	public static String getManifestLogoURL(){
+		return logoURL;
+	}
+	
+	public static void setManifestLogoURL(String pathName){
+		logoURL = pathName;
 	}
 	
 	public static String getOwnerName(){
@@ -649,6 +657,12 @@ public class Setup {
     	values.setAttribute("dropColor", getDropTextColor());
     	values.setAttribute("pickupColor", getPickupTextColor());
     	
+        if (getManifestLogoURL() != ""){
+        	values = new Element("manifestLogo");
+        	values.setAttribute("name", getManifestLogoURL());
+        	e.addContent(values);
+        }       
+    	
     	e.addContent(values = new Element("buildOptions"));
     	values.setAttribute("aggressive", isBuildAggressive()?"true":"false");
     	
@@ -811,6 +825,12 @@ public class Setup {
         		Setup.setPickupTextColor(pickupColor);
         	}
         }
+       	// get manifest logo
+        if ((operations.getChild("manifestLogo") != null)){ 
+        	if((a = operations.getChild("manifestLogo").getAttribute("name"))!= null){
+        		Setup.setManifestLogoURL(a.getValue());
+        	}
+    	}
         if ((operations.getChild("buildOptions") != null)
 				&& (a = operations.getChild("buildOptions").getAttribute("aggressive")) != null) {
       		String enable = a.getValue();

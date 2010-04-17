@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Control;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -234,8 +234,6 @@ public class TrainScriptFrame extends OperationsFrame {
 			packFrame();
 		}
 	}
-
-	File configuredFile;
 
 	/**
 	 * We always use the same file chooser in this class, so that
