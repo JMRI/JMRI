@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: turnouts.xsd,v 1.6 2010-02-16 05:37:20 jacobsen Exp $ -->
+<!-- $Id: turnouts.xsd,v 1.7 2010-04-17 18:33:14 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -69,6 +69,7 @@
     <xs:attribute name="inverted" type="xs:boolean" default="false" />
     <xs:attribute name="locked" type="xs:boolean" default="false" />
     <xs:attribute name="lockMode" type="xs:string" />
+    <xs:attribute name="decoder" type="xs:string" />
 
     <xs:attribute name="state" >
       <xs:simpleType>
