@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.5.shtml,v 1.21 2010-04-12 16:44:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.5.shtml,v 1.22 2010-04-18 14:12:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -143,6 +143,11 @@ input devices, so please check to make sure that your USB-attached devices still
 When loading an older panel file containing signal head icons, you may
 get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
 To make these stop, just store the file again so that it's rewritten in the most recent format.
+
+<h3>Known problems with this release</h3>
+<p>April 18, 2010: Throttle function buttons do not latch properly.
+The button property "lockable" doesn't work making all function buttons
+momentary.
 
 <h3>Download links:</h3>
 
