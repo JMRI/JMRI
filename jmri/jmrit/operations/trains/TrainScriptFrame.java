@@ -2,8 +2,6 @@
 
 package jmri.jmrit.operations.trains;
 
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 import java.util.List;
@@ -12,23 +10,16 @@ import java.io.File;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 //import javax.swing.JMenu;
 //import javax.swing.JMenuBar;
-import javax.swing.JRadioButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.rollingstock.cars.CarOwners;
-import jmri.jmrit.operations.setup.Control;
 
 
 /**
@@ -37,7 +28,7 @@ import jmri.jmrit.operations.setup.Control;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {

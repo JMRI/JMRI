@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -324,6 +324,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(noneRadioButton);
 		addRadioButtonAction(cabooseRadioButton);
 		addRadioButtonAction(fredRadioButton);
+		
+		// tool tips
+		resetButton.setToolTipText(rb.getString("TipTrainReset"));
 		
 		if (_train != null){
 			trainNameTextField.setText(_train.getName());
