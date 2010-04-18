@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.56 2010-04-08 01:10:46 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.57 2010-04-18 16:29:53 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1041,6 +1041,13 @@ box. If you only want engines and cars built before a certain year,
 select the "Before" radio button and enter a four digit year in the text
 box. And if you want to specify a period, select the "Range" radio
 button and enter the after and before years you want the train to service.
+
+<A NAME="TrainScripts"></A>
+<H3>Scripts</H3>
+
+If you want to run a script when a train moves or terminates, select
+under the "Edit Train->Tools" menu "Scripts". This will
+bring up a new window with several script options.
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
