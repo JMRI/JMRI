@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.5 2010-04-14 01:15:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.6 2010-04-18 03:17:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -173,6 +173,18 @@ Fixed a problem with certain options not properly being loaded into the preferen
 <p>
 Fixed a problem where buttons created at startup don't have the right labels.
 
+<p>
+Dan Boudreau added a new operations feature:
+User can optionally run scripts when a train is moved and or terminated.
+
+<p>
+Pete Cressman added a "Warrant Throttle Adjustment Factor" to Logix
+
+<p>
+Dan Boudreau added a new operations feature: Allow the user to specify a logo for the manifests and switch lists.
+
+<p>
+Paul Bender reduced the timeout before the first turnout off message in the XPressNet protocol.
 
 <!--#include virtual="/Footer" -->
 
