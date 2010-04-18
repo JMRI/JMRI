@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.6 2010-04-18 03:17:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.7 2010-04-18 14:16:21 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -142,6 +142,8 @@ When loading an older panel file containing signal head icons, you may
 get WARN messages about "did not locate lunar icon file" and "did not locate flashlunar icon file".
 To make these stop, just store the file again so that it's rewritten in the most recent format.
 
+<h3>Known problems with this release</h3>
+<p> None at the time of this release.
 <h3>Download links:</h3>
 
 <p>Please use these links for downloading:
