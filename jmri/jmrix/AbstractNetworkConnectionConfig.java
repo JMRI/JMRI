@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -43,14 +43,13 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public AbstractNetworkConnectionConfig() {
     }
 
-    boolean init = false;
-
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         hostNameField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.setHostName(hostNameField.getText());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
             }
         });
         hostNameField.addKeyListener( new KeyListener() {
@@ -58,6 +57,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
             public void keyReleased(KeyEvent keyEvent) {
                adapter.setHostName(hostNameField.getText());
+               p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
             }
             public void keyTyped(KeyEvent keyEvent) {
             }
@@ -96,7 +96,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
         });
 
-if(adapter.getSystemConnectionMemo()!=null){
+        if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
@@ -134,6 +134,7 @@ if(adapter.getSystemConnectionMemo()!=null){
         }        init = true;
     }
 
+    jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     protected JTextField hostNameField = new JTextField();
     protected JLabel hostNameFieldLabel;
     protected JTextField portField = new JTextField();
@@ -161,7 +162,7 @@ if(adapter.getSystemConnectionMemo()!=null){
     //static java.util.ResourceBundle rb = 
         //java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
     
-	public void loadDetails(final JPanel details) {
+    public void loadDetails(final JPanel details) {
     	_details = details;
         setInstance();
 
@@ -213,7 +214,10 @@ if(adapter.getSystemConnectionMemo()!=null){
         
         hostNameField.setText(adapter.getHostName());
         hostNameFieldLabel = new JLabel("IP Address: ");
-        
+        if(adapter.getHostName()==null || adapter.getHostName().equals("") ){
+            hostNameField.setText(p.getComboBoxLastSelection(adapter.getClass().getName()+".hostname"));
+            adapter.setHostName(hostNameField.getText());
+        }
         portField.setText(adapter.getCurrentPortName());
         
         portFieldLabel = new JLabel("TCP/UDP Port:");
@@ -230,9 +234,7 @@ if(adapter.getSystemConnectionMemo()!=null){
         init = false;		// need to reload action listeners
         checkInitDone();
     }
-    
-    protected int NUMOPTIONS = 2;
-    
+        
     void showAdvancedItems(){
         _details.removeAll();
         int stdrows = 0;

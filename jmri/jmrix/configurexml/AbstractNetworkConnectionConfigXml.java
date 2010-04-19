@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of Network port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -123,7 +123,18 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         // register, so can be picked up next time
         register();
 
-        adapter.connect();
+        try{
+            adapter.connect();
+        } catch (Exception ex) {
+            ConfigXmlManager.creationErrorEncountered(
+                                        null, "opening connection",
+                                        org.apache.log4j.Level.ERROR,
+                                        ex.getMessage(),
+                                        null,null,null
+                                    );            
+            return false;
+        }
+
         // if successful so far, go ahead and configure
         adapter.configure();
 

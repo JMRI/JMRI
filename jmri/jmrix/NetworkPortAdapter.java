@@ -9,24 +9,24 @@ package jmri.jmrix;
  *
  * @author  Kevin Dickerson Copyright (C) 2010
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 public interface NetworkPortAdapter extends PortAdapter {
 
-	/** Connects to the end device using a hostname/ip address and port
-	 */
-	public void connect(String host, int port);
+    /** Connects to the end device using a hostname/ip address and port
+     */
+    public void connect(String host, int port) throws Exception;
     
-    public void connect();
+    public void connect() throws Exception;
 
 	/** Configure all of the other jmrix widgets needed to work with this adapter
 	 */
-	public void configure();
+    public void configure();
 
-	/** Query the status of this connection.  If all OK, at least
-	 * as far as is known, return true */
-	public boolean status();
+    /** Query the status of this connection.  If all OK, at least
+     * as far as is known, return true */
+    public boolean status();
 
     /**
      * Remember the associated port name
