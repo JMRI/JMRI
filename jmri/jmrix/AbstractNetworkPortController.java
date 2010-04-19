@@ -4,7 +4,6 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import javax.swing.JOptionPane;
 
 import java.net.*;
 
@@ -15,7 +14,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -27,13 +26,17 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     // keep the socket provides our connection.
     protected Socket socketConn = null;
     
-    public void connect(String host, int port) {
+    public void connect(String host, int port) throws Exception {
         setHostName(host);
         setPort(port);
-        connect();
+        try {
+            connect();
+        } catch (Exception e){
+            throw e;
+        }
     }
     
-    public void connect(){
+    public void connect() throws Exception {
         if (m_HostName==null || m_port==0){
             log.error("No host name or port set :" + m_HostName + ":" + m_port);
             return;
@@ -45,6 +48,7 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             log.error("error opening network connection: "+e);
             ConnectionStatus.instance().setConnectionState(
             		m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            throw(e);
         }
     }
     
