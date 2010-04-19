@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.7 2010-04-18 14:16:21 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.8 2010-04-19 20:01:45 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -187,6 +187,19 @@ Dan Boudreau added a new operations feature: Allow the user to specify a logo fo
 
 <p>
 Paul Bender reduced the timeout before the first turnout off message in the XPressNet protocol.
+
+<p>
+Giorgio Terdina updated 
+<A href="http://jmri.org/community/connections/XtrkCadReader/index.shtml">XtrkCadReader</a>
+to version 2.0. (Not really part of JMRI 2.9.6, but we'll record it here anyway)
+The main changes are:
+<ul>
+<li>Correction of a bug affecting curved turnouts, which caused the "XtrkCadReader breaks track apart" problem reported on December by Terry Hill;
+<li>Introduction of curved tracks, available since JMRI 2.7.7. Users of earlier JMRI versions can still convert curved tracks to polylines by specifying an option (-a).
+</ul>
+
+<p>
+Kevin Dickerson updated the port interface structure to improve its structure and error handling.
 
 <!--#include virtual="/Footer" -->
 
