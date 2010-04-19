@@ -4,10 +4,17 @@
  * Converts  layout schemes produced by the Open Source 
  * program XtrkCAD (freely available from  http://www.xtrkcad.org )
  * to JMRI Layout Editor format.
- * @author			Giorgio Terdina Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @author			Giorgio Terdina Copyright (C) 2008, 2009, 2010
+ * @version			$Revision: 1.3 $
  *	2008-May-21		GT - Added support for negative radius (found in some track libraries)
  *	2008-Jul-03		GT - Stripped XML chracters (&, <...) from title and description fields
+ *	2008-Jul-16		GT - Added possibility of inserting turnout name in turnout's description
+ *	2008-Jul-31		GT - Corrected problem with detection of short blocks
+ *	2008-Aug-1		GT - Added sensors
+ *	2008-Sep-10		GT - Fixed integer conversion error due to LAYER CURRENT tag
+ *	2008-Sep-10		GT - Fixed problem with block gaps placed at the end of curves
+ *	2009-Oct-8		GT - Added support for curved tracks (introduced since JMRI 2.7.7)
+ *	2010-Apr-6		GT - Fixed problem with curved turnouts (undefined end points)
  */
 import java.util.*;
 import java.io.*;
@@ -18,7 +25,8 @@ public class XtrkCadReader {
 	static final String xmlHeader = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
 		"<?xml-stylesheet href=\"http://jmri.sourceforge.net/xml/XSLT/panelfile.xsl\" type=\"text/xsl\"?>\n" +
 		"<!DOCTYPE layout-config SYSTEM \"layout-config.dtd\">\n" +
-		"<layout-config>\n<!--\n\nXtrkCadReader - XtrkCad to JMRI Layout Editor format conversion utility\n";
+		"<layout-config>\n<!--\n\nXtrkCadReader - XtrkCad to JMRI Layout Editor format conversion utility\n" +
+		"Revision 2.0\n";
 	static final String xml1 = "	<LayoutEditor class=\"jmri.jmrit.display.configurexml.LayoutEditorXml\" name=\"";
 	static final String xml2 = "\" x=\"0\" y=\"0\" height=\"";
 	static final String xml3 = "\" width=\"";
@@ -49,6 +57,9 @@ public class XtrkCadReader {
 	static double jmriMaxWidth = 800.0;
 	static double scale = 1.0;
 
+	// Is arcs rendering enabled? 	Version 1.4
+	static boolean enableArcRendering = false;
+	
 	// Minimum and maximum chord length used for arcs rendering
 	static final double minChord = 3.0;
 	static double arcChord = 20.0;
@@ -83,6 +94,9 @@ public class XtrkCadReader {
 	static int bumperIdent = 1;
 	static int turntableIdent = 1;
 	static int startBlock = 1;
+
+	// Layers related fields
+	static int mainLineLayer = -1;				// Layer number associated with mainline tracks (-1 = undefined)
 	
 	// Hidden tracks related fields
 	static boolean hiddenIgnore = false;		// Ignore XtrcCad hidden tracks settings
@@ -95,7 +109,8 @@ public class XtrkCadReader {
 	static boolean enableBlockGaps = false;		// Enable automatic definition of blocks based on XtrCAD block gaps
 	static boolean enableBlockXing = false;		// Assign block numbers also to level crossings
 	static boolean getBlockNames = false;		// Get block names from track descriptions
-	static int gapMask = 0;						// Bitmask of block detection method 
+	static boolean setBlockSensors = false;		// Add sensor names to blocks	Version 1.3
+  	static int gapMask = 0;						// Bitmask of block detection method 
 												// 0 = no blocks
 												// 3 = block-gaps only
 												// 4 = turnouts only
@@ -120,8 +135,9 @@ public class XtrkCadReader {
 	static int maxNumber = 0;
 	
 	// Supported options
-	static final String helpDescription = "\nXtrCadRead\rConverts XtrCAD files (.xtc) to JMRI Layout Edit format.";
+	static final String helpDescription = "\nXtrCadRead\rConverts XtrCAD files (.xtc) to JMRI Layout Edit format.\n\tRevision 2.0";
 	static Parser optionBlocks = new Parser("-sb", Parser.NUMBER, "Starting ID number for blocks (default " + startBlock + ")");
+	static Parser optionSBlocks = new Parser("-bs", Parser.OPTION, "Add sensor names to blocks."); // Version 1.3
 	static Parser optionNBlocks = new Parser("-bn", Parser.OPTION, "Obtain block names from track descriptions.");
 	static Parser optionXBlocks = new Parser("-bx", Parser.OPTION, "Assign block numbers also to level crossings.");
 	static Parser optionRBlocks = new Parser("-br", Parser.NUMBER, "Maximum range for inclusion of turnouts in the same block - see documentation (default " + maxRange +")");
@@ -136,6 +152,7 @@ public class XtrkCadReader {
 	static Parser optionHiddenDash = new Parser("-hd", Parser.OPTION, "Render hidden tracks with dashed lines");
 	static Parser optionHiddenIgnore = new Parser("-hi", Parser.OPTION, "Ignore XtrcCad hidden tracks settings");
 	static Parser optionTolerance = new Parser("-t", Parser.NUMBER, "Tolerance for automatic merging of end points (default " + tolerance + " pixels)");
+	static Parser optionArc = new Parser("-a", Parser.OPTION, "Render arcs as polylines (required for JMRI versions prior to 2.8)");
 	static Parser optionChord = new Parser("-c", Parser.NUMBER, "Maximum chord length for arcs rendering (default " + arcChord + " pixels, minimum " + minChord + ")");
 	static Parser optionHeight = new Parser("-y", Parser.NUMBER, "Height of output frame (default " + (int)jmriMaxHeight + " pixels)");
 	static Parser optionWidth = new Parser("-x", Parser.NUMBER, "Width of output frame (default " + (int)jmriMaxWidth + " pixels)");
@@ -147,7 +164,7 @@ public class XtrkCadReader {
 	public XtrkCadReader (){
 		try {
 			int i;
-			System.out.println("\nXtrkCadReader\n\n\t" + (new java.util.Date()).toString() + 
+			System.out.println("\nXtrkCadReader 2.0\n\n\t" + (new java.util.Date()).toString() + 
 			"\n\tConverting XtrcCAD file " + xtcFile + " to JMRI Layout Editor format\n");
 			
 	// 1. Files opening
@@ -169,7 +186,13 @@ public class XtrkCadReader {
 			out.println("\tOptions:");
 			out.println("\t\tWidth of output frame:\t" + (int)jmriMaxWidth);
 			out.println("\t\tHeight of output frame:\t" + (int)jmriMaxHeight);
-			out.println("\t\tMaximum chord length for arcs rendering:\t" + arcChord);
+			// Version 1.4 - Start
+			if (enableArcRendering) {
+				out.println("\t\tMaximum chord length for arcs rendering:\t" + arcChord);
+			} else {
+				out.println("\t\tArc rendering disabled");
+			}
+			// Version 1.4 - End
 			out.println("\t\tTolerance for end points merging:\t" + tolerance);
 			if(hiddenIgnore) {
 				out.println("\t\tIgnore XtrcCad hidden tracks settings");
@@ -197,13 +220,14 @@ public class XtrkCadReader {
 			}
 			if(enableBlockGaps || enableBlockTurnouts) {
 				
-				
-				
 				if(enableBlockXing) {
 					out.println("\t\tAssign block numbers also to level crossings:\tenabled");
 				}
 				if(getBlockNames) {
 					out.println("\t\tObtain block names from track descriptions:\tenabled");
+				}
+				if(setBlockSensors) {
+					out.println("\t\tAdd sensors to blocks:\tenabled"); //Version 1.3
 				}
 				out.println("\t\tStarting ID number for blocks:\t" + startBlock);
 			}
@@ -239,6 +263,20 @@ public class XtrkCadReader {
 						out.println("<!-- Original layout size: " + originalWidth + " x " + originalHeight +
 						"  Output scale: " + scale + "  Output size: " + (int)(originalWidth * scale + 0.5) + " x " +
 						(int)(originalHeight * scale + 0.5) + " -->");
+					} else if(keyword.equals("LAYERS")) {
+						String layerNumber = line.next();
+						if(!layerNumber.equals("CURRENT")) {
+							int newLayer = new Integer(layerNumber).intValue();
+							line.next();
+							line.next();
+							line.next();
+							line.next();
+							line.next();
+							line.next();
+							line.next();
+							line.next();
+							if(line.next().toUpperCase().equals("MAINLINE")) mainLineLayer = newLayer;
+						}
 					} else if(keyword.equals("TURNOUT")) {
 						tracks.addElement(new XtrkCadElement(TURNOUT));
 					} else if(keyword.equals("STRAIGHT") || keyword.equals("JOINT")) {
@@ -360,14 +398,18 @@ public class XtrkCadReader {
 							XtrkCadElement newTrack = new XtrkCadElement();
 							newTrack.description = "Rendering of curved turnout " + track.description;
 							newTrack.visible = track.visible;
+							newTrack.layer = track.layer;
 							tracks.addElement(newTrack);
 							anchors.addElement(new XtrkCadAnchor(maxNumber, anchor1.ref[1], anchor1.x, anchor1.y));
-							anchors.addElement(new XtrkCadAnchor(maxNumber, maxNumber + 1, x1, x1));
+							anchors.addElement(new XtrkCadAnchor(maxNumber, maxNumber + 1, x1, y1));
+							// Adjust anchor of connected track element
+							AdjustAnchors(anchor1.ref[1], anchor1.ref[0], maxNumber);
 							// Then the new turnout
 							maxNumber++;
 							newTrack = new XtrkCadElement();
 							newTrack.trackType = TURNOUT;
 							newTrack.visible = track.visible;
+							newTrack.layer = track.layer;
 							newTrack.turnoutType = track.turnoutType - 3; // Left or right hand
 							newTrack.lastAnchor++; // Increase anchor's number
 							tracks.addElement(newTrack);
@@ -378,9 +420,12 @@ public class XtrkCadReader {
 							maxNumber++;
 							newTrack = new XtrkCadElement();
 							newTrack.visible = track.visible;
+							newTrack.layer = track.layer;
 							tracks.addElement(newTrack);
 							anchors.addElement(new XtrkCadAnchor(maxNumber, maxNumber-1, x3, y3));
 							anchors.addElement(new XtrkCadAnchor(maxNumber, anchor3.ref[1], anchor3.x, anchor3.y));
+							// Adjust anchor of connected track element
+							AdjustAnchors(anchor3.ref[1], anchor3.ref[0], maxNumber);
 							// Now transform the original curved turnout into a straight vector
 							track.trackType = STRAIGHT;
 							anchor1.x = x2;
@@ -433,6 +478,7 @@ public class XtrkCadReader {
 							XtrkCadElement newTrack = new XtrkCadElement();
 							newTrack.trackType = TURNOUT;
 							newTrack.visible = track.visible;
+							newTrack.layer = track.layer;
 							// Set turnout types (one will be left, the other right)
 							if(anchor1.a > ((XtrkCadAnchor)anchors.get(track.firstAnchor + second)).a) newTrack.turnoutType = 2; // Left hand
 							else newTrack.turnoutType = 1; // Right hand
@@ -442,13 +488,18 @@ public class XtrkCadReader {
 							newTrack.description = "Rendering of three-way turnout #" + track.originalNumber;
 							newTrack.lastAnchor++; // Increase anchor's number
 							tracks.addElement(newTrack);
+							int ref1Straight = ((XtrkCadAnchor)anchors.get(track.firstAnchor + central)).ref[1];
+							int ref1Thrown = ((XtrkCadAnchor)anchors.get(track.firstAnchor + second)).ref[1];
 							anchors.addElement(new XtrkCadAnchor(maxNumber, anchor1.ref[0], xM, yM)); // Turnout entry
-							anchors.addElement(new XtrkCadAnchor(maxNumber, ((XtrkCadAnchor)anchors.get(track.firstAnchor + central)).ref[1], 
+							anchors.addElement(new XtrkCadAnchor(maxNumber, ref1Straight, 
 								((XtrkCadAnchor)anchors.get(track.firstAnchor + central)).x,
 								((XtrkCadAnchor)anchors.get(track.firstAnchor + central)).y)); // Straight exit
-							anchors.addElement(new XtrkCadAnchor(maxNumber, ((XtrkCadAnchor)anchors.get(track.firstAnchor + second)).ref[1], 
+							anchors.addElement(new XtrkCadAnchor(maxNumber, ref1Thrown, 
 								((XtrkCadAnchor)anchors.get(track.firstAnchor + second)).x,
 								((XtrkCadAnchor)anchors.get(track.firstAnchor + second)).y)); // Thrown exit
+							// Adjust anchors of connected track elements
+							AdjustAnchors(ref1Straight, anchor1.ref[0], maxNumber);
+							AdjustAnchors(ref1Thrown, anchor1.ref[0], maxNumber);
 							// Compute new coordinates to relocate the old turnout
 							// Save old coordinates of thrown exit
 							double xTold = ((XtrkCadAnchor)anchors.get(track.firstAnchor + first)).x;
@@ -467,15 +518,18 @@ public class XtrkCadReader {
 							anchor3.ref[1] = maxNumber;
 							anchor3.x = xTnew;
 							anchor3.y = yTnew;
-							// Get rid the third exit point
+							// Get rid of the third exit point
 							anchor4.skip = true;
 							track.lastAnchor--;
 							// And now add a straight track to connect the old turnout with its original end point
 							newTrack = new XtrkCadElement();
 							newTrack.visible = track.visible;
+							newTrack.layer = track.layer;
 							tracks.addElement(newTrack);
 							anchors.addElement(new XtrkCadAnchor(maxNumber, anchor1.ref[0], xTnew, yTnew));
 							anchors.addElement(new XtrkCadAnchor(maxNumber, link, xTold, yTold));
+							// Adjust anchor of connected track element
+							AdjustAnchors(link, anchor1.ref[0], maxNumber);
 							t3way ++;
 						}
 						break;
@@ -504,10 +558,12 @@ public class XtrkCadReader {
 								// Create a new track with two anchors (duplicate anchors will be removed later)
 								maxNumber++;
 								XtrkCadElement newTrack = new XtrkCadElement();
+								newTrack.nullLength = true;	// Version 1.3
 								// Add a comment to newly created track
 								newTrack.description = "Padding track between Turnouts/Crossings #"
 								 + track.originalNumber + " and #" + track1.originalNumber;
 								newTrack.visible = track.visible;
+								newTrack.layer = track.layer;
 								tracks.addElement(newTrack);
 								anchors.addElement(new XtrkCadAnchor(maxNumber, anchor.ref[0], anchor.x, anchor.y));
 								anchors.addElement(new XtrkCadAnchor(maxNumber, anchor.ref[1], anchor.x, anchor.y));
@@ -530,7 +586,15 @@ public class XtrkCadReader {
 			System.out.println("\t\t\t" + (nTracks - nTracks2) + " padding tracks inserted");
 
 		// 3.4 Rendering curved tracks.
-			System.out.println("\t\t3.4 - Rendering curved tracks (maximum chord = " + arcChord + " pixels)");
+			// Version 1.4 - Start
+			if (enableArcRendering) {
+				System.out.println("\t\t3.4 - Rendering curved tracks (maximum chord = " + arcChord + " pixels)");
+			} else {
+				System.out.println("\t\t3.4 - Outputting curved tracks (maximum angle = 180 degrees)");
+			}
+			double step;
+			int nSteps;
+			// Version 1.4 - End
 			nTracks2 = nTracks;
 			for(i = 0; i < nTracks1; i++) {
 				XtrkCadElement track = (XtrkCadElement)tracks.get(i);
@@ -557,17 +621,24 @@ public class XtrkCadReader {
 					}
 					// Compute arc width
 					ee -= ss;
+					// Version 1.4 - Start
 					// Compute the angle corresponding to the chord
-					double step = Math.atan2(arcChord, Math.abs(track.radius)) * 180.0 / Math.PI;
-					// Compute the number of chords (make sure it's always truncated to the lowest integer)
-					int nSteps = (int) (Math.abs(ee)/step -0.5);
-					// Make sure we create at least two chords
-					if(nSteps < 1) nSteps = 1;
+					if (enableArcRendering) {
+						step = Math.atan2(arcChord, Math.abs(track.radius)) * 180.0 / Math.PI;
+						// Compute the number of chords (make sure it's always truncated to the lowest integer)
+						nSteps = (int) (Math.abs(ee)/step -0.5);
+						// Make sure we create at least two chords
+						if(nSteps < 1) nSteps = 1;
+					} else {
+						step = 180.0;
+						nSteps = (int) (Math.abs(ee)/step);
+					}
+					// Version 1.4 - End
 					// Recompute the chord angle, in order to obtain chords of equal length
 					step = ee / (double)(nSteps + 1);
 					// Convert to radiants
 					ss = ss * Math.PI / 180.0;
-					step = step * Math.PI / 180.0;
+					double stepRadiant = step * Math.PI / 180.0;
 					
 					// Take note of the first track and anchor that will be created
 					int arcAnchor0 = nAnchors;
@@ -577,48 +648,53 @@ public class XtrkCadReader {
 					double newX = anchorS.x;
 					double newY = anchorS.y;
 					
+					// Take note that the present element is a curve
+					track.isCurved = true;
+					track.arcAngle = step;
+
 					// Create intermediate anchors and connect them
 					for(int ind = 0; ind < nSteps; ind++) {
-						ss += step;
+						ss += stepRadiant;
 						maxNumber++;
 						// Create a new track with two anchors (duplicate anchors will be removed later)
 						XtrkCadElement newTrack = new XtrkCadElement();
 						newTrack.visible = track.visible;
+						newTrack.layer = track.layer;
+						newTrack.isCurved = true;
+						newTrack.arcAngle = step;
 						tracks.addElement(newTrack);
 						anchors.addElement(new XtrkCadAnchor(maxNumber, maxNumber - 1, newX, newY));
 						newX = track.xReference + track.radius * Math.cos(ss);
 						newY = track.yReference + track.radius * Math.sin(ss);
 						anchors.addElement(new XtrkCadAnchor(maxNumber, maxNumber + 1, newX, newY));
 					}
+					// Version 1.4 - Start
+					if (arcTrack0 < nTracks) {
+					// Version 1.4 - End
+						// Add a comment to the first track created (if any)
+						((XtrkCadElement)tracks.get(arcTrack0)).description = "Rendering of " + track.description;
+						// Adjust link in first anchor point of first chord created (if any)
+						((XtrkCadAnchor)anchors.get(arcAnchor0)).ref[1] = anchorS.ref[1];
+						// Move possible block gap to first anchor point of first chord
+						((XtrkCadAnchor)anchors.get(arcAnchor0)).blockGap = anchorS.blockGap;
+						anchorS.blockGap = 0;
+						// Adjust link in duplicate anchor of original track
+						AdjustAnchors(anchorS.ref[1], anchorS.ref[0], ((XtrkCadAnchor)anchors.get(arcAnchor0)).ref[0]);
+						// Adjust link in last anchor point of last chord created
+						((XtrkCadAnchor)anchors.get(nAnchors - 1)).ref[1] = anchorE.ref[0];
 					
-					// Add a comment to the first track created
-					((XtrkCadElement)tracks.get(arcTrack0)).description = "Rendering of " + track.description;
-					
-					// Adjust link in first anchor point of first chord
-					((XtrkCadAnchor)anchors.get(arcAnchor0)).ref[1] = anchorS.ref[1];
-
-					// Adjust link in duplicate anchor of original track
-					for (int ind2 = 0; ind2 < nAnchors; ind2++) {
-						XtrkCadAnchor anchor2 = (XtrkCadAnchor)anchors.get(ind2);
-						if(anchorS.ref[0] == anchor2.ref[1] && anchorS.ref[1] == anchor2.ref[0]) {
-							// Duplicate found, change link
-							anchor2.ref[1] = ((XtrkCadAnchor)anchors.get(arcAnchor0)).ref[0];
-							break;
-						}
-					}
-
-					// Adjust link in last anchor point of last chord created
-					((XtrkCadAnchor)anchors.get(nAnchors - 1)).ref[1] = anchorE.ref[0];
-					
-					// Convert the orginal track into the last chord
-					anchorS.ref[1] = maxNumber;
-					anchorS.x = newX;
-					anchorS.y = newY;
+						// Convert the orginal track into the last chord
+						anchorS.ref[1] = maxNumber;
+						anchorS.x = newX;
+						anchorS.y = newY;
+					}	// Version 1.4 
 					nCurves++;
+					
 				}
 			}			
 			System.out.println("\t\t\t" + nCurves + " curves rendered, for a total of " + (nCurves + nTracks - nTracks2) + " chords");
 			
+
 		// 3.5 Removing duplicated end points.
 			System.out.println("\t\t3.5 - Removing duplicated end points");
 			for (int ind1 = 0; ind1 < nAnchors - 1; ind1++) {
@@ -649,7 +725,8 @@ public class XtrkCadReader {
 				}
 			}
 			System.out.println("\t\t\t" + rAnchors + " duplicated end points removed");
-			
+
+ 
 		// 3.6 Assigning JMRI IDs to tracks
 			System.out.println("\t\t3.6 - Assigning JMRI IDs to tracks");
 			for(i = 0; i < nTracks; i++) {
@@ -767,6 +844,24 @@ public class XtrkCadReader {
 				}
 			}
 			
+			// Version 1.3 Start
+			// Corrected error in block boundaries detection
+			// Remove possible null-length blocks
+			for(i = 0; i < nTracks; i++) {
+					XtrkCadElement track = (XtrkCadElement)tracks.get(i);
+					if(track.nullLength) {
+						XtrkCadAnchor anchor1 = (XtrkCadAnchor)anchors.get(track.firstAnchor);
+						XtrkCadAnchor anchor2 = (XtrkCadAnchor)anchors.get(track.firstAnchor + 1);
+						if(anchor1.blockGap != 0 && anchor2.blockGap != 0) {
+							anchor1.blockGap |= anchor2.blockGap;
+							anchor2.blockGap = 0;
+							if(anchor1.duplicate >= 0) ((XtrkCadAnchor)anchors.get(anchor1.duplicate)).blockGap = anchor1.blockGap;
+							if(anchor2.duplicate >= 0) ((XtrkCadAnchor)anchors.get(anchor2.duplicate)).blockGap = 0;
+						}
+					}
+			}
+			// Version 1.3 End
+
 			// Now assign block numbers
 			if(gapMask != 0) {
 				for(i = 0; i < nTracks; i++) {
@@ -815,10 +910,14 @@ public class XtrkCadReader {
 				out.println("\t<layoutblocks class=\"jmri.jmrit.display.configurexml.LayoutBlockManagerXml\">");
 				for(i = startBlock; i < blockIdent; i++) {
 						BlockName blockName = (BlockName)blockNames.get(i - startBlock);
-						out.println("\t\t<layoutblock systemName=\"" + blockName.system + "\" userName=\"" + blockName.user + 
+		// Version 1.3 - start
+						String sensorName = "";
+						if(setBlockSensors && blockName.user.length() > 1) sensorName = "\" occupancysensor=\"S" + blockName.user.substring(1);
+						out.println("\t\t<layoutblock systemName=\"" + blockName.system + "\" userName=\"" + blockName.user + sensorName +
 					"\" occupiedsense=\"2\" trackcolor=\"black\" occupiedcolor=\"red\" />");
 				}
-				out.println("\t</layoutblocks>\n\t<blocks class=\"jmri.configurexml.BlockManagerXml\" />");
+				out.println("\t</layoutblocks>");
+		// Version 1.3 - end
 			}
 			
 			// Write LayoutEditor statement
@@ -846,7 +945,19 @@ public class XtrkCadReader {
         }
 		System.out.println("\n\t" + (new java.util.Date()).toString() + "\n\tConversion completed! Have fun!\n");
     }
-	
+		
+	public void AdjustAnchors(int ref0, int oldRef1, int newRef1){
+	// Adjust link in duplicate anchor of original track
+		for (int ind2 = 0; ind2 < nAnchors; ind2++) {
+			XtrkCadAnchor anchor2 = (XtrkCadAnchor)anchors.get(ind2);
+			if(anchor2.ref[0] == ref0 && anchor2.ref[1] == oldRef1) {
+				// Duplicate found, change link
+				anchor2.ref[1] = newRef1;
+				break;
+			}
+		}
+	}
+		
 	public static void main(String [] args){
 		// Retrieve input file name from command line
 		Parser.parse(args);
@@ -860,6 +971,7 @@ public class XtrkCadReader {
 		// Retrieve possible options from command line
 		if(optionHeight.present && optionHeight.doubleValue >= 1.0) jmriMaxHeight = optionHeight.doubleValue;
 		if(optionWidth.present && optionWidth.doubleValue >= 1.0) jmriMaxWidth = optionWidth.doubleValue;
+		if(optionArc.present) enableArcRendering = true;	// Version 1.4
 		if(optionChord.present && optionChord.doubleValue >= minChord) arcChord = optionChord.doubleValue;
 		if(optionTolerance.present) tolerance = optionTolerance.doubleValue;
 		if(optionHiddenDash.present) hiddenDash = true;
@@ -879,18 +991,19 @@ public class XtrkCadReader {
 		if(optionRBlocks.present) maxRange = optionRBlocks.doubleValue;
 		if(optionXBlocks.present) enableBlockXing = true;
 		if(optionNBlocks.present) getBlockNames = true;
-
+		if(optionSBlocks.present) setBlockSensors = true;	// Version 1.3
 		// And now do the job!
 		new XtrkCadReader();
 	}
 
+		
 // INTERNAL CLASSES
 
 	public class XtrkCadElement {
 		// Track element
 	
 		// Pointers to end point anchors
-		int firstAnchor, lastAnchor;
+		int firstAnchor, lastAnchor, layer;
 
 		int trackType;			// STRAIGHT, CURVE, etc.
 		int originalNumber;		// Progressive ID number used by XtrkCAD
@@ -905,6 +1018,10 @@ public class XtrkCadReader {
 		int	turnoutType;
 		int visible;
 		
+		// Data for curved tracks (supported since JMRI 2.7.7)
+		boolean isCurved = false;
+		double arcAngle = 0.0D;
+		
 		// Counters of straight and curved segments and paths
 		// contained in the track element
 		int iC = 0;
@@ -912,7 +1029,9 @@ public class XtrkCadReader {
 		int iP = 0;
 
 		
-		String description = "";	// XtrkCAD track description 
+		String description = "";	// XtrkCAD track description
+		
+		boolean nullLength = false;		// Indicator of null length tracks (Version 1.3)
 		
 		// Standard Constructor of XtrkCadElement class
 		// Populates fields reading them from the XtrkCAD file
@@ -926,8 +1045,8 @@ public class XtrkCadReader {
 			// Keep track of the highest ID encountered in order to avoid 
 			// creating duplicate IDs in subsequent phases
 			if(originalNumber > maxNumber) maxNumber = originalNumber;
+			layer = line.nextInt();
 			// Skip unused fields
-			line.next();
 			line.next();
 			line.next();
 			line.next();
@@ -1153,9 +1272,20 @@ public class XtrkCadReader {
 					if(!nameB.equals("")) nameB = " connectbname=\"" + nameB +"\"";
 					nameC = ((XtrkCadAnchor)anchors.get(firstAnchor+2)).getConnectedName(1);
 					if(!nameC.equals("")) nameC = " connectcname=\"" + nameC +"\"";
-					out.println("		<layoutturnout ident=\"TO" + jmriNumber + "\"" + blockString + " type=\"" + turnoutType + "\"" + nameA + nameB + nameC + 
+					// Version 1.3 -- start
+					// Get turnout name, if any
+						String turnoutName = "";
+						line = new Scanner(description);
+						while(line.hasNext()) {
+							keyword = line.next();
+							if(keyword.equals("turnoutname") && line.hasNext()) {
+								turnoutName = " turnoutname=\"" + line.next() + "\"";
+							}
+						}
+					out.println("		<layoutturnout ident=\"TO" + jmriNumber + "\"" + turnoutName + blockString + " type=\"" + turnoutType + "\"" + nameA + nameB + nameC + 
 						" continuing=\"2\" disabled=\"no\" xcen=\"" + xcen + "\" ycen=\"" + ycen + "\" xb=\"" + xb + "\" yb=\"" + yb + 
 						"\" xc=\"" + xc + "\" yc=\"" + yc + "\" class=\"jmri.jmrit.display.configurexml.LayoutTurnoutXml\" />");
+					// Version 1.3 -- end
 					break;
 				case CROSSING:
 					blockString = "";
@@ -1200,13 +1330,31 @@ public class XtrkCadReader {
 							hidden = "hidden=\"yes\" dashed=\"no\"";
 						}
 					}
+					// Version 1.4 - Start
+					String arc = "";
+					if (!enableArcRendering) {
+						// Output for JMRI versions supporting arcs
+						if (isCurved) {
+							arc = " arc=\"yes\" circle=\"yes\" ";
+							if (arcAngle < 0.0D) {
+								arc += "flip=\"yes\" angle=\"" + (-(java.lang.Math.round(arcAngle*100.)/100.)) + "\" ";
+							} else {
+								arc += "flip=\"no\" angle=\"" + (java.lang.Math.round(arcAngle*100.)/100.) + "\" ";
+							}
+						} else {
+							arc = " arc=\"no\" ";
+						}
+					}
 					// Simply connect start and end anchors
 					anchor1 = (XtrkCadAnchor)anchors.get(firstAnchor);
 					anchor2 = (XtrkCadAnchor)anchors.get(firstAnchor+1);
+					String mainLine = "no";
+					if(layer == mainLineLayer) mainLine = "yes";
 					out.println("		<tracksegment ident=\"T" + jmriNumber + "\"" + blockString + " connect1name=\"" + anchor1.getIdent() + 
 						"\" type1=\"" + anchor1.getTurnoutBranch() + "\" connect2name=\"" + anchor2.getIdent() + 
 						"\" type2=\"" + anchor2.getTurnoutBranch() + 
-						"\" mainline=\"no\" " + hidden + " class=\"jmri.jmrit.display.configurexml.TrackSegmentXml\" />");
+						"\" mainline=\"" + mainLine + "\" " + hidden + arc + " class=\"jmri.jmrit.display.configurexml.TrackSegmentXml\" />");
+					// Version 1.4 - End
 					break;
 				default:
 					out.println("		<!-- UNKNOWN item: ignored -->");
@@ -1298,7 +1446,10 @@ public class XtrkCadReader {
 					XtrkCadAnchor anchor = (XtrkCadAnchor)anchors.get(ind);
 					if(anchor.ref[1] != caller) {
 						if(Math.pow(anchor.x - x0, 2) + Math.pow(anchor.y -y0, 2) <= range2) {
-							if((anchor.blockGap & gapMask) != 0 || anchor.ref[1] == 0) return true;
+			// Version 1.3 Start
+				// Corrected error in block boundaries detection
+							if((anchor.blockGap & gapMask) != 0 || anchor.ref[1] == 0) return false;
+			// Version 1.3 End
 							return anchor.getConnectedTrack(1).checkPath(originalNumber, range2, x0, y0);
 						}
 					}
