@@ -7,6 +7,7 @@ import jmri.jmrix.sprog.SprogProgrammer;
 import jmri.jmrix.sprog.SprogProgrammerManager;
 import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 
 
@@ -23,7 +24,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {

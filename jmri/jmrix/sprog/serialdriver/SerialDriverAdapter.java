@@ -7,6 +7,7 @@ import jmri.jmrix.sprog.SprogTrafficController;
 import jmri.jmrix.sprog.SprogProgrammer;
 import jmri.jmrix.sprog.SprogProgrammerManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,8 +25,7 @@ import gnu.io.SerialPort;
  * an Sprog command station via a serial com port.
  * Also used for the USB SPROG, which appears to the computer as a
  * serial port.
- * Normally controlled by the SerialDriverFrame class.
- * <P>
+  * <P>
  * The current implementation only handles the 9,600 baud rate, and does
  * not use any other options at configuration time.
  * 
@@ -33,7 +33,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class SerialDriverAdapter extends AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -149,7 +149,7 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
      	return null;
     }
 
-    public boolean status() {return opened;}
+    //public boolean status() {return opened;}
 
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
@@ -158,35 +158,13 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
         return new String[]{"9,600 bps","19,200 bps"};
     }
 
-    /**
-     * Since option 1 is not used for this, return an array with just a single string
-     */
-    public String[] validOption1() { return new String[]{""}; }
-
-    /**
-     * Option 1 not used, so return a null string.
-     */
-    public String option1Name() { return ""; }
-
-    
-    
-    /**
-     * Get an array of valid values for "option 2"; used to display valid options.
-     * May not be null, but may have zero entries
-     */
-    public String[] validOption2() { return new String[]{""}; }
-
-    /**
-     * Get a String that says what Option 2 represents
-     * May be an empty string, but will not be null
-     */
-    public String option2Name() { return ""; }
-
-    private boolean opened = false;
     InputStream serialStream = null;
     
 	static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null){
+            mInstance = new SerialDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+        }
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
@@ -197,10 +175,17 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
      */
     public void configure() {
         // connect to the traffic controller
-        SprogTrafficController.instance().connectPort(this);
-
+        //SprogTrafficController.instance().connectPort(this);
+        SprogTrafficController control = SprogTrafficController.instance();
+        control.connectPort(this);
+        
+        SprogSystemConnectionMemo memo 
+            = new SprogSystemConnectionMemo(control, SprogMode.SERVICE);
+        
+        memo.configureCommandStation();
+        memo.configureManagers();
 //        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
-        jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.SERVICE));
+        /*jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.SERVICE));
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
 
@@ -208,17 +193,13 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
 
         jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
 
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
+        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
+
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());*/
 
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
     }
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.SPROG;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-    
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 

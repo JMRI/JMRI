@@ -12,12 +12,12 @@ import javax.swing.JMenu;
  * Create a "Systems" menu containing the Jmri SPROG-specific tools
  *
  * @author	Andrew Crosland   Copyright 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SPROGCSMenu extends JMenu {
-    public SPROGCSMenu(String name) {
+    public SPROGCSMenu(SprogSystemConnectionMemo memo) {
         this();
-        setText(name);
+        setText(memo.getUserName());
     }
 
     public SPROGCSMenu() {
