@@ -16,8 +16,6 @@ import java.awt.Color;
 import java.util.Vector;
 
 import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -25,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 
 //
@@ -48,19 +46,19 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         adapter = null;
     }
 
-    boolean init = false;
-
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.setPort((String)portBox.getSelectedItem());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
             }
         });
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) portBox.getSelectedItem());
             }
         });
         opt1Box.addActionListener(new ActionListener() {
@@ -111,30 +109,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
         init = true;
     }
-
+    jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     protected JComboBox portBox = new JComboBox();
     protected JLabel portBoxLabel;
     protected JComboBox baudBox = new JComboBox();
     protected JLabel baudBoxLabel;
-    protected JComboBox opt1Box = new JComboBox();
-    protected JLabel opt1BoxLabel = new JLabel();
-    
-    protected JComboBox opt2Box = new JComboBox();
-
-    protected JLabel opt2BoxLabel = new JLabel();
-    protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-    protected String[] opt1List;
-    protected String[] opt2List;
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
-    protected JPanel _details;
-
-    protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
-    protected JLabel connectionNameLabel = new JLabel("Connection Name");
-    protected JTextField systemPrefixField = new JTextField();
-    protected JTextField connectionNameField = new JTextField();
-    protected String systemPrefix;
-    protected String connectionName;
 
     /**
      * Load the adapter with an appropriate object
@@ -147,11 +128,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (t!=null) return t;
         else return JmrixConfigPane.NONE;
     }
-
-    static java.util.ResourceBundle rb = 
-        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-    protected int NUMOPTIONS = 2;
-    
+   
 	public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
@@ -246,13 +223,25 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         
         String portName = adapter.getCurrentPortName();
         if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
-        	// portBox must contain portName even if it doesn't exist
-        	if(!v.contains(portName))
-        		portBox.insertItemAt(portName, 0);
-        	portBox.setSelectedItem(portName);
+            // portBox must contain portName even if it doesn't exist
+            if(!v.contains(portName))
+                portBox.insertItemAt(portName, 0);
+            portBox.setSelectedItem(portName);
         } else {
-            portBox.insertItemAt(rb.getString("noneSelected"),0);
-            portBox.setSelectedIndex(0);
+            if (p.getComboBoxLastSelection(adapter.getClass().getName()+".port")!=null){
+                portName = p.getComboBoxLastSelection(adapter.getClass().getName()+".port");
+                if(v.contains(portName)){
+                    portBox.setSelectedItem(portName);
+                    adapter.setPort(portName);
+                }
+                else{
+                    portBox.insertItemAt(rb.getString("noneSelected"),0);
+                    portBox.setSelectedIndex(0);
+                }
+            } else {
+                    portBox.insertItemAt(rb.getString("noneSelected"),0);
+                    portBox.setSelectedIndex(0);                                    
+            }
         }
         baudBoxLabel = new JLabel("Baud rate:");
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());        

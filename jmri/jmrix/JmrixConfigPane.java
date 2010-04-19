@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.71 $
+ * @version	$Revision: 1.72 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -47,11 +47,12 @@ public class JmrixConfigPane extends JPanel {
         JmrixConfigPane retval = configPaneTable.get(new Integer(index));
         if (retval != null) return retval;
         Object c = InstanceManager.configureManagerInstance()
-                                .findInstance(ConnectionConfig.class, index);
+                                .findInstance(ConnectionConfig.class, 0);
         log.debug("findInstance returned "+c);
         retval = new JmrixConfigPane((ConnectionConfig)c);
         configPaneTable.put(new Integer(index), retval);
-        
+        InstanceManager.configureManagerInstance().registerPref(retval);
+        InstanceManager.configureManagerInstance().deregister(c);
         return retval;
     }
     
@@ -63,13 +64,11 @@ public class JmrixConfigPane extends JPanel {
             log.debug("no instance found therefore can not dispose of it!");
             return;
         }
-        Object c = InstanceManager.configureManagerInstance()
-                                .findInstance(ConnectionConfig.class, index);
-        if (c!=null) {
-            ConnectionConfig co = (ConnectionConfig) c;
-            co.dispose();
+
+        if (retval.ccCurrent!=null) {
+            retval.ccCurrent.dispose();
         }
-        InstanceManager.configureManagerInstance().deregister(c);
+
         InstanceManager.configureManagerInstance().deregister(retval);
         configPaneTable.remove(new Integer(index));
     }
@@ -102,6 +101,8 @@ public class JmrixConfigPane extends JPanel {
     String[] classConnectionNameList;
     ConnectionConfig[] classConnectionList;
     String[] manufactureNameList;
+
+    jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 
     ConnectionConfig ccCurrent = null;
     /**
@@ -161,7 +162,9 @@ public class JmrixConfigPane extends JPanel {
                         modeBox.setSelectedItem(config.name());
                         if (classConnectionNameList.length==1){
                             modeBox.setSelectedIndex(1);
-                        }
+                        } /*else if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem())!=null){
+                            modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
+                        }*/
                     } else {
                         Class<?> cl = Class.forName(classConnectionNameList[i]);
                         config = (ConnectionConfig)cl.newInstance();
@@ -176,10 +179,18 @@ public class JmrixConfigPane extends JPanel {
                     log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                 }
             }
+            if ((modeBox.getSelectedIndex()==0) && (p.getComboBoxLastSelection((String) manuBox.getSelectedItem())!=null)){
+                modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
+            }
         }
         modeBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
+                if ((String) modeBox.getSelectedItem()!=null){
+                    if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED))
+                        p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
+                }
                 selection();
+                
             }
         });
         JPanel manufacturerPanel = new JPanel();
@@ -230,6 +241,9 @@ public class JmrixConfigPane extends JPanel {
                 } catch (Exception e) {
                     log.debug("Attempt to load "+classConnectionNameList[i]+" failed: "+e);
                 }
+            }
+            if (p.getComboBoxLastSelection((String) manuBox.getSelectedItem())!=null){
+                modeBox.setSelectedItem(p.getComboBoxLastSelection((String) manuBox.getSelectedItem()));
             }
         } else {
             if(ccCurrent!=null){
@@ -294,4 +308,3 @@ public class JmrixConfigPane extends JPanel {
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
 }
-
