@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.5 2008-07-13 14:42:57 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.6 2010-04-19 05:50:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -52,7 +52,7 @@ that represents your trackwork.
 
 <p>
 XTrkCadRead can be downloaded via 
-<a href="http://downloads.sourceforge.net/jmri/XtrkCadReader1v2.zip">this link</a>.
+<a href="https://sourceforge.net/projects/jmri/files/support%20files/XtrkCadReader2v0.zip/download">this link</a>.
 
 <p>
 A manual describing how to run XTrkCadReader, including the options
