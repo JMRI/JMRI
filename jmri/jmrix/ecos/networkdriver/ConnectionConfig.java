@@ -2,7 +2,7 @@
 
 package jmri.jmrix.ecos.networkdriver;
 
-import javax.swing.*;
+//import javax.swing.*;
 
 import jmri.jmrix.JmrixConfigPane;
 
@@ -11,21 +11,16 @@ import jmri.jmrix.JmrixConfigPane;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
-    public ConnectionConfig(String h, String p, String m, String manu){
-        super();
-        hostName = h;
-        portNumber = p;
-        mode = m;
-        if (manufacturerName!=null)
-            manufacturerName=manu;
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
+        super(p);
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
@@ -33,50 +28,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public ConnectionConfig() {
         super();
     }
-
-    public JTextField host;
-    String hostName ="";
-    public JTextField port;
-    String portNumber ="15471";
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.ESU;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
-    String mode = "";
     
     public String name() { return "ECOS via network"; }
-
-    public void loadDetails(JPanel details) {
-        JPanel temp = new JPanel();
-        details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
-        temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
-        temp.add(new JLabel("Server hostname:"));
-        host = new JTextField(hostName);
-        temp.add(host);
-        details.add(temp);
-        temp = new JPanel();
-        temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
-        temp.add(new JLabel("Port number:"));
-        port = new JTextField(portNumber);
-        temp.add(port);
-        details.add(temp);
-
-        if (adapter == null) adapter = NetworkDriverAdapter.instance();
-        String[] opt2List = adapter.validOption2();
-        opt2Box.removeAllItems();
-        for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
-        temp = new JPanel();
-        temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
-        if (opt2List.length>1) {
-            temp.add(new JLabel(adapter.option2Name()));
-            temp.add(opt2Box);
-            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
-            if (! mode.equals("")) opt2Box.setSelectedItem(mode);
-        }
-        details.add(temp);
-    }
 
     /**
      * Access to current selected command station mode
@@ -91,13 +44,13 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
      * @return human-readable connection information
      */
     public String getInfo() {
-        String t = host.getText();
+        String t = adapter.getHostName();
         if (t != null && !t.equals("")) return t;
         else return JmrixConfigPane.NONE;
     }
+
     protected void setInstance() {
-        log.error("Unexpected call to setInstance");
-        new Exception().printStackTrace();
+        adapter = NetworkDriverAdapter.instance();
     }
     
 }

@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos.networkdriver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
 import jmri.jmrix.ecos.networkdriver.NetworkDriverAdapter;
 import jmri.jmrix.ecos.EcosPreferences;
@@ -23,31 +23,18 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
-
-    public ConnectionConfigXml() {
-        super();
-    }
+public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     protected void getInstance() {
-        log.error("unexpected call to getInstance");
-        new Exception().printStackTrace();
+        adapter = NetworkDriverAdapter.instance();
     }
-
-    public Element store(Object o) {
-        ConnectionConfig c = (ConnectionConfig)o;
-        Element e = new Element("connection");
-        e.setAttribute("manufacturer", c.getManufacturer());
-        e.setAttribute("port", c.host.getText());
-        e.setAttribute("option1", c.port.getText());
-        e.setAttribute("option2", c.getMode());
-        
+    
+    protected void extendedElement(Element e){
         Element ecosPrefElem = new Element("commandStationPreferences");
-        //EcosPreferences p = (EcosPreferences)jmri.InstanceManager.getDefault(EcosPreferences.class);
         EcosPreferences p = EcosPreferences.instance();
-        //Element e = new Element("ECOSPreferences");
+
         if(p.getAddTurnoutsToEcos()==0x01) ecosPrefElem.setAttribute("addTurnoutToCS", "no");
         else if(p.getAddTurnoutsToEcos()==0x02) ecosPrefElem.setAttribute("addTurnoutToCS", "yes");
         
@@ -86,63 +73,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 ecosPrefElem.setAttribute("defaultCSLocoDescription",p.getEcosLocoDescription());
         }
         e.addContent(ecosPrefElem);
-        e.setAttribute("class", this.getClass().getName());
-
-        return e;
+    
     }
-    /**
-     * Port name carries the hostname for the network connection
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
+    
     @SuppressWarnings("unchecked")
-    public boolean load(Element e) {
-    	boolean result = true;
-        // configure port name
-        String hostName = e.getAttribute("port").getValue();
-        String portNumber = e.getAttribute("option1").getValue();
-        String mode = "";
-        if (e.getAttribute("option2") != null) {
-            mode = e.getAttribute("option2").getValue();
-        }
-        
-        // notify
-        JFrame f = new JFrame("ECOS network connection");
-        f.getContentPane().add(new JLabel("Connecting to "+hostName+":"+portNumber));
-        f.pack();
-        f.setVisible(true);
-
-        // slightly different, as not based on a serial port...
-        // create the adapter
-        NetworkDriverAdapter client = new NetworkDriverAdapter();
-        
-        // load configuration
-        client.configureOption2(mode);
-        client.setHostName(hostName);
-
-        // start the connection
-        try {
-            client.connect(hostName, Integer.parseInt(portNumber));
-        } catch (Exception ex) {
-            log.error("Error opening connection to "+hostName+" was: "+ex);
-            result = false;
-        }
-        
-        String manufacturer = null;
-        try { 
-            manufacturer = e.getAttribute("manufacturer").getValue();
-        } catch ( NullPointerException ex) { //Considered normal if not present
-        }
-
-        // configure the other instance objects
-        client.configure();
-
-        f.setVisible(false);
-        f.dispose();
-
-        // register, so can be picked up
-        register(hostName, portNumber, mode, manufacturer);
-        
+    protected void unpackElement(Element e) {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
         EcosPreferences p = EcosPreferences.instance();
         for (int i=0; i<ecosPref.size();i++){
@@ -237,16 +172,11 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
             
             p.resetChangeMade();
          }
-        return result;
+    
     }
 
     protected void register() {
-        log.error("unexpected call to register()");
-        new Exception().printStackTrace();
-    }
-    protected void register(String host, String port, String mode, String manufacturer) {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode, manufacturer));
-        //InstanceManager.configureManagerInstance().registerPref(new jmri.jmrix.ecos.EcosPreferences());
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
     
     // initialize logging
