@@ -14,7 +14,7 @@ import org.jdom.Element;
  * roster.Roster class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -54,6 +54,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             if (log.isDebugEnabled()) log.debug("set roster location (1): "+element.getAttribute("directory").getValue());
         }
         if (element.getAttribute("ownerDefault")!=null) RosterEntry.setDefaultOwner(element.getAttribute("ownerDefault").getValue());
+        jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.roster.RosterConfigPane());
         return result;
     }
 
@@ -66,6 +67,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (log.isDebugEnabled()) log.debug("set roster location (2): "+element.getAttribute("directory").getValue());
         if (element.getAttribute("directory")!=null)
             Roster.setFileLocation(element.getAttribute("directory").getValue());
+        jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.roster.RosterConfigPane());
     }
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterConfigPaneXml.class.getName());

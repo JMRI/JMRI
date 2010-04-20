@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.37 $
+ * @version	$Revision: 1.38 $
  */
 public class AppConfigPanel extends AppConfigBase {
 
@@ -181,6 +181,7 @@ public class AppConfigPanel extends AppConfigBase {
         super.add(c);
         return c;
     }
+
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppConfigPanel.class.getName());

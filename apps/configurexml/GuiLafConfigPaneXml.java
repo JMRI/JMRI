@@ -18,7 +18,7 @@ import org.jdom.Element;
  * and the default Locale.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see jmri.GuiLafConfigPane
  * @since 2.9.5
  */
@@ -88,7 +88,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute clickAttr = e.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null)
             jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
-               
+        jmri.InstanceManager.configureManagerInstance().registerPref(new GuiLafConfigPane());
         return result;
     }
 

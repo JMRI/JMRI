@@ -21,7 +21,7 @@ import org.jdom.Element;
  * CombinedLocoSelPane object.  It is <b>not</b> known why this works!
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -59,11 +59,13 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
 		new  jmri.jmrit.symbolicprog.CombinedLocoSelPane();
 
         Attribute a;
-        if (null != (a = element.getAttribute("showEmptyPanes")))
+        if (null != (a = element.getAttribute("showEmptyPanes"))){
             if ( a.getValue().equals("no"))
                 PaneProgFrame.setShowEmptyPanes(false);
             else
                 PaneProgFrame.setShowEmptyPanes(true);
+        }
+        jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true));
         return result;
     }
 

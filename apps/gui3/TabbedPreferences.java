@@ -7,7 +7,6 @@ import apps.GuiLafConfigPane;
 
 import jmri.jmrix.JmrixConfigPane;
 
-import javax.swing.plaf.basic.BasicButtonUI;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ChangeListener;
@@ -24,7 +23,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
