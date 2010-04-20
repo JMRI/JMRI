@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.57 2010-04-18 16:29:53 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.58 2010-04-20 02:51:18 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -166,6 +166,9 @@ that more cars are moved within a given train. Aggressive also tends to
 deliver cars to all of the available sidings. The smaller the siding,
 yard, or interchange the more likely that the program will assign cars
 to that track.
+<P>
+Note that once you've built a train, the build option can not be changed until
+all trains are terminated or reset. 
 
 <H3>Add Operations Menu to Main Menu</H3>
 
