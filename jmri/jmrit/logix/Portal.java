@@ -24,9 +24,11 @@ public class Portal  {
     private ArrayList <OPath> _fromPaths = new ArrayList <OPath>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
+    private long    _fromSignalDelay;
     private ArrayList <OPath> _toPaths = new ArrayList <OPath>();
     private OBlock _toBlock;
-    private NamedBean _toSignal;
+    private NamedBean _toSignal;          // may be either SignalHead or SignalMast
+    private long    _toSignalDelay;
     private String _portalName;
     /*
     public Portal(String name) {
@@ -40,13 +42,6 @@ public class Portal  {
         if (_toBlock!=null) _toBlock.addPortal(this);
         //if (log.isDebugEnabled()) log.debug("Ctor: name= "+_portalName+", fromBlock= "+
         //           getFromBlockName()+", toBlock= "+getToBlockName()); 
-    }
-
-    public Portal(String fromSig, OBlock fromBlock, String portalName, 
-                  OBlock toBlock, String toSig) {
-        this(fromBlock, portalName, toBlock);
-        setFromSignal(fromSig);
-        setToSignal(toSig);
     }
 
     /**
@@ -156,7 +151,7 @@ public class Portal  {
         } else if (!verify(_toPaths, block)) {
             return false;
         }
-        log.debug("setToBlock: oldBlock= \""+getToBlockName()
+        if (log.isDebugEnabled()) log.debug("setToBlock: oldBlock= \""+getToBlockName()
                   +"\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
         if (_toBlock!=null) { _toBlock.removePortal(this); }
         _toBlock = block;
@@ -184,7 +179,7 @@ public class Portal  {
         if (!verify(_fromPaths, block)) {
             return false;
         }
-        log.debug("setFromBlock: oldBlock= \""+getFromBlockName()+
+        if (log.isDebugEnabled()) log.debug("setFromBlock: oldBlock= \""+getFromBlockName()+
                   "\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
         if (_fromBlock!=null) { _fromBlock.removePortal(this); }
         _fromBlock = block;
@@ -195,22 +190,64 @@ public class Portal  {
     public String getFromBlockName() { return (_fromBlock!=null ? _fromBlock.getDisplayName() : null);  }
     public List <OPath> getFromPaths() { return _fromPaths;  }
 
-    public NamedBean getFromSignal() {  return _fromSignal; }
-    public String getFromSignalName() {  return (_fromSignal!=null ? _fromSignal.getDisplayName() : null);  }
-    public boolean setFromSignal(String name) {
-        _fromSignal = getSignal(name);
-        return (_fromSignal != null);
+    public boolean setProtectSignal(NamedBean signal, long time, OBlock protectedBlock) {
+        if (protectedBlock==null) return false;
+        if (_fromBlock.equals(protectedBlock)) {
+            _toSignal = signal;
+            _toSignalDelay = time;
+            //log.debug("setSignal: _toSignal= \""+name+", protectedBlock= "+protectedBlock);
+        }
+        if (_toBlock.equals(protectedBlock)) {
+            _fromSignal = signal;
+            _fromSignalDelay = time;
+            //log.debug("setSignal: _fromSignal= \""+name+", protectedBlock= "+protectedBlock);
+        }
+        return true;
     }
-    public NamedBean getToSignal() { return _toSignal; }
-    public String getToSignalName() { return (_toSignal!=null ? _toSignal.getDisplayName() : null);  }
-    public boolean setToSignal(String name) {
-        _toSignal = getSignal(name);
-        return (_toSignal != null);
+    public boolean setApproachSignal(NamedBean signal, long time, OBlock approachBlock) {
+        if (approachBlock==null) return false;
+        if (_fromBlock.equals(approachBlock)) {
+            _fromSignal = signal;
+            _fromSignalDelay = time;
+            //log.debug("setSignal: _toSignal= \""+name+", approachBlock= "+approachBlock);
+        }
+        if (_toBlock.equals(approachBlock)) {
+            _toSignal = signal;
+            _toSignalDelay = time;
+            //log.debug("setSignal: _fromSignal= \""+name+", approachBlock= "+approachBlock);
+        }
+        return true;
     }
-    private NamedBean getSignal(String name) {
-        NamedBean signal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
+    public NamedBean getFromSignal() {
+        return _fromSignal;
+    }
+    public String getFromSignalName() {
+        return (_fromSignal!=null ? _fromSignal.getDisplayName() : null);
+    }
+    public long getFromSignalDelay() {
+        return _fromSignalDelay;
+    }
+    public NamedBean getToSignal() {
+        return _toSignal;
+    }
+    public String getToSignalName() {
+        return (_toSignal!=null ? _toSignal.getDisplayName() : null); 
+    }
+    public long getToSignalDelay() {
+        return _toSignalDelay;
+    }
+    public void deleteSignal(NamedBean signal) {
+        if (signal.equals(_toSignal)) {
+            _toSignal = null;
+        } else if (signal.equals(_fromSignal)) {
+            _fromSignal = null;
+        }
+    }
+
+    static public NamedBean getSignal(String name) {
+        NamedBean signal = InstanceManager.signalMastManagerInstance().getSignalMast(name);
         if (signal==null) {
-            signal = InstanceManager.signalMastManagerInstance().getSignalMast(name);
+            signal = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
         }
         return signal;
     }

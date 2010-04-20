@@ -105,6 +105,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal!=null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
+            fromElem.setAttribute("signalDelay", ""+portal.getFromSignalDelay());
             elem.addContent(fromElem);
         }
         block = portal.getToBlock();
@@ -124,6 +125,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal!=null) {
             Element toElem = new Element("toSignal");
             toElem.setAttribute("signalName", signal.getSystemName());
+            toElem.setAttribute("signalDelay", ""+portal.getToSignalDelay());
             elem.addContent(toElem);
         }
         return elem;
@@ -328,10 +330,11 @@ public class OBlockManagerXml // extends XmlFile
         
         List<Element> eBlocks = elem.getChildren("fromBlock");
         if (eBlocks.size()>1) log.error("More than one fromBlock present: "+eBlocks.size());
+        String fromBlockName = null;
         if (eBlocks.size()>0) {
             Element eBlk = eBlocks.get(0); 
-            String blockName = eBlk.getAttribute("blockName").getValue();
-            fromBlock = getBlock(blockName);
+            fromBlockName = eBlk.getAttribute("blockName").getValue();
+            fromBlock = getBlock(fromBlockName);
             List<Element> ePaths = eBlk.getChildren("path");
             for (int i=0; i<ePaths.size(); i++) {
                 Element e = ePaths.get(i);
@@ -351,10 +354,11 @@ public class OBlockManagerXml // extends XmlFile
         }
         eBlocks = elem.getChildren("toBlock");
         if (eBlocks.size()>1) log.error("More than one toBlock present: "+eBlocks.size());
+        String toBlockName = null;
         if (eBlocks.size()>0) {
             Element eBlk = eBlocks.get(0); 
-            String blockName = eBlk.getAttribute("blockName").getValue();
-            toBlock = getBlock(blockName);
+            toBlockName = eBlk.getAttribute("blockName").getValue();
+            toBlock = getBlock(toBlockName);
             List<Element> ePaths = eBlk.getChildren("path");
             for (int i=0; i<ePaths.size(); i++) {
                 Element e = ePaths.get(i);
@@ -394,14 +398,34 @@ public class OBlockManagerXml // extends XmlFile
         List<Element> eSignals = elem.getChildren("fromSignal");
         if (eSignals.size()>1) log.error("More than one fromSignal present: "+eSignals.size());
         if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0); 
-            portal.setFromSignal(eSig.getAttribute("signalName").getValue());
+            Element eSig = eSignals.get(0);
+            String name = eSig.getAttribute("signalName").getValue();
+            long time = 0;
+            try {
+                Attribute attr = eSig.getAttribute("signalDelay");
+                if (attr != null){
+                    time = attr.getLongValue();
+                }
+            } catch (org.jdom.DataConversionException e) {
+                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+portalName+")");
+            }
+            portal.setProtectSignal(Portal.getSignal(name), time, toBlock);
         }
         eSignals = elem.getChildren("toSignal");
         if (eSignals.size()>1) log.error("More than one toSignal present: "+eSignals.size());
         if (eSignals.size()>0) {
-            Element eSig = eSignals.get(0); 
-            portal.setToSignal(eSig.getAttribute("signalName").getValue());
+            Element eSig = eSignals.get(0);
+            String name = eSig.getAttribute("signalName").getValue();
+            long time = 0;
+            try {
+                Attribute attr = eSig.getAttribute("signalDelay");
+                if (attr != null){
+                    time = attr.getLongValue();
+                }
+            } catch (org.jdom.DataConversionException e) {
+                log.error("Could not parse signalDelay for signal ("+name+") in portal ("+portalName+")");
+            }
+            portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
         }
         if (log.isDebugEnabled()) log.debug("Load portal "+portalName);
         return portal;
