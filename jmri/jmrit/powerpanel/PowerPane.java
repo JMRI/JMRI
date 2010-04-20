@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Pane for power control
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2010
- * @version	    $Revision: 1.9 $
+ * @version	    $Revision: 1.10 $
  */
 public class PowerPane extends jmri.util.swing.JmriPanel 
             implements java.beans.PropertyChangeListener {
@@ -128,6 +128,7 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent ev) {
+        log.debug("PropertyChange received ");
         try {
             if (listening.getPower()==PowerManager.ON) onOffStatus.setText(res.getString("StatusOn"));
             else if (listening.getPower()==PowerManager.OFF) onOffStatus.setText(res.getString("StatusOff"));
