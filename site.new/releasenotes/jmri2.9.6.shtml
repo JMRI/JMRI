@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.8 2010-04-19 20:01:45 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.9 2010-04-20 15:23:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -200,6 +200,11 @@ The main changes are:
 
 <p>
 Kevin Dickerson updated the port interface structure to improve its structure and error handling.
+
+<p>
+Dan Boudreau added a new operations check:
+Build option should not be changed once trains have been built;  
+Added error message and prevent user from making the change if there are built trains.
 
 <!--#include virtual="/Footer" -->
 
