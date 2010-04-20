@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -284,6 +284,20 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (train.getCabooseRoad().equals(oldRoad))
 				train.setCabooseRoad(newRoad);
 		}
+	}
+	
+	/**
+	 * 
+	 * @return true if there are any trains built
+	 */
+	public boolean getAnyTrainBuilt(){
+		List<String> trains = getTrainsByIdList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = getTrainById(trains.get(i));
+			if (train.getBuilt())
+				return true;
+		}
+		return false;
 	}
 
    /**

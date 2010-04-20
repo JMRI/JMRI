@@ -26,13 +26,14 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.trains.TrainManager;
 
 
 /**
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -290,6 +291,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addButtonAction(saveButton);
 		addCheckBoxAction(eastCheckBox);
 		addCheckBoxAction(northCheckBox);
+		addRadioButtonAction(buildNormal);
+		addRadioButtonAction(buildAggressive);
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -446,6 +449,17 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		}
 		setDirectionCheckBox(direction);
 		packFrame();
+	}
+	
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae){
+		log.debug("radio button selected");
+		// can't change the build option if there are trains built
+		if (TrainManager.instance().getAnyTrainBuilt()){
+			setBuildOption();	// restore the correct setting
+			JOptionPane.showMessageDialog(this, rb.getString("CanNotChangeBuild"),
+					rb.getString("MustTerminateOrReset"),
+					JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	private void setScale(){
