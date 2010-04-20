@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.6 2010-04-19 05:50:20 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.7 2010-04-20 15:25:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -71,9 +71,8 @@ licensing terms, kindly refer to
 
 The code for XTrkCadReader is available in the 
 <a href="http://jmri.sourceforge.net/help/en/html/doc/Technical/getcode.shtml">JMRI CVS Repository</a>.  You can 
-<a href="http://jmri.cvs.sourceforge.net/jmri/XTrkCadReader">look at it in your web browser</a> or 
-directly 
-<a href="http://downloads.sourceforge.net/jmri/XtrkCadReaderSource1v1.zip">download a copy</a>. 
+also
+<a href="http://jmri.cvs.sourceforge.net/jmri/XTrkCadReader">look at it in your web browser</a>.
 <P>
 If you'd like a complete copy from CVS, for example to modify or improve it,
 you can check it out from CVS using the commands:
