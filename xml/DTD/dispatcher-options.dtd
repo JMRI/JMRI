@@ -1,5 +1,5 @@
 <!-- Defines XML for Dispatcher options information -->
-<!-- $Id: dispatcher-options.dtd,v 1.4 2010-01-04 19:11:44 djduchamp Exp $ -->
+<!-- $Id: dispatcher-options.dtd,v 1.5 2010-04-21 12:24:57 djduchamp Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001-2010.                         -->
 <!--                                                                        -->
@@ -29,4 +29,5 @@
     <!ATTLIST options extracolorforallocated  CDATA #REQUIRED>
     <!ATTLIST options nameinallocatedblock    CDATA #REQUIRED>
     <!ATTLIST options layoutscale             CDATA #REQUIRED>
+    <!ATTLIST options usescalemeters          CDATA #REQUIRED>
 
