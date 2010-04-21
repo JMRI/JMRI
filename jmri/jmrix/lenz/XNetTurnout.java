@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.24 $
+ * @version			$Revision: 2.25 $
  */
 
 package jmri.jmrix.lenz;
@@ -502,21 +502,29 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     /* Send an "Off" message to the decoder for this output  */
     protected synchronized void sendOffMessage() {
             // We need to tell the turnout to shut off the output.
-	    if(log.isDebugEnabled()) log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
+	    if(log.isDebugEnabled()) {
+                log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
+                log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " +java.lang.Thread.currentThread().getName());
+            }
             XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   getCommandedState()==_mClosed,
                                                   getCommandedState()==_mThrown,
                                                   false ); 
 	    // Set the known state to the commanded state.
             synchronized(this) {
-               try{
+               //try{
                    // To avoid some of the command station busy 
                    // messages, add a short delay before sending the 
                    // first off message.  
-                   if(InternalState != OFFSENT) wait(30);
-               } catch(java.lang.InterruptedException ie) {
-                   log.debug("wait interrupted");
-               }
+                   if(InternalState != OFFSENT) {
+                        new java.util.Timer().schedule(new offTask(this),30);
+                        newKnownState(getCommandedState());
+                        InternalState = OFFSENT;
+                        return;
+                   };
+               //} catch(java.lang.InterruptedException ie) {
+               //    log.debug("wait interrupted");
+               //}
 	       newKnownState(getCommandedState());
 	       InternalState = OFFSENT;
             }
@@ -525,7 +533,27 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     }
 
 
-
+    class offTask extends java.util.TimerTask{
+        XNetTurnout t;
+        public offTask(XNetTurnout turnout){
+           super();
+           t=turnout;
+        }
+        public void run() {
+            // We need to tell the turnout to shut off the output.
+	    if(log.isDebugEnabled()) {
+                log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
+                log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " +java.lang.Thread.currentThread().getName());
+            }
+            // Generate the message
+            XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
+                                                  getCommandedState()==_mClosed,
+                                                  getCommandedState()==_mThrown,
+                                                  false ); 
+            // Then send the message.
+            XNetTrafficController.instance().sendXNetMessage(msg, t);
+        }
+    }
 
      /*
       * parse the feedback message, and set the status of the turnout 
