@@ -9,8 +9,6 @@ import java.util.Vector;
 
 import java.util.LinkedList;
 
-import java.util.concurrent.LinkedBlockingQueue;
-
 /**
  * Abstract base for TrafficControllers in a Message/Reply protocol.
  * <P>
@@ -19,11 +17,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * the mode.  The "Receive" thread converts characters from the input
  * stream into replies.
  * <P>
- * A third thread is used to forward sent messages to listeners other 
- * than the sender, and to forward received messages to all message 
- * listeners.
- * <P>
- * A forth thread is registered by the constructor as a shutdown hook.  
+ * A third thread is registered by the constructor as a shutdown hook.  
  * It triggers the necessary cleanup code
  * <P>
  * "Mode" refers to the state of the command station communications.<br>
@@ -34,11 +28,9 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.80 $
+ * @version         $Revision: 1.81 $
  */
 abstract public class AbstractMRTrafficController {
-
-    protected LinkedBlockingQueue<Runnable> ForwardQueue=null;
     
     public AbstractMRTrafficController() {
         if (log.isDebugEnabled()) log.debug("setting instance: "+this);
@@ -47,7 +39,6 @@ abstract public class AbstractMRTrafficController {
         allowUnexpectedReply=false;
         setInstance();
         selfLock = this;
-        ForwardQueue= new LinkedBlockingQueue<Runnable>();
         jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
     }
     
@@ -498,15 +489,9 @@ abstract public class AbstractMRTrafficController {
         
         // forward the message to the registered recipients,
         // which includes the communications monitor, except the sender.
-        // Schedule notification via the ForwardQueue to ensure order
+        // Schedule notification via the Swing event queue to ensure order
         Runnable r = new XmtNotifier(m, mLastSender, this);
-        try {
-          ForwardQueue.put(r);
-        } catch( java.lang.InterruptedException ie){
-          log.error("Error while adding transmit message to forwarding queue");
-        } catch( java.lang.NullPointerException npe){
-          log.error("Error while adding transmit message to forwarding queue");
-        }
+        javax.swing.SwingUtilities.invokeLater(r);
 
         // stream to port in single write, as that's needed by serial
         byte msg[] = new byte[lengthOfByteStream(m)];
@@ -579,8 +564,7 @@ abstract public class AbstractMRTrafficController {
     Thread xmtThread = null;
     protected Runnable xmtRunnable = null;
     Thread rcvThread = null;
-    Thread fwdThread = null;
-
+    
     /**
      * Make connection to existing PortController object.
      */
@@ -594,8 +578,6 @@ abstract public class AbstractMRTrafficController {
                 log.debug("connectPort invoked");
             controller = p;
             // and start threads
-            fwdThread = new Thread(new ForwardNotifier());
-            fwdThread.start();
             xmtThread = new Thread(xmtRunnable = new Runnable() {
                     public void run() { 
                                         try {
@@ -789,12 +771,12 @@ abstract public class AbstractMRTrafficController {
 
         // forward the message to the registered recipients,
         // which includes the communications monitor
-        // return a notification via the ForwardQueue to ensure proper order
+        // return a notification via the Swing event queue to ensure proper thread
         Runnable r = new RcvNotifier(msg, mLastSender, this);
         try {
-            ForwardQueue.put(r);
+            javax.swing.SwingUtilities.invokeAndWait(r);
         } catch (Exception e) {
-            log.error("Unexpected exception queueing message:" +e);
+            log.error("Unexpected exception in invokeAndWait:" +e);
             e.printStackTrace();
         }
         if (log.isDebugEnabled()) log.debug("dispatch thread invoked"); 
@@ -949,32 +931,6 @@ abstract public class AbstractMRTrafficController {
             mTC.notifyMessage(mMsg, mDest);
         }
     }  // end XmtNotifier
-
-    /**
-     * Internal class to handle forwarding messages added to the ForwardQueue
-     * to the listeners.  This uses RcvNotifier and XmtNotifier
-     */
-    protected class ForwardNotifier implements Runnable {
-              public ForwardNotifier()
-              {
-                 super();
-              }
-
-              public void run(){
-                   Runnable r;
-                   Thread t;
-                   while(true){
-                     try{
-                       r=ForwardQueue.take();
-                       t=new Thread(r);
-                       t.start();  // Start the thread
-                       t.join();   // and wait for it to finish
-                     } catch(java.lang.InterruptedException ie) {
-                       log.error("Interrupted while checking forward queue");
-                     }
-                   }
-              }
-    }   
     
     /**
      * Internal class to handle traffic controller cleanup.
