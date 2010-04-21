@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -682,7 +682,7 @@ public class SectionTableAction extends AbstractTableAction {
 			}
 			else {
 				if (!txt.equals(rStopSensor.getUserName())) {
-					reverseStopSensorField.setText(rSensor.getSystemName());
+					reverseStopSensorField.setText(rStopSensor.getSystemName());
 				}
 			}
 		}
