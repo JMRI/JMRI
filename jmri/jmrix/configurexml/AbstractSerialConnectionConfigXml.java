@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -34,7 +34,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
      */
     public Element store(Object object) {
         getInstance(object);
-
         Element e = new Element("connection");
         // many of the following are required by the DTD; failing to include
         // them makes the XML file unreadable, but at least the next
@@ -88,7 +87,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         String baudRate = e.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
                 //We can only set the userName and systemPrefix, after the configure has been done.
-        if (adapter.getSystemConnectionMemo()!=null){
+        /*if (adapter.getSystemConnectionMemo()!=null){
             if (e.getAttribute("userName")!=null){
                 adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
             }
@@ -96,7 +95,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
             if (e.getAttribute("systemPrefix")!=null) {
                 adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
             }
-        }
+        }*/
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -114,7 +113,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         }
         // register, so can be picked up next time
         register();
-
         // try to open the port
         String status = adapter.openPort(portName, "JMRI app");
         if (status != null ) {
@@ -131,6 +129,15 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         
         // if successful so far, go ahead and configure
         adapter.configure();
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null) {
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+            
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
 
         // once all the configure processing has happened, do any
         // extra config
