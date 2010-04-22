@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -69,7 +69,6 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         Editor ed = (Editor)o;
         SignalHeadIcon l = new SignalHeadIcon(ed);
         String name;
-        loadCommonAttributes(l, Editor.SIGNALS, element);
 
         Attribute attr = element.getAttribute("signalhead"); 
         if (attr == null) {
@@ -125,6 +124,8 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         }
 
         ed.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.SIGNALS, element);
     }
     
     private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element, String name){

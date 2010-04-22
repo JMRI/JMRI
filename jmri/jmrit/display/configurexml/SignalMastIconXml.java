@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -73,9 +73,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         } else {
             log.error("SignalMast named '"+attr.getValue()+"' not found.");
             return;
-        }
-        loadCommonAttributes(l, Editor.SIGNALS, element);
-        
+        }        
         
         try {
             attr = element.getAttribute("rotation");
@@ -88,6 +86,8 @@ public class SignalMastIconXml extends PositionableLabelXml {
             
                         
         ed.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.SIGNALS, element);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastIconXml.class.getName());

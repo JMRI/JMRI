@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -112,28 +112,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
         
-        // load the contents
-        List<Element> items = element.getChildren();
-        for (int i = 0; i<items.size(); i++) {
-            // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
-            String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via "+adapterName);
-            try {
-                XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
-                // and do it
-                adapter.load(item, panel);
-            } catch (Exception e) {
-                log.error("Exception while loading "+item.getName()+":"+e);
-                result = false;
-                e.printStackTrace();
-            }
-        }
-
-        // Set contents state.
-        // This has to be done after the items are
-        // loaded, because it will over-write various
-        // controls within them.
+        // Load editor option flags. This has to be done before the content 
+        // items are loaded, to preserve the individual item settings
         Attribute a;
         boolean value = true;
         if ((a = element.getAttribute("editable"))!=null && a.getValue().equals("no"))
@@ -175,6 +155,27 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             state = a.getValue();
         panel.setScroll(state);
 
+        //set the (global) editor display widgets to their flag settings
+        panel.initView();
+
+        // load the contents
+        List<Element> items = element.getChildren();
+        for (int i = 0; i<items.size(); i++) {
+            // get the class, hence the adapter object to do loading
+            Element item = items.get(i);
+            String adapterName = item.getAttribute("class").getValue();
+            log.debug("load via "+adapterName);
+            try {
+                XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                // and do it
+                adapter.load(item, panel);
+            } catch (Exception e) {
+                log.error("Exception while loading "+item.getName()+":"+e);
+                result = false;
+                e.printStackTrace();
+            }
+        }
+
         // display the results, with the editor in back
         panel.pack();
 
@@ -189,8 +190,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
+        // do last to set putItem override
         panel.setTitle();
-        panel.initView();
         return result;
     }
 

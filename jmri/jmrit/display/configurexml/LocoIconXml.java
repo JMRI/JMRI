@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -59,8 +59,6 @@ public class LocoIconXml extends PositionableLabelXml {
 		Editor ed = (Editor) o;
         LocoIcon l= new LocoIcon(ed);
         
-        loadCommonAttributes(l, Editor.MARKERS, element);
-        
        // create the objects
         String textName = "error";
         try {
@@ -91,6 +89,8 @@ public class LocoIconXml extends PositionableLabelXml {
 			log.debug("no roster entry for "+rosterId+", ex= "+e);
 		}
         ed.putLocoIcon(l, textName);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.MARKERS, element);        
      }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIconXml.class.getName());

@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -110,7 +110,6 @@ public class MemoryIconXml extends PositionableLabelXml {
         }
         
 
-        loadCommonAttributes(l, Editor.MEMORIES, element);
         loadTextInfo(l, element);
         
         Attribute a = element.getAttribute("selectable");
@@ -127,6 +126,8 @@ public class MemoryIconXml extends PositionableLabelXml {
         	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
 		}
         ed.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.MEMORIES, element);
         l.displayState();
     }
 

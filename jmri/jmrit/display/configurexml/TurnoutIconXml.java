@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -85,8 +85,6 @@ public class TurnoutIconXml extends PositionableLabelXml {
             return;
         }
 
-        loadCommonAttributes(l, Editor.TURNOUTS, element);
-
         loadTurnoutIcon("closed", rotation, l, element, name);
         loadTurnoutIcon("thrown", rotation, l, element, name);
         loadTurnoutIcon("unknown", rotation, l, element, name);
@@ -101,6 +99,8 @@ public class TurnoutIconXml extends PositionableLabelXml {
         l.setTurnout(name);
         
         p.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
     
     private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name){

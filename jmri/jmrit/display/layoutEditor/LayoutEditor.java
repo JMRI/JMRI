@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2870,6 +2870,9 @@ public class LayoutEditor extends Editor {
     * Select the menu items to display for the Positionable's popup 
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
+        if (!((JComponent)p).isVisible()) {
+            return;     // component must be showing on the screen to determine its location
+        }
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {

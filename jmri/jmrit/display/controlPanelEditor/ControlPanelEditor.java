@@ -492,6 +492,8 @@ public class ControlPanelEditor extends Editor {
         } else {
             super.setTitle(name);
         }
+        // all content loaded from file.  Set putItem override.
+        _newItem = true;
     }
     
     /**
@@ -518,8 +520,6 @@ public class ControlPanelEditor extends Editor {
                 scrollVertical.setSelected(true);
                 break;
         }
-        // all stored items have been put into _contents
-        _newItem = true;
     }
 
     /***************** Overrided methods of Editor *******************/
@@ -614,6 +614,9 @@ public class ControlPanelEditor extends Editor {
     * types.
     */
     protected void showPopUp(Positionable p, MouseEvent event) {
+        if (!((JComponent)p).isVisible()) {
+            return;     // component must be showing on the screen to determine its location
+        }
         JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {

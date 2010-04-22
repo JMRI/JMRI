@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 
@@ -85,9 +85,9 @@ public class MemoryInputIconXml extends PositionableLabelXml {
             return;
         }
         
-        loadCommonAttributes(l, Editor.MEMORIES, element);
-//        l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         p.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.MEMORIES, element);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryInputIconXml.class.getName());

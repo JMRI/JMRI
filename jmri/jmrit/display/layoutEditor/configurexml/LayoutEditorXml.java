@@ -15,7 +15,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -324,24 +324,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 			}
 		}
  
-        // load the contents
-        List<Element> items = element.getChildren();
-        for (int i = 0; i<items.size(); i++) {
-            // get the class, hence the adapter object to do loading
-            Element item = items.get(i);
-            String adapterName = item.getAttribute("class").getValue();
-            log.debug("load via "+adapterName);
-            try {
-                XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
-                // and do it
-                adapter.load(item, panel);
-            } catch (Exception e) {
-                log.error("Exception while loading "+item.getName()+":"+e);
-                result = false;
-                e.printStackTrace();
-            }
-        }
-
         // set contents state
         String slValue = "both";
         if ((a = element.getAttribute("sliders"))!=null && a.getValue().equals("no"))
@@ -407,7 +389,28 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		if ((a = element.getAttribute("defaultTrackColor"))!=null) {
 			panel.setDefaultTrackColor(a.getValue());
 		}
-		
+		// Set editor's option flags, load content after 
+        // this so that individual item flags are set as saved
+        panel.initView();
+
+        // load the contents
+        List<Element> items = element.getChildren();
+        for (int i = 0; i<items.size(); i++) {
+            // get the class, hence the adapter object to do loading
+            Element item = items.get(i);
+            String adapterName = item.getAttribute("class").getValue();
+            log.debug("load via "+adapterName);
+            try {
+                XmlAdapter adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                // and do it
+                adapter.load(item, panel);
+            } catch (Exception e) {
+                log.error("Exception while loading "+item.getName()+":"+e);
+                result = false;
+                e.printStackTrace();
+            }
+        }
+
 		// final initialization of objects
 		panel.setConnections();
 			
@@ -423,7 +426,6 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setLayoutDimensions(windowWidth, windowHeight, x, y, panelWidth, panelHeight);
         panel.setVisible(true);    // always show the panel
 		panel.resetDirty();
-        panel.initView();
 
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
