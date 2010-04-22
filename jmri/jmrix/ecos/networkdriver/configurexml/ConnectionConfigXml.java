@@ -23,8 +23,9 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
+
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     protected void getInstance() {
