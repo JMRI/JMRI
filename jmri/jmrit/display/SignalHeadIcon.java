@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -520,6 +520,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
+        if (!isControlling()) return;
         performMouseClicked(e);
     }
     
@@ -527,7 +528,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * This was added in so that the layout editor can handle the mouseclicked when zoomed in
     */
     public void performMouseClicked(java.awt.event.MouseEvent e){
-        if (!isControlling()) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (getSignalHead()==null) {
             log.error("No turnout connection, can't process click");

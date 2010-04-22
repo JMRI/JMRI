@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.50 $
+ * @version $Revision: 1.51 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -313,7 +313,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         if (memory.getValue()!=null)
             newMemory.setText(memory.getValue().toString());
         Object[] options = {"Cancel", "OK", newMemory};
-        int retval = JOptionPane.showOptionDialog(null,
+        int retval = JOptionPane.showOptionDialog(this,
                                                   "Edit Current Memory Value", memory.getSystemName(),
                                                   0, JOptionPane.INFORMATION_MESSAGE, null,
                                                   options, options[2] );
