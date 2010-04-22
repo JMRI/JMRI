@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -36,22 +36,37 @@ public class SensorIconXml extends PositionableLabelXml {
         element.setAttribute("sensor", p.getNameString());
         storeCommonAttributes(p, element);
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
+        element.setAttribute("icon", p.isIcon()?"yes":"no");
+        /*
         if (p.isIcon()){
             element.setAttribute("icon", "yes");
-            storeIconInfo(p, element);
         } else
             element.setAttribute("icon", "no");
         // An icon can have text with it.
         if (p.isText())
             storeTextInfo(p, element);
+        */
+        storeIconInfo(p, element);
+        storeTextInfo(p, element);
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
         return element;
     }
     
     protected void storeTextInfo(SensorIcon p, Element element) {
         if (p.getText()==null) {
-            return;
+            String s = p.getOriginalText();
+            if (s!=null && s.length()>0) {
+                element.setAttribute("text", s);
+            } else {
+                return;
+            }
+        } else {
+            element.setAttribute("text", p.getText());
         }
+        // get iconic overlay text info
+        super.storeTextInfo(p, element);
+        // get text omly info
+        /*
         jmri.jmrit.display.PositionablePopupUtil util = p.getPopupUtility();
         element.setAttribute("text", p.getText());
         element.setAttribute("size", ""+p.getFont().getSize());
@@ -71,6 +86,7 @@ public class SensorIconXml extends PositionableLabelXml {
         if (p.getText()!=null)
             element.setAttribute("text", p.getText());
         if (!p.isIcon()){
+        */
             Element textElement = new Element("activeText");
             if(p.getActiveText()!=null)
                 textElement.setAttribute("text", p.getActiveText());
@@ -130,7 +146,7 @@ public class SensorIconXml extends PositionableLabelXml {
                 textElement.setAttribute("blueBack", ""+p.getBackgroundInconsistent().getBlue());
             }
             element.addContent(textElement);
-        }
+//        }
     }
     
     protected void storeIconInfo(SensorIcon p, Element element) {
@@ -171,23 +187,23 @@ public class SensorIconXml extends PositionableLabelXml {
         }
 
         if (icon){
-            int rotation = 0;
-            try {
-                rotation = element.getAttribute("rotate").getIntValue();
-            } catch (org.jdom.DataConversionException e) {
-            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-            }
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
                                              "resources/icons/smallschematics/tracksegments/circuit-error.gif"),
                                ed);
-            loadSensorIcon("active", rotation, l, element, name);
-            loadSensorIcon("inactive", rotation, l, element, name);
-            loadSensorIcon("unknown", rotation, l,element, name);
-            loadSensorIcon("inconsistent", rotation, l,element, name);
         } else {
             l = new SensorIcon(new String("  "), ed);
         }
-        loadCommonAttributes(l, Editor.SENSORS, element);
+        int rotation = 0;
+        try {
+            rotation = element.getAttribute("rotate").getIntValue();
+        } catch (org.jdom.DataConversionException e) {
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
+
+        loadSensorIcon("active", rotation, l, element, name);
+        loadSensorIcon("inactive", rotation, l, element, name);
+        loadSensorIcon("unknown", rotation, l,element, name);
+        loadSensorIcon("inconsistent", rotation, l,element, name);
         
         loadTextInfo(l, element);
         
@@ -199,6 +215,8 @@ public class SensorIconXml extends PositionableLabelXml {
         
         l.setSensor(name);
         ed.putItem(l);
+        // load individual item's option settings after editor has set its global settings
+        loadCommonAttributes(l, Editor.SENSORS, element);
     }
     
     private void loadSensorIcon(String state, int rotation, SensorIcon l, Element element, String name)
@@ -223,6 +241,7 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     void loadTextInfo(SensorIcon l, Element element){
+        /*
         jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
         Attribute a = element.getAttribute("size");
         try {
@@ -249,6 +268,7 @@ public class SensorIconXml extends PositionableLabelXml {
         } catch (DataConversionException ex) {
             log.warn("invalid style attribute value");
         }
+
         String name;
         if (!l.isIcon()){
             loadSensorTextState("Active", l, element);
@@ -295,6 +315,16 @@ public class SensorIconXml extends PositionableLabelXml {
                 l.setText(name);
             }
         }
+        */
+        if (element.getAttribute("text")!=null) {
+            l.setText(element.getAttribute("text").getValue());
+        }
+        super.loadTextInfo(l, element);
+
+        loadSensorTextState("Active", l, element);
+        loadSensorTextState("InActive", l, element);
+        loadSensorTextState("Unknown", l, element);
+        loadSensorTextState("Inconsistent", l, element);
     }
     
     @SuppressWarnings("unchecked")

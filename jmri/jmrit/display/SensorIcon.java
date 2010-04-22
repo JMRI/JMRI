@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -235,16 +235,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * Pop-up just displays the sensor name
      */
     public boolean showPopUp(JPopupMenu popup) {
-        momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
-        popup.add(momentaryItem);
-        momentaryItem.setSelected (getMomentary());
-        momentaryItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setMomentary(momentaryItem.isSelected());
-            }
-        });
-
-        if (!isIcon() || !isText()) {
+        //if (!isIcon() || !isText()) {
             if(isIcon()){
                 popup.add(new AbstractAction(rb.getString("ChangeToText")) {
                     public void actionPerformed(ActionEvent e) {
@@ -258,7 +249,17 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
             }
-        }
+        //}
+
+        momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
+        popup.add(momentaryItem);
+        momentaryItem.setSelected (getMomentary());
+        momentaryItem.addActionListener(new ActionListener(){
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                setMomentary(momentaryItem.isSelected());
+            }
+        });
+
         return true;
     }
     /******** popup AbstractAction.actionPerformed method overrides *********/
@@ -423,13 +424,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditor = null;
         invalidate();
     }
-    /* Original text is used when changing between icon and text, this allows for a undo when reverting back. */
+    // Original text is used when changing between icon and text, this allows for a undo when reverting back. 
     String originalText;
     public void setOriginalText(String s) {
         originalText=s;
     }
     public String getOriginalText() { return originalText; }
-    
+
     public void setText(String s) {
         _text = (s!=null && s.length()>0);
         super.setText(s);
@@ -654,10 +655,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             _icon = false;
             _text = true;
             setIcon(null);
+            setOriginalText(getText());
         } else if (isText()) {
             _icon = true;
             _text = false;
-            setText(null);
+            //setText(null);
+            setText(getOriginalText());
         }
         setSensor(handle);
     }
@@ -685,10 +688,21 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         SensorPopupUtil(Positionable parent, javax.swing.JComponent textComp) {
             super(parent, textComp);
         }
-        public void setTextJustificationMenu(JPopupMenu popup) {}
-        public void setFixedTextMenu(JPopupMenu popup) {}
-        public void setTextMarginMenu(JPopupMenu popup) {}
-        public void setTextBorderMenu(JPopupMenu popup) {}
+        public void setTextJustificationMenu(JPopupMenu popup) {
+            if (isText()) { super.setTextJustificationMenu(popup); }
+        }
+        public void setFixedTextMenu(JPopupMenu popup) {
+            if (isText()) { super.setFixedTextMenu(popup); }
+        }
+        public void setTextMarginMenu(JPopupMenu popup) {
+            if (isText()) { super.setTextMarginMenu(popup); }
+        }
+        public void setTextBorderMenu(JPopupMenu popup) {
+            if (isText()) { super.setTextBorderMenu(popup); }
+        }
+        public void setTextFontMenu(JPopupMenu popup) {
+            if (isText()) { super.setTextFontMenu(popup); }
+        }
 
         protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
                                final String name, final Color color, final int colorType) {
