@@ -2,10 +2,10 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
-import jmri.jmrix.AbstractSerialPortController;
+import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.SprogProgrammer;
-import jmri.jmrix.sprog.SprogProgrammerManager;
+//import jmri.jmrix.sprog.SprogProgrammer;
+//import jmri.jmrix.sprog.SprogProgrammerManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
@@ -33,13 +33,19 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
-public class SerialDriverAdapter extends AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new SprogSystemConnectionMemo();
+    }
+    
     SerialPort activeSerialPort = null;
 
     public String openPort(String portName, String appName)  {
+    
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -167,6 +173,7 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
         }
         return mInstance;
     }
+    
     static SerialDriverAdapter mInstance = null;
     
     /**
@@ -179,11 +186,12 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
         
-        SprogSystemConnectionMemo memo 
-            = new SprogSystemConnectionMemo(control, SprogMode.SERVICE);
-        
-        memo.configureCommandStation();
-        memo.configureManagers();
+        /*SprogSystemConnectionMemo memo 
+            = new SprogSystemConnectionMemo(control, SprogMode.SERVICE);*/
+        adaptermemo.setSprogMode(SprogMode.SERVICE);
+        adaptermemo.setSprogTrafficController(control);
+        adaptermemo.configureCommandStation();
+        adaptermemo.configureManagers();
 //        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
         /*jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.SERVICE));
 
@@ -192,6 +200,7 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
 
         jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
+        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
         jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
@@ -199,6 +208,11 @@ public class SerialDriverAdapter extends AbstractSerialPortController implements
 
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
+    }
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());

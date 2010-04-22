@@ -6,7 +6,9 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
+//import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.AbstractSerialPortController;
+
 import jmri.jmrix.sprog.SprogConstants.SprogState;
 import jmri.jmrix.sprog.serialdriver.SerialDriverAdapter;
 
@@ -27,7 +29,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -288,7 +290,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           }
           final SprogTrafficController thisTC = this;
           // return a notification via the queue to ensure end
-          //System.out.println("reply " + this.reply.toString());
           Runnable r = new Runnable() {
             SprogReply replyForLater = thisReply;
             SprogTrafficController myTC = thisTC;

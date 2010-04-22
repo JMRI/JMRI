@@ -3,9 +3,9 @@
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.SprogProgrammer;
-import jmri.jmrix.sprog.SprogProgrammerManager;
-import jmri.jmrix.sprog.SprogCommandStation;
+//import jmri.jmrix.sprog.SprogProgrammer;
+//import jmri.jmrix.sprog.SprogProgrammerManager;
+//import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
 
@@ -18,13 +18,12 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  * an Sprog command station via a serial com port.
  * Also used for the USB SPROG, which appears to the computer as a
  * serial port.
- * Normally controlled by the SerialDriverFrame class.
  * <P>
  * The current implementation only handles the 9,600 baud rate, and does
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -35,10 +34,17 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
      */
     public void configure() {
         // connect to the traffic controller
-        SprogTrafficController.instance().connectPort(this);
+        SprogTrafficController control = SprogTrafficController.instance();
+        control.connectPort(this);
+        
+        SprogSystemConnectionMemo memo 
+            = new SprogSystemConnectionMemo(control, SprogMode.OPS);
+        
+        memo.configureCommandStation();
+        memo.configureManagers();
 
 //        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
-        jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.OPS));
+        /*jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.OPS));
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
 
@@ -51,24 +57,22 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         slotThread.start();
         jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
 
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());*/
 
         jmri.jmrix.sprog.ActiveFlagCS.setActive();
 
     }
 
-    private Thread slotThread;
+    //private Thread slotThread;
 
     static public SprogCSSerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SprogCSSerialDriverAdapter();
+        if (mInstance == null) {
+            mInstance = new SprogCSSerialDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+        }
         return mInstance;
     }
     static SprogCSSerialDriverAdapter mInstance = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.SPROG;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
