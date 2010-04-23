@@ -2,6 +2,7 @@
 
 package jmri.jmrix.sprog;
 
+import jmri.InstanceManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 //import jmri.jmrix.sprog.SprogTrafficController;
 //import jmri.jmrix.sprog.SprogCommandStation;
@@ -17,29 +18,38 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sprogMode) {
-        super("S"+(instanceCount>1?""+instanceCount:""), "Sprog"+(instanceCount>1?""+instanceCount:""));
+        super("S", "Sprog");
         this.st = st;
         this.sprogMode = sprogMode;
-        count = instanceCount++;
         register();
     }
     
-    private static int instanceCount = 1;
+     public SprogSystemConnectionMemo() {
+        super("S", "Sprog");
+        register(); // registers general type
+        InstanceManager.store(this, SprogSystemConnectionMemo.class); // also register as specific type
+        //Needs to be implemented
+        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
+                        jmri.jmrix.swing.ComponentFactory.class);*/
+    }
     
+    public void setSprogMode(SprogMode mode){ sprogMode=mode; }
+    public SprogMode getSprogMode() { return sprogMode; }
     private static SprogMode sprogMode;
-    
-    private int count;
+
+    jmri.jmrix.swing.ComponentFactory cf = null;
       
     /**
      * Provides access to the TrafficController for this
      * particular connection.
      */
     public SprogTrafficController getSprogTrafficController() { return st; }
+    public void setSprogTrafficController(SprogTrafficController st) { this.st = st; }
     private SprogTrafficController st;
     
     /**
@@ -53,7 +63,6 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         return new SPROGMenu(this);
     }
 
-    String suffix() { return count>1?""+count:""; }
     private Thread slotThread;
     
     /**
@@ -74,14 +83,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
         slotThread.start();
         jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
-
     }
 
     /**
      * Configure the common managers for Sprog connections.
      * This puts the common manager config in one
      * place.  This method is static so that it can be referenced
-     * from classes that don't inherit.
+     * from classes that don't inherit, including hexfile.HexFileFrame
+     * and locormi.LnMessageClient
      */
     public void configureManagers() {
     
@@ -93,6 +102,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
 
+    }
+    
+    public void dispose(){
+        st = null;
+        InstanceManager.deregister(this, SprogSystemConnectionMemo.class);
+        if (cf != null) 
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        super.dispose();
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogSystemConnectionMemo.class.getName());

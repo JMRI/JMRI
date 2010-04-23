@@ -13,28 +13,35 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public EcosSystemConnectionMemo(EcosTrafficController et) {
-        super("U"+(instanceCount>1?""+instanceCount:""), "ECoS"+(instanceCount>1?""+instanceCount:""));
+        super("U", "ECoS");
         this.et = et;
-        count = instanceCount++;
         register();
+        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
+                jmri.jmrix.swing.ComponentFactory.class);*/
     }
     
-    private static int instanceCount = 1;
+    public EcosSystemConnectionMemo() {
+        super("U", "ECoS");
+        register(); // registers general type
+        InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
+        //Needs to be implemented
+        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
+                        jmri.jmrix.swing.ComponentFactory.class);*/
+    }
     
-    private int count;
-
-    String suffix() { return count>1?""+count:""; }
+    jmri.jmrix.swing.ComponentFactory cf = null;
     
      /**
      * Provides access to the TrafficController for this
      * particular connection.
      */
     public EcosTrafficController getTrafficController() { return et; }
+    public void setEcosTrafficController(EcosTrafficController et) { this.et = et; }
     private EcosTrafficController et;
     
     /**
@@ -67,7 +74,14 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.ecos.EcosSensorManager());
-
+    }
+    
+    public void dispose(){
+        et = null;
+        InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
+        if (cf != null) 
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        super.dispose();
     }
 }
 

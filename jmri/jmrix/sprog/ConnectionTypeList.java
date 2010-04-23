@@ -4,11 +4,11 @@ package jmri.jmrix.sprog;
 
 
 /**
- * Returns a list of valid nce Connection Types
+ * Returns a list of valid Sprog Connection Types
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
