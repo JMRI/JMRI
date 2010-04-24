@@ -123,6 +123,14 @@ public class BlockOrder  {
         return "Normal";
     }
 
+    public long getEntranceSpeedChangeWait() {
+        Portal portal = _block.getPortalByName(getEntryName());
+        if (portal!=null) {
+            return portal.getEntranceSpeedChangeWaitForBlock(_block);
+        }
+        return 0;
+    }
+
     public jmri.NamedBean getSignal() {
         return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);
     }

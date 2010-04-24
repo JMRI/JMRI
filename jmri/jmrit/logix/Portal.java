@@ -342,6 +342,21 @@ public class Portal  {
         return speed;
     }
 
+    public long getEntranceSpeedChangeWaitForBlock(OBlock block) {
+        if (block.equals(_toBlock)) {
+            if (_fromSignal!=null) {
+                if (_fromSignal instanceof SignalHead) {
+                    return _fromSignalDelay;
+                }
+            }
+        } else if (block.equals(_fromBlock)) {
+            if (_toSignal!=null) {
+                return _toSignalDelay;
+            }
+        }
+        return 0;
+    }
+
     private String getPermissibleSpeedFromSignal(SignalHead signal) {
         int appearance = signal.getAppearance();
         String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
