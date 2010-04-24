@@ -1646,7 +1646,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     
     /**
     * Property names from Warrant:
-    *   "save" - from clearall
     *   "runMode" - from setRunMode
     *   "controlChange" - from controlRunTrain
     *   "blockChange" - from goingActive
@@ -1705,12 +1704,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     protected void scrollCommandTable(int row) {
-
-        int setRow = row-3;
-        if (setRow < 0) {
-            setRow = 0;
-        }
-        _throttlePane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+        _throttlePane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
     }
 
     private DccLocoAddress getLocoAddress() {
