@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -37,15 +37,7 @@ public class SensorIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
         element.setAttribute("icon", p.isIcon()?"yes":"no");
-        /*
-        if (p.isIcon()){
-            element.setAttribute("icon", "yes");
-        } else
-            element.setAttribute("icon", "no");
-        // An icon can have text with it.
-        if (p.isText())
-            storeTextInfo(p, element);
-        */
+        
         storeIconInfo(p, element);
         storeTextInfo(p, element);
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SensorIconXml");
@@ -65,88 +57,66 @@ public class SensorIconXml extends PositionableLabelXml {
         }
         // get iconic overlay text info
         super.storeTextInfo(p, element);
-        // get text omly info
-        /*
-        jmri.jmrit.display.PositionablePopupUtil util = p.getPopupUtility();
-        element.setAttribute("text", p.getText());
-        element.setAttribute("size", ""+p.getFont().getSize());
-        element.setAttribute("style", ""+p.getFont().getStyle());
-        if (util.getMargin()!=0)
-            element.setAttribute("margin", ""+util.getMargin());
-        if (util.getBorderSize()!=0){
-            element.setAttribute("borderSize", ""+util.getBorderSize());
-            element.setAttribute("redBorder", ""+util.getBorderColor().getRed());
-            element.setAttribute("greenBorder", ""+util.getBorderColor().getGreen());
-            element.setAttribute("blueBorder", ""+util.getBorderColor().getBlue());
-        } 
-        if (util.getFixedWidth()!=0)
-            element.setAttribute("fixedWidth", ""+util.getFixedWidth());
-        if (util.getFixedHeight()!=0)
-            element.setAttribute("fixedHeight", ""+util.getFixedHeight());
-        if (p.getText()!=null)
-            element.setAttribute("text", p.getText());
-        if (!p.isIcon()){
-        */
-            Element textElement = new Element("activeText");
-            if(p.getActiveText()!=null)
-                textElement.setAttribute("text", p.getActiveText());
-            if (!p.getTextActive().equals(Color.black)) {
-                textElement.setAttribute("red", ""+p.getTextActive().getRed());
-                textElement.setAttribute("green", ""+p.getTextActive().getGreen());
-                textElement.setAttribute("blue", ""+p.getTextActive().getBlue());
-            }
-            if (p.getBackgroundActive()!=null) {
-                textElement.setAttribute("redBack", ""+p.getBackgroundActive().getRed());
-                textElement.setAttribute("greenBack", ""+p.getBackgroundActive().getGreen());
-                textElement.setAttribute("blueBack", ""+p.getBackgroundActive().getBlue());
-            }
-            element.addContent(textElement);
-            textElement = new Element("inactiveText");
-            if(p.getInactiveText()!=null)
-                textElement.setAttribute("text", p.getInactiveText());
-            if(!p.getTextInActive().equals(Color.black)){
-                textElement.setAttribute("red", ""+p.getTextInActive().getRed());
-                textElement.setAttribute("green", ""+p.getTextInActive().getGreen());
-                textElement.setAttribute("blue", ""+p.getTextInActive().getBlue());
-            }
-            if(p.getBackgroundInActive()!=null){
-                textElement.setAttribute("redBack", ""+p.getBackgroundInActive().getRed());
-                textElement.setAttribute("greenBack", ""+p.getBackgroundInActive().getGreen());
-                textElement.setAttribute("blueBack", ""+p.getBackgroundInActive().getBlue());
-            }
-            element.addContent(textElement);
-            
-            textElement = new Element("unknownText");
-            
-            if(p.getUnknownText()!=null)
-                textElement.setAttribute("text", p.getUnknownText());
-            if(!p.getTextUnknown().equals(Color.black)){
-                textElement.setAttribute("red", ""+p.getTextUnknown().getRed());
-                textElement.setAttribute("green", ""+p.getTextUnknown().getGreen());
-                textElement.setAttribute("blue", ""+p.getTextUnknown().getBlue());
-            }   
-            if(p.getBackgroundUnknown()!=null){
-                textElement.setAttribute("redBack", ""+p.getBackgroundUnknown().getRed());
-                textElement.setAttribute("greenBack", ""+p.getBackgroundUnknown().getGreen());
-                textElement.setAttribute("blueBack", ""+p.getBackgroundUnknown().getBlue());
-            }
-            element.addContent(textElement);
-            
-            textElement = new Element("inconsistentText");
-            if(p.getInconsistentText()!=null)
-                textElement.setAttribute("text", p.getInconsistentText());
-            if(!p.getTextInconsistent().equals(Color.black)){
-                textElement.setAttribute("red", ""+p.getTextInconsistent().getRed());
-                textElement.setAttribute("green", ""+p.getTextInconsistent().getGreen());
-                textElement.setAttribute("blue", ""+p.getTextInconsistent().getBlue());
-            }
-            if(p.getBackgroundInconsistent()!=null){
-                textElement.setAttribute("redBack", ""+p.getBackgroundInconsistent().getRed());
-                textElement.setAttribute("greenBack", ""+p.getBackgroundInconsistent().getGreen());
-                textElement.setAttribute("blueBack", ""+p.getBackgroundInconsistent().getBlue());
-            }
-            element.addContent(textElement);
-//        }
+        // get state textual info
+        Element textElement = new Element("activeText");
+        if(p.getActiveText()!=null)
+            textElement.setAttribute("text", p.getActiveText());
+        if (!p.getTextActive().equals(Color.black)) {
+            textElement.setAttribute("red", ""+p.getTextActive().getRed());
+            textElement.setAttribute("green", ""+p.getTextActive().getGreen());
+            textElement.setAttribute("blue", ""+p.getTextActive().getBlue());
+        }
+        if (p.getBackgroundActive()!=null) {
+            textElement.setAttribute("redBack", ""+p.getBackgroundActive().getRed());
+            textElement.setAttribute("greenBack", ""+p.getBackgroundActive().getGreen());
+            textElement.setAttribute("blueBack", ""+p.getBackgroundActive().getBlue());
+        }
+        element.addContent(textElement);
+        textElement = new Element("inactiveText");
+        if(p.getInactiveText()!=null)
+            textElement.setAttribute("text", p.getInactiveText());
+        if(!p.getTextInActive().equals(Color.black)){
+            textElement.setAttribute("red", ""+p.getTextInActive().getRed());
+            textElement.setAttribute("green", ""+p.getTextInActive().getGreen());
+            textElement.setAttribute("blue", ""+p.getTextInActive().getBlue());
+        }
+        if(p.getBackgroundInActive()!=null){
+            textElement.setAttribute("redBack", ""+p.getBackgroundInActive().getRed());
+            textElement.setAttribute("greenBack", ""+p.getBackgroundInActive().getGreen());
+            textElement.setAttribute("blueBack", ""+p.getBackgroundInActive().getBlue());
+        }
+        element.addContent(textElement);
+
+        textElement = new Element("unknownText");
+
+        if(p.getUnknownText()!=null)
+            textElement.setAttribute("text", p.getUnknownText());
+        if(!p.getTextUnknown().equals(Color.black)){
+            textElement.setAttribute("red", ""+p.getTextUnknown().getRed());
+            textElement.setAttribute("green", ""+p.getTextUnknown().getGreen());
+            textElement.setAttribute("blue", ""+p.getTextUnknown().getBlue());
+        }   
+        if(p.getBackgroundUnknown()!=null){
+            textElement.setAttribute("redBack", ""+p.getBackgroundUnknown().getRed());
+            textElement.setAttribute("greenBack", ""+p.getBackgroundUnknown().getGreen());
+            textElement.setAttribute("blueBack", ""+p.getBackgroundUnknown().getBlue());
+        }
+        element.addContent(textElement);
+
+        textElement = new Element("inconsistentText");
+        if(p.getInconsistentText()!=null)
+            textElement.setAttribute("text", p.getInconsistentText());
+        if(!p.getTextInconsistent().equals(Color.black)){
+            textElement.setAttribute("red", ""+p.getTextInconsistent().getRed());
+            textElement.setAttribute("green", ""+p.getTextInconsistent().getGreen());
+            textElement.setAttribute("blue", ""+p.getTextInconsistent().getBlue());
+        }
+        if(p.getBackgroundInconsistent()!=null){
+            textElement.setAttribute("redBack", ""+p.getBackgroundInconsistent().getRed());
+            textElement.setAttribute("greenBack", ""+p.getBackgroundInconsistent().getGreen());
+            textElement.setAttribute("blueBack", ""+p.getBackgroundInconsistent().getBlue());
+        }
+        element.addContent(textElement);
     }
     
     protected void storeIconInfo(SensorIcon p, Element element) {
@@ -161,6 +131,7 @@ public class SensorIconXml extends PositionableLabelXml {
         return false;
     }
 
+    boolean _icon;
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
      * @param element Top level Element to unpack.
@@ -177,16 +148,16 @@ public class SensorIconXml extends PositionableLabelXml {
         } else {
             name = attr.getValue();
         }
-        boolean icon=true;
+        _icon=true;
         if (element.getAttribute("icon") != null){
             String yesno = element.getAttribute("icon").getValue();
             if ( (yesno!=null) && (!yesno.equals("")) ) {
-                if (yesno.equals("yes")) icon=true;
-                else if (yesno.equals("no")) icon=false;
+                if (yesno.equals("yes")) _icon=true;
+                else if (yesno.equals("no")) _icon=false;
             }
         }
 
-        if (icon){
+        if (_icon){
             l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
                                              "resources/icons/smallschematics/tracksegments/circuit-error.gif"),
                                ed);
@@ -221,8 +192,10 @@ public class SensorIconXml extends PositionableLabelXml {
     
     private void loadSensorIcon(String state, int rotation, SensorIcon l, Element element, String name)
     {
+        // loadIcon gets icon as an element
         NamedIcon icon = loadIcon(l,state, element);
-        if (icon==null){
+        if (icon==null && _icon) {
+            // old config files may define icons as attributes
             String iconName;
             if (element.getAttribute(state) != null 
                 && !(iconName = element.getAttribute(state).getValue()).equals("")) {
@@ -241,81 +214,6 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     void loadTextInfo(SensorIcon l, Element element){
-        /*
-        jmri.jmrit.display.PositionablePopupUtil util = l.getPopupUtility();
-        Attribute a = element.getAttribute("size");
-        try {
-            if (a!=null){ 
-                util.setFontSize(a.getFloatValue());
-            }
-        } catch (DataConversionException ex) {
-            log.warn("invalid size attribute value");
-        }
-
-        a = element.getAttribute("style");
-        try {
-            if (a!=null){
-                int style = a.getIntValue();
-                int drop = 0;
-                switch (style){
-                    case 0: drop = 1; //0 Normal
-                            break;
-                    case 2: drop = 1; //italic
-                            break;
-                }
-                util.setFontStyle(style, drop);
-            }
-        } catch (DataConversionException ex) {
-            log.warn("invalid style attribute value");
-        }
-
-        String name;
-        if (!l.isIcon()){
-            loadSensorTextState("Active", l, element);
-            loadSensorTextState("InActive", l, element);
-            loadSensorTextState("Unknown", l, element);
-            loadSensorTextState("Inconsistent", l, element);
-            int margin=0;
-            try {
-                margin=element.getAttribute("margin").getIntValue();
-                util.setMargin(margin);
-            } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse color attributes!");
-            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-            }
-            int fixedWidth=0;
-            int fixedHeight=0;
-            try {
-                fixedWidth=element.getAttribute("fixedWidth").getIntValue();
-            } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse color attributes!");
-            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-            }
-            try {
-                fixedHeight=element.getAttribute("fixedHeight").getIntValue();
-            } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse color attributes!");
-            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-            }
-            if (!(fixedWidth==0 && fixedHeight==0))
-                util.setFixedSize(fixedWidth, fixedHeight);
-            try {
-                util.setBorderSize(element.getAttribute("borderSize").getIntValue());
-                int red = element.getAttribute("redBorder").getIntValue();
-                int blue = element.getAttribute("blueBorder").getIntValue();
-                int green = element.getAttribute("greenBorder").getIntValue();
-                util.setBorderColor(new Color(red, green, blue));
-            } catch ( org.jdom.DataConversionException e) {
-                log.warn("Could not parse level attribute!");
-            } catch ( NullPointerException e) {  // considered normal if the attribute not present
-            }
-        } else {
-            if (element.getAttribute("text")!=null){
-                name = element.getAttribute("text").getValue();
-                l.setText(name);
-            }
-        }
-        */
         if (element.getAttribute("text")!=null) {
             l.setText(element.getAttribute("text").getValue());
         }
