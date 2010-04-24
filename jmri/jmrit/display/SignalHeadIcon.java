@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -233,79 +233,82 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * Pop-up just displays the name
      */
     public boolean showPopUp(JPopupMenu popup) {
-        // add menu to select action on click
-        JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
-        clickButtonGroup = new ButtonGroup();
-        JRadioButtonMenuItem r;
-        r = new JRadioButtonMenuItem(rb.getString("ChangeAspect"));
-        r.addActionListener(new ActionListener() {
-            final int desired = 0;
-            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-        });
-        clickButtonGroup.add(r);
-        if (clickMode == 0)  r.setSelected(true);
-        else r.setSelected(false);
-        clickMenu.add(r);
-        r = new JRadioButtonMenuItem(rb.getString("AlternateLit"));
-        r.addActionListener(new ActionListener() {
-            final int desired = 1;
-            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-        });
-        clickButtonGroup.add(r);
-        if (clickMode == 1)  r.setSelected(true);
-        else r.setSelected(false);
-        clickMenu.add(r);
-        r = new JRadioButtonMenuItem(rb.getString("AlternateHeld"));
-        r.addActionListener(new ActionListener() {
-            final int desired = 2;
-            public void actionPerformed(ActionEvent e) { setClickMode(desired); }
-        });
-        clickButtonGroup.add(r);
-        if (clickMode == 2)  r.setSelected(true);
-        else r.setSelected(false);
-        clickMenu.add(r);
-        popup.add(clickMenu);
+        if (isEditable()) {
+            // add menu to select action on click
+            JMenu clickMenu = new JMenu(rb.getString("WhenClicked"));
+            clickButtonGroup = new ButtonGroup();
+            JRadioButtonMenuItem r;
+            r = new JRadioButtonMenuItem(rb.getString("ChangeAspect"));
+            r.addActionListener(new ActionListener() {
+                final int desired = 0;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 0)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            r = new JRadioButtonMenuItem(rb.getString("AlternateLit"));
+            r.addActionListener(new ActionListener() {
+                final int desired = 1;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 1)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            r = new JRadioButtonMenuItem(rb.getString("AlternateHeld"));
+            r.addActionListener(new ActionListener() {
+                final int desired = 2;
+                public void actionPerformed(ActionEvent e) { setClickMode(desired); }
+            });
+            clickButtonGroup.add(r);
+            if (clickMode == 2)  r.setSelected(true);
+            else r.setSelected(false);
+            clickMenu.add(r);
+            popup.add(clickMenu);
 
 
-        // add menu to select handling of lit parameter
-        JMenu litMenu = new JMenu(rb.getString("WhenNotLit"));
-        litButtonGroup = new ButtonGroup();
-        r = new JRadioButtonMenuItem(rb.getString("ShowAppearance"));
-        r.setIconTextGap(10);
-        r.addActionListener(new ActionListener() {
-            final boolean desired = false;
-            public void actionPerformed(ActionEvent e) { setLitMode(desired); }
-        });
-        litButtonGroup.add(r);
-        if (!litMode)  r.setSelected(true);
-        else r.setSelected(false);
-        litMenu.add(r);
-        r = new JRadioButtonMenuItem(rb.getString("ShowDarkIcon"));
-        r.setIconTextGap(10);
-        r.addActionListener(new ActionListener() {
-            final boolean desired = true;
-            public void actionPerformed(ActionEvent e) { setLitMode(desired); }
-        });
-        litButtonGroup.add(r);
-        if (litMode)  r.setSelected(true);
-        else r.setSelected(false);
-        litMenu.add(r);
-        popup.add(litMenu);
+            // add menu to select handling of lit parameter
+            JMenu litMenu = new JMenu(rb.getString("WhenNotLit"));
+            litButtonGroup = new ButtonGroup();
+            r = new JRadioButtonMenuItem(rb.getString("ShowAppearance"));
+            r.setIconTextGap(10);
+            r.addActionListener(new ActionListener() {
+                final boolean desired = false;
+                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+            });
+            litButtonGroup.add(r);
+            if (!litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            r = new JRadioButtonMenuItem(rb.getString("ShowDarkIcon"));
+            r.setIconTextGap(10);
+            r.addActionListener(new ActionListener() {
+                final boolean desired = true;
+                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+            });
+            litButtonGroup.add(r);
+            if (litMode)  r.setSelected(true);
+            else r.setSelected(false);
+            litMenu.add(r);
+            popup.add(litMenu);
 
-        popup.add(new AbstractAction(rb.getString("EditLogic")) {
-            public void actionPerformed(ActionEvent e) {
-                jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                String name;
-                /*if (mHead.getUserName()==null || mHead.getUserName().equals(""))
-                    name = mHead.getSystemName();
-                else*/
-                    name = getNameString();
-                f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
-                f.setSignal(name);
-                f.setVisible(true);
-            }
-        });
-        return true;
+            popup.add(new AbstractAction(rb.getString("EditLogic")) {
+                public void actionPerformed(ActionEvent e) {
+                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
+                    String name;
+                    /*if (mHead.getUserName()==null || mHead.getUserName().equals(""))
+                        name = mHead.getSystemName();
+                    else*/
+                        name = getNameString();
+                    f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
+                    f.setSignal(name);
+                    f.setVisible(true);
+                }
+            });
+            return true;
+        }
+        return false;
     }
     
     /*************** popup AbstractAction.actionPerformed method overrides ************/

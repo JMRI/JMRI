@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -114,20 +114,23 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
      */
     public boolean showPopUp(JPopupMenu popup) {
 
-        popup.add(new AbstractAction(rb.getString("EditLogic")) {
-            public void actionPerformed(ActionEvent e) {
-                jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                String name;
-                if (mMast.getUserName()==null || mMast.getUserName().equals(""))
-                    name = mMast.getSystemName();
-                else
-                    name = mMast.getUserName();
-                f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
-                f.setSignal(name);
-                f.setVisible(true);
-            }
-        });
-        return true;
+        if (isEditable()) {
+            popup.add(new AbstractAction(rb.getString("EditLogic")) {
+                public void actionPerformed(ActionEvent e) {
+                    jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
+                    String name;
+                    if (mMast.getUserName()==null || mMast.getUserName().equals(""))
+                        name = mMast.getSystemName();
+                    else
+                        name = mMast.getUserName();
+                    f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
+                    f.setSignal(name);
+                    f.setVisible(true);
+                }
+            });
+            return true;
+        }
+        return false;
     }
 
     /**

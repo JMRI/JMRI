@@ -21,7 +21,7 @@ import jmri.util.NamedBeanHandle;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -183,12 +183,15 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
      * Pop-up displays unique attributes of turnouts
      */
     public boolean showPopUp(JPopupMenu popup) {
-		// add tristate option if turnout has feedback
-		if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
-			addTristateEntry(popup);
-            return true;
-		}
-        return false;
+        if (isEditable()) {
+            // add tristate option if turnout has feedback
+            if (namedTurnout != null && getTurnout().getFeedbackMode() != Turnout.DIRECT) {
+                addTristateEntry(popup);
+                return true;
+            }
+            return false;
+        }
+        return true;
 	}
 
     javax.swing.JCheckBoxMenuItem tristateItem = null;

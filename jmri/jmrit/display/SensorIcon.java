@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -235,7 +235,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
      * Pop-up just displays the sensor name
      */
     public boolean showPopUp(JPopupMenu popup) {
-        //if (!isIcon() || !isText()) {
+        if (isEditable()) {
             if(isIcon()){
                 popup.add(new AbstractAction(rb.getString("ChangeToText")) {
                     public void actionPerformed(ActionEvent e) {
@@ -249,17 +249,16 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     }
                 });
             }
-        //}
 
-        momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
-        popup.add(momentaryItem);
-        momentaryItem.setSelected (getMomentary());
-        momentaryItem.addActionListener(new ActionListener(){
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                setMomentary(momentaryItem.isSelected());
-            }
-        });
-
+            momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
+            popup.add(momentaryItem);
+            momentaryItem.setSelected (getMomentary());
+            momentaryItem.addActionListener(new ActionListener(){
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setMomentary(momentaryItem.isSelected());
+                }
+            });
+        }
         return true;
     }
     /******** popup AbstractAction.actionPerformed method overrides *********/
