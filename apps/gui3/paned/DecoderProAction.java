@@ -3,17 +3,23 @@
  package apps.gui3.paned;
 
 import javax.swing.*;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.io.File;
+
+import java.util.List;
 
 import jmri.util.swing.*;
 
 // for ugly code
 import jmri.progdebugger.*;
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.jmrit.roster.*;
+import jmri.jmrit.roster.swing.*;
+
 import org.jdom.*;
 
 /**
@@ -21,8 +27,19 @@ import org.jdom.*;
  *
  * Ignores WindowInterface.
  *
+ * TODO:
+ * Several methods are copied from PaneProgFrame and should be refactored
+ * No programmer support yet
+ * No reset toolbar support yet
+ * No glass pane support
+ * Need better support for visible/non-visible panes
+ * Special panes (Roster entry, attributes, graphics) not included
+ * How do you pick a programmer file? (hardcoded)
+ * 
+ * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
+ *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -54,11 +71,26 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         mainFrame.setVisible(true);
     }
     
+    jmri.jmrit.roster.swing.RosterTable rtable;
+    
     JComponent createTop() {
         JPanel retval = new JPanel();
         retval.setLayout(new BoxLayout(retval, BoxLayout.X_AXIS));
         
-        retval.add(new jmri.jmrit.roster.swing.RosterTable());
+        // set up roster table
+         
+        rtable = new RosterTable();
+        retval.add(rtable);
+        // add selection listener
+        rtable.getTable().getSelectionModel().addListSelectionListener(
+            new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (! e.getValueIsAdjusting()) {
+                        locoSelected(rtable.getModel().getValueAt(e.getFirstIndex(), RosterTableModel.IDCOL).toString());
+                    }
+                }
+            }
+        );
 
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -83,13 +115,48 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         return retval;
     }
     
+    void locoSelected(String id) {
+        System.out.println("locoSelected ID "+id);
+        // convert to roster entry
+        RosterEntry re = Roster.instance().entryFromTitle(id);
+        
+        // start making PaneSet
+                    //JFrame p = new PaneProgFrame(null, re,
+                    //                             "dummy title", "programmers"+File.separator+"Comprehensive"+".xml",
+                    //                             null, false){
+                    //    protected JPanel getModePane() { return null; }
+                    //};
+        
+        PaneSet ps = new PaneSet(null, re);
+        XmlFile pf = new XmlFile(){};  // XmlFile is abstract
+        String filename = "programmers"+File.separator+"Comprehensive.xml";
+        try {
+            // load programmer config from programmer tree
+            ps.makePanes(pf.rootFromName(filename), re);
+        }
+        catch (Exception e) {
+            System.out.println("exception reading programmer file: "+filename);
+            // provide traceback too
+            e.printStackTrace();
+        }
+        
+        List<PaneProgPane> list = ps.getList();
+
+        // update the toolbar list of panes
+        paneJList.setModel(new JList(list.toArray())
+            .getModel());
+    }
+
+    JPanel paneSpace = new JPanel();
     JComponent createRight() {
         JPanel retval = new JPanel();
         retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
 
-        JComponent l = createPane(); // new JLabel("Display of a particular pane will go here");
-        //l.setPreferredSize(new java.awt.Dimension(100, 200));
-        retval.add(l);
+        
+        JComponent l = new JLabel("Display of a particular pane will go here");
+        l.setPreferredSize(new java.awt.Dimension(100, 200));
+        paneSpace.add(l);
+        retval.add(paneSpace);
 
         retval.add(Box.createVerticalGlue());
         retval.add(new JSeparator());
@@ -104,6 +171,11 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         return retval;
     }
     
+    JToolBar paneToolBar = new JToolBar("Panes");
+    JList   paneJList = new JList(new String[]{  // really dummy content
+                "<nothing yet>" 
+            });
+            
     JComponent createLeft() {
         JPanel retval = new JPanel();
         retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
@@ -119,24 +191,22 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         retval.add(Box.createRigidArea(new Dimension(10,10)));
         retval.add(new JSeparator());
         
-        bar = new JToolBar("Panes");
-        bar.setOrientation(JToolBar.VERTICAL);
-        bar.setAlignmentX(defaultXAlignment);
-        JList list = new JList(new String[]{
-                "Roster", 
-                "Function Keys", 
-                "Images", 
-                "Main", 
-                "Motor", 
-                "Speed Control", 
-                "Speed Table", 
-                "Function Mapping", 
-                "Lighting", 
-                "CVs" 
-            });
-        list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        bar.add(list);
-        retval.add(bar);
+        paneToolBar = new JToolBar("Panes");
+        paneToolBar.setOrientation(JToolBar.VERTICAL);
+        paneToolBar.setAlignmentX(defaultXAlignment);
+        paneJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        paneToolBar.add(paneJList);
+        paneJList.addListSelectionListener(
+            new ListSelectionListener() {
+                public void valueChanged(ListSelectionEvent e) {
+                    if (! e.getValueIsAdjusting()) {
+                        showPane((PaneProgPane)paneJList.getSelectedValue());
+                    }
+                }
+            }
+        );
+        
+        retval.add(paneToolBar);
         
         retval.add(new JSeparator());
         
@@ -152,6 +222,14 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         //        "Reset Except Speed Table"
         //    }));
         return retval;
+    }
+    
+    void showPane(PaneProgPane pane) {
+        System.out.println("show pane "+pane);
+        paneSpace.removeAll();
+        paneSpace.add(pane);
+        System.out.println("pref "+pane.getPreferredSize());
+        paneSpace.revalidate();
     }
     
     // amazingly ugly temp pane code
