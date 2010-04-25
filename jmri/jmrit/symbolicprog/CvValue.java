@@ -23,12 +23,11 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.28 $
+ * @version   $Revision: 1.29 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     public CvValue(int num, Programmer pProgrammer) {
         _num = num;

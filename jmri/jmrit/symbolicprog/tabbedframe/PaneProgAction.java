@@ -34,7 +34,7 @@ import javax.swing.JSeparator;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.36 $
+ * @version			$Revision: 1.37 $
  */
 public class PaneProgAction 			extends AbstractAction {
 
@@ -42,8 +42,7 @@ public class PaneProgAction 			extends AbstractAction {
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector  modePane    = new jmri.jmrit.progsupport.ProgDeferredServiceModePane();
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     public PaneProgAction() {
         this("DecoderPro service programmer");

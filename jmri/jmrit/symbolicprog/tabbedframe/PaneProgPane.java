@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.71 $
+ * @version   $Revision: 1.72 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -74,12 +74,11 @@ public class PaneProgPane extends javax.swing.JPanel
     CvTableModel _cvModel;
     IndexedCvTableModel _indexedCvModel;
     VariableTableModel _varModel;
-    PaneProgFrame _parentFrame;
+    PaneContainer container;
     
     boolean _cvTable; 
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     ItemListener l1;
     ItemListener l2;
@@ -89,6 +88,7 @@ public class PaneProgPane extends javax.swing.JPanel
     ItemListener l6;
 
     String mName = "";
+    
     /**
      * Create a null object.  Normally only used for tests and to pre-load classes.
      */
@@ -105,10 +105,10 @@ public class PaneProgPane extends javax.swing.JPanel
      * @param modelElem "model" element from the Decoder Index, used to check what decoder options are present.
      */
     @SuppressWarnings("unchecked")
-	public PaneProgPane(PaneProgFrame parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
+	public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem) {
 
             
-        _parentFrame = parent;
+        container = parent;
         mName = name;
         _cvModel = cvModel;
         _indexedCvModel = icvModel;
@@ -166,16 +166,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     readChangesButton.setText(rbt.getString("ButtonStopReadChangesSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepReadPane(true);
                         prepGlassPane(readChangesButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         readPaneChanges();
                     }
                 } else {
                     stopProgramming();
                     readChangesButton.setText(rbt.getString("ButtonReadChangesSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         readChangesButton.setEnabled(false);
                     }
                 }
@@ -185,16 +185,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     readAllButton.setText(rbt.getString("ButtonStopReadSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepReadPane(false);
                         prepGlassPane(readAllButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         readPaneAll();
                     }
                 } else {
                     stopProgramming();
                     readAllButton.setText(rbt.getString("ButtonReadFullSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         readAllButton.setEnabled(false);
                     }
                 }
@@ -206,16 +206,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     writeChangesButton.setText(rbt.getString("ButtonStopWriteChangesSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepWritePane(true);
                         prepGlassPane(writeChangesButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         writePaneChanges();
                     }
                 } else {
                     stopProgramming();
                     writeChangesButton.setText(rbt.getString("ButtonWriteChangesSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         writeChangesButton.setEnabled(false);
                     }
                 }
@@ -227,16 +227,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     writeAllButton.setText(rbt.getString("ButtonStopWriteSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepWritePane(false);
                         prepGlassPane(writeAllButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         writePaneAll();
                     }
                 } else {
                     stopProgramming();
                     writeAllButton.setText(rbt.getString("ButtonWriteFullSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         writeAllButton.setEnabled(false);
                     }
                 }
@@ -252,16 +252,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     confirmChangesButton.setText(rbt.getString("ButtonStopConfirmChangesSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepConfirmPane(true);
                         prepGlassPane(confirmChangesButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         confirmPaneChanges();
                     }
                 } else {
                     stopProgramming();
                     confirmChangesButton.setText(rbt.getString("ButtonConfirmChangesSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         confirmChangesButton.setEnabled(false);
                     }
                 }
@@ -271,16 +271,16 @@ public class PaneProgPane extends javax.swing.JPanel
             public void itemStateChanged (ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     confirmAllButton.setText(rbt.getString("ButtonStopConfirmSheet"));
-                    if (_parentFrame.isBusy() == false) {
+                    if (container.isBusy() == false) {
                         prepConfirmPane(false);
                         prepGlassPane(confirmAllButton);
-                        _parentFrame.glassPane.setVisible(true);
+                        container.getBusyGlassPane().setVisible(true);
                         confirmPaneAll();
                     }
                 } else {
                     stopProgramming();
                     confirmAllButton.setText(rbt.getString("ButtonConfirmFullSheet"));
-                    if (_parentFrame.isBusy()) {
+                    if (container.isBusy()) {
                         confirmAllButton.setEnabled(false);
                     }
                 }
@@ -301,7 +301,8 @@ public class PaneProgPane extends javax.swing.JPanel
         if (_cvModel.getProgrammer()!= null) add(bottom);
     }
 
-
+    public String getName() { return mName; }
+    
     /**
      * Enable the read all and read changes button if possible.
      * This checks to make sure this is appropriate, given
@@ -434,7 +435,7 @@ public class PaneProgPane extends javax.swing.JPanel
     }
 
     private void prepGlassPane(AbstractButton activeButton) {
-        _parentFrame.prepGlassPane(activeButton);
+        container.prepGlassPane(activeButton);
     }
 
     void enableButtons(boolean stat) {
@@ -489,8 +490,8 @@ public class PaneProgPane extends javax.swing.JPanel
             readAllButton.setSelected(true);
             readAllButton.setEnabled(true);
         }
-        if (_parentFrame.isBusy() == false) {
-            _parentFrame.enableButtons(false);
+        if (container.isBusy() == false) {
+            container.enableButtons(false);
         }
         setToRead(justChanges, true);
         varListIndex = 0;
@@ -523,7 +524,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Set the "ToRead" parameter in all variables and CVs on this pane
      */
     void setToRead(boolean justChanges, boolean startProcess) {
-        if (!_parentFrame.isBusy() ||  // the frame has already setToRead
+        if (!container.isBusy() ||  // the frame has already setToRead
            (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
             for (int i = 0; i < varList.size(); i++) {
                 int varNum = varList.get(i).intValue();
@@ -577,7 +578,7 @@ public class PaneProgPane extends javax.swing.JPanel
      */
     void setToWrite(boolean justChanges, boolean startProcess) {
         if (log.isDebugEnabled()) log.debug("start setToWrite method with "+justChanges+","+startProcess);
-        if (!_parentFrame.isBusy() ||  // the frame has already setToWrite
+        if (!container.isBusy() ||  // the frame has already setToWrite
            (!startProcess)) {  // we want to setToRead false if the pane's process is being stopped
            log.debug("about to start setToWrite of varList");
            for (int i = 0; i < varList.size(); i++) {
@@ -744,7 +745,7 @@ public class PaneProgPane extends javax.swing.JPanel
         readChangesButton.setSelected(false);
         readAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
-        _parentFrame.paneFinished();
+        container.paneFinished();
         return false;
     }
     
@@ -812,7 +813,7 @@ public class PaneProgPane extends javax.swing.JPanel
         confirmChangesButton.setSelected(false);
         confirmAllButton.setSelected(false);  // reset both, as that's final state we want
         setBusy(false);
-        _parentFrame.paneFinished();
+        container.paneFinished();
         return false;
     }
 
@@ -857,8 +858,8 @@ public class PaneProgPane extends javax.swing.JPanel
             writeAllButton.setSelected(true);
             writeAllButton.setEnabled(true);
         }
-        if (_parentFrame.isBusy() == false) {
-            _parentFrame.enableButtons(false);
+        if (container.isBusy() == false) {
+            container.enableButtons(false);
         }
         setToWrite(justChanges, true);
         varListIndex = 0;
@@ -940,7 +941,7 @@ public class PaneProgPane extends javax.swing.JPanel
         writeChangesButton.setSelected(false);
         writeAllButton.setSelected(false);
         setBusy(false);
-        _parentFrame.paneFinished();
+        container.paneFinished();
         log.debug("return from nextWrite with nothing to do");
         return false;
     }
@@ -964,8 +965,8 @@ public class PaneProgPane extends javax.swing.JPanel
             confirmAllButton.setSelected(true);
             confirmAllButton.setEnabled(true);
         }
-        if (_parentFrame.isBusy() == false) {
-            _parentFrame.enableButtons(false);
+        if (container.isBusy() == false) {
+            container.enableButtons(false);
         }
         // we can use the read prep since confirm has to read first
         setToRead(justChanges, true);
@@ -1026,7 +1027,7 @@ public class PaneProgPane extends javax.swing.JPanel
     protected void setBusy(boolean busy) {
         boolean oldBusy = _busy;
         _busy = busy;
-        if (!busy && !_parentFrame.isBusy()) {
+        if (!busy && !container.isBusy()) {
             enableButtons(true);
         }
         if (oldBusy != busy) firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
@@ -1133,7 +1134,7 @@ public class PaneProgPane extends javax.swing.JPanel
         else {
             if (log.isDebugEnabled()) log.debug("No operation to restart");
             if (isBusy()) {
-                _parentFrame.paneFinished();
+                container.paneFinished();
                 setBusy(false);
             }
         }

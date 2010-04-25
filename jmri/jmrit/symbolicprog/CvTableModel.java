@@ -18,12 +18,11 @@ import jmri.*;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2006
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.25 $
+ * @version   $Revision: 1.26 $
  */
 public class CvTableModel extends javax.swing.table.AbstractTableModel implements ActionListener, PropertyChangeListener {
 	
-    static final java.util.ResourceBundle rbt 
-    = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
 	private int _numRows = 0;                // must be zero until Vectors are initialized
     static final int MAXCVNUM = 1024;

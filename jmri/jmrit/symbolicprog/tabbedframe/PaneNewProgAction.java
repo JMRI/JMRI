@@ -28,14 +28,13 @@ import javax.swing.JPanel;
  * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class PaneNewProgAction extends AbstractAction {
 
     Object o1, o2, o3, o4;
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     public PaneNewProgAction() {
         this("DecoderPro service programmer");

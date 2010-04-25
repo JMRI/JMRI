@@ -36,13 +36,12 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.87 $
+ * @version   $Revision: 1.88 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
-    implements java.beans.PropertyChangeListener  {
+    implements java.beans.PropertyChangeListener, PaneContainer  {
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     // members to contain working variable, CV values, Indexed CV values
     JLabel              progStatus   = new JLabel(rbt.getString("StateIdle"));
@@ -598,11 +597,11 @@ abstract public class PaneProgFrame extends JmriJFrame
         }
 
         // add the Info tab
-        tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ROSTER ENTRY"), makeInfoPane(r));
+        tabPane.addTab(rbt.getString("ROSTER ENTRY"), makeInfoPane(r));
 
         // add the Function Label tab
         if (root.getChild("programmer").getAttribute("showFnLanelPane").getValue().equals("yes")) {
-            tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("FUNCTION LABELS"), makeFunctionLabelPane(r));
+            tabPane.addTab(rbt.getString("FUNCTION LABELS"), makeFunctionLabelPane(r));
         } else {
             // make it, just don't make it visible
             makeFunctionLabelPane(r);
@@ -610,7 +609,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         
         // add the Media tab
         if (root.getChild("programmer").getAttribute("showRosterMediaPane").getValue().equals("yes")) {
-            tabPane.addTab(java.util.ResourceBundle.getBundle("jmri/jmrit/symbolicprog/SymbolicProgBundle").getString("ROSTER MEDIA"), makeMediaPane(r));
+            tabPane.addTab(rbt.getString("ROSTER MEDIA"), makeMediaPane(r));
         } else {
             // make it, just don't make it visible
             makeMediaPane(r);
@@ -870,10 +869,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         paneList.add(p);
     }
 
+    public BusyGlassPane getBusyGlassPane() { return glassPane; }
+    
     /**
      *
      */
-    void prepGlassPane(AbstractButton activeButton) {
+    public void prepGlassPane(AbstractButton activeButton) {
         List<Rectangle> rectangles = new ArrayList<Rectangle>();
 
         if (glassPane != null) {
@@ -908,7 +909,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         this.setGlassPane(glassPane);
     }
 
-    void paneFinished() {
+    public void paneFinished() {
         if (!isBusy()) {
             if (glassPane != null) {
                 glassPane.setVisible(false);
@@ -929,7 +930,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * @param stat Are reads possible? If false, so not enable
      * the read buttons.
      */
-    void enableButtons(boolean stat) {
+    public void enableButtons(boolean stat) {
         if (stat) {
             enableReadButtons();
         } else {
@@ -945,7 +946,7 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     boolean justChanges;
 
-    boolean isBusy() { return _busy; }
+    public boolean isBusy() { return _busy; }
     private boolean _busy = false;
     private void setBusy(boolean stat) {
         _busy = stat;

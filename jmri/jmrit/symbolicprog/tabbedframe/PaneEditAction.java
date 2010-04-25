@@ -26,14 +26,13 @@ import javax.swing.JPanel;
  *
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class PaneEditAction 	extends AbstractAction {
 
     Object o1, o2, o3, o4;
 
-    static final java.util.ResourceBundle rbt 
-        = java.util.ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle");
+    static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
     public PaneEditAction() {
         this("Edit Roster Entry");
