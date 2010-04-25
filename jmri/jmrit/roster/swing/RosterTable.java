@@ -17,7 +17,7 @@ import jmri.util.swing.JmriPanel;
  * as a JmriJPanel
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RosterTable extends jmri.util.swing.JmriPanel {
 
@@ -73,9 +73,15 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
         // set preferred scrolling options
         dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        
+        // set to single selection
+        dataTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
     }
-	    
+	   
+	public JTable getTable() { return dataTable; }
+	public RosterTableModel getModel() { return dataModel; }
+	
     public void dispose() {
         if (dataModel != null)
             dataModel.dispose();
