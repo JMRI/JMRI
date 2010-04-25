@@ -15,12 +15,12 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {
 
-    static final int IDCOL = 0;
+    public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
     static final int DECODERCOL = 3;
