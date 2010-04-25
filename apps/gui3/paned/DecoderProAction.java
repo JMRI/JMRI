@@ -39,7 +39,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
  
 public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
@@ -159,14 +159,6 @@ public class DecoderProAction extends jmri.util.swing.JmriAbstractAction {
         retval.add(paneSpace);
 
         retval.add(Box.createVerticalGlue());
-        retval.add(new JSeparator());
-
-        // toolbar alternate for programming
-        JToolBar bar = JToolBarUtil.loadToolBar(
-            new java.io.File("xml/config/apps/decoderpro/ProgramingButtons.xml"),
-            wi, null);
-        bar.setOrientation(JToolBar.HORIZONTAL);
-        retval.add(bar);
         
         return retval;
     }
