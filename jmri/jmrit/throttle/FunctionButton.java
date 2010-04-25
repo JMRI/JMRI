@@ -70,7 +70,6 @@ public class FunctionButton extends JToggleButton implements ActionListener
         setFont(new Font("Monospaced",Font.PLAIN, 12));
         setPreferredSize(new Dimension(BUT_WDTH,BUT_HGHT));
         setMargin(new Insets(2,2,2,2));
-        addMouseListener(popupListener);
     }
     
     public void setEnabled(boolean b) {
