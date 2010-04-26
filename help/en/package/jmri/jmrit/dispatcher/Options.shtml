@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Options.shtml,v 1.5 2009-03-01 18:51:26 djduchamp Exp $ -->
+<!-- $Id: Options.shtml,v 1.6 2010-04-26 18:20:46 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -38,7 +38,7 @@ in the following section.
 </H2
 <p>Selecting <b>Options Window...</b> in the <b>Options</b> menu of the Dispatcher 
 window brings up the window shown below.</p>
-<img src="OptionsWindow.jpg" height="346" width="519">
+<img src="OptionsWindow.jpg" height="445" width="519">
 
 <p>This window shows options currently selected for Dispatcher. To change 
 Dispatcher options, change to the desired option configuration, and 
@@ -55,7 +55,7 @@ Layout Editor panel with full connectivity is available. If this item is checked
 Dispatcher will automatically check if turnouts are set correctly when allocating 
 a Section, and will inform the dispatcher if the turnouts are not set correctly. 
 This item must be checked if Dispatcher is to set turnouts when a Section is 
-allocated (see below).</p>
+allocated (see below), and if trains are to be run automatically.</p>
 </li>
 <li><p>Select one of the three options for Dispatcher to select trains from 
 when creating Active Trains. The three possibilities are:</p></li>
@@ -72,23 +72,26 @@ when creating Active Trains. The three possibilities are:</p></li>
 <li><p>Check <b>Layout has block detection hardware</b> if block occupancy 
 detection is available from the layout. Uncheck if the layout does not have block 
 occupancy detection, or if Dispatcher should not make use of block occupancy 
-detection.</p>
+detection. Block detection hardware is required for automatic running of 
+trains.</p>
 </li>
 <li><p>Check <b>Automatically allocate Sections to Active Trains</b> to activate 
-automated dispatching. Uncheck to deactivate automated dispatching features. 
+automated allocation. Uncheck to deactivate automated allocation. 
 This item is equivalent to the <b>Auto Allocate</b> item in Dispatcher's 
-<b>Options</b> menu. Currently automatic functions are limited, but more will be 
-added in the future.</p>
+<b>Options</b> menu. <b>Note: Automated allocation of Sections is not implemented 
+in the current version of Dispatcher</b>. It is expected to be added in the 
+future.</p>
 </li>
 <li><p>Check <b>Automatically set turnouts when a Section is allocated</b> to 
 activate automatic setting of turnouts. Uncheck to deactivate automatic 
 setting of turnouts. This item is equivalent to <b>Auto Set Turnouts</b> in 
-Dispatcher's <b>Options</b> menu. This item requires that "<i>Use connectivity 
-from Layout Editor panel</i>" be checked (see above). Turnouts will not be set 
+Dispatcher's <b>Options</b> menu. This item requires that <b>Use connectivity 
+from Layout Editor panel</b> be checked (see above). Turnouts will not be set 
 unless the Section to be allocated is free and unoccupied, except for the first
 Section of an Active Train that starts in the Transit. If turnouts cannot be 
 set, the dispatcher will be warned. When setting turnouts, Dispatcher only issues 
-commands to set turnouts; it does not wait for turnouts to actually change.</p>
+commands to set turnouts; it does not wait for turnouts to actually change. This
+item is required for automatic running of trains.</p>
 </li>
 <li><p>Check <b>Use short Active Train names</b> to use the train name as the 
 Active Train name in tables and selection boxes where Active Trains are 
@@ -100,27 +103,47 @@ creating a new Active Train. Uncheck to suppress setting the starting Block
 value to the train name. This feature is designed to facilitate Train 
 Tracking in Layout Editor panels.</p>
 </li>
+<li><p> Check <b>Use alternate color for allocated Blocks</b> to use the Layout 
+Editor alternate unoccupied color for allocated Blocks in Layout Editor panels. 
+This option is designed to make it easier for the dispatcher to see which 
+Sections have been allocated.</p>
+</li>
+<li><p>Check <b>Place train name in allocated Blocks</b> to place the name of the 
+Active Train to which a Section is allocated in the Memory label of Blocks of the 
+Allocated Section. This feature, coupled with the above alternate color option, 
+makes it easy for the dispatcher to see which Allocated Section is allocated to 
+which Active Train when viewing a Layout Editor panel.</p>
+</li>
 <li><p>Select layout scale in the <b>Layout Scale</b> selection box. The selected 
-scale is used in conjunction with Block length in automatic running of trains.
+scale is used in conjunction with Block length in automatic running of trains.</p>
+</li>
+<li><p>Select the preferred <b>Units</b>, either <b>Scale Feet</b> or 
+<b>Scale Meters</b> for referencing train length and block length in 
+Dispatcher.</p>
+</li>
 </ul>
-<p><b>Note: Automated dispatching is not fully implemented in this version of 
-Dispatcher.</b> Some limited function is available, but more will 
-be available in later versions of Dispatcher.</p>
+<p><b>Important Note: Remember to save your Options</b> (see Below). If new 
+Dispatcher Options are not saved, they revert to the previous values the next 
+time Dispatcher is run.</p>
+
 <H2>Using the Options Menu
 </H2
 <p>The <b>Options</b> menu is used to access, edit, and save Dispatcher options. 
 Items in this menu and their use are explained below:
 <ul>
 <li><p><b>Auto Allocate</b> - This check box is used to turn automated 
-dispatching functions on (checked) or off (unchecked). This item is equivalent 
+allocation functions on (checked) or off (unchecked). This item is equivalent 
 to an item in the Options Window. Automated dispatching may be turned on or off 
-at any time. The item is repeated here for convenience of the dispatcher.</p>
+at any time. The item is repeated here for convenience of the dispatcher. 
+<b>Note: Automated allocation of Sections is not implemented in the current 
+version of Dispatcher.</b></p>
 </li>
 <li><p><b>Auto Set Turnouts</b> - This check box is used to turn on (checked) 
 or off (unchecked) automatic setting of turnouts when Sections are allocated. 
 This item is equivalent to an item in the Options Window. Automatic setting of 
-turnouts may be turned on or off at any time. The item is repeated here for 
-convenience of the dispatcher.</p>
+turnouts may be turned on or off at any time, except for automatically running 
+Active Trains. The item is repeated here for the convenience of the 
+dispatcher.</p>
 </li>
 <li><p><b>Options Window...</b> - Selecting this item brings up the Options 
 Window described above.</p>

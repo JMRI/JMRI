@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: AllocateExtra.shtml,v 1.4 2009-02-05 23:54:11 djduchamp Exp $ -->
+<!-- $Id: AllocateExtra.shtml,v 1.5 2010-04-26 18:20:46 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -37,10 +37,11 @@ needed.</p>
 
 <p> Extra Sections are allocated manually via the Dispatcher panel, using this 
 window to select the Active Train and the Section to be allocated. Once allocated, 
-extra Sections will show in the <b><a href="AllocatedSections.shtml">Allocated 
-Sections</a></b> window.  The <b>Release</b> button in the Allocated 
-Sections window should be used to release the extra Sections when they are no 
-longer required.</p>
+extra Sections will show in the <b>Allocated Sections</b> table in the 
+<b><a href="Dispatcher.shtml">Dispatcher</a></b> window.  The <b>Release</b> button 
+in the Allocated Sections table should be used to release the extra Sections when 
+they are no longer required. The <b>Auto Release</b> option does not release extra 
+Sections; extra Sections must be released manually.</p>
 
 <p>Note: Turnout checking and turnout setting are turned off during Allocate Extra.  
 Turnouts should be set as needed by the dispatcher or by the engineer.</p>
@@ -74,7 +75,7 @@ disappears.</p>
 Section.</p>
 </li>
 </ol>
-<p>Note: If this window accidently should be left open, allocating a Section in 
+<p>Note: If this window accidentally should be left open, allocating a Section in 
 another manner will automatically cancel the operation in this window, and this 
 window will disappear.
 
