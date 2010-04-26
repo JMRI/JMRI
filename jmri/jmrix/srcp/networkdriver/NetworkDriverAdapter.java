@@ -2,12 +2,16 @@
 
 package jmri.jmrix.srcp.networkdriver;
 
-import jmri.jmrix.srcp.SRCPMessage;
+
 import jmri.jmrix.srcp.SRCPPortController;
-import jmri.jmrix.srcp.SRCPProgrammer;
-import jmri.jmrix.srcp.SRCPProgrammerManager;
+/*import jmri.jmrix.srcp.SRCPProgrammer;
+import jmri.jmrix.srcp.SRCPMessage;
+import jmri.jmrix.srcp.SRCPProgrammerManager;*/
 import jmri.jmrix.srcp.SRCPTrafficController;
 
+/*import java.io.*;
+import java.net.*;
+import java.util.Vector;*/
 
 /**
  * Implements SerialPortAdapter for the SRCP system network connection.
@@ -15,11 +19,16 @@ import jmri.jmrix.srcp.SRCPTrafficController;
  * an SRCP server (daemon) via a telnet connection.
  * Normally controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008, 2010
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
-public class NetworkDriverAdapter extends SRCPPortController {
+public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter{
+
+    public NetworkDriverAdapter() {
+        super();
+        adaptermemo = new jmri.jmrix.srcp.SRCPSystemConnectionMemo();
+    }
 
     /**
      * set up all of the other objects to operate with an SRCP command
@@ -27,9 +36,13 @@ public class NetworkDriverAdapter extends SRCPPortController {
      */
     public void configure() {
         // connect to the traffic controller
-        SRCPTrafficController.instance().connectPort(this);
+        SRCPTrafficController control = SRCPTrafficController.instance();
+        control.connectPort(this);
+        adaptermemo.setTrafficController(control);
+        adaptermemo.configureManagers();
+        adaptermemo.configureCommandStation();
 
-        jmri.InstanceManager.setProgrammerManager(
+        /*jmri.InstanceManager.setProgrammerManager(
                 new SRCPProgrammerManager(
                     new SRCPProgrammer()));
 
@@ -44,21 +57,29 @@ public class NetworkDriverAdapter extends SRCPPortController {
         // consist manager.
         // jmri.InstanceManager.setConsistManager(new jmri.jmrix.srcp.SRCPConsistManager());
 
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.srcp.SRCPCommandStation());
 
-        // start the connection
-        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("SET PROTOCOL SRCP 0.8.3\n"), null);
-        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("SET CONNECTIONMODE SRCP COMMAND\n"), null);
-        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage("GO\n"), null);
-        // mark OK for menus
+        // mark OK for menus*/
         jmri.jmrix.srcp.ActiveFlag.setActive();
     }
+    
+    public boolean status() {return opened;}
+
+    // private control members
+    private boolean opened = false;
 
     static public NetworkDriverAdapter instance() {
-        if (mInstance == null) mInstance = new NetworkDriverAdapter();
+        if (mInstance == null){
+            mInstance = new NetworkDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+        }
         return mInstance;
     }
     static NetworkDriverAdapter mInstance = null;
+    
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());
 
