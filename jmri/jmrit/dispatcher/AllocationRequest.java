@@ -15,10 +15,22 @@ import java.util.ResourceBundle;
  *	a manager for AllocationRequest objects.
  * <P>
  * AllocationRequests are transient, and are not saved to disk.
- * <P>
  *
- * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.2 $
+ * <P>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is open source software; you can redistribute it and/or modify it 
+ * under the terms of version 2 of the GNU General Public License as 
+ * published by the Free Software Foundation. See the "COPYING" file for 
+ * a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT 
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
+ * for more details.
+ *
+ * @author	Dave Duchamp  Copyright (C) 2008-2010
+ * @version	$Revision: 1.3 $
  */
 public class AllocationRequest {
 

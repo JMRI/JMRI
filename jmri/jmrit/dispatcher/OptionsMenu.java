@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -112,6 +112,8 @@ public class OptionsMenu extends JMenu {
 	JCheckBox extraColorForAllocatedCheckBox = new JCheckBox(rb.getString("ExtraColorForAllocatedBox"));
 	JCheckBox nameInAllocatedBlockCheckBox = new JCheckBox(rb.getString("NameInAllocatedBlockBox"));
 	JComboBox layoutScaleBox = new JComboBox();
+	JRadioButton scaleFeet = new JRadioButton(rb.getString("ScaleFeet"));
+	JRadioButton scaleMeters = new JRadioButton(rb.getString("ScaleMeters"));
 	
 	private void optionWindowRequested(ActionEvent e) {
 		if (optionsFrame == null) {
@@ -182,6 +184,18 @@ public class OptionsMenu extends JMenu {
 			p8.add(layoutScaleBox); 
 			layoutScaleBox.setToolTipText(rb.getString("ScaleBoxHint"));
 			optionsPane.add(p8);
+			JPanel p12 = new JPanel();
+			p12.setLayout(new FlowLayout());
+			p12.add(new JLabel(rb.getString("Units")+"  "));
+			ButtonGroup scaleGroup = new ButtonGroup();
+			p12.add(scaleFeet);
+			scaleFeet.setToolTipText(rb.getString("ScaleFeetHint"));
+			scaleGroup.add(scaleFeet);
+			p12.add(new JLabel("  "));
+			p12.add(scaleMeters);
+			scaleMeters.setToolTipText(rb.getString("ScaleMetersHint"));
+			scaleGroup.add(scaleMeters);
+			optionsPane.add(p12);
 			optionsPane.add(new JSeparator());
 			JPanel p9 = new JPanel();
 			p9.setLayout(new FlowLayout());
@@ -223,6 +237,8 @@ public class OptionsMenu extends JMenu {
 		nameInBlockCheckBox.setSelected(dispatcher.getShortNameInBlock());
 		extraColorForAllocatedCheckBox.setSelected(dispatcher.getExtraColorForAllocated());
 		nameInAllocatedBlockCheckBox.setSelected(dispatcher.getNameInAllocatedBlock());
+		scaleMeters.setSelected(dispatcher.getUseScaleMeters());
+		scaleFeet.setSelected(!dispatcher.getUseScaleMeters());
 		optionsFrame.pack();
 		optionsFrame.setVisible(true);
 	}
@@ -250,6 +266,7 @@ public class OptionsMenu extends JMenu {
 		dispatcher.setExtraColorForAllocated(extraColorForAllocatedCheckBox.isSelected());
 		dispatcher.setNameInAllocatedBlock(nameInAllocatedBlockCheckBox.isSelected());
 		dispatcher.setScale(layoutScaleBox.getSelectedIndex()+1);
+		dispatcher.setUseScaleMeters(scaleMeters.isSelected());
 		optionsFrame.setVisible(false);	
 		optionsFrame.dispose();  // prevent this window from being listed in the Window menu.
 		optionsFrame = null;
@@ -263,7 +280,9 @@ public class OptionsMenu extends JMenu {
 			
 	private void saveRequested(ActionEvent e) {
 		try {
-			new OptionsFile().writeDispatcherOptions(dispatcher);
+// djd debugging
+//			new OptionsFile().writeDispatcherOptions(dispatcher);
+			OptionsFile.instance().writeDispatcherOptions(dispatcher);
 		} 
 		//catch (org.jdom.JDOMException jde) { 
 		//	log.error("Exception writing Dispatcher options: "+jde); 

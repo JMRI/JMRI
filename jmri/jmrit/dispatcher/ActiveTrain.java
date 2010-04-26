@@ -31,21 +31,23 @@ import java.util.ResourceBundle;
  *       PAUSED - Paused waiting for a user-specified number of fast clock minutes.  The
  *                  Active Train is expected to move to either RUNNING or WAITING once the
  *                  specified number of minutes has elapsed. This is intended for automatic
- *                  station stops.
+ *                  station stops. (automatic trains only)
  *       WAITING - Stopped waiting for a Section allocation. This is the state the Active
  *                  Train is in when it is created in Dispatcher.
  *       WORKING - Peforming work under control of a human engineer. This is the state an
  *                  Active Train assumes when an engineer is picking up or setting out cars
- *                  at industries.
+ *                  at industries. (automatic trains only)
  *       READY - Train has completed WORKING, and is awaiting a restart - dispatcher clearance
- *                  to resume running.
+ *                  to resume running. (automatic trains only)
  *       STOPPED - Train was stopped by the dispatcher. Dispatcher must resume. (automatic trains only)
  *       DONE -  Train has completed its transit of the layout and is ready to be terminated 
- *                  by the dispatcher.
+ *                  by the dispatcher. 
+ * Status is a bound property.
+ * <P>
  * The ActiveTrain status should maintained (setStatus) by the running class, or if running 
- *       in DISPATCHED mode, by the dispatcher (if he/she choses to do so).
+ *       in DISPATCHED mode, by Dispatcher.
  * When an ActiveTrain is WAITING, and the dispatcher allocates a section to it, the status 
- *       of the ActiveTrain is automatically set to RUNNING. So an autoRun method can listen 
+ *       of the ActiveTrain is automatically set to RUNNING. So an autoRun class can listen 
  *       to the status of the ActiveTrain to trigger start up if the train has been waiting
  *       for the dispatcher.
  * Npte: There is still more to be programmed here.
@@ -60,9 +62,10 @@ import java.util.ResourceBundle;
  *       ActiveTrain.
  * <P>
  * A ActiveTrains are referenced via a list in DispatcherFrame, which serves as 
- *	a manager for ActiveTrain objects.
+ *		a manager for ActiveTrain objects.
  * <P>
- * ActiveTrains are transient, and are not saved to disk.
+ * ActiveTrains are transient, and are not saved to disk. Active Train information can be saved 
+ *		to disk, making set up with the same options, etc very easy.
  *
  * <P>
  * This file is part of JMRI.
@@ -79,7 +82,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ActiveTrain {
 
@@ -100,7 +103,7 @@ public class ActiveTrain {
 	 * When created, the Status of an Active Train is always WAITING,
 	 */ 
 	public static final int RUNNING = 0x01;   // running on the layout
-	public static final int PAUSED = 0x02;    // pause for a number of fast minutes
+	public static final int PAUSED = 0x02;    // paused for a number of fast minutes
 	public static final int WAITING = 0x04;   // waiting for a section allocation
 	public static final int WORKING = 0x08;   // actively working
 	public static final int READY = 0x10;	  // completed work, waiting for restart
@@ -145,6 +148,7 @@ public class ActiveTrain {
 	private ArrayList<AllocatedSection> mAllocatedSections = new ArrayList<AllocatedSection>();
 	private jmri.Section mLastAllocatedSection = null;
 	private jmri.Section mSecondAllocatedSection = null;
+	private int mNextAllocationNumber = 1;
 	private jmri.Section mNextSectionToAllocate = null;
 	private int mNextSectionSeqNumber = 0;
 	private int mNextSectionDirection = 0;
@@ -156,16 +160,25 @@ public class ActiveTrain {
 	private int mPriority = 0;
 	private boolean mAutoRun = false;
 	private String mDccAddress = "";
-// djd debugging
 	private boolean mResetWhenDone = true;
-	boolean mDelayedStart = false;
-	int mDepartureTimeHr = 8;
-	int mDepartureTimeMin = 0;
-	int mTrainType = LOCAL_FREIGHT;
+	private boolean mDelayedStart = false;
+	private int mDepartureTimeHr = 8;
+	private int mDepartureTimeMin = 0;
+	private int mTrainType = LOCAL_FREIGHT;
+	
+	// start up instance variables
+	private boolean mStarted = false;
+	
 	
 	/**
      * Access methods 
      */
+	public boolean getStarted() {return mStarted;}
+	public void setStarted() {
+		mStarted = true;
+		mStatus = RUNNING;
+		setStatus(WAITING);
+	}
     public jmri.Transit getTransit() { 
 		return mTransit; 
 	}
@@ -185,9 +198,11 @@ public class ActiveTrain {
 	public void setStatus(int status) {  
 		if ( (status==RUNNING) || (status==PAUSED) || (status==WAITING) || (status==WORKING) ||
 					(status==READY) || (status==STOPPED) || (status==DONE)) {
-			int old = mStatus;
-			mStatus = status;
-			firePropertyChange("status", new Integer(old), new Integer(mStatus));
+			if (mStatus!=status) {
+				int old = mStatus;
+				mStatus = status;
+				firePropertyChange("status", new Integer(old), new Integer(mStatus));
+			}
 		}
 		else
 			log.error("Invalid ActiveTrain status - "+status);
@@ -197,8 +212,13 @@ public class ActiveTrain {
 			return rb.getString("RUNNING");
 		else if (mStatus==PAUSED) 
 			return rb.getString("PAUSED");
-		else if (mStatus==WAITING) 
+		else if (mStatus==WAITING) {
+			if (!mStarted && mDelayedStart) {
+				return jmri.jmrit.beantable.LogixTableAction.formatTime(mDepartureTimeHr,
+						mDepartureTimeMin)+" "+rb.getString("START");
+			}
 			return rb.getString("WAITING");
+		}
 		else if (mStatus==WORKING) 
 			return rb.getString("WORKING");
 		else if (mStatus==READY) 
@@ -263,12 +283,17 @@ public class ActiveTrain {
 				// this  is the next Section in the Transit, update pointers
 				mLastAllocatedSection = as.getSection();
 				mNextSectionToAllocate = as.getNextSection();
-				mNextSectionSeqNumber = as.getSequence()+1;
+				mNextSectionSeqNumber = as.getNextSectionSequence();
+				mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(
+										mNextSectionToAllocate,mNextSectionSeqNumber);
+				as.setAllocationNumber(mNextAllocationNumber);
+				mNextAllocationNumber ++;
 			}
 			else {
 				// this is an extra allocated Section
+				as.setAllocationNumber(-1);
 			}
-			if (mStatus==WAITING) {
+			if ( (mStatus==WAITING) && mStarted ) {
 				setStatus(RUNNING);
 			}
 			if (as.getSequence()==2) {
@@ -306,6 +331,9 @@ public class ActiveTrain {
 			return;
 		}
 		mAllocatedSections.remove(index);
+		if (mAutoRun) {
+			mAutoActiveTrain.removeAllocatedSection(as);
+		}
 		if (DispatcherFrame.instance().getNameInAllocatedBlock()) {
 			as.getSection().clearNameInUnoccupiedBlocks();
 			as.getSection().suppressNameUpdate(false);
@@ -319,13 +347,6 @@ public class ActiveTrain {
 								mAllocatedSections.size()-1).getSection();
 			}
 		}
-		if ( (mResetWhenDone) && (mAllocatedSections.size()==1) && (mNextSectionToAllocate==null) ) {
-			AllocatedSection las = mAllocatedSections.get(0);
-			las.resetToBeginning();
-			mNextSectionToAllocate = mSecondAllocatedSection;
-			mNextSectionSeqNumber = 2;
-			mNextSectionDirection = mTransit.getDirectionFromSectionAndSeq(mNextSectionToAllocate,2);
-		}	
 	}
 	public java.util.ArrayList<AllocatedSection> getAllocatedSectionList() {
 		ArrayList<AllocatedSection> list = new ArrayList<AllocatedSection>();
@@ -407,14 +428,11 @@ public class ActiveTrain {
 		if (DispatcherFrame.instance().getShortNameInBlock()) {
 			mStartBlock.setValue(mTrainName);
 		}
-// here add code to start a throttle and start running the train if it is in autoRun
 		return ar;
 	}
 	
 	public void terminate() {
-// here add code to stop the train and release its throttle if it is in autoRun
 		mTransit.setState(jmri.Transit.IDLE);
-// here add code that might be needed to release the train.
 	}
     
 	public void dispose() {

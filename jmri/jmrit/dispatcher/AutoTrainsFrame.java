@@ -3,16 +3,11 @@
 package jmri.jmrit.dispatcher;
 
 import jmri.util.*;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-//import jmri.jmrit.display.LayoutEditor;
 
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
-import javax.swing.table.TableColumnModel;
-import javax.swing.table.TableColumn;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -22,7 +17,7 @@ import java.util.ResourceBundle;
  *  automatically under Dispatcher.
  * <P>
  * There is only one AutoTrains window. AutoTrains are added and deleted from this window
- *  as they are added or removed.
+ *  as they are added or terminated.
  * <P>
  * This file is part of JMRI.
  * <P>
@@ -37,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	
@@ -96,6 +91,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 	private ArrayList<JLabel> _trainLabels = new ArrayList<JLabel>();
 	private ArrayList<JButton> _stopButtons = new ArrayList<JButton>();
 	private ArrayList<JButton> _manualButtons = new ArrayList<JButton>();
+	private ArrayList<JButton> _resumeAutoRunningButtons = new ArrayList<JButton>();
 	private ArrayList<JRadioButton> _forwardButtons = new ArrayList<JRadioButton>();
 	private ArrayList<JRadioButton> _reverseButtons = new ArrayList<JRadioButton>();
 	private ArrayList<JSlider> _speedSliders = new ArrayList<JSlider>();
@@ -106,8 +102,6 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 		autoTrainsFrame = this;
 		autoTrainsFrame.setTitle(rb.getString("TitleAutoTrains"));
 		JMenuBar menuBar = new JMenuBar();
-// here add any menus needed
-//	e.g.	menuBar.add(new OptionsMenu(this));
 		setJMenuBar(menuBar);
 		autoTrainsFrame.addHelpMenu("package.jmri.jmrit.dispatcher.AutoTrains", true);
 		contentPane = autoTrainsFrame.getContentPane();
@@ -166,6 +160,16 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 				manualAuto(s);
 			}
 		});
+		JButton tResumeAuto = new JButton(rb.getString("ResumeAutoButton"));
+		px.add(tResumeAuto);
+		_resumeAutoRunningButtons.add(tResumeAuto);
+		tResumeAuto.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				resumeAutoOperation(s);
+			}
+		});
+		tResumeAuto.setVisible(false);
+		tResumeAuto.setToolTipText(rb.getString("ResumeAutoButtonHint"));
 		ButtonGroup directionGroup = new ButtonGroup();
 		JRadioButton fBut = new JRadioButton(rb.getString("ForwardRadio"));
 		px.add(fBut);
@@ -226,21 +230,37 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 		int index = getTrainIndex (s);
 		if (index>=0) {
 			AutoActiveTrain aat = _autoTrainsList.get(index);
-			ActiveTrain at = aat.getActiveTrain();
-			if (at.getStatus()==ActiveTrain.STOPPED) {
-				// resume
-				aat.setForward(true);
-				aat.getAutoEngineer().setHalt(false);
-				at.setStatus(aat.getSavedStatus());
+			if (aat.getAutoEngineer()!=null) {
+				ActiveTrain at = aat.getActiveTrain();
+				if (at.getStatus()==ActiveTrain.STOPPED) {
+					// resume
+					if (aat.getRunInReverse()) {
+						aat.setForward(false);
+					}
+					else {
+						aat.setForward(true);
+					}
+					aat.getAutoEngineer().setHalt(false);
+					aat.restoreSavedSpeed();
+					at.setStatus(aat.getSavedStatus());
+					if ( (at.getStatus()==ActiveTrain.RUNNING) || 
+							(at.getStatus()==ActiveTrain.WAITING) ) {
+						aat.setSpeedBySignal();
+					}
+				}
+				else {
+					// stop
+					aat.getAutoEngineer().setHalt(true);
+					aat.saveSpeed();
+					aat.setSavedStatus(at.getStatus());
+					at.setStatus(ActiveTrain.STOPPED);
+					if (at.getMode()==ActiveTrain.MANUAL) {
+						_speedSliders.get(index).setValue(0);
+					}
+				}
 			}
 			else {
-				// stop
-				aat.getAutoEngineer().setHalt(true);
-				aat.setSavedStatus(at.getStatus());
-				at.setStatus(ActiveTrain.STOPPED);
-				if (at.getMode()==ActiveTrain.MANUAL) {
-					_speedSliders.get(index).setValue(0);
-				}
+				log.error ("unexpected null autoEngineer");
 			}
 		}
 		displayAutoTrains();
@@ -254,15 +274,37 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 			// if train is AUTOMATIC mode, change it to MANUAL
 			if (at.getMode()==ActiveTrain.AUTOMATIC) {
 				at.setMode(ActiveTrain.MANUAL);
-// djd debugging
-// here ensure that manual mode starts with the train stopped
+				if (aat.getAutoEngineer()!=null) {
+					aat.saveSpeed();
+					aat.getAutoEngineer().setHalt(true);
+					aat.setTargetSpeed(0.0f);
+					aat.waitUntilStopped();
+					aat.getAutoEngineer().setHalt(false);
+					
+				}
 			}
 			else if (at.getMode()==ActiveTrain.MANUAL) {
 				at.setMode(ActiveTrain.AUTOMATIC);
+				aat.restoreSavedSpeed();
+				aat.setForward(!aat.getRunInReverse());
+				if ( (at.getStatus()==ActiveTrain.RUNNING) || 
+						(at.getStatus()==ActiveTrain.WAITING) ) {
+					aat.setSpeedBySignal();
+				}
 			}
 		}
 		displayAutoTrains();
 	}
+
+	public void resumeAutoOperation(String s) {
+		int index = getTrainIndex (s);
+		if (index>=0) {
+			AutoActiveTrain aat = _autoTrainsList.get(index);
+			aat.resumeAutomaticRunning();
+		}
+		displayAutoTrains();
+	}
+			
 	public void directionButton(String s) {
 		int index = getTrainIndex (s);
 		if (index>=0) {
@@ -291,6 +333,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 			}
 		}
 	}
+	
 	private int getTrainIndex (String s) {
 		int index = -1;
 		try {
@@ -310,8 +353,9 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 		for (int i=0; i<_autoTrainsList.size(); i++) {
 			AutoActiveTrain aat = _autoTrainsList.get(i);
 			ActiveTrain at = aat.getActiveTrain();
-			if (at.getStatus()!=ActiveTrain.STOPPED) {
+			if ( (at.getStatus()!=ActiveTrain.STOPPED) && (aat.getAutoEngineer()!=null) ) {
 				aat.getAutoEngineer().setHalt(true);
+				aat.saveSpeed();
 				aat.setSavedStatus(at.getStatus());
 				at.setStatus(ActiveTrain.STOPPED);
 			}
@@ -319,7 +363,7 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 		displayAutoTrains();
 	}
 	
-	private void displayAutoTrains() {
+	protected void displayAutoTrains() {
 		// set up AutoTrains to display
 		while(_autoTrainsList.size()>_JPanels.size()) newTrainLine();
 		for (int i=0; i<_autoTrainsList.size(); i++) {
@@ -338,19 +382,34 @@ public class AutoTrainsFrame extends jmri.util.JmriJFrame {
 				if (at.getStatus()==ActiveTrain.STOPPED) {
 					stopButton.setText(rb.getString("ResumeButton"));
 					stopButton.setToolTipText(rb.getString("ResumeButtonHint"));
+					_resumeAutoRunningButtons.get(i).setVisible(false);
+				}
+				else if (at.getStatus()==ActiveTrain.WORKING) {
+					stopButton.setVisible(false);
 				}
 				else {
 					stopButton.setText(rb.getString("StopButton"));
 					stopButton.setToolTipText(rb.getString("StopButtonHint"));
+					stopButton.setVisible(true);
 				}
 				JButton manualButton = _manualButtons.get(i);
 				if (at.getMode()==ActiveTrain.AUTOMATIC) {
 					manualButton.setText(rb.getString("ToManualButton"));
 					manualButton.setToolTipText(rb.getString("ToManualButtonHint"));
+					manualButton.setVisible(true);
+					_resumeAutoRunningButtons.get(i).setVisible(false);
 					_forwardButtons.get(i).setVisible(false);
 					_reverseButtons.get(i).setVisible(false);
 					_speedSliders.get(i).setVisible(false);
 				}
+				else if ( (at.getMode()==ActiveTrain.MANUAL) && ( (at.getStatus()==ActiveTrain.WORKING) ||
+										(at.getStatus()==ActiveTrain.READY)	) ) {
+					manualButton.setVisible(false);
+					_resumeAutoRunningButtons.get(i).setVisible(true);
+					_forwardButtons.get(i).setVisible(false);
+					_reverseButtons.get(i).setVisible(false);
+					_speedSliders.get(i).setVisible(false);
+				}	
 				else {
 					manualButton.setText(rb.getString("ToAutoButton"));
 					manualButton.setToolTipText(rb.getString("ToAutoButtonHint"));

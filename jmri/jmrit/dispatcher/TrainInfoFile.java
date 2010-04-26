@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -43,6 +43,10 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 
 	public TrainInfoFile () {
 		super();
+	}
+	public TrainInfoFile (String testLocation) {
+		super();
+		fileLocation = testLocation;
 	}
 	
 	// operational variables
@@ -160,6 +164,9 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 					if (traininfo.getAttribute("speedfactor")!=null) {
 						tInfo.setSpeedFactor(traininfo.getAttribute("speedfactor").getValue());
 					}
+					if (traininfo.getAttribute("maxspeed")!=null) {
+						tInfo.setMaxSpeed(traininfo.getAttribute("maxspeed").getValue());
+					}
 					if (traininfo.getAttribute("ramprate")!=null) {
 						tInfo.setRampRate(traininfo.getAttribute("ramprate").getValue());
 					}
@@ -167,6 +174,16 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 						tInfo.setResistanceWheels(true);
 						if (traininfo.getAttribute("resistancewheels").getValue().equals("no"))
 							tInfo.setResistanceWheels(false);
+					}
+					if (traininfo.getAttribute("runinreverse")!=null) {
+						tInfo.setRunInReverse(true);
+						if (traininfo.getAttribute("runinreverse").getValue().equals("no"))
+							tInfo.setRunInReverse(false);
+					}
+					if (traininfo.getAttribute("sounddecoder")!=null) {
+						tInfo.setSoundDecoder(true);
+						if (traininfo.getAttribute("sounddecoder").getValue().equals("no"))
+							tInfo.setSoundDecoder(false);
 					}
 					if (traininfo.getAttribute("maxtrainlength")!=null) {
 						tInfo.setMaxTrainLength(traininfo.getAttribute("maxtrainlength").getValue());
@@ -212,8 +229,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 		traininfo.setAttribute("autorun", ""+(tf.getRunAuto()?"yes":"no"));
 		// here save items related to automatically running active trains
 		traininfo.setAttribute("speedfactor", tf.getSpeedFactor());
+		traininfo.setAttribute("maxspeed", tf.getMaxSpeed());
 		traininfo.setAttribute("ramprate", tf.getRampRate());
 		traininfo.setAttribute("resistancewheels", ""+(tf.getResistanceWheels()?"yes":"no"));
+		traininfo.setAttribute("runinreverse", ""+(tf.getRunInReverse()?"yes":"no"));
+		traininfo.setAttribute("sounddecoder", ""+(tf.getSoundDecoder()?"yes":"no"));
 		traininfo.setAttribute("maxtrainlength", tf.getMaxTrainLength());		
 
 		root.addContent(traininfo);

@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  *		TrainInfoFile.java and dispatcher-traininfo.DTD as well as this module.
  *
  * @author	Dave Duchamp  Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class TrainInfo {
 
@@ -44,9 +44,12 @@ public class TrainInfo {
 	
 	// instance variables for automatic operation
 	String speedFactor = ""+1.0f;
+	String maxSpeed = ""+0.6f;
 	String rampRate = rb.getString("RAMP_NONE"); 
 	boolean resistanceWheels = true;
-	String maxTrainLength = "18.0";
+	boolean runInReverse = false;
+	boolean soundDecoder = false;
+	String maxTrainLength = "200.0";
 	
 	// temporary instance variables
 	
@@ -91,10 +94,16 @@ public class TrainInfo {
      */
 	protected void setSpeedFactor(String s) {speedFactor = s;}
 	protected String getSpeedFactor() {return speedFactor;}
+	protected void setMaxSpeed(String s) {maxSpeed = s;}
+	protected String getMaxSpeed() {return maxSpeed;}
 	protected void setRampRate(String s) {rampRate = s;}
 	protected String getRampRate() {return rampRate;}
 	protected void setResistanceWheels(boolean b) {resistanceWheels = b;}
 	protected boolean getResistanceWheels() {return resistanceWheels;}
+	protected void setRunInReverse(boolean b) {runInReverse = b;}
+	protected boolean getRunInReverse() {return runInReverse;}
+	protected void setSoundDecoder(boolean b) {soundDecoder = b;}
+	protected boolean getSoundDecoder() {return soundDecoder;}
 	protected void setMaxTrainLength(String s) {maxTrainLength = s;}
 	protected String getMaxTrainLength() {return maxTrainLength;}
 

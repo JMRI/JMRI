@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -47,6 +47,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 
 	public OptionsFile () {
 		super();
+	}
+	public OptionsFile (String fileName) {
+		super();
+		defaultFileName = fileName;
+		_instance = this;
 	}
 	
 	// operational variables
@@ -156,6 +161,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 							}
 						}
 					}
+					if (options.getAttribute("usescalemeters")!=null) {
+						dispatcher.setUseScaleMeters(true);
+						if (options.getAttribute("usescalemeters").getValue().equals("no"))
+							dispatcher.setUseScaleMeters(false);
+					}
 				}
 			}
 		} 
@@ -195,6 +205,7 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 		options.setAttribute("extracolorforallocated", ""+(dispatcher.getExtraColorForAllocated()?"yes":"no"));
 		options.setAttribute("nameinallocatedblock", ""+(dispatcher.getNameInAllocatedBlock()?"yes":"no"));
 		options.setAttribute("layoutscale", Scale.getShortScaleID(dispatcher.getScale()));
+		options.setAttribute("usescalemeters", ""+(dispatcher.getUseScaleMeters()?"yes":"no"));
 		root.addContent(options);
 			
 		// write out the file
@@ -212,6 +223,12 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 			throw (ioe);
 		}
 	}
+	
+	private static OptionsFile _instance = null;
+	public static OptionsFile instance() {
+		if (_instance == null) _instance = new OptionsFile();
+		return _instance;
+	}		
   
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OptionsFile.class.getName());
 }
