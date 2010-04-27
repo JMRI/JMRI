@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.25 $
+ * @version			$Revision: 2.26 $
  */
 
 package jmri.jmrix.lenz;
@@ -529,7 +529,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	       InternalState = OFFSENT;
             }
             // Then send the message.
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            XNetTrafficController.instance().sendHighPriorityXNetMessage(msg, this);
     }
 
 

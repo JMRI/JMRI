@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.15 $
+ * @version 		$Revision: 2.16 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -52,6 +52,8 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
         mCommandStation = pCommandStation;
 	setAllowUnexpectedReply(true);
 	mListenerMasks = new Hashtable<XNetListener,Integer>();
+        HighPriorityQueue=new java.util.concurrent.LinkedBlockingQueue<XNetMessage>();
+        HighPriorityListeners= new java.util.concurrent.LinkedBlockingQueue<XNetListener>();
     }
 
     // Abstract methods for the XNetInterface
@@ -133,8 +135,46 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 		}
         }
 
- 	protected AbstractMRMessage pollMessage() { return null; }
-    	protected AbstractMRListener pollReplyHandler() { return null; }
+        // We use the pollMessage routines for high priority messages.
+        // This means responses to time critical messages (turnout off 
+        // messages).  
+        java.util.concurrent.LinkedBlockingQueue<XNetMessage> HighPriorityQueue=null;
+        java.util.concurrent.LinkedBlockingQueue<XNetListener> HighPriorityListeners=null;
+
+
+        public void sendHighPriorityXNetMessage(XNetMessage m, XNetListener reply)
+        {
+             try {
+               HighPriorityQueue.put(m);
+               HighPriorityListeners.put(reply);
+             } catch ( java.lang.InterruptedException ie){
+                 log.error("Interupted while adding High Priority Message to Queue");
+             }
+        }
+
+ 	protected AbstractMRMessage pollMessage() {
+                try{ 
+                   if(HighPriorityQueue.peek()==null) 
+                      return null;
+                   else 
+                      return HighPriorityQueue.take(); 
+                } catch ( java.lang.InterruptedException ie){
+                      log.error("Interupted while removing High Priority Message from Queue");
+                }
+                return null;
+        }
+
+    	protected AbstractMRListener pollReplyHandler() { 
+                try {
+                if(HighPriorityListeners.peek()==null) 
+                    return null;
+                else 
+                    return HighPriorityListeners.take(); 
+                } catch ( java.lang.InterruptedException ie){
+                    log.error("Interupted while removing High Priority Message Listener from Queue");
+                }
+                return null;
+        }
 
    public synchronized void addXNetListener(int mask, XNetListener l) {
 	addListener(l);
