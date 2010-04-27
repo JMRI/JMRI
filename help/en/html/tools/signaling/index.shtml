@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: index.shtml,v 1.9 2010-01-18 16:57:49 kevin-dickerson Exp $ -->
+<!-- $Id: index.shtml,v 1.10 2010-04-27 04:37:28 jacobsen Exp $ -->
 <title>JMRI: Signaling</title>
 
 <!-- Style -->
@@ -427,6 +427,31 @@ is available for use if you really want to do something
 in detail. JMRI provides control of most DCC and C/MRI systems,
 with useful tools for manipulating turnouts, sensors, signals, locomotives,
 etc as well as powerful tools for working on the user screen.
+
+<h2>For more information on signaling</h2>
+
+There are a lot of excellent sources of information on prototype signaling.
+<ul>
+<li>
+John Armstrong's book "The Railroad: What It Is, What It Does"
+
+<li>
+Dr. Bruce Chubb's C/MRI User Manual rev 3.0 has signaling information 
+in chapter 12.
+See particularly 12-11 on page 12-27.
+
+</ul>
+
+For information on the specifics of the technology:
+<ul>
+<li>
+<a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/">AREMA manual section on Circuit Nomenclature</a>
+
+<li>
+<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">AAR rules section 2</a>
+
+</ul>
+
 
 <!--#include virtual="/Footer" -->
 </body>
