@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.9 2010-04-20 15:23:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.10 2010-04-27 04:12:53 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -181,6 +181,7 @@ User can optionally run scripts when a train is moved and or terminated.
 
 <p>
 Pete Cressman added a "Warrant Throttle Adjustment Factor" to Logix
+and added delayed reaction to inputs to Warrants
 
 <p>
 Dan Boudreau added a new operations feature: Allow the user to specify a logo for the manifests and switch lists.
@@ -205,6 +206,29 @@ Kevin Dickerson updated the port interface structure to improve its structure an
 Dan Boudreau added a new operations check:
 Build option should not be changed once trains have been built;  
 Added error message and prevent user from making the change if there are built trains.
+
+<p>
+Paul Bender improved the way that turnout control timing is done for the Lenz protocol.
+
+<p>
+Bill Robinson provided an example of setting turnouts from a web page using the mini-webserver.
+
+<p>
+David Duchamp updated the
+<a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher documentation</a>.
+
+<p>
+Dan Boudreau fixed some problems with function buttons on throttles.
+
+<p>
+David Duchamp made a minor update to the Section table.
+
+<p>
+Kevin Dickerson fixed a bug that would sometimes prevent the complete preferences from being stored.
+
+<p>
+David Duchamp added automated running to the 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>.
 
 <!--#include virtual="/Footer" -->
 
