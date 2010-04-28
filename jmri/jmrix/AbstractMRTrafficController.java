@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.81 $
+ * @version         $Revision: 1.82 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -129,7 +129,7 @@ abstract public class AbstractMRTrafficController {
      * If no message is needed, you may return null.
      * 
      * If the programmerIdle() function returns true, enterNormalMode() is 
-     * called after a timeout while in IDLESTATE durring programing to 
+     * called after a timeout while in IDLESTATE during programming to 
      * return the system to normal mode.  
      * 
      */
@@ -156,6 +156,7 @@ abstract public class AbstractMRTrafficController {
     public static final int WAITREPLYINNORMMODESTATE = 35;  // xmt has done mode change, await reply
     public static final int OKSENDMSGSTATE = 40;        // mode change reply here, send original msg
     public static final int AUTORETRYSTATE = 45;        // received message where automatic recovery may occur with a retransmission, re-send original msg
+    public static final int POLLSTATE = 50;			// Send program mode or poll message
     
     protected boolean allowUnexpectedReply;
     
@@ -327,70 +328,81 @@ abstract public class AbstractMRTrafficController {
                 		log.error("transmitLoop interrupted");
                 	}
                 }
-                if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE)
-                    log.error("left timeout in unexpected state: "+mCurrentState);
-                if (mCurrentState == IDLESTATE) {
-                    // went around with nothing to do; leave programming state if in it
-                    if (mCurrentMode == PROGRAMINGMODE && programmerIdle() ) {
-                        log.debug("timeout causes leaving programming mode");
-                        mCurrentState = WAITREPLYINNORMMODESTATE;
-                        AbstractMRMessage msg = enterNormalMode();
-                        // if the enterNormalMode() message is null, we
-                        // don't want to try to send it to the port.
-                        if (msg!=null) {
-                            forwardToPort(msg, null);
-                            // wait for reply
-                            try {
-                                synchronized(xmtRunnable) {
-                                    xmtRunnable.wait(msg.getTimeout());
-                                }
-                            } catch (InterruptedException e) { 
-                                Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("interrupted while leaving programming mode");
-                            }
-                            checkReplyInDispatch();
-                            // exit program mode timeout?
-                            if (mCurrentState == WAITREPLYINNORMMODESTATE){
-                                // entering normal mode via timeout
-                                handleTimeout (msg,l);
-                                mCurrentMode = NORMALMODE;
-                            }
-                            // and go around again
-                        }
-                    } else if (mCurrentMode == NORMALMODE) {
-                        // We may need to poll
-                        AbstractMRMessage msg = pollMessage();
-                        if (msg != null) {
-                            // yes, send that
-                            log.debug("Sending poll, wait time "+Long.toString(waitTimePoll));
-                            mCurrentState = WAITMSGREPLYSTATE;
-                            forwardToPort(msg, pollReplyHandler());
-                            // wait for reply
-                            try {
-                                synchronized(xmtRunnable) {
-                                    xmtRunnable.wait(msg.getTimeout());
-                                }
-                            } catch (InterruptedException e) { 
-                                Thread.currentThread().interrupt(); // retain if needed later
-                                log.error("interrupted while waiting poll reply");
-                            }
-                            checkReplyInDispatch();
-                            // and go around again
-                            if (mCurrentState == WAITMSGREPLYSTATE) {
-                                handleTimeout(msg,l);
-                            } else {
-                                resetTimeout(msg);
-                            }
-                        } else {
-                            // no, just wait
-                        }
-                        waitTimePoll = 0;
-                    }
+                // we need to synchronize since mCurrentState can change during the if statement
+                synchronized(selfLock){
+                	if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE){
+                		log.error("left timeout in unexpected state: "+mCurrentState);
+                	}
+                }
+                // once we decide that mCurrentState is in the IDLESTATE and there's an xmt msg we must guarantee
+                // the change of mCurrentState to one of the waiting for reply states.  Therefore we need to synchronize.
+                synchronized(selfLock){
+                	if (mCurrentState == IDLESTATE) {
+                		mCurrentState = POLLSTATE;	// this prevents other transitions from the IDLESTATE 
+                	}
+                }
+                // went around with nothing to do; leave programming state if in it
+                if (mCurrentState == POLLSTATE && mCurrentMode == PROGRAMINGMODE && programmerIdle() ) {
+                	log.debug("timeout causes leaving programming mode");
+                	mCurrentState = WAITREPLYINNORMMODESTATE;
+                	AbstractMRMessage msg = enterNormalMode();
+                	// if the enterNormalMode() message is null, we
+                	// don't want to try to send it to the port.
+                	if (msg!=null) {
+                		forwardToPort(msg, null);
+                		// wait for reply
+                		try {
+                			synchronized(xmtRunnable) {
+                				xmtRunnable.wait(msg.getTimeout());
+                			}
+                		} catch (InterruptedException e) { 
+                			Thread.currentThread().interrupt(); // retain if needed later
+                			log.error("interrupted while leaving programming mode");
+                		}
+                		checkReplyInDispatch();
+                		// exit program mode timeout?
+                		if (mCurrentState == WAITREPLYINNORMMODESTATE){
+                			// entering normal mode via timeout
+                			handleTimeout (msg,l);
+                			mCurrentMode = NORMALMODE;
+                		}
+                		// and go around again
+                	}
+                } else if (mCurrentState == POLLSTATE && mCurrentMode == NORMALMODE) {
+                	// We may need to poll
+                	AbstractMRMessage msg = pollMessage();
+                	if (msg != null) {
+                		// yes, send that
+                		log.debug("Sending poll, wait time "+Long.toString(waitTimePoll));
+                		mCurrentState = WAITMSGREPLYSTATE;
+                		forwardToPort(msg, pollReplyHandler());
+                		// wait for reply
+                		try {
+                			synchronized(xmtRunnable) {
+                				xmtRunnable.wait(msg.getTimeout());
+                			}
+                		} catch (InterruptedException e) { 
+                			Thread.currentThread().interrupt(); // retain if needed later
+                			log.error("interrupted while waiting poll reply");
+                		}
+                		checkReplyInDispatch();
+                		// and go around again
+                		if (mCurrentState == WAITMSGREPLYSTATE) {
+                			handleTimeout(msg,l);
+                		} else {
+                			resetTimeout(msg);
+                		}
+                	}
+                	waitTimePoll = 0;
+                } 
+                // no messages, so back to idle
+                if (mCurrentState == POLLSTATE){
+                	mCurrentState =IDLESTATE;
                 }
             }
-        }   // end of permanent loop; go around again
-    }
-    
+        }
+    }   // end of permanent loop; go around again
+
     // Dispatch control and timer
     protected boolean replyInDispatch = false;          // true when reply has been received but dispatch not completed
     private int maxDispatchTime = 0;
@@ -758,7 +770,7 @@ abstract public class AbstractMRTrafficController {
         // Create message off the right concrete class
         AbstractMRReply msg = newReply();
 
-        // wait for start if needede
+        // wait for start if needed
         waitForStartOfReply(istream);
 
         // message exists, now fill it
