@@ -123,7 +123,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -187,6 +187,10 @@ public class SimulatorAdapter extends NcePortController implements
 		jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
 		jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+		
+		// note: the following must be changed to support multiple connections to NCE
+		NceTrafficController tc = NceTrafficController.instance();
+		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
 
 		NceSensorManager s;
 		jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());

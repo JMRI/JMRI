@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -132,6 +132,10 @@ public class UsbDriverAdapter extends NcePortController {
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+		
+		// note: the following must be changed to support multiple connections to NCE
+		NceTrafficController tc = NceTrafficController.instance();
+		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
 
         NceSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());

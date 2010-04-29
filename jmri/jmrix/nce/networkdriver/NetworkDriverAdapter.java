@@ -22,7 +22,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -50,6 +50,10 @@ public class NetworkDriverAdapter extends NcePortController {
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
+		
+		// note: the following must be changed to support multiple connections to NCE
+		NceTrafficController tc = NceTrafficController.instance();
+		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
 
         NceSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
