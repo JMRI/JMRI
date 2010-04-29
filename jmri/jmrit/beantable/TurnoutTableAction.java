@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.82 $
+ * @version     $Revision: 1.83 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -727,29 +727,26 @@ public class TurnoutTableAction extends AbstractTableAction {
             }
             //We have found another turnout with the same address, therefore we need to go onto the next address.
             sName=turnoutPrefix+curAddress;
-            if (sName.length()>2 && sName.charAt(1)=='T') {
-                // probably standard format turnout system name
-                String testSN = sName.substring(0,1)+"L"+sName.substring(2,sName.length());
-                jmri.Light testLight = InstanceManager.lightManagerInstance().
+			String testSN = getTurnoutPrefixFromName()+"L"+curAddress;
+			jmri.Light testLight = InstanceManager.lightManagerInstance().
                     getBySystemName(testSN);
-                if (testLight != null) {
-                    // Address is already used as a Light
-                    log.warn("Requested Turnout "+sName+" uses same address as Light "+testSN);
-                    if (!noWarn) {
-                        int selectedValue = JOptionPane.showOptionDialog(addFrame,
-                                                                         rb.getString("TurnoutWarn1")+" "+sName+" "+rb.getString("TurnoutWarn2")+" "+
-                                                                         testSN+".\n   "+rb.getString("TurnoutWarn3"),rb.getString("WarningTitle"),
-                                                                         JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
-                                                                         new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
-                                                                                      rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
-                        if (selectedValue == 1) return;   // return without creating if "No" response
-                        if (selectedValue == 2) {
-                            // Suppress future warnings, and continue
-                            noWarn = true;
-                        }
-                    }
-                }
-            }
+			if (testLight != null) {
+				// Address is already used as a Light
+				log.warn("Requested Turnout "+sName+" uses same address as Light "+testSN);
+				if (!noWarn) {
+					int selectedValue = JOptionPane.showOptionDialog(addFrame,
+													rb.getString("TurnoutWarn1")+" "+sName+" "+rb.getString("TurnoutWarn2")+" "+
+													testSN+".\n   "+rb.getString("TurnoutWarn3"),rb.getString("WarningTitle"),
+													JOptionPane.YES_NO_CANCEL_OPTION,JOptionPane.QUESTION_MESSAGE,null,
+													new Object[]{rb.getString("ButtonYes"),rb.getString("ButtonNo"),
+																rb.getString("ButtonYesPlus")},rb.getString("ButtonNo"));
+					if (selectedValue == 1) return;   // return without creating if "No" response
+					if (selectedValue == 2) {
+						// Suppress future warnings, and continue
+						noWarn = true;
+					}
+				}
+			}
             // Ask about two bit turnout control if appropriate
             
             if(!useLastBit){
