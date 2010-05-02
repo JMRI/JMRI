@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.12 2010-03-25 02:41:50 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.13 2010-05-02 22:28:21 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -403,8 +403,11 @@
             <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
             </xs:element>
+            <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
-          <xs:attribute name="label" type="xs:string" use="required"/>
+          <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CV" type="xs:int"/>
           <xs:attribute name="mask" type="xs:string" default="VVVVVVVV" />
           <xs:attribute name="readOnly" type="yesNoType" default="no" />
@@ -545,9 +548,19 @@
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="LabelType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
     <xs:attribute name="label" type="xs:string"/>
   </xs:complexType>
   <xs:complexType name="DisplayType">
+    <xs:sequence minOccurs="0" maxOccurs="unbounded">
+      <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>Provide internationalized label text</xs:documentation></xs:annotation>
+      </xs:element>
+    </xs:sequence>
     <xs:attribute name="item" type="xs:string"/>
     <xs:attribute name="label" type="xs:string"/>
     <xs:attribute name="format" type="xs:string"/>
