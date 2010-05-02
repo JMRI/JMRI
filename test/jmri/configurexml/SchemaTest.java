@@ -3,7 +3,7 @@
 package jmri.configurexml;
 
 import jmri.jmrit.XmlFile;
-//import java.io.*;
+import java.io.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -16,49 +16,33 @@ import junit.framework.TestSuite;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SchemaTest extends LoadFileTestBase {
 
-    public void testValidateRef() {
-        validate(new java.io.File("java/test/jmri/configurexml/ConfigFileSchemaTest.xml"));
-    }
-
-    public void testValidateFail() {
-        java.io.File file = 
-                new java.io.File("java/test/jmri/configurexml/SchemaFail.xml");
-        
-        boolean original = XmlFile.getVerify();
-        try {
-            XmlFile.setVerify(true);
-            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
-            xf.rootFromFile(file);
-            Assert.fail("Validation should have failed");
-        } catch (Exception ex) {
-            // expect fail, this is normal
-            XmlFile.setVerify(original);
-            return;
-        } finally {
-            XmlFile.setVerify(original);
+    // the "pass" and "fail" directories contain
+    // paired files to test small bits of schema.
+    // All the "pass" files should validate;
+    // all the "fail" files should not.
+    public void testPassFailFiles() {
+        // first, passes
+        java.io.File dir = new java.io.File("java/test/jmri/configurexml/pass/");
+        java.io.File[] files = dir.listFiles();
+        for (int i=0; i<files.length; i++) {
+            if (files[i].getName().endsWith("xml")) {
+                validate(files[i]);
+            }
+        }
+        // 2nd, fails
+        dir = new java.io.File("java/test/jmri/configurexml/fail/");
+        files = dir.listFiles();
+        for (int i=0; i<files.length; i++) {
+            if (files[i].getName().endsWith("xml")) {
+                validateFail(files[i]);
+            }
         }
     }
-
-    public void testValidateRoster() {
-        validate(new java.io.File("java/test/jmri/configurexml/RosterSchemaTest.xml"));
-    }
-
-    public void testValidatePanelFile() {
-        validate(new java.io.File("java/test/jmri/configurexml/PanelFileSchemaTest.xml"));
-    }
-
-    public void testValidateLargePanelFile() {
-        validate(new java.io.File("java/test/jmri/configurexml/LargePanelFileSchemaTest.xml"));
-    }
-
-    public void testValidateRevHistFile() {
-        validate(new java.io.File("java/test/jmri/configurexml/RevHistTest.xml"));
-    }
-
+    
     public void testSampleFiles() {
         java.io.File dir = new java.io.File("java/test/jmri/configurexml/files/");
         java.io.File[] files = dir.listFiles();
@@ -68,6 +52,24 @@ public class SchemaTest extends LoadFileTestBase {
             }
         }
     }
+
+
+    void validateFail(File file) {
+        boolean original = XmlFile.getVerify();
+        try {
+            XmlFile.setVerify(true);
+            XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
+            xf.rootFromFile(file);
+            Assert.fail("Validation should have failed: "+file.getName());
+        } catch (Exception ex) {
+            // expect fail, this is normal
+            XmlFile.setVerify(original);
+            return;
+        } finally {
+            XmlFile.setVerify(original);
+        }
+    }
+    
 
     // from here down is testing infrastructure
 

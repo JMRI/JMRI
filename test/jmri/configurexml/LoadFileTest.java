@@ -16,11 +16,11 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LoadFileTest extends LoadFileTestBase {
 
-    public void testLoadOne() throws Exception {
+    public void testLoadCurrent() throws Exception {
         // load file
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest.xml"));
@@ -81,6 +81,7 @@ public class LoadFileTest extends LoadFileTestBase {
         while ( (inLine = inFileStream.readLine())!=null && (outLine = outFileStream.readLine())!=null) {
             if (!inLine.startsWith("  <!--Written by JMRI version")
                 && !inLine.startsWith("  <timebase")   // time changes from timezone to timezone
+                && !inLine.startsWith("    <test>")   // version changes over time
                 && !inLine.startsWith("<?xml-stylesheet")   // Linux seems to put attributes in different order
                 && !inLine.startsWith("    <modifier>This line ignored</modifier>"))
                     Assert.assertEquals(inLine, outLine);
