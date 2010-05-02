@@ -411,7 +411,7 @@
     <turnout systemName="ITSS46G" userName="SS46G" feedback="DIRECT" inverted="false" automate="Default" />
     <turnout systemName="ITSS51G" userName="SS51G" feedback="DIRECT" inverted="false" automate="Default" />
     <turnout systemName="ITSS53G" userName="SS53G" feedback="DIRECT" inverted="false" automate="Default" />
-    <turnout systemName="ITSS56G" userName="SS56G" feedback="DIRECT" inverted="false" automate="Default" />
+    <turnout systemName="ITSS56Y" userName="SS56Y" feedback="DIRECT" inverted="false" automate="Default" />
     <turnout systemName="ITSS60G" userName="SS60G" feedback="DIRECT" inverted="false" automate="Default" />
     <turnout systemName="ITSS69G" userName="SS69G" feedback="DIRECT" inverted="false" automate="Default" />
     <turnout systemName="ITSS69Y" userName="SS69Y" feedback="DIRECT" inverted="false" automate="Default" />
@@ -1205,7 +1205,7 @@
     <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="IHSS56" userName="SS56">
       <comment>not phys</comment>
       <turnoutname defines="green">SS56G</turnoutname>
-      <turnoutname defines="yellow">SS56G</turnoutname>
+      <turnoutname defines="yellow">SS56Y</turnoutname>
       <turnoutname defines="red">SS56R</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.TripleTurnoutSignalHeadXml" systemName="IHSS58" userName="SS58">
@@ -2980,6 +2980,6 @@
       <inconsistent url="program:resources/icons/USS/plate/levers/l-inconsistent.gif" rotate="0" degrees="0" scale="1.0" />
     </multisensoricon>
   </paneleditor>
-  <!--Written by JMRI version 2.7.7 on Wed Oct 21 08:31:12 EDT 2009 $Id: JimHeidt14.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Wed Oct 21 08:31:12 EDT 2009 $Id: JimHeidt14.xml,v 1.2 2010-05-02 04:30:39 jacobsen Exp $-->
 </layout-config>
 
