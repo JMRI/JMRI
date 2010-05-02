@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout.xsd,v 1.7 2010-02-28 06:23:53 jacobsen Exp $ -->
+<!-- $Id: layout.xsd,v 1.8 2010-05-02 04:11:29 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -51,6 +51,12 @@ signals - obsolete, EMPTY, never used
         <xs:documentation>
           This is the schema representing panel files, including
           both the panels themselves and configuration information.
+          <p/>
+          This version of the schema is for files created by JMRI
+          version 2.9.5 and before. 
+          This version is no longer being updated,
+          having been superceded by the 
+          layout.2.9.6.xsd file.
         </xs:documentation>
         <xs:appinfo>
             <jmri:usingclass configurexml="yes" />  <!-- too many to list -->
@@ -186,10 +192,22 @@ signals - obsolete, EMPTY, never used
 
         <xs:element name="connection"   type="ConnectionType" minOccurs="0" maxOccurs="unbounded" />
       
-
         <xs:element name="turnouts"     type="TurnoutManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="sensors"      type="SensorManagerType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="lights"       type="LightManagerType" minOccurs="0" maxOccurs="unbounded" />
+
+        <xs:element name="lights"       type="LightManagerType" minOccurs="0" maxOccurs="unbounded" >
+          <xs:key name="lightSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./light"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="lightUserName">
+            <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./light"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+        </xs:element>
+
         <xs:element name="reporters"    type="ReporterManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memories"     type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="memorys"      type="MemoryManagerType" minOccurs="0" maxOccurs="unbounded" /> <!-- deprecated older spelling -->
@@ -201,11 +219,31 @@ signals - obsolete, EMPTY, never used
 
         <xs:element name="timebase"     type="TimebaseType" minOccurs="0" maxOccurs="unbounded" />
 
-        <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalheads"  type="SignalHeadManagerType" minOccurs="0" maxOccurs="unbounded" >
+        </xs:element>
+
+        <xs:element name="signalmasts"  type="SignalMastManagerType" minOccurs="0" maxOccurs="unbounded">
+          <xs:key name="signalMastSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalmast"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="signalMastUserName">
+            <xs:annotation><xs:documentation>Insist that the user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalmast"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+        </xs:element>
+
         <xs:element name="signalgroups" type="SignalGroupManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="layoutblocks" type="LayoutBlockManagerType" minOccurs="0" maxOccurs="unbounded" />
-        <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="signalelements" type="SignalElementManagerType" minOccurs="0" maxOccurs="unbounded">
+          <xs:key name="signalElementName">
+            <xs:annotation><xs:documentation>Insist that at most one appear for each signal</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalelement"/> 
+            <xs:field xpath="@signal"/>           
+          </xs:key>
+        </xs:element>
 
         <xs:element name="audio"        type="AudioManagerType" minOccurs="0" maxOccurs="unbounded" />
         <xs:element name="routes"       type="RouteManagerType" minOccurs="0" maxOccurs="unbounded" />
@@ -222,5 +260,44 @@ signals - obsolete, EMPTY, never used
         
       </xs:sequence>
     </xs:complexType>
+
+          <xs:key name="turnoutSystemName">
+            <xs:annotation><xs:documentation>Insist that each turnout system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="turnoutUserName">
+            <xs:annotation><xs:documentation>Insist that each turnout user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+          <xs:key name="turnoutName">
+            <xs:annotation><xs:documentation>Insist that all turnout user and system names are unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./turnouts/turnout | ./turnouts/turnout"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+
+          <xs:key name="sensorSystemName">
+            <xs:annotation><xs:documentation>Insist that each sensor system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+          <xs:unique name="sensorUserName">
+            <xs:annotation><xs:documentation>Insist that each sensor user name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@userName"/>           
+          </xs:unique>
+          <xs:unique name="sensorName">
+            <xs:annotation><xs:documentation>Insist that all sensor user and system names are unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./sensors/sensor"/> 
+            <xs:field xpath="@systemName | @userName"/>           
+          </xs:unique>
+
+          <xs:key name="signalHeadSystemName">
+            <xs:annotation><xs:documentation>Insist that the system name is unique</xs:documentation></xs:annotation>
+            <xs:selector xpath="./signalheads/signalhead"/> 
+            <xs:field xpath="@systemName"/>           
+          </xs:key>
+
   </xs:element>
 </xs:schema>
