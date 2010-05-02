@@ -23,7 +23,7 @@ import jmri.util.jdom.LocaleSelector;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -189,6 +189,17 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
         String item = ( e.getAttribute("item")!=null ?
                         e.getAttribute("item").getValue() :
                         null);
+        // as a special case, if no item, use label
+        if (item == null) {
+            item = e.getAttribute("label").getValue();
+            log.debug("no item attribute for \""+item+"\"");
+        }
+        // as a special case, if no label, use item
+        if (name == null) {
+            name = item;
+            log.debug("no label attribute for \""+item+"\"");
+        }
+        
         String comment = null;
         if (e.getAttribute("comment") != null)
             comment = e.getAttribute("comment").getValue();
@@ -923,7 +934,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
 
     public VariableValue findVar(String name) {
         for (int i=0; i<getRowCount(); i++) {
-            if (name.equals(getItem(i)))return getVariable(i);
+            if (name.equals(getItem(i)))  return getVariable(i);
             if (name.equals(getLabel(i))) return  getVariable(i);
         }
         return null;
