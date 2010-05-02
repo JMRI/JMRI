@@ -3,13 +3,15 @@
 package jmri.jmrit.ussctc;
 
 import junit.framework.*;
+import junit.extensions.jfcunit.finder.*;
+import junit.extensions.jfcunit.eventdata.*;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicatorAction class
- * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version	$Revision: 1.2 $
+ * @author	Bob Jacobsen  Copyright 2003, 2007, 2010
+ * @version	$Revision: 1.3 $
  */
-public class OsIndicatorActionTest extends TestCase {
+public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
 
     public void testFrameCreate() {
         new OsIndicatorAction("test");
@@ -38,6 +40,18 @@ public class OsIndicatorActionTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        apps.tests.Log4JFixture.setUp(); 
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+    }
+    protected void tearDown() throws Exception { 
+        jmri.util.JUnitUtil.resetInstanceManager();
+        apps.tests.Log4JFixture.tearDown(); 
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OsIndicatorActionTest.class.getName());
 
 }
