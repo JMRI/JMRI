@@ -1,0 +1,5 @@
+This directory contains small schema test files, all of
+which should pass validation.
+
+It's best if these are small enough to test just one schema
+item.

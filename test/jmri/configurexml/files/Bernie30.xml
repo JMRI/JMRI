@@ -1842,7 +1842,7 @@
       <turnoutname defines="red">AlbanyRed</turnoutname>
     </signalhead>
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17A" />
-    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17ADV" userName="" />
+    <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17ADV"  />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17B" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17C" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHBLOCK17D" />
@@ -4614,6 +4614,6 @@
     </positionablelabel>
     <fastclock x="765" y="530" scale="1.0" class="jmri.jmrit.display.configurexml.AnalogClock2DisplayXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.7.7 on Sat Oct 31 19:01:23 EDT 2009 $Id: Bernie30.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.7 on Sat Oct 31 19:01:23 EDT 2009 $Id: Bernie30.xml,v 1.2 2010-05-02 19:52:10 jacobsen Exp $-->
 </layout-config>
 

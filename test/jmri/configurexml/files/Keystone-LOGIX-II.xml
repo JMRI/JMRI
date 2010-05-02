@@ -9177,11 +9177,11 @@
       <sensorname>IST27:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Frackville - Hazleton West (357-2)" mode="4" watchedturnout="lt35" watchedsignal1="lh409" watchedsignal2="lh403" watchedsensor1="ls3" watchedsensor2="ls301" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Frackville - Hazleton West (357-2)" mode="4" watchedturnout="LT35" watchedsignal1="lh409" watchedsignal2="lh403" watchedsensor1="ls3" watchedsensor2="ls301" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST35:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Staging West (357-1)" mode="3" watchedturnout="lt1" watchedsignal1="lh445" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Staging West (357-1)" mode="3" watchedturnout="LT1" watchedsignal1="lh445" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls22</sensorname>
       <sensorname>IST1:WTFK</sensorname>
       <comment />
@@ -9191,16 +9191,16 @@
       <sensorname>IST30:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Scranton - Moosic East (353-2)" mode="4" watchedturnout="lt90" watchedsignal1="lh447" watchedsignal2="lh445" watchedsignal2alt="lh357" watchedsensor1="ls300" watchedsensor1alt="ls21" watchedsensor2="ls299" watchedsensor2alt="LS22" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Scranton - Moosic East (353-2)" mode="4" watchedturnout="LT90" watchedsignal1="lh447" watchedsignal2="lh445" watchedsignal2alt="lh357" watchedsensor1="ls300" watchedsensor1alt="ls21" watchedsensor2="ls299" watchedsensor2alt="LS22" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST90:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Scranton - Moosic East (353-1)" mode="2" watchedturnout="lt90" watchedsignal1="lh445" watchedsignal1alt="lh357" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Scranton - Moosic East (353-1)" mode="2" watchedturnout="LT90" watchedsignal1="lh445" watchedsignal1alt="lh357" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls299</sensorname>
       <sensorname>IST90:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Indiantown Gap-Lancaster (349-2)" mode="4" watchedturnout="lt41" watchedsignal1="lh463" watchedsignal2="lh485" watchedsensor1="ls305" watchedsensor2="ls34" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Indiantown Gap-Lancaster (349-2)" mode="4" watchedturnout="LT41" watchedsignal1="lh463" watchedsignal2="lh485" watchedsensor1="ls305" watchedsensor2="ls34" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST41:WTFK</sensorname>
       <sensorname>ls37</sensorname>
       <comment />
@@ -9210,16 +9210,16 @@
       <sensorname>IST30:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Moosic - Wilkes-Barre Xover (445-2)" mode="2" watchedturnout="lt92" watchedsignal1="lh423" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Moosic - Wilkes-Barre Xover (445-2)" mode="2" watchedturnout="LT92" watchedsignal1="lh423" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls18</sensorname>
       <sensorname>IST92:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Staging  - Titusville + Wilkes Xover (445-1)" mode="4" watchedturnout="lt92" watchedsignal1="lh421" watchedsignal2="lh423" watchedsensor1="ls17" watchedsensor2="ls18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Staging  - Titusville + Wilkes Xover (445-1)" mode="4" watchedturnout="LT92" watchedsignal1="lh421" watchedsignal2="lh423" watchedsensor1="ls17" watchedsensor2="ls18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST92:WTFK</sensorname>
       <comment>east fm west staging to titusville or bypass</comment>
     </signalelement>
-    <signalelement signal="W to E:Harrisburg - Hershey (349-1)" mode="2" watchedturnout="lt41" watchedsignal1="lh485" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Harrisburg - Hershey (349-1)" mode="2" watchedturnout="LT41" watchedsignal1="lh485" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls34</sensorname>
       <sensorname>IST41:WTFK</sensorname>
       <comment />
@@ -9243,13 +9243,13 @@
       <sensorname>IST199:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:La Ponte - Red Rock (341-2)" mode="3" watchedturnout="lt43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:La Ponte - Red Rock (341-2)" mode="3" watchedturnout="LT43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls33</sensorname>
       <sensorname>ls5</sensorname>
       <sensorname>IST43:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:La Ponte - Red Rock (341-1)" mode="2" watchedturnout="lt43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:La Ponte - Red Rock (341-1)" mode="2" watchedturnout="LT43" watchedsignal1="lh397" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls33</sensorname>
       <sensorname>ls5</sensorname>
       <sensorname>IST43:WTFK</sensorname>
@@ -9281,7 +9281,7 @@
       <sensorname>LS40</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Frackville - Girardville Main (433-1)" mode="4" watchedturnout="lt37" watchedsignal1="lh431" watchedsignal2="lh429" watchedsensor1="ls298" watchedsensor2="ls297" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Frackville - Girardville Main (433-1)" mode="4" watchedturnout="LT37" watchedsignal1="lh431" watchedsignal2="lh429" watchedsensor1="ls298" watchedsensor2="ls297" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST37:WTFK</sensorname>
       <comment />
     </signalelement>
@@ -9304,7 +9304,7 @@
       <sensorname>LS307</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Ashland - Shamokin (333-2)" mode="3" watchedturnout="lt42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Ashland - Shamokin (333-2)" mode="3" watchedturnout="LT42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls40</sensorname>
       <sensorname>IST42:WTFK</sensorname>
       <comment />
@@ -9319,7 +9319,7 @@
       <sensorname>ls302</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Ashland - Shamokin (333-1)" mode="2" watchedturnout="lt42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Ashland - Shamokin (333-1)" mode="2" watchedturnout="LT42" watchedsignal1="lh351" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls40</sensorname>
       <sensorname>IST42:WTFK</sensorname>
       <comment />
@@ -9329,7 +9329,7 @@
       <sensorname>LS293</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Tunkhannock - Scranton East  (397-1)" mode="2" watchedturnout="lt89" watchedsignal1="lh389" watchedsignal2="lh391" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Tunkhannock - Scranton East  (397-1)" mode="2" watchedturnout="LT89" watchedsignal1="lh389" watchedsignal2="lh391" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST89:WTFK</sensorname>
       <sensorname>ls2</sensorname>
       <comment />
@@ -9350,12 +9350,12 @@
       <sensorname>IST89:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-2)" mode="2" watchedturnout="lt90" watchedsignal1="lh395" watchedsignal2="lh445" watchedsensor1="ls18" watchedsensor2="ls17" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-2)" mode="2" watchedturnout="LT90" watchedsignal1="lh395" watchedsignal2="lh445" watchedsensor1="ls18" watchedsensor2="ls17" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls302</sensorname>
       <sensorname>IST90:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Girardville Main - Big Mine Run (429-1)" mode="2" watchedturnout="lt38" watchedsignal1="lh321" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Girardville Main - Big Mine Run (429-1)" mode="2" watchedturnout="LT38" watchedsignal1="lh321" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls13</sensorname>
       <sensorname>IST38:WTFK</sensorname>
       <comment />
@@ -9375,7 +9375,7 @@
       <sensorname>IST18:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Wilkes Barre - Punxsutawney Xover (421-2)" mode="4" watchedturnout="lt93" watchedsignal1="lh375" watchedsignal2="lh369" watchedsensor1="ls14" watchedsensor2="ls15" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Wilkes Barre - Punxsutawney Xover (421-2)" mode="4" watchedturnout="LT93" watchedsignal1="lh375" watchedsignal2="lh369" watchedsensor1="ls14" watchedsensor2="ls15" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST93:WTFK</sensorname>
       <comment />
     </signalelement>
@@ -9389,7 +9389,7 @@
       <sensorname>IST44:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Titusville - Punxsutawney Xover (421-1)" mode="2" watchedturnout="lt93" watchedsignal1="lh369" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Titusville - Punxsutawney Xover (421-1)" mode="2" watchedturnout="LT93" watchedsignal1="lh369" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls15</sensorname>
       <sensorname>IST93:WTFK</sensorname>
       <comment />
@@ -9409,7 +9409,7 @@
       <sensorname>IST40:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-1)" mode="4" watchedturnout="lt90" watchedsignal1="lh393" watchedsignal2="lh395" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Scranton Main-Bypass Crossover (389-1)" mode="4" watchedturnout="LT90" watchedsignal1="lh393" watchedsignal2="lh395" watchedsensor1="ls2" watchedsensor2="ls302" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST90:ETFK</sensorname>
       <comment />
     </signalelement>
@@ -9422,7 +9422,7 @@
       <sensorname>IST39:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Hazleton - Frackville (385-1)" mode="3" watchedturnout="lt35" watchedsignal1="lh433" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Hazleton - Frackville (385-1)" mode="3" watchedturnout="LT35" watchedsignal1="lh433" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls8</sensorname>
       <sensorname>IST35:WTFK</sensorname>
       <sensorname>LS7</sensorname>
@@ -9432,7 +9432,7 @@
       <sensorname>IST17:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Big Mine Run - &gt; Yeagerstown (321-1)" mode="4" watchedturnout="lt40" watchedsignal1="lh333" watchedsignal2="lh335" watchedsensor1="ls285" watchedsensor2="ls286" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Big Mine Run - &gt; Yeagerstown (321-1)" mode="4" watchedturnout="LT40" watchedsignal1="lh333" watchedsignal2="lh335" watchedsensor1="ls285" watchedsensor2="ls286" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST40:WTFK</sensorname>
       <comment />
     </signalelement>
@@ -9456,7 +9456,7 @@
       <sensorname>IST93:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Punxsutawney -Titusville Xover (417-1)" mode="4" watchedturnout="lt93" watchedsignal1="lh441" watchedsignal2="LH443" watchedsensor1="LS17" watchedsensor2="LS18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Punxsutawney -Titusville Xover (417-1)" mode="4" watchedturnout="LT93" watchedsignal1="lh441" watchedsignal2="LH443" watchedsensor1="LS17" watchedsensor2="LS18" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST93:ETFK</sensorname>
       <comment />
     </signalelement>
@@ -9518,7 +9518,7 @@
       <sensorname>IST46:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Punxsutawney - Driftwood East (369-2)" mode="3" watchedturnout="lt45" watchedsignal1="LH383" watchedsignal1alt="LH345" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Punxsutawney - Driftwood East (369-2)" mode="3" watchedturnout="LT45" watchedsignal1="LH383" watchedsignal1alt="LH345" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST45:WTFK</sensorname>
       <sensorname>LS288</sensorname>
       <comment />
@@ -9528,7 +9528,7 @@
       <sensorname>IST32:wTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Phila Main - Reading Main (505-1)" mode="2" watchedturnout="lt19" watchedsignal1="LH509" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Phila Main - Reading Main (505-1)" mode="2" watchedturnout="LT19" watchedsignal1="LH509" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls307</sensorname>
       <sensorname>IST19:WTFK</sensorname>
       <comment />
@@ -9557,7 +9557,7 @@
       <sensorname>IST25:ETFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Hazleton - Frackville (405-1)" mode="2" watchedturnout="lt33" watchedsignal1="lh447" watchedsignal2="lh387" watchedsensor1="ls18" watchedsensor2="ls8" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Hazleton - Frackville (405-1)" mode="2" watchedturnout="LT33" watchedsignal1="lh447" watchedsignal2="lh387" watchedsensor1="ls18" watchedsensor2="ls8" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls23</sensorname>
       <sensorname>IST33:WTFK</sensorname>
       <comment />
@@ -9590,17 +9590,17 @@
       <sensorname>IST31:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Punxsutawney - Driftwood East (369-1)" mode="2" watchedturnout="lt45" watchedsignal1="lh341" watchedsignal2="lh343" watchedsensor1="ls287" watchedsensor1alt="LS284" watchedsensor2="ls288" watchedsensor2alt="LS283" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Punxsutawney - Driftwood East (369-1)" mode="2" watchedturnout="LT45" watchedsignal1="lh341" watchedsignal2="lh343" watchedsensor1="ls287" watchedsensor1alt="LS284" watchedsensor2="ls288" watchedsensor2alt="LS283" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST45:WTFK</sensorname>
       <sensorname>LS287</sensorname>
       <sensorname>LS284</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="W to E:Lancaster  - Phila Main+Waterfront Xover (461-2)" mode="4" watchedturnout="lt27" watchedsignal1="lh507" watchedsignal2="lh505" watchedsensor1="ls306" watchedsensor1alt="ls305" watchedsensor2="ls309" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="W to E:Lancaster  - Phila Main+Waterfront Xover (461-2)" mode="4" watchedturnout="LT27" watchedsignal1="lh507" watchedsignal2="lh505" watchedsensor1="ls306" watchedsensor1alt="ls305" watchedsensor2="ls309" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST27:WTFK</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Red Rock - La Ponte West (365-2)" mode="3" watchedturnout="lt43" watchedsignal1="LH383" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Red Rock - La Ponte West (365-2)" mode="3" watchedturnout="LT43" watchedsignal1="LH383" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS283</sensorname>
       <sensorname>IST43:ETFK</sensorname>
       <comment />
@@ -9609,7 +9609,7 @@
       <sensorname>LS310</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:Red Rock - La Ponte West (365-1)" mode="2" watchedturnout="lt43" watchedsignal1="lh381" watchedsignal2="lh383" watchedsensor1="ls284" watchedsensor2="ls283" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:Red Rock - La Ponte West (365-1)" mode="2" watchedturnout="LT43" watchedsignal1="lh381" watchedsignal2="lh383" watchedsensor1="ls284" watchedsensor2="ls283" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS284</sensorname>
       <comment />
     </signalelement>
@@ -9618,7 +9618,7 @@
       <sensorname>LS29</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="E to W:New Castle - Hershey West (361-1)" mode="2" watchedturnout="lt44" watchedsignal1="lh337" watchedsignal2="lh461" watchedsensor1="ls34" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="E to W:New Castle - Hershey West (361-1)" mode="2" watchedturnout="LT44" watchedsignal1="lh337" watchedsignal2="lh461" watchedsensor1="ls34" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>IST44:ETFK</sensorname>
       <sensorname>ls34</sensorname>
       <comment />
@@ -16747,6 +16747,6 @@
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 2.9.2 on Wed Jan 20 15:48:12 EST 2010 $Id: Keystone-LOGIX-II.xml,v 1.1 2010-02-03 16:02:18 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.2 on Wed Jan 20 15:48:12 EST 2010 $Id: Keystone-LOGIX-II.xml,v 1.2 2010-05-02 19:52:10 jacobsen Exp $-->
 </layout-config>
 

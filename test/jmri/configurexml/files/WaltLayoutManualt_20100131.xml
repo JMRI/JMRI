@@ -5319,7 +5319,7 @@
       <sensorname>LS109</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="it28a" mode="4" watchedturnout="lt28" watchedsignal1="ih14" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it28a" mode="4" watchedturnout="LT28" watchedsignal1="ih14" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="LH99" mode="1" watchedsignal1="LH1" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -5329,7 +5329,7 @@
       <sensorname>LS150</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="it29d" mode="4" watchedturnout="lt29" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it29d" mode="4" watchedturnout="LT29" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="LH98" mode="3" watchedturnout="LT21" watchedsignal1="LH2" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
@@ -5339,7 +5339,7 @@
       <sensorname>LS146</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="it29c" mode="2" watchedturnout="lt29" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it29c" mode="2" watchedturnout="LT29" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="LH97" mode="2" watchedturnout="LT21" watchedsignal1="LH2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -5349,7 +5349,7 @@
       <sensorname>LS139</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="it29b" mode="4" watchedturnout="lt29" watchedsignal1="ih19" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it29b" mode="4" watchedturnout="LT29" watchedsignal1="ih19" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="LH96" mode="4" watchedturnout="LT21" watchedsignal1="LH91" watchedsensor1="LS118" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false" />
@@ -5357,26 +5357,26 @@
       <comment />
     </signalelement>
     <signalelement signal="LH95" mode="2" watchedturnout="LT25" watchedsignal1="LH411" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true" />
-    <signalelement signal="t22div" mode="3" watchedturnout="lt22" watchedsignal1="lh261" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="t22div" mode="3" watchedturnout="LT22" watchedsignal1="lh261" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>ls131</sensorname>
       <comment />
     </signalelement>
     <signalelement signal="LH94" mode="2" watchedturnout="LT4" watchedsignal1="LH89" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS157</sensorname>
     </signalelement>
-    <signalelement signal="t31con" mode="2" watchedturnout="lt31" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="t31con" mode="2" watchedturnout="LT31" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="LH93" mode="4" approachsensor1="LS157" watchedturnout="LT4" watchedsignal1="LH407" watchedsignal2="LH408" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
       <comment />
     </signalelement>
-    <signalelement signal="t31div" mode="3" watchedturnout="lt31" watchedsignal1="ih7" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+    <signalelement signal="t31div" mode="3" watchedturnout="LT31" watchedsignal1="ih7" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
       <comment />
     </signalelement>
     <signalelement signal="LH92" mode="1" watchedsignal1="LH235" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS118</sensorname>
     </signalelement>
-    <signalelement signal="t31thr" mode="4" watchedturnout="lt31" watchedsignal1="ih11" watchedsignal2="ih13" limitspeed1="false" limitspeed2="false" useflashyellow="true" distantsignal="true">
+    <signalelement signal="t31thr" mode="4" watchedturnout="LT31" watchedsignal1="ih11" watchedsignal2="ih13" limitspeed1="false" limitspeed2="false" useflashyellow="true" distantsignal="true">
       <comment />
     </signalelement>
     <signalelement signal="LH91" mode="1" watchedsignal1="LH235" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -5554,7 +5554,7 @@
     <signalelement signal="LH100" mode="1" watchedsignal1="LH8" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS127</sensorname>
     </signalelement>
-    <signalelement signal="LH262" mode="4" watchedturnout="lt22" watchedsignal1="ih15" watchedsignal2="ih11" watchedsensor1="ls125" watchedsensor2="ls120" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+    <signalelement signal="LH262" mode="4" watchedturnout="LT22" watchedsignal1="ih15" watchedsignal2="ih11" watchedsensor1="ls125" watchedsensor2="ls120" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
       <comment />
     </signalelement>
     <signalelement signal="LH78" mode="1" watchedsignal1="LH79" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -6048,13 +6048,13 @@
       <sensorname>LS102</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="t30con" mode="2" watchedturnout="lt30" watchedsignal1="ih10" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+    <signalelement signal="t30con" mode="2" watchedturnout="LT30" watchedsignal1="ih10" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
       <comment />
     </signalelement>
-    <signalelement signal="t30div" mode="3" watchedturnout="lt30" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="t30div" mode="3" watchedturnout="LT30" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
-    <signalelement signal="t30thr" mode="4" watchedturnout="lt30" watchedsignal1="ih5" watchedsignal2="ih9" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="t30thr" mode="4" watchedturnout="LT30" watchedsignal1="ih5" watchedsignal2="ih9" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="t27div" mode="3" watchedturnout="LT27" watchedsignal1="LH240" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
@@ -6064,7 +6064,7 @@
       <sensorname>LS120</sensorname>
       <comment />
     </signalelement>
-    <signalelement signal="t27thr" mode="4" watchedturnout="lt27" watchedsignal1="ih9" watchedsignal2="ih5" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="t27thr" mode="4" watchedturnout="LT27" watchedsignal1="ih9" watchedsignal2="ih5" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
     <signalelement signal="t18div" mode="3" watchedturnout="LT18" watchedsignal1="LH203" limitspeed1="false" limitspeed2="true" useflashyellow="false" distantsignal="false">
@@ -6073,7 +6073,7 @@
     <signalelement signal="t18con" mode="2" watchedturnout="LT18" watchedsignal1="LH203" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <sensorname>LS102</sensorname>
     </signalelement>
-    <signalelement signal="t18thr" mode="4" watchedturnout="lt18" watchedsignal1="blk102W" watchedsignal2="ih2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
+    <signalelement signal="t18thr" mode="4" watchedturnout="LT18" watchedsignal1="blk102W" watchedsignal2="ih2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="true">
       <comment />
     </signalelement>
     <signalelement signal="LH299" mode="4" watchedturnout="LT8" watchedsignal1="LH281" watchedsignal2="LH283" watchedsensor1="LS141" watchedsensor2="LS142" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
@@ -6135,10 +6135,10 @@
     <signalelement signal="it25thr" mode="4" watchedturnout="LT25" watchedsensor1="LS3" watchedsensor2="LS2" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
-    <signalelement signal="it28d" mode="2" watchedturnout="lt28" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it28d" mode="2" watchedturnout="LT28" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
-    <signalelement signal="it28c" mode="4" watchedturnout="lt28" watchedsignal2="lh250" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
+    <signalelement signal="it28c" mode="4" watchedturnout="LT28" watchedsignal2="lh250" limitspeed1="false" limitspeed2="false" useflashyellow="false" distantsignal="false">
       <comment />
     </signalelement>
   </signalelements>
@@ -9848,6 +9848,6 @@
       <filename />
     </operation>
   </filehistory>
-  <!--Written by JMRI version 2.9.3 on Mon Feb 01 15:50:32 GMT-06:00 2010 $Id: WaltLayoutManualt_20100131.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.3 on Mon Feb 01 15:50:32 GMT-06:00 2010 $Id: WaltLayoutManualt_20100131.xml,v 1.2 2010-05-02 19:52:10 jacobsen Exp $-->
 </layout-config>
 

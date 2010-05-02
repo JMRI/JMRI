@@ -222,100 +222,100 @@
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP285W" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP301E" />
     <signalhead class="jmri.implementation.configurexml.VirtualSignalHeadXml" systemName="IHMP301W" />
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH513" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH513" >
       <turnout systemName="513" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH515" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH515">
       <turnout systemName="515" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH517" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH517">
       <turnout systemName="517" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH519" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH519">
       <turnout systemName="519" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH521" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH521">
       <turnout systemName="521" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH523" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH523">
       <turnout systemName="523" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH525" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH525">
       <turnout systemName="525" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH527" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH527">
       <turnout systemName="527" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH529" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH529">
       <turnout systemName="529" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH531" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH531">
       <turnout systemName="531" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH533" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH533">
       <turnout systemName="533" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH535" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH535">
       <turnout systemName="535" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH537" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH537">
       <turnout systemName="537" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH539" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH539">
       <turnout systemName="539" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH541" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH541">
       <turnout systemName="541" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH543" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH543">
       <turnout systemName="543" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH545" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH545" >
       <turnout systemName="545" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH547" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH547" >
       <turnout systemName="547" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH549" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH549" >
       <turnout systemName="549" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH551" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH551" >
       <turnout systemName="551" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH553" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH553" >
       <turnout systemName="553" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH555" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH555" >
       <turnout systemName="555" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH557" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH557" >
       <turnout systemName="557" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH559" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH559" >
       <turnout systemName="559" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH561" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH561" >
       <turnout systemName="561" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH563" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH563" >
       <turnout systemName="563" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH565" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH565" >
       <turnout systemName="565" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH567" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH567" >
       <turnout systemName="567" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH569" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH569" >
       <turnout systemName="569" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH571" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH571" >
       <turnout systemName="571" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH573" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH573" >
       <turnout systemName="573" />
     </signalhead>
-    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH575" userName="">
+    <signalhead class="jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml" systemName="LH575" >
       <turnout systemName="575" />
     </signalhead>
   </signalheads>
@@ -501,7 +501,7 @@
       </path>
       <path todir="128" fromdir="64" block="IB18" />
     </block>
-    <block systemName="IB8" userName="" length="0.0" curve="0">
+    <block systemName="IB8"  length="0.0" curve="0">
       <path todir="128" fromdir="64" block="IB7" />
     </block>
     <block systemName="IB9" userName="LB24" length="1727.2" curve="0">
@@ -1054,6 +1054,6 @@
     <positionablepoint ident="EB1" type="2" x="10.0" y="110.0" connect1name="T26" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
     <positionablepoint ident="A9" type="1" x="700.0" y="110.0" connect1name="T12" connect2name="T27" eastboundsignal="IHMP285E" westboundsignal="IHMP285W" class="jmri.jmrit.display.configurexml.PositionablePointXml" />
   </LayoutEditor>
-  <!--Written by JMRI version 2.7.6 on Wed Oct 07 18:06:17 EDT 2009 $Id: BeldenLoop5.xml,v 1.1 2010-02-03 05:57:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.6 on Wed Oct 07 18:06:17 EDT 2009 $Id: BeldenLoop5.xml,v 1.2 2010-05-02 19:52:10 jacobsen Exp $-->
 </layout-config>
 
