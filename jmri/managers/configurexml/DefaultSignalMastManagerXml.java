@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DefaultSignalMastManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -37,7 +37,8 @@ public class DefaultSignalMastManagerXml
         for (int i = 0; i < names.size(); i++) {
             Element e = new Element("signalmast");
             SignalMast p = m.getSignalMast(names.get(i));
-            e.setAttribute("systemName", p.getSystemName());
+            e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
+            e.addContent(new Element("systemName").addContent(p.getSystemName()));
             storeCommon(p, e);
             element.addContent(e);
         }
@@ -57,13 +58,12 @@ public class DefaultSignalMastManagerXml
         for (int i = 0; i < list.size(); i++) {
             SignalMast m;
             Element e = list.get(i);
-            String sys = e.getAttribute("systemName").getValue();
+            String sys = getSystemName(e);
             m = InstanceManager.signalMastManagerInstance()
                         .provideSignalMast(sys);
             
-            Attribute a = e.getAttribute("userName");
-            if (a != null)
-                m.setUserName(a.getValue());
+            if (getUserName(e) != null)
+                m.setUserName(getUserName(e));
             
             loadCommon(m, e);
         }

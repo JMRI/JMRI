@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -38,7 +38,8 @@ public class DefaultSignalGroupManagerXml
         for (int i = 0; i < names.size(); i++) {
             Element e = new Element("signalgroup");
             SignalGroup p = m.getSignalGroup(names.get(i));
-            e.setAttribute("systemName", p.getSystemName());
+            e.setAttribute("systemName", p.getSystemName()); // deprecated for 2.9.* series
+            e.addContent(new Element("systemName").addContent(p.getSystemName()));
             e.setAttribute("userName", p.getUserName());
             //storeCommon(p, e);
             element.addContent(e);
@@ -145,13 +146,12 @@ public class DefaultSignalGroupManagerXml
             boolean inverse =false;
             int state =0x00;
             Attribute a;
-            String sys = e.getAttribute("systemName").getValue();
+            String sys = getSystemName(e);
             
             m = sgm.newSignalGroup(sys);
             
-            a = e.getAttribute("userName");
-            if (a != null)
-                m.setUserName(a.getValue());
+            if (getUserName(e) != null)
+                m.setUserName(getUserName(e));
                 
             primary = e.getAttribute("signalMast").getValue();
             m.setSignalMast(primary);

@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle XML configuration for QuadOutputSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
@@ -36,6 +36,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -60,14 +61,15 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
         NamedBeanHandle<Turnout> lunar = loadTurnout(l.get(3));
+
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new QuadOutputSignalHead(sys, green, yellow, red, lunar);
         else
-            h = new QuadOutputSignalHead(sys, a.getValue(), green, yellow, red, lunar);
+            h = new QuadOutputSignalHead(sys, uname, green, yellow, red, lunar);
 
         loadCommon(h, element);
         

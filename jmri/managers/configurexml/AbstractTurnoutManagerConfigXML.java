@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -59,7 +59,8 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 log.debug("system name is "+sname);
                 Turnout t = tm.getBySystemName(sname);
                 Element elem = new Element("turnout")
-                            .setAttribute("systemName", sname);
+                            .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store turnout "+sname);
 
                 storeCommon(t, elem);
@@ -172,15 +173,13 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
 
         for (int i=0; i<turnoutList.size(); i++) {
             Element elem = turnoutList.get(i);
-            if ( elem.getAttribute("systemName") == null) {
-                log.error("unexpected null in systemName "+elem+" "+elem.getAttributes());
+            String sysName = getSystemName(elem);
+            if ( sysName == null ) {
+                log.error("unexpected null in systemName "+elem);
                 result = false;
                 break;
             }
-            String sysName = elem.getAttribute("systemName").getValue();
-            String userName = null;
-            if ( elem.getAttribute("userName") != null)
-            userName = elem.getAttribute("userName").getValue();
+            String userName = getUserName(elem);
             if (log.isDebugEnabled()) log.debug("create turnout: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Turnout t = tm.getBySystemName(sysName);
             if (t==null){

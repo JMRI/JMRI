@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
  * @author Kevin Dickerson: Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -35,6 +35,7 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -98,15 +99,16 @@ public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         l = element.getChildren("appearance");
         int off = loadAppearance(element.getChildren("appearance"), "closed");
         int on = loadAppearance(element.getChildren("appearance"), "thrown");
+
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
 
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new SingleTurnoutSignalHead(sys, lit, on, off);
         else
-            h = new SingleTurnoutSignalHead(sys, a.getValue(), lit, on, off);
+            h = new SingleTurnoutSignalHead(sys, uname, lit, on, off);
 
         loadCommon(h, element);
         

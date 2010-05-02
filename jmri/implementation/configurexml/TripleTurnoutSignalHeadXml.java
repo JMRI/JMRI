@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
@@ -35,6 +35,7 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -57,14 +58,15 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
+
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new TripleTurnoutSignalHead(sys, green, yellow, red);
         else
-            h = new TripleTurnoutSignalHead(sys, a.getValue(), green, yellow, red);
+            h = new TripleTurnoutSignalHead(sys, uname, green, yellow, red);
 
         loadCommon(h, element);
         

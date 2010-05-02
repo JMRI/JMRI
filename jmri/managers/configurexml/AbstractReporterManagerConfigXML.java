@@ -18,7 +18,7 @@ import org.jdom.Element;
  * specific Reporter or AbstractReporter subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008, 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -49,7 +49,8 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
                 log.debug("system name is "+sname);
                 Reporter r = tm.getBySystemName(sname);
                 Element elem = new Element("reporter")
-                            .setAttribute("systemName", sname);
+                            .setAttribute("systemName", sname); // deprecated for 2.9.* series
+                elem.addContent(new Element("systemName").addContent(sname));
                 // store common parts
                 storeCommon(r, elem);
                 
@@ -92,15 +93,16 @@ public abstract class AbstractReporterManagerConfigXML extends AbstractNamedBean
         ReporterManager tm = InstanceManager.reporterManagerInstance();
 
         for (int i=0; i<reporterList.size(); i++) {
-            if (reporterList.get(i).getAttribute("systemName") == null) {
+
+            String sysName = getSystemName(reporterList.get(i));
+            if (sysName == null) {
                 log.warn("unexpected null in systemName "+reporterList.get(i)+" "+reporterList.get(i).getAttributes());
                 result = false;
                 break;
             }
-            String sysName = reporterList.get(i).getAttribute("systemName").getValue();
-            String userName = null;
-            if (reporterList.get(i).getAttribute("userName") != null)
-            userName = reporterList.get(i).getAttribute("userName").getValue();
+
+            String userName = getUserName(reporterList.get(i));
+
             if (log.isDebugEnabled()) log.debug("create Reporter: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             Reporter r = tm.newReporter(sysName, userName);
             loadCommon(r, reporterList.get(i));

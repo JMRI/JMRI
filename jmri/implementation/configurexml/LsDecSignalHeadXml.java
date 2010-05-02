@@ -28,7 +28,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -48,6 +48,7 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -104,13 +105,13 @@ public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamed
         int darkstatus = loadTurnoutStatus(l.get(6));
         
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new LsDecSignalHead(sys, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
         else
-            h = new LsDecSignalHead(sys, a.getValue(), green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
+            h = new LsDecSignalHead(sys, uname, green, greenstatus, yellow, yellowstatus, red, redstatus, flashgreen, flashgreenstatus, flashyellow, flashyellowstatus, flashred, flashredstatus, dark, darkstatus);
 
         loadCommon(h, element);
         

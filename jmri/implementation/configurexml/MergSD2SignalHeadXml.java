@@ -29,7 +29,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Kevin Dickerson  Copyright: Copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -49,6 +49,8 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
+        
         element.setAttribute("aspects", p.getAspects()+"");
         if(p.getFeather()) element.setAttribute("feather", "yes");
         
@@ -111,8 +113,9 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
         boolean home = true;
         
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
+        
         if (element.getAttribute("feather")!=null) {
             yesno = element.getAttribute("feather").getValue();
         }
@@ -149,10 +152,10 @@ public class MergSD2SignalHeadXml extends jmri.managers.configurexml.AbstractNam
                     input3 = loadTurnout(l.get(2));
                     break;
         }
-        if (a == null)
+        if (uname == null)
             h = new MergSD2SignalHead(sys, aspects, input1, input2, input3, feather, home);
         else
-            h = new MergSD2SignalHead(sys, a.getValue(), aspects, input1, input2, input3, feather, home);
+            h = new MergSD2SignalHead(sys, uname, aspects, input1, input2, input3, feather, home);
 
         loadCommon(h, element);
         

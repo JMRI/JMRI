@@ -14,8 +14,8 @@ import org.jdom.Element;
 /**
  * Handle XML configuration for SE8cSignalHead objects.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.1 $
+ * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008, 2010
+ * @version $Revision: 1.2 $
  */
 public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -32,6 +32,7 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
@@ -69,17 +70,17 @@ public class SE8cSignalHeadXml extends jmri.managers.configurexml.AbstractNamedB
     @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
         List<Element> l = element.getChildren("turnoutname");
-        if (l.size() == 0) l = element.getChildren("turnout");
+        if (l.size() == 0) l = element.getChildren("turnout");  // older form
         NamedBeanHandle<Turnout> low = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> high = loadTurnout(l.get(1));
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new SE8cSignalHead(sys, low, high);
         else
-            h = new SE8cSignalHead(sys, low, high, a.getValue());
+            h = new SE8cSignalHead(sys, low, high, uname);
 
         loadCommon(h, element);
         

@@ -19,7 +19,7 @@ import org.jdom.Element;
  * specific Sensor or AbstractSensor subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -53,8 +53,9 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
                 String inverted = s.getInverted() ? "true" : "false";
 
                 Element elem = new Element("sensor")
-                            .setAttribute("systemName", sname)
+                            .setAttribute("systemName", sname) // deprecated for 2.9.* series
                             .setAttribute("inverted", inverted);
+                elem.addContent(new Element("systemName").addContent(sname));
                 log.debug("store sensor "+sname);
 
                 // store common part
@@ -97,19 +98,17 @@ public abstract class AbstractSensorManagerConfigXML extends AbstractNamedBeanMa
         SensorManager tm = InstanceManager.sensorManagerInstance();
 
         for (int i=0; i<sensorList.size(); i++) {
-            if (sensorList.get(i).getAttribute("systemName") == null) {
+            String sysName = getSystemName(sensorList.get(i));
+            if (sysName == null) {
                 creationErrorEncountered (org.apache.log4j.Level.ERROR,
                                       "Unexpected missing system name while loading sensors",
                                       null,null,null);
                 result = false;
                 break;
             }
-            String sysName = sensorList.get(i).getAttribute("systemName").getValue();
             boolean inverted = false;
             
-            String userName = null;
-            if (sensorList.get(i).getAttribute("userName") != null)
-                userName = sensorList.get(i).getAttribute("userName").getValue();
+            String userName = getUserName(sensorList.get(i));
 
             if (sensorList.get(i).getAttribute("inverted") != null)
                 if (sensorList.get(i).getAttribute("inverted").getValue().equals("true"))

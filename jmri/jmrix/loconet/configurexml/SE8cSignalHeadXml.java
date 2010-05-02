@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -36,7 +36,8 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
-
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
+        
         storeCommon(p, element);
         
         // store the turnout number, not a name, as that's needed when recreating
@@ -62,12 +63,12 @@ public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         List<Element> l = element.getChildren("turnout");
         int turnout = loadTurnout(l.get(0));
         // put it together
-        Attribute a = element.getAttribute("userName");
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new jmri.implementation.SE8cSignalHead(turnout);
         else
-            h = new jmri.implementation.SE8cSignalHead(turnout, a.getValue());
+            h = new jmri.implementation.SE8cSignalHead(turnout, uname);
 
         loadCommon(h, element);
         

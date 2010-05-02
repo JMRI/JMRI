@@ -42,7 +42,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -94,6 +94,8 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     AudioBuffer ab = (AudioBuffer) a;
                     e = new Element("audiobuffer")
                             .setAttribute("systemName", sname);
+                    e.addContent(new Element("systemName").addContent(sname));
+
                     // store common part
                     storeCommon(ab, e);
 
@@ -110,6 +112,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     AudioListener al = (AudioListener) a;
                     e = new Element("audiolistener")
                             .setAttribute("systemName", sname);
+                    e.addContent(new Element("systemName").addContent(sname));
 
                     // store common part
                     storeCommon(al, e);
@@ -148,6 +151,7 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     AudioSource as = (AudioSource) a;
                     e = new Element("audiosource")
                             .setAttribute("systemName", sname);
+                    e.addContent(new Element("systemName").addContent(sname));
 
                     // store common part
                     storeCommon(as, e);
@@ -252,14 +256,15 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
         for (int i=0; i<audioList.size(); i++) {
             Element e = audioList.get(i);
-            if (e.getAttribute("systemName") == null) {
+
+            String sysName = getSystemName(e);
+            if (sysName == null) {
                 log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                 break;
             }
-            String sysName = e.getAttributeValue("systemName");
-            String userName = null;
-            if (e.getAttribute("userName") != null)
-                userName = e.getAttributeValue("userName");
+
+            String userName = getUserName(e);
+
             if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             try {
                 AudioBuffer ab = (AudioBuffer) am.newAudio(sysName, userName);
@@ -296,14 +301,15 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
         for (int i=0; i<audioList.size(); i++) {
             Element e = audioList.get(i);
-            if (e.getAttribute("systemName") == null) {
+
+            String sysName = getSystemName(e);
+            if (sysName == null) {
                 log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                 break;
             }
-            String sysName = e.getAttributeValue("systemName");
-            String userName = null;
-            if (e.getAttribute("userName") != null)
-                userName = e.getAttributeValue("userName");
+
+            String userName = getUserName(e);
+
             if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
             try {
                 AudioSource as = (AudioSource) am.newAudio(sysName, userName);
@@ -388,14 +394,15 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
             for (int i=0; i<audioList.size(); i++) {
                 Element e = audioList.get(i);
-                if (e.getAttribute("systemName") == null) {
+
+                String sysName = getSystemName(e);
+                if (sysName == null) {
                     log.warn("unexpected null in systemName "+(e)+" "+(e).getAttributes());
                     break;
                 }
-                String sysName = e.getAttributeValue("systemName");
-                String userName = null;
-                if (e.getAttribute("userName") != null)
-                    userName = e.getAttributeValue("userName");
+
+                String userName = getUserName(e);
+
                 if (log.isDebugEnabled()) log.debug("create Audio: ("+sysName+")("+(userName==null?"<null>":userName)+")");
                 try {
                     AudioListener al = (AudioListener) am.newAudio(sysName, userName);

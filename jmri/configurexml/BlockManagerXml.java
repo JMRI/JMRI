@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  * @since 2.1.2
  *
  */
@@ -68,6 +68,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 //Block b = tm.getBySystemName(sname);
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
+                elem.addContent(new Element("systemName").addContent(sname));
                 if (log.isDebugEnabled()) log.debug("initial store Block "+sname);
                 
                 // and put this element out
@@ -83,7 +84,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 String uname = b.getUserName();
                 Element elem = new Element("block")
                             .setAttribute("systemName", sname);
-                if (uname!=null) elem.setAttribute("userName", uname);
+                elem.addContent(new Element("systemName").addContent(sname));
+
                 if (log.isDebugEnabled()) log.debug("second store Block "+sname+":"+uname);
 				// store length and curvature attributes
 				elem.setAttribute("length", ""+b.getLengthMm());
@@ -174,10 +176,8 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                 log.warn("unexpected null in systemName "+element+" "+element.getAttributes());
                 return;
             }
-            String sysName = element.getAttribute("systemName").getValue();
-            String userName = null;
-            if (element.getAttribute("userName") != null)
-                userName = element.getAttribute("userName").getValue();
+            String sysName = getSystemName(element);
+            String userName = getUserName(element);
             if (log.isDebugEnabled()) log.debug("defined Block: ("+sysName+")("+(userName==null?"<null>":userName)+")");
 
             Block block = InstanceManager.blockManagerInstance().getBlock(sysName);

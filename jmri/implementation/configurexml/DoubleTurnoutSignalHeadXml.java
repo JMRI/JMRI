@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for DoubleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -35,6 +35,7 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -73,13 +74,13 @@ public class DoubleTurnoutSignalHeadXml extends jmri.managers.configurexml.Abstr
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(1));
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         SignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new DoubleTurnoutSignalHead(sys, green, red);
         else
-            h = new DoubleTurnoutSignalHead(sys, a.getValue(), green, red);
+            h = new DoubleTurnoutSignalHead(sys, uname, green, red);
 
         loadCommon(h, element);
         

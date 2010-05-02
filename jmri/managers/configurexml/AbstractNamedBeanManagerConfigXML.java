@@ -17,7 +17,7 @@ import org.jdom.Attribute;
  * to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexml.AbstractXmlAdapter {
@@ -69,13 +69,21 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
     
     /**
-     * Store the username parameter from a NamedBean
+     * Store the username parameter from a NamedBean.
+     * <ul>
+     * <li>Before 2.9.6, this was an attribute
+     * <li>Starting in 2.9.6, this was stored as both attribute and element
+     * <li>Starting in 3.1/2.11.1, this will be just an element
+     * </ul>
      * @param t The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
     void storeUserName(NamedBean t, Element elem) {
         String uname = t.getUserName();
-        if (uname!=null) elem.setAttribute("userName", uname);
+        if (uname!=null && uname.length() > 0) {
+            elem.setAttribute("userName", uname); // doing this for compatibility during 2.9.* series
+            elem.addContent(new Element("userName").addContent(uname));
+        }
     }
     
     /**
@@ -84,19 +92,44 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * @param beanList List, where each entry is an Element
      * @param i index of Element in list to examine
      */
-    String getUserName(List<Element> beanList, int i) {
+    protected String getUserName(List<Element> beanList, int i) {
         return getUserName(beanList.get(i));
     }
     
     /**
-     * Get the username attribute from an Element defining a NamedBean
+     * Get the user name from an Element defining a NamedBean
+     * <ul>
+     * <li>Before 2.9.6, this was an attribute
+     * <li>Starting in 2.9.6, this was stored as both attribute and element
+     * <li>Starting in 3.1/2.11.1, this will be just an element
+     * </ul>
      * @param elem The existing Element
      */
-    String getUserName(Element elem) {
-        String userName = null;
-        if ( elem.getAttribute("userName") != null)
-        userName = elem.getAttribute("userName").getValue();
-        return userName;
+    protected String getUserName(Element elem) {
+        if ( elem.getChild("userName") != null) {
+            elem.getChild("userName").getText();
+        }
+        if ( elem.getAttribute("userName") != null) {
+            return elem.getAttribute("userName").getValue();
+        } return null;
+    }
+
+    /**
+     * Get the system name from an Element defining a NamedBean
+     * <ul>
+     * <li>Before 2.9.6, this was an attribute
+     * <li>Starting in 2.9.6, this was stored as both attribute and element
+     * <li>Starting in 3.1/2.10.1, this will be just an element
+     * </ul>
+     * @param elem The existing Element
+     */
+    protected String getSystemName(Element elem) {
+        if ( elem.getChild("systemName") != null) {
+            elem.getChild("systemName").getText();
+        }
+        if ( elem.getAttribute("systemName") != null) {
+            return elem.getAttribute("systemName").getValue();
+        } return null;
     }
 
     /**

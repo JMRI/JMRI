@@ -25,7 +25,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008, 2009
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -45,6 +45,7 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
 
         // include contents
         element.setAttribute("systemName", p.getSystemName());
+        element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
         
@@ -58,13 +59,13 @@ public class DccSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBe
      */
     public boolean load(Element element) {
         // put it together
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+        String sys = getSystemName(element);
+        String uname = getUserName(element);
         DccSignalHead h;
-        if (a == null)
+        if (uname == null)
             h = new DccSignalHead(sys);
         else
-            h = new DccSignalHead(sys, a.getValue());
+            h = new DccSignalHead(sys, uname);
 
         loadCommon(h, element);
         

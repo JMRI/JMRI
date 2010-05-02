@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -49,6 +49,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 log.debug("conditional system name is "+sname);
                 Conditional c = tm.getBySystemName(sname);
                 Element elem = new Element("conditional").setAttribute("systemName", sname);
+                elem.addContent(new Element("systemName").addContent(sname));
                 
                 // store common parts
                 storeCommon(c, elem);
@@ -149,13 +150,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
         ConditionalManager tm = InstanceManager.conditionalManagerInstance();
 
         for (int i=0; i<conditionalList.size(); i++) {
-            if (conditionalList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+conditionalList.get(i)+
-									" "+conditionalList.get(i).getAttributes());
+
+            String sysName = getSystemName(conditionalList.get(i));
+            if (sysName == null) {
+                log.warn("unexpected null in systemName "+conditionalList.get(i));
                 break;
             }
-            String sysName = conditionalList.get(i).getAttribute("systemName").
-																				getValue();
+
             String userName = null;
             if (conditionalList.get(i).getAttribute("userName") != null)
                 userName = conditionalList.get(i).getAttribute("userName").

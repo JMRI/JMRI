@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -57,6 +57,7 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
 				
                 Element elem = new Element("route")
                             .setAttribute("systemName", sname);
+                elem.addContent(new Element("systemName").addContent(sname));
                 
                 // store common parts
                 storeCommon(r, elem);
@@ -233,12 +234,13 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
         RouteManager tm = InstanceManager.routeManagerInstance();
 
         for (int i=0; i<routeList.size(); i++) {
-            if (routeList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+routeList.get(i)+" "+
-                                                        routeList.get(i).getAttributes());
+
+            String sysName = getSystemName(routeList.get(i));
+            if (sysName == null) {
+                log.warn("unexpected null in systemName "+routeList.get(i));
                 break;
             }
-            String sysName = ((routeList.get(i))).getAttribute("systemName").getValue();
+
             String userName = null;
             String cTurnout = null;
             String cTurnoutState = null;

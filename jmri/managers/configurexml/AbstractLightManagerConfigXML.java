@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -54,6 +54,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                 Light lgt = tm.getBySystemName(sname);
                 Element elem = new Element("light")
                             .setAttribute("systemName", sname);
+                elem.addContent(new Element("systemName").addContent(sname));
 
                 // store common parts
                 storeCommon(lgt, elem);
@@ -124,15 +125,16 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
         LightManager tm = InstanceManager.lightManagerInstance();
 
         for (int i=0; i<lightList.size(); i++) {
-            if (lightList.get(i).getAttribute("systemName") == null) {
+
+            String sysName = getSystemName(lightList.get(i));
+            if (sysName == null) {
                 log.warn("unexpected null in systemName "+ lightList.get(i)+" "+ lightList.get(i).getAttributes());
                 result = false;
                 break;
             }
-            String sysName = lightList.get(i).getAttribute("systemName").getValue();
-            String userName = null;
-            if (lightList.get(i).getAttribute("userName") != null)
-                userName = lightList.get(i).getAttribute("userName").getValue();
+
+            String userName = getUserName(lightList.get(i));
+
             if (log.isDebugEnabled()) log.debug("create light: ("+sysName+")("+
                                                             (userName==null?"<null>":userName)+")");
             Light lgt = tm.newLight(sysName, userName);

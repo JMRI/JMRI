@@ -15,7 +15,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -48,6 +48,7 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
 				boolean enabled = x.getEnabled();
                 Element elem = new Element("logix")
                             .setAttribute("systemName", sname);
+                elem.addContent(new Element("systemName").addContent(sname));
                 
                 // store common part
                 storeCommon(x, elem);
@@ -114,12 +115,13 @@ public class DefaultLogixManagerXml extends jmri.managers.configurexml.AbstractN
         LogixManager tm = InstanceManager.logixManagerInstance();
 
         for (int i=0; i<logixList.size(); i++) {
-            if (logixList.get(i).getAttribute("systemName") == null) {
-                log.warn("unexpected null in systemName "+logixList.get(i)+" "+
-										logixList.get(i).getAttributes());
+
+            String sysName = getSystemName(logixList.get(i));
+            if (sysName == null) {
+                log.warn("unexpected null in systemName "+logixList.get(i));
                 break;
             }
-            String sysName = ((logixList.get(i))).getAttribute("systemName").getValue();
+
             String userName = null;
 			//boolean enabled = true;
 			String yesno = "";
