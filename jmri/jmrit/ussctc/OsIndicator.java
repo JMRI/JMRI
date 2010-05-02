@@ -14,7 +14,7 @@ import jmri.implementation.DefaultConditionalAction;
  * associated turnout has been unlocked.
  *
  * @author	Bob Jacobsen    Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class OsIndicator implements Constants {
 
@@ -68,6 +68,7 @@ public class OsIndicator implements Constants {
                                                  Conditional.TYPE_SENSOR_INACTIVE,
                                                  lock, true));
         }
+        c.setStateVariables(variableList);
         
         ArrayList <ConditionalAction> actionList = c.getCopyOfActions();
         actionList.add(new DefaultConditionalAction(Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE,
