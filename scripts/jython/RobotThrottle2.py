@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.22 $
+# $Revision: 1.23 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -163,6 +163,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     methodPushTest = None
     methodBlockStop = None
     methodLocoDistanceRedStop = None
+    haltOnSignalHeadAppearance = YELLOW
     
     def init(self):
         #print("start begin:.\n")
@@ -405,7 +406,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             if (oldCurrent == self.currentBlock and oldSignal == watchSignal and self.compareSignalAspects(oldAspect, watchAspect) < 0 and self.isStarting == False)  :
                 # signal dropped, that's bad
                 self.msgText("signal dropped, same signal being watched.\n")
-                if (self.compareSignalAspects(YELLOW, watchAspect) >= 0) : # Only stop on dropping below yellow
+                if (self.compareSignalAspects(self.haltOnSignalHeadAppearance, watchAspect) >= 0) : # Only stop on dropping below this
                 	self.findNewSpeed(self.currentBlock, self.nextBlock)
                 else :
                 	self.msgText("Signal dropped in front of train. Halting!!\n")
@@ -425,6 +426,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.signalBeyond.setIcon(self.cvtAppearanceIcon(farSignal))
             self.signalBeyondText.text = self.cvtAppearanceText(nearSignal)
             self.testAddSignalListener(farSignal)
+            self.farSignal = farSignal
+            self.farSignalAspect = farSignal.getAppearance()
         else :
             self.signalBeyond.setIcon(None)
             self.signalBeyondText.text = ""
@@ -434,7 +437,56 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 self.msgText("Found stop block, doing stop.\n")
                 self.doStop()
         self.isStarting = False
+        self.releaseExtraListeners()
         #self.msgText("didMove: done\n")
+        return
+        
+    # check lists of block and signal listeners and release ones not needed
+    def releaseExtraListeners(self) :
+        numBlocksL = len(self.listenerBlockListeners)
+        numBlocks = len(self.listenerBlocks)
+        #self.msgText("start with Blocks: " + numBlocks.toString() + " Listeners: " + numBlocksL.toString() + "\n")
+        if (numBlocksL != numBlocks or numBlocksL <= 0 or numBlocks <= 0) :
+            # blocks out of sync, stop and take it from the top
+            self.msgText("Block lists out of sync! Blocks: " + numBlocks.toString() + " Listeners: " + numBlocksL.toString() + "\n")
+            self.doHalt()
+            self.releaseBlockListParts()
+        else :
+            while (numBlocks > 0) :
+                numBlocks = numBlocks - 1
+                testBlock = self.listenerBlocks[numBlocks]
+                #self.msgText("testing block: " + self.giveBlockName(testBlock) + "\n")
+                if (testBlock != None) :
+                    if (testBlock != self.currentBlock) :
+                        if (testBlock != self.nextBlock) :
+                            if (testBlock != self.beyondBlock) :
+                                #self.msgText("we don't need block: " + self.giveBlockName(testBlock) + "\n")
+                                l = self.listenerBlockListeners[numBlocks]
+                                testBlock.removePropertyChangeListener(l)
+                                self.listenerBlockListeners.pop(numBlocks)
+                                self.listenerBlocks.pop(numBlocks)
+        numSignals = len(self.listenerSignals)
+        numSignalsL = len(self.listenerSignalListeners)
+        #self.msgText("starting Signals: " + numSignals.toString() + " Listeners:" + numSignalsL.toString() + "\n")
+        if (numSignals != numSignalsL or numSignalsL <= 0 or numSignals <= 0) :
+            self.msgText("Signal lists out of sync! Signals: " + numSignals.toString() + " Listeners:" + numSignalsL.toString() + "\n")
+            self.doHalt()
+            self.releaseSignalListParts()
+        else :
+            while (numSignals > 0) :
+                numSignals = numSignals - 1
+                testSignal = self.listenerSignals[numSignals]
+                #self.msgText("testing signal: " + self.giveSignalName(testSignal) + "\n")
+                if (testSignal != self.currentSignal) :
+                    #self.msgText("not currentSignal: " + self.giveSignalName(self.currentSignal) + "\n")
+                    if (testSignal != self.farSignal) :
+                        #self.msgText("not farSignal: " + self.giveSignalName(self.farSignal) + "\n")
+                        #self.msgText("we don't need signal: " + self.giveSignalName(testSignal) + "\n")
+                        l = self.listenerSignalListeners[numSignals]
+                        testSignal.removePropertyChangeListener(l)
+                        self.listenerSignalListeners.pop(numSignals)
+                        self.listenerSignals.pop(numSignals)
+                        #self.msgText("num signalListeners: " + len(self.listenerSignalListeners).toString() + " " + len(self.listenerSignals).toString() + "\n")
         return
         
     #  return true if thing is in thingList
@@ -466,21 +518,29 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.listenerSignals.append(sig)
             self.listenerSignalListeners.append(sl)
         return
+    
+    # release signal listeners and clean lists
+    def releaseSignalListParts(self) :
+        while(len(self.listenerSignals) > 0) :
+            s = self.listenerSignals.pop(0)
+            l = self.listenerSignalListeners.pop(0)
+            #self.msgText("RB2: releasing listener for signal " + self.giveSignalName(s) + "\n")
+            s.removePropertyChangeListener(l)
+        return
 
+    # release block listeners and clean lists
+    def releaseBlockListParts(self) :
+        while(len(self.listenerBlocks) > 0) :
+            b = self.listenerBlocks.pop(0)
+            l = self.listenerBlockListeners.pop(0)
+            #self.msgText("RB2: releasing listener for block " + self.giveBlockName(b) + "\n")
+            b.removePropertyChangeListener(l)
+        return
+    
     # release all listeners, part of the exit cleanup
     def releaseAllListeners(self, event) :
-        i = 0
-        while(len(self.listenerBlockListeners) > i) :
-            b = self.listenerBlocks[i]
-            #print("RB2: releasing listener for block " + self.giveBlockName(b) + "\n")
-            b.removePropertyChangeListener(self.listenerBlockListeners[i])
-            i = i + 1
-        i = 0
-        while(len(self.listenerSignalListeners) > i) :
-            s = self.listenerSignals[i]
-            #print("RB2: releasing listener for signal " + self.giveSignalName(s) + "\n")
-            s.removePropertyChangeListener(self.listenerSignalListeners[i])
-            i = i + 1
+        self.releaseSignalListParts()
+        self.releaseBlockListParts()
         if (self.redDelayTimer != None) :
             for i in self.redDelayTimer.getActionListeners() :
                 self.redDelayTimer.removeActionListener(i)
@@ -545,6 +605,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.speedFromAppearance(RED)
                     self.currentSignal = None
                     self.currentSignalAspect = RED
+                    self.farSignal = None
+                    self.farSignalAspect = RED
                 else :
                     #self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
                     s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
@@ -950,6 +1012,11 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.msgText("Block: " + self.blockStart.text + " is not occupied!\n")
                     isOk = False
         if (isOk) :
+            # clear id from any existing blocks
+            for x in blocks.getSystemNameList().toArray() :
+                b = blocks.getBySystemName(x)
+                if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
+                    b.setValue("")
             self.startButton.setEnabled(True)
             self.haltButton.setEnabled(True)
             self.testAddBlockListener(blocks.getBlock(self.blockStart.text))
@@ -1140,7 +1207,9 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     def findCurrentBlocks(self) :
         # search the block list for the matching loco
         blockList = []
-        for x in blocks.getSystemNameList().toArray() :
+        blockArray = blocks.getSystemNameList().toArray()
+        #self.msgText("blocks #: " + len(blockArray).toString() + "\n")
+        for x in blockArray :
             b = blocks.getBySystemName(x)
             if (b.getValue() == self.locoAddress.text and b.getState() == ACTIVE) :
                 blockList.append(b)
@@ -1811,9 +1880,18 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             v = ""
         return(v)
         
-# if you are running the RobotThrottle completely interactive, the following two lines are all you need
+	def setSignalAppearanceHalt(self, signalIndication) :
+		self.haltOnSignalHeadAppearance = signalIndication
+		return
+        
+    def returnSignalAppearanceHalt(self) :
+        return(self.haltOnSignalHeadAppearance)
+        
+# if you are running the RobotThrottle completely interactive,
+# the following two lines are all you need
 rb1 = LocoThrot()
 rb1.start()
+#rb1.setSignalAppearanceHalt(GREEN)
 # However, if you are automating the automation, then 
 ## Options for doing more via scripts or Logix Jython command line option
 ## this will set the loco number, if a matching roster entry is found, it will load the values
