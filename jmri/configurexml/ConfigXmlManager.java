@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -238,10 +238,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
             Document doc = newDocument(root);
 
             // add XSLT processing instruction
-            // <?xml-stylesheet type="text/xsl" href="XSLT/panelfile.xsl"?>
+            // <?xml-stylesheet type="text/xsl" href="XSLT/panelfile"+schemaVersion+".xsl"?>
             java.util.Map<String,String> m = new java.util.HashMap<String,String>();
             m.put("type", "text/xsl");
-            m.put("href", xsltLocation+"panelfile.xsl");
+            m.put("href", xsltLocation+"panelfile"+schemaVersion+".xsl");
             ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
             doc.addContent(0,p);
             
