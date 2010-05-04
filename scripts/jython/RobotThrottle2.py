@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.23 $
+# $Revision: 1.24 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -100,6 +100,11 @@
 import java
 import javax.swing
 
+HighDebug = 3
+MediumDebug = 2
+LowDebug = 1
+NoneDebug = 0
+
 # set up a throttle with the loco address
 class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     # initialize variables
@@ -164,6 +169,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     methodBlockStop = None
     methodLocoDistanceRedStop = None
     haltOnSignalHeadAppearance = YELLOW
+    debugLevel = LowDebug
     
     def init(self):
         #print("start begin:.\n")
@@ -608,10 +614,12 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                     self.farSignal = None
                     self.farSignalAspect = RED
                 else :
-                    #self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
+                    if (self.debugLevel >= MediumDebug) :
+                        self.msgText("looking for signal between " + self.giveBlockName(cBlock) + " and " + self.giveBlockName(nBlock) + "\n")
                     s = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalHead(cBlock, nBlock)
                     if (s != None) :
-                        #self.msgText("Found signal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
+                        if (self.debugLevel >= MediumDebug) :
+                            self.msgText("Found currentSignal: " + self.giveSignalName(s) + " displaying: " + self.cvtAppearanceText(s) + "\n")
                         self.speedFromAppearance(s.getAppearance())
                         self.currentSignal = s
                         self.currentSignalAspect = s.getAppearance()
@@ -779,7 +787,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedGreenFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedGreenFlash: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedGreenFlash: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedGreenFlash.text
         return
         
@@ -789,7 +798,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedGreen.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedGreen: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedGreen: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedGreen.text
         return
         
@@ -799,7 +809,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedYellowFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedYellowFlash: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedYellowFlash: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedYellowFlash.text
         return
         
@@ -809,7 +820,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedYellow.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedYellow: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedYellow: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedYellow.text
         return
         
@@ -819,7 +831,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None) :
             i = int(self.locoSpeedRedFlash.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedRedFlash: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedRedFlash: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedRedFlash.text
         return
         
@@ -827,7 +840,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         if (self.currentThrottle != None and self.currentThrottle.getSpeedSetting() != 0 and (self.redDelayTimer == None or self.redDelayTimer.isRunning() == False)) :
             i = int(self.locoSpeedRed.text) * 0.01
             self.currentThrottle.setSpeedSetting(i)
-            self.msgText("doSpeedRed: " + i.toString() + "\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doSpeedRed: " + i.toString() + "\n")
             self.locoSpeed.text = self.locoSpeedRed.text
             # compute how long to delay stopping
             dist = self.currentBlock.getLengthIn()
@@ -857,7 +871,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
     # handle the timeout for stopping on red
     def redDelayHandler(self, event) :
-        self.msgText("redDelayHandler, stopping now!\n")
+        if (self.debugLevel >= LowDebug) :
+                self.msgText("redDelayHandler, stopping now!\n")
         self.redDelayTimer.stop()
         self.doStop()
         return
@@ -868,7 +883,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.redDelayTimer.stop()
         if (self.currentThrottle != None) :
             self.currentThrottle.setSpeedSetting(0)
-            self.msgText("doStop\n")
+            if (self.debugLevel >= LowDebug) :
+                self.msgText("doStop\n")
             self.locoSpeed.text = "0"
             if (self.currentBlock != None) :
                 self.blockStart.text = self.giveBlockName(self.currentBlock)
@@ -1159,14 +1175,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     
     def whenShrinkButtonClicked(self, event):   
         if (self.shrinkGrow == True) :
-            self.msgText("Shrink Display!\n")     # add text
+            if (self.debugLevel >= HighDebug) :
+                self.msgText("Shrink Display!\n")     # add text
             self.speedPane.setVisible(False)
             self.shrinkGrow = False
             self.fullScrollRows = self.scrollArea.getRows()
             self.scrollArea.setRows(self.fullScrollRows / 2)
             self.scriptFrame.pack()
         else :
-            self.msgText("Grow Display!\n")
+            if (self.debugLevel >= HighDebug) :
+                self.msgText("Grow Display!\n")
             self.speedPane.setVisible(True)
             self.shrinkGrow = True
             self.scrollArea.setRows(self.fullScrollRows)
@@ -1226,18 +1244,22 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 dirFlag = dirFlag or jmri.Path.WEST
         pathList = cB.getPaths()
-        #self.msgText("searching " + len(pathList).toString() + " paths from " + self.giveBlockName(cB) + "\n")
+        if (self.debugLevel >= HighDebug) :
+            self.msgText("searching " + len(pathList).toString() + " paths from " + self.giveBlockName(cB) + "\n")
         for p in pathList :
             blockTest = p.getBlock()
             if (p.checkPathSet()) :
                 dirTest = p.getToBlockDirection()
-                #self.msgText("findNextBlock path traversable: "  + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + " dirTest: " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + " dirFlag: " + jmri.Path.decodeDirection(dirFlag) + ":" + dirFlag.toString() + " result: " + (dirTest & dirFlag).toString() + "\n")
+                if (self.debugLevel >= HighDebug) :
+                    self.msgText("findNextBlock path traversable: "  + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + " dirTest: " + jmri.Path.decodeDirection(dirTest) + ":" + dirTest.toString() + " dirFlag: " + jmri.Path.decodeDirection(dirFlag) + ":" + dirFlag.toString() + " result: " + (dirTest & dirFlag).toString() + "\n")
                 if (dirTest & dirFlag != 0) :
                     nB = blockTest
-                    self.msgText("findNextBlock Found " + self.giveBlockName(blockTest) + "\n")
+                    if (self.debugLevel >= LowDebug) :
+                        self.msgText("findNextBlock Found " + self.giveBlockName(blockTest) + "\n")
                     #break
-            #else :
-                #self.msgText("findNextBlock path not traversable: " + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + "\n")
+            else :
+                if (self.debugLevel >= MediumDebug) :
+                    self.msgText("findNextBlock path not traversable: " + self.giveBlockName(cB) + " to " + self.giveBlockName(blockTest) + "\n")
         return nB
         
     # ActionListener - used for the stop timeout
@@ -1837,7 +1859,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def pushTest(self) :
-        self.methodPushTest = Ture
+        self.methodPushTest = True
         return
         
     def setStopBlock(self, blockId) :
@@ -1886,6 +1908,22 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         
     def returnSignalAppearanceHalt(self) :
         return(self.haltOnSignalHeadAppearance)
+        
+    def setDebugNone(self) :
+        self.debugLevel = NoneDebug
+        return()
+        
+    def setDebugLow(self) :
+        self.debugLevel = LowDebug
+        return()
+        
+    def setDebugMedium(self) :
+        self.debugLevel = MediumDebug
+        return()
+        
+    def setDebugHigh(self) :
+        self.debugLevel = HighDebug
+        return()
         
 # if you are running the RobotThrottle completely interactive,
 # the following two lines are all you need
