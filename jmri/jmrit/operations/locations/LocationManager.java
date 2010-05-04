@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -350,7 +350,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 	 * 
 	 */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
+    	log.debug("LocationManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new: " + e.getNewValue());
     	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
 		e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
     		replaceType((String)e.getOldValue(), (String)e.getNewValue());

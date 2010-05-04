@@ -36,7 +36,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -101,8 +101,8 @@ public class OperationsEnginesTest extends TestCase {
 		EngineTypes et1 = new EngineTypes();
 
 		Assert.assertNotNull("exists", et1 );
-		Assert.assertEquals("EngineTypes ENGINETYPES_LENGTH_CHANGED_PROPERTY", "EngineTypes Length", EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("EngineTypes ENGINETYPES_NAME_CHANGED_PROPERTY", "EngineTypes Name", EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY);
+		Assert.assertEquals("EngineTypes ENGINETYPES_LENGTH_CHANGED_PROPERTY", "EngineTypesLength", EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("EngineTypes ENGINETYPES_NAME_CHANGED_PROPERTY", "EngineTypesName", EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY);
 	}
 
         // test EngineTypes Names

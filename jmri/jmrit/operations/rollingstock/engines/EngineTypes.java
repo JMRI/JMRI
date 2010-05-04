@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the types of engines a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class EngineTypes {
 	
@@ -21,8 +21,8 @@ public class EngineTypes {
 	private static final String TYPES = rb.getString("engineDefaultTypes"); 
 	
 	// for property change
-	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypes Length";
-	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypes Name";
+	public static final String ENGINETYPES_LENGTH_CHANGED_PROPERTY = "EngineTypesLength";
+	public static final String ENGINETYPES_NAME_CHANGED_PROPERTY = "EngineTypesName";
     
 	public EngineTypes() {
     }
@@ -89,8 +89,9 @@ public class EngineTypes {
     
     public void replaceName(String oldName, String newName){
     	addName(newName);
-    	deleteName(oldName);
     	firePropertyChange (ENGINETYPES_NAME_CHANGED_PROPERTY, oldName, newName);
+      	// need to keep old name so location manager can replace properly
+       	deleteName(oldName);
     }
     
     public JComboBox getComboBox (){
