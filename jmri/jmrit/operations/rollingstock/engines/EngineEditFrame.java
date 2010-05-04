@@ -19,18 +19,20 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 
 
 /**
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -416,7 +418,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 						newEngine.setDestination(oldengine.getDestination(), oldengine.getDestinationTrack());
 						newEngine.setTrain(oldengine.getTrain());
 						manager.deregister(oldengine);
-						managerXml.writeOperationsEngineFile();
+						writeFiles();
 						return;
 					}
 				}
@@ -424,8 +426,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			addEngine();
 			// save frame size and position
 			manager.setEngineEditFrame(this);
-			managerXml.writeOperationsEngineFile();		//save engine file
-			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
+			writeFiles();
 		}
 		if (ae.getSource() == deleteButton){
 			log.debug("engine delete button actived");
@@ -434,13 +435,13 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 					&& _engine.getNumber().equals(roadNumberTextField.getText())) {
 				manager.deregister(_engine);
 				// save engine file
-				managerXml.writeOperationsEngineFile();
+				writeFiles();
 			} else {
 				Engine e = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
 				if (e != null){
 					manager.deregister(e);
 					// save engine file
-					managerXml.writeOperationsEngineFile();
+					writeFiles();
 				}
 			}
 		}
@@ -462,7 +463,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			}
 			addEngine();
 			// save engine file
-			managerXml.writeOperationsEngineFile();
+			writeFiles();
 		}
 		if (ae.getSource() == clearRoadNumberButton){
 			roadNumberTextField.setText("");
@@ -553,6 +554,21 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			}
 		});
 	}
+	
+	static boolean filesModified = false;
+	/**
+	 * Need to also write the location and train files if a road name
+	 * was deleted. Need to also write files if car type was changed.
+	 */
+	private void writeFiles(){
+		managerXml.writeOperationsEngineFile();		//save engine file
+		if (filesModified){
+			filesModified = false;
+			carManagerXml.writeOperationsCarFile(); 	//save road names, and owners
+			LocationManagerXml.instance().writeOperationsLocationFile();
+			TrainManagerXml.instance().writeOperationsTrainFile();
+		}	
+	}
 
 	private boolean editActive = false;
 	EngineAttributeEditFrame f;
@@ -601,6 +617,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EngineEditFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
+			filesModified = true;
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_engine != null)
 			roadComboBox.setSelectedItem(_engine.getRoad());
@@ -611,6 +628,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				modelComboBox.setSelectedItem(_engine.getModel());
 		}
 		if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_LENGTH_CHANGED_PROPERTY)){
+			filesModified = true;
 			engineTypes.updateComboBox(typeComboBox);
 			if (_engine != null)
 				typeComboBox.setSelectedItem(_engine.getType());
@@ -626,6 +644,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				consistComboBox.setSelectedItem(_engine.getConsistName());
 		}
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
+			filesModified = true;
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_engine != null)
 				ownerComboBox.setSelectedItem(_engine.getOwner());

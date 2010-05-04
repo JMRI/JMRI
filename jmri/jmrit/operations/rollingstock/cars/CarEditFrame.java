@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -508,15 +508,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		}
 	}
 	
-	static boolean roadsModified = false;
+	static boolean filesModified = false;
 	/**
 	 * Need to also write the location and train files if a road name
-	 * was deleted. 
+	 * was deleted. Need to also write files if car type was changed.
 	 */
 	private void writeFiles(){
 		managerXml.writeOperationsCarFile();
-		if (roadsModified){
-			roadsModified = false;
+		if (filesModified){
+			filesModified = false;
 			LocationManagerXml.instance().writeOperationsLocationFile();
 			TrainManagerXml.instance().writeOperationsTrainFile();
 		}
@@ -704,12 +704,13 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			log.debug ("CarEditFrame sees propertyChange "+e.getPropertyName()+" old: "+e.getOldValue()+" new: "+e.getNewValue());
 		if (e.getPropertyName().equals(CarRoads.CARROADS_LENGTH_CHANGED_PROPERTY)){
 			if ((Integer)e.getOldValue() > (Integer)e.getNewValue())
-				roadsModified = true;
+				filesModified = true;
 			CarRoads.instance().updateComboBox(roadComboBox);
 			if (_car != null)
 				roadComboBox.setSelectedItem(_car.getRoad());
 		}
 		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+			filesModified = true;
 			CarTypes.instance().updateComboBox(typeComboBox);
 			if (_car != null)
 				typeComboBox.setSelectedItem(_car.getType());
