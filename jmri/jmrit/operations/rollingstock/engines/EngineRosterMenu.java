@@ -16,7 +16,7 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class EngineRosterMenu extends JMenu {
@@ -59,6 +59,8 @@ public class EngineRosterMenu extends JMenu {
 
         AbstractAction importRosterAction = new ImportRosterEngineAction(rb.getString("MenuItemImportRoster"), pWho);
         importRosterAction.setEnabled(false);
+        AbstractAction exportAction = new ExportEngineRosterAction(rb.getString("MenuItemExport"), pWho);
+        exportAction.setEnabled(false);
         AbstractAction importAction = new ImportEngineAction(rb.getString("MenuItemImport"), pWho);
         importAction.setEnabled(false);
         AbstractAction deleteAction = new DeleteEngineRosterAction(rb.getString("MenuItemDelete"), pWho);
@@ -72,6 +74,7 @@ public class EngineRosterMenu extends JMenu {
         printAction.setEnabled(false);
         add(importRosterAction);
         add(importAction);
+        add(exportAction);
         add(deleteAction);
         add(printAction);
         add(previewAction);
@@ -80,6 +83,7 @@ public class EngineRosterMenu extends JMenu {
         switch (pMenuType) {
             case MAINMENU:
             	importRosterAction.setEnabled(true);
+            	exportAction.setEnabled(true);
                 importAction.setEnabled(true);
                 deleteAction.setEnabled(true);
                 printAction.setEnabled(true);

@@ -24,9 +24,8 @@ import jmri.jmrit.operations.setup.Control;
  * 
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
- * Note that all fields must be single words except for Location.
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ImportEngines extends Thread {
 	
@@ -43,12 +42,12 @@ public class ImportEngines extends Thread {
 	public void run() {
 		// Get file to read from
 		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-		fc.addChoosableFileFilter(new textFilter());
+		fc.addChoosableFileFilter(new importFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // cancelled
+			return; // Canceled
 		if (fc.getSelectedFile() == null)
-			return; // cancelled
+			return; // Canceled
 		File f = fc.getSelectedFile();
 		BufferedReader in;
 		try {
@@ -85,6 +84,13 @@ public class ImportEngines extends Thread {
 		String engineBuilt ="";
 		String engineLocation ="";
 		String engineTrack ="";
+		String[] inputLine;
+		
+		// does the file name end with .csv?
+		if (f.getAbsolutePath().endsWith(".csv")){
+			log.info("Using comma as delimiter for import cars");
+			comma = true;
+		}
 
 		while (true) {
 			lineNumber.setText(Integer.toString(++lineNum));
@@ -112,9 +118,8 @@ public class ImportEngines extends Thread {
 				comma = true;
 			}
 			// use comma as delimiter if found otherwise use spaces
-			String[] inputLine;
 			if (comma)
-				inputLine = line.split(",");
+				inputLine = parseCommaLine(line, 9);
 			else
 				inputLine = line.split("\\s+");
 			
@@ -137,7 +142,7 @@ public class ImportEngines extends Thread {
 				engineLocation ="";
 				engineTrack ="";
 
-				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") type ("+engineModel+ ") length ("+engineLength+")");
+				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") model ("+engineModel+ ") length ("+engineLength+")");
 				if (engineNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road number ("+engineNumber+") too long!",
@@ -148,14 +153,14 @@ public class ImportEngines extends Thread {
 				if (engineRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
 							"Engine ("+engineRoad+" "+engineNumber+") road name ("+engineRoad+") too long!",
-							rb.getString("engineAttribute"),
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineModel.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Engine ("+engineRoad+" "+engineNumber+") type ("+engineModel+") too long!",
-							rb.getString("engineAttribute"),
+							"Engine ("+engineRoad+" "+engineNumber+") model ("+engineModel+") too long!",
+							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
@@ -218,11 +223,13 @@ public class ImportEngines extends Thread {
 						for (int i=base+8; i<inputLine.length; i++){
 							if(inputLine[i].equals("-")){
 								foundDash = true;
-								if (inputLine.length > i)
+								if (inputLine.length > i+1)
 									engineTrack = inputLine[++i];
 							} else if (foundDash)
 								engineTrack = engineTrack + " " +inputLine[i];
 						}
+						if (engineTrack == null)
+							engineTrack = "";
 						log.debug("Engine ("+engineRoad+" "+engineNumber+") has track ("+engineTrack+")");
 					}
 
@@ -307,23 +314,60 @@ public class ImportEngines extends Thread {
 		}
 	}
 
+	protected String[] parseCommaLine(String line, int arraySize) {
+		String[] outLine = new String[arraySize];
+		if (line.contains("\"")) {
+			// log.debug("line number "+lineNum+" has escape char \"");
+			String[] parseLine = line.split(",");
+			int j = 0;
+			for (int i = 0; i < parseLine.length; i++) {
+				if (parseLine[i].contains("\"")) {
+					StringBuilder sb = new StringBuilder(parseLine[i++]);
+					sb.deleteCharAt(0); // delete the "
+					outLine[j] = sb.toString();
+					while (i < parseLine.length) {
+						if (parseLine[i].contains("\"")) {
+							sb = new StringBuilder(parseLine[i]);
+							sb.deleteCharAt(sb.length() - 1); // delete the "
+							outLine[j] = outLine[j] + "," + sb.toString();
+							// log.debug("generated string: "+outLine[j]);
+							j++;
+							break; // done!
+						} else {
+							outLine[j] = outLine[j] + "," + parseLine[i++];
+						}
+					}
+
+				} else {
+					// log.debug("outLine: "+parseLine[i]);
+					outLine[j++] = parseLine[i];
+				}
+			}
+		} else {
+			outLine = line.split(",");
+		}
+		return outLine;
+	}
 
 
 
 	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
-		
+	protected class importFilter extends javax.swing.filechooser.FileFilter {
+
 		public boolean accept(File f){
 			if (f.isDirectory())
-			return true;
+				return true;
 			String name = f.getName();
 			if (name.matches(".*\\.txt"))
 				return true;
-			return false;
+			if (name.matches(".*\\.csv"))
+				return true;
+			else
+				return false;
 		}
-		
+
 		public String getDescription() {
-			return "Text Documents (*.txt)";
+			return "Text & CSV Documents (*.txt, *.csv)";
 		}
 	}
 

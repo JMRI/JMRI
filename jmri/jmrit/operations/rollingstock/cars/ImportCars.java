@@ -24,9 +24,8 @@ import jmri.jmrit.operations.setup.Control;
  * 
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
- * Note that all fields must be single words except for Location.
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @author Dan Boudreau Copyright (C) 2008 2010
+ * @version $Revision: 1.12 $
  */
 public class ImportCars extends Thread {
 	
@@ -41,7 +40,7 @@ public class ImportCars extends Thread {
 	public void run() {
 		// Get file to read from
 		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-		fc.addChoosableFileFilter(new textFilter());
+		fc.addChoosableFileFilter(new importFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // canceled
@@ -85,6 +84,13 @@ public class ImportCars extends Thread {
 		String carBuilt ="";
 		String carLocation ="";
 		String carTrack ="";
+		String[] inputLine;
+		
+		// does the file name end with .csv?
+		if (f.getAbsolutePath().endsWith(".csv")){
+			log.info("Using comma as delimiter for import cars");
+			comma = true;
+		}
 
 		while (true) {
 			lineNumber.setText(Integer.toString(++lineNum));
@@ -112,9 +118,8 @@ public class ImportCars extends Thread {
 				comma = true;
 			}
 			// use comma as delimiter if found otherwise use spaces
-			String[] inputLine;
 			if (comma)
-				inputLine = line.split(",");
+				inputLine = parseCommaLine(line, 11);
 			else
 				inputLine = line.split("\\s+");
 			
@@ -237,11 +242,13 @@ public class ImportCars extends Thread {
 						for (int i=base+9; i<inputLine.length; i++){
 							if(inputLine[i].equals("-")){
 								foundDash = true;
-								if (inputLine.length > i)
+								if (inputLine.length > i+1)
 									carTrack = inputLine[++i];
 							} else if (foundDash)
 								carTrack = carTrack + " " +inputLine[i];
 						}
+						if (carTrack == null)
+							carTrack = "";
 						log.debug("Car ("+carRoad+" "+carNumber+") has track ("+carTrack+")");
 					}
 
@@ -324,24 +331,57 @@ public class ImportCars extends Thread {
 		}
 	}
 
+	protected String[] parseCommaLine(String line, int arraySize) {
+		String[] outLine = new String[arraySize];
+		if (line.contains("\"")) {
+			// log.debug("line number "+lineNum+" has escape char \"");
+			String[] parseLine = line.split(",");
+			int j = 0;
+			for (int i = 0; i < parseLine.length; i++) {
+				if (parseLine[i].contains("\"")) {
+					StringBuilder sb = new StringBuilder(parseLine[i++]);
+					sb.deleteCharAt(0); // delete the "
+					outLine[j] = sb.toString();
+					while (i < parseLine.length) {
+						if (parseLine[i].contains("\"")) {
+							sb = new StringBuilder(parseLine[i]);
+							sb.deleteCharAt(sb.length() - 1); // delete the "
+							outLine[j] = outLine[j] + "," + sb.toString();
+							// log.debug("generated string: "+outLine[j]);
+							j++;
+							break; // done!
+						} else {
+							outLine[j] = outLine[j] + "," + parseLine[i++];
+						}
+					}
 
+				} else {
+					// log.debug("outLine: "+parseLine[i]);
+					outLine[j++] = parseLine[i];
+				}
+			}
+		} else {
+			outLine = line.split(",");
+		}
+		return outLine;
+	}
 
+	protected class importFilter extends javax.swing.filechooser.FileFilter {
 
-	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
-		
 		public boolean accept(File f){
 			if (f.isDirectory())
-			return true;
+				return true;
 			String name = f.getName();
 			if (name.matches(".*\\.txt"))
+				return true;
+			if (name.matches(".*\\.csv"))
 				return true;
 			else
 				return false;
 		}
-		
+
 		public String getDescription() {
-			return "Text Documents (*.txt)";
+			return "Text & CSV Documents (*.txt, *.csv)";
 		}
 	}
 

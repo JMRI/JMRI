@@ -16,7 +16,7 @@ import javax.swing.JMenu;
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class CarRosterMenu extends JMenu {
@@ -59,6 +59,8 @@ public class CarRosterMenu extends JMenu {
 
         AbstractAction importAction = new ImportCarRosterAction(rb.getString("MenuItemImport"), pWho);
         importAction.setEnabled(false);
+        AbstractAction exportAction = new ExportCarRosterAction(rb.getString("MenuItemExport"), pWho);
+        exportAction.setEnabled(false);
         AbstractAction deleteAction = new DeleteCarRosterAction(rb.getString("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
 
@@ -69,6 +71,7 @@ public class CarRosterMenu extends JMenu {
         AbstractAction previewAction = new PrintCarRosterAction(rb.getString("MenuItemPreview"), newFrame, true, pWho);
         previewAction.setEnabled(false);
         add(importAction);
+        add(exportAction);
         add(deleteAction);
         add(printAction);
         add(previewAction);
@@ -77,6 +80,7 @@ public class CarRosterMenu extends JMenu {
         switch (pMenuType) {
             case MAINMENU:
                 importAction.setEnabled(true);
+                exportAction.setEnabled(true);
                 deleteAction.setEnabled(true);
                 printAction.setEnabled(true);
                 previewAction.setEnabled(true);
