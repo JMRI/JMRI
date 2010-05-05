@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile.xsl,v 1.26 2010-01-06 22:03:35 jacobsen Exp $ -->
+<!-- $Id: panelfile.xsl,v 1.27 2010-05-05 16:30:08 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -355,15 +355,23 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
   <td><xsl:value-of select="@userName"/></td>
   <td><xsl:choose>
     <xsl:when test="( @class = 'jmri.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
     <xsl:when test="( @class = 'jmri.configurexml.TripleTurnoutSignalHeadXml' )" >Triple Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.TripleTurnoutSignalHeadXml' )" >Triple Output</xsl:when>
     <xsl:when test="( @class = 'jmri.configurexml.DoubleTurnoutSignalHeadXml' )" >Double Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml' )" >Double Output</xsl:when>
     <xsl:when test="( @class = 'jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml' )" >SE8c</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.SE8cSignalHeadXml' )" >SE8c</xsl:when>
     <xsl:otherwise>Other</xsl:otherwise>
     </xsl:choose></td>
   <td>
-     <xsl:for-each select="turnout">
+     <xsl:for-each select="turnout">  <!-- older form with "turnout" elements -->
         <xsl:value-of select="@systemName"/><br/>
-     </xsl:for-each></td>
+     </xsl:for-each>
+     <xsl:for-each select="turnoutname">  <!-- newer form with "turnoutname" elements -->
+        <xsl:value-of select="."/>(<xsl:value-of select="@defines"/>)<br/>
+     </xsl:for-each>
+  </td>
   <td><xsl:value-of select="comment"/></td>
 </tr>
 </xsl:template>

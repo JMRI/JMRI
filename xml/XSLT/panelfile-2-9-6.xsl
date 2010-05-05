@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile-2-9-6.xsl,v 1.1 2010-05-02 23:52:27 jacobsen Exp $ -->
+<!-- $Id: panelfile-2-9-6.xsl,v 1.2 2010-05-05 16:30:08 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -84,8 +84,8 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
 
 <xsl:template match="turnout">
 <tr> 
-  <td><xsl:value-of select="@systemName"/></td>
-  <td><xsl:value-of select="@userName"/></td>
+  <td><xsl:value-of select="systemName"/></td>
+  <td><xsl:value-of select="userName"/></td>
   <td> <xsl:value-of select="@feedback"/> </td>
   <td><xsl:if test="( @inverted = 'true' )" >Yes</xsl:if></td>
   <td><xsl:if test="( @locked = 'true' )" >Yes</xsl:if></td>
@@ -357,15 +357,23 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
   <td><xsl:value-of select="@userName"/></td>
   <td><xsl:choose>
     <xsl:when test="( @class = 'jmri.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.VirtualSignalHeadXml' )" >Virtual</xsl:when>
     <xsl:when test="( @class = 'jmri.configurexml.TripleTurnoutSignalHeadXml' )" >Triple Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.TripleTurnoutSignalHeadXml' )" >Triple Output</xsl:when>
     <xsl:when test="( @class = 'jmri.configurexml.DoubleTurnoutSignalHeadXml' )" >Double Output</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.DoubleTurnoutSignalHeadXml' )" >Double Output</xsl:when>
     <xsl:when test="( @class = 'jmri.jmrix.loconet.configurexml.SE8cSignalHeadXml' )" >SE8c</xsl:when>
+    <xsl:when test="( @class = 'jmri.implementation.configurexml.SE8cSignalHeadXml' )" >SE8c</xsl:when>
     <xsl:otherwise>Other</xsl:otherwise>
     </xsl:choose></td>
   <td>
-     <xsl:for-each select="turnout">
+     <xsl:for-each select="turnout">  <!-- older form with "turnout" elements -->
         <xsl:value-of select="@systemName"/><br/>
-     </xsl:for-each></td>
+     </xsl:for-each>
+     <xsl:for-each select="turnoutname">  <!-- newer form with "turnoutname" elements -->
+        <xsl:value-of select="."/>(<xsl:value-of select="@defines"/>)<br/>
+     </xsl:for-each>
+  </td>
   <td><xsl:value-of select="comment"/></td>
 </tr>
 </xsl:template>
