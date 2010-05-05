@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: panelfile-2-9-6.xsl,v 1.2 2010-05-05 16:30:08 jacobsen Exp $ -->
+<!-- $Id: panelfile-2-9-6.xsl,v 1.3 2010-05-05 16:33:20 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI panel file into an HTML page -->
 
@@ -371,7 +371,7 @@ This page was produced by <a href="http://jmri.org">JMRI</a>.
         <xsl:value-of select="@systemName"/><br/>
      </xsl:for-each>
      <xsl:for-each select="turnoutname">  <!-- newer form with "turnoutname" elements -->
-        <xsl:value-of select="."/>(<xsl:value-of select="@defines"/>)<br/>
+        <xsl:value-of select="."/> (<xsl:value-of select="@defines"/>)<br/>
      </xsl:for-each>
   </td>
   <td><xsl:value-of select="comment"/></td>
