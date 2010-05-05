@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.11 2010-04-30 02:06:03 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.12 2010-05-05 16:41:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -232,6 +232,21 @@ David Duchamp added automated running to the
 
 <p>
 David Duchamp added Lights for connections with NCE systems.
+
+<p>
+Much more work on the infrastructure for internationalizing (translating) 
+decoder definitions into other languages, in the process reducing the size and redundancy.
+The ESU LocSound V3.5 decoder has been (mostly) translated into French as a proof of concept.
+If you've got your JMRI locale set to French, you should see the results.
+
+<p>
+New and improved operations features from Dan Boudreau: 
+export cars and engines to a file using comma separated values (*.csv).  
+Improved csv file import, now accepts import strings with commas as long as they are in quotes.
+Improved save operations.
+Now locations and trains are also saved if a car or engine type is modified by the user.
+Fix minor bug when replacing an engine type: The location and tracks didn't properly accept the new engine type.
+
 
 <!--#include virtual="/Footer" -->
 
