@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.7 2010-02-15 07:52:46 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.8 2010-05-05 16:35:08 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -134,6 +134,51 @@ More information on XML schema design patterns is available at
 <dt>trueFalseType<dd>true, false
 </dl>
 
+<h3>Schema Versioning</h3>
+
+The requirements for versioning of XML Schema are much
+simpler than those for DTDs, mostly because individual
+items have much clearer scope.  
+
+<ul>
+<li>You <em>do</em> need to
+version a schema you make a change to 
+the schema such that previous files will no longer validate
+with the current schema.  
+<p>
+In that case, just make your schema changes in the current
+schema document, and commit them back to CVS.
+<li>
+You <em>do not</em> need
+to version the schema if you add or change things such that
+existing files continue on validate.
+<p>
+In this case, the steps to version the schema are:
+    <ol>
+    <li>Copy the current schema file to a new one with 
+        the <em>next</em> version number.  E.g. 
+        copy types/turnouts-2-9-6.xsd to types/turnouts-2-9-8.xsd.
+        Make your changes and commit that new version.
+    <li>If this is a subfile, such as the types/turnouts-2-9-6.xsd,
+        that is included in a main schema such as layout-2-9-6.xsd,
+        that main file also needs to be copied, have the include
+        changed, and commited to CVS.
+    <li>Then, change the Java code that writes the 
+        schema reference to the top of output files 
+        to use the new filename. For example, layout (panel)
+        files are written by 
+        <code>src/jmri/configurexml/ConfigXmlManager.java</code>.
+    <li>If the XML stylesheet(s) in xml/XSLT have to be changed,
+        they are versioned in a similar way, including the 
+        code change where the stylesheet reference is included.
+    </ol>
+</ul>
+
+In either case, it's important to include sufficient
+test files that the unit tests catch any problems with the new
+and old schema.  See the 
+<a href="#test">test section below</a>.
+
 <h2>Checking JMRI Schema</h2>
 
 XML Schema are more verbose than the DTDs we're used to.
@@ -196,6 +241,34 @@ produces, click on this link to the
 <a href="http://jmri.org/xml/schema/aspecttable.xsd">aspecttable.xsd</a> schema file.
 If anybody knows of a better stylesheet, we
 can certainly switch to it.
+
+<a id="test">
+<h3>JUnit testing</h3>
+
+We test XML schema and files two ways: 
+Do they properly validate, and can certain files be properly read in and then written
+back.  The second test is more complicated, of course, but also more valuable.
+
+<p>
+To test for validation, drop an XML file into the 
+<code>test/jmri/configurexml/files</code> directory.
+This will automatically be tested to make sure it validates.
+If you version a schema, you should 
+run a few of these files through PanelPro (e.g. read them
+and then rewrite them with the new format) and include new
+copies to test the new format.
+<p>
+Small fragments that demonstrate specific schema features
+can be put in the 
+<code>test/jmri/configurexml/pass</code>
+and
+<code>test/jmri/configurexml/fail</code>
+directories (the "fail" directory files are expected to fail
+for some specific reason documented via comments in the file).
+
+<p>
+To read and write, see the example in
+<code>test/jmri/configurexml/LoadFileTest.java</code>
 
 <h2>External Standards and Future Work</h2>
 
