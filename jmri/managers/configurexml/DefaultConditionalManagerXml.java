@@ -19,7 +19,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -157,7 +157,7 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 break;
             }
 
-            String userName = null;
+            String userName = "";  // omitted username is treated as empty, not null
             if (conditionalList.get(i).getAttribute("userName") != null)
                 userName = conditionalList.get(i).getAttribute("userName").
 																				getValue();
