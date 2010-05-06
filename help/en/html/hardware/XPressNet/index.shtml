@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.10 2010-04-03 02:15:33 pbender Exp $ -->
+<!-- $Id: index.shtml,v 1.11 2010-05-06 02:51:45 pbender Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -34,13 +34,14 @@ JMRI: XPressNet
 
 <H2>Overview</H2>
 
-    XPressNet is the Command Bus used by
+    XPressNet is a Command Bus used by
 	<a href="http://www.atlasrr.com">Atlas</a>,
 	<a href="http://www.lenz.com">Lenz</a>,
     <a href="http://www.hornby.com">Hornby</a>,
         <a href="http://www.opendcc.org">OpenDCC (DIY)</a>,
         <a href="http://www.opendcc.org">Paco Canada (DIY)</a>,
-	<a href="http://www.ztccontrols.com">ZTC Controls</a>, and
+	<a href="http://www.ztccontrols.com">ZTC Controls</a>
+        <a href="http://www.viessmann-modell.com/">Viessmann</a>, and
 	<a href="http://www.roco.co.at">Roco</a>.
     It was developed by Lenz.  
     The XPressNet specification (available from
@@ -135,6 +136,8 @@ this page
 	    <li>ZTC Controls ZTC521 (with XPressNet (aka X-Bus V3.0) software)</li>
             <li>Hornby Select</li>
             <li>OpenDCC's Command Center</li>
+            <li>Viessmann Commander</li>
+            <li>Roco 10830 multiZENTRAl-PRO</li>
 	</ul>
     </dd>
     </dl>
@@ -313,6 +316,15 @@ this page
         switches) and programming locomotives in both service and operations 
         mode.
 
+        <p>The Roco multiZENTRAL-PRO (Roco Part number 10830) is the new 
+        command station for use with Roco's MultiMaus-PRO wireless throttles.  
+        The unit features a built in USB port, but it is unknown at this time 
+        how we can utilize it.
+ 
+        <p>The multiZENTRAL-PRO also provides ports for connecting a MultiMaus 
+        or a LocoMaus 2.  These ports can be used to connect one of the 
+        supported XPressNet computer Interfvaces, but it is unknown at this 
+        point what, if any, limitations exist when using this connection.
 	</dd>
      
         <dt class=left>OpenDCC</dt>
@@ -350,6 +362,17 @@ this page
         This device does not require an XPressNet connection. 
 
         </dd>
+        <dt class=left>Viessemann</dt>
+        <dd>
+        <p> The Viessemann Commander's Low Speed Bus port supports the 
+        XPressNet protocol.  We should be able to use this to connect 
+        using one of the supported XPressnet computer interfaces, but the
+        limitations of this port have not been determined.
+
+        <p> Viessemann has indicated the Commander's built in USB port can 
+        only be used for updating the firmware and sending data to the 
+        commander, not for operating the device.
+        </dd>
 
 	<dt class=left>ZTC</dt>
 	<dd>
@@ -368,7 +391,7 @@ this page
     connect to a ZTC system that supports the XPressNet (aka X-Bus V3.0) 
 	protocol.
 
-	<p>If you have either a ZTC system and wish to add computer 
+	<p>If you have either ZTC system and wish to add computer 
     control to your layout, an XPA and Hayes Compatible Modem may 
     be a more cost effective solution than one of the purpose built
     interfaces.
