@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OBlockTable.shtml,v 1.2 2010-01-05 05:56:08 pete_cressman Exp $ -->
+<!-- $Id: OBlockTable.shtml,v 1.3 2010-05-06 22:09:15 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -31,10 +31,7 @@ The Occupancy Block Tables were developed to define the elements needed to creat
 also a design goal to generate these routes 
 automatically by merely specifying the origin and destination of the trains.  Furthermore,
 it was designed for use by Logix so that users can define and control automated trains
-running from panel editor panels of their own design.  Originally
-it was conceived to bring trains out of non-visible staging areas into visible areas
-where they can be turned over to operators for use in operating sessions.  However, if
-desired, automatic train dispatching by warrants can be put to broader use.  
+running from panel editor panels of their own design.  
    
 <H3>What are Portals and Why Use Them?</H3>
 Occupancy blocks are portions of track having one or more sensors to detect occupancy
@@ -55,13 +52,15 @@ points.  If you have signals on
 your layout, consider where they are located.  Most likely they are placed near dividing 
 points between blocks.  So regardless of the name, Portals are a significant concept.
 </p>
+
+<H3>Paths Through Portals</H3>
 <p>There may be many ways to traverse a block.  A path within a block will enter at one portal 
 and exit through another portal. Or a path may terminate within the block, that is, the path
 is a spur.  Again, portals are a useful concept to indicate these entrance and exit points.
 </p> 
 <p>Note that a path must
 have at least one portal for an entry/exit point and cannot have more than two portals.
-A path is unambiguously defined by specifying the turnouts and their settings for a
+A <b>Path</b> is unambiguously defined by specifying the turnouts and their settings for a
 train to proceed safely through the block.
 </p>
 <H2>Definitions:</H2>
@@ -114,6 +113,7 @@ Each occupancy block on your layout should be entered as a row of this table.
         <li><b>Sensor</b>:The sensor that detects occupancy of the block.</li>
         <li><b>Length</b>: The length of the Block.  This is included for compatibility
         with JMRI Blocks.</li>
+        <li><b>Units</b>: The unit used to determine the length. (inches or centimeters)
         <li><b>Curvature</b>: The curvature selected for the track  This is included for 
         compatibility with JMRI Blocks.</li>
         <li><b>Paths</b>: A button that opens the <b>Block-Path</b> table where the paths of 
@@ -122,39 +122,59 @@ Each occupancy block on your layout should be entered as a row of this table.
         save your configuration file to disk</li> 
 </ul>
 This table is sorted by the system name of the OBlock.  This means that when a new row is added
-the entry will jump to its postion in the sort.  After entering a new OBlock you will find it
+the entry will jump to its postion in the sort.  After entering a new OBlock you may find it
 at the top of the window should you need to do further editing.
 
 <H3>Columns in the Portal Table:</H3>
-The Portal table has columns labeled 'from' and 'to'.  However, you do not need to be concerned
-about the direction of travel.  <i>It does not matter which side of the portal the blocks names are
+The Portal table has columns for the blocks it separates.  You do not need to be concerned
+about the direction of travel through the portal.  <i>It does not matter which side of the portal the blocks names are
 entered</i>, since the algorithms that compute train routes will decipher the correct
-entrance and exit points.  In fact, the columns could just as well be labeled 'this side' and the 'other
-side'.  (Yes, it's magic.  Try it and you'll see that it works.)</p>
+entrance and exit points.</p>
 <ul>
-        <li><b>From Signal Name</b>: (Optional) Enter the name, either system name or user name,
-        of the signal that faces the 'from' block.  That is, the signal that controls the movement
-        of a train exiting the 'from' block and entering the 'to' block.  Thus the 'from signal'
-        protects the 'to block' from entry from the 'from block'. </li> 
-        <li><b>From Block Name</b>: The user or system name of the OBlock on one side of the Portal.</li>
+        <li><b>Block Name</b>: The user or system name of the OBlock on one side of the Portal.</li>
         <li><b>Portal Name</b>: The portal name.  The names of portals must be unique.</li>
-        <li><b>To Block Name</b>: The user or system name of the OBlock on the other side of the Portal.</li>
-        <li><b>To Signal Name</b>: (Optional) Enter the name, either system name or user name,
-        of the signal that faces the 'to' block.  That is, the signal that controls the movement
-        of a train exiting the 'to' block and entering the 'from' block.  Likewise, the 'to signal'
-        protects the 'from block'.</li>
+        <li><b>Block Name</b>: The user or system name of the OBlock on the other side of the Portal.</li>
         <li><<b>Delete</b>: A button to delete the Portal.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
 This table is sorted by the name of the Portal.  This means that when a new row is added
 the entry will jump to its postion in the sort.  After entering a new Portal you may find it at 
-the top of the window for further editing.
+the top of the window for further editing.</p>
+
+<H3>Columns in Signal Table:</H3>
+For each signal on your layout, make an entry in the Signal Table.  This signal will control the
+actions of any warranted train - changing its speed according to the signal's indication when the
+train reaches the portal where the signal is placed.  That is, the signal 'protects' the blocks beyond 
+the portal. The signal may be either a <b>SignalMast</b> or a <b>SignalHead</b>.
+<ul>
+        <li><b>Signal Name</b>: Enter the name of the signal, either the system name or user name.
+        (In the case where the same name is used for both a SignalMast and SignalHead, the SignalMast
+        will be chosen.) </li>  
+        <li><b>From (Approach) Block</b>: Enter the name, either system name or user name,
+        of the block that the signal faces.  The signal controls the movement
+        of a train exiting from the approach block and entering into the protected block.</li> 
+        <li><b>(Through) Portal</b>: Enter the name of the portal where the signal is placed.</li>
+        <li><b>To (Protected) Block</b>: Enter the name, either system name or user name,
+        of the block whose entrance is protected by the signal.</li>
+        <li><b>Delay(ms)</b>: (Optional) Enter the time in milliseconds to delay any speed change
+        that may be required by the signal's aspect.  (See note below)</li>
+</ul>
+        
+<H3>How Signal Aspects Or Occupancy Change Speed:</H3>
+The warrant detects the signal aspect when it enters the <i>approach</i> block and, if needed,
+prepares to change the speed before it reaches the <i>protected</i> block.  Any speed change is
+ramped down to the speed required by the signal.  The above <b>delay</b> time is the time the
+warranted train will wait before beginning the speed change.</p>
+<p>
+Likewise, when the signal indicates a clear or improved speed from a stopped or reduced speed
+condition, the speed will be ramped up to the allowed or recorded speed. 
 
 <H3>Columns in Block-Path Tables:</H3>
 Each block in the Occupancy Block Table will have one or more paths in it.  Pressing the <b>Paths</b> 
-button in a row of the Occupancy Block Table will open this table.  Again, <i>direction of the path
-is immaterial</i>. - (more magic) - 'from' and 'to' do not have to correspond to any 'from' and 'to'
-in the Portal table.  They are just names for 'this end' and 'that end'.</p>
+button in a row of the Occupancy Block Table will open this table.  <i>Direction of the path
+is immaterial</i>.  'from' and 'to' do not have to correspond to any particular side
+of the block.  They are just portal names for the path that traverses from 
+'this portal' to 'that portal'.</p>
 <ul>
         <li><b>From Portal</b>: The portal name of one enterance/exit point of the path.</li> 
         <li><b>Path Name</b>: The name of the Path.  Path names only have to be unique within

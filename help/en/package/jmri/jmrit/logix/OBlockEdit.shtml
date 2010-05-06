@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: OBlockEdit.shtml,v 1.1 2009-11-12 00:04:54 pete_cressman Exp $ -->
+<!-- $Id: OBlockEdit.shtml,v 1.2 2010-05-06 22:09:15 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -65,23 +65,20 @@ name.  The block names can be dragged from the Occupancy Block table to save typ
 Note: The computer will notify you from time to time until you have entered a block on each side
 of the portal name.  It doesn't matter on which side of the portal name you enter a block name, 
 just be sure to enter both sides
-</ul>
-<p><b>5.</b> If there are Signal Heads protecting the exit and/or entrance to the blocks at the portal
-point, enter the system or user name of the signal.  It is important that the Signal Head name put into the
-<b>From Signal</b> column <b><i>face</i></b> the block named in the <b>From Block</b> column.
-<b>Facing</b> means the 'From Signal' controls train movement exiting the 'From Block' and entering 
-the 'To Block'.  
-Similarly, the <b>To Signal</b> must face the <b>To Block</b>.  <i>You can skip
-entering this now and come back and enter it later.</i>  
-<ul>
-Note: If the signal at the portal is not operated by a single JMRI Signal Head - for example, it is some
-combination of JMRI Signal Heads, then it may not be possible for active warrants to set or read these signals.
-In a later release, signal aspect requests might be used by warrants to reserve or inform
-occupancy to a signal system.  (Pie in the sky - don't hold your breath)
 <p>
 Note: It may be helpful to open the <b>Block-Portal Cross Reference Table</b> to review whether all the
 portals have been entered.
 </ul>
+</ul>
+Next, If there are signals at a portal, enter them into the <b>Signal Table</b>.
+<ul>
+<b>5.</b> Enter the system or user name of the signal.  This may be either a SignalMast or SignalHead.
+<p><b>6.</b> Enter the name of the block <b><i>facing</i></b> the signal into the <b>From (Approach) Block</b>
+column.  It is important that the approaching block of the signal is correctly named.  This is the block
+that will detect when a speed change might be needed.
+<p><b>7.</b> Enter the portal name or the name of the block whose entrance is protected.   
+<p><b>8.</b> Enter any delay of milliseconds to wait after entering the approach block before changing 
+the train speed.  (This time delay is used only when the signal indicates a speed change.)   
 </UL>
 Next, identify the Paths in each block.
 <ul>
@@ -90,14 +87,14 @@ Reminder: You may use 'Drag and Drop' to enter text.  When selecting an item to 
 two clicks; one to select the row and a second to select the column entry.  Holding the second click down,
 you can drag the text from that row, column field.
 </ul>
-<b>6.</b> Moving through the Occupancy Block table row by row, do:
+<b>9.</b> Moving through the Occupancy Block table row by row, do:
 <ul>
-<b>6a.</b> Press the <b>Paths</b> button and open the <b>Block-Path</b> table for the row
-<p><b>6b.</b> Enter a path name for a path within the block of the row in the <b>Path Name</b> column.</p>
+<b>9a.</b> Press the <b>Paths</b> button and open the <b>Block-Path</b> table for the row
+<p><b>9b.</b> Enter a path name for a path within the block of the row in the <b>Path Name</b> column.</p>
 <ul>
 Note: The name of the block is in quotes in the title bar of the table.
 </ul>
-<b<6c.</b> Enter the names of the portals where the path enters and exits the block.
+<b<9c.</b> Enter the names of the portals where the path enters and exits the block.
 <ul>
 Note: It doesn't matter on which side of the path name you enter a portal name.  Dead end
 spurs will only have one portal.
@@ -106,15 +103,15 @@ spurs will only have one portal.
 </ul>
 Finally, complete the definition of each Path in each block.
 <UL>
-<b>7.</b> For each path in each <b>Block-Path table</b>, do:
+<b>10.</b> For each path in each <b>Block-Path table</b>, do:
 <ul>
-<p><b>7a.</b> Press the <b>Turnouts</b> button and open the <b>Block-Path-Turnout</b> table for the each
+<p><b>10a.</b> Press the <b>Turnouts</b> button and open the <b>Block-Path-Turnout</b> table for the each
 row in the <b>Block-Path</b> table</P></p>
-<p><b>7b.</b> Enter the system or user name of a turnout in the path.      
+<p><b>10b.</b> Enter the system or user name of a turnout in the path.      
 <ul>
 Note: The name of the path and its block are in quotes in the title bar of the table.
 </ul>
-<p><b>7c.</b> Enter the position of the turnout in the <b>Turnout Setting</b> column - either 'Closed'
+<p><b>10c.</b> Enter the position of the turnout in the <b>Turnout Setting</b> column - either 'Closed'
 or 'Thrown'.
 </ul>
 </UL>
@@ -123,7 +120,7 @@ resolve all of them.
 <p>Now, you are ready to define some routes for warrants.  Of course, there will probably still 
 be a few errors or missing items, but the 'Create Warrant' frame provides a tool to find and fix them.<\p>
 <UL>
-<b>8.</b> Select <b>Create New Warrant</b> from the <b>Warrants</b> menu in a Panel Editor Panel.
+<b>11.</b> Select <b>Create New Warrant</b> from the <b>Warrants</b> menu in a Panel Editor Panel.
 </UL>
  
 To read about how OBlocks, Portals and OPaths can be used to generate train routes and make

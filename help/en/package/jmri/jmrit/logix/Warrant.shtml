@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Warrant.shtml,v 1.3 2009-12-20 18:58:03 pete_cressman Exp $ -->
+<!-- $Id: Warrant.shtml,v 1.4 2010-05-06 22:09:15 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Help</TITLE>
@@ -26,8 +26,8 @@
 <H1>Warrants</H1>
 
 A Warrant is a collection of information sufficient to run an automated train.
-It can also be used to set signals and turnouts for a specified route of a 
-manually operated train.
+It will set the turnouts for a specified route and detect whether there are any
+other trains occupying it.
 A JMRI Warrant is suggestive of what a warrant does on a prototype railroad, but
 there is no intention to replicate any particular railroad's mode of
 operation.
@@ -69,6 +69,8 @@ menu items.  Otherwise, this menu is not displayed.  The Warrant menu items are:
 <H2>Functions of a Warrant</H2>
 
 <H3>Creating Routes</H3>
+Routes are created from the <b>Define Route</b> tab.</p>
+<p>
 A warrant route is a series of block paths linked together so a train
 may travel over it.  A warrant route is created by first choosing an <b>origin
 block</b>, a starting path and a portal to exit the orginating block.  Then,
@@ -100,10 +102,12 @@ track that you believe is there.  When this occurs, you may request the computer
 to display the routes the algorithm has attempted.  As you trace the  
 attempted routes you
 may find that you have forgotten to enter a path or miss-labeled the correct portal
-to a path.  (or, heaven forbid! found a bug.)</b>
+to a path.  (or, heaven forbid! found a bug.)</b></p>
+<p>When you are satisfied with the route, select the <b>Record/Playback Script</b> tab.</p>
 
 <H3>Choosing a Train</H3>
-The Edit/Create Warrant frame has a drop dowm 'combo box' that displays all the trains
+Inside the <b>Choose Engine Consist</b> box you will find 
+a drop dowm 'combo box' labeled <b>Engine Roster</b> that displays all the trains
 listed in the Roster.  Selecting one will assign a train to the warrant.
 <p>
 If you do not have a Roster defined then you may enter a locomotive's address in the
@@ -115,7 +119,7 @@ information about this.</p>
 
 <H3>Learn Mode Throttle</H3>
 If a train has been assigned, that is, has a valid train Id or valid DCC address in the warrant,
-then a throttle can aquired by pressing the <b>Start</b> button.  This
+then a throttle can be aquired by pressing the <b>Start</b> button.  This
 throttle will operate the acquired train and all the throttle commands will be
 recorded until the <b>Stop</b> button is pressed.
 <A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>.</li> has more
@@ -176,10 +180,13 @@ signals set and trains run and controlled using the columns in the table.
         <li><b>DCC Address</b>: - The DCC Address of the locomotive or consist.</li>
         <li><b>Allocate</b>: - A button that reserves the route for the warrant.</li>
         <li><b>Deallocate</b>: - A button that removes the reservation for the warrant.</li>
-        <li><b>Set</b>: - A button the sets the turnouts and signals for the warrant route.</li>
-        <li><b>Run</b>: - A button that runs the train over the route according to the automated throttle commands.</li>
+        <li><b>Set</b>: - A button the sets the turnouts for the warrant route.</li>
+        <li><b>Run</b>: - A button that runs the train over the route according to the automated throttle commands.
+        The recorded speed of the train will be modified according to the occupancy and signal aspects
+        encountered on the route.</li>
         <li><b>Control/Status</b>: - The status of the warrant is shown.  It also has a drop down combo box that
-        can send the following commands to a running train.
+        can send the following commands to a running train.  <b><i>Note</b>: This column has two functions -
+        Status messages and control buttons.</i>
         <ul>
         <li><b>Halt</b>, <b>Resume</b> and <b>Abort</b> commands to an automated running train.</li>
         <li><b>Edit</b>: - A button that opens an editing window for the warrant,</li>
@@ -216,8 +223,12 @@ using the Warrant state variables and actions found in Logix.
         warrant.</li>
         <li><b>Run</b>: - Issue the throttle commands to the train in the warrant.  This
         should only be done when the train occupies the Origin block.</li>
-        <li><b>Set TrainId</b>: - Set the train to be used in the warrant from a trainId 
-        in the Roster.</li>
+        <li><b>Set TrainId</b>: - Set the engine consist to be used in the warrant from a trainId 
+        in the Engine Roster.</li>
+        <li><b>Control Train</b>: - Send a control command (<b>Halt</b>, <b>Resume</b> or 
+        <b>Abort)</b> to a running train under warrant.</li>
+        <li><b>Set Throttle Factor</b>: - Set a multiplier for the recorded throttle setting.
+        When the engine or consist of the train is changed, more or less power may be required.</li>
 </ul>        
 <br>
 

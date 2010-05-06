@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: WarrantTable.shtml,v 1.4 2010-01-05 05:56:08 pete_cressman Exp $ -->
+<!-- $Id: WarrantTable.shtml,v 1.5 2010-05-06 22:09:15 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Panel Editor Help</TITLE>
@@ -39,6 +39,7 @@ There are three steps in creating a warrant, define the route, select a
 train and record the throttle commands.
 </p>
 <H2>Defining a Warrant Route</H2>
+Routes are created using the <b>Define Route</b> tab in the Edit Warrant window.</p> 
 
 <H3>Origin, Destination and Via Blocks</H3>
 A warrant route is created by selecting the the Block and path where
@@ -99,7 +100,7 @@ can be found at <a href="OBlockTable.shtml">The Occupancy Block Tables</a>.
 </p>
 <H3>Calculate and Debug</H3>
 After the origin and destination blocks and paths have been chosen, press
-the <b>Calculate Route</b> button.  Typically, more than one route will be found.
+the <b>Calculate Route</b> button.  Frequently, more than one route will be found.
 The "Searching for Route" text box will show some statistics on the number of routes
 and their length in blocks that have been found while searching for routes.  
 The text field "Max Number of Blocks in Route" limits how far the computer will look
@@ -112,10 +113,9 @@ will display the route for you to examine in the Route Table. Each block, path
 and portals used to traverse the route is displayed. 
 </p><p>
 You may inspect all the routes in this 
-manner.  Choosing a route and pressing the <b>Select</b> button will fill out the 
-Route Table and dismiss the dialog.
-If exactly one route is found, the list dialog is skipped and Route Table is
-filled out.  
+manner.  Choosing a route and pressing the <b>Select</b> button will 
+dismiss the dialog. and bring up the <b>Record/Playback Script</b> tab.
+If exactly one route is found, the list dialog is skipped.  
 </p><p>
 Sometimes the dialog message "No Route found 
 from "Origin Block', path ..." etc. is displayed. Responding <b>Yes</b> to the
@@ -129,7 +129,11 @@ However, these are also the places where you may find an error or
 omission that you made when defining the OBlocks, OPaths and Portals.
 </p>
 
-<H2>Choosing a train</H2>
+<H2>Record/Playback Script</H2>
+You pick the engine to power your train and record its actions from this panel.  
+You also can test and modify the recorded script here.
+
+<H3>Choosing a train</H3>
 If you have defined an JMRI engine roster, the train names are displayed in
 the <b>Engine Roster</b> drop down ComboBox.  Selecting a name from this list
 will fill in the text fields:
@@ -153,12 +157,15 @@ Command Table.
 <p>
 Pressing the <b>Stop</b> button will end the recording.
 </p><p>
-Te learn script should be done with a completely clear route - All turnouts 
+The learn script should be done with a completely clear route - All turnouts 
 set, all blocks unoccupied (except origin), all signals set for
 clear runing and no changes made during recording
 period.  When the train is run executing the script, any changes in these
-completely conditions will be taken into account.
-</p<p>
+completely conditions will be taken into account and the train's speed and schedule
+will be altered accordingly.
+</p
+
+<H3>Running a Train</H3>
 As a safety feature, whenever a warranted train has permission to enter the 
 next block, the turnouts are (re)set.   Having permission from signals means 
 that resetting the turnouts should not interfere with any interlocking logic.  
@@ -166,7 +173,7 @@ In the absence of signals, occupancy or allocation to another warrant also
 may deny permission.  It is the most restrictive of these three conditions 
 that gives the auto-run train permission to proceed.  When such a denial is 
 cleared, the train will proceed automatically.  The only thing that overrides 
-having permission to proceed is if the user has set "Halt".  The train will 
+having permission to proceed is if the user has set the control to "Halt".  The train will 
 not move until the user sets "Resume". (see below how to set these user commands.
 </p>   
 <H3>Throttle Command Table</H3>
@@ -179,49 +186,45 @@ The Throttle Command Table has the following columns:
         <li><b>Value</b>: - The value of the command.</li> 
         <li><b>Block</b>: - The block the train has last entered when the throttle
         command was recorded.</li>
-        <li><b>Delete</b>: - Deletes the command.  Note that this will also remove 
-        some of the elapsed time between the previous and next commands of the deleted 
-        command.</li>
 </ul>
 In addition to the commands you entered from the throttle, a marker when each
 block is entered is also recorded.  A marker row in the table has the elapsed time from 
-the last throttle command, the command name "NoOp" (i.e. no command to send to the 
-train), the value "Enter Block" and the block name being entered.
+the last throttle command, the command name "NoOp" (i.e. no command was send to the 
+train), the value "Enter Block" and the block name being entered.  These rows help
+to synchronize the running of the train to keep to its recorded schedule. 
 </p><p>
 All of the columns in the Throttle Command Table can be edited.  Perhaps you want to
 touch up the horn blasts or modify the speeds.  Just enter the data you want.
 </p>
 
 <H3>Synchronizing Commands to Block boundaries.</H3>
+The "NoOp" markers attempt to shorten or lengthen the elapsed time to synchronize
+the entry into each block at the same time as was recorded.
 If the consist of a train changes, or if power is changed, the recorded elapsed times
 may not allow the throttle commands to execute at the same points on the route where
-the "Learn Mode" train recorded them.
+the "Learn Mode" train recorded them.  The "NoOp" markers can usually correct this. However, 
+in extreme cases or for commands issued within the block sychronization may
+still be uncorrected.
 <p>
-If this is the case, Enter the word "<b>Synch</b>" in the "ET" (elapsed time) column.  
-When the train
-is run in "Run Mode", it will hold back or advance a "Synch" command until it reaches and enters
-the block specified in the "Block" column of the command.  The marker rows can be
-edited into Synch commands or otherwise identify where synchronization can be done.
+If this is the case, a <b>Throttle Adjustment</b> can be entered to multiply the throttle setting
+to supply more or less power. 
 <ul>
-        <b>NOTE:</b>Be sure that the block named in the "Block" of a "Synch" command
-        has not been entered by the train.  If the train has already reached that
-        block, the command and no further commands will be issued. The computer 
-        is holding the sequence of commands waiting for the block to change state from
-        unoccupied to occupied.
-        <p>
-        Also, if block ahead of the train becomes occupied before the train can enter it,
-        a "Synch" command may execute prematurely.  This can happen if a "rouge train"
-        enters a block on the route ahead of the train.
+        <b>NOTE:</b>The throttle adjustment factor is not permanently saved.  The default 
+        mutiplier is always 1.0.  Whenever a factor is wanted, it must be entered manually 
+        each time the warrant is run. - <b>or be set by Logix</b> when Logix is used to set 
+        the trainId and run the warrant.  The recorded and edited throttle commands are the 
+        base settings for each warrant run.  TrainId and Throttle Factor can be set as desired
+        for each warrant run.
 </ul>
 </p>
 
 <H3>Running Trains on Dark Blocks.</H3>
 The Learn mode and Run Mode functions can be used on blocks that do not have detection sensors.
-However, without detection, other than the initial setting of turnouts and signals,
-turnouts and signals cannot be set on the fly while the train is enroute.  This means
+However, without detection, other than the initial setting of turnouts, the warrant
+cannot reset the turnouts or modify its speed while the train is enroute.  This means
 there is no protection from rouge trains fouling the route or from turnouts being changed
-while the train is enroute.  Therefore use these features
-with caution over dark blocks.  "Synch" may not be used as well.
+while the train is enroute.  Therefore run trains
+with caution over dark blocks.
 
 <H2>Run Mode</H2>
 Pressing the <b>Run</b> button in the <b>Run Train</b> box
