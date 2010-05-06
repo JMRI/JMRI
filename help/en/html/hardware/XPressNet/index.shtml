@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.11 2010-05-06 02:51:45 pbender Exp $ -->
+<!-- $Id: index.shtml,v 1.12 2010-05-06 14:23:27 pbender Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -300,6 +300,8 @@ this page
 	</dd>
 	<dt class=left>Roco</dt>
 	<dd>
+        <p>NOTE: Roco calls their implementation of XPressNet RocoNet.  
+
 	<p>The Roco LocoMaus 2 (Roco Part number 10760) has been shown to 
 	support operating equipment on a layout (running trains and throwing 
 	switches) as well as programming locomotives on the programming 
@@ -321,10 +323,11 @@ this page
         The unit features a built in USB port, but it is unknown at this time 
         how we can utilize it.
  
-        <p>The multiZENTRAL-PRO also provides ports for connecting a MultiMaus 
-        or a LocoMaus 2.  These ports can be used to connect one of the 
-        supported XPressNet computer Interfvaces, but it is unknown at this 
-        point what, if any, limitations exist when using this connection.
+        <p>The multiZENTRAL-PRO also provides ports for connecting a RocoNet 
+        device (MultiMaus,LocoMaus 2, etc).  These ports can be used to 
+        connect one of the supported XPressNet computer Interfvaces, but it 
+        is unknown at this point what, if any, limitations exist when using 
+        this connection.
 	</dd>
      
         <dt class=left>OpenDCC</dt>
