@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.24 $
+# $Revision: 1.25 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -254,6 +254,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         #self.msgText("handle done\n")
         return 1 #continue if 1, run once if 0
     
+    # allow changes of a signal dropping on the appearance to trigger halting
+    def setSignalAppearanceHalt(self, signalIndication) :
+        self.haltOnSignalHeadAppearance = signalIndication
+        return
+        
+    # show what level of signal appearance causes a halt on dropping signal
+    def returnSignalAppearanceHalt(self) :
+        return(int(self.haltOnSignalHeadAppearance).toString())
+        
     def getNewThrottle(self) :
         self.holdMoving = True
         if (self.currentThrottle != None) :
@@ -1901,13 +1910,6 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         else :
             v = ""
         return(v)
-        
-	def setSignalAppearanceHalt(self, signalIndication) :
-		self.haltOnSignalHeadAppearance = signalIndication
-		return
-        
-    def returnSignalAppearanceHalt(self) :
-        return(self.haltOnSignalHeadAppearance)
         
     def setDebugNone(self) :
         self.debugLevel = NoneDebug
