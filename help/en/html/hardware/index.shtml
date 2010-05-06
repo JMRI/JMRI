@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.28 2009-01-06 17:58:12 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.29 2010-05-06 03:06:31 pbender Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -251,7 +251,7 @@
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
 	    <dd>
-	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760) or Roco MultiMaus (Roco Part number 10810) via
+	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760), Roco MultiMaus (Roco Part number 10810), or Roco multiZENTRAL-Pro (Roco Part number 10830) via
 		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a>
 		</p>
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
@@ -281,6 +281,14 @@
 		</p>
 
 	    </dd>
+	    <dt class="im"><a href="http://www.viessmann-modell.com/">Viessmann</a></dt>
+	    <dt>Viessmann</dt>
+	    <dd>
+	        <p class="dl">Configure: Viessmann Commander via
+		<A HREF="XPressNet/index.shtml">Lenz LI100, LI101F, or LIUSB XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a>
+		</p>
+		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
+            </dd>
 
 	    <dt class="im">Wangrow</dt>
 	    <dt>Wangrow</dt>
