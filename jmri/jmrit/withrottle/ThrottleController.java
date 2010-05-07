@@ -23,7 +23,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 
 import java.lang.reflect.Method;
@@ -171,6 +171,10 @@ public class ThrottleController implements AddressListener{
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
+
+                case 'I':
+                    idle();
+                    break;
 
                 default:	//	Idle
                         idle();

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: routes.xsd,v 1.7 2010-02-16 05:37:14 jacobsen Exp $ -->
+<!-- $Id: routes.xsd,v 1.8 2010-05-07 15:39:37 bhoffman351 Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -100,6 +100,7 @@
             <xs:attribute name="controlLockTurnout" type="xs:string" />
             <xs:attribute name="controlLockTurnoutState" type="xs:string" /> <!-- CLOSED/THROWN/? -->
             <xs:attribute name="addedDelay" type="xs:int" />
+            <xs:attribute name="wifiControllable" type="xs:boolean" default="true" />
           </xs:complexType>
         </xs:element>
             

@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 
 import java.awt.Color;
@@ -36,6 +36,8 @@ public class WiThrottlePrefsPanel extends JPanel{
     JTextField port;
 
     JCheckBox powerCB;
+    JCheckBox turnoutCB;
+    JCheckBox routeCB;
 
     JButton saveB;
     JButton cancelB;
@@ -74,7 +76,8 @@ public class WiThrottlePrefsPanel extends JPanel{
         updatePortField();
 
         powerCB.setSelected(localPrefs.isAllowTrackPower());
-
+        turnoutCB.setSelected(localPrefs.isAllowTurnout());
+        routeCB.setSelected(localPrefs.isAllowRoute());
     }
 
 /**
@@ -115,6 +118,9 @@ public class WiThrottlePrefsPanel extends JPanel{
         
 
         localPrefs.setAllowTrackPower(powerCB.isSelected());
+        localPrefs.setAllowTurnout(turnoutCB.isSelected());
+        localPrefs.setAllowRoute(routeCB.isSelected());
+
         return didSet;
     }
 
@@ -196,6 +202,14 @@ public class WiThrottlePrefsPanel extends JPanel{
         powerCB = new JCheckBox(rb.getString("LabelTrackPower"));
         powerCB.setToolTipText(rb.getString("ToolTipTrackPower"));
         panel.add(powerCB);
+
+        turnoutCB = new JCheckBox(rb.getString("LabelTurnout"));
+        turnoutCB.setToolTipText(rb.getString("ToolTipTurnout"));
+        panel.add(turnoutCB);
+
+        routeCB = new JCheckBox(rb.getString("LabelRoute"));
+        routeCB.setToolTipText(rb.getString("ToolTipRoute"));
+        panel.add(routeCB);
 
         return panel;
     }

@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -917,7 +917,19 @@ public class DefaultRoute extends AbstractNamedBean
     public void setState(int state) {
         log.warn("Unexpected call to setState in DefaultRoute.");
         return;
-    }    
+    }
+
+
+    protected boolean wifiControllable = true;
+
+    public void setWifiControllable(boolean state){
+        wifiControllable = state;
+    }
+
+    public boolean getWifiControllable(){
+        return wifiControllable;
+    }
+
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRoute.class.getName());
     
     

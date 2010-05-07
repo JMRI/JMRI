@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
@@ -22,6 +22,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     private String port = null;
 
     private boolean allowTrackPower = true;
+    private boolean allowTurnout = true;
+    private boolean allowRoute = true;
     
     public WiThrottlePreferences(String fileName){
         super.openFile(fileName);
@@ -44,12 +46,17 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
             
     	if ((a = child.getAttribute("isAllowTrackPower")) != null )  setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("isAllowTurnout")) != null )  setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("isAllowRoute")) != null )  setAllowRoute(a.getValue().equalsIgnoreCase("true"));
 
     }
 
     public boolean compareValuesDifferent(WiThrottlePreferences prefs){
         WiThrottlePreferences stored = WiThrottleManager.withrottlePreferencesInstance();
         if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
+        if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
+        if (isAllowRoute() != prefs.isAllowRoute()) return true;
+
         if (isUseEStop() != prefs.isUseEStop()) return true;
         if (getEStopDelay() != prefs.getEStopDelay()) return true;
         if (isUseFixedPort() != prefs.isUseFixedPort()) return true;
@@ -65,6 +72,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         setUseFixedPort(prefs.isUseFixedPort());
         setPort(prefs.getPort());
         setAllowTrackPower(prefs.isAllowTrackPower());
+        setAllowTurnout(prefs.isAllowTurnout());
+        setAllowRoute(prefs.isAllowRoute());
     }
 
     public Element store() {
@@ -75,6 +84,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         element.setAttribute("isUseFixedPort", "" + isUseFixedPort());
         element.setAttribute("getPort", "" + getPort());
         element.setAttribute("isAllowTrackPower", "" + isAllowTrackPower());
+        element.setAttribute("isAllowTurnout", "" + isAllowTurnout());
+        element.setAttribute("isAllowRoute", "" + isAllowRoute());
         setIsDirty(false);  //  Resets only when stored
         return element;
     }
@@ -127,6 +138,20 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     }
     public void setAllowTrackPower(boolean value){
         allowTrackPower = value;
+    }
+
+    public boolean isAllowTurnout(){
+        return allowTurnout;
+    }
+    public void setAllowTurnout(boolean value){
+        allowTurnout = value;
+    }
+
+    public boolean isAllowRoute(){
+        return allowRoute;
+    }
+    public void setAllowRoute(boolean value){
+        allowRoute = value;
     }
 
     

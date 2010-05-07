@@ -5,7 +5,7 @@ package jmri.jmrit.withrottle;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -25,7 +25,7 @@ public class TrackPowerController extends AbstractController implements Property
             log.info("No power manager instance.");
             isValid = false;
         }else {
-            pwrMgr.addPropertyChangeListener(this);
+            register();
             isValid = true;
         }
     }
@@ -88,7 +88,11 @@ public class TrackPowerController extends AbstractController implements Property
         sendCurrentState();
     }
 
-    public void dispose(){
+    public void register(){
+        pwrMgr.addPropertyChangeListener(this);
+    }
+
+    public void deregister(){
         pwrMgr.removePropertyChangeListener(this);
     }
 

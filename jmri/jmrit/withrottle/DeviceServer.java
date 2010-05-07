@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.10 $
+ *	@version $Revision: 1.11 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -56,7 +56,7 @@ import jmri.jmrit.roster.RosterEntry;
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added
-    private static final String versionNumber = "1.2";
+    private static final String versionNumber = "1.3";
 
     private Socket device;
     String newLine = System.getProperty("line.separator");
@@ -80,8 +80,13 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private boolean heartbeat = true;
     private int pulseInterval = 16; // seconds til disconnect
     private Timer ekg;
+
     private TrackPowerController trackPower = null;
     private boolean isTrackPowerAllowed;
+    private TurnoutController turnoutC = null;
+    private RouteController routeC = null;
+    private boolean isTurnoutAllowed;
+    private boolean isRouteAllowed;
 
     List <RosterEntry> rosterList;
 
@@ -129,25 +134,21 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         String inPackage = null;
 
         keepReading = true;	//	Gets set to false when device sends 'Q'uit
-        int packageLength;
                 
         do{
             try{
                 inPackage = in.readLine();
 
                 if (inPackage != null){
-                    packageLength = inPackage.length();
                     heartbeat = true;   //  Any contact will keep alive
                     if (log.isDebugEnabled()) log.debug("Recieved: " + inPackage);
                     switch (inPackage.charAt(0)){
                         case 'T':{
-                            if (packageLength < 2) break;
                             keepReading = throttleController.sort(inPackage.substring(1));
                             break;
                         }
 
                         case 'S':{
-                            if (packageLength < 2) break;
                             if (secondThrottleController == null){
                                 secondThrottleFrame = throttleWindow.addThrottleFrame();
                                 throttleWindow.nextThrottleFrame();
@@ -161,7 +162,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case '*':{  //  Heartbeat only
 
-                            if (packageLength > 1){
+                            if (inPackage.length() > 1){
                                 switch (inPackage.charAt(1)){
                                     
                                     case '+':{  //  trigger, turns on timed monitoring
@@ -185,7 +186,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         }   //  end heartbeat block
 
                         case 'C':{  //  Prefix for confirmed package
-                            if (packageLength < 3) break;
                             switch (inPackage.charAt(1)){
                                 case 'T':{
                                     keepReading = throttleController.sort(inPackage.substring(2));
@@ -204,14 +204,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         }
 
                         case 'N':{  //  Prefix for deviceName
-                            if (packageLength < 2) break;
                             deviceName = inPackage.substring(1);
                             log.info("Received Name: "+deviceName);
                             break;
                         }
 
                         case 'H':{  //  Hardware
-                            if (packageLength < 3) break;
                             switch (inPackage.charAt(1)){
                                 case 'U':{
                                     deviceUDID = inPackage.substring(2);
@@ -229,12 +227,23 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             break;
                         }   //  end hardware block
                         
-                        case 'P':{
-                            if (packageLength < 4) break;
+                        case 'P':{  //  Start 'P'anel case
                             switch (inPackage.charAt(1)){
                                 case 'P':{
                                     if (isTrackPowerAllowed){
                                         trackPower.handleMessage(inPackage.substring(2));
+                                    }
+                                    break;
+                                }
+                                case 'T':{
+                                    if (isTurnoutAllowed){
+                                        turnoutC.handleMessage(inPackage.substring(2));
+                                    }
+                                    break;
+                                }
+                                case 'R':{
+                                    if (isRouteAllowed){
+                                        routeC.handleMessage(inPackage.substring(2));
                                     }
                                     break;
                                 }
@@ -260,8 +269,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                     inPackage = null;
                 }
 
-            } catch (IOException e){
+            } catch (IOException exa){
                 if (keepReading) log.error("readLine from device failed");
+            } catch (IndexOutOfBoundsException exb){
+                log.warn("Bad message \""+inPackage+"\" from device: "+getName());
             }
             try{    //  Some layout connections cannot handle rapid inputs
                 Thread.sleep(20);
@@ -287,9 +298,14 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         secondThrottleController = null;
         if (trackPower != null){
             trackPower.removeControllerListener(this);
-            //trackPower.dispose();
-            //trackPower = null;
         }
+        if (turnoutC != null){
+            turnoutC.removeControllerListener(this);
+        }
+        if (routeC != null){
+            routeC.removeControllerListener(this);
+        }
+
         closeSocket();
         for (int i = 0; i < listeners.size(); i++) {
             DeviceListener l = listeners.get(i);
@@ -343,9 +359,27 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower()){  //  Check prefs
             trackPower = WiThrottleManager.trackPowerControllerInstance();
             if (trackPower.isValid){
+                if (log.isDebugEnabled()) log.debug("Track Power valid.");
                 trackPower.addControllerListener(this);
                 trackPower.sendCurrentState();
-                return;
+            }
+        }
+        if (isTurnoutAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTurnout()){
+            turnoutC = WiThrottleManager.turnoutControllerInstance();
+            if (turnoutC.verifyCreation()){
+                if (log.isDebugEnabled()) log.debug("Turnout Controller valid.");
+                turnoutC.addControllerListener(this);
+                turnoutC.sendTitles();
+                turnoutC.sendList();
+            }
+        }
+        if (isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute()){
+            routeC = WiThrottleManager.routeControllerInstance();
+            if (routeC.verifyCreation()){
+                if (log.isDebugEnabled()) log.debug("Route Controller valid.");
+                routeC.addControllerListener(this);
+                routeC.sendTitles();
+                routeC.sendList();
             }
         }
     }
@@ -369,6 +403,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     public void sendPacketToDevice(String message){
         if (message == null) return; //  Do not send a null.
+        if (log.isDebugEnabled()) log.debug("Sent: "+message);
         out.println(message + newLine);
     }
 

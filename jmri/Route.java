@@ -41,7 +41,7 @@ package jmri;
  * @author			Bob Jacobsen Copyright (C) 2007
  * @author          Simon Reader Copyright (C) 2008
  * 
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public interface Route extends NamedBean {
 
@@ -307,7 +307,11 @@ public interface Route extends NamedBean {
      * and output definitions are changed.
      */
     public void deActivateRoute();
-  
+
+    public boolean getWifiControllable();
+
+    public void setWifiControllable(boolean wifiControlled);
+
 }
 
 /* @(#)Route.java */
