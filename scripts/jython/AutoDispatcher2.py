@@ -15,7 +15,7 @@
 # FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
 # for more details.
 #
-# Author:  Giorgio Terdina copyright (c) 2009, 2010
+# Author:  Giorgio Terdina copyright (c) 2009
 #
 # 2.01 beta - Fixed problem wih signalheads without UserName
 # 2.02 beta - Added test for empty sections
@@ -48,9 +48,8 @@
 # 2.29 beta - Corrected loop in match method caused when an unknown section name was found
 # 2.30 beta - Modified "import" statements to reflect package structure of JMRI 2.9.x
 # 2.31 beta - Unified versions for JMRI 2.8 and 2.9.x and initialized block tracking at startup
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# 2.32 beta - Implementd "train start actions" and "AutoStart trains" option.
+# 2.33 beta - Enabled pause/resume buttons while script being stopped
 
 # JAVA imports
 
@@ -118,17 +117,6 @@ from jmri.jmrit import XmlFile
 
 from jmri.jmrit.consisttool import ConsistToolFrame
 
-# 2.29 version
-# from jmri.jmrit.display import LayoutBlock
-# from jmri.jmrit.display import LayoutTurnout
-
-
-# 2.30 version
-# from jmri.jmrit.display.layoutEditor import LayoutBlock
-# from jmri.jmrit.display.layoutEditor import LayoutTurnout
-
-
-
 from jmri.implementation import AbstractShutDownTask
 
 from jmri.jmrit.operations.locations import LocationManager
@@ -153,7 +141,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
 # CONSTANTS ==========================
 
-    version = "2.31 Beta"
+    version = "2.33 Beta"
     
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
@@ -794,13 +782,9 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                 ll = ADlocomotive(l[0], l[1], l[2], False)
             else :
                 ll.setSpeedTable(l[2])
-            if len(l) > 4 :
-                ll.setMomentum(l[3], l[4])
-            if len(l) > 5 :
-                ll.runningTime = l[5]
-            if len(l) > 6 :
-                ll.mileage = l[6]
-
+            ll.setMomentum(l[3], l[4])
+            ll.runningTime = l[5]
+            ll.mileage = l[6]
         # Now build trains roster, based on user settings
         if len(self.trains) > 0 :
             AutoDispatcher.log("Placing trains on tracks :-)")
@@ -963,8 +947,8 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         # Exit if there was an error or user clicked "STOP" button
         if AutoDispatcher.error or not AutoDispatcher.loop :
             # Cleanup before exiting
-            ADmainMenu.pauseButton.enabled = False
-            ADmainMenu.resumeButton.enabled = False
+ #           ADmainMenu.pauseButton.enabled = False
+ #           ADmainMenu.resumeButton.enabled = False
             # Wait for all trains to stop
             self.waitForStop()
             # Release engineers and throttles (if any)
@@ -1053,12 +1037,13 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     def stopAll(self) :
         # Stop trains (or remove power) when paused or an error occurs
         # Ignore, if user disabled "Pause" option
-        if(ADsettings.pauseMode == ADsettings.IGNORE) :
+        if(ADsettings.pauseMode == ADsettings.IGNORE or
+          AutoDispatcher.exiting) :
             return
         # Make sure we are not called more than once 
         # (owing to Jython lack of synchronization)
         if not ADmainMenu.resumeButton.enabled :
-            ADmainMenu.resumeButton.enabled = AutoDispatcher.loop
+            ADmainMenu.resumeButton.enabled = True
             ADmainMenu.pauseButton.enabled = False
             ADmainMenu.stopButton.enabled = False
             # Did user chose to power-off layout?
@@ -1086,19 +1071,12 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             for train in ADtrain.getList() :
                 train.resume()
         ADmainMenu.resumeButton.enabled = False
-        ADmainMenu.pauseButton.enabled = AutoDispatcher.loop
+        ADmainMenu.pauseButton.enabled = True
         ADmainMenu.stopButton.enabled = AutoDispatcher.loop
             
     def saveBeforeExit(self) :
         # Give user the possibility of saving settings and trains position
         # before quitting
-        # Check if settings were changed
-        if AutoDispatcher.preferencesDirty :
-            # Yes, allow user to save them
-            if (JOptionPane.showConfirmDialog(None, 
-              "Save preferences before quitting? ", "Confirmation", 
-              JOptionPane.YES_NO_OPTION) == 0) :
-                self.saveSettings()
         # Check if trains settings or position were changed
         if AutoDispatcher.trainsDirty :
             # Yes, allow user to save them
@@ -1109,6 +1087,15 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
             if (JOptionPane.showConfirmDialog(None, msg, "Confirmation",
               JOptionPane.YES_NO_OPTION) == 0) :
                 self.saveTrains()
+                self.saveSettings()
+                return
+        # Check if settings were changed
+        if AutoDispatcher.preferencesDirty :
+            # Yes, allow user to save them
+            if (JOptionPane.showConfirmDialog(None, 
+              "Save preferences before quitting? ", "Confirmation", 
+              JOptionPane.YES_NO_OPTION) == 0) :
+                self.saveSettings()
 
 # SPEED CONTROL TASK ==============
 
@@ -1486,7 +1473,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                 t.resistiveWheels, t.schedule.text, t.trainAllocation, 
                 t.trainLength, stack, t.locoName, t.reversed,
                 pendingCommands, t.engineerName, lastSection, t.trainSpeed,
-                t.brakingHistory, t.canStopAtBeginning])
+                t.brakingHistory, t.canStopAtBeginning, t.startAction])
         # Write everything to file
         try :
             outs=ObjectOutputStream(FileOutputStream(self.trainFile))
@@ -1646,6 +1633,7 @@ class ADsection (PropertyChangeListener) :
         #   Signal names
         #   Manual flipping Indicator
         #   Name of manual control sensor
+        #   Signal held indicators
         out = []
         for s in ADsection.systemNames.values() :
             if s.direction == 3 :
@@ -1669,13 +1657,20 @@ class ADsection (PropertyChangeListener) :
             else :
                 transitOnly = ""
             signals =["", ""]
+            heldIndicators =["", ""]
             for i in range(2) :
                 if s.signal[i] != None :
                     signals[i] = s.signal[i].name
+                    if s.signal[i].isHeld() :
+                        heldIndicators[i] = "Held"
             if s.manuallyFlipped :
                 inverted = "INVERTED"
             else :
                 inverted = ""
+            if s.isManual() :
+                manualSection = "Manual"
+            else :
+                manualSection = ""
             if s.manualSensor == None :
                 manualSensor = ""
             else :
@@ -1683,8 +1678,9 @@ class ADsection (PropertyChangeListener) :
                 if manualSensor == None or manualSensor == "" :
                     manualSensor = s.manualSensor.getSystemName()
             out.append([s.name, direction, transitOnly, signals[0],
-              signals[1], inverted, manualSensor, s.stopAtBeginning])
-            out.sort()
+              signals[1], inverted, manualSensor, s.stopAtBeginning,
+              heldIndicators, manualSection])
+        out.sort()
         return out
     getSectionsTable = ADstaticMethod(getSectionsTable)
 
@@ -1746,6 +1742,14 @@ class ADsection (PropertyChangeListener) :
                     ).getSensor(sensorName))
                 if len(i) > 7 :
                     section.stopAtBeginning = i[7]
+                    if len(i) > 9 and ADsettings.autoRestart :
+                        for j in range(2) :
+                            if (i[8][j] == "Held" and section.signal[j] != None
+                             and section.signal[j].hasIcon()) :
+                                section.signal[j].setHeld(True)
+                        if i[9] == "Manual":
+                            section.setManual(True)
+                        
     putSectionsTable = ADstaticMethod(putSectionsTable)
 
     def getBlocksTable() :
@@ -1823,13 +1827,11 @@ class ADsection (PropertyChangeListener) :
                             block.speed[j] = speedIndex + 1
                             break
                     jj +=1
-                    if len(i) > 9 :
-                        if i[jj] == "BRAKE" :
-                            section.brakeBlock[j] = block
-                        jj +=1
-                    if len(i) > 11 :
-                        block.action[j] = i[jj]
-                        jj +=1
+                    if i[jj] == "BRAKE" :
+                        section.brakeBlock[j] = block
+                    jj +=1
+                    block.action[j] = i[jj]
+                    jj +=1
     putBlocksTable = ADstaticMethod(putBlocksTable)
 
     def setListeners() :
@@ -3124,7 +3126,7 @@ class ADtrain :
             tt.setDirection(t[2])
             section = ADsection.getByName(t[1])
             if section != None :
-                tt.setSection(section)
+                tt.setSection(section, not ADsettings.autoRestart)
             tt.resistiveWheels = t[3]
             tt.setSchedule(t[4])
             tt.trainAllocation = t[5]
@@ -3163,14 +3165,13 @@ class ADtrain :
                             continue
                     tt.itemSections.append(section)
                     tt.items.append(scheduleItem)
-            if len(t) > 11 :
-                tt.engineerName = t[11]
-            if len(t) > 13 :
-                tt.trainSpeed = t[13]
-            if len(t) > 14 :
-                tt.brakingHistory = t[14]
+            tt.engineerName = t[11]
+            tt.trainSpeed = t[13]
+            tt.brakingHistory = t[14]
             if len(t) > 15 :
                 tt.canStopAtBeginning = t[15]
+                if len(t) > 16 :
+                    tt.startAction = t[16]
             tt.updateSwing()
     buildRoster = ADstaticMethod(buildRoster)
 
@@ -3265,6 +3266,8 @@ class ADtrain :
         self.lastMove = -1L
         # Maximum allowed train speed (may vary from block to block)
         self.maxSpeed = 0
+        # Actions to be played before train departure
+        self.startAction = ""
         # Our engineer name
         self.engineerName = "Auto"
         # Our engineer class
@@ -3322,6 +3325,7 @@ class ADtrain :
         self.setButton.actionPerformed = self.whenSetClicked
         self.detailButton = JButton("Detail")
         self.destinationSwing = AutoDispatcher.centerLabel("None")
+        self.startActionSwing = JTextField("", 5)
         self.enableSwing()
 
     def getName(self) :
@@ -3405,7 +3409,7 @@ class ADtrain :
             # Train was manually moved to another section
             # Take note that we need to restart schedule
             reSchedule = True
-            self.setSection(newSection)
+            self.setSection(newSection, True)
             self.schedule = None
         # Change train's locomotive
         loco = self.locoRoster.getSelectedItem()
@@ -3463,6 +3467,9 @@ class ADtrain :
                     self.trainSpeed[ind] = newSpeed
                     AutoDispatcher.setTrainsDirty()
                 ind += 1
+            if self.startAction != self.startActionSwing.text :
+                self.startAction = self.startActionSwing.text
+                AutoDispatcher.setTrainsDirty()
         # Update swing fields
         self.updateSwing()
         if AutoDispatcher.trainsFrame != None :
@@ -3490,7 +3497,7 @@ class ADtrain :
     def getDirection(self) :
         return self.direction
 
-    def setSection(self, newSection) :
+    def setSection(self, newSection, held) :
         # Set initial position of train
         if newSection != self.section :
             # Train placed in a new section
@@ -3565,7 +3572,7 @@ class ADtrain :
                     # (only if the signal icon is displayed on the panel,
                     # otherwise user will not be able to release it!
                     s = self.section.getSignal(self.direction)
-                    if s.hasIcon() :
+                    if held and s.hasIcon() :
                         s.setHeld(True)
                 else :
                     # Unsuccessful assignment - clear section name
@@ -4392,6 +4399,11 @@ class ADtrain :
             # Switch front light on, if user chose this option
             if ADsettings.lightMode != 0 :
                 self.setFunction(0, True)
+            # Play start actions, if any
+            if self.startAction != "" :
+                self.doAction(self.startAction)
+            elif ADsettings.defaultStartAction != "" :
+                self.doAction(ADsettings.defaultStartAction)
         # Now start train!
         if (self.section.stopBlock[self.direction] == self.block or
            self.section.brakeBlock[self.direction] == self.block) :
@@ -4598,6 +4610,7 @@ class ADtrain :
         self.deleteButton.setEnabled(stopped)
         self.changeButton.setEnabled(stopped)
         self.setButton.setEnabled(stopped)
+        self.startActionSwing.setEnabled(stopped)
 
     def getCurrentBlock(self) :
         return self.block
@@ -5878,6 +5891,8 @@ class ADsettings :
     scale = 87
     flashingCycle = 1.0
     resistiveDefault = False
+    defaultStartAction = ""
+    autoRestart = False
 
     # STATIC METHODS
     
@@ -5946,7 +5961,8 @@ class ADsettings :
          ADsettings.lostCarsSections, ADsettings.sectionTracking, sounds,
          ADsettings.defaultSounds, ADsettings.soundRoot, ADsettings.maintenanceTime,
          ADsettings.maintenanceMiles, ADsettings.scale, locations,
-         ADsettings.flashingCycle)
+         ADsettings.flashingCycle, ADsettings.defaultStartAction,
+         ADsettings.autoRestart)
 
         file.writeObject(outData)
     save = ADstaticMethod(save)
@@ -5983,70 +5999,58 @@ class ADsettings :
         ADsettings.startDelayMin = inData[27]
         ADsettings.speedRamp = inData[28]
         ADsettings.lightMode = inData[29]
-        if len(inData) > 30 :
-            ADsettings.indicationsList = []
-            for a in inData[30] :
-                ADsettings.indicationsList.append(ADindication(a[0], a[1], a[2], a[3]))
-            ADsignalType.adjust()
-        if len(inData) > 31 :
-            ADsettings.ringBell = inData[31]
-        if len(inData) > 32 :
-            ADsettings.signalTypes = []
-            for s in inData[32] :
-                indicationLines = []
-                for a in s[1] :
-                    indicationLine = []
-                    for aa in a :
-                        indicationLine.append(AutoDispatcher.headsAspects[aa])
-                    indicationLines.append(indicationLine)
-                ADsettings.signalTypes.append(ADsignalType(s[0], indicationLines, s[2]))
-        if len(inData) > 33 :
-            ADsignalMast.putTable(inData[33])
-        if len(inData) > 36 :
-            ADsettings.startDelayMax = inData[34]
-            ADsettings.separateTurnouts = inData[35]
-            ADsettings.separateSignals = inData[36]
-        if len(inData) > 38 :
-            ADsettings.stalledDetection = inData[37]
-            ADsettings.stalledTime = inData[38]
-        if len(inData) > 39 :
-            ADsettings.selfLearning = inData[39]
-        if len(inData) > 40 :
-            ADsettings.stopMode = inData[40]
-            if ADsettings.stopMode > 1 :
-                ADsettings.stopMode = 1
-        if len(inData) > 43 :
-            ADsettings.lostCarsDetection = inData[41]
-            ADsettings.lostCarsTollerance = inData[42]
-            ADsettings.lostCarsSections = inData[43]
-        if len(inData) > 44 :
-            ADsettings.sectionTracking = inData[44]
-        if len(inData) > 45 :
-            ADsettings.soundList = []
-            for i in inData[45] :
-                s = ADsound(i[0])
-                s.setPath(i[1])
-                ADsettings.soundList.append(s)
-            ADsettings.newSoundDic()
-        if len(inData) > 46 :
-            ADsettings.defaultSounds = inData[46]
-            while len(ADsettings.defaultSounds) < len(ADsettings.soundLabel) :
-                ADsettings.defaultSounds.append(1)
-        if len(inData) > 47 and inData[47] != "" :
+        ADsettings.indicationsList = []
+        for a in inData[30] :
+            ADsettings.indicationsList.append(ADindication(a[0], a[1], a[2], a[3]))
+        ADsignalType.adjust()
+        ADsettings.ringBell = inData[31]
+        ADsettings.signalTypes = []
+        for s in inData[32] :
+            indicationLines = []
+            for a in s[1] :
+                indicationLine = []
+                for aa in a :
+                    indicationLine.append(AutoDispatcher.headsAspects[aa])
+                indicationLines.append(indicationLine)
+            ADsettings.signalTypes.append(ADsignalType(s[0], indicationLines, s[2]))
+        ADsignalMast.putTable(inData[33])
+        ADsettings.startDelayMax = inData[34]
+        ADsettings.separateTurnouts = inData[35]
+        ADsettings.separateSignals = inData[36]
+        ADsettings.stalledDetection = inData[37]
+        ADsettings.stalledTime = inData[38]
+        ADsettings.selfLearning = inData[39]
+        ADsettings.stopMode = inData[40]
+        if ADsettings.stopMode > 1 :
+            ADsettings.stopMode = 1
+        ADsettings.lostCarsDetection = inData[41]
+        ADsettings.lostCarsTollerance = inData[42]
+        ADsettings.lostCarsSections = inData[43]
+        ADsettings.sectionTracking = inData[44]
+        ADsettings.soundList = []
+        for i in inData[45] :
+            s = ADsound(i[0])
+            s.setPath(i[1])
+            ADsettings.soundList.append(s)
+        ADsettings.newSoundDic()
+        ADsettings.defaultSounds = inData[46]
+        while len(ADsettings.defaultSounds) < len(ADsettings.soundLabel) :
+            ADsettings.defaultSounds.append(1)
+        if inData[47] != "" :
             ADsettings.soundRoot = inData[47]
-        if len(inData) > 48 :
-            ADsettings.maintenanceTime = inData[48]
-        if len(inData) > 50 :
-            ADsettings.maintenanceMiles = inData[49]
-            ADsettings.scale = inData[50]
-        if len(inData) > 51 :
-            for l in inData[51] :
-                location = ADlocation(l[0])
-                location.setSections(l[1])
-        if len(inData) > 52 :
-            ADsettings.flashingCycle = inData[52]
-                
+        ADsettings.maintenanceTime = inData[48]
+        ADsettings.maintenanceMiles = inData[49]
+        ADsettings.scale = inData[50]
+        for l in inData[51] :
+            location = ADlocation(l[0])
+            location.setSections(l[1])
+        ADsettings.flashingCycle = inData[52]
+        if len(inData) > 53 :
+            ADsettings.defaultStartAction = inData[53]
+            if len(inData) > 54 :
+                ADsettings.autoRestart = inData[54]
         ADsettings.initColors()
+        
     load = ADstaticMethod(load)
       
     def newSoundDic() :
@@ -8690,7 +8694,7 @@ class ADpreferencesFrame (AdScrollFrame) :
         self.header = None
 
     def createDetail(self):
-        self.detail.setLayout(GridLayout(41, 2))
+        self.detail.setLayout(GridLayout(43, 2))
         self.detail.add(JLabel("COMMON SETTINGS"))
         self.detail.add(JLabel(""))
         self.detail.add(JLabel("Verbose output:"))
@@ -8836,6 +8840,10 @@ class ADpreferencesFrame (AdScrollFrame) :
         self.signalDelaySwing = JTextField(
           str(float(ADsettings.signalDelay)/1000.), 5)
         self.detail.add(self.signalDelaySwing)
+        self.detail.add(JLabel("Automatically restart trains at script startup:"))
+        self.autoRestartSwing = JCheckBox("",
+          ADsettings.autoRestart)
+        self.detail.add(self.autoRestartSwing)
         self.detail.add(JLabel(""))
         self.detail.add(JLabel(""))
         self.detail.add(JLabel("ENGINEER SETTINGS"))
@@ -8857,6 +8865,9 @@ class ADpreferencesFrame (AdScrollFrame) :
         self.detail1.add(JLabel(" and "))
         self.detail1.add(self.startDelayMaxSwing)
         self.detail.add(self.detail1)
+        self.detail.add(JLabel("Default actions before train departure:"))
+        self.defaultStartSwing = JTextField(ADsettings.defaultStartAction, 5)
+        self.detail.add(self.defaultStartSwing)
         self.detail.add(JLabel("Switch headlights ON/OFF:"))
         self.lightsSwing = JComboBox(["Never", "When train starts/stops",
           "When schedule starts/ends"])
@@ -8986,6 +8997,7 @@ class ADpreferencesFrame (AdScrollFrame) :
         except :
             ADsettings.signalDelay = 0
             self.signalDelaySwing.text = "0"
+        ADsettings.autoRestart = self.autoRestartSwing.isSelected()
         try :
             ADsettings.maintenanceTime = float(self.maintenanceSwing.text)
         except :
@@ -9020,6 +9032,7 @@ class ADpreferencesFrame (AdScrollFrame) :
         except :
             ADsettings.startDelayMax = 0
             self.startDelayMaxSwing.text = "0"
+        ADsettings.defaultStartAction = self.defaultStartSwing.text
         ADsettings.lightMode = self.lightsSwing.getSelectedIndex()
         ADsettings.speedRamp = self.speedRampSwing.getSelectedIndex() + 1
  
@@ -9625,9 +9638,9 @@ class ADtrainDetailFrame (AdScrollFrame) :
         engineerList.append("Manual")
 
         if self.train.locomotive == None :
-            rows = 6
-        else :
             rows = 7
+        else :
+            rows = 8
 
         self.detail.setLayout(BoxLayout(self.detail, BoxLayout.Y_AXIS))
 
@@ -9636,6 +9649,9 @@ class ADtrainDetailFrame (AdScrollFrame) :
         
         detail1.add(JLabel("Cars are equipped with resistive wheels: "))
         detail1.add(self.train.resistiveSwing)
+        detail1.add(JLabel("Actions before train departure: "))
+        self.train.startActionSwing.text = self.train.startAction
+        detail1.add(self.train.startActionSwing)        
         detail1.add(JLabel("Stop at beginning of sections that support this option: "))
         detail1.add(self.train.canStopAtBeginningSwing)
         if ADsettings.units == 1.0 :
@@ -9875,7 +9891,7 @@ class ADImportTrainFrame (AdScrollFrame) :
             for section in startLocation.getSections() :
                 section.setManual(True)
                 if section.getAllocated() == None :
-                    train.setSection(section)
+                    train.setSection(section, True)
                     if section.getAllocated() == train :
                         break
                 section.setManual(False)
