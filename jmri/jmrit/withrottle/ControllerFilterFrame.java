@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
@@ -112,12 +112,12 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
 
         TableColumn include = columnModel.getColumn(AbstractFilterModel.INCLUDECOL);
         include.setResizable(false);
-        include.setMinWidth(50);
-        include.setMaxWidth(80);
+        include.setMinWidth(60);
+        include.setMaxWidth(70);
 
         TableColumn sName = columnModel.getColumn(AbstractFilterModel.SNAMECOL);
         sName.setResizable(true);
-        sName.setMinWidth(75);
+        sName.setMinWidth(80);
         sName.setMaxWidth(120);
 
         TableColumn uName = columnModel.getColumn(AbstractFilterModel.UNAMECOL);
@@ -126,21 +126,8 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         uName.setMaxWidth(340);
     }
 
-    protected void handleModified() {
-        if (getModifiedFlag()) {
-            this.setVisible(true);
-            javax.swing.JOptionPane.showMessageDialog(this,
-                "Please save changes to your panel file.",
-                "Save Warning:",
-                javax.swing.JOptionPane.WARNING_MESSAGE
-
-            );
-
-        }
-    }
-
     protected void storeValues() {
-        log.warn("default storeValues does nothing for "+getTitle());
+        new jmri.configurexml.StoreXmlUserAction().actionPerformed(null);
     }
 
     public void tableChanged(TableModelEvent e) {
