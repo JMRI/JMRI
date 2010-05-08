@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2006
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class LnLight extends AbstractLight {
 
@@ -52,13 +52,6 @@ public class LnLight extends AbstractLight {
         mBit = mgr.getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
-        // Set defaults
-        setControlType( NO_CONTROL );
-        setControlSensor( null );
-        setControlSensorSense(Sensor.ACTIVE);
-        setFastClockControlSchedule( 0,0,0,0 );
-        setControlTurnout( null );
-        setControlTurnoutState( Turnout.CLOSED );
     }
 
     int mBit = 0;                // address bit

@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NceLightManager extends AbstractLightManager {
 
@@ -79,6 +79,12 @@ public class NceLightManager extends AbstractLightManager {
         }
         return (num);
     }	
+
+ 	/**
+	 * A method that determines if it is possible to add a range of lights in numerical
+     * order eg 11 thru 18, primarily used to show/not show the add range box in the add Light window
+     **/
+	public boolean allowMultipleAdditions(String systemName) {return true;}
 	
     /**
      * Public method to validate system name format

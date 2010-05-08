@@ -10,7 +10,7 @@ import jmri.managers.AbstractLightManager;
  * Implement a light manager for "Internal" (virtual) lights.
  *
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class InternalLightManager extends AbstractLightManager {
 
@@ -33,6 +33,12 @@ public class InternalLightManager extends AbstractLightManager {
     public boolean validSystemNameFormat(String systemName) {
         return true;
     }
+	public boolean supportsVariableLights(String systemName) {
+		return true;
+	}
+    public boolean allowMultipleAdditions(String systemName) { 
+		return true;  }
+
 }
 
 /* @(#)InternalLightManager.java */

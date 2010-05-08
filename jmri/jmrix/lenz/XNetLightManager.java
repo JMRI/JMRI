@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -92,6 +92,12 @@ public class XNetLightManager extends AbstractLightManager {
     public boolean validSystemNameConfig(String systemName) {
         return (true);
     }
+
+ 	/**
+	 * A method that determines if it is possible to add a range of lights in numerical
+     * order eg 11 thru 18, primarily used to enable/disable the add range box in the add Light window
+     **/
+	public boolean allowMultipleAdditions(String systemName) {return true;}
     
     /** 
      * Allow access to XNetLightManager

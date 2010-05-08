@@ -14,7 +14,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -66,14 +66,6 @@ public class AcelaLight extends AbstractLight {
                 setState( OFF );
             }
         }
-        //  setState( OFF );
-        // Set defaults for all other instance variables
-        setControlType( NO_CONTROL );
-        setControlSensor( null );
-        setControlSensorSense(Sensor.ACTIVE);
-        setFastClockControlSchedule( 0,0,0,0 );
-        setControlTurnout( null );
-        setControlTurnoutState( Turnout.CLOSED );
     }
 
     /**

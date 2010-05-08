@@ -2,9 +2,17 @@
 
 package jmri;
 
+import jmri.implementation.LightControl;
+
+import java.util.ArrayList;
+
 /**
- * Represent a single visible Light on the physical
- *     layout. 
+ * Represent a single visible Light on the physical layout. 
+ * <p>
+ * Each Light may have one or more control mechanisms.  Control mechanism 
+ *	types are defined here.  If a Light has any controls, the information 
+ *	is contained in LightControl objects, which are referenced via 
+ *	that Light.
  * <p>
  * Lights have a state and an intensity.  
  * <p>
@@ -39,7 +47,6 @@ package jmri;
  * <p>
  * Specific implementations will describe how the settings map to the
  * particular hardware commands.
- *
  * <p>
  * The transition rate is absolute; the intensity changes at a constant rate
  * regardless of whether the change is a big one or a small one.
@@ -57,10 +64,10 @@ package jmri;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author			Dave Duchamp Copyright (C) 2004
+ * @author			Dave Duchamp Copyright (C) 2004, 2010
  * @author			Ken Cameron Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public interface Light extends NamedBean {
 
@@ -115,19 +122,13 @@ public interface Light extends NamedBean {
     */
     public int getState();
     
-    // control types - initially 3 types defined
+    // control types - types defined
     public static final int SENSOR_CONTROL          = 0x01;
     public static final int FAST_CLOCK_CONTROL      = 0x02;
     public static final int TURNOUT_STATUS_CONTROL  = 0x03;
     public static final int TIMED_ON_CONTROL		= 0x04;
+	public static final int TWO_SENSOR_CONTROL		= 0x05;
     public static final int NO_CONTROL              = 0x00;
-    
-    /** 
-     * Control type is an instance variable.  Its value is one of the
-     *      types noted above.
-     */
-    public int getControlType();
-    public void setControlType(int controlType);
     
     /** Check if this object can handle variable intensity.
         <P>
@@ -270,33 +271,12 @@ public interface Light extends NamedBean {
     public boolean isTransitioning();
     
     /**
-     * Control type information, valid by control type
+     * LightControl information management methods
      */
-    public String getControlSensorName(); // controlling Sensor if SENSOR_CONTROL
-    public int getControlSensorSense();         // sense of Sensor for Light ON
-    
-    public int getFastClockOnHour();            // on Hour if FAST_CLOCK_CONTROL
-    public int getFastClockOnMin();             // on Minute if FAST_CLOCK_CONTROL
-    public int getFastClockOffHour();           // off Hour if FAST_CLOCK_CONTROL
-    public int getFastClockOffMin();            // off Minute if FAST_CLOCK_CONTROL
-    
-    public String getControlTurnoutName(); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
-    public int getControlTurnoutState();        // turnout state corresponding to this Light ON
-    
-	public String getControlTimedOnSensorName(); // trigger Sensor if TIMED_ON_CONTROL
-	public int getTimedOnDuration();            // duration (milliseconds) if TIMED_ON_CONTROL
-
-    public void setControlSensor(String sensorSystemName);  // controlling Sensor if SENSOR_CONTROL
-    public void setControlSensorSense(int sense);       // sense of Sensor for Light ON
-    // Set the On/Off Schedule if FAST_CLOCK_CONTROL
-    public void setFastClockControlSchedule(int onHour,int onMin,int offHour, int offMin);
-    
-    public void setControlTurnout(String turnoutSystemName); // turnout whose status is shown if TURNOUT_STATUS_CONTROL
-    public void setControlTurnoutState(int ts);         // turnout state corresponding to this Light ON
-    
-	public void setControlTimedOnSensor(String sensorSystemName); // trigger Sensor if TIMED_ON_CONTROL
-	public void setTimedOnDuration(int duration);   // duration (milliseconds) if TIMED_ON_CONTROL
-
+	public void clearLightControls();  // clears all Light Controls for this Light
+	public void addLightControl(jmri.implementation.LightControl c); // add a LightControl
+	public ArrayList<LightControl> getLightControlList(); // return a list of all LightControls
+	
     /**
      * Set the Enabled property, which determines whether the control logic
      * built in the light object is operating or not. Light objects are usually
@@ -311,16 +291,15 @@ public interface Light extends NamedBean {
     public boolean getEnabled();
     
     /**
-     * Activates a light by control type.  This method tests the 
-     *   control type, and set up a control mechanism, appropriate 
-     *   for the control type.  
+     * Activates a Light.  This method activates each LightControl, 
+     *   setting up a control mechanism, appropriate to its
+     *   control type.  
      */
     public void activateLight();
     
     /**
-     * Deactivates a light by control type.  This method tests the 
-     *   control type, and deactivates the control mechanism, appropriate 
-     *   for the control type.  
+     * Deactivates a Light.  This method deactivates each LightControl,
+     *   shutting down its control mechanism. 
      */
     public void deactivateLight();
 }

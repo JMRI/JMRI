@@ -12,7 +12,7 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 
@@ -78,6 +78,10 @@ abstract public class SerialLightManager extends AbstractLightManager {
     public String normalizeSystemName(String systemName) {
         return (SerialAddress.normalizeSystemName(systemName));
     }
+	/**
+	 * Returns 'true' to indicate this system can support variable lights
+	 */
+	public boolean supportsVariableLights(String systemName) {return true;}
     
     /** 
      * Allow access to SerialLightManager

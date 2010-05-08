@@ -11,7 +11,7 @@ import jmri.managers.AbstractManager;
  * Based on AbstractSignalHeadManager.java and AbstractSensorManager.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public abstract class AbstractLightManager extends AbstractManager
     implements LightManager, java.beans.PropertyChangeListener {
@@ -196,6 +196,21 @@ public abstract class AbstractLightManager extends AbstractManager
     public String convertSystemNameToAlternate(String systemName) {
         return "";
     }
+	
+	/**
+	 * Returns 'true' if the System can potentially support variable Lights
+	 *    Note: LightManagers for Systems that can support variable Lights should 
+	 *         override this method and return 'true'.
+	 */
+	public boolean supportsVariableLights(String systemName) {
+		return false;
+	}
+    
+   /**
+    * A method that determines if it is possible to add a range of lights in numerical
+    * order eg 11 thru 18, primarily used to show/not show the add range box in the add Light window
+    **/
+    public boolean allowMultipleAdditions(String systemName) { return false;  }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractLightManager.class.getName());
 }

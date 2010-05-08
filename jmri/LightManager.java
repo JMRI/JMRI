@@ -26,7 +26,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public interface LightManager extends Manager {
 
@@ -147,6 +147,17 @@ public interface LightManager extends Manager {
      *    determines what needs to be done for each Light.
      */
     public void activateAllLights();
+	
+	/**
+	 * Returns 'true' if the System can potentially support variable Lights
+	 */
+	public boolean supportsVariableLights(String systemName);
+
+ 	/**
+	 * A method that determines if it is possible to add a range of lights in numerical
+     * order eg 11 thru 18, primarily used to show/not show the add range box in the add Light window
+     **/
+	public boolean allowMultipleAdditions(String systemName);
     
 }
 

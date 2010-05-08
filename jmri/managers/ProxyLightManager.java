@@ -15,7 +15,7 @@ import jmri.managers.AbstractManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {
@@ -169,6 +169,29 @@ public class ProxyLightManager extends AbstractProxyManager
         for (int i=0; i<nMgrs(); i++) {
             ((LightManager)getMgr(i)).activateAllLights();
         }
+    }
+
+    /**
+     * Responds 'true' if Light Manager is for a System that supports variable Lights.
+     * Returns false if no manager exists.
+     * If a manager is found, return its determination of support for variable lights.
+     */
+    public boolean supportsVariableLights(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).supportsVariableLights(systemName);
+        return false;
+    }
+
+	/**
+	 * A method that determines if it is possible to add a range of lights in numerical
+     * order eg 11 thru 18, primarily used to show/not show the add range box in the add Light window
+     **/
+	public boolean allowMultipleAdditions(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ( (LightManager)getMgr(i)).allowMultipleAdditions(systemName);
+        return false;
     }
 
     // initialize logging

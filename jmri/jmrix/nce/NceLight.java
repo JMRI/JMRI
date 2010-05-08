@@ -16,7 +16,7 @@ import jmri.Light;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class NceLight extends AbstractLight {
 
@@ -52,13 +52,6 @@ public class NceLight extends AbstractLight {
         mBit = mgr.getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
-        // Set defaults
-        setControlType( NO_CONTROL );
-        setControlSensor( null );
-        setControlSensorSense(Sensor.ACTIVE);
-        setFastClockControlSchedule( 0,0,0,0 );
-        setControlTurnout( null );
-        setControlTurnoutState( Turnout.CLOSED );
     }
 
     int mBit = 0;                // address bit

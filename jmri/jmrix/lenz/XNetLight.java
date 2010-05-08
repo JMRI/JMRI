@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008-2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -51,13 +51,6 @@ public class XNetLight extends AbstractLight implements XNetListener {
         mAddress = XNetLightManager.instance().getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
-        // Set defaults for all other instance variables
-        setControlType( NO_CONTROL );
-        setControlSensor( null );
-        setControlSensorSense(Sensor.ACTIVE);
-        setFastClockControlSchedule( 0,0,0,0 );
-        setControlTurnout( null );
-        setControlTurnoutState( Turnout.CLOSED );
         // At construction, register for messages
         XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
 

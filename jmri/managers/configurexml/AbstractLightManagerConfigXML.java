@@ -5,7 +5,9 @@ package jmri.managers.configurexml;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.LightManager;
+import jmri.implementation.LightControl;
 import java.util.List;
+import java.util.ArrayList;
 import org.jdom.Element;
 
 /**
@@ -21,8 +23,8 @@ import org.jdom.Element;
  * <P>
  * Based on AbstractSensorManagerConfigXML.java
  *
- * @author Dave Duchamp Copyright (c) 2004, 2008
- * @version $Revision: 1.4 $
+ * @author Dave Duchamp Copyright (c) 2004, 2008, 2010
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -58,27 +60,6 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
                 // store common parts
                 storeCommon(lgt, elem);
-                
-                int type = lgt.getControlType();
-                elem.setAttribute("controlType", ""+type);
-                if (type==Light.SENSOR_CONTROL) {
-                    elem.setAttribute("controlSensor", lgt.getControlSensorName() );
-                    elem.setAttribute("sensorSense", ""+lgt.getControlSensorSense() );
-                }
-                else if (type==Light.FAST_CLOCK_CONTROL) {
-                    elem.setAttribute("fastClockOnHour", ""+lgt.getFastClockOnHour() );
-                    elem.setAttribute("fastClockOnMin", ""+lgt.getFastClockOnMin() );
-                    elem.setAttribute("fastClockOffHour", ""+lgt.getFastClockOffHour() );
-                    elem.setAttribute("fastClockOffMin", ""+lgt.getFastClockOffMin() );
-                }
-                else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    elem.setAttribute("controlTurnout", lgt.getControlTurnoutName() );
-                    elem.setAttribute("turnoutState", ""+lgt.getControlTurnoutState() );
-                }
-                else if (type==Light.TIMED_ON_CONTROL) {
-                    elem.setAttribute("timedControlSensor", lgt.getControlTimedOnSensorName() );
-                    elem.setAttribute("duration", ""+lgt.getTimedOnDuration() );
-                }
 
                 // write variable intensity attributes
                 elem.setAttribute("minIntensity", "" + lgt.getMinIntensity());
@@ -86,10 +67,43 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
 
                 // write transition attribute
                 elem.setAttribute("transitionTime", "" + lgt.getTransitionTime());
-
-                log.debug("store light "+sname);
-                lights.addContent(elem);
-
+				
+				// save child lightcontrol entries
+				ArrayList<LightControl> lcList = lgt.getLightControlList();
+				Element lcElem = null;
+				for (int i=0; i<lcList.size(); i++) {
+					LightControl lc = lcList.get(i);
+					if (lc!=null) {
+						lcElem = new Element ("lightcontrol");				
+						int type = lc.getControlType();
+						lcElem.setAttribute("controlType", ""+type);
+						if (type==Light.SENSOR_CONTROL) {
+							lcElem.setAttribute("controlSensor", lc.getControlSensorName() );
+							lcElem.setAttribute("sensorSense", ""+lc.getControlSensorSense() );
+						}
+						else if (type==Light.FAST_CLOCK_CONTROL) {
+							lcElem.setAttribute("fastClockOnHour", ""+lc.getFastClockOnHour() );
+							lcElem.setAttribute("fastClockOnMin", ""+lc.getFastClockOnMin() );
+							lcElem.setAttribute("fastClockOffHour", ""+lc.getFastClockOffHour() );
+							lcElem.setAttribute("fastClockOffMin", ""+lc.getFastClockOffMin() );
+						}
+						else if (type==Light.TURNOUT_STATUS_CONTROL) {
+							lcElem.setAttribute("controlTurnout", lc.getControlTurnoutName() );
+							lcElem.setAttribute("turnoutState", ""+lc.getControlTurnoutState() );
+						}
+						else if (type==Light.TIMED_ON_CONTROL) {
+							lcElem.setAttribute("timedControlSensor", lc.getControlTimedOnSensorName() );
+							lcElem.setAttribute("duration", ""+lc.getTimedOnDuration() );
+						}
+						if (type==Light.TWO_SENSOR_CONTROL) {
+							lcElem.setAttribute("controlSensor", lc.getControlSensorName() );
+							lcElem.setAttribute("controlSensor2", lc.getControlSensor2Name() );
+							lcElem.setAttribute("sensorSense", ""+lc.getControlSensorSense() );
+						}
+						elem.addContent(lcElem);
+					}					
+				}
+				lights.addContent(elem);
             }
         }
         return lights;
@@ -140,63 +154,7 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             Light lgt = tm.newLight(sysName, userName);
             if (lgt!=null) {
                 // load common parts
-                loadCommon(lgt, lightList.get(i));
-                
-                String temString = lightList.get(i).getAttribute("controlType").getValue();
-                int type = Integer.parseInt(temString);
-                lgt.setControlType(type);
-                if (type==Light.SENSOR_CONTROL) {
-                    lgt.setControlSensor(lightList.get(i).
-                                            getAttribute("controlSensor").getValue() );
-					// check for valid sensor name
-					if (lgt.getControlSensorName().length()<1) {
-						lgt.setControlType(Light.NO_CONTROL);
-						log.warn ("invalid sensor name when loading light - "+sysName);
-						result = false;
-					}
-					else {
-						lgt.setControlSensorSense( Integer.parseInt(lightList.get(i).
-                                                    getAttribute("sensorSense").getValue()));
-					}
-                }
-                else if (type==Light.FAST_CLOCK_CONTROL) {
-                    int onHour = Integer.parseInt(lightList.get(i).
-                                                getAttribute("fastClockOnHour").getValue());
-                    int onMin = Integer.parseInt(lightList.get(i).
-                                                getAttribute("fastClockOnMin").getValue());
-                    int offHour = Integer.parseInt(lightList.get(i).
-                                                getAttribute("fastClockOffHour").getValue());
-                    int offMin = Integer.parseInt(lightList.get(i).
-                                                getAttribute("fastClockOffMin").getValue());
-                    lgt.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
-                }
-                else if (type==Light.TURNOUT_STATUS_CONTROL) {
-                    lgt.setControlTurnout(lightList.get(i).
-                                            getAttribute("controlTurnout").getValue());
-					// check for valid turnout name
-					if (lgt.getControlTurnoutName().length()<1) {
-						lgt.setControlType(Light.NO_CONTROL);
-						log.warn ("invalid turnout name when loading light - "+sysName);
-					}
-					else {
-						lgt.setControlTurnoutState(Integer.parseInt(lightList.get(i).
-                                                    getAttribute("turnoutState").getValue()));
-					}
-                }
-                else if (type==Light.TIMED_ON_CONTROL) {
-                    lgt.setControlTimedOnSensor(lightList.get(i).
-                                            getAttribute("timedControlSensor").getValue());
-					// check for valid sensor name
-					if (lgt.getControlTimedOnSensorName().length()<1) {
-						lgt.setControlType(Light.NO_CONTROL);
-						log.warn ("invalid timed on sensor name when loading light - "+sysName);
-						result = false;
-					}
-					else {
-						lgt.setTimedOnDuration( Integer.parseInt(lightList.get(i).
-                                                    getAttribute("duration").getValue()));
-					}
-                }
+                loadCommon(lgt, lightList.get(i));                
                 // variable intensity, transition attributes
                 double value = 0.0;
                 try {
@@ -215,7 +173,156 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
                     value = Double.parseDouble(lightList.get(i).getAttribute("transitionTime").getValue());
                 } catch (Exception e2) {}
                 lgt.setTransitionTime(value);
-                
+				// provide for legacy light control - panel files written by 2.9.5 or before
+				if (lightList.get(i).getAttribute("controlType")!=null) {
+					// this is a legacy Light - create a LightControl from the input
+					String temString = lightList.get(i).getAttribute("controlType").getValue();
+					int type = Light.NO_CONTROL;
+					try {
+						type = Integer.parseInt(temString);
+					} catch (NumberFormatException e) {
+						log.error("error when converting control type in legacy Light load support");
+						type = Light.NO_CONTROL;
+					}
+					if (type!=Light.NO_CONTROL) {
+						// this legacy light has a control - capture it
+						LightControl lc = new LightControl(lgt);
+						lc.setControlType(type);
+						if (type==Light.SENSOR_CONTROL) {
+							lc.setControlSensorName(lightList.get(i).
+                                            getAttribute("controlSensor").getValue() );
+							try {				
+								lc.setControlSensorSense( Integer.parseInt(lightList.get(i).
+                                                    getAttribute("sensorSense").getValue()));
+							} catch (NumberFormatException e) {
+								log.error("error when converting control sensor sense in legacy Light load");
+							}
+						}
+						else if (type==Light.FAST_CLOCK_CONTROL) {
+							int onHour = 0;
+							int onMin = 0;
+							int offHour = 0;
+							int offMin = 0;
+							try {				
+								onHour = Integer.parseInt(lightList.get(i).
+                                                getAttribute("fastClockOnHour").getValue());
+								onMin = Integer.parseInt(lightList.get(i).
+                                                getAttribute("fastClockOnMin").getValue());
+								offHour = Integer.parseInt(lightList.get(i).
+                                                getAttribute("fastClockOffHour").getValue());
+								offMin = Integer.parseInt(lightList.get(i).
+                                                getAttribute("fastClockOffMin").getValue());
+							} catch (NumberFormatException e) {
+								log.error("error when converting fast clock items in legacy Light load");
+							}
+							lc.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
+						}
+						else if (type==Light.TURNOUT_STATUS_CONTROL) {
+							lc.setControlTurnout(lightList.get(i).
+                                            getAttribute("controlTurnout").getValue());
+							try {
+								lc.setControlTurnoutState(Integer.parseInt(lightList.get(i).
+                                                    getAttribute("turnoutState").getValue()));
+							} catch (NumberFormatException e) {
+								log.error("error when converting turnout state in legacy Light load");
+							}
+						}
+						else if (type==Light.TIMED_ON_CONTROL) {
+							lc.setControlTimedOnSensorName(lightList.get(i).
+                                            getAttribute("timedControlSensor").getValue());
+							try {
+								lc.setTimedOnDuration( Integer.parseInt(lightList.get(i).
+                                                    getAttribute("duration").getValue()));
+							} catch (NumberFormatException e) {
+								log.error("error when converting timed sensor items in legacy Light load");
+							}
+													
+						}
+						lgt.addLightControl(lc);
+					}
+                }
+				
+				// load lightcontrol children, if any
+				List<Element> lightControlList = lightList.get(i).getChildren("lightcontrol");
+				for (int n = 0; n<lightControlList.size(); n++) {
+					boolean noErrors = true;
+					Element elem = lightControlList.get(n);
+					LightControl lc = new LightControl(lgt);
+					String tem = elem.getAttribute("controlType").getValue();
+					int type = Light.NO_CONTROL;
+					try {
+						type = Integer.parseInt(tem);
+						lc.setControlType(type);
+					} catch (NumberFormatException e) {
+						log.error("error when converting control type while loading light "+sysName);
+						noErrors = false;
+					}
+					if (type==Light.SENSOR_CONTROL) {
+						lc.setControlSensorName(elem.getAttribute("controlSensor").getValue() );
+						try {
+							lc.setControlSensorSense( Integer.parseInt(elem.
+                                                    getAttribute("sensorSense").getValue()));
+						} catch (NumberFormatException e) {
+							log.error("error when converting control sensor sense while loading light "+sysName);
+							noErrors = false;
+						}
+					}
+					else if (type==Light.FAST_CLOCK_CONTROL) {
+						int onHour = 0;
+						int onMin = 0;
+						int offHour = 0;
+						int offMin = 0;
+						try {				
+							onHour = Integer.parseInt(elem.
+                                                getAttribute("fastClockOnHour").getValue());
+							onMin = Integer.parseInt(elem.
+                                                getAttribute("fastClockOnMin").getValue());
+							offHour = Integer.parseInt(elem.
+                                                getAttribute("fastClockOffHour").getValue());
+							offMin = Integer.parseInt(elem.
+                                                getAttribute("fastClockOffMin").getValue());
+							lc.setFastClockControlSchedule(onHour,onMin,offHour,offMin);
+						} catch (NumberFormatException e) {
+							log.error("error when converting fast clock items while loading light "+sysName);
+							noErrors = false;
+						}
+					}
+					else if (type==Light.TURNOUT_STATUS_CONTROL) {
+						lc.setControlTurnout(elem.getAttribute("controlTurnout").getValue());
+						try {
+							lc.setControlTurnoutState(Integer.parseInt(elem.
+                                                    getAttribute("turnoutState").getValue()));
+						} catch (NumberFormatException e) {
+							log.error("error when converting turnout state while loading light "+sysName);
+							noErrors = false;
+						}
+					}
+					else if (type==Light.TIMED_ON_CONTROL) {
+						lc.setControlTimedOnSensorName(elem.getAttribute("timedControlSensor").getValue());
+						try {
+							lc.setTimedOnDuration( Integer.parseInt(elem.
+                                                    getAttribute("duration").getValue()));
+						} catch (NumberFormatException e) {
+							log.error("error when converting timed sensor items while loading light "+sysName);
+							noErrors = false;
+						}
+					}
+					else if (type==Light.TWO_SENSOR_CONTROL) {
+						lc.setControlSensorName(elem.getAttribute("controlSensor").getValue() );
+						lc.setControlSensor2Name(elem.getAttribute("controlSensor2").getValue() );
+						try {
+							lc.setControlSensorSense( Integer.parseInt(elem.
+                                                    getAttribute("sensorSense").getValue()));
+						} catch (NumberFormatException e) {
+							log.error("error when converting control sensor2 sense while loading light "+sysName);
+							noErrors = false;
+						}
+					}
+					if (noErrors) {
+						lgt.addLightControl(lc);
+					}
+                }
+               
                 // done, start it working
 				lgt.activateLight();
             }
