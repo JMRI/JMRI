@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: lights-2-9-6.xsd,v 1.1 2010-05-02 19:35:19 jacobsen Exp $ -->
+<!-- $Id: lights-2-9-6.xsd,v 1.2 2010-05-08 23:47:11 djduchamp Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -48,23 +48,30 @@
             <xs:attribute name="userName" type="userNameType">
                 <xs:annotation><xs:documentation>Deprecated 2.9.6 in favor of separate element</xs:documentation></xs:annotation>
             </xs:attribute>
-            <xs:attribute name="controlType" type="xs:string" use="required"/>
-            <xs:attribute name="controlSensor" type="xs:string" />
-            <xs:attribute name="sensorSense" type="xs:string" />
-            <xs:attribute name="fastClockOnHour" type="xs:string" />
-            <xs:attribute name="fastClockOnMin" type="xs:string" />
-            <xs:attribute name="fastClockOffHour" type="xs:string" />
-            <xs:attribute name="fastClockOffMin" type="xs:string" />
-            <xs:attribute name="controlTurnout" type="xs:string" />
-            <xs:attribute name="turnoutState" type="xs:string" />
-            <xs:attribute name="timedControlSensor" type="xs:string" />
-            <xs:attribute name="duration" type="xs:string" />
+            <xs:element name="lightcontrol" minOccurs="0" maxOccurs="unbounded" >
+              <xs:complexType>
+                <xs:sequence>
+           		  <xs:attribute name="controlType" type="xs:string" use="required"/>
+                  <xs:attribute name="controlSensor" type="xs:string" />
+                  <xs:attribute name="controlSensor2" type="xs:string" />
+                  <xs:attribute name="sensorSense" type="xs:string" />
+                  <xs:attribute name="fastClockOnHour" type="xs:string" />
+                  <xs:attribute name="fastClockOnMin" type="xs:string" />
+                  <xs:attribute name="fastClockOffHour" type="xs:string" />
+                  <xs:attribute name="fastClockOffMin" type="xs:string" />
+                  <xs:attribute name="controlTurnout" type="xs:string" />
+                  <xs:attribute name="turnoutState" type="xs:string" />
+                  <xs:attribute name="timedControlSensor" type="xs:string" />
+                  <xs:attribute name="duration" type="xs:string" />
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
             <xs:attribute name="minIntensity" type="xs:string" />
             <xs:attribute name="maxIntensity" type="xs:string" />
             <xs:attribute name="transitionTime" type="xs:string" />
           </xs:complexType>
         </xs:element>
-            
+        
       </xs:sequence>
       <xs:attribute name="class" type="classType" use="required"/>
     </xs:complexType>
