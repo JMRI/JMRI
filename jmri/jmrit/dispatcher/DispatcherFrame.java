@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2010
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -130,8 +130,6 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 		if (optionsRead) return;
 		optionsRead = true;
 		try {
-// djd debugging
-//			new OptionsFile().readDispatcherOptions(this);
 			OptionsFile.instance().readDispatcherOptions(this);
 		} 
 		catch (org.jdom.JDOMException jde) {

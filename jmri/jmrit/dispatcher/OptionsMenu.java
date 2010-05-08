@@ -32,7 +32,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class OptionsMenu extends JMenu {
@@ -280,8 +280,6 @@ public class OptionsMenu extends JMenu {
 			
 	private void saveRequested(ActionEvent e) {
 		try {
-// djd debugging
-//			new OptionsFile().writeDispatcherOptions(dispatcher);
 			OptionsFile.instance().writeDispatcherOptions(dispatcher);
 		} 
 		//catch (org.jdom.JDOMException jde) { 
