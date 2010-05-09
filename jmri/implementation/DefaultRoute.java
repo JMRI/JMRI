@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -919,16 +919,6 @@ public class DefaultRoute extends AbstractNamedBean
         return;
     }
 
-
-    protected boolean wifiControllable = true;
-
-    public void setWifiControllable(boolean state){
-        wifiControllable = state;
-    }
-
-    public boolean getWifiControllable(){
-        return wifiControllable;
-    }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultRoute.class.getName());
     

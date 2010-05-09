@@ -14,7 +14,7 @@ import jmri.Sensor;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 public class RouteController extends AbstractController implements PropertyChangeListener{
@@ -44,7 +44,9 @@ public class RouteController extends AbstractController implements PropertyChang
         ArrayList<String> tempList = new ArrayList<String>(0);
         for (String sysName : sysNameList){
             Route r = manager.getBySystemName(sysName);
-            if (r.getWifiControllable()){
+            Object o = r.getProperty("WifiControllable");
+            if ((o == null) || (!o.toString().equalsIgnoreCase("false"))){
+                //  Only skip if 'false'
                 tempList.add(sysName);
             }
         }
@@ -151,7 +153,7 @@ public class RouteController extends AbstractController implements PropertyChang
             if (routeAligned != null){
                 indication.put(routeAligned, r);
                 routeAligned.addPropertyChangeListener(this);
-                if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned+" for Route: "+r);
+                if (log.isDebugEnabled()) log.debug("Add listener to Sensor: "+routeAligned.getSystemName()+" for Route: "+r.getSystemName());
             }
 
 
@@ -169,8 +171,8 @@ public class RouteController extends AbstractController implements PropertyChang
             Sensor routeAligned = InstanceManager.sensorManagerInstance().getBySystemName(r.getTurnoutsAlignedSensor());
             if (routeAligned != null){
                 routeAligned.removePropertyChangeListener(this);
-                indication.remove(r);
-                if (log.isDebugEnabled()) log.debug("Removing listener from Sensor: "+routeAligned+" for Route: "+r);
+                indication.remove(routeAligned);
+                if (log.isDebugEnabled()) log.debug("Removing listener from Sensor: "+routeAligned.getSystemName()+" for Route: "+r.getSystemName());
             }
 
         }

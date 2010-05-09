@@ -20,7 +20,7 @@ import org.jdom.Element;
  * @author Daniel Boudreau Copyright (c) 2007
  * @author Simon Reader Copyright (C) 2008
  *
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -184,9 +184,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                                     .setAttribute("name", r.getTurnoutsAlignedSensor());
                     elem.addContent(rsElem);
                 }
-
-                //  add wifiControllable
-                elem.setAttribute("wifiControllable", r.getWifiControllable()?"true":"false");
                 
                 log.debug("store route "+sname);
                 routes.addContent(elem);
@@ -466,7 +463,6 @@ public class DefaultRouteManagerXml extends jmri.managers.configurexml.AbstractN
                     }
                 }
 
-                r.setWifiControllable(getAttributeBool(routeList.get(i), "wifiControllable", true));
             // and start it working
             r.activateRoute();
             

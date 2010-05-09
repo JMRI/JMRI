@@ -25,7 +25,7 @@ import org.jdom.Attribute;
  * specific Turnout or AbstractTurnout subclass at store time.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -95,7 +95,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
                 	elem.setAttribute("decoder", t.getDecoderName());
                 }
 
-                elem.setAttribute("wifiControllable", t.getWifiControllable()?"true":"false");
                 
 				// include number of control bits, if different from one
 				int iNum = t.getNumberOutputBits();
@@ -257,7 +256,6 @@ public abstract class AbstractTurnoutManagerConfigXML extends AbstractNamedBeanM
             	t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, a.getValue().equals("true"));
             }
 
-            t.setWifiControllable(getAttributeBool(elem, "wifiControllable", true));
  			
 			// number of bits, if present - if not, defaults to 1
 			a = turnoutList.get(i).getAttribute("numBits");

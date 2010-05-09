@@ -68,7 +68,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -403,10 +403,6 @@ public interface Turnout extends NamedBean {
 	 * Turn this object into just a binary output.
 	 */
     public void setBinaryOutput(boolean state);
-
-    public boolean getWifiControllable();
-
-    public void setWifiControllable(boolean wifiControlled);
     
 }
 

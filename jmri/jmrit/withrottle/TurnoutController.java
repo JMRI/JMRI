@@ -14,7 +14,7 @@ import jmri.TurnoutManager;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 
 public class TurnoutController extends AbstractController implements PropertyChangeListener{
@@ -43,7 +43,9 @@ public class TurnoutController extends AbstractController implements PropertyCha
         ArrayList<String> tempList = new ArrayList<String>(0);
         for (String sysName : sysNameList){
             Turnout t = manager.getBySystemName(sysName);
-            if (t.getWifiControllable()){
+            Object o = t.getProperty("WifiControllable");
+            if ((o == null) || (!o.toString().equalsIgnoreCase("false"))){
+                //  Only skip if 'false'
                 tempList.add(sysName);
             }
         }
