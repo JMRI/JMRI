@@ -5,6 +5,7 @@ package jmri.managers.configurexml;
 import jmri.NamedBean;
 
 import java.util.List;
+import java.lang.reflect.*;
 import org.jdom.Element;
 import org.jdom.Attribute;
 
@@ -17,7 +18,7 @@ import org.jdom.Attribute;
  * to eventual type-specific subclasses.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @since 2.3.1
  */
 public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexml.AbstractXmlAdapter {
@@ -37,6 +38,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     protected void storeCommon(NamedBean t, Element elem) {
         storeUserName(t, elem);
         storeComment(t, elem);
+        storeProperties(t, elem);
     }
     
     /**
@@ -52,6 +54,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      */
     protected void loadCommon(NamedBean t, Element elem) {
         loadComment(t, elem);
+        loadProperties(t, elem);
     }
     
     /**
@@ -159,7 +162,8 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
     
     /**
-     * Get an attribute string value from an Element defining a NamedBean
+     * Convenience method to get a String value 
+     * from an Attribute in an Element defining a NamedBean
      * @param elem The existing Element
      * @param name name of desired Attribute
      */
@@ -172,7 +176,8 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     }
     
     /**
-     * Get an attribute boolean value from an Element defining a NamedBean
+     * Convenience method to get a boolean value 
+     * from an Attribute in an Element defining a NamedBean
      * @param elem The existing Element
      * @param name Name of desired Attribute
      * @param def Default value for attribute
@@ -189,4 +194,67 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
             }
     }
 
+    /**
+     * Store all key/value properties
+     * @param t The NamedBean being loaded
+     * @param elem The existing Element
+     */
+    void storeProperties(NamedBean t, Element elem) {
+        java.util.Set<Object> s = t.getPropertyKeys();
+        if (s == null || s.size() == 0) return;
+        Element ret = new Element("properties");
+        elem.addContent(ret);
+        for (Object key : s) {
+            Object value = t.getProperty(key);
+            Element p = new Element("property");
+            ret.addContent(p);
+            p.addContent(new Element("key")
+                            .setAttribute("class", key.getClass().getName())
+                            .setText(key.toString())
+                        );
+            if (value != null) {
+                p.addContent(new Element("value")
+                            .setAttribute("class", value.getClass().getName())
+                            .setText(value.toString())
+                            );
+            }
+        }
+    }
+    
+    /**
+     * Load all key/value properties
+     * @param t The NamedBean being loaded
+     * @param elem The existing Element
+     */
+    void loadProperties(NamedBean t, Element elem) {
+        Element p = elem.getChild("properties");
+        if (p == null) return;
+        for (Object next : p.getChildren("property")) {
+            Element e = (Element) next;
+            
+            try {
+                Class<?> cl;
+                Constructor<?> ctor;
+                // create key object
+                cl = Class.forName(e.getChild("key").getAttributeValue("class"));
+                ctor = cl.getConstructor(new Class<?>[] {String.class});
+                Object key = ctor.newInstance(new Object[] {e.getChild("key").getText()});
+
+                // create value object
+                Object value = null;
+                if (e.getChild("value") != null) {
+                    cl = Class.forName(e.getChild("value").getAttributeValue("class"));
+                    ctor = cl.getConstructor(new Class<?>[] {String.class});
+                    value = ctor.newInstance(new Object[] {e.getChild("value").getText()});
+                }
+                
+                // store
+                t.setProperty(key, value);
+            } catch (Exception ex) {
+                log.error("Error loading properties", ex);
+            }
+        }
+    }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNamedBeanManagerConfigXML.class.getName());
 }
