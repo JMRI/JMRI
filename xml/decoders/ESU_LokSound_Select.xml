@@ -999,14 +999,8 @@
 			<decVal/>
 		</variable>
 
-		<variable label="User Id #1" CV="105" default="0">
-			<decVal/>
-		</variable>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
 
-		<variable label="User Id #2" CV="106" default="0">
-			<decVal/>
-		</variable>
-	
 		<variable label="Blinking Rate" CV="112" default="30"
 			tooltip="Unit is 0.0625 seconds"
 			item="Global lighting option 1" >

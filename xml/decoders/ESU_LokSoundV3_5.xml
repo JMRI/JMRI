@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: ESU_LokSoundV3_5.xml,v 1.13 2010-05-02 22:15:52 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundV3_5.xml,v 1.14 2010-05-09 23:55:16 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -602,16 +602,9 @@
         <label xml:lang="fr">Correction vitesse arrière</label>
         <comment xml:lang="fr">Valeur  0-255</comment>
       </variable>
-      <variable item="User Id #1" CV="105" default="0">
-        <decVal/>
-        <label>User Id #1</label>
-        <label xml:lang="fr">Fonction perso #1</label>
-      </variable>
-      <variable item="User Id #2" CV="106" default="0">
-        <decVal/>
-        <label>User Id #2</label>
-        <label xml:lang="fr">Fonction perso #2</label>
-      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+
       <variable item="Blinking Rate (4-64)" CV="112" default="33" comment="Controls Blink Interval">
         <decVal/>
         <label>Blinking Rate (4-64)</label>

@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: ESU_LokSoundXLV3_5.xml,v 1.5 2009-08-30 07:47:17 jacobsen Exp $ -->
+<!-- $Id: ESU_LokSoundXLV3_5.xml,v 1.6 2010-05-09 23:55:17 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -484,13 +484,8 @@
 			<decVal/>
 		</variable>
 
-		<variable label="User Id #1" CV="105" default="0">
-			<decVal/>
-		</variable>
-		<variable label="User Id #2" CV="106" default="0">
-			<decVal/>
-		</variable>
-	
+    <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+
 	<variable label="Blinking Rate (4-64)" CV="112" default="33"
 	     	comment="Controls Blink Interval">
 			<decVal/>
