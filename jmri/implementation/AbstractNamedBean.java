@@ -5,6 +5,7 @@ package jmri.implementation;
 import jmri.*;
 
 import java.util.HashMap;
+import java.util.Set;
 
 /**
  * Abstract base for the NamedBean interface.
@@ -12,7 +13,7 @@ import java.util.HashMap;
  * Implements the parameter binding support.
  *
  * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -117,6 +118,11 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     public Object getProperty(Object key) {
         if (parameters == null) return null;
         return parameters.get(key);
+    }
+
+    public java.util.Set<Object> getPropertyKeys() {
+        if (parameters == null) return null;
+        return parameters.keySet();
     }
 
     HashMap<Object, Object> parameters = null;

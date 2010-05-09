@@ -26,7 +26,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2002, 2003, 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see         jmri.Manager
  */
 public interface NamedBean {
@@ -146,6 +146,11 @@ public interface NamedBean {
      * If no value has been set for that key, returns null.
      */
     public Object getProperty(Object key);
+
+    /**
+     * Retrieve the complete current set of keys.
+     */
+    public java.util.Set<Object> getPropertyKeys();
 }
 
 /* @(#)NamedBean.java */

@@ -57,6 +57,10 @@ public class CatalogTreeIndex extends AbstractCatalogTree {
         return parameters.get(key);
     }
 
+    public java.util.Set<Object> getPropertyKeys() {
+        return parameters.keySet();
+    }
+
     HashMap<Object, Object> parameters = null;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogTreeIndex.class.getName());
