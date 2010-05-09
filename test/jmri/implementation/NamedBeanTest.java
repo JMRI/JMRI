@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the NamedBean interface
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class NamedBeanTest extends TestCase {
 
@@ -45,6 +45,22 @@ public class NamedBeanTest extends TestCase {
 	    Assert.assertEquals("bar", n.getProperty("foo"));
 	    n.setProperty("foo", null);
 	    Assert.assertEquals(null, n.getProperty("foo"));
+	}
+
+	public void testGetPropertyKeys() {
+	    NamedBean n = new AbstractNamedBean("sys", "usr"){
+	        public int getState() {return 0;}
+	        public void setState(int i) {}
+	    };
+
+	    n.setProperty("foo", "bar");
+	    n.setProperty("biff", "bar");
+	    
+	    java.util.Set<Object> s = n.getPropertyKeys();
+	    Assert.assertEquals("size", 2, s.size());
+	    Assert.assertEquals("contains foo", true, s.contains("foo"));
+	    Assert.assertEquals("contains biff", true, s.contains("biff"));
+	    
 	}
 
 	// from here down is testing infrastructure
