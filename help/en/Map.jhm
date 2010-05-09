@@ -900,6 +900,8 @@
 
 <mapID target="manual.Ops_Locations" url="manual/Ops_Locations.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ImportingCars" url="package/jmri/jmrit/operations/Operations.shtml#ImportingCars"/>
+
 <mapID target="package.jmri.jmrit.beantable.UserMessagePreferences" url="package/jmri/jmrit/beantable/UserMessagePreferences.shtml"/>
 
 <mapID target="manual.Main_XpressNet_Database" url="manual/Main_XpressNet.shtml#Database"/>
