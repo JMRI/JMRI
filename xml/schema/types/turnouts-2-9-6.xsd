@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: turnouts-2-9-6.xsd,v 1.2 2010-05-09 05:53:16 jacobsen Exp $ -->
+<!-- $Id: turnouts-2-9-6.xsd,v 1.3 2010-05-09 22:58:51 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -70,8 +70,6 @@
         <xs:attribute name="lockMode" type="xs:string" />
         <xs:attribute name="decoder" type="xs:string" />
     
-        <xs:attribute name="wifiControllable" type="xs:boolean" default="true" />
-
         <xs:attribute name="state" >
           <xs:simpleType>
             <xs:restriction base="xs:token">

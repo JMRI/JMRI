@@ -13,12 +13,12 @@
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
       <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
-    <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT1</systemName>
       <userName>User 1</userName>
       <comment>Comment on Turnout 1</comment>
     </turnout>
-    <turnout systemName="IT101" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT101" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT101</systemName>
       <comment>Input for IR1, don't change</comment>
       <properties>
@@ -28,26 +28,26 @@
         </property>
       </properties>
     </turnout>
-    <turnout systemName="IT2" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT2</systemName>
     </turnout>
-    <turnout systemName="IT21" userName="For Signal IH2 R" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT21" userName="For Signal IH2 R" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT21</systemName>
       <userName>For Signal IH2 R</userName>
     </turnout>
-    <turnout systemName="IT22" userName="For Signal IH2 Y" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT22" userName="For Signal IH2 Y" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT22</systemName>
       <userName>For Signal IH2 Y</userName>
     </turnout>
-    <turnout systemName="IT23" userName="For Signal IH2 G" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT23" userName="For Signal IH2 G" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT23</systemName>
       <userName>For Signal IH2 G</userName>
     </turnout>
-    <turnout systemName="IT3" userName="User 3" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT3" userName="User 3" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT3</systemName>
       <userName>User 3</userName>
     </turnout>
-    <turnout systemName="IT4" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
+    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Default">
       <systemName>IT4</systemName>
     </turnout>
   </turnouts>
@@ -127,7 +127,7 @@
     </signalhead>
   </signalheads>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
-    <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED" wifiControllable="true">
+    <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
       <systemName>IR1</systemName>
       <userName>random route 1</userName>
       <routeOutputTurnout systemName="IT1" state="THROWN" />
@@ -147,6 +147,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.14 2010-05-09 05:18:51 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.15 2010-05-09 22:58:27 jacobsen Exp $-->
 </layout-config>
 
