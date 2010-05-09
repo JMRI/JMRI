@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -110,7 +110,7 @@ public class TrainIcon extends LocoIcon {
 			return routeMenu;
 		List<String> routeList = route.getLocationsBySequenceList();
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getCarsByTrainList(train);
+		List<String> carList = carManager.getByTrainList(train);
 		for (int r=0; r<routeList.size(); r++){
 			int pickupCars = 0;
 			int dropCars = 0;
@@ -119,7 +119,7 @@ public class TrainIcon extends LocoIcon {
 			if (train.getCurrentLocation() == rl)
 				current = "-> ";
 			for (int j=0; j<carList.size(); j++){
-				Car car = carManager.getCarById(carList.get(j));
+				Car car = carManager.getById(carList.get(j));
 				if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 					pickupCars++;
 				}

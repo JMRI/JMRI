@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -119,7 +119,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     
     private int getIndex (int start, String roadNumber){
 		for (int index = start; index < sysList.size(); index++) {
-			Engine e = manager.getEngineById(sysList.get(index));
+			Engine e = manager.getById(sysList.get(index));
 			if (e != null){
 				String[] number = e.getNumber().split("-");
 				if (e.getNumber().equals(roadNumber) || number[0].equals(roadNumber)){
@@ -139,34 +139,34 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
      	sysList = getSelectedEngineList();
  		// and add listeners back in
 		for (int i = 0; i < sysList.size(); i++)
-			manager.getEngineById(sysList.get(i))
+			manager.getById(sysList.get(i))
 					.addPropertyChangeListener(this);
 	}
     
     public List<String> getSelectedEngineList(){
     	List<String> list;
 		if (_sort == SORTBYROAD)
-			list = manager.getEnginesByRoadNameList();
+			list = manager.getByRoadNameList();
 		else if (_sort == SORTBYMODEL)
-			list = manager.getEnginesByModelList();
+			list = manager.getByModelList();
 		else if (_sort == SORTBYLOCATION)
-			list = manager.getEnginesByLocationList();
+			list = manager.getByLocationList();
 		else if (_sort == SORTBYDESTINATION)
-			list = manager.getEnginesByDestinationList();
+			list = manager.getByDestinationList();
 		else if (_sort == SORTBYTRAIN)
-			list = manager.getEnginesByTrainList();
+			list = manager.getByTrainList();
 		else if (_sort == SORTBYMOVES)
-			list = manager.getEnginesByMovesList();
+			list = manager.getByMovesList();
 		else if (_sort == SORTBYCONSIST)
-			list = manager.getEnginesByConsistList();
+			list = manager.getByConsistList();
 		else if (_sort == SORTBYOWNER)
-			list = manager.getEnginesByOwnerList();
+			list = manager.getByOwnerList();
 		else if (_sort == SORTBYBUILT)
-			list = manager.getEnginesByBuiltList();
+			list = manager.getByBuiltList();
 		else if (_sort == SORTBYRFID)
-			list = manager.getEnginesByRfidList();
+			list = manager.getByRfidList();
 		else
-			list = manager.getEnginesByNumberList();
+			list = manager.getByNumberList();
 		return list;
     }
 
@@ -276,7 +276,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     	if (row >= sysList.size())
     		return "ERROR row "+row;
     	String engineId = sysList.get(row);
-    	Engine engine = manager.getEngineById(engineId);
+    	Engine engine = manager.getById(engineId);
       	if (engine == null)
     		return "ERROR engine unknown "+row;
         switch (col) {
@@ -333,7 +333,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     
     public void setValueAt(Object value, int row, int col) {
 		String engineId = sysList.get(row);
-    	Engine engine = manager.getEngineById(engineId);
+    	Engine engine = manager.getById(engineId);
         switch (col) {
         case SETCOLUMN:
         	log.debug("Set engine location");
@@ -380,7 +380,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		if (sysList != null) {
 			for (int i = 0; i < sysList.size(); i++) {
 				// if object has been deleted, it's not here; ignore it
-				Engine engine = manager.getEngineById(sysList.get(i));
+				Engine engine = manager.getById(sysList.get(i));
 				if (engine != null)
 					engine.removePropertyChangeListener(this);
 			}

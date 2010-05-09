@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -268,14 +268,14 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
 		// set frame size and location for display
 		pack();
-		if (manager.getEngineEditFrameSize()!= null)
-			setSize(manager.getEngineEditFrameSize());
+		if (manager.getEditFrameSize()!= null)
+			setSize(manager.getEditFrameSize());
 		else if (getWidth()<400)
 			setSize(450, getHeight());
 		else
 			setSize (getWidth()+50, getHeight());
-		if (manager.getEngineEditFramePosition()!= null){
-			setLocation(manager.getEngineEditFramePosition());
+		if (manager.getEditFramePosition()!= null){
+			setLocation(manager.getEditFramePosition());
 		}
 		setVisible(true);	
 	}
@@ -397,7 +397,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				return;
 			}
 			// check to see if engine with road and number already exists
-			Engine engine = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+			Engine engine = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
 			if (engine != null){
 				if (_engine == null || !engine.getId().equals(_engine.getId())){
 					JOptionPane.showMessageDialog(this,
@@ -425,7 +425,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			}
 			addEngine();
 			// save frame size and position
-			manager.setEngineEditFrame(this);
+			manager.setEditFrame(this);
 			writeFiles();
 		}
 		if (ae.getSource() == deleteButton){
@@ -437,7 +437,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 				// save engine file
 				writeFiles();
 			} else {
-				Engine e = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+				Engine e = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
 				if (e != null){
 					manager.deregister(e);
 					// save engine file
@@ -453,7 +453,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			Engine e = manager.getEngineByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
+			Engine e = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText() );
 			if (e != null){
 				log.info("Can not add, engine already exists");
 				JOptionPane.showMessageDialog(this,

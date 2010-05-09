@@ -36,7 +36,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -479,7 +479,7 @@ public class OperationsEnginesTest extends TestCase {
 
 	public void testEngineManager(){
         EngineManager manager = EngineManager.instance();
-        List<String> engineList = manager.getEnginesByIdList();
+        List<String> engineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, engineList.size());
         Engine e1 = manager.newEngine("CP", "1");
@@ -611,115 +611,115 @@ public class OperationsEnginesTest extends TestCase {
         e6.setTrain(new Train("id6", "A"));
 
         // now get engines by id
-        engineList = manager.getEnginesByIdList();
+        engineList = manager.getByIdList();
         Assert.assertEquals("Number of Engines by id", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by id", e6, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by id", e2, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by id", e1, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by id", e3, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by id", e4, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by id", e5, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by id", e6, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by id", e2, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by id", e1, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by id", e3, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by id", e4, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by id", e5, manager.getById(engineList.get(5)));
    
         // now get engines by built
-        engineList = manager.getEnginesByBuiltList();
+        engineList = manager.getByBuiltList();
         Assert.assertEquals("Number of Engines by built", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by built", e4, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by built", e3, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by built", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by built", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by built", e6, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by built", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by built", e4, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by built", e3, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by built", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by built", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by built", e6, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by built", e1, manager.getById(engineList.get(5)));
   
         // now get engines by moves
-        engineList = manager.getEnginesByMovesList();
+        engineList = manager.getByMovesList();
         Assert.assertEquals("Number of Engines by move", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by move", e1, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by move", e5, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by move", e4, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by move", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by move", e6, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by move", e3, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by move", e1, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by move", e5, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by move", e4, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by move", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by move", e6, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by move", e3, manager.getById(engineList.get(5)));
   
         // now get engines by owner
-        engineList = manager.getEnginesByOwnerList();
+        engineList = manager.getByOwnerList();
         Assert.assertEquals("Number of Engines by owner", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by owner", e3, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by owner", e6, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by owner", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by owner", e4, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by owner", e2, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by owner", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by owner", e3, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by owner", e6, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by owner", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by owner", e4, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by owner", e2, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by owner", e1, manager.getById(engineList.get(5)));
  
         // now get engines by road name
-        engineList = manager.getEnginesByRoadNameList();
+        engineList = manager.getByRoadNameList();
         Assert.assertEquals("Number of Engines by road name", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by road name", e6, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by road name", e2, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by road name", e1, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by road name", e3, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by road name", e4, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by road name", e5, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by road name", e6, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by road name", e2, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by road name", e1, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by road name", e3, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by road name", e4, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by road name", e5, manager.getById(engineList.get(5)));
 
         // now get engines by consist
-        engineList = manager.getEnginesByConsistList();
+        engineList = manager.getByConsistList();
         Assert.assertEquals("Number of Engines by consist", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by consist", e4, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by consist", e3, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by consist", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by consist", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by consist", e6, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by consist", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by consist", e4, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by consist", e3, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by consist", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by consist", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by consist", e6, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by consist", e1, manager.getById(engineList.get(5)));
 
         // now get engines by location
-        engineList = manager.getEnginesByLocationList();
+        engineList = manager.getByLocationList();
         Assert.assertEquals("Number of Engines by location", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by location", e6, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by location", e5, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by location", e1, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by location", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by location", e4, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by location", e3, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by location", e6, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by location", e5, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by location", e1, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by location", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by location", e4, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by location", e3, manager.getById(engineList.get(5)));
 
         // now get engines by destination
-        engineList = manager.getEnginesByDestinationList();
+        engineList = manager.getByDestinationList();
         Assert.assertEquals("Number of Engines by destination", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by destination", e2, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by destination", e1, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by destination", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by destination", e6, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by destination", e3, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by destination", e4, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by destination", e2, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by destination", e1, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by destination", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by destination", e6, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by destination", e3, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by destination", e4, manager.getById(engineList.get(5)));
 
         // now get engines by train
-        engineList = manager.getEnginesByTrainList();
+        engineList = manager.getByTrainList();
         Assert.assertEquals("Number of Engines by train", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by train", e6, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by train", e4, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by train", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by train", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by train", e3, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by train", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by train", e6, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by train", e4, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by train", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by train", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by train", e3, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by train", e1, manager.getById(engineList.get(5)));
 
         // now get engines by specific train
-        engineList = manager.getEnginesByTrainList(t1);
+        engineList = manager.getByTrainList(t1);
         Assert.assertEquals("Number of Engines in t1", 1, engineList.size());
-        Assert.assertEquals("1st engine in list by t1", e1, manager.getEngineById(engineList.get(0)));
-        engineList = manager.getEnginesByTrainList(t3);
+        Assert.assertEquals("1st engine in list by t1", e1, manager.getById(engineList.get(0)));
+        engineList = manager.getByTrainList(t3);
         Assert.assertEquals("Number of Engines in t3", 3, engineList.size());
-        Assert.assertEquals("1st engine in list by t3", e2, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by t3", e3, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by t3", e5, manager.getEngineById(engineList.get(2)));
+        Assert.assertEquals("1st engine in list by t3", e2, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by t3", e3, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by t3", e5, manager.getById(engineList.get(2)));
                     
         // how many engines available?
-        engineList = manager.getEnginesAvailableTrainList(t1);
+        engineList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Engines available for t1", 1, engineList.size());
-        Assert.assertEquals("1st engine in list available for t1", e1, manager.getEngineById(engineList.get(0)));
+        Assert.assertEquals("1st engine in list available for t1", e1, manager.getById(engineList.get(0)));
 
         // only engines at the start of the route should be available
-        engineList = manager.getEnginesAvailableTrainList(t3);
+        engineList = manager.getAvailableTrainList(t3);
         Assert.assertEquals("Number of Engines available for t3", 1, engineList.size());
-        Assert.assertEquals("1st engine in list available for t3", e2, manager.getEngineById(engineList.get(0)));
-        //Assert.assertEquals("2nd engine in list available for t3", e3, manager.getEngineById(engineList.get(1)));
+        Assert.assertEquals("1st engine in list available for t3", e2, manager.getById(engineList.get(0)));
+        //Assert.assertEquals("2nd engine in list available for t3", e3, manager.getById(engineList.get(1)));
         // note that e5 isn't available since it is located at the end of the train's route
         
         // release engines from trains
@@ -728,64 +728,64 @@ public class OperationsEnginesTest extends TestCase {
         e6.setTrain(null);	// e6 is located at the end of the route, therefore not available
         
         // there should be more engines now
-        engineList = manager.getEnginesAvailableTrainList(t1);
+        engineList = manager.getAvailableTrainList(t1);
         Assert.assertEquals("Number of Engines available t1 after release", 2, engineList.size());
         // should be sorted by moves
-        Assert.assertEquals("1st engine in list available for t1", e1, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list available for t1", e2, manager.getEngineById(engineList.get(1)));
+        Assert.assertEquals("1st engine in list available for t1", e1, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list available for t1", e2, manager.getById(engineList.get(1)));
 
-        engineList = manager.getEnginesAvailableTrainList(t3);
+        engineList = manager.getAvailableTrainList(t3);
         Assert.assertEquals("Number of Engines available for t3 after release", 1, engineList.size());
-        Assert.assertEquals("1st engine in list available for t3", e2, manager.getEngineById(engineList.get(0)));
+        Assert.assertEquals("1st engine in list available for t3", e2, manager.getById(engineList.get(0)));
 
         // now get engines by road number
-        engineList = manager.getEnginesByNumberList();
+        engineList = manager.getByNumberList();
         Assert.assertEquals("Number of Engines by number", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by number", e6, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by number", e1, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by number", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by number", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by number", e3, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by number", e4, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by number", e6, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by number", e1, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by number", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by number", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by number", e3, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by number", e4, manager.getById(engineList.get(5)));
         
         // find engine by road and number
-        Assert.assertEquals("find e1 by road and number", e1, manager.getEngineByRoadAndNumber("CP", "1"));
-        Assert.assertEquals("find e2 by road and number", e2, manager.getEngineByRoadAndNumber("ACL", "3"));
-        Assert.assertEquals("find e3 by road and number", e3, manager.getEngineByRoadAndNumber("CP", "3"));
-        Assert.assertEquals("find e4 by road and number", e4, manager.getEngineByRoadAndNumber("CP", "3-1"));
-        Assert.assertEquals("find e5 by road and number", e5, manager.getEngineByRoadAndNumber("PC", "2"));
-        Assert.assertEquals("find e6 by road and number", e6, manager.getEngineByRoadAndNumber("AA", "1"));
+        Assert.assertEquals("find e1 by road and number", e1, manager.getByRoadAndNumber("CP", "1"));
+        Assert.assertEquals("find e2 by road and number", e2, manager.getByRoadAndNumber("ACL", "3"));
+        Assert.assertEquals("find e3 by road and number", e3, manager.getByRoadAndNumber("CP", "3"));
+        Assert.assertEquals("find e4 by road and number", e4, manager.getByRoadAndNumber("CP", "3-1"));
+        Assert.assertEquals("find e5 by road and number", e5, manager.getByRoadAndNumber("PC", "2"));
+        Assert.assertEquals("find e6 by road and number", e6, manager.getByRoadAndNumber("AA", "1"));
 
         // now get engines by RFID
-        engineList = manager.getEnginesByRfidList();
+        engineList = manager.getByRfidList();
         Assert.assertEquals("Number of Engines by rfid", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by rfid", e2, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by rfid", e5, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by rfid", e4, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by rfid", e3, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by rfid", e6, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by rfid", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by rfid", e2, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by rfid", e5, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by rfid", e4, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by rfid", e3, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by rfid", e6, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by rfid", e1, manager.getById(engineList.get(5)));
 
         // find engine by RFID
-        Assert.assertEquals("find e1 by rfid", e1, manager.getEngineByRfid("SQ1"));
-        Assert.assertEquals("find e2 by rfid", e2, manager.getEngineByRfid("1Ab"));
-        Assert.assertEquals("find e3 by rfid", e3, manager.getEngineByRfid("Ase"));
-        Assert.assertEquals("find e4 by rfid", e4, manager.getEngineByRfid("asd"));
-        Assert.assertEquals("find e5 by rfid", e5, manager.getEngineByRfid("93F"));
-        Assert.assertEquals("find e6 by rfid", e6, manager.getEngineByRfid("B12"));
+        Assert.assertEquals("find e1 by rfid", e1, manager.getByRfid("SQ1"));
+        Assert.assertEquals("find e2 by rfid", e2, manager.getByRfid("1Ab"));
+        Assert.assertEquals("find e3 by rfid", e3, manager.getByRfid("Ase"));
+        Assert.assertEquals("find e4 by rfid", e4, manager.getByRfid("asd"));
+        Assert.assertEquals("find e5 by rfid", e5, manager.getByRfid("93F"));
+        Assert.assertEquals("find e6 by rfid", e6, manager.getByRfid("B12"));
         
         // now get engines by model
-        engineList = manager.getEnginesByModelList();
+        engineList = manager.getByModelList();
         Assert.assertEquals("Number of Engines by type", 6, engineList.size());
-        Assert.assertEquals("1st engine in list by type", e3, manager.getEngineById(engineList.get(0)));
-        Assert.assertEquals("2nd engine in list by type", e4, manager.getEngineById(engineList.get(1)));
-        Assert.assertEquals("3rd engine in list by type", e5, manager.getEngineById(engineList.get(2)));
-        Assert.assertEquals("4th engine in list by type", e2, manager.getEngineById(engineList.get(3)));
-        Assert.assertEquals("5th engine in list by type", e6, manager.getEngineById(engineList.get(4)));
-        Assert.assertEquals("6th engine in list by type", e1, manager.getEngineById(engineList.get(5)));
+        Assert.assertEquals("1st engine in list by type", e3, manager.getById(engineList.get(0)));
+        Assert.assertEquals("2nd engine in list by type", e4, manager.getById(engineList.get(1)));
+        Assert.assertEquals("3rd engine in list by type", e5, manager.getById(engineList.get(2)));
+        Assert.assertEquals("4th engine in list by type", e2, manager.getById(engineList.get(3)));
+        Assert.assertEquals("5th engine in list by type", e6, manager.getById(engineList.get(4)));
+        Assert.assertEquals("6th engine in list by type", e1, manager.getById(engineList.get(5)));
         
         manager.dispose();
-        engineList = manager.getEnginesByIdList();
+        engineList = manager.getByIdList();
         Assert.assertEquals("After dispose Number of Engines", 0, engineList.size());		
 	}
 
@@ -793,46 +793,46 @@ public class OperationsEnginesTest extends TestCase {
 	public void testXMLCreate() throws Exception {
 
                 EngineManager manager = EngineManager.instance();
-                List<String> tempengineList = manager.getEnginesByIdList();
+                List<String> tempengineList = manager.getByIdList();
 
                 Assert.assertEquals("Starting Number of Engines", 0, tempengineList.size());
                 manager.newEngine("CP", "Test Number 1");
                 manager.newEngine("ACL", "Test Number 2");
                 manager.newEngine("CP", "Test Number 3");
 
-                tempengineList = manager.getEnginesByIdList();
+                tempengineList = manager.getByIdList();
 
                 Assert.assertEquals("New Number of Engines", 3, tempengineList.size());
-                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
-                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
-                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getEngineById("CPTest Number 3").getNumber());
+                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getById("CPTest Number 1").getNumber());
+                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getById("ACLTest Number 2").getNumber());
+                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getById("CPTest Number 3").getNumber());
 
-                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getEngineByRoadAndNumber("CP", "Test Number 1").getNumber());
-                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getEngineByRoadAndNumber("ACL", "Test Number 2").getNumber());
-                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getEngineByRoadAndNumber("CP", "Test Number 3").getNumber());
+                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getByRoadAndNumber("CP", "Test Number 1").getNumber());
+                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getByRoadAndNumber("ACL", "Test Number 2").getNumber());
+                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getByRoadAndNumber("CP", "Test Number 3").getNumber());
 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setColor("Black");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setHp("23");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLength("50");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setMoves(5);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setTrain(train);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeight("87");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setColor("Black");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setHp("23");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setLength("50");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setMoves(5);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setTrain(train);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setWeight("87");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
                 
                 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
                 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
                 
 /*
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
@@ -913,7 +913,7 @@ public class OperationsEnginesTest extends TestCase {
                 manager.newEngine("CP", "Test Number 4");
                 manager.newEngine("CP", "Test Number 5");
                 manager.newEngine("CP", "Test Number 6");
-                manager.getEngineByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
+                manager.getByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
                 
                 EngineManagerXml.instance().writeOperationsEngineFile();
         }

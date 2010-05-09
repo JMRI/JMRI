@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -234,7 +234,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	CarManager cm = CarManager.instance();
     	for (int i=0; i<roads.length; i++){
     		if (_track.acceptsRoadName(roads[i])){
-    			Car car = cm.getCarByTypeAndRoad(si.getType(), roads[i]);
+    			Car car = cm.getByTypeAndRoad(si.getType(), roads[i]);
     			if (car != null)
     				cb.addItem(roads[i]);
     		}

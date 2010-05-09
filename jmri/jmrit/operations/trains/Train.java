@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -212,7 +212,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int numberOfLocations = 0;
 		boolean trainAt = false;
 		CarManager carManager = CarManager.instance();
-		List<String> carList = carManager.getCarsByTrainList(this);
+		List<String> carList = carManager.getByTrainList(this);
 		if (getRoute() != null){
 			List<String> routeList = getRoute().getLocationsBySequenceList();
 			for (int i=0; i<routeList.size(); i++){
@@ -226,7 +226,7 @@ public class Train implements java.beans.PropertyChangeListener {
 				if (i == 0)
 					continue; // don't count work at departure
 				for (int j=0; j<carList.size(); j++){
-					Car car = carManager.getCarById(carList.get(j));
+					Car car = carManager.getById(carList.get(j));
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
 						carPickups++;
 					}
@@ -741,10 +741,10 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return The number of cars worked by this train
      */
     public int getNumberCarsWorked(){
-    	List<String> cars = CarManager.instance().getCarsByTrainList(this);
+    	List<String> cars = CarManager.instance().getByTrainList(this);
     	// remove cars that haven't been assigned by the train builder
     	for (int i=0; i<cars.size(); i++){
-    		Car c = CarManager.instance().getCarById(cars.get(i));
+    		Car c = CarManager.instance().getById(cars.get(i));
     		if (c.getRouteLocation() == null){
     			cars.remove(i--);
     		}
@@ -757,10 +757,10 @@ public class Train implements java.beans.PropertyChangeListener {
      * @return The number of cars currently in the train
      */
     public int getNumberCarsInTrain(RouteLocation rl){
-    	List<String> cars = CarManager.instance().getCarsByTrainList(this);
+    	List<String> cars = CarManager.instance().getByTrainList(this);
     	// remove cars that aren't in the train
     	for (int i=0; i<cars.size(); i++){
-    		Car c = CarManager.instance().getCarById(cars.get(i));
+    		Car c = CarManager.instance().getById(cars.get(i));
     		if (c.getRouteLocation() != rl || c.getTrack() != null){
     			cars.remove(i--);
     		}
@@ -1213,7 +1213,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public Engine getLeadEngine(){
 		if (leadEngine == null  && !_leadEngineId.equals("")){
-			leadEngine = EngineManager.instance().getEngineById(_leadEngineId);
+			leadEngine = EngineManager.instance().getById(_leadEngineId);
 		}
 		return leadEngine;
 	}

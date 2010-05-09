@@ -15,7 +15,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
 /**
  * Exports the car roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class ExportCars extends XmlFile {
@@ -72,7 +72,7 @@ public class ExportCars extends XmlFile {
 		}
         
         CarManager manager = CarManager.instance();
-        List<String> carList = manager.getCarsByNumberList();
+        List<String> carList = manager.getByNumberList();
         String line ="";
         // check for delimiter in the following car fields
         String carType;
@@ -81,7 +81,7 @@ public class ExportCars extends XmlFile {
         
         for (int i=0; i<carList.size(); i++){
         	// store car number, road, type, length, weight, color, owner, built date, location and track
-        	Car car = manager.getCarById(carList.get(i));
+        	Car car = manager.getById(carList.get(i));
         	carType = car.getType();
         	if (carType.contains(del)){
         		log.debug("Car ("+car.getRoad()+" "+car.getNumber()+") has delimiter in type field: "+carType);

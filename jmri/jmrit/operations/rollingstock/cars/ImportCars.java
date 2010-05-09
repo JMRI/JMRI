@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ImportCars extends Thread {
 	
@@ -199,7 +199,7 @@ public class ImportCars extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				Car c = manager.getCarByRoadAndNumber(carRoad, carNumber);
+				Car c = manager.getByRoadAndNumber(carRoad, carNumber);
 				if (c != null){
 					log.info("Can not add, car number ("+carNumber+") road ("+carRoad+ ") already exists");
 				} else {

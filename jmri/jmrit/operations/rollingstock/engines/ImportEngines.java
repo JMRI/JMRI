@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ImportEngines extends Thread {
 	
@@ -181,7 +181,7 @@ public class ImportEngines extends Thread {
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
-				Engine e = manager.getEngineByRoadAndNumber(engineRoad, engineNumber);
+				Engine e = manager.getByRoadAndNumber(engineRoad, engineNumber);
 				if (e != null){
 					log.info("Can not add, engine number ("+engineNumber+") road ("+engineRoad+ ") already exists");
 				} else {

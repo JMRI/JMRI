@@ -27,7 +27,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -223,9 +223,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	
 	private void replaceLoad(String type, String oldLoad, String newLoad) {
 		CarManager manager = CarManager.instance();
-		List<String> cars = manager.getCarsByIdList();
+		List<String> cars = manager.getByIdList();
 		for (int i = 0; i < cars.size(); i++) {
-			Car car = manager.getCarById(cars.get(i));
+			Car car = manager.getById(cars.get(i));
 			if (car.getType().equals(type) && car.getLoad().equals(oldLoad))
 				car.setLoad(newLoad);
 		}
@@ -254,9 +254,9 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		int number = 0;
 		String item = (String)comboBox.getSelectedItem();
 		CarManager manager = CarManager.instance();
-		List<String> cars = manager.getCarsByIdList();
+		List<String> cars = manager.getByIdList();
 		for (int i=0; i<cars.size(); i++){
-			Car car = manager.getCarById(cars.get(i));
+			Car car = manager.getById(cars.get(i));
 			if (car.getLoad().equals(item))
 				number++;
 		}

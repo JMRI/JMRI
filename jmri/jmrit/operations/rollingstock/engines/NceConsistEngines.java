@@ -40,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 
@@ -115,7 +115,7 @@ jmri.jmrix.nce.NceListener {
 		
 		if (syncOK){
 			// now check each engine in the operations to see if there are any matches
-			engineList = engineManager.getEnginesByNumberList();
+			engineList = engineManager.getByNumberList();
 			consists = new ArrayList<String>();
 
 			// look for lead engines
@@ -126,7 +126,7 @@ jmri.jmrix.nce.NceListener {
 					log.debug("NCE consist "+consistNum+" has lead engine "+engNum);
 					boolean engMatch = false;
 					for (int indexEng=0; indexEng<engineList.size(); indexEng++){
-						Engine engine = engineManager.getEngineById(engineList.get(indexEng));
+						Engine engine = engineManager.getById(engineList.get(indexEng));
 						if (engine.getNumber().equals(Integer.toString(engNum))){
 							log.debug("found lead engine match "+engine.getNumber());
 							Consist engConsist = engineManager.newConsist(NCE+consistNum);
@@ -167,7 +167,7 @@ jmri.jmrix.nce.NceListener {
 				log.debug("NCE consist "+consistNum+" has engine "+engNum);
 				boolean engMatch = false;
 				for (int indexEng=0; indexEng<engineList.size(); indexEng++){
-					Engine engine = engineManager.getEngineById(engineList.get(indexEng));
+					Engine engine = engineManager.getById(engineList.get(indexEng));
 					if (engine.getNumber().equals(Integer.toString(engNum))){
 						log.debug("found engine match "+engine.getNumber());
 						engMatch = true;

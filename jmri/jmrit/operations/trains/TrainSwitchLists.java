@@ -63,8 +63,8 @@ public class TrainSwitchLists extends TrainCommon {
 			Train train = manager.getTrainById(trains.get(i));
 			if (!train.getBuilt())
 				continue;	// train wasn't built so skip
-			List<String> carList = carManager.getCarsByTrainDestinationList(train);
-			List<String> enginesList = engineManager.getEnginesByTrainList(train);
+			List<String> carList = carManager.getByTrainDestinationList(train);
+			List<String> enginesList = engineManager.getByTrainList(train);
 			// does the train stop once or more at this location?
 			Route route = train.getRoute();
 			if (route == null)
@@ -91,7 +91,7 @@ public class TrainSwitchLists extends TrainCommon {
 					// go through the list of engines and determine if the engine departs here
 					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById(enginesList.get(j));
+								.getById(enginesList.get(j));
 						if (engine.getRouteLocation() == rl	&& !engine.getTrackName().equals("")){
 							pickupEngine(fileOut, engine);
 						}
@@ -101,7 +101,7 @@ public class TrainSwitchLists extends TrainCommon {
 					for (int j = 0; j < routeList.size(); j++) {
 						RouteLocation rld = train.getRoute().getLocationById(routeList.get(j));
 						for (int k = 0; k < carList.size(); k++) {
-							Car car = carManager.getCarById(carList.get(k));
+							Car car = carManager.getById(carList.get(k));
 							if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
 									&& car.getRouteDestination() == rld) {
 								pickupCar(fileOut, car);
@@ -111,13 +111,13 @@ public class TrainSwitchLists extends TrainCommon {
 					}
 					for (int j = 0; j < enginesList.size(); j++) {
 						Engine engine = engineManager
-								.getEngineById(enginesList.get(j));
+								.getById(enginesList.get(j));
 						if (engine.getRouteDestination() == rl){
 							dropEngine(fileOut, engine);
 						}
 					}
 					for (int j=0; j<carList.size(); j++){
-						Car car = carManager.getCarById(carList.get(j));
+						Car car = carManager.getById(carList.get(j));
 						if (car.getRouteDestination() == rl){
 							dropCar(fileOut, car);
 							dropCars++;

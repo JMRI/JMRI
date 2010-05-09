@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -282,7 +282,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		CarManager cManager = CarManager.instance();
-		Car c6 = cManager.getCarByRoadAndNumber("SP", "6");
+		Car c6 = cManager.getByRoadAndNumber("SP", "6");
 		
 		Assert.assertNotNull("Car did not create", c6);
 		Assert.assertEquals("car type", "Caboose", c6.getType());
@@ -327,7 +327,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testCarEditFrameRead(){
 		CarManager cManager = CarManager.instance();
-		Car c1 = cManager.getCarByRoadAndNumber("NH", "1");
+		Car c1 = cManager.getByRoadAndNumber("NH", "1");
 		CarEditFrame f = new CarEditFrame();
 		f.initComponents();
 		f.setTitle("Test Edit Car Frame");
@@ -454,7 +454,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.setTitle("Test Car Set Frame");
 		f.initComponents();
 		CarManager cManager = CarManager.instance();
-		Car c3 = cManager.getCarByRoadAndNumber("AA", "3");
+		Car c3 = cManager.getByRoadAndNumber("AA", "3");
 		f.loadCar(c3);
 		
 		f.dispose();

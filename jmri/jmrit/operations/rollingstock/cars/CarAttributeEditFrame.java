@@ -27,7 +27,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -281,9 +281,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 	
 	private void replaceItem (String oldItem, String newItem){
-		List<String> cars = manager.getCarsByNumberList();
+		List<String> cars = manager.getByNumberList();
 		for (int i=0; i<cars.size(); i++){
-			Car car = manager.getCarById(cars.get(i));
+			Car car = manager.getById(cars.get(i));
 
 			if(_comboboxName == CarEditFrame.ROAD){
 				if (car.getRoad().equals(oldItem))
@@ -362,9 +362,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			return;
 		int number = 0;
 		String item = (String)comboBox.getSelectedItem();
-		List<String> cars = manager.getCarsByIdList();
+		List<String> cars = manager.getByIdList();
 		for (int i=0; i<cars.size(); i++){
-			Car car = manager.getCarById(cars.get(i));
+			Car car = manager.getById(cars.get(i));
 
 			if(_comboboxName == CarEditFrame.ROAD){
 				if (car.getRoad().equals(item))

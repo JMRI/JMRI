@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -4014,36 +4014,36 @@ public class OperationsTrainsTest extends TestCase {
 
 		Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
 		/*                
-                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getEngineById("CPTest Number 1").getNumber());
-                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getEngineById("ACLTest Number 2").getNumber());
-                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getEngineById("CPTest Number 3").getNumber());
+                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getById("CPTest Number 1").getNumber());
+                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getById("ACLTest Number 2").getNumber());
+                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getById("CPTest Number 3").getNumber());
 
-                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getEngineByRoadAndNumber("CP", "Test Number 1").getNumber());
-                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getEngineByRoadAndNumber("ACL", "Test Number 2").getNumber());
-                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getEngineByRoadAndNumber("CP", "Test Number 3").getNumber());
+                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getByRoadAndNumber("CP", "Test Number 1").getNumber());
+                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getByRoadAndNumber("ACL", "Test Number 2").getNumber());
+                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getByRoadAndNumber("CP", "Test Number 3").getNumber());
 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setColor("Black");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setDestination(destination, load to staging);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setHp("23");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLength("50");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setMoves(5);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
-//                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setTrain(train);
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeight("87");
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setColor("Black");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setDestination(destination, load to staging);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setHp("23");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setLength("50");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setMoves(5);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
+//                manager.getByRoadAndNumber("CP", "Test Number 1").setTrain(train);
+                manager.getByRoadAndNumber("CP", "Test Number 1").setWeight("87");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
 
 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
 
-                manager.getEngineByRoadAndNumber("CP", "Test Number 1").setModel("E8");
+                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
 		 */                
 		/*
 		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);

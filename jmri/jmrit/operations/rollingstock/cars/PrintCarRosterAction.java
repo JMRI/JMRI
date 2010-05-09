@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -85,7 +85,7 @@ public class PrintCarRosterAction  extends AbstractAction {
 					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<cars.size(); i++){
-        		Car car = manager.getCarById(cars.get(i));
+        		Car car = manager.getById(cars.get(i));
         		// skip cars without a location?
         		if (car.getLocationName().equals("")){
         			if (!printAll)

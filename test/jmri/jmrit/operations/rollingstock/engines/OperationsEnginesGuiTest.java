@@ -25,7 +25,7 @@ import java.util.List;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 
@@ -242,7 +242,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
 		
 		EngineManager cManager = EngineManager.instance();
-		Engine c6 = cManager.getEngineByRoadAndNumber("SP", "6");
+		Engine c6 = cManager.getByRoadAndNumber("SP", "6");
 		
 		Assert.assertNotNull("Engine did not create", c6);
 		Assert.assertEquals("Engine type", "SW8", c6.getModel());
@@ -261,7 +261,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testEngineEditFrameRead(){
 		EngineManager cManager = EngineManager.instance();
-		Engine e1 = cManager.getEngineByRoadAndNumber("NH", "1");
+		Engine e1 = cManager.getByRoadAndNumber("NH", "1");
 		EngineEditFrame f = new EngineEditFrame();
 		f.initComponents();
 		f.setTitle("Test Edit Engine Frame");
@@ -331,7 +331,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		f.setTitle("Test Engine Set Frame");
 		f.initComponents();
 		EngineManager cManager = EngineManager.instance();
-		Engine e3 = cManager.getEngineByRoadAndNumber("AA", "3");
+		Engine e3 = cManager.getByRoadAndNumber("AA", "3");
 		f.loadEngine(e3);
 		f.dispose();
 	}
