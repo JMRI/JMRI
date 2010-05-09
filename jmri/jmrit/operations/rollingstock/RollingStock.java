@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -259,21 +259,21 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * Sets rolling stock location on the layout
 	 * @param location
 	 * @param track (yard, siding, staging, or interchange track)
-	 * @param force when true place rolling stock ignore track length
+	 * @param force when true place rolling stock ignore track length, type, & road
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.
 	 */
 	protected String setLocation(Location location, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new location
-		if (location != null && track != null && !location.acceptsTypeName(getType())){
+		if (!force && location != null && track != null && !location.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at location: "+ location.getName() + " wrong type");
 			return TYPE;
 		}
-		if (location != null && track != null && !track.acceptsTypeName(getType())){
+		if (!force && location != null && track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + getId() + ") type (" +getType()+ ") at track location: "+ location.getName() + " " + track.getName() + " wrong type");
 			return TYPE;
 		}
-		if (location != null && track != null && !track.acceptsRoadName(getRoad())){
+		if (!force && location != null && track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + getId() + ") road (" +getRoad()+ ") at track location: "+ location.getName() + " " + track.getName() + " wrong road");
 			return ROAD;
 		}
