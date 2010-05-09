@@ -76,7 +76,7 @@ function loadDoc(evt) {
         try {
             loadXMLDoc("/xmlio", "<xmlio><item><type>turnout</type><name>"
                         +document.form.address.value
-                        +"</name><set>2</set></item><list><type>turnout</type></list></xmlio>"); // list needed before JMRI 2.9.5
+                        +"</name><set>2</set></item></xmlio>");
         }
         catch(e) {
             var msg = (typeof e == "string") ? e : ((e.message) ? e.message : "Unknown Error");
