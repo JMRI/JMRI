@@ -2,7 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
-<!-- $Id: 0NMRA.xml,v 1.13 2010-03-25 02:43:24 jacobsen Exp $ -->
+<!-- $Id: 0NMRA.xml,v 1.14 2010-05-09 23:56:13 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -34,56 +34,30 @@
 	                     register="yes" ops="yes"></programming>
 
 	<variables>
-		<variable label="Primary Address" CV="1" comment="Short address"
-						item="Short Address"  default="03">
-			<shortAddressVal/>
-			<label xml:lang="fr">Primary Address(fr)</label>
-		</variable>
-		<variable label="Vstart" item="Vstart" CV="2"
-						comment="A value of 255 corresponds to 100%">
-			<decVal/>
-			<label xml:lang="fr">Vstart(fr)</label>
-	    </variable>
-		<variable label="Acceleration Rate" CV="3"
-						item="Accel" >
-			<decVal max="31"/>
-	        <label xml:lang="fr">Acceleration Rate(fr)</label>
-	    </variable>
-		<variable label="Deceleration Rate" CV="4"
-						item="Decel">
-			<decVal max="31"/>
-	        <label xml:lang="fr">Deceleration Rate(fr)</label>
-	    </variable>
-		<variable label="Vhigh" item="Vhigh" CV="5">
-		    <decVal/>
-	        <label xml:lang="fr">Vhigh(fr)</label>
-		</variable>
-		<variable label="Vmid" item="Vmid" CV="6">
-		    <decVal/>
-	        <label xml:lang="fr">Vmid(fr)</label>
-		</variable>
-		<variable label="Manufacturer Version No: " CV="7" readOnly="yes"
-						item="Decoder Version">
-		    <decVal/>
-	        <label xml:lang="fr">Manufacturer Version No: (fr)</label>
-		</variable>
-		<variable label="Manufacturer ID: " CV="8" readOnly="yes"
-						item="Manufacturer">
-		    <decVal/>
-	        <label xml:lang="fr">Manufacturer ID: (fr)</label>
-		</variable>
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>	
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>	
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>	
+
+        <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>	
+
 		<variable label="Total PWM Period" item="Total PWM Period" CV="9">
 		    <decVal/>
 	        <label xml:lang="fr">Total PWM Period(fr)</label>
 		</variable>
+		
 		<variable label="EMF Feedback Cutout" item="EMF Feedback Cutout" CV="10">
 		    <decVal/>
 	        <label xml:lang="fr">EMF Feedback Cutout(fr)</label>
 		</variable>
+		
 		<variable label="Packet Time-out Value" item="Packet Time-out Value" CV="11">
 		    <decVal/>
 	        <label xml:lang="fr">Packet Time-out Value(fr)</label>
 		</variable>
+		
 		<variable label="Analog Power Conversion" item="Analog Power Conversion" 
 		        CV="12" mask="XXXXXXXV">
 			<enumVal>
@@ -124,125 +98,27 @@
 				</enumVal>
 	        <label xml:lang="fr">CTC/Railcommand Power Conversion(fr)</label>
 		</variable>
-		<variable label="Analog Mode Function Status - F1" item="Analog Mode Function Status - F1" 
-		        CV="13" mask="XXXXXXXV">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F1(fr)</label>
-		</variable>
-		<variable label="Analog Mode Function Status - F2" item="Analog Mode Function Status - F2" 
-		        CV="13" mask="XXXXXXVX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F2(fr)</label>
-		</variable>
-		<variable label="Analog Mode Function Status - F3" item="Analog Mode Function Status - F3" 
-		        CV="13" mask="XXXXXVXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F3(fr)</label>
-	    </variable>
-		<variable label="Analog Mode Function Status - F4" item="Analog Mode Function Status - F4" 
-		        CV="13" mask="XXXXVXXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F4(fr)</label>
-	    </variable>
-		<variable label="Analog Mode Function Status - F5" item="Analog Mode Function Status - F5" 
-		        CV="13" mask="XXXVXXXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F5(fr)</label>
-	    </variable>
-		<variable label="Analog Mode Function Status - F6" item="Analog Mode Function Status - F6" 
-		        CV="13" mask="XXVXXXXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F6(fr)</label>
-		</variable>
-		<variable label="Analog Mode Function Status - F7" item="Analog Mode Function Status - F7" 
-		        CV="13" mask="XVXXXXXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F7(fr)</label>
-		</variable>
-		<variable label="Analog Mode Function Status - F8" item="Analog Mode Function Status - F8" 
-		        CV="13" mask="VXXXXXXX">
-			<enumVal>
-				<enumChoice choice="off"><choice xml:lang="fr">off(fr)</choice></enumChoice>
-				<enumChoice choice="on"><choice xml:lang="fr">on(fr)</choice></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Analog Mode Function Status - F8(fr)</label>
-	    </variable>
 			
+        <xi:include href="http://jmri.org/xml/decoders/nmra/analogModeFunction.xml"/>	
+
         <variable label="Decoder Lock ID number" item="Decoder Lock ID number" 
                 CV="16" mask="XXXXXVVV" default="0">
             <decVal/>
 	        <label xml:lang="fr">Decoder Lock ID number(fr)</label>
         </variable>
-
-		<variable label="Extended Address" CV="17"
-						item="Long Address" >
-			<longAddressVal/>
-	        <label xml:lang="fr">Extended Address(fr)</label>
-		</variable>
-			
-		<variable label="Consist Address" item="Consist Address" CV="19" mask="XVVVVVVV">
-			<decVal/>
-	        <label xml:lang="fr">Consist Address(fr)</label>
-		</variable>
-		
-		<variable label="Consist Direction" item="Consist Direction"  CV="19" mask="VXXXXXXX">
-			<enumVal>
-				<enumChoice choice="Normal"></enumChoice>
-				<enumChoice choice="Reversed"></enumChoice>
-				</enumVal>
-	        <label xml:lang="fr">Consist Direction(fr)</label>
-		</variable>
-		
+	
         <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>	
+		
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>	
 
-		<variable label="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
-				<decVal max="127"/>
-	        <label xml:lang="fr">Consist Acceleration Adjustment(fr)</label>
-		</variable>
-		<variable label="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
-			<enumVal>
-				<enumChoice choice="Adjustment Added"/>
-				<enumChoice choice="Adjustment Subtracted"/>
-				</enumVal>
-	        <label xml:lang="fr">Consist Acceleration Adjustment Sign(fr)</label>
-		</variable>
-		<variable label="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
-				<decVal max="127"/>
-	        <label xml:lang="fr">Consist Deceleration Adjustment(fr)</label>
-	    </variable>
-		<variable label="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
-			<enumVal>
-				<enumChoice choice="Adjustment Added"/>
-				<enumChoice choice="Adjustment Subtracted"/>
-				</enumVal>
-	        <label xml:lang="fr">Consist Deceleration Adjustment Sign(fr)</label>
-		</variable>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>	
+
 		<variable label="Speed Table/Mid Range Cab Speed Step" CV="25"
 				comment="See RP 9.2.2 for more information. Values from 2 to 127 indicate preloaded speed tables. 0 or 1 means not used.  Values between 128 and 154 define the cab throttle position where the mid range decoder speed value is applied">
 				<decVal/>
 	        <label xml:lang="fr">Speed Table/Mid Range Cab Speed Step(fr)</label>
 		</variable>
+		
 		<variable label="Locomotive Direction" CV="29" mask="XXXXXXXV">
 			<enumVal>
 				<enumChoice choice="normal"/>
@@ -281,13 +157,6 @@
 				</enumVal>
 	        <label xml:lang="fr">Speed Table Definition(fr)</label>
 		</variable>
-		<variable label="Address Format" CV="29" mask="XXVXXXXX">
-			<enumVal>
-				<enumChoice choice="One byte (short) address"/>
-				<enumChoice choice="Two byte (extended) address"/>
-				</enumVal>
-	        <label xml:lang="fr">Address Format(fr)</label>
-		</variable>
 
         <!-- this next large group forms a table, so doesn't need translation -->
         <xi:include href="http://jmri.org/xml/decoders/nmra/functionmap.xml"/>	
@@ -311,14 +180,7 @@
 		    <decVal/>
 	        <label xml:lang="fr">Reverse Trim(fr)</label>
 		</variable>
-		<variable label="User Id #1" item="User Id #1" CV="105">
-		    <decVal/>
-	        <label xml:lang="fr">User Id #1(fr)</label>
-		</variable>
-		<variable label="User Id #2" item="User Id #2" CV="106">
-		    <decVal/>
-	        <label xml:lang="fr">User Id #2(fr)</label>
-		</variable>
+        <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>	
 	
 	</variables>
 </decoder>
