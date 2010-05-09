@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile.xsl"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/panelfile-2-9-6.xsl"?>
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>2</major>
@@ -13,40 +13,46 @@
       <operation name="Raw" class="jmri.configurexml.turnoutoperations.RawTurnoutOperationXml" interval="300" maxtries="1" />
       <operation name="Sensor" class="jmri.configurexml.turnoutoperations.SensorTurnoutOperationXml" interval="300" maxtries="3" />
     </operations>
-    <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT1" userName="User 1" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT1</systemName>
       <userName>User 1</userName>
       <comment>Comment on Turnout 1</comment>
     </turnout>
-    <turnout systemName="IT101" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT101" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT101</systemName>
       <comment>Input for IR1, don't change</comment>
+      <properties>
+        <property>
+          <key class="java.lang.String">test</key>
+          <value class="java.lang.Integer">12</value>
+        </property>
+      </properties>
     </turnout>
-    <turnout systemName="IT2" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT2" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT2</systemName>
     </turnout>
-    <turnout systemName="IT21" userName="For Signal IH2 R" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT21" userName="For Signal IH2 R" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT21</systemName>
       <userName>For Signal IH2 R</userName>
     </turnout>
-    <turnout systemName="IT22" userName="For Signal IH2 Y" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT22" userName="For Signal IH2 Y" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT22</systemName>
       <userName>For Signal IH2 Y</userName>
     </turnout>
-    <turnout systemName="IT23" userName="For Signal IH2 G" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT23" userName="For Signal IH2 G" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT23</systemName>
       <userName>For Signal IH2 G</userName>
     </turnout>
-    <turnout systemName="IT3" userName="User 3" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT3" userName="User 3" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT3</systemName>
       <userName>User 3</userName>
     </turnout>
-    <turnout systemName="IT4" feedback="DIRECT" inverted="false" automate="Default">
+    <turnout systemName="IT4" feedback="DIRECT" inverted="false" wifiControllable="true" automate="Default">
       <systemName>IT4</systemName>
     </turnout>
   </turnouts>
   <lights class="jmri.managers.configurexml.InternalLightManagerXml">
-    <light systemName="IL1" userName="User 1" controlType="0" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
+    <light systemName="IL1" userName="User 1" minIntensity="0.0" maxIntensity="1.0" transitionTime="0.0">
       <systemName>IL1</systemName>
       <userName>User 1</userName>
     </light>
@@ -121,7 +127,7 @@
     </signalhead>
   </signalheads>
   <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
-    <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
+    <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED" wifiControllable="true">
       <systemName>IR1</systemName>
       <userName>random route 1</userName>
       <routeOutputTurnout systemName="IT1" state="THROWN" />
@@ -141,6 +147,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sun May 02 11:53:34 PDT 2010 $Id: LoadFileTestRef.xml,v 1.13 2010-05-02 19:53:14 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTestRef.xml,v 1.14 2010-05-09 05:18:51 jacobsen Exp $-->
 </layout-config>
 

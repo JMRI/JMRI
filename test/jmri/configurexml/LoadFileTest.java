@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LoadFileTest extends LoadFileTestBase {
 
@@ -41,6 +41,23 @@ public class LoadFileTest extends LoadFileTestBase {
         // load file
         InstanceManager.configureManagerInstance()
             .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml"));
+    
+        // check existance of a few objects
+        Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
+        Assert.assertNull(InstanceManager.sensorManagerInstance().getSensor("no sensor"));
+
+        Assert.assertNotNull(InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
+        Assert.assertNull(InstanceManager.turnoutManagerInstance().getTurnout("no sensor"));
+        
+        Assert.assertNotNull(InstanceManager.memoryManagerInstance().getMemory("IM1"));
+        Assert.assertNull(InstanceManager.memoryManagerInstance().getMemory("no memory"));
+        
+    }
+    
+    public void testLoad295() throws Exception {
+        // load file
+        InstanceManager.configureManagerInstance()
+            .load(new java.io.File("java/test/jmri/configurexml/LoadFileTest295.xml"));
     
         // check existance of a few objects
         Assert.assertNotNull(InstanceManager.sensorManagerInstance().getSensor("IS1"));
@@ -94,6 +111,10 @@ public class LoadFileTest extends LoadFileTestBase {
 
     public void testValidate277() {
         validate(new java.io.File("java/test/jmri/configurexml/LoadFileTest277.xml"));
+    }
+
+    public void testValidate295() {
+        validate(new java.io.File("java/test/jmri/configurexml/LoadFileTest295.xml"));
     }
 
     public void testValidateRef() {
