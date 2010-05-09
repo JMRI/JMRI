@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.12 2010-05-05 16:41:50 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.13 2010-05-09 06:02:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -66,7 +66,8 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(none yet)
+Panel files written with JMRI 2.9.6 that contain Lights 
+will not be readable by earlier versions of JMRI.
 
 <h3>Older warnings</h3>
 
@@ -247,6 +248,13 @@ Improved save operations.
 Now locations and trains are also saved if a car or engine type is modified by the user.
 Fix minor bug when replacing an engine type: The location and tracks didn't properly accept the new engine type.
 
+<p>
+Giorgio Terdina updated the AutoDispatcher script.
+
+<p>
+David Duchamp make a major revision of Lights, 
+including multiple controls and a new user interface for 
+<a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml">adding and editing</a>.
 
 <!--#include virtual="/Footer" -->
 
