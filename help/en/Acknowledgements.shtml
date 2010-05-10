@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.111 2010-05-02 18:09:02 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.112 2010-05-10 00:13:11 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -339,7 +339,7 @@
 	MS100-equivalent level shifter, contributed the LnSendTool.py script
 	and decoder definitions for Team Digital products,
 	helped fix a problem with overrunning LocoNet command stations,
-	and provided an example web page for layout control via the mini-webserver.
+	and provided example web pages for layout control via the mini-webserver.
     <LI>Mark Rogerson, who provided the RXTX (Java communications library) for MacOS X machines with Intel processors
 	<LI>Wim Ros, who provide help with the direct connection to the Intellibox
 	<LI>Klaus Ruebsam, who is hosting German and English JMRI discussion

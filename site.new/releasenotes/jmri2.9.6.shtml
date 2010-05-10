@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.13 2010-05-09 06:02:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.14 2010-05-10 00:13:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -212,7 +212,10 @@ Added error message and prevent user from making the change if there are built t
 Paul Bender improved the way that turnout control timing is done for the Lenz protocol.
 
 <p>
-Bill Robinson provided an example of setting turnouts from a web page using the mini-webserver.
+Bill Robinson provided two examples of setting turnouts from a web page using the mini-webserver.
+One, "web/turnoutPanel.html" shows a schematic control panel with turnouts you can click to control
+LT1 through LT4. The other, "web/turnoutMonitor.html", provides a table of all defined turnouts
+with buttons you can click to close or throw them.
 
 <p>
 David Duchamp updated the
@@ -255,6 +258,17 @@ Giorgio Terdina updated the AutoDispatcher script.
 David Duchamp make a major revision of Lights, 
 including multiple controls and a new user interface for 
 <a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml">adding and editing</a>.
+
+<p>
+Key/value properties added to the various NamedBean types are not persisted in panel files.
+
+<p>
+Dan Boudreau made a minor improvement to operations:
+force the placing of cars during the load process when the user has modified the location type or road attributes.
+
+<p>
+Brett Hoffman added the ability to control Turnouts and Routes remotely.
+
 
 <!--#include virtual="/Footer" -->
 
