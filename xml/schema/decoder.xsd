@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.13 2010-05-02 22:28:21 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.14 2010-05-10 03:32:46 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -77,6 +77,8 @@
           <xs:attribute name="paged" type="yesNoType" default="no" />
           <xs:attribute name="register" type="yesNoType" default="no" />
           <xs:attribute name="ops" type="yesNoType" default="no" />
+          <xs:attribute name="transpRead" type="yesNoType" default="no" />
+          <xs:attribute name="bidirRead" type="yesNoType" default="no" />
         </xs:complexType>
       </xs:element>
 
@@ -94,6 +96,7 @@
         <xs:element name="decoder" type="DecoderType" minOccurs="1" maxOccurs="1"/>
         <xs:element name="pane"    type="PaneType" minOccurs="0" maxOccurs="unbounded"/>
       </xs:sequence>
+      <xs:attribute name="showEmptyPanes" type="yesNoType"/>
     </xs:complexType>
   </xs:element>
 
@@ -155,7 +158,7 @@
           <xs:attribute name="numOuts" type="xs:int" />
           <xs:attribute name="lowVersionID" type="xs:int" />
           <xs:attribute name="highVersionID" type="xs:int" />
-          <xs:attribute name="productID" type="xs:int" />
+          <xs:attribute name="productID" type="xs:string" />
           <xs:attribute name="maxInputVolts" type="xs:string" />
           <xs:attribute name="maxMotorCurrent" type="xs:string" />
           <xs:attribute name="maxTotalCurrent" type="xs:string" />
@@ -435,6 +438,9 @@
                     <xs:sequence minOccurs="0" maxOccurs="unbounded">
                       <xs:element name="ienumChoice" minOccurs="0" maxOccurs="unbounded" >
                         <xs:complexType>
+                          <xs:sequence>
+                            <xs:element name="choice" minOccurs="0" maxOccurs="unbounded"/>
+                          </xs:sequence>
                           <xs:attribute name="choice" type="xs:string"/>
                           <xs:attribute name="value" type="xs:int"/>
                           <xs:attribute name="include" type="xs:string"/>
@@ -522,10 +528,13 @@
   </xs:complexType>
 
   <xs:complexType name="PaneType">
-    <xs:choice>
-      <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:choice>
+    <xs:sequence>
+      <xs:choice>
+        <xs:element name="row" type="PaneRowType" minOccurs="0" maxOccurs="unbounded" />
+        <xs:element name="column" type="PaneColumnType" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:choice>
+      <xs:element name="name" minOccurs="0" maxOccurs="unbounded" />
+    </xs:sequence>
     <xs:attribute name="name" type="xs:string"/>
     <xs:attribute name="nameFmt" type="xs:string"/>
   </xs:complexType>
@@ -535,6 +544,8 @@
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
@@ -544,6 +555,8 @@
       <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="display" type="DisplayType" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="separator" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
+      <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
