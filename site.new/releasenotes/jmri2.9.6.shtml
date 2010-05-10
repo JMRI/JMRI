@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.14 2010-05-10 00:13:13 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.15 2010-05-10 19:06:49 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -260,7 +260,7 @@ including multiple controls and a new user interface for
 <a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml">adding and editing</a>.
 
 <p>
-Key/value properties added to the various NamedBean types are not persisted in panel files.
+Key/value properties added to the various NamedBean types are now persisted in panel files.
 
 <p>
 Dan Boudreau made a minor improvement to operations:
