@@ -4,8 +4,8 @@
   <jmriversion>
     <major>2</major>
     <minor>9</minor>
-    <test>5</test>
-    <modifier>+dev</modifier>
+    <test>6</test>
+    <modifier></modifier>
   </jmriversion>
   <sensors class="jmri.managers.configurexml.InternalSensorManagerXml">
     <sensor systemName="ISCLOCKRUNNING" inverted="false">
@@ -67,6 +67,6 @@
     <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 01 22:53:23 PDT 2010 $Id: ScaledIconTest.xml,v 1.11 2010-05-02 19:53:14 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 01 22:53:23 PDT 2010 $Id: ScaledIconTest.xml,v 1.12 2010-05-10 04:34:17 jacobsen Exp $-->
 </layout-config>
 
