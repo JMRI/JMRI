@@ -2,10 +2,13 @@ package jmri.jmrit.withrottle;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,10 +26,11 @@ import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
     private static String[] COLUMN_NAMES = {rbx.getString("ColumnLabelSystemName"),
                                             rbx.getString("ColumnLabelUserName"),
@@ -40,12 +44,12 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         JTabbedPane tabbedPane = new JTabbedPane();
         if (InstanceManager.turnoutManagerInstance()!=null) {
             
-            tabbedPane.addTab("Turnouts", null, addTurnoutPanel(),"Limit the turnouts controllable by WiFi devices.");
+            tabbedPane.addTab(rb.getString("LabelTurnout"), null, addTurnoutPanel(),"Limit the turnouts controllable by WiFi devices.");
         }
         
         if (InstanceManager.routeManagerInstance()!=null) {
             
-            tabbedPane.addTab("Routes", null, addRoutePanel(),"Limit the routes controllable by WiFi devices.");
+            tabbedPane.addTab(rb.getString("LabelRoute"), null, addRoutePanel(),"Limit the routes controllable by WiFi devices.");
         }
         
         add(tabbedPane);
@@ -64,6 +68,14 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.add(new JLabel("Turnouts to "));
         p.add(new JLabel("be controlled "));
         p.add(new JLabel("by WiFi devices."));
+        JButton saveButton = new JButton(rb.getString("ButtonSave"));
+        saveButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                storeValues();
+                dispose();
+            }
+        });
+        p.add(saveButton);
         tPanel.add(p);
         
         JTable table = new JTable(new TurnoutFilterModel());
@@ -84,6 +96,14 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.add(new JLabel("Routes to "));
         p.add(new JLabel("be controlled "));
         p.add(new JLabel("by WiFi devices."));
+        JButton saveButton = new JButton(rb.getString("ButtonSave"));
+        saveButton.addActionListener(new ActionListener (){
+            public void actionPerformed(ActionEvent event){
+                storeValues();
+                dispose();
+            }
+        });
+        p.add(saveButton);
         tPanel.add(p);
 
         JTable table = new JTable(new RouteFilterModel());
