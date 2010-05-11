@@ -12,13 +12,14 @@ import jmri.TurnoutManager;
 import jmri.TurnoutOperationManager;
 
 import jmri.managers.AbstractManager;
+import jmri.Manager;
 
 /**
  * Implementation of a TurnoutManager that can serves as a proxy
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
 public class ProxyTurnoutManager extends AbstractProxyManager implements TurnoutManager {
 
@@ -35,8 +36,8 @@ public class ProxyTurnoutManager extends AbstractProxyManager implements Turnout
 	/**
 	 * Revise superclass behavior: support TurnoutOperations
 	 */
-
-    public void addManager(AbstractManager m) {
+    @Override
+    public void addManager(Manager m) {
         super.addManager(m);
         TurnoutOperationManager.getInstance().loadOperationTypes();
     }

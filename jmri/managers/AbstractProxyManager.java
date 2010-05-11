@@ -26,7 +26,7 @@ import jmri.util.SystemNameComparator;
  * internal manager.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 abstract public class AbstractProxyManager implements Manager {
 
@@ -58,7 +58,7 @@ abstract public class AbstractProxyManager implements Manager {
 
     public void addManager(Manager m) {
         mgrs.add((AbstractManager)m);
-        log.debug("added manager");
+        if(log.isDebugEnabled()) log.debug("added manager " +m.getClass());
     }
 
     private AbstractManager getInternal() {
