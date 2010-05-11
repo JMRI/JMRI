@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_01x3.xml,v 1.48 2010-05-10 03:38:51 jacobsen Exp $ -->
+<!-- $Id: Digitrax_01x3.xml,v 1.49 2010-05-11 13:52:24 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -79,19 +79,19 @@
         <output name="8" label="Wht/Blu" connection="wire"/>
         <size length="2.23" width="1.45" height="0" units="inches"/>
       </model>
-      <model model="DH163" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="DH163AT" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163AT" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Pad 1" connection="solder"/>
         <output name="6" label="Pad 2" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="DH163A0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163A0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="1" label="Pad" connection="solder"/>
         <output name="2" label="Pad" connection="solder"/>
         <output name="3" label="Pad" connection="solder"/>
@@ -100,20 +100,20 @@
         <output name="6" label="Pad" connection="solder"/>
         <size length="2.877" width="0.667" height="0.173" units="inches"/>
       </model>
-      <model model="DH163D" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163D" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="DH163IP" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+      <model model="DH163IP" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
         <output name="3" label="Pad" connection="solder"/>
         <output name="4" label="Pad" connection="solder"/>
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="DH163K0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163K0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="1" label="Pad" connection="solder"/>
         <output name="2" label="Pad" connection="solder"/>
         <output name="3" label="Pad" connection="solder"/>
@@ -122,21 +122,21 @@
         <output name="6" label="Pad" connection="solder"/>
         <size length="2.877" width="0.667" height="0.173" units="inches"/>
       </model>
-      <model model="DH163L0" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
+      <model model="DH163L0" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="9pin">
         <output name="3" label="Pad" connection="solder"/>
         <output name="4" label="Pad" connection="solder"/>
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="1.05" width=".67" height=".25" units="inches"/>
       </model>
-      <model model="DH163P" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+      <model model="DH163P" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Pad" connection="solder"/>
         <output name="6" label="Pad" connection="solder"/>
         <size length="1.05" width="0.67" height="0.25" units="inches"/>
       </model>
-      <model model="DH163PS" numOuts="6" numFns="8" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
+      <model model="DH163PS" numOuts="6" numFns="10" maxMotorCurrent="1.5A (peak=2A)" formFactor="HO" connector="NMRAmedium">
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Violet" connection="wire"/>
         <output name="5" label="Pad" connection="solder"/>
