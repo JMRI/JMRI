@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.6.shtml,v 1.15 2010-05-10 19:06:49 bhoffman351 Exp $ -->
+<!-- $Id: jmri2.9.6.shtml,v 1.16 2010-05-11 14:43:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,7 +29,7 @@
       Release Notes for JMRI 2.9.6 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: May 11, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.6 of JMRI/DecoderPro is available for download.
 
@@ -49,8 +49,16 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Improvements in several automating-running tools:
+    <ul>
+    <li><a href="http://jmri.org/help/en/package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a>
+    <li><a href="http://jmri.org/help/en/package/jmri/jmrit/logix/Warrant.shtml">Warrants</a>
+    <li><a href="http://www.jmri.org/jython/AutoDispatcher2.py">AutoDispatcher script</a>
+    </ul>
+<li>Improvements to how pulse-output (solenoid coil) turnouts are handled through Lenz systems.
+<li>Major update to <a href="http://jmri.org/help/en/package/jmri/jmrit/beantable/LightAddEdit.shtml">Light support</a>
+<li>Multiple small improvements to Operations support
+<li>More improvements and fixes to the new preferences dialog and flexible system for multiple connections
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -66,8 +74,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-Panel files written with JMRI 2.9.6 that contain Lights 
+Panel files containing Lights written with JMRI 2.9.6
 will not be readable by earlier versions of JMRI.
+JMRI continues to be able to read panel files written by version 2.4 or 
+later.
 
 <h3>Older warnings</h3>
 
@@ -144,7 +154,10 @@ get WARN messages about "did not locate lunar icon file" and "did not locate fla
 To make these stop, just store the file again so that it's rewritten in the most recent format.
 
 <h3>Known problems with this release</h3>
-<p> None at the time of this release.
+
+When you bring up a Layout Editor panel, the 'edit' checkbox is always set. 
+To edit the panel, you may have to toggle it twice to get the edit window to display. 
+
 <h3>Download links:</h3>
 
 <p>Please use these links for downloading:
@@ -216,6 +229,18 @@ Bill Robinson provided two examples of setting turnouts from a web page using th
 One, "web/turnoutPanel.html" shows a schematic control panel with turnouts you can click to control
 LT1 through LT4. The other, "web/turnoutMonitor.html", provides a table of all defined turnouts
 with buttons you can click to close or throw them.
+
+<p>
+The Ant javadoc-uml target now generates JavaDoc pages with UML class diagrams.
+To show the diagram, click the "Show UML class diagram" link at the top of each page.
+Note that the process of generating these is quite resource-intensive, and requires a 
+Java 1.6 runtime be present.  
+We make the JavaDocs for the most recent release
+<a href="http://jmri.org/JavaDoc/doc/">available</a>
+in the 
+<a href="http://jmri.org/help/en/html/doc/Technical/index.shtml">developer section</a>
+of the 
+<a href="http://jmri.org">JMRI web site</a>.
 
 <p>
 David Duchamp updated the
