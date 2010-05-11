@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.60 2010-05-05 15:09:25 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.61 2010-05-11 00:07:26 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -268,6 +268,11 @@ Select the desired color from the drop down box.
 You can select the text color of your manifest when the operation is to pick up a car.
 Select the desired color from the drop down box.
 
+<H3>Add Logo</H3>
+
+If you want a logo in the top right hand corner of your manifests and switch lists, press
+the "Add Logo" button and select a file with the image you want to display.
+
 <A NAME="BuildReportDetails"></A>
 <H3>Build Report Details</H3>
 
@@ -487,6 +492,23 @@ interchange track.
 <P>If you want more control on how your interchange track will
 operate, you can optionally specify a train or route to pickup or drop
 off cars at an interchange track.</P>
+
+<H3>How to Create a Classification Yard</H3>
+
+A classification yard is used to sort cars into various trains. Normally
+a yard track is assigned to a specific train and cars are delivered to
+that track until there are enough cars to complete a train. To create a
+classification yard, you need to assign an <A HREF="#Interchange">interchange
+track</A> to each of the trains that will depart your yard. For each
+track, allow any train to drop off cars, but assign only one train to
+pick them up. You should configure the interchange track to service the
+same car types and roads that the train services, otherwise you could
+end up with orphan cars.
+
+<P>Note that it is okay to create more interchange tracks then there
+are physical tracks in your classification yard. The cars can share the
+same "slough" track until its time to finally sort them into their
+various trains.</P>
 
 <A NAME="Staging"></A>
 <H3>Staging Tracks</H3>
