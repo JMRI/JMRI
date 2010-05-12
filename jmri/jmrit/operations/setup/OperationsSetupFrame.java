@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -537,7 +537,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		pack();
 		if (Setup.getOperationsSetupFrameSize()!= null){
 			setSize(Setup.getOperationsSetupFrameSize());
-		} 
+		} else {
+			setSize(getWidth(), getHeight()+20);	// made the panel a bit larger to eliminate scroll bars
+		}
 	}
 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {

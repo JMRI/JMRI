@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.routes;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsXml;
@@ -21,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Routes GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 	
@@ -152,7 +153,7 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
 		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
 		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
 		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 

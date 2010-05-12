@@ -25,7 +25,7 @@ import java.util.List;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 
@@ -362,7 +362,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
 		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
 		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
