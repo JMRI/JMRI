@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.61 2010-05-11 00:07:26 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.62 2010-05-12 01:22:23 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -26,23 +26,28 @@
 
 <H2>JMRI Operations</H2>
 
-The operations program allows you to build computer generated car
-manifests for your railroad. A manifest or switch list defines where a
-car is located on the railroad and how and where it should be eventually
-positioned on the railroad. The program allows you to build a roster of
-cars, define locations on the railroad, and routes for trains to travel.
-The car roster includes information about the car, including road name,
-type of car, color, length, date built, and its owner. Trains are
-assigned routes that define locations where cars can be picked up or
-dropped. Features include the ability to define what car types and car
-road names a location can service, the available track space for a
-location, and the maximum length the train can be between any two
-locations on the route. Locations can have sidings, yards, staging and
-interchange tracks. Optionally, trains can be configured to require a
-caboose or car with FRED. The program generates car manifests for each
-train and optionally for any location. The program can also place icons
-representing trains on a JMRI panel. The icon can be taught to move in
-the panel along with the train from location to location.
+The operations program allows you to build computer generated train
+manifests for your railroad. A train manifest details the work that a
+train will perform during an operations session. The manifest provides a
+list of car pickup and drops and shows where the car's are located and
+where they should be eventually positioned on the railroad. The program
+allows you to build a roster of cars, define locations on the railroad,
+and routes for trains to travel. The car roster includes information
+about the car, including road name, number, type of car, color, length,
+weight, date built, and owner. Trains are assigned routes that define
+locations where cars can be picked up or dropped. Features include the
+ability to control what car types and car road names a location can
+service, the available track space for a location, and the maximum
+length the train can be between any two locations on the route.
+<P>
+Locations can have sidings, yards, staging and interchange tracks.
+Optionally, trains can be configured to require a caboose or car with
+FRED. The program generates manifests for each train and optionally a
+switch list for any location. A switch list for a location shows the
+work for all of the scheduled trains that will visit that location. The
+program can also place icons representing trains on a JMRI panel. The
+icon can be taught to move in the panel along with the train from
+location to location. </P>
 
 <A name="demo"></A>
 <H3>Operations Demo Files</H3>
@@ -471,7 +476,7 @@ town's sidings.
 
 <H3>Why are there Yards and Sidings?</H3>
 
-The program when generating a switch list for a train with a single
+The program when generating a manifest for a train with a single
 location (local switcher) will never move a car from a siding to a
 siding or yard to a yard, only yard to siding or siding to yard. This
 rule also applies to interchanges. 
@@ -547,7 +552,7 @@ Sometimes for operations a train enters staging at one location (call it
 A) and then later departs at another location (call it B). From an
 operations perspective locations A and B are locations not directly
 connected by trains. So we need to relocate engines and cars from
-location A to B so the operations manifest can make sense. One way to do
+location A to B so the train's manifest can make sense. One way to do
 this is to terminate the train into staging at location A. Then create a
 "virtual" train that simply moves the cars from location A staging to
 location B staging. Doing this causes the program to "move" the train
@@ -927,7 +932,7 @@ decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
 "Tools->Operations->Routes".
 
-<P><img src="images/Routes.png">
+<P><img src="images/Routes.png"></P>
 
 <P>Then press the "Add" button located at the bottom of the page.</P>
 
@@ -1149,14 +1154,20 @@ select the trains you want in the build column and then press the
 program will then print or preview manifests for all of the selected
 trains.
 
-<P><img src="images/Manifest.png"> <A NAME="SwitchList"></A></P>
+<P><img src="images/Manifest.png"></P>
+
+<A NAME="SwitchList"></A>
 <H3>Switch Lists</H3>
 
-Press the "Print Switch List" button if you want a switch list for a
-given location. A menu will appear that allows you to select which
+A switch list shows the work required to service all of the trains
+visiting that location. Normally a switch list is given to the person in
+charge of a yard or a location with many sidings or industries.
+
+<P>Press the "Print Switch List" button if you want a switch list
+for a given location. A menu will appear that allows you to select which
 locations to preview or print. Once you've determined which locations
 you want to print or preview, press the "Save" button to keep your
-selections.
+selections.</P>
 
 <P>
 <img src="images/SwitchList.png"></P>
