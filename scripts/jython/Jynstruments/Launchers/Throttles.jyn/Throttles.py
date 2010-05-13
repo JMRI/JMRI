@@ -11,6 +11,7 @@ class Throttles(Jynstrument):
     def init(self):
         jbNew= JButton( LoadDefaultXmlThrottlesLayoutAction() )
         jbNew.setIcon( NamedIcon("file://"+self.getFolder() +"/Throttles.png", "Throttles.png") )
+        jbNew.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         jbNew.setToolTipText( jbNew.getText() )
         jbNew.setText( None )
         self.add(jbNew)

@@ -52,6 +52,8 @@ import wiiremotej.event.WiiRemoteListener as WiiRemoteListener
 import wiiremotej.event.WiiDeviceDiscoveryListener as WiiDeviceDiscoveryListener
 import wiiremotej.WiiRemoteJ as WiiRemoteJ
 import wiiremotej.event.WRButtonEvent as WRButtonEvent
+import javax.swing.JButton as JButton
+import javax.swing.ImageIcon as ImageIcon
 
 class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiDeviceDiscoveryListener, WiiRemoteListener, Runnable):
     #Wiimote discoverer events
@@ -173,7 +175,8 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
         self.speedTimer.setRepeats(True)
-        self.label = ResizableImagePanel(self.getFolder() + "/WiimoteThrottle.png",20,20 ) #label
+        self.label = JButton(ImageIcon(self.getFolder() + "/WiimoteThrottle.png","WiiMote")) #label
+        self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
         self.lastTimeButton1 = Calendar.getInstance().getTimeInMillis()
         self.lastTimeButton2 = Calendar.getInstance().getTimeInMillis()

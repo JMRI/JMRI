@@ -14,7 +14,6 @@ class Test(Jynstrument):
         print "In init"
         self.label = ResizableImagePanel(self.getFolder() + "/jython.png",20,20 ) #label
         self.add(self.label)
-        self.addComponentListener(self.label)
         print "Running class ", self.getClassName(), " from file ", self.getJythonFile(), " in folder ", self.getFolder()
         print "Context is: ", self.getContext().getClass()
         print "Jython path is: ", sys.path

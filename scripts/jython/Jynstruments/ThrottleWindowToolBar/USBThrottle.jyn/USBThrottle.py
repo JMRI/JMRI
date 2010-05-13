@@ -15,7 +15,6 @@
 #
 
 import jmri.jmrit.jython.Jynstrument as Jynstrument
-import jmri.util.ResizableImagePanel as ResizableImagePanel
 import java.beans.PropertyChangeListener as PropertyChangeListener
 import jmri.jmrit.throttle.AddressListener as AddressListener
 import javax.swing.Timer as Timer
@@ -24,6 +23,8 @@ import thread
 import sys
 import net.java.games.input.Controller as Controller
 import javax.swing.JCheckBoxMenuItem as JCheckBoxMenuItem
+import javax.swing.JButton as JButton
+import javax.swing.ImageIcon as ImageIcon
 
 # Some default speeds that will be used in the program
 speedMaxSpeed = 1
@@ -76,7 +77,11 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         
                     # Speed
                     if (component == self.driver.componentSpeed) :
-                        self.speedAction.setSpeedIncrement(value / valueSpeedDivider)
+                        if (self.driver.componentSpeedMultiplier != 0) :
+                            self.vsd = valueSpeedDivider * self.driver.componentSpeedMultiplier
+                        else :
+                            self.vsd = valueSpeedDivider
+                        self.speedAction.setSpeedIncrement(value / self.vsd)
                         if ( abs(value) > self.driver.valueSpeedTrigger ) :
                             self.speedTimer.start()
                         else :
@@ -146,7 +151,8 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
         self.speedAction.setThrottle( self.throttle )
         self.speedTimer = Timer(valueSpeedTimerRepeat, self.speedAction ) # Very important to use swing Timer object (see Swing and multithreading doc)
         self.speedTimer.setRepeats(True)
-        self.label = ResizableImagePanel(self.getFolder() + "/USBControl.png",20,20 ) #label
+        self.label = JButton(ImageIcon(self.getFolder() + "/USBControl.png","WiiMote")) #label
+        self.label.addMouseListener(self.getMouseListeners()[0]) # In order to get the popupmenu on the button too
         self.add(self.label)
         self.model = jmri.jmrix.jinput.TreeModel.instance() # USB
         self.desiredController = None
@@ -194,11 +200,12 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
             del self.USBDriver
             dd=ctrl.getName()
             dd=dd.replace(" ", "")
-            dd=dd.replace(".", "")
-            self.USBDriver = __import__(dd)
+            dd=dd.replace(".", "")              
+            self.USBDriver = __import__(dd)           
         except ImportError:  # On error load a default one
             print "Driver  \""+ dd +"\" not found, loading default one"
             self.USBDriver =  __import__("Default")
+        reload(self.USBDriver)
         sys.path.remove(self.getFolder())
         self.driver = self.USBDriver.USBDriver()
 
