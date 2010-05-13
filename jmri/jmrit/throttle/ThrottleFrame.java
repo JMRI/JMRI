@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -303,6 +303,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         		backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
         		addComponentListener(backgroundPanel); // backgroudPanel warned when desktop resized
         		addressPanel.addAddressListener(backgroundPanel);
+        		addressPanel.setBackgroundPanel(backgroundPanel); // so that it's changeable when browsing through rosters
         		add(backgroundPanel, BACKPANEL_LAYER);
         	}
         	addComponentListener(this); // to force sub windows repositionning

@@ -1,5 +1,6 @@
 package jmri.jmrit.jython;
 
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -26,10 +27,12 @@ public class JynstrumentPopupMenu extends JPopupMenu {
     	        maybeShowPopup(e);
     	    }
     	    private void maybeShowPopup(MouseEvent e) {
-    	    	if (! (e.getComponent() instanceof Jynstrument)) {
-    	    		return;
+    	    	Component cmp = e.getComponent();
+    	    	while ((cmp!=null) && (! ( cmp instanceof Jynstrument))) {
+    	    		cmp = cmp.getParent();
     	    	}
-	        	Jynstrument it = (Jynstrument) e.getComponent();
+    	    	if (cmp == null) return;
+	        	Jynstrument it = (Jynstrument) cmp;
     	        if (e.isPopupTrigger()) {
     	        	it.getPopUpMenu().show(e.getComponent(),e.getX(), e.getY());
     	        }

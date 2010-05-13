@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -121,6 +121,19 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			rosterBox.setSelectedIndex(index);
 			this.disableRosterBoxActions = false;
 		}
+		if ((backgroundPanel != null) && (!(rosterBox.getSelectedItem() instanceof NullComboBoxItem))) {
+			backgroundPanel.unsetImage();
+			String rosterEntryTitle = rosterBox.getSelectedItem().toString();
+			RosterEntry re = Roster.instance().entryFromTitle(rosterEntryTitle);
+			if ((re != null) && (re.getImagePath()!=null)){
+				backgroundPanel.setImagePath(re.getImagePath());
+			}
+		}
+	}
+
+	private BackgroundPanel backgroundPanel;
+	public void setBackgroundPanel(BackgroundPanel bp) {
+		backgroundPanel = bp;		
 	}
 	
 	/**

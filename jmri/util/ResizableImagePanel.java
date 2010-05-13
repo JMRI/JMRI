@@ -238,9 +238,10 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     			if (log.isDebugEnabled()) log.debug("Actually resizing image "+this.getImagePath()+" to "+newW+"x"+newH);
     			scaledImage = new BufferedImage(newW, newH,  image.getType() == 0? BufferedImage.TYPE_INT_ARGB : image.getType());  
     			Graphics2D g = scaledImage.createGraphics();
+    			log.debug("Background color is "+getBackground());
     			g.setBackground(getBackground());
     			g.clearRect(0, 0, newW, newH);
-    			g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);  
+    			g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY ); 
     			if ( _respectAspectRatio )
     				if (  (getSize().getWidth() / getSize().getHeight()) > ((double)image.getWidth(null) / (double)image.getHeight(null)) )
     				{ // Fill on height
@@ -252,7 +253,7 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     					newH = image.getHeight(null)*newW/image.getWidth(null);
     					new0y = (int)(getSize().getHeight()-newH)/2;
     				}
-    			g.drawImage(image, new0x, new0y, new0x+newW, new0y+newH, 0, 0, image.getWidth(), image.getHeight(), null);              
+    			g.drawImage(image, new0x, new0y, new0x+newW, new0y+newH, 0, 0, image.getWidth(), image.getHeight(), this);              
     			g.dispose();  
     		} else {
     			scaledImage = image;
