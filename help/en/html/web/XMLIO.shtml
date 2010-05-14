@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: XMLIO.shtml,v 1.5 2010-03-06 06:56:40 jacobsen Exp $ -->
+<!-- $Id: XMLIO.shtml,v 1.6 2010-05-14 16:45:00 jacobsen Exp $ -->
 <title>JMRI: XML IO Servlet</title>
 
 <!-- Style -->
@@ -34,7 +34,7 @@ package, and provides web access to the
 By default, the JMRI mini server will send any URL that starts with /xmlio to this servlet.
 
 <p>
-There are three sample pages that show how this can be used:
+There are several sample pages that show how this can be used:
 <dl>
 <dt><a href="http://localhost:12080/web/request.html">web/request.html</a>
 <dd>Makes a single XML request for all available sensors, and shows their status in a table.
@@ -43,6 +43,13 @@ There are three sample pages that show how this can be used:
 updating a table when any change.
 <dt><a href="http://localhost:12080/web/throttle.html">web/throttle.html</a>
 <dd>Sends a speed command to a DCC locomotive on the layout when a button is pressed.
+<dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutPanel.html</a>
+<dd>Example of a control panel on a web page.  To use it, configure JMRI to use
+"LocoNet Simulator" (if you don't have a LocoNet connection already; in JMRI
+2.9.7 or later, the demo uses "internal" devices and this is not necessary)
+and create turnouts 1 through 4.
+<dt><a href="http://localhost:12080/web/turnoutPanel.html">web/turnoutMonitor.html</a>
+<dd>More complex turnout table, with buttons to throw and close turnouts.
 </dl>
 
 <p>
