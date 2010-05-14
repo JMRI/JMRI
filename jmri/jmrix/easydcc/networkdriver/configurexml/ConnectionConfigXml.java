@@ -18,7 +18,7 @@ import jmri.jmrix.easydcc.networkdriver.NetworkDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
@@ -41,11 +41,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
         return e;
     }*/
-    /**
-     * Port name carries the hostname for the network connection
-     * @param e Top level Element to unpack.
-     * @return true if successful
-      */
+
     /*public boolean load(Element e) {
     	boolean result = true;
         // configure port name
