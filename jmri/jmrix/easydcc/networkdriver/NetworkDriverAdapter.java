@@ -2,12 +2,11 @@
 
 package jmri.jmrix.easydcc.networkdriver;
 
-import jmri.jmrix.easydcc.EasyDccPortController;
+import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccProgrammer;
 import jmri.jmrix.easydcc.EasyDccProgrammerManager;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
-import java.io.*;
 import java.net.*;
 import java.util.Vector;
 
@@ -18,38 +17,45 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
-public class NetworkDriverAdapter extends EasyDccPortController {
+public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
+    public NetworkDriverAdapter() {
+        super();
+        //adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
+    }
     /**
      * set up all of the other objects to operate with an EasyDcc command
      * station connected to this port
      */
     public void configure() {
         // connect to the traffic controller
-        EasyDccTrafficController.instance().connectPort(this);
+        EasyDccTrafficController control = EasyDccTrafficController.instance();
+        control.connectPort(this);
+        adaptermemo.setEasyDccTrafficController(control);
+        adaptermemo.configureManagers();
 
-        jmri.InstanceManager.setProgrammerManager(
+        /*jmri.InstanceManager.setProgrammerManager(
                 new EasyDccProgrammerManager(
                     new EasyDccProgrammer()));
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());*/
 
         // Create an instance of the consist manager.  Make sure this
         // happens AFTER the programmer manager to override the default   
         // consist manager.
-        jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
+        /*jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
+        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());*/
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
     // base class methods for the EasyDccPortController interface
-    public DataInputStream getInputStream() {
+    /*public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
         }
@@ -59,18 +65,18 @@ public class NetworkDriverAdapter extends EasyDccPortController {
             log.error("Exception getting input stream: "+ex1);
             return null;
         }
-    }
+    }*/
 
-    public void connect(String host, int port) {
+    /*public void connect(String host, int port) {
         try {
             socket = new Socket(host, port);
             opened = true;
         } catch (Exception e) {
             log.error("error opening EasyDcc network connection: "+e);
         }
-    }
+    }*/
 
-    public DataOutputStream getOutputStream() {
+    /*public DataOutputStream getOutputStream() {
         if (!opened) log.error("getOutputStream called before load(), stream not available");
         try {
             return new DataOutputStream(socket.getOutputStream());
@@ -79,7 +85,7 @@ public class NetworkDriverAdapter extends EasyDccPortController {
             log.error("getOutputStream exception: "+e);
      	}
      	return null;
-    }
+    }*/
 
     public boolean status() {return opened;}
 
@@ -87,10 +93,18 @@ public class NetworkDriverAdapter extends EasyDccPortController {
     private boolean opened = false;
 
     static public NetworkDriverAdapter instance() {
-        if (mInstance == null) mInstance = new NetworkDriverAdapter();
+        if (mInstance == null) {
+            mInstance = new NetworkDriverAdapter();
+            mInstance.setPort(0);
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+        }
         return mInstance;
     }
     static NetworkDriverAdapter mInstance = null;
+    
+    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
+    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+
 
     Socket socket;
 

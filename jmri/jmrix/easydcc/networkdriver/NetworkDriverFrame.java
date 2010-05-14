@@ -8,13 +8,14 @@ import javax.swing.*;
  * Frame to control and connect EasyDcc command station via NetworkDriver
  * interface.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
+@Deprecated
 public class NetworkDriverFrame extends jmri.jmrix.SerialPortFrame {
 
     public NetworkDriverFrame() {
         super("Open EasyDcc network connection");
-        adapter = new NetworkDriverAdapter();
+        //adapter = new SerialDriverAdapter();
     }
 
     public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {

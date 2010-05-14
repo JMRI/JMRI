@@ -10,8 +10,9 @@ import java.awt.event.ActionEvent;
  *       			NetworkDriverFrame object.
  *
  * @author			Bob Jacobsen    Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
+@Deprecated
 public class NetworkDriverAction extends AbstractAction  {
 
     public NetworkDriverAction(String s) { super(s);}

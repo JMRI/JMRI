@@ -6,6 +6,7 @@ import jmri.jmrix.easydcc.EasyDccPortController;
 import jmri.jmrix.easydcc.EasyDccProgrammer;
 import jmri.jmrix.easydcc.EasyDccProgrammerManager;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,9 +25,14 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
+
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new EasyDccSystemConnectionMemo();
+    }
 
     SerialPort activeSerialPort = null;
 
@@ -105,9 +111,12 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
      */
     public void configure() {
         // connect to the traffic controller
-        EasyDccTrafficController.instance().connectPort(this);
+        EasyDccTrafficController control = EasyDccTrafficController.instance();
+        control.connectPort(this);
+        adaptermemo.setEasyDccTrafficController(control);
+        adaptermemo.configureManagers();
 
-        jmri.InstanceManager.setProgrammerManager(
+        /*jmri.InstanceManager.setProgrammerManager(
                 new EasyDccProgrammerManager(
                     new EasyDccProgrammer()));
 
@@ -123,7 +132,7 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         // consist manager. 
         jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
 
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());
+        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());*/
         
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
@@ -162,16 +171,18 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
     InputStream serialStream = null;
 
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null){
+            mInstance = new SerialDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+        }
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.EASYDCC;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
+    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
+    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }
