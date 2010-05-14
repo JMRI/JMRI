@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.62 2010-05-12 01:22:23 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.63 2010-05-14 14:26:24 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -194,6 +194,9 @@ engine number as part of your train icon text, select the "Append Engine
 Number" box. You can select the background color of your train icon
 depending on the train's direction. Select the color desired for each
 direction using the pull down menus.
+<P>
+<img src="images/PanelWithMarkers.png">
+</P>
 
 <H3>Save</H3>
 
