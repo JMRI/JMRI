@@ -84,9 +84,8 @@ class VideoView(Jynstrument, MouseListener):
         pass
     def mouseEntered(self, event):
         if self.menuPopuled == False :
-            print "Entering loop..."
             for cam in self.videoCapture.getDeviceList(): # The selection bellow might have to be modified
-                print cam.getDescription()
+#                print cam.getDescription()
                 mi =  JCheckBoxMenuItem ( cam.getDescription() )
                 self.getPopUpMenu().add( mi )
                 mi.addItemListener( CaptureItemListener(cam, self) )
