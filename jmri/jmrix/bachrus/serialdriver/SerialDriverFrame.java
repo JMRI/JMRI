@@ -8,8 +8,9 @@ import javax.swing.JOptionPane;
  * Frame to control and connect Speedo  SerialDriver interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
+@Deprecated
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SerialDriverFrame() {

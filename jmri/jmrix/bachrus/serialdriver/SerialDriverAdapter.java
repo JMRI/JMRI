@@ -4,6 +4,8 @@ package jmri.jmrix.bachrus.serialdriver;
 
 import jmri.jmrix.bachrus.SpeedoPortController;
 import jmri.jmrix.bachrus.SpeedoTrafficController;
+import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
+import jmri.jmrix.SystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -28,9 +30,14 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
+
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new SpeedoSystemConnectionMemo();
+    }
 
     SerialPort activeSerialPort = null;
 
@@ -129,7 +136,10 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
      */
     public void configure() {
         // connect to the traffic controller
-        SpeedoTrafficController.instance().connectPort(this);
+        SpeedoTrafficController control = SpeedoTrafficController.instance();
+        control.connectPort(this);
+        
+        adaptermemo.configureManagers();
 
         jmri.jmrix.bachrus.ActiveFlag.setActive();
 
@@ -191,16 +201,21 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     InputStream serialStream = null;
 
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null){
+            mInstance = new SerialDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+        }
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
+    
+        //The following needs to be enabled once systemconnectionmemo has been correctly implemented
+    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.BACHRUS;
-
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
+    public void dispose(){
+        adaptermemo.dispose();
+        adaptermemo = null;
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -9,7 +9,7 @@ package jmri.jmrix.bachrus.serialdriver;
  *
  * @author      Bob Jacobsen        Copyright (C) 2001, 2003
  * @author      Andrew Crosland     Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -29,6 +29,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "Speedo"; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() {         
+        if (adapter == null){
+            adapter = new SerialDriverAdapter();
+        } 
+    }
 }
 
