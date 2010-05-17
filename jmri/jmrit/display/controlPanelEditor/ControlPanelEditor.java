@@ -63,6 +63,8 @@ public class ControlPanelEditor extends Editor {
     private JMenu _zoomMenu;
     private JMenu _markerMenu;
 
+    private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
+    // "CheckBoxEditable" is "show popups" (lame?)
     private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxEditable"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
@@ -77,7 +79,6 @@ public class ControlPanelEditor extends Editor {
     private Positionable _newPositonable;   // newly created item to be placed
     private boolean _newItemAdded = true;
     private boolean _newItem = false;       // item newly created in this session
-//    private String _name;
 
     public ControlPanelEditor() {
     }
@@ -93,6 +94,8 @@ public class ControlPanelEditor extends Editor {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
 
         // make menus
+        setGlobalSetsLocalFlag(false);
+        setUseGlobalFlag(false);
         _menuBar = new JMenuBar();
         makeIconMenu();
         makeZoomMenu();
@@ -200,6 +203,14 @@ public class ControlPanelEditor extends Editor {
                 }
             });
         editableBox.setSelected(isEditable());
+        // use globals item
+        _optionMenu.add(useGlobalFlagBox);
+        useGlobalFlagBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setUseGlobalFlag(useGlobalFlagBox.isSelected());
+                }
+            });                    
+        useGlobalFlagBox.setSelected(useGlobalFlag());
         // positionable item
         _optionMenu.add(positionableBox);
         positionableBox.addActionListener(new ActionListener() {
@@ -342,14 +353,16 @@ public class ControlPanelEditor extends Editor {
         _fileMenu.add(editItem);
         editItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
-                    setEditable(false);
+                    setAllEditable(false);
                 }
             });
     }
-
-    public void setEditable(boolean edit) {
+    // override
+    public void setAllEditable(boolean edit) {
         if (edit) {
-            _menuBar.remove(_editMenu);
+            if (_editMenu!=null) {
+                _menuBar.remove(_editMenu);
+            }
             if (_iconMenu==null) {
                 makeIconMenu();
             } else {
@@ -379,15 +392,23 @@ public class ControlPanelEditor extends Editor {
                 _editMenu = new JMenu(rb.getString("MenuEdit"));
                 _editMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
                         public void actionPerformed(ActionEvent e) {
-                            setEditable(true);
+                            setAllEditable(true);
                         }
                 });
             }
             _menuBar.add(_editMenu, 0);
         }
-        setAllEditable(edit);
+        super.setAllEditable(edit);
         setTitle();
         _menuBar.validate();
+    }
+    // override
+    public void setUseGlobalFlag(boolean set) {
+        positionableBox.setEnabled(set);
+        //positionableBox.invalidate();
+        controllingBox.setEnabled(set);
+        //controllingBox.invalidate();
+        super.setUseGlobalFlag(set);      
     }
 
     private void zoomRestore() {
@@ -492,8 +513,11 @@ public class ControlPanelEditor extends Editor {
         } else {
             super.setTitle(name);
         }
-        // all content loaded from file.  Set putItem override.
-        _newItem = true;
+    }
+
+    // all content loaded from file.  Set putItem override.
+    public void loadComplete() {
+        _newItem= true;
     }
     
     /**
@@ -525,6 +549,7 @@ public class ControlPanelEditor extends Editor {
     /***************** Overrided methods of Editor *******************/
 
     public void putItem(Positionable l) {
+        if (_debug) log.debug("putItem: _newItem= "+_newItem);
         if (_newItem && l.getDisplayLevel()>BKG) {
             _newPositonable = l;
             _newItemAdded = false;
@@ -581,12 +606,7 @@ public class ControlPanelEditor extends Editor {
             getTargetPanel().repaint();
         }
     }
-/*
-    public void mouseExited(MouseEvent event) {
-        //if (_debug) log.debug("mouseExited pt: ("+event.getX()+", "+event.getY()+")");
-        setToolTip(null);
-    }
-*/
+    
     /*************** implementation of Abstract Editor methods ***********/
     /**
      * The target window has been requested to close, don't delete it at this

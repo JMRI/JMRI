@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -523,7 +523,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
      * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
-        if (!isControlling()) return;
+        if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
         performMouseClicked(e);
     }
     

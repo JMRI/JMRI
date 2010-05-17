@@ -16,7 +16,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -178,6 +178,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
         // display the results, with the editor in back
         panel.pack();
+        panel.setAllEditable(panel.isEditable());
 
         // we don't pack the target frame here, because size was specified
         // TODO: Work out why, when calling this method, panel size is increased
@@ -190,8 +191,10 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         // reset the size and position, in case the display caused it to change
         panel.getTargetFrame().setLocation(x,y);
         panel.getTargetFrame().setSize(width,height);
-        // do last to set putItem override
         panel.setTitle();
+        // do last to set putItem override
+        panel.loadComplete();
+
         return result;
     }
 

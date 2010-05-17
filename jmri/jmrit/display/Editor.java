@@ -102,18 +102,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private JLayeredPane _targetPanel;
     private JFrame      _targetFrame;
 	private JScrollPane _panelScrollPane;
-/*
-    public enum TriState {TRUE, FALSE, NOTSET;
-    
-        public boolean isTrue() {
-            return (this == TRUE);
-        }
-        public boolean isNotSet() {
-            return (this == NOTSET);
-        }
-    }
-*/    
-	// Option menu items 
+	
+    // Option menu items 
 	protected int _scrollState = SCROLL_NONE;
     private boolean _editable = true;
     private boolean _positionable = true;
@@ -122,9 +112,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean _showTooltip = true;
     private boolean _showCoordinates = true;
 
-    // Note TODO - implementation for setting Positionable properties by level.
-    private boolean[] _editableLevels = new boolean[NUM_LEVELS];
-    private boolean[] _positionableLevels = new boolean[NUM_LEVELS];
+    final public static int OPTION_POSITION = 1;
+    final public static int OPTION_CONTROLS = 2;
+    final public static int OPTION_HIDDEN = 3;
+    final public static int OPTION_TOOLTIP= 4;
+    final public static int OPTION_COORDS = 5;
+
+    private boolean _globalSetsLocal = true;    // pre 2.9.6 behavior
+    private boolean _useGlobalFlag = false;     // pre 2.9.6 behavior
 
     // mouse methods variables
     protected int _lastX;
@@ -156,10 +151,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         super(name);
         setName(name);
         _debug = log.isDebugEnabled();
-        for (int i=0; i<NUM_LEVELS; i++) {
-            _editableLevels[i] = true;
-            _positionableLevels[i] = true;
-        }
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
     }
@@ -392,9 +383,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         for (int i = 0; i<_contents.size(); i++) {
             _contents.get(i).setEditable(state);
         }
-        for (int i=0; i<NUM_LEVELS; i++) {
-            _editableLevels[i] = state;
-        }
     }
     
 	// accessor routines for persistent information
@@ -403,10 +391,38 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-    * Is level k editable?
+    * Which flag should be used, global or local for Positioning
+    * and Control of individual items?
     */
-    public boolean isEditableLevel(int k) {
-        return _editableLevels[k-1];
+    public void setUseGlobalFlag(boolean set) {
+        _useGlobalFlag = set;      
+    }
+    public boolean useGlobalFlag() {
+        return _useGlobalFlag;
+    }
+
+    public boolean getFlag(int whichOption, boolean localFlag) {
+        if (_useGlobalFlag) {
+            switch (whichOption) {
+                case OPTION_POSITION:
+                    return _positionable;
+                case OPTION_CONTROLS:
+                    return _controlLayout;
+                case OPTION_HIDDEN:
+                    return _showHidden;
+                case OPTION_TOOLTIP:
+                    return _showTooltip;
+                case OPTION_COORDS:
+                    return _showCoordinates;
+            }
+        }
+        return localFlag;
+    }
+    /**
+    * Does global flag sets Positionable and Control for individual items
+    */
+    public void setGlobalSetsLocalFlag(boolean set) {
+        _globalSetsLocal = set;
     }
 
     /**
@@ -416,24 +432,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setAllPositionable(boolean state) {
         _positionable = state;
-        for (int i = 0; i<_contents.size(); i++) {
-        	Positionable p = _contents.get(i);
-        	p.setPositionable(state);
-        }
-        for (int i=0; i<NUM_LEVELS; i++) {
-            _positionableLevels[i] = state;
+        if (_globalSetsLocal) {
+            for (int i = 0; i<_contents.size(); i++) {
+                Positionable p = _contents.get(i);
+                p.setPositionable(state);
+            }
         }
     }
     public boolean allPositionable() {
         return _positionable;
     }
-    /**
-    * Is level k positionable?
-    */
-    public boolean positionableLevel(int k) {
-        return _positionableLevels[k-1];
-    }
-
 
     /**
      *  Control whether target panel items are controlling layout items.
@@ -443,8 +451,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      */
     public void setAllControlling(boolean state) {
         _controlLayout = state;
-        for (int i = 0; i<_contents.size(); i++) {
-            _contents.get(i).setControlling(state);
+        if (_globalSetsLocal) {
+            for (int i = 0; i<_contents.size(); i++) {
+                _contents.get(i).setControlling(state);
+            }
         }
     }
     public boolean allControlling() {
@@ -1814,7 +1824,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     */
     protected void moveItem(Positionable p, int deltaX, int deltaY) {
         //if (_debug) log.debug("moveItem at ("+p.getX()+","+p.getY()+") delta ("+deltaX+", "+deltaY+")");
-        if (p.isPositionable()) {
+        if (getFlag(OPTION_POSITION, p.isPositionable())) {
             int xObj = p.getX() + (int)Math.round(deltaX/getPaintScale());
             int yObj = p.getY() + (int)Math.round(deltaY/getPaintScale());
             // don't allow negative placement, icon can become unreachable 
@@ -1931,7 +1941,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         int cnt = 0;
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
-            if (!comp.isPositionable())  { continue; }
+            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
             if (alignX) {
                 sum += comp.getX();
             } else {
@@ -1942,7 +1952,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         int ave = Math.round((float)sum/cnt);
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable comp = _selectionGroup.get(i);
-            if (!comp.isPositionable())  { continue; }
+            if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
             if (alignX) {
                 comp.setLocation(ave, comp.getY());
             } else {
@@ -2085,7 +2095,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return; 
         }
         if (_currentSelection!=null) {
-            if (!_currentSelection.isPositionable()) { return; }
+            if (!getFlag(OPTION_POSITION, _currentSelection.isPositionable())) { return; }
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
             if (_selectionGroup!=null) {

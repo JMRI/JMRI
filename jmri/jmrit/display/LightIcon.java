@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -249,7 +249,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
      */
     // Was mouseClicked, changed to mouseRelease to workaround touch screen driver limitation
     public void doMouseReleased(java.awt.event.MouseEvent e) {
-        if (!isControlling()) return;
+        if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
         if (e.isMetaDown() || e.isAltDown() ) return;
         if (light==null) {
             log.error("No light connection, can't process click");
