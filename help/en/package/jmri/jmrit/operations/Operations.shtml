@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.63 2010-05-14 14:26:24 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.64 2010-05-18 03:07:09 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -219,6 +219,14 @@ files in a directory that is based on the day you pressed the "Backup"
 button. For example, if today was November 21, 2008, the program will
 create a backup directory named "2008_11_21".</P>
 
+<H3>Reset Databases</H3>
+
+To reset the operation databases to their original defaults, use the
+Settings Tools menu and select "Reset Databases". The "Reset Database"
+option will make a backup copy of the current operation files before
+deleting them. The results will be that the settings, cars, engines,
+locations, and trains databases will be purged.
+
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
 
@@ -299,7 +307,6 @@ available cars and engines, and a bit how the program finds destinations
 for the cars and engines. The "Very Detailed" setting produces the most
 pages, and will show why cars are not picked up or dropped. Be sure and
 press "Save" after changing the build report selection.
-
 
 <A NAME="Locations"></A>
 <H2>Locations</H2>
