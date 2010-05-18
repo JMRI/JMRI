@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -95,16 +95,8 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 			log.debug("restore button activated");
 			// first backup the users data in case they forgot
 		   	Backup backup = new Backup();
-	    	String backupName = backup.getDirectoryName();
-	    	// make up to 10 backup files using today's date
-	    	for (int i=0; i<10; i++){
-	    		if (backup.checkDirectoryExists(backupName)){
-	    			log.debug("Operations backup directory "+backupName+" already exist");
-	    			backupName = backup.getDirectoryName()+"_"+i;
-	    		} else {
-	    			break;
-	    		}
-	    	}
+	    	String backupName = backup.createBackupDirectoryName();
+	    	// now backup files
 	    	boolean success = backup.backupFiles(backupName);
 	    	if(!success){
 	    		log.error("Could not backup files");

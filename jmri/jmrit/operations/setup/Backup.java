@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class Backup extends XmlFile {
 
@@ -110,6 +110,7 @@ public class Backup extends XmlFile {
 	
 	/**
 	 * Copies operation files from directoryName
+	 * 
 	 * @param directoryName
 	 * @return true if successful, false if not.
 	 */
@@ -169,6 +170,39 @@ public class Backup extends XmlFile {
 		if (defaultDirectoryName.equals(""))
 			return getDate();
 		return defaultDirectoryName;
+	}
+	
+	public String createBackupDirectoryName(){
+		String backupName = getDirectoryName();
+	   	// make up to 100 backup file names
+    	for (int i=0; i<100; i++){
+    		if (checkDirectoryExists(backupName)){
+    			log.debug("Operations backup directory "+backupName+" already exist");
+    			backupName = getDirectoryName()+"_"+i;
+    		} else {
+    			break;
+    		}
+    	}
+    	return backupName;
+	}
+	
+	/**
+	 * Reset operations by deleting xml files, leaves directories and backup files in place
+	 */
+	public void reset(){
+		File files = new File(operationsDirectory);
+		if (!files.exists())
+			return;
+		String[] operationFileNames = files.list();
+		for (int i = 0; i < operationFileNames.length; i++) {
+		    // skip non-xml files
+		    if ( ! operationFileNames[i].toUpperCase().endsWith(".XML") )
+		         continue;
+		    //
+			log.debug("deleting file: " + operationFileNames[i]);
+			File file = new File(operationsDirectory + File.separator + operationFileNames[i]);
+			file.delete();
+		}
 	}
 	
 	public void setDirectoryName(String name){

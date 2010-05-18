@@ -15,7 +15,7 @@ import apps.Apps;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LoadDemoAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
@@ -26,16 +26,8 @@ public class LoadDemoAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
     	Backup backup = new Backup();
-    	String backupName = backup.getDirectoryName();
-    	// make up to 10 backup files using today's date
-    	for (int i=0; i<10; i++){
-    		if (backup.checkDirectoryExists(backupName)){
-    			log.debug("Operations backup directory "+backupName+" already exist");
-    			backupName = backup.getDirectoryName()+"_"+i;
-    		} else {
-    			break;
-    		}
-    	}
+    	String backupName = backup.createBackupDirectoryName();
+    	// now backup files
     	boolean success = backup.backupFiles(backupName);
     	if(!success){
     		log.error("Could not backup files");
