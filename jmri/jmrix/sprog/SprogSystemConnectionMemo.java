@@ -18,7 +18,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -100,7 +100,14 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
         
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
+
+        switch (sprogMode){
+            case OPS : jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());
+                break;
+            case SERVICE : jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());
+                break;
+
+        }
 
     }
     
