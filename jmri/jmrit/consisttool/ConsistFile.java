@@ -17,10 +17,10 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
-class ConsistFile extends jmri.jmrit.XmlFile {
+public class ConsistFile extends jmri.jmrit.XmlFile {
 
        private jmri.ConsistManager ConsistMan = null;   
 
