@@ -17,12 +17,18 @@ public class JynstrumentFactory {
 
 	public static Jynstrument createInstrument(String path, Object context) {
 		String className = validate(path);
-    	if (className == null) {
-    		log.error("Invalid instrument");
-    		return null;
-    	}
-    	String jyFile = path+ File.separator + className+".py" ;
-    	PythonInterpreter interp = (PythonInterpreter) jmri.util.PythonInterp.getPythonInterpreter();
+		if (className == null) {
+			// Try containing directory
+			File f = new File(path);
+			path = f.getParent();
+			className = validate(path);
+			if (className == null) {
+				log.error("Invalid instrument");
+				return null;
+			}
+		}
+		String jyFile = path+ File.separator + className+".py" ;
+		PythonInterpreter interp = (PythonInterpreter) jmri.util.PythonInterp.getPythonInterpreter();
 		Jynstrument jyns;
 		try {
 			interp.execfile(jyFile);
@@ -46,35 +52,37 @@ public class JynstrumentFactory {
 		jyns.init();  // GO!
 		return jyns;
 	}
-	
+
 	// validate Jynstrument path, return className
-	private static String validate(String path) {		
+	private static String validate(String path) {
+		if (path == null)
+			return null;
 		if ( path.length() - 4 < 0) {
 			log.error("File name too short");
 			return null;
 		}
 		File f = new File(path);
-		
+
 		// Path must be a folder named xyz.jin
 		if ( ! f.isDirectory())  {
-			log.error("Not a directory");
+			log.debug("Not a directory, trying parent");
 			return null; 
 		}
 		if ( path.substring( path.length() - 4).compareToIgnoreCase(".jyn") != 0 ) {
 			log.debug("Not an instrument");
 			return null;
 		}
-		
+
 		// must contain a xyz.py file and construct class name from filename (xyz actually) xyz class in xyz.jy file in xyz.jin folder
 		String[] children = f.list();
 		String className = null;
 		for (int i=0; i<children.length; i++)
-				if ((children[i]+".py").compareToIgnoreCase(f.getParentFile().getName()) == 0)
-					return children[i].substring(0, children[i].length() - 3); // got exact match for folder name
-				else 
-					if (children[i].substring(children[i].length() - 3).compareToIgnoreCase(".py") == 0 )
-						className = children[i].substring(0, children[i].length() - 3); // else take whatever comes
-			
+			if ((children[i]+".py").compareToIgnoreCase(f.getParentFile().getName()) == 0)
+				return children[i].substring(0, children[i].length() - 3); // got exact match for folder name
+			else 
+				if (children[i].substring(children[i].length() - 3).compareToIgnoreCase(".py") == 0 )
+					className = children[i].substring(0, children[i].length() - 3); // else take whatever comes
+
 		return className;
 	}
 
