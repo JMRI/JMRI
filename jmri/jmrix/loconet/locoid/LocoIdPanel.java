@@ -13,7 +13,7 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements LocoNetListener {
@@ -21,7 +21,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
     // member declarations
     javax.swing.JButton readButton;
     javax.swing.JButton setButton;
-    javax.swing.JTextField value;
+    javax.swing.JTextArea value;
 
     public LocoIdPanel() {
         super();
@@ -32,7 +32,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         setButton = new javax.swing.JButton(rb.getString("ButtonSet"));
         readButton = new javax.swing.JButton(rb.getString("ButtonRead"));
-        value = new javax.swing.JTextField(2);
+        value = new javax.swing.JTextArea(12, 4);  // rows, columns
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -81,6 +81,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
         memo.getLnTrafficController().sendLocoNetMessage(createSetPacket(value.getText()));
     }
     public void readButtonActionPerformed() {
+        value.setText("");
         memo.getLnTrafficController().sendLocoNetMessage(createReadPacket());
     }
 
@@ -93,7 +94,7 @@ public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
         if ( (m.getElement(0)&0xFF) != 0xD7) return;
         if ( ((m.getElement(1)&0xFF) != 0x1F) && ((m.getElement(1)&0xFF) != 0x17)) return;
         if ( (m.getElement(2)&0xFF) != 0x00) return;
-        value.setText(""+m.getElement(3));
+        value.setText(value.getText()+m.getElement(3)+"\n");
     }
 
 
