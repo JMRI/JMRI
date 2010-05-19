@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.7.shtml,v 1.1 2010-05-11 14:43:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.7.shtml,v 1.2 2010-05-19 05:45:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -168,6 +168,24 @@ None at the time of this release.
 The function mapping pane for Digitrax DH163 decoders was missing two rows (functions F7 and F8).
 This has been fixed.
 
+<p>
+Lionel Jeanson made improvements to the jyninstrument throttle support for images, 
+added a driver for "USB Game Pad 2"-type devices,
+and added 
+<a href="http://jmri.org/jython/Jynstruments/ThrottleFrame/VideoView.jyn/VideoView.py">support for a video input view</a>
+in a frame inside a Throttle Window.
+
+<p>
+Dan Boudreau updated the operations print feature so you can now control which car attributes are printed.
+
+<p>
+Pete Cressman added an option to use local or global flag for positioning & control of items in the panel editor(s).
+
+<p>
+Dan Boudreau added a "reset operations databases to default" feature to the operations support.
+
+<p>
+The LocoNet ID tool now displays multiple received IDs, so you can tell if all your UR90/UR91 receivers are set properly.
 
 <!--#include virtual="/Footer" -->
 
