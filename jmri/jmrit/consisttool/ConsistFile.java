@@ -17,7 +17,7 @@ import org.jdom.Element;
  * This class manipulates files conforming to the consist-roster-config DTD.
  *
  * @author      Paul Bender Copyright (C) 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class ConsistFile extends jmri.jmrit.XmlFile {
@@ -193,10 +193,8 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
 
         /**
          * Read all consists from a file.
-         * @param file a file to write to a consist
          * @throws org.jdom.JDOMException
-         * @throws java.io.FileNotFoundException
-         * @param consistList an ArrayList of consist IDs to write to the file
+         * @throws java.io.IOException
          */
 	@SuppressWarnings("unchecked")
 	public void ReadFile() throws org.jdom.JDOMException, java.io.IOException {
@@ -228,10 +226,9 @@ public class ConsistFile extends jmri.jmrit.XmlFile {
         }
 
 	/**
-         * Write all consists to a file.
+     * Write all consists to a file.
 	 * @param consistList an ArrayList of consists to write
-         * @throws org.jdom.JDOMException
-         * @param consistList an ArrayList of consist IDs to write to the file
+     * @throws org.jdom.JDOMException
  	 */
 	public void WriteFile(ArrayList<jmri.DccLocoAddress> consistList) throws java.io.IOException {
            // create root element
