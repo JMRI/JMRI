@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -79,6 +79,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         String color = "";
         String owner = "";
         String built = "";
+        String load = "";
         
         boolean printOnly = printCarsWithLocation.isSelected();
         boolean printLength = printCarLength.isSelected();
@@ -86,20 +87,24 @@ public class PrintCarRosterAction  extends AbstractAction {
         boolean printColor = printCarColor.isSelected();
         boolean printOwner = printCarOwner.isSelected();
         boolean printBuilt = printCarBuilt.isSelected();
+        boolean printLoad = printCarLoad.isSelected();
         
-		int locMaxLen = 29;
+		int locMaxLen = 15;
 		int ownerMaxLen = 4;
 		// adjust the max length for the location and track field
 		if (!printLength)
-			locMaxLen = locMaxLen +5;
+			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_LENGTH_NAME+1;
 		if (!printWeight)
-			locMaxLen = locMaxLen +5;
+			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_WEIGHT_NAME+1;
 		if (!printColor)
-			locMaxLen = locMaxLen +12;
+			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_ATTRIBUTE;
    		if (!printOwner)
 			locMaxLen = locMaxLen +5;
   		if (!printBuilt)
-			locMaxLen = locMaxLen +5;
+			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_BUILT_NAME+1;
+ 		if (!printLoad)
+			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_ATTRIBUTE;
+  		
   		// now adjust the owner name field if there is space available
   		if (locMaxLen > Control.MAX_LEN_STRING_LOCATION_NAME + Control.MAX_LEN_STRING_TRACK_NAME + ownerMaxLen){
   			ownerMaxLen = locMaxLen - (Control.MAX_LEN_STRING_LOCATION_NAME + Control.MAX_LEN_STRING_TRACK_NAME);
@@ -110,13 +115,14 @@ public class PrintCarRosterAction  extends AbstractAction {
         List<String> cars = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-        	+ "\t" + rb.getString("Type") + "\t "
-        	+ (printLength?rb.getString("Length")+ " ":" ") 
+        	+ "\t" + rb.getString("Type") + "\t  "
+        	+ (printLength?rb.getString("Length")+ " ":"  ") 
         	+ (printWeight?rb.getString("Weight")+ " ":" ")
-        	+ (printColor?rb.getString("Color")+ "     ":"")
+        	+ (printColor?rb.getString("Color")+ "       ":"")
+        	+ (printLoad?rb.getString("Load")+ "        ":"")
         	+ (printOwner?rb.getString("Owner")+" ":"")
         	+ (printBuilt?rb.getString("Built"):"")
-        	+ "\t" + rb.getString("Location") + " - "+ rb.getString("Track")
+        	+ " " + rb.getString("Location")
         	+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<cars.size(); i++){
@@ -142,14 +148,14 @@ public class PrintCarRosterAction  extends AbstractAction {
         			road += " ";
 
         		type = car.getType().trim();
-        		if (type.length() > 11)
-        			type = type.substring(0, 11);
-        		for (int j=type.length(); j<11; j++)
+        		if (type.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+        			type = type.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+        		for (int j=type.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
         			type += " ";
 
         		if (printLength){
         			length = car.getLength().trim();
-        			for (int j=length.length(); j<5; j++)
+        			for (int j=length.length(); j<Control.MAX_LEN_STRING_LENGTH_NAME+1; j++)
         				length += " ";
         		}
 
@@ -157,16 +163,24 @@ public class PrintCarRosterAction  extends AbstractAction {
         			weight = car.getWeight().trim();
         			if (weight.length() > 4)
         				weight = weight.substring(0, 4);
-        			for (int j=weight.length(); j<5; j++)
+        			for (int j=weight.length(); j<Control.MAX_LEN_STRING_WEIGHT_NAME+1; j++)
         				weight += " ";
         		}
 
         		if (printColor){
         			color = car.getColor().trim();
-        			if (color.length() > 11)
-        				color = color.substring(0, 11);
-        			for (int j=color.length(); j<12; j++)
+        			if (color.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+        				color = color.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+        			for (int j=color.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
         				color += " ";
+        		}
+        		
+           		if (printLoad){
+        			load = car.getLoad().trim();
+        			if (load.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+        				load = load.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+        			for (int j=load.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
+        				load += " ";
         		}
 
         		if (printOwner){
@@ -181,12 +195,12 @@ public class PrintCarRosterAction  extends AbstractAction {
         			built = car.getBuilt().trim();
         			if (built.length() > 4)
         				built = built.substring(0, 4);
-        			for (int j=built.length(); j<5; j++)
+        			for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
         				built += " ";
         		}
 
-        		s = number + " " + road + " " + type + " " 
-        		+ length + weight + color + owner + built
+        		s = number + " " + road + " " + type
+        		+ length + weight + color + load + owner + built
         		+ location + newLine;
         		writer.write(s, 0, s.length());
         	}
@@ -204,9 +218,9 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarColor = new JCheckBox(rb.getString("PrintCarColor"));
     JCheckBox printCarOwner = new JCheckBox(rb.getString("PrintCarOwner"));
     JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
+    JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
     
     JButton okayButton = new JButton(rb.getString("ButtonOkay"));
-    JButton cancelButton = new JButton(rb.getString("ButtonCancel"));
     
     public class CarPrintOptionFrame extends OperationsFrame{
     	 PrintCarRosterAction pcr;
@@ -222,6 +236,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pPanel.add(printCarLength);
     		pPanel.add(printCarWeight);
     		pPanel.add(printCarColor);
+    		pPanel.add(printCarLoad);
     		pPanel.add(printCarOwner);
     		pPanel.add(printCarBuilt);
     		
@@ -232,6 +247,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		printCarColor.setSelected(true);
     		printCarOwner.setSelected(false);
     		printCarBuilt.setSelected(false);
+    		printCarLoad.setSelected(false);
     		
     		JPanel pButtons = new JPanel();  
     		pButtons.setLayout(new GridBagLayout());
