@@ -3,7 +3,10 @@
 package jmri.jmrit.beantable;
 
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.*;
 import java.util.ResourceBundle;
@@ -14,13 +17,14 @@ import java.util.ResourceBundle;
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
  * @author  Pete Cressman    Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
 
-    public AddNewDevicePanel(JTextField sysName, JTextField userName,
+    public AddNewDevicePanel(JTextField sys, JTextField userName,
                              String addButtonLabel, ActionListener listener) {
+            sysName = sys;
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); 
@@ -45,16 +49,37 @@ public class AddNewDevicePanel extends jmri.util.swing.JmriPanel {
             p.add(userName,c);
             add(p);
 
-            JButton ok;
             add(ok = new JButton(rb.getString(addButtonLabel)));
             ok.addActionListener(listener);
+            ok.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        reset();
+                    }
+            });
+
+            reset();
+            sysName.addKeyListener(new KeyAdapter() {
+                    public void keyReleased(KeyEvent a){
+                        if (sysName.getText().length() > 0) {
+                            ok.setEnabled(true);
+                            ok.setToolTipText(null);
+                        }
+                    }
+                });
+    }
+
+    void reset() {
+        ok.setEnabled(false);
+        ok.setToolTipText(rb.getString("ToolTipWillActivate"));
     }
 
     public void addLabels(String labelSystemName, String labelUserName) {
         sysNameLabel.setText(labelSystemName);
         userNameLabel.setText(labelUserName);
     }
-    
+
+    JButton ok;
+    JTextField sysName;
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
 

@@ -34,7 +34,7 @@ import jmri.Path;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
-import jmri.jmrit.display.PickListModel;
+import jmri.jmrit.picker.PickListModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -422,8 +422,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         topRight.add(panel);
         topRight.add(Box.createHorizontalStrut(STRUT_SIZE));
 
-        JScrollPane pane = makePickList();
-        topRight.add(pane);
+        PickListModel pickListModel = PickListModel.oBlockPickModelInstance();
+        topRight.add(new JScrollPane(pickListModel.makePickTable()));
         tab1.add(topRight);
 
         JPanel x = new JPanel();
@@ -914,31 +914,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         return p;
     }
 
-    public JScrollPane makePickList() {
-        PickListModel pickListModel = PickListModel.oBlockPickModelInstance();
-        pickListModel.init();
-        JTable table = new JTable(pickListModel);
-
-        table.setRowSelectionAllowed(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,table.getRowHeight()*7));
-        table.setDragEnabled(true);
-        table.setTransferHandler(new DnDExportHandler());
-        TableColumnModel columnModel = table.getColumnModel();
-
-        TableColumn sNameColumnT = columnModel.getColumn(PickListModel.SNAME_COLUMN);
-        sNameColumnT.setResizable(true);
-        sNameColumnT.setMinWidth(50);
-        sNameColumnT.setMaxWidth(200);
-
-        TableColumn uNameColumnT = columnModel.getColumn(PickListModel.UNAME_COLUMN);
-        uNameColumnT.setResizable(true);
-        uNameColumnT.setMinWidth(100);
-        uNameColumnT.setMaxWidth(300);
-
-        return new JScrollPane(table);
-    }
-
 
     class DnDImportHandler extends TransferHandler{
         int _type;
@@ -1001,34 +976,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             return true;
         }
         */
-    }
-
-    class DnDExportHandler extends TransferHandler{
-        int _type;
-
-        DnDExportHandler() {
-        }
-
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-
-        public Transferable createTransferable(JComponent c) {
-            JTable table = (JTable)c;
-            int col = table.getSelectedColumn();
-            int row = table.getSelectedRow();
-            if (col<0 || row<0) {
-                return null;
-            }
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from ("
-                                                +row+", "+col+") for \""
-                                                +table.getModel().getValueAt(row, col)+"\"");
-            return new StringSelection((String)table.getModel().getValueAt(row, col));
-        }
-
-        public void exportDone(JComponent c, Transferable t, int action) {
-            if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone ");
-        }
     }
 
     private void makeMenus() {

@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -279,15 +279,14 @@ public class LogixTableAction extends AbstractTableAction {
         JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
         menu.setMnemonic(KeyEvent.VK_O);
 
-        /*menu.addSeparator();
-        JCheckBoxMenuItem cbMenuItem = new JCheckBoxMenuItem(rbx.getString("SuppressWithDisable"));
-        cbMenuItem.setSelected(_suppressReminder);
-        cbMenuItem.addActionListener(new ActionListener() {
+        menu.addSeparator();
+        JMenuItem item = new JMenuItem(rbx.getString("OpenPickListTables"));
+        item.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                _suppressReminder = !_suppressReminder;
+                OpenPickListTable();
             }
         });
-        menu.add(cbMenuItem);*/
+        menu.add(item);
         if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
             _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                                getPreferenceState("beantable.LRouteTableAction.remindRoute");
@@ -311,6 +310,14 @@ public class LogixTableAction extends AbstractTableAction {
         menuBar.add(menu);
 	}
 
+    void OpenPickListTable() {
+        if (_pickTables==null) {
+            _pickTables = new jmri.jmrit.picker.PickFrame(rbx.getString("TitlePickList"));
+        } else {
+            _pickTables.setVisible(true);
+        }
+    }
+
     void enableAll(boolean enable) {
         List <String> sysNameList = _logixManager.getSystemNameList();
         for (int i=0; i<sysNameList.size(); i++) {
@@ -332,6 +339,7 @@ public class LogixTableAction extends AbstractTableAction {
 	boolean _showReminder = false;
     boolean _suppressReminder = false;
     boolean _suppressIndirectRef = false;
+    jmri.jmrit.picker.PickFrame _pickTables;
 
 	// current focus variables
 	Logix _curLogix = null;
@@ -1830,6 +1838,9 @@ public class LogixTableAction extends AbstractTableAction {
      * and editConditionalFrame window closer.
      */
     void cancelConditionalPressed(ActionEvent e) {
+        if (_pickTables!=null) {
+            _pickTables.dispose();
+        }
         if (_editActionFrame != null) {
             cleanUpAction();
         }
@@ -2014,6 +2025,7 @@ public class LogixTableAction extends AbstractTableAction {
 /************************* Methods for Edit Variable Window ********************/
 
     boolean alreadyEditingActionOrVariable() {
+        OpenPickListTable();
         if (_editActionFrame != null) {
 			// Already editing an Action, ask for completion of that edit
 			javax.swing.JOptionPane.showMessageDialog(_editActionFrame,

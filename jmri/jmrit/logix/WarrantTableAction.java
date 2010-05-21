@@ -49,7 +49,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Path;
-import jmri.jmrit.display.PickListModel;
+import jmri.jmrit.picker.PickListModel;
 import jmri.util.HelpUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
@@ -657,6 +657,9 @@ public class WarrantTableAction extends AbstractAction {
         }
         public NamedBean addBean(String name) {
             return manager.provideWarrant(name);
+        }
+        public NamedBean addBean(String sysName, String userName) {
+            return manager.createNewWarrant(sysName, userName);
         }
 
         public int getColumnCount () {
