@@ -21,6 +21,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
 import jmri.jmrit.revhistory.FileHistory;
+import jmri.jmrit.picker.PickListModel;
 import org.jdom.Element;
 
 import jmri.util.JmriJFrame;

@@ -13,6 +13,7 @@ import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.PreviewDialog;
+import jmri.jmrit.picker.PickListModel;
 
 import java.awt.Dimension;
 import java.awt.Font;

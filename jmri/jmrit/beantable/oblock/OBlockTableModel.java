@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 import java.util.List;
@@ -49,7 +49,7 @@ import jmri.jmrit.logix.OBlockManager;
      * Duplicates the JTable model for BlockTableAction and adds a column
      * for the occupancy sensor.  Configured for use within an internal frame.
      */
-public class OBlockTableModel extends jmri.jmrit.display.PickListModel {
+public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
 
     static public final int SYSNAMECOL  = 0;
     static public final int USERNAMECOL = 1;
@@ -101,6 +101,9 @@ public class OBlockTableModel extends jmri.jmrit.display.PickListModel {
     // Method name not appropriate (initial use was for Icon Editors)
     public NamedBean addBean(String name) {
         return manager.getOBlock(name);
+    }
+    public NamedBean addBean(String sysName, String userName) {
+        return manager.createNewOBlock(sysName, userName);
     }
 
     public int getColumnCount () {

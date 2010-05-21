@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  * @since 2.7.2
  */
 
@@ -158,7 +158,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         };
         _iconEditorFrame = PositionableLabel.makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
                                              "SelectMemory", _iconEditor, this);
-        _iconEditor.setPickList(PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         _iconEditor.complete(addIconAction, null, true, true);
         _iconEditor.setSelection(memory);
     }

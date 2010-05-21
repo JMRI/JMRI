@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -190,7 +190,7 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
         _iconEditorFrame = makeAddIconFrame("EditLight", "addIconsToPanel", 
                                             "SelectLight", _iconEditor, this);
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(PickListModel.lightPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {

@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -395,7 +395,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditorFrame = makeAddIconFrame("EditSensor", "addIconsToPanel", 
                                             "SelectSensor", _iconEditor, this);
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(PickListModel.sensorPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
 
 
         ActionListener addIconAction = new ActionListener() {

@@ -20,7 +20,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -274,7 +274,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         };
         _iconEditorFrame = makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
                                              "SelectMemory", _iconEditor, this);
-        _iconEditor.setPickList(PickListModel.memoryPickModelInstance());
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         _iconEditor.complete(addIconAction, null, true, true);
         _iconEditor.setSelection(memory);
     }
