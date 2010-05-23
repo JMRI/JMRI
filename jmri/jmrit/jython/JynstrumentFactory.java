@@ -73,12 +73,13 @@ public class JynstrumentFactory {
 			return null;
 		}
 
-		// must contain a xyz.py file and construct class name from filename (xyz actually) xyz class in xyz.jy file in xyz.jin folder
+		// must contain a xyz.py file and construct class name from filename (xyz actually) xyz class in xyz.py file in xyz.jin folder
 		String[] children = f.list();
 		String className = null;
+		String assumedClassName = f.getName().substring(0, f.getName().length()-4);
 		for (int i=0; i<children.length; i++)
-			if ((children[i]+".py").compareToIgnoreCase(f.getParentFile().getName()) == 0)
-				return children[i].substring(0, children[i].length() - 3); // got exact match for folder name
+			if ((children[i]).compareToIgnoreCase(assumedClassName+".py") == 0)
+				return assumedClassName; // got exact match for folder name			
 			else 
 				if (children[i].substring(children[i].length() - 3).compareToIgnoreCase(".py") == 0 )
 					className = children[i].substring(0, children[i].length() - 3); // else take whatever comes
