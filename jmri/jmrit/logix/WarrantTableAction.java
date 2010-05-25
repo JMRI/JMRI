@@ -661,6 +661,9 @@ public class WarrantTableAction extends AbstractAction {
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName);
         }
+        public boolean canAddBean() {
+            return true;
+        }
 
         public int getColumnCount () {
             return NUMCOLS;

@@ -7,10 +7,12 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.*;
 import javax.swing.table.*;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent; 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent; 
 
-public class PickPanel extends JPanel implements ListSelectionListener {
+public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
     static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     private static int ROW_HEIGHT;
@@ -18,9 +20,11 @@ public class PickPanel extends JPanel implements ListSelectionListener {
     JTable[]    _tables;
     JTabbedPane _tabPane;
 
-    JButton         _addTableButton;
-    JTextField      _sysNametext;
-    JTextField      _userNametext;
+    JPanel      _addPanel;
+    JPanel      _cantAddPanel;
+    JButton     _addTableButton;
+    JTextField  _sysNametext;
+    JTextField  _userNametext;
 
     public PickPanel(PickListModel[] models) {
         _tabPane = new JTabbedPane();
@@ -36,6 +40,7 @@ public class PickPanel extends JPanel implements ListSelectionListener {
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         add(makeAddToTablePanel(), BorderLayout.SOUTH);
+        _tabPane.addChangeListener(this);
     }
 
     private JTable makeTable(PickListModel model) {
@@ -71,8 +76,17 @@ public class PickPanel extends JPanel implements ListSelectionListener {
                     addToTable();
                 }
             };
-        return new jmri.jmrit.beantable.AddNewDevicePanel(
+        _addPanel = new jmri.jmrit.beantable.AddNewDevicePanel(
                     _sysNametext, _userNametext, "addToTable", listener);
+        _cantAddPanel = new JPanel();
+        _cantAddPanel.setLayout(new BorderLayout(5,5));
+        _cantAddPanel.add(new JLabel("Cannot add to this PickList", SwingConstants.CENTER), BorderLayout.NORTH);
+        _cantAddPanel.add(new JLabel("Open a Tools Table to add an item.", SwingConstants.CENTER), BorderLayout.SOUTH);
+        JPanel p = new JPanel();
+        p.add(_addPanel);
+        p.add(_cantAddPanel);
+        stateChanged(null);
+        return p;
     }
     void addToTable() {
         String name = _sysNametext.getText();
@@ -82,11 +96,23 @@ public class PickPanel extends JPanel implements ListSelectionListener {
             jmri.NamedBean bean = model.addBean(name, _userNametext.getText());
             int setRow = model.getIndexOf(bean);
             table.setRowSelectionInterval(setRow, setRow);
-            ((JScrollPane)_tabPane.getSelectedComponent()).getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+            JPanel p = (JPanel)_tabPane.getSelectedComponent();
+            ((JScrollPane)p.getComponent(1)).getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
         }
         _sysNametext.setText("");
     }
 
+    public void stateChanged(ChangeEvent e) {
+        JTable table = _tables[_tabPane.getSelectedIndex()];
+        PickListModel model = (PickListModel)table.getModel();
+        if (model.canAddBean()) {
+            _cantAddPanel.setVisible(false);
+            _addPanel.setVisible(true);
+        } else {
+            _addPanel.setVisible(false);
+            _cantAddPanel.setVisible(true);
+        }
+    }
 
     public void valueChanged(ListSelectionEvent e) {
         if (log.isDebugEnabled()) log.debug("ListSelectionEvent from "+e.getSource().getClass().getName()

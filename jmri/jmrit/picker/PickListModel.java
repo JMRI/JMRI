@@ -126,8 +126,16 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
 
     abstract public Manager getManager();
     abstract public NamedBean getBySystemName(String name);
+
+    /**
+    * Return bean with name given in parameter.  Create if needed and possible
+    */
     abstract public NamedBean addBean(String name);
     abstract public NamedBean addBean(String sysName, String userName);
+    /**
+    * Return true if model can create beans
+    */
+    abstract public boolean canAddBean();
 
     public Class<?> getColumnClass(int c) {
             return String.class;
@@ -300,6 +308,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         public NamedBean addBean(String sysName, String userName) {
             return manager.newTurnout(sysName, userName);
         }
+        public boolean canAddBean() {
+            return true;
+        }
     }
 
     class SensorPickModel extends PickListModel {
@@ -319,6 +330,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public NamedBean addBean(String sysName, String userName) {
             return manager.newSensor(sysName, userName);
+        }
+        public boolean canAddBean() {
+            return true;
         }
     }
 
@@ -344,6 +358,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             }
             return sh;
         }
+        public boolean canAddBean() {
+            return false;
+        }
     }
 
     class SignalMastPickModel extends PickListModel {
@@ -368,6 +385,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             }
             return sm;
         }
+        public boolean canAddBean() {
+            return false;
+        }
     }
 
 
@@ -389,6 +409,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         public NamedBean addBean(String sysName, String userName) {
             return manager.newMemory(sysName, userName);
         }
+        public boolean canAddBean() {
+            return true;
+        }
     }
 
     class ReporterPickModel extends PickListModel {
@@ -408,6 +431,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public NamedBean addBean(String sysName, String userName) {
             return manager.newReporter(sysName, userName);
+        }
+        public boolean canAddBean() {
+            return true;
         }
     }
 
@@ -429,6 +455,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         public NamedBean addBean(String sysName, String userName) {
             return manager.newLight(sysName, userName);
         }
+        public boolean canAddBean() {
+            return true;
+        }
     }
 
     class OBlockPickModel extends PickListModel {
@@ -449,6 +478,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewOBlock(sysName, userName);
         }
+        public boolean canAddBean() {
+            return true;
+        }
     }
 
     class WarrantPickModel extends PickListModel {
@@ -468,5 +500,8 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public NamedBean addBean(String sysName, String userName) {
             return manager.createNewWarrant(sysName, userName);
+        }
+        public boolean canAddBean() {
+            return true;
         }
     }

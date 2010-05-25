@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.util.List;
@@ -104,6 +104,9 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     }
     public NamedBean addBean(String sysName, String userName) {
         return manager.createNewOBlock(sysName, userName);
+    }
+    public boolean canAddBean() {
+        return true;
     }
 
     public int getColumnCount () {
