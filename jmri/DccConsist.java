@@ -65,6 +65,18 @@ public class DccConsist implements Consist, ProgListener{
 
 	// Clean Up local Storage.
 	public void dispose() {
+            for(int i=(ConsistList.size()-1);i>=0;i--){
+		DccLocoAddress loco=ConsistList.get(i);
+		if(log.isDebugEnabled()) log.debug("Deleting Locomotive: " + loco.toString());
+		try {
+                    remove(loco);
+	    	}catch (Exception ex){
+                    log.error("Error removing loco: " + loco.toString() + " from consist: " + ConsistAddress.toString());
+		}
+            }
+            ConsistList = null;
+            ConsistDir = null;
+            ConsistPosition = null;
 	}
 
 	// Set the Consist Type
@@ -188,6 +200,7 @@ public class DccConsist implements Consist, ProgListener{
 		 //String Address= Integer.toString(LocoAddress);
 		 ConsistDir.remove(LocoAddress);
 		 ConsistList.remove(LocoAddress);
+                 ConsistPosition.remove(LocoAddress);
 	         removeFromAdvancedConsist(LocoAddress);		
 	      }
 	      else {
