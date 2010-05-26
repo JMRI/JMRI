@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.4 $
+ *	@version $Revision: 1.5 $
  */
 
 import java.awt.Color;
@@ -38,6 +38,7 @@ public class WiThrottlePrefsPanel extends JPanel{
     JCheckBox powerCB;
     JCheckBox turnoutCB;
     JCheckBox routeCB;
+    JCheckBox consistCB;
 
     JButton saveB;
     JButton cancelB;
@@ -78,6 +79,7 @@ public class WiThrottlePrefsPanel extends JPanel{
         powerCB.setSelected(localPrefs.isAllowTrackPower());
         turnoutCB.setSelected(localPrefs.isAllowTurnout());
         routeCB.setSelected(localPrefs.isAllowRoute());
+        consistCB.setSelected(localPrefs.isAllowConsist());
     }
 
 /**
@@ -120,6 +122,7 @@ public class WiThrottlePrefsPanel extends JPanel{
         localPrefs.setAllowTrackPower(powerCB.isSelected());
         localPrefs.setAllowTurnout(turnoutCB.isSelected());
         localPrefs.setAllowRoute(routeCB.isSelected());
+        localPrefs.setAllowConsist(consistCB.isSelected());
 
         return didSet;
     }
@@ -210,6 +213,10 @@ public class WiThrottlePrefsPanel extends JPanel{
         routeCB = new JCheckBox(rb.getString("LabelRoute"));
         routeCB.setToolTipText(rb.getString("ToolTipRoute"));
         panel.add(routeCB);
+
+        consistCB = new JCheckBox(rb.getString("LabelConsist"));
+        consistCB.setToolTipText(rb.getString("ToolTipConsist"));
+        panel.add(consistCB);
 
         return panel;
     }

@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
@@ -24,6 +24,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     private boolean allowTrackPower = true;
     private boolean allowTurnout = true;
     private boolean allowRoute = true;
+    private boolean allowConsist = true;
     
     public WiThrottlePreferences(String fileName){
         super.openFile(fileName);
@@ -48,6 +49,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     	if ((a = child.getAttribute("isAllowTrackPower")) != null )  setAllowTrackPower(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isAllowTurnout")) != null )  setAllowTurnout(a.getValue().equalsIgnoreCase("true"));
         if ((a = child.getAttribute("isAllowRoute")) != null )  setAllowRoute(a.getValue().equalsIgnoreCase("true"));
+        if ((a = child.getAttribute("isAllowConsist")) != null )  setAllowConsist(a.getValue().equalsIgnoreCase("true"));
 
     }
 
@@ -56,6 +58,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
         if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
         if (isAllowRoute() != prefs.isAllowRoute()) return true;
+        if (isAllowConsist() != prefs.isAllowConsist()) return true;
 
         if (isUseEStop() != prefs.isUseEStop()) return true;
         if (getEStopDelay() != prefs.getEStopDelay()) return true;
@@ -74,6 +77,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         setAllowTrackPower(prefs.isAllowTrackPower());
         setAllowTurnout(prefs.isAllowTurnout());
         setAllowRoute(prefs.isAllowRoute());
+        setAllowConsist(prefs.isAllowConsist());
     }
 
     public Element store() {
@@ -86,6 +90,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         element.setAttribute("isAllowTrackPower", "" + isAllowTrackPower());
         element.setAttribute("isAllowTurnout", "" + isAllowTurnout());
         element.setAttribute("isAllowRoute", "" + isAllowRoute());
+        element.setAttribute("isAllowConsist", "" + isAllowConsist());
         setIsDirty(false);  //  Resets only when stored
         return element;
     }
@@ -154,7 +159,13 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
         allowRoute = value;
     }
 
-    
+    public boolean isAllowConsist(){
+        return allowConsist;
+    }
+    public void setAllowConsist(boolean value){
+        allowConsist = value;
+    }
+
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePreferences.class.getName());
 
 }

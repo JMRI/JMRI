@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.11 $
+ *	@version $Revision: 1.12 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -19,6 +19,14 @@ package jmri.jmrit.withrottle;
  *      'S'econdThrottle - sends to secondThrottleController
  *      'C' - Not used anymore except to provide backward compliance, same as 'T'
  *      'N'ame of device
+ *      'H' hardware info - followed by:
+ *          'U' UDID - unique device identifier
+ *      'P' panel - followed by:
+ *          'P' track power
+ *          'T' turnouts
+ *          'R' routes
+ *      'R' roster - followed by:
+ *          'C' consists
  *      'Q'uit - device has quit, close its throttleWindow
  *      '*' - heartbeat from client device ('*+' starts, '*-' stops)
  * 
@@ -26,7 +34,19 @@ package jmri.jmrit.withrottle;
  *      
  *      Track power: 'PPA' + '0' (off), '1' (on), '2' (unknown)
  *      Minimum package length of 4 char.
- *      
+ *
+ *      Send Info on routes to devices, not specific to any one route.
+ *      Format:  PRT]\[value}|{routeKey]\[value}|{ActiveKey]\[value}|{InactiveKey
+ *      Send list of routes
+ *      Format:  PRL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
+ *      States:  1 - UNKNOWN, 2 - ACTIVE, 4 - INACTIVE (based on turnoutsAligned sensor, if used)
+ *
+ *      Send Info on turnouts to devices, not specific to any one turnout.
+ *      Format:  PTT]\[value}|{turnoutKey]\[value}|{closedKey]\[value}|{thrownKey
+ *      Send list of turnouts
+ *      Format:  PTL]\[SysName}|{UsrName}|{CurrentState]\[SysName}|{UsrName}|{CurrentState
+ *      States:  1 - UNKNOWN, 2 - CLOSED, 4 - THROWN
+ *
  *      Roster is sent formatted: ]\[ separates roster entries, }|{ separates info in each entry
  *      e.g.  RL###]\[RVRR1201}|{1201}|{L]\[Limited}|{8165}|{L]\[
  * 
@@ -36,6 +56,9 @@ package jmri.jmrit.withrottle;
  *      Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of seconds until eStop
  *      This class sends initial to device, but does not start monitoring until it gets a response of '*+'
  *      Device should send heartbeat to server in shorter time than eStop
+ *
+ *      Alert message: 'HM' + message to display.
+ *      Cannot have newlines in body of text, only at end of message.
  *
  */
 
@@ -87,6 +110,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private RouteController routeC = null;
     private boolean isTurnoutAllowed;
     private boolean isRouteAllowed;
+    private ConsistController consistC = null;
+    private boolean isConsistAllowed;
 
     List <RosterEntry> rosterList;
 
@@ -251,6 +276,19 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                             break;
                         }   //  end panel block
 
+                        case 'R':{  //  Start 'R'oster case
+                            switch (inPackage.charAt(1)){
+                                case 'C':{
+                                    if (isConsistAllowed){
+                                        consistC.handleMessage(inPackage.substring(2));
+                                    }
+                                    break;
+                                }
+                            }
+
+                            break;
+                        }   //  end roster block
+
                         case 'Q':{
                             if (secondThrottleController != null){
                                 secondThrottleController.sort(inPackage);
@@ -304,6 +342,9 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         }
         if (routeC != null){
             routeC.removeControllerListener(this);
+        }
+        if (consistC != null){
+            consistC.removeControllerListener(this);
         }
 
         closeSocket();
@@ -381,6 +422,22 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 routeC.sendTitles();
                 routeC.sendList();
             }
+        }
+        
+        //  Consists can be selected regardless of pref, as long as there is a ConsistManager.
+        consistC = WiThrottleManager.consistControllerInstance();
+        if (consistC.verifyCreation()){
+            if (log.isDebugEnabled()) log.debug("Consist Controller valid.");
+            isConsistAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowConsist();
+            consistC.addControllerListener(this);
+            consistC.setIsConsistAllowed(isConsistAllowed);
+            consistC.sendConsistListType();
+
+            consistC.sendAllConsistData();
+        }
+
+        //  This checks prefs to see if make & break consists is allowed.
+        if (isConsistAllowed){
         }
     }
 

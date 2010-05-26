@@ -5,7 +5,7 @@ import jmri.jmrit.XmlFile;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 public class WiThrottleManager {
@@ -15,6 +15,7 @@ public class WiThrottleManager {
     private TrackPowerController trackPowerController = null;
     private TurnoutController turnoutController = null;
     private RouteController routeController = null;
+    private ConsistController consistController = null;
 
     private WiThrottlePreferences withrottlePreferences = null;
     
@@ -22,6 +23,7 @@ public class WiThrottleManager {
         trackPowerController = new TrackPowerController();
         turnoutController = new TurnoutController();
         routeController = new RouteController();
+        consistController = new ConsistController();
         withrottlePreferences = new WiThrottlePreferences(XmlFile.prefsDir()+ "throttle" +File.separator+ "WiThrottlePreferences.xml");
     }
 
@@ -41,6 +43,10 @@ public class WiThrottleManager {
 
     static public RouteController routeControllerInstance(){
         return instance().routeController;
+    }
+
+    static public ConsistController consistControllerInstance(){
+        return instance().consistController;
     }
 
     static public WiThrottlePreferences withrottlePreferencesInstance(){
