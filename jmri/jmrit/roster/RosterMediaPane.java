@@ -100,7 +100,7 @@ public class RosterMediaPane extends javax.swing.JPanel {
 		JTable jtAttributes = new JTable();
 		jtAttributes.setModel(rosterAttributesModel);
 		JScrollPane jsp = new JScrollPane(jtAttributes);
-		jtAttributes.setFillsViewportHeight(true);
+//		jtAttributes.setFillsViewportHeight(true); // Java 1.6 only
 
 
 		JPanel mediap = new JPanel();
