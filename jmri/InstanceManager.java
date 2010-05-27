@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.65 $
+ * @version			$Revision: 1.66 $
  */
 public class InstanceManager {
 
@@ -71,7 +71,7 @@ public class InstanceManager {
      * store(d). 
      *
      * Someday, we may provide another way to set the default
-     * but for now it's the first one stored
+     * but for now it's the last one stored
      */
     @SuppressWarnings("unchecked")   // checked by construction
     static public <T> T getDefault(Class<T> type) {
@@ -79,6 +79,23 @@ public class InstanceManager {
         if (l == null) return null;
         if (l.size()<1) return null;
         return (T)l.get(l.size()-1);
+    }
+    
+    /**
+     * Set an object of type T as the default for that type 
+     *
+     * Now, we do that moving the item to the front;
+     * see the getDefault() method
+     */
+    @SuppressWarnings("unchecked")   // checked by construction
+    static public <T> void setDefault(Class<T> type, T val) {
+        List<Object> l = getList(type);
+        if (l == null || (l.size()<1) ) {
+            store(val, type);
+            l = getList(type);
+        }
+        l.remove(val);
+        l.add(val);
     }
     
     /**
