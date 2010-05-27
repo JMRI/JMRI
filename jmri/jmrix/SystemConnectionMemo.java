@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -137,6 +137,20 @@ abstract public class SystemConnectionMemo {
             return true;
         }
         return false;
+    }
+    
+    /** 
+     * Does this connection provide a manager of this type?
+     */
+    public boolean provides(Class c) {
+        return false; // nothing, by default
+    }
+    
+    /** 
+     * Does this connection provide a manager of this type?
+     */
+    public <T> T get(Class T) {
+        return null; // nothing, by default
     }
     
     public void dispose(){
