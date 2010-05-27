@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -56,9 +56,6 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         
         // initialize slot array
         for (int i=0; i<=127; i++) _slots[i] = new LocoNetSlot(i);
-
-        // register this as the default, register as the Programmer
-        jmri.InstanceManager.setProgrammerManager(new LnProgrammerManager(this));
 
         // listen to the LocoNet
         tc.addLocoNetListener(~0, this);

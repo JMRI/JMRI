@@ -30,7 +30,7 @@ import java.io.InputStreamReader;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class LnHexFilePort extends LnPortController implements Runnable, jmri.jmrix.SerialPortAdapter {
 
@@ -47,7 +47,6 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
             log.error("init (pipe): Exception: "+e.toString());
         }
         adaptermemo = new LocoNetSystemConnectionMemo();
-        //System.out.println(adaptermemo.getUserName());
     }
     
     LocoNetSystemConnectionMemo adaptermemo = null;

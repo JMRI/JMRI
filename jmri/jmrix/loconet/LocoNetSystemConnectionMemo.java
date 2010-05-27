@@ -2,7 +2,7 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.InstanceManager;
+import jmri.*;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -65,6 +65,17 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     }
     private LnMessageManager lnm = null;
     
+    private ProgrammerManager programmerManager;
+    
+    public ProgrammerManager getProgrammerManager() {
+        if (programmerManager == null)
+            programmerManager = new LnProgrammerManager(getSlotManager());
+        return programmerManager;
+    }
+    public void setProgrammerManager(ProgrammerManager p) {
+        programmerManager = p;
+    }
+    
     /**
      * Configure the programming manager and "command station" objects
      * @param mCanRead
@@ -85,6 +96,24 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
     }
 
+    /** 
+     * Currently provides only Programmer this way
+     */
+    public boolean provides(Class type) {
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        return false; // nothing, by default
+    }
+    
+    /** 
+     * Currently provides only Programmer this way
+     */
+    public Object get(Class type) {
+        if (type.equals(jmri.ProgrammerManager.class))
+            return getProgrammerManager();
+        return null; // nothing, by default
+    }
+        
     /**
      * Configure the common managers for LocoNet connections.
      * This puts the common manager config in one
@@ -108,6 +137,9 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         InstanceManager.setThrottleManager(
             new jmri.jmrix.loconet.LnThrottleManager(getSlotManager()));
+
+        jmri.InstanceManager.setProgrammerManager(
+            getProgrammerManager());
 
         InstanceManager.setReporterManager(
             new jmri.jmrix.loconet.LnReporterManager(getLnTrafficController(), getSystemPrefix()));

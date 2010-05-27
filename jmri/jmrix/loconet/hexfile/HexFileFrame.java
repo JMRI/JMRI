@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.30 $
+ * @version                     $Revision: 1.31 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -160,8 +160,10 @@ public class HexFileFrame extends JmriJFrame {
         port.getAdapterMemo().configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one
-        jmri.InstanceManager.setProgrammerManager(
+        port.getAdapterMemo().setProgrammerManager(
                 new jmri.progdebugger.DebugProgrammerManager());
+        jmri.InstanceManager.setProgrammerManager(
+                port.getAdapterMemo().getProgrammerManager());
 
         // Install a debug throttle manager, replacing the existing LocoNet one
         jmri.InstanceManager.setThrottleManager(
