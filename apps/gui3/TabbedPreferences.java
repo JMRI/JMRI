@@ -23,7 +23,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -31,8 +31,8 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
     
-    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"),"WiThrottle"};
-    String listRefValues[] = { "CONNECTIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
+    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
+    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -133,10 +133,12 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.add(connectionPanel, "CONNECTIONS");
         GuiLafConfigPane gui;
 
+        JTabbedPane defaultsPanel = new JTabbedPane();
         JTabbedPane startupPanel = new JTabbedPane();
         JTabbedPane displayPanel = new JTabbedPane();
         JTabbedPane rosterPanel = new JTabbedPane();
 
+        detailpanel.add(defaultsPanel, "DEFAULTS");
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
         detailpanel.add(throttlePreferences, "THROTTLE");
@@ -145,8 +147,12 @@ public class TabbedPreferences extends AppConfigBase {
         detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
 
 
+        addItem(defaultsPanel, rb.getString("TabbedLayoutDefaults"),
+                    "LabelTabbedLayoutDefaults", new apps.ManagerDefaultsConfigPane(), true, null);
+
         addItem(rosterPanel, rb.getString("TabbedLayoutProgrammer"),
                     "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
+
         addItem(startupPanel, rb.getString("TabbedLayoutStartupActions"),
                     "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutCreateButton"),
@@ -155,6 +161,7 @@ public class TabbedPreferences extends AppConfigBase {
                     "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true, null);
         addItem(startupPanel, rb.getString("TabbedLayoutStartupScripts"),
                     "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true, null);
+
         addItem(displayPanel, rb.getString("TabbedLayoutGUI"),
                     "LabelTabbedLayoutGUI", gui = new GuiLafConfigPane(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutLocale"),
