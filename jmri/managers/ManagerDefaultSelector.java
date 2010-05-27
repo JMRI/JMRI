@@ -23,7 +23,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
@@ -37,9 +37,9 @@ public class ManagerDefaultSelector {
      * Return the userName of the system
      * that provides the default instance
      * for a specific class.
-     * @parameter managerClass the specific type, e.g. TurnoutManager,
+     * @param managerClass the specific type, e.g. TurnoutManager,
      *          for which a default system is desired
-     * @returns userName of the system, or null if none set
+     * @return userName of the system, or null if none set
      */
     public String getDefault(Class managerClass) {
         return defaults.get(managerClass);
