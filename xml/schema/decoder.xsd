@@ -3,7 +3,7 @@
 
 <!-- Schema for JMRI decoder definitions       -->
 
-<!-- $Id: decoder.xsd,v 1.14 2010-05-10 03:32:46 jacobsen Exp $ -->
+<!-- $Id: decoder.xsd,v 1.15 2010-05-28 06:05:47 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
 <!--                                                                        -->
@@ -273,6 +273,9 @@
                 </xs:documentation></xs:annotation>
                 <xs:complexType>
                   <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element ref="docbook:copyright" minOccurs="0" maxOccurs="1" />
+                    <xs:element ref="docbook:authorgroup" minOccurs="0" maxOccurs="unbounded" />
+                    <xs:element ref="docbook:revhistory" minOccurs="0" maxOccurs="unbounded" />
                     <xs:element name="enumChoice" >
                       <xs:complexType>
                         <xs:sequence minOccurs="0" maxOccurs="unbounded">
