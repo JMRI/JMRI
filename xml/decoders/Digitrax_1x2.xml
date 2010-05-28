@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2005, 2007 All rights reserved -->
-<!-- $Id: Digitrax_1x2.xml,v 1.31 2010-05-10 03:38:51 jacobsen Exp $ -->
+<!-- $Id: Digitrax_1x2.xml,v 1.32 2010-05-28 06:00:56 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -264,56 +264,7 @@
         <label>Addressing Mode</label>
       </variable>
       <variable label="Forward light F0F effect generated" CV="49" mask="XXXXVVVV" item="Function F0F effect generated">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Forward light F0F effect generated</label>
       </variable>
       <variable label="Forward light F0F behavior" CV="49" mask="VVVVXXXX" item="Function F0F behavior">
@@ -370,56 +321,7 @@
         <label>Forward light F0F behavior</label>
       </variable>
       <variable label="Reverse light F0R effect generated" CV="50" mask="XXXXVVVV" item="Function F0R effect generated">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Reverse light F0R effect generated</label>
       </variable>
       <variable label="Reverse light F0R behavior" CV="50" mask="VVVVXXXX" item="Function F0R behavior">
@@ -476,56 +378,7 @@
         <label>Reverse light F0R behavior</label>
       </variable>
       <variable label="Function 1 effect generated" CV="51" mask="XXXXVVVV" minFn="1">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 1 effect generated</label>
       </variable>
       <variable label="Function 1 behavior" CV="51" mask="VVVVXXXX" minFn="1">
@@ -582,56 +435,7 @@
         <label>Function 1 behavior</label>
       </variable>
       <variable label="Function 2 effect generated" CV="52" mask="XXXXVVVV" minFn="2">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 2 effect generated</label>
       </variable>
       <variable label="Function 2 behavior" CV="52" mask="VVVVXXXX" minFn="2">
@@ -688,56 +492,7 @@
         <label>Function 2 behavior</label>
       </variable>
       <variable label="Function 3 effect generated" CV="53" mask="XXXXVVVV" minFn="3">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 3 effect generated</label>
       </variable>
       <variable label="Function 3 behavior" CV="53" mask="VVVVXXXX" minFn="3">
@@ -794,56 +549,7 @@
         <label>Function 3 behavior</label>
       </variable>
       <variable label="Function 4 effect generated" CV="54" mask="XXXXVVVV" minFn="4">
-        <enumVal>
-          <enumChoice choice="Normal function of lead">
-            <choice>Normal function of lead</choice>
-          </enumChoice>
-          <enumChoice choice="Random flicker">
-            <choice>Random flicker</choice>
-          </enumChoice>
-          <enumChoice choice="Mars light">
-            <choice>Mars light</choice>
-          </enumChoice>
-          <enumChoice choice="Flashing head light">
-            <choice>Flashing head light</choice>
-          </enumChoice>
-          <enumChoice choice="Single pulse strobe">
-            <choice>Single pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Double pulse strobe">
-            <choice>Double pulse strobe</choice>
-          </enumChoice>
-          <enumChoice choice="Rotary beacon simulation">
-            <choice>Rotary beacon simulation</choice>
-          </enumChoice>
-          <enumChoice choice="Gyralite">
-            <choice>Gyralite</choice>
-          </enumChoice>
-          <enumChoice choice="Rule 17 dimmable headlight">
-            <choice>Rule 17 dimmable headlight</choice>
-          </enumChoice>
-          <enumChoice choice="FRED end of train light">
-            <choice>FRED end of train light</choice>
-          </enumChoice>
-          <enumChoice choice="Right ditch light; when F2 on, flashes alternately">
-            <choice>Right ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Left ditch light; when F2 on, flashes alternately">
-            <choice>Left ditch light; when F2 on, flashes alternately</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0C)">
-            <choice>Reserved (0x0C)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0D)">
-            <choice>Reserved (0x0D)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0E)">
-            <choice>Reserved (0x0E)</choice>
-          </enumChoice>
-          <enumChoice choice="Reserved (0x0F)">
-            <choice>Reserved (0x0F)</choice>
-          </enumChoice>
-        </enumVal>
+        <xi:include href="http://jmri.org/xml/decoders/digitrax/effectgen.xml"/>
         <label>Function 4 effect generated</label>
       </variable>
       <variable label="Function 4 behavior" CV="54" mask="VVVVXXXX" minFn="4">
