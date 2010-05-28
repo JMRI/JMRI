@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TransitAddEdit.shtml,v 1.5 2010-03-30 15:47:52 djduchamp Exp $ -->
+<!-- $Id: TransitAddEdit.shtml,v 1.6 2010-05-28 19:03:27 djduchamp Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -46,7 +46,8 @@ from the User Name of other Transits will be accepted, but it's
 wise to use a string that describes the intended use of the Transit.</p>
 </li>
 <li><p>Next add <b>Sections</b> to the Transit.  Every Transit must have at least 
-one Section, but most will have many more. Sections must be connected,and must 
+two Sections, but most will have many more. Two "Primary" Sections are needed to 
+define the direction of the Transit. Sections must be connected,and must 
 be entered in order. Select the Section you would like to begin the Transit 
 in the upper popup menu. At any point during Section addition, this popup menu lists 
 only those Sections that are eligible for addition. Click <b>Add Next Section</b> 

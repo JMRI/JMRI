@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 
@@ -214,7 +214,6 @@ public class TransitTableAction extends AbstractTableAction {
 	private ArrayList<Section> sectionList = new ArrayList<Section>();
 	private int[] direction = new int[150];
 	private int[] sequence = new int[150];
-//	@SuppressWarnings("raw")
 	@SuppressWarnings("unchecked")
 	private ArrayList<TransitSectionAction>[] action = new ArrayList[150]; 
 	private boolean[] alternate = new boolean[150];
@@ -452,7 +451,7 @@ public class TransitTableAction extends AbstractTableAction {
 				curSequenceNum = sequence[index];
 				if (index>0) curSectionDirection = direction[index];
 				index --;
-				while (alternate[index] && (index>=0)) index--;
+				while ( (index>=0) && alternate[index] ) index--;
 				if (index>=0) {
 					prevSection = sectionList.get(index);
 					prevSectionDirection = direction[index];
@@ -592,7 +591,7 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 	}
 	private boolean checkTransitInformation() {
-		if (sectionList.size()<=0) {
+		if ( (sectionList.size()<=1) || (curSequenceNum<=1) ) {
 			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
 					.getString("Message26"), rbx.getString("ErrorTitle"),
 					javax.swing.JOptionPane.ERROR_MESSAGE);			
@@ -614,8 +613,10 @@ public class TransitTableAction extends AbstractTableAction {
 				return false;
 			}
 			ArrayList<TransitSectionAction> list = action[i];
-			for (int j=0; j<list.size(); j++) {
-				ts.addAction(list.get(j));
+			if (list!=null) {
+				for (int j=0; j<list.size(); j++) {
+					ts.addAction(list.get(j));
+				}
 			}
 			curTransit.addTransitSection(ts);
 		}
@@ -1570,8 +1571,6 @@ public class TransitTableAction extends AbstractTableAction {
 		return s;
 	}
 	
-    //private boolean noWarn = false;
-	
 	/**
 	 * Table model for Sections in Create/Edit Transit window
 	 */
@@ -1613,8 +1612,6 @@ public class TransitTableAction extends AbstractTableAction {
 		public boolean isCellEditable(int r, int c) {
 			if ( c==ACTION_COLUMN ) 
 				return (true);
-//			if ( ( c==DATA_COLUMN ) && ( action[r]==TransitSection.PAUSE ) )
-//				return (true);
 			return (false);
 		}
 
