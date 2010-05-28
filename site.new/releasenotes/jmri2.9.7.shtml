@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.7.shtml,v 1.4 2010-05-20 01:34:45 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.7.shtml,v 1.5 2010-05-28 00:17:05 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -42,7 +42,7 @@ And please back up your JMRI files before installing this, in case you want to g
 back to an earlier version.
 
 <p>This is the seventh in a series of test versions. We expect this series
-to end in a JMRI 2.10 (or perhaps JMRI 3.0) production release in Summer 2010. 
+to end in a JMRI 2.10 production release in Summer 2010. 
 
 <p>
 It contains 
@@ -189,7 +189,7 @@ The LocoNet ID tool now displays multiple received IDs, so you can tell if all y
 
 <p>
 Lionel Jeanson added a work-around so that jynstrument customizations would work even if
-the file was dropped instead of properly dropping the folder.
+the file was dropped instead of properly dropping the folder, and fixed a bug in finding the proper folders.
 
 <p>
 Kevin Dickerson fixed a problem with SPROG throttles.
