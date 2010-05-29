@@ -18,12 +18,13 @@ package jmri.jmrit.withrottle;
  *	di'R'ection (0=reverse, 1=forward)
  *	'L'ong address #, 'S'hort address #     e.g. L1234
  *      'r'elease, 'd'ispatch
+ *      'C'consist address, followed by S#
  *	'I'dle (defaults to this if it falls through the tree) !! Needs to change to nothing on default
  *          idle needs to be called specifically
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.4 $
+ *	@version $Revision: 1.5 $
  */
 
 import java.lang.reflect.Method;
@@ -172,6 +173,23 @@ public class ThrottleController implements AddressListener{
                         setAddress(addr, false);
                         break;
 
+                case 'C':       /*      Sets a consist address to follow the 'lead" loco,
+                                 *      which should be already set.
+                                 *      This is used to control speed an direction on the
+                                 *      consist address, but have functions mapped to lead.
+                                 */
+                    addr = Integer.parseInt(inPackage.substring(2));
+                    if (inPackage.charAt(1) == 'S'){
+                        if (log.isDebugEnabled()) log.debug("Setting consist address: "+inPackage);
+                        setAddress(addr, false);
+                    }else{
+                        log.warn("Consists do not currently support long address!");
+                        //setAddress(addr, true);
+                    }
+                    
+                    
+                    break;
+                    
                 case 'I':
                     idle();
                     break;
