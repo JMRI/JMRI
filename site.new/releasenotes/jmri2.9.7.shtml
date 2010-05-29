@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.7.shtml,v 1.5 2010-05-28 00:17:05 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.7.shtml,v 1.6 2010-05-29 05:28:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -193,6 +193,22 @@ the file was dropped instead of properly dropping the folder, and fixed a bug in
 
 <p>
 Kevin Dickerson fixed a problem with SPROG throttles.
+
+<p>
+Brett Hoffman added consist selection to the WiThrottle support.
+
+<p>
+When using multiple LocoNet connections, there's now a preference that lets you pick which one
+will be used for CV programming.
+
+<p>
+Lionel Jeanson added a table in the DecoderPro "Roster Media" pane for updating roster attributes.
+
+<p>
+Pete Cressman improved the Warrant Table and OBlock Table
+
+
+
 
 <!--#include virtual="/Footer" -->
 
