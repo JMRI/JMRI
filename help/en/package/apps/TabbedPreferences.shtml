@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.6 2010-04-11 16:37:10 bhoffman351 Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.7 2010-05-29 02:55:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -34,10 +34,12 @@ Clicking on each preference will then populate the right hand side, with the var
 <img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
 <p>
 <a href="#Connection">Connections</a><br>
+<a href="#Defaults">Defaults</a><br>
 <a href="#Startup">Start Up</a><br>
 <a href="#Display">Display</a><br>
 <a href="#Messages">Messages</a><br>
 <a href="#Roster">Roster</a><br>
+<a href="#Throttle">Throttle</a><br>
 <a href="#WiThrottle">WiThrottle</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
@@ -46,18 +48,17 @@ Be sure to click "Save" when leaving this window.  Your changes to the preferenc
 don't take effect until the program is stopped and restarted, so the
 program will prompt you to do that after saving the preferences.
 
+<p>
 <img src="../../images/bangdesk.gif" align="right" height="45" width="45" alt="Cute image of work">
 This page is under construction. 
 In the meantime, there's some more information on preferences
 on some 
 <a href="../../manual/Getting_Started.shtml#Preferences">tutorial pages</a>.
-<p>
+
 <a name="Connection">
 <h2>Connections</h2></a>
-<p>
-<dl>
-<dt>Layout Connection
-<dd>You can select any of the various JMRI layout connections here.<p>
+
+You can select any of the various JMRI layout connections here.<p>
 Each connection has its own unique tab, to get started, first select your DCC System Manufacturer,
 followed by the type of connection that you are using.  You will then be presented with a series of 
 most commonly required settings that need to be set.  If you need to change some of the more advanced 
@@ -70,16 +71,21 @@ and this will remove the configuration for that connection.
 <p>
 For more information on how to configure this for your particular hardware,
 see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
-
+<p>
 Remember to press save!
 
-</dl>
-<dl>
+<a name="Defaults">
+<h2>Defaults</h2></a>
+
+If you are using multiple connections of the same type, e.g. multiple
+LocoNet connections, this pane lets you select which one is connected
+to e.g. the CV programmer you want to use.
+
 <a name="Startup">
 <h2>Start Up</h2></a>
 This deals with all the preferences that are invoked at start up such as loading panel files and running scripts.
-<a name="actions">
-<dt>Actions</a>
+<dl>
+<dt>Actions
 <dd>
 This section lets you have the program automatically
 execute various menu selections at startup.  For example,
@@ -92,7 +98,7 @@ From the list that's presented, select "Open Turnout Table".
 Don't forget
 to save your updated preferences with the button at the bottom of the screen!
 
-<dt>Create buttons on the main screen
+<dt>Buttons
 <dd>
 This allows you to add extra buttons to the main JMRI window
 that are connected to specific menu choices.
@@ -106,7 +112,7 @@ Don't forget
 to save your updated preferences with the button at the bottom of the screen!
 The button will appear when you next start the program.
 
-<dt>Load panel files at startup
+<dt>Files
 <dd>
 This section lets you automatically load panel files when the program
 starts up.  The previous sections will have already executed, so any actions
@@ -118,7 +124,7 @@ Click "Add File", which will open a file section window in which you can select 
 desired file.  If you later want to stop loading the file at startup, 
 click the "Remove" button next to the filename.
 
-<dt>Run scripts at startup
+<dt>Scripts
 <dd>
 This section lets you automatically run a script file when the program
 starts up.  The previous sections will have already executed, so any actions
@@ -133,10 +139,12 @@ desired file.  If you later want to stop executing a particular script at startu
 click the "Remove" button next to the filename.
 </dl>
 
-<dl>
+
 <a name="Display">
 <h2>Display</h2></a>
-<dt>GUI Style
+
+<dl>
+<dt>GUI
 <dd>These radio boxes allow you to select how the program looks.
 The available choices depend on what kind of computer you have, and not 
 all of the following may be available:
@@ -149,7 +157,6 @@ all of the following may be available:
     <li>Mac OS X - only available on MacOS, this makes the program look
         like a Macintosh application
     </ul>
-<a name="locale">
 <dt>Locale
 <dd><a href="../../Acknowledgements.shtml">Many people</a> have contributed "internationalizations"
 of JMRI.  This converts (much) of the text on the screen to a language
@@ -162,24 +169,19 @@ new and improved translations, please see our
 <a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
 </dl>
 
-<dl>
+
 <a name="Messages">
 <h2>Messages</h2></a>
 This allows you to change the way that information and warning messages are displayed in JMRI.  <br>
 It will also allow you to configure a default responses and the question being displayed.
-</dl>
 
-<dl>
+
+
 <a name="Roster">
 <h2>Roster</h2></a>
 
-	<dt>Programmer Defaults
-	<dd>This section has a checkbox that lets you decide whether the DecoderPro
-programmer will display empty panes (tabs). Some people like to see them, even though they're empty,
-some people would prefer not to see them, so they don't keep trying to look at them.  We
-provide this preference so you can choose.
-
-<dt>Programmer Defaults
+<dl>
+<dt>Programmer
 <dd>The DecoderPro programmer allows you to select how much or how little
 to display of the decoder content using configurable "Programmers". You 
 can select one at the same time you 
@@ -187,8 +189,16 @@ can select one at the same time you
 but this provides a convenient place to set a default so you don't
 have to select it each time you open a decoder.
 
+<p>
+This section also has a checkbox that lets you decide whether the DecoderPro
+programmer will display empty panes (tabs). 
+Some people like to see them, even though they're empty,
+some people would prefer not to see them, 
+so they don't keep trying to look at them.  
+We provide this preference so you can choose.
+
 <a id="roster">
-<dt>Set the location of the roster
+<dt>Roster
 <dd>
 Normally, the roster is stored in a standard location
 as part of the
@@ -209,14 +219,16 @@ existing entries, even if changed.
 
 </dl>
 
-<dl>
+<a name="Throttle">
+<h2>Throttle</h2></a>
+
+This preference pane lets you select whether the extended throttle
+features are available, and which ones can be used.
+
 <a name="WiThrottle">
 <h2>WiThrottle</h2></a>
-<dt>WiFi throttles
-<dd>"Apply" will change the preferences temporarily, until JMRI is quit.
-<p>
-"Save" will store the changes for future sessions of JMRI.
 
+<dl>
 <dt>eStop
 
 <dd>If selected,
@@ -240,8 +252,16 @@ This will let you to limit what users have the ability to control.
 <ul>
     <li>Track Power - Select whether mobile devices connected through
         this WiFi interface can control track power.
+    <li>Turnouts - 
+    <li>Routes - 
+    <li>Consists -
 </ul>
 </dl>
+
+The "Apply" button puts the current settings into effect, without
+saving them permanently.  For a connected throttle to use the
+new settings, its connection must be closed and reopened.
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
