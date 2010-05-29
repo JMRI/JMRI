@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class ActivateTrainFrame {
 
@@ -546,9 +546,9 @@ public class ActivateTrainFrame {
 			List<String> l = TrainManager.instance().getTrainsByNameList();
 			if (l.size()>0) {
 				for (int i = 0; i<l.size(); i++) {
-					String rName = l.get(i);
-					Train t = TrainManager.instance().getTrainByName(rName);
+					Train t = TrainManager.instance().getTrainById(l.get(i));
 					if (t!=null) {
+						String rName = t.getName();
 						if (isTrainFree(rName)) {
 							trainSelectBox.addItem(rName);
 						}
