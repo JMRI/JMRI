@@ -12,7 +12,7 @@ import jmri.jmrit.consisttool.ConsistFile;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 public class ConsistController extends AbstractController{
     
@@ -127,7 +127,6 @@ public class ConsistController extends AbstractController{
      */
     private void reorderConsist(String message){
         Consist consist;
-       // List<String> tempList = ;
         List<String> headerAndLocos = Arrays.asList(message.split("<:>"));
         
         if (headerAndLocos.size()<2){
@@ -136,7 +135,6 @@ public class ConsistController extends AbstractController{
         }
 
         try{
-       //     log.debug("old consist: "+headerAndLocos.size() + " Header: "+headerAndLocos.get(0));
             List<String> headerData = Arrays.asList(headerAndLocos.get(0).split("<;>"));
             //  
             consist = manager.getConsist(stringToDcc(headerData.get(1)));
@@ -148,7 +146,7 @@ public class ConsistController extends AbstractController{
              * and reinsert it at the front of the list.
              */
             for (String loco : locoData){
-                ArrayList conList = consist.getConsistList();
+                ArrayList<DccLocoAddress> conList = consist.getConsistList();
                 int index = conList.indexOf(stringToDcc(loco));
                 if (index != -1){
                     conList.add(conList.remove(index));
