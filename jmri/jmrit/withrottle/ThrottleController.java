@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  */
 
 import java.lang.reflect.Method;
@@ -50,6 +50,8 @@ public class ThrottleController implements AddressListener{
     private boolean isAddressSet;
     public boolean confirm = false;
     private ArrayList<ThrottleControllerListener> listeners;
+    private boolean useLeadLocoF;
+    ConsistFunctionController leadLocoF = null;
 
 /**
  *  Constructor.
@@ -146,8 +148,11 @@ public class ThrottleController implements AddressListener{
                         break;
 
                 case 'F':	//	Function
+                    if (useLeadLocoF){
+                        leadLocoF.handleMessage(inPackage);
+                    }else{
                         handleFunction(inPackage);
-
+                    }
                         break;
 
                 case 'R':	//	Direction
@@ -156,24 +161,47 @@ public class ThrottleController implements AddressListener{
 
                 case 'r':	//	Release
                         addressPanel.releaseAddress();
+                        clearLeadLoco();
                         break;
 
                 case 'd':	//	Dispatch
                         addressPanel.dispatchAddress();
+                        clearLeadLoco();
                         break;
 
                 case 'L':	//	Set a Long address.
                         addressPanel.dispatchAddress();
+                        clearLeadLoco();
                         int addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, true);
                         break;
 
                 case 'S':	//	Set a Short address.
                         addressPanel.dispatchAddress();
+                        clearLeadLoco();
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
                     
+                case 'C':       /*      
+                                 *      This is used to control speed an direction on the
+                                 *      consist address, but have functions mapped to lead.
+                                 */
+                    addr = Integer.parseInt(inPackage.substring(2));
+                    //if (inPackage.charAt(1) == 'S'){
+                        if (log.isDebugEnabled()) log.debug("Setting consist address: "+inPackage);
+                        clearLeadLoco();
+                        leadLocoF = new ConsistFunctionController(new DccLocoAddress(addr, (inPackage.charAt(1) != 'S')));
+                        useLeadLocoF = leadLocoF.verifyCreation();
+                        if (!useLeadLocoF) {
+                            log.warn("Lead loco address not available.");
+                            leadLocoF = null;
+                        }
+                    
+
+
+                    break;
+
                 case 'I':
                     idle();
                     break;
@@ -211,7 +239,13 @@ public class ThrottleController implements AddressListener{
 
     }
 
-
+    private void clearLeadLoco(){
+        if (useLeadLocoF){
+            leadLocoF.dispose();
+            leadLocoF = null;
+            useLeadLocoF = false;
+        }
+    }
 
 
 //  Device is quitting or has lost connection
@@ -226,6 +260,7 @@ public class ThrottleController implements AddressListener{
         }catch (NullPointerException e){
             log.warn("No throttle frame to shutdown");
         }
+        clearLeadLoco();
     }
 
 //  ControlPanel methods
@@ -328,7 +363,7 @@ public class ThrottleController implements AddressListener{
         }
 
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleController.class.getName());
 
 }
