@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -149,8 +149,19 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     public void setAppearances(String aspect, List<NamedBeanHandle<SignalHead>> heads) {
         if (systemDefn != null && systemDefn.checkAspect(aspect))
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
+        if (heads.size() > table.get(aspect).length)
+            log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" but only "+table.get(aspect).length+" settings");
         for (int i = 0; i < heads.size(); i++) {
+            // some extensive checking
+            if (heads.get(i) == null)
+                log.error("Null head "+i+" in setAppearances");
+            if (heads.get(i).getBean() == null)
+                log.error("Could not get bean for head "+i+" in setAppearances");
+            if (table.get(aspect) == null)
+                log.error("Couldn't get table array for aspect \""+aspect+"\" in setAppearances");
+
             heads.get(i).getBean().setAppearance(table.get(aspect)[i]);
+
             if (log.isDebugEnabled()) log.debug("Setting "+heads.get(i).getBean().getSystemName()+" to "+
                                                 heads.get(i).getBean().getAppearanceName(table.get(aspect)[i]));
         }
