@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.5 $
+ *	@version $Revision: 1.6 $
  */
 
 import java.lang.reflect.Method;
@@ -36,6 +36,7 @@ import jmri.jmrit.throttle.ControlPanel;
 
 import javax.swing.JSlider;
 import java.util.ArrayList;
+import jmri.DccLocoAddress;
 
 
 public class ThrottleController implements AddressListener{
@@ -172,23 +173,6 @@ public class ThrottleController implements AddressListener{
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
-
-                case 'C':       /*      Sets a consist address to follow the 'lead" loco,
-                                 *      which should be already set.
-                                 *      This is used to control speed an direction on the
-                                 *      consist address, but have functions mapped to lead.
-                                 */
-                    addr = Integer.parseInt(inPackage.substring(2));
-                    if (inPackage.charAt(1) == 'S'){
-                        if (log.isDebugEnabled()) log.debug("Setting consist address: "+inPackage);
-                        setAddress(addr, false);
-                    }else{
-                        log.warn("Consists do not currently support long address!");
-                        //setAddress(addr, true);
-                    }
-                    
-                    
-                    break;
                     
                 case 'I':
                     idle();
@@ -214,7 +198,7 @@ public class ThrottleController implements AddressListener{
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
-                
+                        
                 default:
                         break;
             }
