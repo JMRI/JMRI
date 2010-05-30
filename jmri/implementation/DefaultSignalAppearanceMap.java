@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -150,7 +150,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         if (systemDefn != null && systemDefn.checkAspect(aspect))
             log.warn("Attempt to set "+getSystemName()+" to undefined aspect: "+aspect);
         if (heads.size() > table.get(aspect).length)
-            log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" but only "+table.get(aspect).length+" settings");
+            log.warn("setAppearance to \""+aspect+"\" finds "+heads.size()+" heads but only "+table.get(aspect).length+" settings");
+
         for (int i = 0; i < heads.size(); i++) {
             // some extensive checking
             if (heads.get(i) == null)
