@@ -36,7 +36,7 @@ import java.util.Vector;
  *
  * @author			Bob Jacobsen Copyright (C) 2002, 2008
  * @author			Pete Cressman Copyright (C) 2009
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public interface SignalMast extends NamedBean {
 
@@ -48,7 +48,7 @@ public interface SignalMast extends NamedBean {
     public void setAspect(String aspect);
     
     /**
-     * Get current aspect name.
+     * Get current aspect name. This is a bound property.
      *
      * @return null if not yet set
      */
