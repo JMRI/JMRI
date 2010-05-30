@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.1 2010-05-29 05:30:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.2 2010-05-30 23:27:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -165,8 +165,10 @@ None at the time of this release.
 
 <h3>Changes since test version 2.9.7</h3>
 
+Dan Boudreau fixed a dispatcher bug when getting the train list from operations. 
 
-
+<p>
+Brett Hoffman updated the WiThrottle protocol to separate functions for lead loco in consist.
 
 <!--#include virtual="/Footer" -->
 

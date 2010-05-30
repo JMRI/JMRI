@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.7.shtml,v 1.6 2010-05-29 05:28:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.7.shtml,v 1.7 2010-05-30 23:27:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -26,14 +26,16 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
       <h2>
-      Release Notes for JMRI 2.9.7 release
+      Release Notes for JMRI 2.9.8 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: May 29, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.7 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -49,10 +51,11 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Multiple improvements to throttles
+<li>Improved LocoNet ID monitoring
+<li>Improved support for multiple LocoNet connections
 </ul>
-along with lots of other changes.  See the complete list below.
+along with other changes.  See the complete list below.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
@@ -66,7 +69,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None yet)
+JMRI versions from 2.9.4 on, including this one, 
+will sometimes general extra events when you click on a panel when using Linux.  
+This can generate spurious events on the layout.  
+We don't think this happens with Mac OS X or Windows.
 
 <h3>Older warnings</h3>
 
@@ -206,8 +212,6 @@ Lionel Jeanson added a table in the DecoderPro "Roster Media" pane for updating 
 
 <p>
 Pete Cressman improved the Warrant Table and OBlock Table
-
-
 
 
 <!--#include virtual="/Footer" -->
