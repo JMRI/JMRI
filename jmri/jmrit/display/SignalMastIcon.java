@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -29,6 +29,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         super(new NamedIcon("resources/icons/misc/X-red.gif","resources/icons/misc/X-red.gif"), editor);
         _control = true;
         debug = log.isDebugEnabled();
+        setPopupUtility(null);
     }
     
     private SignalMast mMast;
