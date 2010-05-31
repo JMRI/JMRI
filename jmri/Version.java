@@ -21,7 +21,7 @@ import java.util.Calendar;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.132 $
+ * @version $Revision: 1.133 $
  */
 
 public class Version {
@@ -47,7 +47,7 @@ public class Version {
      * Modifier is used to denote specific builds.
      * It should be the empty string "" for released versions.
      */
-     static final boolean released = true;
+     static final boolean released = false;
      static final public String modifier = released?"":"+dev";
 
     /**
