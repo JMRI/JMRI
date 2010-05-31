@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.64 2010-05-18 03:07:09 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.65 2010-05-31 15:08:33 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -181,7 +181,7 @@ all trains are terminated or reset.
 When selected, add the operations menu to the main menu bar. The
 operations menu will appear the next time you restart JMRI.
 
-<H3>Train Icons</H3>
+<H3>Panel Options (Train Icons)</H3>
 
 If you want the operations program to place an icon representing the
 train on a panel, add the panel name, otherwise leave the name blank to
@@ -1150,6 +1150,53 @@ detail level.
 <P>
 <img src="images/BuildReport.png">
 </P>
+<H3>Reading the Build Report</H3>
+
+The build report shows the steps the operations program goes through
+while building a train. The first page provides the route the train will
+travel and the number of car moves requested for each location. The
+report then shows the car type and engine types that the train will
+service. By reading the various comments in the report you can get an
+idea of steps the operations program goes through to build a train. When
+there's an issue that the operation's build can't resolve, the build
+will fail. To understand why a build failed, go to the last page of the
+build report and by working backwards from the last line, you should be
+able to understand why a train failed to build.
+
+<H3>More Build Report Details</H3>
+
+For those who want to understand how the program builds trains here's
+the details. If the train requires an engine or several engines, the
+program will look for engines at the start of the route and then
+determines if the termination location will accept them. Note that if
+two or more engines are required for the train that the engines must be
+in a consist. The program assigns to the engines and cars the number of
+moves that they experience during each session. The move count is bumped
+up each time an engine or car is dropped off to a new location's track.
+The program sorts the engines and cars by the move count, and then tries
+to assign engines and cars with the least number of moves to the train.
+When building a train only cars at locations that are part of the train's route
+are used.
+<P>The next step is to assign a caboose or car with FRED to the
+train. If the program finds the required caboose or car with FRED at the
+start of the route, the program tries to find a track at the termination
+location that will accept it. If successful, all other cabooses and cars
+with FRED are removed from the available car list.</P>
+<P>Next the program will assign cars to the train starting from the
+departure location. Each car goes through the process of finding a track
+along the route that will accept the car. Another count assigned to a
+track is used to determine if the track has been serviced recently.
+Tracks with the least amount of service get priority. A car can have
+several track choices and the one with the highest priority will be
+assigned as the car's destination. The process continues until the
+number of car moves requested by a location is met, or the available
+cars being processed by the program is used up. Once the car moves
+requested for a location is met, the next location in the route is
+processed. This continues until all locations in a train's route have
+been processed.</P>
+
+
+
 
 <H3>Printing Manifests</H3>
 
