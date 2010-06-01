@@ -26,11 +26,12 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
-public class SimpleTimebase implements Timebase {
+public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
 	public SimpleTimebase() {
+        super("SIMPLECLOCK");
 		// initialize time-containing memory
 		clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
 		if (clockMemory==null) {
@@ -517,7 +518,9 @@ public class SimpleTimebase implements Timebase {
         pcMinutes.removePropertyChangeListener(l);
     }
 
-
+    public void setState(int s) throws jmri.JmriException{}
+    public int getState(){ return 0; }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleTimebase.class.getName());
 
 }

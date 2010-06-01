@@ -30,9 +30,9 @@ import java.util.Date;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2004, 2007, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
-public interface Timebase {
+public interface Timebase extends NamedBean {
 
     /**
      * Set the current time
