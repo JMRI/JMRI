@@ -12,14 +12,14 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.32 $
+ * @version    $Revision: 2.33 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
     protected boolean isAvailable;  // Flag  stating if the throttle is in 
                                   // use or not.
-    protected javax.swing.Timer statTimer; // Timer used to periodically get 
+    protected java.util.Timer statTimer; // Timer used to periodically get 
                                          // current status of the throttle 
                                          // when throttle not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
@@ -1495,26 +1495,23 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void startStatusTimer() {
         if(statTimer==null) {
-            statTimer = new javax.swing.Timer(statTimeoutValue,new java.awt.event.ActionListener() { 
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
+            statTimer = new java.util.Timer();
+        }
+        statTimer.cancel();
+        statTimer.schedule(new java.util.TimerTask() { 
+                    public void run() {
                         /* If the timer times out, just send a status 
                            request message */
                         sendStatusInformationRequest();
                     }
-                });                           
-        }
-        statTimer.stop();
-        statTimer.setInitialDelay(statTimeoutValue);
-        statTimer.setRepeats(true);
-        statTimer.start();   
+                },statTimeoutValue);                           
     }
     
     /*
      * Stop the Status Timer 
      */
     protected void stopStatusTimer() {
-        if(statTimer!=null) statTimer.stop();
-        //           requestState=THROTTLEIDLE;
+        if(statTimer!=null) statTimer.cancel();
     }
     
     public LocoAddress getLocoAddress() {
