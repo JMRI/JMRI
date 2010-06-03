@@ -436,7 +436,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_globalSetsLocal) {
             for (int i = 0; i<_contents.size(); i++) {
                 Positionable p = _contents.get(i);
-                p.setPositionable(state);
+                // don't allow backgrounds to be set positionable by global flag
+                if (!state || p.getDisplayLevel()!=BKG) {
+                    p.setPositionable(state);
+                }
             }
         }
     }
