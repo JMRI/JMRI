@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.33 $
+ * @version    $Revision: 2.34 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1497,7 +1497,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         if(statTimer==null) {
             statTimer = new java.util.Timer();
         }
-        statTimer.cancel();
+        else {
+            statTimer.cancel();
+        }
         statTimer.schedule(new java.util.TimerTask() { 
                     public void run() {
                         /* If the timer times out, just send a status 
