@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.12 $
+ *	@version $Revision: 1.13 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -219,7 +219,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                 }
 
                                 default:{
-                                    log.warn("Received unknown network package.");
+                                    log.warn("Received unknown network package: "+inPackage);
                                     
                                     break;
                                 }
@@ -298,7 +298,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         }
 
                         default:{   //  If an unknown makes it through, do nothing.
-                            log.warn("Received unknown network package.");
+                            log.warn("Received unknown network package: "+inPackage);
                             break;
                         }
 
