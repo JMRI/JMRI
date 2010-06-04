@@ -17,7 +17,7 @@ import jmri.jmrix.loconet.*;
  * so are shown separately.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
 
@@ -107,9 +107,11 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         add(pane1);
         add(slotScroll);
 
-       // set scroll size
-       //pane1.setMaximumSize(new java.awt.Dimension(100,300));
-
+        // set scroll size
+        //pane1.setMaximumSize(new java.awt.Dimension(100,300));
+       
+        if (pane1.getMaximumSize().height > 0 && pane1.getMaximumSize().width > 0)
+            pane1.setMaximumSize(pane1.getPreferredSize());
     }
 
     public String getHelpTarget() { return "package.jmri.jmrix.loconet.slotmon.SlotMonFrame"; }
