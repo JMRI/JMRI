@@ -15,7 +15,7 @@ import jmri.util.JmriJFrame;
  *  confused with ThrottleManager
  *
  * @author     Glen Oberhauser
- * @version    $Revision: 1.21 $
+ * @version    $Revision: 1.22 $
  */
 public class ThrottleFrameManager
 {
@@ -48,18 +48,7 @@ public class ThrottleFrameManager
 		String dirname = XmlFile.prefsDir()+ "throttle" +File.separator;
 		XmlFile.ensurePrefsPresent(dirname);
 		throttlesPref = new ThrottlesPreferences(dirname+ "ThrottlesPreferences.xml");
-		
-		throttlesListFrame = new JmriJFrame("Throttles list");
-		throttlesListPanel = new ThrottlesListPanel();
-		throttlesListFrame.setContentPane(throttlesListPanel);
-		throttlesListFrame.pack();
-		
-		throttlePreferencesFrame = new JmriJFrame("Throttles preferences");
-		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane(throttlesPref);
-		throttlePreferencesFrame.add(tpP);
-		tpP.setContainer(throttlePreferencesFrame);
-		throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		throttlePreferencesFrame.pack();
+		buildThrottleListFrame();
 	}
 
 	/**
@@ -226,12 +215,32 @@ public class ThrottleFrameManager
 	public ThrottlesListPanel getThrottlesListPanel() {
 		return throttlesListPanel ;
 	}
-
+	
+	private void buildThrottlePreferencesFrame() {
+		throttlePreferencesFrame = new JmriJFrame("Throttles preferences");
+		ThrottlesPreferencesPane tpP = new ThrottlesPreferencesPane(throttlesPref);
+		throttlePreferencesFrame.add(tpP);
+		tpP.setContainer(throttlePreferencesFrame);
+		throttlePreferencesFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		throttlePreferencesFrame.pack();
+	}
+	
+	private void buildThrottleListFrame() {
+		throttlesListFrame = new JmriJFrame("Throttles list");
+		throttlesListPanel = new ThrottlesListPanel();
+		throttlesListFrame.setContentPane(throttlesListPanel);
+		throttlesListFrame.pack();
+	}
+	
 	public void showThrottlesList() {
+		if (throttlesListFrame == null)
+			buildThrottleListFrame();
 		throttlesListFrame.setVisible( ! throttlesListFrame.isVisible() );
 	}
 	
 	public void showThrottlesPreferences() {
+		if (throttlePreferencesFrame == null)
+			buildThrottlePreferencesFrame();
 		throttlePreferencesFrame.setVisible( true );
 		throttlePreferencesFrame.requestFocus();
 	}

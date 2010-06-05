@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -421,11 +421,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void dispose() {
     	log.debug("Disposing "+getTitle());
 		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().removeThrottleFrame(this);
-        // check for any special disposing in InternalFrames
-        controlPanel.destroy();
-        functionPanel.destroy();
-        // dispose of this last because it will release and destroy throttle.
-        addressPanel.destroy();
+		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
+        	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isCleaningOnClose() ) {
+	        // check for any special disposing in InternalFrames
+	        controlPanel.destroy();
+	        functionPanel.destroy();
+	        // dispose of this last because it will release and destroy throttle.
+	        addressPanel.destroy();
+		}
     }
     
     public void saveRosterChanges(){
