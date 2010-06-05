@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.82 $
+ * @version         $Revision: 1.83 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -861,6 +861,13 @@ abstract public class AbstractMRTrafficController {
                     if (log.isDebugEnabled())
                         log.debug("Allowed unexpected reply received in state: "
                                   + mCurrentState   + " was " + msg.toString());
+                   synchronized (xmtRunnable) {
+                       // The transmit thread sometimes gets stuck
+                       // when unexpected replies are received.  Notify
+                       // it to clear the block without a timeout.
+                       // (do not change the current state)
+                       xmtRunnable.notify();
+                   }  
                 } else {
                     log.error("reply complete in unexpected state: "
                               + mCurrentState + " was " + msg.toString());
