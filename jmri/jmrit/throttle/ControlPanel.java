@@ -40,7 +40,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.82 $
+ * @version    $Revision: 1.83 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -60,7 +60,6 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     private JButton stopButton;
     private JButton idleButton;
     private JPanel buttonPanel;
-    //private int speedIncrement;
     private boolean internalAdjust = false;
     
     private JPopupMenu propertiesPopup;
@@ -364,17 +363,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
     /**
      *  Set the GUI to match that the loco speed.
      *
-     * @param  speedIncrement  : TODO - is this still TODO as of Feb 2010?
+     * @param  speedIncrement  The throttle back end's speed increment 
+     *                         value - % increase for each speed step.
      * @param  speed           The speed value of the loco.
      */
-    public void setSpeedValues(int speedIncrement, int speed)
+    public void setSpeedValues(float speedIncrement, float speed)
     {
-        //this.speedIncrement = speedIncrement;
-    	int tempSpeed = speed * speedIncrement;
-        
+        //This is an internal speed adjustment
+        internalAdjust=true;
     	//Translate the speed sent in to the max allowed by any set speed limit
     	speedSlider.setValue((int)
-    			(((float)tempSpeed/intSpeedSteps) * maxSpeed));
+    			((speed/speedIncrement)/maxSpeed));
         if (log.isDebugEnabled()) log.debug("SpeedSlider value: "+speedSlider.getValue());
         // Spinner Speed should be the raw integer speed value
         if(speedSpinner!=null)
@@ -746,7 +745,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.82 $
+     * @version    $Revision: 1.83 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1028,8 +1027,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         this.throttle = t;
         this.setEnabled(true);
         this.setIsForward(throttle.getIsForward());
-        this.setSpeedValues((int) throttle.getSpeedIncrement(),
-                            (int) throttle.getSpeedSetting());
+        this.setSpeedValues(throttle.getSpeedIncrement(),
+                            throttle.getSpeedSetting());
         // Throttle now available so set speed steps from saved xml value
         if (_speedStepModeForLater != 0) {
             this.throttle.setSpeedStepMode(_speedStepModeForLater);
