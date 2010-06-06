@@ -478,13 +478,9 @@ public class ThrottleWindow extends JmriJFrame {
 
 	public void toFront(String throttleFrameTitle) {
 		throttlesLayout.show(throttlesPanel, throttleFrameTitle);
-		toFront();
-	}
-	
-	public void toFront() {
 		setVisible(true);
 		requestFocus();
-		super.toFront();
+		toFront();
 	}
 
 	public String getTitleTextType() {
