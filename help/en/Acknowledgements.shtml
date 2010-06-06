@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.112 2010-05-10 00:13:11 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.113 2010-06-06 22:05:28 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -398,6 +398,7 @@
 	    updated lots of decoder definitions,
 	    improved many help pages,
 	    and is an active jmriusers moderator.
+	<li>Steve Todd, who updated the EngineDriver throttle for Android.
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 

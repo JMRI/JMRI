@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.2 2010-05-30 23:27:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.3 2010-06-06 22:05:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -169,6 +169,30 @@ Dan Boudreau fixed a dispatcher bug when getting the train list from operations.
 
 <p>
 Brett Hoffman updated the WiThrottle protocol to separate functions for lead loco in consist.
+
+<p>
+Pete Cressman fixed an occasional error message from Logix when using the clock.
+
+<p>
+Pete Cressman updated the panel editors to keep background locked when using global positionable flag.
+
+<p>
+Paul Bender made technical changes to the internals of the XPressNet throttle support.
+
+<p>
+Improved how LocoNet Slot Monitor uses screen space.
+
+<p>
+Steve Todd updated the Engine Driver throttle for Android.
+
+<p>
+Paul Bender and Lionel Jeanson improved the internal structure of the throttle support.
+You may see changes in the way that real (handheld) throttles and the program interact.
+There's a new throttle preference to control whether the speed should be set to 0
+and functions turned off when a throttle is released.
+
+<p>
+More work on Lenz turnout control by Paul Bender.
 
 <!--#include virtual="/Footer" -->
 
