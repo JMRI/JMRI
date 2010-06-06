@@ -333,10 +333,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		alt1Button.setVisible(true);
 		alt2Button.setVisible(true);
 		buttonActionCmdPerformed();
-		setFnButtonsFromRoster();
+		setFnButtons();
 	}
 
-	private void setFnButtonsFromRoster() {
+	// Update buttons value from slot + load buttons definition from roster if any
+	private void setFnButtons() {
 		if (mThrottle != null) {
 			if (addressPanel == null) return;
 			RosterEntry rosterEntry = addressPanel.getRosterEntry();
@@ -386,12 +387,13 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 					log.warn("Exception in notifyThrottleFound: " + ex3);
 				}
 			}
-			if (maxi < NUM_FUNC_BUTTONS_INIT
+			// hide undefined buttons if applicable
+			if ((rosterEntry!=null) && (maxi < NUM_FUNC_BUTTONS_INIT
 					&& jmri.jmrit.throttle.ThrottleFrameManager.instance()
 					.getThrottlesPreferences().isUsingExThrottle()
 					&& jmri.jmrit.throttle.ThrottleFrameManager.instance()
 					.getThrottlesPreferences()
-					.isHidingUndefinedFuncButt()) {
+					.isHidingUndefinedFuncButt())) {
 				alt1Button.setVisible(false);
 				alt2Button.setVisible(false);
 			}
@@ -402,7 +404,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.62 $
+	 * @version $Revision: 1.63 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
@@ -574,7 +576,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		mThrottle = t;
 		setEnabled(true);
 		mThrottle.addPropertyChangeListener(this);
-		setFnButtonsFromRoster();	//load from roster
+		setFnButtons();
 	}
 
 	public void notifyAddressReleased(int address, boolean isLong)
