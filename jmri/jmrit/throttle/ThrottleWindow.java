@@ -231,7 +231,7 @@ public class ThrottleWindow extends JmriJFrame {
     	add(throttleToolBar, BorderLayout.PAGE_START);
     }
 
-    private void ynstrument(String path) {
+    public void ynstrument(String path) {
     	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
     	if (it == null) {
     		log.error("Error while creating Jynstrument "+path);
@@ -478,9 +478,13 @@ public class ThrottleWindow extends JmriJFrame {
 
 	public void toFront(String throttleFrameTitle) {
 		throttlesLayout.show(throttlesPanel, throttleFrameTitle);
+		toFront();
+	}
+	
+	public void toFront() {
 		setVisible(true);
 		requestFocus();
-		toFront();
+		super.toFront();
 	}
 
 	public String getTitleTextType() {
