@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.1.5.shtml,v 1.46 2008-05-20 21:30:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.1.5.shtml,v 1.47 2010-06-06 22:05:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -411,7 +411,7 @@ NCE systems now have CommandStation object support, so they can send
 arbitrary DCC packets.
 
 <p>
-The <a href="http://www.nacservicesinc.com/">RPS</a> system support received a major update.
+The <a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS</a> system support received a major update.
 
 <!--#include virtual="/Footer" -->
 

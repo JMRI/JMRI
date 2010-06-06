@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.30 2010-05-06 14:58:14 pbender Exp $ -->
+<!-- $Id: index.shtml,v 1.31 2010-06-06 22:04:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -197,10 +197,10 @@
 	    <dt>MERG CBUS</dt>
 	    <dd><p class="dl">Configure: <A HREF="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
-	    <dt class=im><a href="http://www.nacservicesinc.com/">
+	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
 	    <IMG src="images/RPS.gif"
 	        width="64" height="41" alt="RPS image"></a></dt>
-	    <dt><a href="http://www.nacservicesinc.com/">NAC Services</a></dt>
+	    <dt><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS</a></dt>
 	    <dd>
 		<A HREF="rps/index.shtml">Configure connection</a>
 		 to an RPS position measurement system.
