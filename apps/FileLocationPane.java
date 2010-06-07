@@ -2,31 +2,20 @@
 
 package apps;
 
-import java.awt.FlowLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.*;
 
 /**
- * Provide GUI to configure Swing GUI LAF defaults
+ * Provide GUI to configure the Default File Locations
  * <P>
- * Provides GUI configuration for SWING LAF by
- * displaying radiobuttons for each LAF implementation available.
- * This information is then persisted separately
- * (e.g. by {@link jmri.configurexml.FileLocationPaneXml})
- * <P>
- * Locale default language and country is also considered a
- * GUI (and perhaps LAF) configuration item.
+ * Provides GUI configuration for the default file locations by
+ * displaying textfields for the user to directly enter in their own path or
+ * a Set button is provided so that the user can select the path.
  *
- * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.1 $
- * @since 2.9.5  (Previously in jmri package)
+ * @author      Kevin Dickerson   Copyright (C) 2010
+ * @version	$Revision: 1.2 $
  */
 public class FileLocationPane extends JPanel {
 

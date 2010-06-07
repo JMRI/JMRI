@@ -1,27 +1,15 @@
 package apps.configurexml;
 
 import apps.FileLocationPane;
-import java.util.Locale;
-
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
-
-import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;
 
 /**
- * Handle XML persistance of SwingGuiLaf default values.
+ * Handle XML persistance of directory locations.
  * <P>
- * This class is named as being the persistant form of the
- * FileLocationPane class, but there's no object of that
- * form created when this is read back.  Instead, this interacts directly with Swing
- * and the default Locale.
  *
- * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2010
- * @version $Revision: 1.1 $
- * @see jmri.FileLocationPane
- * @since 2.9.5
+ * @author Kevin Dickerson Copyright: Copyright (c) 2010
+ * @version $Revision: 1.2 $
  */
 public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
