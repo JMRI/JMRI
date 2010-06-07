@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -336,7 +336,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     }
     
     // #JYNSTRUMENT# here instantiate the Jynstrument, put it in a component, initialize the context and start it
-    private JInternalFrame ynstrument(String path) {
+    public JInternalFrame ynstrument(String path) {
     	if (path == null) return null;
        	Jynstrument it = JynstrumentFactory.createInstrument(path, this); // everything is there
     	if (it == null) {
