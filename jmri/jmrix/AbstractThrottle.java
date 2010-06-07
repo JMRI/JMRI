@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
     protected float speedSetting;
@@ -977,7 +977,8 @@ abstract public class AbstractThrottle implements DccThrottle {
 
 
     /*
-     * setSpeedStepMode - set the speed step value.
+     * setSpeedStepMode - set the speed step value and the related
+     *                    speedIncrement value.
      * <P>
      * specific implementations should override this function
      * <P>
@@ -986,6 +987,16 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
      public void setSpeedStepMode(int Mode) {
 	    speedStepMode = Mode;
+            if(Mode==DccThrottle.SpeedStepMode14)
+               speedIncrement=1.0f/14.0f;
+            else if(Mode==DccThrottle.SpeedStepMode27)
+               speedIncrement=1.0f/27.0f;
+            else if(Mode==DccThrottle.SpeedStepMode28)
+               speedIncrement=1.0f/28.0f;
+            else // default to 128 speed step mode
+               speedIncrement=1.0f/126.0f; // remember there are only 126 
+                                      // non-stop values in 128 speed 
+                                      // step mode
      }
 
     /*

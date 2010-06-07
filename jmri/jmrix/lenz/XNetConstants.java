@@ -25,10 +25,10 @@ package jmri.jmrix.lenz;
 public final class XNetConstants {
 
 /* a few constants */
-public final static int SPEED_STEP_14_INCREMENT=9;
-public final static int SPEED_STEP_27_INCREMENT=5;
-public final static int SPEED_STEP_28_INCREMENT=4;
-public final static int SPEED_STEP_128_INCREMENT=1;
+public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;
+public final static float SPEED_STEP_27_INCREMENT=1.0f/27.0f;
+public final static float SPEED_STEP_28_INCREMENT=1.0f/28.0f;
+public final static float SPEED_STEP_128_INCREMENT=1.0f/126.0f;
 
 /* Commands send from the command station to the computer*/
 
