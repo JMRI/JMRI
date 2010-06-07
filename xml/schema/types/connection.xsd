@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: connection.xsd,v 1.2 2010-02-16 05:40:55 jacobsen Exp $ -->
+<!-- $Id: connection.xsd,v 1.3 2010-06-07 17:59:50 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -71,6 +71,10 @@
     <xs:attribute name="speed" type="xs:string"/>
     <xs:attribute name="option1" type="xs:string"/>
     <xs:attribute name="option2" type="xs:string"/>
+    <xs:attribute name="manufacturer" type="xs:string"/>
+    <xs:attribute name="disabled" type="xs:string"/>
+    <xs:attribute name="userName" type="xs:string"/>
+    <xs:attribute name="systemPrefix" type="xs:string"/>
     <xs:attribute name="class" type="classType" use="required"/>
   </xs:complexType>
 
