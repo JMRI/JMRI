@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: layout-2-9-6.xsd,v 1.1 2010-05-02 19:35:18 jacobsen Exp $ -->
+<!-- $Id: layout-2-9-6.xsd,v 1.2 2010-06-07 18:01:31 kevin-dickerson Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010                      -->
 <!--                                                                        -->
@@ -128,7 +128,75 @@ signals - obsolete, EMPTY, never used
                 <xs:attribute name="nonStandardMouseEvent" type="yesNoType"/>
             </xs:complexType>
         </xs:element>
-            
+        
+        <xs:element name="fileLocations" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines the default locations for user file locations.
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">apps.configurexml.FileLocationPaneXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+                <xs:attribute name="defaultScriptLocation" type="xs:string"/>
+                <xs:attribute name="class" type="classType" use="required" />
+                <xs:attribute name="defaultUserLocation" type="xs:string"/>
+                <xs:attribute name="defaultThrottleLocation" type="xs:string"/>
+            </xs:complexType>
+        </xs:element>
+        <xs:element name="UserMessagePreferences" minOccurs="0" maxOccurs="unbounded">
+            <xs:annotation>
+                <xs:documentation>
+                  Defines the User preferences for message boxes and drop down lists.
+                </xs:documentation>
+                <xs:appinfo>
+                    <jmri:usingclass configurexml="yes">jmri.managers.configurexml.DefaultUserMessagePreferencesXml</jmri:usingclass>
+                </xs:appinfo>
+            </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="comboBoxLastValue" minOccurs="0" maxOccurs="unbounded">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="comboBox" minOccurs="0" maxOccurs="unbounded">
+                        <xs:complexType>
+                          <xs:attribute name="name" type="xs:string" />
+                          <xs:attribute name="lastSelected" type="xs:string"/>
+                        </xs:complexType>
+                      </xs:element>
+                    </xs:sequence>
+                  </xs:complexType>
+
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="class" type="classType" use="required" />
+            </xs:complexType>
+        </xs:element>
+        
+        <xs:element name="managerdefaults" minOccurs="0" maxOccurs="unbounded">
+          <xs:annotation>
+            <xs:documentation>
+              Defines which manager is to be used for various operations.
+            </xs:documentation>
+            <xs:appinfo>
+                <jmri:usingclass configurexml="yes">jmri.managers.configurexml.DefaultUserMessagePreferencesXml</jmri:usingclass>
+            </xs:appinfo>
+          </xs:annotation>
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="setting" minOccurs="0" maxOccurs="unbounded">
+                  <xs:complexType>
+                    <xs:sequence>
+                      <xs:element name="key" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                      <xs:element name="value" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                    </xs:sequence>
+                  </xs:complexType>
+                </xs:element>
+              </xs:sequence>
+              <xs:attribute name="class" type="classType" use="required" />
+            </xs:complexType>
+        </xs:element>
         <xs:element name="programmer" minOccurs="0" maxOccurs="unbounded">
             <xs:annotation>
                 <xs:documentation>
