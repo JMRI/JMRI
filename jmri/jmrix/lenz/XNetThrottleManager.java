@@ -5,14 +5,19 @@ import jmri.LocoAddress;
 
 import jmri.jmrix.AbstractThrottleManager;
 
+import java.util.HashMap;
+
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.8 $
+ * @version    $Revision: 2.9 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
 {
+
+    private HashMap<LocoAddress,XNetThrottle> throttles= new HashMap<LocoAddress,XNetThrottle>(5);
+
     /**
      * Constructor.
      */
@@ -26,9 +31,15 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * the throttle listeners know about it.
      **/
      public void requestThrottleSetup(LocoAddress address) {
+        XNetThrottle throttle;
 	if(log.isDebugEnabled()) log.debug("Requesting Throttle: " +address);
-	XNetThrottle throttle=new XNetThrottle(address);
-	notifyThrottleKnown(throttle,address);	
+        if(throttles.containsKey(address))
+           notifyThrottleKnown(throttles.get(address),address);
+        else {
+	   throttle=new XNetThrottle(address);
+           throttles.put(address,throttle);
+	   notifyThrottleKnown(throttle,address);	
+        }
      }
 
     /*
