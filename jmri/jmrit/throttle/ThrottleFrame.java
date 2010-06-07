@@ -44,7 +44,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -76,13 +76,21 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     private String title;    
     private String lastUsedSaveFile = null;
     private static String DefaultThrottleFileName = "JMRI_ThrottlePreference.xml";
+    
+    private static String ThrottleFileLocation = null;
 
     public static String getDefaultThrottleFolder() {
-    	return XmlFile.prefsDir()+"throttle"+File.separator ;
+        if (ThrottleFileLocation == null)
+            return XmlFile.prefsDir()+"throttle"+File.separator ;
+        return ThrottleFileLocation;
     }
 
     public static String getDefaultThrottleFilename() { 
     	return getDefaultThrottleFolder()+DefaultThrottleFileName;
+    }
+    
+    public static void setDefaultThrottleLocation(String location){
+        ThrottleFileLocation = location;
     }
                 
     public ThrottleFrame(ThrottleWindow tw)
@@ -421,14 +429,11 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     public void dispose() {
     	log.debug("Disposing "+getTitle());
 		jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel().removeThrottleFrame(this);
-		if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
-        	 jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isCleaningOnClose() ) {
-	        // check for any special disposing in InternalFrames
-	        controlPanel.destroy();
-	        functionPanel.destroy();
-	        // dispose of this last because it will release and destroy throttle.
-	        addressPanel.destroy();
-		}
+        // check for any special disposing in InternalFrames
+        controlPanel.destroy();
+        functionPanel.destroy();
+        // dispose of this last because it will release and destroy throttle.
+        addressPanel.destroy();
     }
     
     public void saveRosterChanges(){

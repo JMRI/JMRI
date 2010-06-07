@@ -23,7 +23,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -31,8 +31,8 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
     
-    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
-    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
+    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuFileLocation"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
+    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "STARTUP", "DISPLAY", "FILELOCATIONS", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -72,6 +72,7 @@ public class TabbedPreferences extends AppConfigBase {
                 public void actionPerformed(ActionEvent e) {
                     throttlePreferences.jbSaveActionPerformed(e);
                     withrottlePrefsPanel.storeValues();
+                    apps.FileLocationPane.save();
                     savePressed();
                 }
             });
@@ -137,10 +138,12 @@ public class TabbedPreferences extends AppConfigBase {
         JTabbedPane startupPanel = new JTabbedPane();
         JTabbedPane displayPanel = new JTabbedPane();
         JTabbedPane rosterPanel = new JTabbedPane();
+        JTabbedPane filePanel = new JTabbedPane();
 
         detailpanel.add(defaultsPanel, "DEFAULTS");
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
+        detailpanel.add(filePanel, "FILELOCATIONS");
         detailpanel.add(throttlePreferences, "THROTTLE");
         detailpanel.add(withrottlePrefsPanel, "WITHROTTLE");
         detailpanel.add(rosterPanel, "ROSTER");
@@ -168,6 +171,8 @@ public class TabbedPreferences extends AppConfigBase {
                     "LabelTabbedLayoutLocale", gui.doLocale(), false, null);
         addItem(rosterPanel, rb.getString("TabbedLayoutRoster"),
                     "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true, null);
+        addItem(filePanel, rb.getString("TabbedLayoutFileLocations"),
+                    "LabelTabbedFileLocations", new apps.FileLocationPane(), true, null);
 
         // horrible hack to make sure GUI is done first
         items.remove(gui);
@@ -220,7 +225,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (store) items.add(item);  
     }
     
-    void addConnection(int tabPosition, int instance){
+    void addConnection(int tabPosition, final int instance){
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         
@@ -237,7 +242,23 @@ public class TabbedPreferences extends AppConfigBase {
         
         });
         b.add(deleteButton);
-        p.add(b);
+
+        //For a future release
+        /*JPanel c = new JPanel();
+        c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        final JCheckBox disable = new JCheckBox("Disable Connection");
+        disable.setSelected(JmrixConfigPane.instance(instance).getDisabled());
+        disable.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                JmrixConfigPane.instance(instance).setDisabled(disable.isSelected());
+            }
+        });
+        c.add(disable);*/
+        JPanel p1 = new JPanel();
+        p1.setLayout(new GridLayout(0,2));
+        //p1.add(c); - For future release with above
+        p1.add(b);
+        p.add(p1);
         String title;
         if (JmrixConfigPane.instance(instance).getConnectionName()!=null){
             title=JmrixConfigPane.instance(instance).getConnectionName();
@@ -253,6 +274,12 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         }
+        //If the connection is disabled we put it the tab name in brackets.
+        //For a future release
+
+        /*if(JmrixConfigPane.instance(instance).getDisabled()){
+            title = "(" + title + ")";
+        }*/
         connectionTabInstance.add(instance);
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
