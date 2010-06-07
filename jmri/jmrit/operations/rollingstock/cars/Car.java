@@ -13,7 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -161,7 +161,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		ScheduleItem si = sch.getItemById(track.getScheduleItemId());
 		if (si == null){
 			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+")");
-			return OKAY;
+			// reset and get first schedule item on the list
+			si = sch.getItemById(sch.getItemsBySequenceList().get(0));
+			track.setScheduleItemId(si.getId());
 		}
 		if (getType().equals(si.getType())) {
 			if (si.getRoad().equals("") || getRoad().equals(si.getRoad()))
@@ -260,7 +262,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
 		if (currentSi == null){
-			log.error("can not find schedule item ("+track.getScheduleItemId()+")");
+			log.warn("can not find schedule item ("+track.getScheduleItemId()+")");
+			// reset schedule
+			track.setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
 			return;
 		}
 		// is car part of a kernel?

@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.34 $
+ * @version             $Revision: 1.35 $
  */
 public class Track {
 	
@@ -594,7 +594,9 @@ public class Track {
     }
     
     public void setScheduleCount(int count){
+    	int old = _scheduleCount;
     	_scheduleCount = count;
+    	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
     }
     
     /**
