@@ -13,7 +13,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.26 $
+ * @version             $Revision: 1.27 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -257,12 +257,12 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		ScheduleManager scheduleManager = ScheduleManager.instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){
-			log.error("can not find schedule ("+track.getScheduleName()+")");
+			log.warn("can not find schedule ("+track.getScheduleName()+") assigned to track ("+track.getName()+")");
 			return;
 		}
 		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
 		if (currentSi == null){
-			log.warn("can not find schedule item ("+track.getScheduleItemId()+")");
+			log.warn("can not find schedule item ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
 			// reset schedule
 			track.setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
 			return;
