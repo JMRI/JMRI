@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Component;
 import java.awt.Color;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import java.awt.Dimension;
 
 import javax.swing.*;
 
@@ -13,7 +16,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -43,6 +46,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         tab.add(lRouteTab(), "LRoutes");
         tab.add(applicationTab(), "Application");
         tab.add(tableDeleteTab(), "Deleting Table Entries");
+        tab.add(lMiscTable(), "Misc Notifications");
         add(tab);
         add(component);
         //setAlignmentX(Component.RIGHT_ALIGNMENT);
@@ -192,6 +196,15 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         p.setWarnSignalHeadInUse(getChoiceType(_warnSignalHeadInUse));
         p.setWarnTransitInUse(getChoiceType(_warnTransitInUse));
 
+        for (int i = 0; i<data.length; i++){
+            if (((String)data[i][1]).toLowerCase()=="true"){
+                p.setPreferenceState((String)data[i][0], true);
+                data[i][1]="true";
+            } else {
+                p.setPreferenceState((String)data[i][0], false);
+            }
+        }
+        
         jmri.InstanceManager.configureManagerInstance().storePrefs();
         p.finishLoading();
     }
@@ -243,6 +256,32 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         return masterChoiceCode[masterBox.getSelectedIndex()];
     
     }
+    
+    Object data [][];
+    private JPanel lMiscTable(){
+        JPanel lMiscTableTabPanel = new JPanel();
+        String[] columnNames = {"Option",
+                                "Display"};
+        
+        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
+        data = new Object[preferenceList.size()][2];
+        
+        for (int i = 0; i < preferenceList.size(); i++) {
+            data[i][0] = preferenceList.get(i);
+            data[i][1] = "true";
+        }
+        
+        JTable table = new JTable(data, columnNames);
+        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
+        table.getColumnModel().getColumn(0).setPreferredWidth(400);
+        table.setFillsViewportHeight(true);
+        JScrollPane scrollPane = new JScrollPane(table);
+        lMiscTableTabPanel.setLayout(new BoxLayout(lMiscTableTabPanel, BoxLayout.Y_AXIS));
+        lMiscTableTabPanel.add(scrollPane);
+        lMiscTableTabPanel.add(new JLabel("To re-enable a display message blank out the value in the Display column"));
+        return lMiscTableTabPanel;
+    }
+    
 }
 
 
