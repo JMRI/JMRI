@@ -23,7 +23,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -244,8 +244,8 @@ public class TabbedPreferences extends AppConfigBase {
         b.add(deleteButton);
 
         //For a future release
-        /*JPanel c = new JPanel();
-        c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        JPanel c = new JPanel();
+        /*c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         final JCheckBox disable = new JCheckBox("Disable Connection");
         disable.setSelected(JmrixConfigPane.instance(instance).getDisabled());
         disable.addActionListener(new ActionListener() {
@@ -256,7 +256,7 @@ public class TabbedPreferences extends AppConfigBase {
         c.add(disable);*/
         JPanel p1 = new JPanel();
         p1.setLayout(new GridLayout(0,2));
-        //p1.add(c); - For future release with above
+        p1.add(c);
         p1.add(b);
         p.add(p1);
         String title;
