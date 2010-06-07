@@ -36,14 +36,16 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         }
         
         int comboBoxSize = p.getComboBoxSelectionSize();
-        
         if (comboBoxSize >0){
             Element comboList = new Element("comboBoxLastValue");
                 for(int i = 0; i<comboBoxSize; i++){
-                    Element combo = new Element("comboBox");
-                    combo.setAttribute("name", p.getComboBoxName(i));
-                    combo.setAttribute("lastSelected", p.getComboBoxLastSelection(i));
-                    comboList.addContent(combo);
+                    //No point in storing the last entered/selected value if it is blank
+                    if ((p.getComboBoxLastSelection(i)!=null)&&(!p.getComboBoxLastSelection(i).equals(""))){
+                        Element combo = new Element("comboBox");
+                        combo.setAttribute("name", p.getComboBoxName(i));
+                        combo.setAttribute("lastSelected", p.getComboBoxLastSelection(i));
+                        comboList.addContent(combo);
+                    }
                 }
             messages.addContent(comboList);
         }
