@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.25 $
+ * @version $Revision: 2.26 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -304,7 +304,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
                         } else if(m.isCommErrorMessage()) {
 			   // We experienced a communicatiosn error
                            // If this is a Timeslot error, ignore it, 
-                           //otherwise report it as an error
+                           // otherwise report it as an error
                            if(m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)
                                    return;
 			   log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
@@ -383,10 +383,19 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			   	progState = NOTPROGRAMMING;
 			   stopTimer();
 			   notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
+            		} else if (m.getElement(0)==XNetConstants.CS_INFO && 
+				   m.getElement(1)==XNetConstants.PROG_CS_BUSY) {
+                           // Command station indicated it was busy in 
+                           // programming mode, request results again 
+                           // (do not reset timer or change mode)
+                           // NOTE: Currently only sent by OpenDCC.
+			   controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
+                                                            this);
+                           return;
                         } else if(m.isCommErrorMessage()) {
 			   // We experienced a communicatiosn error
                            // If this is a Timeslot error, ignore it, 
-                           //otherwise report it as an error
+                           // otherwise report it as an error
                            if(m.getElement(1)==XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)
                                    return;
 			   log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
