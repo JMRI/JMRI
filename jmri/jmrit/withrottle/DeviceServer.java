@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.13 $
+ *	@version $Revision: 1.14 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -52,6 +52,9 @@ package jmri.jmrit.withrottle;
  * 
  *      Function labels: RF## first throttle, or RS## second throttle, each label separated by ]\[
  *      e.g.  RF29]\[Light]\[Bell]\[Horn]\[Short Horn]\[ &etc.
+ *
+ *      RSF 'R'oster 'P'roperties 'F'unctions
+ *
  * 
  *      Heartbeat send '*0' to tell device to stop heartbeat, '*#' # = number of seconds until eStop
  *      This class sends initial to device, but does not start monitoring until it gets a response of '*+'
@@ -79,7 +82,7 @@ import jmri.jmrit.roster.RosterEntry;
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added
-    private static final String versionNumber = "1.3";
+    private static final String versionNumber = "1.4";
 
     private Socket device;
     String newLine = System.getProperty("line.separator");
@@ -127,8 +130,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow();
             throttleFrame = throttleWindow.getCurentThrottleFrame();
             throttleController = new ThrottleController(throttleFrame);
+            throttleController.setWhichThrottle("T");
             addressPanel = throttleFrame.getAddressPanel();
             throttleController.addThrottleControllerListener(this);
+            throttleController.addControllerListener(this);
 
         }
         try{
@@ -178,8 +183,10 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                                 secondThrottleFrame = throttleWindow.addThrottleFrame();
                                 throttleWindow.nextThrottleFrame();
                                 secondThrottleController = new ThrottleController(secondThrottleFrame);
+                                secondThrottleController.setWhichThrottle("S");
                                 secondAddressPanel = secondThrottleFrame.getAddressPanel();
                                 secondThrottleController.addThrottleControllerListener(this);
+                                secondThrottleController.addControllerListener(this);
                             }
                             keepReading = secondThrottleController.sort(inPackage.substring(1));
                             break;
@@ -326,10 +333,12 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (throttleController != null) {
             throttleController.shutdownThrottle();
             throttleController.removeThrottleControllerListener(this);
+            throttleController.removeControllerListener(this);
         }
         if (secondThrottleController != null) {
             secondThrottleController.shutdownThrottle();
             secondThrottleController.removeThrottleControllerListener(this);
+            secondThrottleController.removeControllerListener(this);
         }
         throttleWindow.dispose();
         throttleController = null;
