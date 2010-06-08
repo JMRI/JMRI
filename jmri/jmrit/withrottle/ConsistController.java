@@ -7,14 +7,17 @@ import java.util.List;
 import jmri.Consist;
 import jmri.ConsistManager;
 import jmri.DccLocoAddress;
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.ProgrammerException;
 import jmri.jmrit.consisttool.ConsistFile;
 
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
-public class ConsistController extends AbstractController{
+public class ConsistController extends AbstractController implements ProgListener{
     
     private ConsistManager manager;
     private ConsistFile file;
@@ -115,6 +118,9 @@ public class ConsistController extends AbstractController{
                 removeLoco(message);
                 
             }
+            if (message.charAt(0) == 'F'){   //  program CV 21 & 22 'F'unctions
+                setConsistCVs(message);
+            }
         }catch (NullPointerException exb){
             log.warn("Message \""+message+"\" does not match a consist command.");
         }
@@ -202,7 +208,7 @@ public class ConsistController extends AbstractController{
         try{
             //  Break out header and either get existing consist or create new
             List<String> headerData = Arrays.asList(headerAndLoco.get(0).split("<;>"));
-            
+
             consist = manager.getConsist(stringToDcc(headerData.get(1)));
             consist.setConsistID(headerData.get(2));
             
@@ -243,9 +249,12 @@ public class ConsistController extends AbstractController{
             
             List<String> locoData = Arrays.asList(headerAndLoco.get(1).split("<;>"));
             
-            if (consist.contains(stringToDcc(locoData.get(0)))){
-                consist.remove(stringToDcc(locoData.get(0)));
-                if (log.isDebugEnabled()) log.debug("Remove loco: "+locoData.get(0)+", from consist: "+headerData.get(1));
+            DccLocoAddress loco = stringToDcc(locoData.get(0));
+            if (checkForBroadcastAddress(loco)) return;
+
+            if (consist.contains(loco)){
+                consist.remove(loco);
+                if (log.isDebugEnabled()) log.debug("Remove loco: "+loco+", from consist: "+headerData.get(1));
             }
         }catch(NullPointerException e){
             log.warn("removeLoco error for message: " + message);
@@ -259,10 +268,75 @@ public class ConsistController extends AbstractController{
         }
     }
     
+    /**
+     * set CV 21&22 for consist functions
+     * send each CV individually
+     * @param message   RCF<;> locoAddress <:> CV# <;> value
+     */
+    private void setConsistCVs(String message){
+        
+        DccLocoAddress loco;
+        
+        List<String> headerAndCVs = Arrays.asList(message.split("<:>"));
+
+        if (log.isDebugEnabled()) log.debug("setConsistCVs string: "+message);
+        
+        try{
+            List<String> headerData = Arrays.asList(headerAndCVs.get(0).split("<;>"));
+            
+            loco = stringToDcc(headerData.get(1));
+            if (checkForBroadcastAddress(loco)) return;
+            
+        }catch(NullPointerException e){
+            log.warn("setConsistCVs error for message: " + message);
+
+            return;
+        }
+        Programmer pom = jmri.InstanceManager.programmerManagerInstance()
+                .getAddressedProgrammer(loco.isLongAddress(),loco.getNumber());
+
+        // loco done, now get CVs
+
+        for (int i = 1; i < headerAndCVs.size(); i++){
+            List<String> CVData = Arrays.asList(headerAndCVs.get(i).split("<;>"));
+
+            try{
+                int CVNum = Integer.parseInt(CVData.get(0));
+                int CVValue = Integer.parseInt(CVData.get(1));
+                try{
+                    pom.writeCV(CVNum,CVValue,this);
+                }catch(ProgrammerException e){
+                }
+            }catch(NumberFormatException nfe){
+                log.warn("Error in setting CVs: "+nfe);
+            }
+        }
+        jmri.InstanceManager.programmerManagerInstance().releaseAddressedProgrammer(pom);
+        
+    }
+    
+    public void programmingOpReply(int value, int status) {
+        
+    }
+    
     public DccLocoAddress stringToDcc(String s){
         int num = Integer.parseInt(s.substring(1));
         boolean isLong = (s.charAt(0) == 'L');
         return (new DccLocoAddress(num, isLong));
+    }
+    
+    /**
+     * Check to see if an address will try to broadcast (0) a programming message.
+     * 
+     * @param addr  The address to check
+     * @return  true if address is no good, otherwise false
+     */
+    public boolean checkForBroadcastAddress(DccLocoAddress addr){
+        if (addr.getNumber() < 1){
+            log.warn("Trying to use broadcast address!");
+            return true;
+        }
+        return false;
     }
 
     void register() {
