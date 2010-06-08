@@ -14,7 +14,7 @@ import jmri.TurnoutManager;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 public class TurnoutController extends AbstractController implements PropertyChangeListener{
@@ -39,6 +39,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
     }
     
     
+    @Override
     public void filterList(){
         ArrayList<String> tempList = new ArrayList<String>(0);
         for (String sysName : sysNameList){
@@ -58,7 +59,7 @@ public class TurnoutController extends AbstractController implements PropertyCha
             if (message.charAt(0) == 'A'){
                 if (message.charAt(1) == '2'){
                     Turnout t = manager.getBySystemName(message.substring(2));
-                    if (t.getKnownState() == Turnout.CLOSED){
+                    if (t.getCommandedState() == Turnout.CLOSED){
                         t.setCommandedState(Turnout.THROWN);
                     }else{
                         t.setCommandedState(Turnout.CLOSED);
@@ -139,13 +140,17 @@ public class TurnoutController extends AbstractController implements PropertyCha
     public void propertyChange(PropertyChangeEvent evt) {
         if (evt.getPropertyName().equals("KnownState")) {
             Turnout t = (Turnout)evt.getSource();
-            String message;
+            sendTurnoutState(t);
+        }
+    }
 
-            message = "PTA" + t.getKnownState() + t.getSystemName();
+    public void sendTurnoutState(Turnout t){
+        String message;
 
-            for (ControllerInterface listener : listeners){
-                listener.sendPacketToDevice(message);
-            }
+        message = "PTA" + t.getKnownState() + t.getSystemName();
+
+        for (ControllerInterface listener : listeners){
+            listener.sendPacketToDevice(message);
         }
     }
 
