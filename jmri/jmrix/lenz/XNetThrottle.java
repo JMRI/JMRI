@@ -12,16 +12,18 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.34 $
+ * @version    $Revision: 2.35 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
 {
     protected boolean isAvailable;  // Flag  stating if the throttle is in 
                                   // use or not.
-    protected java.util.Timer statTimer; // Timer used to periodically get 
-                                         // current status of the throttle 
-                                         // when throttle not available.
+    protected java.util.TimerTask statusTask; // Timer Task used to 
+                                              // periodically get 
+                                              // current status of the 
+                                              // throttle when throttle 
+                                              // not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
     // status of the throttle
     
@@ -349,9 +351,14 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                                             XNetInterface.CS_INFO |
                                                             XNetInterface.THROTTLE, this);
 	stopStatusTimer();
-	    super.dispose();
-        //     super.dispose(); // GT 2007/11/6 - This statement results in a warning at run time
+        super.dispose();
     }
+
+    public void release() {
+        //if (!active) log.warn("release called when not active");
+        //dispose();
+    }
+
     
     public int setDccAddress(int newaddress)
     {
@@ -1494,28 +1501,27 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Set up the status timer, and start it.
      */
     protected void startStatusTimer() {
-        if(statTimer==null) {
-            statTimer = new java.util.Timer();
+        if(statusTask!=null) {
+            statusTask.cancel();
         }
-        else {
-            statTimer.cancel();
-        }
-        statTimer.schedule(new java.util.TimerTask() { 
-                    public void run() {
-                        /* If the timer times out, just send a status 
-                           request message */
-                        sendStatusInformationRequest();
-                    }
-                },statTimeoutValue);                           
+        statusTask=new java.util.TimerTask() { 
+                 public void run() {
+                    /* If the timer times out, just send a status 
+                       request message */
+                    sendStatusInformationRequest();
+                 }
+           };
+        new java.util.Timer().schedule(statusTask,statTimeoutValue,statTimeoutValue);                           
     }
     
     /*
      * Stop the Status Timer 
      */
     protected void stopStatusTimer() {
-        if(statTimer!=null) statTimer.cancel();
+        if(statusTask!=null) 
+              statusTask.cancel();
     }
-    
+   
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, XNetThrottleManager.isLongAddress(address));
     }
@@ -1571,7 +1577,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
     }
 
-    
     // register for notification
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottle.class.getName());
