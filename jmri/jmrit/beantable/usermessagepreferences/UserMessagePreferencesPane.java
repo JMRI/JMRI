@@ -16,7 +16,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -274,7 +274,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         JTable table = new JTable(data, columnNames);
         table.setPreferredScrollableViewportSize(new Dimension(500, 200));
         table.getColumnModel().getColumn(0).setPreferredWidth(400);
-        table.setFillsViewportHeight(true);
+        //table.setFillsViewportHeight(true);
         JScrollPane scrollPane = new JScrollPane(table);
         lMiscTableTabPanel.setLayout(new BoxLayout(lMiscTableTabPanel, BoxLayout.Y_AXIS));
         lMiscTableTabPanel.add(scrollPane);
