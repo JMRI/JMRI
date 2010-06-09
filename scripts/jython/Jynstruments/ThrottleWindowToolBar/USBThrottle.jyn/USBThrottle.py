@@ -77,9 +77,9 @@ class USBThrottle(Jynstrument, PropertyChangeListener, AddressListener):
                         
                     # Speed
                     if (component == self.driver.componentSpeed) :
-                        if (self.driver.componentSpeedMultiplier != 0) :
+                        try:
                             self.vsd = valueSpeedDivider * self.driver.componentSpeedMultiplier
-                        else :
+                        except AttributeError:
                             self.vsd = valueSpeedDivider
                         self.speedAction.setSpeedIncrement(value / self.vsd)
                         if ( abs(value) > self.driver.valueSpeedTrigger ) :
