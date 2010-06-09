@@ -2,8 +2,16 @@
 
 package apps;
 
+import java.awt.FlowLayout;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ResourceBundle;
+import javax.swing.filechooser.FileFilter;
 
 import javax.swing.*;
 
@@ -15,65 +23,19 @@ import javax.swing.*;
  * a Set button is provided so that the user can select the path.
  *
  * @author      Kevin Dickerson   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
+ 
 public class FileLocationPane extends JPanel {
 
+    static protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
     public FileLocationPane() {
-    
-        JButton bScript = new JButton("Set");
-        final JFileChooser fcScript;
-        fcScript = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
-
-        fcScript.setDialogTitle("Select Directory");
-        fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fcScript.setAcceptAllFileFilterUsed(false);
-        bScript.addActionListener(new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                // get the file
-                fcScript.showOpenDialog(null);
-                if (fcScript.getSelectedFile()==null) return; // cancelled
-                scriptLocation.setText(fcScript.getSelectedFile()+File.separator);
-                validate();
-                if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-            }
-        });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JPanel p = new JPanel();
-        JLabel scripts = new JLabel("Jython Script");
-        p.add(scripts);
-        p.add(scriptLocation);
-        p.add(bScript);
-        scriptLocation.setColumns(20);
-        scriptLocation.setText(jmri.jmrit.XmlFile.scriptsDir());
-        add(p);
-        
-        p = new JPanel();
-        JLabel users = new JLabel("User File Locations");
-        p.add(users);
-        p.add(userLocation);
-        userLocation.setColumns(20);
-        userLocation.setText(jmri.jmrit.XmlFile.userFileLocationDefault());
-        
-        JButton bUser = new JButton("Set");
-        final JFileChooser fcUser;
-        fcUser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    
 
-        fcUser.setDialogTitle("Select Directory");
-        fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-        fcUser.setAcceptAllFileFilterUsed(false);
-        bUser.addActionListener(new AbstractAction() {
-            public void actionPerformed(ActionEvent e) {
-                // get the file
-                fcUser.showOpenDialog(null);
-                if (fcUser.getSelectedFile()==null) return; // cancelled
-                userLocation.setText(fcUser.getSelectedFile()+File.separator);
-                validate();
-                if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
-            }
-        });
-        p.add(bUser);
-        add(p);
+        add(PrefLocation());
+        add(ScriptsLocation());
         
         /*p = new JPanel();
         JLabel throttle = new JLabel("Default Throttle Location");
@@ -91,9 +53,68 @@ public class FileLocationPane extends JPanel {
         //jmri.jmrit.throttle.ThrottleFrame.setDefaultThrottleLocation(throttleLocation.getText());
     }
     
+    private JPanel ScriptsLocation(){
+        JPanel p = new JPanel();
+        JButton bScript = new JButton(rb.getString("ButtonSetDots"));
+        final JFileChooser fcScript;
+        fcScript = new JFileChooser(jmri.jmrit.XmlFile.scriptsDir());
+
+        fcScript.setDialogTitle(rb.getString("MessageSelectDirectory"));
+        fcScript.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fcScript.setAcceptAllFileFilterUsed(false);
+        bScript.addActionListener(new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                // get the file
+                fcScript.showOpenDialog(null);
+                if (fcScript.getSelectedFile()==null) return; // cancelled
+                scriptLocation.setText(fcScript.getSelectedFile()+File.separator);
+                validate();
+                if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+            }
+        });
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        p = new JPanel();
+        JLabel scripts = new JLabel(rb.getString("ScriptDir"));
+        p.add(scripts);
+        p.add(scriptLocation);
+        p.add(bScript);
+        scriptLocation.setColumns(30);
+        scriptLocation.setText(jmri.jmrit.XmlFile.scriptsDir());
+        return p;
+    }
+    
+    private JPanel PrefLocation(){
+        JPanel p = new JPanel();
+        JLabel users = new JLabel(rb.getString("PrefDir"));
+        p.add(users);
+        p.add(userLocation);
+        userLocation.setColumns(30);
+        userLocation.setText(jmri.jmrit.XmlFile.userFileLocationDefault());
+        
+        JButton bUser = new JButton(rb.getString("ButtonSetDots"));
+        final JFileChooser fcUser;
+        fcUser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+
+        fcUser.setDialogTitle(rb.getString("MessageSelectDirectory"));
+        fcUser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fcUser.setAcceptAllFileFilterUsed(false);
+        bUser.addActionListener(new AbstractAction() {
+            public void actionPerformed(ActionEvent e) {
+                // get the file
+                fcUser.showOpenDialog(null);
+                if (fcUser.getSelectedFile()==null) return; // cancelled
+                userLocation.setText(fcUser.getSelectedFile()+File.separator);
+                validate();
+                if (getTopLevelAncestor()!=null) ((JFrame)getTopLevelAncestor()).pack();
+            }
+        });
+        p.add(bUser);
+        return p;
+    }
+
     protected static JTextField scriptLocation = new JTextField();
     protected static JTextField userLocation = new JTextField();
-    protected static JTextField throttleLocation = new JTextField();
+    //protected static JTextField throttleLocation = new JTextField();
 
 }
 
