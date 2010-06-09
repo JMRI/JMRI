@@ -10,11 +10,11 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class ConfigurationManager {
 
-    private static final String[] options = new String[]{"MERG CBUS", "Raw CAN", "Test - do not use"};
+    private static final String[] options = new String[]{"MERG CBUS", "OpenLCB CAN", "Raw CAN", "Test - do not use"};
     
     /**
      * Provide the current set of "Option1" 
@@ -37,11 +37,16 @@ public class ConfigurationManager {
             jmri.jmrix.can.cbus.ActiveFlag.setActive();
 
         } if (options[1].equals(option)) {
+            // "OpenLCB CAN"
+            
+            jmri.jmrix.can.ActiveFlag.setActive();
+
+        } if (options[2].equals(option)) {
             // "Raw CAN"
             // This is just vanilla CAN with nothing additional
             jmri.jmrix.can.ActiveFlag.setActive();
 
-        } if (options[2].equals(option)) {
+        } if (options[3].equals(option)) {
             // "Test - do not use"
             jmri.jmrix.can.nmranet.ActiveFlag.setActive();
 
