@@ -1,5 +1,6 @@
 package jmri.jmrix.loconet;
 
+import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -15,7 +16,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -94,11 +95,17 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         switch(slot.decoderType())
         {
             case LnConstants.DEC_MODE_128:
-            case LnConstants.DEC_MODE_128A: this.speedIncrement = 1; break;
+            case LnConstants.DEC_MODE_128A: 
+            	setSpeedStepMode( DccThrottle.SpeedStepMode128 ); 
+            	break;
             case LnConstants.DEC_MODE_28:
             case LnConstants.DEC_MODE_28A:
-            case LnConstants.DEC_MODE_28TRI: this.speedIncrement = 4; break;
-            case LnConstants.DEC_MODE_14: this.speedIncrement = 8; break;
+            case LnConstants.DEC_MODE_28TRI: 
+            	setSpeedStepMode( DccThrottle.SpeedStepMode28 );
+            	break;
+            case LnConstants.DEC_MODE_14: 
+            	setSpeedStepMode( DccThrottle.SpeedStepMode14 );
+            	break;
         }
 
         // listen for changes

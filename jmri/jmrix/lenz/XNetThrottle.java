@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.35 $
+ * @version    $Revision: 2.36 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -56,7 +56,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
         super();
         this.setDccAddress(((DccLocoAddress)address).getNumber());
-        this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
+        this.speedIncrement=SPEED_STEP_128_INCREMENT;
         this.speedStepMode=DccThrottle.SpeedStepMode128;
         //       this.isForward=true;
         setIsAvailable(false);
@@ -476,33 +476,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     {
         return speedIncrement;
     }
-    
-    /*
-     * setSpeedStepMode - set the speed step value.
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
-     */
-    synchronized public void setSpeedStepMode(int Mode) {
-	if(log.isDebugEnabled()) log.debug("Speed Step Mode Change to Mode: " + Mode +
-                                           " Current mode is: " + this.speedStepMode);
-        this.speedStepMode = Mode;
-	if(Mode == DccThrottle.SpeedStepMode128) {
-            this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode28) {
-            this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode27) {
-            this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
-	} else if(Mode == DccThrottle.SpeedStepMode14) {
-            this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
-	} else {
-            this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
-            this.speedStepMode = DccThrottle.SpeedStepMode128;
-	}
-	setSpeedSetting(this.speedSetting);
-    }
-    
-    
+          
     // Handle incoming messages for This throttle.
     public void message(XNetReply l) {
 	// First, we want to see if this throttle is waiting for a message 
@@ -758,28 +732,28 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if((b1 & 0x01)==0x01)
             {
                 if(log.isDebugEnabled()) { log.debug ("Speed Step setting 27"); }
-                this.speedIncrement=XNetConstants.SPEED_STEP_27_INCREMENT;
+                this.speedIncrement=SPEED_STEP_27_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode27)
                     notifyPropertyChangeListener("SpeedSteps",
                                                  Integer.valueOf(this.speedStepMode),
                                                  Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode27));
             } else if((b1 & 0x02)==0x02) {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 28"); }
-                this.speedIncrement=XNetConstants.SPEED_STEP_28_INCREMENT;
+                this.speedIncrement=SPEED_STEP_28_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode28)
                     notifyPropertyChangeListener("SpeedSteps",
                                                  Integer.valueOf(this.speedStepMode),
                                                  Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode28));
             } else if((b1 & 0x04)==0x04) {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 128"); }
-                this.speedIncrement=XNetConstants.SPEED_STEP_128_INCREMENT;
+                this.speedIncrement=SPEED_STEP_128_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode128)
                     notifyPropertyChangeListener("SpeedSteps",
                                                  Integer.valueOf(this.speedStepMode),
                                                  Integer.valueOf(this.speedStepMode=DccThrottle.SpeedStepMode128));
             } else {
                 if(log.isDebugEnabled()) { log.debug("Speed Step setting 14"); }
-                this.speedIncrement=XNetConstants.SPEED_STEP_14_INCREMENT;
+                this.speedIncrement=SPEED_STEP_14_INCREMENT;
                 if(this.speedStepMode!=DccThrottle.SpeedStepMode14)
                     notifyPropertyChangeListener("SpeedSteps",
                                                  Integer.valueOf(this.speedStepMode),

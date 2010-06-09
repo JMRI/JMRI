@@ -17,9 +17,15 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
+	public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;
+	public final static float SPEED_STEP_27_INCREMENT=1.0f/27.0f;
+	public final static float SPEED_STEP_28_INCREMENT=1.0f/28.0f;
+	public final static float SPEED_STEP_128_INCREMENT=1.0f/126.0f; // remember there are only 126 
+																	// non-stop values in 128 speed 
+	
     protected float speedSetting;
     protected float speedIncrement;
     /**
@@ -985,19 +991,20 @@ abstract public class AbstractThrottle implements DccThrottle {
      * @param Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
      */
-     public void setSpeedStepMode(int Mode) {
-	    speedStepMode = Mode;
-            if(Mode==DccThrottle.SpeedStepMode14)
-               speedIncrement=1.0f/14.0f;
-            else if(Mode==DccThrottle.SpeedStepMode27)
-               speedIncrement=1.0f/27.0f;
-            else if(Mode==DccThrottle.SpeedStepMode28)
-               speedIncrement=1.0f/28.0f;
-            else // default to 128 speed step mode
-               speedIncrement=1.0f/126.0f; // remember there are only 126 
-                                      // non-stop values in 128 speed 
-                                      // step mode
-     }
+    public void setSpeedStepMode(int Mode) {
+    	if(log.isDebugEnabled()) log.debug("Speed Step Mode Change to Mode: " + Mode +
+                " Current mode is: " + this.speedStepMode);
+    	speedStepMode = Mode;
+    	if(Mode==DccThrottle.SpeedStepMode14)
+    		speedIncrement=SPEED_STEP_14_INCREMENT;
+    	else if(Mode==DccThrottle.SpeedStepMode27)
+    		speedIncrement=SPEED_STEP_27_INCREMENT;
+    	else if(Mode==DccThrottle.SpeedStepMode28)
+    		speedIncrement=SPEED_STEP_28_INCREMENT;
+    	else // default to 128 speed step mode
+    		speedIncrement=SPEED_STEP_128_INCREMENT; 
+    	//setSpeedSetting(this.speedSetting);
+    }
 
     /*
      * getSpeedStepMode - get the current speed step value.
