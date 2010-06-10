@@ -3,7 +3,7 @@
 
 <!-- XML Schema for JMRI aspect-signaling support                           -->
 
-<!-- $Id: xmlio.xsd,v 1.1 2010-03-06 02:44:15 jacobsen Exp $ -->
+<!-- $Id: xmlio.xsd,v 1.2 2010-06-10 00:24:20 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -88,7 +88,15 @@
           </xs:documentation></xs:annotation>
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="type" minOccurs="1" maxOccurs="1"/>
+              <xs:element name="type" minOccurs="1" maxOccurs="1">
+                <xs:simpleType>
+                  <xs:restriction base="xs:token">
+                    <xs:enumeration value="sensor"/>
+                    <xs:enumeration value="turnout"/>
+                    <xs:enumeration value="power"/>
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
               <xs:element name="name" minOccurs="1" maxOccurs="1"/>
               <xs:choice>
                 <xs:element name="value" minOccurs="1" maxOccurs="1">

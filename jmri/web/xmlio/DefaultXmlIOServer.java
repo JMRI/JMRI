@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -63,6 +63,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("name").addContent(name));
                     e.addContent(n);
                 }            
+            } else if (type.equals("power")) {
+                // add a power element
+                PowerManager m = InstanceManager.powerManagerInstance();
+                Element n = new Element("item");
+                n.addContent(new Element("type").addContent("power"));
+                n.addContent(new Element("name").addContent("power"));
+                e.addContent(n);
             } else log.warn("Unexpected type in list element: "+type);
         }
         
@@ -82,6 +89,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
+            else if (type.equals("power")) immediateWritePower(name, item);
             else log.warn("Unexpected type in item: "+type);
         }
         
@@ -91,6 +99,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             if (type.equals("turnout")) immediateReadTurnout(name, item);
             else if (type.equals("sensor")) immediateReadSensor(name, item);
+            else if (type.equals("power")) immediateReadPower(name, item);
         }
         
         return e;
@@ -119,6 +128,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             
             if (type.equals("turnout")) addListenerToTurnout(name, item, dr);
             else if (type.equals("sensor")) addListenerToSensor(name, item, dr);
+            else if (type.equals("power")) addListenerToPower(name, item, dr);
             else log.warn("Unexpected type: "+type);
         }
 
@@ -135,8 +145,13 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String type = item.getChild("type").getText();
             String name = item.getChild("name").getText();
             
-            if (type.equals("turnout")) immediateReadTurnout(name, item);
-            else if (type.equals("sensor")) immediateReadSensor(name, item);
+            try {
+                if (type.equals("turnout")) immediateReadTurnout(name, item);
+                else if (type.equals("sensor")) immediateReadSensor(name, item);
+                else if (type.equals("power")) immediateReadPower(name, item);
+            } catch (JmriException j) {
+                log.warn("exception handling "+type+" "+name, j);
+            }
         }
         
         r.monitorReply(e);
@@ -152,10 +167,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String type = item.getChild("type").getText();
             String name = item.getChild("name").getText();
             if (item.getChild("value") == null) return true;  // if no value, consider changed
-            
-            if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
-            else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
-            else log.warn("Unexpected type: "+type);
+
+            try {
+                if (type.equals("turnout")) changed |= monitorProcessTurnout(name, item);
+                else if (type.equals("sensor")) changed |= monitorProcessSensor(name, item);
+                else if (type.equals("power")) changed |= monitorProcessPower(name, item);
+                else log.warn("Unexpected type: "+type);
+            } catch (JmriException j) {
+                log.warn("exception handling "+type+" "+name, j);
+            }
         }
         return changed;
     }
@@ -170,6 +190,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
         b.addPropertyChangeListener(dr);
     }
     
+    void addListenerToPower(String name, Element item, DeferredRead dr) {
+        PowerManager b = InstanceManager.powerManagerInstance();
+        b.addPropertyChangeListener(dr);
+    }
+    
     void removeListenerFromTurnout(String name, Element item, DeferredRead dr) {
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
         b.removePropertyChangeListener(dr);
@@ -177,6 +202,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
     
     void removeListenerFromSensor(String name, Element item, DeferredRead dr) {
         Sensor b = InstanceManager.sensorManagerInstance().provideSensor(name);
+        b.removePropertyChangeListener(dr);
+    }
+    
+    void removeListenerFromPower(String name, Element item, DeferredRead dr) {
+        PowerManager b = InstanceManager.powerManagerInstance();
         b.removePropertyChangeListener(dr);
     }
     
@@ -210,6 +240,22 @@ public class DefaultXmlIOServer implements XmlIOServer {
         return false;  // no difference
     }
     
+    /**
+     * Return true if there is a difference
+     */
+    boolean monitorProcessPower(String name, Element item) throws JmriException {
+        // get power manager
+        PowerManager b = InstanceManager.powerManagerInstance();
+
+        // check for value element, which means compare
+        Element v = item.getChild("value");
+        if (v!=null) {
+            int state = Integer.parseInt(v.getText());
+            return  (b.getPower() != state);
+        }
+        return false;  // no difference
+    }
+    
     void immediateWriteTurnout(String name, Element item) {
         // get turnout
         Turnout b = InstanceManager.turnoutManagerInstance().provideTurnout(name);
@@ -232,6 +278,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             b.setState(state);
+            item.removeContent(v);
+        }
+    }
+    
+    void immediateWritePower(String name, Element item) throws JmriException {
+        // get power manager
+        PowerManager b = InstanceManager.powerManagerInstance();
+
+        // check for set element, which means write
+        Element v = item.getChild("set");
+        if (v!=null) {
+            int state = Integer.parseInt(v.getText());
+            b.setPower(state);
             item.removeContent(v);
         }
     }
@@ -260,6 +319,19 @@ public class DefaultXmlIOServer implements XmlIOServer {
         
         // set result
         v.setText(""+b.getState());
+    }
+    
+    void immediateReadPower(String name, Element item) throws JmriException {
+        // get power manager
+        PowerManager b = InstanceManager.powerManagerInstance();
+
+        Element v = item.getChild("value");
+
+        // Start read: ensure value element
+        if (v == null) item.addContent(v = new Element("value"));
+        
+        // set result
+        v.setText(""+b.getPower());
     }
     
     static HashMap<Integer, ThrottleContext> map = new HashMap<Integer, ThrottleContext>();
