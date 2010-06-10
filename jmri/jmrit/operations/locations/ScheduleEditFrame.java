@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -168,7 +168,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		
 		// set frame size and schedule for display
 		pack();
-		setSize(900, Control.panelHeight);
+		setSize(Control.panelWidth, Control.panelHeight);
 		setVisible(true);
 	}
 	

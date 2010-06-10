@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -246,16 +246,13 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
 				_car.setDestination(null, null);
 			} else {
-				if (trackDestinationBox.getSelectedItem() == null
-						|| trackDestinationBox.getSelectedItem().equals("")) {
-					JOptionPane.showMessageDialog(this,
-							rb.getString("carFullyDest"),
-							rb.getString("carCanNotDest"),
-							JOptionPane.ERROR_MESSAGE);
-					return;
+				Track destTrack = null;
+				if (trackDestinationBox.getSelectedItem() != null 
+						&& !trackDestinationBox.getSelectedItem().equals("")){
+					destTrack = (Track)trackDestinationBox.getSelectedItem();
 				}
 				String status = _car.setDestination((Location) destinationBox.getSelectedItem(),
-						(Track)trackDestinationBox.getSelectedItem());
+						destTrack);
 				if (!status.equals(Car.OKAY)){
 					log.debug ("Can't set car's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
@@ -263,6 +260,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 							rb.getString("carCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
+
 				}
 			}
 			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals(""))
@@ -404,7 +402,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
 				Location l = (Location)locationBox.getSelectedItem();
 				l.updateComboBox(trackLocationBox);
-				findAvailableTracks(l, trackLocationBox, autoTrackCheckBox);
+				findAvailableTracks(l, trackLocationBox, autoTrackCheckBox.isSelected(), false);
 				if (_car.getLocation() != null && _car.getLocation().equals(l) && _car.getTrack() != null)
 					trackLocationBox.setSelectedItem(_car.getTrack());
 				packFrame();
@@ -420,7 +418,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
 				Location l = (Location)destinationBox.getSelectedItem();
 				l.updateComboBox(trackDestinationBox);
-				findAvailableTracks(l, trackDestinationBox, autoDestinationTrackCheckBox);
+				findAvailableTracks(l, trackDestinationBox, autoDestinationTrackCheckBox.isSelected(), true);
 				if (_car.getDestination() != null && _car.getDestination().equals(l) && _car.getDestinationTrack() != null)
 					trackDestinationBox.setSelectedItem(_car.getDestinationTrack());
 				packFrame();
@@ -432,12 +430,12 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	 * Find the available tracks that will accept this car
 	 * @param l location
 	 */
-	protected void findAvailableTracks(Location l, JComboBox box, JCheckBox checkBox){
-		if(checkBox.isSelected() && l != null){
+	protected void findAvailableTracks(Location l, JComboBox box, boolean filter, boolean destTrack){
+		if(filter && l != null){
 			List<String> tracks = l.getTracksByNameList(null);
 			for (int i=0; i<tracks.size(); i++){
 				Track track = l.getTrackById(tracks.get(i));
-				if (_car.testDestination(l, track).equals(Car.OKAY)){
+				if (_car.testDestination(l, track).equals(Car.OKAY) && (!destTrack || !track.getLocType().equals(Track.STAGING))){
 					box.setSelectedItem(track);
 					log.debug("Available track: "+track.getName()+" for location: "+l.getName());
 				} else {

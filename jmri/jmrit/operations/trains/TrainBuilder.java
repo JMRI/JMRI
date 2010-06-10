@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.76 $
+ * @version             $Revision: 1.77 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -401,13 +401,13 @@ public class TrainBuilder extends TrainCommon{
 				indexEng--;
 				continue;
 			}
-			// remove engines on tracks that don't service the train's direction
+			// remove engines on tracks that don't service the train's departure direction
 			if (!checkPickUpTrainDirection(engine, train.getRoute().getLocationById(routeList.get(0)))){
 				engineList.remove(indexEng);
 				indexEng--;
 				continue;
 			}
-			// remove engines that have been assigned destinations
+			// remove engines that have been assigned destinations that don't match the terminal 
 			if (engine.getDestination() != null && !engine.getDestination().equals(terminateLocation)){
 				addLine(buildReport, THREE, "Exclude engine ("+engine.getRoad()+" "+engine.getNumber()+") it has an assigned destination ("+engine.getDestination().getName()+")");
 				engineList.remove(indexEng);
@@ -654,11 +654,11 @@ public class TrainBuilder extends TrainCommon{
 						&& checkPickUpTrainDirection(car, train.getRoute().getLocationById(routeList.get(0)))){
 					if (car.getDestination() == null || car.getDestination() == terminateLocation){
 						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.getRoad()+" "+car.getNumber()}));
-						// remove all other cabooses from list
+						// found a caboose with road that matches engine, now remove all other cabooses from list
 						for (int i=0; i<carList.size(); i++){
 							Car testCar = carManager.getById(carList.get(i));
 							if (testCar.isCaboose() && testCar != car){
-								// need to keep it if departing staging
+								// need to keep caboose if departing staging
 								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
 									addLine(buildReport, FIVE, "Exclude caboose ("+testCar.getRoad()+" "+testCar.getNumber()+") at location ("+testCar.getLocationName()+", "+testCar.getTrackName()+")");
 									carList.remove(carList.get(i));		// remove this car from the list
@@ -727,6 +727,7 @@ public class TrainBuilder extends TrainCommon{
 				// car meets all requirements, now find a destination track to place car
 				if (train.getTrainTerminatesRouteLocation().getStagingTrack() == null){
 					List<String> sls = terminateLocation.getTracksByMovesList(null);
+					// TODO need to check to see if car has a destination track already assigned to it
 					// loop through the destination tracks to find one that accepts caboose or car with FRED
 					for (int s = 0; s < sls.size(); s++){
 						Track destTrack = terminateLocation.getTrackById(sls.get(s));
@@ -935,19 +936,22 @@ public class TrainBuilder extends TrainCommon{
 	
 	boolean multipass = false;
 	/**
-	 * 
+	 * Main routine to place cars into the train.  Can be called multiple times, percent
+	 * controls how many cars are placed in any given pass.
 	 * @return true if there were no errors
 	 */
 	private boolean placeCars(int percent){
-		if(percent < 100){
+		if (percent < 100){
 			addLine(buildReport, THREE, "Multipass build, find destinations for "+percent+" percent of the available moves");
 			multipass = true;
 		}
-		if(percent == 100 && multipass)
+		if (percent == 100 && multipass)
 			addLine(buildReport, THREE, "Final build pass, find destinations for the remaining available moves");
+		// determine how many locations are serviced by this train
 		int numLocs = routeList.size();
 		if (numLocs > 1)  // don't find car destinations for the last location in the route
 			numLocs--;
+		// now go through each location starting at departure and place cars as requested
 		for (int routeIndex=0; routeIndex<numLocs; routeIndex++){
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(routeIndex));
 			if(train.skipsLocation(rl.getId())){
@@ -961,7 +965,7 @@ public class TrainBuilder extends TrainCommon{
 				int saveReqMoves = reqNumOfMoves;	// save a copy for status message
 				addLine(buildReport, THREE, "Location (" +rl.getName()+ ") requests " +reqNumOfMoves+ "/" +rl.getMaxCarMoves()+ " moves" );
 				// multipass build?
-				if(percent < 100)
+				if (percent < 100)
 					reqNumOfMoves = reqNumOfMoves*percent/100;
 				if (reqNumOfMoves <= 0)
 					success = true;
@@ -997,13 +1001,51 @@ public class TrainBuilder extends TrainCommon{
 										// are drops allows at this location?
 										if (!rld.canDrop()){
 											addLine(buildReport, THREE, "Route ("+train.getRoute().getName()+") does not allow drops at location ("+rld.getName()+") stop "+locCount);
-										} else if (rld.getCarMoves() < rld.getMaxCarMoves()){  
-											carAdded = addCarToTrain(c, rl, rld, c.getDestination(), c.getDestinationTrack());
+										} else if (rld.getCarMoves() < rld.getMaxCarMoves()){
+											// check for valid destination track
+											if (c.getDestinationTrack() == null){
+												addLine(buildReport, THREE, "Car ("+c.getRoad()+" "+c.getNumber()+") doesn't have a valid destination track");
+												// is there a track assigned for staging cars?
+												if (rld.getStagingTrack() != null){
+													addLine(buildReport, THREE, "Car ("+c.getRoad()+" "+c.getNumber()+") assigned to staging track ("+rld.getStagingTrack().getName()+")");
+													carAdded = addCarToTrain(c, rl, rld, c.getDestination(), rld.getStagingTrack());
+												// no, find a destination track this this car
+												} else {
+													List<String> tracks = c.getDestination().getTracksByMovesList(null);
+													for (int s = 0; s < tracks.size(); s++){
+														Track testTrack = c.getDestination().getTrackById(tracks.get(s));
+														// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
+														// need to find a track that is isn't the same as the car's current
+														String status = c.testDestination(c.getDestination(), testTrack);
+														// is the testTrack a siding with a Schedule?
+														if (testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
+																&& status.contains(Car.LOAD) 
+																&& checkDropTrainDirection(c, rld, c.getDestination(), testTrack)){
+															addLine(buildReport, THREE, "Can't drop car ("+c.getRoad()+" "+c.getNumber()+") to track ("+testTrack.getName()+") because "+status);
+															continue;
+														}
+														if (!status.equals(Car.OKAY)){
+															addLine(buildReport, SEVEN, "Can't drop car ("+c.getRoad()+" "+c.getNumber()+") to track (" +testTrack.getName()+") due to "+status);
+															continue;
+														}
+														if (testTrack != c.getTrack() 
+																&& status.equals(Car.OKAY) 
+																&& checkDropTrainDirection(c, rld, c.getDestination(), testTrack)){
+															carAdded = addCarToTrain(c, rl, rld, c.getDestination(), testTrack);
+															break;
+														}
+													}
+												}
+											} else {
+												// going into staging?
+												if (rld.getStagingTrack() == null  || rld.getStagingTrack() == c.getDestinationTrack())
+												carAdded = addCarToTrain(c, rl, rld, c.getDestination(), c.getDestinationTrack());
+											}
 											// done?
 											if (carAdded)
 												break;	//yes
 											else
-												addLine(buildReport, THREE, "Car ("+c.getRoad()+" "+c.getNumber()+") can not be dropped to track (" + c.getDestinationTrack() + ") stop "+locCount);
+												addLine(buildReport, THREE, "Car ("+c.getRoad()+" "+c.getNumber()+") can not be delivered to (" + c.getDestination() + ") stop "+locCount);
 										} else {
 											addLine(buildReport, THREE, "No available moves for destination ("+rld.getName()+") stop "+locCount);
 										}		
@@ -1167,6 +1209,7 @@ public class TrainBuilder extends TrainCommon{
 										destinationTemp = null;
 									}
 								}
+								// check for programming error
 								if(destinationTemp != null){
 									if(trackTemp == null){
 										buildFailed("Build Failure, trackTemp is null!");

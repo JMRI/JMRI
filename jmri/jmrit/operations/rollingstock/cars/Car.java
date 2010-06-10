@@ -3,6 +3,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.Schedule;
@@ -13,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -26,6 +27,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected String _nextLoad = "";
+	protected Location _nextDestination = null;
+	protected Track _nextDestTrack = null;
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	
@@ -80,6 +83,22 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public String getNextLoad(){
 		return _nextLoad;
+	}
+	
+	public void setNextDestination(Location destination){
+		_nextDestination = destination;
+	}
+	
+	public Location getNextDestination(){
+		return _nextDestination;
+	}
+	
+	public void setNextDestTrack(Track track){
+		_nextDestTrack = track;
+	}
+	
+	public Track getNextDestTrack(){
+		return _nextDestTrack;
 	}
 	
 	public void setCaboose(boolean caboose){
@@ -206,6 +225,22 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		// update load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null && track != null) || getTrain() == null)
 			return status;
+		// set next destination and track if available
+		if (getNextDestination() != null){
+			String newStatus = super.setDestination(getNextDestination(), getNextDestTrack());
+			if (!newStatus.equals(OKAY)){
+				String loc = "null";
+				String trk = "null";
+				if (getNextDestination() != null)
+					loc = getNextDestination().getName();
+				if (getNextDestTrack() != null)
+					trk = getNextDestTrack().getName();
+				log.error("Next destination failed for car ("+getId()+") status "+newStatus+" location "
+						+loc+" track "+trk);
+			}
+			setNextDestination(null);
+			setNextDestTrack(null);
+		}
 		// update load when car reaches a siding
 		if (destTrack.getLocType().equals(Track.SIDING)){
 			if (!getNextLoad().equals("")){
@@ -275,6 +310,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		// get the car's next load
 		setNextLoad(currentSi.getShip());
+		// get the car's next destination and track
+		setNextDestination(currentSi.getDestination());
+		setNextDestTrack(currentSi.getDestinationTrack());
+		
 		log.debug("Car ("+getId()+") next load ("+getNextLoad()+")");
 		// bump and check count
 		track.setScheduleCount(track.getScheduleCount()+1);
@@ -334,6 +373,12 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if ((a = e.getAttribute("nextLoad")) != null){
 			_nextLoad = a.getValue();
 		}
+		if ((a = e.getAttribute("nextDestId")) != null){
+			_nextDestination = LocationManager.instance().getLocationById(a.getValue());
+		}
+		if ((a = e.getAttribute("nextDestTrackId")) != null){
+			_nextDestTrack = _nextDestination.getTrackById(a.getValue());
+		}
 	}
 	
 	/**
@@ -361,6 +406,11 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		if (!getNextLoad().equals("")){
 			e.setAttribute("nextLoad", getNextLoad());
+		}
+		if (getNextDestination() != null){
+			e.setAttribute("nextDestId", getNextDestination().getId());
+			if (getNextDestTrack() != null)
+				e.setAttribute("nextDestTrackId", getNextDestTrack().getId());
 		}
 		return e;
 	}

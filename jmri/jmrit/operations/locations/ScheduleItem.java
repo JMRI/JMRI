@@ -3,10 +3,10 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.setup.Control;
 
 /**
- * Represents a car type to be scheduled for a location
+ * Represents one schedule item of a schedule
  * 
- * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.8 $
+ * @author Daniel Boudreau Copyright (C) 2009, 2010
+ * @version             $Revision: 1.9 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -16,6 +16,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	protected String _road = "";			// the car road
 	protected String _load ="";				// the car load requested
 	protected String _ship ="";				// the car load shipped
+	protected Location _destination = null;	// car destination after load
+	protected Track _trackDestination = null;// car destination track after load
 	protected int _count = 1;				// the number of times this type of car must be dropped
 	protected String _comment = "";
 			
@@ -23,6 +25,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public static final String TYPE_CHANGED_PROPERTY = "type";
 	public static final String ROAD_CHANGED_PROPERTY = "road";
 	public static final String LOAD_CHANGED_PROPERTY = "load";
+	public static final String DESTINATION_CHANGED_PROPERTY = "destination";
+	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "destinationTrack";
 	public static final String DISPOSE = "dispose";
 	
 	/**
@@ -115,6 +119,62 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		firePropertyChange (NUMBER_CHANGED_PROPERTY, old, count);
 	}
 	
+	public Location getDestination() {
+		return _destination;
+	}
+	
+	public void setDestination(Location destination){
+		Location old = _destination;
+		_destination = destination;
+		String oldName = "null";
+		if (old != null)
+			oldName = old.getName();
+		String newName = "null";
+		if (_destination != null)
+			newName = _destination.getName();
+		firePropertyChange (DESTINATION_CHANGED_PROPERTY, oldName, newName);
+	}
+	
+	public String getDestinationName() {
+		if (_destination != null)
+			return _destination.getName();
+		return "";
+	}
+	
+	public String getDestinationId() {
+		if (_destination != null)
+			return _destination.getId();
+		return "";
+	}
+
+	public Track getDestinationTrack() {
+		return _trackDestination;
+	}
+	
+	public void setDestinationTrack(Track track){
+		Track old = _trackDestination;
+		_trackDestination = track;
+		String oldName = "null";
+		if (old != null)
+			oldName = old.getName();
+		String newName = "null";
+		if (_trackDestination != null)
+			newName = _trackDestination.getName();
+		firePropertyChange (DESTINATION_TRACK_CHANGED_PROPERTY, oldName, newName);
+	}
+	
+	public String getDestinationTrackName() {
+		if (_trackDestination != null)
+			return _trackDestination.getName();
+		return "";
+	}
+	
+	public String getDestinationTrackId() {
+		if (_trackDestination != null)
+			return _trackDestination.getId();
+		return "";
+	}
+	
 	public void setComment(String comment) {
 		_comment = comment;
 	}
@@ -146,6 +206,10 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
         if ((a = e.getAttribute("load")) != null )  _load = a.getValue();
         if ((a = e.getAttribute("ship")) != null )  _ship = a.getValue();
+		if ((a = e.getAttribute("destinationId")) != null)
+			_destination = LocationManager.instance().getLocationById(a.getValue());
+		if ((a = e.getAttribute("destTrackId")) != null  && _destination != null)
+			_trackDestination = _destination.getTrackById(a.getValue());
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
     }
 
@@ -162,7 +226,11 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	e.setAttribute("type", getType());
     	e.setAttribute("road", getRoad());
     	e.setAttribute("load", getLoad());
-    	e.setAttribute("ship", getShip());  	
+    	e.setAttribute("ship", getShip());
+		if (!getDestinationId().equals(""))
+			e.setAttribute("destinationId", getDestinationId());
+		if (!getDestinationTrackId().equals(""))
+			e.setAttribute("destTrackId", getDestinationTrackId());
        	e.setAttribute("comment", getComment());
     	return e;
     }

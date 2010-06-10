@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -40,7 +40,9 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private static final int ROADCOLUMN  = TYPECOLUMN +1;
     private static final int LOADCOLUMN  = ROADCOLUMN +1;
     private static final int SHIPCOLUMN  = LOADCOLUMN +1;
-    private static final int COUNTCOLUMN  = SHIPCOLUMN +1;
+    private static final int DESTCOLUMN  = SHIPCOLUMN +1;
+    private static final int TRACKCOLUMN  = DESTCOLUMN +1;
+    private static final int COUNTCOLUMN  = TRACKCOLUMN +1;
     private static final int UPCOLUMN = COUNTCOLUMN +1;
     private static final int DOWNCOLUMN = UPCOLUMN +1;
     private static final int DELETECOLUMN = DOWNCOLUMN +1;
@@ -98,12 +100,14 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
 		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(120);
-		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(120);
-		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(120);
-		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(120);
+		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(DESTCOLUMN).setPreferredWidth(130);
+		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(130);
 		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(50);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
@@ -125,6 +129,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case ROADCOLUMN: return rb.getString("Road");
         case LOADCOLUMN: return rb.getString("Receive");
         case SHIPCOLUMN: return rb.getString("Ship");
+        case DESTCOLUMN: return rb.getString("Destination");
+        case TRACKCOLUMN: return rb.getString("Track");
         case COUNTCOLUMN: return rb.getString("Count");
         case UPCOLUMN: return "";
         case DOWNCOLUMN: return "";
@@ -141,6 +147,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case ROADCOLUMN: return JComboBox.class;
         case LOADCOLUMN: return JComboBox.class;
         case SHIPCOLUMN: return JComboBox.class;
+        case DESTCOLUMN: return JComboBox.class;
+        case TRACKCOLUMN: return JComboBox.class;
         case COUNTCOLUMN: return String.class;
         case UPCOLUMN: return JButton.class;
         case DOWNCOLUMN: return JButton.class;
@@ -154,6 +162,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case ROADCOLUMN:
         case LOADCOLUMN:
         case SHIPCOLUMN:
+        case DESTCOLUMN:
+        case TRACKCOLUMN:
         case COUNTCOLUMN:
         case UPCOLUMN:
         case DOWNCOLUMN:
@@ -177,6 +187,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case ROADCOLUMN: return getRoadComboBox(si);
         case LOADCOLUMN: return getLoadComboBox(si);
         case SHIPCOLUMN: return getShipComboBox(si);
+        case DESTCOLUMN: return getDestComboBox(si);
+        case TRACKCOLUMN: return getTrackComboBox(si);
         case COUNTCOLUMN: return si.getCount();
         case UPCOLUMN: return rb.getObject("Up");
         case DOWNCOLUMN: return rb.getObject("Down");
@@ -197,6 +209,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		break;
         case SHIPCOLUMN: setShip(value, row);
 			break;
+        case DESTCOLUMN: setDestination(value, row);
+			break;
+        case TRACKCOLUMN: setTrack(value, row);
+			break;
         case COUNTCOLUMN: setCount(value, row);
         	break;
         case UPCOLUMN: moveUpScheduleItem(row);
@@ -214,7 +230,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private String getCurrentPointer(ScheduleItem si){
     	if (_track.getScheduleItemId().equals(si.getId()))
     		if (si.getCount() > 1)
-    			return _track.getScheduleCount()+" -->";
+    			return " "+_track.getScheduleCount()+" -->";
     		else
     			return "    -->";
     	else
@@ -271,6 +287,25 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getShip()});
     		cb.addItem(notValidRoad);
     		cb.setSelectedItem(notValidRoad);
+    	}
+    	return cb;
+    }
+    
+    private JComboBox getDestComboBox(ScheduleItem si){
+    	log.debug("getDestComboBox for ScheduleItem "+si.getType());
+    	JComboBox cb = LocationManager.instance().getComboBox();  
+    	cb.setSelectedItem(si.getDestination());
+    	return cb;
+    }
+    
+    private JComboBox getTrackComboBox(ScheduleItem si){
+    	log.debug("getTrackComboBox for ScheduleItem "+si.getType());
+    	JComboBox cb = new JComboBox();
+    	if (si.getDestination() != null){
+    		Location dest = si.getDestination();
+        	dest.updateComboBox(cb);  
+        	filterTracks(dest, cb, si.getType());
+        	cb.setSelectedItem(si.getDestinationTrack());
     	}
     	return cb;
     }
@@ -336,25 +371,56 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		si.setShip(load);
     }
     
+    private void setDestination(Object value, int row){ 	
+    	if (((JComboBox)value).getSelectedItem() != null){
+    		ScheduleItem si = _schedule.getItemById(list.get(row));
+    		si.setDestinationTrack(null);
+    		Location dest = null;
+    		if (!((JComboBox)value).getSelectedItem().equals("")){
+    			dest = (Location)((JComboBox)value).getSelectedItem();
+    		}
+    		si.setDestination(dest);
+    		fireTableCellUpdated(row, TRACKCOLUMN);
+    	}
+    }
+    
+    private void setTrack(Object value, int row){
+    	if (((JComboBox)value).getSelectedItem() != null){
+    		ScheduleItem si = _schedule.getItemById(list.get(row));
+    		Track track = null;
+    		if (!((JComboBox)value).getSelectedItem().equals("")){
+    			track = (Track)((JComboBox)value).getSelectedItem();
+    		}
+    		si.setDestinationTrack(track);
+    	}
+    }
+    
     private void moveUpScheduleItem (int row){
     	log.debug("move schedule up");
-		String id = list.get(row);
-		ScheduleItem si = _schedule.getItemById(id);
+		ScheduleItem si = _schedule.getItemById(list.get(row));
     	_schedule.moveItemUp(si);
     }
     
     private void moveDownScheduleItem (int row){
     	log.debug("move schedule down");
-		String id = list.get(row);
-		ScheduleItem si = _schedule.getItemById(id);
+		ScheduleItem si = _schedule.getItemById(list.get(row));
     	_schedule.moveItemDown(si);
     }
 
     private void deleteScheduleItem (int row){
     	log.debug("Delete schedule");
-		String id = list.get(row);
-		ScheduleItem si = _schedule.getItemById(id);
+		ScheduleItem si = _schedule.getItemById(list.get(row));
     	_schedule.deleteItem(si);
+    }
+    
+    // remove tracks that don't service the car's type
+    private void filterTracks (Location loc, JComboBox cb, String carType){
+    	List<String> tracks = loc.getTracksByNameList(null);
+		for (int i=0; i<tracks.size(); i++){
+			Track track = loc.getTrackById(tracks.get(i));
+			if (!loc.acceptsTypeName(carType) || !track.acceptsTypeName(carType))
+				cb.removeItem(track);
+		}
     }
     
    private int _trainDirection = Setup.getDirectionInt((String)Setup.getComboBox().getItemAt(0));
