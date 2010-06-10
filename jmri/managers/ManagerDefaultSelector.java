@@ -23,7 +23,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
@@ -60,9 +60,11 @@ public class ManagerDefaultSelector {
     /** 
      * load into InstanceManager
      */
+    @SuppressWarnings("unchecked")
     public void configure() {
         List<Object> connList = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-
+        if (connList == null) return; // nothing to do 
+        
         for (Class c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
