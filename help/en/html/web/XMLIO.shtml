@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright 2008 -->
-<!-- $Id: XMLIO.shtml,v 1.6 2010-05-14 16:45:00 jacobsen Exp $ -->
+<!-- $Id: XMLIO.shtml,v 1.7 2010-06-10 02:53:50 jacobsen Exp $ -->
 <title>JMRI: XML IO Servlet</title>
 
 <!-- Style -->
@@ -81,6 +81,10 @@ Request:
     &lt;type&gt;sensor&lt;/type&gt;
     &lt;name&gt;West sensor&lt;/name&gt;
   &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+  &lt;/item&gt;
 &lt;/xmlio&gt;
 </pre></code>
 
@@ -96,6 +100,11 @@ Reply:
     &lt;type&gt;sensor&lt;/type&gt;
     &lt;name&gt;West sensor&lt;/name&gt;
     &lt;value&gt;4&lt;/value&gt;
+  &lt;/item&gt;
+  &lt;item&gt;
+    &lt;type&gt;power&lt;/type&gt;
+    &lt;name&gt;power&lt;/name&gt;
+    &lt;value&gt;2&lt;/value&gt;
   &lt;/item&gt;
 &lt;/xmlio&gt;
 </pre></code>
