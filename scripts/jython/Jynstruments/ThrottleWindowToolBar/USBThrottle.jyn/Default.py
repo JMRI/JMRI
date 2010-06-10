@@ -25,14 +25,17 @@ class USBDriver :
         self.componentDirection = "rz" # Analog axis component for curent throttle direction
         self.valueDirectionForward = 1
         self.valueDirectionBackward = -1
+        
+        self.componentDirectionSwitch = "" # A single component to switch speed
+        self.valueDirectionSwitch = 1 
 
-        self.componentStopSpeed = "0" # Preset speed button stop
+        self.componentStopSpeed = "0" # Preset speed button stop, double tap will Estop
         self.valueStopSpeed = 1
     
         self.componentSlowSpeed = "1" # Preset speed button slow
         self.valueSlowSpeed = 1 
     
-        self.componentCruiseSpeed = "2" # Preset speed button cruise
+        self.componentCruiseSpeed = "2" # Preset speed button cruise, double tap will max speed
         self.valueCruiseSpeed = 1
     
         self.componentMaxSpeed = "3" # Preset speed button max

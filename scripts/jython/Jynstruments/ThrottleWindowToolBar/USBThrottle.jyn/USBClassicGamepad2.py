@@ -1,5 +1,5 @@
 
-print "In USBDriver - UDB Classic Gamepad 2"
+print "In USBDriver - USB Classic Gamepad 2"
 
 class USBDriver :
     def __init__(self):
@@ -27,28 +27,22 @@ class USBDriver :
         self.valueDirectionForward = 1
         self.valueDirectionBackward = -1
 
-        self.componentDirectionForward = "0" # Analog axis component for curent throttle direction
-        self.valueDirectionForwardCmp = 1
+        self.componentDirectionSwitch = "4" # A single component to switch speed
+        self.valueDirectionSwitch = 1        
         
-        self.componentDirectionBackward = "1" # Analog axis component for curent throttle direction
-        self.valueDirectionBackwardCmp = 1
-        
-        self.componentStopSpeed = "2x2" # Preset speed button stop
+        self.componentStopSpeed = "0" # Preset speed button stop
         self.valueStopSpeed = 1
     
-        self.componentSlowSpeed = "2" # Preset speed button slow
+        self.componentSlowSpeed = "1" # Preset speed button slow
         self.valueSlowSpeed = 1 
     
-        self.componentCruiseSpeed = "3" # Preset speed button cruise
+        self.componentCruiseSpeed = "2" # Preset speed button cruise
         self.valueCruiseSpeed = 1
     
-        self.componentMaxSpeed = "3x2" # Preset speed button max
-        self.valueMaxSpeed = 1
-
-        self.componentEStopSpeed = "0+1" # Preset speed button E stop
+        self.componentMaxSpeed = "" # Preset speed button max
         self.valueMaxSpeed = 1
         
-        self.componentF0 = "4" # Function button
+        self.componentF0 = "3" # Function button
         self.valueF0 = 1
 
         self.componentF1 = "" # Function button
