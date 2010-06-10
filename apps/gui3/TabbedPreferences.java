@@ -23,7 +23,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -31,8 +31,8 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
     
-    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuFileLocation"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
-    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "STARTUP", "DISPLAY", "FILELOCATIONS", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
+    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuFileLocation"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
+    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "FILELOCATIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
