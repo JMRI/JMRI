@@ -16,7 +16,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -27,18 +27,22 @@ public class AddSignalMastPanel extends JPanel {
         p = new JPanel(); 
         p.setLayout(new jmri.util.javaworld.GridLayout2(4,2));
 
-        p.add(new JLabel(rb.getString("LabelUserName")));
+        JLabel l = new JLabel(rb.getString("LabelUserName"));
+        p.add(l);
         p.add(userName);
 
-        p.add(new JLabel("Signal system: "));
+        l = new JLabel("Signal system: ");
+        p.add(l);
         p.add(sigSysBox);
         
-        p.add(new JLabel("Mast type: "));
+        l = new JLabel("Mast type: ");
+        p.add(l);
         p.add(mastBox);
 
-        p.add(new JLabel("Heads: "));
+        l = new JLabel("Heads: ");
+        p.add(l);
         JPanel h = new JPanel();
-        h.setLayout(new java.awt.FlowLayout());
+        h.setLayout(new BoxLayout(h, BoxLayout.Y_AXIS ));
         h.add(head1);
         h.add(head2);
         h.add(head3);
@@ -64,8 +68,12 @@ public class AddSignalMastPanel extends JPanel {
         }
      
         loadMastDefinitions();
+        enableHeadFields();
         sigSysBox.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) { loadMastDefinitions(); }
+        });
+        mastBox.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent e) { enableHeadFields(); }
         });
     }
     
@@ -93,6 +101,8 @@ public class AddSignalMastPanel extends JPanel {
             String u = (String) sigSysBox.getSelectedItem();
             sigsysname = man.getByUserName(u).getSystemName();
 
+            map = new HashMap<String, Integer>();
+            
             // do file IO to get all the appearances
             // gather all the appearance files
             File[] apps = new File("xml"+File.separator+"signals"+File.separator+sigsysname).listFiles();
@@ -104,13 +114,38 @@ public class AddSignalMastPanel extends JPanel {
                     mastNames.add(apps[j]);
                     jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
                     Element root = xf.rootFromFile(apps[j]);
-                    mastBox.addItem(root.getChild("name").getText());
+                    String name = root.getChild("name").getText();
+                    mastBox.addItem(name);
+                    map.put(name, new Integer(root.getChild("appearances")
+                                    .getChild("appearance")
+                                    .getChildren("show")
+                                    .size()));
                 }
             }
         } catch (Exception e) {
             mastBox.addItem("select a system first");
         }
-     }
+    }
+    
+    HashMap<String, Integer> map = new HashMap<String, Integer>();
+    
+    void enableHeadFields() {
+        int count = map.get(mastBox.getSelectedItem()).intValue();
+        head1.setEnabled(count>=1);
+        head1.setVisible(count>=1);
+
+        head2.setEnabled(count>=2);
+        head2.setVisible(count>=2);
+
+        head3.setEnabled(count>=3);
+        head3.setVisible(count>=3);
+
+        head4.setEnabled(count>=4);
+        head4.setVisible(count>=4);
+        
+        head5.setEnabled(count>=5);
+        head5.setVisible(count>=5);
+    }
     
     void okPressed(ActionEvent e) {
         String mastname = mastNames.get(mastBox.getSelectedIndex()).getName();
@@ -119,15 +154,15 @@ public class AddSignalMastPanel extends JPanel {
                         +":"+mastname.substring(11,mastname.length()-4);
 
         // add head names by brute force
-        if (!head1.getText().equals(""))
+        if (head1.isEnabled())
             name += ":"+head1.getText();
-        if (!head2.getText().equals(""))
+        if (head2.isEnabled())
             name += ":"+head2.getText();
-        if (!head3.getText().equals(""))
+        if (head3.isEnabled())
             name += ":"+head3.getText();
-        if (!head4.getText().equals(""))
+        if (head4.isEnabled())
             name += ":"+head4.getText();
-        if (!head5.getText().equals(""))
+        if (head5.isEnabled())
             name += ":"+head5.getText();
             
         log.debug("add signal: "+name);
