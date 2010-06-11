@@ -9,7 +9,7 @@ import java.util.List;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 abstract public class AbstractController {
 
@@ -26,10 +26,20 @@ abstract public class AbstractController {
      */
     abstract boolean verifyCreation();
 
+/**
+ * Break down a message and use it.
+ * @param message
+ */
     abstract void handleMessage(String message);
 
+/**
+ * Register as listener of NamedBeans to be updated of changes.
+ */
     abstract void register();
 
+/**
+ * Deregister as listener of NamedBeans
+ */
     abstract void deregister();
 
 /**
@@ -67,6 +77,11 @@ abstract public class AbstractController {
         }
     }
 
+/**
+ * Add a listener to handle:
+ * listener.sendPacketToDevice(message);
+ * @param listener
+ */
     public void addControllerListener(ControllerInterface listener){
         if (listeners == null)
                 listeners = new ArrayList<ControllerInterface>(1);

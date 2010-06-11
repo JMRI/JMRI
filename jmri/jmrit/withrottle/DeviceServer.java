@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.14 $
+ *	@version $Revision: 1.15 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -73,16 +73,13 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.ThrottleWindow;
-import jmri.jmrit.throttle.AddressPanel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 public class DeviceServer implements Runnable, ThrottleControllerListener, ControllerInterface {
 
     //  Manually increment as features are added
-    private static final String versionNumber = "1.4";
+    private static final String versionNumber = "1.5";
 
     private Socket device;
     String newLine = System.getProperty("line.separator");
@@ -91,14 +88,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     ArrayList<DeviceListener> listeners;
     String deviceName = "Unknown";
     String deviceUDID;
-    String deviceAddress = "Not Set";
-    String secondDeviceAddress = "Not Set";
 
-    ThrottleFrame throttleFrame;
-    ThrottleFrame secondThrottleFrame;
-    ThrottleWindow throttleWindow;
-    AddressPanel addressPanel;
-    AddressPanel secondAddressPanel;
     ThrottleController throttleController;
     ThrottleController secondThrottleController;
     private boolean keepReading;
@@ -124,18 +114,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         if (listeners == null){
             listeners = new ArrayList<DeviceListener>(2);
         }
+        throttleController = new ThrottleController();
+        throttleController.setWhichThrottle("T");
+        throttleController.addThrottleControllerListener(this);
+        throttleController.addControllerListener(this);
 
-        // Create a throttle instance for each device connected
-        if (jmri.InstanceManager.throttleManagerInstance() != null){
-            throttleWindow = jmri.jmrit.throttle.ThrottleFrameManager.instance().createThrottleWindow();
-            throttleFrame = throttleWindow.getCurentThrottleFrame();
-            throttleController = new ThrottleController(throttleFrame);
-            throttleController.setWhichThrottle("T");
-            addressPanel = throttleFrame.getAddressPanel();
-            throttleController.addThrottleControllerListener(this);
-            throttleController.addControllerListener(this);
-
-        }
         try{
             in = new BufferedReader(new InputStreamReader(device.getInputStream(),"UTF8"));
             out = new PrintWriter(device.getOutputStream(),true);
@@ -180,11 +163,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
                         case 'S':{
                             if (secondThrottleController == null){
-                                secondThrottleFrame = throttleWindow.addThrottleFrame();
-                                throttleWindow.nextThrottleFrame();
-                                secondThrottleController = new ThrottleController(secondThrottleFrame);
+                                secondThrottleController = new ThrottleController();
                                 secondThrottleController.setWhichThrottle("S");
-                                secondAddressPanel = secondThrottleFrame.getAddressPanel();
                                 secondThrottleController.addThrottleControllerListener(this);
                                 secondThrottleController.addControllerListener(this);
                             }
@@ -340,7 +320,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             secondThrottleController.removeThrottleControllerListener(this);
             secondThrottleController.removeControllerListener(this);
         }
-        throttleWindow.dispose();
+
         throttleController = null;
         secondThrottleController = null;
         if (trackPower != null){
@@ -458,15 +438,23 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return deviceName;
     }
 
-    public String getCurrentAddress(){
-        if (secondThrottleFrame != null) return (deviceAddress +", "+secondDeviceAddress);
-        return deviceAddress;
+    public String getCurrentAddressString(){
+        String s = throttleController.getCurrentAddressString();
+        if (secondThrottleController != null){
+            s = (s +", "+secondThrottleController.getCurrentAddressString());
+        }
+        return s;
     }
 
     public static String getWiTVersion(){
         return versionNumber;
     }
-
+    
+/**
+ * Called by various Controllers to send a string message
+ * to a connected device.  Appends a newline to the end.
+ * @param message   The string to send.
+ */
     public void sendPacketToDevice(String message){
         if (message == null) return; //  Do not send a null.
         if (log.isDebugEnabled()) log.debug("Sent: "+message);
@@ -497,56 +485,20 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
     
     public void notifyControllerAddressFound(ThrottleController TC){
-        //deviceAddress = throttle.getLocoAddress().toString();
-        if (TC == secondThrottleController){    //  prefix with S to indicate second address
-            secondDeviceAddress = secondAddressPanel.getCurrentAddress().toString();
-            out.println("S" + secondDeviceAddress+newLine); //  response
 
-            //  Send function labels for this roster entry
-            if (secondAddressPanel.getRosterEntry() != null){
-                out.println(sendFunctionLabels(secondAddressPanel.getRosterEntry()));
-            }
-            for (int i = 0; i < listeners.size(); i++) {
-                DeviceListener l = listeners.get(i);
-                l.notifyDeviceAddressChanged(secondAddressPanel.getCurrentAddress());
-                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " secondAddress: "+secondDeviceAddress);
-            }
-        }else{
-            deviceAddress = addressPanel.getCurrentAddress().toString();
-            out.println("T" + deviceAddress+newLine); //  response
-        
-            //  Send function labels for this roster entry
-            if (addressPanel.getRosterEntry() != null){
-                out.println(sendFunctionLabels(addressPanel.getRosterEntry()));
-            }
-            for (int i = 0; i < listeners.size(); i++) {
-                DeviceListener l = listeners.get(i);
-                l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
-                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+deviceAddress);
-            }
+        for (int i = 0; i < listeners.size(); i++) {
+            DeviceListener l = listeners.get(i);
+            l.notifyDeviceAddressChanged(this);
+            if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+TC.getCurrentAddressString());
         }
-        
     }
     
     public void notifyControllerAddressReleased(ThrottleController TC){
-        
-        if (TC == secondThrottleController){
-            secondDeviceAddress = "Not Set";
-            if (log.isDebugEnabled()) log.debug("Second address: " + secondDeviceAddress);
-            out.println("S" + secondDeviceAddress+newLine);
-            for (int i = 0; i < listeners.size(); i++) {
-                DeviceListener l = listeners.get(i);
-                l.notifyDeviceAddressChanged(secondAddressPanel.getCurrentAddress());
-                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " secondAddress: "+secondDeviceAddress);
-            }
-        }else{
-            deviceAddress = "Not Set";
-            out.println("T" + deviceAddress+newLine);
-            for (int i = 0; i < listeners.size(); i++) {
-                DeviceListener l = listeners.get(i);
-                l.notifyDeviceAddressChanged(addressPanel.getCurrentAddress());
-                if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+deviceAddress);
-            }
+
+        for (int i = 0; i < listeners.size(); i++) {
+            DeviceListener l = listeners.get(i);
+            l.notifyDeviceAddressChanged(this);
+            if (log.isDebugEnabled()) log.debug("Notify DeviceListener: " + l.getClass() + " address: "+TC.getCurrentAddressString());
         }
         
     }
@@ -585,19 +537,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         return ("RL" + rosterList.size() + rosterString + newLine);
     }
     
-    public String sendFunctionLabels(RosterEntry rosterEntry){
-        StringBuilder functionString = new StringBuilder();
-        int i;  //  Used for # of labels sent
-        for (i = 0; i<29; i++){
-            functionString.append("]\\[");
-            if (rosterEntry.getFunctionLabel(i) != null) functionString.append(rosterEntry.getFunctionLabel(i));
-        }
-        if ((secondAddressPanel != null) && (rosterEntry == secondAddressPanel.getRosterEntry())) {
-            return ("RS" + i + functionString + newLine);
-        }
-        return ("RF" + i + functionString + newLine);
-    }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DeviceServer.class.getName());
 
 }

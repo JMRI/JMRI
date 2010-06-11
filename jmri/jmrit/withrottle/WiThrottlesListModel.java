@@ -8,7 +8,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 11/11/09.
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 import javax.swing.table.AbstractTableModel;
@@ -66,7 +66,7 @@ public class WiThrottlesListModel extends AbstractTableModel{
         if (col == 0){
             return deviceList.get(row).getName();
         }else{
-            return deviceList.get(row).getCurrentAddress();
+            return deviceList.get(row).getCurrentAddressString();
         }
     }
 

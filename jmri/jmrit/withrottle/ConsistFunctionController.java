@@ -7,7 +7,7 @@ import jmri.ThrottleListener;
 /**
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 public class ConsistFunctionController implements ThrottleListener{
 
@@ -22,6 +22,7 @@ public class ConsistFunctionController implements ThrottleListener{
         if (log.isDebugEnabled()) log.debug("Lead Loco throttle found: " + t);
         throttle = t;
         throttleController.setFunctionThrottle(t);
+        throttleController.sendFunctionLabels(t);
     }
     
     public void dispose(){

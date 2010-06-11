@@ -24,33 +24,28 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.8 $
+ *	@version $Revision: 1.9 $
  */
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Method;
 import jmri.DccThrottle;
-import jmri.jmrit.throttle.ThrottleFrame;
-import jmri.jmrit.throttle.AddressListener;
-import jmri.jmrit.throttle.AddressPanel;
-import jmri.jmrit.throttle.ControlPanel;
 
-import javax.swing.JSlider;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.DccLocoAddress;
+import jmri.ThrottleListener;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 
 
-public class ThrottleController implements AddressListener, PropertyChangeListener{
+public class ThrottleController implements /*AddressListener,*/ ThrottleListener, PropertyChangeListener{
 
     private DccThrottle throttle;
     private DccThrottle functionThrottle;
     private DccLocoAddress leadAddress;
     private String whichThrottle;
-    private int speedIncrement;
-    AddressPanel addressPanel;
-    ControlPanel controlPanel;
-    JSlider speedSlider;
     float speedMultiplier;
     private boolean isAddressSet;
     public boolean confirm = false;
@@ -64,14 +59,8 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
  *  Point a local variable to the different panels needed for control.
  *  @param throttleFrame The ThrottleFrame this ThrottleController will control.
  */
-    public ThrottleController(ThrottleFrame throttleFrame){
-
-        addressPanel = throttleFrame.getAddressPanel();
-        controlPanel = throttleFrame.getControlPanel();
-        speedSlider = controlPanel.getSpeedSlider();
-        speedMultiplier = speedSlider.getMaximum()/126;
-
-        addressPanel.addAddressListener(this);
+    public ThrottleController(){
+        speedMultiplier = 1.0f/126.0f;
     }
 
     public void setWhichThrottle(String s){
@@ -122,43 +111,62 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
      * Receive notification that an address has been released/dispatched
      * @param address The address released/dispatched
      */
-    public void notifyAddressReleased(int address, boolean isLong){
+    public void addressRelease(/*int address, boolean isLong*/){
         isAddressSet = false;
+        throttle.release();
         throttle.removePropertyChangeListener(this);
         throttle = null;
+        sendAddress();
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressReleased(this);
             if (log.isDebugEnabled()) log.debug("Notify TCListener address released: " + l.getClass());
         }
     }
+
+    public void addressDispatch(/*int address, boolean isLong*/){
+        isAddressSet = false;
+        throttle.dispatch();
+        throttle.removePropertyChangeListener(this);
+        throttle = null;
+        sendAddress();
+        for (int i = 0; i < listeners.size(); i++) {
+            ThrottleControllerListener l = listeners.get(i);
+            l.notifyControllerAddressReleased(this);
+            if (log.isDebugEnabled()) log.debug("Notify TCListener address dispatched: " + l.getClass());
+        }
+    }
     
     /**
      * Recieve notification that a DccThrottle has been found and is in use.
-     * Set speedIncrement for this throttle.
+     * 
      * @param throttle The throttle which has been found
      */
-    public void notifyAddressThrottleFound(DccThrottle throttle){
-	if (throttle != null) {
-            this.throttle = throttle;
+//    public void notifyAddressThrottleFound(DccThrottle throttle){
+    public void notifyThrottleFound(DccThrottle t) {
+	if (t != null) {
+            throttle = t;
             setFunctionThrottle(throttle);
-            this.throttle.addPropertyChangeListener(this);
-            speedIncrement = (int)throttle.getSpeedIncrement();
+            throttle.addPropertyChangeListener(this);
             isAddressSet = true;
         }else {
             log.error("*throttle is null!*");
+            return;
         }
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
             l.notifyControllerAddressFound(this);
             if (log.isDebugEnabled()) log.debug("Notify TCListener address found: " + l.getClass());
         }
+        
+        sendAddress();
+
+        sendFunctionLabels(throttle);
+
         sendAllFunctionStates(whichThrottle);
-        if (speedIncrement == 0) {	//	handles LN Simulator
-            speedIncrement = 1;
-        }
 
     }
+
 /*
  * Current Format:  RPF}|{whichThrottle]\[eventName}|{newValue
  * This format may be used to send multiple function status, for initial values.
@@ -181,6 +189,34 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
             }
         }
         
+    }
+
+    public void sendFunctionLabels(DccThrottle t){
+        StringBuilder functionString = new StringBuilder();
+        RosterEntry rosterLoco = null;
+        if (t.getLocoAddress() != null){
+            List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+((DccLocoAddress)t.getLocoAddress()).getNumber(), null, null, null, null);
+            if (l.size()>0){
+                if (log.isDebugEnabled()) log.debug("Roster Loco found: "+ l.get(0).getDccAddress());
+                rosterLoco = l.get(0);
+            }else return;
+        }
+
+        if (whichThrottle.equalsIgnoreCase("S")) {
+            functionString.append("RS29}|{" + getCurrentAddressString());
+        }else{
+            //  I know, it should have been 'RT' but this was before there were two throttles.
+            functionString.append("RF29}|{" + getCurrentAddressString());
+        }
+
+        int i;
+        for (i = 0; i<29; i++){
+            functionString.append("]\\[");
+            if (rosterLoco.getFunctionLabel(i) != null) functionString.append(rosterLoco.getFunctionLabel(i));
+        }
+        for (ControllerInterface listener : controllerListeners){
+            listener.sendPacketToDevice(functionString.toString());
+        }
     }
     
 /**
@@ -248,24 +284,28 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
                         break;
 
                 case 'r':	//	Release
-                        addressPanel.releaseAddress();
+                       // addressPanel.releaseAddress();
+                        addressRelease();
                         clearLeadLoco();
                         break;
 
                 case 'd':	//	Dispatch
-                        addressPanel.dispatchAddress();
+                        //addressPanel.dispatchAddress();
+                        addressDispatch();
                         clearLeadLoco();
                         break;
 
                 case 'L':	//	Set a Long address.
-                        addressPanel.dispatchAddress();
+                        //addressPanel.dispatchAddress();
+                        addressRelease();
                         clearLeadLoco();
                         int addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, true);
                         break;
 
                 case 'S':	//	Set a Short address.
-                        addressPanel.dispatchAddress();
+                        //addressPanel.dispatchAddress();
+                        addressRelease();
                         clearLeadLoco();
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
@@ -353,9 +393,8 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
 
         try{
         if (isAddressSet){
-            controlPanel.setSpeedValues(speedIncrement, 0);
-            addressPanel.dispatchAddress();
-            addressPanel.removeAddressListener(this);
+            throttle.setSpeedSetting(0);
+            addressRelease();
         }
         }catch (NullPointerException e){
             log.warn("No throttle frame to shutdown");
@@ -363,44 +402,62 @@ public class ThrottleController implements AddressListener, PropertyChangeListen
         clearLeadLoco();
     }
 
-//  ControlPanel methods
-
+/**
+ * handle the conversion from rawSpeed to the float value needed in
+ * the DccThrottle
+ * @param rawSpeed  Value sent from mobile device, range 0 - 126
+ */
     private void setSpeed(int rawSpeed){
 
-        int newSpeed = (int)(rawSpeed*speedMultiplier);
+        float newSpeed = (rawSpeed*speedMultiplier);
 
-        if (log.isDebugEnabled()) log.debug("raw"+rawSpeed+" MAX"+speedSlider.getMaximum()+" NewSpd"+newSpeed);
-        controlPanel.setSpeedValues(speedIncrement, newSpeed);
+        if (log.isDebugEnabled()) log.debug("raw: "+rawSpeed+", NewSpd: "+newSpeed);
+        throttle.setSpeedSetting(newSpeed);
     }
 
 
     private void setDirection(boolean isForward){
-        controlPanel.setForwardDirection(isForward);
+        throttle.setIsForward(isForward);
     }
 
     private void eStop(){
-        controlPanel.stop();
+        throttle.setSpeedSetting(-1);
     }
 
     private void idle(){
-        controlPanel.setSpeedValues(speedIncrement, 0);
+        throttle.setSpeedSetting(0);
     }
 
 
-//  AddressPanel methods
-
-/**
- * Move the address values along to the AddressPanel
- * @param number
- * @param isLong
- */
     private void setAddress(int number, boolean isLong){
-	
-	addressPanel.setAddress(number, isLong);
+
+        jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
 
     }
 
-//	FunctionPanel methods
+    public DccLocoAddress getCurrentAddress(){
+        return (DccLocoAddress)throttle.getLocoAddress();
+    }
+
+    /**
+     * Get the string representation of this throttles address.
+     * Returns 'Not Set' if no address in use.
+     */
+    public String getCurrentAddressString(){
+        if (isAddressSet){
+            return ((DccLocoAddress)throttle.getLocoAddress()).toString();
+        }else {
+            return "Not Set";
+        }
+    }
+
+    public void sendAddress(){
+        for (ControllerInterface listener : controllerListeners){
+            listener.sendPacketToDevice(whichThrottle + getCurrentAddressString());
+        }
+    }
+
+//	Function methods
     private void handleFunction(String inPackage){
         //	get the function # sent from device
         String receivedFunction = inPackage.substring(2);
