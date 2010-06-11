@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.9 $
+ *	@version $Revision: 1.10 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -57,7 +57,6 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 /**
  *  Constructor.
  *  Point a local variable to the different panels needed for control.
- *  @param throttleFrame The ThrottleFrame this ThrottleController will control.
  */
     public ThrottleController(){
         speedMultiplier = 1.0f/126.0f;
@@ -109,7 +108,6 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
     /**
      * Receive notification that an address has been released/dispatched
-     * @param address The address released/dispatched
      */
     public void addressRelease(/*int address, boolean isLong*/){
         isAddressSet = false;
@@ -140,7 +138,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
     /**
      * Recieve notification that a DccThrottle has been found and is in use.
      * 
-     * @param throttle The throttle which has been found
+     * @param t The throttle which has been found
      */
 //    public void notifyAddressThrottleFound(DccThrottle throttle){
     public void notifyThrottleFound(DccThrottle t) {

@@ -8,7 +8,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 11/18/09.
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 
 
@@ -33,7 +33,7 @@ public interface DeviceListener extends EventListener{
 
     /**
      * A device has changed its address.
-     * @param currentAddress
+     * @param device
      */
     public void notifyDeviceAddressChanged(DeviceServer device);
 
