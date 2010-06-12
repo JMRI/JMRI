@@ -14,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -174,12 +174,12 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		ScheduleManager scheduleManager = ScheduleManager.instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){
-			log.warn("Could not find schedule ("+track.getScheduleName()+")");
+			log.warn("Could not find schedule ("+track.getScheduleName()+") for track ("+track.getName()+")");
 			return OKAY;
 		}
 		ScheduleItem si = sch.getItemById(track.getScheduleItemId());
 		if (si == null){
-			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+")");
+			log.warn("Could not find schedule item id ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
 			// reset and get first schedule item on the list
 			si = sch.getItemById(sch.getItemsBySequenceList().get(0));
 			track.setScheduleItemId(si.getId());
@@ -229,14 +229,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (getNextDestination() != null){
 			String newStatus = super.setDestination(getNextDestination(), getNextDestTrack());
 			if (!newStatus.equals(OKAY)){
-				String loc = "null";
 				String trk = "null";
-				if (getNextDestination() != null)
-					loc = getNextDestination().getName();
 				if (getNextDestTrack() != null)
 					trk = getNextDestTrack().getName();
-				log.error("Next destination failed for car ("+getId()+") status "+newStatus+" location "
-						+loc+" track "+trk);
+				log.warn("Next destination ("+getNextDestination().getName()+", "+trk+") failed for car ("+getId()+") due to "+newStatus);
 			}
 			setNextDestination(null);
 			setNextDestTrack(null);
