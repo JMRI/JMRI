@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.65 2010-05-31 15:08:33 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.66 2010-06-12 21:19:22 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -460,15 +460,22 @@ types and roads for this siding and location.
 you can create them using the <A HREF="#EditCarAttributes">Edit Car
 Attributes</A> for car "Load". Each new load is associated with the car
 type. For example you can have "Screws" for a boxcar, and "Oil" for a
-tank car. The program will only deliver cars with a "Schedule" load to a
+tank car. The program will deliver cars with a "Schedule" load to a
 siding that has a Schedule that also requests that particular load.
 However, cars with a Schedule load can still be placed at yards,
-staging, and interchanges.
-</P>
+staging, and interchanges.</P>
+
+<P>You can if you wish, specify the next destination for a car
+once it has been serviced by the siding. Only destination tracks that
+can accept the car type are shown in the track pull down menu. Note that
+the program doesn't have the capability to route a car to a location
+using multiple trains. The car's current location and the car's
+destination and track must be serviced by one train.
+Therefore, if it would take two or more trains to move the car to its
+final destination, the car will not move!</P>
 <P>You can optionally use your staging tracks to empty cars with a
 "Schedule" load, and you can also optionally create "Schedule" loads
-using staging tracks.
-</P>
+using staging tracks.</P>
 <P>You can also access your Schedules from the Locations Tools menu.  The
 Schedules table provides status for each schedule.  Since you can assign
 a schedule to multiple sidings, the table also provides additional status for each
