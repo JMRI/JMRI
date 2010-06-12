@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.18 $
+ *	@version $Revision: 1.19 $
  */
 
 import java.awt.event.*;
@@ -263,9 +263,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
                 while(interface_addresses.hasMoreElements()){
                   InetAddress ip=(InetAddress)interface_addresses.nextElement();
                   bound_ip_address=ip.getHostAddress();
-                  if(!bound_ip_address.equals("0.0.0.0") && !bound_ip_address.regionMatches(0, "127", 0, 3))
+                  if(!bound_ip_address.equals("0.0.0.0") && !bound_ip_address.regionMatches(0, "127", 0, 3) && !(bound_ip_address.contains(":")) )
                   {
-                    //Find just the first "real" IP address to present in the GUI. If the user has set up a multihomed
+                    //Find just the first "real" IPv4 address to present in the GUI. If the user has set up a multihomed
                     //computer, chances are that he knows enough about networking to know which IP address he should use
                     //to connect to this service.
                     break network_interfaces;
