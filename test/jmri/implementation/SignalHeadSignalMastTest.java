@@ -3,6 +3,7 @@
 package jmri.implementation;
 
 import jmri.*;
+import jmri.util.StringUtil;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -12,7 +13,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -21,15 +22,27 @@ public class SignalHeadSignalMastTest extends TestCase {
         Assert.assertNotNull(InstanceManager.signalHeadManagerInstance().getSignalHead("IH1"));
     }
     
-	public void testTwoNameCtorOK() {
+	public void testTwoNameOneHeadCtorOK() {
+	    new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
+	}
+
+	public void testTwoNameSe8cHeadCtorOK() {
+	    new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
+	}
+
+	public void testOneNameOneHeadCtorOK() {
+	        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)");
+	}
+
+	public void testOldTwoNameCtorOK() {
 	    new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1", "user");
 	}
 
-	public void testOneNameCtorOK() {
+	public void testOldOneNameCtorOK() {
 	        new SignalHeadSignalMast("IF$shsm:basic:one-searchlight:IH1");
 	}
 
-	public void testOneNameCtorFailNoSystem() {
+	public void testOldOneNameCtorFailNoSystem() {
 	    try {
 	        new SignalHeadSignalMast("IF$shsm:notanaspect:one-searchlight:IH1");
 	        Assert.fail("should have thrown exception");

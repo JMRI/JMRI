@@ -3,6 +3,7 @@
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.*;
+import jmri.util.StringUtil;
 
 import java.awt.event.*;
 import java.io.*;
@@ -16,7 +17,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -155,15 +156,15 @@ public class AddSignalMastPanel extends JPanel {
 
         // add head names by brute force
         if (head1.isEnabled())
-            name += ":"+head1.getText();
+            name += "("+StringUtil.parenQuote(head1.getText())+")";
         if (head2.isEnabled())
-            name += ":"+head2.getText();
+            name += "("+StringUtil.parenQuote(head2.getText())+")";
         if (head3.isEnabled())
-            name += ":"+head3.getText();
+            name += "("+StringUtil.parenQuote(head3.getText())+")";
         if (head4.isEnabled())
-            name += ":"+head4.getText();
+            name += "("+StringUtil.parenQuote(head4.getText())+")";
         if (head5.isEnabled())
-            name += ":"+head5.getText();
+            name += "("+StringUtil.parenQuote(head5.getText())+")";
             
         log.debug("add signal: "+name);
         SignalMast m;

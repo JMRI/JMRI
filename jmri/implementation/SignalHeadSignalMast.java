@@ -12,18 +12,26 @@ import jmri.util.NamedBeanHandle;
  * <p>
  * System name specifies the creation information:
 <pre>
-IF:basic:one-searchlight:IH1
+IF:basic:one-searchlight:(IH1)(IH2)
 </pre>
  * The name is a colon-separated series of terms:
  * <ul>
  * <li>IF$shsm - defines signal masts of this type
  * <li>basic - name of the signaling system
  * <li>one-searchlight - name of the particular aspect map
- * <li>IH1 - colon-separated list of names for SignalHeads
+ * <li>(IH1)(IH2) - colon-separated list of names for SignalHeads
+ * </ul>
+ * There was an older form where the names where colon separated:  IF:basic:one-searchlight:IH1:IH2
+ * This was deprecated because colons appear in e.g. SE8c system names.
+ * <ul>
+ * <li>IF$shsm - defines signal masts of this type
+ * <li>basic - name of the signaling system
+ * <li>one-searchlight - name of the particular aspect map
+ * <li>IH1:IH2 - colon-separated list of names for SignalHeads
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -44,12 +52,35 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
             log.error("SignalMast system name needs at least three parts: "+systemName);
             throw new IllegalArgumentException("System name needs at least three parts: "+systemName);
         }
-        if (!parts[0].equals("IF$shsm"))
+        if (!parts[0].equals("IF$shsm")) {
             log.warn("SignalMast system name should start with IF: "+systemName);
-        // checking complete, init
-        configureSignalSystemDefinition(parts[1]);
-        configureAspectTable(parts[1], parts[2]);
-        configureHeads(parts);
+        }
+        String prefix = parts[0];
+        String system = parts[1];
+        String mast = parts[2];
+        int start = prefix.length()+1+system.length()+1+mast.length();
+        // if "mast" contains (, it's new style
+        if (mast.indexOf('(') == -1) {
+            // old style
+            configureSignalSystemDefinition(system);
+            configureAspectTable(system, mast);
+            configureHeads(parts, 3);
+        } else {
+            // new style
+            mast = mast.substring(0, mast.indexOf("("));
+            String interim = systemName.substring(prefix.length()+1+system.length()+1);
+            String parenstring = interim.substring(interim.indexOf("("), interim.length());
+            java.util.List<String> parens = jmri.util.StringUtil.splitParens(parenstring);
+            configureSignalSystemDefinition(system);
+            configureAspectTable(system, mast);
+            String[] heads = new String[parens.size()];
+            int i=0;
+            for (String p : parens) {
+                heads[i] = p.substring(1, p.length()-1);
+                i++;
+            }
+            configureHeads(heads, 0);            
+        }
     }
     
     void configureSignalSystemDefinition(String name) {
@@ -64,12 +95,13 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         map = DefaultSignalAppearanceMap.getMap(signalSystemName, aspectMapName);
     }
     
-    void configureHeads(String parts[]) {
+    void configureHeads(String parts[], int start) {
         heads = new ArrayList<NamedBeanHandle<SignalHead>>();
-        for (int i = 3; i < parts.length; i++) {
+        for (int i = start; i < parts.length; i++) {
+            String name = parts[i];
             NamedBeanHandle<SignalHead> s 
                 = new NamedBeanHandle<SignalHead>(parts[i],
-                        InstanceManager.signalHeadManagerInstance().getSignalHead(parts[i]));
+                        InstanceManager.signalHeadManagerInstance().getSignalHead(name));
             heads.add(s);
         }
     }   

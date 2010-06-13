@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public interface SignalMastManager extends Manager {
 
@@ -54,6 +54,11 @@ public interface SignalMastManager extends Manager {
      */
     public SignalMast provideSignalMast(String name);
 
+    public SignalMast provideSignalMast(String prefix, // nominally IF$shsm
+                                        String signalSystem,
+                                        String mastName,
+                                        String[] heads);
+                                        
     public SignalMast getByUserName(String s);
     public SignalMast getBySystemName(String s);
     /**
