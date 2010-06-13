@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.5 2010-06-13 18:15:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.6 2010-06-13 18:57:34 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -166,9 +166,6 @@ None at the time of this release.
 
 <h3>Changes since test version 2.9.7</h3>
 
-Dan Boudreau fixed a dispatcher bug when getting the train list from operations. 
-
-<p>
 Brett Hoffman updated the WiThrottle protocol to separate functions for lead loco in consist.
 
 <p>
@@ -199,9 +196,6 @@ Paul Bender did more work on Lenz turnout control.
 Paul Bender made some changes to make the XPressNet support compatible with OpenDCC command stations.
 
 <p>
-Dan Boudreau added a minor operations enhancement: show current car count in schedule table.
-
-<p>
 Web browsers can now access layout power via XMLIO.
 
 <p>
@@ -214,9 +208,10 @@ Feature is handy where multiple Windows user profiles have to access a common se
 Improved window for adding Signal Masts so that it's clearer how many SignalHeads are needed,
 and to give more space for entering them.
 
-<p>
-Dan Boudreau added a new operations feature: 
-Users can now specify in a siding's schedule the destination and track for a car.
+<p>Dan Boudreau added a new operations schedule feature: Users can now
+specify the destination and track for a car. Also, the schedule now
+shows the current car count in schedule table when the car count is greater
+than 1.
 
 <p>
 Fixed a problem with SignalMast system names when using signal heads with ":" characters in their
