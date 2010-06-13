@@ -15,7 +15,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class InputWindow extends JPanel {
 
@@ -62,7 +62,7 @@ public class InputWindow extends JPanel {
         // add the text to the output frame
         String echo = ">>> "+cmd;
         // intermediate \n characters need to be prefixed
-        echo = jmri.util.StringUtil.replaceAll(echo,"\n", "\n... ");
+        echo = echo.replaceAll("\n", "\n... ");
         echo = echo.substring(0, echo.length()-4);
         PythonInterp.getOutputArea().append(echo);
 

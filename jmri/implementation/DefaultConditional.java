@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -956,7 +956,7 @@ public class DefaultConditional extends AbstractNamedBean
 					        // add the text to the output frame
 					        String echo = ">>> " + cmd;
 					        // intermediate \n characters need to be prefixed
-					        echo = jmri.util.StringUtil.replaceAll(echo, "\n", "\n... ");
+					        echo = echo.replaceAll("\n", "\n... ");
 					        echo = echo.substring(0, echo.length() - 4);
 					        PythonInterp.getOutputArea().append(echo);
 
