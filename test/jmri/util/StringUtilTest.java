@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.util.StringUtil class.
  * @author	Bob Jacobsen  Copyright 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class StringUtilTest extends TestCase {
 
@@ -170,154 +170,192 @@ public class StringUtilTest extends TestCase {
 		Assert.assertEquals("7th byte",0xB1,b[7]&0xFF);
 	}
 
-        @SuppressWarnings("null")
-		private boolean compareStringArray(String[] s1, String[] s2) {
-            if (s1 == null && s2 == null) return true;
-            if (s1 == null && s2 != null) return false;
-            if (s1 != null && s2 == null) return false;
-            // s1 and s2 are not null
-            if (s1.length != s2.length) return false;
+    @SuppressWarnings("null")
+    private boolean compareStringArray(String[] s1, String[] s2) {
+        if (s1 == null && s2 == null) return true;
+        if (s1 == null && s2 != null) return false;
+        if (s1 != null && s2 == null) return false;
+        // s1 and s2 are not null
+        if (s1.length != s2.length) return false;
 
-            for (int i = 0; i<s1.length; i++) {
-                if (! s1[i].equals(s2[i]) ) return false;
-            }
-            return true;
+        for (int i = 0; i<s1.length; i++) {
+            if (! s1[i].equals(s2[i]) ) return false;
         }
+        return true;
+    }
 
-        public void testJoinA1() {
-            String input[] = new String[]{ "A", "B", "C" };
-            String results = StringUtil.join(input,".");
-            Assert.assertEquals("output", "A.B.C", results);
-        }
+    public void testJoinA1() {
+        String input[] = new String[]{ "A", "B", "C" };
+        String results = StringUtil.join(input,".");
+        Assert.assertEquals("output", "A.B.C", results);
+    }
 
-        public void testSort1() {
-            String input[] = new String[]{ "A", "B", "C" };
-            String output[] = new String[]{ "A", "B", "C" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort1() {
+        String input[] = new String[]{ "A", "B", "C" };
+        String output[] = new String[]{ "A", "B", "C" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testSort2() {
-            String input[] = new String[]{ "A", "b", "C" };
-            String output[] = new String[]{ "A", "C", "b" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort2() {
+        String input[] = new String[]{ "A", "b", "C" };
+        String output[] = new String[]{ "A", "C", "b" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testSort3() {
-            String input[] = new String[]{ "B", "C", "A" };
-            String output[] = new String[]{ "A", "B", "C" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort3() {
+        String input[] = new String[]{ "B", "C", "A" };
+        String output[] = new String[]{ "A", "B", "C" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testSort4() {
-            String input[] = new String[]{ "c", "b", "a" };
-            String output[] = new String[]{ "a", "b", "c" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort4() {
+        String input[] = new String[]{ "c", "b", "a" };
+        String output[] = new String[]{ "a", "b", "c" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testSort5() {
-            String input[] = new String[]{ "A", "c", "b" };
-            String output[] = new String[]{ "A", "b", "c" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort5() {
+        String input[] = new String[]{ "A", "c", "b" };
+        String output[] = new String[]{ "A", "b", "c" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testSort6() {
-            String input[] = new String[]{ "A", "A", "b" };
-            String output[] = new String[]{ "A", "A", "b" };
-            StringUtil.sort(input);
-            Assert.assertTrue(compareStringArray(input, output));
-        }
+    public void testSort6() {
+        String input[] = new String[]{ "A", "A", "b" };
+        String output[] = new String[]{ "A", "A", "b" };
+        StringUtil.sort(input);
+        Assert.assertTrue(compareStringArray(input, output));
+    }
 
-        public void testReplace1() {
-            String input = "123456";
-            String output = StringUtil.localReplaceAll(input, "1", "X");
-            Assert.assertTrue(output.equals("X23456"));
-        }
+    public void testSplit1() {
+        String input = "abc.cdf";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 2, result.length);
+        Assert.assertEquals("item 0", "abc", result[0]);            
+        Assert.assertEquals("item 1", "cdf", result[1]);            
+    }
+    
+    public void testSplit2() {
+        String input = "abcxcdf";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 1, result.length);
+        Assert.assertEquals("item 0", "abcxcdf", result[0]);            
+    }
+    
+    public void testSplit3() {
+        String input = "abc.cdf.";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 3, result.length);
+        Assert.assertEquals("item 0", "abc", result[0]);            
+        Assert.assertEquals("item 1", "cdf", result[1]);            
+        Assert.assertEquals("item 2", "", result[2]);            
+    }
+    
+    public void testSplit4() {
+        String input = "abc.cdf.ert";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 3, result.length);
+        Assert.assertEquals("item 0", "abc", result[0]);            
+        Assert.assertEquals("item 1", "cdf", result[1]);            
+        Assert.assertEquals("item 2", "ert", result[2]);            
+    }
+    
+    public void testSplit5() {
+        String input = "abc..cdf";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 3, result.length);
+        Assert.assertEquals("item 0", "abc", result[0]);            
+        Assert.assertEquals("item 1", "", result[1]);            
+        Assert.assertEquals("item 2", "cdf", result[2]);            
+    }
+    
+    public void testSplit6() {
+        String input = "abcxcdf.";
+        String [] result = jmri.util.StringUtil.split(input, ".");
+        Assert.assertEquals("length", 2, result.length);
+        Assert.assertEquals("item 0", "abcxcdf", result[0]);            
+        Assert.assertEquals("item 1", "", result[1]);            
+    }
+    
+    public void testparenQuote() {
+        String sample;
 
-        public void testReplace2() {
-            String input = "123456";
-            String output = StringUtil.localReplaceAll(input, "6", "X");
-            Assert.assertTrue(output.equals("12345X"));
-        }
+        sample = "abc";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
-        public void testReplace3() {
-            String input = "123\n456";
-            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
-            Assert.assertTrue(output.equals("123\n...>456"));
-        }
+        sample = "123";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
-        public void testReplace4() {
-            String input = "123\n456\n";
-            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
-            Assert.assertTrue(output.equals("123\n...>456\n...>"));
-        }
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
-        public void testReplace5() {
-            String input = "123\n\n456";
-            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
-            Assert.assertTrue(output.equals("123\n...>\n...>456"));
-        }
+        sample = "a\\b";
+        Assert.assertEquals(sample, "a\\\\b", StringUtil.parenQuote(sample));
 
-        public void testReplace6() {
-            String input = "\n123\n456\n";
-            String output = StringUtil.localReplaceAll(input, "\n", "\n...>");
-            Assert.assertTrue(output.equals("\n...>123\n...>456\n...>"));
-        }
+        sample = "a(v)c";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
 
-        public void testSplit1() {
-            String input = "abc.cdf";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 2, result.length);
-            Assert.assertEquals("item 0", "abc", result[0]);            
-            Assert.assertEquals("item 1", "cdf", result[1]);            
-        }
+        sample = "a(v(b)(n)K)";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+
+        sample = "()((()))";
+        Assert.assertEquals(sample, sample, StringUtil.parenQuote(sample));
+
+        sample = "a)b";
+        Assert.assertEquals(sample, "a\\)b", StringUtil.parenQuote(sample));
+    }
+    
+    public void testparenUnQuote() {
+        String sample;
+
+        sample = "abc";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "123";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "a\\\\b";
+        Assert.assertEquals(sample, "a\\b", StringUtil.parenUnQuote(sample));
+
+        sample = "a(v)c";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "a(v(b)(n)K)";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "()((()))";
+        Assert.assertEquals(sample, sample, StringUtil.parenUnQuote(sample));
+
+        sample = "a\\)b";
+        Assert.assertEquals(sample, "a)b", StringUtil.parenUnQuote(sample));
+    }
+    
+    public void testSplitParens() {
+        String sample;
+        java.util.List<String> list;
+
+        sample = "(abc)";
+        list = StringUtil.splitParens(sample);
+        Assert.assertEquals(sample, 1, list.size());
+        Assert.assertEquals(sample+" 1", "(abc)", list.get(0));
+
+        sample = "(abc)(def)";
+        list = StringUtil.splitParens(sample);
+        Assert.assertEquals(sample, 2, list.size());
+        Assert.assertEquals(sample+" 1", "(abc)", list.get(0));
+        Assert.assertEquals(sample+" 1", "(def)", list.get(1));
+
         
-        public void testSplit2() {
-            String input = "abcxcdf";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 1, result.length);
-            Assert.assertEquals("item 0", "abcxcdf", result[0]);            
-        }
-        
-        public void testSplit3() {
-            String input = "abc.cdf.";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 3, result.length);
-            Assert.assertEquals("item 0", "abc", result[0]);            
-            Assert.assertEquals("item 1", "cdf", result[1]);            
-            Assert.assertEquals("item 2", "", result[2]);            
-        }
-        
-        public void testSplit4() {
-            String input = "abc.cdf.ert";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 3, result.length);
-            Assert.assertEquals("item 0", "abc", result[0]);            
-            Assert.assertEquals("item 1", "cdf", result[1]);            
-            Assert.assertEquals("item 2", "ert", result[2]);            
-        }
-        
-        public void testSplit5() {
-            String input = "abc..cdf";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 3, result.length);
-            Assert.assertEquals("item 0", "abc", result[0]);            
-            Assert.assertEquals("item 1", "", result[1]);            
-            Assert.assertEquals("item 2", "cdf", result[2]);            
-        }
-        
-        public void testSplit6() {
-            String input = "abcxcdf.";
-            String [] result = jmri.util.StringUtil.split(input, ".");
-            Assert.assertEquals("length", 2, result.length);
-            Assert.assertEquals("item 0", "abcxcdf", result[0]);            
-            Assert.assertEquals("item 1", "", result[1]);            
-        }
-        
+    }
+    
 	// from here down is testing infrastructure
 
 	public StringUtilTest(String s) {

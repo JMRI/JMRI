@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class StringUtil {
@@ -318,29 +318,6 @@ public class StringUtil {
         }
         return buffer.toString();
     }
-    /**
-     * Provide a version of String replaceAll() that also works on Java 1.1.8
-     */
-     static public String replaceAll(String input, String find, String replace) {
-        try {
-            return input.replaceAll(find, replace);
-        } catch (Throwable t) {
-            // not available, do the hard way
-            return localReplaceAll(input, find, replace);
-        }
-     }
-
-     static String localReplaceAll(String input, String find, String replace) {
-        String local = input;
-        String output = "";
-        int loc;
-        while ( (loc = local.indexOf(find)) >= 0) {
-            // found string, so have to do replacement
-            output = output+local.substring(0,loc)+replace;
-            local = local.substring(loc+find.length(), local.length());
-        }
-        return output+local;
-     }
 
     /**
      * Split a string into an array of Strings, at a particular
@@ -381,6 +358,76 @@ public class StringUtil {
         result[size] = temp;
         
         return result;
+    }
+    
+    /** 
+     * If there's an unmatched ), quote it with \,
+     * and quote \ with \ too.
+     */
+    static public String parenQuote(String in) {
+        String result = "";
+        if (in.equals("")) return "";
+        int level = 0;
+        for (int i = 0; i < in.length(); i++) {
+            char c = in.charAt(i);
+            if (c == '(') level++;
+            else if (c == '\\') result+='\\';
+            else if (c ==')') {
+                level--;
+                if (level < 0) {
+                    level = 0;
+                    result+='\\';
+                }
+            }
+            result += c;
+        }
+        return result;
+    }
+    
+    /** 
+     * Undo parenQuote
+     */
+    static String parenUnQuote(String in) {
+        String result = "";
+        if (in.equals("")) return result;
+        for (int i = 0; i < in.length(); i++) {
+            char c = in.charAt(i);
+            if (c == '\\') {
+                i++;
+                c = in.charAt(i);
+                if (c != '\\' && c != ')') {
+                    // if none of those, just leave both in place
+                    c+='\\';
+                }
+            }
+            result += c;
+        }
+        return result;
+    }
+    
+    static public java.util.List<String> splitParens(String in) {
+        java.util.ArrayList<String> result = new java.util.ArrayList<String>();
+        if (in.equals("")) return result;
+        int level = 0;
+        String temp = "";
+        for (int i = 0; i < in.length(); i++) {
+            char c = in.charAt(i);
+            if (c == '(') {
+                level++;
+            } else if (c == '\\') {
+                temp+=c;
+                i++;
+                c = in.charAt(i);
+            } else if (c ==')') {
+                level--;
+            }
+            temp+=c;
+            if (level == 0) {
+                result.add(temp);
+                temp = "";
+            }
+        }
+        return result;        
     }
     
 }
