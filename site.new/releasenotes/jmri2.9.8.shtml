@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.4 2010-06-13 17:49:44 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.5 2010-06-13 18:15:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -221,6 +221,21 @@ Users can now specify in a siding's schedule the destination and track for a car
 <p>
 Fixed a problem with SignalMast system names when using signal heads with ":" characters in their
 names, e.g. SE8c signal heads.
+
+<p>
+Mike Mosher added decoder definitions for the TCS V51+ decoders.
+
+<p>
+Steve Todd updated the wireless throttle support to avoid confusion with IPv6 connections.
+
+<p>
+Jack Shall updated the Tsunami Diesel decoder definition to add the BW1000 series decoders.
+
+<p>
+John Stewart provided a decoder definition for the Lenz Plus 2010 decoder.
+
+<p>
+Mike Mosher added decoder definitions for the Soundtraxx Tsunami OEM decoders for Genesis locomotives.
 
 <!--#include virtual="/Footer" -->
 

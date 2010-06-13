@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.113 2010-06-06 22:05:28 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.114 2010-06-13 18:15:07 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -385,6 +385,7 @@
 	<LI>Ron Sommer, who provided the PanelPro icon for Windows
 	<li>Tom Starbuck, who updated and organized the model numbers in the TCS BEMF decoder definitions.
 	<LI>Dima Stepanchuk, who provided a fix for the Packet Analyzer
+	<li>John Stewart, who provided a decoder definition for the Lenz Plus 2010 decoder.
 <a name="T"></A>
 	<LI>Francois Taburet, who provided the French translation for DecoderPro
 	<li>Giorgio Terdina, who provided the code for the Roco multiMaus and
@@ -398,7 +399,7 @@
 	    updated lots of decoder definitions,
 	    improved many help pages,
 	    and is an active jmriusers moderator.
-	<li>Steve Todd, who updated the EngineDriver throttle for Android.
+	<li>Steve Todd, who updated the EngineDriver throttle for Android and fixed an IPv6 problem.
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
