@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -55,6 +55,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             mMast.addPropertyChangeListener(this);
             namedMast = sh;
             pName=sh.getName();
+            getIcons();
         }
     }
     
@@ -71,6 +72,21 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             namedMast = new NamedBeanHandle<SignalMast>(pName, mMast);
             displayState(mastState());
             mMast.addPropertyChangeListener(this);
+            getIcons();
+        }
+    }
+
+    private void getIcons() {
+        iconCache = new java.util.Hashtable<String, NamedIcon>();
+        java.util.Enumeration<String> e = mMast.getAppearanceMap().getAspects();
+        while (e.hasMoreElements()) {
+            String s = mMast.getAppearanceMap().getProperty(e.nextElement(), "imagelink");
+            s = s.substring(s.indexOf("resources"));
+            NamedIcon n = new NamedIcon(s,s);
+            iconCache.put(s, n);
+            if(_rotate!=0){
+                n.rotate(_rotate, this);
+            }
         }
     }
 
@@ -173,13 +189,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                 
                 // tiny global cache, due to number of icons
                 NamedIcon n = iconCache.get(s);
-                if (n == null) {
-                    n = new NamedIcon(s,s);
-                    iconCache.put(s, n);
-                    if(_rotate!=0){
-                        n.rotate(_rotate, this);
-                    }
-                }
                 super.setIcon(n);
                 setSize(n.getIconWidth(), n.getIconHeight());
             }
@@ -190,6 +199,10 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         return;
     }
     
+    public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
+        return false;
+    }
+
     int _rotate=0;
     public void rotate(int deg){
         Set<String> set = iconCache.keySet();
@@ -200,14 +213,31 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
           n.rotate(deg, this);
         }
         _rotate = _rotate+deg;
+        displayState(mastState());
     }
     
+    double _scale = 1.0;
+    public void setScale(double s) {
+        Set<String> set = iconCache.keySet();
+        Iterator<String> itr = set.iterator();
+        while (itr.hasNext()) {
+          String state = itr.next();
+          NamedIcon n = iconCache.get(state);
+          n.scale(s, this);
+        }
+        _scale *= s;
+        displayState(mastState());
+    }
+
     public int getRotation(){
         return _rotate;
     }
     
-    static java.util.Hashtable<String, NamedIcon> iconCache =
-        new java.util.Hashtable<String, NamedIcon>();
+    public double getScale(){
+        return _scale;
+    }
+    
+    private java.util.Hashtable<String, NamedIcon> iconCache;
 
     //private static boolean warned = false;
 

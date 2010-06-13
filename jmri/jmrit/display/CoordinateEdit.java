@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -508,7 +508,8 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,-360,360,1);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(((NamedIcon)pLabel.getIcon()).getDegrees()));
+//        spinX.setValue(new Integer(((NamedIcon)pLabel.getIcon()).getDegrees()));
+        spinX.setValue(0);
         spinX.setToolTipText(rb.getString("enterDegrees"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
