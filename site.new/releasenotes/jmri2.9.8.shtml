@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.3 2010-06-06 22:05:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.4 2010-06-13 17:49:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -41,16 +41,17 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the eighth in a series of test versions. We expect this series
-to end in a JMRI 2.10 production release in Summer 2010. 
+<p>This is the eighth in a series of test versions. It carries the last major
+new features for the JMRI 2.10 production release expected in Summer 2010. 
 
 <p>
 It contains 
 many new features, including:
 
 <ul>
-<li>
-<li>
+<li>Several improvements for remote (iPhone, Android) throttles
+<li>A new preference lets you specify where your user files are stored.
+<li>Several improvements to how windows use screen space.
 </ul>
 along with lots of other changes.  See the complete list below.
 
@@ -192,7 +193,34 @@ There's a new throttle preference to control whether the speed should be set to 
 and functions turned off when a throttle is released.
 
 <p>
-More work on Lenz turnout control by Paul Bender.
+Paul Bender did more work on Lenz turnout control.
+
+<p>
+Paul Bender made some changes to make the XPressNet support compatible with OpenDCC command stations.
+
+<p>
+Dan Boudreau added a minor operations enhancement: show current car count in schedule table.
+
+<p>
+Web browsers can now access layout power via XMLIO.
+
+<p>
+Allow the user to specify the default preferences and jython script directory locations.  
+This helps to get around an issue reported with windows 7 directory/file permissions.
+It also allows the user to set where they wish to save panel/throttle/etc files without having to modify the launcher. 
+Feature is handy where multiple Windows user profiles have to access a common set of panel and roster files.
+
+<p>
+Improved window for adding Signal Masts so that it's clearer how many SignalHeads are needed,
+and to give more space for entering them.
+
+<p>
+Dan Boudreau added a new operations feature: 
+Users can now specify in a siding's schedule the destination and track for a car.
+
+<p>
+Fixed a problem with SignalMast system names when using signal heads with ":" characters in their
+names, e.g. SE8c signal heads.
 
 <!--#include virtual="/Footer" -->
 
