@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.8.shtml,v 1.6 2010-06-13 18:57:34 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.9.8.shtml,v 1.7 2010-06-13 23:16:23 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -188,6 +188,11 @@ Paul Bender and Lionel Jeanson improved the internal structure of the throttle s
 You may see changes in the way that real (handheld) throttles and the program interact.
 There's a new throttle preference to control whether the speed should be set to 0
 and functions turned off when a throttle is released.
+
+<p>
+Brett Hoffman changed how the WiThrottle protocol creates a throttle.
+The throttle no longer shows in the "Windows" menu or
+in the "Throttles List" window.
 
 <p>
 Paul Bender did more work on Lenz turnout control.
