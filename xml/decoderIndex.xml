@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.9.7 on Fri May 28 20:00:02 PDT 2010 $Id: decoderIndex.xml,v 1.161 2010-05-29 03:03:07 jacobsen Exp $-->
-  <decoderIndex version="192">
+  <!--Written by JMRI version 2.9.8 on Sun Jun 13 11:12:53 PDT 2010 $Id: decoderIndex.xml,v 1.162 2010-06-13 18:14:16 jacobsen Exp $-->
+  <decoderIndex version="195">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1785,6 +1785,47 @@
           <output name="4" label="D - Violet" />
           <output name="5" label="E - Brown" />
           <output name="6" label="F - Pink" />
+        </model>
+      </family>
+      <family name="Lenz Plus decoders released March 2010" mfg="Lenz" highVersionID="95" lowVersionID="95" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" type="locomotive" file="Lenz_Plus_2010.xml">
+        <model model="Gold small wired - #10410-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+        </model>
+        <model model="Gold small plugin - #10411-xx" numOuts="2" numFns="14" lowVersionID="95" maxMotorCurrent="0.5A (peak=0.8A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Purple" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
+        </model>
+        <model model="Gold JST - #10432-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Purple" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
+        </model>
+        <model model="Gold NMRA - #10433-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Purple" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
+        </model>
+        <model model="Gold MAXI - #10440-xx" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="3.0A (peak=5.0A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Purple" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
+        </model>
+        <model model="Silver direct+ - #10330-01" numOuts="5" numFns="14" lowVersionID="95" maxMotorCurrent="1.0A (peak=1.8A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="A - White" connection="unspecified" />
+          <output name="2" label="B - Yellow" connection="unspecified" />
+          <output name="3" label="C - Green" connection="unspecified" />
+          <output name="4" label="D - Purple" connection="unspecified" />
+          <output name="5" label="E - Brown" connection="unspecified" />
         </model>
       </family>
       <family name="Lenz Silver with 6th gen BEMF" mfg="Lenz" highVersionID="82" lowVersionID="65" comment="Decoders featuring Precision Braking Control and Low Gear Switching Drive" file="Lenz_Silver.xml">
@@ -4268,6 +4309,21 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="TSU-1000 UP Gas Turbine" numOuts="4" numFns="14" connector="9pin" productID="827114" comment="Model 827114">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
         <model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" connector="other" productID="828043" comment="Model 828043">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
@@ -4404,6 +4460,66 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828046" comment="Model 828046">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-BW1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other" productID="828025" comment="Model 828025">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-BW1000 Baldwin 608A (Turbo)" numOuts="4" numFns="14" connector="other" productID="828023" comment="Model 828023">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-BW1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828020" comment="Model 828020">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="TSU-BW1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828026" comment="Model 828026">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -4569,6 +4685,218 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD70" numOuts="4" numFns="14" connector="other" productID="828060" comment="Model 828060">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+      </family>
+      <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Genesis.xml">
+        <model model="F2" numOuts="4" numFns="14" connector="other" productID="F2">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="F3" numOuts="4" numFns="14" connector="other" productID="F2">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="F7" numOuts="4" numFns="14" connector="other" productID="F2">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="F9" numOuts="4" numFns="14" connector="other" productID="F2">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F2">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="F45" numOuts="4" numFns="14" connector="other" productID="F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="FP45" numOuts="4" numFns="14" connector="other" productID="F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="GP15-1" numOuts="4" numFns="14" connector="other" productID="MP15">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="GP15T" numOuts="4" numFns="14" connector="other" productID="F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="MP15AC" numOuts="4" numFns="14" connector="other" productID="MP15">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="SD45-2" numOuts="4" numFns="14" connector="other" productID="F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="SD60I" numOuts="4" numFns="14" connector="other" productID="SD60">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="SD60M" numOuts="4" numFns="14" connector="other" productID="SD60">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="SD70ACe" numOuts="4" numFns="14" connector="other" productID="SD60">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
@@ -4843,6 +5171,40 @@
           <output name="Coupler" />
         </model>
       </family>
+      <family name="Tsunami Steam Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami steam decoders" file="SoundTraxx_Tsu_Steam_Genesis.xml">
+        <model model="Bigboy 4-8-8-4" numOuts="4" numFns="14" connector="other" productID="BB">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="MT-4 4-8-2" numOuts="4" numFns="14" connector="other" productID="MT4">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+      </family>
       <family name="Standard Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10" file="TAMS_LD-G-21.xml">
         <model model="LD-G-21" numOuts="4" numFns="10">
           <output name="1" label="X2" />
@@ -4918,6 +5280,502 @@
       </family>
       <family name="TCS Tx series decoders" mfg="Train Control Systems" file="TCS_Tx_v28.xml">
         <model model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35" />
+      </family>
+      <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52" type="locomotive" file="TCS_V51.xml">
+        <model model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="A6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="200 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="200 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="200 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="200 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="200 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="ALD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: SD50 SD60" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.83" width="0.351" height="0.13" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="AMD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.83" width="0.351" height="0.13" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.73" width="0.349" height="0.13" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="CN" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="Fits  Classic N locos with split lighting board, 2 functions" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.834" width="0.361" height="0.101" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.73" width="0.36" height="0.15" units="inches" />
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="DP2X" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0845" width="0.680" height="0.165" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="DP2X-UK" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="UK  version of DP2X different pin orientation - fits Atlas vacuumcar" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0845" width="0.680" height="0.165" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="DP5" numOuts="5" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="EUN651" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" comment="European 6 pin connector" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0845" width="0.680" height="0.165" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="G8" numOuts="8" numFns="14" maxMotorCurrent="?" formFactor="O" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="3.0" width="1.45" height="0.0" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="IMD4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.83" width="0.351" height="0.13" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="IMF4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="IMFP4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="IMFTA4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="IMFTB4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K0D8-A" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K0D8-B" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K0D8-C" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K0D8-D" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.53" width="0.542" height="0.155" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="60 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="60 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="60 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="60 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="60 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="60 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="60 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="60 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.7" width="0.4" height="0.0" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K1D4-NC" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" comment="No Clips version of K1D4" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.7" width="0.4" height="0.0" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K2D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.7" width="0.4" height="0.0" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="K3D3" numOuts="3" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="2.860" width="0.680" height="0.145" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="50 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M1" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M1P-15" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M1P-UK" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M3" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.570" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.570" width="0.355" height="0.132" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="M4T" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.567" width="0.359" height="0.135" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="80 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+        </model>
+        <model model="MC2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="MC4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="MZA4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Z-scale 4 function A format drop in with two LEDs" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="T1" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.956" width="0.665" height="0.207" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="1.010" width="0.665" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="T6X" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="1.00" width="0.680" height="0.250" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="VO-1000N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="Z2" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="Z" comment="Fits Z thru light duty HO" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
         <model model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
