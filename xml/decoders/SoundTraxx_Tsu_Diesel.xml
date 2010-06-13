@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.7 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel.xml,v 1.8 2010-06-13 18:11:54 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,6 +12,7 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Jack Shall lcrr@bellsouth.net" version="1" lastUpdated="20090602"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="2" lastUpdated="20090723"/>
@@ -19,7 +20,10 @@
   <version author="Jack Shall lcrr@bellsouth.net" version="4" lastUpdated="20100111"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="5" lastUpdated="20100218"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20100405"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="7" lastUpdated="20100512"/>
+
 <!-- This file contains the Tsunami definitions for ALL of the internal combustion engine locomotives	-->
+
 <!-- version 1	Based on the "Soundtraxx_Tsu_(various diesels)" series of files.					-->
 <!--			Co-authored by Michael Mosher.	Special thanks to Bob Jacobsen and Phil Utley		-->
 <!--			for their assistance, and Marc Fournier for getting the ball rolling.				-->
@@ -37,7 +41,12 @@
 <!-- version 5	Added Baldwin VO (model 827111), 608NA (model 827112) and 608A (model 827113).		-->
 <!-- version 6	Added EMD 645-Turbo (model 827002), EMD 710 (model 827003) and						-->
 <!--			GE Cummins (model 827014) TSU-750 series decoders.									-->
+<!-- version 7	Added BW1000 series decoders: EMD 567 (828020), Baldwin 608A Turbo (828023),		-->
+<!--			ALCO 251 V16 (828025) and GE FDL-16 (828026).										-->
+<!--			Also added TSU-1000 UP Gas Turbine (827114).										-->
+
 <!-- Decoder Model information follows -->
+
   <decoder>
     <family name="Tsunami Diesel" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami diesel decoders">
       <model model="TSU-750 Alco 244" numOuts="2" numFns="14" connector="other" productID="827004" comment="Model 827004">
@@ -370,6 +379,21 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
+      <model model="TSU-1000 UP Gas Turbine" numOuts="4" numFns="14" connector="9pin" productID="827114" comment="Model 827114">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
       <model model="TSU-AT1000 Alco 244" numOuts="4" numFns="14" connector="other" productID="828043" comment="Model 828043">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
@@ -506,6 +530,68 @@
         <output name="Coupler"/>
       </model>
       <model model="TSU-AT1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828046" comment="Model 828046">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+
+
+      <model model="TSU-BW1000 Alco 251 (V16)" numOuts="4" numFns="14" connector="other" productID="828025" comment="Model 828025">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-BW1000 Baldwin 608A (Turbo)" numOuts="4" numFns="14" connector="other" productID="828023" comment="Model 828023">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-BW1000 EMD 567" numOuts="4" numFns="14" connector="other" productID="828020" comment="Model 828020">
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="TSU-BW1000 GE FDL-16" numOuts="4" numFns="14" connector="other" productID="828026" comment="Model 828026">
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -2845,7 +2931,7 @@
         <label>Bell Ring Rate</label>
       </variable>
 <!-- Airhorn Selection follows -->
-      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,828040,828043,828045,828047,828049,828050,828065" tooltip="Selects which airhorn to use">
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,827114,828020,828023,828025,828040,828043,828045,828047,828049,828050,828065" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco A2">
             <choice>Wabco A2</choice>
@@ -2899,7 +2985,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,828040,828043,828045,828047,828049,828050,828065" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827001,827004,827008,827011,827012,827014,827101,827104,827106,827108,827111,827112,827113,827114,828020,828023,828025,828040,828043,828045,828047,828049,828050,828065" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short horn blast">
             <choice>Short horn blast</choice>
@@ -3061,7 +3147,7 @@
         <label>Alternate Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,828041,828046,828048,828051,828056,828061,828062,828063,828064" tooltip="Selects which airhorn to use">
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="9" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,828026,828041,828046,828048,828051,828056,828061,828062,828063,828064" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Wabco E2">
             <choice>Wabco E2</choice>
@@ -3115,7 +3201,7 @@
         <label>Airhorn Select</label>
         <comment>Show these horns for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,828041,828046,828048,828051,828056,828061,828062,828063,828064" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" comment="Show these horns for the models (productID) listed below" include="827002,827102,827107,827109,828026,828041,828046,828048,828051,828056,828061,828062,828063,828064" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
             <choice>Short Horn</choice>
@@ -4056,3 +4142,5 @@
     <name>ASC</name>
   </pane>
 </decoder-config>
+
+ 	  	 
