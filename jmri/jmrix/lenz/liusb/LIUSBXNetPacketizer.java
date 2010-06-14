@@ -14,7 +14,7 @@ import jmri.jmrix.lenz.XNetPacketizer;
  * 0xFF 0xFE or 0xFF 0xFD bytes that appear prior to any message read in.
  *
  * @author		Paul Bender  Copyright (C) 2005
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  *
  */
 public class LIUSBXNetPacketizer extends XNetPacketizer {
@@ -61,18 +61,29 @@ public class LIUSBXNetPacketizer extends XNetPacketizer {
      * @param istream character source. 
      * @throws IOException when presented by the input source.
      */
+     @Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
+        byte lastbyte=(byte)0xFF;
 	if(log.isDebugEnabled()) log.debug("loading characters from port");
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
             // This is a test for the LIUSB device
             while((i==0) && ((char1 & 0xF0)==0xF0)) {
                 if((char1&0xFF) !=0xF0 && (char1&0xFF)!=0xF2){
+                   // save this so we can check for unsolicited
+                   // messages.
+                   lastbyte = char1;
                    //  toss this byte and read the next one
                    char1 = readByteProtected(istream);
                 }
+                
             }
+            // LIUSB messages are preceeded by 0xFF 0xFE if they are
+            // responses to messages we sent.  If they are unrequested
+            // information, they are preceeded by 0xFF 0xFD.
+            if(lastbyte==(byte)0xFD)
+               msg.setUnsolicited();
             msg.setElement(i, char1 &0xFF);
             if (endOfMessage(msg)) {
                 break;
