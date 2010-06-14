@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.1 2010-06-13 17:49:30 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.2 2010-06-14 04:42:19 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -165,6 +165,8 @@ None at the time of this release.
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.9.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.9.tgz/download</a>
 
 <h3>Changes since test version 2.9.8</h3>
+
+Pete Cressman fixed a problem with rotating Signal Mast icons.
 
 
 <!--#include virtual="/Footer" -->
