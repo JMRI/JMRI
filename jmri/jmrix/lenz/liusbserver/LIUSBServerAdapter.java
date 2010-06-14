@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -157,6 +157,8 @@ public class LIUSBServerAdapter extends XNetPortController {
                continue;
              }          
           if(log.isDebugEnabled()) log.debug("Network Adapter Received Reply: " + r.toString() );
+          r.setUnsolicited(); // Anything coming through the broadcast port
+                              // is an unsolicited message.
           writeReply(r);
           }
         }
