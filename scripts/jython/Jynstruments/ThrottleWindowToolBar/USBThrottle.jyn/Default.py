@@ -1,5 +1,5 @@
 
-print "In USBDriver - Default"
+print "Loading USBDriver : Default"
 
 class USBDriver :
     def __init__(self):
@@ -20,7 +20,8 @@ class USBDriver :
         self.valueThrottleRelease = 1
         
         self.componentSpeed = "x"  # Analog axis component for curent throttle speed
-        self.valueSpeedTrigger = 0.05
+        self.valueSpeedTrigger = 0.05 # ignore values lower than
+        self.componentSpeedMultiplier = 1 # multiplier for pad value (negative values to reveerse)
 
         self.componentDirection = "rz" # Analog axis component for curent throttle direction
         self.valueDirectionForward = 1
@@ -43,27 +44,36 @@ class USBDriver :
 
         self.componentF0 = "4" # Function button
         self.valueF0 = 1
+        self.valueF0Off = 0  # off event for non lockable functions
 
         self.componentF1 = "5" # Function button
         self.valueF1 = 1 
+        self.valueF1Off = 0
 
         self.componentF2 = "6" # Function button
         self.valueF2 = 1
+        self.valueF2Off = 0
 
         self.componentF3 = "7" # Function button
         self.valueF3 = 1
+        self.valueF3Off = 0
 
         self.componentF4 = "8" # Function button
         self.valueF4 = 1
+        self.valueF4Off = 0
         
         self.componentF5 = "" # Function button
         self.valueF5 = 1
+        self.valueF5Off = 0
 
         self.componentF6 = "" # Function button
         self.valueF6 = 1
+        self.valueF6Off = 0
 
         self.componentF7 = "" # Function button
         self.valueF7 = 1
+        self.valueF7Off = 0
         
         self.componentF8 = "" # Function button
         self.valueF8 = 1
+        self.valueF8Off = 0

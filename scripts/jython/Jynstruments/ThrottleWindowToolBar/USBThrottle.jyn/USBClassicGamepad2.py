@@ -1,5 +1,5 @@
 
-print "In USBDriver - USB Classic Gamepad 2"
+print "Loading USBDriver : USB Classic Gamepad 2"
 
 class USBDriver :
     def __init__(self):
@@ -44,27 +44,36 @@ class USBDriver :
         
         self.componentF0 = "3" # Function button
         self.valueF0 = 1
+        self.valueF0Off = 0  # off event for non lockable functions
 
         self.componentF1 = "" # Function button
         self.valueF1 = 1 
+        self.valueF1Off = 0  # off event for non lockable functions
 
         self.componentF2 = "" # Function button
         self.valueF2 = 1
+        self.valueF2Off = 0  # off event for non lockable functions
 
         self.componentF3 = "" # Function button
         self.valueF3 = 1
+        self.valueF3Off = 0  # off event for non lockable functions
 
         self.componentF4 = "" # Function button
         self.valueF4 = 1
+        self.valueF4Off = 0  # off event for non lockable functions
         
         self.componentF5 = "" # Function button
         self.valueF5 = 1
+        self.valueF5Off = 0  # off event for non lockable functions
 
         self.componentF6 = "" # Function button
         self.valueF6 = 1
+        self.valueF6Off = 0  # off event for non lockable functions
 
         self.componentF7 = "" # Function button
         self.valueF7 = 1
+        self.valueF7Off = 0  # off event for non lockable functions
         
         self.componentF8 = "" # Function button
         self.valueF8 = 1
+        self.valueF8Off = 0  # off event for non lockable functions

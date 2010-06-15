@@ -1,5 +1,15 @@
+# Use an Xbox (original) controller as throttle(s)                                    
+#
+# Author: Andrew Berridge, Lionel Jeanson 2010 - Based on USBThrottle.py, Bob Jacobsen, copyright 2008
+# Part of the JMRI distribution
+#
+# Requires:
+# XBCD Xbox Controller Driver (from http://www.redcl0ud.com/xbcd.html)
+# Original Xbox (not 360) controller
+# 
+# Currently tested on Windows only
 
-print "In USBDriver - XBCD XBox Gamepad"
+print "Loading USBDriver : XBCD XBox Gamepad"
 
 class USBDriver :
     def __init__(self):
@@ -40,27 +50,36 @@ class USBDriver :
 
         self.componentF0 = "6" # Function button
         self.valueF0 = 1
+        self.valueF0Off = 0  # off event for non lockable functions
 
         self.componentF1 = "2" # Function button
         self.valueF1 = 1 
+        self.valueF1Off = 0  # off event for non lockable functions
 
         self.componentF2 = "1" # Function button
         self.valueF2 = 1
+        self.valueF2Off = 0  # off event for non lockable functions
 
         self.componentF3 = "0" # Function button
         self.valueF3 = 1
+        self.valueF3Off = 0  # off event for non lockable functions
 
         self.componentF4 = "5" # Function button
         self.valueF4 = 1
+        self.valueF4Off = 0  # off event for non lockable functions
         
         self.componentF5 = "" # Function button
         self.valueF5 = 1
+        self.valueF5Off = 0  # off event for non lockable functions
 
         self.componentF6 = "" # Function button
         self.valueF6 = 1
+        self.valueF6Off = 0  # off event for non lockable functions
 
         self.componentF7 = "" # Function button
         self.valueF7 = 1
+        self.valueF7Off = 0  # off event for non lockable functions
         
         self.componentF8 = "" # Function button
         self.valueF8 = 1
+        self.valueF8Off = 0  # off event for non lockable functions
