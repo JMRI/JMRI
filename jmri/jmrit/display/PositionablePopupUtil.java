@@ -8,7 +8,9 @@ import java.util.ResourceBundle;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
+import javax.swing.border.CompoundBorder;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -77,6 +79,8 @@ public class PositionablePopupUtil {
     private int margin=0;
     private int borderSize=0;
     private Color borderColor=null;
+    private Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+    private Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);;
 
     JMenuItem italic = null;
     JMenuItem bold = null;
@@ -103,10 +107,16 @@ public class PositionablePopupUtil {
             edit.add("Margin= " + getMargin());
             edit.add(CoordinateEdit.getMarginEditAction(_parent));
         }
-        JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
-        makeColorMenu(colorMenu, BACKGROUND_COLOR);
-        edit.add(colorMenu);
         popup.add(edit);
+    }
+    
+    public void setBackgroundMenu(JPopupMenu popup){
+        JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
+        //JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
+        makeColorMenu(edit, BACKGROUND_COLOR);
+        //edit.add(colorMenu);
+        popup.add(edit);
+    
     }
 
     public void setTextBorderMenu(JPopupMenu popup) {
@@ -134,7 +144,15 @@ public class PositionablePopupUtil {
     }
     public void setMargin(int m) {
         margin = m;
-        _parent.setBorder(new LineBorder(borderColor, borderSize));
+        if (_parent.isOpaque()){
+            borderMargin = new LineBorder(setBackground(),m);
+            //_parent.setBorder(new LineBorder(setBackground(), m));
+            
+        } else{
+            borderMargin = BorderFactory.createEmptyBorder(m, m, m, m);
+            //_parent.setBorder(BorderFactory.createEmptyBorder(m, m, m, m));
+        }
+        _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         _parent.updateSize();
     }
 
@@ -164,8 +182,8 @@ public class PositionablePopupUtil {
     public void setBorderSize(int border){
         borderSize = border;
         if(borderColor!=null){
-            _parent.setBorder(new LineBorder(borderColor, borderSize));
-            setHorizontalAlignment(CENTRE);
+            outlineBorder = new LineBorder(borderColor, borderSize);
+            _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
         _parent.updateSize();
     }
@@ -176,10 +194,9 @@ public class PositionablePopupUtil {
 
     public void setBorderColor(Color border){
         borderColor = border;
-        if(borderSize!=0){
-            _parent.setBorder(new LineBorder(borderColor, borderSize));
-            _parent.updateSize();
-            setHorizontalAlignment(JLabel.CENTER);
+        if(borderColor!=null){
+            outlineBorder = new LineBorder(borderColor, borderSize);
+            _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         }
     }
 
@@ -210,6 +227,7 @@ public class PositionablePopupUtil {
             _parent.setOpaque(true);
             _parent.setBackground(color);
         }
+        setMargin(margin);  //This rebuilds margin and sets it colour.
         _parent.updateSize();
     }
 
@@ -358,6 +376,7 @@ public class PositionablePopupUtil {
                             int h = _parent.getHeight();
                             Container parent = _parent.getParent();
                             // force redisplay
+                            setMargin(margin);  //This rebuilds margin and clears it colour.
                             parent.validate();
                             parent.repaint(p.x,p.y,w,h);
                         }
@@ -423,7 +442,7 @@ public class PositionablePopupUtil {
     static final int RIGHT  = 0x02;
     static final int CENTRE = 0x04;
     
-    private int justification=LEFT; //Default is always left    
+    private int justification=CENTRE; //Default is always Centre    
     
     public void setJustification(int just){
         justification=just;

@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2899,6 +2899,7 @@ public class LayoutEditor extends Editor {
                 util.setTextMarginMenu(popup);        
                 util.setTextBorderMenu(popup);        
                 util.setTextFontMenu(popup);
+                util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
                 popupSet = true;
             }
@@ -4588,6 +4589,7 @@ public class LayoutEditor extends Editor {
      */
     protected void paintTargetPanel(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
+        //drawPositionableLabelBorder(g2);
         // Optional antialising, to eliminate (reduce) staircase on diagonal lines
         if(antialiasingOn) g2.setRenderingHints(antialiasing);
         if (isEditable() && drawGrid) drawPanelGrid(g2);
@@ -4605,6 +4607,7 @@ public class LayoutEditor extends Editor {
         drawTrackInProgress(g2);
         g2.setStroke(new BasicStroke(1.0F,BasicStroke.CAP_ROUND,BasicStroke.JOIN_ROUND));
         drawPoints(g2);
+        
         if (isEditable()) {
             drawTurnoutRects(g2);
             drawXingRects(g2);
@@ -5648,7 +5651,7 @@ public class LayoutEditor extends Editor {
 			g2.draw(new Rectangle2D.Double (l.getX(), l.getY(), l.getSize().width, l.getSize().height));
 		}
 	}
-	
+    
 	private void drawPanelGrid(Graphics2D g2) {
 		Dimension dim = getSize();
 		double pix = 10.0;

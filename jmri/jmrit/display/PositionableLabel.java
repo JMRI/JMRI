@@ -36,7 +36,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.93 $
+ * @version $Revision: 1.94 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -196,7 +196,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedWidth()!=0) {
             max = _popupUtil.getFixedWidth();
-            max += _popupUtil.getMargin()*2;
+            max += _popupUtil.getBorderSize()*2;
             if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
                 _popupUtil.setFixedWidth(PositionablePopupUtil.MIN_SIZE);
                 max = PositionablePopupUtil.MIN_SIZE;
@@ -210,6 +210,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
             if (_popupUtil!=null) {
                 max += _popupUtil.getMargin()*2;
+                max += _popupUtil.getBorderSize()*2;
             }
             if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
                 max = PositionablePopupUtil.MIN_SIZE;
@@ -223,7 +224,7 @@ public class PositionableLabel extends JLabel implements Positionable {
         int max = 0;
         if (_popupUtil!=null && _popupUtil.getFixedHeight()!=0) {
             max = _popupUtil.getFixedHeight();
-            max += _popupUtil.getMargin()*2;
+            max += _popupUtil.getBorderSize()*2;
             if (max < PositionablePopupUtil.MIN_SIZE) {   // don't let item disappear
                 _popupUtil.setFixedHeight(PositionablePopupUtil.MIN_SIZE);
             }
@@ -237,6 +238,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
             if (_popupUtil!=null) {
                 max += _popupUtil.getMargin()*2;
+                max += _popupUtil.getBorderSize()*2;
             }
             if (max < PositionablePopupUtil.MIN_SIZE) {  // don't let item disappear
                 max = PositionablePopupUtil.MIN_SIZE;
