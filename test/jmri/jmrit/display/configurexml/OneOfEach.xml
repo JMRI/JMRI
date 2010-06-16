@@ -39,8 +39,8 @@
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
   <paneleditor class="jmri.jmrit.display.controlPanelEditor.configurexml.ControlPanelEditorXml" name="Control Panel" x="162" y="99" height="527" width="858" editable="yes" positionable="yes" showcoordinates="yes" showtooltips="yes" controlling="yes" hide="no" panelmenu="yes" scrollable="none">
-    <positionablelabel x="121" y="13" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Label" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="274" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Sensor" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="121" y="13" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Label" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="274" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Sensor" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <sensoricon sensor="IS0" x="283" y="36" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" momentary="true" icon="yes" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -56,9 +56,9 @@
       </inconsistent>
     </sensoricon>
     <positionablelabel x="121" y="47" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Text " size="12" style="1" red="51" green="51" blue="51" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="23" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="FixedSize=40" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="23" y="47" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed" size="12" style="1" red="51" green="51" blue="51" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" fixedWidth="40" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="337" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SensorOverlaid" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="23" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="FixedSize=80" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="23" y="47" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed" size="12" style="1" red="51" green="51" blue="51" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" fixedWidth="80" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="337" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SensorOverlaid" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <sensoricon sensor="IS1" x="360" y="36" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" momentary="false" icon="yes" text="PootnToot" size="12" style="1" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <active url="program:resources/icons/USS/sensor/green-on.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -73,26 +73,26 @@
         <rotation>0</rotation>
       </inconsistent>
     </sensoricon>
-    <positionablelabel x="461" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SensorAsText" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="461" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SensorAsText" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <sensoricon sensor="IS1" x="461" y="36" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" momentary="true" icon="no" text="&lt;unknown&gt;" size="14" style="3" class="jmri.jmrit.display.configurexml.SensorIconXml">
       <activeText text="Toot" red="0" green="255" blue="0" redBack="255" greenBack="255" blueBack="0" />
       <inactiveText text="Poot" red="255" green="0" blue="0" redBack="64" greenBack="64" blueBack="64" />
       <unknownText text="&lt;unknown&gt;" redBack="255" greenBack="255" blueBack="0" />
       <inconsistentText text="&lt;inconsistent&gt;" redBack="255" greenBack="255" blueBack="0" />
     </sensoricon>
-    <positionablelabel x="133" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Memory" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="219" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MemoryInput" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="339" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MemorySpinner" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="21" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="NullMemory" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="21" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="NullMemory" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <memoryicon memory="IM0" x="37" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="3" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
-    <memoryicon memory="IM1" x="134" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <positionablelabel x="133" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Memory" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="219" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MemoryInput" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="339" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MemorySpinner" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="21" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="NullMemory" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="21" y="258" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="NullMemory" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <memoryicon memory="IM0" x="37" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="3" red="51" green="51" blue="51" selectable="no" justification="left" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM1" x="134" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="51" green="51" blue="51" selectable="no" justification="left" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
     <memoryicon colWidth="5" memory="IM1" x="222" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="centre" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
-    <memoryicon memory="IM1" x="339" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
-    <memoryicon memory="IM2" x="130" y="346" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="255" green="0" blue="0" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
+    <memoryicon memory="IM1" x="339" y="284" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="0" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" justification="left" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
+    <memoryicon memory="IM2" x="130" y="346" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="255" green="0" blue="0" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" selectable="no" justification="left" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="program:resources/icons/misc/X-red.gif" />
     <memoryicon colWidth="5" memory="IM2" x="219" y="339" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="255" green="0" blue="0" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" justification="right" class="jmri.jmrit.display.configurexml.MemoryInputIconXml" />
     <memoryicon memory="IM2" x="339" y="338" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="12" style="1" red="255" green="0" blue="0" redBack="0" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" justification="centre" class="jmri.jmrit.display.configurexml.MemorySpinnerIconXml" />
-    <positionablelabel x="112" y="317" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Green Margin=10, Blue Border=2, Red Bold Font, Just L,R.C" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="112" y="317" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Green Margin=10, Blue Border=2, Red Bold Font, Just L,R.C" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <turnouticon turnout="IT1" x="593" y="36" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -107,7 +107,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </turnouticon>
-    <positionablelabel x="585" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="RightTurnout" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="585" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="RightTurnout" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <turnouticon turnout="IT2" x="698" y="36" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-west-closed.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
@@ -122,7 +122,7 @@
         <rotation>0</rotation>
       </inconsistent>
     </turnouticon>
-    <positionablelabel x="683" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="LeftTurnout" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="683" y="12" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="LeftTurnout" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <turnouticon turnout="IT1" x="603" y="120" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.0">
         <rotation>1</rotation>
@@ -137,7 +137,7 @@
         <rotation>1</rotation>
       </inconsistent>
     </turnouticon>
-    <positionablelabel x="578" y="91" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="RotateOrthogonal" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="578" y="91" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="RotateOrthogonal" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <turnouticon turnout="IT2" x="701" y="120" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <closed url="program:resources/icons/smallschematics/tracksegments/os-lefthand-west-closed.gif" degrees="45" scale="1.0">
         <rotation>0</rotation>
@@ -152,9 +152,9 @@
         <rotation>0</rotation>
       </inconsistent>
     </turnouticon>
-    <positionablelabel x="693" y="91" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Rotate 45 deg" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="465" y="113" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SignalHead" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="660" y="183" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="693" y="91" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Rotate 45 deg" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="465" y="113" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="SignalHead" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="660" y="183" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Scaled" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <turnouticon turnout="IT1" x="605" y="213" level="7" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" tristate="false" class="jmri.jmrit.display.configurexml.TurnoutIconXml">
       <closed url="program:resources/icons/smallschematics/tracksegments/os-righthand-east-closed.gif" degrees="0" scale="1.5">
         <rotation>2</rotation>
@@ -215,14 +215,15 @@
         <rotation>0</rotation>
       </inconsistent>
     </turnouticon>
-    <positionablelabel x="330" y="105" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="LocoMarker" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="23" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed Fixed" size="12" style="1" red="255" green="255" blue="255" redBack="255" greenBack="0" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="255" blueBorder="0" fixedWidth="40" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="204" y="47" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Centered" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="207" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Left Justified" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="23" y="161" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed" size="12" style="1" red="51" green="51" blue="51" redBack="255" greenBack="200" blueBack="0" margin="10" borderSize="2" redBorder="255" greenBorder="0" blueBorder="255" fixedWidth="40" justification="right" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="121" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Text Text" size="12" style="3" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="255" greenBorder="0" blueBorder="0" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="330" y="105" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="LocoMarker" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="23" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed" size="12" style="1" red="255" green="255" blue="255" redBack="255" greenBack="0" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="255" blueBorder="0" fixedWidth="80" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="204" y="47" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Centered" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="207" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Left Justified" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="207" y="161" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Right Justified" size="12" style="1" red="51" green="51" blue="51" justification="right" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="23" y="161" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Fixed" size="12" style="1" red="51" green="51" blue="51" redBack="255" greenBack="200" blueBack="0" margin="10" borderSize="2" redBorder="255" greenBorder="0" blueBorder="255" fixedWidth="80" justification="right" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="121" y="102" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Text Text" size="12" style="3" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="255" greenBorder="0" blueBorder="0" justification="left"  class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="118" y="161" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Text Text" size="12" style="2" red="51" green="51" blue="51" redBack="255" greenBack="255" blueBack="255" margin="10" borderSize="2" redBorder="255" greenBorder="0" blueBorder="255" justification="right" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <reportericon reporter="LR1" x="331" y="196" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="14" style="2" red="255" green="0" blue="0" redBack="255" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" class="jmri.jmrit.display.configurexml.ReporterIconXml" />
+    <reportericon reporter="LR1" x="331" y="196" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" size="14" style="2" red="255" green="0" blue="0" redBack="255" greenBack="255" blueBack="0" margin="10" borderSize="2" redBorder="0" greenBorder="0" blueBorder="255" justification="left" class="jmri.jmrit.display.configurexml.ReporterIconXml" />
     <positionablelabel x="334" y="178" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Reporter" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <locoicon x="335" y="125" level="10" forcecontroloff="false" hidden="no" positionable="true" showtooltip="false" text="12345" icon="yes" class="jmri.jmrit.display.configurexml.LocoIconXml">
       <icon url="program:resources/icons/markers/loco-blue.gif" degrees="0" scale="1.0">
@@ -249,14 +250,14 @@
         <rotation>0</rotation>
       </inconsistent>
     </multisensoricon>
-    <positionablelabel x="483" y="273" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MultiSensor" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
-    <positionablelabel x="625" y="341" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
+    <positionablelabel x="483" y="273" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="MultiSensor" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="625" y="341" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" icon="yes" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
       <icon url="program:resources/jmri32x32.gif" degrees="0" scale="1.0">
         <rotation>0</rotation>
       </icon>
     </positionablelabel>
-    <positionablelabel x="625" y="315" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Icon" size="12" style="1" red="51" green="51" blue="51" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
+    <positionablelabel x="625" y="315" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Icon" size="12" style="1" red="51" green="51" blue="51" justification="centre" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.9.4+dev+P1 on Sat Mar 13 18:49:57 PST 2010 $Id: OneOfEach.xml,v 1.1 2010-03-14 03:32:58 pete_cressman Exp $-->
+  <!--Written by JMRI version 2.9.4+dev+P1 on Sat Mar 13 18:49:57 PST 2010 $Id: OneOfEach.xml,v 1.2 2010-06-16 18:42:47 kevin-dickerson Exp $-->
 </layout-config>
 
