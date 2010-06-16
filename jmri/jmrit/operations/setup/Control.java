@@ -1,5 +1,8 @@
 package jmri.jmrit.operations.setup;
 
+import java.awt.Toolkit;
+import java.awt.Dimension;
+
 /**
  * Controls for operations developers. Debug Property changes and instance
  * creation, maximum panel width, etc.
@@ -13,11 +16,15 @@ public class Control {
 	public static final boolean showProperty = false;
 	public static final boolean showInstance = false;
 	
-	// Maximum panel width
+	// Default panel width
 	public static final int panelWidth = 1025;
 	
 	// Default panel height
 	public static final int panelHeight = 500;
+	
+	static Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();	
+	// Maximum panel height
+	public static final int panelMaxHeight = screenSize.height;
 	
 	// Default panel edit locations
 	public static final int panelX = 0;

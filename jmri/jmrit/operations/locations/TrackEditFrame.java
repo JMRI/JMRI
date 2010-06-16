@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -119,8 +119,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	pLength.setLayout(new GridBagLayout());
     	pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
 		addItem(pLength, trackLengthTextField, 0, 0);
-		
-		
+			
 		// row 3
 		panelTrainDir.setLayout(new GridBagLayout());
 		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainTrack")));
@@ -203,8 +202,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		
-		// set frame size and location for display
-		//setSize(getWidth()+50, getHeight()+25); // add some room for menu
+		// set frame location for display
 		setLocation(Control.panelX, Control.panelY);	
 	}
 	
@@ -482,8 +480,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem (panelCheckBoxes, clearButton, 1, ++y);
 		addItem (panelCheckBoxes, setButton, 4, y);
 		panelCheckBoxes.revalidate();
-		pack();
-		repaint();
+		packFrame();
 	}
 	
 	int x = 0;
@@ -555,8 +552,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		}
 		panelRoadNames.revalidate();
 
-		pack();
-		repaint();
+		packFrame();
 	}
 	
 	private void updateTrainDir(){
@@ -581,8 +577,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		panelTrainDir.revalidate();
 
-		pack();
-		repaint();
+		packFrame();
 	}
 
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -631,6 +626,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	CarTypes.instance().removePropertyChangeListener(this);
     	ScheduleManager.instance().removePropertyChangeListener(this);
         super.dispose();
+    }
+    
+    protected void packFrame(){
+		pack();
+		// make some room so rolling stock type scroll window doesn't always appear
+		if (getWidth()+50 < Control.panelWidth)
+			setSize (getWidth()+50, getHeight());
+		if (getHeight()+50 < Control.panelMaxHeight)
+			setSize (getWidth(), getHeight()+50);
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());
