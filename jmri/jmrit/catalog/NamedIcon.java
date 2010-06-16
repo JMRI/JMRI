@@ -26,7 +26,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -58,8 +58,6 @@ public class NamedIcon extends ImageIcon {
         mName = pName;
         mURL = jmri.util.FileUtil.getPortableFilename(pUrl);
         mRotation = 0;
-        _deg = 0;
-        _scale = 1.0;
     }
 
     /**
@@ -213,8 +211,8 @@ public class NamedIcon extends ImageIcon {
         } catch (InterruptedException ie) {}
         return myImage;
     }
-    private int _deg;
-    private double _scale;
+    private int _deg = 0;
+    private double _scale = 1.0;
     private AffineTransform _transformR = new AffineTransform();    // rotations
     private AffineTransform _transformS = new AffineTransform();    // scaling
 
