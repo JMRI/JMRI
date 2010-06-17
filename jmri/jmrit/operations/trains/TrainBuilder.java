@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.77 $
+ * @version             $Revision: 1.78 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -191,6 +191,16 @@ public class TrainBuilder extends TrainCommon{
 	    	}	       	
 	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);	// remove trailing separators
 	    	addLine(buildReport, FIVE, "Train ("+train.getName()+") "+train.getRoadOption()+" roads: "+sbuf.toString());
+		}
+		// show load names that this train will service
+		if (!train.getLoadOption().equals(Train.ALLLOADS)){
+			String[] loads = train.getLoadNames();
+			sbuf = new StringBuffer("");    	
+	    	for (int i=0; i<loads.length; i++){
+	    		sbuf = sbuf.append(loads[i]+", ");
+	    	}
+	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2); // remove trailing separators
+	    	addLine(buildReport, FIVE, "Train ("+train.getName()+") "+train.getLoadOption()+" loads: "+sbuf.toString());
 		}
 		// show owner names that this train will service
 		if (!train.getOwnerOption().equals(Train.ALLOWNERS)){
@@ -794,7 +804,7 @@ public class TrainBuilder extends TrainCommon{
 			return false;
 		}
 
-    	// remove cars that don't have a valid track, interchange, road, or type for this train
+    	// remove cars that don't have a valid track, interchange, road, load, owner, or type for this train
 		addLine(buildReport, SEVEN, "Remove cars not serviced by this train");
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getById(carList.get(carIndex));
@@ -817,6 +827,12 @@ public class TrainBuilder extends TrainCommon{
     			}
     			if (!train.acceptsTypeName(c.getType())){
     				addLine(buildReport, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") type ("+c.getType()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
+    				carList.remove(carList.get(carIndex));
+    				carIndex--;
+    				continue;
+    			}
+    			if (!c.isCaboose() && !train.acceptsLoadName(c.getLoad())){
+    				addLine(buildReport, FIVE, "Exclude car ("+c.getRoad()+" "+c.getNumber()+") load ("+c.getLoad()+") at location ("+c.getLocationName()+", "+c.getTrackName()+")");
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;

@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class CarLoads {
 	
@@ -57,6 +57,10 @@ public class CarLoads {
         _instance = null;
     }
     
+    /**
+     * Add a car type with specific loads
+     * @param type car type
+     */
     public void addType(String type){
     	list.put(type, new ArrayList<String>());
     }
@@ -83,19 +87,20 @@ public class CarLoads {
      */
     public JComboBox getComboBox(String type){
     	JComboBox box = new JComboBox();
-    	if (type == null){
-    		box.addItem(getDefaultEmptyName());
-    		box.addItem(getDefaultLoadName());
-    	} else {
-    		List<String> loads = getNames(type);
-    		for (int i=0; i<loads.size(); i++){
-    			box.addItem(loads.get(i));
-    		}
+    	List<String> loads = getNames(type);
+    	for (int i=0; i<loads.size(); i++){
+    		box.addItem(loads.get(i));
     	}
     	return box;
     }
     
     public List<String> getNames(String type){
+    	if (type == null){
+    		List<String> loads = new ArrayList<String>();
+    		loads.add(getDefaultEmptyName());
+    		loads.add(getDefaultLoadName());
+    		return loads;
+    	}
     	List<String> loads = list.get(type);
     	if (loads == null){
     		addType(type);

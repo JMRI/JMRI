@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -28,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -57,6 +58,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
+		//CarLoads.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
     }
     
@@ -177,6 +179,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void dispose() {
     	CarTypes.instance().removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
+    	//CarLoads.instance().removePropertyChangeListener(this);
     	EngineTypes.instance().removePropertyChangeListener(this);
         _trainHashTable.clear();
         _instance = null;
@@ -263,6 +266,21 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (train.acceptsTypeName(oldType)){
 				train.deleteTypeName(oldType);
 				train.addTypeName(newType);
+			}
+		}
+    }
+    
+    public void replaceLoad(String oldLoadName, String newLoadName){
+		List<String> trains = getTrainsByIdList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = getTrainById(trains.get(i));
+			String[] loadNames = train.getLoadNames();
+			for (int j=0; j<loadNames.length; j++){
+				if (loadNames[j].equals(oldLoadName)){
+					train.deleteLoadName(oldLoadName);
+					if (newLoadName != null)
+						train.addLoadName(newLoadName);
+				}
 			}
 		}
     }
@@ -606,6 +624,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
     		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
     	}
+    	// TODO use listener to determine if load name has changed
+       	//if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
+    	//	replaceLoad((String)e.getOldValue(), (String)e.getNewValue());
+    	//}
     }
     
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

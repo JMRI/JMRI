@@ -24,6 +24,8 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.setup.Control;
 
@@ -32,7 +34,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,9 +49,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	TrainEditFrame _trainEditFrame;
 
 	JPanel panelRoadNames = new JPanel();
+	JPanel panelLoadNames = new JPanel();
 	JPanel panelOwnerNames = new JPanel();
 	JPanel panelBuilt = new JPanel();
 	JScrollPane roadPane;
+	JScrollPane loadPane;
 	JScrollPane ownerPane;
 	JScrollPane builtPane;
 
@@ -60,20 +64,25 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	JLabel after = new JLabel(rb.getString("After"));
 
 	// major buttons
-	//JButton clearButton = new JButton(rb.getString("Clear"));
-	//JButton setButton = new JButton(rb.getString("Select"));
 	JButton addRoadButton = new JButton(rb.getString("AddRoad"));
 	JButton deleteRoadButton = new JButton(rb.getString("DeleteRoad"));
-	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
+	
+	JButton addLoadButton = new JButton(rb.getString("AddLoad"));
+	JButton deleteLoadButton = new JButton(rb.getString("DeleteLoad"));
+	JButton deleteAllLoadsButton = new JButton(rb.getString("DeleteAllLoads"));
 	
 	JButton addOwnerButton = new JButton(rb.getString("AddOwner"));
 	JButton deleteOwnerButton = new JButton(rb.getString("DeleteOwner"));
-
+	
+	JButton saveTrainButton = new JButton(rb.getString("SaveTrain"));
 
 	// radio buttons    
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    JRadioButton loadNameAll = new JRadioButton(rb.getString("AcceptAll"));
+    JRadioButton loadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
+    JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
     JRadioButton ownerNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton ownerNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton ownerNameExclude = new JRadioButton(rb.getString("Exclude"));
@@ -83,6 +92,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     JRadioButton builtDateRange = new JRadioButton(rb.getString("Range"));
 
     ButtonGroup roadGroup = new ButtonGroup();
+    ButtonGroup loadGroup = new ButtonGroup();
     ButtonGroup ownerGroup = new ButtonGroup();
     ButtonGroup builtGroup = new ButtonGroup();
 	
@@ -100,6 +110,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	
 	// combo boxes
 	JComboBox roadBox = CarRoads.instance().getComboBox();
+	JComboBox typeBox = CarTypes.instance().getComboBox();
+	JComboBox loadBox = CarLoads.instance().getComboBox(null);
 	JComboBox ownerBox = CarOwners.instance().getComboBox();
 
 	public static final String DISPOSE = "dispose" ;
@@ -111,6 +123,10 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	roadPane.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrain")));
     	
+      	loadPane = new JScrollPane(panelLoadNames);
+      	loadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+      	loadPane.setBorder(BorderFactory.createTitledBorder(rb.getString("LoadsTrain")));
+      	
       	ownerPane = new JScrollPane(panelOwnerNames);
       	ownerPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	ownerPane.setBorder(BorderFactory.createTitledBorder(rb.getString("OwnersTrain")));
@@ -158,6 +174,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		
+		// row 8
+		panelLoadNames.setLayout(new GridBagLayout());
+		loadGroup.add(loadNameAll);
+		loadGroup.add(loadNameInclude);
+		loadGroup.add(loadNameExclude);
+		
 		// row 9
 		panelOwnerNames.setLayout(new GridBagLayout());
 		ownerGroup.add(ownerNameAll);
@@ -188,6 +210,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		
 		getContentPane().add(p1);
 		getContentPane().add(roadPane);
+		getContentPane().add(loadPane);
 		getContentPane().add(ownerPane);
 		getContentPane().add(builtPane);
       	getContentPane().add(pB);
@@ -197,6 +220,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		//addButtonAction(clearButton);
 		addButtonAction(deleteRoadButton);
 		addButtonAction(addRoadButton);
+		addButtonAction(deleteLoadButton);
+		addButtonAction(deleteAllLoadsButton);
+		addButtonAction(addLoadButton);
 		addButtonAction(deleteOwnerButton);
 		addButtonAction(addOwnerButton);
 		addButtonAction(saveTrainButton);
@@ -204,6 +230,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
+		addRadioButtonAction(loadNameAll);
+		addRadioButtonAction(loadNameInclude);
+		addRadioButtonAction(loadNameExclude);
 		addRadioButtonAction(ownerNameAll);
 		addRadioButtonAction(ownerNameInclude);
 		addRadioButtonAction(ownerNameExclude);
@@ -212,6 +241,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		addRadioButtonAction(builtDateBefore);
 		addRadioButtonAction(builtDateRange);
 		
+		addComboBoxAction(typeBox);
 		
 		if (_train != null){
 			trainName.setText(_train.getName());
@@ -227,11 +257,15 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 		updateRoadNames();
+		updateLoadComboBoxes();
+		updateLoadNames();
 		updateOwnerNames();
 		updateBuilt();
 
-		// get notified if car roads gets modified
+		// get notified if car roads, loads, and owners gets modified
+		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
+		CarLoads.instance().addPropertyChangeListener(this);
 		CarOwners.instance().addPropertyChangeListener(this);
 		setVisible(true);
 	}
@@ -252,6 +286,19 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				if(_train.deleteRoadName((String) roadBox.getSelectedItem()))
 					updateRoadNames();
 				selectNextItemComboBox(roadBox);
+			}
+			if (ae.getSource() == addLoadButton){
+				if(_train.addLoadName((String) loadBox.getSelectedItem()))
+					updateLoadNames();
+				selectNextItemComboBox(loadBox);
+			}
+			if (ae.getSource() == deleteLoadButton){
+				if(_train.deleteLoadName((String) loadBox.getSelectedItem()))
+					updateLoadNames();
+				selectNextItemComboBox(loadBox);
+			}
+			if (ae.getSource() == deleteAllLoadsButton){
+				deleteAllRoads();
 			}
 			if (ae.getSource() == addOwnerButton){
 				if(_train.addOwnerName((String) ownerBox.getSelectedItem()))
@@ -281,6 +328,18 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 				_train.setRoadOption(Train.EXCLUDEROADS);
 				updateRoadNames();
 			}
+			if (ae.getSource() == loadNameAll){
+				_train.setLoadOption(Train.ALLLOADS);
+				updateLoadNames();
+			}
+			if (ae.getSource() == loadNameInclude){
+				_train.setLoadOption(Train.INCLUDELOADS);
+				updateLoadNames();
+			}
+			if (ae.getSource() == loadNameExclude){
+				_train.setLoadOption(Train.EXCLUDELOADS);
+				updateLoadNames();
+			}
 			if (ae.getSource() == ownerNameAll){
 				_train.setOwnerOption(Train.ALLOWNERS);
 				updateOwnerNames();
@@ -299,6 +358,11 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 					ae.getSource() == builtDateRange )
 				updateBuilt();	
 		}
+	}
+	
+	// Car type combo box has been changed, show loads associated with this car type
+	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		updateLoadComboBoxes();
 	}
 	
 	private void updateRoadNames(){
@@ -349,6 +413,66 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		packFrame();
 	}
 	
+	private void updateLoadNames(){
+		panelLoadNames.removeAll();
+		
+    	JPanel p = new JPanel();
+    	p.setLayout(new GridBagLayout());
+    	p.add(loadNameAll, 0);
+    	p.add(loadNameInclude, 1);
+    	p.add(loadNameExclude, 2);
+    	GridBagConstraints gc = new GridBagConstraints();
+    	gc.gridwidth = 6;
+    	panelLoadNames.add(p, gc);
+		
+		int y = 1;		// vertical position in panel
+
+		if(_train != null){
+			// set radio button
+			loadNameAll.setSelected(_train.getLoadOption().equals(Train.ALLLOADS));
+			loadNameInclude.setSelected(_train.getLoadOption().equals(Train.INCLUDEROADS));
+			loadNameExclude.setSelected(_train.getLoadOption().equals(Train.EXCLUDEROADS));
+			
+			if (!loadNameAll.isSelected()){
+		    	p = new JPanel();
+		    	p.setLayout(new FlowLayout());
+		    	p.add(typeBox);
+		    	p.add(loadBox);
+		    	p.add(addLoadButton);
+		    	p.add(deleteLoadButton);
+		    	p.add(deleteAllLoadsButton);
+				gc.gridy = y++;
+		    	panelLoadNames.add(p, gc);
+
+		    	String[]carLoads = _train.getLoadNames();
+		    	int x = 0;
+		    	for (int i =0; i<carLoads.length; i++){
+		    		JLabel load = new JLabel();
+		    		load.setText(carLoads[i]);
+		    		addItem(panelLoadNames, load, x++, y);
+		    		if (x > 6){
+		    			y++;
+		    			x = 0;
+		    		}
+		    	}
+			}
+		} else {
+			loadNameAll.setSelected(true);
+		}
+		panelLoadNames.revalidate();
+		packFrame();
+	}
+	
+	private void deleteAllRoads(){
+		if(_train != null){
+			String [] trainLoads = _train.getLoadNames();
+			for (int i=0; i<trainLoads.length; i++){
+				_train.deleteLoadName(trainLoads[i]);
+			}
+		}
+		updateLoadNames();
+	}
+	
 	private void updateOwnerNames(){
 		panelOwnerNames.removeAll();
 		
@@ -365,9 +489,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 
 		if(_train != null){
 			// set radio button
-			ownerNameAll.setSelected(_train.getOwnerOption().equals(Train.ALLROADS));
-			ownerNameInclude.setSelected(_train.getOwnerOption().equals(Train.INCLUDEROADS));
-			ownerNameExclude.setSelected(_train.getOwnerOption().equals(Train.EXCLUDEROADS));
+			ownerNameAll.setSelected(_train.getOwnerOption().equals(Train.ALLOWNERS));
+			ownerNameInclude.setSelected(_train.getOwnerOption().equals(Train.INCLUDEOWNERS));
+			ownerNameExclude.setSelected(_train.getOwnerOption().equals(Train.EXCLUDEOWNERS));
 			
 			if (!ownerNameAll.isSelected()){
 		    	p = new JPanel();
@@ -457,8 +581,17 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		saveTrainButton.setEnabled(enabled);
 	}
 	
+	private void updateTypeComboBoxes(){
+		CarTypes.instance().updateComboBox(typeBox);
+	}
+	
 	private void updateRoadComboBoxes(){
 		CarRoads.instance().updateComboBox(roadBox);
+	}
+	
+	private void updateLoadComboBoxes(){
+		String carType = (String)typeBox.getSelectedItem();
+		CarLoads.instance().updateComboBox(carType, loadBox);
 	}
 	
 	private void updateOwnerComboBoxes(){
@@ -476,7 +609,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 	
 	public void dispose() {
+		CarTypes.instance().removePropertyChangeListener(this);	
 		CarRoads.instance().removePropertyChangeListener(this);	
+		CarLoads.instance().removePropertyChangeListener(this);
 		CarOwners.instance().removePropertyChangeListener(this);	
 		if (_train != null){
 			_train.removePropertyChangeListener(this);
@@ -492,9 +627,17 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			updateRoadComboBoxes();
 			updateRoadNames();
 		}
+		if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
+			updateLoadComboBoxes();
+			updateLoadNames();
+		}
 		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
 			updateOwnerComboBoxes();
 			updateOwnerNames();
+		}
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+			updateTypeComboBoxes();
 		}
 	}
  	

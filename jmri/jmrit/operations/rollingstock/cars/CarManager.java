@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -285,6 +285,21 @@ public class CarManager extends RollingStockManager{
     	}
     	return sortList(names);
     }
+    
+    /**
+     * Replace car loads
+     * @param type type of car
+     * @param oldLoad old load name
+     * @param newLoad new load name
+     */
+	public void replaceLoad(String type, String oldLoadName, String newLoadName) {
+		List<String> cars = getByIdList();
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = getById(cars.get(i));
+			if (car.getType().equals(type) && car.getLoad().equals(oldLoadName))
+				car.setLoad(newLoadName);
+		}
+	}
 
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
