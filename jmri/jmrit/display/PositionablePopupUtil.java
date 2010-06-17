@@ -6,15 +6,11 @@ import java.util.ResourceBundle;
 
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import javax.swing.border.CompoundBorder;
 
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.awt.event.MouseEvent;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import javax.swing.*;
@@ -112,9 +108,7 @@ public class PositionablePopupUtil {
     
     public void setBackgroundMenu(JPopupMenu popup){
         JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
-        //JMenu colorMenu = new JMenu(rb.getString("FontBackgroundColor"));
         makeColorMenu(edit, BACKGROUND_COLOR);
-        //edit.add(colorMenu);
         popup.add(edit);
     
     }
@@ -181,9 +175,11 @@ public class PositionablePopupUtil {
 
     public void setBorderSize(int border){
         borderSize = border;
+        
         if(borderColor!=null){
             outlineBorder = new LineBorder(borderColor, borderSize);
             _parent.setBorder(new CompoundBorder(outlineBorder, borderMargin));
+            //setHorizontalAlignment(CENTRE);
         }
         _parent.updateSize();
     }
@@ -352,7 +348,9 @@ public class PositionablePopupUtil {
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green, type);
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue, type);
         addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta, type);
-        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
+        if (type == BACKGROUND_COLOR){
+            addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null, type);
+        }
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
