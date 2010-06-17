@@ -29,6 +29,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	public static final int NUM_FUNC_BUTTONS_INIT = 16;	//only show 16 function buttons at start
 	private DccThrottle mThrottle;
 
+	private	JPanel mainPanel;
 	private FunctionButton functionButton[];
 	private JToggleButton alt1Button = new JToggleButton();
 	private JToggleButton alt2Button = new JToggleButton();
@@ -217,11 +218,11 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		Roster.writeRosterFile();
 	}
 
-	JPanel mainPanel = new JPanel();
 	/**
 	 * Place and initialize all the buttons.
 	 */
 	private void initGUI(){
+		mainPanel = new JPanel();
 		mainPanel.removeAll();
 		setContentPane(mainPanel);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -404,7 +405,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.63 $
+	 * @version $Revision: 1.64 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
@@ -581,7 +582,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 
 	public void notifyAddressReleased(int address, boolean isLong)
 	{
-		this.setEnabled(false);
+		mainPanel.setEnabled(false);
 		if (mThrottle != null)
 			mThrottle.removePropertyChangeListener(this);
 		mThrottle = null;

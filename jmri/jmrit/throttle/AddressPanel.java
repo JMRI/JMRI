@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -40,6 +40,8 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	private DccLocoAddress consistAddress;
 	private ArrayList<AddressListener> listeners;
 
+	private JPanel mainPanel;
+	
 	private JButton releaseButton;
 	private JButton dispatchButton;
 	private JButton progButton;
@@ -247,7 +249,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * Create, initialize and place the GUI objects.
 	 */
 	private void initGUI() {
-		JPanel mainPanel = new JPanel();
+		mainPanel = new JPanel();
 		this.setContentPane(mainPanel);
 		this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -382,13 +384,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 				consistAddress = new DccLocoAddress(cA, false);
 			} else {
 				log.warn("consist number missing " + cre.getLoco1DccAddress());
-				JOptionPane.showMessageDialog(this,
+				JOptionPane.showMessageDialog(mainPanel,
 						rb.getString("ConsistNumberHasNotBeenAssigned"),
 						rb.getString("NeedsConsistNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
 			}
-			if (JOptionPane.showConfirmDialog(this,
+			if (JOptionPane.showConfirmDialog(mainPanel,
 					rb.getString("SendFunctionToLead"), rb.getString("NCEconsistThrottle"),
 					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
 				addrSelector.setAddress(consistAddress);
@@ -416,7 +418,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
     	boolean requestOK =
     		InstanceManager.throttleManagerInstance().requestThrottle(currentAddress.getNumber(), currentAddress.isLongAddress(), this);
     	if (!requestOK)
-    		JOptionPane.showMessageDialog(this, rb.getString("AddressInUse"));
+    		JOptionPane.showMessageDialog(mainPanel, rb.getString("AddressInUse"));
 	}
 
     /**

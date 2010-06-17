@@ -40,7 +40,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.86 $
+ * @version    $Revision: 1.87 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -78,6 +78,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Min interval for sending commands to the actual throttle can be configured
      * as part of the throttle config but is bounded
      */
+    private JPanel mainPanel ;
     
     private boolean trackSlider = false;
     private boolean trackSliderDefault = false;
@@ -387,14 +388,14 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     private void initGUI()
     {
-        JPanel mainPanel = new JPanel();
+        mainPanel = new JPanel();
         this.setContentPane(mainPanel);
         mainPanel.setLayout(new BorderLayout());
         this.setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
         
         speedControlPanel = new JPanel();
         speedControlPanel.setLayout(new BoxLayout(speedControlPanel,BoxLayout.X_AXIS));
-        this.getContentPane().add(speedControlPanel,BorderLayout.CENTER);
+        mainPanel.add(speedControlPanel,BorderLayout.CENTER);
         sliderPanel = new JPanel();
         sliderPanel.setLayout(new GridBagLayout());
         
@@ -545,7 +546,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         
         buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridBagLayout());
-        this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
         
         ButtonGroup directionButtons = new ButtonGroup();
         directionButtons.add(forwardButton);
@@ -657,17 +658,17 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      */
     private void changeOrientation()
     {
-        if (this.getWidth() > this.getHeight())
+        if (mainPanel.getWidth() > mainPanel.getHeight())
             {
                 speedSlider.setOrientation(JSlider.HORIZONTAL);
-                this.remove(buttonPanel);
-                this.getContentPane().add(buttonPanel, BorderLayout.EAST);
+                mainPanel.remove(buttonPanel);
+                mainPanel.add(buttonPanel, BorderLayout.EAST);
             }
         else
             {
                 speedSlider.setOrientation(JSlider.VERTICAL);
-                this.remove(buttonPanel);
-                this.getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+                mainPanel.remove(buttonPanel);
+                mainPanel.add(buttonPanel, BorderLayout.SOUTH);
             }
     }
     
@@ -745,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.86 $
+     * @version    $Revision: 1.87 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -1016,7 +1017,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
 	}
 
 	public void notifyAddressReleased(int address, boolean isLong) {
-        this.setEnabled(false);
+        mainPanel.setEnabled(false);
         if (throttle != null)
         	throttle.removePropertyChangeListener(this);
         throttle = null;		

@@ -1,9 +1,11 @@
 package jmri.jmrit.throttle;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ComponentEvent;
@@ -13,6 +15,7 @@ import java.awt.event.ContainerListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -44,19 +47,19 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
 	private static final ResourceBundle rb = ThrottleBundle.bundle();
 
     private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
-    private final Integer PANEL_LAYER = new Integer(1);
+    private final Integer PANEL_LAYER_FRAME = new Integer(1);
+    private final Integer PANEL_LAYER_PANEL = new Integer(2);
+    
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;
-    
-    private static Color TRANS_COLOR = new Color(200,200,200,75);
-    
+        
     private static int ADDRESS_PANEL_INDEX = 0;
     private static int CONTROL_PANEL_INDEX = 1;
     private static int FUNCTION_PANEL_INDEX = 2;
@@ -296,9 +299,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         addressPanel.addAddressListener(this);
         addressPanel.addAddressListener(jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesListPanel());
         
-        add(controlPanel, PANEL_LAYER);
-        add(functionPanel, PANEL_LAYER);
-        add(addressPanel, PANEL_LAYER);
+        add(controlPanel, PANEL_LAYER_FRAME);
+        add(functionPanel, PANEL_LAYER_FRAME);
+        add(addressPanel, PANEL_LAYER_FRAME);
 
         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
         	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
@@ -329,8 +332,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         // #JYNSTRUMENT# Bellow prepare drag'n drop receptacle:
         new FileDrop(this, new Listener() {
         	public void filesDropped(File[] files) {
-        		for (int i=0; i<files.length; i++)
-        			ynstrument(files[i].getPath());
+        		if (isEditMode)
+	        		for (int i=0; i<files.length; i++)
+	        			ynstrument(files[i].getPath());
         	}
         });
 
@@ -366,21 +370,21 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			}
 			public void componentRemoved(ContainerEvent e) {
 				Container c = e.getContainer();
-				while ( ! (c instanceof JInternalFrame))
+				while ( (!(c instanceof JInternalFrame)) && (! (c instanceof TranslucentJPanel)))
 					c = c.getParent();
 				c.setVisible(false);
-				remove(c);
+				remove(c);				
 				repaint();
 			}
     	});   	
     	newiFrame.pack();
-    	add(newiFrame, PANEL_LAYER);
+    	add(newiFrame, PANEL_LAYER_FRAME);
     	newiFrame.setVisible(true);
     	return newiFrame;
     }
 
     // make sure components are inside this frame bounds
-	private void checkPosition(JComponent comp)	{ 	
+	private void checkPosition(Component comp)	{ 	
 		if ( (this.getWidth()<1) || (this.getHeight()<1)) return;
 		
 		Rectangle pos = comp.getBounds();
@@ -409,15 +413,83 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	public void makeAllComponentsInBounds() {
 		Component[] cmps = getComponents();
 		for (int i=0; i<cmps.length; i++) {
-			try {
-				if (cmps[i] instanceof JInternalFrame)
-					checkPosition ( (JInternalFrame) cmps[i] );
-			} catch (Exception ex) {
-				log.debug("Got exception (no panic) "+ex);
+				checkPosition ( cmps[i] );
+		}
+	}
+
+	private HashMap <Container, JInternalFrame> contentPanes;
+	
+	private class TranslucentJPanel extends JPanel {
+		private Color TRANS_COL = new Color(175, 175, 175, 150);
+		
+		public TranslucentJPanel() {
+			super();
+			setOpaque(false);
+		}
+		
+		public void paintComponent(Graphics g) {
+			g.setColor(TRANS_COL);
+			g.fillRoundRect(0, 0, getSize().width,  getSize().height, 20, 20);
+			super.paintComponent(g);
+		}		
+	}
+	
+	private void playRendering() {
+		Component[] cmps = getComponentsInLayer(PANEL_LAYER_FRAME);
+		contentPanes = new HashMap <Container, JInternalFrame>();
+		for (int i=0; i<cmps.length; i++) {
+			if ((cmps[i] instanceof JInternalFrame) && (cmps[i].isVisible())) {
+				JInternalFrame jif = (JInternalFrame) cmps[i];
+				Dimension cpSize = jif.getContentPane().getSize();
+				Point cpLoc = jif.getContentPane().getLocationOnScreen();
+				
+				TranslucentJPanel pane = new TranslucentJPanel();
+				pane.setLayout(new BorderLayout());
+				contentPanes.put(pane, jif);					
+				pane.add(jif.getContentPane(), BorderLayout.CENTER);
+
+				jif.setContentPane(new JPanel());
+				jif.setVisible(false);
+				Point loc = new Point( cpLoc.x-this.getLocationOnScreen().x, cpLoc.y-this.getLocationOnScreen().y );
+				add(pane, PANEL_LAYER_PANEL);
+				pane.setLocation(loc);
+				pane.setSize(cpSize);
+				pane.updateUI();
 			}
 		}
 	}
 
+	private void editRendering() {
+		Component[] cmps = getComponentsInLayer(PANEL_LAYER_PANEL);
+		for (int i=0; i<cmps.length; i++) {
+			if (cmps[i] instanceof JPanel) {
+				JPanel pane = (JPanel) cmps[i];
+				JInternalFrame jif = contentPanes.get(pane);
+				jif.setContentPane( (Container)pane.getComponent(0));
+				jif.setVisible(true);
+				remove(pane);
+			}
+		}
+	}
+	
+    private boolean isEditMode = true;
+    private boolean willSwitch = false;
+    public void switchMode() {
+    	if (isVisible()) {
+	    	if (isEditMode) 
+	    		playRendering();
+	    	else
+	    		editRendering();
+	    	isEditMode = ! isEditMode;
+	    	willSwitch = false;
+	    	throttleWindow.getViewAddressPanel().setEnabled(isEditMode);
+	    	throttleWindow.getViewControlPanel().setEnabled(isEditMode);
+	    	throttleWindow.getViewFunctionPanel().setEnabled(isEditMode);
+    	}
+    	else
+    		willSwitch = ! willSwitch;
+    }
+	
     /**
 	 * Handle my own destruction.
 	 * <ol>
@@ -525,6 +597,11 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
      * @return    the XML of this object.
      */
     public Element getXml() {
+    	boolean switchAfter = false;
+    	if (! isEditMode) {
+    		switchMode();
+    		switchAfter = true;
+    	}
 		Dimension bDim = new Dimension (0,0);
 
         Element me = new Element("ThrottleFrame");
@@ -565,6 +642,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         	}
         }
         me.setContent(children);
+        if (switchAfter)
+        	switchMode();
         return me;
     }
     
@@ -599,6 +678,12 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         	return;
         }
         
+    	boolean switchAfter = false;
+    	if (! isEditMode) {
+    		switchMode();
+    		switchAfter = true;
+    	}
+    	
     	int bSize = 23;
         // Get InternalFrame border size
         if (e.getAttribute("border") != null) bSize = Integer.parseInt((e.getAttribute("border").getValue()));
@@ -627,6 +712,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         	}
         }
         setFrameTitle();
+        if (switchAfter)
+        	switchMode();
     }
     
     /**
@@ -666,6 +753,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	public void componentShown(ComponentEvent e) {
 		throttleWindow.setCurentThrottleFrame(this);
 		throttleWindow.updateGUI();
+		if (willSwitch)
+			switchMode();
 	}
 	
 	public void saveThrottle() {
@@ -755,7 +844,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	{
 		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
 		{
-			jcomp.setBackground(TRANS_COLOR);//new Color(0,0,0,0));
+			jcomp.setBackground(new Color(0,0,0,0));
 			jcomp.setOpaque(false);
 		}
 		setTransparent ( jcomp.getComponents() );

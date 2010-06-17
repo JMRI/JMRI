@@ -56,6 +56,7 @@ public class ThrottleWindow extends JmriJFrame {
     private JButton jbThrottleList = null;
     private JButton jbNew = null;
     private JButton jbClose = null;
+    private JButton jbMode = null;
     private JToolBar throttleToolBar;
     
     private String titleText = "";
@@ -202,6 +203,19 @@ public class ThrottleWindow extends JmriJFrame {
 			}
 		});
     	throttleToolBar.add(jbClose);
+
+    	jbMode = new JButton();
+//    	jbMode.setText(throttleBundle.getString("ThrottleToolBarEdit"));
+    	jbMode.setIcon(new NamedIcon("resources/icons/throttles/Edit24.gif","resources/icons/throttles/Edit24.gif"));
+    	jbMode.setToolTipText(throttleBundle.getString("ThrottleToolBarEditToolTip"));
+    	jbMode.setVerticalTextPosition(JButton.BOTTOM);
+    	jbMode.setHorizontalTextPosition(JButton.CENTER);
+    	jbMode.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				switchMode();
+			}
+		});
+    	throttleToolBar.add(jbMode);
     	
     	throttleToolBar.addSeparator();
     	
@@ -221,6 +235,8 @@ public class ThrottleWindow extends JmriJFrame {
     	jbThrottleList.addActionListener(new ThrottlesListAction() );
     	throttleToolBar.add(jbThrottleList);
 
+
+    	
     	new FileDrop(throttleToolBar, new Listener() {
     		public void filesDropped(File[] files) {
         		for (int i=0; i<files.length; i++)
@@ -231,6 +247,15 @@ public class ThrottleWindow extends JmriJFrame {
     	add(throttleToolBar, BorderLayout.PAGE_START);
     }
 
+    private boolean isEditMode = true;
+    private void switchMode() {
+    	isEditMode = ! isEditMode;
+        Component[] comps = throttlesPanel.getComponents() ;
+        for (int i=0; i<comps.length; i++)
+        	if (comps[i] instanceof ThrottleFrame)
+        		((ThrottleFrame)comps[i]).switchMode();
+    }
+    
     public void ynstrument(String path) {
     	Jynstrument it = JynstrumentFactory.createInstrument(path, this);
     	if (it == null) {
@@ -466,6 +491,8 @@ public class ThrottleWindow extends JmriJFrame {
 		tp.setTitle(txt);
         throttlesPanel.add(tp,txt);
         throttlesLayout.show(throttlesPanel, txt);
+        if (! isEditMode)
+        	tp.switchMode();
 		updateGUI();
 	}
 	
