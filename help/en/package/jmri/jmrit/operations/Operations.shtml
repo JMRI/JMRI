@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.66 2010-06-12 21:19:22 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.67 2010-06-17 02:46:27 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1093,6 +1093,14 @@ service.</P>
 
 <P>Press the "Save Train" button to update the train build options
 and close the window when your done.</P>
+
+<H3>Train Car Loads</H3>
+
+You can decide which car loads the train will service.  There are two pull
+down menus, the first one is the type of car, and the second the type of load
+serviced by the car type selected.  Use the "Add Load" button to build a list
+of loads that the train will either service or exclude.  The "Delete All"
+button will remove all loads from the list.
 
 <H3>Train Owners</H3>
 
