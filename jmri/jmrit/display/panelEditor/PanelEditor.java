@@ -260,6 +260,7 @@ public class PanelEditor extends Editor implements ItemListener {
             editableBox.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
                         setAllEditable(editableBox.isSelected());
+                        hiddenCheckBoxListener();
                     }
                 });
             editableBox.setSelected(isEditable());
@@ -281,11 +282,7 @@ public class PanelEditor extends Editor implements ItemListener {
             controllingBox.setSelected(allControlling());
             // hidden item
             contentPane.add(hiddenBox);
-            hiddenBox.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent event) {
-                        setShowHidden(hiddenBox.isSelected());
-                    }
-                });                    
+            hiddenCheckBoxListener();
             hiddenBox.setSelected(showHidden());
 
             contentPane.add(showCoordinatesBox);
@@ -337,8 +334,7 @@ public class PanelEditor extends Editor implements ItemListener {
         // when this window closes, set contents of target uneditable
         addWindowListener(new java.awt.event.WindowAdapter() {
             PanelEditor panelEd;
-				public void windowClosing(java.awt.event.WindowEvent e) {
-                    setAllPositionable(false);
+                public void windowClosing(java.awt.event.WindowEvent e) {
                     jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(panelEd);
                 }
                 java.awt.event.WindowAdapter init(PanelEditor pe) {
@@ -348,7 +344,6 @@ public class PanelEditor extends Editor implements ItemListener {
             }.init(this));
         // and don't destroy the window
         setDefaultCloseOperation(JDialog.HIDE_ON_CLOSE);
-
         // move this editor panel off the panel's position
         getTargetFrame().setLocationRelativeTo(this);
         getTargetFrame().pack();
@@ -356,6 +351,27 @@ public class PanelEditor extends Editor implements ItemListener {
         if (_debug) log.debug("PanelEditor ctor done.");
     }  // end ctor
 
+    /**
+    * Initializes the hiddencheckbox and its listener.
+    * This has been taken out of the init, as checkbox is
+    * enable/disabled by the editableBox.
+    */
+    private void hiddenCheckBoxListener(){
+        setShowHidden(hiddenBox.isSelected());
+        if (editableBox.isSelected()){
+            hiddenBox.setEnabled(false);
+            hiddenBox.setSelected(true);
+        } else {
+            hiddenBox.setEnabled(true);
+            hiddenBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    setShowHidden(hiddenBox.isSelected());
+                }
+            });
+        }
+    
+    }
+    
     /**
      * After construction, initialize all the widgets to their saved config settings.
      */
@@ -542,7 +558,10 @@ public class PanelEditor extends Editor implements ItemListener {
      * Called from TargetPanel's paint method for additional drawing by editor view
      */
     protected void paintTargetPanel(Graphics g) {
+        /*Graphics2D g2 = (Graphics2D)g;
+        drawPositionableLabelBorder(g2);*/
     }
+
     /**
      * Set an object's location when it is created.
      */
