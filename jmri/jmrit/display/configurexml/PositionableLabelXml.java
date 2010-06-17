@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -86,18 +86,17 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (util.getFixedHeight()!=0)
             element.setAttribute("fixedHeight", ""+util.getFixedHeight());
 
-        if(util.getJustification()!=0x00){
-            String just;
-            switch (util.getJustification()){
-                case 0x02 : just="right";
-                            break;
-                case 0x04 : just ="centre";
-                            break;
-                default :   just="left";
-                            break;
-                }
-            element.setAttribute("justification", just);
-        }
+        String just;
+        switch (util.getJustification()){
+            case 0x02 : just="right";
+                        break;
+            case 0x04 : just ="centre";
+                        break;
+            default :   just="left";
+                        break;
+            }
+        element.setAttribute("justification", just);
+        
         //return element;
     }
     /**
