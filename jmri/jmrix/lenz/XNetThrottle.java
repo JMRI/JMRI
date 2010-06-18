@@ -5,14 +5,14 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
 
-import java.util.LinkedList;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.36 $
+ * @version    $Revision: 2.37 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -42,10 +42,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     public XNetThrottle()
     {
         super();
-        XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
-                                                         XNetInterface.CS_INFO |
-                                                         XNetInterface.THROTTLE, this);
-        requestList = new LinkedList<RequestMessage>();
+        requestList = new LinkedBlockingQueue<RequestMessage>();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
     
@@ -65,10 +62,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
             f5Momentary = f6Momentary = f7Momentary = f8Momentary = f9Momentary =
             f10Momentary = f11Momentary = f12Momentary = false;
         
-        XNetTrafficController.instance().addXNetListener(XNetInterface.COMMINFO |
-                                                         XNetInterface.CS_INFO |
-                                                         XNetInterface.THROTTLE, this);
-        requestList = new LinkedList<RequestMessage>();
+        requestList = new LinkedBlockingQueue<RequestMessage>();
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
@@ -347,9 +341,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     public void dispose()
     {
-        XNetTrafficController.instance().removeXNetListener(XNetInterface.COMMINFO |
-                                                            XNetInterface.CS_INFO |
-                                                            XNetInterface.THROTTLE, this);
 	stopStatusTimer();
         super.dispose();
     }
@@ -523,11 +514,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     setIsAvailable(true);
                     requestState=THROTTLEIDLE;
                     sendQueuedMessage();
-                } else if(l.isCommErrorMessage()) {
+                } else if(l.isRetransmittableErrorMsg()) {
                     /* this is a communications error */
                     log.error("Communications error occured - message recieved was: " + l);
-                    requestState=THROTTLEIDLE;
-                    sendQueuedMessage();
                 } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                           l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                     /* The Command Station does not support this command */
@@ -676,18 +665,21 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                     // for functions F13-F28
                     sendFunctionHighMomentaryStatusRequest();
                 }
-            } else if(l.isCommErrorMessage()) {
+            } else if(l.isRetransmittableErrorMsg()) {
                 /* this is a communications error */
                 log.error("Communications error occured - message received was: " + l);
-                requestState=THROTTLEIDLE;
-                sendQueuedMessage();
             } else if(l.getElement(0)==XNetConstants.CS_INFO &&
                       l.getElement(1)==XNetConstants.CS_NOT_SUPPORTED) {
                 /* The Command Station does not support this command */
                 log.error("Unsupported Command Sent to command station");
                 requestState=THROTTLEIDLE;
                 sendQueuedMessage();
-	    }
+	    } else {
+               /* this is an unknown error */
+               requestState=THROTTLEIDLE;                        
+               sendQueuedMessage();
+               log.warn("Received unhandled response: " + l);
+            }
 	}
 	//requestState=THROTTLEIDLE;
         //sendQueuedMessage();
@@ -1475,6 +1467,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Set up the status timer, and start it.
      */
     protected void startStatusTimer() {
+        if(log.isDebugEnabled()) log.debug("Status Timer Started");
         if(statusTask!=null) {
             statusTask.cancel();
         }
@@ -1492,6 +1485,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * Stop the Status Timer 
      */
     protected void stopStatusTimer() {
+        if(log.isDebugEnabled()) log.debug("Status Timer Stopped");
         if(statusTask!=null) 
               statusTask.cancel();
     }
@@ -1502,7 +1496,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 
 
     //A queue to hold outstanding messages
-    protected LinkedList<RequestMessage> requestList = null;
+    protected LinkedBlockingQueue<RequestMessage> requestList = null;
 
     //function to send message from queue.
     synchronized protected void sendQueuedMessage(){
@@ -1511,13 +1505,16 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         // check to see if the queue has a message in it, and if it does,
         // remove the first message
         if(requestList.size()!=0){
-           if(log.isDebugEnabled()) log.debug("sending message to message queue");
+           if(log.isDebugEnabled()) log.debug("sending message to traffic controller");
            // if the queue is not empty, remove the first message
            // from the queue, send the message, and set the state machine 
            // to the requried state.
-           msg=requestList.removeFirst();
-           XNetTrafficController.instance().sendXNetMessage(msg.getMsg(),this);
+           try{
+             msg=requestList.take();
+           } catch (java.lang.InterruptedException ie) {
+           }
            requestState=msg.getState();
+           XNetTrafficController.instance().sendXNetMessage(msg.getMsg(),this);
         } else {
           if(log.isDebugEnabled()) log.debug("message queue empty");
           // if the queue is empty, set the state to idle.
@@ -1530,7 +1527,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         if(log.isDebugEnabled()) log.debug("adding message to message queue");
         // put the message in the queue
         RequestMessage msg=new RequestMessage(m,s);
-        requestList.addLast(msg);
+        try {
+          requestList.put(msg);
+        } catch(java.lang.InterruptedException ie) {
+        }
         // if the state is idle, trigger the message send
         if(requestState==THROTTLEIDLE) sendQueuedMessage();
     }

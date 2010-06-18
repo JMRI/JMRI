@@ -10,13 +10,13 @@ import java.util.HashMap;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.9 $
+ * @version    $Revision: 2.10 $
  */
 
-public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager
+public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener
 {
 
-    private HashMap<LocoAddress,XNetThrottle> throttles= new HashMap<LocoAddress,XNetThrottle>(5);
+    protected HashMap<LocoAddress,XNetThrottle> throttles= new HashMap<LocoAddress,XNetThrottle>(5);
 
     /**
      * Constructor.
@@ -24,6 +24,9 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     public XNetThrottleManager()
     {
        super();
+
+       // Register to listen for throttle messages
+       XNetTrafficController.instance().addXNetListener(XNetInterface.THROTTLE, this);
     }
 
     /**
@@ -91,6 +94,32 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
 		jmri.DccThrottle.SpeedStepMode27 | 
 		jmri.DccThrottle.SpeedStepMode14 );
     }
+
+    // Handle incoming messages for throttles.
+    public void message(XNetReply r) {
+        // We want to check to see if a throttle has taken over an address
+        if (r.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE) {
+           if(r.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE) {
+               // This is a take over message.  If we know about this throttle,
+               // send the message on.
+               LocoAddress address=new jmri.DccLocoAddress(r.getThrottleMsgAddr(),
+                                                           isLongAddress(r.getThrottleMsgAddr()));
+               if(throttles.containsKey(address))
+                  throttles.get(address).message(r);
+           }
+        }
+       
+    }
+
+    // listen for the messages to the LI100/LI101
+    public void message(XNetMessage l) {
+    }
+
+    // Handle a timeout notification
+    public void notifyTimeout(XNetMessage msg)
+    {
+    }
+     
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetThrottleManager.class.getName());
 

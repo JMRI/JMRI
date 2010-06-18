@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -431,6 +431,15 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     }
 
     /**
+     * Does this message indicate the locomotive has been taken over by
+     * another device?
+     */
+    public boolean isThrottleTakenOverMessage(){
+       return(this.getElement(0)==XNetConstants.LOCO_INFO_RESPONSE &&
+              this.getElement(1)==XNetConstants.LOCO_NOT_AVAILABLE);
+    }
+
+    /**
      * Is this a consist message?
      */
     public boolean isConsistMessage() {
@@ -499,10 +508,22 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * Return True if the message is an error message indicating 
      * we should retransmit.
      */
+    @Override
     public boolean isRetransmittableErrorMsg(){
           return(this.isCSBusyMessage() || 
                  this.isCommErrorMessage() || 
                  this.isCSTransferError());
+    }
+
+    /*
+     * Return true of the message is an unsolicited message
+     */
+    @Override
+    public boolean isUnsolicited() {
+       // The message may be set as an unsolicited message else where
+       // or it may be classified as unsolicited based on the type of 
+       // message received.
+       return(super.isUnsolicited() || this.isThrottleTakenOverMessage());
     }
 
     // initialize logging
