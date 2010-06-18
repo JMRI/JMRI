@@ -147,8 +147,12 @@ public class FunctionButton extends JToggleButton implements ActionListener
     public void setIsLockable(boolean isLockable)
     {
         this.isLockable = isLockable;
+        if(isDirty()) {
+            // Changes in this parameter should only be sent to the 
+            // listeners if the dirty bit is set.
 		for (int i=0; i<listeners.size();i++)
             listeners.get(i).notifyFunctionLockableChanged(identity, isLockable);
+        }
     }
 
     /**
