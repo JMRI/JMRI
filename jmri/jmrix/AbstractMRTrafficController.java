@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.83 $
+ * @version         $Revision: 1.84 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -223,7 +223,7 @@ abstract public class AbstractMRTrafficController {
                 xmtRunnable.notify();
             }
         }
-        log.debug("just notified transmit thread");
+        log.debug("just notified transmit thread with message " +m.toString());
     }
     
     /**
@@ -289,8 +289,16 @@ abstract public class AbstractMRTrafficController {
                 if (m.replyExpected()) {
                     // wait for a reply, or eventually timeout
                     try {
-                        synchronized(xmtRunnable) {  
-                            xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
+                        synchronized(xmtRunnable) { 
+                            // Do not wait if the current
+                            // state has changed since we
+                            // last set it.
+                            if(mCurrentState==WAITMSGREPLYSTATE) 
+                               xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
+                            else 
+                               if(log.isDebugEnabled()) 
+                                  log.debug("Skipping Wait for normal message.  mCurrentState: "+
+                                             mCurrentState);
                         }
                     } catch (InterruptedException e) { 
                         Thread.currentThread().interrupt(); // retain if needed later
@@ -379,7 +387,15 @@ abstract public class AbstractMRTrafficController {
                 		// wait for reply
                 		try {
                 			synchronized(xmtRunnable) {
-                				xmtRunnable.wait(msg.getTimeout());
+                                               // Do not wait if the current
+                                               // state has changed since we
+                                               // last set it.
+                                               if(mCurrentState==WAITMSGREPLYSTATE) 
+                			    	  xmtRunnable.wait(msg.getTimeout());
+                                                else 
+                                                   if(log.isDebugEnabled()) 
+                                                      log.debug("Skipping Wait for poll message.  mCurrentState: "+
+                                                       mCurrentState);
                 			}
                 		} catch (InterruptedException e) { 
                 			Thread.currentThread().interrupt(); // retain if needed later
@@ -866,7 +882,8 @@ abstract public class AbstractMRTrafficController {
                        // when unexpected replies are received.  Notify
                        // it to clear the block without a timeout.
                        // (do not change the current state)
-                       xmtRunnable.notify();
+                       //if(mCurrentState!=IDLESTATE)
+                          xmtRunnable.notify();
                    }  
                 } else {
                     log.error("reply complete in unexpected state: "
@@ -876,6 +893,9 @@ abstract public class AbstractMRTrafficController {
             }
             // Unsolicited message
         } else {
+            if(log.isDebugEnabled()) log.debug("Unsolicited Message Received " 
+                                               + msg.toString());
+
             replyInDispatch = false;
         }
     }
@@ -889,18 +909,16 @@ abstract public class AbstractMRTrafficController {
             modeMsg.setRetries(100); // set the number of retries  
             // high, just in case the interface
             // is busy when we try to send
-            synchronized(selfLock) {
-                forwardToPort(modeMsg, null);
-                // wait for reply
-                try {
-                    if (xmtRunnable!=null)
-                        synchronized(xmtRunnable) {
-                            xmtRunnable.wait(modeMsg.getTimeout());
-                        }
-                } catch (InterruptedException e) { 
-                    Thread.currentThread().interrupt(); // retain if needed later
-                    log.error("transmit interrupted"); 
-                }
+            forwardToPort(modeMsg, null);
+            // wait for reply
+            try {
+                 if (xmtRunnable!=null)
+                     synchronized(xmtRunnable) {
+                         xmtRunnable.wait(modeMsg.getTimeout());
+                     }
+            } catch (InterruptedException e) { 
+                 Thread.currentThread().interrupt(); // retain if needed later
+                 log.error("transmit interrupted"); 
             }
         }
     }
