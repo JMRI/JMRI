@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -51,11 +51,11 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         }
         mMast = sh.getBean();
         if (mMast != null) {
+            getIcons();
             displayState(mastState());
             mMast.addPropertyChangeListener(this);
             namedMast = sh;
             pName=sh.getName();
-            getIcons();
         }
     }
     
@@ -70,9 +70,9 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         if (mMast == null) log.warn("did not find a SignalMast named "+pName);
         else {
             namedMast = new NamedBeanHandle<SignalMast>(pName, mMast);
+            getIcons();
             displayState(mastState());
             mMast.addPropertyChangeListener(this);
-            getIcons();
         }
     }
 
@@ -217,7 +217,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         displayState(mastState());
     }
     
-    double _scale = 1.0;
     public void setScale(double s) {
         Set<String> set = iconCache.keySet();
         Iterator<String> itr = set.iterator();
@@ -226,7 +225,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
           NamedIcon n = iconCache.get(state);
           n.scale(s, this);
         }
-        _scale *= s;
         displayState(mastState());
     }
 
@@ -234,13 +232,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         return _rotate;
     }
     
-    public double getScale(){
-        return _scale;
-    }
-    
     private java.util.Hashtable<String, NamedIcon> iconCache;
-
-    //private static boolean warned = false;
 
     public void dispose() {
         mMast.removePropertyChangeListener(this);
