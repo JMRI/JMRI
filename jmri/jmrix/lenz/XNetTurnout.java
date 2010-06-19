@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.26 $
+ * @version			$Revision: 2.27 $
  */
 
 package jmri.jmrix.lenz;
@@ -257,13 +257,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     synchronized public void message(XNetReply l) {
 	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
         if(InternalState==OFFSENT) {
-	  if(l.isOkMessage()) {
+	  if(l.isOkMessage() && !l.isUnsolicited()) {
 	    /* the command was successfully recieved */
             synchronized(this) {
 	       newKnownState(getCommandedState());
 	       InternalState=IDLE;
             }
 	    return;
+          } else if(l.isRetransmittableErrorMsg()) {
+            return; // don't do anything, the Traffic 
+                    // Controller is handling retransmitting
+                    // this one.
 	  } else {
             /* Default Behavior: If anything other than an OK message
                is received, Send another OFF message. */
@@ -521,7 +525,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                         newKnownState(getCommandedState());
                         InternalState = OFFSENT;
                         return;
-                   };
+                   }
                //} catch(java.lang.InterruptedException ie) {
                //    log.debug("wait interrupted");
                //}
