@@ -21,7 +21,7 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.9 $
+ * @version 		$Revision: 2.10 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -41,11 +41,13 @@ public class XNetPacketizer extends XNetTrafficController {
 	 *
 	 * Checksum is computed and overwritten here, then the message
 	 * is converted to a byte array and queue for transmission
-     * @param m Message to send; will be updated with CRC
+         * @param m Message to send; will be updated with CRC
 	 */
 	public void sendXNetMessage(XNetMessage m, XNetListener reply) {
-		if(m.length()!=0)
+		if(m.length()!=0){
 			sendMessage(m,reply);
+                        java.lang.Thread.currentThread().yield();
+                }
 	}
 
 
@@ -55,6 +57,7 @@ public class XNetPacketizer extends XNetTrafficController {
      * @param msg  The output byte stream
      * @param offset the first byte not yet used
      */
+    @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
 	if(m.getNumDataElements()==0) return;
 	((XNetMessage)m).setParity();
@@ -67,6 +70,7 @@ public class XNetPacketizer extends XNetTrafficController {
      * returns true if ready, false otherwise
      * May throw an Exception.   
      */
+    @Override
     public boolean portReadyToSend(jmri.jmrix.AbstractPortController p) throws Exception {
         if (((XNetPortController)p).okToSend()) {
          ((XNetPortController)p).setOutputBufferEmpty(false);
