@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.15 $
+ *	@version $Revision: 1.16 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -130,10 +130,6 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
         out.println("VN"+getWiTVersion()+newLine);
         out.println(sendRoster());
         addControllers();
-        if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()){
-            pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
-            out.println("*"+pulseInterval+newLine); //  Turn on heartbeat, if used
-        }
         
     }
 
@@ -218,6 +214,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                         case 'N':{  //  Prefix for deviceName
                             deviceName = inPackage.substring(1);
                             log.info("Received Name: "+deviceName);
+                            
+                            if (WiThrottleManager.withrottlePreferencesInstance().isUseEStop()){
+                                pulseInterval = WiThrottleManager.withrottlePreferencesInstance().getEStopDelay();
+                                out.println("*"+pulseInterval+newLine); //  Turn on heartbeat, if used
+                            }
                             break;
                         }
 
