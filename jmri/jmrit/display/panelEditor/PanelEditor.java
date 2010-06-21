@@ -647,6 +647,25 @@ public class PanelEditor extends Editor implements ItemListener {
         setToolTip(tip);
     }
 
+    public void mouseReleased(MouseEvent event) {
+        super.mouseReleased(event);
+
+        
+        // if not sending MouseClicked, do it here
+        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
+            mouseClicked(event);
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        super.mouseClicked(event);
+
+        if (allPositionable() && _selectRect!=null) {
+            if (_selectionGroup==null && _dragging) {
+                makeSelectionGroup();
+            }
+        }
+    }
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());
 }

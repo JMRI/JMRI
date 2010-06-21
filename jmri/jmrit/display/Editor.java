@@ -128,9 +128,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     BasicStroke DASHED_LINE = new BasicStroke(1f, BasicStroke.CAP_BUTT, 
                                     BasicStroke.JOIN_BEVEL,
                                     10f, new float[] {10f, 10f}, 0f);
-    Rectangle _selectRect = null;
-    private boolean _dragging = false;
-    private ArrayList <Positionable> _selectionGroup = null;  // items gathered inside fence
+    protected Rectangle _selectRect = null;
+    protected boolean _dragging = false;
+    protected ArrayList <Positionable> _selectionGroup = null;  // items gathered inside fence
     private Positionable _currentSelection;
     private ToolTip _defaultToolTip;
     private ToolTip _tooltip = null;
@@ -1887,7 +1887,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /*
     * Gather all items inside _selectRect
     */
-    private void makeSelectionGroup() {
+    protected void makeSelectionGroup() {
         _selectionGroup = new ArrayList <Positionable>();
         Rectangle test = new Rectangle();
         List <Positionable> list = getContents();
@@ -1904,7 +1904,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) {
             log.debug("makeSelectionGroup:"+_selectionGroup.size()+" selected.");
         }
-        if (_selectionGroup.size() < 2) {
+        if (_selectionGroup.size() < 1) {
             _selectRect = null;
             _selectionGroup = null;
         }
@@ -2070,17 +2070,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 if (_selectionGroup==null && _dragging) {
                     makeSelectionGroup();
                 }
-                if (_selectionGroup==null) {
-                    _selectRect = null;
-                }
             }
         }
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
-        
-        // if not sending MouseClicked, do it here
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
-            mouseClicked(event);
     }
 
     public void mouseDragged(MouseEvent event) {
@@ -2163,14 +2156,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             if (_currentSelection != null && !_dragging) {
                 _currentSelection.doMouseClicked(event);
-            }
-            if (allPositionable() && _selectRect!=null) {
-                if (_selectionGroup==null && _dragging) {
-                    makeSelectionGroup();
-                }
-                if (_selectionGroup==null) {
-                    _selectRect = null;
-                }
             }
         }
         _targetPanel.repaint(); // needed for ToolTip
