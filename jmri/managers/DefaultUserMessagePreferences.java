@@ -22,12 +22,14 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
 
     protected static DefaultUserMessagePreferences _instance = null;
+    
+    private static boolean allowSave = true;
 
     public DefaultUserMessagePreferences(){
 
@@ -41,7 +43,11 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 public boolean doAction(){
                     if (getChangeMade()){
                         log.info("Storing preferences as part of shutdown");
-                        jmri.InstanceManager.configureManagerInstance().storePrefs();
+                        if (allowSave){
+                            jmri.InstanceManager.configureManagerInstance().storePrefs();
+                        } else {
+                            log.info("Not allowing save of changes as the user has accessed the preferences and not performed a save");
+                        }
                     }
                     return true;
                 }
@@ -54,7 +60,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             }
         }
     }
-
+    
+    public void allowSave() { allowSave = true; }
+    public void disallowSave() { allowSave = false; }
+    
     public Dimension getScreen() { 
         return Toolkit.getDefaultToolkit().getScreenSize();
     }

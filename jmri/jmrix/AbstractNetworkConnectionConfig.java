@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -50,6 +50,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void actionPerformed(ActionEvent e) {
                 adapter.setHostName(hostNameField.getText());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
+                pref.disallowSave();
             }
         });
         hostNameField.addKeyListener( new KeyListener() {
@@ -58,12 +59,14 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyReleased(KeyEvent keyEvent) {
                adapter.setHostName(hostNameField.getText());
                p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
+               pref.disallowSave();
             }
             public void keyTyped(KeyEvent keyEvent) {
             }
         });
         portField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                pref.disallowSave();
                 try{
                     adapter.setPort(Integer.parseInt(portField.getText()));
                 } catch (java.lang.NumberFormatException ex) {
@@ -76,6 +79,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             public void keyPressed(KeyEvent keyEvent) {
             }
             public void keyReleased(KeyEvent keyEvent) {
+                pref.disallowSave();
                try{
                     adapter.setPort(Integer.parseInt(portField.getText()));
                 } catch (java.lang.NumberFormatException ex) {
@@ -87,11 +91,13 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         });
         opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                pref.disallowSave();
                 adapter.configureOption1((String)opt1Box.getSelectedItem());
             }
         });
         opt2Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                pref.disallowSave();
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
             }
         });
@@ -103,6 +109,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
+                    pref.disallowSave();
                 }
             });
             systemPrefixField.addFocusListener( new FocusListener() {
@@ -111,6 +118,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
+                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -120,6 +128,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
+                    pref.disallowSave();
                 }
             });
             connectionNameField.addFocusListener( new FocusListener() {
@@ -128,6 +137,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
+                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -325,6 +335,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
+
+    /* For a future release
+    public boolean getDisabled() { return adapter.getDisabled(); }
+    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }*/
     
     public String getConnectionName() { 
         if(adapter.getSystemConnectionMemo()!=null)

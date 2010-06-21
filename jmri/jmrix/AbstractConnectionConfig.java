@@ -2,25 +2,20 @@
 
 package jmri.jmrix;
 
-/*import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.Color;
-import java.util.Vector;*/
-
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import jmri.UserPreferencesManager;
+import jmri.InstanceManager;
+
 /**
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -30,6 +25,8 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
      */
     public AbstractConnectionConfig() {
     }
+    
+    protected final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
 
     protected boolean init = false;
 
@@ -80,6 +77,10 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
     abstract public String getConnectionName();
 
+    /* For a future release
+    abstract public boolean getDisabled();
+    abstract public void setDisabled(boolean disable);
+    */
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
 
 }

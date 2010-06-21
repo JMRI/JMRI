@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 
 //
@@ -35,7 +35,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public AbstractSerialConnectionConfig(jmri.jmrix.SerialPortAdapter p){
         adapter = p;
     }
-
+    
     public jmri.jmrix.SerialPortAdapter getAdapter() { return adapter; }
     
     /**
@@ -53,22 +53,26 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             public void actionPerformed(ActionEvent e) {
                 adapter.setPort((String)portBox.getSelectedItem());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
+                pref.disallowSave();
             }
         });
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".baud", (String) portBox.getSelectedItem());
+                pref.disallowSave();
             }
         });
         opt1Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureOption1((String)opt1Box.getSelectedItem());
+                pref.disallowSave();
             }
         });
         opt2Box.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureOption2((String)opt2Box.getSelectedItem());
+                pref.disallowSave();
             }
         });
         if(adapter.getSystemConnectionMemo()!=null){
@@ -78,6 +82,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
+                    pref.disallowSave();
                 }
             });
             systemPrefixField.addFocusListener( new FocusListener() {
@@ -86,6 +91,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
+                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -95,6 +101,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
+                    pref.disallowSave();
                 }
             });
             connectionNameField.addFocusListener( new FocusListener() {
@@ -103,6 +110,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
+                    pref.disallowSave();
                 }
                 public void focusGained(FocusEvent e){ }
             });
@@ -346,6 +354,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
+    
+    /*  For a future release
+    public boolean getDisabled() { return adapter.getDisabled(); }
+    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }*/
     
     public String getConnectionName() { 
         if((adapter!=null) && (adapter.getSystemConnectionMemo()!=null))

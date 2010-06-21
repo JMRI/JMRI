@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.72 $
+ * @version	$Revision: 1.73 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -134,6 +134,7 @@ public class JmrixConfigPane extends JPanel {
         }
         manuBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
+                p.disallowSave();
                 updateComboConnection();
             }
         });
@@ -185,6 +186,7 @@ public class JmrixConfigPane extends JPanel {
         }
         modeBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
+                p.disallowSave();
                 if ((String) modeBox.getSelectedItem()!=null){
                     if (!((String) modeBox.getSelectedItem()).equals(NONE_SELECTED))
                         p.addComboBoxLastSelection((String) manuBox.getSelectedItem(), (String) modeBox.getSelectedItem());
@@ -304,6 +306,19 @@ public class JmrixConfigPane extends JPanel {
         if (current!=0) return classConnectionList[current];
         return null;
     }
+    
+    /* For a future release
+    public boolean getDisabled(){
+        int current = modeBox.getSelectedIndex();
+        if (current==0) return false;
+        return classConnectionList[current].getDisabled();
+    }
+    
+    public void setDisabled(boolean disabled){
+        int current = modeBox.getSelectedIndex();
+        if (current==0) return;
+        classConnectionList[current].setDisabled(disabled);
+    }*/
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
