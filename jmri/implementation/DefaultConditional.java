@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -529,7 +529,7 @@ public class DefaultConditional extends AbstractNamedBean
                 String devName = action.getDeviceName();
                 if (devName!=null && devName.length()>0 && devName.charAt(0)== '@') {
                     String memName = devName.substring(1);
-                    Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
+                    Memory m = getMemory(memName);
                     if (m == null) {
                         log.error("invalid memory name in action - "+devName);
                         continue;
@@ -821,7 +821,7 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_SET_MEMORY:
-						Memory m = InstanceManager.memoryManagerInstance().getMemory(devName);
+						Memory m = getMemory(devName);
 						if (m == null) {
 							log.error("invalid memory name in action - "+action.getDeviceName());
 						}
@@ -831,12 +831,12 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						break;
 					case Conditional.ACTION_COPY_MEMORY:
-						Memory mFrom = InstanceManager.memoryManagerInstance().getMemory(devName);
+						Memory mFrom = getMemory(devName);
 						if (mFrom == null) {
 							log.error("invalid memory name in action - "+action.getDeviceName());
 						}
 						else {
-							Memory mTo = InstanceManager.memoryManagerInstance().getMemory(action.getActionString());
+							Memory mTo = getMemory(action.getActionString());
 							if (mTo == null) {
 								log.error("invalid memory name in action - "+action.getActionString());
 							}
@@ -1094,7 +1094,7 @@ public class DefaultConditional extends AbstractNamedBean
         String devName = action.getDeviceName();
         if (devName.charAt(0)== '@') {
             String memName = devName.substring(1);
-            Memory m = InstanceManager.memoryManagerInstance().getMemory(memName);
+            Memory m = getMemory(memName);
             if (m == null) {
                 log.error("invalid memory name in action - "+devName);
                 return null;
@@ -1102,6 +1102,17 @@ public class DefaultConditional extends AbstractNamedBean
             devName = (String)m.getValue();
         }
         return devName;
+    }
+
+    /** for backward compatibility with config files having system names in lower case
+    */
+    private Memory getMemory(String name) {
+        Memory m = InstanceManager.memoryManagerInstance().getMemory(name);
+        if (m==null) {
+            String sName = name.toUpperCase().trim();
+            m = InstanceManager.memoryManagerInstance().getMemory(sName);
+        }
+        return m;
     }
 
 	/**
@@ -1113,7 +1124,7 @@ public class DefaultConditional extends AbstractNamedBean
         try {
             time = Integer.valueOf(sNumber).intValue();
         } catch (NumberFormatException e) {
-            Memory mem = InstanceManager.memoryManagerInstance().getMemory(sNumber);
+            Memory mem = getMemory(sNumber);
             if (mem == null) {
                 log.error("invalid memory name for action time variable - "+sNumber+
                           ", for Action \""+action.getTypeString()+
