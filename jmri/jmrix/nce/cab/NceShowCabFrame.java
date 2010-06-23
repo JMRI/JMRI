@@ -118,8 +118,8 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit6 - 0 = Do not use
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
- * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @author Dan Boudreau Copyright (C) 2009, 2010
+ * @version $Revision: 1.7 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -283,9 +283,9 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	if (flags1 == FLAGS1_PROCAB)
         		type.setText("ProCab");
         	else if (flags1 == FLAGS1_CAB04) 
-        		type.setText("Cab04");
+        		type.setText("Cab04/06");	// Cab04 or Cab06
            	else if (flags1 == FLAGS1_USB)
-        		type.setText("USB");
+        		type.setText("USB/M-P");	// USB or Mini-Panel
             else if (flags1 == FLAGS1_AIU)
         		type.setText("AIU");
             else {
