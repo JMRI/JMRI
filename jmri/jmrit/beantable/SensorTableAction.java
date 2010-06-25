@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -75,6 +75,7 @@ public class SensorTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
+    String userNameError = this.getClass().getName()+".DuplicateUserName";
     jmri.UserPreferencesManager p;
       
     void addPressed(ActionEvent e) {
@@ -120,8 +121,8 @@ public class SensorTableAction extends AbstractTableAction {
     }
     
     void okPressed(ActionEvent e) {
-        String user = userName.getText();
-        if (user.equals("")) user=null;
+        /*String user = userName.getText();
+        if (user.equals("")) user=null;*/
 
         int numberOfSensors = 1;
 
@@ -162,9 +163,16 @@ public class SensorTableAction extends AbstractTableAction {
                 handleCreateException(sName);
                 return; // without creating       
             }
-            if ((x!=0) && user != null && !user.equals(""))
-                user = userName.getText()+":"+x;
-            if (user!= null && !user.equals("") && (InstanceManager.sensorManagerInstance().getByUserName(user)==null)) s.setUserName(user);
+            if (s!=null) {
+                String user = userName.getText();
+                if ((x!=0) && user != null && !user.equals(""))
+                    user = userName.getText()+":"+x;
+                if (user!= null && !user.equals("") && (InstanceManager.sensorManagerInstance().getByUserName(user)==null)){
+                    s.setUserName(user);
+                } else if (InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)) {
+                    p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
+                }
+            }
         }
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
