@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.73 $
+ * @version	$Revision: 1.74 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -124,7 +124,8 @@ public class JmrixConfigPane extends JPanel {
         manufactureNameList = jmri.jmrix.DCCManufacturerList.getSystemNames();
         for (int i=0; i<manufactureNameList.length; i++) {
             String manuName = manufactureNameList[i];
-            if (original!=null && original.getManufacturer().equals(manuName)){
+            if (original!=null && original.getManufacturer() != null
+                    && original.getManufacturer().equals(manuName)){
                 manuBox.addItem(manuName);
                 manuBox.setSelectedItem(manuName);
             } else {
