@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.67 2010-06-17 02:46:27 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.68 2010-06-26 03:04:49 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -753,7 +753,8 @@ enter a kernel name. Then select the kernel from the menu box.
 <H3>Optional Fields</H3>
 
 Finally you can optionally enter the build date, owner and comment for
-this car.
+this car.  The build date can be entered as a four digit year, or in the format of
+month-year.  
 
 <H3>Save</H3>
 
