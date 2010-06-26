@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.3 2010-06-15 02:49:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.4 2010-06-26 17:14:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -175,6 +175,67 @@ Paul Bender made improvements to the XPressNet communications internals.
 Paul Bender improved how the Throttle handles functions when opening a throttle to a locomotive that's already in use.
 
 <p>
+Lionel Jeanson added support for lockable/non lockable functions from roster entry into USB Throttle Jynstrument.
+
+<p>
+Kevin Dickerson updated the editors to handle the setting of borders and margins better, by using a compounded border, 
+the inner covering the margin, the outer covering the outline border.  
+Fixes an issue seen by a user on the yahoo group
+
+<p>
+Steve Todd updated the Android Engine Driver throttle program to have dual throttles.
+
+<p>
+Dan Boudreau made a minor GUI improvement in the edit track: Adjust frame so car type scroll bars don't always show up.
+
+<p>
+Dan Boudreau added a new operations feature:  Users can now control which car loads a train will service.
+
+<p>
+Lionel Jeanson added a new throttle icon.
+
+<p>
+Kevin Dickerson updated the editor icons so that they always save the justification position. 
+He removed some inconsistencies from the hidden option.
+He also removed the "clear" colour from borders, as that didn't do anything.
+
+<p>
+Lionel Jeanson updated the internal edit/play code for throttles to better handle backgrounds.
+
+<p>
+Lionel Jeanson provided a new "RosterImage" Jynstrument displaying the defined roster locomotive image in a throttle frame.
+
+<p>
+Paul Bender updated internals of the throttle support in general and for XPressNet.
+
+<p>
+Pete Cressman improved the Signal Mast icon for the editors.
+
+<p>
+Paul Bender improved the handling of unexpected XPressNet messages.
+
+<p>
+Brett Hoffman improved the WiThrottle communications.
+
+<p>
+Kevin Dickerson fixed a bug that was causing preference settings to be saved even if the Save button hasn't been pressed.
+
+<p>
+Pete Cressman made a change to how backgrounds are handled in the editor.
+
+<p>
+Pete Cressman removed the "special mouse click" support from the control panel editor.
+
+<p>
+Dan Boudreau added two new devices to NCE show cabs: Cab06 and Mini-Panel.
+
+<p>
+Kevin Dickerson fixed an occasional bug while adding sensors.
+
+<p>
+Dan Boudreau updated the operations feature 
+to allow users to use the format month-year for a car's built date.
+
 
 <!--#include virtual="/Footer" -->
 
