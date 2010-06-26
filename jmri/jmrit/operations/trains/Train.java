@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -68,7 +68,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected boolean _printed = false;		// when true, manifest has been printed
 	protected Route _route = null;
 	protected String _roadOption = ALLROADS;// train road name restrictions
-	protected int _requires = 0;			// train requirements, caboose, fred
+	protected int _requires = 0;			// train requirements, caboose, FRED
 	protected String _numberEngines = "0";	// number of engines this train requires
 	protected String _engineRoad = "";		// required road name for engines assigned to this train 
 	protected String _engineModel = "";		// required model of engines assigned to this train
@@ -821,7 +821,21 @@ public class Train implements java.beans.PropertyChangeListener {
     		else
     			return false;
     	} catch (NumberFormatException e1){
-    		log.debug("date: "+date+" isn't an integer");
+    		log.debug("Built date: "+date+" isn't an integer");
+    		// maybe the built date is in the format month-year
+    		String[] built = date.split("-");
+    		if (built.length>1)
+    			try{
+    				int d = Integer.parseInt(built[1]);
+    				if (d<100)
+    					d = d + 1900;
+    			if (s<d && d<e)
+    				return true;
+    			else
+    				return false;
+    			} catch (NumberFormatException e2){
+    				log.debug("Unable to parse car built date "+date);
+    			}
     		return false;
     	}  	
     }
