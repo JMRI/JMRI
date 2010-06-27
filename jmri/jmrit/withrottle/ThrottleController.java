@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.10 $
+ *	@version $Revision: 1.11 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -309,24 +309,8 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                         setAddress(addr, false);
                         break;
                     
-                case 'C':       /*      
-                                 *      This is used to control speed an direction on the
-                                 *      consist address, but have functions mapped to lead.
-                                 *      Consist address must be set first!
-                                 */
-                    
-                    leadAddress = new DccLocoAddress(Integer.parseInt(inPackage.substring(2)), (inPackage.charAt(1) != 'S'));
-                    //if (inPackage.charAt(1) == 'S'){
-                        if (log.isDebugEnabled()) log.debug("Setting consist address: "+leadAddress.toString());
-                        clearLeadLoco();
-                        leadLocoF = new ConsistFunctionController(this);
-                        useLeadLocoF = leadLocoF.requestThrottle(leadAddress);
-                        if (!useLeadLocoF) {
-                            log.warn("Lead loco address not available.");
-                            leadLocoF = null;
-                        }
-                    
-
+                case 'C':
+                    setLocoForConsistFunctions(inPackage.substring(1));
 
                     break;
 
@@ -354,7 +338,12 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
-                        
+
+                case 'C':
+                    setLocoForConsistFunctions(inPackage.substring(1));
+
+                    break;
+
                 default:
                         break;
             }
@@ -383,6 +372,27 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
     public void setFunctionThrottle(DccThrottle t){
         functionThrottle = t;
         functionThrottle.addPropertyChangeListener(this);
+    }
+
+    public void setLocoForConsistFunctions(String inPackage){
+        /*
+         *      This is used to control speed an direction on the
+         *      consist address, but have functions mapped to lead.
+         *      Consist address must be set first!
+         */
+
+        leadAddress = new DccLocoAddress(Integer.parseInt(inPackage.substring(1)), (inPackage.charAt(0) != 'S'));
+        //if (inPackage.charAt(1) == 'S'){
+        if (log.isDebugEnabled()) log.debug("Setting lead loco address: "+leadAddress.toString() +
+                                            ", for consist: " + getCurrentAddressString());
+        clearLeadLoco();
+        leadLocoF = new ConsistFunctionController(this);
+        useLeadLocoF = leadLocoF.requestThrottle(leadAddress);
+
+        if (!useLeadLocoF) {
+            log.warn("Lead loco address not available.");
+            leadLocoF = null;
+        }
     }
 
 
@@ -432,6 +442,15 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
 
     }
+
+    public DccThrottle getThrottle(){
+        return throttle;
+    }
+
+    public DccThrottle getFunctionThrottle(){
+        return functionThrottle;
+    }
+
 
     public DccLocoAddress getCurrentAddress(){
         return (DccLocoAddress)throttle.getLocoAddress();
