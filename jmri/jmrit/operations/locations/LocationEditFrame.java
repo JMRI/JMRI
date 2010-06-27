@@ -14,6 +14,7 @@ import javax.swing.*;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 
@@ -21,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -53,6 +54,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
 	JButton setButton = new JButton(rb.getString("Select"));
+	JButton autoSelectButton = new JButton(rb.getString("AutoSelect"));
 	JButton saveLocationButton = new JButton(rb.getString("SaveLocation"));
 	JButton deleteLocationButton = new JButton(rb.getString("DeleteLocation"));
 	JButton addLocationButton = new JButton(rb.getString("AddLocation"));
@@ -77,11 +79,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	// text field
 	JTextField locationNameTextField = new JTextField(20);
 	JTextField commentTextField = new JTextField(35);
-
-	// for padding out panel
-	JLabel space1 = new JLabel("     ");
-	JLabel space2 = new JLabel("     ");
-	JLabel space3 = new JLabel("     ");
 	
 	// combo boxes
 
@@ -228,6 +225,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// setup buttons
 		addButtonAction(setButton);
 		addButtonAction(clearButton);
+		addButtonAction(autoSelectButton);
 		addButtonAction(deleteLocationButton);
 		addButtonAction(addLocationButton);
 		addButtonAction(saveLocationButton);
@@ -365,6 +363,15 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (ae.getSource() == clearButton){
 			selectCheckboxes(false);
 		}
+		if (ae.getSource() == autoSelectButton){
+			log.debug("auto select button pressed");
+			if (JOptionPane.showConfirmDialog(this,
+					rb.getString("autoSelectCarTypes?"), rb.getString("autoSelectLocations?"),
+					JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION){
+				return;
+			}
+			autoSelectCheckboxes();
+		}
 	}
 	
 	private void saveNewLocation(){
@@ -496,12 +503,12 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 	}
 	
-	private void selectCheckboxes(boolean enable){
+	private void selectCheckboxes(boolean select){
 		for (int i=0; i < checkBoxes.size(); i++){
 			checkBox = checkBoxes.get(i);
-			checkBox.setSelected(enable);
+			checkBox.setSelected(select);
 			if(_location != null){
-				if (enable)
+				if (select)
 					_location.addTypeName(checkBox.getText());
 				else
 					_location.deleteTypeName(checkBox.getText());
@@ -517,7 +524,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		loadTypes(CarTypes.instance().getNames());
 		loadTypes(EngineTypes.instance().getNames());
     	addItem(panelCheckBoxes, clearButton, 1, ++y);
-    	addItem(panelCheckBoxes, setButton, 4, y);
+    	addItem(panelCheckBoxes, setButton, 3, y);
+    	addItem(panelCheckBoxes, autoSelectButton, 5, y);
 		panelCheckBoxes.revalidate();
 		repaint();
 	}
@@ -541,6 +549,28 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			if (x > 6){
 				y++;
 				x = 0;
+			}
+		}
+	}
+	
+	/**
+	 * Adjust the location's car service types to only reflect 
+	 * the car types serviced by the location's tracks. 
+	 */
+	private void autoSelectCheckboxes(){
+		for (int i=0; i < checkBoxes.size(); i++){
+			checkBoxes.get(i).setSelected(false);
+			// check each track to determine which car types are serviced by this location
+			List<String> tracks = _location.getTracksByNameList(null);
+			for (int j=0; j<tracks.size(); j++){
+				Track track = _location.getTrackById(tracks.get(j));
+				if (_location.acceptsTypeName(checkBoxes.get(i).getText()) 
+						&& track.acceptsTypeName(checkBoxes.get(i).getText()))
+					checkBoxes.get(i).setSelected(true);
+			}
+			// this type of car isn't serviced by any of the tracks, so delete
+			if (!checkBoxes.get(i).isSelected()){
+				_location.deleteTypeName(checkBoxes.get(i).getText());
 			}
 		}
 	}
