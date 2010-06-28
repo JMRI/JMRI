@@ -17,6 +17,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import jmri.jmrit.operations.rollingstock.engines.EngineManager;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
@@ -27,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -107,6 +109,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new CarAttributeAction(rb.getString("CarQuanity"), this));
+		toolMenu.add(new CarDeleteAttributeAction(rb.getString("DeleteUnusedAttributes"), this));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		// add help menu to window
@@ -136,8 +139,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			addItemToCombobox (addItem);
 		}
 		if (ae.getSource() == deleteButton){
-			String deleteItem = (String)comboBox.getSelectedItem();
-			deleteItemFromCombobox (deleteItem);
+			deleteItemFromCombobox ((String)comboBox.getSelectedItem());
 		}
 		if (ae.getSource() == replaceButton){
 			String newItem = addTextBox.getText();
@@ -173,6 +175,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 
 	private void deleteItemFromCombobox (String deleteItem){
+		log.debug("delete attribute "+deleteItem);
 		if(_comboboxName == CarEditFrame.ROAD){
 			// purge train and locations by using replace
 			CarRoads.instance().replaceName(deleteItem, null);
@@ -366,6 +369,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			return;
 		int number = 0;
 		String item = (String)comboBox.getSelectedItem();
+		log.debug("Selected item "+item);
 		List<String> cars = manager.getByIdList();
 		for (int i=0; i<cars.size(); i++){
 			Car car = manager.getById(cars.get(i));
@@ -396,6 +400,47 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			}
 		}
 		quanity.setText(Integer.toString(number));
+		// Tool to delete all attributes that haven't been assigned to a car
+		if (number == 0 && deleteUnused){
+			//need to check if an engine is using the road name
+			if(_comboboxName == CarEditFrame.ROAD){
+				List<String> engines = EngineManager.instance().getByIdList();
+				for (int i=0; i<engines.size(); i++){
+					Engine engine = EngineManager.instance().getById(engines.get(i));
+					if (engine.getRoad().equals(item)){
+						log.info("Engine ("+engine.getRoad()+" "+engine.getNumber()+") has assigned road name ("+item+")");
+						return;
+					}
+				}
+			}
+			// confirm that attribute is to be deleted
+			if (!cancel){
+				int results = JOptionPane.showOptionDialog(null, 
+						MessageFormat.format(rb.getString("ConfirmDeleteAttribute"),new Object[]{_comboboxName, item}), rb.getString("DeleteAttribute?"),
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE,
+						null, new Object[] {rb.getString("ButtonYes"), rb.getString("ButtonNo"),
+					rb.getString("ButtonCancel") }, rb.getString("ButtonYes"));
+				if (results == JOptionPane.YES_OPTION)
+					deleteItemFromCombobox ((String)comboBox.getSelectedItem());
+				if (results == JOptionPane.CANCEL_OPTION || results == JOptionPane.CLOSED_OPTION)
+					cancel = true;
+			}
+		}
+	}
+	
+	boolean deleteUnused = false;
+	boolean cancel = false;
+	public void deleteUnusedAttribures(){
+		if (!showQuanity)
+			toggleShowQuanity();
+		deleteUnused = true;
+		cancel = false;
+		int items = comboBox.getItemCount()-1;
+		for (int i=items; i>=0; i--){
+			comboBox.setSelectedIndex(i);
+		}
+		deleteUnused = false;	//done
+		comboBox.setSelectedIndex(0);	// update count
 	}
 
     public void dispose() {
@@ -461,6 +506,22 @@ final class CarAttributeAction extends AbstractAction {
     public void actionPerformed(ActionEvent ae) {
     	log.debug("Show attribute quanity");
     	caef.toggleShowQuanity();
+    }
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(CarAttributeEditFrame.class.getName());
+}
+
+final class CarDeleteAttributeAction extends AbstractAction {	
+    public CarDeleteAttributeAction(String actionName, CarAttributeEditFrame caef) {
+        super(actionName);
+        this.caef = caef;
+    }
+    
+    CarAttributeEditFrame caef;
+    
+    public void actionPerformed(ActionEvent ae) {
+    	log.debug("Delete unused attributes");
+    	caef.deleteUnusedAttribures();
     }
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(CarAttributeEditFrame.class.getName());
