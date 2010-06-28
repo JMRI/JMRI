@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.117 $)
+distribution.  ($Revision: 1.118 $)
 
 Start in a directory, typically called "Distributions", that
 contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:
@@ -25,6 +25,10 @@ Make sure everything is up-to-date:
     * site/Copyright.html
     * xml/XSLT masters and stylesheets
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
+    
+( ) Check that the Version.java file has been updated (both version
+    number in two places and copyright date), has released=true set
+    and has been committed to CVS
     
 ( ) Bring in patches to date, including decoders
 
@@ -74,10 +78,6 @@ Make sure everything is up-to-date:
     the one for normal development is from Distribution/java/.  Make sure
     the one in scripts/ is the one you want. (We don't generally change this)
            
-( ) Check that the Version.java file has been updated (both version
-    number in two places and copyright date), has released=true set
-    and has been committed to CVS
-    
 ( ) (Still needed?) Update test comparison files with proper version (line 7)
 
     bbedit test/jmri/configurexml/LoadFileTestRef.xml test/jmri/jmrit/display/configurexml/ScaledIconTest.xml
@@ -124,37 +124,37 @@ Add something about copyright notices on changed files
 To actually create the distribution:
 
 ( ) Go to your working directory and
-	cvs -Q tag -F Release-2-9-8
+	cvs -Q tag -F Release-2-9-9
 
 ( ) Create a new working directory, if you haven't already:
     
     cd <project directory>
     mkdir X-Y-Z-cand
     cd X-Y-Z-cand
-    cvs co -r Release-2-9-8 all
+    cvs co -r Release-2-9-9 all
     
     This gives it a sticky tag.  If your working directory
     already has that name, just
     
-    cvs -q update -r Release-2-9-8
+    cvs -q update -r Release-2-9-9
     
     to make sure it's got the tag
     
 ( ) Come back to Distributions and 
     cd scripts
-	cvs -Q tag -F Release-2-9-8
+	cvs -Q tag -F Release-2-9-9
     cd ../java
-	cvs -Q tag -F Release-2-9-8
+	cvs -Q tag -F Release-2-9-9
     cd ..
     
 ( ) Announce the tag to jmri-developers list, wait for comments
 
 ( ) Start the actual build! In the Distributions directory:
 
-	ant -f dist.xml -Drelease=Release-2-9-8 -Dnumber=2.9.8 release1
+	ant -f dist.xml -Drelease=Release-2-9-9 -Dnumber=2.9.9 release1
 	
-	(the -Drelease-Release-2-9-8 option specifies the CVS tag to extract
-	 and build; the -Dnumber=2.9.8 specifies the release number to append
+	(the -Drelease-Release-2-9-9 option specifies the CVS tag to extract
+	 and build; the -Dnumber=2.9.9 specifies the release number to append
 	 to filenames, etc.)
 	
 	This will run "alltests"; make sure they all pass
@@ -189,7 +189,7 @@ To actually create the distribution:
     (The dist.xml file needs to have "test\ release" vs "production\ release"
     edited as needed in dist.xml - this should be automated)
 
-    ant -f dist.xml -Drelease=Release-2-9-8 -Dnumber=2.9.8 -Duser.name=jacobsen release2
+    ant -f dist.xml -Drelease=Release-2-9-9 -Dnumber=2.9.9 -Duser.name=jacobsen release2
 
     (The user.name only needs to be provided if your SourceForge.net ID 
      is different than your current login ID)
@@ -202,7 +202,9 @@ To actually create the distribution:
 ( ) Any time after release1 is complete, create and upload the JavaDocs
     and XSLT'd decoder pages (you need to have Java 1.6 in ~/.ant/ant.conf)
     
-	ant -f dist.xml -Drelease=Release-2-9-8 -Dnumber=2.9.8 release3
+	ant -f dist.xml -Drelease=Release-2-9-9 -Dnumber=2.9.9 release3
+	
+	Set ~/.ant/ant.conf back to Java 1.5 afterwards
 	
 ( ) Format the release note page, change date, etc
 
@@ -211,8 +213,6 @@ To actually create the distribution:
 ( ) Commit release note files to the web site CVS directory
     
 ( ) Complete all the above before continuing
-
-( ) Edit Version.java to indicate this is now development again, and commit
 
 ( ) Update the web site front page and downloads page
     		
@@ -230,7 +230,7 @@ To actually create the distribution:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
-    Subject is "Test version 2.9.8 of JMRI/DecoderPro is available for download"
+    Subject is "Test version 2.9.9 of JMRI/DecoderPro is available for download"
 
 ( ) Mail announcement to jmri-announce@lists.sourceforge.net
 
@@ -238,7 +238,7 @@ To actually create the distribution:
 
 ( ) News item from JMRI sourceforge page, Summary tab
 
-	Title is of the form "JMRI 2.9.8 test version is available";
+	Title is of the form "JMRI 2.9.9 test version is available";
 	text is pretty much directly taken from the release note
 
 ( ) If a production version, update the SF automatic download icon by selecting default in FRS
@@ -258,9 +258,6 @@ To actually create the distribution:
 		rrsoftware@yahoogroups.com
 		Apple MacOS Software
 		
-( ) Consider submitting to SoftPedia
-    http://mac.softpedia.com/user/submit.shtml
-
 ( ) Consider submitting to VersionTracker
 
 ( ) Commit back any changes made to this doc
