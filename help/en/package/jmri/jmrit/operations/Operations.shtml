@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.68 2010-06-26 03:04:49 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.69 2010-06-28 00:25:41 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -365,11 +365,13 @@ appropriate.
 <H3>Location Rolling Stock</H3>
 
 You can control the rolling stock a location can service. Push the
-"Clear All" to deselect all types, or "Select All" to select all types,
+"Clear All" button to deselect all types, or "Select All" to select all types,
 then select or deselect the rolling stock you wish the location to
-accept. 
+accept. After configuring the tracks for a location, you can use the
+"Auto Select" button to reflect the rolling stock serviced by the
+various tracks.
 
-<A NAME="Yards"></A>
+ <A NAME="Yards"></A>
 <H3>Yards</H3>
 
 To add a yard, press the "Add Yard Track" button. Now enter the name of
