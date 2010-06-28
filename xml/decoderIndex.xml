@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
+<?xml-stylesheet type="text/xsl" href="/xml/XSLT/DecoderID.xsl"?>
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.9.8 on Sun Jun 13 11:12:53 PDT 2010 $Id: decoderIndex.xml,v 1.162 2010-06-13 18:14:16 jacobsen Exp $-->
-  <decoderIndex version="195">
+  <!--Written by JMRI version 2.9.9 on Sun Jun 27 19:40:26 PDT 2010 $Id: decoderIndex.xml,v 1.163 2010-06-28 02:42:33 jacobsen Exp $-->
+  <decoderIndex version="198">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -452,7 +452,7 @@
           <output name="G8" label="Snd Slot 8" />
         </model>
         <model model="SL 75" numOuts="4" numFns="15" productID="SL75">
-          <versionCV lowVersionID="40" />
+          <versionCV lowVersionID="40" highVersionID="112" />
           <output name="3" label="Green" />
           <output name="4" label="Purple" />
           <output name="Ra" label="Yard Mode" />
@@ -1557,6 +1557,9 @@
           <functionlabel num="20" lockable="false">Short Horn</functionlabel>
           <functionlabel num="21" lockable="false">pop Valve</functionlabel>
         </functionlabels>
+      </family>
+      <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
+        <model model="TT300" lowVersionID="1" highVersionID="1" />
       </family>
       <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH" file="Haber_u_Koenig.xml">
         <model model="NFA" numOuts="8" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="1.2 A" comment="NFA=Niederfrequenzansteuerung">
@@ -4685,6 +4688,218 @@
           <output name="Coupler" />
         </model>
         <model model="TSU-KT1000 Kato SD70" numOuts="4" numFns="14" connector="other" productID="828060" comment="Model 828060">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+      </family>
+      <family name="Tsunami Diesel Bowser OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Bowser Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Bowser.xml">
+        <model model="Alco C-628" numOuts="4" numFns="14" connector="other" productID="Century">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Alco C-630" numOuts="4" numFns="14" connector="other" productID="Century">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin AS-16" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin AS-616" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin DS 4-4-1000" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin S-8" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin S-12" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin VO-660" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="Baldwin VO-1000" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="EMD FT" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="EMD F3" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="EMD F7" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="EMD F9" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="GE U25B" numOuts="4" numFns="14" connector="other" productID="GE">
           <versionCV lowVersionID="64" />
           <output name="Air Horn" />
           <output name="Bell" />
