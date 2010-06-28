@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.4 2010-06-26 17:14:07 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.5 2010-06-28 01:15:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -224,6 +224,9 @@ Kevin Dickerson fixed a bug that was causing preference settings to be saved eve
 Pete Cressman made a change to how backgrounds are handled in the editor.
 
 <p>
+Michael Mosher provided a new definition for Soundtraxx Bowser locomotive decoders
+
+<p>
 Pete Cressman removed the "special mouse click" support from the control panel editor.
 
 <p>
@@ -236,6 +239,15 @@ Kevin Dickerson fixed an occasional bug while adding sensors.
 Dan Boudreau updated the operations feature 
 to allow users to use the format month-year for a car's built date.
 
+<p>
+Nigel Cliffe provided a new definition for the TT300 accessory decoder, a UK product by Traintronics.
+
+<p>
+Nigel Cliffe made minor changes to CT decoder, primarily extending the volume control from four-steps to sixty-four steps 
+(yet more undocumented changes by CT(!), found when experimenting with new decoder)
+
+<P>
+Steve Todd updated the Engine Driver throttle for Andriod to version 0.6
 
 <!--#include virtual="/Footer" -->
 
