@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.6 2010-06-28 04:05:18 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.7 2010-06-28 20:35:34 bhoffman351 Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -259,7 +259,7 @@ that a location services.
 Only car types that are serviced by the location's tracks will be selected.
 
 <p>
-Brad Hoffman fixed a timing issue with WiThrottle and consists.
+Brett Hoffman fixed a timing issue with WiThrottle and consists.
 
 
 <!--#include virtual="/Footer" -->
