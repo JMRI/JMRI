@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.5 2010-06-28 01:15:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.6 2010-06-28 04:05:18 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -248,6 +248,19 @@ Nigel Cliffe made minor changes to CT decoder, primarily extending the volume co
 
 <P>
 Steve Todd updated the Engine Driver throttle for Andriod to version 0.6
+
+<p>
+Dan Boudreau improved the names of operations menu items
+
+<p>
+Dan Boudreau added an operations feature for locations: 
+A button has been added to automatically adjust the car types 
+that a location services.  
+Only car types that are serviced by the location's tracks will be selected.
+
+<p>
+Brad Hoffman fixed a timing issue with WiThrottle and consists.
+
 
 <!--#include virtual="/Footer" -->
 
