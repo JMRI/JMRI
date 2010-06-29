@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.51 $ -->
+<!-- Revision $Revision: 1.52 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -241,7 +241,7 @@
     <!-- using NSIS tools -->
     <echo message="create Windows installer"/>
     <exec executable="/opt/local/bin/makensis" dir="Windows/JMRI">
-        <arg line="-V2 InstallJMRI.nsi"/>
+        <arg line="-V2 -DJMRI_VER=${number} InstallJMRI.nsi"/>
     </exec>
 </target>
 

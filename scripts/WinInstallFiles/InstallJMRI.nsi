@@ -50,6 +50,18 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.14.0
+; - Enabled the JMRI version to be determined by the ant dist.xml script
+; - as opposed to being hard-coded in here
+; - Update Multi-user installation configuration to default to the previous
+; - settings when upgrading (i.e. Current User or All Users)
+; - Updated URL for Windows 98 & ME JRE download to 1.5.0_22; was 1.5.0_17
+; - see:
+; -   http://www.java.com/en/download/faq/win98_me.xml
+; -   http://www.java.com/en/download/windows98me_manual.jsp
+; - As the build version is not checked, this will only be downloaded where
+; - either no JRE exists or a version earlier than 1.5 is installed.
+; -------------------------------------------------------------------------
 ; - Version 0.1.13.0
 ; - Removal of obsolete .bat and resource files
 ; -------------------------------------------------------------------------
@@ -158,9 +170,12 @@
 !define AUTHOR    "Matt Harris for JMRI"        ; Author name
 !define APP       "JMRI"                        ; Application name
 !define COPYRIGHT "© 1997-2010 JMRI Community"  ; Copyright string
-!define JMRI_VER  "2.9.9"                       ; Application version
+!ifndef JMRI_VER
+  ; -- usually, this will be determined by the dist.xml ant script
+  !define JMRI_VER  "unknown"                   ; Application version
+!endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.13.0"                    ; Installer version
+!define INST_VER  "0.1.14.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -195,7 +210,7 @@ SetCompressor /SOLID /FINAL lzma
 ; - Defines for downloading
 ; -------------------------------------------------------------------------
 !define JRE_URL     "http://java.com/winoffline_installer/"
-!define JRE_URL98ME "http://javadl.sun.com/webapps/download/AutoDL?BundleId=26411"
+!define JRE_URL98ME "http://javadl.sun.com/webapps/download/AutoDL?BundleId=35608"
 !define INTERNET_CONNECTION_CONFIGURED 64  ; 0x40
 !define INTERNET_CONNECTION_LAN 2          ; 0x02
 !define INTERNET_CONNECTION_MODEM 1        ; 0x01
@@ -210,6 +225,8 @@ SetCompressor /SOLID /FINAL lzma
 !define MULTIUSER_MUI ; allow for use with ModernUI
 !define MULTIUSER_INSTALLMODE_COMMANDLINE
 !define MULTIUSER_INIT_TEXT_ALLUSERSNOTPOSSIBLE "Your user account does not have sufficient privileges to uninstall $(^Name) for all users of this computer."
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_KEY "Software\Microsoft\Windows\CurrentVersion\Uninstall\JMRI"
+!define MULTIUSER_INSTALLMODE_DEFAULT_REGISTRY_VALUENAME ""
 
 ; -------------------------------------------------------------------------
 ; - Defines for log saving
