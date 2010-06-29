@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 
 //
@@ -178,10 +178,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         	portBox.addItem(rb.getString("noPortsFound"));
 
         baudList = adapter.validBaudRates();
-        baudBox.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
         if(baudBox.getActionListeners().length >0)
         	baudBox.removeActionListener(baudBox.getActionListeners()[0]);
+        baudBox.removeAllItems();
     	if (log.isDebugEnabled()) log.debug("after remove, "+baudBox.getItemCount()+" items, first is "
     											+baudBox.getItemAt(0));        
         for (int i=0; i<baudList.length; i++) baudBox.addItem(baudList[i]);
@@ -195,10 +195,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         opt2List = adapter.validOption2();
-        opt2Box.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
         if(opt2Box.getActionListeners().length >0)
         	opt2Box.removeActionListener(opt2Box.getActionListeners()[0]);
+        opt2Box.removeAllItems();
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
         if (baudList.length>1) {
