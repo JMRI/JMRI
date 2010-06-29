@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.1 $ -->
+<!-- Revision $Revision: 1.2 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -68,9 +68,9 @@
 
   <target name="copyfiles" depends="init" description="copy resource files">
     <!-- Copy top level resources to include in jar file -->
-    <copy todir="${target}">
-      <fileset dir="src/" includes="**/*.properties"  /> 
-    </copy>
+    <!-- <copy todir="${target}">
+      <fileset dir="src/" includes="**/*.properties"  />
+    </copy> -->
   </target>
 
   <target name="compile" depends="init, copyfiles" description="compile source, omitting tests">
