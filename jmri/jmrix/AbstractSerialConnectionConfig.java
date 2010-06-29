@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 
 //
@@ -189,10 +189,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     											+baudBox.getItemAt(0));        
     	
         opt1List = adapter.validOption1();
-        opt1Box.removeAllItems();
         // need to remove ActionListener before addItem() or action event will occur
         if(opt1Box.getActionListeners().length >0)
         	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
+        opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
         opt2List = adapter.validOption2();
         opt2Box.removeAllItems();
