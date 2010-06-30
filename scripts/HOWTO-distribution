@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.118 $)
+distribution.  ($Revision: 1.119 $)
 
 Start in a directory, typically called "Distributions", that
 contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:
@@ -95,11 +95,10 @@ Make sure everything is up-to-date:
 
     Commit back to CVS
 
-( ) Update version number & copyright date in Windows installer script
+( ) Update copyright date in Windows installer script
+    (note version number and output filename now determined via dist.xml)
 
     bbedit WinInstallFiles/InstallJMRI.nsi
-    
-    This is important, because it names the output file.
     
 ( ) Update version numbers in Linux scripts
 

@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1399,7 +1399,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			setStatus(TRAININROUTE+" "+getNumberCarsInTrain(next)+" "+rb.getString("cars"));
 			// run move scripts
 			for (int i=0; i<getMoveScripts().size(); i++){
-				jmri.util.PythonInterp.runScript(getMoveScripts().get(i));
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getMoveScripts().get(i)));
 			}
 		}else{
 			log.debug("Train ("+getName()+")terminated");
@@ -1407,7 +1407,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			setBuilt(false);
 			// run termination scripts
 			for (int i=0; i<getTerminationScripts().size(); i++){
-				jmri.util.PythonInterp.runScript(getTerminationScripts().get(i));
+				jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getTerminationScripts().get(i)));
 			}
 		}
 	}

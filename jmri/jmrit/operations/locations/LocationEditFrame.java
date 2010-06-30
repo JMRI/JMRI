@@ -21,8 +21,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of location
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.15 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -233,6 +233,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		addButtonAction(addSidingButton);
 		addButtonAction(addInterchangeButton);
 		addButtonAction(addStagingButton);
+		
+		// add tool tips
+		autoSelectButton.setToolTipText(rb.getString("TipAutoSelect"));
 		
 		addRadioButtonAction(sidingRadioButton);
 		addRadioButtonAction(yardRadioButton);
