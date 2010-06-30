@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -870,7 +870,7 @@ public class DefaultConditional extends AbstractNamedBean
 						if (!(action.getActionString().equals(""))) {
                             Sound sound = action.getSound();
 							if (sound == null) {
-								sound = new jmri.jmrit.Sound(action.getActionString());
+								sound = new jmri.jmrit.Sound(jmri.util.FileUtil.getExternalFilename(action.getActionString()));
 							}
 							sound.play();
                             actionCount++;
@@ -878,7 +878,7 @@ public class DefaultConditional extends AbstractNamedBean
 						break;
 					case Conditional.ACTION_RUN_SCRIPT:
 						if (!(action.getActionString().equals(""))) {
-							jmri.util.PythonInterp.runScript(action.getActionString());
+							jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(action.getActionString()));
                             actionCount++;
 						}
 						break;
