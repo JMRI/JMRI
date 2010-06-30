@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -155,6 +155,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
      * @param e
      */
     public void doMouseClicked(java.awt.event.MouseEvent e) {
+        if (e.isMetaDown() || e.isAltDown() ) return;
         if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return;
         java.util.Vector <String> aspects = mMast.getValidAspects();
         int idx = aspects.indexOf(mMast.getAspect()) + 1;
