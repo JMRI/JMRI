@@ -17,7 +17,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -73,9 +73,6 @@ public class AddSignalMastPanel extends JPanel {
         sigSysBox.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) { loadMastDefinitions(); }
         });
-        mastBox.addItemListener(new ItemListener(){
-            public void itemStateChanged(ItemEvent e) { enableHeadFields(); }
-        });
     }
     
     // IF$shsm:basic:one-searchlight:IH1
@@ -93,6 +90,10 @@ public class AddSignalMastPanel extends JPanel {
     ArrayList<File> mastNames = new ArrayList<File>();
     
     void loadMastDefinitions() {
+        // need to remove itemListener before addItem() or item event will occur
+        if(mastBox.getItemListeners().length >0) {
+            mastBox.removeItemListener(mastBox.getItemListeners()[0]);
+        }
         mastBox.removeAllItems();
         try {
             mastNames = new ArrayList<File>();
@@ -113,10 +114,12 @@ public class AddSignalMastPanel extends JPanel {
                     log.debug("   found file: "+apps[j].getName());
                     // load it and get name 
                     mastNames.add(apps[j]);
+                    
                     jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
                     Element root = xf.rootFromFile(apps[j]);
                     String name = root.getChild("name").getText();
                     mastBox.addItem(name);
+                    
                     map.put(name, new Integer(root.getChild("appearances")
                                     .getChild("appearance")
                                     .getChildren("show")
@@ -126,11 +129,18 @@ public class AddSignalMastPanel extends JPanel {
         } catch (Exception e) {
             mastBox.addItem("select a system first");
         }
+        mastBox.addItemListener(new ItemListener(){
+            public void itemStateChanged(ItemEvent e) { enableHeadFields(); }
+        });
+        enableHeadFields();
+        
     }
     
     HashMap<String, Integer> map = new HashMap<String, Integer>();
     
     void enableHeadFields() {
+        if (mastBox.getSelectedItem()==null)
+            return;
         int count = map.get(mastBox.getSelectedItem()).intValue();
         head1.setEnabled(count>=1);
         head1.setVisible(count>=1);
@@ -146,6 +156,13 @@ public class AddSignalMastPanel extends JPanel {
         
         head5.setEnabled(count>=5);
         head5.setVisible(count>=5);
+        
+        validate();
+        if (getTopLevelAncestor()!=null){
+            ((jmri.util.JmriJFrame)getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)getTopLevelAncestor()).getPreferredSize());
+            ((jmri.util.JmriJFrame)getTopLevelAncestor()).pack();
+        }
+        repaint();
     }
     
     void okPressed(ActionEvent e) {
