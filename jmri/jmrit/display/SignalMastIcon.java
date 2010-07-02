@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -199,6 +199,36 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
         }
         
         return;
+    }
+    
+    public int maxHeight() {
+        int max = 0;
+        //Only defer to the default icon if the iconCache is empty
+        if (iconCache==null)
+            return super.maxHeight();
+        Set<String> set = iconCache.keySet();
+        Iterator<String> itr = set.iterator();
+        while (itr.hasNext()) {
+          String state = itr.next();
+          NamedIcon n = iconCache.get(state);
+          max = Math.max((n!=null) ? n.getIconHeight() : 0, max);
+        }
+        return max;
+    }
+    
+    public int maxWidth() {
+        int max = 0;
+        //Only defer to the default icon if the iconCache is empty
+        if (iconCache==null)
+            return super.maxWidth();
+        Set<String> set = iconCache.keySet();
+        Iterator<String> itr = set.iterator();
+        while (itr.hasNext()) {
+          String state = itr.next();
+          NamedIcon n = iconCache.get(state);
+          max = Math.max((n!=null) ? n.getIconWidth() : 0, max);
+        }
+        return max;
     }
     
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {
