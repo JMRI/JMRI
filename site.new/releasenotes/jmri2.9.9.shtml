@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.9.shtml,v 1.8 2010-07-01 13:49:52 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.9.shtml,v 1.9 2010-07-02 03:17:47 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.9.9 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: July 1, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.9 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -41,7 +43,8 @@
 And please back up your JMRI files before installing this, in case you want to go 
 back to an earlier version.
 
-<p>This is the nineth in a series of test versions. We expect this series
+<p>This is the nineth (and hopefully last) in a series of test versions. 
+We expect this series
 to end in a JMRI 2.10 production release in Summer 2010. 
 
 <p>
@@ -49,9 +52,9 @@ It contains
 many new features, including:
 
 <ul>
-<li>
-<li>
-<li>
+<li>Many improvements to local and WiFi-attached throttles
+<li>Multiple small improvements to operations
+<li>Several new decoder definitions
 </ul>
 along with lots of other changes.  See the complete list below.
 
