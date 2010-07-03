@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.7 2008-07-28 16:20:38 jacobsen Exp $ -->
-<title>JMRI: CAN Network Support</title>
+<!-- $Id: index.shtml,v 1.8 2010-07-03 01:31:05 jacobsen Exp $ -->
+<title>JMRI: CBUS Support</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
