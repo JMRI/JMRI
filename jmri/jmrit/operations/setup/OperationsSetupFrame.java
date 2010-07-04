@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -340,11 +340,32 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			// check input fields
 			try {
 				Integer.parseInt(maxLengthTextField.getText());
+			} catch (NumberFormatException e){
+				JOptionPane.showMessageDialog(this, textMaxTrain.getText(),
+						rb.getString("CanNotAcceptNumber"),
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try {
 				Integer.parseInt(maxEngineSizeTextField.getText());
+			} catch (NumberFormatException e){
+				JOptionPane.showMessageDialog(this, textMaxEngine.getText(),
+						rb.getString("CanNotAcceptNumber"),
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try {
 				Integer.parseInt(switchTimeTextField.getText());
+			} catch (NumberFormatException e){
+				JOptionPane.showMessageDialog(this, textMoveTime.getText(),
+						rb.getString("CanNotAcceptNumber"),
+						JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+			try {
 				Integer.parseInt(travelTimeTextField.getText());
 			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, e.getLocalizedMessage(),
+				JOptionPane.showMessageDialog(this, textTravelTime.getText(),
 						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
