@@ -27,7 +27,7 @@
 			<LI><a href="IntroStructure.shtml">Introduction</a>
 			<LI><a href="AppStructure.shtml">Application Structure</a>
 			<LI><a href="Names.shtml">Names and Naming</a>
-			<li><a href="patterns.shtml">Code Structure Patterns</a>
+			<li><a href="Patterns.shtml">Code Structure Patterns</a>
 			<li><a href="Swing.shtml">Swing Structure</a>
 			<li><a href="SystemStructure.shtml">External Connection Structure</a>
 			<LI><a href="Threads.shtml">Threads</a>
