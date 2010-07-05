@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -58,7 +58,23 @@ public class SignalMastIconXml extends PositionableLabelXml {
         SignalMastIcon l = new SignalMastIcon(ed);
         String name;
         
-        Attribute attr = element.getAttribute("signalmast"); 
+        Attribute attr;
+        /*
+         * We need to set the rotation and scaling first, prior to setting the
+         * signalmast, otherwise we end up in a situation where by the icons do
+         * not get rotated or scaled correctly.
+         **/
+        try {
+            attr = element.getAttribute("rotation");
+            int rotation = attr.getIntValue();
+            l.rotate(rotation);
+            attr = element.getAttribute("scale");
+            l.setScale(attr.getDoubleValue());
+        } catch ( org.jdom.DataConversionException e) {
+            log.error("failed to convert rotation or scale attribute");
+        } catch ( NullPointerException e) {  // considered normal if the attribute not present
+        }
+        attr = element.getAttribute("signalmast"); 
         if (attr == null) {
             log.error("incorrect information for signal mast; must use signalmast name");
             return;
@@ -74,19 +90,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         } else {
             log.error("SignalMast named '"+attr.getValue()+"' not found.");
             return;
-        }        
-        
-        try {
-            attr = element.getAttribute("rotation");
-            int rotation = attr.getIntValue();
-            l.rotate(rotation);
-            attr = element.getAttribute("scale");
-            l.setScale(attr.getDoubleValue());
-        } catch ( org.jdom.DataConversionException e) {
-            log.error("failed to convert rotation or scale attribute");
-        } catch ( NullPointerException e) {  // considered normal if the attribute not present
         }
-            
                         
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
