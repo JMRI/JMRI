@@ -26,7 +26,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.11 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.12 $ (CVS maintains this line, do not edit please)
 #
 
 # define the class to be invoked
@@ -80,12 +80,15 @@ then
       ARCH=`$cmd 2>/dev/null`
       if [ -n "$ARCH" ]
       then
+	    # canonicalize the architecture names where possible
+	    # we currently have AMD64 / X86_64 
 	    if [ "$ARCH" = "amd64" ]
 	    then
 	      ARCH="x86_64"
 	    fi
 
-	    if [ "$ARCH" = "i686" ]
+            # and all the flavors of ia32 (traditional x86)
+	    if [ "$ARCH" = "i686" -o "$ARCH" = "i586" -o "$ARCH" = "i486" ]
 	    then
 	      ARCH="i386"
 	    fi
