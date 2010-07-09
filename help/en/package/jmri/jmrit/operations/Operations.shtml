@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.69 2010-06-28 00:25:41 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.70 2010-07-09 14:24:17 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1130,6 +1130,78 @@ bring up a new window with several script options.
 <p>
 Included in the jython directory are several examples of operation oriented scripts.
 </P>
+
+<A NAME="TrainShowCarTypesServiced"></A>
+<H3>Show Car Types Serviced</H3>
+<P>This diagnostic tool can help you determine why a train will not
+service a particular car type. You can select a car type and see how
+the train will service that car type.  You can also select a specific
+car to see how that car would be serviced.</P>
+
+<P><img src="images/ShowCarTypesServicedTrain.png"></P>
+<P>The window shows the train's route along with every
+location and track that can be serviced by the train. To the right of each track is the
+current status for the car type currently selected in the drop down
+menu. If the track status is "OK" then this train can pickup and drop
+this type of car to that specific track.  If the track status is "Pickup" or
+"Drop" then the train can only pickup or drop off cars to this particular track.
+A status that starts off with an "X" means that the train will not service the
+track.  The following table provides a summary of the various track statuses. </P>
+
+<table>
+<tr>
+<th>Status</th>
+<th>Description</th>
+</tr>
+<tr>
+<td width="20%">OK</td><td>Selected car type can be picked up and dropped</td>
+</tr>
+<tr>
+<td>Pickup</td><td>Selected car type can only be picked up from this track</td>
+</tr>
+<tr>
+<td>Drop</td><td>Selected car type can only be dropped to this track</td>
+</tr>
+<tr>
+<td>X (Train Built)</td><td>Selected car built date is not serviced by this train</td>
+</tr>
+<tr>
+<td>X (Train Load)</td><td>Selected car load is not serviced by this train</td>
+</tr>
+<tr>
+<td>X (Train Owner)</td><td>Selected car owner is not serviced by this train</td>
+</tr>
+<tr>
+<td>X (Train Road)</td><td>Selected car road is not serviced by this train</td>
+</tr>
+<tr>
+<td>X (Train Type)</td><td>Selected car type is not serviced by this train</td>
+</tr>
+<tr>
+<td>X (Train Skips)</td><td>The train doesn't service this location</td>
+</tr>
+<tr>
+<td>X (Route)</td><td>The route doesn't allow pickups or drops for this location</td>
+</tr>
+<tr>
+<td>X (Route Moves)</td><td>The number of requested car moves for this location is zero</td>
+</tr>
+<tr>
+<td>X (Location Type)</td><td>The location doesn't service the selected car type</td>
+</tr>
+<tr>
+<td>X (Track Road)</td><td>The track doesn't service the selected car road</td>
+</tr>
+<tr>
+<td>X (Track Type)</td><td>The track doesn't service the selected car type</td>
+</tr>
+<tr>
+<td>X (Dir Loc)</td><td>Based on the train's departure direction, the location doesn't allow drops or pickups</td>
+</tr>
+<tr>
+<td>X (Dir Trk)</td><td>Based on the train's departure direction, the track doesn't allow drops or pickups</td>
+</tr>
+</table>
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
