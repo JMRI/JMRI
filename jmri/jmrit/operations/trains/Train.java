@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -88,6 +88,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String DISPOSE_CHANGED_PROPERTY = "TrainDispose";
 	public static final String STOPS_CHANGED_PROPERTY = "TrainStops";
 	public static final String TYPES_CHANGED_PROPERTY = "TrainTypes";
+	public static final String BUILT_CHANGED_PROPERTY = "TrainBuilt";
 	public static final String ROADS_CHANGED_PROPERTY = "TrainRoads";
 	public static final String LOADS_CHANGED_PROPERTY = "TrainLoads";
 	public static final String OWNERS_CHANGED_PROPERTY = "TrainOwners";
@@ -96,6 +97,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String STATUS_CHANGED_PROPERTY = "TrainStatus";
 	public static final String DEPARTURETIME_CHANGED_PROPERTY = "TrainDepartureTime";
 	public static final String TRAIN_LOCATION_CHANGED_PROPERTY = "TrainLocation";
+	public static final String TRAIN_ROUTE_CHANGED_PROPERTY = "TrainRoute";
 	
 	// Train status
 	public static final String TERMINATED = rb.getString("Terminated");
@@ -309,7 +311,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		_route = route;
 		_skipLocationsList.clear();
 		if (old == null || !old.equals(route)){
-			firePropertyChange("route", oldRoute, newRoute);
+			firePropertyChange(TRAIN_ROUTE_CHANGED_PROPERTY, oldRoute, newRoute);
 		}
 	}
 	
@@ -530,7 +532,9 @@ public class Train implements java.beans.PropertyChangeListener {
  	 * @param option ALLROADS INCLUDEROADS EXCLUDEROADS
  	 */
     public void setRoadOption (String option){
+    	String old = _roadOption;
     	_roadOption = option;
+    	firePropertyChange (ROADS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _roadList = new ArrayList<String>();
@@ -613,7 +617,9 @@ public class Train implements java.beans.PropertyChangeListener {
  	 * @param option ALLLOADS INCLUDELOADS EXCLUDELOADS
  	 */
     public void setLoadOption (String option){
+    	String old = _loadOption;
     	_loadOption = option;
+    	firePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _loadList = new ArrayList<String>();
@@ -696,7 +702,9 @@ public class Train implements java.beans.PropertyChangeListener {
  	 * @param option ALLOWNERS INCLUDEOWNERS EXCLUDEOWNERS
  	 */
     public void setOwnerOption (String option){
+    	String old = _ownerOption;
     	_ownerOption = option;
+    	firePropertyChange (OWNERS_CHANGED_PROPERTY, old, option);
     }
 
     List<String> _ownerList = new ArrayList<String>();
@@ -775,7 +783,9 @@ public class Train implements java.beans.PropertyChangeListener {
      * @param year
      */
     public void setBuiltStartYear(String year){
+    	String old = _builtStartYear;
     	_builtStartYear = year;
+    	firePropertyChange (BUILT_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltStartYear(){
@@ -787,7 +797,9 @@ public class Train implements java.beans.PropertyChangeListener {
      * @param year
      */
     public void setBuiltEndYear(String year){
+    	String old = _builtEndYear;
     	_builtEndYear = year;
+    	firePropertyChange (BUILT_CHANGED_PROPERTY, old, year);
     }
     
     public String getBuiltEndYear(){

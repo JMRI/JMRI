@@ -21,7 +21,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RollingStockManager {
 	
@@ -276,6 +276,22 @@ public class RollingStockManager {
      */
     public List<String> getByTypeList() {
     	return getByList(getByRoadNameList(), BY_TYPE);
+    }
+    
+    /**
+     * Return rolling stock ids of a specific type
+     * @param type type of rolling stock
+     * @return list of RollingStock ids that are specific type
+     */
+    public List<String> getByTypeList(String type){
+    	List<String> l = getByTypeList();
+    	List<String> out = new ArrayList<String>();
+    	for (int i=0; i<l.size(); i++){
+    		RollingStock rs = getById(l.get(i));
+    		if (rs.getType().equals(type))
+    			out.add(l.get(i));
+    	}
+    	return out;
     }
     
     /**

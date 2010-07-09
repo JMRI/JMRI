@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.35 $
+ * @version             $Revision: 1.36 $
  */
 public class Track {
 	
@@ -84,6 +84,7 @@ public class Track {
 	public static final String LENGTH_CHANGED_PROPERTY = "length";
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
+	public static final String TRAINDIRECTION_CHANGED_PROPERTY = "trainDirection";
 	
 	public Track(String id, String name, String type) {
 		log.debug("New track " + name + " " + id);
@@ -349,7 +350,7 @@ public class Track {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange("trainDirection", Integer.toString(old), Integer.toString(direction));
+			firePropertyChange(TRAINDIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	public int getTrainDirections(){
