@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class LayoutEditor extends Editor {
@@ -2557,29 +2557,35 @@ public class LayoutEditor extends Editor {
 	
 		
 	private PositionableLabel checkLabelImages(Point2D loc) {
-		// check label images, if any
-		for (int i=labelImage.size()-1; i>=0; i--) {
-			PositionableLabel s = labelImage.get(i);
-			double x = s.getX();
-			double y = s.getY();
-			double w = 10.0;
-			double h = 5.0;
-			if (s.isIcon()) {
-				w = s.maxWidth();
-				h = s.maxHeight();	
-			}
-			else if (s.isText()) {
-				h = s.getFont().getSize();
-				w = (h*2*(s.getText().length()))/3;
-			}
-			Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
-			// Test this detection rectangle
-			if (r.contains(loc)) {
-				// mouse was pressed in label image
-				return s;
-			}
-		}
-		return null;
+           PositionableLabel l =null;
+           int level = 0;
+           for (int i=labelImage.size()-1; i>=0; i--) {
+                   PositionableLabel s = labelImage.get(i);
+                   double x = s.getX();
+                   double y = s.getY();
+                   double w = 10.0;
+                   double h = 5.0;
+                   if (s.isIcon()) {
+                           w = s.maxWidth();
+                           h = s.maxHeight();
+                   }
+                   else if (s.isText()) {
+                           h = s.getFont().getSize();
+                           w = (h*2*(s.getText().length()))/3;
+                   }
+
+                   Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
+                   // Test this detection rectangle
+                   if (r.contains(loc)) {
+                       // mouse was pressed in label image
+                       if (s.getDisplayLevel()>=level){
+                       //Check to make sure that we are returning the highest level label.
+                           l = s;
+                           level = s.getDisplayLevel();
+                       }
+                   }
+            }
+            return l;
 	}
 	
 	private AnalogClock2Display checkClocks(Point2D loc) {
