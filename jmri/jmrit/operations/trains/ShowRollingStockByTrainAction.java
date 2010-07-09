@@ -13,10 +13,10 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ShowRollingStockByTrainAction extends AbstractAction {
-	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.Trains.JmritOperationsTrainsBundle");
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
 	public ShowRollingStockByTrainAction(String s, TrainEditFrame frame) {
 		super(s);
