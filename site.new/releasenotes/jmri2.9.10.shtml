@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.10.shtml,v 1.1 2010-06-13 17:49:23 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.10.shtml,v 1.2 2010-07-09 04:11:52 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -165,6 +165,21 @@ None at the time of this release.
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.10.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.9.10.tgz/download</a>
 
 <h3>Changes since test version 2.9.9</h3>
+
+Kevin Dickerson fixed a problem when switching between Signal Mast signal system definitions.
+He also changed how icons are resized, which should help with resizing problems on rotation.
+
+<p>
+Dan Boudreau improved error reporting in the operations feature.
+
+<p>
+Fixed a problem in sample scripts that access serial or parallel ports.
+
+<p>
+Fixed problems with signal mast icons.
+
+<p>
+Fixed a problem with French translation of roster.
 
 
 <!--#include virtual="/Footer" -->
