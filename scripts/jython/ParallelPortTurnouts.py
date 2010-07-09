@@ -9,14 +9,14 @@
 # configure JMRI to use LocoNet Simulator
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
 name = "LPT1" 
 #name = "/dev/cu.usbmodem3d11" # debug
 
 # find the port info and open the port
-import javax.comm
-port = javax.comm.CommPortIdentifier.getPortIdentifier(name)
+import gnu.io
+port = gnu.io.CommPortIdentifier.getPortIdentifier(name)
 parallelPort = port.open("JMRI", 50)
 outputStream = parallelPort.getOutputStream()
 print "Port opened OK"

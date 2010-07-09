@@ -23,7 +23,7 @@
 
 import jarray
 import jmri
-import javax.comm
+import gnu.io
 
 class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :    
     # starts up the serial port
@@ -32,13 +32,13 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
         
         # find the port info and open the port
         print "opening ",portname
-        self.portID = javax.comm.CommPortIdentifier.getPortIdentifier(portname)
+        self.portID = gnu.io.CommPortIdentifier.getPortIdentifier(portname)
         self.port = self.portID.open("JMRI", 50)
         
         # set options on port
         baudrate = 9600
-        self.port.setSerialPortParams(baudrate, javax.comm.SerialPort.DATABITS_8, 
-                                    javax.comm.SerialPort.STOPBITS_1, javax.comm.SerialPort.PARITY_NONE)
+        self.port.setSerialPortParams(baudrate, gnu.io.SerialPort.DATABITS_8, 
+                                    gnu.io.SerialPort.STOPBITS_1, gnu.io.SerialPort.PARITY_NONE)
         
         # get I/O connections for later
         self.inputStream = self.port.getInputStream()

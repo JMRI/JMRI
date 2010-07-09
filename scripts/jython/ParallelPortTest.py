@@ -4,13 +4,13 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 name = "LPT1" 
 
 # find the port info and open the port
-import javax.comm
-port = javax.comm.CommPortIdentifier.getPortIdentifier(name)
+import gnu.io
+port = gnu.io.CommPortIdentifier.getPortIdentifier(name)
 parallelPort = port.open("JMRI", 50)
 outputStream = parallelPort.getOutputStream()
 print "Port opened OK"
