@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.10.shtml,v 1.1 2010-07-11 15:51:01 jacobsen Exp $ -->
+<!-- $Id: jmri2.10.shtml,v 1.2 2010-07-11 18:48:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -198,14 +198,6 @@ Kevin Dickerson fixed a problem with displaying existing sensor groups.
 
 <p>
 A number of internal methods that were deprecated in JMRI 2.5.1 have now been removed.
-
-<p>
-The 
-<a href="http://jmri.sourceforge.net/help/en/html/web/index.shtml#Start">JMRI web server</a> 
-now advertises itself via 
-<a href="http://jmri.org/help/en/html/doc/Technical/Networking.shtml">Bonjour/Zeroconf</a>, 
-so you can easily find it in a suitable web browser
-without having to know the IP address or name.
 
 <p>
 The included jmdns.jar (Zeroconf/Bonjour networking) library has been updated to version 3.0 to
@@ -503,17 +495,11 @@ thus helping to prevent accidental changing of turnouts when they are occupied.
 Feature is disabled by default.
 
 <p>
-Fixed a problem that prevented clicking on panels in the mini web server.
-
-<p>
 Dick Bronson improved the SP signal definitions
 
 <p>
 Kevin Dickerson added a "signal group" feature, still in development.
 
-<p>
-Many decoder files got small fixes so that they were entirely in the proper
-format.
 
 <p>
 Lionel Jeanson updated the USBThrottle so it now supports browsing through 
@@ -526,19 +512,14 @@ Lionel Jeanson provided a bug fix in wiimote throttle.
 Many decoder definitions where changed over to use "XML Schema" instead of "DTDs" for their
 syntax checking.  This is a technical, internal change that will allow some other
 updates later.
-
+Many decoder files got small fixes so that they were entirely in the proper
+format.
 <p>
 Paul Bender add support for the Power manager to the Lenz XPressNet simulator.
 
 <p>
 Kevin Dickerson updated the preferences manager to show icons in warning/info dialogs,
 and to give more options to suppressing messages permanently or just this session.
-
-<p>
-The 
-<a href="http://jmri.org/help/en/html/web/index.shtml">Mini Web Server</a>
-can now display more types of information, including directory listings, 
-and better show the contents of JMRI XML files.
 
 <p>
 Dan Boudreau fixed a problem in the "Apps" infrastructure that caused it to 
@@ -603,10 +584,32 @@ Many improvements to the built-in
 <a href="http://jmri.org/help/en/html/web/index.shtml">mini web server</a>,
 including improvements to iPhone support and allowing more browser types to
 display JMRI panel files.
+The server now advertises itself via 
+<a href="http://jmri.org/help/en/html/doc/Technical/Networking.shtml">Bonjour/Zeroconf</a>, 
+so you can easily find it in a suitable web browser
+without having to know the IP address or name.
+The server is now multithreaded to improve performance.
+The server can now display more types of information, including directory listings, 
+and better show the contents of JMRI XML files.
+Fixed a problem that prevented clicking on panels in the mini web server.
 
 <p>
-The communications library issues that prevented JMRI 2.9.3 from being used
-on Mac OS X 10.4 has been fixed.
+Matjaz Krajnc provided better code and icons for the web throttle.
+
+<p>
+Bill Robinson provided two examples of setting turnouts from a web page using the mini-webserver.
+One, "web/turnoutPanel.html" shows a schematic control panel with turnouts you can click to control
+LT1 through LT4. The other, "web/turnoutMonitor.html", provides a table of all defined turnouts
+with buttons you can click to close or throw them.
+
+<p>
+The 
+<a href="http://jmri.org/help/en/html/web/XMLIO.shtml">XML IO</a> 
+package has been updated. To see a demonstration, start the 
+JMRI mini web server, and try these two URLs:
+<a href="http://localhost:12080/web/request.html">http://localhost:12080/web/request.html</a> and
+<a href="http://localhost:12080/web/monitor.html">http://localhost:12080/web/monitor.html</a>.
+Web browsers can now access layout power via XMLIO.
 
 <p>
 The help system can now directly print help pages. See the new icons
@@ -620,9 +623,6 @@ display internal-only addresses that won't work for external access.
 
 <p>
 David Duchamp updated the instructions for building with XCode.
-
-<p>
-The built-in JMRI web server is now multithreaded to improve performance.
 
 <p>
 Dan Boudreau improved the operations train icon:  
@@ -648,14 +648,6 @@ to find the right one.  For example, if you pick "NCE" as the manufacturer,
 you can then pick from "Serial Interface", "Network Interface" and "NCE USB".
 
 <p>
-The 
-<a href="http://jmri.org/help/en/html/web/XMLIO.shtml">XML IO</a> 
-package has been updated. To see a demonstration, start the 
-JMRI mini web server, and try these two URLs:
-<a href="http://localhost:12080/web/request.html">http://localhost:12080/web/request.html</a> and
-<a href="http://localhost:12080/web/monitor.html">http://localhost:12080/web/monitor.html</a>.
-
-<p>
 Kevin Dickerson improved the synchronization of turnouts between JMRI and 
 an eCos command station.
 
@@ -671,10 +663,6 @@ some additional tweaking.
 <p>
 The buttons inside tables have been made smaller so that tables will fit
 better on smaller screens.
-
-<p>
-Fixed bug introduced in JMRI 2.9.1 that prevented clicking on 
-panels when using the Mini Web Server.
 
 <p>
 Dan Boudreau added a simulated connection to the NCE protocols, so 
@@ -810,10 +798,6 @@ If you have multiple connections defined, the Power Control tool now lets you
 select which one you want to operate under a "Connection" menu.
 
 <p>
-New versions of the RXTX library for MacOS X is being provided, along with a 
-special case for PowerPC processors.
-
-<p>
 Team Digital updated the definition for their SRC16 board.
 
 <p>
@@ -837,6 +821,8 @@ make this part of the code smarter eventually.
 
 <p>
 Walter Thompson improved many help pages.
+Walt Thompson updated the help pages for adding Blocks, the speedometer, 
+and the main DecoderPro in-program pages.
 
 <p>
 Kevin Dickerson did a huge amount of work on the preferences to improve their 
@@ -882,9 +868,6 @@ Added basic preferences support including using a fixed port #.
 Improved JmDNS shutdown.
 
 <p>
-The throttle preferences have been improved and updated.
-
-<p>
 Dan Boudreau and Steve Williams improved how consists are handled
 when using a JMRI throttle with an NCE PowerHouse Pro.
 
@@ -900,10 +883,6 @@ we continue to recommend lower speeds due to issues in the Intellibox flow contr
 
 <p>
 You can now invert EasyDCC turnouts.
-
-<p>
-Walt Thompson updated the help pages for adding Blocks, the speedometer, 
-and the main DecoderPro in-program pages.
 
 <p>
 Peter Ulvestad updated the MRC 1665decoder definition
@@ -953,9 +932,6 @@ Bob Milhaupt fixed a bug in transponder messages in the LocoNet monitor.
 Matt Harris updated the Windows launch tool to allow more customization.
 
 <p>
-Matjaz Krajnc provided better code and icons for the web throttle.
-
-<p>
 Tom Stack updated the Tsunami Diesel definition with more models.
 
 <p>
@@ -976,13 +952,6 @@ Pete Cressman updated the
 
 <p>
 Kevin Dickerson fixed an occasional problem when deleting a signal head icon.
-
-<p>
-Fixed a problem what would result in an extra LocoNet menu when the preferences are set for certain
-Digitrax PR3 modes.
-
-<p>
-Fixed a problem with certain options not properly being loaded into the preferences dialog.
 
 <p>
 Fixed a problem where buttons created at startup don't have the right labels.
@@ -1022,11 +991,6 @@ Added error message and prevent user from making the change if there are built t
 <p>
 Paul Bender improved the way that turnout control timing is done for the Lenz protocol.
 
-<p>
-Bill Robinson provided two examples of setting turnouts from a web page using the mini-webserver.
-One, "web/turnoutPanel.html" shows a schematic control panel with turnouts you can click to control
-LT1 through LT4. The other, "web/turnoutMonitor.html", provides a table of all defined turnouts
-with buttons you can click to close or throw them.
 
 <p>
 The Ant javadoc-uml target now generates JavaDoc pages with UML class diagrams.
@@ -1170,8 +1134,6 @@ Paul Bender did more work on Lenz turnout control.
 <p>
 Paul Bender made some changes to make the XPressNet support compatible with OpenDCC command stations.
 
-<p>
-Web browsers can now access layout power via XMLIO.
 
 <p>
 Allow the user to specify the default preferences and jython script directory locations.  
