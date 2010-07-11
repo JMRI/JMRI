@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.9.10.shtml,v 1.4 2010-07-09 18:26:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.9.10.shtml,v 1.5 2010-07-11 17:24:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.9.10 release
       </h2>
 
-	<p>Date: MMM NN, 2010</p>
+	<p>Date: July 11, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.9.10 of JMRI/DecoderPro is available for download.
 
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
@@ -46,14 +48,7 @@ to end in a JMRI 2.10 production release in Summer 2010.
 
 <p>
 It contains 
-many new features, including:
-
-<ul>
-<li>
-<li>
-<li>
-</ul>
-along with lots of other changes.  See the complete list below.
+mostly fixes to minor bugs, see the complete list below.
 
 <p>Some of the changes involved are quite extensive.
 They may require a certain amount of experience before they are working well.  
@@ -191,6 +186,8 @@ Mike Mosher updated the common parts of the QSI definitions for easier translati
 <p>
 Kevin Dickerson fixed a problem with selecting certain layout editor icons.
 
+<p>
+Brett Hoffman updated some of the remote throttle communications.
 
 <!--#include virtual="/Footer" -->
 
