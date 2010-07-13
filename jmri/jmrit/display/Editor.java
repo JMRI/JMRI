@@ -15,6 +15,7 @@ import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Reporter;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.catalog.ImageIndexEditor;
@@ -72,7 +73,7 @@ import jmri.configurexml.*;
  */
 
 abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
-                                ActionListener {
+                                ActionListener, KeyListener {
 
     final public static int BKG       = 1;
     final public static int TEMP      = 2;
@@ -128,9 +129,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     BasicStroke DASHED_LINE = new BasicStroke(1f, BasicStroke.CAP_BUTT, 
                                     BasicStroke.JOIN_BEVEL,
                                     10f, new float[] {10f, 10f}, 0f);
+
     protected Rectangle _selectRect = null;
+    Rectangle _highlightcomponent = null;
     protected boolean _dragging = false;
     protected ArrayList <Positionable> _selectionGroup = null;  // items gathered inside fence
+
     private Positionable _currentSelection;
     private ToolTip _defaultToolTip;
     private ToolTip _tooltip = null;
@@ -140,6 +144,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected int yLoc = 0;     // y coord of selected Positionable
     protected int _anchorX;     // x coord when mousePressed
     protected int _anchorY;     // y coord when mousePressed
+
+    private boolean delayedPopupTrigger = false; // Used to delay the request of a popup, on a mouse press as this may conflict with a drag event
 
     private double _paintScale = 1.0;   // scale for _targetPanel drawing
 
@@ -163,7 +169,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void setDefaultToolTip(ToolTip dtt) {
         _defaultToolTip = dtt;
     }
-
+    
     /***************** setting the main panel and frame ****************/
 
     /**
@@ -192,6 +198,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         });
         _targetPanel.addMouseListener(this);
         _targetPanel.addMouseMotionListener(this);
+        _targetPanel.setFocusable(true);
+        _targetPanel.addKeyListener(this);
         //_targetFrame.pack();
     }
 
@@ -340,6 +348,22 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g.drawRect(_selectRect.x, _selectRect.y, _selectRect.width, _selectRect.height);
                 g2d.setStroke(stroke);
                 g2d.setColor(color);
+            }
+            if (_highlightcomponent!=null || _selectionGroup!=null){
+                java.awt.Stroke stroke = g2d.getStroke();
+                Color color = g2d.getColor();
+                g2d.setColor(new Color(204, 207, 88));
+                g2d.setStroke(new java.awt.BasicStroke(2.0f));
+                if (_selectionGroup!=null){
+                    for(int i=0; i<_selectionGroup.size();i++){
+                        g.drawRect(_selectionGroup.get(i).getX(), _selectionGroup.get(i).getY(), _selectionGroup.get(i).maxWidth(), _selectionGroup.get(i).maxHeight());
+                    }
+                }
+                if (_highlightcomponent!=null)
+                    g.drawRect(_highlightcomponent.x, _highlightcomponent.y, _highlightcomponent.width, _highlightcomponent.height);
+                //Draws a border around the highlighted component
+                g2d.setColor(color);
+                g2d.setStroke(stroke);
             }
             if (_tooltip != null) {
                 _tooltip.paint(g2d, _paintScale);
@@ -700,9 +724,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
         if (showCoordinates()) {
             JMenu edit = new JMenu(rb.getString("EditLocation"));
-            edit.add("x= " + p.getX());
-            edit.add("y= " + p.getY());
-            edit.add(CoordinateEdit.getCoordinateEditAction(p));
+            if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
+                MemoryIcon pm = (MemoryIcon) p;
+                edit.add("x= " + pm.getOriginalX());
+                edit.add("y= " + pm.getOriginalY());
+                edit.add(MemoryIconCoordinateEdit.getCoordinateEditAction(pm));
+            } else {
+                edit.add("x= " + p.getX());
+                edit.add("y= " + p.getY());
+                edit.add(CoordinateEdit.getCoordinateEditAction(p));
+            }
             popup.add(edit);
            return true;
         }
@@ -805,13 +836,33 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         popup.add(new AbstractAction(rb.getString("Remove")) {
             Positionable comp;
             public void actionPerformed(ActionEvent e) { 
-                comp.remove();
+                if (_selectionGroup==null)
+                    comp.remove();
+                else
+                    removeMultiItems();
             }
             AbstractAction init(Positionable pos) {
                 comp = pos;
                 return this;
             }
         }.init(p));
+    }
+    
+    private void removeMultiItems(){
+        boolean itemsInCopy = false;
+        if (_selectionGroup==_multiItemCopyGroup){
+            itemsInCopy=true;
+        }
+        for (int i=0; i<_selectionGroup.size(); i++) {
+            Positionable comp = _selectionGroup.get(i);
+            comp.remove();
+        }
+        //As we have removed all the items from the panel we can remove the group.
+        _selectionGroup = null;
+        //If the items in the selection group and copy group are the same we need to
+        //clear the copy group as the originals no longer exist.
+        if (itemsInCopy)
+            _multiItemCopyGroup = null;
     }
 
     /************************* End Popup Methods ***********************/
@@ -985,6 +1036,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setTooltip(new ToolTip(_defaultToolTip, l));
         addToTarget(l);
         _contents.add(l);
+        /*This allows us to catch any new items that are being pasted into the panel
+        and add them to the selection group, so that the user can instantly move them around*/
+        if (pasteItem){
+            amendSelectionGroup(l);
+        }
     }
     
     protected void addToTarget(Positionable l) {
@@ -1617,7 +1673,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         setNextLocation(l);
         putItem(l);
     }
-
+    
     /******************** end adding content *********************/
 
     /*********************** Icon Editors utils ****************************/
@@ -1829,8 +1885,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected void moveItem(Positionable p, int deltaX, int deltaY) {
         //if (_debug) log.debug("moveItem at ("+p.getX()+","+p.getY()+") delta ("+deltaX+", "+deltaY+")");
         if (getFlag(OPTION_POSITION, p.isPositionable())) {
-            int xObj = p.getX() + (int)Math.round(deltaX/getPaintScale());
-            int yObj = p.getY() + (int)Math.round(deltaY/getPaintScale());
+            int xObj;
+            int yObj;
+            if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
+                MemoryIcon pm = (MemoryIcon) p;
+                xObj = pm.getOriginalX() + (int)Math.round(deltaX/getPaintScale());
+                yObj = pm.getOriginalY() + (int)Math.round(deltaY/getPaintScale());
+            } else {
+                xObj = p.getX() + (int)Math.round(deltaX/getPaintScale());
+                yObj = p.getY() + (int)Math.round(deltaY/getPaintScale());
+            }
             // don't allow negative placement, icon can become unreachable 
             if (xObj < 0) xObj = 0;
             if (yObj < 0) yObj = 0;
@@ -1859,17 +1923,19 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                                                rect.width*_paintScale,
                                                                rect.height*_paintScale);
             if (rect2D.contains(x, y)) {
-                boolean added =false;
-                int level = p.getDisplayLevel();
-                for (int k=0; k<selections.size(); k++) {
-                    if (level > selections.get(k).getDisplayLevel()) {
-                        selections.add(k, p);
-                        added = true;
-                        break;
+                if (p.isPositionable()){
+                    boolean added =false;
+                    int level = p.getDisplayLevel();
+                    for (int k=0; k<selections.size(); k++) {
+                        if (level > selections.get(k).getDisplayLevel()) {
+                            selections.add(k, p);
+                            added = true;
+                            break;
+                        }
                     }
-                }
-                if (!added) {
-                    selections.add(p);
+                    if (!added) {
+                        selections.add(p);
+                    }
                 }
             }
         }
@@ -1909,6 +1975,27 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _selectionGroup = null;
         }
     }
+    
+    private void amendSelectionGroup(Positionable p){
+        if (p==null) return;
+        if (_selectionGroup==null){
+            _selectionGroup = new ArrayList <Positionable>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_selectionGroup.size();i++){
+            if (_selectionGroup.get(i)==p){
+                _selectionGroup.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _selectionGroup.add(p);
+        else if (removed && _selectionGroup.isEmpty())
+            _selectionGroup=null;
+        _targetPanel.repaint();
+    }
+    
     protected boolean setSelectionsPositionable(boolean enabled, Positionable p) { 
         if (_selectionGroup!=null && _selectionGroup.contains(p)) {
             for (int i=0; i<_selectionGroup.size(); i++) {
@@ -2010,7 +2097,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _lastX = _anchorX;
         _lastY = _anchorY;
         List <Positionable> selections = getSelectedItems(event);
-
         if (_dragging) {
             return;
         }
@@ -2022,19 +2108,48 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             if (event.isPopupTrigger()) {
                 if (_debug) log.debug("mousePressed calls showPopUp");
-                showPopUp(_currentSelection, event);
-            } else {
+                if (event.isMetaDown() || event.isAltDown()){
+                    // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                    delayedPopupTrigger = true;
+                } else {
+                    // no possible conflict with moving, display the popup now
+                    if (_selectionGroup!=null){
+                        //Will show the copy option only
+                        showMultiSelectPopUp(event, _currentSelection);
+                    } else {
+                        showPopUp(_currentSelection, event);
+                    }
+                }
+            } else if (!event.isControlDown()){ 
                 _currentSelection.doMousePressed(event);
+                _selectionGroup = null;
             }
         } else {
-            _currentSelection = null;
-        }
-        if (allPositionable()) {
-            if (_currentSelection==null || 
-                        (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))) {
-                    _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
-                    _selectionGroup = null;
+            if (event.isPopupTrigger()) {
+                if (event.isMetaDown() || event.isAltDown()){
+                    // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                    delayedPopupTrigger = true;
+                } else {
+                    if (_multiItemCopyGroup!=null){
+                        pasteItemPopUp(event);
+                    } else if (_selectionGroup!=null) {
+                        showMultiSelectPopUp(event, _currentSelection);
+                    } else {
+                        _currentSelection = null;
+                    }
+                }
+            } else {
+                _currentSelection = null;
             }
+        }
+        //if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
+        if (event.isControlDown()){
+            //Don't want to do anything, just want to catch it, so that the next two else ifs are not
+            //executed
+        } else if (_currentSelection==null || 
+                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))){
+                _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
+                _selectionGroup = null;
         } else {
             _selectRect = null;
             _selectionGroup = null;
@@ -2058,12 +2173,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 _currentSelection = selections.get(0); 
             }
         } else {
-            _currentSelection = null;
+            if ((event.isPopupTrigger()||delayedPopupTrigger) && !_dragging){
+                pasteItemPopUp(event);
+            }
+            else
+                _currentSelection = null;
         }
-        if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
-            showPopUp(_currentSelection, event);
+        /*if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
+            amendSelectionGroup(_currentSelection, event);*/
+        if ((event.isPopupTrigger() || delayedPopupTrigger) && _currentSelection != null && !_dragging) {
+            if (_selectionGroup!=null){
+                //Will show the copy option only
+                showMultiSelectPopUp(event, _currentSelection);
+                
+            } else {
+                showPopUp(_currentSelection, event);
+            }
         } else {
-            if (_currentSelection != null && !_dragging) {
+            if (_currentSelection != null && !_dragging && !event.isControlDown()) {
                 _currentSelection.doMouseReleased(event);
             }
             if (allPositionable() && _selectRect!=null) {
@@ -2072,13 +2199,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
         }
+        delayedPopupTrigger = false;
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
 
     public void mouseDragged(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
-        if (event.isPopupTrigger() || (!event.isMetaDown() && !event.isAltDown())) {
+        if ((event.isPopupTrigger()) || (!event.isMetaDown() && !event.isAltDown())) {
             if (_currentSelection!=null) {
                 List <Positionable> selections = getSelectedItems(event);
                 if (selections.size() > 0) {
@@ -2091,7 +2219,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             return; 
         }
-        if (_currentSelection!=null) {
+        if (_currentSelection!=null || _selectionGroup!=null) {
             if (!getFlag(OPTION_POSITION, _currentSelection.isPositionable())) { return; }
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
@@ -2100,8 +2228,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     moveItem(_selectionGroup.get(i), deltaX, deltaY);
                 }
                 moveSelectRect(deltaX, deltaY);
+                _highlightcomponent = null;
             } else {
                 moveItem(_currentSelection, deltaX, deltaY);
+                _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), _currentSelection.maxWidth(), _currentSelection.maxHeight());
             }
         } else {
             if (allPositionable() && _selectionGroup==null) {
@@ -2127,11 +2257,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 selection = selections.get(0); 
             }
         }
+        if (isEditable() && selection!=null && selection.getDisplayLevel()>BKG){
+            _highlightcomponent = new Rectangle(selection.getX(), selection.getY(), selection.maxWidth(), selection.maxHeight());
+            _targetPanel.repaint();
+        } else {
+            _highlightcomponent = null;
+            _targetPanel.repaint();
+        }
         if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
             showToolTip(selection, event);
+            //selection.highlightlabel(true);
             _targetPanel.repaint();
         } else {
             setToolTip(null);
+            _highlightcomponent = null;
             _targetPanel.repaint();
         }
     }
@@ -2150,15 +2289,26 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         } else {
             _currentSelection = null;
+            if (event.isPopupTrigger()){
+                pasteItemPopUp(event);
+            }
         }
         if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
-            showPopUp(_currentSelection, event);
+            if (_selectionGroup!=null)
+                showMultiSelectPopUp(event, _currentSelection);
+            else
+                showPopUp(_currentSelection, event);
+            //_selectionGroup = null; //Show popup only works for a single item
+            
         } else {
-            if (_currentSelection != null && !_dragging) {
+            if (_currentSelection != null && !_dragging && !event.isControlDown()) {
                 _currentSelection.doMouseClicked(event);
             }
         }
         _targetPanel.repaint(); // needed for ToolTip
+        if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
+            amendSelectionGroup(_currentSelection);
+        }
     }
 
     public void mouseEntered(MouseEvent event) {
@@ -2169,6 +2319,116 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _targetPanel.repaint();  // needed for ToolTip
     }
 
+    public void keyTyped(KeyEvent e) {
+    }
+
+    public void keyPressed(KeyEvent e) {
+        if (_selectionGroup==null) return;
+        int x = 0;
+        int y = 0;
+        for (int i=0; i<_selectionGroup.size(); i++) {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP: y=-1;
+                                    break;
+                case KeyEvent.VK_DOWN: y=1;
+                                    break;
+                case KeyEvent.VK_LEFT: x=-1;
+                                    break;
+                case KeyEvent.VK_RIGHT: x=1;
+                                        break;
+            }
+            //A cheat if the shift key isn't pressed then we move 5 pixels at a time.
+            if(!e.isShiftDown()){
+                y=y*5;
+                x=x*5;
+            }
+            
+            moveItem(_selectionGroup.get(i), x, y);
+        }
+        moveSelectRect(x, y);
+        _targetPanel.repaint();
+    }
+
+    public void keyReleased(KeyEvent e) {
+    }
+    
+    protected ArrayList <Positionable> _multiItemCopyGroup = null;  // items gathered inside fence
+    
+    protected void copyItem(Positionable p){
+        _multiItemCopyGroup = new ArrayList <Positionable>();
+        _multiItemCopyGroup.add(p);
+    }
+    
+    protected void pasteItemPopUp(final MouseEvent event){
+        if (_multiItemCopyGroup==null)
+            return;
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem edit = new JMenuItem("Paste");
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { pasteItem(event); }
+        });
+        popup.add(edit);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    
+    protected void showMultiSelectPopUp(final MouseEvent event, Positionable p){
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem edit = new JMenuItem("Copy");
+        if (p.isPositionable()) {
+            setShowAlignmentMenu(p, popup);
+        }
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                _multiItemCopyGroup = new ArrayList <Positionable>();
+                _multiItemCopyGroup = _selectionGroup;
+            }
+        });
+        setRemoveMenu(p, popup);
+        popup.add(edit);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    
+    protected boolean pasteItem = false;
+    
+    protected void pasteItem(MouseEvent e){
+        pasteItem = true;
+        XmlAdapter adapter;
+        String className;
+        int x;
+        int y;
+        int xOrig;
+        int yOrig;
+        if (_multiItemCopyGroup!=null) {
+            JComponent copied;
+            int xoffset;
+            int yoffset;
+            x = _multiItemCopyGroup.get(0).getX();
+            y = _multiItemCopyGroup.get(0).getY();
+            xoffset=e.getX()-x;
+            yoffset=e.getY()-y;
+            for(int i = 0; i<_multiItemCopyGroup.size(); i++){
+                copied = (JComponent)_multiItemCopyGroup.get(i);
+                xOrig = copied.getX();
+                yOrig = copied.getY();
+                x = xOrig+xoffset;
+                y = yOrig+yoffset;
+                if (x<0) x=1;
+                if (y<0) y=1;
+                className=ConfigXmlManager.adapterName(copied);
+                copied.setLocation(x, y);
+                try{
+                    adapter = (XmlAdapter)Class.forName(className).newInstance();
+                    Element el = adapter.store(copied);
+                    adapter.load(el, this);
+                } catch (Exception ex) {
+                    log.debug(ex);
+                }
+                copied.setLocation(xOrig, yOrig);
+            }
+        }
+        pasteItem = false;
+        _targetPanel.repaint();
+    }
     /*********************** Abstract Methods ************************/
 
     /*

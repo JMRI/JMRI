@@ -426,6 +426,13 @@ public class PositionablePopupUtil {
         }
     }
 
+    public void copyItem(JPopupMenu popup){
+        JMenuItem edit = new JMenuItem("Copy");
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { _parent.getEditor().copyItem(_parent);; }
+        });
+        popup.add(edit);
+    }
     /*************** Justification ************************/
 
     public void setTextJustificationMenu(JPopupMenu popup) {
@@ -440,11 +447,12 @@ public class PositionablePopupUtil {
     static final int RIGHT  = 0x02;
     static final int CENTRE = 0x04;
     
-    private int justification=CENTRE; //Default is always Centre    
+    private int justification=CENTRE; //Default is always Centre
     
     public void setJustification(int just){
         justification=just;
         setHorizontalAlignment(justification);
+        _parent.updateSize();
     }
         
     public void setJustification(String just){
@@ -455,11 +463,13 @@ public class PositionablePopupUtil {
         else
             justification=LEFT;
         setHorizontalAlignment(justification);
+        _parent.updateSize();
     }
     
     public int getJustification(){
         return justification;
     }
+    
     void addJustificationMenuEntry(JMenu menu, final int just) {
         ButtonGroup justButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r;

@@ -3,10 +3,7 @@ package jmri.jmrit.display;
 import jmri.jmrit.catalog.NamedIcon;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Container;
-import java.awt.Font;
-import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -15,18 +12,11 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-//import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
-import javax.swing.JRadioButtonMenuItem;
-//import java.awt.Dimension;
-import javax.swing.border.LineBorder;
 
 /**
  * PositionableLabel is a JLabel that can be dragged around the
@@ -36,7 +26,7 @@ import javax.swing.border.LineBorder;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.94 $
+ * @version $Revision: 1.95 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
