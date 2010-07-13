@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.jmrit.catalog.NamedIcon;
-import java.awt.event.ActionEvent;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
@@ -12,6 +11,9 @@ import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.Point;
+
 import jmri.util.NamedBeanHandle;
 
 /**
@@ -20,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.53 $
+ * @version $Revision: 1.54 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -40,6 +42,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         //setIcon(defaultIcon);
         _namedIcon=defaultIcon;
         //updateSize();
+        //By default all memory is left justified
+        _popupUtil.setJustification(LEFT);
     }
 
     public MemoryIcon(NamedIcon s, Editor editor) {
@@ -47,9 +51,11 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         setDisplayLevel(Editor.LABELS);
         defaultIcon = s;
         //updateSize();
+        _popupUtil.setJustification(LEFT);
         log.debug("MemoryIcon ctor= "+MemoryIcon.class.getName());
-    }
 
+    }
+    
     public void resetDefaultIcon() {
         defaultIcon = new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif");
@@ -252,7 +258,58 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         }
         updateSize();
     }
-
+    
+    /*As the size of a memory label can change we want to adjust the position of the x,y
+    if the width is fixed*/
+    
+    static final int LEFT   = 0x00;
+    static final int RIGHT  = 0x02;
+    static final int CENTRE = 0x04;
+    
+    public void updateSize() {
+        if (_popupUtil.getFixedWidth()==0){
+            //setSize(maxWidth(), maxHeight());
+            switch (_popupUtil.getJustification()){
+                case LEFT :     super.setLocation(getOriginalX(), getOriginalY());
+                                break;
+                case RIGHT :    super.setLocation(getOriginalX()-maxWidth(), getOriginalY());
+                                break;
+                case CENTRE :   super.setLocation(getOriginalX()-(maxWidth()/2), getOriginalY());
+                                break;
+            }
+            setSize(maxWidth(), maxHeight());
+        } else {
+            super.updateSize();
+        }
+    }
+    
+    /*Stores the original location of the memory, this is then used to calculate
+    the position of the text dependant upon the justification*/
+    private int originalX=0;
+    private int originalY=0;
+    
+    public void setOriginalLocation(int x, int y){
+        originalX=x;
+        originalY=y;
+        updateSize();
+    }
+    
+    public int getOriginalX(){
+        return originalX;
+    }
+     
+    public int getOriginalY(){
+        return originalY;
+    }
+    
+    public void setLocation(int x, int y){
+        if(_popupUtil.getFixedWidth()==0){
+            setOriginalLocation(x,y);
+        } else {
+            super.setLocation(x,y);
+        }
+    }
+    
     public boolean setEditIconMenu(JPopupMenu popup) {
         popup.add(new AbstractAction(rb.getString("EditIcon")) {
                 public void actionPerformed(ActionEvent e) {

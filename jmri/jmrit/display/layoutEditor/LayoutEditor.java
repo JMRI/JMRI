@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class LayoutEditor extends Editor {
@@ -536,6 +536,8 @@ public class LayoutEditor extends Editor {
         }
 		jmri.jmrit.display.PanelMenu.instance().addEditorPanel(this);
     	thisPanel = this;
+        thisPanel.setFocusable(true);
+        thisPanel.addKeyListener(this);
 		resetDirty();
 		// establish link to LayoutEditorAuxTools
 		auxTools = new LayoutEditorAuxTools(thisPanel);
@@ -2138,6 +2140,14 @@ public class LayoutEditor extends Editor {
 							selectedPointType = LAYOUT_POS_LABEL;
 							startDel.setLocation((((PositionableLabel)selectedObject).getX()-dLoc.getX()), 
 												(((PositionableLabel)selectedObject).getY()-dLoc.getY()));
+                            if (selectedObject instanceof MemoryIcon) {
+                                MemoryIcon pm = (MemoryIcon) selectedObject;
+                                if (pm.getPopupUtility().getFixedWidth()==0){
+                                    startDel.setLocation((pm.getOriginalX()-dLoc.getX()), 
+                                                        (pm.getOriginalY()-dLoc.getY()));
+                                }
+                            }
+
 							//selectedNeedsConnect = false;
 
 						}
@@ -2237,6 +2247,9 @@ public class LayoutEditor extends Editor {
                 selections.get(0).doMousePressed(event);
             }
         }
+        //thisPanel.setFocusable(true);
+        thisPanel.requestFocusInWindow();
+
         return;
     }
 	
@@ -2766,7 +2779,7 @@ public class LayoutEditor extends Editor {
 				beginObject = null;
 				foundObject = null;
 				repaint();
-			}			
+			}
         }
 		// check if controlling turnouts out of edit mode
 		else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
@@ -2801,6 +2814,7 @@ public class LayoutEditor extends Editor {
 		}
 		isDragging = false;
 		delayedPopupTrigger = false;
+        thisPanel.requestFocusInWindow();
         return;
     }
 	
@@ -2956,7 +2970,7 @@ public class LayoutEditor extends Editor {
 		}
         return;
 	}
-
+    
     public void mouseMoved(MouseEvent event)
     {
         calcLocation(event, 0, 0);
@@ -3001,7 +3015,7 @@ public class LayoutEditor extends Editor {
 			repaint();
 			return;
 		}
-		if (isEditable()) {	
+		if (isEditable()) {
 			if ((selectedObject!=null) && (event.isMetaDown() || event.isAltDown()) && allPositionable()) {
 				// moving a point
 				if (snapToGridOnMove) {

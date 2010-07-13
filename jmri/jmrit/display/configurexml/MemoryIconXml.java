@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -39,6 +39,12 @@ public class MemoryIconXml extends PositionableLabelXml {
         storeCommonAttributes(p, element);
         storeTextInfo(p, element);
         
+        //If the max width option is not set and the justification is not left
+        //Then we need to replace the x, y values with the original ones.
+        /*if (p.maxWidth()!=0 && p.getPopupUtility().getJustification()!=0){
+            element.setAttribute("x", ""+p.getOriginalX());
+            element.setAttribute("y", ""+p.getOriginalY());
+        }*/
         element.setAttribute("selectable", (p.isSelectable()?"yes":"no"));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.MemoryIconXml");
@@ -128,6 +134,15 @@ public class MemoryIconXml extends PositionableLabelXml {
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.MEMORIES, element);
+        /*int x = 0;
+        int y = 0;
+        try {
+            x = element.getAttribute("x").getIntValue();
+            y = element.getAttribute("y").getIntValue();
+        } catch ( org.jdom.DataConversionException e) {
+            log.error("failed to convert positional attribute");
+        }
+        l.setOriginalLocation(x,y);*/
         l.displayState();
     }
 

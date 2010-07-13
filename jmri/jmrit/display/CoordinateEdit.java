@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -685,7 +685,7 @@ public class CoordinateEdit extends JmriJFrame {
 		pack();
 	}
 
-    private void addSpinItems(boolean addY) {
+    protected void addSpinItems(boolean addY) {
         addItem(nameText, 0, 0, 2);
         addItem(textX, 0, 1, 1);
         addItem(spinX, 1, 1, 1);
