@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.9.10 of JMRI.
+ * These JavaDocs are for Version 2.10 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -21,7 +21,7 @@ import java.util.Calendar;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.138 $
+ * @version $Revision: 1.139 $
  */
 
 public class Version {
@@ -36,12 +36,12 @@ public class Version {
      * Minor number changes with each production release.
      * Odd is development, even is production.
      */
-     static final public int minor = 9;
+     static final public int minor = 10;
      
     /* Test number changes with individual releases,
      * general fastest for test releases.
      */
-     static final public int test = 10;
+     static final public int test = 0;
      
     /**
      * Modifier is used to denote specific builds.
@@ -59,7 +59,7 @@ public class Version {
      * @return The current version string
      */
      static public String name() { 
-        return ""+major+"."+minor+"."+test+modifier; 
+        return ""+major+"."+minor; //+"."+test+modifier; 
      }
      
 }
