@@ -50,9 +50,6 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
-; - Version 0.1.15.0
-; - Remove shortcut to LocoTools JMRI application
-; -------------------------------------------------------------------------
 ; - Version 0.1.14.0
 ; - Enabled the JMRI version to be determined by the ant dist.xml script
 ; - as opposed to being hard-coded in here
@@ -178,7 +175,7 @@
   !define JMRI_VER  "unknown"                   ; Application version
 !endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.15.0"                    ; Installer version
+!define INST_VER  "0.1.14.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -541,9 +538,6 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     !insertmacro MUI_STARTMENU_WRITE_BEGIN JMRIStartMenu
     SetOutPath "$INSTDIR"
     CreateDirectory "$SMPROGRAMS\$SMFOLDER"
-    ; -- Remove any shortcuts to deprecated components
-    Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\LocoTools.lnk"
-    ; -- Create shortcuts for standard JMRI components
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.DecoderPro.DecoderPro" \
@@ -602,6 +596,11 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "apps.JmriDemo.JMRIdemo" \
                    "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start JMRI Demo"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\LocoTools.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.LocoTools.LocoTools" \
+                   "$INSTDIR\decpro5.ico" 0 "" "" \
+                   "Start LocoTools"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\CornwallRR.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.cornwall.CornwallRR" \
@@ -755,7 +754,7 @@ LangString DESC_SEC_XML ${LANG_ENGLISH} "XML files (Decoder definitions, etc.)"
 LangString DESC_SEC_WEB ${LANG_ENGLISH} "Web files"
 LangString DESC_SEC_SMSC ${LANG_ENGLISH} "Select Start Menu Shortcuts to create"
 LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for DecoderPro, PanelPro and InstallTest"
-LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMRI Demo and CornwallRR"
+LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for JMRI Demo, LocoTools and CornwallRR"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"

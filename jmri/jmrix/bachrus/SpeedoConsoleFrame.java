@@ -14,7 +14,7 @@ import jmri.util.JmriJFrame;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.4 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
 
@@ -22,6 +22,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
      * TODO:
      *  Complete the help file
      *  Allow selection of arbitrary scale
+     *  Smooth readings
+     *
      */
 
 
@@ -75,29 +77,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
     protected double selectedScale = 0;
     protected int series = 0;
     protected double speed = 0;
-    protected double old_speed = 0;
-    protected double speed_acc = 0;
-    protected double speed_ave = 0;
-    protected int range = 1;
     protected double circ = 0;
     protected double count = 1;
     protected double f;
-    
-    /*
-     * At low speed, readings arrive less often and less filtering
-     * is applied to minimise the delay in updating the display
-     * 
-     * Speed measurement is split into 3 ranges with an overlap, tp
-     * prevent "hunting" between the ranges.
-     */
-    protected static final int RANGE1LO = 0;
-    protected static final int RANGE1HI = 5;
-    protected static final int RANGE2LO = 3;
-    protected static final int RANGE2HI = 20;
-    protected static final int RANGE3LO = 16;
-    protected static final int RANGE3HI = 9999;
-    protected static final int[] filter_length = {0, 3, 10, 20};
-    
+
     protected boolean timerRunning = false;
 
     //Create the combo box, select item at index 4.
@@ -169,11 +152,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         speedGroup.add(kphButton);
         mphButton.setSelected(true);
         
-        Font f = new Font("", Font.PLAIN, 96);
-        speedTextField.setFont(f);
-        speedTextField.setHorizontalAlignment(JTextField.RIGHT);
-        speedTextField.setColumns(3);
-        speedTextField.setText("0");
+        speedTextField.setText("Waiting...");
         speedTextField.setVisible(true);
         speedTextField.setToolTipText("Speed will be displayed here");
 
@@ -231,29 +210,28 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         log.debug("Speedo reply " + l.toString());
         count = l.getCount();
         series = l.getSeries();
-        if (count > 0) {
-            switch (series) {
-                case 4:
-                    circ = 12.5664;
-                    readerLabel.setText("40 Series Reader");
-                    break;
-                case 5:
-                    circ = 18.8496;
-                    readerLabel.setText("50 Series Reader");
-                    break;
-                case 6:
-                    circ = 50.2655;
-                    readerLabel.setText("60 Series Reader");
-                    break;
-                default:
-                    speedTextField.setText("Error!");
-                    log.error("Invalid reader type");
-                    break;
-            }
-
-            // Update speed
-            calcSpeed();
+        switch (series) {
+            case 4:
+                circ = 12.5664;
+                readerLabel.setText("40 Series Reader");
+                break;
+            case 5:
+                circ = 18.8496;
+                readerLabel.setText("50 Series Reader");
+                break;
+            case 6:
+                circ = 50.2655;
+                readerLabel.setText("60 Series Reader");
+                break;
+            default:
+                speedTextField.setText("Error!");
+                log.error("Invalid reader type");
+                break;
         }
+
+        // Update speed 
+        calcSpeed();
+
         if (timerRunning == false) {
             // first reply starts the timer
             startTimer();
@@ -280,67 +258,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating speed " + ae);
             }
-//            log.info("Count: "+count+" Frequency: "+f+" Speed: "+speed);
-            // Averaging function used for speed is
-            // S(t) = S(t-1) - [S(t-1)/N] + speed
-            // A(t) = S(t)/N
-            //
-            // where S is an accumulator, N is the length of the filter (i.e.,
-            // the number of samples included in the rolling average), and A is
-            // the result of the averaging function.
-            //
-            // Re-arranged
-            // S(t) = S(t-1) - A(t-1) + speed
-            // A(t) = S(t)/N
-            speed_acc = speed_acc - speed_ave + speed;
-            speed_ave = speed_acc/filter_length[range];
-//            log.info(" Acc: "+speed_acc+" Ave: "+speed_ave+" range: "+range);
-            // When we switch range we must compensate the current accumulator
-            // value for the longer filter.
-            switch (range) {
-                case 1:
-                    if (speed > RANGE1HI) {
-                        range++;
-                        speed_acc = speed_acc*filter_length[2]/filter_length[1];
-                    }
-                    break;
-                case 2:
-                    if (speed < RANGE2LO){
-                        range--;
-                        speed_acc = speed_acc*filter_length[1]/filter_length[2];
-                    }
-                    else if (speed > RANGE2HI) {
-                        range++;
-                        speed_acc = speed_acc*filter_length[3]/filter_length[2];
-                    }
-                    break;
-                case 3:
-                    if (speed < RANGE3LO) {
-                        range--;
-                        speed_acc = speed_acc*filter_length[2]/filter_length[3];
-                    }
-                    break;
-            }
-            showSpeed(speed_ave, 0);
+            showSpeed(speed);
         }
     }
 
     /*
      * Display the speed
      */
-    protected void showSpeed(double speed, int force) {
+    protected void showSpeed(double speed) {
         if (series > 0) {
             if ((speed < 0) || (speed > 999)) {
                 log.error("Calculated speed out of range: " + speed);
                 speedTextField.setText("Out of Range!");
             } else {
-                // Final smoothing as applied by Bachrus Console. Don't update display
-                // unless speed has changed more than 4%
-                if ((speed > old_speed*1.02) || (speed < old_speed*1.02) || force > 0) {
-                    speedTextField.setText(MessageFormat.format("{0,number,###}", speed));
-                    speedTextField.setHorizontalAlignment(JTextField.RIGHT);
-                    old_speed = speed;
-                }
+                speedTextField.setText(MessageFormat.format("{0,number,###}", speed));
+                speedTextField.setHorizontalAlignment(JTextField.RIGHT);
             }
         }
     }
@@ -363,12 +295,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
      * Internal routine to resend the speed on a timeout
      */
     synchronized protected void replyTimeout() {
-        //log.debug("Timed out - display speed zero");
+        log.debug("Timed out - display speed zero");
         speed = 0;
-        speed_acc = 0;
-        speed_ave = 0;
-        old_speed = 0;
-        showSpeed(speed, 1);
+        showSpeed(speed);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoConsoleFrame.class.getName());
