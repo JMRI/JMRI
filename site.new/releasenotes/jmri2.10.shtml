@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.10.shtml,v 1.5 2010-07-13 18:13:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.10.shtml,v 1.6 2010-07-13 18:25:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -733,14 +733,6 @@ you can work on an NCE-based panel without the actual layout connected.
 <p>
 Andrew Crosland added support for the 
 <a href="http://www.bachrus.com/speedometer.php">Bachrus electronic speedometer</a>.
-
-<p>
-A new preferences dialog is available for testing.  If people
-think it better, perhaps after some changes, we'll replace the current one
-with it.  To use it, select "New Tabbed Prefs" under the "Edit" menu.
-Please give feedback on the jmriusers list if you try it!
-Note: you should only attempt to use one preference panel or the other
-during a single run of the program, don't switch back and forth.
 
 <p>
 Dan Boudreau improved the appearance of the Turnout Control.
