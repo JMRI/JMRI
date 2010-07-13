@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.10.shtml,v 1.4 2010-07-13 18:06:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.10.shtml,v 1.5 2010-07-13 18:13:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -44,6 +44,7 @@ Among the enhancements since the last production release, JMRI 2.10, are:
 <li>Many improvements to throttles, particularly wireless ones
 <li>Many new and improved DecoderPro decoder definitions
 <li>New support for "aspect signaling", which drives an entire mast at once
+<li>More flexible preferences, accessed through a much better window.
 <li>Improvements to layout and panel editor
 </ul>
 
