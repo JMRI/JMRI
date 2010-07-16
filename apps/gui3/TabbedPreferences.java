@@ -6,6 +6,8 @@ import apps.AppConfigBase;
 import apps.GuiLafConfigPane;
 
 import jmri.jmrix.JmrixConfigPane;
+import jmri.UserPreferencesManager;
+import jmri.InstanceManager;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -17,19 +19,21 @@ import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import org.jdom.Element;
 
 /**
  * Provide access to preferences via a 
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
     public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
     public String getTitle() { return rb.getString("TitlePreferences"); }
     public boolean isMultipleInstances() { return false; }  // only one of these!
+    static ArrayList<Element> preferencesElements = new ArrayList<Element>();
     
     String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuFileLocation"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
     String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "FILELOCATIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
@@ -43,11 +47,12 @@ public class TabbedPreferences extends AppConfigBase {
     final jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
     
     ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
-    
+    final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
 
     public TabbedPreferences() {
         super();
-
+        
+        pref.disallowSave();
         final JList list = new JList(choices);
         JScrollPane listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
@@ -74,6 +79,7 @@ public class TabbedPreferences extends AppConfigBase {
                     withrottlePrefsPanel.storeValues();
                     apps.FileLocationPane.save();
                     savePressed();
+                    pref.allowSave();
                 }
             });
         buttonpanel.add(save);
@@ -81,7 +87,6 @@ public class TabbedPreferences extends AppConfigBase {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         ArrayList<Object> connList=null;
         int count = 0;
-        
         connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.JmrixConfigPane.class);
         if(connList!=null){
             for (int x = 0; x<connList.size(); x++){
@@ -93,17 +98,19 @@ public class TabbedPreferences extends AppConfigBase {
                     count++;
                 }
             }
-        
-        } else {
-            connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-            if (connList!=null){
-                for (int x = 0; x<connList.size(); x++){
-                    /*This extra check is here a some of the original code automatically created four connection instances
-                    therefore we need to filter out those that are set to none.*/
-                    if(!(jmri.jmrix.JmrixConfigPane.instance(x).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
-                        addConnection(count, x);
-                        count++;
-                    }
+        }
+        /**By default 4 sets of jmrixconfigpanes are created at start up.  However
+         * if there are more than 4 connections, the 5+ connections do not have
+         * a jmrixconfigpane instance created, thus we need to pick those up.
+         */
+        connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        if (connList!=null){
+            for (int x = 0; x<connList.size(); x++){
+                /*This extra check is here a some of the original code automatically created four connection instances
+                therefore we need to filter out those that are set to none.*/
+                if(!(jmri.jmrix.JmrixConfigPane.instance(count).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
+                    addConnection(count, count);
+                    count++;
                 }
             }
         }
@@ -139,7 +146,7 @@ public class TabbedPreferences extends AppConfigBase {
         JTabbedPane displayPanel = new JTabbedPane();
         JTabbedPane rosterPanel = new JTabbedPane();
         JTabbedPane filePanel = new JTabbedPane();
-
+        
         detailpanel.add(defaultsPanel, "DEFAULTS");
         detailpanel.add(startupPanel, "STARTUP");
         detailpanel.add(displayPanel, "DISPLAY");
@@ -188,7 +195,9 @@ public class TabbedPreferences extends AppConfigBase {
         add(detailpanel);
         
         list.setSelectedIndex(0);
+
     }
+    
     
     void selection(String View){
         CardLayout cl = (CardLayout) (detailpanel.getLayout());
@@ -260,6 +269,7 @@ public class TabbedPreferences extends AppConfigBase {
         p1.add(b);
         p.add(p1);
         String title;
+
         if (JmrixConfigPane.instance(instance).getConnectionName()!=null){
             title=JmrixConfigPane.instance(instance).getConnectionName();
         } else if((JmrixConfigPane.instance(instance).getCurrentProtocolName()!=null) && (!JmrixConfigPane.instance(instance).getCurrentProtocolName().equals(JmrixConfigPane.NONE))){
@@ -274,6 +284,7 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             }
         }
+
         //If the connection is disabled we put it the tab name in brackets.
         //For a future release
 
@@ -284,6 +295,15 @@ public class TabbedPreferences extends AppConfigBase {
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
         connectionPanel.setToolTipTextAt(tabPosition, title);
+        //For a future release
+        /*if(ConnectionStatus.instance().isConnectionOk(JmrixConfigPane.instance(instance).getCurrentProtocolInfo())){
+            connectionPanel.setForegroundAt(tabPosition, Color.black);
+        } else {
+            connectionPanel.setForegroundAt(tabPosition, Color.red);
+        }
+        if(JmrixConfigPane.instance(instance).getDisabled()){
+            connectionPanel.setForegroundAt(tabPosition, Color.ORANGE);
+        }*/
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
 //        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
         items.add(JmrixConfigPane.instance(instance));
@@ -302,6 +322,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     void newConnectionTab(){
+        pref.disallowSave();
         JComponent p = new JPanel();
         p.add(Box.createVerticalGlue());
 
@@ -319,6 +340,7 @@ public class TabbedPreferences extends AppConfigBase {
     //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
     //left here until a move is made to 1.6 or an alternative method is used.
     private void removeTab(ActionEvent e, JComponent c, int x){
+        pref.disallowSave();
         int i;
         // indexOfTabComponent is not supported in java 1.5
         //i = connectionPanel.indexOfTabComponent(c);
