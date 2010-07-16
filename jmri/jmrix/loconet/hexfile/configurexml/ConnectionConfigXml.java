@@ -3,7 +3,6 @@ package jmri.jmrix.loconet.hexfile.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
-import jmri.jmrix.loconet.hexfile.LnHexFilePort;
 
 import org.jdom.Element;
 
@@ -18,7 +17,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -88,6 +87,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
         // register, so can be picked up
         register();
+        f.configure();
         return true;
     }
 

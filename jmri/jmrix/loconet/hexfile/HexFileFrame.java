@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.31 $
+ * @version                     $Revision: 1.32 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -107,7 +107,7 @@ public class HexFileFrame extends JmriJFrame {
         port.setDelay(Integer.valueOf(delayField.getText()).intValue());
 
         // and make the connections
-        configure();
+        //configure();
 
     }
 
