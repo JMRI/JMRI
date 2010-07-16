@@ -14,7 +14,8 @@ import javax.swing.JTextField;
  *
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2007
- * @version	$Revision: 1.2 $
+ * @author      Matthew Harris  Copyright (C) 2008, 2010
+ * @version	$Revision: 1.3 $
  */
 public class RosterConfigPane extends JPanel {
 

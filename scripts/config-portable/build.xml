@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004 -->
-<!-- Revision $Revision: 1.2 $ -->
+<!-- Revision $Revision: 1.3 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -44,11 +44,14 @@
   <!-- set global properties for this build -->
   <property name="source" value="src"/>
   <property name="target" value="classes"/>
-  <property name="jartarget" value=".."/>
+  <property name="jartarget" value="."/>
   
   <path id="project.class.path">
     <pathelement location=".." />
-    <pathelement location="C:\Program Files\JMRI\jmri.jar" />
+    <!-- To compile, this requires checking-out the "scripts" CVS target -->
+    <!-- alongside the "all" target - see README for further details and -->
+    <!-- for JMRI to have been compiled                                  -->
+    <pathelement location="../../java/classes/" />
     <pathelement location="${target}/" />  <!-- last to check for name collisions -->
   </path>
 
