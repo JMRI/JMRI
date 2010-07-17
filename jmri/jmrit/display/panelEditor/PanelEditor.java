@@ -576,13 +576,12 @@ public class PanelEditor extends Editor implements ItemListener {
     * and after the items that pertain only to specific Positionable
     * types.
     */
-    JPopupMenu popup = new JPopupMenu();
 
     protected void showPopUp(Positionable p, MouseEvent event) {
         if (!((JComponent)p).isVisible()) {
             return;     // component must be showing on the screen to determine its location
         }
-        //JPopupMenu popup = new JPopupMenu();
+        JPopupMenu popup = new JPopupMenu();
 
         if (p.isEditable()) {
             // items for all Positionables
@@ -638,11 +637,6 @@ public class PanelEditor extends Editor implements ItemListener {
             p.showPopUp(popup);
         }
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
-    }
-
-    protected void hidePopUp(){
-        popup.setVisible(false);
-        popup=null;
     }
 
     public void showToolTip(Positionable selection, MouseEvent event) {
