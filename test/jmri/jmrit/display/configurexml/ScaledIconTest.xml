@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>2</major>
-    <minor>10</minor>
+    <minor>11</minor>
     <test>6</test>
     <modifier></modifier>
   </jmriversion>
@@ -67,6 +67,6 @@
     <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 01 22:53:23 PDT 2010 $Id: ScaledIconTest.xml,v 1.14 2010-07-13 03:20:46 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 01 22:53:23 PDT 2010 $Id: ScaledIconTest.xml,v 1.15 2010-07-18 20:05:47 jacobsen Exp $-->
 </layout-config>
 

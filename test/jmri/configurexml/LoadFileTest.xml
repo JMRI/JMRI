@@ -3,7 +3,7 @@
 <layout-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/layout-2-9-6.xsd">
   <jmriversion>
     <major>2</major>
-    <minor>10</minor>
+    <minor>11</minor>
     <test>6</test>
     <modifier>+dev</modifier>
   </jmriversion>
@@ -147,6 +147,6 @@
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.24 2010-07-13 03:20:45 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.25 2010-07-18 20:05:47 jacobsen Exp $-->
 </layout-config>
 
