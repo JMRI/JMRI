@@ -14,7 +14,7 @@ import jmri.util.JmriJFrame;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
 
@@ -76,6 +76,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
     protected int series = 0;
     protected double speed = 0;
     protected double old_speed = 0;
+    protected double old_display_speed = 0;
     protected double speed_acc = 0;
     protected double speed_ave = 0;
     protected int range = 1;
@@ -96,7 +97,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
     protected static final int RANGE2HI = 20;
     protected static final int RANGE3LO = 16;
     protected static final int RANGE3HI = 9999;
-    protected static final int[] filter_length = {0, 3, 10, 20};
+    protected static final int[] filter_length = {0, 2, 5, 10};
     
     protected boolean timerRunning = false;
 
@@ -173,7 +174,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         speedTextField.setFont(f);
         speedTextField.setHorizontalAlignment(JTextField.RIGHT);
         speedTextField.setColumns(3);
-        speedTextField.setText("0");
+        speedTextField.setText("0.0");
         speedTextField.setVisible(true);
         speedTextField.setToolTipText("Speed will be displayed here");
 
@@ -188,12 +189,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         // Listen to change of units
         mphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                calcSpeed();
+//                calcSpeed();
             }
         });
         kphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                calcSpeed();
+//                calcSpeed();
             }
         });
 
@@ -228,7 +229,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
      * @param l
      */
     public synchronized void reply(SpeedoReply l) {  // receive a reply message and log it
-        log.debug("Speedo reply " + l.toString());
+        //log.debug("Speedo reply " + l.toString());
         count = l.getCount();
         series = l.getSeries();
         if (count > 0) {
@@ -256,7 +257,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         }
         if (timerRunning == false) {
             // first reply starts the timer
-            startTimer();
+            startReplyTimer();
+            startDisplayTimer();
             timerRunning = true;
         } else {
             // subsequnet replies restart it
@@ -280,7 +282,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating speed " + ae);
             }
-//            log.info("Count: "+count+" Frequency: "+f+" Speed: "+speed);
             // Averaging function used for speed is
             // S(t) = S(t-1) - [S(t-1)/N] + speed
             // A(t) = S(t)/N
@@ -292,9 +293,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
             // Re-arranged
             // S(t) = S(t-1) - A(t-1) + speed
             // A(t) = S(t)/N
-            speed_acc = speed_acc - speed_ave + speed;
+            // If speed reading is wildly out then use current average to filter
+            // out mechanical jitter in locos and readers
+            if ((speed > old_speed*.85) && (speed < old_speed*1.15)) {
+                speed_acc = speed_acc - speed_ave + speed;
+            } else {
+                speed_acc = speed_acc - speed_ave + speed_ave;
+            }
             speed_ave = speed_acc/filter_length[range];
-//            log.info(" Acc: "+speed_acc+" Ave: "+speed_ave+" range: "+range);
+            log.info("Speed: "+speed+" Ave: "+speed_ave);
             // When we switch range we must compensate the current accumulator
             // value for the longer filter.
             switch (range) {
@@ -321,7 +328,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
                     }
                     break;
             }
-            showSpeed(speed_ave, 0);
+//            showSpeed(speed_ave, 0);
+            old_speed = speed;
         }
     }
 
@@ -332,14 +340,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         if (series > 0) {
             if ((speed < 0) || (speed > 999)) {
                 log.error("Calculated speed out of range: " + speed);
-                speedTextField.setText("Out of Range!");
+                speedTextField.setText("999");
             } else {
                 // Final smoothing as applied by Bachrus Console. Don't update display
                 // unless speed has changed more than 4%
-                if ((speed > old_speed*1.02) || (speed < old_speed*1.02) || force > 0) {
-                    speedTextField.setText(MessageFormat.format("{0,number,###}", speed));
+                if ((speed > old_display_speed*1.02) || (speed < old_display_speed*0.98) || force > 0) {
+                    speedTextField.setText(MessageFormat.format("{0,number,##0.0}", speed));
                     speedTextField.setHorizontalAlignment(JTextField.RIGHT);
-                    old_speed = speed;
+                    old_display_speed = speed;
                 }
             }
         }
@@ -349,7 +357,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
 
 	// Once we receive a speedoReply we expect them regularly, at
     // least once every 4 seconds
-    protected void startTimer() {
+    protected void startReplyTimer() {
         replyTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 replyTimeout();
@@ -367,8 +375,29 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener {
         speed = 0;
         speed_acc = 0;
         speed_ave = 0;
-        old_speed = 0;
+        old_display_speed = 0;
         showSpeed(speed, 1);
+    }
+
+    javax.swing.Timer displayTimer = null;
+
+	// A timer is used to update the display every .25s
+    protected void startDisplayTimer() {
+        displayTimer = new javax.swing.Timer(250, new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                displayTimeout();
+            }
+        });
+        displayTimer.setRepeats(true);     // refresh until stopped by dispose
+        displayTimer.start();
+    }
+
+    /**
+     * Internal routine to update the
+     */
+    synchronized protected void displayTimeout() {
+        //log.info("Display timeout");
+        showSpeed(speed_ave, 0);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoConsoleFrame.class.getName());
