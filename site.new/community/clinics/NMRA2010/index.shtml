@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.4 2010-06-28 01:15:10 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.5 2010-07-19 02:00:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>JMRI: NMRA 2010 Clinics</TITLE>
@@ -31,10 +31,12 @@ clinic schedule hasn't been issued yet, but we have received tentative times for
 our clinics.
 
 <h3>Tuesday, July 13, 2010</h3>
-<p>1:00 PM - <b>Intro to JMRI and PanelPro's Layout Editor</b>, Dave Duchamp, Dick Bronson, and Bob Jacobsen
+<p>1:00 PM - <b>Intro to JMRI and PanelPro's Layout Editor</b>, Dave Duchamp
+    <a href="JMRILayoutEditor2010.pdf">PDF slides</a> (7.6MB), <a href="LayoutEditor2010.xml">sample panel file</a> (120kb)
 <p>2:30 PM - <b>Introduction To Layout Control With JMRI PanelPro</b>, Dick Bronson, Dave Duchamp, and Bob Jacobsen
 <h3>Wednesday, July 14, 2010</h3>
-<p>1:00 PM - <b>Running Trains with JMRI's Dispatcher</b>, Dave Duchamp, Dick Bronson, and Bob Jacobsen
+<p>1:00 PM - <b>Running Trains with JMRI's Dispatcher</b>, Dave Duchamp
+    <a href="DispatcherClinic2010.pdf">PDF slides</a> (4MB), <a href="Dispatcher2010.xml">sample panel file</a> (200kb)
 <p>2:30 PM - <b>Aspect Based Signaling With JMRI PanelPro</b>, Dick Bronson, Bob Jacobsen, and Dave Duchamp
 <p>4:00 PM - <b>Create a Detailed CTC Machine Model With JMRI PanelPro</b>, Dick Bronson, Dave Duchamp, and Bob Jacobsen
 <p>7:00 PM - <b>JMRI - New and Advanced Features</b>, Bob Jacobsen, Dave Duchamp, and Dick Bronson
