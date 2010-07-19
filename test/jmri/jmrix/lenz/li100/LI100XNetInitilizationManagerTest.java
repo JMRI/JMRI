@@ -1,6 +1,7 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetInterfaceScaffold;
 import jmri.jmrix.lenz.XNetListenerScaffold;
 
@@ -14,7 +15,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetInitilizationManager class
  * @author			Paul Bender
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LI100XNetInitilizationManagerTest extends TestCase {
 
@@ -24,7 +25,8 @@ public class LI100XNetInitilizationManagerTest extends TestCase {
                 XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
                 XNetListenerScaffold l = new XNetListenerScaffold();
 
-        LI100XNetInitilizationManager m = new LI100XNetInitilizationManager(){
+        XNetSystemConnectionMemo memo=new XNetSystemConnectionMemo(t);
+        LI100XNetInitilizationManager m = new LI100XNetInitilizationManager(memo){
             protected int getInitTimeout() {
                 return 50;   // shorten, because this will fail & delay test
             }  
@@ -32,6 +34,7 @@ public class LI100XNetInitilizationManagerTest extends TestCase {
         Assert.assertNotNull("exists", t );
         Assert.assertNotNull("exists", l );
         Assert.assertNotNull("exists", m );
+        Assert.assertNotNull("exists", memo );
         jmri.util.JUnitAppender.assertWarnMessage("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
     }
 
