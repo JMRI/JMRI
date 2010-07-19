@@ -5,7 +5,7 @@ package jmri.jmrix.lenz.ztc640;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -23,8 +23,9 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a ZTC640 connected via an FTDI virtual 
  *              comm port. Normally controlled by the lenz.ztc640.ZTC640Frame 
  *              class.
- * @author			Bob Jacobsen   Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003-2006
- * @version			$Revision: 1.16 $
+ * @author			Bob Jacobsen   Copyright (C) 2002
+ * @author                      Paul Bender, Copyright (C) 2003-2010
+ * @version			$Revision: 1.17 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -204,13 +205,13 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
+        XNetTrafficController packets = new ZTC640XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation
         // packets.startThreads();
-        
-        new XNetInitilizationManager();
+        adaptermemo.setXNetTrafficController(packets);
+        new XNetInitilizationManager(adaptermemo);
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

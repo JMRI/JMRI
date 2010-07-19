@@ -5,7 +5,7 @@ package jmri.jmrix.lenz.liusbserver;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetPortController;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 import jmri.jmrix.lenz.XNetReply;
 
@@ -23,8 +23,8 @@ import java.io.*;
  * The LIUSB Server disconnects port 5550 if another device puts the system 
  * into service mode. 
  *
- * @author			Paul Bender (C) 2009
- * @version			$Revision: 1.6 $
+ * @author			Paul Bender (C) 2009-2010
+ * @version			$Revision: 1.7 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -113,11 +113,14 @@ public class LIUSBServerAdapter extends XNetPortController {
 	public void configure() {
             if(log.isDebugEnabled()) log.debug("configure called");
             // connect to a packetizing traffic controller
-            AbstractMRTrafficController packets = (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
+            XNetTrafficController packets = (new LIUSBServerXNetPacketizer(new LenzCommandStation()));
             packets.connectPort(this);
+
 
        	    // start operation
             // packets.startThreads();
+            adaptermemo.setXNetTrafficController(packets);
+ 
             commThread = new Thread(new Runnable () {
        public void run(){ // start a new thread
        // this thread has one task.  It repeatedly reads from the two incomming
@@ -167,7 +170,7 @@ public class LIUSBServerAdapter extends XNetPortController {
             commThread.start();
             bcastThread.start();
 
-            new XNetInitilizationManager();
+            new XNetInitilizationManager(adaptermemo);
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	

@@ -9,11 +9,13 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
     protected Thread initThread = null;
+
+    protected XNetSystemConnectionMemo systemMemo = null;
     
     /**
      * Define timeout used during initialization
@@ -22,10 +24,11 @@ abstract public class AbstractXNetInitilizationManager {
         return 30000;
     }
     
-    public AbstractXNetInitilizationManager() {
+    public AbstractXNetInitilizationManager(XNetSystemConnectionMemo memo) {
 	/* spawn a thread to request version information and wait for the 
 	   command station to respond */
 	if(log.isDebugEnabled()) log.debug("Starting XPressNet Initilization Process");
+        systemMemo=memo;
 	initThread= new Thread(new XNetInitilizer(this));
 
 	// Since we can't currently reconfigure the user interface after  
@@ -63,15 +66,14 @@ abstract public class AbstractXNetInitilizationManager {
       initTimer = setupInitTimer();
       
          // Register as an XPressNet Listener
-	    XNetTrafficController.instance().addXNetListener(XNetInterface.CS_INFO,this);
+	    systemMemo.getXNetTrafficController().addXNetListener(XNetInterface.CS_INFO,this);
 
          //Send Information request to LI100/LI100
          /* First, we need to send a request for the Command Station
             hardware and software version */
 	    XNetMessage msg=XNetMessage.getCSVersionRequestMessage();
           //Then Send the version request to the controller
-          XNetTrafficController.instance().sendXNetMessage(msg,this);	  
-
+          systemMemo.getXNetTrafficController().sendXNetMessage(msg,this);	  
 	}
 
     protected javax.swing.Timer setupInitTimer() {
@@ -121,10 +123,10 @@ abstract public class AbstractXNetInitilizationManager {
               // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
-   	        XNetTrafficController.instance()
+   	        systemMemo.getXNetTrafficController()
                                      .getCommandStation()
                                      .setCommandStationSoftwareVersion(l);
-  	        XNetTrafficController.instance()
+  	        systemMemo.getXNetTrafficController()
                                      .getCommandStation()
                                      .setCommandStationType(l);
 		finish();
@@ -143,7 +145,7 @@ abstract public class AbstractXNetInitilizationManager {
        }
  
        public void dispose() {
-          XNetTrafficController.instance().removeXNetListener(XNetInterface.CS_INFO,this);
+          systemMemo.getXNetTrafficController().removeXNetListener(XNetInterface.CS_INFO,this);
        }
     }
 

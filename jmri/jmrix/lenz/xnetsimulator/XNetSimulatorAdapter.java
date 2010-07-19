@@ -9,7 +9,7 @@ import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 import jmri.jmrix.ConnectionStatus;
 
@@ -31,8 +31,8 @@ import java.io.PipedOutputStream;
  *NOTE: Some material in this file was modified from other portions of the 
  *      support infrastructure.
  * 
- * @author			Paul Bender, Copyright (C) 2009
- * @version			$Revision: 1.8 $
+ * @author			Paul Bender, Copyright (C) 2009-2010
+ * @version			$Revision: 1.9 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -93,15 +93,18 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
      */
     public void configure() {
         // connect to a packetizing traffic controller
-        AbstractMRTrafficController packets = new XNetPacketizer(new LenzCommandStation());
+        XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
         
         // start operation
         // packets.startThreads();
+
+        adaptermemo.setXNetTrafficController(packets);
+ 
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitilizationManager();
+        new XNetInitilizationManager(adaptermemo);
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

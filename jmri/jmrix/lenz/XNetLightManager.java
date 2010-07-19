@@ -13,18 +13,22 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class XNetLightManager extends AbstractLightManager {
 
-    public XNetLightManager() {
-        _instance = this;
+    private XNetTrafficController tc = null;
+    private String prefix = null;
+
+    public XNetLightManager(XNetTrafficController tc,String prefix) {
+        this.prefix=prefix;
+        this.tc=tc;
     }
 
     /**
-     *  Returns the system letter for Loconet
+     *  Returns the system letter for XPressNet 
      */
-    public String getSystemPrefix() { return "X"; }
+    public String getSystemPrefix() { return prefix; }
     
     /**
      * Method to create a new Light based on the system name
@@ -38,9 +42,9 @@ public class XNetLightManager extends AbstractLightManager {
 		int bitNum = getBitFromSystemName(systemName);
 		if (bitNum == 0) return (null);
         // Normalize the systemName
-		String sName = "XL"+bitNum;   // removes any leading zeros
+		String sName = prefix+bitNum;   // removes any leading zeros
 		// make the new Light object
-		lgt = new XNetLight(sName,userName); 
+		lgt = new XNetLight(tc,this,sName,userName); 
         return lgt;
     }    
 	
@@ -49,15 +53,16 @@ public class XNetLightManager extends AbstractLightManager {
      */
 	public int getBitFromSystemName (String systemName) {
         // validate the system Name leader characters
-        if ( (systemName.charAt(0) != 'X') || (systemName.charAt(1) != 'L') ) {
-            // here if an illegal loconet light system name 
-            log.error("illegal character in header field of loconet light system name: "+systemName);
+        if ( (!systemName.startsWith(getSystemPrefix()+"L")) ) {
+            // here if an illegal XPressNet light system name 
+            log.error("illegal character in header field of XPressNet light system name: "+systemName);
             return (0);
         }
 	// name must be in the XLnnnnn format
         int num = 0;
 		try {
-			num = Integer.valueOf(systemName.substring(2)).intValue();
+			num = Integer.valueOf(systemName.substring(
+                                  getSystemPrefix().length()+1,systemName.length())).intValue();
 		}
 		catch (Exception e) {
 			log.error("illegal character in number field of system name: "+systemName);
@@ -102,11 +107,10 @@ public class XNetLightManager extends AbstractLightManager {
     /** 
      * Allow access to XNetLightManager
      */
+    @Deprecated
     static public XNetLightManager instance() {
-        if (_instance == null) _instance = new XNetLightManager();
-        return _instance;
+        return null;
     }
-    private static XNetLightManager _instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManager.class.getName());
 

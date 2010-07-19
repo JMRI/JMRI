@@ -5,7 +5,7 @@ package jmri.jmrix.lenz.xntcp;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetPortController;
-import jmri.jmrix.AbstractMRTrafficController;
+import jmri.jmrix.lenz.XNetTrafficController;
 
 import java.io.*;
 import java.util.*;
@@ -15,7 +15,7 @@ import jmri.jmrix.ConnectionStatus;
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  */
@@ -227,10 +227,10 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 	 */
 	public void configure() {
             // connect to a packetizing traffic controller
-            AbstractMRTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
+            XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
-
-            new XNetInitilizationManager();
+            adaptermemo.setXNetTrafficController(packets);
+            new XNetInitilizationManager(adaptermemo);
 		
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	}

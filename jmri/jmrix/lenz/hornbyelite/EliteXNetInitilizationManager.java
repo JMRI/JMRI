@@ -3,6 +3,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
 import jmri.jmrix.lenz.XNetTrafficController;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * This class performs Command Station dependant initilization for 
@@ -11,27 +12,33 @@ import jmri.jmrix.lenz.XNetTrafficController;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
+
+    public EliteXNetInitilizationManager(XNetSystemConnectionMemo memo){
+      super(memo);
+    }
+
 
     protected void init() {
 	if(log.isDebugEnabled()) log.debug("Init called");
         @SuppressWarnings("unused")
-		float CSSoftwareVersion = XNetTrafficController.instance()
+		float CSSoftwareVersion = systemMemo.getXNetTrafficController()
                                        .getCommandStation()
                                        .getCommandStationSoftwareVersion();
         @SuppressWarnings("unused")
-		int CSType = XNetTrafficController.instance()
+		int CSType = systemMemo.getXNetTrafficController()
                                           .getCommandStation()
                                           .getCommandStationType();
 
         /* First, we load things that should work on all systems */
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager());
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager(systemMemo));
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetThrottleManager());
             
 	if (log.isDebugEnabled()) log.debug("Command Station is Hornby Elite (manually identified).");
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager());
+        jmri.InstanceManager.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
         jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.hornbyelite.EliteXNetProgrammer.instance()));
 
 	if(log.isDebugEnabled()) log.debug("XPressNet Initilization Complete");

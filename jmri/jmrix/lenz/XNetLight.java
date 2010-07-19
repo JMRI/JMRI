@@ -16,17 +16,22 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008-2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
+
+    private XNetTrafficController tc=null;
+    private XNetLightManager lm=null;
 
     /**
      * Create a Light object, with only system name.
      * <P>
      * 'systemName' was previously validated in LnLightManager
      */
-    public XNetLight(String systemName) {
+    public XNetLight(XNetTrafficController tc,XNetLightManager lm,String systemName) {
         super(systemName);
+        this.tc=tc;
+        this.lm=lm;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -35,8 +40,10 @@ public class XNetLight extends AbstractLight implements XNetListener {
      * <P>
      * 'systemName' was previously validated in XNetLightManager
      */
-    public XNetLight(String systemName, String userName) {
+    public XNetLight(XNetTrafficController tc,XNetLightManager lm,String systemName, String userName) {
         super(systemName, userName);
+        this.tc=tc;
+        this.lm=lm;
         // Initialize the Light
         initializeLight(systemName);
     }
@@ -44,15 +51,15 @@ public class XNetLight extends AbstractLight implements XNetListener {
    /*
     *  Initilize the light object's parameters
     */
-    private void initializeLight(String systemName) {
+    private synchronized void initializeLight(String systemName) {
         // Save system name
         mSystemName = systemName;
         // Extract the Bit from the name
-        mAddress = XNetLightManager.instance().getBitFromSystemName(systemName);
+        mAddress = lm.getBitFromSystemName(systemName);
         // Set initial state
         setState( OFF );
         // At construction, register for messages
-        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
+        tc.addXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
 
    }
         
@@ -66,7 +73,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
      *  System dependent instance variables
      */
     String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
+    //protected int mState = OFF;  // current state of this light
     //private int mOldState =mState; // save the old state
     int mAddress = 0;            // accessory output address
 
@@ -80,7 +87,7 @@ public class XNetLight extends AbstractLight implements XNetListener {
     /**
      *  Return the current state of this Light
      */
-    public int getState() { return mState; }
+    synchronized public int getState() { return mState; }
 
     /**
      *  Set the current state of this Light
@@ -93,15 +100,13 @@ public class XNetLight extends AbstractLight implements XNetListener {
 	   return;
         }
 
-        // find the command station
-        //LenzCommandStation cs = XNetTrafficController.instance().getCommandStation();
         // get the right packet
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mAddress,
                                                   (newState & ON)!=0,
                                                   (newState & OFF)!=0,
                                                   true);
         InternalState=COMMANDSENT;         
-        XNetTrafficController.instance().sendXNetMessage(msg, this);
+        tc.sendXNetMessage(msg, this);
 
         if (newState!=mState) {
                 int oldState = mState;
@@ -181,7 +186,7 @@ l);
                                                   mState==ON,
                                                   mState==OFF,
                                                   false);
-            XNetTrafficController.instance().sendXNetMessage(msg, this);
+            tc.sendXNetMessage(msg, this);
             
             // Set the known state to the commanded state.
             synchronized(this) {

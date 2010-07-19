@@ -12,13 +12,18 @@ import jmri.util.SystemType;
  * <p>
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @author			Paul Bender    Copyright (C) 2004
- * @version			$Revision: 2.7 $
+ * @author			Paul Bender    Copyright (C) 2004,2010
+ * @version			$Revision: 2.8 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
+
+    public XNetPortController(){
+       super();
+       adaptermemo = new XNetSystemConnectionMemo();
+    }
+
     // base class. Implementations will provide InputStream and OutputStream
-    // objects to XNetTrafficController classes, who in turn will deal in messages.
-    
+    // objects to XNetTrafficController classes, who in turn will deal in messages.    
     // returns the InputStream from the port
     public abstract DataInputStream getInputStream();
     
@@ -53,6 +58,10 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortCo
 
     protected String [] validOption2 = new String[]{"yes", "no"};
     protected boolean CheckBuffer = false;
+
+    protected XNetSystemConnectionMemo adaptermemo = null;
+
+
 }
 
 

@@ -4,7 +4,7 @@
  * Description:		PowerManager implementation for controlling layout power
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 
 package jmri.jmrix.lenz;
@@ -14,9 +14,9 @@ import jmri.PowerManager;
 
 public class XNetPowerManager implements PowerManager, XNetListener {
 
-	public XNetPowerManager() {
+	public XNetPowerManager(XNetSystemConnectionMemo memo) {
 		// connect to the TrafficManager
-		tc = XNetTrafficController.instance();
+		tc = memo.getXNetTrafficController();
 		tc.addXNetListener(XNetInterface.CS_INFO, this);
 		// request the current command station status
 		tc.sendXNetMessage(XNetMessage.getCSStatusRequestMessage(),this);
