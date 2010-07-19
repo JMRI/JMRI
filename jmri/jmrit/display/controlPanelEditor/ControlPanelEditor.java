@@ -676,6 +676,7 @@ public class ControlPanelEditor extends Editor {
                 util.setTextFontMenu(popup);
                 util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
+                util.copyItem(popup);
                 popupSet = true;
             }
             if (popupSet) { 
