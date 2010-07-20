@@ -14,7 +14,7 @@ import jmri.TurnoutManager;
  *
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.3 $
+ *	@version $Revision: 1.4 $
  */
 
 public class TurnoutController extends AbstractController implements PropertyChangeListener{
@@ -64,6 +64,14 @@ public class TurnoutController extends AbstractController implements PropertyCha
                     }else{
                         t.setCommandedState(Turnout.CLOSED);
                     }
+                }else if (message.charAt(1) == 'C'){
+                    Turnout t = manager.getBySystemName(message.substring(2));
+                    t.setCommandedState(Turnout.CLOSED);
+
+                }else if (message.charAt(1) == 'T'){
+                    Turnout t = manager.getBySystemName(message.substring(2));
+                    t.setCommandedState(Turnout.THROWN);
+
                 }else log.warn("Message \""+message+"\" unknown.");
             }
         }catch (NullPointerException exb){
