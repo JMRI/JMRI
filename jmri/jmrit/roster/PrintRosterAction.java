@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 import javax.swing.*;
+import java.io.IOException;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class PrintRosterAction  extends AbstractAction {
 
@@ -40,7 +41,6 @@ public class PrintRosterAction  extends AbstractAction {
     
 
     public void actionPerformed(ActionEvent e) {
-
         // obtain a HardcopyWriter to do this
         Roster r = Roster.instance();
         String title = "DecoderPro Roster";
@@ -62,6 +62,17 @@ public class PrintRosterAction  extends AbstractAction {
         ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         writer.write(icon.getImage(), new JLabel(icon));
+        //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
+        int height = icon.getImage().getHeight(null);
+        int blanks = (height-writer.getLineAscent())/writer.getLineHeight();
+        
+        try{
+            for(int i = 0; i<blanks; i++){
+                String s = "\n";
+                writer.write(s,0,s.length());
+            }
+        } catch (IOException ex) { log.warn("error during printing: "+ex);
+        }
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
@@ -74,8 +85,9 @@ public class PrintRosterAction  extends AbstractAction {
                         l.get(i).printEntry(writer);
                 }
             }
-            else
+            else {
                 l.get(i).printEntry(writer);
+            }
         }
 
         // and force completion of the printing

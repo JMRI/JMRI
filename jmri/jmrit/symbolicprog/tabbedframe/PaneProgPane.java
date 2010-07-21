@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.73 $
+ * @version   $Revision: 1.74 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1614,6 +1614,10 @@ public class PaneProgPane extends javax.swing.JPanel
         _indexedCvModel = null;
         _varModel = null;
     }
+
+    public boolean includeInPrint() { return print; }
+    public void includeInPrint(boolean inc) { print = inc; };
+    boolean print = false;
 
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything

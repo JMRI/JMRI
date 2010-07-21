@@ -16,7 +16,7 @@ import javax.swing.*;
  *
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller  Copyright (C) 2005
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class PrintAction  extends AbstractAction {
 
@@ -49,7 +49,7 @@ public class PrintAction  extends AbstractAction {
         // ask the frame to print it's content panes
         mFrame.printPanes(writer);
 
-        writer.close();
+        //writer.close();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintAction.class.getName());
