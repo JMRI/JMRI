@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -184,7 +184,8 @@ public class HardcopyWriter extends Writer {
         previewToolBar.add(closeButton);
         closeButton.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent actionEvent) {
-                page.dispose();
+                if (page!=null)
+                    page.dispose();
                 previewFrame.dispose();
             }
         });
@@ -310,6 +311,14 @@ public class HardcopyWriter extends Writer {
             job.end();
         }
     }
+    /** Dispose added so that a preview can be cancelled */
+    public void dispose(){
+        synchronized(this.lock) {
+            if (page!=null) page.dispose();
+            previewFrame.dispose();
+            job.end();
+        }
+    }
 
     public void setFontStyle(int style) {
 		synchronized (this.lock) {
@@ -327,7 +336,12 @@ public class HardcopyWriter extends Writer {
 		}
 	}
     
-
+    public int getLineHeight() { return this.lineheight; }
+    
+    public int getFontSize() { return this.fontsize; }
+    
+    public int getLineAscent() { return this.lineascent; }
+    
     public void setFontName(String name) {
 		synchronized (this.lock) {
 			// try to set a new font, but restore current one if it fails
