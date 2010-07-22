@@ -27,7 +27,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class PositionablePoint
@@ -220,7 +220,8 @@ public class PositionablePoint
 						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
 				});
-		}			
+		}
+        layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
 	}
 

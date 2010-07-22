@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class LayoutTurntable
@@ -278,6 +278,7 @@ public class LayoutTurntable
 					}
 				}
 			});
+        layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 

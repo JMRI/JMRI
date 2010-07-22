@@ -75,7 +75,7 @@ import javax.swing.*;
  * A link is required to be able to correctly interpret the use of signal heads.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutTurnout
@@ -1077,7 +1077,8 @@ public class LayoutTurnout
 					}
 				}
 			});
-		}			
+		}
+        layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
     }
 	

@@ -628,7 +628,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 popupSet = false;
             }
             p.setDisableControlMenu(popup);
-
+            
             // for Positionables with unique item settings
             p.showPopUp(popup);
 

@@ -23,7 +23,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -95,6 +95,22 @@ public class LayoutBlockManager extends AbstractManager {
         LayoutBlock block = getByUserName(name);
         if (block!=null) return block;
         return getBySystemName(name);
+    }
+
+    public LayoutBlock getLayoutBlock(Block block){
+        LayoutBlock lblock;
+        java.util.Iterator<String> iter = getSystemNameList().iterator();
+        while (iter.hasNext()) {
+            String sName = iter.next();
+            if (sName==null) {
+                log.error("System name null during scan of LayoutBlocks");
+            }
+            else {
+                    lblock = getBySystemName(sName);
+                    if (lblock.getBlock() == block) return lblock;
+            }
+        }
+        return null;
     }
 
     public LayoutBlock getBySystemName(String name) {

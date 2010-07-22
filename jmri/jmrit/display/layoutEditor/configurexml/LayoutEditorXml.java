@@ -5,6 +5,7 @@ import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.XmlAdapter;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.Positionable;
+import java.awt.Color;
 
 import java.util.List;
 import org.jdom.*;
@@ -15,7 +16,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -70,6 +71,11 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		panel.setAttribute("xoverlong", Float.toString((float)p.getXOverLong()));
 		panel.setAttribute("xoverhwid", Float.toString((float)p.getXOverHWid()));
 		panel.setAttribute("xovershort", Float.toString((float)p.getXOverShort()));
+        if (p.getBackgroundColor()!=null){
+            panel.setAttribute("redBackground", ""+p.getBackgroundColor().getRed());
+            panel.setAttribute("greenBackground", ""+p.getBackgroundColor().getGreen());
+            panel.setAttribute("blueBackground", ""+p.getBackgroundColor().getBlue());
+        }
 		p.resetDirty();
 
         // include contents (Icons and Labels)
@@ -389,6 +395,15 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
 		if ((a = element.getAttribute("defaultTrackColor"))!=null) {
 			panel.setDefaultTrackColor(a.getValue());
 		}
+        try {
+            int red = element.getAttribute("redBackground").getIntValue();
+            int blue = element.getAttribute("blueBackground").getIntValue();
+            int green = element.getAttribute("greenBackground").getIntValue();
+            panel.setBackgroundColor(new Color(red, green, blue));
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
 		// Set editor's option flags, load content after 
         // this so that individual item flags are set as saved
         panel.initView();

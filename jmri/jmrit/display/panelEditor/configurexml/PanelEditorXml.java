@@ -8,6 +8,7 @@ import jmri.jmrit.display.Positionable;
 import java.awt.Dimension;
 import java.awt.Point;
 import javax.swing.JFrame;
+import java.awt.Color;
 
 import java.util.List;
 import org.jdom.*;
@@ -16,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -50,6 +51,11 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
         panel.setAttribute("panelmenu", frame.getJMenuBar().isVisible()?"yes":"no");
         panel.setAttribute("scrollable", p.getScrollable());
+        if (p.getBackgroundColor()!=null){
+            panel.setAttribute("redBackground", ""+p.getBackgroundColor().getRed());
+            panel.setAttribute("greenBackground", ""+p.getBackgroundColor().getGreen());
+            panel.setAttribute("blueBackground", ""+p.getBackgroundColor().getBlue());
+        }
 
         // include contents
         List <Positionable> contents = p.getContents();
@@ -157,6 +163,17 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         if ((a = element.getAttribute("scrollable"))!=null)
             state = a.getValue();
         panel.setScroll(state);
+        
+                // set color if needed
+        try {
+            int red = element.getAttribute("redBackground").getIntValue();
+            int blue = element.getAttribute("blueBackground").getIntValue();
+            int green = element.getAttribute("greenBackground").getIntValue();
+            panel.setBackgroundColor(new Color(red, green, blue));
+        } catch ( org.jdom.DataConversionException e) {
+            log.warn("Could not parse color attributes!");
+        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+        }
         //set the (global) editor display widgets to their flag settings
         panel.initView();
 

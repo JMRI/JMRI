@@ -148,6 +148,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean delayedPopupTrigger = false; // Used to delay the request of a popup, on a mouse press as this may conflict with a drag event
 
     private double _paintScale = 1.0;   // scale for _targetPanel drawing
+    
+    private Color defaultBackgroundColor = Color.lightGray;
 
     // map of icon editor frames (incl, icon editor) keyed by name
     HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
@@ -161,7 +163,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
     }
-
+    
     public List <Positionable> getContents() {
         return _contents;
     }
@@ -224,6 +226,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     public final JFrame getTargetFrame() {
         return _targetFrame;
+    }
+    
+    public Color getBackgroundColor(){
+        TargetPane tmp = (TargetPane) _targetPanel;
+        return tmp.getBackgroundColor();
+    }
+    
+    public void setBackgroundColor(Color col){
+        TargetPane tmp = (TargetPane) _targetPanel;
+        tmp.setBackgroundColor(col);
+    }
+    
+    public void clearBackgroundColor(){
+        TargetPane tmp = (TargetPane) _targetPanel;
+        tmp.clearBackgroundColor();
     }
 
     /**
@@ -298,6 +315,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         public TargetPane() {
             setLayout(null);
         }
+        
         public void setSize(int width, int height) {
             if (_debug) log.debug("size now w="+width+", h="+height);
             this.h = height;
@@ -368,6 +386,21 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             if (_tooltip != null) {
                 _tooltip.paint(g2d, _paintScale);
             }
+        }
+        
+        public void setBackgroundColor(Color col){
+            setBackground(col);
+            setOpaque(true);
+        }
+        
+        public void clearBackgroundColor(){
+            setOpaque(false);
+        }
+        
+        public Color getBackgroundColor(){
+            if (isOpaque())
+                return getBackground();
+            return null;
         }
     }
     
@@ -2135,6 +2168,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     } else if (_selectionGroup!=null) {
                         showMultiSelectPopUp(event, _currentSelection);
                     } else {
+                        backgroundPopUp(event);
                         _currentSelection = null;
                     }
                 }
@@ -2174,10 +2208,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         } else {
             if ((event.isPopupTrigger()||delayedPopupTrigger) && !_dragging){
-                pasteItemPopUp(event);
-            }
-            else
+                if (_multiItemCopyGroup!=null)
+                    pasteItemPopUp(event);
+                else {
+                    backgroundPopUp(event);
+                    _currentSelection = null;
+                }
+            } 
+            else{
                 _currentSelection = null;
+                
+            }
         }
         /*if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
             amendSelectionGroup(_currentSelection, event);*/
@@ -2290,7 +2331,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             _currentSelection = null;
             if (event.isPopupTrigger()){
-                pasteItemPopUp(event);
+                if (_multiItemCopyGroup==null)
+                    pasteItemPopUp(event);
+                else
+                    backgroundPopUp(event);
             }
         }
         if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
@@ -2367,7 +2411,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { pasteItem(event); }
         });
+        setBackgroundMenu(popup);
         popup.add(edit);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    
+    protected void backgroundPopUp(MouseEvent event){
+        JPopupMenu popup = new JPopupMenu();
+        setBackgroundMenu(popup);
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
     
@@ -2428,6 +2479,68 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
         pasteItem = false;
         _targetPanel.repaint();
+    }
+    
+    public void setBackgroundMenu(JPopupMenu popup){
+        JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
+        makeColorMenu(edit);
+        popup.add(edit);
+    
+    }
+        
+    protected void makeColorMenu(JMenu colorMenu) {
+        ButtonGroup buttonGrp = new ButtonGroup();
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null);
+    }
+    
+    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
+                           final String name, Color color) {
+        ActionListener a = new ActionListener() {
+            //final String desiredName = name;
+            Color desiredColor;
+            public void actionPerformed(ActionEvent e) {
+                if(desiredColor!=null)
+                    setBackgroundColor(desiredColor);
+                else
+                    clearBackgroundColor();
+            }
+            ActionListener init (Color c) {
+                desiredColor = c;
+                return this;
+            }
+        }.init(color);
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+
+        if (color==null) { color = defaultBackgroundColor; }
+        setColorButton(getBackgroundColor(), color, r);
+        colorButtonGroup.add(r);
+        menu.add(r);
+    }
+    
+    protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
+        if (_debug)
+            log.debug("setColorButton: color="+color+" (RGB= "+(color==null?"":color.getRGB())+
+                      ") buttonColor= "+buttonColor+" (RGB= "+(buttonColor==null?"":buttonColor.getRGB())+")");
+        if (buttonColor!=null) {
+            if (color!=null && buttonColor.getRGB() == color.getRGB()) {
+                 r.setSelected(true);
+            } else r.setSelected(false);
+        } else {
+            if (color==null)  r.setSelected(true);
+            else  r.setSelected(false);
+        }
     }
     /*********************** Abstract Methods ************************/
 

@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class LayoutEditor extends Editor {
@@ -194,12 +194,16 @@ public class LayoutEditor extends Editor {
 	//private ButtonGroup bkColorButtonGroup = null;
 	private ButtonGroup trackColorButtonGroup = null;
     private ButtonGroup textColorButtonGroup = null;
+    private ButtonGroup backgroundColorButtonGroup = null;
 	private Color[] trackColors = new Color[13];
     private Color[] textColors = new Color[13];
+    private Color[] backgroundColors = new Color[13];
 	private JRadioButtonMenuItem[] trackColorMenuItems = new JRadioButtonMenuItem[13];
+    private JRadioButtonMenuItem[] backgroundColorMenuItems = new JRadioButtonMenuItem[13];
     private JRadioButtonMenuItem[] textColorMenuItems = new JRadioButtonMenuItem[13];
 	private int trackColorCount = 0;
     private int textColorCount = 0;
+    private int backgroundColorCount = 0;
 	
 	// Selected point information
     //private final static int TURNOUT = 1;      // possible object types
@@ -256,6 +260,7 @@ public class LayoutEditor extends Editor {
     private static float mainlineTrackWidth = 4.0F;
     private static float sideTrackWidth = 2.0F;
 	private Color defaultTrackColor = Color.black;
+    private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
     private String layoutName = "";
 	private double xScale = 1.0;
@@ -946,6 +951,23 @@ public class LayoutEditor extends Editor {
 					repaint();
                 }
             });
+            
+        JMenu backgroundColorMenu = new JMenu(rb.getString("SetBackgroundColor"));
+		backgroundColorButtonGroup = new ButtonGroup();
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Black"), Color.black);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("DarkGray"),Color.darkGray);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Gray"),Color.gray);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("LightGray"),Color.lightGray);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("White"),Color.white);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Red"),Color.red);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Pink"),Color.pink);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Orange"),Color.orange);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Yellow"),Color.yellow);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Green"),Color.green);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Blue"),Color.blue);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Magenta"),Color.magenta);
+		addBackgroundColorMenuEntry(backgroundColorMenu, rb.getString("Cyan"),Color.cyan);
+        optionMenu.add(backgroundColorMenu);
 		// add fast clock
         JMenuItem clockItem = new JMenuItem(rb.getString("AddFastClock"));
         optionMenu.add(clockItem);
@@ -1923,6 +1945,30 @@ public class LayoutEditor extends Editor {
 		setDirty(true);
 	}
 
+    void addBackgroundColorMenuEntry(JMenu menu, final String name, final Color color) {
+        ActionListener a = new ActionListener() {
+				//final String desiredName = name;
+				final Color desiredColor = color;
+				public void actionPerformed(ActionEvent e) { 
+					if (defaultBackgroundColor!=desiredColor) {
+						defaultBackgroundColor = desiredColor;
+                        setBackgroundColor(desiredColor);
+						setDirty(true);
+						repaint();
+					}
+				}
+			};
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+        backgroundColorButtonGroup.add(r);
+        if (defaultBackgroundColor == color) r.setSelected(true);
+        else r.setSelected(false);
+        menu.add(r);
+		backgroundColorMenuItems[backgroundColorCount] = r;
+		backgroundColors[backgroundColorCount] = color;
+		backgroundColorCount ++;
+    }
+    
     void addTrackColorMenuEntry(JMenu menu, final String name, final Color color) {
         ActionListener a = new ActionListener() {
 				//final String desiredName = name;
@@ -2075,6 +2121,8 @@ public class LayoutEditor extends Editor {
 		// initialize cursor position
         _anchorX = xLoc;
         _anchorY = yLoc;
+        _lastX = _anchorX;
+        _lastY = _anchorY;
 		calcLocation(event,0,0);
         if (isEditable()) {
 			boolean prevSelectionActive = selectionActive;
@@ -2567,7 +2615,6 @@ public class LayoutEditor extends Editor {
 		}
 		return null;
 	}
-	
 		
 	private PositionableLabel checkLabelImages(Point2D loc) {
            PositionableLabel l =null;
@@ -2780,6 +2827,7 @@ public class LayoutEditor extends Editor {
 				foundObject = null;
 				repaint();
 			}
+            createSelectionGroups();
         }
 		// check if controlling turnouts out of edit mode
 		else if ( ( selectedObject!=null) && (selectedPointType==TURNOUT_CENTER) && 
@@ -2928,7 +2976,7 @@ public class LayoutEditor extends Editor {
                 popupSet = false;
             }
             p.setDisableControlMenu(popup);
-
+            setShowAlignmentMenu(popup);
             // for Positionables with unique settings
             p.showPopUp(popup);
             setShowTooltipMenu(p, popup);
@@ -2942,6 +2990,7 @@ public class LayoutEditor extends Editor {
         }        
         popup.show((Component)p, p.getWidth()/2+(int)((getPaintScale()-1.0)*p.getX()),
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
+        /*popup.show((Component)p, event.getX(), event.getY());*/
     }
 
 	private long whenReleased = 0;  // used to identify event that was popup trigger
@@ -2968,9 +3017,547 @@ public class LayoutEditor extends Editor {
 				if (lo!=null) showPopUp(lo, event);
 			}		
 		}
+        if (event.isControlDown() && !event.isPopupTrigger()){
+            if (checkSelect(dLoc, false)) {
+			// show popup menu
+                switch (foundPointType) {
+                    case POS_POINT:
+                        amendSelectionGroup((PositionablePoint)foundObject);
+                        break;
+                    case TURNOUT_CENTER:
+                        amendSelectionGroup((LayoutTurnout)foundObject);
+                        break;
+                    case LEVEL_XING_CENTER:
+                        amendSelectionGroup((LevelXing)foundObject);
+                        break;
+                    case TURNTABLE_CENTER:
+                        amendSelectionGroup((LayoutTurntable)foundObject);
+                        break;
+                }
+            } else {
+            
+                PositionableLabel s = (PositionableLabel)checkSensorIcons(dLoc);
+				if (s!=null) {
+					amendSelectionGroup(s);
+				}
+                else {
+                    PositionableLabel sh = (PositionableLabel)checkSignalHeadIcons(dLoc);
+                    if (sh!=null) {
+                        amendSelectionGroup(sh);
+                    }
+                    else {
+                        PositionableLabel ms = (PositionableLabel)checkMultiSensors(dLoc);
+                        if (ms!=null) {
+                            amendSelectionGroup(ms);
+                        }
+                        else {
+                            PositionableLabel lb = checkLabelImages(dLoc);
+                            if (lb!=null) {
+                                amendSelectionGroup(lb);
+                            }
+                            else {
+                                PositionableLabel b = checkBackgrounds(dLoc);
+                                if (b!=null) {
+                                    amendSelectionGroup(b);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else if(selectionWidth==0 || selectionHeight==0){
+            clearSelectionGroups();
+        }
+        //thisPanel.setFocusable(true);
+        thisPanel.requestFocusInWindow();
         return;
 	}
     
+    private ArrayList<LayoutTurnout> _turnoutSelection = null; //new ArrayList<LayoutTurnout>();  // LayoutTurnouts
+	private ArrayList<PositionablePoint> _pointSelection = null; //new ArrayList<PositionablePoint>();  // PositionablePoint list
+	private ArrayList<LevelXing> _xingSelection = null; //new ArrayList<LevelXing>();  // LevelXing list
+	private ArrayList<LayoutTurntable> _turntableSelection = null; //new ArrayList<LayoutTurntable>(); // Turntable list
+    private ArrayList<Positionable> _positionableSelection = null;
+    
+    private void highLightSelection(Graphics2D g){
+        java.awt.Stroke stroke = g.getStroke();
+        Color color = g.getColor();
+        g.setColor(new Color(204, 207, 88));
+        g.setStroke(new java.awt.BasicStroke(2.0f));
+        if (_positionableSelection!=null){
+            for (int i = 0; i<_positionableSelection.size(); i++) {
+                Positionable c = _positionableSelection.get(i);
+                g.drawRect(_positionableSelection.get(i).getX(), _positionableSelection.get(i).getY(), _positionableSelection.get(i).maxWidth(), _positionableSelection.get(i).maxHeight());
+            }
+        }
+        // loop over all defined turnouts
+        if (_turnoutSelection!=null){
+            for (int i = 0; i<_turnoutSelection.size();i++) {
+                LayoutTurnout t = _turnoutSelection.get(i);
+                int minx = (int) Math.min(Math.min(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.min(t.getCoordsC().getX(), t.getCoordsD().getX()));
+                int miny = (int) Math.min(Math.min(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.min(t.getCoordsC().getY(), t.getCoordsD().getY()));
+                int maxx = (int) Math.max(Math.max(t.getCoordsA().getX(), t.getCoordsB().getX()),Math.max(t.getCoordsC().getX(), t.getCoordsD().getX()));
+                int maxy = (int) Math.max(Math.max(t.getCoordsA().getY(), t.getCoordsB().getY()),Math.max(t.getCoordsC().getY(), t.getCoordsD().getY()));
+                int width = maxx-minx;
+                int height = maxy-miny;
+                int x = (int) t.getCoordsCenter().getX()-(width/2);
+                int y = (int) t.getCoordsCenter().getY()-(height/2);
+                g.drawRect(x, y, width, height);
+                }
+        }
+        if (_xingSelection!=null){
+        // loop over all defined level crossings
+            for (int i = 0; i<_xingSelection.size();i++) {
+                LevelXing xing = _xingSelection.get(i);
+                int minx = (int) Math.min(Math.min(xing.getCoordsA().getX(), xing.getCoordsB().getX()),Math.min(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
+                int miny = (int) Math.min(Math.min(xing.getCoordsA().getY(), xing.getCoordsB().getY()),Math.min(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
+                int maxx = (int) Math.max(Math.max(xing.getCoordsA().getX(), xing.getCoordsB().getX()),Math.max(xing.getCoordsC().getX(), xing.getCoordsD().getX()));
+                int maxy = (int) Math.max(Math.max(xing.getCoordsA().getY(), xing.getCoordsB().getY()),Math.max(xing.getCoordsC().getY(), xing.getCoordsD().getY()));
+                int width = maxx-minx;
+                int height = maxy-miny;
+                int x = (int) xing.getCoordsCenter().getX()-(width/2);
+                int y = (int) xing.getCoordsCenter().getY()-(height/2);
+                g.drawRect(x, y, width, height);
+                }
+        }
+        // loop over all defined turntables
+        if (_turntableSelection!=null){
+            for (int i = 0; i<_turntableSelection.size();i++) {
+                LayoutTurntable tt = _turntableSelection.get(i);
+                Point2D center = tt.getCoordsCenter();
+                int x = (int) center.getX() - (int)tt.getRadius();
+                int y = (int) center.getY() - (int)tt.getRadius();
+                g.drawRect(x, y, ((int)tt.getRadius()*2), ((int)tt.getRadius()*2));
+            }
+        }
+        // loop over all defined Anchor Points and End Bumpers
+        if (_pointSelection!=null){
+            for (int i = 0; i<_pointSelection.size();i++) {
+                PositionablePoint p = _pointSelection.get(i);
+                Point2D coord = p.getCoords();
+                g.drawRect((int)p.getCoords().getX()-4, (int)p.getCoords().getY()-4, 9, 9);
+            }
+        }
+        g.setColor(color);
+        g.setStroke(stroke);
+    }
+ 
+    private void createSelectionGroups(){
+        List <Positionable> contents = getContents();
+        Rectangle2D selectRect = new Rectangle2D.Double (selectionX, selectionY, 
+                                                selectionWidth, selectionHeight);
+        for (int i = 0; i<contents.size(); i++) {
+            Positionable c = contents.get(i);
+            Point2D upperLeft = c.getLocation();
+            if (selectRect.contains(upperLeft)) {
+                if (_positionableSelection==null) _positionableSelection = new ArrayList<Positionable>();
+                _positionableSelection.add(c);
+            }
+        }
+        // loop over all defined turnouts
+        for (int i = 0; i<turnoutList.size();i++) {
+            LayoutTurnout t = turnoutList.get(i);
+            Point2D center = t.getCoordsCenter();
+            if (selectRect.contains(center)) {
+                if (_turnoutSelection==null) _turnoutSelection = new ArrayList<LayoutTurnout>();
+                _turnoutSelection.add(t);
+            }
+        }
+        // loop over all defined level crossings
+        for (int i = 0; i<xingList.size();i++) {
+            LevelXing x = xingList.get(i);
+            Point2D center = x.getCoordsCenter();
+            if (selectRect.contains(center)) {
+                if (_xingSelection==null) _xingSelection = new ArrayList<LevelXing>();
+                _xingSelection.add(x);
+            }
+        }
+        // loop over all defined turntables
+        for (int i = 0; i<turntableList.size();i++) {
+            LayoutTurntable x = turntableList.get(i);
+            Point2D center = x.getCoordsCenter();
+            if (selectRect.contains(center)) {
+                if (_turntableSelection==null) _turntableSelection = new ArrayList<LayoutTurntable>();
+                _turntableSelection.add(x);
+            }
+        }
+        // loop over all defined Anchor Points and End Bumpers
+        for (int i = 0; i<pointList.size();i++) {
+            PositionablePoint p = pointList.get(i);
+            Point2D coord = p.getCoords();
+            if (selectRect.contains(coord)) {
+                if (_pointSelection==null) _pointSelection = new ArrayList<PositionablePoint>();
+                _pointSelection.add(p);
+            }
+        }
+        repaint();
+    }
+    
+    private void clearSelectionGroups(){
+        _pointSelection=null;
+        _turntableSelection=null;
+        _xingSelection=null;
+        _turnoutSelection=null;
+        _positionableSelection=null;
+    }
+    
+    private void amendSelectionGroup(Positionable p){
+        if (_positionableSelection==null){
+            _positionableSelection = new ArrayList <Positionable>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_positionableSelection.size();i++){
+            if (_positionableSelection.get(i)==p){
+                _positionableSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _positionableSelection.add(p);
+        if (_positionableSelection.size()==0){
+            _positionableSelection=null;
+        }
+        repaint();
+    }
+    
+    private void amendSelectionGroup(LayoutTurnout p){
+        if (_turnoutSelection==null){
+            _turnoutSelection = new ArrayList <LayoutTurnout>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_turnoutSelection.size();i++){
+            if (_turnoutSelection.get(i)==p){
+                _turnoutSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _turnoutSelection.add(p);
+        if (_turnoutSelection.size()==0){
+            _turnoutSelection=null;
+        }
+        repaint();
+    }
+    
+    private void amendSelectionGroup(PositionablePoint p){
+        if (_pointSelection==null){
+            _pointSelection = new ArrayList <PositionablePoint>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_pointSelection.size();i++){
+            if (_pointSelection.get(i)==p){
+                _pointSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _pointSelection.add(p);
+        if (_pointSelection.size()==0){
+            _pointSelection=null;
+        }
+        repaint();
+    }
+    
+    private void amendSelectionGroup(LevelXing p){
+        if (_xingSelection==null){
+            _xingSelection = new ArrayList <LevelXing>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_xingSelection.size();i++){
+            if (_xingSelection.get(i)==p){
+                _xingSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _xingSelection.add(p);
+        if (_xingSelection.size()==0){
+            _xingSelection=null;
+        }
+        repaint();
+    }
+    
+    private void amendSelectionGroup(LayoutTurntable p){
+        if (_turntableSelection==null){
+            _turntableSelection = new ArrayList <LayoutTurntable>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_turntableSelection.size();i++){
+            if (_turntableSelection.get(i)==p){
+                _turntableSelection.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _turntableSelection.add(p);
+        if (_turntableSelection.size()==0){
+            _turntableSelection=null;
+        }
+        repaint();
+    }
+
+    public void alignSelection(boolean alignX){
+        int sum = 0;
+        int cnt = 0;
+
+        if(_positionableSelection!=null){
+            for (int i = 0; i<_positionableSelection.size(); i++){
+                Positionable comp = _positionableSelection.get(i);
+                if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                if (alignX) {
+                    sum += comp.getX();
+                } else {
+                    sum += comp.getY();
+                }
+                cnt++;
+            }
+        }
+        
+        if(_pointSelection!=null){
+            for (int i = 0; i<_pointSelection.size(); i++){
+                PositionablePoint comp = _pointSelection.get(i);
+                if (alignX) {
+                    sum += comp.getCoords().getX();
+                } else {
+                    sum += comp.getCoords().getY();
+                }
+                cnt++;
+            }
+        }
+        
+        if(_turnoutSelection!=null){
+            for (int i = 0; i<_turnoutSelection.size(); i++){
+                LayoutTurnout comp = _turnoutSelection.get(i);
+                if (alignX) {
+                    sum += comp.getCoordsCenter().getX();
+                } else {
+                    sum += comp.getCoordsCenter().getY();
+                }
+                cnt++;
+            }
+        }
+        
+        if(_xingSelection!=null){
+            for (int i = 0; i<_xingSelection.size(); i++){
+                LevelXing comp = _xingSelection.get(i);
+                if (alignX) {
+                    sum += comp.getCoordsCenter().getX();
+                } else {
+                    sum += comp.getCoordsCenter().getY();
+                }
+                cnt++;
+            }
+        }
+        if(_turntableSelection!=null){
+            for (int i = 0; i<_turntableSelection.size(); i++){
+                LayoutTurntable comp = _turntableSelection.get(i);
+                if (alignX) {
+                    sum += comp.getCoordsCenter().getX();
+                } else {
+                    sum += comp.getCoordsCenter().getY();
+                }
+                cnt++;
+            }
+        }
+        
+        int ave = Math.round((float)sum/cnt);
+        if(_positionableSelection!=null){
+            for (int i=0; i<_positionableSelection.size(); i++) {
+                Positionable comp = _positionableSelection.get(i);
+                if (!getFlag(OPTION_POSITION, comp.isPositionable()))  { continue; }
+                if (alignX) {
+                    comp.setLocation(ave, comp.getY());
+                } else {
+                    comp.setLocation(comp.getX(), ave);
+                }
+            }
+        }
+        if(_pointSelection!=null){
+            for (int i=0; i<_pointSelection.size(); i++) {
+                PositionablePoint comp = _pointSelection.get(i);
+                if (alignX) {
+                    comp.setCoords(new Point2D.Double(ave, comp.getCoords().getY()));
+                } else {
+                    comp.setCoords(new Point2D.Double(comp.getCoords().getX(), ave));
+                }
+            }
+        }
+        if(_turnoutSelection!=null){
+            for (int i=0; i<_turnoutSelection.size(); i++) {
+                LayoutTurnout comp = _turnoutSelection.get(i);
+                if (alignX) {
+                    comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
+                } else {
+                    comp.setCoordsCenter(new Point2D.Double(comp.getCoordsCenter().getX(), ave));
+                }
+            }
+        }
+        if(_xingSelection!=null){
+            for (int i=0; i<_xingSelection.size(); i++) {
+                LevelXing comp = _xingSelection.get(i);
+                if (alignX) {
+                    comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
+                } else {
+                    comp.setCoordsCenter(new Point2D.Double(comp.getCoordsCenter().getX(), ave));
+                }
+            }
+        }
+        if(_turntableSelection!=null){
+            for (int i=0; i<_turntableSelection.size(); i++) {
+                LayoutTurntable comp = _turntableSelection.get(i);
+                if (alignX) {
+                    comp.setCoordsCenter(new Point2D.Double(ave, comp.getCoordsCenter().getY()));
+                } else {
+                    comp.setCoordsCenter(new Point2D.Double(comp.getCoordsCenter().getX(), ave));
+                }
+            }
+        }
+        repaint();
+    }
+    
+    protected boolean showAlignPopup() {
+        if (_positionableSelection!=null) {
+            return true;
+        } else if (_pointSelection!=null) {
+            return true;
+        } else if (_turnoutSelection!=null){
+            return true;
+        } else if (_turntableSelection!=null){
+            return true;
+        } else if (_xingSelection!=null){
+            return true;
+        }
+        return false;
+    }
+    
+        /**
+    * Offer actions to align the selected Positionable items either
+    * Horizontally (at avearage y coord) or Vertically (at avearage x coord).
+    */
+    public boolean setShowAlignmentMenu(JPopupMenu popup) {
+        if (showAlignPopup()) {
+            JMenu edit = new JMenu("EditAlignment");  //rb.getString()
+            edit.add(new AbstractAction("AlignX") { //rb.getString()
+                public void actionPerformed(ActionEvent e) {
+                    alignSelection(true);
+                }
+            });
+            edit.add(new AbstractAction("AlignY") { //rb.getString(
+                public void actionPerformed(ActionEvent e) {
+                    alignSelection(false);
+                }
+            });
+            popup.add(edit);
+            return true;
+        }
+        return false;
+    }
+    
+    public void keyPressed(KeyEvent e) {
+        if (_positionableSelection!=null){
+            for (int i = 0; i<_positionableSelection.size(); i++) {
+                Positionable c = _positionableSelection.get(i);
+                int xNew;
+                int yNew;
+                if ((c instanceof MemoryIcon) && (c.getPopupUtility().getFixedWidth()==0)) {
+                    MemoryIcon pm = (MemoryIcon) c;
+                    xNew = (int)(returnNewXPostition(e, pm.getOriginalX()));
+                    yNew = (int)(returnNewYPostition(e, pm.getOriginalY()));
+                } else {
+                    Point2D upperLeft = c.getLocation();
+                    xNew = (int)(returnNewXPostition(e, upperLeft.getX()));
+                    yNew = (int)(returnNewYPostition(e, upperLeft.getY()));
+                }
+                c.setLocation(xNew,yNew);
+            }
+        }
+        // loop over all defined turnouts
+        if (_turnoutSelection!=null){
+            for (int i = 0; i<_turnoutSelection.size();i++) {
+                LayoutTurnout t = _turnoutSelection.get(i);
+                Point2D center = t.getCoordsCenter();
+                t.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+                                                                returnNewYPostition(e, center.getY())));
+                }
+        }
+        if (_xingSelection!=null){
+        // loop over all defined level crossings
+            for (int i = 0; i<_xingSelection.size();i++) {
+                LevelXing x = _xingSelection.get(i);
+                Point2D center = x.getCoordsCenter();
+                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+                                                                returnNewYPostition(e, center.getY())));
+                }
+        }
+        // loop over all defined turntables
+        if (_turntableSelection!=null){
+            for (int i = 0; i<_turntableSelection.size();i++) {
+                LayoutTurntable x = _turntableSelection.get(i);
+                Point2D center = x.getCoordsCenter();
+                x.setCoordsCenter(new Point2D.Double(returnNewXPostition(e, center.getX()),
+                                                                returnNewYPostition(e, center.getY())));
+            }
+        }
+        // loop over all defined Anchor Points and End Bumpers
+        if (_pointSelection!=null){
+            for (int i = 0; i<_pointSelection.size();i++) {
+                PositionablePoint p = _pointSelection.get(i);
+                Point2D coord = p.getCoords();
+                p.setCoords(new Point2D.Double(returnNewXPostition(e, coord.getX()),
+                                                                returnNewYPostition(e, coord.getY())));
+            }
+        }
+        repaint();
+    }
+    
+    private double returnNewXPostition(KeyEvent e, double val){
+        if(e.isShiftDown()){
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_LEFT: val=val-1;
+                                    break;
+                case KeyEvent.VK_RIGHT: val=val+1;
+                                        break;
+            }
+        } else {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_LEFT: val=val-5;
+                                    break;
+                case KeyEvent.VK_RIGHT: val=val+5;
+                                        break;
+            }
+        }
+        if (val<0) val = 0;
+        return val;
+    
+    }
+    
+    private double returnNewYPostition(KeyEvent e, double val){
+        if(e.isShiftDown()){
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP: val=val-1;
+                                    break;
+                case KeyEvent.VK_DOWN: val=val+1;
+                                    break;
+            }
+        } else {
+            switch (e.getKeyCode()){
+                case KeyEvent.VK_UP: val=val-5;
+                                    break;
+                case KeyEvent.VK_DOWN: val=val+5;
+                                    break;
+            }
+        }
+        if (val<0) val = 0;
+        return val;
+    
+    }
+
     public void mouseMoved(MouseEvent event)
     {
         calcLocation(event, 0, 0);
@@ -3023,101 +3610,177 @@ public class LayoutEditor extends Editor {
 					int yy = (((int)newPos.getY()+4)/10)*10;
 					newPos.setLocation(xx,yy);
 				}
-				switch (selectedPointType) {
-					case POS_POINT:
-						((PositionablePoint)selectedObject).setCoords(newPos);
-						isDragging = true;
-						break;
-					case TURNOUT_CENTER:
-						((LayoutTurnout)selectedObject).setCoordsCenter(newPos);
-						isDragging = true;
-						break;
-					case TURNOUT_A:
-						LayoutTurnout o = (LayoutTurnout)selectedObject;
-						o.setCoordsA(newPos);
-						break;
-					case TURNOUT_B:
-						o = (LayoutTurnout)selectedObject;
-						o.setCoordsB(newPos);
-						break;
-					case TURNOUT_C:
-						o = (LayoutTurnout)selectedObject;
-						o.setCoordsC(newPos);
-						break;
-					case TURNOUT_D:
-						o = (LayoutTurnout)selectedObject;
-						o.setCoordsD(newPos);
-						break;
-					case LEVEL_XING_CENTER:
-						((LevelXing)selectedObject).setCoordsCenter(newPos);
-						isDragging = true;
-						break;
-					case LEVEL_XING_A:
-						LevelXing x = (LevelXing)selectedObject;
-						x.setCoordsA(newPos);
-						break;
-					case LEVEL_XING_B:
-						x = (LevelXing)selectedObject;
-						x.setCoordsB(newPos);
-						break;
-					case LEVEL_XING_C:
-						x = (LevelXing)selectedObject;
-						x.setCoordsC(newPos);
-						break;
-					case LEVEL_XING_D:
-						x = (LevelXing)selectedObject;
-						x.setCoordsD(newPos);
-						break;
-					case TURNTABLE_CENTER:
-						((LayoutTurntable)selectedObject).setCoordsCenter(newPos);
-						isDragging = true;
-						break;
-					case LAYOUT_POS_LABEL:
-						PositionableLabel l = (PositionableLabel)selectedObject;
-						if (l.isPositionable()) {
-							int xint = (int)newPos.getX();
-							int yint = (int)newPos.getY();
-							// don't allow negative placement, object could become unreachable
-							if (xint<0) xint = 0;
-							if (yint<0) yint = 0;
-							l.setLocation(xint, yint);
-							isDragging = true;
-						}
-						break;
-					case LAYOUT_POS_JCOMP:
-						PositionableJComponent c = (PositionableJComponent)selectedObject;
-						if (c.isPositionable()) {
-							int xint = (int)newPos.getX();
-							int yint = (int)newPos.getY();
-							// don't allow negative placement, object could become unreachable
-							if (xint<0) xint = 0;
-							if (yint<0) yint = 0;
-							c.setLocation(xint, yint);
-							isDragging = true;
-						}
-						break;
-					case MULTI_SENSOR:
-						PositionableLabel pl = (PositionableLabel)selectedObject;
-						if (pl.isPositionable()) {
-							int xint = (int)newPos.getX();
-							int yint = (int)newPos.getY();
-							// don't allow negative placement, object could become unreachable
-							if (xint<0) xint = 0;
-							if (yint<0) yint = 0;
-							pl.setLocation(xint, yint);
-							isDragging = true;
-						}
-						break;
-                    case TRACK_CIRCLE_CENTRE: TrackSegment t = (TrackSegment)selectedObject;
-                                                reCalculateTrackSegmentAngle(t, newPos.getX(), newPos.getY());
-                                            break;
-					default:
-						if (selectedPointType>=TURNTABLE_RAY_OFFSET) {
-							LayoutTurntable turn = (LayoutTurntable)selectedObject;
-							turn.setRayCoordsIndexed(newPos.getX(),newPos.getY(),
-											selectedPointType-TURNTABLE_RAY_OFFSET);
-						}
-				}
+                if (_pointSelection!=null||_turntableSelection!=null||_xingSelection!=null||
+                            _turnoutSelection!=null||_positionableSelection!=null){
+                    int offsetx = xLoc - _lastX;
+                    int offsety = yLoc - _lastY;
+                    //We should do a move based upon a selection group.
+                    int xNew;
+                    int yNew;
+                    if (_positionableSelection!=null){
+                        for (int i = 0; i<_positionableSelection.size(); i++) {
+                            Positionable c = _positionableSelection.get(i);
+                            if ((c instanceof MemoryIcon) && (c.getPopupUtility().getFixedWidth()==0)) {
+                                MemoryIcon pm = (MemoryIcon) c;
+                                xNew = (pm.getOriginalX()+offsetx);
+                                yNew = (pm.getOriginalY()+offsety);
+                            } else {
+                                Point2D upperLeft = c.getLocation();
+                                xNew = (int)(upperLeft.getX()+offsetx);
+                                yNew = (int)(upperLeft.getY()+offsety);
+                            }
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            c.setLocation(xNew,yNew);
+                        }
+                    }
+                    
+                    if (_turnoutSelection!=null){
+                        for (int i = 0; i<_turnoutSelection.size();i++) {
+                            LayoutTurnout t = _turnoutSelection.get(i);
+                            Point2D center = t.getCoordsCenter();
+                            xNew = (int) center.getX()+offsetx;
+                            yNew = (int) center.getY()+offsety;
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            t.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                        }
+                    }
+                    if (_xingSelection!=null){
+                    // loop over all defined level crossings
+                        for (int i = 0; i<_xingSelection.size();i++) {
+                            LevelXing x = _xingSelection.get(i);
+                            Point2D center = x.getCoordsCenter();
+                            xNew = (int) center.getX()+offsetx;
+                            yNew = (int) center.getY()+offsety;
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            x.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                        }
+                    }
+                    // loop over all defined turntables
+                    if (_turntableSelection!=null){
+                        for (int i = 0; i<_turntableSelection.size();i++) {
+                            LayoutTurntable x = _turntableSelection.get(i);
+                            Point2D center = x.getCoordsCenter();
+                            xNew = (int) center.getX()+offsetx;
+                            yNew = (int) center.getY()+offsety;
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            x.setCoordsCenter(new Point2D.Double(xNew, yNew));
+                        }
+                    }
+                    // loop over all defined Anchor Points and End Bumpers
+                    if (_pointSelection!=null){
+                        for (int i = 0; i<_pointSelection.size();i++) {
+                            PositionablePoint p = _pointSelection.get(i);
+                            Point2D coord = p.getCoords();
+                            xNew = (int) coord.getX()+offsetx;
+                            yNew = (int) coord.getY()+offsety;
+                            if (xNew<0) xNew=0;
+                            if (yNew<0) yNew=0;
+                            p.setCoords(new Point2D.Double(xNew, yNew));
+                        }
+                    }
+                    _lastX = xLoc;
+                    _lastY = yLoc;
+                } else {
+                    switch (selectedPointType) {
+                        case POS_POINT:
+                            ((PositionablePoint)selectedObject).setCoords(newPos);
+                            isDragging = true;
+                            break;
+                        case TURNOUT_CENTER:
+                            ((LayoutTurnout)selectedObject).setCoordsCenter(newPos);
+                            isDragging = true;
+                            break;
+                        case TURNOUT_A:
+                            LayoutTurnout o = (LayoutTurnout)selectedObject;
+                            o.setCoordsA(newPos);
+                            break;
+                        case TURNOUT_B:
+                            o = (LayoutTurnout)selectedObject;
+                            o.setCoordsB(newPos);
+                            break;
+                        case TURNOUT_C:
+                            o = (LayoutTurnout)selectedObject;
+                            o.setCoordsC(newPos);
+                            break;
+                        case TURNOUT_D:
+                            o = (LayoutTurnout)selectedObject;
+                            o.setCoordsD(newPos);
+                            break;
+                        case LEVEL_XING_CENTER:
+                            ((LevelXing)selectedObject).setCoordsCenter(newPos);
+                            isDragging = true;
+                            break;
+                        case LEVEL_XING_A:
+                            LevelXing x = (LevelXing)selectedObject;
+                            x.setCoordsA(newPos);
+                            break;
+                        case LEVEL_XING_B:
+                            x = (LevelXing)selectedObject;
+                            x.setCoordsB(newPos);
+                            break;
+                        case LEVEL_XING_C:
+                            x = (LevelXing)selectedObject;
+                            x.setCoordsC(newPos);
+                            break;
+                        case LEVEL_XING_D:
+                            x = (LevelXing)selectedObject;
+                            x.setCoordsD(newPos);
+                            break;
+                        case TURNTABLE_CENTER:
+                            ((LayoutTurntable)selectedObject).setCoordsCenter(newPos);
+                            isDragging = true;
+                            break;
+                        case LAYOUT_POS_LABEL:
+                            PositionableLabel l = (PositionableLabel)selectedObject;
+                            if (l.isPositionable()) {
+                                int xint = (int)newPos.getX();
+                                int yint = (int)newPos.getY();
+                                // don't allow negative placement, object could become unreachable
+                                if (xint<0) xint = 0;
+                                if (yint<0) yint = 0;
+                                l.setLocation(xint, yint);
+                                isDragging = true;
+                            }
+                            break;
+                        case LAYOUT_POS_JCOMP:
+                            PositionableJComponent c = (PositionableJComponent)selectedObject;
+                            if (c.isPositionable()) {
+                                int xint = (int)newPos.getX();
+                                int yint = (int)newPos.getY();
+                                // don't allow negative placement, object could become unreachable
+                                if (xint<0) xint = 0;
+                                if (yint<0) yint = 0;
+                                c.setLocation(xint, yint);
+                                isDragging = true;
+                            }
+                            break;
+                        case MULTI_SENSOR:
+                            PositionableLabel pl = (PositionableLabel)selectedObject;
+                            if (pl.isPositionable()) {
+                                int xint = (int)newPos.getX();
+                                int yint = (int)newPos.getY();
+                                // don't allow negative placement, object could become unreachable
+                                if (xint<0) xint = 0;
+                                if (yint<0) yint = 0;
+                                pl.setLocation(xint, yint);
+                                isDragging = true;
+                            }
+                            break;
+                        case TRACK_CIRCLE_CENTRE: TrackSegment t = (TrackSegment)selectedObject;
+                                                    reCalculateTrackSegmentAngle(t, newPos.getX(), newPos.getY());
+                                                break;
+                        default:
+                            if (selectedPointType>=TURNTABLE_RAY_OFFSET) {
+                                LayoutTurntable turn = (LayoutTurntable)selectedObject;
+                                turn.setRayCoordsIndexed(newPos.getX(),newPos.getY(),
+                                                selectedPointType-TURNTABLE_RAY_OFFSET);
+                            }
+                    }
+                }
 				repaint();
 			}			
 			else if ( (beginObject!=null) && event.isShiftDown() 
@@ -4636,6 +5299,7 @@ public class LayoutEditor extends Editor {
             drawTurntableRects(g2);
             drawMemoryRects(g2);
             drawTrackCircleCentre(g2);
+            highLightSelection(g2);
         }
 		else if (turnoutCirclesWithoutEditMode) {
 			drawTurnoutCircles(g2);
@@ -5671,7 +6335,7 @@ public class LayoutEditor extends Editor {
 			g2.draw(new Rectangle2D.Double (l.getX(), l.getY(), l.getSize().width, l.getSize().height));
 		}
 	}
-    
+
 	private void drawPanelGrid(Graphics2D g2) {
 		Dimension dim = getSize();
 		double pix = 10.0;
