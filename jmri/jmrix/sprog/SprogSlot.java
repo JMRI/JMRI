@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
  * @author			Andrew Berridge 2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
  public class SprogSlot {
 	 
@@ -30,6 +30,7 @@ import jmri.NmraPacket;
      forward = true;
      status = SprogConstants.SLOT_FREE;
      slot = num;
+     opsPkt = false;
    }
 
    private byte[] payload;
@@ -40,6 +41,7 @@ import jmri.NmraPacket;
    private boolean forward;
    private int status;
    private int slot;
+   private boolean opsPkt;
    
    private boolean f0to4Packet = false;
    public boolean isF0to4Packet() {
@@ -112,6 +114,7 @@ private boolean f5to8Packet = false;
      public void setOps(int address, boolean longAddr, int cv, int val) {
          payload = NmraPacket.opsCvWriteByte(address, longAddr, cv, val );
          this.repeat = SprogConstants.OPS_REPEATS;
+         this.opsPkt = true;
          status = SprogConstants.SLOT_IN_USE; 
      }
      
@@ -261,6 +264,7 @@ private boolean f5to8Packet = false;
        payload[0] = 0;
        payload[1] = 0;
        payload[2] = 0;
+       opsPkt = false;
      }
 
      public boolean isLongAddress() { return (getAddr() >= 100); }
@@ -274,6 +278,7 @@ private boolean f5to8Packet = false;
          repeat--;
          if (repeat == 0) {
            log.debug("Clear slot "+slot+"due to repeats exhausted");
+           this.clear();
          }
        }
        return repeat;
@@ -283,6 +288,8 @@ private boolean f5to8Packet = false;
      public int getAddr() { return addr; }
      public void setAddr(int a) { addr = a;}
      public boolean isForward() { return forward; }
+     public boolean isOpsPkt() { return opsPkt; }
+     
      /**
       * Get the payload of this slot. Note - if this slot has a number of repeats, calling this 
       * method will also decrement the internal repeat counter
