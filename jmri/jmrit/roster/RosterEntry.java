@@ -12,7 +12,12 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.StringTokenizer;
 import java.util.Vector;
+import javax.swing.*;
 import jmri.util.davidflanagan.HardcopyWriter;
+
+import java.lang.Math.*;
+import javax.swing.ImageIcon;
+import java.awt.Image;
 
 
 import org.jdom.Element;
@@ -40,7 +45,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.46 $
+ * @version   $Revision: 1.47 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -333,6 +338,7 @@ public class RosterEntry {
     }
     
     final static int MAXFNNUM = 28;
+    public int getMAXFNNUM() { return MAXFNNUM; }
     String[] functionLabels;
     boolean[] functionLockables;
     
@@ -576,128 +582,206 @@ public class RosterEntry {
         LocoFile.loadCvModel(mRootElement.getChild("locomotive"), cvModel, iCvModel);
     }
 
+    public void printEntry(HardcopyWriter w){
+        if((getIconPath()!=null)&&(!getIconPath().contains("__noIcon.jpg"))){
+            ImageIcon icon = new ImageIcon(getIconPath());
+            // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
+            //we set the imagesize to 150x150 pixels
+            int imagesize = 150;
+            if (icon!=null){
+                Image img = icon.getImage();
+                int width = img.getWidth(null);
+                int height = img.getHeight(null);
+                double widthratio = (double) width/imagesize;
+                double heightratio = (double) height/imagesize;
+                double ratio = Math.max(widthratio,heightratio);
+                width = (int)(width/ratio);
+                height = (int)(height/ratio);
+                Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
+
+                ImageIcon newIcon = new ImageIcon(newImg);
+                w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
+                //Work out the number of line approx that the image takes up.
+                //We might need to pad some areas of the roster out, so that things
+                //look correct and text doesn't overflow into the image.
+                blanks = (newImg.getHeight(null)-w.getLineAscent())/w.getLineHeight();
+                textSpaceWithIcon = w.getCharactersPerLine()-((newImg.getWidth(null)/w.getCharWidth())) - indentWidth -1;
+
+            }
+        }
+        printEntryDetails(w);
+    }
+    
+    private int blanks=0;
+    private int textSpaceWithIcon=0;
+    String indent = "                      ";
+    int indentWidth = indent.length();
+    String newLine = "\n";
+    
     /**
      *Prints the roster information. Updated to allow for multiline
      *comment and decoder comment fields.
      *Created separate write statements for text and line feeds to work
      *around the HardcopyWriter bug that misplaces borders
      */
-    public void printEntry(Writer w)
+    public void printEntryDetails(Writer w)
     {
+        int linesadded = -1;
+        String title;
         try {
-            String indent = "                      ";
-            int indentWidth = indent.length();
+            //int indentWidth = indent.length();
             HardcopyWriter ww = (HardcopyWriter) w;
             int textSpace = ww.getCharactersPerLine() - indentWidth -1;
-            String newLine = "\n";
-
-            w.write(newLine,0,1);
-            String s = "   ID:                "+_id;
-            w.write(s,0,s.length());
-            w.write(newLine,0,1);
-            s =  "   Filename:          "+(_fileName!=null?_fileName:"<null>");
-            w.write(s,0,s.length());
+            title = "   ID:                ";
+            if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _id, title, textSpaceWithIcon) + linesadded;
+            } else {
+                linesadded = writeWrappedComment(w, _id, title, textSpace) + linesadded;
+            }
+            title = "   Filename:          ";
+            if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _fileName!=null?_fileName:"<null>", title, textSpaceWithIcon) + linesadded;
+            } else {
+                linesadded = writeWrappedComment(w, _fileName!=null?_fileName:"<null>", title, textSpace) + linesadded;
+            }
 
             if (!(_roadName.equals("")))
             {
-              w.write(newLine,0,1);
-              s = "   Road name:         " + _roadName;
-              w.write(s,0,s.length());
+              title = "   Road name:         ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _roadName, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _roadName, title, textSpace) + linesadded;
+              }
             }
             if (!(_roadNumber.equals("")))
             {
-              w.write(newLine,0,1);
-              s = "   Road number:       " + _roadNumber;
-              w.write(s,0,s.length());
+              title = "   Road number:       ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _roadNumber, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _roadNumber, title, textSpace) + linesadded;
+              }
             }
             if (!(_mfg.equals("")))
             {
-              w.write(newLine,0,1);
-              s = "   Manufacturer:      " + _mfg;
-              w.write(s,0,s.length());
+              title = "   Manufacturer:      ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _mfg, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _mfg, title, textSpace) + linesadded;
+              }
             }
             if (!(_owner.equals("")))
             {
-              w.write(newLine,0,1);
-              s = "   Owner:             " + _owner;
-              w.write(s,0,s.length());
+              title = "   Owner:             ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _owner, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _owner, title, textSpace) + linesadded;
+              }
             }
             if (!(_model.equals("")))
             {
-              w.write(newLine,0,1);
-              s = "   Model:             " + _model;
-              w.write(s,0,s.length());
+              title = "   Model:             ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _model, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _model, title, textSpace) + linesadded;
+              }
             }
             if (!(_dccAddress.equals("")))
             {
               w.write(newLine,0,1);
-              s = "   DCC Address:       " + _dccAddress;
+              String s = "   DCC Address:       " + _dccAddress;
               w.write(s,0,s.length());
+              linesadded++;
             }
 
             //If there is a comment field, then wrap it using the new wrapCommment
             //method and print it
             if (!(_comment.equals("")))
             {
-              Vector<String> commentVector = wrapComment(_comment, textSpace);
+                //Because the text will fill the width if the roster entry has an icon
+                //then we need to add some blank lines to prevent the comment text going
+                //through the picture.
+                for(int i = 0; i<(blanks-linesadded); i++){
+                    w.write(newLine,0,1);
+                }
+                //As we have added the blank lines to pad out the comment we will
+                //reset the number of blanks to 0.
+                if (blanks!=0) blanks = 0;
+                title = "   Comment:           ";
+                linesadded = writeWrappedComment(w, _comment, title, textSpace) + linesadded;
+            }
+            if (!(_decoderModel.equals("")))
+            {
+              title = "   Decoder Model:     ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _decoderModel, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _decoderModel, title, textSpace) + linesadded;
+              }
+            }
+            if (!(_decoderFamily.equals("")))
+            {
+              title = "   Decoder Family:    ";
+              if ((textSpaceWithIcon!=0)&&(linesadded<blanks)){
+                linesadded = writeWrappedComment(w, _decoderFamily, title, textSpaceWithIcon) + linesadded;
+              } else {
+                linesadded = writeWrappedComment(w, _decoderFamily, title, textSpace) + linesadded;
+              }
+            }
 
-              //Now have a vector of text pieces and line feeds that will all
-              //fit in the allowed space. Print each piece, prefixing the first one
-              //with the label and indenting any remainding.
-              int k = 0;
+            //If there is a decoderComment field, need to wrap it
+            if (!(_decoderComment.equals("")))
+            {
+                //Because the text will fill the width if the roster entry has an icon
+                //then we need to add some blank lines to prevent the comment text going
+                //through the picture.
+                for(int i = 0; i<(blanks-linesadded); i++){
+                    w.write(newLine,0,1);
+                }
+                //As we have added the blank lines to pad out the comment we will
+                //reset the number of blanks to 0.
+                if (blanks!=0) blanks = 0;
+                title = "   Decoder Comment:   ";
+                linesadded = writeWrappedComment(w, _decoderComment, title, textSpace) + linesadded;
+              }
               w.write(newLine,0,1);
-              s = "   Comment:           " + commentVector.elementAt(k);
-              w.write(s,0,s.length());
-              k++;
-              while (k < commentVector.size())
+              for(int i = -1; i<(blanks-linesadded); i++){
+                w.write(newLine,0,1);
+              }
+            } catch (IOException e) {
+              log.error("Error printing RosterEntry: "+e);
+            }
+    }
+    
+    private int writeWrappedComment(Writer w, String text, String title, int textSpace){
+        Vector<String> commentVector = wrapComment(text, textSpace);
+
+        //Now have a vector of text pieces and line feeds that will all
+        //fit in the allowed space. Print each piece, prefixing the first one
+        //with the label and indenting any remainding.
+        String s;
+        int k = 0;
+        try {
+            w.write(newLine,0,1);
+            s = title + commentVector.elementAt(k);
+            w.write(s,0,s.length());
+            k++;
+            while (k < commentVector.size())
               {
                 String token = commentVector.elementAt(k);
                 if (!token.equals("\n")) s = indent + token;
                 else s = token;
                 w.write(s,0,s.length());
                 k++;
-              }
             }
-
-            if (!(_decoderModel.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Decoder Model:     " + _decoderModel;
-              w.write(s,0,s.length());
-            }
-            if (!(_decoderFamily.equals("")))
-            {
-              w.write(newLine,0,1);
-              s = "   Decoder Family:    " + _decoderFamily;
-              w.write(s,0,s.length());
-            }
-
-            //If there is a decoderComment field, need to wrap it
-            if (!(_decoderComment.equals("")))
-            {
-              Vector<String> decoderCommentVector = wrapComment(_decoderComment, textSpace);
-
-                //Now have a vector of text pieces and line feeds that will all
-                //fit in the allowed space. Print each piece, prefixing the first one
-                //with the label and indenting the remainder.
-                int k = 0;
-                w.write(newLine,0,1);
-                s = "   Decoder Comment:   " + decoderCommentVector.elementAt(k);
-                w.write(s,0,s.length());
-                k++;
-                while (k < decoderCommentVector.size())
-                {
-                  String token = decoderCommentVector.elementAt(k);
-                  if (!token.equals("\n")) s = indent + token;
-                  else s = token;
-                  w.write(s,0,s.length());
-                  k++;
-                }
-              }
-              w.write(newLine,0,1);
-            } catch (IOException e) {
-              log.error("Error printing RosterEntry: "+e);
-              }
+        } catch (IOException e) {
+          log.error("Error printing RosterEntry: "+e);
+        }
+        return k;
     }
 
     /**

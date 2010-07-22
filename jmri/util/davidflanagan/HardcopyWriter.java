@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -340,6 +340,8 @@ public class HardcopyWriter extends Writer {
     
     public int getFontSize() { return this.fontsize; }
     
+    public int getCharWidth() { return this.charwidth; }
+    
     public int getLineAscent() { return this.lineascent; }
     
     public void setFontName(String name) {
@@ -452,6 +454,24 @@ public class HardcopyWriter extends Writer {
         int y = y0+(linenum*lineheight) + lineascent;
 
         page.drawImage(c, x, y, c.getWidth(null)*2/3, c.getHeight(null)*2/3, null);
+    }
+    
+    /**
+     * Write a graphic to the printout.
+     * <P>This was not in the
+     * original class, but was added afterwards by Kevin Dickerson.
+     * it is a copy of the write, but without the scaling.
+     * <P> The image is positioned on the right side of the paper,
+     * at the current height.
+     */
+    public void writeNoScale(Image c, Component i) {
+        // if we haven't begun a new page, do that now
+        if (page == null) newpage();
+
+        int x = x0+width- (c.getWidth(null) + charwidth);
+        int y = y0+(linenum*lineheight) + lineascent;
+
+        page.drawImage(c, x, y, c.getWidth(null), c.getHeight(null), null);
     }
 
     /** A Method to allow a JWindow to print itself at the current line position
