@@ -33,7 +33,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -211,7 +211,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
     
     public void dispose(){
-        adaptermemo.dispose();
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
         adaptermemo = null;
     }
 
