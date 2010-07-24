@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.pr3.ConnectionConfig;
 import jmri.jmrix.loconet.pr3.PR3Adapter;
-import jmri.jmrix.SerialPortAdapter;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -17,7 +16,7 @@ import jmri.jmrix.SerialPortAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2005, 2006, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
