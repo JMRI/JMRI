@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.74 $
+ * @version	$Revision: 1.75 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -308,7 +308,6 @@ public class JmrixConfigPane extends JPanel {
         return null;
     }
     
-    /* For a future release
     public boolean getDisabled(){
         int current = modeBox.getSelectedIndex();
         if (current==0) return false;
@@ -319,7 +318,7 @@ public class JmrixConfigPane extends JPanel {
         int current = modeBox.getSelectedIndex();
         if (current==0) return;
         classConnectionList[current].setDisabled(disabled);
-    }*/
+    }
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmrixConfigPane.class.getName());
