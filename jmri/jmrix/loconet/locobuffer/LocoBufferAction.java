@@ -12,7 +12,7 @@ package jmri.jmrix.loconet.locobuffer;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
+@Deprecated 
 public class LocoBufferAction 			extends AbstractAction {
 
 	public LocoBufferAction(String s) { super(s);}

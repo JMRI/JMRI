@@ -7,8 +7,9 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect LocoNet via LocoBuffer interface and comm port
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
+ @Deprecated 
 public class LocoBufferFrame extends jmri.jmrix.SerialPortFrame {
 
 	public LocoBufferFrame() {
