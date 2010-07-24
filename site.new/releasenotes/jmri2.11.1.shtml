@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id: jmri2.11.1.shtml,v 1.1 2010-07-24 04:28:54 jacobsen Exp $ -->
+<html lang="en">
+<head>
+ <title>
+ JMRI: Release Notes for 2.11.1
+ 
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="java model railroad JMRI 2.11.1 decoderpro panelpro loconet lenz nce easydcc dcc nmra">
+
+<!-- Style -->
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+  
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+      <h2>
+      Release Notes for JMRI 2.11.1 release
+      </h2>
+
+	<p>Date: MMM DD, 2010</p>
+	<p>From: Bob Jacobsen</p>
+	<p>Subject: Test version 2.11.1 of JMRI/DecoderPro is available for download.
+ 
+<br><b>This is a draft release note only; the download links do not yet work</b>
+
+<h3>Notes:</h3>
+
+<p>This is a test release.  Please post a note if you encounter any new or old bugs!  
+And please back up your JMRI files before installing this, in case you want to go 
+back to an earlier version.
+
+<p>This is the first in a series of test versions. We expect this series
+to end in a JMRI 2.12 or 3.0 production release in December 2010. 
+
+<p>
+It contains 
+many new features, including:
+
+<ul>
+<li>
+</ul>
+along with other changes.  See the complete list below.
+
+<p>Some of the changes involved are quite extensive.
+They may require a certain amount of experience before they are working well.  
+Therefore, this test version should be considered experimental.
+
+<b><p>
+JMRI is now only available under the 
+<A HREF="/COPYING">GNU General Public License</a>. For more information, please
+see our 
+<a href="/Copyright.html">copyright and licensing page</a>.</p></b>
+
+<h3>New warnings for this version:</h3>
+
+(None for this version)
+
+<h3>Older warnings</h3>
+
+(None for this version)
+
+<h3>Known problems with this release</h3>
+
+None at the time of this release.
+
+<h3>Download links:</h3>
+
+<p>Please use these links for downloading:
+
+<p>MacOS X:
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.dmg/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.dmg/download</a>
+
+<p>Windows:
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.exe/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.exe/download</a>
+
+<p>Linux:
+     <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.1.tgz/download</a>
+
+<h3>Changes since test version 2.11.1</h3>
+
+Chuck Catania contributed a new set of 
+SPTCO-1930 signal aspects.
+
+<p>
+Andrew Crosland improved the speed averaging for the Bachrus speedometer.
+
+<p>
+Kevin Dickerson updated the auto width justification of a memory label in LayoutEditor, around the x position, 
+ie the text will centre around position X, or be right justified to the value of X.
+Before the justification only really showed itself with fixed width memory labels.
+
+<p>
+Kevin Dickerson made multiple improvements to panel editor.
+<ul>
+<li>Multiple items can be selected, by holding down the ctrl key and clicking on them.
+<li>Selected items now have a square box drawn around them.
+<li>Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, 
+    by holding shift and then the arrow key, it will move a pixel at a time.
+<li>Provides a basic copy & paste function within a single panel, allows for single or multiple items to be copied.
+<li>A revised pop-up menu is displayed when multiple items are selected, it only displays the options for Edit Alignment, Remove, Copy.
+<li>Should also remove the issue in ubuntu when dragging items on the panel editor, that the popupbox is displayed when it shouldn't be. 
+    Nb this needs to be check on a MAC that it doesn't cause a problem.
+</ul>
+
+<p>
+Kevin Dickerson improved the preferences:
+    By default 4 sets of jmrixconfigpanes are created at start up.  
+    However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
+    do not automatically get listed in the preference window.
+    
+<p>
+Dan Boudreau improved the UK version of the operations feature.
+
+<p>
+Kevin Dickerson fixed a problem that could cause multiple LocoNet connections to get the wrong prefix.
+
+<p>
+Andrew Crosland improved the Bachrus speedometer readout to work more closely with the hardware, and to reject measurements that appear to suffer from jitter.
+
+<p>
+Pete Cressman added a copy popup to the Control Panel Editor.
+
+<p>
+Paul Bender is updating the XPressNet adapter code to allow multiple connections.
+
+<p>
+Kevin Dickerson made it possible to dismiss a print preview dialog.
+
+<p>
+Keving Dickerson updated roster printing: 
+Puts the loco icon on the print out, formats the text around the graphic so it looks neater and doesn't run into the loco graphic.
+Function Labels can now be printed on individual roster items.
+When printing individual roster items, the user is given the option to select which tabs should be printed.
+
+<p>
+Kevin Dickerson updated the layout editor:
+Add the ability to set the background color of the panel via a menu option.
+Selected items now have a square box drawn around them.
+Multiple items can be selected, by holding down the ctrl key and clicking on them.
+Positioning can now be adjusted by using the arrow keys, the arrow keys on their own will move the items by 5 pixels either way, 
+by holding shift and then the arrow key, it will move a pixel at a time.
+
+<p>
+Kevin Dickerson updated the Panel Editor & Control Editor:
+Added ability to set the background colour by bring up the popup menu on an empty part of the panel. 
+
+<p>
+Andrew Crosland updated the SPROG support to make repeated ops mode CV writes appear consecutively rather than interleaved.
+Problem reported on developers list by Galen Seitz 22 July 2010
+
+<!--#include virtual="/Footer" -->
+
+   </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</div> <!-- closes #container -->
+</body>
+</html>
