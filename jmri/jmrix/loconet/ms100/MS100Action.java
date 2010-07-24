@@ -12,7 +12,7 @@ package jmri.jmrix.loconet.ms100;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
+@Deprecated 
 public class MS100Action 			extends AbstractAction {
 
 	public MS100Action(String s) { super(s);}

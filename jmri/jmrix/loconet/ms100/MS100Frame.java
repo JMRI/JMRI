@@ -9,7 +9,7 @@
 package jmri.jmrix.loconet.ms100;
 
 import javax.swing.*;
-
+@Deprecated 
 public class MS100Frame extends jmri.jmrix.SerialPortFrame {
 
 	public MS100Frame() {
