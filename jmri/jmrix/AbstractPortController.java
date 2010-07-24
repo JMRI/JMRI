@@ -20,7 +20,7 @@ import javax.swing.JOptionPane;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -90,7 +90,14 @@ abstract public class AbstractPortController implements PortAdapter {
     public void setManufacturer(String Manufacturer) { mManufacturer = Manufacturer; }
     protected String mManufacturer = null;
     
-    //protected SystemConnectionMemo adaptermemo = null;
+    public boolean getDisabled() { return mDisabled; }
+   
+    /* The set disabled is handled within the local port controller for each system
+    this is because it needs to also needs to set a disabled flag inthe system connection memo*/
+    
+    abstract public void setDisabled(boolean disabled);
+    protected boolean mDisabled = false;
+    
     abstract public SystemConnectionMemo getSystemConnectionMemo();
 
     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractPortController.class.getName());

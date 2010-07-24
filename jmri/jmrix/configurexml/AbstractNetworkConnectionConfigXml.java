@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of Network port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -57,6 +57,10 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         if (adapter.getCurrentOption2Setting()!=null)
             e.setAttribute("option2", adapter.getCurrentOption2Setting());
         else e.setAttribute("option2", rb.getString("noneSelected"));
+        
+        if (adapter.getDisabled())
+            e.setAttribute("disabled", "yes");
+        else e.setAttribute("disabled", "no");
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -120,9 +124,22 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         } catch ( NullPointerException ex) { //Considered normal if not present
             
         }
+        
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+                if ( (yesno!=null) && (!yesno.equals("")) ) {
+                    if (yesno.equals("no")) adapter.setDisabled(false);
+                    else if (yesno.equals("yes")) adapter.setDisabled(true);
+                }
+        }
         // register, so can be picked up next time
         register();
-
+        
+        
+        if (adapter.getDisabled()){
+            unpackElement(e);
+            return result;
+        }
         try{
             adapter.connect();
         } catch (Exception ex) {

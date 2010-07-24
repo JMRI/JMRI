@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -77,11 +77,10 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     
     abstract public String getConnectionName();
 
-    /* For a future release
     abstract public boolean getDisabled();
     abstract public void setDisabled(boolean disable);
-    */
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
+
+     static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractConnectionConfig.class.getName());
 
 }
 

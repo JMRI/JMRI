@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -336,9 +336,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
 
-    /* For a future release
     public boolean getDisabled() { return adapter.getDisabled(); }
-    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }*/
+    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
     public String getConnectionName() { 
         if(adapter.getSystemConnectionMemo()!=null)

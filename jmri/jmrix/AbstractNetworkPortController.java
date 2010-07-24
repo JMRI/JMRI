@@ -14,7 +14,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -115,10 +115,17 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
      	}
      	return null;
     }
+    
     /*This in place here until all systems are converted over to the systemconnection memo
     this will then become abstract, once all the code has been refactored*/
     public SystemConnectionMemo getSystemConnectionMemo() { return null; }
     
+    /*Set disable should be handled by the local port controller in each connection
+    this is abstract in the Portcontroller and can be removed once all the other codes has
+    been refactored */
+    public void setDisabled(boolean disabled) { 
+        mDisabled = disabled;
+    }
     /*Dispose should be handled by the port adapters and this should be abstract
     However this is in place until all the other code has been refactored */
     public void dispose(){ return; }

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of serial port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -59,6 +59,10 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         if (adapter.getCurrentOption2Setting()!=null)
             e.setAttribute("option2", adapter.getCurrentOption2Setting());
         else e.setAttribute("option2", rb.getString("noneSelected"));
+        
+        if (adapter.getDisabled())
+            e.setAttribute("disabled", "yes");
+        else e.setAttribute("disabled", "no");
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -111,9 +115,30 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         } catch ( NullPointerException ex) { //Considered normal if not present
             
         }
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null) {
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+            
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+                if ( (yesno!=null) && (!yesno.equals("")) ) {
+                    if (yesno.equals("no")) adapter.setDisabled(false);
+                    else if (yesno.equals("yes")) adapter.setDisabled(true);
+                }
+        }
         // register, so can be picked up next time
         register();
         // try to open the port
+        if (adapter.getDisabled()){
+            unpackElement(e);
+            return result;
+        }
+        
         String status = adapter.openPort(portName, "JMRI app");
         if (status != null ) {
             // indicates an error, return it
@@ -129,15 +154,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractXmlAdapt
         
         // if successful so far, go ahead and configure
         adapter.configure();
-        if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null) {
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
-            
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }
 
         // once all the configure processing has happened, do any
         // extra config
