@@ -15,9 +15,7 @@ import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
 
-
 import javax.swing.*;
-
 
 /**
  * Basic configuration infrastructure, to be 
@@ -25,7 +23,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -55,6 +53,10 @@ public class AppConfigBase extends JmriPanel {
         return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
     }
 
+    public static boolean getDisabled(int index) {
+        return JmrixConfigPane.instance(index).getDisabled();
+    }
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AppConfigBase.class.getName());
 
@@ -124,7 +126,7 @@ public class AppConfigBase extends JmriPanel {
     public void dispose() {
         items.clear();
     }
-
+    
     protected void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
@@ -224,5 +226,4 @@ public class AppConfigBase extends JmriPanel {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }
-
 }
