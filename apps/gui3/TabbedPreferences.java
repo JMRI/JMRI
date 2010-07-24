@@ -26,7 +26,7 @@ import org.jdom.Element;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -254,7 +254,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         //For a future release
         JPanel c = new JPanel();
-        /*c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
+        c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         final JCheckBox disable = new JCheckBox("Disable Connection");
         disable.setSelected(JmrixConfigPane.instance(instance).getDisabled());
         disable.addActionListener(new ActionListener() {
@@ -262,7 +262,7 @@ public class TabbedPreferences extends AppConfigBase {
                 JmrixConfigPane.instance(instance).setDisabled(disable.isSelected());
             }
         });
-        c.add(disable);*/
+        c.add(disable);
         JPanel p1 = new JPanel();
         p1.setLayout(new GridLayout(0,2));
         p1.add(c);
@@ -285,25 +285,22 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
 
-        //If the connection is disabled we put it the tab name in brackets.
-        //For a future release
-
-        /*if(JmrixConfigPane.instance(instance).getDisabled()){
+        if(JmrixConfigPane.instance(instance).getDisabled()){
             title = "(" + title + ")";
-        }*/
+        }
         connectionTabInstance.add(instance);
         connectionPanel.add(title, p);
         connectionPanel.setTitleAt(tabPosition, title);
         connectionPanel.setToolTipTextAt(tabPosition, title);
-        //For a future release
-        /*if(ConnectionStatus.instance().isConnectionOk(JmrixConfigPane.instance(instance).getCurrentProtocolInfo())){
+
+        if(jmri.jmrix.ConnectionStatus.instance().isConnectionOk(JmrixConfigPane.instance(instance).getCurrentProtocolInfo())){
             connectionPanel.setForegroundAt(tabPosition, Color.black);
         } else {
             connectionPanel.setForegroundAt(tabPosition, Color.red);
         }
         if(JmrixConfigPane.instance(instance).getDisabled()){
             connectionPanel.setForegroundAt(tabPosition, Color.ORANGE);
-        }*/
+        }
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
 //        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
         items.add(JmrixConfigPane.instance(instance));
