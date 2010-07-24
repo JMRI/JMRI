@@ -9,7 +9,7 @@ import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
  * refers to the switch settings on the new LocoBuffer II
  
  * @author			Bob Jacobsen   Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
@@ -32,10 +32,5 @@ public class LocoBufferIIAdapter extends LocoBufferAdapter {
 
     public String option1Name() { return "LocoBuffer-II connection uses "; }
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoBufferIIAdapter.class.getName());
 }
