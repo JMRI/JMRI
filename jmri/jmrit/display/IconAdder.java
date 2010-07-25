@@ -46,7 +46,6 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -57,7 +56,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableColumn;
-import javax.swing.JDialog;
 
 /**
  * Provides a simple editor for selecting N NamedIcons.  Class for
@@ -439,8 +437,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.add(new JSeparator());
 
         if (changeIconAction != null) {
-            _catalog = new CatalogPanel("catalog", "selectNode");
-            _catalog.init(false);
             makeDefaultCatalog();
             _catalog.setVisible(false);
             this.add(_catalog);
@@ -481,8 +477,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (_catalog != null)  {
             _catalog.setVisible(true);
         } else {
-            _catalog = new CatalogPanel("catalog", "selectNode");
-            _catalog.init(false);
             makeDefaultCatalog();
         }
         /*
@@ -512,6 +506,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     void makeDefaultCatalog() {
+        _catalog = new CatalogPanel("catalogs", "selectNode");
+        _catalog.init(false);
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         List <String> sysNames = manager.getSystemNameList();
         if (sysNames != null) {
@@ -527,206 +523,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
     }
 
-    public void addTreeToCatalog(CatalogTree tree) {
-        if (_catalog != null) {
-            _catalog.addTree(tree);
-        }
-    }
-
-    // For choosing image directories
-    static JFileChooser _directoryChooser = null;
-
-    /*
-    * Open file anywhere in the file system and let the user decide whether
-    * to add it to the Catalog
-    */
-    public static File getDirectory(String msg, boolean dirsOnly) {    
-        if (_directoryChooser == null) {
-            _directoryChooser = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"resources");
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Graphics Files");
-            for (int i=0; i<CatalogTreeManager.IMAGE_FILTER.length; i++) {
-                filt.addExtension(CatalogTreeManager.IMAGE_FILTER[i]);
-            }
-            _directoryChooser.setFileFilter(filt);
-        }
-        _directoryChooser.setDialogTitle(rb.getString(msg));
-        _directoryChooser.rescanCurrentDirectory();
-        if (dirsOnly) {
-            _directoryChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-            _directoryChooser.setAccessory(null);
-        } else {
-            _directoryChooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            JLabel label = new JLabel(rb.getString("loadDir1"));
-            panel.add(label);
-            label = new JLabel(rb.getString("loadDir2"));
-            panel.add(label);
-            label = new JLabel(rb.getString("loadDir3"));
-            panel.add(label);
-            label = new JLabel(rb.getString("loadDir4"));
-            panel.add(label);
-            _directoryChooser.setAccessory(panel);
-        }
-        int retVal = _directoryChooser.showOpenDialog(null);
-        if (retVal != JFileChooser.APPROVE_OPTION) return null;  // give up if no file selected
- 
-        if (dirsOnly) {
-            return _directoryChooser.getSelectedFile();
-        } else {
-            return _directoryChooser.getSelectedFile().getParentFile();
-        }
-    }
-
-    private JTextField showWaitFrame(Frame parent, String msg) {
-        _waitDialog = new JDialog(parent, rb.getString("waitTitle"), false);
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(new JLabel(rb.getString("waitWarning")));
-        JTextField waitText = new JTextField(msg);
-        waitText.setEditable(false);
-        waitText.setFont(new Font("Dialog", Font.BOLD, 12));
-        waitText.setBackground(panel.getBackground());
-        panel.add(waitText);
-        _waitDialog.getContentPane().add(panel);
-        _waitDialog.setLocation(0,50);
-        _waitDialog.pack();
-        java.awt.Rectangle r = _waitDialog.getContentPane().getBounds();
-        if (log.isDebugEnabled()) log.debug("Bounds: r.x= "+r.x+", r.y= "+r.y+", r.width= "+
-                                            r.width+", r.height= "+r.height);
-        _waitDialog.repaint(0, r.x, r.y, r.width, r.height);
-        _waitDialog.setVisible(false);
-        _waitDialog.pack();
-        return waitText;
-    }
-
-    private void closeWaitFrame() {
-        if (_waitDialog != null) {
-            _waitDialog.dispose();
-            _waitDialog = null;
-        }
-    }
-
-    /**
-    *  Open one directory.
-    * @param addDir - <pre>if true, allows directory to be added as a tree to the Catalog.
-    *                      if false, allows preview panel to drag icons.
-    */
-    public void openDirectory(boolean addDir) {
-        _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
-        File dir = getDirectory("openDirMenu", false);
-        if (dir != null) {
-            _waitDialog.setVisible(true);
-            _waitDialog.validate();
-            if (addDir) {
-                doPreviewDialog(dir, new AActionListener(dir), new MActionListener(dir, true),
-                                null, new CActionListener(), 0);
-            } else {
-                doPreviewDialog(dir, null, new MActionListener(dir, true),
-                                null, new CActionListener(), 0);
-            }
-        } else {
-            closeWaitFrame();
-        }
-    }
-
-    public void searchFS() {
-        _waitText = showWaitFrame(_parent, rb.getString("prevMsg"));
-        File dir = getDirectory("searchFSMenu", true);
-        if (dir == null) {
-            closeWaitFrame();
-            return;
-        }
-        if (log.isDebugEnabled()) log.debug("searchFS at dir= "+dir.getPath());
-        _waitDialog.setVisible(true);
-        getImageDirectory(dir, CatalogTreeManager.IMAGE_FILTER);
-
-        JOptionPane.showMessageDialog(this, rb.getString("DirNotFound"), rb.getString("searchFSMenu"),
-                                             JOptionPane.INFORMATION_MESSAGE);
-        closeWaitFrame();
-    }
-
-    class AActionListener implements ActionListener {
-        File dir;
-        public AActionListener(File d) {
-            dir = d;
-        }
-        public void actionPerformed(ActionEvent a) {
-            addDirectoryToCatalog(dir);
-        }
-    }
-    class MActionListener implements ActionListener {
-        File dir;
-        boolean oneDir;
-        public MActionListener(File d, boolean o) {
-            dir = d;
-            oneDir = o;
-        }
-        public void actionPerformed(ActionEvent a) {
-            displayMore(dir, oneDir);
-        }
-    }
-    class LActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            keepLooking();
-        }
-    }
-    class CActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent a) {
-            cancelLooking();
-        }
-    }
-
-    private void doPreviewDialog(File dir, ActionListener addAction, ActionListener moreAction,
-                                 ActionListener lookAction, ActionListener cancelAction,
-                                 int startNum) {
-        _quitLooking = false;
-        // if both addAction & lookAction not null dialog will be modeless - i.e dragable
-        _previewDialog = new PreviewDialog(_parent, "previewDir", dir, CatalogTreeManager.IMAGE_FILTER,
-                                            ((addAction != null)||(lookAction != null)) );
-        _previewDialog.init(addAction, moreAction, lookAction, cancelAction, startNum);
-        if (lookAction == null) {
-            closeWaitFrame();
-        }
-    }
-
-    private void getImageDirectory(File f, String[] filter) {
-        File[] files = f.listFiles();
-        if (files == null) {
-            return;
-        }
-        for (int k=0; k<files.length; k++) {
-            if (files[k].isDirectory()) {
-                getImageDirectory(files[k], filter);
-                if (_quitLooking){
-                    return;
-                }
-                String text = _waitText.getText();
-                if (text.length() > 500) {
-                    _waitText.setText(rb.getString("prevMsg"));
-                } else {
-                    _waitText.setText(text+".");
-                }
-                _waitText.setMinimumSize(_waitText.getPreferredSize());
-                _waitDialog.pack();
-            } else {
-                for (int j=0; j<filter.length; j++) {
-                    if (files[k].getName().endsWith(filter[j])) {
-                        doPreviewDialog(f, new AActionListener(f), new MActionListener(f, false),
-                                            new LActionListener(), new CActionListener(), 0);
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    PreviewDialog _previewDialog = null;
-    JDialog _waitDialog;
-    JTextField _waitText;
-    boolean _quitLooking = false;
-    
-    void addDirectoryToCatalog(File dir) {
+    public void addDirectoryToCatalog(java.io.File dir) {
         if (_catalog == null) {
             _catalog = new CatalogPanel("catalog", "selectNode");
             _catalog.init(false);
@@ -740,40 +537,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _catalog.createNewBranch("IF"+name, name, dir.getAbsolutePath());
         this.add(_catalog);
         this.pack();
-        cancelLooking();
     }
 
-    void displayMore(File dir, boolean oneDir) {
-        if (_previewDialog != null) {
-            _quitLooking = false;
-            int numFilesShown = _previewDialog.getNumFilesShown();
-            _previewDialog.dispose();
-            if (oneDir) {
-                doPreviewDialog(dir, null, new MActionListener(dir, oneDir),
-                                null, new CActionListener(), numFilesShown);
-            } else {
-                doPreviewDialog(dir, null, new MActionListener(dir,oneDir),
-                                new LActionListener(), new CActionListener(), numFilesShown);
-            }
+    public void addTreeToCatalog(CatalogTree tree) {
+        if (_catalog != null) {
+            _catalog.addTree(tree);
         }
     }
-    
-    void keepLooking() {
-        if (_previewDialog != null) {
-            _quitLooking = false;
-            _previewDialog.dispose();
-            _previewDialog = null;
-        }
-    }
-
-    void cancelLooking() {
-        if (_previewDialog != null) {
-            _quitLooking = true;
-            _previewDialog.dispose();
-            _previewDialog = null;
-        }
-    }
-
     private class IconButton extends DropButton {
         String key;
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete

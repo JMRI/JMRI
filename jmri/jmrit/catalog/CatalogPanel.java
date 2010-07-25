@@ -149,7 +149,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _dTree.setExpandsSelectedPaths(true);
         _treePane = new JScrollPane(_dTree);
         _treePane.getViewport().setPreferredSize(new Dimension(250, 200));
-        add(_treePane, 1);
+        add(_treePane);
         setupPanel();
     }
 
@@ -441,7 +441,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
             }
             l.setBackground(color);
         }
-        //setSelectionBackground(Color.cyan); Save for use as alternative to DnD.
         _preview.invalidate();
     }
 
@@ -470,6 +469,15 @@ public class CatalogPanel extends JPanel implements MouseListener {
         _preview.repaint();
     }
 
+    class MemoryExceptionHandler implements Thread.UncaughtExceptionHandler {
+        public void uncaughtException(Thread t, Throwable e) {
+            _noMemory = true;
+            log.error("Exception from setIcons: "+e, e);
+        }
+    }
+
+    boolean _noMemory = false;
+
     /**
     *  Display the icons in the preview panel
     */
@@ -483,8 +491,6 @@ public class CatalogPanel extends JPanel implements MouseListener {
         if (leaves == null) {
             return null;
         }
-        int cellHeight = 100;
-        int cellWidth = 100;
         int numCol = 1;
         while (numCol*numCol <leaves.size()) {
             numCol++;
@@ -495,7 +501,10 @@ public class CatalogPanel extends JPanel implements MouseListener {
         int numRow = leaves.size()/numCol;
         int cnt = 0;
         boolean newCol = false;
-        boolean noMemory = false;
+        _noMemory = false;
+        // VM launches another thread to run ImageFetcher.
+        // This handler will catch memory exceptions from that thread
+        Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
         GridBagLayout gridbag = new GridBagLayout();
         _preview.setLayout(gridbag);
         GridBagConstraints c = new GridBagConstraints();
@@ -506,13 +515,16 @@ public class CatalogPanel extends JPanel implements MouseListener {
         c.gridy = 0;
         c.gridx = -1;
         for (int i=0; i<leaves.size(); i++) {
-            if (noMemory) {
+            if (_noMemory) {
                 cnt++;
                 continue;
             }
             CatalogTreeLeaf leaf = leaves.get(i);
             NamedIcon icon = new NamedIcon(leaf.getPath(), leaf.getName());
             double scale = icon.reduceTo(ICON_WIDTH, ICON_HEIGHT, ICON_SCALE);
+            if (_noMemory) {
+                continue;
+            }
             if (c.gridx < numCol) {
                 c.gridx++;
             } else if (c.gridy < numRow) { //start next row
@@ -550,19 +562,13 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                 new Object[] {printDbl(scale,2)}));
             p.add(label);
-            if (cellHeight < icon.getIconHeight()) {
-                cellHeight = icon.getIconHeight()
-                                +label.getPreferredSize().height
-                                +nameLabel.getPreferredSize().height;
-            }
-            if (cellWidth < icon.getIconWidth()) {
-                cellWidth = Math.max(nameLabel.getPreferredSize().width,
-                                Math.max(label.getPreferredSize().width, icon.getIconWidth()))+10;
-            }
             if (_noDrag) {
                 p.addMouseListener(this);
             }
             gridbag.setConstraints(p, c);
+            if (_noMemory) {
+                continue;
+            }
             _preview.add(p);
             if (log.isDebugEnabled()) {
                 log.debug(leaf.getName()+" inserted at ("+c.gridx+", "+c.gridy+
@@ -575,8 +581,8 @@ public class CatalogPanel extends JPanel implements MouseListener {
         JLabel bottom = new JLabel();
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
-        _preview.setPreferredSize(new java.awt.Dimension(numCol*cellWidth, numRow*cellHeight));
 
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
         IconAdder.getParentFrame(this).pack();
         return java.text.MessageFormat.format(rb.getString("numImagesInNode"),
                               new Object[] {node.getUserObject(),new Integer(leaves.size())});
@@ -724,14 +730,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
             JLabel label = (JLabel)con.getComponent(0);
             NamedIcon icon = (NamedIcon)label.getIcon();
             showPopUp(e, icon);
-        } /* Save this code in case there is a need to use an alternative
-            icon changing method to DnD.
-        else {
-            setSelectionBackground(_currentBackground);
-
-            _selectedImage = (JPanel)e.getSource();
-            setSelectionBackground(Color.cyan);
-        } */
+        }
     }
 
     class DropJTree extends JTree implements DropTargetListener {

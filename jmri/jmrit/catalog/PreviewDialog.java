@@ -18,8 +18,6 @@ import java.awt.Insets;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -30,6 +28,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -61,7 +60,7 @@ import javax.swing.JTextField;
  * @author			Pete Cressman  Copyright 2009
  *
  */
-public class PreviewDialog extends JDialog implements MouseListener {
+public class PreviewDialog extends JDialog {
 
     JPanel          _selectedImage;
     static Color    _grayColor = new Color(235,235,235);
@@ -90,10 +89,15 @@ public class PreviewDialog extends JDialog implements MouseListener {
     }
 
     public void init(ActionListener addAction, ActionListener moreAction, 
-                     ActionListener lookAction, ActionListener cancelAction, int startNum) {
-
+                     ActionListener lookAction, ActionListener cancelAction, 
+                     int startNum, JFrame waitDialog) {
+        waitDialog.setVisible(true);
+        waitDialog.invalidate();
+        waitDialog.repaint();
+        if (log.isDebugEnabled()) log.debug("Enter _previewDialog.init dir= "+_currentDir.getPath()); 
         addWindowListener(new java.awt.event.WindowAdapter() {
 				public void windowClosing(java.awt.event.WindowEvent e) {
+                    DirectorySearcher.instance().close();
                     dispose();
                 }
             });
@@ -161,19 +165,21 @@ public class PreviewDialog extends JDialog implements MouseListener {
         cancelButton.addActionListener(cancelAction);
         p.add(cancelButton);
         p.add(Box.createHorizontalStrut(5));
-        p.setPreferredSize(new Dimension(400, 2*_moreButton.getPreferredSize().height));
+        p.setPreferredSize(new Dimension(400, _moreButton.getPreferredSize().height));
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(p);
-        p.add(Box.createVerticalStrut(5));
         panel.add(new JSeparator());
         panel.add(previewPanel);
         getContentPane().add(panel);
-        setMinimumSize(new Dimension(400,500));
+        setPreferredSize(new Dimension(450, 
+                        previewPanel.getPreferredSize().height + 2*p.getPreferredSize().height));
+        //setMinimumSize(new Dimension(450,300));
         setLocationRelativeTo(null);
-        setVisible(true);
         pack();
+        waitDialog.setVisible(false);
+        setVisible(true);
     }
 
     /**
@@ -187,6 +193,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
         p.add(_previewLabel);
         previewPanel.add(p);
         _preview = new JPanel();
+        _preview.setMinimumSize(new Dimension(2*CatalogPanel.ICON_WIDTH, 2*CatalogPanel.ICON_HEIGHT));
         JScrollPane js = new JScrollPane(_preview);                       
         previewPanel.add(js);
         _preview.setMinimumSize(new Dimension(200, 150));
@@ -223,38 +230,27 @@ public class PreviewDialog extends JDialog implements MouseListener {
         previewPanel.add(panel);
         return previewPanel;
     }
-
-    /**
-    *  Return the icon sekected in the preview panel
-    */
-    public NamedIcon getSelectedIcon() {
-        if (_selectedImage != null) {
-            JLabel l = (JLabel)_selectedImage.getComponent(0);
-            // deselect
-            setSelectionBackground(_currentBackground);
-            _selectedImage = null;
-            return (NamedIcon)l.getIcon();
-        }
-        return null;
-    }
-
-    void setBackGround(Color color) {
+    
+    private void setBackGround(Color color) {
         _preview.setBackground(color);
         _currentBackground = color;
         Component[] comp = _preview.getComponents();
         for (int i=0; i<comp.length; i++){
-            comp[i].setBackground(color);
+            JLabel l = null;
+            if (comp[i].getClass().getName().equals("javax.swing.JPanel")) {
+                JPanel p = (JPanel)comp[i];
+                p.setBackground(color);
+                l = (JLabel)p.getComponent(0);
+            } else if (comp[i].getClass().getName().equals("javax.swing.JLabel")) {
+                l = (JLabel)comp[i];
+            } else {
+                if (log.isDebugEnabled()) log.debug("setBackGround label #"+i+
+                                                    ", class= "+comp[i].getClass().getName());
+                return;
+            }
+            l.setBackground(color);
         }
-        setSelectionBackground(Color.cyan);
-        _preview.repaint();
-    }
-
-    void setSelectionBackground(Color color) {
-        if (_selectedImage != null) {
-            _selectedImage.getComponent(0).setBackground(color);
-            _selectedImage.getComponent(1).setBackground(color);
-            _selectedImage.setBackground(color);
-        }
+        _preview.invalidate();
     }
 
     void resetPanel() {
@@ -265,7 +261,6 @@ public class PreviewDialog extends JDialog implements MouseListener {
         if (log.isDebugEnabled()) log.debug("resetPanel");
         Component[] comp = _preview.getComponents();
         for (int i=comp.length-1; i>=0; i--) {
-            comp[i].removeMouseListener(this);
             _preview.remove(i);
             comp[i] = null;
         }
@@ -280,19 +275,32 @@ public class PreviewDialog extends JDialog implements MouseListener {
         return _startNum + _cnt;
     }
 
+    class MemoryExceptionHandler implements Thread.UncaughtExceptionHandler {
+        public void uncaughtException(Thread t, Throwable e) {
+            _noMemory = true;
+            log.error("Exception from setIcons: "+e, e);
+            if (log.isDebugEnabled()) log.debug("memoryAvailable = "+availableMemory());
+        }
+    }
+
+    boolean _noMemory = false;
+    
     /**
     *  Displays (thumbnails if image is large) of the current directory.
     *  Number of images displayed may be restricted due to memory constraints.
     *  Returns true if memory limits displaying all the images
     */
     private boolean setIcons(int startNum) throws OutOfMemoryError {
-        if (log.isDebugEnabled()) log.debug("setIcons: startNum= "+startNum);
+        // VM launches another thread to run ImageFetcher.
+        // This handler will catch memory exceptions from that thread
+        _noMemory = false;
+        Thread.setDefaultUncaughtExceptionHandler(new MemoryExceptionHandler());
         int numCol = 6;
         int numRow = 5;
-        int cellHeight = 0;
-        int cellWidth = 0;
         long memoryNeeded = 0;
-        long memoryAvailable = availableMemory();
+        // allow room for ImageFetcher threads
+        long memoryAvailable = availableMemory() - 10000000;
+        if (log.isDebugEnabled()) log.debug("setIcons: startNum= "+startNum+" memoryAvailable = "+availableMemory());
         boolean newCol = false;
         GridBagLayout gridbag = new GridBagLayout();
         _preview.setLayout(gridbag);
@@ -305,17 +313,12 @@ public class PreviewDialog extends JDialog implements MouseListener {
         c.gridx = -1;
         _cnt = 0;
         int cnt = 0;
-        boolean noMemory = false;
         File[] files = _currentDir.listFiles();
         for (int i=0; i<files.length; i++) {
             String ext = jmri.util.FileChooserFilter.getFileExtension(files[i]);
             for (int k=0; k<_filter.length; k++) {
-                if (ext != null && ext.equals(_filter[k])) {
-                    if (cnt < startNum) {
-                        cnt++;
-                        continue;
-                    }
-                    if (noMemory) {
+                if (ext != null && ext.equalsIgnoreCase(_filter[k])) {
+                    if (cnt < startNum || _noMemory) {
                         cnt++;
                         continue;
                     }
@@ -324,91 +327,76 @@ public class PreviewDialog extends JDialog implements MouseListener {
                     if (index > 0) {
                         name = name.substring(0, index);
                     }
-                    if (memoryAvailable < 11*memoryNeeded) {
-                        //log.debug("\n00\navailableMemory= "+memoryAvailable+", 'memoryNeeded'= "+memoryNeeded);
-                        memoryAvailable = availableMemory();
-                    }
-                    if (memoryAvailable < 4*memoryNeeded) {
-                        JOptionPane.showMessageDialog(this, 
-                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                                new Object[] {new Integer(_cnt)}),
-                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
-                        noMemory = true;
-                        //log.debug("\n1\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
-                        continue;
-                    }
-                    String path = files[i].getAbsolutePath();
-                    NamedIcon icon = new NamedIcon(path, name);
-                    double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
-
-                    memoryNeeded += 4*icon.getIconWidth()*icon.getIconHeight();
-                    if (memoryAvailable < 10*memoryNeeded) {
-                        JOptionPane.showMessageDialog(this, 
-                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                                new Object[] {new Integer(_cnt)}),
-                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
-                        //log.debug("\n3\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
-                        noMemory = true;
-                        continue;
-                    }
-                    if (c.gridx < numCol) {
-                        c.gridx++;
-                    } else if (c.gridy < numRow) { //start next row
-                        c.gridy++;
-                        if (!newCol) {
-                            c.gridx=0;
+                     try {
+                        String path = files[i].getAbsolutePath();
+                        NamedIcon icon = new NamedIcon(path, name);
+                        memoryNeeded += 3*icon.getIconWidth()*icon.getIconHeight();
+                        if (memoryAvailable < memoryNeeded) {
+                            _noMemory = true;
+                            continue;
                         }
-                    } else if (!newCol) { // start new column
-                        c.gridx++;
-                        numCol++;
-                        c.gridy = 0;
-                        newCol = true;
-                    } else {  // start new row
-                        c.gridy++;
-                        numRow++;
-                        c.gridx = 0;
-                        newCol = false;
-                    }                    
-                    c.insets = new Insets(5, 5, 0, 0);
-                    JLabel image;
-                    if (_mode){
-                        image = new JLabel();
-                    } else {
-                        image = new DragJLabel();   //modeless is for ImageEditor dragging
-                    }
-                    image.setOpaque(true);
-                    image.setName(name);
-                    image.setBackground(_currentBackground);
-                    image.setIcon(icon);
-                    JPanel p = new JPanel();
-                    p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-                    p.add(image);
-                    if (name.length()>18) {
-                        name = name.substring(0, 18);
-                    }
-                    JLabel nameLabel = new JLabel(name);
-                    JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
-                                        new Object[] {CatalogPanel.printDbl(scale,2)}));
-                    p.add(label);
-                    p.add(nameLabel);
-                    if (cellHeight < icon.getIconHeight()) {
-                        cellHeight = icon.getIconHeight()
-                                        +label.getPreferredSize().height
-                                        +nameLabel.getPreferredSize().height;
-                    }
-                    if (cellWidth < icon.getIconWidth()) {
-                        cellWidth = Math.max(nameLabel.getPreferredSize().width, 
-                                        Math.max(label.getPreferredSize().width, icon.getIconWidth()))+10;
-                    }
-                    p.addMouseListener(this);
-                    gridbag.setConstraints(p, c);
-                    if (log.isDebugEnabled()) log.debug(name+" inserted at ("+c.gridx+", "+c.gridy+") "
-                                                        +memoryNeeded);
-                    _preview.add(p);
-                    _cnt++;
-                    cnt++;
-                    if (_cnt > 300) { // somewhere above this number, VM can't build display of panel
-                        noMemory = true;
+                        double scale = icon.reduceTo(CatalogPanel.ICON_WIDTH, 
+                                                     CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
+                        if (_noMemory) {
+                            continue;
+                        }
+                           if (c.gridx < numCol) {
+                            c.gridx++;
+                        } else if (c.gridy < numRow) { //start next row
+                            c.gridy++;
+                            if (!newCol) {
+                                c.gridx=0;
+                            }
+                        } else if (!newCol) { // start new column
+                            c.gridx++;
+                            numCol++;
+                            c.gridy = 0;
+                            newCol = true;
+                        } else {  // start new row
+                            c.gridy++;
+                            numRow++;
+                            c.gridx = 0;
+                            newCol = false;
+                        }                    
+                        c.insets = new Insets(5, 5, 0, 0);
+                        JLabel image;
+                        if (_mode){
+                            image = new JLabel();
+                        } else {
+                            image = new DragJLabel();   //modeless is for ImageEditor dragging
+                        }
+                        image.setOpaque(true);
+                        image.setName(name);
+                        image.setBackground(_currentBackground);
+                        image.setIcon(icon);
+                        JPanel p = new JPanel();
+                        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+                        p.add(image);
+                        if (name.length()>18) {
+                            name = name.substring(0, 18);
+                        }
+                        JLabel nameLabel = new JLabel(name);
+                        JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
+                                            new Object[] {CatalogPanel.printDbl(scale,2)}));
+                        p.add(label);
+                        p.add(nameLabel);
+                        gridbag.setConstraints(p, c);
+                        if (_noMemory) {
+                            continue;
+                        }
+                        if (log.isDebugEnabled()) log.debug(name+" inserted at ("+c.gridx+", "+c.gridy+")");
+                        _preview.add(p);
+                        _cnt++;
+                        cnt++;
+                        if (_cnt > 300) { // somewhere above this number, VM can't build display of panel
+                            _noMemory = true;
+                        }
+                    } catch (OutOfMemoryError oome) {
+                        JOptionPane.showMessageDialog(this, 
+                                java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                                new Object[] {new Integer(_cnt)}),
+                                rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+                        _noMemory = true;
                     }
                 }
             }
@@ -418,13 +406,24 @@ public class PreviewDialog extends JDialog implements MouseListener {
         JLabel bottom = new JLabel();
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
-        _preview.setPreferredSize(new java.awt.Dimension(numCol*cellWidth, numRow*cellHeight));
-        _previewLabel.setText(java.text.MessageFormat.format(rb.getString("numImagesInDir"),
-                              new Object[] {_currentDir.getName(), new Integer(cnt),
-                                  new Integer(startNum)}));
+        String msg = java.text.MessageFormat.format(rb.getString("numImagesInDir"),
+                              new Object[] {_currentDir.getName(), new Integer(cnt)});
+        if (startNum>0) {
+            msg = msg +" "+ java.text.MessageFormat.format(rb.getString("numImagesShown"), 
+                              new Object[] {new Integer(startNum)});
+        }
+        _previewLabel.setText(msg);
+        _preview.setMinimumSize(new Dimension(CatalogPanel.ICON_WIDTH, 2*CatalogPanel.ICON_HEIGHT));
         jmri.jmrit.display.IconAdder.getParentFrame(this).pack();
-        //log.debug("\n6\navailableMemory= "+availableMemory()+", 'memoryNeeded'= "+memoryNeeded);
-        return noMemory;
+
+        if (_noMemory) {
+            JOptionPane.showMessageDialog(this, 
+                    java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
+                    new Object[] {new Integer(_cnt)}),
+                    rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
+        }
+        Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
+        return _noMemory;
     }
 
     static int CHUNK = 500000;
@@ -442,7 +441,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
                 memoryTest.remove(i);
             }
             memoryTest = null;
-            if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
+            //if (log.isDebugEnabled()) log.debug("Max Memory available= "+total+" bytes");
         }
         return total;
     }
@@ -454,22 +453,7 @@ public class PreviewDialog extends JDialog implements MouseListener {
         super.dispose();
         log.debug("PreviewDialog disposed.");
     }
-
-    public void mouseClicked(MouseEvent e) {
-    }
-    public void mouseEntered(MouseEvent e) {
-    }
-    public void mouseExited(MouseEvent e) {
-    }
-    public void mousePressed(MouseEvent e) {
-    }
-    public void mouseReleased(MouseEvent e) {
-        setSelectionBackground(_currentBackground);
-
-        _selectedImage = (JPanel)e.getSource();
-        setSelectionBackground(Color.cyan);
-    }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PreviewDialog.class.getName());
 }
 

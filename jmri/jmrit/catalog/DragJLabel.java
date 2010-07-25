@@ -1,4 +1,4 @@
-// CatalogPanel.java
+// DragJLabel.java
 package jmri.jmrit.catalog;
 
 import javax.swing.JLabel;
@@ -86,7 +86,7 @@ import java.io.IOException;
          return null;
      }
 
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CatalogPanel.class.getName());
+     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DragJLabel.class.getName());
 }
 
 

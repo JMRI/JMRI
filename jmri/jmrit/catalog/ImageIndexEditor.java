@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -97,17 +98,12 @@ public class ImageIndexEditor extends JmriJFrame {
         }.init(editor));
 
         findIcon.addSeparator();
-        JMenuItem openItem = new JMenuItem(IconAdder.rb.getString("openDirMenu"));
-        class AActionListener implements ActionListener {
-            IconAdder editor;
-            public AActionListener() {
-                editor = new IconAdder();
-            }
-            public void actionPerformed(ActionEvent e) {
-                editor.openDirectory(false);
-            }
-        }
-        openItem.addActionListener(new AActionListener());
+        JMenuItem openItem = new JMenuItem(rb.getString("openDirMenu"));
+        openItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    DirectorySearcher.instance().openDirectory(false);
+                }
+            });
         findIcon.add(openItem);
 
         JMenu editMenu = new JMenu(rb.getString("EditIndexMenu"));
@@ -138,16 +134,26 @@ public class ImageIndexEditor extends JmriJFrame {
         addHelpMenu("package.jmri.jmrit.catalog.ImageIndex", true);
 
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
-        mainPanel.add(makeCatalogPanel());
-        mainPanel.add(new JSeparator(SwingConstants.VERTICAL));
-        mainPanel.add(makeIndexPanel());
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        JPanel labelPanel = new JPanel();
+        String msg = java.text.MessageFormat.format(
+                           rb.getString("dragIcons"), 
+                           new Object[] {rb.getString("defaultCatalog"), rb.getString("ImageIndex")});
+        labelPanel.add(new JLabel(msg, SwingConstants.LEFT));
+        mainPanel.add(labelPanel);
+        JPanel catalogsPanel = new JPanel();
+        catalogsPanel.setLayout(new BoxLayout(catalogsPanel, BoxLayout.X_AXIS));
+        catalogsPanel.add(makeCatalogPanel());
+        catalogsPanel.add(new JSeparator(SwingConstants.VERTICAL));
+        catalogsPanel.add(makeIndexPanel());
+        mainPanel.add(catalogsPanel);
         getContentPane().add(mainPanel);
 
         // when this window closes, check for saving 
         addWindowListener(new java.awt.event.WindowAdapter() {
             Editor panelEd;
             public void windowClosing(java.awt.event.WindowEvent e) {
+                DirectorySearcher.instance().close();
                 checkImageIndex(panelEd);
             }
             java.awt.event.WindowAdapter init(Editor pe) {
@@ -176,7 +182,6 @@ public class ImageIndexEditor extends JmriJFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static void storeImageIndex(Editor editor) {
         // build a new Default Icons tree
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
@@ -190,11 +195,13 @@ public class ImageIndexEditor extends JmriJFrame {
         if (tree == null) {
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
+        @SuppressWarnings("unchecked")
         Iterator <IconAdder>iter = editor.getIconEditors().iterator();
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
         while (iter.hasNext()) {
             IconAdder ed = iter.next();
             CatalogTreeNode node = ed.getDefaultIconNode();
+            @SuppressWarnings("unchecked")
             Enumeration<CatalogTreeNode> e = root.children();
             String name = node.toString();
             while (e.hasMoreElements()) {
@@ -223,7 +230,7 @@ public class ImageIndexEditor extends JmriJFrame {
     }
     
     private JPanel makeCatalogPanel() {
-        _catalog = new CatalogPanel("catalog", "selectNode");
+        _catalog = new CatalogPanel("defaultCatalog", "selectNode");
         _catalog.init(false);
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         List <String> sysNames = manager.getSystemNameList();

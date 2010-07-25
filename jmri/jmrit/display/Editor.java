@@ -6,6 +6,7 @@ import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Rectangle2D;
+import java.io.File;
 
 import javax.swing.*;
 import javax.swing.Timer;  // disambiguate java.util.Timer
@@ -1802,17 +1803,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             findIcon.addSeparator();
             
             JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
-            ActionListener action = new ActionListener() {
-                    IconAdder myEditor;
+            searchItem.addActionListener(new ActionListener() {
+                    IconAdder ea;
                     public void actionPerformed(ActionEvent e) {
-                        myEditor.searchFS();
+                        File dir = jmri.jmrit.catalog.DirectorySearcher.instance().searchFS();
+                        if (dir != null) {
+                            ea.addDirectoryToCatalog(dir);
+                        }
                     }
-                    ActionListener init(IconAdder editor) {
-                        myEditor = editor;
+                    ActionListener init(IconAdder ed) {
+                        ea = ed;
                         return this;
                     }
-            }.init(editor);
-            searchItem.addActionListener(action);
+            }.init(editor));
+
             findIcon.add(searchItem);
             frame.setJMenuBar(menuBar);
             editor.setParent(frame);
