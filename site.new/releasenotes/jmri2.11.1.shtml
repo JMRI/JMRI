@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.1 2010-07-24 04:28:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.2 2010-07-25 19:05:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -159,6 +159,18 @@ Added ability to set the background colour by bring up the popup menu on an empt
 <p>
 Andrew Crosland updated the SPROG support to make repeated ops mode CV writes appear consecutively rather than interleaved.
 Problem reported on developers list by Galen Seitz 22 July 2010
+
+<p>
+Andrew Crosland updated the Bachrus speedometer to add dial type speed display, in both metric and English units,
+and to
+integrate with DCC system to capture loco speed profile.
+
+<p>
+Kevin Dickerson made some improvements to the connection code, including catching an error, removing deprecated code and 
+adding a "disable adapter" option.
+
+<p>
+Dan Boudreau improved operations UK support.
 
 <!--#include virtual="/Footer" -->
 
