@@ -13,7 +13,6 @@ import java.awt.event.ItemEvent;
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
-import java.util.Vector;
 
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
@@ -27,7 +26,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 
 //
@@ -227,10 +226,8 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             addStandardDetails(incAdvancedOptions);
         }
         _details.validate();
-        if (_details.getTopLevelAncestor()!=null){
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).setSize(((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).getPreferredSize());
-            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).pack();
-        }
+        if (_details.getTopLevelAncestor()!=null)
+            ((jmri.util.JmriJFrame)_details.getTopLevelAncestor()).repaint();
         _details.repaint();
     }
     
@@ -264,6 +261,9 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             return adapter.getSystemConnectionMemo().getUserName();
         else return null;
     }
+    
+    public boolean getDisabled() { return adapter.getDisabled(); }
+    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
     public void dispose(){
         if (adapter!=null){
