@@ -5,20 +5,22 @@ package jmri.jmrix.bachrus;
 import java.awt.*;
 import java.awt.font.*;
 import java.awt.geom.*;
+import java.awt.print.*;
 import javax.swing.*;
 
 /**
  * Frame for graph of loco speed curveSpeed curve
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
-public class GraphPane extends JPanel {
+public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
 
     protected String xLabel;
     protected String yLabel;
     protected dccSpeedProfile _sp;
+    protected String annotate;
 
     // Use a default 28 step profile
     public GraphPane() {
@@ -36,6 +38,10 @@ public class GraphPane extends JPanel {
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        drawGraph(g);
+    }
+
+    protected void drawGraph(Graphics g) {
         Graphics2D g2 = (Graphics2D)g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                             RenderingHints.VALUE_ANTIALIAS_ON);
@@ -68,7 +74,7 @@ public class GraphPane extends JPanel {
         g2.drawString(xLabel, sx, sy);
         // The space between values along the abcissa.
         float xInc = (float)(w - 2*PAD)/(_sp.getLength()-1);
-        
+
         // Draw lines.
         float scale = (float)(h - 2*PAD)/_sp.getMax();
         g2.setPaint(Color.green.darker());
@@ -89,4 +95,54 @@ public class GraphPane extends JPanel {
             g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
         }
     }
+
+    public int print(Graphics g, PageFormat pf, int page) throws
+                                                        PrinterException {
+
+        if (page > 0) { /* We have only one page, and 'page' is zero-based */
+            return Printable.NO_SUCH_PAGE;
+        }
+
+        Graphics2D g2 = (Graphics2D)g;
+        /* User (0,0) is typically outside the imageable area, so we must
+         * translate by the X and Y values in the PageFormat to avoid clipping.
+         */
+        g2.translate(pf.getImageableX(), pf.getImageableY());
+
+        // Scale to fit the width and height if neccessary
+        double scale = 1.0;
+        if (this.getWidth() > pf.getImageableWidth()) {
+            scale *= pf.getImageableWidth()/this.getWidth();
+        }
+        if (this.getHeight() > pf.getImageableHeight()) {
+            scale *= pf.getImageableHeight()/this.getHeight();
+        }
+        g2.scale(scale, scale);
+
+        // Draw the graph
+        drawGraph((Graphics2D)g);
+
+        // Add annotation
+        g2.setPaint(Color.BLACK);
+        g2.drawString(annotate, 0, Math.round(this.getHeight()+2*PAD*scale));
+
+        /* tell the caller that this page is part of the printed document */
+        return Printable.PAGE_EXISTS;
+    }
+
+    public void printProfile(String s) {
+        annotate = s;
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(this);
+        boolean ok = job.printDialog();
+        if (ok) {
+            try {
+                job.print();
+            } catch (PrinterException ex) {
+                log.error("Exception whilst printing profile " + ex);
+            }
+        }
+    }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(GraphPane.class.getName());
 }

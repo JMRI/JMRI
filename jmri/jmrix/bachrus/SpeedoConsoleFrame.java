@@ -2,6 +2,8 @@
 
 package jmri.jmrix.bachrus;
 
+import java.util.*;
+import java.text.*;
 import java.awt.*;
 import java.text.MessageFormat;
 import javax.swing.*;
@@ -21,7 +23,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -54,6 +56,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JButton startProfileButton = new JButton("Start");
     protected JButton stopProfileButton = new JButton("Stop");
     protected JButton exportProfileButton = new JButton("Export");
+    protected JButton printProfileButton = new JButton("Print");
 
     protected javax.swing.JLabel readerLabel = new javax.swing.JLabel();
 
@@ -360,6 +363,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profileButtonPane.add(startProfileButton);
         profileButtonPane.add(stopProfileButton);
         profileButtonPane.add(exportProfileButton);
+        profileButtonPane.add(printProfileButton);
         
         // Listen to start button
         startProfileButton.addActionListener(new java.awt.event.ActionListener() {
@@ -379,6 +383,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         stopProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sp.export();
+            }
+        });
+
+        // Listen to print button
+        printProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                Date today;
+                String result;
+                SimpleDateFormat formatter;
+                formatter = new SimpleDateFormat("EEE d MMM yyyy", Locale.getDefault());
+                today = new Date();
+                result = formatter.format(today);
+                String annotate = "Bachrus MTS-DCC profile for loco address "
+                                    + profileAddress + " created on " + result;
+                profileGraphPane.printProfile(annotate);
             }
         });
 
@@ -671,12 +690,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             log.info("Step: " + profileStep + " Speed: " + speed_ave);
             sp.setPoint(profileStep, speed_ave);
             profileGraphPane.repaint();
-            if (profileStep == 27) {
+            if (profileStep == 28) {
                 tidyUp();
                 log.info("Profile complete");
+            } else if (profileStep == 27) {
+                profileSpeed += 0.0F;
+                throttle.setSpeedSetting(profileSpeed);
+                profileStep += 1;
             } else {
                 profileSpeed += profileIncrement;
-                profileStep += 1;
                 throttle.setSpeedSetting(profileSpeed);
                 log.info("Set speed: "+profileSpeed);
             }
