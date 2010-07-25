@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.1 $
+ * @version                    $Revision: 1.2 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -22,7 +22,7 @@ public class SpeedoDial extends JPanel {
     double speedAngle = 0.0;
     int speedDigits = 0;
     
-    // Create a Panel that has clockface drawn on it scaled to the size of the panel
+    // Create a Panel that has a dial drawn on it scaled to the size of the panel
     // Define common variables
     Image logo;
     Image scaledLogo;
@@ -46,24 +46,33 @@ public class SpeedoDial extends JPanel {
     int logoWidth;
     int logoHeight;
 
-    // centreX, centreY are the coordinates of the centre of the clock
+    // centreX, centreY are the coordinates of the centre of the dial
     int centreX;
     int centreY;
 
     enum speedUnits {MPH, KPH};
     speedUnits units = speedUnits.MPH;
+    
+    int mphLimit = 80;
+    int mphInc = 40;
+    int kphLimit = 140;
+    int kphInc = 60;
+    double priMajorTick;
+    double priMinorTick;
+    double secTick;
+
         
     public SpeedoDial() {
         super();
 
-        // Load the JMRI logo and hands to put on the clock
+        // Load the JMRI logo and pointer for the dial
         // Icons are the original size version kept for to allow for mulitple resizing
         // and scaled Icons are the version scaled for the panel size
         jmriIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
         scaledIcon = new NamedIcon("resources/logo.gif", "resources/logo.gif");
         logo = jmriIcon.getImage();
 
-        // Create an unscaled set of hands to get the original size (height)to use
+        // Create an unscaled pointer to get the original size (height)to use
         // in the scaling calculations
         minuteHand = new Polygon(minuteX, minuteY, 11);
         minuteHeight = minuteHand.getBounds().getSize().height;
@@ -85,8 +94,8 @@ public class SpeedoDial extends JPanel {
 
         g2.translate(centreX, centreY);
 
-        // Draw the clockface outline scaled to the panel size with a dot in the middle and
-        // rings for the hands
+        // Draw the dial outline scaled to the panel size with a dot in the middle and
+        // center ring for the pointer
         g2.setColor(Color.white);
         g2.fillOval(-faceSize/2, -faceSize/2, faceSize, faceSize);
         g2.setColor(Color.black);
@@ -94,43 +103,87 @@ public class SpeedoDial extends JPanel {
 
         int dotSize = faceSize/40;
         g2.fillOval(-dotSize*2, -dotSize*2, 4*dotSize, 4*dotSize);
-        g2.setColor(Color.white);
-        g2.fillOval(-dotSize, -dotSize, 2*dotSize, 2*dotSize);
-        g2.setColor(Color.black);
-        g2.fillOval(-dotSize/2, -dotSize/2, dotSize, dotSize);
 
         // Draw the JMRI logo
         g2.drawImage(scaledLogo, -logoWidth/2, -faceSize/4, logoWidth, logoHeight, this);
 
-        // Draw the hour and minute markers
-        int dashSize = size/60;
-        // i is degrees clockwise from the X axis
-        for (int i = 150; i < 390; i = i + 6) {
-            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
-                       dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
-        }
-        for (int i = 150; i < 390; i = i + 30) {
-            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
-                       dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
-        }
-
-        // Add the hour digits, with the fontsize scaled to the clock size
+        // Currently selected units are plotted every 10 units with major and minor
+        // tick marks around the outer edge of the dial
+        // Other units are plotted in a differrent color, smaller font with dots
+        // in an inner ring
+        // Scaled font size for primary units
         int fontSize = faceSize/10;
         if (fontSize < 1) fontSize=1;
         Font sizedFont = new Font("Serif", Font.PLAIN, fontSize);
         g2.setFont(sizedFont);
         FontMetrics fontM = g2.getFontMetrics(sizedFont);
 
-        for (int i = 0; i < 9; i++) {
-            String hour = Integer.toString(10*i);
-            int xOffset = fontM.stringWidth(hour);
+        // Draw the speed markers for the primary units
+        int dashSize = size/60;
+        if (units == speedUnits.MPH) {
+            priMajorTick = 240/(mphLimit/10);
+            priMinorTick = priMajorTick/5;
+            secTick = 240/(mphLimit*1.609344/10);
+        } else {
+            priMajorTick = 240/(kphLimit/10);
+            priMinorTick = priMajorTick/5;
+            secTick = 240/(kphLimit/1.609344/10);
+        }
+        // i is degrees clockwise from the X axis
+        // Add minor tick marks
+        for (double i = 150; i < 391; i = i + priMinorTick) {
+            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
+                       dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
+        }
+        // Add major tick marks and digits
+        int j = 0;
+        for (double i = 150; i < 391; i = i + priMajorTick) {
+            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
+                       dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
+            String speed = Integer.toString(10*j);
+            int xOffset = fontM.stringWidth(speed);
             int yOffset = fontM.getHeight();
             // offset by 210 degrees to start in lower left quadrant and work clockwise
-            g2.drawString(hour, dotX(faceSize/2-6*dashSize,i*30-210) - xOffset/2,
-                               dotY(faceSize/2-6*dashSize,i*30-210) + yOffset/4);
+            g2.drawString(speed, dotX(faceSize/2-6*dashSize,j*priMajorTick-210) - xOffset/2,
+                               dotY(faceSize/2-6*dashSize,j*priMajorTick-210) + yOffset/4);
+            j++;
         }
 
-        // Draw minute hand rotated to appropriate angle
+        // Add dots and digits for secondary units
+        // First make a smaller font
+        fontSize = faceSize/15;
+        if (fontSize < 1) fontSize=1;
+        sizedFont = new Font("Serif", Font.PLAIN, fontSize);
+        g2.setFont(sizedFont);
+        fontM = g2.getFontMetrics(sizedFont);
+        g2.setColor(Color.green);
+        j = 0;
+        for (double i = 150; i < 391; i = i + secTick) {
+            g2.fillOval(dotX(faceSize/2 - 10 * dashSize, i), dotY(faceSize/2 - 10 * dashSize, i),
+                        5, 5);
+            if (((j & 1) == 0) ||(units == speedUnits.KPH)) {
+                // kph are plotted every 20 when secondary, mph every 10
+                String speed = Integer.toString(10*j);
+                int xOffset = fontM.stringWidth(speed);
+                int yOffset = fontM.getHeight();
+                // offset by 210 degrees to start in lower left quadrant and work clockwise
+                g2.drawString(speed, dotX(faceSize/2-13*dashSize,j*secTick-210) - xOffset/2,
+                                   dotY(faceSize/2-13*dashSize,j*secTick-210) + yOffset/4);
+            }
+            j++;
+        }
+        g2.setColor(Color.black);
+
+//        for (int i = 0; i < 9; i++) {
+//            String hour = Integer.toString(10*i);
+//            int xOffset = fontM.stringWidth(hour);
+//            int yOffset = fontM.getHeight();
+//            // offset by 210 degrees to start in lower left quadrant and work clockwise
+//            g2.drawString(hour, dotX(faceSize/2-6*dashSize,i*30-210) - xOffset/2,
+//                               dotY(faceSize/2-6*dashSize,i*30-210) + yOffset/4);
+//        }
+
+        // Draw pointer rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Graphics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
         for (int i = 0; i < scaledMinuteX.length; i++) {
@@ -142,9 +195,9 @@ public class SpeedoDial extends JPanel {
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
         g2.fillPolygon(scaledMinuteHand);
 
-        // Draw units indicator in slightly smaller font than hour digits
+        // Draw units indicator in slightly smaller font than speed digits
         String unitsString = (units == speedUnits.MPH) ? "MPH" : "KPH";
-        int unitsFontSize = (int) (fontSize*.75);
+        int unitsFontSize = (int) (faceSize/10*.75);
         if (unitsFontSize < 1) unitsFontSize = 1;
         Font unitsSizedFont = new Font("Serif", Font.PLAIN, unitsFontSize);
         g2.setFont(unitsSizedFont);
