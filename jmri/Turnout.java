@@ -68,7 +68,7 @@ package jmri;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  * @see         jmri.TurnoutManager
  * @see         jmri.InstanceManager
  * @see         jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlFrame
@@ -310,7 +310,12 @@ public interface Turnout extends NamedBean {
     /**
      * Set turnout inverted
      *<P>
-     * If true commands are reversed to layout
+     * If true commands are reversed to layout.
+     * <p>
+     * Changing this changes the known state from
+     * CLOSED to THROWN and vice-versa, with notifications;
+     * UNKNOWN and INCONSISTENT are left unchanged, as is
+     * the commanded state.
      */
     public void setInverted(boolean inverted);
     

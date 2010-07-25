@@ -21,7 +21,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public interface Sensor extends NamedBean {
 
@@ -53,6 +53,10 @@ public interface Sensor extends NamedBean {
      * considered to be inverted, e.g. the normal
      * electrical signal that results in an ACTIVE state
      * now results in an INACTIVE state.
+     * <p>
+     * Changing this changes the state from
+     * ACTIVE to INACTIVE and vice-versa, with notifications;
+     * UNKNOWN and INCONSISTENT are left unchanged.
      */
     public void setInverted(boolean inverted);
     
