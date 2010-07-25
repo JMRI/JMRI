@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.27 $
+ * @version			$Revision: 2.28 $
  */
 
 package jmri.jmrix.lenz;
@@ -241,9 +241,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                             _mThrown=jmri.Turnout.THROWN;
                             _mClosed=jmri.Turnout.CLOSED;
                      }
-                if (oldInverted != _inverted)
-                        firePropertyChange("inverted", Boolean.valueOf(oldInverted),
-                                        Boolean.valueOf(_inverted));
+                super.setInverted(inverted);
         }
 
     public boolean canInvert() {
