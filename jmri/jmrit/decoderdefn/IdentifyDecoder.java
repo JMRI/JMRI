@@ -11,10 +11,13 @@ package jmri.jmrit.decoderdefn;
  *
  * Once started, this maintains a List of possible RosterEntrys as
  * it works through the identification progress.
- *
- * @author    Bob Jacobsen   Copyright (C) 2001
+ * 
+ * Contains special case code for QSI (mfgID == 113) and 
+ * TCS (mfgID == 153)
+ * 
+ * @author    Bob Jacobsen   Copyright (C) 2001, 2010
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane
@@ -48,6 +51,10 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Set PI for Read Product ID High Byte");
             writeCV(49, 254);
             return false;
+        } else if (mfgID == 153) {
+            statusUpdate("Read decoder ID CV 248");
+            readCV(248);
+            return false;
         }
         return true;
     }
@@ -57,6 +64,9 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Set SI for Read Product ID High Byte");
             writeCV(50, 4);
             return false;
+        } else if (mfgID == 153) {
+            productID = value;
+            return true;
         }
         log.error("unexpected step 4 reached with value: "+value);
         return true;
