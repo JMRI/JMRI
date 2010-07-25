@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -28,7 +29,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -216,12 +217,12 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	
 	// add or find button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
-//		log.debug("engine button actived");
+//		log.debug("engine button activated");
 		if (ae.getSource() == findButton){
 			int rowindex = enginesModel.findEngineByRoadNumber(findEngineTextBox.getText());
 			if (rowindex < 0){
 				JOptionPane.showMessageDialog(this,
-						"Engine with road number "+ findEngineTextBox.getText()+ " not found", "Could not find engine!",
+						MessageFormat.format(rb.getString("engineWithRoadNumNotFound"),new Object[]{findEngineTextBox.getText()}), rb.getString("engineCouldNotFind"),
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 				

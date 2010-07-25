@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.event.TableModelListener; 
 import javax.swing.event.TableModelEvent;
+
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,7 +34,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -254,7 +256,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			int rowindex = carsModel.findCarByRoadNumber(findCarTextBox.getText());
 			if (rowindex < 0){
 				JOptionPane.showMessageDialog(this,
-						"Car with road number "+ findCarTextBox.getText()+ " not found", "Could not find car!",
+						MessageFormat.format(rb.getString("carWithRoadNumNotFound"),new Object[]{findCarTextBox.getText()}), rb.getString("carCouldNotFind"),
 						JOptionPane.INFORMATION_MESSAGE);
 				return;
 			}

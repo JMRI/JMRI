@@ -9,12 +9,13 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.29 $
+ * @version             $Revision: 1.30 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -233,6 +234,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 				if (getNextDestTrack() != null)
 					trk = getNextDestTrack().getName();
 				log.warn("Next destination ("+getNextDestination().getName()+", "+trk+") failed for car ("+getId()+") due to "+newStatus);
+			} else {
+				if (TrainManager.instance().getTrainForCar(this) == null)
+					log.warn ("Car ("+toString()+") next destination ("+getNextDestination().getName()+") is not served directly by any train");
 			}
 			setNextDestination(null);
 			setNextDestTrack(null);

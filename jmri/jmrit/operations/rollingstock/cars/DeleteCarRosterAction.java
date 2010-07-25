@@ -13,7 +13,7 @@ import javax.swing.JOptionPane;
  * This routine will remove all cars from the operation database.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 
@@ -30,7 +30,7 @@ public class DeleteCarRosterAction extends AbstractAction {
 	
 	public void actionPerformed(ActionEvent ae) {
 		if (JOptionPane.showConfirmDialog(null,
-				"Are you sure you want to delete all the cars in your roster?", "Delete all cars?",
+				rb.getString("carSureDelete"), rb.getString("carDeleteAll"),
 				JOptionPane.OK_CANCEL_OPTION) == JOptionPane.OK_OPTION){
 			log.debug("removing all cars from roster");
 			CarManager.instance().deleteAll();

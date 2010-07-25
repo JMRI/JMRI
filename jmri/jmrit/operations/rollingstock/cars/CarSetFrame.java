@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -251,8 +251,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 						&& !trackDestinationBox.getSelectedItem().equals("")){
 					destTrack = (Track)trackDestinationBox.getSelectedItem();
 				}
-				String status = _car.setDestination((Location) destinationBox.getSelectedItem(),
-						destTrack);
+				Location destination = (Location) destinationBox.getSelectedItem();
+				String status = _car.setDestination(destination, destTrack);
 				if (!status.equals(Car.OKAY)){
 					log.debug ("Can't set car's destination because of "+ status);
 					JOptionPane.showMessageDialog(this,
@@ -260,7 +260,14 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 							rb.getString("carCanNotDest"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
-
+				} else {
+					if (TrainManager.instance().getTrainForCar(_car) == null){
+						JOptionPane.showMessageDialog(this,
+								rb.getString("carNotServByAnyTrain"),
+								rb.getString("carNotMove"),
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 				}
 			}
 			if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals(""))
@@ -271,11 +278,43 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				// determine if train services this car's type
 				if (train != null && !train.acceptsTypeName(_car.getType())){
 					JOptionPane.showMessageDialog(this,
-							MessageFormat.format(rb.getString("carTrainNotServ"), new Object[]{_car.getType(), train.getName()}),
+							MessageFormat.format(rb.getString("carTrainNotServType"), new Object[]{_car.getType(), train.getName()}),
 							rb.getString("carNotMove"),
 							JOptionPane.ERROR_MESSAGE);
 					return;
-				}				
+				}
+				// determine if train services this car's road
+				if (train != null && !train.acceptsRoadName(_car.getRoad())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carTrainNotServRoad"), new Object[]{_car.getRoad(), train.getName()}),
+							rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				// determine if train services this car's built date
+				if (train != null && !train.acceptsBuiltDate(_car.getBuilt())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carTrainNotServBuilt"), new Object[]{_car.getBuilt(), train.getName()}),
+							rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				// determine if train services this car's load
+				if (train != null && !train.acceptsLoadName(_car.getLoad())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carTrainNotServLoad"), new Object[]{_car.getLoad(), train.getName()}),
+							rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				// determine if train services this car's built date
+				if (train != null && !train.acceptsOwnerName(_car.getOwner())){
+					JOptionPane.showMessageDialog(this,
+							MessageFormat.format(rb.getString("carTrainNotServOwner"), new Object[]{_car.getOwner(), train.getName()}),
+							rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
+					return;
+				}
 				// determine if train services the location and destination selected by user
 				RouteLocation rl = null;
 				RouteLocation rd = null;
