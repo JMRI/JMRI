@@ -10,7 +10,7 @@ import jmri.Sensor;
  * Sensor system names are always upper case.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2009
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -81,8 +81,15 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
     public void setInverted(boolean inverted) {
         boolean oldInverted = _inverted;
         _inverted = inverted;
-        if (oldInverted != _inverted)
+        if (oldInverted != _inverted) {
             firePropertyChange("inverted", new Boolean(oldInverted), new Boolean(_inverted));
+            int state = _knownState;
+            if (state == ACTIVE) {
+                setOwnState(INACTIVE);
+            } else if (state == INACTIVE) {
+                setOwnState(ACTIVE);
+            }
+        }
     }
     
     /**
