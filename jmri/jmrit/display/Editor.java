@@ -16,13 +16,11 @@ import jmri.CatalogTree;
 import jmri.InstanceManager;
 import jmri.Light;
 import jmri.Reporter;
-import jmri.configurexml.ConfigXmlManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
-import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.picker.PickListModel;
 import org.jdom.Element;
 
@@ -2159,7 +2157,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             } else if (!event.isControlDown()){ 
                 _currentSelection.doMousePressed(event);
-                _selectionGroup = null;
+                if (_selectRect==null)
+                    _selectionGroup = null;
             }
         } else {
             if (event.isPopupTrigger()) {
@@ -2181,7 +2180,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
         }
         //if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
-        if (event.isControlDown()){
+        if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()){
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
         } else if (_currentSelection==null || 
