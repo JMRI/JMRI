@@ -3,6 +3,7 @@ package jmri.jmrix.loconet.hexfile.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
+import jmri.jmrix.loconet.hexfile.LnHexFilePort;
 
 import org.jdom.Element;
 
@@ -17,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -42,6 +43,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
         if (adapter.getManufacturer()!=null)
             e.setAttribute("manufacturer", adapter.getManufacturer());
+
+        if (adapter.getDisabled())
+            e.setAttribute("disabled", "yes");
+        else e.setAttribute("disabled", "no");
 
         e.setAttribute("class", this.getClass().getName());
 
@@ -84,9 +89,18 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
             }
         }
+        if (e.getAttribute("disabled")!=null) {
+            String yesno = e.getAttribute("disabled").getValue();
+                if ( (yesno!=null) && (!yesno.equals("")) ) {
+                    if (yesno.equals("no")) adapter.setDisabled(false);
+                    else if (yesno.equals("yes")) adapter.setDisabled(true);
+                }
+        }
 
         // register, so can be picked up
         register();
+        if (adapter.getDisabled())
+            return true;
         f.configure();
         return true;
     }
@@ -97,7 +111,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        //adapter = new LnHexFilePort();
+        adapter = new LnHexFilePort();
     }
 
     protected void register() {
