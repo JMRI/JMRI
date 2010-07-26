@@ -3,10 +3,10 @@
 package jmri.jmrix.bachrus;
 
 /**
- * Class to represent the speed profile of a DCC decoder
- *
+ * Class to represent a dimensionless speed profile of a DCC decoder.
+ * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class dccSpeedProfile {
 
@@ -46,6 +46,7 @@ public class dccSpeedProfile {
     }
 
     public int getLength() { return _length; }
+    public void setMax(float m) { _max = m; }
     public float getMax() { return _max; }
 
     // Save data as CSV

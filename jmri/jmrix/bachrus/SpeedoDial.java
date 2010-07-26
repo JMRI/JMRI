@@ -14,12 +14,12 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.2 $
+ * @version                    $Revision: 1.3 $
  */
 public class SpeedoDial extends JPanel {
 
     // GUI member declarations
-    double speedAngle = 0.0;
+    float speedAngle = 0.0F;
     int speedDigits = 0;
     
     // Create a Panel that has a dial drawn on it scaled to the size of the panel
@@ -38,7 +38,7 @@ public class SpeedoDial extends JPanel {
     Polygon minuteHand;
     Polygon scaledMinuteHand;
     int minuteHeight;
-    double scaleRatio;
+    float scaleRatio;
     int faceSize;
     int panelWidth;
     int panelHeight;
@@ -50,16 +50,15 @@ public class SpeedoDial extends JPanel {
     int centreX;
     int centreY;
 
-    enum speedUnits {MPH, KPH};
-    speedUnits units = speedUnits.MPH;
+    int units = Speed.MPH;
     
     int mphLimit = 80;
     int mphInc = 40;
     int kphLimit = 140;
     int kphInc = 60;
-    double priMajorTick;
-    double priMinorTick;
-    double secTick;
+    float priMajorTick;
+    float priMinorTick;
+    float secTick;
 
         
     public SpeedoDial() {
@@ -120,24 +119,24 @@ public class SpeedoDial extends JPanel {
 
         // Draw the speed markers for the primary units
         int dashSize = size/60;
-        if (units == speedUnits.MPH) {
+        if (units == Speed.MPH) {
             priMajorTick = 240/(mphLimit/10);
             priMinorTick = priMajorTick/5;
-            secTick = 240/(mphLimit*1.609344/10);
+            secTick = 240/(Speed.mphToKph(mphLimit)/10);
         } else {
             priMajorTick = 240/(kphLimit/10);
             priMinorTick = priMajorTick/5;
-            secTick = 240/(kphLimit/1.609344/10);
+            secTick = 240/(Speed.kphToMph(kphLimit)/10);
         }
         // i is degrees clockwise from the X axis
         // Add minor tick marks
-        for (double i = 150; i < 391; i = i + priMinorTick) {
+        for (float i = 150; i < 391; i = i + priMinorTick) {
             g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
                        dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
         }
         // Add major tick marks and digits
         int j = 0;
-        for (double i = 150; i < 391; i = i + priMajorTick) {
+        for (float i = 150; i < 391; i = i + priMajorTick) {
             g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
                        dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
             String speed = Integer.toString(10*j);
@@ -158,10 +157,10 @@ public class SpeedoDial extends JPanel {
         fontM = g2.getFontMetrics(sizedFont);
         g2.setColor(Color.green);
         j = 0;
-        for (double i = 150; i < 391; i = i + secTick) {
+        for (float i = 150; i < 391; i = i + secTick) {
             g2.fillOval(dotX(faceSize/2 - 10 * dashSize, i), dotY(faceSize/2 - 10 * dashSize, i),
                         5, 5);
-            if (((j & 1) == 0) ||(units == speedUnits.KPH)) {
+            if (((j & 1) == 0) ||(units == Speed.KPH)) {
                 // kph are plotted every 20 when secondary, mph every 10
                 String speed = Integer.toString(10*j);
                 int xOffset = fontM.stringWidth(speed);
@@ -173,15 +172,6 @@ public class SpeedoDial extends JPanel {
             j++;
         }
         g2.setColor(Color.black);
-
-//        for (int i = 0; i < 9; i++) {
-//            String hour = Integer.toString(10*i);
-//            int xOffset = fontM.stringWidth(hour);
-//            int yOffset = fontM.getHeight();
-//            // offset by 210 degrees to start in lower left quadrant and work clockwise
-//            g2.drawString(hour, dotX(faceSize/2-6*dashSize,i*30-210) - xOffset/2,
-//                               dotY(faceSize/2-6*dashSize,i*30-210) + yOffset/4);
-//        }
 
         // Draw pointer rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
@@ -196,7 +186,7 @@ public class SpeedoDial extends JPanel {
         g2.fillPolygon(scaledMinuteHand);
 
         // Draw units indicator in slightly smaller font than speed digits
-        String unitsString = (units == speedUnits.MPH) ? "MPH" : "KPH";
+        String unitsString = (units == Speed.MPH) ? "MPH" : "KPH";
         int unitsFontSize = (int) (faceSize/10*.75);
         if (unitsFontSize < 1) unitsFontSize = 1;
         Font unitsSizedFont = new Font("Serif", Font.PLAIN, unitsFontSize);
@@ -227,19 +217,19 @@ public class SpeedoDial extends JPanel {
 
     // Method to convert degrees to radians
     // Math.toRadians was not available until Java 1.2
-    double toRadians(double degrees) {
-        return degrees/180.0*Math.PI;
+    float toRadians(float degrees) {
+        return degrees/180.0F*(float)Math.PI;
     }
 
     // Method to provide the cartesian x coordinate given a radius and angle (in degrees)
-    int dotX (double radius, double angle) {
+    int dotX (float radius, float angle) {
         int xDist;
         xDist = (int) Math.round(radius * Math.cos(toRadians(angle)));
         return xDist;
     }
 
     // Method to provide the cartesian y coordinate given a radius and angle (in degrees)
-    int dotY (double radius, double angle) {
+    int dotY (float radius, float angle) {
         int yDist;
         yDist = (int) Math.round(radius * Math.sin(toRadians(angle)));
         return yDist;
@@ -263,7 +253,7 @@ public class SpeedoDial extends JPanel {
         logoWidth = scaledIcon.getIconWidth();
         logoHeight = scaledIcon.getIconHeight();
 
-        scaleRatio=faceSize/2.7/minuteHeight;
+        scaleRatio=faceSize/2.7F/minuteHeight;
         for (int i = 0; i < minuteX.length; i++) {
             scaledMinuteX[i] =(int) (minuteX[i]*scaleRatio);
             scaledMinuteY[i] = (int) (minuteY[i]*scaleRatio);
@@ -278,10 +268,15 @@ public class SpeedoDial extends JPanel {
     
     @SuppressWarnings("deprecation")
     void update(float speed) {
-        // hand rotation starts at 12 o'clock position so offset it here
-        // scale by 3 so 10xph is 30 degrees
-        speedDigits = Math.round(speed);
-        speedAngle = speed*3-120;
+        // hand rotation starts at 12 o'clock position so offset it by 120 degrees
+        // scale by the angle between major tick marks divided by 10
+        if (units == Speed.MPH) {
+            speedDigits = Math.round((float)Speed.kphToMph(speed));
+            speedAngle = -120 + Speed.kphToMph(speed*priMajorTick/10);
+        } else {
+            speedDigits = Math.round(speed);
+            speedAngle = -120+speed*priMajorTick/10;
+        }
         repaint();
     }
 
@@ -289,7 +284,9 @@ public class SpeedoDial extends JPanel {
         repaint();
     }
 
-    void setUnitsMph() { units = speedUnits.MPH; }
-    void setUnitsKph() { units = speedUnits.KPH; }
+    void setUnitsMph() { units = Speed.MPH; }
+    void setUnitsKph() { units = Speed.KPH; }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoDial.class.getName());
 }
 

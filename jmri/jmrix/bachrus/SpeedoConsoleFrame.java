@@ -5,6 +5,7 @@ package jmri.jmrix.bachrus;
 import java.util.*;
 import java.text.*;
 import java.awt.*;
+import java.awt.event.*;
 import java.text.MessageFormat;
 import javax.swing.*;
 import javax.swing.JComboBox;
@@ -23,7 +24,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -107,6 +108,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected float circ = 0;
     protected float count = 1;
     protected float f;
+    protected boolean newResult;
     
     /*
      * At low speed, readings arrive less often and less filtering
@@ -124,7 +126,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int[] filter_length = {0, 2, 5, 10};
     protected enum displayType {NUMERIC, DIAL};
     protected displayType display = displayType.NUMERIC;
-    
+
     /*
      * Keep track of the DCC services available
      */
@@ -201,7 +203,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 JComboBox cb = (JComboBox)e.getSource();
                 selectedScale = scales[cb.getSelectedIndex()];
-//                calcSpeed();
                 // *** check if -1 and enable text entry box
             }
         });
@@ -230,6 +231,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
  
         // Numeric speed card
         JPanel numericSpeedPanel = new JPanel();
+        numericSpeedPanel.setLayout(new BoxLayout(numericSpeedPanel, BoxLayout.X_AXIS));
         Font f = new Font("", Font.PLAIN, 96);
         speedTextField.setFont(f);
         speedTextField.setHorizontalAlignment(JTextField.RIGHT);
@@ -241,6 +243,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
         // Dial speed card
         JPanel dialSpeedPanel = new JPanel();
+        dialSpeedPanel.setLayout(new BoxLayout(dialSpeedPanel, BoxLayout.X_AXIS));
         dialSpeedPanel.add(speedoDialDisplay);
         speedoDialDisplay.update(0.0F);
 
@@ -271,17 +274,17 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         speedPanel.add(displayCards);
         speedPanel.add(buttonPanel);
         
-        // Listen to change of units
+        // Listen to change of units, convert current average and update display
         mphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-//                calcSpeed();
+                profileGraphPane.setUnitsMph();
                 speedoDialDisplay.setUnitsMph();
                 speedoDialDisplay.update();
             }
         });
         kphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-//                calcSpeed();
+                profileGraphPane.setUnitsKph();
                 speedoDialDisplay.setUnitsKph();
                 speedoDialDisplay.update();
             }
@@ -471,6 +474,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             // Update speed
             calcSpeed();
         }
+        newResult = true;
         if (timerRunning == false) {
             // first reply starts the timer
             startReplyTimer();
@@ -483,7 +487,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     /*
-     * Calculate the scale speed
+     * Calculate the scale speed in KPH
      */
     protected void calcSpeed() {
         if (series > 0) {
@@ -491,61 +495,65 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             try {
                 f = 1500000/count;
                 speed = (f/24)*circ*selectedScale*3600/1000000;
-                // Convert to mph?
-                if (mphButton.isSelected()) {
-                    speed = speed/1.609344F;
-                }
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating speed " + ae);
             }
-            // Averaging function used for speed is
-            // S(t) = S(t-1) - [S(t-1)/N] + speed
-            // A(t) = S(t)/N
-            //
-            // where S is an accumulator, N is the length of the filter (i.e.,
-            // the number of samples included in the rolling average), and A is
-            // the result of the averaging function.
-            //
-            // Re-arranged
-            // S(t) = S(t-1) - A(t-1) + speed
-            // A(t) = S(t)/N
-            // If speed reading is wildly out then use current average to filter
-            // out mechanical jitter in locos and readers
-            if ((speed > old_speed*.85) && (speed < old_speed*1.15)) {
+            avFn(speed, false);
+            switchRange();
+        }
+    }
+
+    // Averaging function used for speed is
+    // S(t) = S(t-1) - [S(t-1)/N] + speed
+    // A(t) = S(t)/N
+    //
+    // where S is an accumulator, N is the length of the filter (i.e.,
+    // the number of samples included in the rolling average), and A is
+    // the result of the averaging function.
+    //
+    // Re-arranged
+    // S(t) = S(t-1) - A(t-1) + speed
+    // A(t) = S(t)/N
+    // If speed reading is wildly out then use current average to filter
+    // out mechanical jitter in locos and readers
+    protected void avFn(float speed, boolean force) {
+            if (((speed > old_speed*.85) && (speed < old_speed*1.15))
+                    || force) {
                 speed_acc = speed_acc - speed_ave + speed;
             } else {
                 speed_acc = speed_acc - speed_ave + speed_ave;
             }
             speed_ave = speed_acc/filter_length[range];
-//            log.info("Speed: "+speed+" Ave: "+speed_ave);
-            // When we switch range we must compensate the current accumulator
-            // value for the longer filter.
-            switch (range) {
-                case 1:
-                    if (speed > RANGE1HI) {
-                        range++;
-                        speed_acc = speed_acc*filter_length[2]/filter_length[1];
-                    }
-                    break;
-                case 2:
-                    if (speed < RANGE2LO){
-                        range--;
-                        speed_acc = speed_acc*filter_length[1]/filter_length[2];
-                    }
-                    else if (speed > RANGE2HI) {
-                        range++;
-                        speed_acc = speed_acc*filter_length[3]/filter_length[2];
-                    }
-                    break;
-                case 3:
-                    if (speed < RANGE3LO) {
-                        range--;
-                        speed_acc = speed_acc*filter_length[2]/filter_length[3];
-                    }
-                    break;
-            }
-//            showSpeed(speed_ave, 0);
             old_speed = speed;
+//            log.info("Speed: "+speed+" Ave: "+speed_ave);
+    }
+    
+    // When we switch range we must compensate the current accumulator
+    // value for the longer filter.
+    protected void switchRange() {
+        switch (range) {
+            case 1:
+                if (speed > RANGE1HI) {
+                    range++;
+                    speed_acc = speed_acc*filter_length[2]/filter_length[1];
+                }
+                break;
+            case 2:
+                if (speed < RANGE2LO){
+                    range--;
+                    speed_acc = speed_acc*filter_length[1]/filter_length[2];
+                }
+                else if (speed > RANGE2HI) {
+                    range++;
+                    speed_acc = speed_acc*filter_length[3]/filter_length[2];
+                }
+                break;
+            case 3:
+                if (speed < RANGE3LO) {
+                    range--;
+                    speed_acc = speed_acc*filter_length[2]/filter_length[3];
+                }
+                break;
         }
     }
 
@@ -553,6 +561,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      * Display the speed
      */
     protected void showSpeed(float speed, int force) {
+        float speedForText = speed;
+        if (mphButton.isSelected()) {
+            speedForText = Speed.kphToMph(speedForText);
+        }
         if (series > 0) {
             if ((speed < 0) || (speed > 999)) {
                 log.error("Calculated speed out of range: " + speed);
@@ -561,7 +573,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 // Final smoothing as applied by Bachrus Console. Don't update display
                 // unless speed has changed more than 4%
                 if ((speed > old_display_speed*1.02) || (speed < old_display_speed*0.98) || force > 0) {
-                    speedTextField.setText(MessageFormat.format("{0,number,##0.0}", speed));
+                    speedTextField.setText(MessageFormat.format("{0,number,##0.0}", speedForText));
                     speedTextField.setHorizontalAlignment(JTextField.RIGHT);
                     old_display_speed = speed;
                     speedoDialDisplay.update(speed);
@@ -666,6 +678,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     synchronized protected void displayTimeout() {
         //log.info("Display timeout");
+        newResult = false;
         showSpeed(speed_ave, 0);
     }
 
@@ -687,20 +700,21 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             tidyUp();
             log.error("Timeout waiting for throttle");
         } else if (state == profileState.RUNNING) {
-            log.info("Step: " + profileStep + " Speed: " + speed_ave);
+//            log.info("Step: " + profileStep + " Speed: " + speed_ave);
             sp.setPoint(profileStep, speed_ave);
             profileGraphPane.repaint();
             if (profileStep == 28) {
                 tidyUp();
                 log.info("Profile complete");
-            } else if (profileStep == 27) {
-                profileSpeed += 0.0F;
+            } else {
+                if (profileStep == 27) {
+                    profileSpeed = 0.0F;
+                } else {
+                    profileSpeed += profileIncrement;
+                }
                 throttle.setSpeedSetting(profileSpeed);
                 profileStep += 1;
-            } else {
-                profileSpeed += profileIncrement;
-                throttle.setSpeedSetting(profileSpeed);
-                log.info("Set speed: "+profileSpeed);
+//                log.info("Set speed: "+profileSpeed);
             }
         } else {
             log.error("Unexpected profile timeout");
