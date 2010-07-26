@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Names.shtml,v 1.20 2009-12-21 02:54:23 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.21 2010-07-26 21:18:31 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -43,7 +43,7 @@ There are several important uses:
 <LI>When working with user input, e.g. typing a number in a field, 
 the code will need to know how to map the user-provided info
 onto objects. Sometimes the user will want to name objects
-with arbitary user names, e.g. "East Lockport Turnout". 
+with arbitrary user names, e.g. "East Lockport Turnout". 
 These can't be known until their mapping to hardware has been made. 
 But other times these will be de-novo identifications that the 
 code must understand, e.g. something that means "LocoNet Turnout 23".
@@ -96,8 +96,8 @@ the hardware may need.
 
 <H2>System Name Format</h2>
 
-A system name is formed from a single letter representing the hardware system, 
-followed by a single letter indicating the type, 
+A system name is formed from a single upper case letter representing the hardware system, 
+followed by a single upper case letter indicating the type, 
 followed by system- and type-specific string. 
 The string is meant to be related to the hardware addressing, but
 is otherwise unconstrained.
