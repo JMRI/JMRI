@@ -525,7 +525,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public void addDirectoryToCatalog(java.io.File dir) {
         if (_catalog == null) {
-            _catalog = new CatalogPanel("catalog", "selectNode");
+            _catalog = new CatalogPanel("catalogs", "selectNode");
             _catalog.init(false);
             makeDefaultCatalog();
         }
