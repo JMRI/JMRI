@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.3 $
+ * @version                    $Revision: 1.4 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -59,6 +59,8 @@ public class SpeedoDial extends JPanel {
     float priMajorTick;
     float priMinorTick;
     float secTick;
+    String priString = "MPH";
+    String secString = "KPH";
 
         
     public SpeedoDial() {
@@ -171,6 +173,9 @@ public class SpeedoDial extends JPanel {
             }
             j++;
         }
+        // Draw secondary units string
+        g2.drawString(secString, dotX(faceSize/2-5*dashSize,45) - fontM.stringWidth(secString)/2,
+                           dotY(faceSize/2-5*dashSize,45) + fontM.getHeight()/4);
         g2.setColor(Color.black);
 
         // Draw pointer rotated to appropriate angle
@@ -185,14 +190,15 @@ public class SpeedoDial extends JPanel {
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY, rotatedMinuteX.length);
         g2.fillPolygon(scaledMinuteHand);
 
-        // Draw units indicator in slightly smaller font than speed digits
-        String unitsString = (units == Speed.MPH) ? "MPH" : "KPH";
+        // Draw primary units indicator in slightly smaller font than speed digits
         int unitsFontSize = (int) (faceSize/10*.75);
         if (unitsFontSize < 1) unitsFontSize = 1;
         Font unitsSizedFont = new Font("Serif", Font.PLAIN, unitsFontSize);
         g2.setFont(unitsSizedFont);
-        FontMetrics amPmFontM = g2.getFontMetrics(unitsSizedFont);
-        g2.drawString(unitsString, -amPmFontM.stringWidth(unitsString)/2, faceSize/5 );
+        FontMetrics unitsFontM = g2.getFontMetrics(unitsSizedFont);
+//        g2.drawString(unitsString, -amPmFontM.stringWidth(unitsString)/2, faceSize/5 );
+        g2.drawString(priString, dotX(faceSize/2-5*dashSize,-225) - unitsFontM.stringWidth(priString)/2,
+                           dotY(faceSize/2-5*dashSize,-225) + unitsFontM.getHeight()/4);
         
         // Show numeric speed
         String speedString = Integer.toString(speedDigits);
@@ -284,8 +290,16 @@ public class SpeedoDial extends JPanel {
         repaint();
     }
 
-    void setUnitsMph() { units = Speed.MPH; }
-    void setUnitsKph() { units = Speed.KPH; }
+    void setUnitsMph() {
+        units = Speed.MPH;
+        priString = "MPH";
+        secString = "KPH";
+    }
+    void setUnitsKph() {
+        units = Speed.KPH;
+        priString = "KPH";
+        secString = "MPH";
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpeedoDial.class.getName());
 }
