@@ -12,7 +12,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curveSpeed curve
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -37,8 +37,9 @@ public class GraphPane extends JPanel implements Printable {
     public void setYLabel (String s) { yLabel = s; }
 
     int units = Speed.MPH;
-    void setUnitsMph() { units = Speed.MPH; }
-    void setUnitsKph() { units = Speed.KPH; }
+    String unitString = "Speed (MPH)";
+    void setUnitsMph() { units = Speed.MPH; setYLabel("Speed MPH"); }
+    void setUnitsKph() { units = Speed.KPH; setYLabel("Speed KPH"); }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -51,10 +52,12 @@ public class GraphPane extends JPanel implements Printable {
                             RenderingHints.VALUE_ANTIALIAS_ON);
         int w = getWidth();
         int h = getHeight();
+        
         // Draw ordinate.
         g2.draw(new Line2D.Double(PAD, PAD, PAD, h-PAD));
         // Draw abcissa.
         g2.draw(new Line2D.Double(PAD, h-PAD, w-PAD, h-PAD));
+        
         // Draw labels.
         Font font = g2.getFont();
         FontRenderContext frc = g2.getFontRenderContext();
@@ -69,28 +72,64 @@ public class GraphPane extends JPanel implements Printable {
             float sx = (PAD/2 - sw)/2;
             g2.drawString(letter, sx, sy);
             sy += sh;
-        }
+        }        
         // Abcissa label.
         sy = h - PAD/2 + (PAD/2 - sh)/2 + lm.getAscent();
         float sw = (float)font.getStringBounds(xLabel, frc).getWidth();
         float sx = (w - sw)/2;
-        g2.setPaint(Color.red);
         g2.drawString(xLabel, sx, sy);
+        
+        // Used to scale values into drawing area
+        float scale = (float)(h - 2*PAD)/_sp.getMax();
+        // space between values along the ordinate
+        // start with an increment of 10
+        int valInc = 10;
+        float yInc = scale*valInc;
+        if (units == Speed.MPH) {
+            // need inverse transform here
+            yInc = Speed.mphToKph(yInc);
+        }
+        if (_sp.getMax() > 100) {
+            valInc = 20;
+            yInc *=2;
+        }
+        String ordString;
+        // Draw lines
+        for(int i = 0; i <= (h - 2*PAD)/yInc; i++) {
+            float y1 = h - PAD - i*yInc;
+            g2.draw(new Line2D.Double(7*PAD/8, y1, PAD, y1));
+            ordString = Integer.toString(i*valInc);
+            sw = (float)font.getStringBounds(ordString, frc).getWidth();
+            sx = 7*PAD/8 - sw;
+            sy = y1 + lm.getAscent()/2;
+            g2.drawString(ordString, sx, sy);
+        }
+        
         // The space between values along the abcissa.
         float xInc = (float)(w - 2*PAD)/(_sp.getLength()-1);
-
+        String abString;
         // Draw lines.
-        float scale = (float)(h - 2*PAD)/_sp.getMax();
         g2.setPaint(Color.green.darker());
-        for(int i = 0; i < _sp.getLength()-1; i++) {
+        for(int i = 0; i < _sp.getLength(); i++) {
             float x1 = PAD + i*xInc;
             float y1 = h - PAD - scale*_sp.getPoint(i);
             float x2 = PAD + (i+1)*xInc;
             float y2 = h - PAD - scale*_sp.getPoint(i+1);
-            g2.draw(new Line2D.Double(x1, y1, x2, y2));
+            if (i < _sp.getLength()-1) {
+                g2.draw(new Line2D.Double(x1, y1, x2, y2));
+            }
             // tick marks along abcissa
             g2.draw(new Line2D.Double(x1, h-7*PAD/8, x1, h-PAD));
+            if (((i%5) == 0) || (i == _sp.getLength()-1)) {
+                // abcissa labels every 5 ticks
+                abString = Integer.toString(i);
+                sw = (float)font.getStringBounds(abString, frc).getWidth();
+                sx = x1 - sw/2;
+                sy = h - PAD + (PAD/2 - sh)/2 + lm.getAscent();
+                g2.drawString(abString, sx, sy);
+            }
         }
+        
         // Mark data points.
         g2.setPaint(Color.red);
         for(int i = 0; i < _sp.getLength(); i++) {
