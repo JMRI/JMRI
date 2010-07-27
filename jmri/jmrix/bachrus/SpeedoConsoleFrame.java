@@ -24,7 +24,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -278,6 +278,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         mphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 profileGraphPane.setUnitsMph();
+                profileGraphPane.repaint();
                 speedoDialDisplay.setUnitsMph();
                 speedoDialDisplay.update();
             }
@@ -285,6 +286,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         kphButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 profileGraphPane.setUnitsKph();
+                profileGraphPane.repaint();
                 speedoDialDisplay.setUnitsKph();
                 speedoDialDisplay.update();
             }
@@ -352,11 +354,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profilePane.add(profileAddressPane);
         
         // pane to hold the graph
-        sp = new dccSpeedProfile(28);
+        sp = new dccSpeedProfile(29);       // 28 step plus step 0
         profileGraphPane = new GraphPane(sp);
         profileGraphPane.setPreferredSize(new Dimension(600, 300));
         profileGraphPane.setXLabel("Speed Step");
-        profileGraphPane.setYLabel("Speed");
+        profileGraphPane.setUnitsMph();
 
         profilePane.add(profileGraphPane);
         
@@ -383,7 +385,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         });
 
         // Listen to export button
-        stopProfileButton.addActionListener(new java.awt.event.ActionListener() {
+        exportProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 sp.export();
             }
@@ -595,6 +597,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 profileTimer.setRepeats(false);
                 profileTimer.start();
                 jmri.InstanceManager.throttleManagerInstance().requestThrottle(profileAddress, this);
+                sp.clear();
+                profileGraphPane.repaint();
             }
         } else {
             // Must have a non-zero address
@@ -614,6 +618,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profileTimer.stop();
         throttle = t;
         log.info("Throttle aquired, starting profiling");
+        throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
+        if (throttle.getSpeedStepMode() != DccThrottle.SpeedStepMode28) {
+            log.error("Failed to set 28 step mode");
+            throttle.release();
+            return;
+        }
         // turn on power
         try {
             jmri.InstanceManager.powerManagerInstance().setPower(PowerManager.ON);
@@ -624,7 +634,6 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Start at step 0 with 28 step packets
         profileSpeed = 0.0F;
         profileStep = 0;
-        throttle.setSpeedStepMode(DccThrottle.SpeedStepMode28);
         profileIncrement = throttle.getSpeedIncrement();
         throttle.setSpeedSetting(profileSpeed);
         // using profile timer to trigger each next step
@@ -703,18 +712,20 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 //            log.info("Step: " + profileStep + " Speed: " + speed_ave);
             sp.setPoint(profileStep, speed_ave);
             profileGraphPane.repaint();
-            if (profileStep == 28) {
+            if (profileStep == 29) {
                 tidyUp();
                 log.info("Profile complete");
             } else {
-                if (profileStep == 27) {
+                if (profileStep == 28) {
                     profileSpeed = 0.0F;
                 } else {
                     profileSpeed += profileIncrement;
                 }
                 throttle.setSpeedSetting(profileSpeed);
                 profileStep += 1;
-//                log.info("Set speed: "+profileSpeed);
+                // adjust delay as we get faster and averaging is quicker
+                profileTimer.setDelay(5000 - range*1000);
+                //log.info("Step " + profileStep + " Set speed: "+profileSpeed);
             }
         } else {
             log.error("Unexpected profile timeout");
@@ -732,7 +743,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
         if (throttle != null) {
             throttle.setSpeedSetting(0.0F);
-            jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
+            //jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
+            throttle.release();
             throttle = null;
         }
         state = profileState.IDLE;

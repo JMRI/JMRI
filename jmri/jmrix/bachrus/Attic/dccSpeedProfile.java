@@ -2,11 +2,14 @@
 
 package jmri.jmrix.bachrus;
 
+import java.io.*;
+import javax.swing.JFileChooser;
+
 /**
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class dccSpeedProfile {
 
@@ -21,7 +24,7 @@ public class dccSpeedProfile {
         for (int i=0; i<_length; i++) {
             _dataPoints[i] = 0.0F;
         }
-        _max = 25;
+        _max = 40;
     }
     
     public boolean setPoint(int idx, float val) {
@@ -37,6 +40,12 @@ public class dccSpeedProfile {
         return ret;
     }
 
+    public void clear() {
+        for (int i=0; i<_length; i++) {
+            _dataPoints[i] = 0.0F;
+        }
+    }
+    
     public float getPoint(int idx) {
         if (idx < _length) {
             return _dataPoints[idx];
@@ -49,8 +58,59 @@ public class dccSpeedProfile {
     public void setMax(float m) { _max = m; }
     public float getMax() { return _max; }
 
-    // Save data as CSV
-    public void export() {
+    final JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
+    // Save data as CSV
+    @SuppressWarnings("null")
+    public void export() {
+        String fileName = null;
+        File saveFile = null;
+
+        log.debug("Export()");
+        
+        // get filename
+        // start at current file, show dialog
+        int retVal = fileChooser.showSaveDialog(null);
+
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+          fileName = fileChooser.getSelectedFile().getPath();
+          saveFile = new File(fileName);
+        }
+        FileOutputStream out = null;
+        PrintWriter p = null;
+        try {
+            // Create a print writer based on the file, so we can print to it.
+            out = new FileOutputStream(fileName);
+            p = new PrintWriter(out, true);
+        } catch (IOException ex) {
+            if (log.isDebugEnabled()) log.debug("Problem creating output stream " + ex);
+        }
+
+        if (out == null) log.error("Null File Output Stream");
+        if (p == null) log.error("Null Print Writer");
+
+        // Save rows
+        if ((out != null) && (p != null)) {
+            for (int i = 0; i < _length; i++) {
+                p.print(i);
+                p.print(",");
+                p.println(_dataPoints[i]);
+            }
+        }
+        
+        try {
+            if (p != null) {
+                p.flush();
+                p.close();
+            }
+            if (out != null) {
+                out.close();
+            }
+        } catch (IOException ex) {
+            log.error("Exception writing CSV " + ex);
+        }
     }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(dccSpeedProfile.class.getName());
 }
