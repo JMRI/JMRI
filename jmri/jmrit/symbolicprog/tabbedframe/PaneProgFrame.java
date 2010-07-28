@@ -3,7 +3,7 @@
 package jmri.jmrit.symbolicprog.tabbedframe;
 
 import jmri.Programmer;
-import jmri.util.davidflanagan.HardcopyWriter;
+import jmri.util.davidflanagan.*;
 import jmri.ShutDownTask;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.XmlFile;
@@ -37,7 +37,7 @@ import java.awt.event.ItemEvent;
  * @author    Bob Jacobsen Copyright (C) 2001, 2004, 2005, 2008
  * @author    D Miller Copyright 2003, 2005
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.89 $
+ * @version   $Revision: 1.90 $
  */
 abstract public class PaneProgFrame extends JmriJFrame
     implements java.beans.PropertyChangeListener, PaneContainer  {
@@ -1128,8 +1128,15 @@ abstract public class PaneProgFrame extends JmriJFrame
         return false;
     }
 
-    public void doPrintPanes(HardcopyWriter w) {
+    public void doPrintPanes(boolean preview) {
         //choosePrintItems();
+        HardcopyWriter w = null;
+        try {
+            w = new HardcopyWriter(this, getRosterEntry().getId(), 10, .8, .5, .5, .5, preview);
+        } catch (HardcopyWriter.PrintCanceledException ex) {
+            log.debug("Print cancelled");
+            return;
+        }
         printInfoSection(w);
 
         if (_flPane.includeInPrint())
@@ -1144,7 +1151,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         w.close();
     }
     
-    public void printPanes(final HardcopyWriter w) {
+    public void printPanes(final boolean preview) {
     //public void choosePrintItems(){
         final JFrame frame = new JFrame("Select Items to Print");
         JPanel p1 = new JPanel();
@@ -1192,13 +1199,12 @@ abstract public class PaneProgFrame extends JmriJFrame
         
         cancel.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    w.dispose();
                     frame.dispose();
                 }
             });
         ok.addActionListener(new java.awt.event.ActionListener() {
                 public void actionPerformed(java.awt.event.ActionEvent evt) {
-                    doPrintPanes(w);
+                    doPrintPanes(preview);
                     frame.dispose();
                 }
             });

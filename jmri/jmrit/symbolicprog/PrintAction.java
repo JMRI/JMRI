@@ -2,7 +2,6 @@
 
 package jmri.jmrit.symbolicprog;
 
-import jmri.util.davidflanagan.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import java.awt.event.*;
 
@@ -16,7 +15,7 @@ import javax.swing.*;
  *
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller  Copyright (C) 2005
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class PrintAction  extends AbstractAction {
 
@@ -36,20 +35,7 @@ public class PrintAction  extends AbstractAction {
     boolean isPreview;
 
     public void actionPerformed(ActionEvent e) {
-
-        // obtain a HardcopyWriter to do this
-        HardcopyWriter writer = null;
-        try {
-            writer = new HardcopyWriter(mFrame, mFrame.getRosterEntry().getId(), 10, .8, .5, .5, .5, isPreview);
-        } catch (HardcopyWriter.PrintCanceledException ex) {
-            log.debug("Print cancelled");
-            return;
-        }
-
-        // ask the frame to print it's content panes
-        mFrame.printPanes(writer);
-
-        //writer.close();
+        mFrame.printPanes(isPreview);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintAction.class.getName());
