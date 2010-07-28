@@ -34,6 +34,7 @@ public class PositionablePopupUtil {
     protected JComponent _textComponent;    // closest ancestor for JLabel and JTextField
     protected int _textType;                // JComponent does not have text, used for casting
     protected Positionable _parent;
+    protected PositionablePropertiesUtil _propertiesUtil;
 
     private Color defaultForeground;
     private Color defaultBackground;
@@ -56,6 +57,7 @@ public class PositionablePopupUtil {
         defaultForeground = _textComponent.getForeground();
         defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
+        _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
 
     public String toString() {
@@ -80,6 +82,15 @@ public class PositionablePopupUtil {
 
     JMenuItem italic = null;
     JMenuItem bold = null;
+
+    public void propertyUtil(JPopupMenu popup){
+        JMenuItem edit = new JMenuItem("Copy");
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { _propertiesUtil.display(); }
+        });
+        popup.add(edit);
+       //popup.add(_propertiesUtil.display());
+    }
 
     public void setFixedTextMenu(JPopupMenu popup) {
         JMenu edit = new JMenu(rb.getString("EditFixed"));

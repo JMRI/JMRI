@@ -3,6 +3,7 @@ package jmri.jmrit.display.panelEditor;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.JmriJFrame;
+import java.util.*;
 
 import jmri.jmrit.display.*;
 
@@ -599,9 +600,9 @@ public class PanelEditor extends Editor implements ItemListener {
 
             // Positionable items with defaults or using overrides
             boolean popupSet =false;
-            popupSet = p.setRotateOrthogonalMenu(popup);        
-            popupSet = p.setRotateMenu(popup);        
-            popupSet = p.setScaleMenu(popup);        
+            popupSet = p.setRotateOrthogonalMenu(popup);
+            popupSet = p.setRotateMenu(popup);
+            popupSet = p.setScaleMenu(popup);
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -621,6 +622,8 @@ public class PanelEditor extends Editor implements ItemListener {
                 util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
                 util.copyItem(popup);
+                popup.addSeparator();
+                util.propertyUtil(popup);
                 popupSet = true;
             }
             if (popupSet) { 
