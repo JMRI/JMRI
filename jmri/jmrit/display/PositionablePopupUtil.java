@@ -84,7 +84,7 @@ public class PositionablePopupUtil {
     JMenuItem bold = null;
 
     public void propertyUtil(JPopupMenu popup){
-        JMenuItem edit = new JMenuItem("Copy");
+        JMenuItem edit = new JMenuItem("Properties");
         edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { _propertiesUtil.display(); }
         });

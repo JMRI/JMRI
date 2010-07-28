@@ -3,7 +3,6 @@ package jmri.jmrit.display.panelEditor;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.JmriJFrame;
-import java.util.*;
 
 import jmri.jmrit.display.*;
 
