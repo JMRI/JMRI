@@ -1,6 +1,6 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010 -->
-<!-- Revision $Revision: 1.4 $ -->
+<!-- Revision $Revision: 1.5 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -36,25 +36,47 @@
   
   <target name="index" depends="init" 
   			description="create an index page">
-    <style  basedir="${basedir}"
+    <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
     		style="format.xsl"
     		includes="JmriHelp_enIndex.xml"
     	>
-	</style>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+    </xslt>
     <move file="JmriHelp_enIndex.html" tofile="webindex.shtml"/> 
   </target>
 
   <target name="TOC" depends="init" 
   			description="create a TOC page">
-    <style  basedir="${basedir}"
+    <xslt  basedir="${basedir}"
     		destdir="${target}"
     		extension=".html"
     		style="format.xsl"
     		includes="JmriHelp_enTOC.xml"
     	>
-	</style>
+        <xmlcatalog>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Map Version 1.0//EN"
+                location="map_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp TOC Version 1.0//EN"
+                location="toc_2_0.dtd"/>
+            <dtd
+                publicId="-//Sun Microsystems Inc.//DTD JavaHelp Index Version 1.0//EN"
+                location="index_2_0.dtd"/>
+        </xmlcatalog>
+	</xslt>
     <move file="JmriHelp_enTOC.html" tofile="webtoc.shtml"/> 
   </target>
 
