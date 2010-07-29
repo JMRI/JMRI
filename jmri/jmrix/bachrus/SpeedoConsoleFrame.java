@@ -24,7 +24,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -424,7 +424,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         tc.addSpeedoListener(this);
 
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrix.bachrus.SpeedoConsoleFrame", true);
+    	addHelpMenu();
 
         getContentPane().add(tabbedPane);
         
