@@ -38,7 +38,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008,2009
  * @author	Bob Jacobsen Copyright (C) 2008,2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -242,47 +242,48 @@ public abstract class AbstractVariableLight extends AbstractLight
     protected void newInternalMinute() {
     	double origCurrent = mCurrentIntensity;
     	int origState = mState;
-    	if ((Math.abs(mCurrentIntensity - mTransitionTargetIntensity) > 0.001) && (mTransitionDuration > 0)) {
-    		if (log.isDebugEnabled()) {
-    			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
-    		}
-
-    		int steps = getNumberOfSteps();
-    		
-        	double stepsPerMinute = steps / mTransitionDuration;
-        	double stepSize = 1 / (double)steps;
-        	double intensityDiffPerMinute = stepSize * stepsPerMinute;
-
-			if (mTransitionTargetIntensity > mCurrentIntensity) {
-				mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
-				if (mCurrentIntensity >= mTransitionTargetIntensity) {
-				    // Done!
-					mCurrentIntensity = mTransitionTargetIntensity;
-					if (mCurrentIntensity >= getMaxIntensity())
-					    mState = ON;
-					else
-					    mState = INTERMEDIATE;
+		int steps = getNumberOfSteps();
+		
+		if ((mTransitionDuration > 0) && (steps > 0)) {
+	    	double stepsPerMinute = steps / mTransitionDuration;
+	    	double stepSize = 1 / (double)steps;
+	    	double intensityDiffPerMinute = stepSize * stepsPerMinute;
+	    	// if we are more than one step away, keep stepping
+	    	if (Math.abs(mCurrentIntensity - mTransitionTargetIntensity) != 0) {
+	    		if (log.isDebugEnabled()) {
+	    			log.debug("before Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+	    		}
+	
+				if (mTransitionTargetIntensity > mCurrentIntensity) {
+					mCurrentIntensity = mCurrentIntensity + intensityDiffPerMinute;
+					if (mCurrentIntensity >= mTransitionTargetIntensity) {
+					    // Done!
+						mCurrentIntensity = mTransitionTargetIntensity;
+						if (mCurrentIntensity >= getMaxIntensity())
+						    mState = ON;
+						else
+						    mState = INTERMEDIATE;
+					}
+				} else {
+					mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
+					if (mCurrentIntensity <= mTransitionTargetIntensity) {
+					    // Done!
+						mCurrentIntensity = mTransitionTargetIntensity;
+						if (mCurrentIntensity <= getMinIntensity())
+						    mState = OFF;
+						else
+						    mState = INTERMEDIATE;
+					}
 				}
-			} else {
-				mCurrentIntensity = mCurrentIntensity - intensityDiffPerMinute;
-				if (mCurrentIntensity <= mTransitionTargetIntensity) {
-				    // Done!
-					mCurrentIntensity = mTransitionTargetIntensity;
-					mCurrentIntensity = mTransitionTargetIntensity;
-					if (mCurrentIntensity <= getMinIntensity())
-					    mState = OFF;
-					else
-					    mState = INTERMEDIATE;
-				}
-			}
-			
-			// command new intensity
-            sendIntensity(mCurrentIntensity);
-
-    		if (log.isDebugEnabled()){
-        		log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
-    		}
-    	}
+				
+				// command new intensity
+	            sendIntensity(mCurrentIntensity);
+	
+	    		if (log.isDebugEnabled()){
+	        		log.debug("after Target: " + mTransitionTargetIntensity + " Current: " + mCurrentIntensity);
+	    		}
+	    	}
+		}
     	if (origCurrent != mCurrentIntensity) {
             firePropertyChange("CurrentIntensity", new Double(origCurrent), new Double(mCurrentIntensity));
     		if (log.isDebugEnabled()){
