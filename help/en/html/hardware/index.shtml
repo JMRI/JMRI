@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.31 2010-06-06 22:04:59 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.32 2010-07-31 17:23:11 crosland Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -57,6 +57,15 @@
 		
 		<p>Note: you can not program decoders with this configuration</p>
 
+	    </dd>
+
+	    <dt class="im">
+			<a href="http://www.bachrus.com/">
+		  <img src="images/Bachrus_logo.gif" width="100" height="25" alt="Bachrus"></a>
+			</dt>
+	    <dt>Bachrus</dt>
+	    <dd>
+		<p class="dl">Configure: <A HREF="bachrus/index.shtml">Bachrus MTS-DCC Model Train Speedometer</a></p> 
 	    </dd>
 
 	    <dt class="im"><a href="http://www.jlcenterprises.net/">C/MRI</a></dt>
