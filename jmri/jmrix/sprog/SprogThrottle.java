@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -91,7 +91,8 @@ public class SprogThrottle extends AbstractThrottle
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
-        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+//        int value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
+        int value = Math.round((127-1)*speed);     // -1 for rescale to avoid estop
         if (value>0) value = value+1;  // skip estop
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
