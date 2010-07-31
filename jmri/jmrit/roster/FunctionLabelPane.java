@@ -15,7 +15,7 @@ import java.util.Vector;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -138,7 +138,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     }
     
     public boolean includeInPrint() { return print; }
-    public void includeInPrint(boolean inc) { print = inc; };
+    public void includeInPrint(boolean inc) { print = inc; }
     boolean print = false;
     
     public void printPane(HardcopyWriter w) {

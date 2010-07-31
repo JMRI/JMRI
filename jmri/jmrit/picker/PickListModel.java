@@ -294,7 +294,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         TurnoutManager manager;
         TurnoutPickModel () {
             manager = InstanceManager.turnoutManagerInstance();
-            _name = rb.getString("TitleTurnoutTable");;
+            _name = rb.getString("TitleTurnoutTable");
         }
         public Manager getManager() {
             return manager;
@@ -317,7 +317,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         SensorManager manager;
         SensorPickModel () {
             manager = InstanceManager.sensorManagerInstance();
-            _name = rb.getString("TitleSensorTable");;
+            _name = rb.getString("TitleSensorTable");
         }
         public Manager getManager() {
             return manager;
@@ -340,7 +340,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         SignalHeadManager manager;
         SignalHeadPickModel () {
             manager = InstanceManager.signalHeadManagerInstance();
-            _name = rb.getString("TitleSignalTable");;
+            _name = rb.getString("TitleSignalTable");
         }
         public Manager getManager() {
             return manager;
@@ -367,7 +367,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         SignalMastManager manager;
         SignalMastPickModel () {
             manager = InstanceManager.signalMastManagerInstance();
-            _name = rb.getString("TitleSignalMastTable");;
+            _name = rb.getString("TitleSignalMastTable");
         }
         public Manager getManager() {
             return manager;
@@ -395,7 +395,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         MemoryManager manager;
         MemoryPickModel () {
             manager = InstanceManager.memoryManagerInstance();
-            _name = rb.getString("TitleMemoryTable");;
+            _name = rb.getString("TitleMemoryTable");
         }
         public Manager getManager() {
             return manager;
@@ -418,7 +418,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         ReporterManager manager;
         ReporterPickModel () {
             manager = InstanceManager.reporterManagerInstance();
-            _name = rb.getString("TitleReporterTable");;
+            _name = rb.getString("TitleReporterTable");
         }
         public Manager getManager() {
             return manager;
@@ -441,7 +441,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         LightManager manager;
         LightPickModel () {
             manager = InstanceManager.lightManagerInstance();
-            _name = rb.getString("TitleLightTable");;
+            _name = rb.getString("TitleLightTable");
         }
         public Manager getManager() {
             return manager;
@@ -464,7 +464,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         OBlockManager manager;
         OBlockPickModel () {
             manager = InstanceManager.oBlockManagerInstance();
-            _name = rb.getString("TitleBlockTable");;
+            _name = rb.getString("TitleBlockTable");
         }
         public Manager getManager() {
             return manager;
@@ -487,7 +487,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         WarrantManager manager;
         WarrantPickModel () {
             manager = InstanceManager.warrantManagerInstance();
-            _name = rb.getString("TitleWarrantTable");;
+            _name = rb.getString("TitleWarrantTable");
         }
         public Manager getManager() {
             return manager;

@@ -39,7 +39,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Dave Duchamp Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class LightControl {
 
@@ -79,7 +79,7 @@ public class LightControl {
     public int getFastClockOnHour() {return _fastClockOnHour;}
 	public int getFastClockOnMin() {return _fastClockOnMin;}             
     public int getFastClockOffHour() {return _fastClockOffHour;}           
-    public int getFastClockOffMin() {return _fastClockOffMin;};            
+    public int getFastClockOffMin() {return _fastClockOffMin;}
     public void setFastClockControlSchedule(int onHour,int onMin,int offHour, int offMin) {
 		_fastClockOnHour = onHour;
 		_fastClockOnMin = onMin;

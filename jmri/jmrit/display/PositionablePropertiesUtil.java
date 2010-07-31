@@ -558,7 +558,7 @@ public class PositionablePropertiesUtil {
         Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
         //int margin = Integer.parseInt(marginSizeText.getText());
         int margin = ((Number)marginSizeTextSpin.getValue()).intValue();
-        Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);;
+        Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
         if(desiredColor!=null) {
             outlineBorder = new LineBorder(desiredColor, ((Number)borderSizeTextSpin.getValue()).intValue());
         } else {

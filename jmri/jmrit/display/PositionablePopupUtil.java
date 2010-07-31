@@ -78,7 +78,7 @@ public class PositionablePopupUtil {
     private int borderSize=0;
     private Color borderColor=null;
     private Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-    private Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);;
+    private Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
 
     JMenuItem italic = null;
     JMenuItem bold = null;
@@ -440,7 +440,7 @@ public class PositionablePopupUtil {
     public void copyItem(JPopupMenu popup){
         JMenuItem edit = new JMenuItem("Copy");
         edit.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) { _parent.getEditor().copyItem(_parent);; }
+            public void actionPerformed(ActionEvent e) { _parent.getEditor().copyItem(_parent); }
         });
         popup.add(edit);
     }
