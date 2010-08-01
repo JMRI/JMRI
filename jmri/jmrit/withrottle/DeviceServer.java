@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.18 $
+ *	@version $Revision: 1.19 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -98,11 +98,11 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     private Timer ekg;
 
     private TrackPowerController trackPower = null;
-    private boolean isTrackPowerAllowed;
+    final boolean isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower();
     private TurnoutController turnoutC = null;
     private RouteController routeC = null;
-    private boolean isTurnoutAllowed;
-    private boolean isRouteAllowed;
+    final boolean isTurnoutAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTurnout();
+    final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
 
@@ -387,7 +387,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     }
 
     private void addControllers(){
-        if (isTrackPowerAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTrackPower()){  //  Check prefs
+        if (isTrackPowerAllowed){
             trackPower = WiThrottleManager.trackPowerControllerInstance();
             if (trackPower.isValid){
                 if (log.isDebugEnabled()) log.debug("Track Power valid.");
@@ -395,7 +395,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 trackPower.sendCurrentState();
             }
         }
-        if (isTurnoutAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowTurnout()){
+        if (isTurnoutAllowed){
             turnoutC = WiThrottleManager.turnoutControllerInstance();
             if (turnoutC.verifyCreation()){
                 if (log.isDebugEnabled()) log.debug("Turnout Controller valid.");
@@ -404,7 +404,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
                 turnoutC.sendList();
             }
         }
-        if (isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute()){
+        if (isRouteAllowed){
             routeC = WiThrottleManager.routeControllerInstance();
             if (routeC.verifyCreation()){
                 if (log.isDebugEnabled()) log.debug("Route Controller valid.");
@@ -425,10 +425,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
 
             consistC.sendAllConsistData();
         }
-
-        //  This checks prefs to see if make & break consists is allowed.
-        if (isConsistAllowed){
-        }
+        
     }
 
     public String getUDID(){
