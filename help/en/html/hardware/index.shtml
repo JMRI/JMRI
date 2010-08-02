@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.32 2010-07-31 17:23:11 crosland Exp $ -->
+<!-- $Id: index.shtml,v 1.33 2010-08-02 01:51:11 zoo Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -350,7 +350,7 @@
 
 	<dt class=left>Terminal Server</dt>
 	<dd>
-		<p><a href="TerminalServer.shtml">EasyDCC via a Lantronics Terminal Server</a></p>
+		<p><a href="TerminalServer.shtml">EasyDCC via a Lantronix Terminal Server</a></p>
 	</dd>
 
 	</dl>
