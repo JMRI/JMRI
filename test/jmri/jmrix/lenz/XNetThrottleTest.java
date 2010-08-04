@@ -10,12 +10,12 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetThrottle class
  * @author			Paul Bender
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetThrottleTest extends TestCase {
 
     public void testCtor() {
-        XNetThrottle t = new XNetThrottle();
+        XNetThrottle t = new XNetThrottle(XNetTrafficController.instance());
         Assert.assertNotNull(t);
     }
 

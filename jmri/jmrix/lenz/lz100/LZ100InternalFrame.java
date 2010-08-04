@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005-2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -31,7 +31,11 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     private int sendCount=0; // count the number of times the on/off 
 			      // sequence for F4 has been sent durring a reset
 
+    protected XNetTrafficController tc = null;
+
     public LZ100InternalFrame() {
+
+        tc=XNetTrafficController.instance();
 	
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -129,8 +133,8 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
     
 	// Check for XPressNet Connection, add listener if present, 
 	//  warn if not.
-        if (XNetTrafficController.instance() != null)
-	    XNetTrafficController.instance().addXNetListener(~0, this);
+        if (tc != null)
+	    tc.addXNetListener(~0, this);
         else
             log.warn("No XpressNet connection, so panel won't function");
 
@@ -170,7 +174,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
             XNetMessage msgon=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,true,false);
 	    sendCount--;
 	    resetMode=ONSENT;
-	    XNetTrafficController.instance().sendXNetMessage(msgon,this);
+	    tc.sendXNetMessage(msgon,this);
 	  } else if(resetMode==ONSENT) {
             XNetMessage msgoff=XNetMessage.getFunctionGroup1OpsMsg(0,false,false,false,false,false);
 	    if(sendCount>=0)
@@ -180,7 +184,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 		resetCSButton.setEnabled(true);
 		status.setText(rb.getString("LZ100ResetFinished"));
 	    }
-	    XNetTrafficController.instance().sendXNetMessage(msgoff,this);
+	    tc.sendXNetMessage(msgoff,this);
 	  }
        } else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE &&
                   l.getElement(1) == XNetConstants.CS_STATUS_RESPONSE) {
@@ -224,13 +228,13 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
       resetMode = ONSENT;
       sendCount = 25;
 
-      XNetTrafficController.instance().sendXNetMessage(msgon,this);
+      tc.sendXNetMessage(msgon,this);
     }
 
     // get the current automatic/manual mode
     synchronized void amModeGet() {
 	   XNetMessage msg=XNetMessage.getCSStatusRequestMessage();
-           XNetTrafficController.instance().sendXNetMessage(msg,this);
+           tc.sendXNetMessage(msg,this);
 	   amModeGetButton.setSelected(false);
 	   status.setText(rb.getString("LZ100StatusRetrieveMode"));
     }
@@ -242,7 +246,7 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 		   else log.debug("Auto Mode False");
 	   }
 	   XNetMessage msg=XNetMessage.getCSAutoStartMessage(autoMode);
-           XNetTrafficController.instance().sendXNetMessage(msg,this);
+           tc.sendXNetMessage(msg,this);
 	   amModeSetButton.setSelected(false);
 	   status.setText(rb.getString("LZ100StatusSetMode"));
     }

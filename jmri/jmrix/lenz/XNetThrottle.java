@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.37 $
+ * @version    $Revision: 2.38 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -25,6 +25,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                                               // throttle when throttle 
                                               // not available.
     protected static final int statTimeoutValue = 1000; // Interval to check the 
+    protected XNetTrafficController tc = null;
+
     // status of the throttle
     
     protected static final int THROTTLEIDLE=0;  // Idle Throttle
@@ -39,9 +41,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /**
      * Constructor
      */
-    public XNetThrottle()
+    public XNetThrottle(XNetTrafficController controller)
     {
         super();
+        tc=controller;
         requestList = new LinkedBlockingQueue<RequestMessage>();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor"); }
     }
@@ -49,9 +52,10 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     /**
      * Constructor
      */
-    public XNetThrottle(LocoAddress address)
+    public XNetThrottle(LocoAddress address,XNetTrafficController controller)
     {
         super();
+        this.tc=controller;
         this.setDccAddress(((DccLocoAddress)address).getNumber());
         this.speedIncrement=SPEED_STEP_128_INCREMENT;
         this.speedStepMode=DccThrottle.SpeedStepMode128;
@@ -66,7 +70,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         sendStatusInformationRequest();
         if (log.isDebugEnabled()) { log.debug("XnetThrottle constructor called for address " + address ); }
     }
-    
+
+    /*
+     *  Set the traffic controller used with this throttle
+     */
+    public void setXNetTrafficController(XNetTrafficController controller)
+    {
+       tc=controller;
+    }
+
     /**
      * Send the XpressNet message to set the state of locomotive
      * direction and functions F0, F1, F2, F3, F4
@@ -109,13 +121,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup4()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
        XNetMessage msg=XNetMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
@@ -130,13 +138,9 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendFunctionGroup5()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
        XNetMessage msg=XNetMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
@@ -151,9 +155,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup1()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -171,9 +173,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup2()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -191,9 +191,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup3()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -211,18 +209,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup4()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -241,18 +233,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      */
     protected void sendMomentaryFunctionGroup5()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -279,9 +265,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 					  " Current step mode is: " + this.speedStepMode );
 
         this.speedSetting = speed;
-        if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+        if(tc.getCommandStation().getCommandStationType()==0x10) {
             // MultiMaus doesn't support emergency off.  When -1 is
             // sent, set the speed to 0 instead.
             if(speed<0) speed=0;
@@ -389,9 +373,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // of functions from the command station
     synchronized protected void sendFunctionStatusInformationRequest()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -400,9 +382,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         if(log.isDebugEnabled())log.debug("Throttle " +address +" sending request for function momentary status.");
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionStatusMsg(this.address);
-        // now, we send the message to the command station
-        // XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLESTATSENT;
         queueMessage(msg,THROTTLESTATSENT);
         return;
     }
@@ -411,21 +390,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // status of functions 13-28 from the command station
     synchronized protected void sendFunctionHighInformationRequest()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                    tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
         if(log.isDebugEnabled())log.debug("Throttle " +address +" sending request for function momentary status.");
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionHighOnStatusMsg(this.address);
         // now, we send the message to the command station
-        //XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLESTATSENT;
         queueMessage(msg,THROTTLESTATSENT);
         return;
     }
@@ -434,18 +407,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
     // of functions from the command station
     synchronized protected void sendFunctionHighMomentaryStatusRequest()
     {
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersionBCD()<0x36){
+       if(tc.getCommandStation().getCommandStationSoftwareVersionBCD()<0x36){
            log.info("Functions F13-F28 unavailable in CS software version " +
-                    XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationSoftwareVersion());
+                   tc.getCommandStation().getCommandStationSoftwareVersion());
            return;
         } 
-       if(XNetTrafficController.instance()
-                               .getCommandStation()
-                               .getCommandStationType()==0x10) {
+       if(tc.getCommandStation().getCommandStationType()==0x10) {
           // if the command station is multimouse, ignore
           if(log.isDebugEnabled())
 		log.debug("Command station does not support Momentary functions");
@@ -455,8 +422,6 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         /* Send the request for Function status */
         XNetMessage msg=XNetMessage.getLocomotiveFunctionHighMomStatusMsg(this.address);
         // now, we send the message to the command station
-        //XNetTrafficController.instance().sendXNetMessage(msg,this);
-        //requestState=THROTTLESTATSENT;
         queueMessage(msg,THROTTLESTATSENT);
         return;
     }
@@ -696,7 +661,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        if(msg.getRetries()>0){
 	  // If the message still has retries available, send it back to 
 	  // the traffic controller.
-          XNetTrafficController.instance().sendXNetMessage(msg,this);
+          tc.sendXNetMessage(msg,this);
        } else {
          // Try to send the next queued message,  if one is available.
          sendQueuedMessage();
@@ -1514,7 +1479,7 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
            } catch (java.lang.InterruptedException ie) {
            }
            requestState=msg.getState();
-           XNetTrafficController.instance().sendXNetMessage(msg.getMsg(),this);
+           tc.sendXNetMessage(msg.getMsg(),this);
         } else {
           if(log.isDebugEnabled()) log.debug("message queue empty");
           // if the queue is empty, set the state to idle.

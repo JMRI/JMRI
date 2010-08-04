@@ -10,15 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.6 $
+ * @version	$Revision: 2.7 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 
-   // private Programmer mProgrammer;
+   protected XNetTrafficController tc = null;
 
     public XNetProgrammerManager(Programmer pProgrammer) {
         super(pProgrammer);
-	//mProgrammer=pProgrammer;
+        tc = XNetTrafficController.instance();
     }
 
     /**
@@ -27,9 +27,7 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
      * we're using but for now, we'll return true
      */
     public boolean isAddressedModePossible() {
-        return XNetTrafficController.instance()
-                                .getCommandStation()
-                                .isOpsModePossible();
+        return tc.getCommandStation().isOpsModePossible();
     }
 
     public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {

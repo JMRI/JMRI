@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -46,6 +46,8 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     private boolean _getAll = false; // flag to know if get all or 
                                      // get next/previous was pressed
+
+    protected XNetTrafficController tc = null;
 
     public StackMonFrame() {
         super();
@@ -156,7 +158,9 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         pack();
 
-	XNetTrafficController.instance().addXNetListener(~0,this);
+        tc=XNetTrafficController.instance();
+
+	tc.addXNetListener(~0,this);
     }
 
     public void addNotify() {
@@ -189,7 +193,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 	if(!adrTextField.getText().equals(""))
 	   address=Integer.parseInt(adrTextField.getText());
 	XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address,true);
-	XNetTrafficController.instance().sendXNetMessage(msg,this);
+	tc.sendXNetMessage(msg,this);
     }
 
     /*
@@ -197,7 +201,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
      */
     private void getNextEntry(int address) {
 	XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address,true);
-	XNetTrafficController.instance().sendXNetMessage(msg,this);
+	tc.sendXNetMessage(msg,this);
     }
 
     /*
@@ -208,7 +212,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 	if(!adrTextField.getText().equals(""))
 	   address=Integer.parseInt(adrTextField.getText());
 	XNetMessage msg = XNetMessage.getNextAddressOnStackMsg(address,false);
-	XNetTrafficController.instance().sendXNetMessage(msg,this);
+	tc.sendXNetMessage(msg,this);
     }
 
     /* 
@@ -219,7 +223,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 	if(!adrTextField.getText().equals("")){
 	   address=Integer.parseInt(adrTextField.getText());
            XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg(address);
-           XNetTrafficController.instance().sendXNetMessage(msg,this);
+           tc.sendXNetMessage(msg,this);
         }
     }
 
@@ -234,7 +238,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         {
 	   address=Integer.parseInt(adrTextField.getText());
 	   XNetMessage msg = XNetMessage.getLocomotiveInfoRequestMsg(address);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   tc.sendXNetMessage(msg,this);
         }
     }
 
@@ -250,7 +254,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
         {
 	   address=Integer.parseInt(adrTextField.getText());
 	   XNetMessage msg = XNetMessage.getLocomotiveFunctionStatusMsg(address);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   tc.sendXNetMessage(msg,this);
         }
     }
 

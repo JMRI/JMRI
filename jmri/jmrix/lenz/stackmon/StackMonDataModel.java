@@ -16,7 +16,7 @@ import javax.swing.table.TableColumnModel;
  * Table data model for display of Lenz Command Station Stack information.
  *
  * @author              Paul Bender Copyright (c) 2008
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 
 public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
@@ -34,8 +34,11 @@ public class StackMonDataModel extends javax.swing.table.AbstractTableModel {
         java.util.ArrayList<Integer> _addressList;  // Store the addresses
         java.util.Hashtable<Integer,String> _typeList;     // Store the entry type
 
+        protected XNetTrafficController tc = null;
+
         // Construct a new instance
         StackMonDataModel(int row, int column) {
+          tc = XNetTrafficController.instance();
         }
 
         void initTable(JTable stackTable, StackMonFrame stackFrame) {
@@ -103,7 +106,7 @@ JButton());
                                 fireTableRowsDeleted(row,row);
                                 // delete address from table
                                 XNetMessage msg = XNetMessage.getDeleteAddressOnStackMsg((_addressList.get(row)).intValue());
-                                XNetTrafficController.instance().sendXNetMessage(msg,_stackFrame);
+                                tc.sendXNetMessage(msg,_stackFrame);
                                 _typeList.remove(_addressList.get(row));
                                 _addressList.remove(row);
                                 fireTableDataChanged();

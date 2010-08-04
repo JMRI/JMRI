@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision: 2.12 $
+ * @version         $Revision: 2.13 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -22,13 +22,17 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 				sensor */
     private String systemName;
 
+    protected XNetTrafficController tc = null;
+
     public XNetSensor(String systemName, String userName) {
         super(systemName, userName);
+        tc=XNetTrafficController.instance();
         init(systemName);
     }
 
     public XNetSensor(String systemName) {
         super(systemName);
+        tc=XNetTrafficController.instance();
         init(systemName);
     }
 
@@ -64,10 +68,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
  				  " (Address " + baseaddress + 
                                   " position " + (((address-1) % 8) + 1) +
 				  ")");
-        // At construction, register for messages
-        //XNetTrafficController.instance().addXNetListener(
-	//				XNetInterface.FEEDBACK, this);
-	// Request initial status from the layout
         this.requestUpdateFromLayout();
     }
 
@@ -84,7 +84,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
        XNetMessage msg = XNetMessage.getFeedbackRequestMsg(baseaddress,
                                                           (nibble==0x00));
        msg.setElement(1,baseaddress);
-       XNetTrafficController.instance().sendXNetMessage(msg, this);
+       tc.sendXNetMessage(msg, this);
     }
 
     /**
@@ -130,7 +130,6 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
     }
 
     public void dispose() {
-        //XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK, this);
         super.dispose();
     }
 

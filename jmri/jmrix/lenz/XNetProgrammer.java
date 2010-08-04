@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.26 $
+ * @version $Revision: 2.27 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -108,7 +108,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
     public boolean getCanRead() {
 		// Multimaus cannot read CVs, unless Rocomotion interface is used, assume other Command Stations do.
 		// To be revised if and when a Rocomotion adapter is introduced!!!
-		return (XNetTrafficController.instance().getCommandStation().getCommandStationType() != 0x10);
+		return (controller().getCommandStation().getCommandStationType() != 0x10);
     }
 
 	// notify property listeners - see AbstractProgrammer for more

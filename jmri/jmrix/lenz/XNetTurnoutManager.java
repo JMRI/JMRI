@@ -11,16 +11,19 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 
+    protected XNetTrafficController tc = null;
+
     // ctor has to register for XNet events
     public XNetTurnoutManager() {
         _instance = this;
-        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK, this);
+        tc=XNetTrafficController.instance();
+        tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
     public String getSystemPrefix() { return "X"; }

@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -31,14 +31,14 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
             {
                 log.warn("Command Station disconnected, or powered down assuming LZ100/LZV100 V3.x");
                 jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager(systemMemo));
-                jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
+                jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager(systemMemo));
                 jmri.InstanceManager.setProgrammerManager(new jmri.jmrix.lenz.XNetProgrammerManager(jmri.jmrix.lenz.XNetProgrammer.instance()));
                 /* the "raw" Command Station only works on systems that support   
                    Ops Mode Programming */
                  jmri.InstanceManager.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
                 /* the consist manager has to be set up AFTER the programmer, to 
                    prevent the default consist manager from being loaded on top of it */
-                jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
+                jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                 jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                 jmri.InstanceManager.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
                 jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
@@ -47,7 +47,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
             } else {
                 /* First, we load things that should work on all systems */
                 jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager(systemMemo));
-                jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager());
+                jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.XNetThrottleManager(systemMemo));
                 
                 /* Next we check the command station type, and add the 
                    apropriate managers */
@@ -57,7 +57,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                     jmri.InstanceManager.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
-                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
+                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                 } else if (CSType==0x01) {
                     if (log.isDebugEnabled()) log.debug("Command Station is LH200");
                 } else if (CSType==0x00) {
@@ -69,7 +69,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                                                            .getCommandStation());
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
-                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
+                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                     jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                     jmri.InstanceManager.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
                     jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());
@@ -92,7 +92,7 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                                                            .getCommandStation());
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
-                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager());
+                    jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
                     jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.XNetTurnoutManager());
                     jmri.InstanceManager.setLightManager(new jmri.jmrix.lenz.XNetLightManager(systemMemo.getXNetTrafficController(),systemMemo.getSystemPrefix()));
                     jmri.InstanceManager.setSensorManager(new jmri.jmrix.lenz.XNetSensorManager());

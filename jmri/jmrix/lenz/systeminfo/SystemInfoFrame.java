@@ -21,12 +21,15 @@ import jmri.jmrix.lenz.*;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListener {
 
+    protected XNetTrafficController tc = null;
+
     public SystemInfoFrame() {
         super("XPressNet System Information");
+          tc=XNetTrafficController.instance();
         getContentPane().setLayout(new GridLayout(0,2));
 
           getContentPane().add(new JLabel("Command Station: "));
@@ -76,8 +79,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
             }
         );
        
-        if (XNetTrafficController.instance()!=null)
-	    XNetTrafficController.instance().addXNetListener(~0, this);
+        if (tc!=null)
+	    tc.addXNetListener(~0, this);
         else
             log.warn("No XPressNet connection, panel won't function");
 
@@ -101,16 +104,16 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
         hardware and software version */
 	XNetMessage msg=XNetMessage.getCSVersionRequestMessage();
         //Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
+        tc.sendXNetMessage(msg,this);
         /* Next, get the message to request the Computer Interface 
            Hardware/Software Version */
        	XNetMessage msg2=XNetMessage.getLIVersionRequestMessage();
         // Then send it to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg2,this);
+        tc.sendXNetMessage(msg2,this);
 	/* Finally, we send a request for the Command Station Status*/
 	XNetMessage msg3=XNetMessage.getCSStatusRequestMessage();
         //Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg3,this);
+        tc.sendXNetMessage(msg3,this);
     }
 
     // listen for responses from the LI101
@@ -129,12 +132,8 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
               // This is the Command Station Software Version Response
               if(l.getElement(1)==XNetConstants.CS_SOFTWARE_VERSION)
 	      {
-   	        XNetTrafficController.instance()
-                                     .getCommandStation()
-                                     .setCommandStationSoftwareVersion(l);
-  	        XNetTrafficController.instance()
-                                     .getCommandStation()
-                                     .setCommandStationType(l);
+   	        tc.getCommandStation().setCommandStationSoftwareVersion(l);
+  	        tc.getCommandStation().setCommandStationType(l);
                 setCSVersionDisplay();
               }
        } else if (l.getElement(0) == XNetConstants.CS_REQUEST_RESPONSE) {
@@ -177,12 +176,9 @@ public class SystemInfoFrame extends jmri.util.JmriJFrame implements XNetListene
      * LenzCommandStation class.
      **/
     private void setCSVersionDisplay() {
-		CSSoftwareVersion.setText("" + XNetTrafficController.instance()
-                                                 .getCommandStation()
+		CSSoftwareVersion.setText("" + tc.getCommandStation()
                                                  .getCommandStationSoftwareVersion());
-                int cs_type=XNetTrafficController.instance()
-                                                 .getCommandStation()
-                                                 .getCommandStationType();
+                int cs_type=tc.getCommandStation().getCommandStationType();
                 if(cs_type==0x00) {
 			CSType.setText("LZ100/LZV100");
 		}

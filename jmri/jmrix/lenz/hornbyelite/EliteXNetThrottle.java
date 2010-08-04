@@ -3,13 +3,13 @@ package jmri.jmrix.lenz.hornbyelite;
 import jmri.LocoAddress;
 
 import jmri.jmrix.lenz.XNetReply;
-
+import jmri.jmrix.lenz.XNetTrafficController;
 
 /**
  * An implementation of DccThrottle with code specific to a
  * XpressnetNet connection on the Hornby Elite
  * @author  Paul Bender (C) 2008-2009
- * @version    $Revision: 1.8 $
+ * @version    $Revision: 1.9 $
  */
 
 public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
@@ -21,18 +21,18 @@ public class EliteXNetThrottle extends jmri.jmrix.lenz.XNetThrottle
     /**
      * Constructor
      */
-    public EliteXNetThrottle()
+    public EliteXNetThrottle(XNetTrafficController tc)
     {
-        super();
+        super(tc);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor"); }
     }
     
     /**
      * Constructor
      */
-    public EliteXNetThrottle(LocoAddress address)
+    public EliteXNetThrottle(LocoAddress address,XNetTrafficController tc)
     {
-        super(address);
+        super(address,tc);
         if (log.isDebugEnabled()) { log.debug("Elite XNetThrottle constructor called for address " + address ); }
     }
     

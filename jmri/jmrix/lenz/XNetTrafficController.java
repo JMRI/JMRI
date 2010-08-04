@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.17 $
+ * @version 		$Revision: 2.18 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -29,7 +29,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 	 * @return The registered TrafficController instance for general use,
 	 *         if need be creating one.
 	 */
-        //NOTE: To be Deprecated after 2.10
+        @Deprecated
 	static public XNetTrafficController instance() {
 		return self;
 	}
@@ -38,7 +38,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 	 * static function setting this object as the TrafficController 
          * instance to use.
 	 */
-        // NOTE: To be Deprecated after 2.10
+        @Deprecated 
 	protected void setInstance() {
 		if(self==null) self=this;
 	}

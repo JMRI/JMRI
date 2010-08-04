@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.10 $
+ * @version    $Revision: 2.11 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener
@@ -18,15 +18,19 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
 
     protected HashMap<LocoAddress,XNetThrottle> throttles= new HashMap<LocoAddress,XNetThrottle>(5);
 
+    protected XNetTrafficController tc = null;
+
     /**
      * Constructor.
      */
-    public XNetThrottleManager()
+    public XNetThrottleManager(XNetSystemConnectionMemo memo)
     {
        super();
+       // connect to the TrafficManager
+       tc = memo.getXNetTrafficController();
 
        // Register to listen for throttle messages
-       XNetTrafficController.instance().addXNetListener(XNetInterface.THROTTLE, this);
+       tc.addXNetListener(XNetInterface.THROTTLE, this);
     }
 
     /**
@@ -39,7 +43,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
         if(throttles.containsKey(address))
            notifyThrottleKnown(throttles.get(address),address);
         else {
-	   throttle=new XNetThrottle(address);
+	   throttle=new XNetThrottle(address,tc);
            throttles.put(address,throttle);
 	   notifyThrottleKnown(throttle,address);	
         }

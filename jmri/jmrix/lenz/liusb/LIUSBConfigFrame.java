@@ -15,12 +15,15 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LIUSB.
  *
  * @author			Paul Bender  Copyright (C) 2009-2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
+    protected XNetTrafficController tc = null;
+
     public LIUSBConfigFrame() {
         super("LIUSB Configuration Utility");
+        tc=XNetTrafficController.instance();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();
@@ -89,8 +92,8 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
         // add status
         getContentPane().add(status);
 
-        if (XNetTrafficController.instance() != null)
-	    XNetTrafficController.instance().addXNetListener(~0, this);
+        if (tc != null)
+	    tc.addXNetListener(~0, this);
         else
             log.warn("No XpressNet connection, so panel won't function");
 
@@ -117,7 +120,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
            XNetMessage msg=XNetMessage.getLIAddressRequestMsg(
                                                 addrBox.getSelectedIndex());
            //Then send to the controller
-           XNetTrafficController.instance().sendXNetMessage(msg,this);
+           tc.sendXNetMessage(msg,this);
         }
     }
 
@@ -127,7 +130,7 @@ public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListen
            to get the current value. */
         XNetMessage msg=XNetMessage.getLIAddressRequestMsg(32);
         //Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
+        tc.sendXNetMessage(msg,this);
     }
 
     // listen for responces from the LI101

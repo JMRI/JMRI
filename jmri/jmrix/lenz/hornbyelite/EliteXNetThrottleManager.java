@@ -2,11 +2,12 @@ package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
+import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2008
- * @version    $Revision: 1.4 $
+ * @version    $Revision: 1.5 $
  */
 
 public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManager implements ThrottleManager
@@ -14,9 +15,9 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
     /**
      * Constructor.
      */
-    public EliteXNetThrottleManager()
+    public EliteXNetThrottleManager(XNetSystemConnectionMemo memo)
     {
-       super();
+       super(memo);
     }
 
     /**
@@ -29,7 +30,7 @@ public class EliteXNetThrottleManager extends jmri.jmrix.lenz.XNetThrottleManage
         if(throttles.containsKey(address))
            notifyThrottleKnown(throttles.get(address),address);
         else {
-           throttle=new EliteXNetThrottle(address);
+           throttle=new EliteXNetThrottle(address,tc);
            throttles.put(address,throttle);
            notifyThrottleKnown(throttle,address);
         }

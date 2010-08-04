@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -30,8 +30,6 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     public boolean load(Element lights) {
-        // create the master object
-        XNetLightManager.instance();
         // load individual lights
         return loadLights(lights);
     }

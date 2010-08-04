@@ -14,7 +14,7 @@ import jmri.ProgrammerException;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003-2010
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.15 $
+ * @version        $Revision: 2.16 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
@@ -27,14 +27,16 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
     int value;
     jmri.ProgListener progListener = null;
 
+    protected XNetTrafficController tc = null;
+
     public XNetOpsModeProgrammer(int pAddress) {
+        tc=XNetTrafficController.instance();
 	if(log.isDebugEnabled()) log.debug("Creating Ops Mode Programmer for Address " + pAddress);
 	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
 	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
 	if(log.isDebugEnabled()) log.debug("High Address: " + mAddressHigh +" Low Address: " +mAddressLow);
         // register as a listener
-        XNetTrafficController.instance().addXNetListener(
-			XNetInterface.COMMINFO|XNetInterface.CS_INFO,this);
+        tc.addXNetListener(XNetInterface.COMMINFO|XNetInterface.CS_INFO,this);
     }
 
     /**
@@ -42,7 +44,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
      */
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         XNetMessage msg=XNetMessage.getWriteOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
-	XNetTrafficController.instance().sendXNetMessage(msg,this);
+	tc.sendXNetMessage(msg,this);
         /* we need to save the programer and value so we can send messages 
         back to the screen when the programing screen when we recieve 
         something from the command station */
@@ -54,7 +56,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
            XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,value);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   tc.sendXNetMessage(msg,this);
            /* We can trigger a read to an LRC120, but the information is not
 	      currently sent back to us via the XPressNet */
            p.programmingOpReply(CV,jmri.ProgListener.NotImplemented);
@@ -62,7 +64,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
            XNetMessage msg=XNetMessage.getVerifyOpsModeCVMsg(mAddressHigh,mAddressLow,CV,val);
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   tc.sendXNetMessage(msg,this);
            /* We can trigger a read to an LRC120, but the information is not
 	      currently sent back to us via the XPressNet */
            p.programmingOpReply(val,jmri.ProgListener.NotImplemented);

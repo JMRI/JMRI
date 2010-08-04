@@ -15,12 +15,15 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
+    protected XNetTrafficController tc = null;
+
     public LI101Frame() {
         super("LI101 Configuration Utility");
+        tc = XNetTrafficController.instance();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();
@@ -104,8 +107,8 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
         // add status
         getContentPane().add(status);
 
-        if (XNetTrafficController.instance() != null)
-	    XNetTrafficController.instance().addXNetListener(~0, this);
+        if (tc != null)
+	    tc.addXNetListener(~0, this);
         else
             log.warn("No XpressNet connection, so panel won't function");
 
@@ -136,14 +139,14 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 	   XNetMessage msg=XNetMessage.getLIAddressRequestMsg(
 						addrBox.getSelectedIndex());
            //Then send to the controller
-           XNetTrafficController.instance().sendXNetMessage(msg,this);
+           tc.sendXNetMessage(msg,this);
         }
         if((String)speedBox.getSelectedItem()!=""  &&
            (String)speedBox.getSelectedItem()!=null) {
              /* Now, we can send a baud rate request */
 	     XNetMessage msg=XNetMessage.getLISpeedRequestMsg(speedBox.getSelectedIndex()+1);
              //Then send to the controller
-             XNetTrafficController.instance().sendXNetMessage(msg,this);
+             tc.sendXNetMessage(msg,this);
           }
     }
 
@@ -153,13 +156,13 @@ public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
            to get the current value. */
 	XNetMessage msg=XNetMessage.getLIAddressRequestMsg(32);
         //Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
+        tc.sendXNetMessage(msg,this);
 
         /* Next, we request setting an out of range speed request
            to get the current value. */
 	XNetMessage msg2=XNetMessage.getLISpeedRequestMsg(6);
         //Then send to the controller
-        XNetTrafficController.instance().sendXNetMessage(msg2,this);
+        tc.sendXNetMessage(msg2,this);
     }
 
     // listen for responces from the LI101

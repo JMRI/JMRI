@@ -13,26 +13,29 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.29 $
+ * @version         $Revision: 2.30 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
+        protected XNetTrafficController tc = null;
+
 	public XNetMonFrame() {
 		super();
+                tc=XNetTrafficController.instance();
 	}
 
 	protected String title() { return "XpressNet Traffic"; }
 
 	public void dispose() {
 		// disconnect from the LnTrafficController
-		XNetTrafficController.instance().removeXNetListener(~0,this);
+		tc.removeXNetListener(~0,this);
 		// and unwind swing
 		super.dispose();
 	}
 
 	protected void init() {
 		// connect to the TrafficController
-		XNetTrafficController.instance().addXNetListener(~0, this);
+		tc.addXNetListener(~0, this);
 	}
 
 	public synchronized void message(XNetReply l) {  // receive a XpressNet message and log it

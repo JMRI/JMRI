@@ -10,20 +10,23 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004-2010
- * @version               $Revision: 2.13 $
+ * @version               $Revision: 2.14 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
         private Thread initThread = null;
 
+        protected XNetTrafficController tc = null;
+
         /**
          *  Constructor - call the constructor for the superclass, and 
          *  initilize the consist reader thread, which retrieves consist 
          *  information from the command station
          **/
-        public XNetConsistManager(){
+        public XNetConsistManager(XNetSystemConnectionMemo systemMemo){
               super();
+              tc=systemMemo.getXNetTrafficController();
               // Initilize the consist reader thread.
 	      initThread = new Thread(new XNetConsistReader());
               int it=initThread.getPriority();
@@ -50,7 +53,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
 	 */
 	public Consist addConsist(DccLocoAddress address){ 
 		        XNetConsist consist;
-                        consist = new XNetConsist(address);
+                        consist = new XNetConsist(address,tc);
                         ConsistTable.put(address,consist);
                         ConsistList.add(address);
                         return(consist);
@@ -78,12 +81,10 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
 
 	   XNetConsistReader(){
               // Register as an XPressNet Listener
-              XNetTrafficController.instance().addXNetListener(
-                                                   XNetInterface.COMMINFO|
-                                                   XNetInterface.THROTTLE|
-                                                   XNetInterface.CONSIST,
-                                                   this);
-
+              tc.addXNetListener(XNetInterface.COMMINFO|
+                                 XNetInterface.THROTTLE|
+                                 XNetInterface.CONSIST,
+                                 this);
               searchNext();
           }
  
@@ -94,21 +95,21 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
               if(log.isDebugEnabled()) log.debug("Sending search for next DB Entry, _lastAddress is: " + _lastAddress);
               CurrentState=SEARCHREQUESTSENT;
 	      XNetMessage msg=XNetMessage.getNextAddressOnStackMsg(_lastAddress,true);
-              XNetTrafficController.instance().sendXNetMessage(msg,this);
+              tc.sendXNetMessage(msg,this);
            }
 
            private void searchMU() {
               if(log.isDebugEnabled()) log.debug("Sending search for next MU Entry, _lastMUAddress is: " + _lastMUAddress + " _lastMemberAddress is: " + _lastMemberAddress);
               CurrentState=MUSEARCHSENT;
 	      XNetMessage msg=XNetMessage.getDBSearchMsgNextMULoco(_lastMUAddress,_lastMemberAddress,true);
-              XNetTrafficController.instance().sendXNetMessage(msg,this);
+              tc.sendXNetMessage(msg,this);
            }
 
            private void requestInfoMU() {
               if(log.isDebugEnabled()) log.debug("Sending search for next MU Entry information , _lastMemberAddress is: " + _lastMemberAddress);
               CurrentState=MUINFOREQUESTSENT;
 	      XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(_lastMemberAddress);
-              XNetTrafficController.instance().sendXNetMessage(msg,this);
+              tc.sendXNetMessage(msg,this);
            }
 
            // Listener for messages from the command station
@@ -141,7 +142,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
                                   + _lastMemberAddress);
                                CurrentState=DHADDRESS1INFO;
 	                       XNetMessage msg=XNetMessage.getLocomotiveInfoRequestMsg(_lastMemberAddress);
-                               XNetTrafficController.instance().sendXNetMessage(msg,this);
+                               tc.sendXNetMessage(msg,this);
                                break;
                             case XNetConstants.LOCO_SEARCH_RESPONSE_MU_BASE:
                                _lastAddress = l.getThrottleMsgAddr();
@@ -223,8 +224,7 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
 	                       XNetMessage msg=XNetMessage
                                                .getLocomotiveInfoRequestMsg(
                                                          _lastMemberAddress);
-                               XNetTrafficController.instance()
-                                                    .sendXNetMessage(msg,this);
+                               tc.sendXNetMessage(msg,this);
                          } else {
                             // This consist already exists
                             searchNext();

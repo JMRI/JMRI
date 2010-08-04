@@ -5,7 +5,7 @@
  * it uses the XPressNet specific commands to build a consist.
  *
  * @author                      Paul Bender Copyright (C) 2004-2010
- * @version                     $Revision: 2.18 $
+ * @version                     $Revision: 2.19 $
  */
 
 package jmri.jmrix.lenz;
@@ -27,32 +27,33 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	private DccLocoAddress _locoAddress = null; // address for the last request
 	private boolean _directionNormal = false; // direction of the last request
 
+        protected XNetTrafficController tc = null; // hold the traffic controller associated with this consist.
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 
-	public XNetConsist(int address) {
+	public XNetConsist(int address, XNetTrafficController controller) {
 		super(address);
+                tc=controller;
 	 	// At construction, register for messages
-        	XNetTrafficController.instance().addXNetListener(
-						XNetInterface.COMMINFO|
-						XNetInterface.CONSIST, 
-						this); 
+        	tc.addXNetListener(XNetInterface.COMMINFO|
+				   XNetInterface.CONSIST, 
+				   this); 
 	}
 
 	// Initialize a consist for the specific address
         // the Default consist type is an advanced consist 
-	public XNetConsist(DccLocoAddress address) {
+	public XNetConsist(DccLocoAddress address,XNetTrafficController controller) {
 		super(address);
+                tc=controller;
 	 	// At construction, register for messages
-        	XNetTrafficController.instance().addXNetListener(
-						XNetInterface.COMMINFO|
-						XNetInterface.CONSIST, 
-						this); 
+        	tc.addXNetListener(XNetInterface.COMMINFO|
+				   XNetInterface.CONSIST, 
+				   this); 
 	}
 
 	// Clean Up local storage, and remove the XNetListener
 	public void dispose() {
 		super.dispose();
-		XNetTrafficController.instance().removeXNetListener(
+		tc.removeXNetListener(
 						XNetInterface.COMMINFO|
 						XNetInterface.CONSIST, 
 						this);
@@ -272,7 +273,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
 		XNetMessage msg=XNetMessage.getAddLocoToConsistMsg(ConsistAddress.getNumber(),LocoAddress.getNumber(),directionNormal);
-		XNetTrafficController.instance().sendXNetMessage(msg,this);
+		tc.sendXNetMessage(msg,this);
 		_state=ADDREQUESTSENTSTATE;
 	}
 
@@ -284,7 +285,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
 		XNetMessage msg=XNetMessage.getRemoveLocoFromConsistMsg(ConsistAddress.getNumber(),LocoAddress.getNumber());
-		XNetTrafficController.instance().sendXNetMessage(msg,this);
+		tc.sendXNetMessage(msg,this);
 		 _state=REMOVEREQUESTSENTSTATE;
 	}
 
@@ -301,7 +302,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
                      ConsistList.contains(LocoAddress)) {
               XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(
                            ConsistList.get(0).getNumber());  
-              XNetTrafficController.instance().sendXNetMessage(msg,this);
+              tc.sendXNetMessage(msg,this);
            }
 
 	   // We need to make sure the directions are set correctly
@@ -309,9 +310,9 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
            // and check that the direction of the trailing locomotive
            // is correct relative to the lead locomotive.
            DccLocoAddress address = ConsistList.get(0);
-           XNetThrottle lead= new XNetThrottle(address);
+           XNetThrottle lead= new XNetThrottle(address,tc);
 		
-	   XNetThrottle trail = new XNetThrottle(LocoAddress);
+	   XNetThrottle trail = new XNetThrottle(LocoAddress,tc);
 
            if(directionNormal) {
               if(log.isDebugEnabled()) log.debug("DOUBLE HEADER: Set direction of trailing locomotive same as lead locomotive");
@@ -328,7 +329,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 	   // All we have to do here is create an apropriate XNetMessage, 
 	   // and send it.
 	   XNetMessage msg=XNetMessage.getBuildDoubleHeaderMsg(address.getNumber(),LocoAddress.getNumber());
-	   XNetTrafficController.instance().sendXNetMessage(msg,this);
+	   tc.sendXNetMessage(msg,this);
 	   _state=ADDREQUESTSENTSTATE;
 	}
 
@@ -340,7 +341,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
 		// All we have to do here is create an apropriate XNetMessage, 
 		// and send it.
 		XNetMessage msg=XNetMessage.getDisolveDoubleHeaderMsg(ConsistList.get(0).getNumber());
-		XNetTrafficController.instance().sendXNetMessage(msg,this);
+		tc.sendXNetMessage(msg,this);
 		_state=REMOVEREQUESTSENTSTATE; 
 	}
 
@@ -456,7 +457,7 @@ public class XNetConsist extends jmri.DccConsist implements XNetListener {
                                                              (float)0.0,
                                                              isForward); 
         // now, we send the message to the command station
-        XNetTrafficController.instance().sendXNetMessage(msg,this);
+        tc.sendXNetMessage(msg,this);
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetConsist.class.getName());

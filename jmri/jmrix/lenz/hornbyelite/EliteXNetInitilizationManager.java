@@ -12,7 +12,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -34,7 +34,7 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
 
         /* First, we load things that should work on all systems */
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.lenz.XNetPowerManager(systemMemo));
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetThrottleManager());
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetThrottleManager(systemMemo));
             
 	if (log.isDebugEnabled()) log.debug("Command Station is Hornby Elite (manually identified).");
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager());

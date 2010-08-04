@@ -10,11 +10,13 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
     public String getSystemPrefix() { return "X"; }
+
+    protected XNetTrafficController tc = null;
 
     static public XNetSensorManager instance() {
         if (mInstance == null) new XNetSensorManager();
@@ -24,7 +26,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // to free resources when no longer used
     public void dispose() {
-        XNetTrafficController.instance().removeXNetListener(XNetInterface.FEEDBACK, this);
+        tc.removeXNetListener(XNetInterface.FEEDBACK, this);
         super.dispose();
     }
 
@@ -36,7 +38,8 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
 
     // ctor has to register for XNetNet events
     public XNetSensorManager() {
-        XNetTrafficController.instance().addXNetListener(XNetInterface.FEEDBACK,this);
+        tc=XNetTrafficController.instance();
+        tc.addXNetListener(XNetInterface.FEEDBACK,this);
         mInstance = this;
     }
 
