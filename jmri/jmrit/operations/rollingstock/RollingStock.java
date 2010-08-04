@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -320,12 +320,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			}
 			if (_location != null) {
 				_location.addRS(this);
-				//	Need to know if location name changes so we can forward to listerners 
+				//	Need to know if location name changes so we can forward to listeners 
 				_location.addPropertyChangeListener(this);
 			} 
 			if (_trackLocation != null){
 				_trackLocation.addRS(this);
-				//	Need to know if location name changes so we can forward to listerners 
+				//	Need to know if location name changes so we can forward to listeners 
 				_trackLocation.addPropertyChangeListener(this);
 				// if there's a destination then there's a pickup
 				if (_destination != null){
@@ -379,12 +379,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 					_trackLocation.addPickupRS(this);
 				}
 			
-				// Need to know if destination name changes so we can forward to listerners 
+				// Need to know if destination name changes so we can forward to listeners 
 				_destination.addPropertyChangeListener(this);
 			} 
 			if (_trackDestination != null){
 				_trackDestination.addDropRS(this);
-				// Need to know if destination name changes so we can forward to listerners 
+				// Need to know if destination name changes so we can forward to listeners 
 				_trackDestination.addPropertyChangeListener(this);
 			} else {
 				// rolling stock has been terminated bump rolling stock moves
@@ -593,16 +593,14 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	
 	public void moveRollingStock(RouteLocation old, RouteLocation next){
 		if(old == getRouteLocation()){	
-			// Arriving at terminal?
+			// Arriving at destination?
 			if(getRouteLocation() == getRouteDestination()){
 				log.debug("Rolling stock ("+toString()+") has arrived at destination ("+getDestination()+")");
-				Location destination = getDestination();
-				Track destTrack = getDestinationTrack();
+				setLocation(getDestination(), getDestinationTrack(), true);	// force car to destination
 				setDestination(null, null); 	// this also clears the route locations
-				setLocation(destination, destTrack);
 				setTrain(null);
 			}else{
-				log.debug("Rolling stock ("+toString()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") arrives ("+next.getName()+")");
+				log.debug("Rolling stock ("+toString()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") destination ("+next.getName()+")");
 				Location nextLocation = locationManager.getLocationByName(next.getName());
 				setLocation(nextLocation, null);
 				setRouteLocation(next);

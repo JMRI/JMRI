@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -90,7 +90,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JCheckBox mainMenuCheckBox = new JCheckBox(rb.getString("MainMenu"));
 	JCheckBox iconCheckBox = new JCheckBox(rb.getString("trainIcon"));
 	JCheckBox appendCheckBox = new JCheckBox(rb.getString("trainIconAppend"));
-	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
+	//JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
 	
 	// text field
 	JTextField ownerTextField = new JTextField(10);
@@ -132,7 +132,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 
 		// load checkboxes
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
-		rfidCheckBox.setSelected(Setup.isRfidEnabled());
+		//rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		iconCheckBox.setSelected(Setup.isTrainIconCordEnabled());
 		appendCheckBox.setSelected(Setup.isTrainIconAppendEnabled());		
 
@@ -235,7 +235,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		options.setLayout(new GridBagLayout());
 		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
 		addItem (options, mainMenuCheckBox, 1,7);
-		addItem (options, rfidCheckBox, 1,8);		
+		// addItem (options, rfidCheckBox, 1,8);		
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
@@ -297,6 +297,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
 		toolMenu.add(new ResetAction(rb.getString("ResetOperations")));
@@ -393,7 +394,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// RFID enabled?
-			Setup.setRfidEnabled(rfidCheckBox.isSelected());
+			// Setup.setRfidEnabled(rfidCheckBox.isSelected());
 			// add panel name to setup
 			Setup.setPanelName(panelTextField.getText());
 			// train Icon X&Y

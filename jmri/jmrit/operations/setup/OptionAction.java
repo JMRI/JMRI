@@ -1,4 +1,4 @@
-// PrintOptionAction.java
+//OptionAction.java
 
 package jmri.jmrit.operations.setup;
 
@@ -8,23 +8,23 @@ import javax.swing.AbstractAction;
 
 
 /**
- * Swing action to load the print options.
+ * Swing action to load the options frame.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @author Daniel Boudreau Copyright (C) 2010
+ * @version $Revision: 1.1 $
  */
-public class PrintOptionAction extends AbstractAction {
+public class OptionAction extends AbstractAction {
 
-    public PrintOptionAction(String s) {
+    public OptionAction(String s) {
     	super(s);
     }
 
-    PrintOptionFrame f = null;
+    OptionFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a settings frame
     	if (f == null || !f.isVisible()){
-    		f = new PrintOptionFrame();
+    		f = new OptionFrame();
     		f.initComponents();
     	}
         f.setExtendedState(Frame.NORMAL);
@@ -32,7 +32,7 @@ public class PrintOptionAction extends AbstractAction {
     }
     
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(PrintOptionAction.class.getName());
+	.getLogger(OptionAction.class.getName());
 }
 
-/* @(#)PrintOptionAction.java */
+/* @(#)OptionAction.java */

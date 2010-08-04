@@ -4,7 +4,6 @@ package jmri.jmrit.operations.trains;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
-import jmri.jmrit.operations.rollingstock.cars.CarsTableFrame;
 
 import javax.swing.AbstractAction;
 
@@ -13,7 +12,7 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ShowRollingStockByTrainAction extends AbstractAction {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");

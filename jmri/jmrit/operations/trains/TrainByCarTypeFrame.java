@@ -16,8 +16,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -26,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -174,12 +172,17 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
 					op.setText(rb.getString("X(DirTrk)"));
+				else if (!track.acceptsPickupTrain(train))
+					op.setText(rb.getString("X(TrainPickup)"));
+				else if (!track.acceptsDropTrain(train))
+					op.setText(rb.getString("X(TrainDrop)"));
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
 					op.setText(rb.getString("Drop"));
 				else if (rl.canPickup())
 					op.setText(rb.getString("Pickup"));
+
 				else
 					op.setText("X");	//default shouldn't occur
 			}
@@ -257,12 +260,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 			log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
 		if (e.getSource().equals(car) || e.getSource().equals(train))
 			updateRoute();
+		if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class))
+			updateRoute();
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY))
+				e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY))
 			updateRoute();
 		if (e.getPropertyName().equals(Train.DISPOSE_CHANGED_PROPERTY))
 				dispose();

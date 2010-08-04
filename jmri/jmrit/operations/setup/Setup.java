@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -149,6 +149,7 @@ public class Setup {
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
+	private static boolean carRoutingEnabled = false;			//when true enable car routing
 	
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
 	
@@ -184,6 +185,14 @@ public class Setup {
 	
 	public static void setRfidEnabled(boolean enabled){
 		enableRfid = enabled;
+	}
+	
+	public static boolean isCarRoutingEnabled(){
+		return carRoutingEnabled;
+	}
+	
+	public static void setCarRoutingEnabled(boolean enabled){
+		carRoutingEnabled = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -620,7 +629,7 @@ public class Setup {
     	else if (direction.equals(SOUTH_DIR))
     		return SOUTH;
     	else
-    		return 0; // return unkown
+    		return 0; // return unknown
     }
     
     public static org.jdom.Element store(){
@@ -644,6 +653,7 @@ public class Setup {
     	values.setAttribute("showCarDestination", isShowCarDestinationEnabled()?"true":"false");
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
+    	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
     	values.setAttribute("name", getPanelName());
@@ -788,6 +798,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
         		Setup.setRfidEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("carRoutingEnabled"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
+        		Setup.setCarRoutingEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("panel") != null){

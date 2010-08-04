@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.36 $
+ * @version             $Revision: 1.37 $
  */
 public class Track {
 	
@@ -85,6 +85,8 @@ public class Track {
 	public static final String SCHEDULE_CHANGED_PROPERTY = "schedule change";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
 	public static final String TRAINDIRECTION_CHANGED_PROPERTY = "trainDirection";
+	public static final String DROP_CHANGED_PROPERTY = "drop";
+	public static final String PICKUP_CHANGED_PROPERTY = "pickup";
 	
 	public Track(String id, String name, String type) {
 		log.debug("New track " + name + " " + id);
@@ -420,6 +422,7 @@ public class Track {
     	_dropOption = option;
     	if (!old.equals(option))
     		_dropList.clear();
+    	firePropertyChange (DROP_CHANGED_PROPERTY, old, option);
     }
     
     public String getPickupOption (){
@@ -435,6 +438,7 @@ public class Track {
        	_pickupOption = option;
     	if (!old.equals(option))
     		_pickupList.clear();
+    	firePropertyChange (PICKUP_CHANGED_PROPERTY, old, option);
      }
     
     List<String> _dropList = new ArrayList<String>();
@@ -456,12 +460,14 @@ public class Track {
      	if (_dropList.contains(id))
     		return;
     	_dropList.add(id);
-    	log.debug("track " +getName()+ " add drop "+id);
+    	log.debug("track " +getName()+ " add drop id "+id);
+    	firePropertyChange (DROP_CHANGED_PROPERTY, null, id);
     }
     
     public void deleteDropId(String id){
     	_dropList.remove(id);
-    	log.debug("track " +getName()+ " delete drop "+id);
+    	log.debug("track " +getName()+ " delete drop id "+id);
+    	firePropertyChange (DROP_CHANGED_PROPERTY, id, null);
      }
     
     /**
@@ -515,12 +521,14 @@ public class Track {
      	if (_pickupList.contains(id))
     		return;
     	_pickupList.add(id);
-    	log.debug("track " +getName()+ " add pickup "+id);
+    	log.debug("track " +getName()+ " add pickup id "+id);
+    	firePropertyChange (PICKUP_CHANGED_PROPERTY, null, id);
     }
     
     public void deletePickupId(String id){
     	_pickupList.remove(id);
-    	log.debug("track " +getName()+ " delete pickup "+id);
+    	log.debug("track " +getName()+ " delete pickup id "+id);
+    	firePropertyChange (PICKUP_CHANGED_PROPERTY, id, null);
      }
     
     /**

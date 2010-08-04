@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -364,6 +364,12 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 						JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carLocOrder"),
 								new Object[] {_car.getDestinationName(),	_car.getLocationName(),
 								train.getName() }), rb.getString("carNotMove"),
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if (!train.servicesCar(_car)){
+						JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carTrainNotService"),
+								new Object[] {train.getName()}), rb.getString("carNotMove"),
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}

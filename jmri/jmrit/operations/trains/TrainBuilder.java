@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.80 $
+ * @version             $Revision: 1.81 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -538,7 +538,7 @@ public class TrainBuilder extends TrainCommon{
 							try {
 								cWeight = Integer.parseInt(cEngine.getWeightTons());
 							} catch (NumberFormatException e){
-								log.warn("engine ("+cEngine.getId()+") does not have a valid weight");
+								log.warn("engine ("+cEngine.toString()+") does not have a valid weight");
 							}
 							engineWeight = engineWeight + cWeight;
 						}
@@ -561,7 +561,7 @@ public class TrainBuilder extends TrainCommon{
 					try {
 						engineWeight = Integer.parseInt(engine.getWeightTons());
 					} catch (NumberFormatException e){
-						log.warn("engine ("+engine.getId()+") does not have a valid weight");
+						log.warn("engine ("+engine.toString()+") does not have a valid weight");
 						engineWeight = 0;
 					}
 					break;  // done with loading engine

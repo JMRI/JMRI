@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -371,6 +371,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	String s ="";
         	if (!c.getDestinationName().equals(""))
         		s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
+        	if (c.getNextDestination() != null)
+        		s = s + "->"+c.getNextDestination().getName() + " (" + c.getNextDestTrack().getName()+ ")";
         	return s;
         }
         case TRAINCOLUMN: {

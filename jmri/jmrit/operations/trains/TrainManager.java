@@ -14,25 +14,21 @@ import javax.swing.JComboBox;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsXml;
-
 
 /**
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.33 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @version	$Revision: 1.34 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -327,31 +323,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * @return Train that can service car from its current
 	 * location to the its destination.
 	 */
-	public Train getTrainForCar (Car car){
+	public Train getTrainForCar(Car car){
 		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = getTrainById(trains.get(i));
 			// does this train service this car?
-			if (train.acceptsTypeName(car.getType()) && train.acceptsBuiltDate(car.getBuilt()) 
-					&& train.acceptsOwnerName(car.getOwner()) && train.acceptsRoadName(car.getRoad())
-					&& train.acceptsLoadName(car.getLoad())){
-				Route route = train.getRoute();
-				List<String> locations = route.getLocationsBySequenceList();
-				for (int j=0; j<locations.size(); j++){
-					RouteLocation loc = route.getLocationById(locations.get(j));
-					if (loc.getName().equals(car.getLocationName()) && loc.canPickup()  && loc.getMaxCarMoves()>0
-							&& !train.skipsLocation(loc.getId())){
-						log.debug("Car ("+car.toString()+") can be picked up by train ("+train.getName()+")");
-						for (int k=j; k<locations.size(); k++){
-							loc = route.getLocationById(locations.get(k));
-							if (loc.getName().equals(car.getDestinationName()) && loc.canDrop() && loc.getMaxCarMoves()>0){
-								log.debug("Car ("+car.toString()+") can be dropped by train ("+train.getName()+")");
-								return train;
-							}
-						}
-					}
-				}
-			}
+			if (train.servicesCar(car))
+				return train;
 		}
 		return null;
 	}

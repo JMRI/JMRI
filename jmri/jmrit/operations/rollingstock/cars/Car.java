@@ -10,12 +10,14 @@ import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.trains.TrainManager;
+import jmri.jmrit.operations.router.Router;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -223,23 +225,44 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			return status;
 		// now check to see if the track has a schedule
 		scheduleNext(track);
-		// update load only when car reaches destination and was in train
+		// update next destination and load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null && track != null) || getTrain() == null)
 			return status;
 		// set next destination and track if available
 		if (getNextDestination() != null){
+			// Has the car accidentally arrived at the car's next destination?
+			if (getLocation().equals(getNextDestination()) && getTrack().equals(getNextDestTrack())){
+				log.debug("Car ("+toString()+") has arrieved at next destination");
+				setNextDestination(null);
+				setNextDestTrack(null);
+			}
 			String newStatus = super.setDestination(getNextDestination(), getNextDestTrack());
 			if (!newStatus.equals(OKAY)){
 				String trk = "null";
 				if (getNextDestTrack() != null)
 					trk = getNextDestTrack().getName();
-				log.warn("Next destination ("+getNextDestination().getName()+", "+trk+") failed for car ("+getId()+") due to "+newStatus);
-			} else {
-				if (TrainManager.instance().getTrainForCar(this) == null)
-					log.warn ("Car ("+toString()+") next destination ("+getNextDestination().getName()+") is not served directly by any train");
+				log.warn("Next destination ("+getNextDestination().getName()+", "+trk+") failed for car ("+toString()+") due to "+newStatus);
+			} else if (getNextDestination() != null){
+				// check to see if car will move with new destination
+				if (TrainManager.instance().getTrainForCar(this) == null){
+					if (Setup.isCarRoutingEnabled()) {
+						log.debug("Car ("+toString()+") next destination ("+getNextDestination().getName()+") is not served directly by any train");
+						if (Router.instance().setCarDestinationInterchange(this)){
+							log.debug("Was able to set route via interchange for car ("+toString()+")");
+						} else if (Router.instance().setCarDestinationYard(this)){
+							log.debug("Was able to set route via yard for car ("+toString()+")");
+						} else {
+							log.debug("Wasn't able to set route for car ("+toString()+")");
+							super.setDestination(null, null);	// maybe next time
+						}
+					} else {
+						log.warn("Car ("+toString()+") next destination ("+getNextDestination().getName()+") is not served directly by any train");
+					}
+				} else {
+					setNextDestination(null);
+					setNextDestTrack(null);
+				}
 			}
-			setNextDestination(null);
-			setNextDestTrack(null);
 		}
 		// update load when car reaches a siding
 		if (destTrack.getLocType().equals(Track.SIDING)){
