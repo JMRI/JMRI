@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FAQLinux.html,v 1.21 2010-04-12 12:04:55 jacobsen Exp $ -->
+<!-- $Id: FAQLinux.html,v 1.22 2010-08-06 17:49:54 zoo Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -66,10 +66,8 @@ The main
 <a href="Linux.html">JMRI Linux page</a>
 has a general list of things you have to do.
 <p>
-<a href="http://stpaulterminal.org/software/jmri/">david zuhn's web site</a>
-and 
 <A HREF="http://trainguy.dyn.dhs.org/~jminer/dcc/Installing_JMRI_on_RedHat_Fedora_Core_3.html">Jon Miner's web site</a>
-provide nice summaries
+provides a nice summary
 of installing on Fedora.  
 <P>
 Robert Plevier has provided a note on his 
@@ -80,11 +78,12 @@ There's also a <a href="Ubuntu.shtml">page describing installation on Ubuntu Lin
 
 <dt class=left><a id="#path"/>The "java" command doesn't work. Now what?</dt>
 <dd class=first>
-Make sure the java bin directory is on the path.  For example,
+<p>Make sure the java bin directory is on the path.  For example,
 the default location for the "SDK" 1.4.2_05 version of java is
 <code>
 /usr/java/j2sdk1.4.2_05/bin
 </code>.
+</p>
 </dd>
 
 <dt class=left><a id="sdk"/>What's the difference between the "SDK" and "JRE" java versions?</dt>
@@ -99,19 +98,22 @@ Java programs, not develop them, so it's smaller.
 
 <dt class=left><a id="commlibs"/>Do I need to install the Java comm libraries?</dt>
 <dd class=first>
-If you want to use JMRI 2.9.2 or later, you don't need to 
+If you want to use JMRI 2.10 or later, you don't need to 
 install the Java comm libraries.  With that version, JMRI 
 changed to use the RXTX library instead, and JMRI carries
-the needed files with it. 
-
+the needed files with it.  If you have the Java comm libraries
+installed, you will need to remove them.
 <p>
 If you want to use JMRI 2.9.1 or earlier, including JMRI 2.8,
-you do need to install the Java comm libraries.
+you <b>do</b> need to install the Java comm libraries.
 
 </dd>
 
 <dt class=left><a id="comm"/>Where do I install the Java comm libraries?</dt>
 <dd class=first>
+<i>This answer is still correct, but no longer needed for JMRI 2.10 or
+  later.</i>
+<p>
 Those libraries need to be installed where they will be found at the java startup.
 That means they need to be in the directory associated with the "java" command
 you'll be running.
@@ -131,9 +133,26 @@ use the SDK directories, but you might want to install to both.
 <dt class=left><a id="usb"/>What do I do if my (USB) serial port isn't 
 listed in the preferences?</dt>
 <dd class=first>
-<P>There are three options for solving this problem.
-<P>Option 1:<p>
-<P> If the RxTx and Java Communications Libraries are installed correctly, 
+<P>There are several options for solving this problem.</p>
+<ol>
+<li>
+  <p>With JMRI 2.10 and later, you can set the environment variable
+  <b>JMRI_SERIAL_PORTS</b> to a colon-separated list of the additional
+  serial port devices you have available.  You can set this in your
+  <tt>.bashrc</tt> file (or equivalent for whatever shell you
+  use):</p>
+
+  <pre>
+  <code>
+  export JMRI_SERIAL_PORTS=/dev/nce:/dev/locobuffer
+  </code>
+  </pre>
+
+  <p>You can also put this into <tt>/etc/profile.d/jmri.sh</tt> if you
+  don't want to change your personal <tt>.bashrc</tt> file.</p>
+
+<li>
+  <P> If the RxTx and Java Communications Libraries are installed correctly, 
 and  the serial port to which your device is attached isn't listed, 
 you can force RxTx to recognize a specific serial port.
 <p>If you want to force the use of "/dev/ttyUSB0", you can do this by 
@@ -142,13 +161,15 @@ or "JmriDemo" script:
 <P>
 <pre>
 <code>
- -Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0
+-Dgnu.io.rxtx.SerialPorts=/dev/ttyUSB9 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;# JMRI 2.10 or later
+<br>
+-Djavax.comm.rxtx.SerialPorts=/dev/ttyUSB0 &nbsp;&nbsp; # for 2.8 or earlier
 </code>
 </pre>
 <p> Multiple ports can be added to the list by using a colon seperated 
 list.
-<p>Option 2:<p>
-<P> If the RxTx and Java Communications Libraries are installed correctly, 
+<li>
+<P> <i>For JMRI 2.8 and earlier only:</i> If the RxTx and Java Communications Libraries are installed correctly, 
 and  the serial port to which your device is attached isn't listed, 
 you can force RxTx to recognize a specific serial port.
 <p>If you want to force the use of "/dev/ttyUSB0", you can do this by 
@@ -161,10 +182,11 @@ javax.comm.rxtx.SerialPorts=/dev/ttyUSB0
 </pre>
 <p> Multiple ports can be added to the list by using a colon seperated 
 list.
-<p>Option 3:<p>
+<li>
 <p> Finally, if you want RxTx to scan the available ports for you, you can 
 modify the source code to do this.  The instructions for doing this are 
-included in the INSTALLATION file contained within the RxTx package.</p>
+included in the INSTALLATION file contained within the RxTx package or
+at the <a href="http://rxtx.org/">RXTX home site</a>.</p>
 </dd>
 
 </dl>
