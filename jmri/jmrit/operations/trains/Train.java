@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -879,6 +879,8 @@ public class Train implements java.beans.PropertyChangeListener {
 								&& rLoc.getMaxCarMoves()>0
 								&& !skipsLocation(rLoc.getId())
 								&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0
+								// TODO remove the restriction that a destination track must be specified
+								&& car.getDestinationTrack() != null 
 								&& (car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) > 0
 								&& car.getDestinationTrack().acceptsDropTrain(this)){
 							log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("

@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.31 $
+ * @version             $Revision: 1.32 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -34,6 +34,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected Track _nextDestTrack = null;
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
+	public static final String NEXTDESTINATION_CHANGED_PROPERTY = "Next destination changed";
 	
 	public Car(){
 		
@@ -90,6 +91,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public void setNextDestination(Location destination){
 		_nextDestination = destination;
+		firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
 	}
 	
 	public Location getNextDestination(){
