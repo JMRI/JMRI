@@ -10,15 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Paul Bender Copyright (C) 2003
- * @version	$Revision: 2.7 $
+ * @version	$Revision: 2.8 $
  */
 public class XNetProgrammerManager  extends DefaultProgrammerManager {
 
    protected XNetTrafficController tc = null;
 
-    public XNetProgrammerManager(Programmer pProgrammer) {
+    public XNetProgrammerManager(Programmer pProgrammer,XNetSystemConnectionMemo memo) {
         super(pProgrammer);
-        tc = XNetTrafficController.instance();
+        tc = memo.getXNetTrafficController();
     }
 
     /**
@@ -31,7 +31,7 @@ public class XNetProgrammerManager  extends DefaultProgrammerManager {
     }
 
     public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new XNetOpsModeProgrammer(pAddress);
+        return new XNetOpsModeProgrammer(pAddress,tc);
     }
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {

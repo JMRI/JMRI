@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.27 $
+ * @version $Revision: 2.28 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -38,13 +38,15 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	// response to a request to a programming request. 
 	protected boolean _service_mode = false;
 
-	public XNetProgrammer() {
+	public XNetProgrammer(XNetTrafficController tc) {
 	   // error if more than one constructed?
 	   if (self != null)
 		log.error("Creating too many XNetProgrammer objects");
 
 	   // register this as the default, register as the Programmer
 	   self = this;
+
+           _controller=tc;
 
            // connect to listen
            controller().addXNetListener(XNetInterface.CS_INFO |
@@ -58,7 +60,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	 * method to find the existing XNetProgrammer object, if need be creating one
 	 */
 	static public XNetProgrammer instance() {
-		if (self == null) self = new XNetProgrammer();
 		return self;
 		}
 	protected static XNetProgrammer self = null;  // needs to be accessible from tests
@@ -458,10 +459,6 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	XNetTrafficController _controller = null;
 
 	protected XNetTrafficController controller() {
-		// connect the first time
-		if (_controller == null) {
-			_controller = XNetTrafficController.instance();
-		}
 		return _controller;
 	}
 

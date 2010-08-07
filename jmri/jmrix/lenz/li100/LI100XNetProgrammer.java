@@ -7,6 +7,7 @@
 package jmri.jmrix.lenz.li100;
 
 import jmri.Programmer;
+import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
@@ -28,7 +29,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003, 2004, 2005, 2009
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.6 $
+ * @version $Revision: 2.7 $
  */
 public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -39,6 +40,10 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
         private XNetMessage lastRequestMessage = null;
 
         private int _error=0;
+
+        public LI100XNetProgrammer(XNetTrafficController tc){
+           super(tc);
+        }
 
       // programming interface
         synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
@@ -122,16 +127,6 @@ public class LI100XNetProgrammer extends XNetProgrammer implements XNetListener 
                   throw e;
                 }
         }
-
-
-	/*
-         * method to find the existing XNetProgrammer object, if need be creating one
-         */
-        static public XNetProgrammer instance() {
-                if (self == null) self = new LI100XNetProgrammer();
-                return self;
-                }
-
 
 
 	synchronized public void message(XNetReply m) {

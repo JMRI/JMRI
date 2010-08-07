@@ -7,6 +7,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.Programmer;
+import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetProgrammer;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
@@ -26,7 +27,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * <LI>Wait for Normal Operations Resumed broadcast -- The Elite does not seem to require this step.
  * </UL>
  * @author Paul Bender      Copyright (c) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener {
 
@@ -36,22 +37,9 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         static private final int ELITEMESSAGETIMEOUT = 10000;
         static private final int EliteXNetProgrammerTimeout = 20000;
    
-/*	public EliteXNetProgrammer() {
-         	// error if more than one constructed?
-           	if (self != null)
-                	log.error("Creating too many XNetProgrammer objects");
-         
-           	// register this as the default, register as the Programmer
-           	self = this;
- 
-
-           	// connect to listen
-        	controller().addXNetListener(XNetInterface.CS_INFO |
-				     XNetInterface.COMMINFO |
-				     XNetInterface.INTERFACE,
-				     this);
-
-    	}*/
+	public EliteXNetProgrammer(XNetTrafficController tc) {
+             super(tc);
+    	}
 
 
       // programming interface
@@ -160,17 +148,8 @@ public class EliteXNetProgrammer extends XNetProgrammer implements XNetListener 
         }
 
 
-	/*
-         * method to find the existing XNetProgrammer object, if need be creating one
-         */
-        static public XNetProgrammer instance() {
-                if (self == null) self = new EliteXNetProgrammer();
-                return self;
-                }
-
-
 	synchronized public void message(XNetReply m) {
-if (m.getElement(0)==XNetConstants.CS_INFO &&
+                 if (m.getElement(0)==XNetConstants.CS_INFO &&
                      m.getElement(1)==XNetConstants.BC_SERVICE_MODE_ENTRY) {
                      if(_service_mode == false) {
                         // the command station is in service mode.  An "OK"

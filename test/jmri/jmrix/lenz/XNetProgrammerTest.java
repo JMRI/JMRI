@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz;
@@ -23,7 +23,7 @@ public class XNetProgrammerTest extends TestCase {
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
 
-		XNetProgrammer p = new XNetProgrammer();
+		XNetProgrammer p = new XNetProgrammer(t);
 
 		// and do the write
 		p.writeCV(10, 20, l);
@@ -38,7 +38,7 @@ public class XNetProgrammerTest extends TestCase {
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
 
-		XNetProgrammer p = new XNetProgrammer();
+		XNetProgrammer p = new XNetProgrammer(t);
 
         // set register mode
         p.setMode(Programmer.REGISTERMODE);
@@ -67,7 +67,7 @@ public class XNetProgrammerTest extends TestCase {
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
 
-		XNetProgrammer p = new XNetProgrammer();
+		XNetProgrammer p = new XNetProgrammer(t);
 
 		// and do the read
 		p.readCV(10, l);
@@ -82,7 +82,7 @@ public class XNetProgrammerTest extends TestCase {
 		XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
 		XNetListenerScaffold l = new XNetListenerScaffold();
 
-		XNetProgrammer p = new XNetProgrammer();
+		XNetProgrammer p = new XNetProgrammer(t);
 
         // set register mode
         p.setMode(Programmer.REGISTERMODE);

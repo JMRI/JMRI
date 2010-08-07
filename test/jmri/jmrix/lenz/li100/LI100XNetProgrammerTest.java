@@ -5,17 +5,23 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.jmrix.lenz.XNetInterfaceScaffold;
+import jmri.jmrix.lenz.LenzCommandStation;
+
 /**
  * LI100XNetProgrammerTest.java
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  * @author			Paul Bender
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
     public void testCtor() {
-        LI100XNetProgrammer p = new LI100XNetProgrammer();
+// infrastructure objects
+        XNetInterfaceScaffold t = new XNetInterfaceScaffold(new LenzCommandStation());
+
+        LI100XNetProgrammer p = new LI100XNetProgrammer(t);
         Assert.assertNotNull(p);
         jmri.util.JUnitAppender.assertErrorMessage("Creating too many XNetProgrammer objects");
     }

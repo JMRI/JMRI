@@ -14,7 +14,7 @@ import jmri.ProgrammerException;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003-2010
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.16 $
+ * @version        $Revision: 2.17 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
@@ -29,8 +29,8 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
 
     protected XNetTrafficController tc = null;
 
-    public XNetOpsModeProgrammer(int pAddress) {
-        tc=XNetTrafficController.instance();
+    public XNetOpsModeProgrammer(int pAddress,XNetTrafficController controller) {
+        tc=controller;
 	if(log.isDebugEnabled()) log.debug("Creating Ops Mode Programmer for Address " + pAddress);
 	mAddressLow=LenzCommandStation.getDCCAddressLow(pAddress);
 	mAddressHigh=LenzCommandStation.getDCCAddressHigh(pAddress);
