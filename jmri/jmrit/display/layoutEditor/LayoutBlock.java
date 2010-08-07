@@ -59,7 +59,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -450,7 +450,7 @@ public class LayoutBlock extends AbstractNamedBean
 			}
 			// update block Paths to reflect connectivity as needed
 			updateBlockPaths(c,panel);
-            System.out.println("updatePaths()");
+            log.debug("updatePaths()");
             addAllThroughPaths();
             //updatePeers();
             updateRoutePaths();
@@ -537,7 +537,7 @@ public class LayoutBlock extends AbstractNamedBean
 
 				}
 				//if (newp != null)
-                System.out.println("updateBlock Paths");
+                log.debug("updateBlock Paths");
 				block.addPath(newp);
 				addAllThroughPaths();
 				addRoute(tmpblock, _instance, 0, newp.getToBlockDirection(), newp);
@@ -958,7 +958,7 @@ public class LayoutBlock extends AbstractNamedBean
                     attachedBlocks.add(d.get(i).getBlock2());
                 }
             }
-            System.out.println(attachedBlocks);
+            log.debug(attachedBlocks);
             ArrayList<LayoutBlock> attachedBlocks2 = attachedBlocks;
             for (int i = 0;i<attachedBlocks.size(); i++){
                 for (int x = 0;x<attachedBlocks2.size(); x++){
@@ -1028,25 +1028,25 @@ public class LayoutBlock extends AbstractNamedBean
         }
         if(!add)
             return;
-        System.out.println(srcBlock.getBlock().getDisplayName() + ", " + dstBlock.getBlock().getDisplayName() + " current block " + block.getDisplayName());
+        log.debug(srcBlock.getBlock().getDisplayName() + ", " + dstBlock.getBlock().getDisplayName() + " current block " + block.getDisplayName());
         ConnectivityUtil Connection = new ConnectivityUtil(panel);
         ArrayList<LayoutTurnout> stod = Connection.getTurnoutList(block, srcBlock.getBlock(), dstBlock.getBlock());
         ArrayList<Integer> stodSet = Connection.getTurnoutSettingList();
         ArrayList<LayoutTurnout> tmpdtos = Connection.getTurnoutList(block, dstBlock.getBlock(), srcBlock.getBlock());
         ArrayList<Integer> tmpdtosSet = Connection.getTurnoutSettingList();
-        //System.out.println(stod);
+        //log.debug(stod);
         if ((stod.size()==tmpdtos.size()) && (stodSet.size()==tmpdtosSet.size())){
-            //System.out.println("sizes are all the same");
+            //log.debug("sizes are all the same");
             //Need to reorder the tmplist (dst-src) to be the same order as src-dst
             ArrayList<LayoutTurnout> dtos = new ArrayList<LayoutTurnout>();
             for (int i=tmpdtos.size();i>0;i--){
                 dtos.add(tmpdtos.get(i-1));
             }
-        //    System.out.println(dtos);
+        //    log.debug(dtos);
             //check to make sure that we pass through the same turnouts
             for (int i=0;i<dtos.size();i++){
                 if(dtos.get(i)!=stod.get(i)){
-                    //System.out.println("not equal will quit " + dtos.get(i) + ", " + stod.get(i));
+                    //log.debug("not equal will quit " + dtos.get(i) + ", " + stod.get(i));
                     return;
                 }
             }
@@ -1054,13 +1054,13 @@ public class LayoutBlock extends AbstractNamedBean
             for(int i=tmpdtosSet.size();i>0;i--){
                 dtosSet.add(tmpdtosSet.get(i-1));
             }
-            //System.out.println(stodSet);
-            //System.out.println(dtosSet);
+            //log.debug(stodSet);
+            //log.debug(dtosSet);
             for (int i=0;i<dtosSet.size();i++){
                 int x = stodSet.get(i);
                 int y = dtosSet.get(i);
                 if(x!=y){
-                    System.out.println("not on setting equal will quit " + x + ", " + y);
+                    log.debug("not on setting equal will quit " + x + ", " + y);
                     return;
                 }
             }
@@ -1072,11 +1072,11 @@ public class LayoutBlock extends AbstractNamedBean
                     return;
                 }
             }
-            System.out.println("Checks path, will add through path into system.");
+            log.debug("Checks path, will add through path into system.");
             ThroughPaths path = new ThroughPaths(srcBlock, dstBlock);
             throughPaths.add(path);
         } else {
-            System.out.println("sizes are not the same therefore not a valid path through");
+            log.debug("sizes are not the same therefore not a valid path through");
         }
     }
     
@@ -1085,15 +1085,15 @@ public class LayoutBlock extends AbstractNamedBean
     }
     
     public void printValidThroughPaths(){
-        System.out.println("Through paths in this block");
+        log.debug("Through paths in this block");
         for(int i = 0; i<throughPaths.size(); i++){
-            System.out.println((throughPaths.get(i).getDestinationBlock()).getDisplayName() + ", " + (throughPaths.get(i).getSourceBlock()).getDisplayName());
+            log.debug((throughPaths.get(i).getDestinationBlock()).getDisplayName() + ", " + (throughPaths.get(i).getSourceBlock()).getDisplayName());
         }
     
     }
     
     public void removeThroughPath(jmri.Block blkRmvd){
-        System.out.println("Remove a through path");
+        log.debug("Remove a through path");
         LayoutBlock removeBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blkRmvd);
         for(int i = 0; i<throughPaths.size(); i++){
             if (throughPaths.get(i).getSourceBlock()==removeBlock)
@@ -1126,42 +1126,42 @@ public class LayoutBlock extends AbstractNamedBean
     ArrayList<Routes>routes = new ArrayList<Routes>();
     
     public void addRoute(LayoutBlock destBlock, LayoutBlock nextBlock, int hopCount, int direction, Path p){
-        System.out.println("=== Layout Block Routes " + this.getDisplayName() +" ===");
-        System.out.println(this.getDisplayName() + " Our Block " + this.getDisplayName() + " Adding Route " + destBlock.getDisplayName() + " Next Hop Block " + nextBlock.getDisplayName() + " Hop Count " + hopCount);
+        log.debug("=== Layout Block Routes " + this.getDisplayName() +" ===");
+        log.debug(this.getDisplayName() + " Our Block " + this.getDisplayName() + " Adding Route " + destBlock.getDisplayName() + " Next Hop Block " + nextBlock.getDisplayName() + " Hop Count " + hopCount);
         if (hopCount>=254){
-            System.out.println("Maximum hop count reached, do not add to route table");
+            log.debug("Maximum hop count reached, do not add to route table");
             return;
         }
         if (destBlock==this){
-            System.out.println("destination block is our block, will not add to table");
+            log.debug("destination block is our block, will not add to table");
             return;
         }
         //Need to check that the route doesn't already exist.
         for(int x = 0; x<routes.size(); x++){
             Routes r = routes.get(x);
             if((r.getDestBlock()==destBlock) && (r.getNextBlock()==nextBlock)){
-                System.out.println(this.getDisplayName() + " Route between the locations is already in our table therefore will break");
+                log.debug(this.getDisplayName() + " Route between the locations is already in our table therefore will break");
                 return;
             }
         }
         Routes route = new Routes(destBlock, nextBlock, hopCount, direction, p);
         routes.add(route);
-        System.out.println(this.getDisplayName() +" Route to " + destBlock.getDisplayName() + " Added to block " + this.getDisplayName() + " with a Next Hop of " + nextBlock.getDisplayName() + " Hop Count " + hopCount);
+        log.debug(this.getDisplayName() +" Route to " + destBlock.getDisplayName() + " Added to block " + this.getDisplayName() + " with a Next Hop of " + nextBlock.getDisplayName() + " Hop Count " + hopCount);
         hopCount++;
-        System.out.println(this.getDisplayName() +" Checking paths connected to " + this.getDisplayName() + " to see which ones to add path size is - " + getBlock().getPaths().size());
+        log.debug(this.getDisplayName() +" Checking paths connected to " + this.getDisplayName() + " to see which ones to add path size is - " + getBlock().getPaths().size());
         for (int i = 0; i<getBlock().getPaths().size(); i++) {
             p = getBlock().getPaths().get(i);
             LayoutBlock peer = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock());
-            System.out.println(this.getDisplayName() +" block in path " + p.getBlock().getDisplayName() + " our next block is " + nextBlock.getDisplayName());
+            log.debug(this.getDisplayName() +" block in path " + p.getBlock().getDisplayName() + " our next block is " + nextBlock.getDisplayName());
             if ((p.getBlock() != nextBlock.getBlock()) && (p.getBlock() != destBlock.getBlock())){
-                //System.out.println("Checking paths size of list " + throughPaths.size());
-//                System.out.println(this.getDisplayName() +" block in path is not the same as nextBlock or destBlock we will add to the block in paths route table");
+                //log.debug("Checking paths size of list " + throughPaths.size());
+//                log.debug(this.getDisplayName() +" block in path is not the same as nextBlock or destBlock we will add to the block in paths route table");
                 //As the next block is not the one where the route came from we will add it to the next blocks route table
-                System.out.println("throughPaths size " + throughPaths.size() + ", peer " + peer.getDisplayName());
+                log.debug("throughPaths size " + throughPaths.size() + ", peer " + peer.getDisplayName());
                 /*for (int x = 0; x<throughPaths.size(); x++){
                     //First make sure that we are not sending the route back to the original
-                    System.out.println("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName() + ", nextHop " + destBlock.getDisplayName());
-                    System.out.println("source " + throughPaths.get(x).getSourceBlock() + ", Dest " + throughPaths.get(x).getDestinationBlock()+ ", peer " + peer + ", nextHop " + destBlock);
+                    log.debug("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName() + ", nextHop " + destBlock.getDisplayName());
+                    log.debug("source " + throughPaths.get(x).getSourceBlock() + ", Dest " + throughPaths.get(x).getDestinationBlock()+ ", peer " + peer + ", nextHop " + destBlock);
                     LayoutBlock sndRouteTo = null;
                     if ((throughPaths.get(x).getSourceBlock()==destBlock) && (throughPaths.get(x).getDestinationBlock()==peer)){
                         //sndRouteTo = throughPaths.get(x).getDestinationBlock();
@@ -1172,21 +1172,21 @@ public class LayoutBlock extends AbstractNamedBean
                         sndRouteTo = peer;
                     }
                     if (sndRouteTo!=null){
-                        System.out.println("will add valid route to " + sndRouteTo.getDisplayName());
+                        log.debug("will add valid route to " + sndRouteTo.getDisplayName());
                         sndRouteTo.addRoute(destBlock, this, hopCount, p.getFromBlockDirection(),p);
                     } else {
-                        System.out.println("not a valid path through, will not add");
+                        log.debug("not a valid path through, will not add");
                     }
                 }*/
                 for (int x = 0; x<throughPaths.size(); x++){
                     //First make sure that we are not sending the route back to the original
                     LayoutBlock sndRouteTo = null;
-//                    System.out.println("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName() + ", nextHop " + nextBlock.getDisplayName());
-//                    System.out.println("source " + throughPaths.get(x).getSourceBlock() + ", Dest " + throughPaths.get(x).getDestinationBlock()+ ", peer " + peer + ", nextHop " + nextBlock);
+//                    log.debug("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName() + ", nextHop " + nextBlock.getDisplayName());
+//                    log.debug("source " + throughPaths.get(x).getSourceBlock() + ", Dest " + throughPaths.get(x).getDestinationBlock()+ ", peer " + peer + ", nextHop " + nextBlock);
                     if (throughPaths.get(x).getSourceBlock()==peer){ //was dest
                         if(nextBlock==this){
-//                            System.out.println("next block is ourself, need to check against the dest block");
-//                            System.out.println(throughPaths.get(x).getDestinationBlock() + ", " + destBlock);
+//                            log.debug("next block is ourself, need to check against the dest block");
+//                            log.debug(throughPaths.get(x).getDestinationBlock() + ", " + destBlock);
                             if (throughPaths.get(x).getDestinationBlock()==destBlock)//new check
                                 sndRouteTo = throughPaths.get(x).getSourceBlock();
                         } else {
@@ -1196,8 +1196,8 @@ public class LayoutBlock extends AbstractNamedBean
                     }
                     else if (throughPaths.get(x).getDestinationBlock()==peer){ //was dest
                         if(nextBlock==this){
-//                            System.out.println("next block is ourself, need to check against the dest block");
-//                            System.out.println(throughPaths.get(x).getSourceBlock() + ", " + destBlock);
+//                            log.debug("next block is ourself, need to check against the dest block");
+//                            log.debug(throughPaths.get(x).getSourceBlock() + ", " + destBlock);
                             if (throughPaths.get(x).getSourceBlock()==destBlock)//new check
                                 sndRouteTo = throughPaths.get(x).getDestinationBlock();                        
                         } else {
@@ -1206,43 +1206,43 @@ public class LayoutBlock extends AbstractNamedBean
                         }
                     }
                     if (sndRouteTo!=null){
-//                        System.out.println("Sending route details to " + sndRouteTo.getDisplayName());
+//                        log.debug("Sending route details to " + sndRouteTo.getDisplayName());
                         sndRouteTo.addRoute(destBlock, this, hopCount, p.getFromBlockDirection(),p);
                     } else {
-//                        System.out.println("not a valid path through, will not add");
+//                        log.debug("not a valid path through, will not add");
                     }
                 }
             }
         }  //We need to send the new peer all of our existing routes.
-        System.out.println("=== Layout Block Routes Finished ===");
+        log.debug("=== Layout Block Routes Finished ===");
     }
     
     //When a new path is added, we send it our routes.
     //public void updateNewPathWithExistingRoutes(LayoutBlock peer){
     public void updateNewPathWithExistingRoutes(Path p, LayoutBlock peer){
         //LayoutBlock peer = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock().getDisplayName());
-        System.out.println("updatenewpaths " + peer.getDisplayName());
-//        System.out.println("Update New Path " + peer.getDisplayName());
+        log.debug("updatenewpaths " + peer.getDisplayName());
+//        log.debug("Update New Path " + peer.getDisplayName());
         for(int i = 0; i<routes.size(); i++){
             Routes r = routes.get(i);
             if((r.getNextBlock()!=peer) && (r.getDestBlock()!=peer)){
                 int hopCount = r.getHopCount();
                 hopCount++;
                 //LayoutBlock nextBlock = r.getNextBlock();
-//                System.out.println("Direction of Route " + r.getDestBlock().getDisplayName() + ", " + Path.decodeDirection(r.getDirection()) + " Direction of next hop " + Path.decodeDirection(p.getToBlockDirection()));
-//                System.out.println(Path.decodeDirection((p.getToBlockDirection()&r.getDirection())));
+//                log.debug("Direction of Route " + r.getDestBlock().getDisplayName() + ", " + Path.decodeDirection(r.getDirection()) + " Direction of next hop " + Path.decodeDirection(p.getToBlockDirection()));
+//                log.debug(Path.decodeDirection((p.getToBlockDirection()&r.getDirection())));
                 /*if((p.getToBlockDirection()&r.getDirection())==0){
-//                    System.out.println("Call to Add from updateNewPath");
+//                    log.debug("Call to Add from updateNewPath");
                     //This should direction should be set from the path.
                     peer.addRoute(r.getDestBlock(), this, hopCount, p.getFromBlockDirection(),p); //was r.getDirection()
                 } else if(getBlock().getPaths().size()==2){
                     //If the route has not been added, is it because both of the paths to us come from the same direction.
                     if ((getBlock().getPaths().get(0).getFromBlockDirection()&getBlock().getPaths().get(1).getFromBlockDirection())==0){
-//                        System.out.println("bordering blocks are in the same direction and these are the only paths from updatepath");
+//                        log.debug("bordering blocks are in the same direction and these are the only paths from updatepath");
                         InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock()).addRoute(r.getDestBlock(), this, hopCount, p.getFromBlockDirection(),p);
                     }
                 }*/
-                System.out.println(throughPaths.size());
+                log.debug(throughPaths.size());
                 for (int x = 0; x<throughPaths.size(); x++){
                     //Make sure that are allowed to send the route on
                     LayoutBlock sndRoute = null;
@@ -1258,7 +1258,7 @@ public class LayoutBlock extends AbstractNamedBean
                 }
                 /*for (int x = 0; x<throughPaths.size(); x++){
                     //Make sure that are allowed to send the route on
-                    System.out.println("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName());
+                    log.debug("source " + throughPaths.get(x).getSourceBlock().getDisplayName() + ", Dest " + throughPaths.get(x).getDestinationBlock().getDisplayName()+ ", peer " + peer.getDisplayName());
                     boolean valid = false;
                     if ((throughPaths.get(x).getSourceBlock()==peer) && (throughPaths.get(x).getDestinationBlock()==r.getNextBlock())){
                         valid = true;
@@ -1267,14 +1267,14 @@ public class LayoutBlock extends AbstractNamedBean
                         valid = true;
                     }
                     if (valid){
-                        System.out.println("route valid so will call add updateNewPathWithExistingRoutes()");
+                        log.debug("route valid so will call add updateNewPathWithExistingRoutes()");
                         peer.addRoute(r.getDestBlock(), this, hopCount, p.getFromBlockDirection(),p);
                     } else
-                        System.out.println("route NOT valid");
+                        log.debug("route NOT valid");
                 }*/
             }
         }
-        System.out.println("#### End of update to new path" + p.getBlock().getDisplayName());
+        log.debug("#### End of update to new path" + p.getBlock().getDisplayName());
     }
     
     //Adds the route of connected paths to our self, this should kick off the progation of the routes to all
@@ -1283,7 +1283,7 @@ public class LayoutBlock extends AbstractNamedBean
         java.util.List<Path> path = getBlock().getPaths();
         for (int i = 0; i<path.size(); i++){
             Path p = path.get(i);
-            System.out.println("add called from updateRoutePaths");
+            log.debug("add called from updateRoutePaths");
             addRoute(InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock()), this, 0, p.getToBlockDirection(), p);
         }
     }
@@ -1297,7 +1297,7 @@ public class LayoutBlock extends AbstractNamedBean
                     int hopCount = r.getHopCount();
                     hopCount++;
                     //This the direction should be our path from.
-                    System.out.println("add called From updatePeers passed to updateNewPathWithExistingRoutes");
+                    log.debug("add called From updatePeers passed to updateNewPathWithExistingRoutes");
                     updateNewPathWithExistingRoutes(p, InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock()));
                     //InstanceManager.layoutBlockManagerInstance().getLayoutBlock(p.getBlock()).addRoute(r.getDestBlock(), this, hopCount, p.getFromBlockDirection(),p); //was r.getDirection()
                 }
@@ -1307,10 +1307,10 @@ public class LayoutBlock extends AbstractNamedBean
     
     
     public void printRoutes(){
-        System.out.println("Routes for block " + this.getDisplayName());
-        System.out.println("Destination, Next Block, Hop Count, Direction");
+        log.debug("Routes for block " + this.getDisplayName());
+        log.debug("Destination, Next Block, Hop Count, Direction");
         for(int i = 0; i<routes.size(); i++){
-            System.out.println((routes.get(i).getDestBlock().getBlock()).getDisplayName() + ", " + (routes.get(i).getNextBlock().getBlock()).getDisplayName() + ", " + routes.get(i).getHopCount() + ", " + Path.decodeDirection(routes.get(i).getDirection()));
+            log.debug((routes.get(i).getDestBlock().getBlock()).getDisplayName() + ", " + (routes.get(i).getNextBlock().getBlock()).getDisplayName() + ", " + routes.get(i).getHopCount() + ", " + Path.decodeDirection(routes.get(i).getDirection()));
         }
     }
     
@@ -1332,12 +1332,12 @@ public class LayoutBlock extends AbstractNamedBean
     public void removeRoute(jmri.Block blkRmvd, LayoutBlock nextHop){
         LayoutBlock removedBlock = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(blkRmvd);
         //LayoutBlock nextHop = InstanceManager.layoutBlockManagerInstance().getLayoutBlock(nxtHop);
-        System.out.println("Remove path called " + removedBlock.getDisplayName());
+        log.debug("Remove path called " + removedBlock.getDisplayName());
         boolean routeRemoved = false;
         for(int i = 0; i<routes.size(); i++){
             Routes r = routes.get(i);
             if(r.getDestBlock()==removedBlock){
-                System.out.println("removing route " + removedBlock.getDisplayName() + " from block " + this.getDisplayName());
+                log.debug("removing route " + removedBlock.getDisplayName() + " from block " + this.getDisplayName());
                 //remove route from our table then inform neighbour.
                 routes.remove(i);
                 if((r.getNextBlock()== nextHop) && (nextHop!=this))
@@ -1372,16 +1372,16 @@ public class LayoutBlock extends AbstractNamedBean
     }
 
     public int getNextBlockByIndex(LayoutBlock destBlock, int direction, int offSet){
-        //System.out.println(routes.size());
+        //log.debug(routes.size());
         for (int i = offSet; i<routes.size(); i++){
             Routes r = routes.get(i);
-            System.out.println("----");
-            System.out.println(r.getDirection() + ", " + direction);
-            System.out.println(r.getDestBlock() + ", " + destBlock);
+            log.debug("----");
+            log.debug(r.getDirection() + ", " + direction);
+            log.debug(r.getDestBlock() + ", " + destBlock);
             if ((r.getDestBlock()==destBlock)) {
-                System.out.println((r.getDirection()&direction));
+                log.debug((r.getDirection()&direction));
                 if ((r.getDirection()&direction)!=0){
-                    System.out.println("Return " + i);
+                    log.debug("Return " + i);
                     return i;
                 }
             }
