@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.LenzCommandStation;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li100.LI100XNetProgrammer class
  * @author			Paul Bender
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class LI100XNetProgrammerTest extends TestCase {
 
@@ -23,7 +23,6 @@ public class LI100XNetProgrammerTest extends TestCase {
 
         LI100XNetProgrammer p = new LI100XNetProgrammer(t);
         Assert.assertNotNull(p);
-        jmri.util.JUnitAppender.assertErrorMessage("Creating too many XNetProgrammer objects");
     }
 
 	// from here down is testing infrastructure

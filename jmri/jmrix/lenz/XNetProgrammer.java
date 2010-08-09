@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.28 $
+ * @version $Revision: 2.29 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -40,8 +40,8 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
 	public XNetProgrammer(XNetTrafficController tc) {
 	   // error if more than one constructed?
-	   if (self != null)
-		log.error("Creating too many XNetProgrammer objects");
+	   //if (self != null)
+	   //	log.error("Creating too many XNetProgrammer objects");
 
 	   // register this as the default, register as the Programmer
 	   self = this;
