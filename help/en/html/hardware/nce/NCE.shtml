@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.23 2010-01-07 04:17:10 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.24 2010-08-09 06:22:51 jacobsen Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -236,14 +236,15 @@ system from the preference menu for reliable operation.</P>
 <H3>Setup</H3>
 
 <OL>
-	<LI>To connect your computer using a NCE USB adaptor, you will
-	need in addition to the USB adaptor, a USB cable to connect
-	the adapter to your computer and a RJ12 to RJ12
-	cable to connect the adapter to your NCE system.
-	<p>
-	It's important that you use a RJ12 cable with six conductors
-	in it, not just four like some phone cables. 
-	Look at the end connectors to make sure.
+	<LI>To connect your computer using a NCE USB adaptor, you will need in
+    addition to the USB adaptor, a USB A to USB B cable to connect the adapter
+    to your computer and a RJ11 to RJ11 cable to connect the adapter to your NCE
+    system.
+    It is important to use a straight through RJ11 cable and not a crossover
+    like some phone cables. Look at the end connectors to make sure that the
+    colors are in the same order. You can use a RJ12 cable with six conductors
+    in place of the RJ11 because it's only the four center conductors that are
+    used, but it must also be a straight through cable.
 	<p>
 	The connection order is also thought to be important:
 	<ul>
