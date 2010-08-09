@@ -9,7 +9,7 @@ public class LocationTrackPair {
 	Location _location;
 	Track _track;
 	
-	LocationTrackPair(Location location, Track track){
+	public LocationTrackPair(Location location, Track track){
 		_location = location;
 		_track = track;
 	}

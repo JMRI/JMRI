@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -450,6 +450,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _destination;
 	}
 	
+	public void setDestination(Location destination){
+		_destination = destination;
+	}
+	
 	public String getDestinationName() {
 		if (_destination != null)
 			return _destination.getName();
@@ -460,6 +464,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		if (_destination != null)
 			return _destination.getId();
 		return "";
+	}
+	
+	public void setDestinationTrack(Track track){
+		_trackDestination = track;
 	}
 
 	public Track getDestinationTrack() {
