@@ -153,7 +153,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     // map of icon editor frames (incl, icon editor) keyed by name
     HashMap <String, JFrameItem> _iconEditorFrame = new HashMap <String, JFrameItem>();
 
-    public Editor() {}
+    public Editor() {
+        _debug = log.isDebugEnabled();
+    }
 
     public Editor(String name) {
         super(name);
@@ -448,8 +450,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     /**
-    * Which flag should be used, global or local for Positioning
-    * and Control of individual items?
+    * Set which flag should be used, global or local for Positioning
+    * and Control of individual items.  Items call getFlag() to return
+    * the appropriate flag it should use.
     */
     public void setUseGlobalFlag(boolean set) {
         _useGlobalFlag = set;      
@@ -458,7 +461,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _useGlobalFlag;
     }
 
+    /**
+    * @param localFlag is the current setting of the item
+    */
     public boolean getFlag(int whichOption, boolean localFlag) {
+        if (_debug)  log.debug("getFlag Option= "+whichOption+", _useGlobalFlag="+_useGlobalFlag+" localFlag="+localFlag);
         if (_useGlobalFlag) {
             switch (whichOption) {
                 case OPTION_POSITION:
@@ -1958,7 +1965,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                                                rect.width*_paintScale,
                                                                rect.height*_paintScale);
             if (rect2D.contains(x, y)) {
-                if (p.isPositionable()){
+                if (isEditable()){
                     boolean added =false;
                     int level = p.getDisplayLevel();
                     for (int k=0; k<selections.size(); k++) {
@@ -1974,14 +1981,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 }
             }
         }
-      /*  if (_debug) {
-            log.debug("getSelectedItems at ("+x+","+y+") "+selections.size()+" found,");
-            for (int i=0; i<selections.size(); i++) {
-                Positionable comp = selections.get(i);
-                log.debug("getSelectedItems: selection: "+ comp.getNameString()+
-                            ", class= "+comp.getClass().getName());
-            }
-        } */
+        if (_debug)  log.debug("getSelectedItems at ("+x+","+y+") "+selections.size()+" found,");
         return selections;
     }
 

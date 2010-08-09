@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -441,15 +441,15 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public void setMomentary(boolean m) { momentary = m; }
 
     public boolean buttonLive() {
-        if (!_editor.getFlag(Editor.OPTION_CONTROLS, isControlling())) return false;
         if (namedSensor==null) {  // no sensor connected for this protocol
             log.error("No sensor connection, can't process click");
             return false;
         }
-        return true;
+        return _editor.getFlag(Editor.OPTION_CONTROLS, isControlling());
     }
 
     public void doMousePressed(MouseEvent e) {
+        if (debug) log.debug("doMousePressed buttonLive="+buttonLive()+", getMomentary="+getMomentary());
         if (getMomentary() && buttonLive() && !e.isMetaDown() && !e.isAltDown()) {
             // this is a momentary button press
             try {
