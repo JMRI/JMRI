@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -149,7 +149,7 @@ public class Setup {
 	
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
-	private static boolean carRoutingEnabled = false;			//when true enable car routing
+	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
 	
@@ -617,7 +617,7 @@ public class Setup {
     /**
      * Converts String direction to binary direction
      * @param direction EAST_DIR WEST_DIR NORTH_DIR SOUTH_DIR
-     * @return int representation of a direction
+     * @return integer representation of a direction
      */
     public static int getDirectionInt(String direction){
     	if (direction.equals(EAST_DIR))
