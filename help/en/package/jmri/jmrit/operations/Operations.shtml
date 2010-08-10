@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.70 2010-07-09 14:24:17 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.71 2010-08-10 20:40:06 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -48,6 +48,9 @@ work for all of the scheduled trains that will visit that location. The
 program can also place icons representing trains on a JMRI panel. The
 icon can be taught to move in the panel along with the train from
 location to location. </P>
+<P>
+The operations program is included in the JMRI/DecoderPro suite of tools 
+and can be found under the main menu heading "Tools->Operations".</P>
 
 <A name="demo"></A>
 <H3>Operations Demo Files</H3>
@@ -469,12 +472,7 @@ staging, and interchanges.</P>
 
 <P>You can if you wish, specify the next destination for a car
 once it has been serviced by the siding. Only destination tracks that
-can accept the car type are shown in the track pull down menu. Note that
-the program doesn't have the capability to route a car to a location
-using multiple trains. The car's current location and the car's
-destination and track must be serviced by one train.
-Therefore, if it would take two or more trains to move the car to its
-final destination, the car will not move!</P>
+can accept the car type are shown in the track pull down menu. </P>
 <P>You can optionally use your staging tracks to empty cars with a
 "Schedule" load, and you can also optionally create "Schedule" loads
 using staging tracks.</P>
@@ -1179,6 +1177,12 @@ track.  The following table provides a summary of the various track statuses. </
 </tr>
 <tr>
 <td>X (Train Skips)</td><td>The train doesn't service this location</td>
+</tr>
+<tr>
+<td>X (Train Pickup)</td><td>The train can't pickup cars from this track</td>
+</tr>
+<tr>
+<td>X (Train Drop)</td><td>The train can't drop cars to this track</td>
 </tr>
 <tr>
 <td>X (Route)</td><td>The route doesn't allow pickups or drops for this location</td>
