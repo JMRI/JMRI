@@ -1965,19 +1965,17 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                                                rect.width*_paintScale,
                                                                rect.height*_paintScale);
             if (rect2D.contains(x, y)) {
-                if (isEditable()){
-                    boolean added =false;
-                    int level = p.getDisplayLevel();
-                    for (int k=0; k<selections.size(); k++) {
-                        if (level > selections.get(k).getDisplayLevel()) {
-                            selections.add(k, p);
-                            added = true;
-                            break;
-                        }
+                boolean added =false;
+                int level = p.getDisplayLevel();
+                for (int k=0; k<selections.size(); k++) {
+                    if (level > selections.get(k).getDisplayLevel()) {
+                        selections.add(k, p);
+                        added = true;
+                        break;
                     }
-                    if (!added) {
-                        selections.add(p);
-                    }
+                }
+                if (!added) {
+                    selections.add(p);
                 }
             }
         }
