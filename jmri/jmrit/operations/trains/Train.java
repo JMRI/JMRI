@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -851,49 +851,52 @@ public class Train implements java.beans.PropertyChangeListener {
     		return false;
     	}  	
     }
-    
+    private boolean debugFlag = false;
     public boolean servicesCar(Car car){
-		if (acceptsTypeName(car.getType()) && acceptsBuiltDate(car.getBuilt()) 
-				&& acceptsOwnerName(car.getOwner()) && acceptsRoadName(car.getRoad())
-				&& acceptsLoadName(car.getLoad())){
-			Route route = getRoute();
-			List<String> rLocations = route.getLocationsBySequenceList();
-			for (int j=0; j<rLocations.size()-1; j++){
-				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
-				if (rLoc.getName().equals(car.getLocationName()) 
-						&& rLoc.canPickup()  
-						&& rLoc.getMaxCarMoves()>0
-						&& !skipsLocation(rLoc.getId())
-						&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
-					if (car.getTrack() != null){
-						if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
-								|| !car.getTrack().acceptsPickupTrain(this))
-							continue;
-					}
-					log.debug("Car ("+car.toString()+") can be picked up by train ("+getName()+") from ("
-							+car.getLocationName()+", "+car.getTrackName()+")");
-					for (int k=j; k<rLocations.size(); k++){
-						rLoc = route.getLocationById(rLocations.get(k));
-						if (rLoc.getName().equals(car.getDestinationName()) 
-								&& rLoc.canDrop() 
-								&& rLoc.getMaxCarMoves()>0
-								&& !skipsLocation(rLoc.getId())
-								&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0
-								// TODO remove the restriction that a destination track must be specified
-								&& car.getDestinationTrack() != null 
-								&& (car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) > 0
-								&& car.getDestinationTrack().acceptsDropTrain(this)){
-							log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
-									+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
-							return true;
-						}
-					}
-				}
-			}
-		}
-		return false;
+    	if (acceptsTypeName(car.getType()) && acceptsBuiltDate(car.getBuilt()) 
+    			&& acceptsOwnerName(car.getOwner()) && acceptsRoadName(car.getRoad())
+    			&& acceptsLoadName(car.getLoad())){
+    		Route route = getRoute();
+    		List<String> rLocations = route.getLocationsBySequenceList();
+    		for (int j=0; j<rLocations.size()-1; j++){
+    			RouteLocation rLoc = route.getLocationById(rLocations.get(j));
+    			if (rLoc.getName().equals(car.getLocationName()) 
+    					&& rLoc.canPickup()  
+    					&& rLoc.getMaxCarMoves()>0
+    					&& !skipsLocation(rLoc.getId())
+    					&& (car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    				if (car.getTrack() != null){
+    					if ((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 
+    							|| !car.getTrack().acceptsPickupTrain(this))
+    						continue;
+    				}
+    				if (debugFlag)
+    					log.debug("Car ("+car.toString()+") can be picked up by train ("+getName()+") from ("
+    							+car.getLocationName()+", "+car.getTrackName()+")");
+    				for (int k=j; k<rLocations.size(); k++){
+    					rLoc = route.getLocationById(rLocations.get(k));
+    					if (rLoc.getName().equals(car.getDestinationName()) 
+    							&& rLoc.canDrop() 
+    							&& rLoc.getMaxCarMoves()>0
+    							&& !skipsLocation(rLoc.getId())
+    							&& (car.getDestination().getTrainDirections() & rLoc.getTrainDirection()) > 0){
+    						if (car.getDestinationTrack() != null){
+    							if ((car.getDestinationTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0
+    									|| !car.getDestinationTrack().acceptsDropTrain(this))
+    								continue;
+    						}	
+    						if (debugFlag)
+    							log.debug("Car ("+car.toString()+") can be dropped by train ("+getName()+") to ("
+    									+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
+    						return true;
+    					}
+    				}
+    			}
+    		}
+    	}
+    	return false;
     }
-    
+
     /**
      * 
      * @return The number of cars worked by this train
