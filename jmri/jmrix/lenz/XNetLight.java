@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008-2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -47,6 +47,14 @@ public class XNetLight extends AbstractLight implements XNetListener {
         // Initialize the Light
         initializeLight(systemName);
     }
+
+   /*
+    * Dispose of the light object
+    */
+   public void dispose(){
+        tc.removeXNetListener(XNetInterface.FEEDBACK|XNetInterface.COMMINFO|XNetInterface.CS_INFO, this);
+     super.dispose();
+   }
 
    /*
     *  Initilize the light object's parameters

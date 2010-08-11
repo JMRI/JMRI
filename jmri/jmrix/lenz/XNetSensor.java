@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision: 2.13 $
+ * @version         $Revision: 2.14 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -24,15 +24,15 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    public XNetSensor(String systemName, String userName) {
+    public XNetSensor(String systemName, String userName,XNetTrafficController controller) {
         super(systemName, userName);
-        tc=XNetTrafficController.instance();
+        tc=controller;
         init(systemName);
     }
 
-    public XNetSensor(String systemName) {
+    public XNetSensor(String systemName,XNetTrafficController controller) {
         super(systemName);
-        tc=XNetTrafficController.instance();
+        tc=controller;
         init(systemName);
     }
 

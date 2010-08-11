@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.13 $
+ * @version			$Revision: 2.14 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -20,19 +20,22 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     protected XNetTrafficController tc = null;
 
     // ctor has to register for XNet events
-    public XNetTurnoutManager() {
+    public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
+        super();
         _instance = this;
-        tc=XNetTrafficController.instance();
+        tc=controller;
+        this.prefix=prefix;
         tc.addXNetListener(XNetInterface.FEEDBACK, this);
     }
 
-    public String getSystemPrefix() { return "X"; }
+    public String getSystemPrefix() { return prefix; }
+    protected String prefix = null;
 
     // XNet-specific methods
 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        Turnout t = new XNetTurnout(addr);
+        Turnout t = new XNetTurnout(addr,tc);
         t.setUserName(userName);
         return t;
     }
@@ -110,8 +113,9 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
+    @Deprecated
     static public XNetTurnoutManager instance() {
-        if (_instance == null) _instance = new XNetTurnoutManager();
+        //if (_instance == null) _instance = new XNetTurnoutManager();
         return _instance;
     }
     static XNetTurnoutManager _instance = null;

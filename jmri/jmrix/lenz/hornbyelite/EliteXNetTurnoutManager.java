@@ -10,17 +10,22 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
     final java.util.ResourceBundle rbt = java.util.ResourceBundle.getBundle("jmri.jmrix.lenz.XNetBundle");
 
+
+    public EliteXNetTurnoutManager(jmri.jmrix.lenz.XNetTrafficController controller,String prefix) {
+      super(controller,prefix);
+   }
+
     // XNet-specific methods
 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        Turnout t = new EliteXNetTurnout(addr);
+        Turnout t = new EliteXNetTurnout(addr,tc);
         t.setUserName(userName);
         return t;
     }

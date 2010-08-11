@@ -8,12 +8,13 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 2.7 $
  */
 public class XNetSensorTest extends TestCase {
 
     public void testXNetSensorCreate() {
-        XNetSensor t = new XNetSensor("XS042");
+        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
+        XNetSensor t = new XNetSensor("XS042",xnis);
 
         // created in UNKNOWN state
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
@@ -24,7 +25,7 @@ public class XNetSensorTest extends TestCase {
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
         Assert.assertNotNull("exists", xnis );
         
-        XNetSensor t = new XNetSensor("XS044");
+        XNetSensor t = new XNetSensor("XS044",xnis);
         XNetReply m;
 
 
@@ -61,7 +62,8 @@ public class XNetSensorTest extends TestCase {
 
     // XNetSensor test for setting state
     public void testXNetSensorSetState() throws jmri.JmriException {
-        XNetSensor t = new XNetSensor("XS043");
+        XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
+        XNetSensor t = new XNetSensor("XS043",xnis);
 
         t.setKnownState(jmri.Sensor.ACTIVE);
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.ACTIVE);
@@ -73,7 +75,7 @@ public class XNetSensorTest extends TestCase {
     public void testXNetSensorStatusRequest() {
         XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
-        XNetSensor t = new XNetSensor("XS042");
+        XNetSensor t = new XNetSensor("XS042",xnis);
 
         t.requestUpdateFromLayout();
         // check that the correct message was sent

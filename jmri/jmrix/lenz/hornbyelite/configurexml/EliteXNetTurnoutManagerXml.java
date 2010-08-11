@@ -10,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Paul Bender Copyright: Copyright (c) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -27,8 +27,6 @@ public class EliteXNetTurnoutManagerXml extends jmri.managers.configurexml.Abstr
     }
 
     public boolean load(Element turnouts) {
-        // create the master object
-        jmri.jmrix.lenz.XNetTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(turnouts);
     }

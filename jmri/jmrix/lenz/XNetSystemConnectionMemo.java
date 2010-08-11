@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -20,6 +20,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
    public XNetSystemConnectionMemo(XNetTrafficController xt){
      super("X","XPressnet");
      this.xt=xt;
+     xt.setSystemConnectionMemo(this);
      register(); // registers general type
      InstanceManager.store(this,XNetSystemConnectionMemo.class); // also register as specific type
 
@@ -49,6 +50,20 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public XNetTrafficController getXNetTrafficController() { return xt; }
     private XNetTrafficController xt;
     public void setXNetTrafficController(XNetTrafficController xt) { this.xt = xt; }
+
+    /**
+     * Provides access to the Programmer for this particular connection.
+     */
+    public ProgrammerManager getProgrammerManager() {
+        if (programmerManager == null)
+            programmerManager = new XNetProgrammerManager(new XNetProgrammer(xt),this);
+        return programmerManager;
+    }
+    public void setProgrammerManager(ProgrammerManager p) {
+        programmerManager = p;
+    }
+
+    private ProgrammerManager programmerManager;
 
     public void dispose() {
         xt = null;

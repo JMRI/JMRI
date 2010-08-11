@@ -10,16 +10,17 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.12 $
+ * @version			$Revision: 2.13 $
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
-    public String getSystemPrefix() { return "X"; }
+    public String getSystemPrefix() { return prefix; }
+    protected String prefix = null;
 
     protected XNetTrafficController tc = null;
 
+    @Deprecated
     static public XNetSensorManager instance() {
-        if (mInstance == null) new XNetSensorManager();
         return mInstance;
     }
     static private XNetSensorManager mInstance = null;
@@ -33,13 +34,14 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
     // XPressNet specific methods
 
     public Sensor createNewSensor(String systemName, String userName) {
-        return new XNetSensor(systemName, userName);
+        return new XNetSensor(systemName, userName,tc);
     }
 
     // ctor has to register for XNetNet events
-    public XNetSensorManager() {
-        tc=XNetTrafficController.instance();
+    public XNetSensorManager(XNetTrafficController controller,String prefix) {
+        tc=controller;
         tc.addXNetListener(XNetInterface.FEEDBACK,this);
+        this.prefix=prefix;
         mInstance = this;
     }
 

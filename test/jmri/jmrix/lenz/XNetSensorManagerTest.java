@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensorManager class.
  * @author	Paul Bender Copyright (c) 2003
- * @version     $Revision: 2.5 $
+ * @version     $Revision: 2.6 $
  */
 public class XNetSensorManagerTest extends TestCase  {
 
@@ -25,7 +25,7 @@ public class XNetSensorManagerTest extends TestCase  {
 		new jmri.InstanceManager() {
 		    protected void init() { super.init(); root = null; }
 		};
-        XNetSensorManager l = new XNetSensorManager();
+        XNetSensorManager l = new XNetSensorManager(xnis,"X");
         jmri.InstanceManager.setSensorManager(l);
 
     }
@@ -36,7 +36,7 @@ public class XNetSensorManagerTest extends TestCase  {
         Assert.assertNotNull("exists", xnis );
         
         // create and register the manager object
-        XNetSensorManager l = new XNetSensorManager();
+        XNetSensorManager l = new XNetSensorManager(xnis,"X");
 
         // sample sensor object
         Sensor t = l.newSensor("XS22", "test");
@@ -52,7 +52,7 @@ public class XNetSensorManagerTest extends TestCase  {
         Assert.assertNotNull("exists", xnis );
         
         // create and register the manager object
-		XNetSensorManager l = new XNetSensorManager();
+		XNetSensorManager l = new XNetSensorManager(xnis,"X");
 
 		// sample turnout object
 		Sensor s = l.newSensor("XS22", "test");
@@ -68,7 +68,7 @@ public class XNetSensorManagerTest extends TestCase  {
 		XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
 
 		// create and register the manager object
-		XNetSensorManager l = new XNetSensorManager();
+		XNetSensorManager l = new XNetSensorManager(xnis,"X");
 
 		// send messages for feedbak encoder 22
 		// notify the XPressNet that somebody else changed it...
@@ -86,11 +86,13 @@ public class XNetSensorManagerTest extends TestCase  {
 	}
 
 	public void testAsAbstractFactory () {
+		// prepare an interface, register
+		XNetInterfaceScaffold xnis = new XNetInterfaceScaffold(new LenzCommandStation());
 		// create and register the manager object in a new instance manager
 		new jmri.InstanceManager() {
 		    protected void init() { super.init(); root = null; }
 		};
-		XNetSensorManager l = new XNetSensorManager();
+		XNetSensorManager l = new XNetSensorManager(xnis,"X");
 		jmri.InstanceManager.setSensorManager(l);
 
 		// ask for a Sensor, and check type

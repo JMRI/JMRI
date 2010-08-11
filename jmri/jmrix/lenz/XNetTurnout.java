@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.29 $
+ * @version			$Revision: 2.30 $
  */
 
 package jmri.jmrix.lenz;
@@ -124,9 +124,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    public XNetTurnout(int pNumber) {  // a human-readable turnout number must be specified!
+    public XNetTurnout(int pNumber,XNetTrafficController controller) {  // a human-readable turnout number must be specified!
         super("XT"+pNumber);
-        tc=XNetTrafficController.instance();
+        tc=controller;
         mNumber = pNumber;
 
         /* Add additiona feedback types information */

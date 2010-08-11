@@ -14,7 +14,7 @@ import junit.framework.TestSuite;
 /**
  Tests for the jmri.jmrix.lenz.XNetTurnoutManager class.
  * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 2.7 $
  */
 public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
@@ -71,8 +71,9 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
     }
 
     public void testAsAbstractFactory () {
+        lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        XNetTurnoutManager l = new XNetTurnoutManager();
+        XNetTurnoutManager l = new XNetTurnoutManager(lnis,"X");
         jmri.InstanceManager.setTurnoutManager(l);
 
         // ask for a Turnout, and check type
@@ -118,7 +119,7 @@ public class XNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new LenzCommandStation());
         // create and register the manager object
-        l = new XNetTurnoutManager();
+        l = new XNetTurnoutManager(lnis,"X");
         jmri.InstanceManager.setTurnoutManager(l);
     }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }

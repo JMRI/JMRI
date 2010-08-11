@@ -13,7 +13,7 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Paul Bender Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class XNetLightManager extends AbstractLightManager {
 
@@ -42,7 +42,7 @@ public class XNetLightManager extends AbstractLightManager {
 		int bitNum = getBitFromSystemName(systemName);
 		if (bitNum == 0) return (null);
         // Normalize the systemName
-		String sName = prefix+bitNum;   // removes any leading zeros
+		String sName = prefix+"L"+bitNum;   // removes any leading zeros
 		// make the new Light object
 		lgt = new XNetLight(tc,this,sName,userName); 
         return lgt;
@@ -112,7 +112,7 @@ public class XNetLightManager extends AbstractLightManager {
         return null;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManager.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetLightManagerTest.class.getName());
 
 }
 

@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.18 $
+ * @version 		$Revision: 2.19 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -208,8 +208,12 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
     /**
       * enterNormalMode() returns the value of getExitProgModeMsg();
       */
-    protected boolean programmerIdle() { 
-	  return !(XNetProgrammer.instance().programmerBusy());
+    protected boolean programmerIdle() {
+          
+          if(mMemo.getProgrammerManager().getGlobalProgrammer() instanceof
+             jmri.jmrix.lenz.XNetProgrammer )
+	  return !(((jmri.jmrix.lenz.XNetProgrammer)mMemo.getProgrammerManager().getGlobalProgrammer()).programmerBusy());
+          else return true;
 	}
 
     protected boolean endOfMessage(AbstractMRReply msg) { 
@@ -264,6 +268,27 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      */
     public LenzCommandStation getCommandStation() { return mCommandStation; }
 
+    /** Reference to the system connection memo  **/
+    XNetSystemConnectionMemo mMemo = null;
+
+    /**
+     * Get access to the system connection memo associated with this 
+     * traffic controller
+     * @return associated systemConnectionMemo object
+     */
+    public XNetSystemConnectionMemo getSystemConnectionMemo(){
+      return(mMemo);
+    }
+    
+
+   /**
+     * Set the system connection memo associated with this 
+     * traffic controller
+     * @param associated systemConnectionMemo object
+     */
+    public void setSystemConnectionMemo(XNetSystemConnectionMemo m){
+      mMemo = m;
+    }
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetTrafficController.class.getName());
 }
 
