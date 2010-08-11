@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.71 2010-08-10 20:40:06 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.72 2010-08-11 17:39:13 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -51,6 +51,10 @@ location to location. </P>
 <P>
 The operations program is included in the JMRI/DecoderPro suite of tools 
 and can be found under the main menu heading "Tools->Operations".</P>
+
+<P>
+<img src="images/MainMenuDecoderPro.png">
+</P>
 
 <A name="demo"></A>
 <H3>Operations Demo Files</H3>
