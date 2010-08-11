@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.4 $
+ *	@version $Revision: 1.5 $
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
@@ -68,6 +68,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.add(new JLabel("Turnouts to "));
         p.add(new JLabel("be controlled "));
         p.add(new JLabel("by WiFi devices."));
+        p.add(new JLabel("\n"));
+        p.add(new JLabel("Save changes "));
+        p.add(new JLabel("to panel file."));
         JButton saveButton = new JButton(rb.getString("ButtonSave"));
         saveButton.addActionListener(new ActionListener (){
             public void actionPerformed(ActionEvent event){
@@ -96,6 +99,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         p.add(new JLabel("Routes to "));
         p.add(new JLabel("be controlled "));
         p.add(new JLabel("by WiFi devices."));
+        p.add(new JLabel("\n"));
+        p.add(new JLabel("Save changes "));
+        p.add(new JLabel("to panel file."));
         JButton saveButton = new JButton(rb.getString("ButtonSave"));
         saveButton.addActionListener(new ActionListener (){
             public void actionPerformed(ActionEvent event){
@@ -120,7 +126,7 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         table.getModel().addTableModelListener(this);
 
         table.setRowSelectionAllowed(false);
-        table.setPreferredScrollableViewportSize(new java.awt.Dimension(480,240));
+        table.setPreferredScrollableViewportSize(new java.awt.Dimension(580,240));
 
         //table.getTableHeader().setBackground(Color.lightGray);
         table.setShowGrid(false);
@@ -138,12 +144,14 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
         TableColumn sName = columnModel.getColumn(AbstractFilterModel.SNAMECOL);
         sName.setResizable(true);
         sName.setMinWidth(80);
-        sName.setMaxWidth(120);
+        sName.setPreferredWidth(80);
+        sName.setMaxWidth(340);
 
         TableColumn uName = columnModel.getColumn(AbstractFilterModel.UNAMECOL);
         uName.setResizable(true);
-        uName.setMinWidth(210);
-        uName.setMaxWidth(340);
+        uName.setMinWidth(180);
+        uName.setPreferredWidth(300);
+        uName.setMaxWidth(440);
     }
 
     protected void storeValues() {
