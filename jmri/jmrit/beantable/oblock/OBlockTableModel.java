@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.util.List;
@@ -201,37 +201,35 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                         AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     return;
                 }
-                if (block!=null) {
-                    if (tempRow[SENSORCOL] != null) {
-                        Sensor sensor = null;
-                        try {
-                            sensor = InstanceManager.sensorManagerInstance().provideSensor(tempRow[SENSORCOL]);
-                            if (sensor!=null) {
-                                block.setSensor(sensor);
-                            }
-                        } catch (Exception ex) {
-                            log.error("No Sensor named \""+(String)value+"\" found. threw exception: "+ ex);
+                if (tempRow[SENSORCOL] != null) {
+                    Sensor sensor = null;
+                    try {
+                        sensor = InstanceManager.sensorManagerInstance().provideSensor(tempRow[SENSORCOL]);
+                        if (sensor!=null) {
+                            block.setSensor(sensor);
                         }
-                        if (sensor==null) {
-                            JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
-                                rbo.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
-                                AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
-                        }
+                    } catch (Exception ex) {
+                        log.error("No Sensor named \""+(String)value+"\" found. threw exception: "+ ex);
                     }
-                    block.setComment(tempRow[COMMENTCOL]);
-                    float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                    if (tempRow[UNITSCOL].equals("in")) {
-                        block.setLength(len*25.4f);
-                        block.setMetricUnits(false);
-                    } else {
-                        block.setLength(len*10.0f);
-                        block.setMetricUnits(true);
+                    if (sensor==null) {
+                        JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
+                            rbo.getString("NoSuchSensorErr"), tempRow[SENSORCOL]),
+                            AbstractTableAction.rb.getString("ErrorTitle"), JOptionPane.WARNING_MESSAGE);
                     }
-                    if (tempRow[CURVECOL].equals(noneText)) block.setCurvature(Block.NONE);
-                    else if (tempRow[CURVECOL].equals(gradualText)) block.setCurvature(Block.GRADUAL);
-                    else if (tempRow[CURVECOL].equals(tightText)) block.setCurvature(Block.TIGHT);
-                    else if (tempRow[CURVECOL].equals(severeText)) block.setCurvature(Block.SEVERE);
-                }  
+                }
+                block.setComment(tempRow[COMMENTCOL]);
+                float len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
+                if (tempRow[UNITSCOL].equals("in")) {
+                    block.setLength(len*25.4f);
+                    block.setMetricUnits(false);
+                } else {
+                    block.setLength(len*10.0f);
+                    block.setMetricUnits(true);
+                }
+                if (tempRow[CURVECOL].equals(noneText)) block.setCurvature(Block.NONE);
+                else if (tempRow[CURVECOL].equals(gradualText)) block.setCurvature(Block.GRADUAL);
+                else if (tempRow[CURVECOL].equals(tightText)) block.setCurvature(Block.TIGHT);
+                else if (tempRow[CURVECOL].equals(severeText)) block.setCurvature(Block.SEVERE);
                 //fireTableRowsUpdated(row,row);
                 initTempRow();
                 fireTableDataChanged();

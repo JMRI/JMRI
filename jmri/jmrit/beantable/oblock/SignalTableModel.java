@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 import java.util.ArrayList;
@@ -123,7 +123,6 @@ public class SignalTableModel extends AbstractTableModel {
     private void makeList() {
         ArrayList <SignalRow> tempList = new ArrayList <SignalRow>();
         // save signals that do not have all their blocks yet
-        String msg = null;
         for (int i=0; i<_signalList.size(); i++) {
             SignalRow sr = _signalList.get(i);
             if (sr.getToBlock()==null || sr.getFromBlock()==null) {
@@ -282,9 +281,7 @@ public class SignalTableModel extends AbstractTableModel {
                                 }
                             } else {
                                 if (portal.setApproachSignal(signal, time, fromBlock)) {
-                                    if (toBlock==null) {
-                                        signalRow.setToBlock(portal.getOpposingBlock(fromBlock));
-                                    }
+                                    signalRow.setToBlock(portal.getOpposingBlock(fromBlock));
                                 } else {
                                     signalRow.setPortal(null);
                                 }

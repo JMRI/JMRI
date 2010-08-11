@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 import java.awt.Point;
@@ -71,7 +71,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
          if (tr.isDataFlavorSupported(TABLECELL_FLAVOR) ||
                          tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
              _dropPoint = evt.getLocation();
-             DnDHandler handler = (DnDHandler)getTransferHandler();
+             //DnDHandler handler = (DnDHandler)getTransferHandler();
              int col = columnAtPoint(_dropPoint);
              int row = rowAtPoint(_dropPoint);
              for (int i=0; i<_skipCols.length; i++) {
@@ -307,7 +307,9 @@ public class DnDJTable extends JTable implements DropTargetListener,
                          do {
                              parent = parent.getParent();
                          } while (parent!=null && !(parent instanceof JInternalFrame));
-                         ((JInternalFrame)parent).moveToFront();
+                         if (parent!=null && (parent instanceof JInternalFrame)) {
+                             ((JInternalFrame)parent).moveToFront();
+                         }
                          //if (log.isDebugEnabled()) 
                          //    log.debug("DnDHandler.importData: data= "+data+" dropped at ("+row+", "+col+")");
                          return true;
