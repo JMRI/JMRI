@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -112,10 +112,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("hidden", p.isHidden()?"yes":"no");
         element.setAttribute("positionable", p.isPositionable()?"true":"false");
         element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
+        element.setAttribute("editable", p.isEditable()?"true":"false");        
     }
 
     public Element storeIcon(String elemName, NamedIcon icon) {
-
+        if (icon==null) {
+            return null;
+        }
         Element element = new Element(elemName);
         element.setAttribute("url", icon.getURL());        
         element.setAttribute("degrees", String.valueOf(icon.getDegrees()));
@@ -333,7 +336,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if ( (a!=null) && a.getValue().equals("true"))
             l.setShowTooltip(true);
         else
-            l.setShowTooltip(false);    
+            l.setShowTooltip(false);
+
+        a = element.getAttribute("editable");
+        if ( (a!=null) && a.getValue().equals("true"))
+            l.setEditable(true);
+        else
+            l.setEditable(false);    
     }
     
 	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
