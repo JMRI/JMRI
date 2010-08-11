@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -236,7 +236,6 @@ public class DefaultConditional extends AbstractNamedBean
     * Find out if the state variable is willing to cause the actions to execute
     */
     boolean wantsToTrigger(PropertyChangeEvent evt) {
-        String listener = "";
         try {
             String sysName = ((NamedBean)evt.getSource()).getSystemName();
             String userName = ((NamedBean)evt.getSource()).getUserName();
