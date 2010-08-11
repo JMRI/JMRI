@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
@@ -67,7 +67,7 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                     f.init(rb.getString("SetXY"), pos, true);
                     f.initSetXY();
                     f.setVisible(true);	
-                    f.setLocationRelativeTo((Component)pos);
+                    f.setLocationRelativeTo(pos);
                 }
             };
     }

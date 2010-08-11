@@ -476,6 +476,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         panel.add(makeTextBoxPanel(false, _statusBox, "Status", false));
         _statusBox.setMinimumSize(new Dimension(600, _statusBox.getPreferredSize().height));
         _statusBox.setMaximumSize(new Dimension(900, _statusBox.getPreferredSize().height));
+        _statusBox.setText(status);
         panel.add(_statusBox);
         tab2.add(panel, BorderLayout.SOUTH);
 

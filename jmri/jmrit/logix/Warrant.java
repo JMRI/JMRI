@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -46,7 +46,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private boolean _tempRunBlind;              // run mode flag
 
     private int     _idxCurrentOrder;       // Index of block at head of train (if running)
-    private int     _idxTrailingOrder;      // index of block train has just left (if running)
+//    private int     _idxTrailingOrder;      // index of block train has just left (if running)
     private int     _runMode;
     private Engineer _engineer;         // thread that runs the train
     private boolean _allocated;         // all Blocks of _orders have been allocated
@@ -76,7 +76,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public Warrant(String sName, String uName) {
         super(sName.toUpperCase(), uName);
         _idxCurrentOrder = 0;
-        _idxTrailingOrder = -1;
+//        _idxTrailingOrder = -1;
         _orders = _savedOrders;
         _runBlind = false;
     }
@@ -368,7 +368,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             _runMode = mode;
             _idxCurrentOrder = 0;
-            _idxTrailingOrder = -1;
+//            _idxTrailingOrder = -1;
             _orders = _savedOrders;
             _throttleFactor = 1.0f;
         } else if (_runMode==MODE_LEARN || _runMode==MODE_RUN) {
@@ -464,7 +464,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         //_throttle.addPropertyChangeListener(this);
         _idxCurrentOrder = 0;
-        _idxTrailingOrder = -1;
+//        _idxTrailingOrder = -1;
 
         if (_runMode == MODE_LEARN) {
             _student.notifyThrottleFound(_throttle);
@@ -717,7 +717,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                             idx+", _idxCurrentOrder= "+_idxCurrentOrder);
         if (idx < _idxCurrentOrder) {
             // block is behind train.  Assume we are leaving.
-            _idxTrailingOrder = idx;
+//            _idxTrailingOrder = idx;
             if (this.equals(block.getWarrant())) {
                 block.deAllocate(this);
             }
@@ -803,7 +803,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         private boolean _abort = false;
         private boolean _halt = false;  // halt/resume from user's control
         private boolean _wait = false;  // waits for signals/occupancy/allocation to clear
-        private boolean _waitForSync = false;  // waits for train to catch up to commands
+        //private boolean _waitForSync = false;  // waits for train to catch up to commands
         private boolean _speedOverride = false; // speed changing due to signal or occupancy
         private int     _syncIdx;
         private List <ThrottleSetting> _throttleCommands;
