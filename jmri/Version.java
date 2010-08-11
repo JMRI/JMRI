@@ -1,6 +1,5 @@
 package jmri;
 
-import java.util.Calendar;
 
 /**
  * Defines a simple place to get the JMRI version string.
@@ -21,7 +20,7 @@ import java.util.Calendar;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.140 $
+ * @version $Revision: 1.141 $
  */
 
 public class Version {

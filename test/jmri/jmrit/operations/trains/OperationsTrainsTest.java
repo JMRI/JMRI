@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -4279,10 +4279,10 @@ public class OperationsTrainsTest extends TestCase {
 		// Create route with 4 location
 		Setup.setCarMoves(7);	// set default to 7 moves per location
 		Route rte1 = rmanager.newRoute("Route 2 Westford");
-		RouteLocation rl1 = rte1.addLocation(loc1);
+		rte1.addLocation(loc1);
 		RouteLocation rl2 = rte1.addLocation(loc2);
 		RouteLocation rl3 = rte1.addLocation(loc3);
-		RouteLocation rl4 = rte1.addLocation(loc4);
+		rte1.addLocation(loc4);
 		
 		// don't allow pickup or drops at Arlington
 		rl2.setCanDrop(false);
@@ -4662,11 +4662,11 @@ public class OperationsTrainsTest extends TestCase {
 		// Create route with 5 location
 		Setup.setCarMoves(7);	// set default to 7 moves per location
 		Route rte1 = rmanager.newRoute("Route 3 Westford");
-		RouteLocation rl1 = rte1.addLocation(loc1);
-		RouteLocation rl2 = rte1.addLocation(loc2);
-		RouteLocation rl3 = rte1.addLocation(loc3);
-		RouteLocation rl4 = rte1.addLocation(loc4);
-		RouteLocation rl5 = rte1.addLocation(loc5);
+		rte1.addLocation(loc1);
+		rte1.addLocation(loc2);
+		rte1.addLocation(loc3);
+		rte1.addLocation(loc4);
+		rte1.addLocation(loc5);
 		
 		
 		// Create train
