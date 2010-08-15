@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: editors.xsd,v 1.7 2010-02-21 00:00:17 jacobsen Exp $ -->
+<!-- $Id: editors.xsd,v 1.8 2010-08-15 07:41:31 jacobsen Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009, 2010.                           -->
 <!--                                                                        -->
@@ -151,6 +151,7 @@
         </xs:simpleType>
       </xs:attribute>
       <xs:attribute name="fixed" type="trueFalseType" />
+      <xs:attribute name="editable" type="trueFalseType" />
 
       <xs:attribute name="height" type="xs:integer" >
         <xs:annotation><xs:documentation>
