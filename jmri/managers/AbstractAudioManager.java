@@ -5,7 +5,6 @@ package jmri.managers;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
-import jmri.managers.AbstractManager;
 
 /**
  * Abstract partial implementation of an AudioManager.
@@ -25,7 +24,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractAudioManager extends AbstractManager
     implements AudioManager {
@@ -53,7 +52,7 @@ public abstract class AbstractAudioManager extends AbstractManager
     }
 
     public Audio getByUserName(String key) {
-        return (Audio)_tuser.get(key);
+        return key==null?null:(Audio)_tuser.get(key);
     }
 
     public Audio newAudio(String systemName, String userName) throws AudioException {
