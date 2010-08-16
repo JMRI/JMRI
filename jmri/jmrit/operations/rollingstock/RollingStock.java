@@ -15,8 +15,8 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Represents rolling stock, both powered (engines) and not powered (cars) on
  * the layout.
  * 
- * @author Daniel Boudreau
- * @version $Revision: 1.36 $
+ * @author Daniel Boudreau Copyright (C) 2009, 2010
+ * @version $Revision: 1.37 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 

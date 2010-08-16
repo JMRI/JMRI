@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.81 $
+ * @version             $Revision: 1.82 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1064,7 +1064,7 @@ public class TrainBuilder extends TrainCommon{
 													String status = c.testDestination(c.getDestination(), c.getDestinationTrack());
 													if (status.equals(Car.OKAY) && checkDropTrainDirection(c, rld, c.getDestination(), c.getDestinationTrack()))
 														carAdded = addCarToTrain(c, rl, rld, c.getDestination(), c.getDestinationTrack());
-													else
+													else if (!status.equals(Car.OKAY))
 														addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +c.getDestinationTrack().getName()+") due to "+status);
 												}
 											}

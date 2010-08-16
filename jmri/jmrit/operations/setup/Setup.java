@@ -3,8 +3,8 @@ package jmri.jmrit.operations.setup;
 /**
  * Operations settings. 
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.31 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.32 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -801,7 +801,7 @@ public class Setup {
         	}
            	if ((a = operations.getChild("settings").getAttribute("carRoutingEnabled"))!= null){
         		String enable = a.getValue();
-        		if (log.isDebugEnabled()) log.debug("showRfid: "+enable);
+        		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
         		Setup.setCarRoutingEnabled(enable.equals("true"));
         	}
         }

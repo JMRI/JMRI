@@ -32,8 +32,8 @@ import jmri.jmrit.operations.trains.TrainManager;
 /**
  * Frame for user to place car on the layout
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.14 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -56,6 +56,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	JLabel textTrack2 = new JLabel(rb.getString("Track"));
 	JLabel textName3 = new JLabel(rb.getString("Name"));
 	JLabel textTrack3 = new JLabel(rb.getString("Track"));
+	JLabel textName4 = new JLabel(rb.getString("Name"));
+	JLabel textTrack4 = new JLabel(rb.getString("Track"));
 
 	// major buttons
 	JButton saveButton = new JButton(rb.getString("Save"));
@@ -65,6 +67,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	JComboBox trackLocationBox = new JComboBox(); 
 	JComboBox destinationBox = LocationManager.instance().getComboBox();
 	JComboBox trackDestinationBox = new JComboBox(); 
+	JComboBox destReturnWhenEmptyBox = LocationManager.instance().getComboBox();
+	JComboBox trackReturnWhenEmptyBox = new JComboBox(); 
 	JComboBox nextDestinationBox = LocationManager.instance().getComboBox();
 	JComboBox nextDestTrackBox = new JComboBox(); 
 	JComboBox trainBox = TrainManager.instance().getComboBox();
@@ -73,6 +77,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	JCheckBox autoTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox autoDestinationTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox autoNextDestTrackCheckBox = new JCheckBox(rb.getString("Auto"));
+	JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 		
 	public CarSetFrame() {
 		super();
@@ -115,10 +120,26 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		addItem(pLocation, autoTrackCheckBox, 3, 1);
 		pPanel.add(pLocation);
 		
-		// optional panel
-		JPanel pOptional = new JPanel();
-		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
-		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		// optional panel 1
+		JPanel pOptional1 = new JPanel();
+		pOptional1.setLayout(new BoxLayout(pOptional1,BoxLayout.Y_AXIS));
+		pOptional1.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		
+		// row 5
+		JPanel pReturnWhenEmpty = new JPanel();
+		pReturnWhenEmpty.setLayout(new GridBagLayout());
+		pReturnWhenEmpty.setBorder(BorderFactory.createTitledBorder(rb.getString("ReturnWhenEmpty")));
+		addItem(pReturnWhenEmpty, textName4, 1, 0);
+		addItem(pReturnWhenEmpty, textTrack4, 2, 0);
+		addItem(pReturnWhenEmpty, destReturnWhenEmptyBox, 1, 1);
+		addItem(pReturnWhenEmpty, trackReturnWhenEmptyBox, 2, 1);
+		addItem(pReturnWhenEmpty, autoReturnWhenEmptyTrackCheckBox, 3, 1);
+		pOptional1.add(pReturnWhenEmpty);
+		
+		// optional panel 2
+		JPanel pOptional2 = new JPanel();
+		pOptional2.setLayout(new BoxLayout(pOptional2,BoxLayout.Y_AXIS));
+		pOptional2.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalProgram")));
 
 		// row 6
 		JPanel pDestination = new JPanel();
@@ -129,7 +150,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		addItem(pDestination, destinationBox, 1, 1);
 		addItem(pDestination, trackDestinationBox, 2, 1);
 		addItem(pDestination, autoDestinationTrackCheckBox, 3, 1);
-		pOptional.add(pDestination);
+		pOptional2.add(pDestination);
 		
 		// row 7
 		JPanel pNextDestination = new JPanel();
@@ -140,14 +161,14 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		addItem(pNextDestination, nextDestinationBox, 1, 1);
 		addItem(pNextDestination, nextDestTrackBox, 2, 1);
 		addItem(pNextDestination, autoNextDestTrackCheckBox, 3, 1);
-		pOptional.add(pNextDestination);
+		pOptional2.add(pNextDestination);
 		
 		// row 8
 		JPanel pTrain = new JPanel();
 		pTrain.setLayout(new GridBagLayout());
 		pTrain.setBorder(BorderFactory.createTitledBorder(rb.getString("Train")));
 		addItem(pTrain, trainBox, 0, 0);
-		pOptional.add(pTrain);
+		pOptional2.add(pTrain);
 
 		// button panel
 		JPanel pButtons = new JPanel();
@@ -157,13 +178,15 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		getContentPane().add(pPanel);
-		getContentPane().add(pOptional);
+		getContentPane().add(pOptional1);
+		getContentPane().add(pOptional2);
 		getContentPane().add(pButtons);
 		
 		// select auto mode
 		autoTrackCheckBox.setSelected(true);
 		autoDestinationTrackCheckBox.setSelected(true);
 		autoNextDestTrackCheckBox.setSelected(true);
+		autoReturnWhenEmptyTrackCheckBox.setSelected(true);
 		
 		// setup buttons
 		addButtonAction(saveButton);
@@ -172,16 +195,19 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		addComboBoxAction(locationBox);
 		addComboBoxAction(destinationBox);
 		addComboBoxAction(nextDestinationBox);
+		addComboBoxAction(destReturnWhenEmptyBox);
 		
 		// setup checkbox
 		addCheckBoxAction(autoTrackCheckBox);
 		addCheckBoxAction(autoDestinationTrackCheckBox);
 		addCheckBoxAction(autoNextDestTrackCheckBox);
+		addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
 		
 		// add tool tips
 		autoTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
 		autoDestinationTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
 		autoNextDestTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
+		autoReturnWhenEmptyTrackCheckBox.setToolTipText(rb.getString("TipAutoTrack"));
 
 		// build menu
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
@@ -191,7 +217,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		// get notified if train combo box gets modified
 		trainManager.addPropertyChangeListener(this);
 		
-		// Only show nextDestination if routing enabled
+		// Only show returnWhenEmpty and nextDestination if routing enabled
+		pOptional1.setVisible(Setup.isCarRoutingEnabled());
 		pNextDestination.setVisible(Setup.isCarRoutingEnabled());
 		
 		// set frame size and location for display
@@ -220,26 +247,13 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	private void updateComboBoxes(){
 		log.debug("update combo boxes");
 		locationManager.updateComboBox(locationBox);
-		locationBox.setSelectedItem(_car.getLocation());
-		Location l = _car.getLocation();
-		if (l != null){
-			l.updateComboBox(trackLocationBox);
-			trackLocationBox.setSelectedItem(_car.getTrack());
-		}		
+		locationBox.setSelectedItem(_car.getLocation());	
 		locationManager.updateComboBox(destinationBox);
 		destinationBox.setSelectedItem(_car.getDestination());
-		l = _car.getDestination();
-		if (l != null){
-			l.updateComboBox(trackDestinationBox);
-			trackDestinationBox.setSelectedItem(_car.getDestinationTrack());
-		}
 		locationManager.updateComboBox(nextDestinationBox);
 		nextDestinationBox.setSelectedItem(_car.getNextDestination());
-		l = _car.getNextDestination();
-		if (l != null){
-			l.updateComboBox(nextDestTrackBox);
-			nextDestTrackBox.setSelectedItem(_car.getNextDestTrack());
-		}
+		locationManager.updateComboBox(destReturnWhenEmptyBox);
+		destReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestination());
 		trainManager.updateComboBox(trainBox);
 		trainBox.setSelectedItem(_car.getTrain());
 		
@@ -247,6 +261,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		updateLocation();
 		updateDestination();
 		updateNextDestination();
+		updateReturnWhenEmpty();
 	}
 	
 	// location combo box
@@ -260,11 +275,15 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		if (ae.getSource()== nextDestinationBox){
 			updateNextDestination();
 		}
+		if (ae.getSource()== destReturnWhenEmptyBox){
+			updateReturnWhenEmpty();
+		}
 	}
 	
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
+			log.debug("Save button action");
 			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
 				_car.setLocation(null, null);
 			} else {
@@ -312,6 +331,18 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 						return;
 					}
 				}
+			}
+			if (destReturnWhenEmptyBox.getSelectedItem() == null || destReturnWhenEmptyBox.getSelectedItem().equals("")) {
+				_car.setReturnWhenEmptyDestination(null);
+				_car.setReturnWhenEmptyDestTrack(null);
+			} else {
+				if (trackReturnWhenEmptyBox.getSelectedItem() != null 
+						&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){
+					_car.setReturnWhenEmptyDestTrack((Track)trackReturnWhenEmptyBox.getSelectedItem());
+				} else {
+					_car.setReturnWhenEmptyDestTrack(null);
+				}
+				_car.setReturnWhenEmptyDestination((Location) destReturnWhenEmptyBox.getSelectedItem());
 			}
 			if (nextDestinationBox.getSelectedItem() == null || nextDestinationBox.getSelectedItem().equals("")) {
 				_car.setNextDestination(null);
@@ -420,13 +451,13 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 							foundDes = true;
 							break;
 						}
-						
+
 					}
 					if (!foundDes){
 						JOptionPane.showMessageDialog(this, MessageFormat.format(rb.getString("carLocOrder"),
 								new Object[] {_car.getDestinationName(),	_car.getLocationName(),
-								train.getName() }), rb.getString("carNotMove"),
-								JOptionPane.ERROR_MESSAGE);
+							train.getName() }), rb.getString("carNotMove"),
+							JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					if (!train.servicesCar(_car)){
@@ -452,7 +483,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 							kCar.setLocation(null, null);
 						} else {
 							String status = kCar.setLocation((Location) locationBox.getSelectedItem(),
-								(Track)trackLocationBox.getSelectedItem());
+									(Track)trackLocationBox.getSelectedItem());
 							if (!status.equals(Car.OKAY)){
 								log.debug ("Can't set the location for all of the cars in the kernel because of "+ status);
 								JOptionPane.showMessageDialog(this,
@@ -501,6 +532,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			updateDestination();
 		if (ae.getSource() == autoNextDestTrackCheckBox) 
 			updateNextDestination();
+		if (ae.getSource() == autoReturnWhenEmptyTrackCheckBox) 
+			updateReturnWhenEmpty();
 	}
 	
 	protected void updateLocation(){
@@ -530,6 +563,22 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 				findAvailableTracks(l, trackDestinationBox, autoDestinationTrackCheckBox.isSelected(), true);
 				if (_car.getDestination() != null && _car.getDestination().equals(l) && _car.getDestinationTrack() != null)
 					trackDestinationBox.setSelectedItem(_car.getDestinationTrack());
+				packFrame();
+			}
+		}
+	}
+	
+	protected void updateReturnWhenEmpty(){
+		if (destReturnWhenEmptyBox.getSelectedItem() != null){
+			if (destReturnWhenEmptyBox.getSelectedItem().equals("")){
+				trackReturnWhenEmptyBox.removeAllItems();
+			}else{
+				log.debug("CarSetFrame sees return when empty: "+ destReturnWhenEmptyBox.getSelectedItem());
+				Location l = (Location)destReturnWhenEmptyBox.getSelectedItem();
+				l.updateComboBox(trackReturnWhenEmptyBox);
+				findAvailableTracks(l, trackReturnWhenEmptyBox, autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
+				if (_car.getReturnWhenEmptyDestination() != null && _car.getReturnWhenEmptyDestination().equals(l) && _car.getReturnWhenEmptyDestTrack() != null)
+					trackReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestTrack());
 				packFrame();
 			}
 		}

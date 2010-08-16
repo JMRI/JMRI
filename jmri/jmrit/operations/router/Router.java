@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class Router {
@@ -50,7 +50,8 @@ public class Router {
 		if (car.getNextDestination() != null){
 			log.debug("Car ("+car.toString()+") has next destination ("+car.getNextDestination().getName()+") car routing begins");
 			// Has the car accidentally arrived at the car's next destination?
-			if (car.getLocation().equals(car.getNextDestination()) && car.getTrack().equals(car.getNextDestTrack())){
+			if (car.getLocation().equals(car.getNextDestination()) 
+					&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
 				log.debug("Car ("+car.toString()+") has arrieved at next destination");
 				car.setNextDestination(null);
 				car.setNextDestTrack(null);
@@ -64,8 +65,10 @@ public class Router {
 				log.warn("Next destination ("+car.getNextDestination().getName()+", "+trk+") failed for car ("+car.toString()+") due to "+newStatus);
 			}
 			// check to see if car will move with new destination and a single train
-			if (TrainManager.instance().getTrainForCar(car) != null){
-				log.debug("Car ("+car.toString()+") destination ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") can be serviced by a single train");
+			Train train = TrainManager.instance().getTrainForCar(car);
+			if (train != null){
+				log.debug("Car ("+car.toString()+") destination ("+car.getDestinationName()+", "+car.getDestinationTrackName()
+						+") can be serviced by a single train ("+train.getName()+")");
 				car.setNextDestination(null);
 				car.setNextDestTrack(null);
 				return true;
@@ -161,6 +164,7 @@ public class Router {
 					if (nextTrain != null){
 						if (debugFlag)
 							log.debug("Train ("+nextTrain.getName()+") can service car ("+car.toString()+") from "+type+" ("+ts.getLocationName()+", "+ts.getTrackName()+") to final destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()+")");
+						// Save the "last" location/track pairs for later use
 						lastLocationTrackPairs.add(new LocationTrackPair(location, track));
 						ts.setLocation(saveLocation); // restore car's location and track
 						ts.setTrack(saveTrack);	
@@ -189,13 +193,28 @@ public class Router {
 		return false;	// couldn't find two trains to service this car
 	}
 
-	// note that last location track pairs was loaded by setCarDestinationTwoTrains
+	// Note that "last" set of location/track pairs was loaded by
+	// setCarDestinationTwoTrains.
+	// The code builds two additional sets of location/track pairs called
+	// "first" and "other".
+	// "first" is the first set of location/track pairs that the car can reach
+	// by a single train.
+	// "last" is the last set of location/track pairs that services the cars
+	// final destination.
+	// And "other" is the remaining sets of location/track pairs that are not "first" or
+	// "last".
+	// The code then tries to connect the "first" and "last" track pair sets
+	// with a train that can service the car.
+	// If successful, that would be a three train route for the car. If not
+	// successful, the code than tries combinations of "first", "other" and "last"
+	// location/track pairs to create a route for the car.
+	// 
 	private boolean setCarDestinationMultipleTrains(Car car){
 		if (lastLocationTrackPairs.size()== 0)
 			return false;
 		log.debug("Multiple train routing begins");
-		log.debug("Try to find route using 2 trains");
 		Car ts = clone(car);
+		// build the "first" and "other" location/track pairs
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));

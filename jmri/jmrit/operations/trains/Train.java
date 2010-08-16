@@ -46,7 +46,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -819,12 +819,12 @@ public class Train implements java.beans.PropertyChangeListener {
     	try{
        		s = Integer.parseInt(getBuiltStartYear());
     	} catch (NumberFormatException e1){
-    		log.debug("Built start date not initialized, start: "+getBuiltStartYear());
+    		log.debug("Train ("+getName()+") built start date not initialized, start: "+getBuiltStartYear());
     	}
     	try{
     		e = Integer.parseInt(getBuiltEndYear());
     	} catch (NumberFormatException e1){
-    		log.debug("Built end date not initialized, end: "+getBuiltEndYear());
+    		log.debug("Train ("+getName()+") built end date not initialized, end: "+getBuiltEndYear());
     	}  	
     	try{
     		int d = Integer.parseInt(date);
