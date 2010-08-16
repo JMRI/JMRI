@@ -2405,6 +2405,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     protected void pasteItemPopUp(final MouseEvent event){
+        if (!isEditable())
+            return;
         if (_multiItemCopyGroup==null)
             return;
         JPopupMenu popup = new JPopupMenu();
@@ -2418,6 +2420,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     protected void backgroundPopUp(MouseEvent event){
+        if (!isEditable())
+            return;
         JPopupMenu popup = new JPopupMenu();
         setBackgroundMenu(popup);
         popup.show(event.getComponent(), event.getX(), event.getY());
