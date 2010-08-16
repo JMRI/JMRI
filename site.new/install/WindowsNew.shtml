@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.4 2010-01-10 07:23:47 jacobsen Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.5 2010-08-16 17:12:52 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -58,6 +58,11 @@ JMRI Install Guide: Windows
         <br /><img src="images/WinInstall-03b_UninstallOld.png" height="144" width="323" alt="installer uninstall old version progress"/></p>
         <p>Uninstaller complete
         <br /><img src="images/WinInstall-03c_UninstallOld.png" height="126" width="231" alt="installer uninstall old version complete"/></p>
+		<p>In some circumstances, the removal of version 2.5.1 or earlier is not successful:</p>
+		<p>Uninstaller failed
+		<br /><img src="images/WinInstall-03d_UninstallOldFailed.png" height="126" width="497" alt="installer uninstall old version failed"/></p>
+		<p>In such cases, it is necessary to download and run the following file and then re-run the installer:
+		<br /><a href="support/RemoveOldJMRIUninstallEntry.exe">RemoveOldJMRIUninstallEntry.exe</a>
       <LI>Choose installation type</LI>
         <p>If supported by your Windows version and depending on the permissions of your user, the installer may ask you to choose to install JMRI just for yourself or for all users of the computer.
         <br /><img src="images/WinInstall-04_ChooseUsers.png" height="393" width="503" alt="installer user choice"/></p>
