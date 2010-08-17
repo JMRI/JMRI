@@ -7,12 +7,13 @@ import javax.swing.*;
 /**
  * Frame to control and connect Acela CTI interface via SerialDriver interface and comm port
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
  */
 
+@Deprecated
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
     public SerialDriverFrame() {

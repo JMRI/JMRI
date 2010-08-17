@@ -12,7 +12,7 @@ import jmri.jmrix.acela.nodeconfig.NodeConfigAction;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on MRC example, modified to establish Acela support. 
@@ -55,7 +55,11 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     public String name() { return "Acela"; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    protected void setInstance() {
+        if (adapter == null){
+            adapter = new SerialDriverAdapter();
+        } 
+    }
 }
 
 /* @(#)ConnectionConfig.java */

@@ -3,9 +3,8 @@
 package jmri.jmrix.acela.serialdriver;
 
 import jmri.jmrix.acela.AcelaPortController;
-import jmri.jmrix.acela.AcelaSensorManager;
-import jmri.jmrix.acela.AcelaTurnoutManager;
 import jmri.jmrix.acela.AcelaTrafficController;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -24,7 +23,7 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  * @author	Bob Coleman, Copyright (C) 2007, 2008
  *              Based on Mrc example, modified to establish Acela support. 
@@ -32,6 +31,12 @@ import gnu.io.SerialPort;
 
 public class SerialDriverAdapter extends AcelaPortController  implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new AcelaSystemConnectionMemo();
+        mInstance=this;
+    }
+    
     SerialPort activeSerialPort = null;
 
     public String openPort(String portName, String appName)  {
@@ -108,7 +113,11 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
      */
     public void configure() {
         // connect to the traffic controller
-        AcelaTrafficController.instance().connectPort(this);
+        AcelaTrafficController control = AcelaTrafficController.instance();
+        control.connectPort(this);
+
+        adaptermemo.setAcelaTrafficController(control);
+        adaptermemo.configureManagers();
 
         // connect to a packetizing traffic controller
         // LnPacketizer packets = new LnPacketizer();
@@ -116,7 +125,8 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
 
         // do the common manager config
         // configureManagers();
-   	jmri.InstanceManager.setLightManager(new jmri.jmrix.acela.AcelaLightManager());
+        //now moved to the adapter memo
+   	/*jmri.InstanceManager.setLightManager(new jmri.jmrix.acela.AcelaLightManager());
 
         AcelaSensorManager s;
         jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.acela.AcelaSensorManager());
@@ -124,7 +134,7 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
 
         AcelaTurnoutManager t;
         jmri.InstanceManager.setTurnoutManager(t = new jmri.jmrix.acela.AcelaTurnoutManager());
-        AcelaTrafficController.instance().setTurnoutManager(t);	
+        AcelaTrafficController.instance().setTurnoutManager(t);	*/
 
         // start operation
         // packets.startThreads();
@@ -176,15 +186,22 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
     InputStream serialStream = null;
 
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null) {
+            mInstance = new SerialDriverAdapter();
+            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.CTI);
+        }
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.CTI;
+    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
+    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 }

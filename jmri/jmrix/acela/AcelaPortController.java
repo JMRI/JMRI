@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Abstract base for classes representing a CMRI communications port
  * @author	Bob Jacobsen    Copyright (C) 2001
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -26,6 +26,14 @@ public abstract class AcelaPortController extends jmri.jmrix.AbstractSerialPortC
 
     // check that this object is ready to operate
     public abstract boolean status();
+    
+    protected AcelaSystemConnectionMemo adaptermemo = null;
+
+    public void setDisabled(boolean disabled) {
+        mDisabled = disabled;
+        if(adaptermemo!=null)
+            adaptermemo.setDisabled(disabled);
+    }
 }
 
 /* @(#)AcelaPortController.java */
