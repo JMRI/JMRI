@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.4 2010-08-09 06:25:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.5 2010-08-18 17:48:11 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -215,7 +215,16 @@ Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 <p>
 Dan Boudreau improved operations car routing to a maximum of 3 trains.
 
+<p>
+Pete Cressman fixed a problem selecting groups on panels
 
+<p>
+Dan Boudreau changed the default for car routing to "on"
+
+<p>
+Dan Boudreau added a new operations feature, "Return When Empty".  
+When a car's load changes to empty, the user can optionally set the location or location/track to where the car should return.
+Also, the operations feature now allows car routing via staging tracks.
 
 
 <!--#include virtual="/Footer" -->
