@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.36 $
+ * @version             $Revision: 1.37 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -252,11 +252,11 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		// update next destination and load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
+		// update load when car reaches a siding
+		loadNext(destTrack);
 		// set next destination and destination track if available
 		if (!Router.instance().setCarNextDestination(this))
 			super.setDestination(null, null);	// couldn't route car, maybe next time
-		// update load when car reaches a siding
-		loadNext(destTrack);
 		return status;
 	}
 	
