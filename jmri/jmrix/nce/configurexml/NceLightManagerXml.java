@@ -3,7 +3,6 @@
 package jmri.jmrix.nce.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.nce.*;
 
 /**
  * Provides load and store functionality for
@@ -13,7 +12,7 @@ import jmri.jmrix.nce.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

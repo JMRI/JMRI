@@ -5,7 +5,6 @@ package jmri.jmrix.bachrus;
 import java.util.*;
 import java.text.*;
 import java.awt.*;
-import java.awt.event.*;
 import java.text.MessageFormat;
 import javax.swing.*;
 import javax.swing.JComboBox;
@@ -24,7 +23,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -124,7 +123,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int RANGE3LO = 16;
     protected static final int RANGE3HI = 9999;
     protected static final int[] filter_length = {0, 2, 5, 10};
-    protected enum displayType {NUMERIC, DIAL};
+    protected enum displayType {NUMERIC, DIAL}
     protected displayType display = displayType.NUMERIC;
 
     /*
@@ -138,7 +137,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected boolean timerRunning = false;
 
     protected dccSpeedProfile sp;
-    protected enum profileState {IDLE, WAIT_FOR_THROTTLE, RUNNING};
+    protected enum profileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
     protected profileState state = profileState.IDLE;
     protected DccThrottle throttle = null;
     protected int profileStep = 0;
@@ -146,7 +145,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected float profileIncrement;
     protected int profileAddress = 0;
     protected Programmer prog = null;
-    protected enum progState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18};
+    protected enum progState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18}
     protected progState readState = progState.IDLE;
 
     //Create the combo box, select item at index 4.

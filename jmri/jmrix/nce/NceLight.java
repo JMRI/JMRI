@@ -4,9 +4,6 @@ package jmri.jmrix.nce;
 
 import jmri.implementation.AbstractLight;
 import jmri.NmraPacket;
-import jmri.Sensor;
-import jmri.Turnout; 
-import jmri.Light;
 
 /**
  * NceLight.java
@@ -16,7 +13,7 @@ import jmri.Light;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class NceLight extends AbstractLight {
 
