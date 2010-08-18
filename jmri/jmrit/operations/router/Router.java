@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class Router {
@@ -32,6 +32,8 @@ public class Router {
 	private List<LocationTrackPair> otherLocationTrackPairs = new ArrayList<LocationTrackPair>();
 	
 	TrainManager trainManager = TrainManager.instance();
+	
+	public boolean enable_staging = false; 	// using staging to route cars can be tricky, not recommended
 	
 	/** record the single instance **/
 	private static Router _instance = null;
@@ -83,6 +85,9 @@ public class Router {
 				// now try 2 trains and a yard track
 				} else if (setCarDestinationYard(car)){
 					log.debug("Was able to set route via yard for car ("+car.toString()+")");
+					// now try 2 trains and a yard track
+				} else if (setCarDestinationStaging(car)){
+					log.debug("Was able to set route via staging for car ("+car.toString()+")");
 				// now try 3 or more trains to route car
 				} else if (setCarDestinationMultipleTrains(car)){
 					log.debug("Was able to set multiple train route for car ("+car.toString()+")");
@@ -125,7 +130,22 @@ public class Router {
 		return setCarDestinationTwoTrains (car, Track.YARD);
 	}
 	
-	private boolean debugFlag = false;
+	/**
+	 * Sets a car's next destination to a staging track if two train can route the
+	 * car.
+	 * 
+	 * @param car the car to be routed
+	 * @return true if car's destination has been modified to a staging track. False if a
+	 *         staging track wasn't found that could service the car's final
+	 *         destination.
+	 */
+	public boolean setCarDestinationStaging(Car car){
+		if (enable_staging)
+			return setCarDestinationTwoTrains (car, Track.STAGING);
+		return false;
+	}
+	
+	private boolean debugFlag = true;
 	
 	private boolean setCarDestinationTwoTrains(Car car, String type){
 		if (!Setup.isCarRoutingEnabled()){
@@ -151,7 +171,7 @@ public class Router {
 		List<String> locations = LocationManager.instance().getLocationsByIdList();
 		for (int i=0; i<locations.size(); i++){
 			Location location = LocationManager.instance().getLocationById(locations.get(i));
-			List<String> tracks = location.getTracksByNameList(type);	// restrict to yards or interchanges
+			List<String> tracks = location.getTracksByNameList(type);	// restrict to yards, interchanges, or staging
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
 				if (ts.testLocation(location, track).equals(Car.OKAY)){
@@ -177,6 +197,9 @@ public class Router {
 						ts.setDestination(saveDestation);
 						ts.setDestinationTrack(saveDestTrack);
 						if (status.equals(Car.OKAY) && firstTrain != null){
+							// check to see if track is staging
+							if (track.getLocType().equals(Track.STAGING))
+								track = null;	// don't specify which track in staging is to be used, decide later
 							car.setDestination(location, track);
 							if (debugFlag)
 								log.debug("Train ("+firstTrain.getName()+") can service car ("+car.toString()+") from current location ("+car.getLocationName()+", "+car.getTrackName()+") to "+type+" ("+car.getDestinationName()+", "+car.getDestinationTrackName()+")");
@@ -222,8 +245,8 @@ public class Router {
 			for (int j=0; j<tracks.size(); j++){
 				Track track = location.getTrackById(tracks.get(j));
 				if ((track.getLocType().equals(Track.INTERCHANGE) ||
-						track.getLocType().equals(Track.YARD)) 
-						&& ts.testLocation(location, track).equals(Car.OKAY)){
+						track.getLocType().equals(Track.YARD) ||
+						(enable_staging && ts.testLocation(location, track).equals(Car.OKAY)))){
 					if (debugFlag)
 						log.debug("Found "+track.getLocType()+" track ("+location.getName()+", "+track.getName()+") for car ("+car.toString()+")");
 					// test to see if there's a train that can deliver the car to this location
@@ -280,7 +303,10 @@ public class Router {
 					// does a train service these two locations?
 					Train middleTrain = trainManager.getTrainForCar(ts);
 					if (middleTrain != null){
-						log.debug("Found 3 train route, setting car destination ("+ts.getLocationName()+", "+ts.getTrackName()+")");			
+						// check to see if track is staging
+						if (ts.getTrack().getLocType().equals(Track.STAGING))
+							ts.setTrack(null);	// don't specify which track in staging is to be used, decide later
+						log.debug("Found 3 train route, setting car destination ("+ts.getLocationName()+", "+ts.getTrackName()+")");				
 						String status = car.setDestination(ts.getLocation(), ts.getTrack());
 						if (status.equals(Car.OKAY)){
 							log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+ts.getDestinationName()+"->"+car.getNextDestination().getName());
@@ -314,8 +340,11 @@ public class Router {
 							Train middleTrain3 = trainManager.getTrainForCar(ts);
 							if (middleTrain3 != null){
 								log.debug("Train 3 ("+middleTrain3.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());
-								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
 								String status = car.setDestination(fltp.getLocation(),fltp.getTrack());
+								// check to see if track is staging
+								if (fltp.getTrack().getLocType().equals(Track.STAGING))
+									car.setDestination(fltp.getLocation(),null);	// don't specify which track in staging is to be used, decide later
+								log.debug("Found 4 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");					
 								if (status.equals(Car.OKAY)){
 									log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestination().getName());
 									return true;	// done 4 train routing
@@ -361,8 +390,11 @@ public class Router {
 									Train middleTrain4 = trainManager.getTrainForCar(ts);
 									if (middleTrain4 != null){
 										log.debug("Train 4 ("+middleTrain4.getName()+") services car from "+ts.getLocationName()+" to "+ts.getDestinationName()+", "+ts.getDestinationTrackName());										
-										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
 										String status = car.setDestination(fltp.getLocation(),fltp.getTrack());
+										// check to see if track is staging
+										if (fltp.getTrack().getLocType().equals(Track.STAGING))
+											car.setDestination(fltp.getLocation(),null);	// don't specify which track in staging is to be used, decide later
+										log.debug("Found 5 train route, setting car destination ("+fltp.getLocation().getName()+", "+fltp.getTrack().getName()+")");			
 										if (status.equals(Car.OKAY)){
 											log.info("Route for car ("+car.toString()+") "+car.getLocationName()+"->"+car.getDestinationName()+"->"+mltp1.getLocation().getName()+"->"+mltp2.getLocation().getName()+"->"+lltp.getLocation().getName()+"->"+car.getNextDestination().getName());
 											return true;	// done 4 train routing
