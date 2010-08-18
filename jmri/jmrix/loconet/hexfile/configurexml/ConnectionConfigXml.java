@@ -18,7 +18,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -65,6 +65,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         // start the "connection"
         jmri.jmrix.loconet.hexfile.HexFileFrame f
                 = new jmri.jmrix.loconet.hexfile.HexFileFrame();
+        f.setAdapter((LnHexFilePort)adapter);
         try {
             f.initComponents();
         } catch (Exception ex) {
@@ -72,7 +73,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         }
         f.pack();
         f.setVisible(true);
-        adapter = f.getAdapter();
+        //adapter = f.getAdapter();
         String manufacturer;
         try { 
             manufacturer = e.getAttribute("manufacturer").getValue();
@@ -111,7 +112,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        //adapter = new LnHexFilePort();
+        adapter = new LnHexFilePort();
     }
 
     protected void register() {

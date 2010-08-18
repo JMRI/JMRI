@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * a .hex file, feeding the information to a LocoMonFrame (monitor) and
  * connecting to a LocoGenFrame (for sending a few commands).
  * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version                     $Revision: 1.32 $
+ * @version                     $Revision: 1.33 $
  */
 public class HexFileFrame extends JmriJFrame {
 
@@ -38,6 +38,9 @@ public class HexFileFrame extends JmriJFrame {
     //LocoNetSystemConnectionMemo adaptermemo = null;
 
     public void initComponents() throws Exception {
+        if (port==null){
+            log.error("initComponents called before adapter has been set");
+        }
         // the following code sets the frame's initial state
 
         openHexFileButton.setText("Open file");
@@ -103,12 +106,11 @@ public class HexFileFrame extends JmriJFrame {
             });
 
         // create a new Hex file handler, set its delay
-        port = new LnHexFilePort();
-        port.setDelay(Integer.valueOf(delayField.getText()).intValue());
+        //port = new LnHexFilePort();
+        //port.setDelay(Integer.valueOf(delayField.getText()).intValue());
 
         // and make the connections
         //configure();
-
     }
 
     boolean connected = false;
@@ -146,6 +148,10 @@ public class HexFileFrame extends JmriJFrame {
     }
 
     public void configure() {
+        if (port==null){
+            log.error("initComponents called before adapter has been set");
+            return;
+        }
         // connect to a packetizing LnTrafficController
         packets = new LnPacketizer();
         packets.connectPort(port);
@@ -200,6 +206,7 @@ public class HexFileFrame extends JmriJFrame {
     private Thread sourceThread;
     //private Thread sinkThread;
     
+    public void setAdapter(LnHexFilePort adapter) { port = adapter; }
     public LnHexFilePort getAdapter() { return port; }
     private LnHexFilePort port = null;
 

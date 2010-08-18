@@ -10,7 +10,7 @@ import javax.swing.JPanel;
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -41,10 +41,5 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
             adapter.dispose();
         super.dispose();
     }
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.DIGITRAX;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
 }
 
