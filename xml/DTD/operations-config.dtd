@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.18 2010-08-16 22:35:23 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.19 2010-08-18 17:31:16 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -41,7 +41,8 @@
 <!ATTLIST settings showCarLoad		(true | false ) "false">  
 <!ATTLIST settings showCarDestination (true | false ) "false">  
 <!ATTLIST settings showRfid 		(true | false ) "false">  
-<!ATTLIST settings carRoutingEnabled (true | false ) "true">  
+<!ATTLIST settings carRoutingEnabled (true | false ) "true"> 
+<!ATTLIST settings carRoutingViaStaging (true | false ) "false">  
 <!ATTLIST settings addCarComment	(true | false ) "false">  
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 

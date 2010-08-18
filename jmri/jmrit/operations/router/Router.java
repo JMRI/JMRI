@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class Router {
@@ -140,6 +140,7 @@ public class Router {
 	 *         destination.
 	 */
 	public boolean setCarDestinationStaging(Car car){
+		enable_staging = Setup.isCarRoutingViaStagingEnabled();
 		if (enable_staging)
 			return setCarDestinationTwoTrains (car, Track.STAGING);
 		return false;

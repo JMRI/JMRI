@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -150,6 +150,7 @@ public class Setup {
 	private static boolean mainMenuEnabled = false;		//when true add operations menu to main menu bar
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
+	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
 	
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
 	
@@ -193,6 +194,14 @@ public class Setup {
 	
 	public static void setCarRoutingEnabled(boolean enabled){
 		carRoutingEnabled = enabled;
+	}
+	
+	public static boolean isCarRoutingViaStagingEnabled(){
+		return carRoutingStaging;
+	}
+	
+	public static void setCarRoutingViaStagingEnabled(boolean enabled){
+		carRoutingStaging = enabled;
 	}
 	
 	public static boolean isBuildAggressive(){
@@ -654,6 +663,7 @@ public class Setup {
     	values.setAttribute("addCarComment", isAppendCarCommentEnabled()?"true":"false");
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
+    	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
     	values.setAttribute("name", getPanelName());
@@ -803,6 +813,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carRoutingEnabled: "+enable);
         		Setup.setCarRoutingEnabled(enable.equals("true"));
+        	}
+         	if ((a = operations.getChild("settings").getAttribute("carRoutingViaStaging"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
+        		Setup.setCarRoutingViaStagingEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("panel") != null){
