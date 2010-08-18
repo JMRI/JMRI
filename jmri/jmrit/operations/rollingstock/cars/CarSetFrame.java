@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -609,7 +609,13 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			List<String> tracks = l.getTracksByNameList(null);
 			for (int i=0; i<tracks.size(); i++){
 				Track track = l.getTrackById(tracks.get(i));
-				if (_car.testDestination(l, track).equals(Car.OKAY) && (!destTrack || !track.getLocType().equals(Track.STAGING))){
+				String status = "";
+				if (destTrack){
+					status = _car.testDestination(l, track);
+				} else {
+					status = _car.testLocation(l, track);
+				}
+				if (status.equals(Car.OKAY) && (!destTrack || !track.getLocType().equals(Track.STAGING))){
 					box.setSelectedItem(track);
 					log.debug("Available track: "+track.getName()+" for location: "+l.getName());
 				} else {

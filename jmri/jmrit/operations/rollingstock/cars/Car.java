@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.35 $
+ * @version             $Revision: 1.36 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -170,8 +170,11 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		String status = super.testDestination(destination, track);
 		if (!status.equals(OKAY))
 			return status;
-		// does rolling stock already have this destination?
+		// does car already have this destination?
 		if (destination == getDestination() && track == getDestinationTrack())
+			return OKAY;
+		// is car returning to same track?
+		if (track == getTrack())
 			return OKAY;
 		// now check to see if car is in a kernel and can fit 
 		if (getKernel() != null && track != null &&
