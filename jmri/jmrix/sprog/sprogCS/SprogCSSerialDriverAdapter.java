@@ -3,11 +3,8 @@
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogTrafficController;
-//import jmri.jmrix.sprog.SprogProgrammer;
-//import jmri.jmrix.sprog.SprogProgrammerManager;
-//import jmri.jmrix.sprog.SprogCommandStation;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+
 
 
 
@@ -23,7 +20,7 @@ import jmri.jmrix.sprog.SprogSystemConnectionMemo;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -36,29 +33,12 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         // connect to the traffic controller
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
+                
+        adaptermemo.setSprogMode(SprogMode.OPS);
+        adaptermemo.setSprogTrafficController(control);
+        adaptermemo.configureCommandStation();
+        adaptermemo.configureManagers();
         
-        SprogSystemConnectionMemo memo 
-            = new SprogSystemConnectionMemo(control, SprogMode.OPS);
-        
-        memo.configureCommandStation();
-        memo.configureManagers();
-
-//        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
-        /*jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.OPS));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
-
-//        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogSoftCommandStation());
-        // Start the command station queuing thread
-        log.debug("start command station queuing thread");
-        slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
-        slotThread.start();
-        jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogCSThrottleManager());*/
-
         jmri.jmrix.sprog.ActiveFlagCS.setActive();
 
     }
