@@ -3,8 +3,6 @@
 package jmri.jmrix.easydcc.serialdriver;
 
 import jmri.jmrix.easydcc.EasyDccPortController;
-import jmri.jmrix.easydcc.EasyDccProgrammer;
-import jmri.jmrix.easydcc.EasyDccProgrammerManager;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
 
@@ -25,13 +23,14 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super();
         adaptermemo = new EasyDccSystemConnectionMemo();
+        mInstance=this;
     }
 
     SerialPort activeSerialPort = null;
@@ -115,24 +114,6 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         control.connectPort(this);
         adaptermemo.setEasyDccTrafficController(control);
         adaptermemo.configureManagers();
-
-        /*jmri.InstanceManager.setProgrammerManager(
-                new EasyDccProgrammerManager(
-                    new EasyDccProgrammer()));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
-
-		// KSL 20040409 - Create an instance of EasyDccThrottleManager 
-		jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());
-
-        // Create an instance of the consist manager.  Make sure this 
-        // happens AFTER the programmer manager to override the default 
-        // consist manager. 
-        jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
-
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());*/
         
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

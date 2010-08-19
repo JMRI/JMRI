@@ -3,8 +3,6 @@
 package jmri.jmrix.easydcc.networkdriver;
 
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
-import jmri.jmrix.easydcc.EasyDccProgrammer;
-import jmri.jmrix.easydcc.EasyDccProgrammerManager;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
 
 import java.net.*;
@@ -17,13 +15,14 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
         super();
-        //adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
+        adaptermemo = new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo();
+        mInstance=this;
     }
     /**
      * set up all of the other objects to operate with an EasyDcc command
@@ -36,56 +35,9 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         adaptermemo.setEasyDccTrafficController(control);
         adaptermemo.configureManagers();
 
-        /*jmri.InstanceManager.setProgrammerManager(
-                new EasyDccProgrammerManager(
-                    new EasyDccProgrammer()));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());*/
-
-        // Create an instance of the consist manager.  Make sure this
-        // happens AFTER the programmer manager to override the default   
-        // consist manager.
-        /*jmri.InstanceManager.setConsistManager(new jmri.jmrix.easydcc.EasyDccConsistManager());
-
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.easydcc.EasyDccCommandStation());*/
-
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }
 
-    // base class methods for the EasyDccPortController interface
-    /*public DataInputStream getInputStream() {
-        if (!opened) {
-            log.error("getInputStream called before load(), stream not available");
-        }
-        try {
-            return new DataInputStream(socket.getInputStream());
-        } catch (java.io.IOException ex1) {
-            log.error("Exception getting input stream: "+ex1);
-            return null;
-        }
-    }*/
-
-    /*public void connect(String host, int port) {
-        try {
-            socket = new Socket(host, port);
-            opened = true;
-        } catch (Exception e) {
-            log.error("error opening EasyDcc network connection: "+e);
-        }
-    }*/
-
-    /*public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
-        try {
-            return new DataOutputStream(socket.getOutputStream());
-        }
-     	catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
-    }*/
 
     public boolean status() {return opened;}
 
