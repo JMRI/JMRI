@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.26 $
+ * @version   $Revision: 1.27 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -36,10 +36,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     private static final int TYPECOLUMN = 2;
     private static final int LENGTHCOLUMN = 3;
     private static final int COLORCOLUMN = 4;	// also the Load column
-    //private static final int LOADCOLUMN = 4;
     private static final int KERNELCOLUMN  = 5;
     private static final int LOCATIONCOLUMN  = 6;
-    private static final int DESTINATIONCOLUMN = 7;
+    private static final int DESTINATIONCOLUMN = 7;  // also the return when empty column
     private static final int TRAINCOLUMN = 8;
     private static final int MOVESCOLUMN = 9;	// also the Owner and RFID column
     private static final int SETCOLUMN = 10;
@@ -47,7 +46,9 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
     
-    private boolean showColor = true;
+    private boolean showColor = true;	// show color if true, show load if false
+    private boolean showDest = true;	// show destination if true, show RWE if false
+    
     private static final int SHOWMOVES = 0;
     private static final int SHOWBUILT = 1;
     private static final int SHOWOWNER = 2;
@@ -67,6 +68,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     public final int SORTBYBUILT = 11;
     public final int SORTBYOWNER = 12;
     public final int SORTBYRFID = 13;
+    public final int SORTBYRWE = 14;	// return when empty
     
     private int _sort = SORTBYNUMBER;
     
@@ -95,6 +97,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     	}
     	else if (sort == SORTBYLOAD && showColor){
     		showColor = false;
+    		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+    	else if (sort == SORTBYDESTINATION && !showDest){
+    		showDest = true;
+    		fireTableStructureChanged();
+    		initTable(_table);
+    	}
+       	else if (sort == SORTBYRWE && showDest){
+    		showDest = false;
     		fireTableStructureChanged();
     		initTable(_table);
     	}
@@ -192,6 +204,8 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			list = manager.getByBuiltList();
 		else if (_sort == SORTBYRFID)
 			list = manager.getByRfidList();
+		else if (_sort == SORTBYRWE)
+			list = manager.getByRweList();
 		else
 			list = manager.getByNumberList();
     	filterList(list);
@@ -271,7 +285,12 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         case LENGTHCOLUMN: return rb.getString("Len");
         case KERNELCOLUMN: return rb.getString("Kernel");
         case LOCATIONCOLUMN: return rb.getString("Location");
-        case DESTINATIONCOLUMN: return rb.getString("Destination");
+        case DESTINATIONCOLUMN: {
+        		if (showDest)
+        			return rb.getString("Destination");
+        		else
+        			return rb.getString("ReturnWhenEmpty");
+        }
         case TRAINCOLUMN: return rb.getString("Train");
         case MOVESCOLUMN: {
         	if (showMoveCol == SHOWBUILT)
@@ -369,12 +388,16 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         }
         case DESTINATIONCOLUMN: {
         	String s ="";
-        	if (!c.getDestinationName().equals(""))
-        		s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
-        	if (c.getNextDestination() != null)
-        		s = s + "->"+c.getNextDestination().getName();
-        	if (c.getNextDestTrack() != null)
-        		s = s + " (" + c.getNextDestTrack().getName()+ ")";
+        	if (showDest){
+        		if (!c.getDestinationName().equals(""))
+        			s = c.getDestinationName() + " (" + c.getDestinationTrackName() + ")";
+        		if (c.getNextDestination() != null)
+        			s = s + "->"+c.getNextDestination().getName();
+        		if (c.getNextDestTrack() != null)
+        			s = s + " (" + c.getNextDestTrack().getName()+ ")";
+        	} else {
+        		s = c.getReturnWhenEmptyDestName();
+        	}
         	return s;
         }
         case TRAINCOLUMN: {

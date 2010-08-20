@@ -1,4 +1,4 @@
-// ModifyTrainsAction.java
+// TrainsByCarTypeAction.java
 
 package jmri.jmrit.operations.trains;
 
@@ -14,10 +14,10 @@ import javax.swing.AbstractAction;
  * @author Daniel Boudreau Copyright (C) 2009
  * @version $Revision: 1.1 $
  */
-public class ModifyTrainsAction extends AbstractAction {
+public class TrainsByCarTypeAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public ModifyTrainsAction(String s) {
+    public TrainsByCarTypeAction(String s) {
     	super(s);
     }
 
@@ -33,4 +33,4 @@ public class ModifyTrainsAction extends AbstractAction {
     }
 }
 
-/* @(#)ModifyTrainsAction.java */
+/* @(#)TrainsByCarTypeAction.java */

@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -183,10 +183,10 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		getContentPane().add(pButtons);
 		
 		// select auto mode
-		autoTrackCheckBox.setSelected(true);
-		autoDestinationTrackCheckBox.setSelected(true);
-		autoNextDestTrackCheckBox.setSelected(true);
-		autoReturnWhenEmptyTrackCheckBox.setSelected(true);
+		//autoTrackCheckBox.setSelected(true);
+		//autoDestinationTrackCheckBox.setSelected(true);
+		//autoNextDestTrackCheckBox.setSelected(true);
+		//autoReturnWhenEmptyTrackCheckBox.setSelected(true);
 		
 		// setup buttons
 		addButtonAction(saveButton);
@@ -353,13 +353,6 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 					_car.setNextDestTrack((Track)nextDestTrackBox.getSelectedItem());
 				} else {
 					_car.setNextDestTrack(null);
-					if (nextDestinationBox.getSelectedItem() != null || nextDestinationBox.getSelectedItem().equals("")){
-						JOptionPane.showMessageDialog(this,
-								rb.getString("carFullyDest"),
-								rb.getString("carCanNotDest"),
-								JOptionPane.ERROR_MESSAGE);
-						return;
-					}
 				}
 				_car.setNextDestination((Location) nextDestinationBox.getSelectedItem());
 			}

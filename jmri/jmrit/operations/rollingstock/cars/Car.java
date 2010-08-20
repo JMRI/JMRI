@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.37 $
+ * @version             $Revision: 1.38 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -35,6 +35,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	public static final String NEXTDESTINATION_CHANGED_PROPERTY = "Next destination changed";
+	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Return when empty changed";
 	
 	public Car(){
 		
@@ -90,8 +91,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	public void setNextDestination(Location destination){
+		Location old = _nextDestination;
 		_nextDestination = destination;
-		firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
+		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
+			firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
 	}
 	
 	public Location getNextDestination(){
@@ -99,7 +102,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	public void setNextDestTrack(Track track){
+		Track old = _nextDestTrack;
 		_nextDestTrack = track;
+		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
+			firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
 	}
 	
 	public Track getNextDestTrack(){
@@ -107,7 +113,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	public void setReturnWhenEmptyDestination(Location destination){
+		Location old = _rweDestination;
 		_rweDestination = destination;
+		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
+			firePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
 	}
 	
 	public Location getReturnWhenEmptyDestination(){
@@ -115,11 +124,24 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	public void setReturnWhenEmptyDestTrack(Track track){
+		Track old = _rweDestTrack;
 		_rweDestTrack = track;
+		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
+			firePropertyChange(RETURN_WHEN_EMPTY_CHANGED_PROPERTY, null, null);
+
 	}
 	
 	public Track getReturnWhenEmptyDestTrack(){
 		return _rweDestTrack;
+	}
+	
+	public String getReturnWhenEmptyDestName(){
+		if (getReturnWhenEmptyDestination() != null && getReturnWhenEmptyDestTrack() != null)
+			return getReturnWhenEmptyDestination().getName()+"("+getReturnWhenEmptyDestTrack().getName()+")";
+		else if (getReturnWhenEmptyDestination() != null)
+			return getReturnWhenEmptyDestination().getName()+"()";
+		else
+			return "";
 	}
 	
 	public void setCaboose(boolean caboose){

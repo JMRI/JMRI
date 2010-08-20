@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -199,9 +199,18 @@ public class CarManager extends RollingStockManager{
     	return getByList(getByLocationList(), BY_LOAD);
     }
     
+    /**
+     * Sort by car return when empty location and track
+     * @return list of RollingStock ids ordered by car return when empty
+     */
+    public List<String> getByRweList() {
+    	return getByList(getByLocationList(), BY_RWE);
+    }
+    
     // The special sort options for cars
     private static final int BY_LOAD = 4;
     private static final int BY_KERNEL = 5;
+    private static final int BY_RWE = 13;	// Return When Empty
     
     // add load and kernel options to sort list
     protected Object getRsAttribute(RollingStock rs, int attribute){
@@ -209,6 +218,7 @@ public class CarManager extends RollingStockManager{
     	switch (attribute){
     	case BY_LOAD: return car.getLoad();
     	case BY_KERNEL: return car.getKernelName();
+    	case BY_RWE: return car.getReturnWhenEmptyDestName();
     	default: return super.getRsAttribute(car, attribute);
     	}
     }

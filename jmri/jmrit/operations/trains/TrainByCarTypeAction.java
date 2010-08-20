@@ -1,4 +1,4 @@
-//ShowRollingStockByTrainAction.java
+//TrainByCarTypeAction.java
 
 package jmri.jmrit.operations.trains;
 
@@ -8,16 +8,16 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register an object.
+ * Swing action to create and register a TrainByCarTypeFrame.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.1 $
  */
-public class ShowRollingStockByTrainAction extends AbstractAction {
+public class TrainByCarTypeAction extends AbstractAction {
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-	public ShowRollingStockByTrainAction(String s, TrainEditFrame frame) {
+	public TrainByCarTypeAction(String s, TrainEditFrame frame) {
 		super(s);
 		this.frame = frame;
 	}
@@ -31,4 +31,4 @@ public class ShowRollingStockByTrainAction extends AbstractAction {
 	}
 }
 
-/* @(#)ShowRollingStockByTrainAction.java */
+/* @(#)TrainByCarTypeAction.java */

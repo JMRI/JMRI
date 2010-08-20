@@ -33,8 +33,8 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the car roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @version             $Revision: 1.20 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -62,6 +62,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     JRadioButton sortByKernel = new JRadioButton(rb.getString("Kernel"));
     JRadioButton sortByLocation = new JRadioButton(rb.getString("Location"));
     JRadioButton sortByDestination = new JRadioButton(rb.getString("Destination"));
+    JRadioButton sortByRwe = new JRadioButton(rb.getString("RWE"));
     JRadioButton sortByTrain = new JRadioButton(rb.getString("Train"));
     JRadioButton sortByMoves = new JRadioButton(rb.getString("Moves"));
     JRadioButton sortByBuilt = new JRadioButton(rb.getString("Built"));
@@ -107,6 +108,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	cp1.add(sortByKernel);
     	cp1.add(sortByLocation);
     	cp1.add(sortByDestination);
+    	cp1.add(sortByRwe);
     	cp1.add(sortByTrain);
     	cp1.add(sortByMoves);
     	cp1.add(sortByBuilt);
@@ -154,6 +156,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		addRadioButtonAction (sortByKernel);
 		addRadioButtonAction (sortByLocation);
 		addRadioButtonAction (sortByDestination);
+		addRadioButtonAction (sortByRwe);
 		addRadioButtonAction (sortByTrain);
 		addRadioButtonAction (sortByMoves);
 		addRadioButtonAction (sortByBuilt);
@@ -168,6 +171,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		group.add(sortByKernel);
 		group.add(sortByLocation);
 		group.add(sortByDestination);
+		group.add(sortByRwe);
 		group.add(sortByTrain);
 		group.add(sortByMoves);
 		group.add(sortByBuilt);
@@ -225,6 +229,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		}
 		if (ae.getSource() == sortByDestination){
 			carsModel.setSort(carsModel.SORTBYDESTINATION);
+		}
+		if (ae.getSource() == sortByRwe){
+			carsModel.setSort(carsModel.SORTBYRWE);
 		}
 		if (ae.getSource() == sortByTrain){
 			carsModel.setSort(carsModel.SORTBYTRAIN);
