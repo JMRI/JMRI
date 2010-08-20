@@ -38,7 +38,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -210,11 +210,11 @@ public class AudioTableAction extends AbstractTableAction {
 
     public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
 
-        int subType;
+        char subType;
 
         public static final int EDITCOL = NUMCOLUMN;
 
-        public AudioTableDataModel(int subType) {
+        public AudioTableDataModel(char subType) {
             super();
             this.subType = subType;
             getManager().addPropertyChangeListener(this);

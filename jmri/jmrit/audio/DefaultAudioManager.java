@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -98,6 +98,10 @@ public class DefaultAudioManager extends AbstractAudioManager {
     }
 
     public List<String> getSystemNameList(int subType) {
+        return this.getSystemNameList((char)subType);
+    }
+
+    public List<String> getSystemNameList(char subType) {
         List<String> tempList = getSystemNameList();
         List<String> out = new ArrayList<String>();
         for (int i=0; i<tempList.size(); i++) {
