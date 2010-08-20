@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -63,13 +63,6 @@ public class TrainManagerXml extends XmlFile {
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 	        
-	        //Check the Comment and Decoder Comment fields for line breaks and
-	        //convert them to a processor directive for storage in XML
-	        //Note: this is also done in the LocoFile.java class to do
-	        //the same thing in the indidvidual locomotive roster files
-	        //Note: these changes have to be undone after writing the file
-	        //since the memory version of the roster is being changed to the
-	        //file version for writing
 	        TrainManager manager = TrainManager.instance();
 	        List<String> trainList = manager.getTrainsByIdList();
 	        
@@ -315,7 +308,7 @@ public class TrainManagerXml extends XmlFile {
  
     
 	/**
-     * Store the switchlist for a location
+     * Store the switch list for a location
      */
     public File createSwitchListFile(String name) {
     	if(backupFile)

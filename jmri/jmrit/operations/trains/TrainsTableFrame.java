@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.41 $
+ * @version             $Revision: 1.42 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -96,7 +96,7 @@ public class TrainsTableFrame extends OperationsFrame {
 						"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
 						rb.getString("PromptSaveQuit"), this) {
 					public boolean checkPromptNeeded() {
-						return !getModifiedFlag();
+						return !trainManagerXml.isDirty();
 					}
 
 					public boolean doPrompt() {
@@ -398,6 +398,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		setModifiedFlag(true);
+		trainManagerXml.setDirty(true);
 		if (ae.getSource() == buildMsgBox){
 			trainManager.setBuildMessages(buildMsgBox.isSelected());
 		}
