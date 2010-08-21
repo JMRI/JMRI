@@ -13,12 +13,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.Color;
 import javax.swing.JOptionPane;
-
-//import java.util.Vector;
-
-//import javax.swing.JComboBox;
 import javax.swing.JTextField;
-//import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,7 +21,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -336,7 +331,10 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
 
-    public boolean getDisabled() { return adapter.getDisabled(); }
+    public boolean getDisabled() {
+        if (adapter==null) return true;
+        return adapter.getDisabled();
+    }
     public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
     public String getConnectionName() { 

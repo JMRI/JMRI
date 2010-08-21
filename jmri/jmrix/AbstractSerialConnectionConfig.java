@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 
 //
@@ -355,7 +355,10 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public String getManufacturer() { return adapter.getManufacturer(); }
     public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
     
-    public boolean getDisabled() { return adapter.getDisabled(); }
+    public boolean getDisabled() {
+        if (adapter==null) return true;
+        return adapter.getDisabled();
+    }
     public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
     public String getConnectionName() { 

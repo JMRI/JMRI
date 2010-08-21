@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 //
@@ -262,7 +262,10 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         else return null;
     }
     
-    public boolean getDisabled() { return adapter.getDisabled(); }
+    public boolean getDisabled() {
+        if (adapter==null) return true;
+        return adapter.getDisabled();
+    }
     public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
     public void dispose(){
