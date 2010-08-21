@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.19 $
+ * @version 		$Revision: 2.20 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -284,7 +284,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
    /**
      * Set the system connection memo associated with this 
      * traffic controller
-     * @param associated systemConnectionMemo object
+     * @param m associated systemConnectionMemo object
      */
     public void setSystemConnectionMemo(XNetSystemConnectionMemo m){
       mMemo = m;
