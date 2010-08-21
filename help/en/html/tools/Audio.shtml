@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Me 2008 -->
-<!-- $Id: Audio.shtml,v 1.5 2009-10-02 21:43:51 matthewharris Exp $ -->
+<!-- $Id: Audio.shtml,v 1.6 2010-08-21 08:25:43 matthewharris Exp $ -->
 <title>JMRI: Audio</title>
 
 <!-- Style -->
@@ -101,6 +101,10 @@ in which case they will be played back independently.
 <p>
 As with the Audio Listener, an Audio Source should be positioned in 3d-space.
 If required to 'move' whilst playing, set the velocity in x, y and z directions.
+<p>
+<em>Note:</em> The Audio Source position is only relevant when bound to a mono
+buffer - those holding multi-channel sounds (i.e. stereo) will not be affected
+by changes in position and played as-is.
 <p>
 If it is necessary to turn-down the volume of a specific Audio Source, this can be achieved by changing the 'Gain' setting.
 Similarly, the pitch can be modified by changing the 'Pitch' parameter.
