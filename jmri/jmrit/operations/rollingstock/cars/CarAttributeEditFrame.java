@@ -23,13 +23,14 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationsByCarTypeFrame;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.26 $
+ * @version             $Revision: 1.27 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -123,7 +124,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     	setVisible(true);
     }
  
-	// add or delete button
+	// add, delete, or replace button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
@@ -159,6 +160,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			}
 			if (newItem.equals(oldItem))
 				return;
+			// need to make sure locations and trains are loaded
+			TrainManager.instance();
+			//LocationManager.instance();
 			// don't show dialog, save current state
 			boolean oldShow = showDialogBox;
 			showDialogBox = false;
@@ -322,6 +326,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		//	now adjust locations and trains
 		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().replaceName(oldItem, newItem);
+			CarLoads.instance().replaceType(oldItem, newItem);
 		}
 		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().replaceName(oldItem, newItem);

@@ -22,6 +22,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -46,7 +47,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -133,6 +134,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		// a new train accepts all types
 		setTypeNames(CarTypes.instance().getNames());
 		setTypeNames(EngineTypes.instance().getNames());
+		CarRoads.instance().addPropertyChangeListener(this);
+		CarTypes.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
 	}
 
 	public String getId() {
@@ -523,6 +527,13 @@ public class Train implements java.beans.PropertyChangeListener {
     	return _typeList.contains(type);
     }
     
+    public void replaceType(String oldType, String newType){
+    	if (acceptsTypeName(oldType)){
+    		deleteTypeName(oldType);
+    		addTypeName(newType);
+    	}
+    }
+    
 	public String getRoadOption (){
     	return _roadOption;
     }
@@ -606,6 +617,15 @@ public class Train implements java.beans.PropertyChangeListener {
        	}
        	// exclude!
        	return !_roadList.contains(road);
+    }
+    
+    public void replaceRoad(String oldRoad, String newRoad){
+    	if (deleteRoadName(oldRoad) && newRoad != null)
+    		addRoadName(newRoad);
+    	if (getEngineRoad().equals(oldRoad))
+    		setEngineRoad(newRoad);
+    	if (getCabooseRoad().equals(oldRoad))
+    		setCabooseRoad(newRoad);
     }
     
 	public String getLoadOption (){
@@ -1498,6 +1518,9 @@ public class Train implements java.beans.PropertyChangeListener {
     public void dispose(){
     	if (getRoute() != null)
     		getRoute().removePropertyChangeListener(this);
+    	CarRoads.instance().removePropertyChangeListener(this);
+		CarTypes.instance().removePropertyChangeListener(this);
+		EngineTypes.instance().removePropertyChangeListener(this);
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
   
@@ -1509,108 +1532,111 @@ public class Train implements java.beans.PropertyChangeListener {
      * @param e  Consist XML element
      */
     public Train(org.jdom.Element e) {
-        org.jdom.Attribute a;
-        if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
-        else log.warn("no id attribute in train element when reading operations");
-        if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
-        if ((a = e.getAttribute("description")) != null )  _description = a.getValue();
-        // create the train calendar
-        _departureTime = Calendar.getInstance();
-		_departureTime.set(2008,10,29,12,00);
-        if ((a = e.getAttribute("departHour")) != null ){
-        	String hour = a.getValue();
-        	if ((a = e.getAttribute("departMinute")) != null ){
-        		String minute = a.getValue();
-        		setDepartureTime(hour, minute);
-        	}
-        }
-        // try and first get the route by id then by name
-        if ((a = e.getAttribute("routeId")) != null ) {
-       		setRoute(RouteManager.instance().getRouteById(a.getValue()));
-        }else if ((a = e.getAttribute("route")) != null ) {
-       		setRoute(RouteManager.instance().getRouteByName(a.getValue()));
-        }
-        if ((a = e.getAttribute("skip")) != null ) {
-        	String locationIds = a.getValue();
-           	String[] locs = locationIds.split("%%");
-//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
-           	setTrainSkipsLocations(locs);
-        }
-        if ((a = e.getAttribute("carTypes")) != null ) {
-        	String names = a.getValue();
-           	String[] Types = names.split("%%");
-//        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
-        	setTypeNames(Types);
-        }
-        if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
-        if ((a = e.getAttribute("carRoads")) != null ) {
-        	String names = a.getValue();
-           	String[] roads = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
-        	setRoadNames(roads);
-        }
-        if ((a = e.getAttribute("carLoadOption")) != null )  _loadOption = a.getValue();
-        if ((a = e.getAttribute("carOwnerOption")) != null )  _ownerOption = a.getValue();
-        if ((a = e.getAttribute("builtStartYear")) != null )  _builtStartYear = a.getValue();
-        if ((a = e.getAttribute("builtEndYear")) != null )  _builtEndYear = a.getValue();
-        if ((a = e.getAttribute("carLoads")) != null ) {
-        	String names = a.getValue();
-           	String[] loads = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getLoadOption()+  " car loads: "+ names);
-        	setLoadNames(loads);
-        }
-        if ((a = e.getAttribute("carOwners")) != null ) {
-        	String names = a.getValue();
-           	String[] owners = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getOwnerOption()+  " car owners: "+ names);
-        	setOwnerNames(owners);
-        }
-        if ((a = e.getAttribute("numberEngines")) != null)
-        	_numberEngines = a.getValue();
-        if ((a = e.getAttribute("engineRoad")) != null)
-        	_engineRoad = a.getValue();
-        if ((a = e.getAttribute("engineModel")) != null)
-        	_engineModel = a.getValue();
-        if ((a = e.getAttribute("requires")) != null)
-        	_requires = Integer.parseInt(a.getValue());
-        if ((a = e.getAttribute("cabooseRoad")) != null)
-        	_cabooseRoad = a.getValue();
- 		if ((a = e.getAttribute("built")) != null)
-			_built = a.getValue().equals("true");
-		if ((a = e.getAttribute("build")) != null)
-			_build = a.getValue().equals("true");
-		if ((a = e.getAttribute("buildFailed")) != null)
-			_buildFailed = a.getValue().equals("true");
-		if ((a = e.getAttribute("printed")) != null)
-			_printed = a.getValue().equals("true");
-		if ((a = e.getAttribute("leadEngine")) != null)
-			_leadEngineId = a.getValue();
-		if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
-        if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
-        if ((a = e.getAttribute("current")) != null ){
-        	if (_route != null){
-        		_current = _route.getLocationById(a.getValue());
-        	}
-        }
-        // check for scripts
-        if (e.getChild("scripts") != null){
-            @SuppressWarnings("unchecked")
-        	List<Element> lm = e.getChild("scripts").getChildren("move");
-        	for (int i=0; i<lm.size(); i++){
-        		Element es = lm.get(i);
-        		if ((a = es.getAttribute("name")) != null ){
-        			addMoveScript(a.getValue());
-        		}
-        	}
-        	@SuppressWarnings("unchecked")
-           	List<Element> lt = e.getChild("scripts").getChildren("terminate");
-        	for (int i=0; i<lt.size(); i++){
-        		Element es = lt.get(i);
-        		if ((a = es.getAttribute("name")) != null ){
-        			addTerminationScript(a.getValue());
-        		}
-        	}
-        }
+    	org.jdom.Attribute a;
+    	if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
+    	else log.warn("no id attribute in train element when reading operations");
+    	if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
+    	if ((a = e.getAttribute("description")) != null )  _description = a.getValue();
+    	// create the train calendar
+    	_departureTime = Calendar.getInstance();
+    	_departureTime.set(2008,10,29,12,00);
+    	if ((a = e.getAttribute("departHour")) != null ){
+    		String hour = a.getValue();
+    		if ((a = e.getAttribute("departMinute")) != null ){
+    			String minute = a.getValue();
+    			setDepartureTime(hour, minute);
+    		}
+    	}
+    	// try and first get the route by id then by name
+    	if ((a = e.getAttribute("routeId")) != null ) {
+    		setRoute(RouteManager.instance().getRouteById(a.getValue()));
+    	}else if ((a = e.getAttribute("route")) != null ) {
+    		setRoute(RouteManager.instance().getRouteByName(a.getValue()));
+    	}
+    	if ((a = e.getAttribute("skip")) != null ) {
+    		String locationIds = a.getValue();
+    		String[] locs = locationIds.split("%%");
+    		//        	if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
+    		setTrainSkipsLocations(locs);
+    	}
+    	if ((a = e.getAttribute("carTypes")) != null ) {
+    		String names = a.getValue();
+    		String[] Types = names.split("%%");
+    		//        	if (log.isDebugEnabled()) log.debug("Car types: "+names);
+    		setTypeNames(Types);
+    	}
+    	if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
+    	if ((a = e.getAttribute("carRoads")) != null ) {
+    		String names = a.getValue();
+    		String[] roads = names.split("%%");
+    		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
+    		setRoadNames(roads);
+    	}
+    	if ((a = e.getAttribute("carLoadOption")) != null )  _loadOption = a.getValue();
+    	if ((a = e.getAttribute("carOwnerOption")) != null )  _ownerOption = a.getValue();
+    	if ((a = e.getAttribute("builtStartYear")) != null )  _builtStartYear = a.getValue();
+    	if ((a = e.getAttribute("builtEndYear")) != null )  _builtEndYear = a.getValue();
+    	if ((a = e.getAttribute("carLoads")) != null ) {
+    		String names = a.getValue();
+    		String[] loads = names.split("%%");
+    		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getLoadOption()+  " car loads: "+ names);
+    		setLoadNames(loads);
+    	}
+    	if ((a = e.getAttribute("carOwners")) != null ) {
+    		String names = a.getValue();
+    		String[] owners = names.split("%%");
+    		if (log.isDebugEnabled()) log.debug("Train (" +getName()+ ") " +getOwnerOption()+  " car owners: "+ names);
+    		setOwnerNames(owners);
+    	}
+    	if ((a = e.getAttribute("numberEngines")) != null)
+    		_numberEngines = a.getValue();
+    	if ((a = e.getAttribute("engineRoad")) != null)
+    		_engineRoad = a.getValue();
+    	if ((a = e.getAttribute("engineModel")) != null)
+    		_engineModel = a.getValue();
+    	if ((a = e.getAttribute("requires")) != null)
+    		_requires = Integer.parseInt(a.getValue());
+    	if ((a = e.getAttribute("cabooseRoad")) != null)
+    		_cabooseRoad = a.getValue();
+    	if ((a = e.getAttribute("built")) != null)
+    		_built = a.getValue().equals("true");
+    	if ((a = e.getAttribute("build")) != null)
+    		_build = a.getValue().equals("true");
+    	if ((a = e.getAttribute("buildFailed")) != null)
+    		_buildFailed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("printed")) != null)
+    		_printed = a.getValue().equals("true");
+    	if ((a = e.getAttribute("leadEngine")) != null)
+    		_leadEngineId = a.getValue();
+    	if ((a = e.getAttribute("status")) != null )  _status = a.getValue();
+    	if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
+    	if ((a = e.getAttribute("current")) != null ){
+    		if (_route != null){
+    			_current = _route.getLocationById(a.getValue());
+    		}
+    	}
+    	// check for scripts
+    	if (e.getChild("scripts") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> lm = e.getChild("scripts").getChildren("move");
+    		for (int i=0; i<lm.size(); i++){
+    			Element es = lm.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addMoveScript(a.getValue());
+    			}
+    		}
+    		@SuppressWarnings("unchecked")
+    		List<Element> lt = e.getChild("scripts").getChildren("terminate");
+    		for (int i=0; i<lt.size(); i++){
+    			Element es = lt.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addTerminationScript(a.getValue());
+    			}
+    		}
+    	}
+		CarRoads.instance().addPropertyChangeListener(this);
+		CarTypes.instance().addPropertyChangeListener(this);
+		EngineTypes.instance().addPropertyChangeListener(this);
     }
 
     /**
@@ -1724,8 +1750,16 @@ public class Train implements java.beans.PropertyChangeListener {
     	if (e.getPropertyName().equals(Route.DISPOSE)){
     		setRoute(null);
     	}
+    	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
+    		replaceType((String)e.getOldValue(), (String)e.getNewValue());
+    	}
+       	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
+    	}
     	// forward any property changes in this train's route
-    	firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
+       	if (e.getSource().getClass().equals(Route.class))
+       		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(

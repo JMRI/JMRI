@@ -28,7 +28,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -258,17 +258,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
     }
     
-    public void replaceType(String oldType, String newType){
-		List<String> trains = getTrainsByIdList();
-		for (int i=0; i<trains.size(); i++){
-			Train train = getTrainById(trains.get(i));
-			if (train.acceptsTypeName(oldType)){
-				train.deleteTypeName(oldType);
-				train.addTypeName(newType);
-			}
-		}
-    }
-    
     public void replaceLoad(String oldLoadName, String newLoadName){
 		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
@@ -283,25 +272,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			}
 		}
     }
-    
-	public void replaceRoad(String oldRoad, String newRoad){
-		List<String> trains = getTrainsByIdList();
-		for (int i=0; i<trains.size(); i++){
-			Train train = getTrainById(trains.get(i));
-			String[] roadNames = train.getRoadNames();
-			for (int j=0; j<roadNames.length; j++){
-				if (roadNames[j].equals(oldRoad)){
-					train.deleteRoadName(oldRoad);
-					if (newRoad != null)
-						train.addRoadName(newRoad);
-				}
-			}
-			if (train.getEngineRoad().equals(oldRoad))
-				train.setEngineRoad(newRoad);
-			if (train.getCabooseRoad().equals(oldRoad))
-				train.setCabooseRoad(newRoad);
-		}
-	}
 	
 	/**
 	 * 
@@ -634,11 +604,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void propertyChange(java.beans.PropertyChangeEvent e) {
     	log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
     	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
-    			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
-    		replaceType((String)e.getOldValue(), (String)e.getNewValue());
-    	}
-    	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
-    		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
+    			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    		setFilesDirty();
     	}
     	// TODO use listener to determine if load name has changed
        	//if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY)){
