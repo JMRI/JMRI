@@ -30,6 +30,9 @@ check3 -d java &lib118
 # build the java/ directory for ant, netbeans, eclipse and jbuilder
 all -a runtime java-contents netbeansfiles
 
+# same as 'all', but with a top level directory (intended for CI builds)
+ci-build -d ci-build &all
+
 
 # properties target; all the properties files. Maintained manually!
 properties -a \
