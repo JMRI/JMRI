@@ -13,16 +13,16 @@ import jmri.jmrit.XmlFile;
 
 public class ThrottlesPreferences {
     private boolean _useExThrottle = true;	
-    private boolean _1Win4all = true;
+    private boolean _useToolBar = true;
     private boolean _resizeWinImg = false;
-    private boolean _useAdvTransition = false;
     private boolean _useRosterImage = true;
-    private boolean _useTransparentCtl = false;
     private boolean _enableRosterSearch = true;
     private boolean _enableAutoLoad = true;
     private boolean _hideUndefinedFunButton = false;
     private boolean _ignoreThrottlePosition = true;
     private boolean _cleaningOnClose = false;
+    private boolean _saveThrottleOnLayoutSave = true;
+
     private Dimension _winDim = new Dimension(800,600);
     private String prefFile;
 	private ArrayList<PropertyChangeListener> listeners;
@@ -53,13 +53,12 @@ public class ThrottlesPreferences {
     	org.jdom.Attribute a;
     	org.jdom.Attribute b;
     	if ((a = e.getAttribute("isUsingExThrottle")) != null )  setUseExThrottle( a.getValue().compareTo("true") == 0 );
-    	if ((a = e.getAttribute("isOneWindowForAll")) != null )  setOneWindowForAll( a.getValue().compareTo("true") == 0 );
+    	if ((a = e.getAttribute("isUsingToolBar")) != null )  setUsingToolBar( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isResizingWindow")) != null )  setResizeWindow( a.getValue().compareTo("true") == 0 );
     	if (((a = e.getAttribute("windowDimensionWidth")) != null ) && ((b = e.getAttribute("windowDimensionHeight")) != null ))
     		setWindowDimension( new Dimension ( new Integer(a.getValue()),  new Integer( b.getValue()) ));
-    	if ((a = e.getAttribute("isUsingAdvTransition")) != null )  setUseAdvTransition( a.getValue().compareTo("true") == 0 );
+    	if ((a = e.getAttribute("isSavingThrottleOnLayoutSave")) != null ) setSaveThrottleOnLayoutSave( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isUsingRosterImage")) != null )  setUseRosterImage( a.getValue().compareTo("true") == 0 );
-    	if ((a = e.getAttribute("isUsingTransparentCtl")) != null )  setUseTransparentCtl( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isEnablingRosterSearch")) != null )  setEnableRosterSearch( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isAutoLoading")) != null )  setAutoLoad( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isHidingUndefinedFunctionButtons")) != null )  setHideUndefinedFuncButt( a.getValue().compareTo("true") == 0 );
@@ -79,13 +78,12 @@ public class ThrottlesPreferences {
     private org.jdom.Element store() {
     	org.jdom.Element e = new org.jdom.Element("throttlesPreferences");
     	e.setAttribute("isUsingExThrottle", ""+isUsingExThrottle());
-    	e.setAttribute("isOneWindowForAll", ""+isOneWindowForAll() );
+    	e.setAttribute("isUsingToolBar", ""+isUsingToolBar() );
     	e.setAttribute("isResizingWindow", ""+isResizingWindow() );
     	e.setAttribute("windowDimensionWidth", ""+(int)getWindowDimension().getWidth() );
     	e.setAttribute("windowDimensionHeight", ""+(int)getWindowDimension().getHeight() );
-    	e.setAttribute("isUsingAdvTransition", ""+isUsingAdvTransition());
+    	e.setAttribute("isSavingThrottleOnLayoutSave", ""+isSavingThrottleOnLayoutSave());
     	e.setAttribute("isUsingRosterImage", ""+isUsingRosterImage());
-    	e.setAttribute("isUsingTransparentCtl", ""+isUsingTransparentCtl());
     	e.setAttribute("isEnablingRosterSearch", ""+isEnablingRosterSearch());
     	e.setAttribute("isAutoLoading", ""+isAutoLoading());
     	e.setAttribute("isHidingUndefinedFunctionButtons", ""+isHidingUndefinedFuncButt());
@@ -99,11 +97,10 @@ public class ThrottlesPreferences {
     {
     	setWindowDimension (tp.getWindowDimension() );
     	setUseExThrottle (tp.isUsingExThrottle() );
-    	setOneWindowForAll(tp.isOneWindowForAll() );
+    	setUsingToolBar(tp.isUsingToolBar() );
     	setResizeWindow(tp.isResizingWindow());
-    	setUseAdvTransition(tp.isUsingAdvTransition());
+    	setSaveThrottleOnLayoutSave(tp.isSavingThrottleOnLayoutSave());
     	setUseRosterImage(tp.isUsingRosterImage());
-    	setUseTransparentCtl(tp.isUsingTransparentCtl());
     	setEnableRosterSearch(tp.isEnablingRosterSearch());
     	setAutoLoad(tp.isAutoLoading());
     	setHideUndefinedFuncButt(tp.isHidingUndefinedFuncButt());
@@ -122,11 +119,10 @@ public class ThrottlesPreferences {
     {
     	return( getWindowDimension() != tp.getWindowDimension() ||
     			isUsingExThrottle() != tp.isUsingExThrottle() ||
-    			isOneWindowForAll() != tp.isOneWindowForAll() ||
+    			isUsingToolBar() != tp.isUsingToolBar() ||
     			isResizingWindow() != tp.isResizingWindow()||
-    			isUsingAdvTransition() != tp.isUsingAdvTransition()||
+    			isSavingThrottleOnLayoutSave() != tp.isSavingThrottleOnLayoutSave()||
     			isUsingRosterImage() != tp.isUsingRosterImage()||
-    			isUsingTransparentCtl() != tp.isUsingTransparentCtl()||
     			isEnablingRosterSearch() != tp.isEnablingRosterSearch()||
     			isAutoLoading() != tp.isAutoLoading() ||
     			isHidingUndefinedFuncButt() != tp.isHidingUndefinedFuncButt() ||
@@ -179,11 +175,11 @@ public class ThrottlesPreferences {
 	public void setUseExThrottle(boolean exThrottle) {
 		_useExThrottle = exThrottle; 
 	}
-	public boolean isOneWindowForAll() {
-		return _1Win4all;
+	public boolean isUsingToolBar() {
+		return _useToolBar;
 	}
-	public void setOneWindowForAll(boolean win4all) {
-		_1Win4all = win4all;
+	public void setUsingToolBar(boolean win4all) {
+		_useToolBar = win4all;
 	}
 	public boolean isResizingWindow() {
 		return _resizeWinImg;
@@ -191,23 +187,11 @@ public class ThrottlesPreferences {
 	public void setResizeWindow(boolean winImg) {
 		_resizeWinImg = winImg;
 	}
-	public boolean isUsingAdvTransition() {
-		return _useAdvTransition;
-	}
-	public void setUseAdvTransition(boolean advTransition) {
-		_useAdvTransition = advTransition;
-	}
 	public boolean isUsingRosterImage() {
 		return _useRosterImage;
 	}
 	public void setUseRosterImage(boolean rosterImage) {
 		_useRosterImage = rosterImage;
-	}
-	public boolean isUsingTransparentCtl() {
-		return _useTransparentCtl;
-	}
-	public void setUseTransparentCtl(boolean transparentCtl) {
-		_useTransparentCtl = transparentCtl;
 	}
     public boolean isEnablingRosterSearch() {
     	return _enableRosterSearch;
@@ -239,7 +223,12 @@ public class ThrottlesPreferences {
 	public boolean isCleaningOnClose() {
 		return _cleaningOnClose;
 	}
-
+	public void setSaveThrottleOnLayoutSave(boolean b) {
+		_saveThrottleOnLayoutSave = b;
+	}
+	public boolean isSavingThrottleOnLayoutSave() {
+		return _saveThrottleOnLayoutSave;
+	}
 	
 	/**
 	 * Add an AddressListener. AddressListeners are notified when the user

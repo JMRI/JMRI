@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -185,8 +185,8 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			setLastUsedSaveFile(sfile);
 		}
 		catch (Exception ex){
-    		log.warn("Exception in storing throttles preferences xml: "+ex);
-    	}
+    		log.warn("Exception while storing throttle xml: "+ex);
+    	}	
 	}
     
     public void loadThrottle(String sfile) {
@@ -198,6 +198,13 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     		sfile = file.getAbsolutePath();
     		if (sfile == null) return;
     	}
+        
+    	boolean switchAfter = false;
+    	if (! isEditMode) {
+    		switchMode();
+    		switchAfter = true;
+    	}
+    	
 		try {
 			XmlFile xf = new XmlFile(){};   // odd syntax is due to XmlFile being abstract
 			File f=new File(sfile);
@@ -230,6 +237,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 				log.debug("Loading throttle exception: " + ex.getMessage());
 		}
 //    	checkPosition();
+        if (switchAfter) {
+        	switchMode();
+        }
 		return ;
 	}
     
@@ -304,11 +314,11 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
         add(addressPanel, PANEL_LAYER_FRAME);
 
         if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) {
-        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
+/*        	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() ) {
         		setTransparent(functionPanel);
         		setTransparent(addressPanel);
         		setTransparent(controlPanel);
-        	}
+        	}*/
         	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingRosterImage() ) {
         		backgroundPanel = new BackgroundPanel();
         		backgroundPanel.setAddressPanel(addressPanel); // reusing same way to do it than existing thing in functionPanel
@@ -355,16 +365,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
     		log.error("Error while creating Jynstrument "+path);
     		return null;
     	}
+    	setTransparentBackground(it);
     	JInternalFrame newiFrame = new JInternalFrame(it.getClassName());
     	newiFrame.add(it);
     	newiFrame.addInternalFrameListener(frameListener);
     	newiFrame.setDoubleBuffered(true);
     	newiFrame.setResizable(true);
     	newiFrame.setClosable(true);
-    	newiFrame.setIconifiable(true);
-    	if ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() &&
-    			jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingTransparentCtl() )
-    		setTransparent(newiFrame);
+    	newiFrame.setIconifiable(true);    	
     	newiFrame.getContentPane().addContainerListener(new ContainerListener() {
 			public void componentAdded(ContainerEvent e) {				
 			}
@@ -420,7 +428,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	private HashMap <Container, JInternalFrame> contentPanes;
 	
 	private class TranslucentJPanel extends JPanel {
-		private Color TRANS_COL = new Color(175, 175, 175, 150);
+		private Color TRANS_COL = new Color(100, 100, 100, 100);
 		
 		public TranslucentJPanel() {
 			super();
@@ -429,7 +437,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		
 		public void paintComponent(Graphics g) {
 			g.setColor(TRANS_COL);
-			g.fillRoundRect(0, 0, getSize().width,  getSize().height, 20, 20);
+			g.fillRoundRect(0, 0, getSize().width,  getSize().height, 10, 10);
 			super.paintComponent(g);
 		}		
 	}
@@ -445,8 +453,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 				
 				TranslucentJPanel pane = new TranslucentJPanel();
 				pane.setLayout(new BorderLayout());
-				contentPanes.put(pane, jif);					
+				contentPanes.put(pane, jif);
 				pane.add(jif.getContentPane(), BorderLayout.CENTER);
+				setTransparent(pane, true);
 
 				jif.setContentPane(new JPanel());
 				jif.setVisible(false);
@@ -454,7 +463,6 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 				add(pane, PANEL_LAYER_PANEL);
 				pane.setLocation(loc);
 				pane.setSize(cpSize);
-				pane.updateUI();
 			}
 		}
 	}
@@ -466,6 +474,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 				JPanel pane = (JPanel) cmps[i];
 				JInternalFrame jif = contentPanes.get(pane);
 				jif.setContentPane( (Container)pane.getComponent(0));
+				setTransparent(jif, false);
 				jif.setVisible(true);
 				remove(pane);
 			}
@@ -482,12 +491,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 	    		editRendering();
 	    	isEditMode = ! isEditMode;
 	    	willSwitch = false;
-	    	throttleWindow.getViewAddressPanel().setEnabled(isEditMode);
-	    	throttleWindow.getViewControlPanel().setEnabled(isEditMode);
-	    	throttleWindow.getViewFunctionPanel().setEnabled(isEditMode);
     	}
     	else
     		willSwitch = ! willSwitch;
+    	throttleWindow.updateGUI();
     }
 	
     /**
@@ -709,11 +716,14 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
                 Element window = jinsts.get(i).getChild("window");
                 if ((window !=null) && (jif!=null))
                 	WindowPreferences.setPreferences(jif, window);
+                if (jif != null)
+                	jif.repaint();
         	}
         }
         setFrameTitle();
-        if (switchAfter)
+        if (switchAfter) {
         	switchMode();
+        }
     }
     
     /**
@@ -752,9 +762,9 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
 	public void componentShown(ComponentEvent e) {
 		throttleWindow.setCurentThrottleFrame(this);
-		throttleWindow.updateGUI();
 		if (willSwitch)
 			switchMode();
+		throttleWindow.updateGUI();
 	}
 	
 	public void saveThrottle() {
@@ -839,25 +849,50 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 		throttleWindow.updateGUI();
 	}
 
-// some utilities to turn a component background transparent
-	public static void setTransparent(JComponent jcomp)
+	// some utilities to turn a component background transparent
+	public static void setTransparentBackground(JComponent jcomp)
 	{
 		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
-		{
 			jcomp.setBackground(new Color(0,0,0,0));
-			jcomp.setOpaque(false);
-		}
-		setTransparent ( jcomp.getComponents() );
+		setTransparentBackground ( jcomp.getComponents() );
 	}
 	
-	private static void setTransparent(Component[] comps)
+	public static void setTransparentBackground(Component[] comps)
 	{
 		for (int i=0; i<comps.length; i++)
 		{
 			try
 			{
 				if (comps[i] instanceof JComponent)
-					setTransparent( (JComponent) comps[i] );
+					setTransparentBackground( (JComponent) comps[i] );
+			}
+			catch(Exception e)
+			{ // Do nothing, just go on
+			}
+		}
+	}
+	
+// some utilities to turn a component background transparent
+	public static void setTransparent(JComponent jcomp)
+	{
+		setTransparent(jcomp, true);
+	}
+	
+	public static void setTransparent(JComponent jcomp, boolean transparency)
+	{
+		if (jcomp instanceof JPanel) //OS X: Jpanel components are enough
+			jcomp.setOpaque(!transparency);
+		setTransparent ( jcomp.getComponents(), transparency );
+	}
+	
+	private static void setTransparent(Component[] comps, boolean transparency)
+	{
+		for (int i=0; i<comps.length; i++)
+		{
+			try
+			{
+				if (comps[i] instanceof JComponent)
+					setTransparent( (JComponent) comps[i], transparency );
 			}
 			catch(Exception e)
 			{ // Do nothing, just go on

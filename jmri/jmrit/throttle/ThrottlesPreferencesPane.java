@@ -27,17 +27,16 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
 	private static final long serialVersionUID = -5473594799045080011L;
 	
 	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
-    private javax.swing.JCheckBox cb1Win4all;
+    private javax.swing.JCheckBox cbUseToolBar;
     private javax.swing.JCheckBox cbResizeWinImg;
-    private javax.swing.JCheckBox cbUseAdvTransition;
     private javax.swing.JCheckBox cbUseExThrottle;
     private javax.swing.JCheckBox cbUseRosterImage;
-    private javax.swing.JCheckBox cbUseTransparentCtl;
     private javax.swing.JCheckBox cbEnableRosterSearch;
     private javax.swing.JCheckBox cbEnableAutoLoad;
     private javax.swing.JCheckBox cbHideUndefinedButtons;
     private javax.swing.JCheckBox cbIgnoreThrottlePosition;
     private javax.swing.JCheckBox cbCleanOnDispose;
+    private javax.swing.JCheckBox cbSaveThrottleOnLayoutSave;
     private javax.swing.JLabel	labelApplyWarning;
     private javax.swing.JButton jbApply;
     private javax.swing.JButton jbCancel;
@@ -140,9 +139,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         jbApply = new javax.swing.JButton();
         
         cbUseExThrottle = new javax.swing.JCheckBox();
-        cbUseTransparentCtl = new javax.swing.JCheckBox();
-        cb1Win4all = new javax.swing.JCheckBox();
-        cbUseAdvTransition = new javax.swing.JCheckBox();
+        cbUseToolBar = new javax.swing.JCheckBox();
         cbUseRosterImage = new javax.swing.JCheckBox();
         cbResizeWinImg = new javax.swing.JCheckBox();
         cbEnableRosterSearch = new javax.swing.JCheckBox();
@@ -150,14 +147,13 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbHideUndefinedButtons = new javax.swing.JCheckBox();
         cbIgnoreThrottlePosition = new javax.swing.JCheckBox();
         cbCleanOnDispose = new javax.swing.JCheckBox();
+        cbSaveThrottleOnLayoutSave = new javax.swing.JCheckBox();
 
         labelApplyWarning = new javax.swing.JLabel();
         
         cbUseExThrottle.setText(throttleBundle.getString("UseExThrottle"));
-        cbUseTransparentCtl.setText(throttleBundle.getString("ExThrottleTransparence"));
-        cbUseAdvTransition.setText(throttleBundle.getString("ExThrottleAdvTransition"));
         cbResizeWinImg.setText(throttleBundle.getString("ExThrottleForceResize"));
-        cb1Win4all.setText(throttleBundle.getString("ExThrottle1win4all"));
+        cbUseToolBar.setText(throttleBundle.getString("ExThrottleUseToolBar"));
         cbUseRosterImage.setText(throttleBundle.getString("ExThrottleUseRosterImageBkg"));
         cbEnableRosterSearch.setText(throttleBundle.getString("ExThrottleEnableRosterSearch"));
         cbEnableAutoLoad.setText(throttleBundle.getString("ExThrottleEnableAutoSave"));
@@ -165,6 +161,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         cbIgnoreThrottlePosition.setText(throttleBundle.getString("ExThrottleIgnoreThrottlePosition"));         
         labelApplyWarning.setText(throttleBundle.getString("ExThrottleLabelApplyWarning"));
         cbCleanOnDispose.setText(throttleBundle.getString("ExThrottleCleanOnDispose"));
+        cbSaveThrottleOnLayoutSave.setText(throttleBundle.getString("ExThrottleSaveThrottleOnLayoutSave"));
 
         java.awt.event.ActionListener al = new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -172,7 +169,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
             }
         };
         cbUseExThrottle.addActionListener(al);
-        cb1Win4all.addActionListener(al);
+        cbUseToolBar.addActionListener(al);
         cbUseRosterImage.addActionListener(al);
         cbEnableAutoLoad.addActionListener(al);
 
@@ -201,7 +198,7 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         setLayout(new GridBagLayout());
         
         this.add(cbUseExThrottle, gridBagConstraints1);
-        this.add(cbUseTransparentCtl, gridBagConstraints2);
+        this.add(cbSaveThrottleOnLayoutSave, gridBagConstraints2);
         this.add(cbUseRosterImage, gridBagConstraints3);
         this.add(cbResizeWinImg, gridBagConstraints4);
         this.add(cbEnableRosterSearch, gridBagConstraints5);
@@ -211,17 +208,16 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
         this.add(jbApply, gridBagConstraints9);
         this.add(cbHideUndefinedButtons, gridBagConstraints11);
         this.add(cbIgnoreThrottlePosition, gridBagConstraints10);
-        this.add(cb1Win4all, gridBagConstraints12);
+        this.add(cbUseToolBar, gridBagConstraints12);
         this.add(cbCleanOnDispose, gridBagConstraints14);
         this.add(labelApplyWarning, gridBagConstraints13);
     }
 
     private void setComponents(ThrottlesPreferences tp) {
     	if (tp==null) return;
-        cbUseTransparentCtl.setSelected( tp.isUsingTransparentCtl() );
-        cbUseAdvTransition.setSelected( tp.isUsingAdvTransition() );
+    	cbSaveThrottleOnLayoutSave.setSelected( tp.isSavingThrottleOnLayoutSave() );
         cbResizeWinImg.setSelected( tp.isResizingWindow() );
-        cb1Win4all.setSelected( tp.isOneWindowForAll() );
+        cbUseToolBar.setSelected( tp.isUsingToolBar() );
         cbUseRosterImage.setSelected( tp.isUsingRosterImage() );
         cbUseExThrottle.setSelected( tp.isUsingExThrottle() );
         cbEnableRosterSearch.setSelected( tp.isEnablingRosterSearch() );
@@ -235,11 +231,10 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     {
     	ThrottlesPreferences tp = new ThrottlesPreferences();
     	tp.setUseExThrottle (cbUseExThrottle.isSelected() );
-    	tp.setOneWindowForAll(cb1Win4all.isSelected() );
+    	tp.setUsingToolBar(cbUseToolBar.isSelected() );
     	tp.setResizeWindow(cbResizeWinImg.isSelected());
-    	tp.setUseAdvTransition(cbUseAdvTransition.isSelected());
     	tp.setUseRosterImage(cbUseRosterImage.isSelected());
-    	tp.setUseTransparentCtl( cbUseTransparentCtl.isSelected() ); 
+    	tp.setSaveThrottleOnLayoutSave( cbSaveThrottleOnLayoutSave.isSelected() ); 
     	tp.setEnableRosterSearch( cbEnableRosterSearch.isSelected() );
     	tp.setAutoLoad( cbEnableAutoLoad.isSelected() );
     	tp.setHideUndefinedFuncButt( cbHideUndefinedButtons.isSelected() );
@@ -250,18 +245,17 @@ public class ThrottlesPreferencesPane extends javax.swing.JPanel implements Prop
     
     private void checkConsistancy()
     {
-        cbUseTransparentCtl.setEnabled( cbUseExThrottle.isSelected() );
-        cb1Win4all.setEnabled( cbUseExThrottle.isSelected() );
+    	cbSaveThrottleOnLayoutSave.setEnabled( cbUseExThrottle.isSelected() );
+        cbUseToolBar.setEnabled( cbUseExThrottle.isSelected() );
         cbEnableRosterSearch.setEnabled( cbUseExThrottle.isSelected() );
         cbEnableAutoLoad.setEnabled( cbUseExThrottle.isSelected() );
-        cbUseAdvTransition.setEnabled( cbUseExThrottle.isSelected() && cb1Win4all.isSelected() );
         cbUseRosterImage.setEnabled( cbUseExThrottle.isSelected() );
         cbResizeWinImg.setEnabled( cbUseExThrottle.isSelected()  &&  cbUseRosterImage.isSelected() );
         cbHideUndefinedButtons.setEnabled( cbUseExThrottle.isSelected() );
         cbIgnoreThrottlePosition.setEnabled( cbUseExThrottle.isSelected() && cbEnableAutoLoad.isSelected() );
         cbCleanOnDispose.setEnabled( cbUseExThrottle.isSelected() );
         if ( cbUseExThrottle.isSelected() ) {
-        	if ( cb1Win4all.isSelected() ) {
+        	if ( cbUseToolBar.isSelected() ) {
         		cbIgnoreThrottlePosition.setSelected( true );
         		cbIgnoreThrottlePosition.setEnabled( false );
         	}

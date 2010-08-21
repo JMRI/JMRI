@@ -94,7 +94,7 @@ public class ThrottleWindow extends JmriJFrame {
         throttlesPanel = new JPanel(throttlesLayout);
         throttlesPanel.setDoubleBuffered(true);
         if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()))
+        	&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar()))
         	initializeToolbar();
 /*        if ( (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
         		&& ( jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isResizingWindow()))
@@ -127,9 +127,14 @@ public class ThrottleWindow extends JmriJFrame {
     	// title bar
     	getCurentThrottleFrame().setFrameTitle();
     	// menu items
-    	viewAddressPanel.setSelected( getCurentThrottleFrame().getAddressPanel().isVisible() );
-		viewControlPanel.setSelected( getCurentThrottleFrame().getControlPanel().isVisible() );
-		viewFunctionPanel.setSelected( getCurentThrottleFrame().getFunctionPanel().isVisible() );
+    	viewAddressPanel.setEnabled(isEditMode);
+    	viewControlPanel.setEnabled(isEditMode);
+    	viewFunctionPanel.setEnabled(isEditMode);
+    	if (isEditMode) {
+    		viewAddressPanel.setSelected( getCurentThrottleFrame().getAddressPanel().isVisible() );
+    		viewControlPanel.setSelected( getCurentThrottleFrame().getControlPanel().isVisible() );
+    		viewFunctionPanel.setSelected( getCurentThrottleFrame().getFunctionPanel().isVisible() );
+    	}
 		fileMenuSave.setEnabled( getCurentThrottleFrame().getLastUsedSaveFile() != null || getCurentThrottleFrame().getRosterEntry() != null);
 		editMenuExportRoster.setEnabled( getCurentThrottleFrame().getRosterEntry() != null);
     	// toolbar items
@@ -254,6 +259,7 @@ public class ThrottleWindow extends JmriJFrame {
         for (int i=0; i<comps.length; i++)
         	if (comps[i] instanceof ThrottleFrame)
         		((ThrottleFrame)comps[i]).switchMode();
+        updateGUI();
     }
     
     public void ynstrument(String path) {
@@ -262,7 +268,7 @@ public class ThrottleWindow extends JmriJFrame {
     		log.error("Error while creating Jynstrument "+path);
     		return ;
     	}
-    	ThrottleFrame.setTransparent(it);
+    	ThrottleFrame.setTransparent(it, true);
     	it.setVisible(true);
     	throttleToolBar.add(it);
     	throttleToolBar.repaint();
@@ -395,7 +401,7 @@ public class ThrottleWindow extends JmriJFrame {
 			this.getJMenuBar().add(powerMenu);
 
 			if ( (! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle() ) 
-					|| ( ! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isOneWindowForAll()) )
+					|| ( ! jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingToolBar()) )
 				this.getJMenuBar().add(new SmallPowerManagerButton());
 		}
 		
@@ -536,10 +542,15 @@ public class ThrottleWindow extends JmriJFrame {
 
         Component[] cmps = throttlesPanel.getComponents();
         if (cmps!=null) {
+            ThrottleFrame cf = this.getCurentThrottleFrame();
         	for (int i=0; i<cmps.length; i++)
         	try {
         		if (cmps[i] instanceof ThrottleFrame) {
 	        		ThrottleFrame tf = (ThrottleFrame) cmps[i];
+	        		if ((jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isUsingExThrottle()) && (jmri.jmrit.throttle.ThrottleFrameManager.instance().getThrottlesPreferences().isSavingThrottleOnLayoutSave())) {
+	        			tf.toFront();
+	        			tf.saveThrottle();
+	        		}
 	        		Element tfe = tf.getXmlFile();
 	        		if (tfe == null)
 	        			tfe =  tf.getXml();
@@ -548,6 +559,8 @@ public class ThrottleWindow extends JmriJFrame {
         	} catch (Exception ex) {
         		log.debug("Got exception (no panic): "+ex);
         	}
+        	if (cf != null)
+        		cf.toFront();
         }
         
         me.setContent(children);        
