@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -202,10 +202,8 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
     public boolean isControlTypeSupported(String systemName) {return true;}
     
     /**
-    * A method that creates an array of systems names to allow bulk
-    * creation of turnouts.
+    * A method that returns the next valid free turnout hardware address
     */
-
     public String getNextValidAddress(String curAddress, String prefix){
         int nAddress = 0;
         int bitNum = 0;
@@ -218,7 +216,32 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             nAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
             bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
             tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        }  else if (curAddress.contains("B")||(curAddress.contains("b"))) {
+            curAddress = curAddress.toUpperCase();
+            try{
+                //We do this to simply check that we have numbers in the correct places ish
+                Integer.parseInt(curAddress.substring(0,1));
+                int b = (curAddress.toUpperCase()).indexOf("B")+1;
+                Integer.parseInt(curAddress.substring(b));
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            tmpSName = prefix+typeLetter()+curAddress;
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
+            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
         } else {
+            try {
+                //We do this to simply check that the value passed is a number!
+                Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
             tmpSName = prefix+"T"+curAddress;
             bitNum = SerialAddress.getBitFromSystemName(tmpSName);
             nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
@@ -238,7 +261,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         bitNum = bitNum + t.getNumberOutputBits();
         //Check to determine if the systemName is in use, return null if it is,
         //otherwise return the next valid address.
-         tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
+        tmpSName = SerialAddress.makeSystemName("T", nAddress, bitNum);
         t = getBySystemName(tmpSName);
         if(t!=null){
             for(int x = 1; x<10; x++){

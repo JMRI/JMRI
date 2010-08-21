@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -153,7 +153,83 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     static SerialSensorManager _instance = null;
-
+    
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        //If the hardware address past does not already exist then this can
+        //be considered the next valid address.
+        int nAddress = 0;
+        int bitNum = 0;
+        int seperator=0;
+        String tmpSName;
+        
+        if(curAddress.contains(":")){
+            //Address format passed is in the form node:address
+            seperator = curAddress.indexOf(":");
+            try{
+                nAddress = Integer.valueOf(curAddress.substring(0,seperator)).intValue();
+                bitNum = Integer.valueOf(curAddress.substring(seperator+1)).intValue();
+            } catch (NumberFormatException ex) {
+            log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+            jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address format of node:address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+            return null;
+        }
+            tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
+        } else if (curAddress.contains("B")||(curAddress.contains("b"))) {
+            curAddress = curAddress.toUpperCase();
+            try{
+                //We do this to simply check that we have numbers in the correct places ish
+                Integer.parseInt(curAddress.substring(0,1));
+                int b = (curAddress.toUpperCase()).indexOf("B")+1;
+                Integer.parseInt(curAddress.substring(b));
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            tmpSName = prefix+typeLetter()+curAddress;
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
+            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+        } else {
+            try {
+                //We do this to simply check that the value passed is a number!
+                Integer.parseInt(curAddress);
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert " + curAddress + " Hardware Address to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return null;
+            }
+            tmpSName = prefix+typeLetter()+curAddress;
+            bitNum = SerialAddress.getBitFromSystemName(tmpSName);
+            nAddress = SerialAddress.getNodeAddressFromSystemName(tmpSName);
+        }
+         
+        //Check to determine if the systemName is in use, return null if it is,
+        //otherwise return the next valid address.
+        Sensor s = getBySystemName(tmpSName);
+        if(s!=null){
+            for(int x = 1; x<10; x++){
+                bitNum++;
+                tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
+                s = getBySystemName(tmpSName);
+                if(s==null){
+                    seperator = tmpSName.indexOf("S")+1;
+                    curAddress = tmpSName.substring(seperator);
+                    return curAddress;
+                }
+            }
+            return null;
+        } else {
+            seperator = tmpSName.indexOf("S")+1;
+            curAddress = tmpSName.substring(seperator);
+            return curAddress;
+        }
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialSensorManager.class.getName());
 }
 
