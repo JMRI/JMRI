@@ -13,7 +13,7 @@ import java.awt.Dimension;
 public class Control {
 	
 	// debug flags
-	public static final boolean showProperty = true;
+	public static final boolean showProperty = false;
 	public static final boolean showInstance = false;
 	
 	// Default panel width
