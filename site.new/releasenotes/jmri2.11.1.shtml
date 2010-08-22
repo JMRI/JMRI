@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.5 2010-08-18 17:48:11 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.6 2010-08-22 13:12:17 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -119,9 +119,6 @@ Kevin Dickerson improved the preferences:
     By default 4 sets of jmrixconfigpanes are created at start up.  
     However if there are more than 4 connections, the 5th and above connections do not have a jmrixconfigpane instance created and 
     do not automatically get listed in the preference window.
-    
-<p>
-Dan Boudreau improved the UK version of the operations feature.
 
 <p>
 Kevin Dickerson fixed a problem that could cause multiple LocoNet connections to get the wrong prefix.
@@ -170,9 +167,6 @@ Kevin Dickerson made some improvements to the connection code, including catchin
 adding a "disable adapter" option.
 
 <p>
-Dan Boudreau improved operations UK support.
-
-<p>
 Pete Cressman improved how icons are found in the computer's file system.
 
 <p>
@@ -213,23 +207,19 @@ Simon Ginsburg added translation tool scripts.
 Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 
 <p>
-Dan Boudreau improved operations car routing to a maximum of 3 trains.
-
-<p>
 Pete Cressman fixed a problem selecting groups on panels
 
-<p>
-Dan Boudreau changed the default for car routing to "on"
 
-<p>
-Dan Boudreau added a new operations feature, "Return When Empty".  
-When a car's load changes to empty, the user can optionally set the location or location/track to where the car should return.
-Also, the operations feature now allows car routing via staging tracks.
-
+<p>Dan Boudreau made several enhancements to operations. The
+operations program now supports car routing. The program will now use up
+to 5 trains to move a car from one location to another. Routing through
+staging tracks is disabled by default. A new operations feature, "Return
+When Empty" is now available. When a car's load changes to empty, the
+car can optionally return to a location or location/track. UK support
+has also been improved. 
 
 <!--#include virtual="/Footer" -->
-
-   </div><!-- closes #mainContent-->
+</div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
 </div> <!-- closes #container -->
 </body>
