@@ -8,7 +8,6 @@ import jmri.jmrix.ecos.EcosPreferences;
 import java.util.List;
 
 import org.jdom.*;
-import javax.swing.*;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -23,7 +22,7 @@ import javax.swing.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {

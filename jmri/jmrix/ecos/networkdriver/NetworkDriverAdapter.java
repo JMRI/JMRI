@@ -2,8 +2,6 @@
 
 package jmri.jmrix.ecos.networkdriver;
 
-import jmri.jmrix.ConnectionStatus;
-import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrix.ecos.*;
 
 /*import java.io.*;
@@ -17,13 +15,14 @@ import java.util.Vector;*/
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
+        mInstance=this;
     }
     /**
      * set up all of the other objects to operate with an ECOS command
@@ -60,7 +59,8 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     
     //To be completed
     public void dispose(){
-        adaptermemo.dispose();
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
         adaptermemo = null;
     }
 
