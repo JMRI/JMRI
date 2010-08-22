@@ -14,12 +14,13 @@ import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainManager;
 
 /**
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -100,7 +101,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     	setVisible(true);
     }
  
-	// add or delete button
+	// add, delete or replace button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("edit frame button actived");
 		if (ae.getSource() == addButton){
@@ -137,6 +138,8 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			}
 			if (newItem.equals(oldItem))
 				return;
+			// need to make sure locations and trains are loaded
+			TrainManager.instance();
 			addItemToCombobox (newItem);
 			replaceItem(oldItem, newItem);
 			deleteItemFromCombobox (oldItem);
@@ -282,6 +285,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if(_comboboxName == EngineEditFrame.ROAD){
 			CarRoads.instance().replaceName(oldItem, newItem);
+		}
+		if(_comboboxName == EngineEditFrame.OWNER){
+			CarOwners.instance().replaceName(oldItem, newItem);
 		}
 	}
 	
