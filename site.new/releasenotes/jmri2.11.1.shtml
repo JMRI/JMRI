@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.6 2010-08-22 13:12:17 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.7 2010-08-22 16:07:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -136,7 +136,7 @@ Paul Bender is updating the XPressNet adapter code to allow multiple connections
 Kevin Dickerson made it possible to dismiss a print preview dialog.
 
 <p>
-Keving Dickerson updated roster printing: 
+Kevin Dickerson updated roster printing: 
 Puts the loco icon on the print out, formats the text around the graphic so it looks neater and doesn't run into the loco graphic.
 Function Labels can now be printed on individual roster items.
 When printing individual roster items, the user is given the option to select which tabs should be printed.
@@ -217,6 +217,18 @@ staging tracks is disabled by default. A new operations feature, "Return
 When Empty" is now available. When a car's load changes to empty, the
 car can optionally return to a location or location/track. UK support
 has also been improved. 
+
+<p>
+Lionel Jeanson made multiple improvements to throttles:
+<ul>
+<li>More French translation
+<li>Improved edit/play mode and transparency, transparency no longer proposed as a preference, in edit mode, internal frames are opaque and are set translucent when going to play mode (click on button with pen in toolbar). Tested on OS-X/Windows/Linux with several L&F, works fine on all.
+<li>Improved "save throttle layout" and "save default throttle layout", now also save throttles themselves, new preference in throttle preference to configure this behavior (activated as default, to be deactivated to go to older mode that would only save the windows layout).
+</ul>
+
+<p>
+Kevin Dickerson improved the C/MRI sensor add process so that it now displays an error message when an invalid system name is entered.
+Sensor manager now allows for multiple sensors to be added.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
