@@ -7,9 +7,10 @@ import javax.swing.*;
 /**
  * Frame to control and connect SECSI
  * @author    Bob Jacobsen   Copyright (C) 2001, 2006, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 
+@Deprecated
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
     public SerialDriverFrame() {

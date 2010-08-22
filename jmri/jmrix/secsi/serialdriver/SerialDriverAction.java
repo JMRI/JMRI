@@ -11,8 +11,9 @@ import javax.swing.AbstractAction;
  * oaktree.SerialDriverFrame object
  *
  * @author   Bob Jacobsen    Copyright (C) 2002, 2007, 2008
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
+@Deprecated
 public class SerialDriverAction extends AbstractAction {
 
     public SerialDriverAction(String s) { super(s);}
