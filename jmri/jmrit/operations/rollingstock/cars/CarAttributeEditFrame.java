@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -331,6 +331,9 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		if(_comboboxName == CarEditFrame.ROAD){
 			CarRoads.instance().replaceName(oldItem, newItem);
 		}
+		if(_comboboxName == CarEditFrame.OWNER){
+			CarOwners.instance().replaceName(oldItem, newItem);
+		}
 	}
 	
 	private void loadCombobox(){ 
@@ -469,7 +472,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 			CarColors.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarLengths.CARLENGTHS_CHANGED_PROPERTY))
 			CarLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(CarManager.KERNELLISTLENGTH_CHANGED_PROPERTY))
 			manager.updateKernelComboBox(comboBox);

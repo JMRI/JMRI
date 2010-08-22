@@ -22,6 +22,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -47,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -134,9 +135,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		// a new train accepts all types
 		setTypeNames(CarTypes.instance().getNames());
 		setTypeNames(EngineTypes.instance().getNames());
-		CarRoads.instance().addPropertyChangeListener(this);
-		CarTypes.instance().addPropertyChangeListener(this);
-		EngineTypes.instance().addPropertyChangeListener(this);
+		addPropertyChangeListerners();
 	}
 
 	public String getId() {
@@ -796,6 +795,13 @@ public class Train implements java.beans.PropertyChangeListener {
        	}
        	// exclude!
        	return !_ownerList.contains(owner);
+    }
+    
+    public void replaceOwner(String oldName, String newName){
+    	if (acceptsOwnerName(oldName)){
+    		deleteOwnerName(oldName);
+    		addOwnerName(newName);
+    	}
     }
     
     /**
@@ -1634,9 +1640,14 @@ public class Train implements java.beans.PropertyChangeListener {
     			}
     		}
     	}
+    	addPropertyChangeListerners();
+    }
+    
+    private void addPropertyChangeListerners(){
 		CarRoads.instance().addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
+		CarOwners.instance().addPropertyChangeListener(this);
     }
 
     /**
@@ -1756,6 +1767,9 @@ public class Train implements java.beans.PropertyChangeListener {
     	}
        	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
     		replaceRoad((String)e.getOldValue(), (String)e.getNewValue());
+    	}
+       	if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
+    		replaceOwner((String)e.getOldValue(), (String)e.getNewValue());
     	}
     	// forward any property changes in this train's route
        	if (e.getSource().getClass().equals(Route.class))

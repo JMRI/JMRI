@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.24 $
+ * @version             $Revision: 1.25 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -333,7 +333,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 			EngineTypes.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_CHANGED_PROPERTY))
 			EngineLengths.instance().updateComboBox(comboBox);
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY))
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY))
 			CarOwners.instance().updateComboBox(comboBox);
 		if (e.getPropertyName().equals(EngineManager.CONSISTLISTLENGTH_CHANGED_PROPERTY))
 			manager.updateConsistComboBox(comboBox);

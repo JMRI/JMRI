@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -730,7 +730,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			if (_car != null) 
 				kernelComboBox.setSelectedItem(_car.getKernelName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY)){
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_car != null)
 				ownerComboBox.setSelectedItem(_car.getOwner());

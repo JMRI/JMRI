@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -28,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -57,7 +58,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public TrainManager() {
 		CarTypes.instance().addPropertyChangeListener(this);
 		CarRoads.instance().addPropertyChangeListener(this);
-		//CarLoads.instance().addPropertyChangeListener(this);
+		CarOwners.instance().addPropertyChangeListener(this);
 		EngineTypes.instance().addPropertyChangeListener(this);
     }
     
@@ -178,7 +179,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	public void dispose() {
     	CarTypes.instance().removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
-    	//CarLoads.instance().removePropertyChangeListener(this);
+    	CarOwners.instance().removePropertyChangeListener(this);
     	EngineTypes.instance().removePropertyChangeListener(this);
         _trainHashTable.clear();
         _instance = null;
@@ -605,7 +606,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	log.debug("TrainManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new " + e.getNewValue());
     	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY) ||
     			e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY) ||
-    			e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    			e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
     		setFilesDirty();
     	}
     	// TODO use listener to determine if load name has changed

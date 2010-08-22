@@ -11,11 +11,12 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the owner names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class CarOwners {
 	
-	public static final String CAROWNERS_CHANGED_PROPERTY = "CarOwners";
+	public static final String CAROWNERS_NAME_CHANGED_PROPERTY = "CarOwners Name";
+	public static final String CAROWNERS_LENGTH_CHANGED_PROPERTY = "CarOwners Length";
 	
     public CarOwners() {
     }
@@ -65,12 +66,20 @@ public class CarOwners {
     	if (list.contains(owner))
     		return;
     	list.add(0,owner);
-    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, list.size()-1, list.size());
+    	firePropertyChange (CAROWNERS_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String owner){
     	list.remove(owner);
-    	firePropertyChange (CAROWNERS_CHANGED_PROPERTY, list.size()+1, list.size());
+    	firePropertyChange (CAROWNERS_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
+    }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	list.remove(oldName);
+    	firePropertyChange (CAROWNERS_NAME_CHANGED_PROPERTY, oldName, newName);
+    	if (newName == null)
+    		firePropertyChange (CAROWNERS_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
     public boolean containsName(String owner){

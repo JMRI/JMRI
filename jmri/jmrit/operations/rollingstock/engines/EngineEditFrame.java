@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -643,7 +643,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			if (_engine != null) 
 				consistComboBox.setSelectedItem(_engine.getConsistName());
 		}
-		if (e.getPropertyName().equals(CarOwners.CAROWNERS_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarOwners.CAROWNERS_LENGTH_CHANGED_PROPERTY)){
 			filesModified = true;
 			CarOwners.instance().updateComboBox(ownerComboBox);
 			if (_engine != null)
