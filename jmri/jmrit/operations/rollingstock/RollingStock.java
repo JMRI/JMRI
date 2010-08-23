@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -280,9 +280,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 */
 	protected String setLocation(Location location, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new location
-		String status = testLocation(location, track);
-		if (force == false && status != OKAY)
-			return status;
+		if (!force){
+			String status = testLocation(location, track);
+			if (status != OKAY)
+				return status;
+		}
 		// now update
 		Location oldLocation = _location;
 		_location = location;
@@ -622,13 +624,13 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			// Arriving at destination?
 			if(getRouteLocation() == getRouteDestination()){
 				log.debug("Rolling stock ("+toString()+") has arrived at destination ("+getDestination()+")");
-				setLocation(getDestination(), getDestinationTrack(), true);	// force car to destination
+				setLocation(getDestination(), getDestinationTrack(), true);	// force RS to destination
 				setDestination(null, null); 	// this also clears the route locations
 				setTrain(null);
 			}else{
 				log.debug("Rolling stock ("+toString()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") destination ("+next.getName()+")");
 				Location nextLocation = locationManager.getLocationByName(next.getName());
-				setLocation(nextLocation, null);
+				setLocation(nextLocation, null, true); // force RS to location
 				setRouteLocation(next);
 			}
 		}

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.38 $
+ * @version             $Revision: 1.39 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -99,6 +99,12 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public Location getNextDestination(){
 		return _nextDestination;
+	}
+	
+	public String getNextDestinationName() {
+		if (_nextDestination != null)
+			return _nextDestination.getName();
+		return "";
 	}
 	
 	public void setNextDestTrack(Track track){
@@ -319,7 +325,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		setNextDestination(currentSi.getDestination());
 		setNextDestTrack(currentSi.getDestinationTrack());
 		
-		log.debug("Car ("+getId()+") next load ("+getNextLoad()+")");
+		log.debug("Car ("+toString()+") next load ("+getNextLoad()+")");
 		// bump and check count
 		track.setScheduleCount(track.getScheduleCount()+1);
 		if (track.getScheduleCount() < currentSi.getCount())
@@ -346,6 +352,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
+				// is the next load default empty?  Check for car return when empty
+				if (getLoad().equals(carLoads.getDefaultEmptyName()))
+					setLoadEmpty();
 				return;
 			}
 			// car doesn't have a schedule load, flip load status
@@ -377,10 +386,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			setNextDestination(getReturnWhenEmptyDestination());
 			if (getReturnWhenEmptyDestTrack() != null){
 				setNextDestTrack(getReturnWhenEmptyDestTrack());
-				log.debug("Car ("+toString()+") has return when empty destination ("+getNextDestination().getName()+", "+getNextDestTrack().getName()+")");
-				// set next destination and destination track if available
-				if (!Router.instance().setCarNextDestination(this))
-					super.setDestination(null, null);	// couldn't route car, maybe next time
+				log.debug("Car ("+toString()+") has return when empty destination ("+getNextDestinationName()+", "+getNextDestTrack().getName()+")");
 			}
 		}
 	}
