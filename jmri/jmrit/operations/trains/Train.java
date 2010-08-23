@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -885,7 +885,20 @@ public class Train implements java.beans.PropertyChangeListener {
     		Route route = getRoute();
     		if (route != null){
     			List<String> rLocations = route.getLocationsBySequenceList();
-    			for (int j=0; j<rLocations.size()-1; j++){
+    			if (rLocations.size() == 1){
+    				RouteLocation rLoc = route.getLocationById(rLocations.get(0));
+    				if (rLoc.getName().equals(car.getLocationName()) 
+    						&& rLoc.canPickup()  
+    						&& rLoc.getMaxCarMoves()>0
+    						&& !skipsLocation(rLoc.getId())
+    						&& rLoc.getName().equals(car.getDestinationName())
+    						&& rLoc.canDrop() ){
+    					if (debugFlag)
+    						log.debug("Local switcher "+getName()+" for location "+rLoc.getName());
+    					return true;
+    				}
+    			}
+    			else for (int j=0; j<rLocations.size()-1; j++){
     				RouteLocation rLoc = route.getLocationById(rLocations.get(j));
     				if (rLoc.getName().equals(car.getLocationName()) 
     						&& rLoc.canPickup()  
