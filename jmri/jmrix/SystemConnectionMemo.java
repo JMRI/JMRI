@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -28,23 +28,6 @@ abstract public class SystemConnectionMemo {
             for (int x = 2; x<50; x++){
                 if(setUserName(userName+x)){
                     break;
-                }
-            }
-        }
-        //Adds and registered an internal connection to the system.
-        if (!this.getClass().getName().contains("InternalSystemConnectionMemo")){
-            java.util.List<Object> list 
-                    = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-            
-            if (list != null){
-                boolean internalSetup = false;
-                for (Object memo : list) {
-                    if (((jmri.jmrix.SystemConnectionMemo)memo).getClass().getName().equals("jmri.jmrix.internal.InternalSystemConnectionMemo"))
-                        internalSetup = true;
-                }
-                if (!internalSetup){
-                    jmri.jmrix.internal.InternalSystemConnectionMemo memo = new jmri.jmrix.internal.InternalSystemConnectionMemo();
-                    memo.configureManagers();
                 }
             }
         }
