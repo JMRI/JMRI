@@ -227,6 +227,7 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox.setMaximumSize(new Dimension(200,200));
         _addIconBox.addItem(new ComboBoxItem("RightTOEditor"));
         _addIconBox.addItem(new ComboBoxItem("LeftTOEditor"));
+        _addIconBox.addItem(new ComboBoxItem("SlipTOEditor"));
         _addIconBox.addItem(new ComboBoxItem("SensorEditor"));
         _addIconBox.addItem(new ComboBoxItem("SignalHeadEditor"));
         _addIconBox.addItem(new ComboBoxItem("SignalMastEditor"));
