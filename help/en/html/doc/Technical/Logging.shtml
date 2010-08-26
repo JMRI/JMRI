@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logging.shtml,v 1.3 2008-05-21 20:36:26 jacobsen Exp $ -->
+<!-- $Id: Logging.shtml,v 1.4 2010-08-26 18:31:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -72,6 +72,22 @@ to
 </PRE>
 log entries will be written to both the "console"
 by "A1", and a file by "R". 
+<P>
+The "default.lcf" file determines the destination and format
+of the logged messages.  By default, you get lines that look like:
+
+<CODE><PRE>
+514668 [AWT-EventQueue-0] WARN jmri.jmrit.powerpanel.PowerPane  - No power manager instance found, panel not active
+</PRE></CODE>
+The columns are:
+<ul>
+<li><CODE>514668 - time in milliseconds since the program started</CODE>
+<li><CODE>[AWT-EventQueue-0] - the thread that emitted the message, useful if you've created your own in a script</CODE>
+<li><CODE>WARN - the severity of the message</CODE>
+<li><CODE>jmri.jmrit.powerpanel.PowerPane - the place in the code (class name) that emitted the message</CODE>
+<li><CODE>No power manager instance found, panel not active - the message itself</CODE>
+</UL>
+
 <P>
 To log messages
 from a class named MyClass, add this to the bottom of the class file:
