@@ -25,7 +25,7 @@ import jmri.util.JmriJFrame;
  * @author	Bob Jacobsen    Copyright (C) 2007
  * @author  Matt Harris Copyright (C) 2008
  *
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class ReportContextAction extends AbstractAction {
 
@@ -45,7 +45,7 @@ public class ReportContextAction extends AbstractAction {
         pane.setEditable(false);
         pane.setLineWrap(true);
         pane.setWrapStyleWord(true);
-        pane.setColumns(80);
+        pane.setColumns(120);
 
         JScrollPane  scroll = new JScrollPane(pane);
         frame.add(scroll, BorderLayout.CENTER);
