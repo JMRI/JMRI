@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -982,7 +982,6 @@ public class LightTableAction extends AbstractTableAction {
     private int sensorInactiveIndex;
     private int turnoutClosedIndex;
     private int turnoutThrownIndex;
-    private JLabel stateBoxLabel = new JLabel( rb.getString("LightSensorSense") );
     private JButton createControl;
     private JButton updateControl;
     private JButton cancelControl;
