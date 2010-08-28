@@ -39,7 +39,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Dave Duchamp Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LightControl {
 
@@ -111,7 +111,6 @@ public class LightControl {
 	protected int _timeOff = 0;
     protected Turnout _controlTurnout = null;
     private java.beans.PropertyChangeListener _turnoutListener = null;
-    private boolean _timedActive = false;
     protected Sensor _timedControlSensor = null;
     private java.beans.PropertyChangeListener _timedSensorListener = null;
 	protected Timer _timedControlTimer = null;
