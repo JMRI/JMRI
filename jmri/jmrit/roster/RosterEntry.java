@@ -45,7 +45,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.47 $
+ * @version   $Revision: 1.48 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -588,26 +588,25 @@ public class RosterEntry {
             // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
             //we set the imagesize to 150x150 pixels
             int imagesize = 150;
-            if (icon!=null){
-                Image img = icon.getImage();
-                int width = img.getWidth(null);
-                int height = img.getHeight(null);
-                double widthratio = (double) width/imagesize;
-                double heightratio = (double) height/imagesize;
-                double ratio = Math.max(widthratio,heightratio);
-                width = (int)(width/ratio);
-                height = (int)(height/ratio);
-                Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 
-                ImageIcon newIcon = new ImageIcon(newImg);
-                w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
-                //Work out the number of line approx that the image takes up.
-                //We might need to pad some areas of the roster out, so that things
-                //look correct and text doesn't overflow into the image.
-                blanks = (newImg.getHeight(null)-w.getLineAscent())/w.getLineHeight();
-                textSpaceWithIcon = w.getCharactersPerLine()-((newImg.getWidth(null)/w.getCharWidth())) - indentWidth -1;
+            Image img = icon.getImage();
+            int width = img.getWidth(null);
+            int height = img.getHeight(null);
+            double widthratio = (double) width/imagesize;
+            double heightratio = (double) height/imagesize;
+            double ratio = Math.max(widthratio,heightratio);
+            width = (int)(width/ratio);
+            height = (int)(height/ratio);
+            Image newImg = img.getScaledInstance(width, height, java.awt.Image.SCALE_SMOOTH);
 
-            }
+            ImageIcon newIcon = new ImageIcon(newImg);
+            w.writeNoScale(newIcon.getImage(), new JLabel(newIcon));
+            //Work out the number of line approx that the image takes up.
+            //We might need to pad some areas of the roster out, so that things
+            //look correct and text doesn't overflow into the image.
+            blanks = (newImg.getHeight(null)-w.getLineAscent())/w.getLineHeight();
+            textSpaceWithIcon = w.getCharactersPerLine()-((newImg.getWidth(null)/w.getCharWidth())) - indentWidth -1;
+
         }
         printEntryDetails(w);
     }
