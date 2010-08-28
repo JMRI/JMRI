@@ -41,7 +41,7 @@ import javax.swing.table.TableColumnModel;
  *
  * @author			Bob Jacobsen   Copyright (C) 2007
  * @author			Pete Cressman   Copyright (C) 2009
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SensorGroupFrame extends jmri.util.JmriJFrame {
 
@@ -55,7 +55,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
     public final static String logixUserName = "System Logix";
     public final static String ConditionalSystemPrefix = logixSysName+"_SGC_";
     private final static String ConditionalUserPrefix = "Sensor Group ";
-    private static int ROW_HEIGHT;
+    private int rowHeight;
     
     SensorTableModel _sensorModel;
     JScrollPane _sensorScrollPane;
@@ -107,7 +107,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         uNameColumnS.setMinWidth(210);
         uNameColumnS.setPreferredWidth(260);
 
-        ROW_HEIGHT = sensorTable.getRowHeight();
+        rowHeight = sensorTable.getRowHeight();
         _sensorScrollPane = new JScrollPane(sensorTable);
         p2xs.add(_sensorScrollPane,BorderLayout.CENTER);
         getContentPane().add(p2xs);
@@ -305,7 +305,7 @@ public class SensorGroupFrame extends jmri.util.JmriJFrame {
         if (setRow < 0) {
             setRow = 0;
         }
-        _sensorScrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+        _sensorScrollPane.getVerticalScrollBar().setValue(setRow*rowHeight);
     }
 
     Logix getSystemLogix() {
