@@ -14,7 +14,7 @@ import jmri.managers.ManagerDefaultSelector;
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @since 2.9.7
  */
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
@@ -47,7 +47,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
 
     public boolean load(Element e) {
         @SuppressWarnings("unchecked")
-        List<Element> list = (List<Element>)e.getChildren("setting");
+        List<Element> list = e.getChildren("setting");
         
         for (Element s : list) {
             String name = s.getChild("value").getText();

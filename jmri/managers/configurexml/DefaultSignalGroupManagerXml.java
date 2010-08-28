@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -145,7 +145,7 @@ public class DefaultSignalGroupManagerXml
             String yesno;
             boolean inverse =false;
             int state =0x00;
-            Attribute a;
+
             String sys = getSystemName(e);
             
             m = sgm.newSignalGroup(sys);
