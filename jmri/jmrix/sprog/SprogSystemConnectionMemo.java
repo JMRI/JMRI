@@ -18,14 +18,14 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
-    public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sprogMode) {
+    public SprogSystemConnectionMemo(SprogTrafficController st, SprogMode sm) {
         super("S", "Sprog");
         this.st = st;
-        this.sprogMode = sprogMode;
+        sprogMode = sm;  // static
         register();
     }
     
