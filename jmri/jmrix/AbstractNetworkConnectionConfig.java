@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -44,7 +44,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         hostNameField.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.setHostName(hostNameField.getText());
-                p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", hostNameField.getText());
                 pref.disallowSave();
             }
         });
@@ -53,7 +53,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             }
             public void keyReleased(KeyEvent keyEvent) {
                adapter.setHostName(hostNameField.getText());
-               p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", (String) hostNameField.getText());
+               p.addComboBoxLastSelection(adapter.getClass().getName()+".hostname", hostNameField.getText());
                pref.disallowSave();
             }
             public void keyTyped(KeyEvent keyEvent) {
