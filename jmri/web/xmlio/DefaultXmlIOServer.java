@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -65,7 +65,6 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 }            
             } else if (type.equals("power")) {
                 // add a power element
-                PowerManager m = InstanceManager.powerManagerInstance();
                 Element n = new Element("item");
                 n.addContent(new Element("type").addContent("power"));
                 n.addContent(new Element("name").addContent("power"));
