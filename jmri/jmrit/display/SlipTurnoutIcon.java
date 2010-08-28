@@ -36,7 +36,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -639,7 +639,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
     * Displays a popup menu to select a given state, rather than cycling
     * through each state
-    * @param e
+    * @param popup
     */
     public boolean showPopUp(JPopupMenu popup) {
         if (isEditable()) {
