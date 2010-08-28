@@ -9,7 +9,7 @@ import java.util.List;
  * <P>
  *
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 
@@ -23,7 +23,6 @@ public class FileLocationPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      */
     public Element store(Object o) {
         Element e = new Element("fileLocations");
-        FileLocationPane g = (FileLocationPane) o;
         /*e.setAttribute("defaultScriptLocation", jmri.jmrit.XmlFile.scriptsDir());
         e.setAttribute("defaultUserLocation", jmri.jmrit.XmlFile.userFileLocationDefault());
         e.setAttribute("defaultThrottleLocation", jmri.jmrit.throttle.ThrottleFrame.getDefaultThrottleFolder());*/

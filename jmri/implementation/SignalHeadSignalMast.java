@@ -31,7 +31,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -58,7 +58,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         String prefix = parts[0];
         String system = parts[1];
         String mast = parts[2];
-        int start = prefix.length()+1+system.length()+1+mast.length();
+
         // if "mast" contains (, it's new style
         if (mast.indexOf('(') == -1) {
             // old style
