@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.86 $
+ * @version $Revision: 1.87 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -330,16 +330,16 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         try {
             adapter = (XmlAdapter)Class.forName(adapterName(o)).newInstance();
         } catch (java.lang.ClassNotFoundException ex1) {
-            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex1);
+            log.error("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex1);
         } catch (java.lang.IllegalAccessException ex2) {
-            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex2);
+            log.error("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex2);
         } catch (java.lang.InstantiationException ex3) {
-            log.fatal("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex3);
+            log.error("Cannot load configuration adapter for "+o.getClass().getName()+" due to "+ex3);
         }
         if (adapter!=null){
             return adapter.store(o);
         } else {
-            log.fatal("Cannot store configuration for "+o.getClass().getName());
+            log.error("Cannot store configuration for "+o.getClass().getName());
             return null;
         }
     }
