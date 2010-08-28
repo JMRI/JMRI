@@ -15,7 +15,7 @@ import java.util.Vector;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -181,11 +181,7 @@ public class FunctionLabelPane extends javax.swing.JPanel {
             s = "\n";
             w.write(s,0,s.length());
             w.setFontStyle(Font.PLAIN);
-            // Define a vector to store the names of variables that have been printed
-            // already.  If they have been printed, they will be skipped.
-            // Using a vector here since we don't know how many variables will
-            // be printed and it allows expansion as necessary
-            Vector<String> printedVariables = new Vector<String>(10,5);
+
             // index over variables
             for (int i=0; i<maxfunction; i++) {
                 String name = ""+i;
@@ -194,7 +190,6 @@ public class FunctionLabelPane extends javax.swing.JPanel {
                 String value = re.getFunctionLabel(i);
                 //Skip Blank functions
                 if (value!=null){
-                    String originalName = name;
 
                     //define index values for name and value substrings
                     int nameLeftIndex = 0;
