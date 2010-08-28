@@ -24,7 +24,7 @@ import org.jdom.Element;
  * Based on AbstractSensorManagerConfigXML.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2008, 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -154,25 +154,19 @@ public abstract class AbstractLightManagerConfigXML extends AbstractNamedBeanMan
             Light lgt = tm.newLight(sysName, userName);
             if (lgt!=null) {
                 // load common parts
-                loadCommon(lgt, lightList.get(i));                
+                loadCommon(lgt, lightList.get(i));  
+                
                 // variable intensity, transition attributes
-                double value = 0.0;
-                try {
-                    value = Double.parseDouble(lightList.get(i).getAttribute("minIntensity").getValue());
-                } catch (Exception e1) {}
+                double value;
+                value = Double.parseDouble(lightList.get(i).getAttribute("minIntensity").getValue());
                 lgt.setMinIntensity(value);
 
-                value = 1.0;
-                try {
-                    value = Double.parseDouble(lightList.get(i).getAttribute("maxIntensity").getValue());
-                } catch (Exception e2) {}
+                value = Double.parseDouble(lightList.get(i).getAttribute("maxIntensity").getValue());
                 lgt.setMaxIntensity(value);
 
-                value = 0.0;
-                try {
-                    value = Double.parseDouble(lightList.get(i).getAttribute("transitionTime").getValue());
-                } catch (Exception e2) {}
+                value = Double.parseDouble(lightList.get(i).getAttribute("transitionTime").getValue());
                 lgt.setTransitionTime(value);
+                
 				// provide for legacy light control - panel files written by 2.9.5 or before
 				if (lightList.get(i).getAttribute("controlType")!=null) {
 					// this is a legacy Light - create a LightControl from the input
