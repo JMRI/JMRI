@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.76 $ -->
+<!-- Revision $Revision: 1.77 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -60,8 +60,6 @@
     <pathelement location="../lib/RXTXcomm.jar" />
     <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/ch.ntb.usb.jar" />
-    <pathelement location="../lib/comm-rxtx.jar" />
-    <pathelement location="../lib/comm.jar" />
     <pathelement location="../lib/xercesImpl.jar" />
     <pathelement location="../lib/gluegen-rt.jar" />
     <pathelement location="../lib/javacsv.jar" />
@@ -92,8 +90,6 @@
     <pathelement location="../lib/RXTXcomm.jar" />
     <pathelement location="../lib/Serialio.jar" />
     <pathelement location="../lib/ch.ntb.usb.jar" />
-    <pathelement location="../lib/comm-rxtx.jar" />
-    <pathelement location="../lib/comm.jar" />
     <pathelement location="../lib/xercesImpl.jar" />
     <pathelement location="../lib/gluegen-rt.jar" />
     <pathelement location="../lib/javacsv.jar" />
@@ -780,6 +776,18 @@
 						outputFile="${jartarget}/jmri-fb.html" 
 						jvmargs="-Xmx1024m"
 						timeout="12000000">
+		<auxClasspath refid="findbugs.aux.class.path" />
+		<sourcePath path="${source}/" />
+	  <class location="${jartarget}/jmri.jar" />
+	</findbugs>
+ </target>
+		 
+ <target name="findbugs-ci" depends="dist" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
+ 	<findbugs home="${findbugs.home}"
+  	      	output="xml:withMessages"
+		outputFile="findbugs.xml" 
+		jvmargs="-Xmx1024m"
+		timeout="12000000">
 		<auxClasspath refid="findbugs.aux.class.path" />
 		<sourcePath path="${source}/" />
 	  <class location="${jartarget}/jmri.jar" />
