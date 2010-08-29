@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Ant.shtml,v 1.3 2009-07-28 14:47:07 jacobsen Exp $ -->
+<!-- $Id: Ant.shtml,v 1.4 2010-08-29 21:46:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -60,7 +60,7 @@ do:
 <code>
 <pre>
    ant clean
-   ant alltests
+   ant alltest
 </pre>
 </code>
 and make sure the tests run cleanly.
