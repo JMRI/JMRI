@@ -9,7 +9,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -44,6 +44,12 @@ public abstract class AbstractReporterManager extends AbstractManager
         if (log.isDebugEnabled()) log.debug("new Reporter:"
                                             +( (systemName==null) ? "null" : systemName)
                                             +";"+( (userName==null) ? "null" : userName));
+        if (systemName == null){
+        	log.error("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        	throw new IllegalArgumentException("SystemName cannot be null. UserName was "
+        			+( (userName==null) ? "null" : userName));
+        }
         // return existing if there is one
         Reporter s;
         if ( (userName!=null) && ((s = getByUserName(userName)) != null)) {
