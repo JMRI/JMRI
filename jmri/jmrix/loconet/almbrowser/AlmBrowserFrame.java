@@ -23,7 +23,7 @@ import jmri.util.StringUtil;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetListener {
 
@@ -207,8 +207,8 @@ public class AlmBrowserFrame extends jmri.util.JmriJFrame implements LocoNetList
 
     public void dispose() {
 	    // disconnect from LnTrafficController
-        tc = null;
         tc.removeLocoNetListener(~0, this);
+        tc = null;
         super.dispose();
     }
 
