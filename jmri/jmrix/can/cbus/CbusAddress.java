@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class CbusAddress {
 
@@ -116,6 +116,7 @@ public class CbusAddress {
      * Two addresses are equal if they result in the same numeric contents
      */
     public boolean equals(Object r) {
+        if (r == null) return false;
         if (! (r.getClass().equals(CbusAddress.class))) return false;
         CbusAddress opp = (CbusAddress) r;
         if (opp.aFrame.length != this.aFrame.length) return false;

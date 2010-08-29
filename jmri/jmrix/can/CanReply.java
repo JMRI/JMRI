@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.12 $
+ * @version         $Revision: 1.13 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -66,6 +66,7 @@ public class CanReply extends AbstractMRReply {
      * Note that a CanMessage and a CanReply can be tested for equality
      */
     public boolean equals(Object a) {
+        if (a == null) return false;
         if (a.getClass().equals(CanMessage.class)) {
             CanMessage m = (CanMessage) a;
             if ( (_header!=m.getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))

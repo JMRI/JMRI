@@ -19,7 +19,7 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Region {
     
@@ -94,6 +94,7 @@ public class Region {
     }
     
     public boolean equals(Object ro) {
+        if (ro == null) return false;
         try {
             Region r = (Region)ro;
             if (points.length != r.points.length) return false;

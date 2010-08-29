@@ -25,7 +25,7 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -78,6 +78,7 @@ public class CanMessage extends AbstractMRMessage {
      * Note that a CanMessage and a CanReply can be tested for equality
      */
     public boolean equals(Object a) {
+        if (a == null) return false;
         if (a.getClass().equals(CanMessage.class)) {
             CanMessage m = (CanMessage) a;
             if ( (_header!=m.getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
