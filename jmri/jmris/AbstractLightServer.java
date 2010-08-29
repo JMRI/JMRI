@@ -11,7 +11,7 @@ import jmri.Light;
  * Abstract interface between the a JMRI Light and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 abstract public class AbstractLightServer implements java.beans.PropertyChangeListener {
@@ -27,14 +27,14 @@ abstract public class AbstractLightServer implements java.beans.PropertyChangeLi
      abstract public void sendErrorStatus() throws IOException;
      abstract public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException;
 	
-    public void lightOff(java.lang.String Light) {
+    public void lightOff(java.lang.String lightName) {
 		// load address from switchAddrTextField
 		try {
 			if (light != null)
 				light.removePropertyChangeListener(this);
-			light= InstanceManager.lightManagerInstance().provideLight(Light);
+			light= InstanceManager.lightManagerInstance().provideLight(lightName);
 			if (light == null) {
-				log.error("Light " + light.getSystemName()
+				log.error("Light " + lightName
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);
@@ -49,15 +49,15 @@ abstract public class AbstractLightServer implements java.beans.PropertyChangeLi
 		}
 	}
 
-        public void lightOn(java.lang.String Light) {
+        public void lightOn(java.lang.String lightName) {
 		// load address from switchAddrTextField
 		try {
 			if (light!= null)
 				light.removePropertyChangeListener(this);
-			light= InstanceManager.lightManagerInstance().provideLight(Light);
+			light= InstanceManager.lightManagerInstance().provideLight(lightName);
 
 			if (light== null) {
-				log.error("Light " + light.getSystemName()
+				log.error("Light " + lightName
 						+ " is not available");
 			} else {
 				light.addPropertyChangeListener(this);

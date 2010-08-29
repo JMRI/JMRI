@@ -11,7 +11,7 @@ import jmri.Turnout;
  * Abstract interface between the a JMRI turnout and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 abstract public class AbstractTurnoutServer implements java.beans.PropertyChangeListener {
@@ -27,14 +27,14 @@ abstract public class AbstractTurnoutServer implements java.beans.PropertyChange
      abstract public void sendErrorStatus() throws IOException;
      abstract public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException;
 	
-    public void closeTurnout(java.lang.String Turnout) {
+    public void closeTurnout(java.lang.String turnoutName) {
 		// load address from switchAddrTextField
 		try {
 			if (turnout != null)
 				turnout.removePropertyChangeListener(this);
-			turnout = InstanceManager.turnoutManagerInstance().provideTurnout(Turnout);
+			turnout = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
 			if (turnout == null) {
-				log.error("Turnout " + turnout.getSystemName()
+				log.error("Turnout " + turnoutName
 						+ " is not available");
 			} else {
 				turnout.addPropertyChangeListener(this);
@@ -49,15 +49,15 @@ abstract public class AbstractTurnoutServer implements java.beans.PropertyChange
 		}
 	}
 
-        public void throwTurnout(java.lang.String Turnout) {
+        public void throwTurnout(java.lang.String turnoutName) {
 		// load address from switchAddrTextField
 		try {
 			if (turnout != null)
 				turnout.removePropertyChangeListener(this);
-			turnout = InstanceManager.turnoutManagerInstance().provideTurnout(Turnout);
+			turnout = InstanceManager.turnoutManagerInstance().provideTurnout(turnoutName);
 
 			if (turnout == null) {
-				log.error("Turnout " + turnout.getSystemName()
+				log.error("Turnout " + turnoutName
 						+ " is not available");
 			} else {
 				turnout.addPropertyChangeListener(this);
