@@ -69,7 +69,7 @@
       <turnoutname defines="red">For Signal IH2 R</turnoutname>
     </signalhead>
   </signalheads>
-  <routes class="jmri.configurexml.DefaultRouteManagerXml">
+  <routes class="jmri.managers.configurexml.DefaultRouteManagerXml">
     <route systemName="IR1" userName="random route 1" controlTurnout="IT101" controlTurnoutState="CLOSED">
       <routeOutputTurnout systemName="IT1" state="THROWN" />
       <routeOutputTurnout systemName="IT2" state="CLOSED" />
@@ -80,13 +80,13 @@
       <routeSensor systemName="IS101" mode="onInactive" />
     </route>
   </routes>
-  <conditionals class="jmri.configurexml.DefaultConditionalManagerXml">
+  <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
     <conditional systemName="IX1C1" userName="" antecedent="R1 and R2" logicType="1">
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="1" negated="no" type="1" systemName="User 1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.2 2009-10-16 07:16:24 jacobsen Exp $-->
+  <!--Written by JMRI version 2.7.6 on Thu Oct 15 23:16:50 PDT 2009 $Id: LoadFileTest277.xml,v 1.3 2010-08-29 18:51:57 jacobsen Exp $-->
 </layout-config>
 
