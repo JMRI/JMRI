@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3928,7 +3928,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateMemoryReference(String name) {
         Memory m = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             m = InstanceManager.memoryManagerInstance().getByUserName(name);
             if (m != null) {
                 //return m.getSystemName();
@@ -3950,7 +3950,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateTurnoutReference(String name) {
         Turnout t = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             t = InstanceManager.turnoutManagerInstance().getByUserName(name);
             if (t != null) {
                 //return t.getSystemName();
@@ -3971,7 +3971,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
             if (h != null) {
                 //return h.getSystemName();
@@ -3992,7 +3992,7 @@ public class LogixTableAction extends AbstractTableAction {
         SignalMast h = null;
         name = name.trim();
         try {
-            if ((name != null) && (name != "")) {
+            if ((name != null) && (!name.equals(""))) {
                 h = InstanceManager.signalMastManagerInstance().getByUserName(name);
                 if (h != null) {
                     //return h.getSystemName();
@@ -4012,7 +4012,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateWarrantReference(String name) {
         Warrant w = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             w = InstanceManager.warrantManagerInstance().getByUserName(name);
             if (w != null) {
                 //return h.getSystemName();
@@ -4033,7 +4033,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSensorReference(String name) {
         Sensor s = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             s = InstanceManager.sensorManagerInstance().getByUserName(name);
             if (s != null) {
                 //return s.getSystemName();
@@ -4054,7 +4054,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateLightReference(String name) {
         Light l = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             l = InstanceManager.lightManagerInstance().getByUserName(name);
             if (l != null) {
                 //return l.getSystemName();
@@ -4076,7 +4076,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateConditionalReference(String name) {
         Conditional c = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             c = _conditionalManager.getByUserName(_curLogix, name);
             if (c != null) {
                 return c.getSystemName();
@@ -4100,7 +4100,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateLogixReference(String name) {
         Logix l = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             l = _logixManager.getByUserName(name);
             if (l != null) {
                 return name;
@@ -4120,7 +4120,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateRouteReference(String name) {
         Route r = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             r = InstanceManager.routeManagerInstance().getByUserName(name);
             if (r != null) {
                 return name;
@@ -4138,7 +4138,7 @@ public class LogixTableAction extends AbstractTableAction {
     String validateAudioReference(String name) {
         Audio a = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             a = InstanceManager.audioManagerInstance().getByUserName(name);
             if (a != null) {
                 return name;
@@ -4160,7 +4160,7 @@ public class LogixTableAction extends AbstractTableAction {
         Conditional c = null;
 
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             c = _conditionalManager.getByUserName(_curLogix, name);
             if (c != null) {
                 return c;
@@ -4183,7 +4183,7 @@ public class LogixTableAction extends AbstractTableAction {
     Memory getMemory(String name) {
         Memory m = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             m = InstanceManager.memoryManagerInstance().getByUserName(name);
             if (m != null) {
                 return m;
@@ -4203,7 +4203,7 @@ public class LogixTableAction extends AbstractTableAction {
     Light getLight(String name) {
         Light l = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             l = InstanceManager.lightManagerInstance().getByUserName(name);
             if (l != null) {
                 return l;
@@ -4222,7 +4222,7 @@ public class LogixTableAction extends AbstractTableAction {
     Sensor getSensor(String name) {
         Sensor s = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             s = InstanceManager.sensorManagerInstance().getByUserName(name);
             if (s != null) {
                 return s;
@@ -4241,7 +4241,7 @@ public class LogixTableAction extends AbstractTableAction {
     Turnout getTurnout(String name) {
         Turnout t = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             t = InstanceManager.turnoutManagerInstance().getByUserName(name);
             if (t != null) {
                 return t;
@@ -4260,7 +4260,7 @@ public class LogixTableAction extends AbstractTableAction {
     SignalHead getSignalHead(String name) {
         SignalHead h = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
             if (h != null) {
                 return h;
@@ -4279,7 +4279,7 @@ public class LogixTableAction extends AbstractTableAction {
     SignalMast getSignalMast(String name) {
         SignalMast h = null;
         name = name.trim();
-        if ((name != null) && (name != "")) {
+        if ((name != null) && (!name.equals(""))) {
             h = InstanceManager.signalMastManagerInstance().getByUserName(name);
             if (h != null) {
                 return h;
