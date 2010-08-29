@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * Decimal representation of a value.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @version             $Revision: 1.25 $
+ * @version             $Revision: 1.26 $
  *
  */
 public class DecVariableValue extends VariableValue
@@ -73,7 +73,7 @@ public class DecVariableValue extends VariableValue
             int newVal = Integer.valueOf(_value.getText()).intValue();
             int oldVal = Integer.valueOf(oldContents).intValue();
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
         }
     }
 
@@ -105,7 +105,7 @@ public class DecVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("actionPerformed");
         int newVal = Integer.valueOf(_value.getText()).intValue();
         updatedTextField();
-        prop.firePropertyChange("Value", null, new Integer(newVal));
+        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
@@ -183,7 +183,7 @@ public class DecVariableValue extends VariableValue
         if (oldVal != value) {
             _value.setText(""+value);
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
         }
     }
 

@@ -16,7 +16,7 @@ import java.util.Vector;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -126,7 +126,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
 
             // notify  (this used to be before setting the values)
             if (log.isDebugEnabled()) log.debug(label()+" about to firePropertyChange");
-            prop.firePropertyChange("Value", null, new Integer(oldVal));
+            prop.firePropertyChange("Value", null, Integer.valueOf(oldVal));
             if (log.isDebugEnabled()) log.debug(label()+" returned to from firePropertyChange");
         }
         if (log.isDebugEnabled()) log.debug(label()+" end action event saw oldCv="+oldCv+" newVal="+newVal+" newCv="+newCv);
@@ -192,7 +192,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
-            prop.firePropertyChange("Value", null, new Integer(value));
+            prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
     public Component getRep(String format) {
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.25 $
+     * @version         $Revision: 1.26 $
      */
     public class VarComboBox extends JComboBox {
 

@@ -23,7 +23,7 @@ import javax.swing.JTextField;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  */
 public class CvValue extends AbstractValue implements ProgListener {
 
@@ -87,7 +87,7 @@ public class CvValue extends AbstractValue implements ProgListener {
     Color getColor() { return _tableEntry.getBackground(); }
 
     protected void notifyValueChange(int value) {
-        prop.firePropertyChange("Value", null, new Integer(value));
+        prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
     /**
      * Edit a new value into the CV. Only use this for external edits, e.g. set form a GUI,
@@ -131,7 +131,7 @@ public class CvValue extends AbstractValue implements ProgListener {
         case DIFF: setColor(COLOR_DIFF); break;
         default:      log.error("Inconsistent state: "+_state);
         }
-        if (oldstate != state) prop.firePropertyChange("State", new Integer(oldstate), new Integer(state));
+        if (oldstate != state) prop.firePropertyChange("State", Integer.valueOf(oldstate), Integer.valueOf(state));
     }
 
     private int _state = 0;

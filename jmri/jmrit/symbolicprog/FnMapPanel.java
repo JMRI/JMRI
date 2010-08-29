@@ -31,7 +31,7 @@ import jmri.util.jdom.LocaleSelector;
  * Although support for the "CV label column" is still here, its turned off now.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class FnMapPanel extends JPanel {
     // columns
@@ -141,7 +141,7 @@ public class FnMapPanel extends JPanel {
                 int iVar = _varModel.findVarIndex(name);
                 if (iVar>=0) {
                     if (log.isDebugEnabled()) log.debug("Process var: "+name+" as index "+iVar);
-                    varsUsed.add(new Integer(iVar));
+                    varsUsed.add(Integer.valueOf(iVar));
                     JComponent j = (JComponent)(_varModel.getRep(iVar, "checkbox"));
                     int row = firstFn+iFn;
                     int column = firstOut+iOut;

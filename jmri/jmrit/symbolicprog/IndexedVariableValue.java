@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2010
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -77,8 +77,8 @@ public class IndexedVariableValue extends VariableValue
             int newVal = (Integer.valueOf(_value.getText()).intValue());
             int oldVal = (Integer.valueOf(oldContents).intValue());
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal),
-                                    new Integer(newVal));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal),
+                                    Integer.valueOf(newVal));
         }
     }
 
@@ -105,7 +105,7 @@ public class IndexedVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("actionPerformed");
         int newVal = (Integer.valueOf(_value.getText()).intValue());
         updatedTextField();
-        prop.firePropertyChange("Value", null, new Integer(newVal));
+        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
@@ -164,13 +164,13 @@ public class IndexedVariableValue extends VariableValue
             }
             b.setSize(b.getWidth(),28);
             Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
-            labelTable.put( new Integer( 0 ), new JLabel("Off") );
+            labelTable.put( Integer.valueOf( 0 ), new JLabel("Off") );
             if ( _maxVal == 63 ) {   // this if for the QSI mute level, not very universal, needs work
-                labelTable.put( new Integer( _maxVal/2 ), new JLabel("25%") );
-                labelTable.put( new Integer( _maxVal ), new JLabel("50%") );
+                labelTable.put( Integer.valueOf( _maxVal/2 ), new JLabel("25%") );
+                labelTable.put( Integer.valueOf( _maxVal ), new JLabel("50%") );
             } else {
-                labelTable.put( new Integer( _maxVal/2 ), new JLabel("50%") );
-                labelTable.put( new Integer( _maxVal ), new JLabel("100%") );
+                labelTable.put( Integer.valueOf( _maxVal/2 ), new JLabel("50%") );
+                labelTable.put( Integer.valueOf( _maxVal ), new JLabel("100%") );
             }
             b.setLabelTable( labelTable );
             b.setPaintTicks(true);
@@ -239,7 +239,7 @@ public class IndexedVariableValue extends VariableValue
         if (oldVal != value) {
             _value.setText(""+value);
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
         }
     }
 
@@ -480,7 +480,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.19 $
+     * @version     $Revision: 1.20 $
      */
     public class VarTextField extends JTextField {
 

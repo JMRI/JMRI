@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.36 $
+ * @version  $Revision: 1.37 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -210,7 +210,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
         case DIFF: 		setColor(COLOR_DIFF); break;
         default: log.error("Inconsistent state: "+_state);
         }
-        if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", new Integer(_state), new Integer(state));
+        if (_state != state || _state == UNKNOWN) prop.firePropertyChange("State", Integer.valueOf(_state), Integer.valueOf(state));
         _state = state;
     }
     private int _state = UNKNOWN;

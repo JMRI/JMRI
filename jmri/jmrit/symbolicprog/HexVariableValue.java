@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 /**
  * LIke DecVariableValue, except that the string representation is in hexadecimal
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class HexVariableValue extends DecVariableValue {
 
@@ -42,7 +42,7 @@ public class HexVariableValue extends DecVariableValue {
                 if (log.isDebugEnabled()) log.debug("actionPerformed");
                 int newVal = Integer.valueOf(_value.getText(),16).intValue();
                 updatedTextField();
-                prop.firePropertyChange("Value", null, new Integer(newVal));
+                prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
         }
 
         public void setValue(int value) {
@@ -53,7 +53,7 @@ public class HexVariableValue extends DecVariableValue {
                 _value.setText(Integer.toHexString(value));
                 if (oldVal != value || getState() == VariableValue.UNKNOWN)
                         actionPerformed(null);
-                        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+                        prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
         }
 
         // initialize logging

@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -133,7 +133,7 @@ public class IndexedEnumVariableValue extends VariableValue
         if (newCv != oldCv) {
             cv.setValue(newCv); // to prevent CV going EDITED during loading of decoder file
             // notify
-            prop.firePropertyChange("Value", null, new Integer(getIntValue()));
+            prop.firePropertyChange("Value", null, Integer.valueOf(getIntValue()));
         }
     }
 
@@ -196,7 +196,7 @@ public class IndexedEnumVariableValue extends VariableValue
         selectValue(value);
 
         if ((oldVal != value) || (getState() == VariableValue.UNKNOWN))
-            prop.firePropertyChange("Value", null, new Integer(value));
+            prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
     public Component getRep(String format) {
@@ -486,7 +486,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.15 $
+     * @version $Revision: 1.16 $
      */
     public class iVarComboBox extends JComboBox {
 

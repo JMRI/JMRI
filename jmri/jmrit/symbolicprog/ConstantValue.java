@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -79,7 +79,7 @@ public class ConstantValue extends VariableValue {
         int oldVal = _value.getSelectedIndex();
         _value.setSelectedIndex(value);
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
-            prop.firePropertyChange("Value", null, new Integer(value));
+            prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
     public Component getRep(String format) {

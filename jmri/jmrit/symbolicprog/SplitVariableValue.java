@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -119,7 +119,7 @@ public class SplitVariableValue extends VariableValue
             int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
             int oldVal = ((Integer.valueOf(oldContents).intValue())-mOffset)/mFactor;
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
         }
     }
 
@@ -161,7 +161,7 @@ public class SplitVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" actionPerformed");
         int newVal = ((Integer.valueOf(_value.getText()).intValue())-mOffset)/mFactor;
         updatedTextField();
-        prop.firePropertyChange("Value", null, new Integer(newVal));
+        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
@@ -211,7 +211,7 @@ public class SplitVariableValue extends VariableValue
         _value.setText(String.valueOf( value*mFactor + mOffset));
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
             actionPerformed(null);
-        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value*mFactor + mOffset));
+        prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value*mFactor + mOffset));
         if (log.isDebugEnabled()) log.debug("CV "+getCvNum()+","+getSecondCvNum()+" exit setValue "+value);
     }
 
@@ -375,7 +375,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.25 $
+     * @version     $Revision: 1.26 $
      */
     public class VarTextField extends JTextField {
 

@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -221,7 +221,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         if (log.isDebugEnabled()) log.debug("action event: "+e);
 
         // notify
-        prop.firePropertyChange("Value", null, new Integer(getIntValue()));
+        prop.firePropertyChange("Value", null, Integer.valueOf(getIntValue()));
         // Here for new values; set as needed
         selectValue(getIntValue());
     }
@@ -264,7 +264,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
         selectValue(value);
 
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
-            prop.firePropertyChange("Value", null, new Integer(value));
+            prop.firePropertyChange("Value", null, Integer.valueOf(value));
     }
 
     /**

@@ -14,7 +14,7 @@ import javax.swing.text.Document;
 /**
  * Extends VariableValue to represent a NMRA long address
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  *
  */
 public class LongAddrVariableValue extends VariableValue
@@ -73,7 +73,7 @@ public class LongAddrVariableValue extends VariableValue
             int newVal = Integer.valueOf(_value.getText()).intValue();
             int oldVal = Integer.valueOf(oldContents).intValue();
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(newVal));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
         }
     }
 
@@ -100,7 +100,7 @@ public class LongAddrVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("actionPerformed");
         int newVal = Integer.valueOf(_value.getText()).intValue();
         updatedTextField();
-        prop.firePropertyChange("Value", null, new Integer(newVal));
+        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
@@ -143,7 +143,7 @@ public class LongAddrVariableValue extends VariableValue
         _value.setText(""+value);
         if (oldVal != value || getState() == VariableValue.UNKNOWN)
             actionPerformed(null);
-        prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+        prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
     }
 
     Color _defaultColor;

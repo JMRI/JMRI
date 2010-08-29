@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.11 $
+ * @version  $Revision: 1.12 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -100,8 +100,8 @@ public class IndexedPairVariableValue extends VariableValue
             int newVal = Integer.valueOf(_value.getText()).intValue();
             int oldVal = Integer.valueOf(oldContents).intValue();
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal),
-                                    new Integer(newVal));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal),
+                                    Integer.valueOf(newVal));
         }
     }
 
@@ -136,7 +136,7 @@ public class IndexedPairVariableValue extends VariableValue
         if (log.isDebugEnabled()) log.debug("actionPerformed");
         int newVal = ((Integer.valueOf(_value.getText()).intValue())-_Offset)/_Factor;
         updatedTextField();
-        prop.firePropertyChange("Value", null, new Integer(newVal));
+        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
     }
 
     /** FocusListener implementations */
@@ -183,7 +183,7 @@ public class IndexedPairVariableValue extends VariableValue
         if (oldVal != value) {
             _value.setText(""+value);
             updatedTextField();
-            prop.firePropertyChange("Value", new Integer(oldVal), new Integer(value));
+            prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
         }
     }
 
@@ -494,7 +494,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.11 $
+     * @version     $Revision: 1.12 $
      */
     public class VarTextField extends JTextField {
 
