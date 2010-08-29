@@ -300,7 +300,7 @@ public class JTextPaneAppender extends AppenderSkeleton
      */
     public void setFontSize( int aSize, Level aLevel )
     {
-        MutableAttributeSet set = myAttributeSet.get( aLevel );
+        MutableAttributeSet set = myAttributeSet.get( aLevel.toString() );
         if ( set != null )
         {
             StyleConstants.setFontSize( set, aSize );
@@ -314,7 +314,7 @@ public class JTextPaneAppender extends AppenderSkeleton
      */
     public int getFontSize( Level aLevel )
     {
-        AttributeSet attrSet = myAttributeSet.get( aLevel );
+        AttributeSet attrSet = myAttributeSet.get( aLevel.toString() );
         if ( attrSet == null )
         {
             throw new IllegalArgumentException( "Unhandled Level: " + aLevel.toString() );
@@ -346,7 +346,7 @@ public class JTextPaneAppender extends AppenderSkeleton
      */
     public void setFontName( String aName, Level aLevel )
     {
-        MutableAttributeSet set = myAttributeSet.get( aLevel );
+        MutableAttributeSet set = myAttributeSet.get( aLevel.toString() );
         if ( set != null )
         {
             StyleConstants.setFontFamily( set, aName );
@@ -361,7 +361,7 @@ public class JTextPaneAppender extends AppenderSkeleton
      */
     public String getFontName( Level aLevel )
     {
-        AttributeSet attrSet = myAttributeSet.get( aLevel );
+        AttributeSet attrSet = myAttributeSet.get( aLevel.toString() );
         
         if ( attrSet == null )
         {
