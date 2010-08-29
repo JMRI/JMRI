@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SerialAddress {
 
@@ -351,22 +351,22 @@ public class SerialAddress {
                 } else return true;
             }
             subtype = subtype.toUpperCase();
-            if (subtype == "A") // advanced serial occ
+            if (subtype.equals("A")) // advanced serial occ
                 if ( (bit<1) || (bit>24) ){
                     log.error("invalid bit number "+bit+" in "+systemName);
                     return false;
                 }
-            else if (subtype == "M") // advanced serial motion
+            else if (subtype.equals("M")) // advanced serial motion
                 if ( (bit<1) || (bit>24) ){
                     log.error("invalid bit number "+bit+" in "+systemName);
                     return false;
                 }
-            else if (subtype == "S") // old serial
+            else if (subtype.equals("S")) // old serial
                 if ( (bit<1) || (bit>24) ){
                     log.error("invalid bit number "+bit+" in "+systemName);
                     return false;
                 }
-            if (subtype == "P") // parallel
+            if (subtype.equals("P")) // parallel
                 if ( (bit<1) || (bit>96) ){
                     log.error("invalid bit number "+bit+" in "+systemName);
                     return false;
