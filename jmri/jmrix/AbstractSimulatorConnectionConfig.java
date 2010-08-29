@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 
 //
@@ -106,23 +106,10 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         init = true;
     }
 
-    protected JComboBox opt1Box = new JComboBox();
-    protected JLabel opt1BoxLabel = new JLabel();
     
-    protected JComboBox opt2Box = new JComboBox();
-
-    protected JLabel opt2BoxLabel = new JLabel();
-    protected JCheckBox showAdvanced = new JCheckBox("Additional Connection Settings");
-    protected String[] opt1List;
-    protected String[] opt2List;
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
-    protected JPanel _details;
 
-    protected JLabel systemPrefixLabel = new JLabel("Connection Prefix");
-    protected JLabel connectionNameLabel = new JLabel("Connection Name");
-    protected JTextField systemPrefixField = new JTextField();
-    protected JTextField connectionNameField = new JTextField();
     protected String systemPrefix;
     protected String connectionName;
 
@@ -138,7 +125,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     static java.util.ResourceBundle rb = 
         java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-    protected int NUMOPTIONS = 0;
     
 	public void loadDetails(final JPanel details) {
         _details = details;
