@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -127,6 +127,8 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     private double intPidGainPv = 0.02;
     private double intPidGainIv = 0.001;
     private double intPidGainDv = 0.01;
+    
+    private double rateChgMinimum = 0.001;
     
     private int nceSyncInitStateCounter = 0;	// NCE master sync initialzation state machine
     private int	nceSyncRunStateCounter = 0;	// NCE master sync runtime state machine
@@ -1136,7 +1138,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
                 txt = txt + " " + priorOffsetErrors.get(i).doubleValue();
             }
             log.debug("priorOffsetErrors: " + txt);
-            log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now);
+            log.debug("syncOffset: " + syncInterval + " avgDiff: " + avgDiff + " @ " + now.toString());
         }
     }
     
@@ -1224,7 +1226,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
             // don't try to drift, just reset
             nceSyncInitStateCounter = 1;
             nceSyncInitStates();
-        } else if (oldInternalRate != newInternalRate) {
+        } else if (Math.abs(oldInternalRate - newInternalRate) >= rateChgMinimum) {
             try {
                 internalClock.setRate(newInternalRate);
                 if (log.isDebugEnabled()){
