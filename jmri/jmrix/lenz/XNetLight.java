@@ -16,7 +16,7 @@ import jmri.Turnout;
  *  Based in part on SerialLight.java
  *
  * @author      Paul Bender Copyright (C) 2008-2010
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class XNetLight extends AbstractLight implements XNetListener {
 
@@ -110,8 +110,8 @@ public class XNetLight extends AbstractLight implements XNetListener {
 
         // get the right packet
         XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mAddress,
-                                                  (newState & ON)!=0,
-                                                  (newState & OFF)!=0,
+                                                  newState == ON,
+                                                  newState == OFF,
                                                   true);
         InternalState=COMMANDSENT;         
         tc.sendXNetMessage(msg, this);
