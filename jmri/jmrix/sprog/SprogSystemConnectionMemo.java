@@ -18,7 +18,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -40,7 +40,7 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
     public void setSprogMode(SprogMode mode){ sprogMode=mode; }
     public SprogMode getSprogMode() { return sprogMode; }
-    private static SprogMode sprogMode;
+    private SprogMode sprogMode;
 
     jmri.jmrix.swing.ComponentFactory cf = null;
       
