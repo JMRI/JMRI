@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -96,7 +96,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
             				}else{
             					// turnout feedback isn't monitoring, but listen in case it changes
              					mControlTurnout.addPropertyChangeListener(this);
-            					if (log.isDebugEnabled() & debugTurnoutMonitor) {
+            					if (log.isDebugEnabled() && debugTurnoutMonitor) {
             						log.debug("add turnout to listener NT" + NTnum  
             								+ " Feed back mode: " + mControlTurnout.getFeedbackMode());
             					}
@@ -154,7 +154,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     public void reply(NceReply r) {
 		if (r.getNumDataElements() == REPLY_LEN) {
 
-			if (log.isDebugEnabled() & debugTurnoutMonitor == true) {
+			if (log.isDebugEnabled() && debugTurnoutMonitor == true) {
 				log.debug("memory poll reply received for memory block "
 						+ currentBlock + ": " + r.toString());
 			}
