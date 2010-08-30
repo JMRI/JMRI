@@ -15,19 +15,25 @@ import java.util.ResourceBundle;
  * Station.
  *
  * @author			Paul Bender    Copyright (C) 2005
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LZ100Action extends AbstractAction {
 
-    public LZ100Action(String s) { super(s);}
-    public LZ100Action() {
-        this("LZ100 Configuration Manager");
+    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+
+    public LZ100Action(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+       super(s);
+       _memo=memo;
+    }
+
+    public LZ100Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+        this("LZ100 Configuration Manager",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
         // create an LZ100Frame
  	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
-        LZ100Frame f = new LZ100Frame(rb.getString("LZ100Config"));
+        LZ100Frame f = new LZ100Frame(rb.getString("LZ100Config"),_memo);
         f.setVisible(true);
     }
 }

@@ -15,15 +15,15 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LIUSB.
  *
  * @author			Paul Bender  Copyright (C) 2009-2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class LIUSBConfigFrame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    public LIUSBConfigFrame() {
+    public LIUSBConfigFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("LIUSB Configuration Utility");
-        tc=XNetTrafficController.instance();
+        tc=memo.getXNetTrafficController();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();

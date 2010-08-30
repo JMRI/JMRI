@@ -17,7 +17,7 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -68,7 +68,8 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.srcp.SystemMenu");
         addMenu("jmri.jmrix.tmcc.TMCCMenu");
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
-        addMenu("jmri.jmrix.lenz.XNetMenu");
+        // XPressNet Allows Multiple Connections now
+        add( new jmri.jmrix.lenz.swing.XNetMenu(null));
         addMenu("jmri.jmrix.xpa.XpaMenu");
         addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());

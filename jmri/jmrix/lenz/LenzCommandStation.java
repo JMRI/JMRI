@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  * to the a Lenz Command Station, on an XPressNet network.
  *
  * @author			Bob Jacobsen Copyright (C) 2001 Portions by Paul Bender Copyright (C) 2003
- * @version			$Revision: 2.13 $
+ * @version			$Revision: 2.14 $
  */
 public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.CommandStation {
 
@@ -177,10 +177,27 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation,jmri.Com
      */
     public void sendPacket(byte[] packet, int repeats) {
 
+        if(_tc==null)
+        {
+           log.error("Send Packet Called without setting traffic controller");
+           return;
+        }
+
 	XNetMessage msg=XNetMessage.getNMRAXNetMsg(packet);
         for(int i=0;i<repeats;i++)
-	   XNetTrafficController.instance().sendXNetMessage(msg,null);
+	   _tc.sendXNetMessage(msg,null);
     }
+
+    /*
+     * For the command station interface, we need to set the traffic 
+     * controller.
+     */
+    public void setTrafficController(XNetTrafficController tc)
+    {
+       _tc=tc;
+    }
+
+   private XNetTrafficController _tc = null;
 
     /*
      * We need to register for logging

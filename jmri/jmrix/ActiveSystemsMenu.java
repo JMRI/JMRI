@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -109,9 +109,6 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
 
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
-
         if (jmri.jmrix.xpa.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
 
@@ -185,8 +182,6 @@ public class ActiveSystemsMenu extends JMenu {
             m.add(getMenu("jmri.jmrix.tmcc.TMCCMenu"));
         if (jmri.jmrix.wangrow.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.wangrow.WangrowMenu"));
-        if (jmri.jmrix.lenz.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.lenz.XNetMenu"));
         if (jmri.jmrix.xpa.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.xpa.XpaMenu"));
         if (jmri.jmrix.zimo.ActiveFlag.isActive())

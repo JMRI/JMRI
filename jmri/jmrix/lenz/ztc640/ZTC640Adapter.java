@@ -25,7 +25,7 @@ import jmri.util.SerialUtil;
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -289,6 +289,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
     private boolean opened = false;
     InputStream serialStream = null;
     
+    @Deprecated
     static public ZTC640Adapter instance() {
         if (mInstance == null) mInstance = new ZTC640Adapter();
         return mInstance;

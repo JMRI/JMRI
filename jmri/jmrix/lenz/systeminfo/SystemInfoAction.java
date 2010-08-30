@@ -14,13 +14,18 @@ import javax.swing.AbstractAction;
  * and the command station
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 2.1 $
+ * @version			$Revision: 2.2 $
  */
 public class SystemInfoAction extends AbstractAction {
 
-    public SystemInfoAction(String s) { super(s);}
-    public SystemInfoAction() {
-        this("Xpressnet System Information");
+    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
+
+    public SystemInfoAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
+       super(s);
+       _memo=memo;
+    }
+    public SystemInfoAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+        this("Xpressnet System Information",memo);
     }
 
     public void actionPerformed(ActionEvent e) {

@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009-2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -181,6 +181,7 @@ public class LIUSBServerAdapter extends XNetPortController {
 	 * Local method to do specific configuration
 	 */
 
+        @Deprecated
 	static public LIUSBServerAdapter instance() {
 		if (mInstance == null) mInstance = new LIUSBServerAdapter();
 		return mInstance;

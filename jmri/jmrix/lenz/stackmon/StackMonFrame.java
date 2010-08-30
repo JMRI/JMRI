@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -49,7 +49,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
     protected XNetTrafficController tc = null;
 
-    public StackMonFrame() {
+    public StackMonFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super();
 	    // Configure GUI components
 
@@ -158,7 +158,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
 
         pack();
 
-        tc=XNetTrafficController.instance();
+        tc=memo.getXNetTrafficController();
 
 	tc.addXNetListener(~0,this);
     }

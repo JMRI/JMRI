@@ -10,7 +10,7 @@ package jmri.jmrix.lenz;
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
  * @author			Giorgio Terdina  Copyright (C) 2007
- * @version			$Revision: 2.14 $
+ * @version			$Revision: 2.15 $
  */
 public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -36,6 +36,9 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                 /* the "raw" Command Station only works on systems that support   
                    Ops Mode Programming */
                  jmri.InstanceManager.setCommandStation(systemMemo.getXNetTrafficController().getCommandStation());
+                 systemMemo.getXNetTrafficController()
+                           .getCommandStation()
+                           .setTrafficController(systemMemo.getXNetTrafficController());
                 /* the consist manager has to be set up AFTER the programmer, to 
                    prevent the default consist manager from being loaded on top of it */
                 jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
@@ -67,6 +70,9 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                        Ops Mode Programming */
                     jmri.InstanceManager.setCommandStation(systemMemo.getXNetTrafficController()
                                                            .getCommandStation());
+                    systemMemo.getXNetTrafficController()
+                           .getCommandStation()
+                           .setTrafficController(systemMemo.getXNetTrafficController());
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
                     jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));
@@ -90,6 +96,9 @@ public class XNetInitilizationManager extends AbstractXNetInitilizationManager{
                        Ops Mode Programming */
                     jmri.InstanceManager.setCommandStation(systemMemo.getXNetTrafficController()
                                                            .getCommandStation());
+                    systemMemo.getXNetTrafficController()
+                           .getCommandStation()
+                           .setTrafficController(systemMemo.getXNetTrafficController());
                     /* the consist manager has to be set up AFTER the programmer, to 
                        prevent the default consist manager from being loaded on top of it */
                     jmri.InstanceManager.setConsistManager(new jmri.jmrix.lenz.XNetConsistManager(systemMemo));

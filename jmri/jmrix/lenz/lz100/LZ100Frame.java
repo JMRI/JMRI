@@ -12,21 +12,21 @@ import javax.swing.*;
  * utiliy is defined in {@link LZ100InternalFrame}
  *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class LZ100Frame extends jmri.util.JmriJFrame {
 
     //private ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.lenz.lz100.LZ100Bundle");
 
-    public LZ100Frame() {
-	    this("LZ100 Configuration Utility");
+    public LZ100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+	    this("LZ100 Configuration Utility",memo);
     }
 
-    public LZ100Frame(String FrameName) {
+    public LZ100Frame(String FrameName,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(FrameName);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
- 	javax.swing.JInternalFrame LZ100IFrame=new LZ100InternalFrame();
+ 	javax.swing.JInternalFrame LZ100IFrame=new LZ100InternalFrame(memo);
 
 	javax.swing.JPanel pane0 = new JPanel();
 	pane0.add(LZ100IFrame);

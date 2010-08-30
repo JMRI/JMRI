@@ -15,15 +15,15 @@ import jmri.jmrix.lenz.*;
  * port speed used to communicate with the LI101.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 public class LI101Frame extends jmri.util.JmriJFrame implements XNetListener {
 
     protected XNetTrafficController tc = null;
 
-    public LI101Frame() {
+    public LI101Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super("LI101 Configuration Utility");
-        tc = XNetTrafficController.instance();
+        tc = memo.getXNetTrafficController();
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         JPanel pane0 = new JPanel();

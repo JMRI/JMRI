@@ -14,18 +14,25 @@ import javax.swing.AbstractAction;
  * the {@link jmri.jmrix.lenz.li101.LI101PortFrame} class.
  *
  * @author			Paul Bender    Copyright (C) 2003
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 public class LI101Action extends AbstractAction {
 
-    public LI101Action(String s) { super(s);}
-    public LI101Action() {
-        this("LI101 Configuration Manager");
+    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo = null;
+
+    public LI101Action(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) 
+    { 
+      super(s);
+      _memo=memo;
+    }
+
+    public LI101Action(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+        this("LI101 Configuration Manager",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
         // create an LI101Frame
-        LI101Frame f = new LI101Frame();
+        LI101Frame f = new LI101Frame(_memo);
         f.setVisible(true);
     }
 }

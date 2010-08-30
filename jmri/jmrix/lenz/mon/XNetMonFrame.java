@@ -13,15 +13,15 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.30 $
+ * @version         $Revision: 2.31 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
         protected XNetTrafficController tc = null;
 
-	public XNetMonFrame() {
+	public XNetMonFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 		super();
-                tc=XNetTrafficController.instance();
+                tc=memo.getXNetTrafficController();
 	}
 
 	protected String title() { return "XpressNet Traffic"; }

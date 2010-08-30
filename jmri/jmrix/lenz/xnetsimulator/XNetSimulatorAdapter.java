@@ -32,7 +32,7 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009-2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -136,7 +136,8 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
     public String[] validBaudRates() {
         return null;
     }
-    
+   
+    @Deprecated 
     static public XNetSimulatorAdapter instance() {
         if (mInstance == null) mInstance = new XNetSimulatorAdapter();
         return mInstance;
@@ -147,7 +148,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
        // and writes modified data to the output pipe.  This is the heart
        // of the command station simulation.
        if(log.isDebugEnabled()) log.debug("Simulator Thread Started");
-       ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+       ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
        for(;;){
          XNetMessage m=readMessage();
          if(log.isDebugEnabled()) log.debug("Simulator Thread received message " + m.toString() );

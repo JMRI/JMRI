@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender  Copyright: Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -52,8 +52,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     public boolean load(Element e) {
     	boolean result = true;
         // start the "connection"
-        jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter adapter
-                = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter();
+        adapter = new jmri.jmrix.lenz.xnetsimulator.XNetSimulatorAdapter();
         adapter.configure();
         // register, so can be picked up
         getInstance();
@@ -63,7 +62,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
 
     protected void getInstance() {
-        adapter = XNetSimulatorAdapter.instance();
+        if(adapter==null){
+           adapter = new XNetSimulatorAdapter();
+           adapter.configure();
+        }
     }
 
     protected void register() {

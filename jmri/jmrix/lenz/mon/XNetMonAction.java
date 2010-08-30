@@ -6,7 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @author			Paul Bender     Copyright (C) 2008
- * @version         $Revision: 2.4 $
+ * @version         $Revision: 2.5 $
  */
 
 package jmri.jmrix.lenz.mon;
@@ -17,15 +17,20 @@ import java.awt.event.ActionEvent;
 
 public class XNetMonAction extends AbstractAction {
 
-    public XNetMonAction(String s) { super(s);}
+    private jmri.jmrix.lenz.XNetSystemConnectionMemo _memo;
 
-    public XNetMonAction(){
-	this("XPressNet Monitor");
+    public XNetMonAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
+       super(s);
+       _memo = memo;
+    }
+
+    public XNetMonAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo){
+	this("XPressNet Monitor",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
 		// create a XNetMonFrame
-		XNetMonFrame f = new XNetMonFrame();
+		XNetMonFrame f = new XNetMonFrame(_memo);
 		try {
 			f.initComponents();
 			}

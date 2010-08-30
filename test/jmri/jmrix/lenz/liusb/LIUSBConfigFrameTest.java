@@ -10,12 +10,15 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.liusb.LIUSBConfigFrame class
  * @author			Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LIUSBConfigFrameTest extends TestCase {
 
     public void testCtor() {
-        LIUSBConfigFrame f = new LIUSBConfigFrame();
+        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo=new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
+
+        LIUSBConfigFrame f = new LIUSBConfigFrame(memo);
         Assert.assertNotNull(f);
     }
 

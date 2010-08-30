@@ -16,15 +16,15 @@ import javax.swing.*;
  * utility for the LV102 power station
  *
  * @author			Paul Bender  Copyright (C) 2003,2005
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 public class LZV100Frame extends jmri.util.JmriJFrame {
 
-    public LZV100Frame() {
-        this("LZV100 Configuration Utility");
+    public LZV100Frame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+        this("LZV100 Configuration Utility",memo);
     }
 
-    public LZV100Frame(String FrameName) {
+    public LZV100Frame(String FrameName,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
         super(FrameName);
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
@@ -34,7 +34,7 @@ public class LZV100Frame extends jmri.util.JmriJFrame {
 	pane0.add(LV102IFrame);
         getContentPane().add(pane0);
 
-	javax.swing.JInternalFrame LZ100IFrame=new jmri.jmrix.lenz.lz100.LZ100InternalFrame();
+	javax.swing.JInternalFrame LZ100IFrame=new jmri.jmrix.lenz.lz100.LZ100InternalFrame(memo);
 
 	javax.swing.JPanel pane1 = new JPanel();
 	pane1.add(LZ100IFrame);

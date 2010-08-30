@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.2 $
+ * @version  $Revision: 1.3 $
  */
 
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -25,8 +25,8 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      InstanceManager.store(this,XNetSystemConnectionMemo.class); // also register as specific type
 
      // create and register the ComponentFactory
-     //Instancemanager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),
-     //                      jmri.jmrix.swing.ComponentFactor.class);
+     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),
+                           jmri.jmrix.swing.ComponentFactory.class);
 
    }
 
@@ -36,12 +36,11 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      InstanceManager.store(this,XNetSystemConnectionMemo.class); // also register as specific type
 
      // create and register the ComponentFactory
-     //Instancemanager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),                          
-     //                      jmri.jmrix.swing.ComponentFactor.class);
+     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),                            jmri.jmrix.swing.ComponentFactory.class);
 
    }
 
-   //jmri.jmrix.swing.ComponentFactor cf = null;
+   jmri.jmrix.swing.ComponentFactory cf = null;
 
     /**
      * Provides access to the TrafficController for this
@@ -68,8 +67,8 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void dispose() {
         xt = null;
         InstanceManager.deregister(this, XNetSystemConnectionMemo.class);
-        //if (cf != null)
-        //    InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
+        if (cf != null)
+            InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         super.dispose();
     }
 

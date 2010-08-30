@@ -10,12 +10,15 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.li101.LI101Frame class
  * @author			Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LI101FrameTest extends TestCase {
 
     public void testCtor() {
-        LI101Frame f = new LI101Frame();
+        jmri.jmrix.lenz.XNetInterfaceScaffold t = new jmri.jmrix.lenz.XNetInterfaceScaffold(new jmri.jmrix.lenz.LenzCommandStation());
+        jmri.jmrix.lenz.XNetSystemConnectionMemo memo=new jmri.jmrix.lenz.XNetSystemConnectionMemo(t);
+
+        LI101Frame f = new LI101Frame(memo);
         Assert.assertNotNull(f);
     }
 

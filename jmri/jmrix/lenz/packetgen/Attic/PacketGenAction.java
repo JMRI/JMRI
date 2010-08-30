@@ -5,7 +5,7 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 2.2 $
+ * @version			$Revision: 2.3 $
  */
 
 package jmri.jmrix.lenz.packetgen;
@@ -17,10 +17,15 @@ import jmri.jmrix.lenz.XNetTrafficController;
 
 public class PacketGenAction 			extends AbstractAction {
 
-    public PacketGenAction(String s) { super(s);}
+    jmri.jmrix.lenz.XNetSystemConnectionMemo _memo=null;
 
-    public PacketGenAction() {
-        this("Generate XPressNet message");
+    public PacketGenAction(String s,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) { 
+       super(s);
+       _memo=memo;
+    }
+
+    public PacketGenAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
+        this("Generate XPressNet message",memo);
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -35,7 +40,7 @@ public class PacketGenAction 			extends AbstractAction {
 		f.setVisible(true);
 
 		// connect to the TrafficController
-		f.connect(XNetTrafficController.instance());
+		f.connect(_memo.getXNetTrafficController());
 	}
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PacketGenAction.class.getName());
 }

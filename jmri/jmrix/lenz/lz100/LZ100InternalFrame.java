@@ -15,7 +15,7 @@ import jmri.jmrix.lenz.*;
  * reset the command station.
  *
  * @author			Paul Bender  Copyright (C) 2005-2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XNetListener {
 
@@ -33,9 +33,9 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
     protected XNetTrafficController tc = null;
 
-    public LZ100InternalFrame() {
+    public LZ100InternalFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 
-        tc=XNetTrafficController.instance();
+        tc=memo.getXNetTrafficController();
 	
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
