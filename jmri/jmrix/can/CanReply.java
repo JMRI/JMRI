@@ -19,7 +19,7 @@ import jmri.jmrix.AbstractMRReply;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.13 $
+ * @version         $Revision: 1.14 $
  */
 public class CanReply extends AbstractMRReply {
         
@@ -60,6 +60,13 @@ public class CanReply extends AbstractMRReply {
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++)
             _dataChars[i] = m._dataChars[i];
+    }
+    
+    /**
+     * Hash on the header
+     */
+    public int hashCode() {
+        return _header;
     }
     
     /** 

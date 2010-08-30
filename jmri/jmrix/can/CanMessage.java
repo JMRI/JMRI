@@ -25,7 +25,7 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -72,6 +72,13 @@ public class CanMessage extends AbstractMRMessage {
         _nDataChars = m._nDataChars;
         _dataChars = new int[_nDataChars];
         for (int i = 0; i<_nDataChars; i++) _dataChars[i] = m._dataChars[i];
+    }
+    
+    /**
+     * Hash on the header
+     */
+    public int hashCode() {
+        return _header;
     }
     
     /** 
