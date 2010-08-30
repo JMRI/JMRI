@@ -7,7 +7,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  *
  */
 public class DCCManufacturerList {
@@ -104,7 +104,7 @@ public class DCCManufacturerList {
         if(System.equals(SRCP)) { return new jmri.jmrix.srcp.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ROCO)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MAPLE)) { return new jmri.jmrix.maple.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(SPROG)) { return new jmri.jmrix.sprog.ConnectionTypeList().getAvailableProtocolClasses();  }
+        if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(NCE)) { return new jmri.jmrix.nce.ConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(NAC)) { return new jmri.jmrix.rps.ConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.Intellibox.ConnectionTypeList().getAvailableProtocolClasses();   }
