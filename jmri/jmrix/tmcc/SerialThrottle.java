@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * over 100 are considered long addresses. 
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialThrottle extends AbstractThrottle
 {
@@ -36,8 +36,10 @@ public class SerialThrottle extends AbstractThrottle
         this.f8           = false;
         this.f9           = false;
         this.f10           = false;
-        this.f11           = false;
-        this.f12           = false;
+        this.f11           = false;        
+		this.f12           = false;
+		this.f13           = false;
+		this.f14           = false;
         this.address      = address;
         this.isForward    = true;
 
@@ -79,36 +81,63 @@ public class SerialThrottle extends AbstractThrottle
 
     public void setF5(boolean f5) {
         this.f5 = f5;
+		// aux 1 + 0
+		sendToLayout(0x0010 + address.getNumber()*128);
     }
 
     public void setF6(boolean f6) {
         this.f6 = f6;
+		// aux 1 + 1
+		sendToLayout(0x0011 + address.getNumber()*128);
     }
 
     public void setF7(boolean f7) {
         this.f7 = f7;
+		// aux 1 + 2
+		sendToLayout(0x0012 + address.getNumber()*128);
     }
 
     public void setF8(boolean f8) {
         this.f8 = f8;
+		// aux 1 + 3
+		sendToLayout(0x0013 + address.getNumber()*128);
     }
 
     public void setF9(boolean f9) {
         this.f9 = f9;
+		// aux 1 + 4
+		sendToLayout(0x0014 + address.getNumber()*128);
     }
 
     public void setF10(boolean f10) {
         this.f10 = f10;
+		// aux 1 + 5
+		sendToLayout(0x0015 + address.getNumber()*128);
     }
 
     public void setF11(boolean f11) {
         this.f11 = f11;
+		// aux 1 + 6
+		sendToLayout(0x0016 + address.getNumber()*128);
     }
 
     public void setF12(boolean f12) {
         this.f12 = f12;
+		// aux 1 + 7
+		sendToLayout(0x0017 + address.getNumber()*128);
     }
-
+	
+    public void setF13(boolean f13) {
+        this.f13 = f13;
+		// aux 1 + 8
+		sendToLayout(0x0018 + address.getNumber()*128);
+	}
+	
+	public void setF14(boolean f14) {
+		this.f14 = f14;
+		// aux 1 + 9
+		sendToLayout(0x0019 + address.getNumber()*128);
+	}
 
     /**
      * Set the speed
