@@ -12,7 +12,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -125,7 +125,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         }
         
         Attribute a = element.getAttribute("turnoutType");
-        if ((a==null) || (a!=null)) {
+        if (a!=null) {
             if (a.getValue().equals("doubleSlip")) {
                 l.setTurnoutType(l.DOUBLESLIP);
             } else if (a.getValue().equals("singleSlip")) {
