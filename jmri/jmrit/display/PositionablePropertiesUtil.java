@@ -1,13 +1,10 @@
 package jmri.jmrit.display;
 
 import java.awt.*;
-import jmri.util.JmriJFrame;
 import java.util.ResourceBundle;
 import java.awt.event.*;
 import java.util.ArrayList;
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.ImageIcon;
@@ -159,7 +156,9 @@ public class PositionablePropertiesUtil {
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
-            } catch (Exception ce) { }
+            } catch (Exception ce) {
+                log.error("Unable to get font colour from field " + ce);
+            }
             if (desiredColor == defaultForeground)
                 fontCurrentColor = i;
         }
@@ -335,7 +334,9 @@ public class PositionablePropertiesUtil {
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
-            } catch (Exception ce) { }
+            } catch (Exception ce) {
+                log.error("Unable to convert the selected font color to a color " + ce);
+            }
             if (desiredColor == defaultBorderColor)
                 borderCurrentColor = i;
         }
@@ -537,26 +538,13 @@ public class PositionablePropertiesUtil {
             attrs = Font.BOLD;
         if (italic.isSelected())
             attrs |= Font.ITALIC;
-        //This will need reworking!
         
-        //example.setFont(jmri.util.FontUtil.deriveFont(example.getFont(),attrs));
         Font newFont = new Font(_parent.getFont().getName(), attrs,  Integer.parseInt(fontSizeField.getText()));
 
         Color desiredColor;
-        /*try {
-                // try to get a color by name using reflection
-                String selectedColor = _fontcolors[fontColor.getSelectedIndex()];
-                //String selectedColor = (String) fontColor.getSelectedItem();
-                Field f = Color.class.getField((selectedColor.toUpperCase()).replaceAll(" ", "_"));
-                desiredColor = (Color) f.get(null);
-        } catch (Exception ce) {
-                desiredColor = Color.black;
-        }*/
-        //example.setForeground(desiredColor);
 
         desiredColor = colorFromComboBox(borderColorCombo, null);
         Border borderMargin = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-        //int margin = Integer.parseInt(marginSizeText.getText());
         int margin = ((Number)marginSizeTextSpin.getValue()).intValue();
         Border outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
         if(desiredColor!=null) {
@@ -564,8 +552,6 @@ public class PositionablePropertiesUtil {
         } else {
             outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
         }
-        //example.setBorder(new CompoundBorder(outlineBorder, borderMargin));
-        //example.setBorder(new CompoundBorder(outlineBorder, borderMargin));
         int hoz=0;
         switch(_justificationCombo.getSelectedIndex()){
             case 0 :    hoz = (0x02);
@@ -667,8 +653,6 @@ public class PositionablePropertiesUtil {
         pop.setBorderSize(borderSize);
         pop.setFontStyle(0, fontStyle);
         pop.setFontSize(fontSize);
-        //pop.setForeground(defaultForeground);
-        //pop.setBackgroundColor(defaultBackground);
         pop.setBorderColor(defaultBorderColor);
         _parent.setLocation(xPos, yPos);
     }
@@ -696,7 +680,6 @@ public class PositionablePropertiesUtil {
         marginSize = pop.getMargin();
         borderSize = pop.getBorderSize();
         justification = pop.getJustification();
-        text = pop.getText();
         fontStyle = pop.getFontStyle();
         fontSize = pop.getFontSize();
         if ( (Font.BOLD & fontStyle) == Font.BOLD ) bold.setSelected(true);
@@ -714,7 +697,6 @@ public class PositionablePropertiesUtil {
             yPos = _parent.getY();
         }
     }
-    private Font defaultFont;
     private int fontStyle;
     private Color defaultForeground;
     private Color defaultBackground;
@@ -723,9 +705,7 @@ public class PositionablePropertiesUtil {
     private int fixedHeight=0;
     private int marginSize=0;
     private int borderSize=0;
-    private Color borderColor=null;
     private int justification;
-    private String text;
     private int fontSize;
     private int xPos;
     private int yPos;
@@ -778,6 +758,7 @@ public class PositionablePropertiesUtil {
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         return spinX;
     }
+
     class ColorComboBoxRenderer extends JLabel
                            implements ListCellRenderer {
 
@@ -791,16 +772,13 @@ public class PositionablePropertiesUtil {
             boolean isSelected, boolean cellHasFocus) {
             if (value==null) return this;
             int selectedIndex = ((Integer)value).intValue();
-            Color desiredColor;
             ImageIcon icon = images[selectedIndex];
             String colorString = _backgroundcolors[selectedIndex];
 
             setIcon(icon);
             setText(colorString);
-            return this;
-            
+            return this;            
         }
-
     }
     
     class textDetails {
@@ -864,4 +842,5 @@ public class PositionablePropertiesUtil {
         JLabel getLabel() { return example; }
     
     }
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePropertiesUtil.class.getName());
 }
