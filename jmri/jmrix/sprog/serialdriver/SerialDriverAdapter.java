@@ -4,16 +4,12 @@ package jmri.jmrix.sprog.serialdriver;
 
 import jmri.jmrix.sprog.SprogPortController;
 import jmri.jmrix.sprog.SprogTrafficController;
-//import jmri.jmrix.sprog.SprogProgrammer;
-//import jmri.jmrix.sprog.SprogProgrammerManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
 import jmri.jmrix.sprog.SprogSystemConnectionMemo;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
@@ -33,7 +29,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.31 $
+ * @version	$Revision: 1.32 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -155,8 +151,6 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      	return null;
     }
 
-    //public boolean status() {return opened;}
-
     /**
      * Get an array of valid baud rates. This is currently only 19,200 bps
      */
@@ -165,8 +159,8 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     }
 
     InputStream serialStream = null;
-    
-	static public SerialDriverAdapter instance() {
+
+    static public SerialDriverAdapter instance() {
         if (mInstance == null){
             mInstance = new SerialDriverAdapter();
             mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
@@ -182,29 +176,13 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        //SprogTrafficController.instance().connectPort(this);
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
         
-        /*SprogSystemConnectionMemo memo 
-            = new SprogSystemConnectionMemo(control, SprogMode.SERVICE);*/
         adaptermemo.setSprogMode(SprogMode.SERVICE);
         adaptermemo.setSprogTrafficController(control);
         adaptermemo.configureCommandStation();
         adaptermemo.configureManagers();
-//        jmri.jmrix.sprog.SprogProgrammer.instance();  // create Programmer in InstanceManager
-        /*jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), SprogMode.SERVICE));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
-
-        jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.sprog.SprogThrottleManager());*/
 
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
