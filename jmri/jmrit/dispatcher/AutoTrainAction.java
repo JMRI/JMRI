@@ -38,7 +38,7 @@ import jmri.TransitSection;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class AutoTrainAction {
 	
@@ -298,6 +298,7 @@ public class AutoTrainAction {
 			return;
 		}		
 		Sensor s = null;
+		float temp = 0.0f;
 		switch (tsa.getWhatCode()) {
 			case TransitSectionAction.PAUSE:
 				// pause for a number of fast minutes--e.g. station stop
@@ -306,12 +307,14 @@ public class AutoTrainAction {
 				break;
 			case TransitSectionAction.SETMAXSPEED:
 				// set maximum train speed to value
-				_autoActiveTrain.setMaxSpeed(((float)tsa.getDataWhat1())*0.01f);
+				temp = tsa.getDataWhat1();
+				_autoActiveTrain.setMaxSpeed(temp*0.01f);
 				completedAction(tsa);
 				break;
 			case TransitSectionAction.SETCURRENTSPEED:
 				// set current speed either higher or lower than current value
-				float spd = ((float)tsa.getDataWhat1())*0.01f;
+				temp = tsa.getDataWhat1();
+				float spd = temp*0.01f;
 				if (spd>_autoActiveTrain.getMaxSpeed()) {
 					spd = _autoActiveTrain.getMaxSpeed();
 				}
@@ -334,7 +337,8 @@ public class AutoTrainAction {
 				break;
 			case TransitSectionAction.RAMPTRAINSPEED:
 				// set current speed to target using specified ramp rate
-				float spdx = ((float)tsa.getDataWhat1())*0.01f;
+				temp = tsa.getDataWhat1();
+				float spdx = temp*0.01f;
 				if (spdx>_autoActiveTrain.getMaxSpeed()) {
 					spdx = _autoActiveTrain.getMaxSpeed();
 				}

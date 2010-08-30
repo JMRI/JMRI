@@ -42,7 +42,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	
@@ -82,7 +82,8 @@ public class AutoActiveTrain implements ThrottleListener {
 	public static final int RAMP_SLOW		= 0x04;		// Slow ramping
 
 	// operational instance variables
-	private AutoActiveTrain _instance = this;
+// djd debugging
+//	private AutoActiveTrain _instance = this;
 	private ActiveTrain _activeTrain = null;
 	private AutoTrainAction _autoTrainAction = null;
 	private DccThrottle _throttle = null;
@@ -195,8 +196,6 @@ public class AutoActiveTrain implements ThrottleListener {
 	private SignalHead _controllingSignal = null;
 	private PropertyChangeListener _conSignalListener = null;
 	private Block _conSignalProtectedBlock = null;
-	private SignalHead _nextSignal = null;
-	private PropertyChangeListener _nextSignalListener = null;
 	private Block _currentBlock = null;
 	private Block _nextBlock = null;
 	private Block _previousBlock = null;
@@ -394,18 +393,19 @@ public class AutoActiveTrain implements ThrottleListener {
 		// Note: null signal head will result when exiting throat-to-throat blocks.
 		else log.debug("new current signal is null - sometimes OK");
 	}
-	private boolean inNextSection = false;	
+// djd debugging - temporarily disable this flag to prevent warning
+//	private boolean inNextSection = false;	
 	private Block getNextBlock(Block b, AllocatedSection as) {
 		if (_nextSection != null) {
 			EntryPoint ep = as.getSection().getExitPointToSection(_nextSection,as.getDirection());
 			if ( (ep!=null) && (ep.getBlock()==b)) {
 				// this block is connected to a block in the next section
-				inNextSection = true;
+//				inNextSection = true;
 				return ep.getFromBlock();
 			}	
 		}
 		// this allocated section has multiple blocks _or_ there is no next Section
-		inNextSection = false;
+//		inNextSection = false;
 		Block blk = as.getSection().getEntryBlock();
 		while (blk!=null) { 		
 			if (b==blk) return as.getSection().getNextBlock();
@@ -852,7 +852,7 @@ public class AutoActiveTrain implements ThrottleListener {
 						_currentForward = _forward;
 					}
 					// test if need to change speed
-					if (_currentSpeed != _targetSpeed) {
+					if (java.lang.Math.abs(_currentSpeed-_targetSpeed)>0.01) {
 						if (_currentRampRate==RAMP_NONE) {
 							// set speed immediately
 							_currentSpeed = _targetSpeed;
@@ -960,7 +960,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		 * Allow user to test if train is moving at its current requested speed
 		 */
 		public synchronized boolean isAtSpeed() {
-			if (_currentSpeed != _targetSpeed) return false;
+			if (java.lang.Math.abs(_currentSpeed-_targetSpeed)>0.01) return false;
 			return true;
 		}
 
@@ -1005,41 +1005,6 @@ public class AutoActiveTrain implements ThrottleListener {
                 case 26: _throttle.setF26(isSet); break;
                 case 27: _throttle.setF27(isSet); break;
                 case 28: _throttle.setF28(isSet); break;
-            }
-        }
-
-        private void setLockFunction(int cmdNum, boolean isTrue) {
-            switch (cmdNum)
-            {
-                case 0: _throttle.setF0Momentary(!isTrue); break;
-                case 1: _throttle.setF1Momentary(!isTrue); break;
-                case 2: _throttle.setF2Momentary(!isTrue); break;
-                case 3: _throttle.setF3Momentary(!isTrue); break;
-                case 4: _throttle.setF4Momentary(!isTrue); break;
-                case 5: _throttle.setF5Momentary(!isTrue); break;
-                case 6: _throttle.setF6Momentary(!isTrue); break;
-                case 7: _throttle.setF7Momentary(!isTrue); break;
-                case 8: _throttle.setF8Momentary(!isTrue); break;
-                case 9: _throttle.setF9Momentary(!isTrue); break;
-                case 10: _throttle.setF10Momentary(!isTrue); break;
-                case 11: _throttle.setF11Momentary(!isTrue); break;
-                case 12: _throttle.setF12Momentary(!isTrue); break;
-                case 13: _throttle.setF13Momentary(!isTrue); break;
-                case 14: _throttle.setF14Momentary(!isTrue); break;
-                case 15: _throttle.setF15Momentary(!isTrue); break;
-                case 16: _throttle.setF16Momentary(!isTrue); break;
-                case 17: _throttle.setF17Momentary(!isTrue); break;
-                case 18: _throttle.setF18Momentary(!isTrue); break;
-                case 19: _throttle.setF19Momentary(!isTrue); break;
-                case 20: _throttle.setF20Momentary(!isTrue); break;
-                case 21: _throttle.setF21Momentary(!isTrue); break;
-                case 22: _throttle.setF22Momentary(!isTrue); break;
-                case 23: _throttle.setF23Momentary(!isTrue); break;
-                case 24: _throttle.setF24Momentary(!isTrue); break;
-                case 25: _throttle.setF25Momentary(!isTrue); break;
-                case 26: _throttle.setF26Momentary(!isTrue); break;
-                case 27: _throttle.setF27Momentary(!isTrue); break;
-                case 28: _throttle.setF28Momentary(!isTrue); break;
             }
         }
     }
