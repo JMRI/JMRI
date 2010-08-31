@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 import java.util.ArrayList;
@@ -288,7 +288,7 @@ public class PortalTableModel extends AbstractTableModel {
 
     private boolean listContains(String name) {
         for (int i=0; i<_portalList.size(); i++)  {
-            if (_portalList.get(i).equals(name)) { return true; }
+            if (_portalList.get(i).getName().equals(name)) { return true; }
         }
         return false;
     }
