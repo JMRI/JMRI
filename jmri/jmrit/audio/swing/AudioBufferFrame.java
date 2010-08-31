@@ -45,7 +45,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
@@ -111,7 +111,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p.add(loopStartLabel);
         loopStart.setPreferredSize(new JTextField(8).getPreferredSize());
         loopStart.setModel(
-                new SpinnerNumberModel(new Long(0), new Long(0), new Long(Long.MAX_VALUE), new Long(1)));
+                new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopStart.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 loopEnd.setValue(
@@ -125,7 +125,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p.add(loopEndLabel);
         loopEnd.setPreferredSize(new JTextField(8).getPreferredSize());
         loopEnd.setModel(
-                new SpinnerNumberModel(new Long(0), new Long(0), new Long(Long.MAX_VALUE), new Long(1)));
+                new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
         loopEnd.addChangeListener(new ChangeListener() {
             public void stateChanged(ChangeEvent e) {
                 loopStart.setValue(
@@ -155,8 +155,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         userName.setText(null);
         url.setText(null);
 //        format.setText(null);
-        loopStart.setValue(new Long(0));
-        loopEnd.setValue(new Long(0));
+        loopStart.setValue(Long.valueOf(0));
+        loopEnd.setValue(Long.valueOf(0));
 
         this._newBuffer = true;
     }
@@ -195,8 +195,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         // Process selection
         if (retValue == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            String fileName = new String();
-            if (!url.getText().equals((fileName=FileUtil.getPortableFilename(file)))) {
+            String fileName = FileUtil.getPortableFilename(file);
+            if (!url.getText().equals(fileName)) {
                 url.setText(fileName);
             }
         }
