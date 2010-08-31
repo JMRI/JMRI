@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -36,8 +36,6 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     double iconAspect;
 
     Timebase clock;
-    javax.swing.Timer timer;
-    static int delay = 2*1000;  // update display every two seconds
 
     static NamedIcon tubes[] = new NamedIcon[10];
     static NamedIcon baseTubes[] = new NamedIcon[10];
@@ -127,15 +125,15 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
       int iconWidth;
       int frameHeight = this.getContentPane().getSize().height;
       int frameWidth = this.getContentPane().getSize().width;
-      if (frameWidth/frameHeight > aspect) {
+      if ((double)frameWidth / (double)frameHeight > aspect) {
         iconHeight = frameHeight;
         iconWidth = (int) (iconAspect * iconHeight);
       }
       else {
         //this DOES NOT allow space for the Run/Stop button, if it is
         //enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        iconWidth = (int) (frameWidth/4.5);
-        iconHeight = (int) (iconWidth/iconAspect);
+        iconWidth = (int) (frameWidth / 4.5);
+        iconHeight = (int) (iconWidth / iconAspect);
       }
       for (int i = 0; i < 10; i++) {
         Image scaledImage = baseTubes[i].getImage().getScaledInstance(iconWidth,iconHeight,Image.SCALE_SMOOTH);
@@ -167,8 +165,6 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
     }
 
     public void dispose() {
-    	if (timer != null)
-			timer.stop();
         super.dispose();
     }
 
