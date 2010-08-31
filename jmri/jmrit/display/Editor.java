@@ -1238,7 +1238,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             "resources/icons/smallschematics/tracksegments/os-slip-error-full.gif");
         editor.setIcon(1, "BeanStateUnknown",
             "resources/icons/smallschematics/tracksegments/os-slip-unknown-full.gif");
-        editor.setTurnoutType(0x00);
+        editor.setTurnoutType(SlipTurnoutIcon.DOUBLESLIP);
         JFrameItem frame = makeAddIconFrame("SlipTOEditor", "addIconsToPanel", "SelectTO", editor);
         _iconEditorFrame.put("SlipTOEditor", frame);
         editor.setPickList(PickListModel.turnoutPickModelInstance());
@@ -1600,32 +1600,43 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     void addSlip(){
         SlipIconAdder editor = (SlipIconAdder)getIconEditor("SlipTOEditor");
     	SlipTurnoutIcon l = new SlipTurnoutIcon(this);
-
+        l.setSingleSlipRoute(editor.getSingleSlipRoute());
         switch(editor.getTurnoutType()){
-            case 0x00 : 
+            case SlipTurnoutIcon.DOUBLESLIP : 
                 l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
                 l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
                 l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
                 l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
                 break;
-            case 0x02:
+            case SlipTurnoutIcon.SINGLESLIP:
                 l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
                 l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
                 l.setLowerWestToLowerEastIcon(editor.getIcon("Slip"));
                 l.setSingleSlipRoute(editor.getSingleSlipRoute());
                 break;
-            case 0x04:
+            case SlipTurnoutIcon.THREEWAY:
                 l.setLowerWestToUpperEastIcon(editor.getIcon("Upper"));
                 l.setUpperWestToLowerEastIcon(editor.getIcon("Middle"));
                 l.setLowerWestToLowerEastIcon(editor.getIcon("Lower"));
                 l.setSingleSlipRoute(editor.getSingleSlipRoute());
                 break;
+            case SlipTurnoutIcon.SCISSOR: //Scissor is the same as a Double for icon storing.
+                l.setLowerWestToUpperEastIcon(editor.getIcon("LowerWestToUpperEast"));
+                l.setUpperWestToLowerEastIcon(editor.getIcon("UpperWestToLowerEast"));
+                l.setLowerWestToLowerEastIcon(editor.getIcon("LowerWestToLowerEast"));
+                //l.setUpperWestToUpperEastIcon(editor.getIcon("UpperWestToUpperEast"));
+                break;
+        }
+        
+        if((editor.getTurnoutType()==SlipTurnoutIcon.SCISSOR)&&(!editor.getSingleSlipRoute())){
+            l.setTurnout(editor.getTurnout("lowerwest").getName(), SlipTurnoutIcon.LOWERWEST);
+            l.setTurnout(editor.getTurnout("lowereast").getName(), SlipTurnoutIcon.LOWEREAST);
         }
         l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
         l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         l.setTurnoutType(editor.getTurnoutType());
-        l.setTurnout(editor.getTurnout("west").getName(), true);
-        l.setTurnout(editor.getTurnout("east").getName(), false);
+        l.setTurnout(editor.getTurnout("west").getName(), SlipTurnoutIcon.WEST);
+        l.setTurnout(editor.getTurnout("east").getName(), SlipTurnoutIcon.EAST);
         l.setDisplayLevel(TURNOUTS);
         setNextLocation(l);
         putItem(l);

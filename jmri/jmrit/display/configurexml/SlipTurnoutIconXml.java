@@ -12,7 +12,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -31,10 +31,39 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("slipturnouticon");
-        element.setAttribute("turnoutEast", p.getNamedTurnout(true).getName());
-        element.setAttribute("turnoutWest", p.getNamedTurnout(false).getName());
-        storeCommonAttributes(p, element);
+        //element.setAttribute("turnoutEast", p.getNamedTurnout(SlipTurnoutIcon.WEST).getName());
+        //element.setAttribute("turnoutWest", p.getNamedTurnout(SlipTurnoutIcon.EAST).getName());
+        element.addContent(new Element("turnoutEast").addContent(p.getNamedTurnout(SlipTurnoutIcon.EAST).getName()));
+        element.addContent(new Element("turnoutWest").addContent(p.getNamedTurnout(SlipTurnoutIcon.WEST).getName()));
+        
+        switch(p.getTurnoutType()){
+            case SlipTurnoutIcon.DOUBLESLIP : 
+                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
+                element.addContent(storeIcon("upperWestToUpperEast", p.getUpperWestToUpperEastIcon(),p.getUWUEText()));
+                element.setAttribute("turnoutType", "doubleSlip");
+                break;
+            case SlipTurnoutIcon.SINGLESLIP:
+                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
+                element.setAttribute("turnoutType", "singleSlip");
+                element.setAttribute("singleSlipRoute", p.getSingleSlipRoute()?"upperWestToUpperEast":"lowerWestToLowerEast");
+                break;
+            case SlipTurnoutIcon.THREEWAY:
+                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
+                element.setAttribute("turnoutType", "threeWay");
+                element.setAttribute("firstTurnoutExit", p.getSingleSlipRoute()?"upper":"lower");
+                break;
+            case SlipTurnoutIcon.SCISSOR:
+                if (!p.getSingleSlipRoute()){
+                    element.addContent(new Element("turnoutLowerEast").addContent(p.getNamedTurnout(SlipTurnoutIcon.LOWEREAST).getName()));
+                    element.addContent(new Element("turnoutLowerWest").addContent(p.getNamedTurnout(SlipTurnoutIcon.LOWERWEST).getName()));
+                }
+                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
+                element.setAttribute("turnoutType", "scissor");
 
+        }
+        
+        storeCommonAttributes(p, element);
+        
         // include contents
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         //element.setAttribute("turnoutType", p.getTurnoutType()?"double":"single");
@@ -42,34 +71,6 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         // new style
         element.addContent(storeIcon("lowerWestToUpperEast", p.getLowerWestToUpperEastIcon(), p.getLWUEText()));
         element.addContent(storeIcon("upperWestToLowerEast", p.getUpperWestToLowerEastIcon(), p.getUWLEText()));
-        switch(p.getTurnoutType()){
-            case 0x00 : 
-                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
-                element.addContent(storeIcon("upperWestToUpperEast", p.getUpperWestToUpperEastIcon(),p.getUWUEText()));
-                element.setAttribute("turnoutType", "doubleSlip");
-                break;
-            case 0x02:
-                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
-                element.setAttribute("turnoutType", "singleSlip");
-                element.setAttribute("singleSlipRoute", p.getSingleSlipRoute()?"upperWestToUpperEast":"lowerWestToLowerEast");
-                break;
-            case 0x04:
-                element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
-                element.setAttribute("turnoutType", "threeWay");
-                element.setAttribute("firstTurnoutExit", p.getSingleSlipRoute()?"upper":"lower");
-                //TBC
-                break;
-        }
-        
-        
-        /*if (p.getTurnoutType()){
-            element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
-            element.addContent(storeIcon("upperWestToUpperEast", p.getUpperWestToUpperEastIcon(),p.getUWUEText()));
-        } else {
-            element.addContent(storeIcon("lowerWestToLowerEast", p.getLowerWestToLowerEastIcon(),p.getLWLEText()));
-            element.setAttribute("singleSlipRoute", p.getSingleSlipRoute()?"upperWestToUpperEast":"lowerWestToLowerEast");
-        }*/
-
         element.addContent(super.storeIcon("unknown", p.getUnknownIcon()));
         element.addContent(super.storeIcon("inconsistent", p.getInconsistentIcon()));
 
@@ -77,7 +78,7 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
 
         return element;
     }
-    
+       
     Element storeIcon(String elemName, NamedIcon icon, String text){
         Element element = super.storeIcon(elemName, icon);
         element.addContent(new Element("text").addContent(text));
@@ -109,63 +110,64 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
-        String nameEast;
-        try {
+        String nameEast = loadTurnout(element, "turnoutEast");
+        /*try {
             nameEast=element.getAttribute("turnoutEast").getValue();
         } catch ( NullPointerException e) { 
             log.error("incorrect information for turnout; must use turnout name");
             return;
-        }
-        String nameWest;
-        try {
+        }*/
+        String nameWest = loadTurnout(element, "turnoutWest");
+        /*try {
             nameWest=element.getAttribute("turnoutWest").getValue();
         } catch ( NullPointerException e) { 
             log.error("incorrect information for turnout; must use turnout name");
             return;
-        }
+        }*/
         
         Attribute a = element.getAttribute("turnoutType");
         if (a!=null) {
             if (a.getValue().equals("doubleSlip")) {
-                l.setTurnoutType(l.DOUBLESLIP);
+                l.setTurnoutType(SlipTurnoutIcon.DOUBLESLIP);
             } else if (a.getValue().equals("singleSlip")) {
-                l.setTurnoutType(l.SINGLESLIP);
+                l.setTurnoutType(SlipTurnoutIcon.SINGLESLIP);
                 a = element.getAttribute("singleSlipRoute");
                 if ( (a==null) || ((a!=null) && a.getValue().equals("upperWestToUpperEast")))
                     l.setSingleSlipRoute(true);
                 else 
                     l.setSingleSlipRoute(false);
             } else if (a.getValue().equals("threeWay")) {
-                l.setTurnoutType(l.THREEWAY);
+                l.setTurnoutType(SlipTurnoutIcon.THREEWAY);
                 a = element.getAttribute("firstTurnoutExit");
                 if ( (a==null) || ((a!=null) && a.getValue().equals("lower")))
                     l.setSingleSlipRoute(false);
                 else
                     l.setSingleSlipRoute(true);
+            } else if (a.getValue().equals("scissor")){
+                l.setTurnoutType(SlipTurnoutIcon.SCISSOR);
+                if(loadTurnout(element, "turnoutLowerWest")==null)
+                    l.setSingleSlipRoute(true);
+                else{
+                    //loadTurnout(element, "turnoutLowerEast");
+                    l.setSingleSlipRoute(false);
+                    l.setTurnout(loadTurnout(element, "turnoutLowerEast"), SlipTurnoutIcon.LOWEREAST);
+                    l.setTurnout(loadTurnout(element, "turnoutLowerWest"), SlipTurnoutIcon.LOWERWEST);
+                    }
+            
             }
         }
-        
         loadTurnoutIcon("lowerWestToUpperEast", rotation, l, element);
         loadTurnoutIcon("upperWestToLowerEast", rotation, l, element);
         switch(l.getTurnoutType()){
-            case 0x00 : 
+            case SlipTurnoutIcon.DOUBLESLIP : 
                 loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
                 loadTurnoutIcon("upperWestToUpperEast", rotation, l, element);
                 break;
-            case 0x02:
+            default :
                 loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
-                break;
-            case 0x04:
-                //TBC
-                loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
-                break;
+                break;                
         }
-        /*if(l.getTurnoutType()==0x00){
-            loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
-            loadTurnoutIcon("upperWestToUpperEast", rotation, l, element);
-        } else {
-            loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
-        }*/
+
         loadTurnoutIcon("unknown", rotation, l, element);
         loadTurnoutIcon("inconsistent", rotation, l, element);
         
@@ -175,12 +177,23 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
         else
             l.setTristate(false);
             
-        l.setTurnout(nameEast, true);
-        l.setTurnout(nameWest, false);
+        l.setTurnout(nameEast, SlipTurnoutIcon.EAST);
+        l.setTurnout(nameWest, SlipTurnoutIcon.WEST);
         
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
+    }
+    
+    private String loadTurnout(Element element, String turn){
+        if (element!=null){
+            Element e = element.getChild(turn);
+            if (e!=null)
+                return e.getText();
+            else
+                return null;
+        }
+        return null;
     }
     
     @SuppressWarnings("unchecked")

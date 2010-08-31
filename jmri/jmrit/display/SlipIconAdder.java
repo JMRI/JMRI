@@ -9,19 +9,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.io.IOException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.TransferHandler;
+import javax.swing.JCheckBox;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -63,6 +67,7 @@ public class SlipIconAdder extends IconAdder {
         doubleSlipButton.setSelected(false);
         singleSlipButton.setSelected(false);
         threeWayButton.setSelected(false);
+        scissorButton.setSelected(false);
         switch(dblSlip){
             case 0x00:
                 doubleSlipButton.setSelected(true);
@@ -72,6 +77,9 @@ public class SlipIconAdder extends IconAdder {
                 break;
             case 0x04:
                 threeWayButton.setSelected(true);
+                break;
+            case 0x08:
+                scissorButton.setSelected(true);
                 break;
         }
     }
@@ -87,6 +95,7 @@ public class SlipIconAdder extends IconAdder {
     JRadioButton doubleSlipButton = new JRadioButton(rb.getString("DoubleSlip"));
     JRadioButton singleSlipButton = new JRadioButton(rb.getString("SingleSlip"));
     JRadioButton threeWayButton = new JRadioButton(rb.getString("ThreeWay"));
+    JRadioButton scissorButton = new JRadioButton(rb.getString("Scissor"));
     
     JRadioButton singleDirection = new JRadioButton(rb.getString("SingleSlipRoute"));
     JRadioButton lowerWestToLowerEastButton = new JRadioButton(rb.getString("LowerWestToLowerEast"));
@@ -111,10 +120,12 @@ public class SlipIconAdder extends IconAdder {
         typeGroup.add(doubleSlipButton);
         typeGroup.add(singleSlipButton);
         typeGroup.add(threeWayButton);
+        typeGroup.add(scissorButton);
         JPanel _typePanel = new JPanel();
         _typePanel.add(doubleSlipButton);
         _typePanel.add(singleSlipButton);
         _typePanel.add(threeWayButton);
+        _typePanel.add(scissorButton);
         _iconPanel.add(_typePanel);
         doubleSlipButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
@@ -129,6 +140,11 @@ public class SlipIconAdder extends IconAdder {
         threeWayButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent actionEvent) {
                     slipUpdate(0x04);
+                }
+            });
+        scissorButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    slipUpdate(0x08);
                 }
             });
             
@@ -166,11 +182,34 @@ public class SlipIconAdder extends IconAdder {
             _buttonPanel.add(lowerWestToLowerEastButton);
             _buttonPanel.add(upperWestToUpperEastButton);
             _iconPanel.add(_buttonPanel);
+        } else if (getTurnoutType()==0x08){
+            ButtonGroup group = new ButtonGroup();
+            lowerWestToLowerEastButton.setText("4 Turnouts");
+            upperWestToUpperEastButton.setText("2 Turnouts");
+            group.add(lowerWestToLowerEastButton);
+            group.add(upperWestToUpperEastButton);
+            JPanel _buttonPanel = new JPanel();
+            _buttonPanel.add(lowerWestToLowerEastButton);
+            _buttonPanel.add(upperWestToUpperEastButton);
+            _iconPanel.add(_buttonPanel);
+            lowerWestToLowerEastButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    changeNumScissorTurnouts();
+                }
+            });
+            upperWestToUpperEastButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent actionEvent) {
+                    changeNumScissorTurnouts();
+                }
+            });
         }
         
         JPanel rowPanel = null;
         int cnt=0;
-        for (int i=0; i<2; i++) {
+        int numTurnoutPanels = 2;
+        if ((doubleSlip == 0x08) && (lowerWestToLowerEastButton.isSelected()))
+            numTurnoutPanels = 4;
+        for (int i=0; i<numTurnoutPanels; i++) {
             if (rowPanel == null) {
                 rowPanel = new JPanel();
                 rowPanel.setLayout(new BoxLayout(rowPanel, BoxLayout.X_AXIS));
@@ -186,18 +225,35 @@ public class SlipIconAdder extends IconAdder {
             if (i==0){
                 if (doubleSlip==0x04){
                     label = rb.getString("FirstTurnout"); 
+                } else if (doubleSlip==0x08) {
+                    if (lowerWestToLowerEastButton.isSelected())
+                        label = rb.getString("UpperWestTurnout");
+                    else
+                        label = rb.getString("RHCrossing");
                 } else {
                     label = rb.getString("WestTurnout"); 
                 }
                 key = "west";                
-            } else {
+            } else if (i==1){
                 key = "east";
                 if (doubleSlip==0x04){
                     label = rb.getString("SecondTurnout");
+                } else if (doubleSlip==0x08) {
+                    if (lowerWestToLowerEastButton.isSelected())
+                        label = rb.getString("UpperEastTurnout");
+                    else
+                        label = rb.getString("LHCrossing");
                 } else {
                     label = rb.getString("EastTurnout"); 
                 }
+            } else if (i==2){
+                key = "lowerwest";
+                label = rb.getString("LowerWestTurnout");
+            } else {
+                key = "lowereast";
+                label = rb.getString("LowerEastTurnout");
             }
+            
             turnout = _turnoutMap.get(key);
             JLabel k = new JLabel(key);
             k.setName(key);
@@ -230,13 +286,13 @@ public class SlipIconAdder extends IconAdder {
             rowPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
             cnt++;
-            if ((cnt%3)==0) {
+            if ((cnt%2)==0) {
                 _iconPanel.add(rowPanel);
                 rowPanel = null;
             }
             dim = panel.getPreferredSize();
         }
-        while ((cnt%3)!=0)
+        while ((cnt%2)!=0)
         {
             try {
                 rowPanel.add(Box.createRigidArea(dim));
@@ -282,14 +338,24 @@ public class SlipIconAdder extends IconAdder {
         pack();
     }
     
+    void changeNumScissorTurnouts(){
+        if(upperWestToUpperEastButton.isSelected()){
+            _turnoutMap.remove("lowerwest");
+            _turnoutMap.remove("lowereast");
+        }
+        makeIconPanel();
+    }
+    
     void slipUpdate(int slip){
         //If what we are setting to is the same as already set do nothing.
         if (slip==doubleSlip)
             return;
-        if (doubleSlip==0x04) {
+        if ((doubleSlip==0x04)||(doubleSlip==0x08)) {
             delete(4);
             delete(3);
             delete(2);
+            _turnoutMap.remove("lowerwest");
+            _turnoutMap.remove("lowereast");
             //We need to reset the icons back for a slip
             setIcon(3, "LowerWestToUpperEast",
                 "resources/icons/smallschematics/tracksegments/os-slip-lower-west-upper-east.gif");
@@ -301,7 +367,9 @@ public class SlipIconAdder extends IconAdder {
                 "resources/icons/smallschematics/tracksegments/os-slip-error-full.gif");
             setIcon(1, "BeanStateUnknown",
                 "resources/icons/smallschematics/tracksegments/os-slip-unknown-full.gif");
-        } else if (slip ==0x04) {
+        } 
+        
+        if (slip==0x04) {
             //We need to setup the base icons for a three way.
             delete(5);
             delete(4);
@@ -317,6 +385,23 @@ public class SlipIconAdder extends IconAdder {
                 "resources/icons/smallschematics/tracksegments/os-3way-error.gif");
             setIcon(1, "BeanStateUnknown",
                 "resources/icons/smallschematics/tracksegments/os-3way-unknown.gif");
+            upperWestToUpperEastButton.setSelected(true);
+        } else if (slip == 0x08) {
+            //We need to setup the base icons for a Scissor.
+            delete(5);
+            setIcon(3, "LowerWestToUpperEast",
+                "resources/icons/smallschematics/tracksegments/os-double-crossover-lower-west-upper-east.gif");
+            setIcon(2, "UpperWestToLowerEast", 
+                "resources/icons/smallschematics/tracksegments/os-double-crossover-upper-west-lower-east.gif");
+            setIcon(4, "LowerWestToLowerEast",
+                "resources/icons/smallschematics/tracksegments/os-double-crossover-closed.gif");            
+
+            setIcon(0, "BeanStateInconsistent", 
+                "resources/icons/smallschematics/tracksegments/os-double-crossover-error.gif");
+            setIcon(1, "BeanStateUnknown",
+                "resources/icons/smallschematics/tracksegments/os-double-crossover-unknown.gif");            
+            
+            upperWestToUpperEastButton.setSelected(true);
         }
         
         switch(slip){
@@ -392,7 +477,10 @@ public class SlipIconAdder extends IconAdder {
         if (_addButton == null) {
             return;
         }
-        if (_turnoutMap.size() == 2) {
+        int numTurnouts = 2;
+        if ((doubleSlip == SlipTurnoutIcon.SCISSOR) && (lowerWestToLowerEastButton.isSelected()))
+            numTurnouts = 4;
+        if (_turnoutMap.size() == numTurnouts) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
             //checkIconSizes();

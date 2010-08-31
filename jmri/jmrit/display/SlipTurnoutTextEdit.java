@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Kevin Dickerson (SlipTurnoutTextEditor version);
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class SlipTurnoutTextEdit extends JmriJFrame 
@@ -107,10 +107,10 @@ public class SlipTurnoutTextEdit extends JmriJFrame
 				UWUETextField.getMaximumSize().width, UWUETextField
 						.getPreferredSize().height));
                         
-        if (l.getTurnoutType()==0x00){
+        if (l.getTurnoutType()==SlipTurnoutIcon.DOUBLESLIP){
         	textLWLE.setVisible(true);
             textUWUE.setVisible(true);
-        } else if (l.getTurnoutType()==0x04) {
+        } else if (l.getTurnoutType()==SlipTurnoutIcon.THREEWAY) {
             textLWLE.setVisible(true);
             LWLETextField.setVisible(true);
             textUWUE.setVisible(false);
@@ -204,7 +204,7 @@ public class SlipTurnoutTextEdit extends JmriJFrame
             textUWLE.setText(rb.getString("UpperWestToLowerEast") + " = " + pl.getUWLEText());
             textLWLE.setText(rb.getString("LowerWestToLowerEast") + " = " + pl.getLWLEText());
             textUWUE.setText(rb.getString("UpperWestToUpperEast") + " = " + pl.getUWUEText());
-            if (pl.getTurnoutType()==0x04){
+            if (pl.getTurnoutType()==SlipTurnoutIcon.THREEWAY){
                 textLWUE.setText(rb.getString("Upper") + " = " + pl.getLWUEText());
                 textUWLE.setText(rb.getString("Middle") + " = " + pl.getUWLEText());
                 textLWLE.setText(rb.getString("Lower") + " = " + pl.getLWLEText());
