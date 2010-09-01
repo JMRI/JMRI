@@ -36,7 +36,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -60,11 +60,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Attached a named turnout to this display item
      * @param pName Used as a system/user name to lookup the turnout object
-     * @param turn is used to determine which turnout to add
-     * WEST = 0x01
-     * EAST = 0x02;
-     * LOWER WEST = 0x04
-     * LOWER EAST = 0x06
+     * @param turn is used to determine which turnout position this is for.
+     * 0x01 - West
+     * 0x02 - East
+     * 0x04 - Lower West
+     * 0x06 - Upper East
      */
      public void setTurnout(String pName, int turn) {
          if (InstanceManager.turnoutManagerInstance()!=null) {
@@ -79,7 +79,16 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
              log.error("No TurnoutManager for this protocol, icon won't see changes");
          }
      }
-
+     
+    /**
+     * Attached a namedBean Handle turnout to this display item
+     * @param to Used as the NamedBeanHandle to lookup the turnout object
+     * @param turn is used to determine which turnout position this is for.
+     * 0x01 - West
+     * 0x02 - East
+     * 0x04 - Lower West
+     * 0x06 - Upper East
+     */
     public void setTurnout(NamedBeanHandle<Turnout> to, int turn) {
         switch(turn){
             case WEST:      if (namedTurnoutWest != null) {
@@ -133,7 +142,14 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     
     //true for double slip, false for single.
     int turnoutType = DOUBLESLIP;
-    
+    /*
+    * Sets the type of turnout configuration which is being used
+    * @param slip - valid values are
+    * 0x00 - Double Slip
+    * 0x02 - Single Slip
+    * 0x04 - Three Way Turnout
+    * 0x08 - Scissor Crossing
+    */
     public void setTurnoutType(int slip){
         turnoutType = slip;
     }
@@ -143,6 +159,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     boolean singleSlipRoute = false;
     static boolean LOWERWESTtoLOWEREAST = false;
     static boolean UPPERWESTtoUPPEREAST = true;
+    
     /**
     * Single Slip Route, determines if the slip route is from
     * upper west to upper east (true) or lower west to lower east (false)
@@ -227,6 +244,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     public void setLowerWestToLowerEastIcon(NamedIcon i) {
         lowerWestToLowerEast = i;
         displayState(turnoutState());
+        /*Only a double slip needs the fourth icon, we therefore set the upper west to upper east icon
+        to be the same as the lower west to upper wast icon*/
         if(turnoutType!=DOUBLESLIP)
             setUpperWestToUpperEastIcon(i);
     } 
@@ -275,7 +294,17 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     }
 
     /**
-     * Get current state of attached turnout
+     * Get current state of attached turnouts
+     * This adds the two turnout states together, however for the second turnout
+     * configured it will add 1 to the Closed state and 3 to the Thrown state.
+     * This helps to indentify which turnout is thrown and/or closed.
+     * <p>
+     * For a Scissor crossing that uses four turnouts, the code simply checks to ensure
+     * that diagonally opposite turnouts are set the same.  
+     * If not is will return an Inconsistent state.
+     * <p>
+     * If any turnout that has either not been configured or in an Unknown or
+     * Inconsistent state, the code will return the state UNKNOWN or INCONSISTENT.
      * @return A state variable from a Turnout, e.g. Turnout.CLOSED
      */
     int turnoutState() {
@@ -429,6 +458,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 	 * Drive the current state of the display from the state of the turnout.
      * Here we have to alter the passed state to match the type of turnout we
      * are dealing with.
+     * @param state An integer value of the turnout states.
 	 */
     void displayState(int state) {
     //This needs to be worked on
@@ -506,9 +536,36 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     String lowerWestToLowerEastText = rb.getString("LowerWestToLowerEast");
     String upperWestToUpperEastText = rb.getString("UpperWestToUpperEast");
     
+    /**
+    * Get the text used in the pop-up for setting the route from Lower West
+    * to Upper East
+    * For a scissor crossing this the Left-hand crossing.
+    * For a 3 Way turnout this is the Upper Exit.
+    */
     public String getLWUEText(){ return lowerWestToUpperEastText; }
+ 
+    /**
+    * Get the text used in the pop-up for setting the route from Upper West
+    * to Lower East.
+    * For a scissor crossing this the Right-hand crossing.
+    * For a 3 Way turnout this is the Middle Exit.
+    */
     public String getUWLEText(){ return upperWestToLowerEastText; }
+    
+    /**
+    * Get the text used in the pop-up for setting the route from Lower West
+    * to Lower East.
+    * For a scissor crossing this the Straight (Normal) Route.
+    * For a 3 Way turnout this is the Lower Exit.
+    */
     public String getLWLEText(){ return lowerWestToLowerEastText; }
+    
+    /**
+    * Get the text used in the pop-up for setting the route from Upper West
+    * to Upper East.
+    * For a scissor crossing this is not used.
+    * For a 3 Way turnout this is not used.
+    */
     public String getUWUEText(){ return upperWestToUpperEastText; }
     
     public void setLWUEText(String txt){ lowerWestToUpperEastText=txt; }
@@ -579,6 +636,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         };
         _iconEditor.complete(addIconAction, changeIconAction, true, true);
     }
+    
     void updateTurnout() {
         setTurnoutType(_iconEditor.getTurnoutType());
         switch(_iconEditor.getTurnoutType()){
@@ -608,8 +666,6 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
                 if (!getSingleSlipRoute()){
                     setTurnout(_iconEditor.getTurnout("lowerwest"), LOWERWEST);
                     setTurnout(_iconEditor.getTurnout("lowereast"), LOWEREAST);
-                    //namedTurnoutWestLower = _iconEditor.getTurnout("lowerwest");
-                    //namedTurnoutEastLower = _iconEditor.getTurnout("lowereast");
                 }
                 break;
         }
@@ -647,6 +703,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
 
     }
     
+     /**
+     * Throw the turnouts for a double slip when the icon is clicked
+     */
     private void doDoubleSlipMouseClick(){
         switch(turnoutState()){
             case 5:  setUpperWestToUpperEast();
@@ -661,6 +720,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
     
+     /**
+     * Throw the turnouts for a single slip when the icon is clicked
+     */
     private void doSingleSlipMouseClick(){
         switch(turnoutState()){
             case 5: if (singleSlipRoute)
@@ -687,6 +749,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
     
+    /**
+     * Throw the turnouts for a 3 way Turnout when the icon is clicked
+     */
     private void do3WayMouseClick(){
         switch(turnoutState()){
             case 5: if (singleSlipRoute)
@@ -713,6 +778,9 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
     
+     /**
+     * Throw the turnouts for a scissor crossing when the icon is clicked
+     */
     boolean firstStraight = false;
     private void doScissorMouseClick(){
         if (turnoutState()==5){
@@ -735,7 +803,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     protected void reset() {
         _turnoutSetting = new HashMap <Turnout, Integer>();
     }
-    
+    /**
+    * Set the turnouts appropriate for Upper West to Lower East line in a Slip
+    * which is the equivalent a of right hand crossing in a scissors.
+    * With a three way turnout, this is also the middle route.
+    */
     private void setUpperWestToLowerEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
@@ -752,6 +824,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         setSlip();
     }
     
+    /**
+    * Set the turns appropriate for Lower West to Upper East line in a Slip
+    * which is the equivalent of the left hand crossing in a scissors.
+    * With a three way turnout, this is also the upper route.
+    */
     private void setLowerWestToUpperEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
@@ -768,6 +845,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         setSlip();
     }
     
+    /**
+    * Set the turnouts appropriate for Upper West to Upper East line in a Slip
+    * which is the equivalent of the straight (normal route) in a scissors.
+    * With a three way turnout, this is not used.
+    */
+    
     private void setUpperWestToUpperEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
@@ -783,6 +866,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
         setSlip();
     }
+    
+    /**
+    * Set the turnouts appropriate for Lower West to Lower East line in a Slip
+    * which is the equivalent of the straight (normal route) in a scissors.
+    * With a three way turnout, this is the lower route.
+    */
     
     private void setLowerWestToLowerEast(){
         reset();
