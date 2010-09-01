@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations package
  * @author		Bob Coleman
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsTest extends TestCase {
 
@@ -35,6 +35,7 @@ public class OperationsTest extends TestCase {
 		suite.addTest(jmri.jmrit.operations.rollingstock.engines.OperationsEnginesTest.suite());
 		suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesTest.suite());
 		suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());
+		suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());
 
 		// GUI tests start here
 		suite.addTest(jmri.jmrit.operations.setup.OperationsSetupGuiTest.suite());
