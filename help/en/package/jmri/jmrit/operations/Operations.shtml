@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.73 2010-08-16 02:10:09 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.74 2010-09-02 03:21:35 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1078,6 +1078,13 @@ Press "Save Train" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
 trains is also created each time the "Save Train" button is pressed. 
+
+<A NAME="TrainOptions"></A>
+<H3>Train Options</H3>
+
+You can optionally have a unique railroad name and logo for each train in
+your roster.  Use the "Edit Train->Tools->Options" to enter your train's
+railroad name and logo.
 
 <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>

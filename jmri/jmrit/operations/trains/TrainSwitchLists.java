@@ -140,7 +140,7 @@ public class TrainSwitchLists extends TrainCommon {
 
 	public void printSwitchList(Location location, boolean preview){
 		File buildFile = TrainManagerXml.instance().getSwitchListFile(location.getName());
-		Train.printReport(buildFile, "Switch List " + location.getName(), preview, Setup.getFontName(), false);
+		Train.printReport(buildFile, "Switch List " + location.getName(), preview, Setup.getFontName(), false, Setup.getManifestLogoURL());
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

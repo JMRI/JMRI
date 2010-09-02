@@ -19,7 +19,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -104,5 +104,5 @@ public class OptionFrame extends OperationsFrame{
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(OperationsSetupFrame.class.getName());
+	.getLogger(OptionFrame.class.getName());
 }

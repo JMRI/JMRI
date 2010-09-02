@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.83 $
+ * @version             $Revision: 1.84 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1629,7 +1629,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	private static void printBuildReport(File file, String name, boolean isPreview){
-		Train.printReport(file, name, isPreview, "", true);
+		Train.printReport(file, name, isPreview, "", true, "");
  	}
 	
 	private void makeManifest() {
@@ -1646,7 +1646,10 @@ public class TrainBuilder extends TrainCommon{
 			return;
 		}
 		// build header
-		addLine(fileOut, Setup.getRailroadName());
+		if (!train.getRailroadName().equals(""))
+			addLine(fileOut, train.getRailroadName());
+		else
+			addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
 		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{new Date()}));

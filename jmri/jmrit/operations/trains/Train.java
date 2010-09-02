@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -83,7 +83,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
 	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved
-	
+	protected String railroadName ="";		// optional railroad name for this train
+	protected String logoURL ="";			// optional manifest logo for this train
 	protected String _comment = "";
 	
 	// property change names
@@ -1084,6 +1085,22 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _terminationScripts;
 	}
 	
+	public String getRailroadName(){
+		return railroadName;
+	}
+	
+	public void setRailroadName(String name){
+		railroadName = name;
+	}
+	
+	public String getManifestLogoURL(){
+		return logoURL;
+	}
+	
+	public void setManifestLogoURL(String pathName){
+		logoURL = pathName;
+	}
+	
 	public void setBuilt(boolean built) {
 		boolean old = _built;
 		_built = built;
@@ -1131,7 +1148,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void printBuildReport(){
 		File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
 		boolean isPreview = TrainManager.instance().getPrintPreview();
-		printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true);
+		printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
 	}
 	
 	public void setBuildFailed(boolean status) {
@@ -1175,7 +1192,12 @@ public class Train implements java.beans.PropertyChangeListener {
 		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
 		if (!file.exists())
 			return false;
-		printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false);
+		String logoURL = "";
+		if (!getManifestLogoURL().equals(""))
+			logoURL = getManifestLogoURL();
+		else 
+			logoURL = Setup.getManifestLogoURL();
+		printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false, logoURL);
 		if (!isPreview)
 			setPrinted(true);
 		return true;
@@ -1189,7 +1211,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _printed;
 	}
 	
-	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport){
+	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL){
 	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
@@ -1214,9 +1236,8 @@ public class Train implements java.beans.PropertyChangeListener {
 		String newLine = "\n";
 		String line = " ";
 		
-		if (!isBuildReport && !Setup.getManifestLogoURL().equals("")) {
-			// add the image
-			ImageIcon icon = new ImageIcon(Setup.getManifestLogoURL());
+		if (!isBuildReport && (!logoURL.equals(""))) {
+			ImageIcon icon = new ImageIcon(logoURL);
 			writer.write(icon.getImage(), new JLabel(icon));
 		}
         
@@ -1659,6 +1680,17 @@ public class Train implements java.beans.PropertyChangeListener {
     			}
     		}
     	}
+    	// check for optional railroad name and logo
+        if ((e.getChild("railRoad") != null) && 
+        		(a = e.getChild("railRoad").getAttribute("name"))!= null){
+        	String name = a.getValue();
+           	setRailroadName(name);
+    	}
+        if ((e.getChild("manifestLogo") != null)){ 
+        	if((a = e.getChild("manifestLogo").getAttribute("name"))!= null){
+        		setManifestLogoURL(a.getValue());
+        	}
+    	}
     	addPropertyChangeListerners();
     }
     
@@ -1769,6 +1801,16 @@ public class Train implements java.beans.PropertyChangeListener {
         	}
         	e.addContent(es);
         }
+        if (!getRailroadName().equals("")){
+        	Element r = new Element("railRoad");
+        	r.setAttribute("name", getRailroadName());
+        	e.addContent(r);
+        }
+        if (!getManifestLogoURL().equals("")){
+        	Element l = new Element("manifestLogo");
+        	l.setAttribute("name", getManifestLogoURL());
+        	e.addContent(l);
+        }   
         return e;
     }
 
