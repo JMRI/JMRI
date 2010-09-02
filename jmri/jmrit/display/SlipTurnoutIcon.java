@@ -23,20 +23,21 @@ import java.util.Iterator;
  *<P>
  * Note: lower west to lower east icon is used for storing the slip icon, in a single slip,
  * even if the slip is set for upper west to upper east.
- *  
+ * <p>
  * With a 3-Way point we use the following translations
- *
- * lower west to upper east - to upper exit
- * upper west to lower east - to middle exit
- * lower west to lower east - to lower exit
- * west Turnout - First Turnout
- * east Turnout - Second Turnout
- * singleSlipRoute - translates to which exit the first turnout goes to
- * true if upper, or false if lower
+ *<ul>
+ * <li>lower west to upper east - to upper exit
+ * <li>upper west to lower east - to middle exit
+ * <li>lower west to lower east - to lower exit
+ * <li>west Turnout - First Turnout
+ * <li>east Turnout - Second Turnout
+ * <li>singleSlipRoute - translates to which exit the first turnout goes to
+ * <li>true if upper, or false if lower
+ * </ul>
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -84,10 +85,12 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Attached a namedBean Handle turnout to this display item
      * @param to Used as the NamedBeanHandle to lookup the turnout object
      * @param turn is used to determine which turnout position this is for.
-     * 0x01 - West
-     * 0x02 - East
-     * 0x04 - Lower West
-     * 0x06 - Upper East
+     * <ul>
+     * <li>0x01 - West
+     * <li>0x02 - East
+     * <li>0x04 - Lower West
+     * <li>0x06 - Upper East
+     * </ul>
      */
     public void setTurnout(NamedBeanHandle<Turnout> to, int turn) {
         switch(turn){
@@ -130,25 +133,61 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         }
     }
     
+    /** 
+     * Constant used to referred to the Turnout address configured to operate the
+     * west (or first for a three way) of the Turnout.
+     */
     public static final int WEST = 0x01;
+    
+    /** 
+     * Constant used to referred to the Turnout address configured to operate the
+     * east (or second for a three way) of the Turnout.
+     */
     public static final int EAST = 0x02;
+    
+    /** 
+     * Constant used for a scissor crossing using 4 turnout address, and refers
+     * to the turnout located at the lower west.
+     */
     public static final int LOWERWEST = 0x04;
+   
+   /** 
+     * Constant used for a scissor crossing using 4 turnout address, and refers
+     * to the turnout located at the lower east.
+     */
     public static final int LOWEREAST = 0x06;
 
+    /** 
+     * Constant used to refer to a Double Slip Configuration.
+     */
     public static final int DOUBLESLIP = 0x00;
+    
+    /** 
+     * Constant used to refer to a Single Slip Configuration.
+     */
     public static final int SINGLESLIP = 0x02;
+    
+    /** 
+     * Constant used to refer to a Three Way Turnout Configuration.
+     */
     public static final int THREEWAY = 0x04;
+    
+     /** 
+     * Constant used to refer to a Scissor (Double Crossover) Configuration.
+     */
     public static final int SCISSOR = 0x08;
     
     //true for double slip, false for single.
     int turnoutType = DOUBLESLIP;
-    /*
+    /**
     * Sets the type of turnout configuration which is being used
     * @param slip - valid values are
-    * 0x00 - Double Slip
-    * 0x02 - Single Slip
-    * 0x04 - Three Way Turnout
-    * 0x08 - Scissor Crossing
+    * <ul>
+    * <li>0x00 - Double Slip
+    * <li>0x02 - Single Slip
+    * <li>0x04 - Three Way Turnout
+    * <li>0x08 - Scissor Crossing
+    * </ul>
     */
     public void setTurnoutType(int slip){
         turnoutType = slip;
@@ -166,6 +205,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     * This also doubles up for the three way and determines if the
     * first turnout routes to the upper (true) or lower (false) exit point.
     * returns 
+    * <p>
     * In a Scissor crossing this returns true if only two turnout address are
     * required to set the crossing or false if four turnout address are required
     */
@@ -175,6 +215,11 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     public void setSingleSlipRoute(boolean route) {
         singleSlipRoute = route;
     }
+    
+    /**
+    * Returns the turnout located at the position specified.
+    * @param turn See constants for EAST, WEST, LOWEREAST, LOWERWEST
+    */
     
     public Turnout getTurnout(int turn) { 
         switch(turn) {
