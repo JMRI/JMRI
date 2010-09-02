@@ -27,5 +27,7 @@
 	<classpathentry kind="lib" path="lib/ExternalLinkContentViewerUI.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
 	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/annotations.jar"/>
+	<classpathentry kind="lib" path="lib/jsr305.jar"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>

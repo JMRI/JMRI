@@ -7,7 +7,7 @@
         <!-- TODO decide on and define some value for ${build.classes.dir} -->
         <mkdir dir="classes"/>
         <javac destdir="classes" includes="${files}" source="1.3" srcdir="src/jmri">
-            <classpath path=".:java/classes:java/lib/junit.jar:jmri.jar:lib/log4j.jar:lib/jhall.jar:lib/xercesImpl.jar:lib/jdom.jar:lib/jython.jar:lib/javacsv.jar:lib/MRJAdapter.jar:lib/jinput.jar:lib/ch.ntb.usb.jar:lib/servlet.jar:lib/vecmath.jar:lib/jfcunit.jar:lib/jakarta-regexp-1.5.jar"/>
+            <classpath path=".:java/classes:java/lib/junit.jar:jmri.jar:lib/log4j.jar:lib/jhall.jar:lib/xercesImpl.jar:lib/jdom.jar:lib/jython.jar:lib/javacsv.jar:lib/MRJAdapter.jar:lib/jinput.jar:lib/ch.ntb.usb.jar:lib/servlet.jar:lib/vecmath.jar:lib/jfcunit.jar:lib/jakarta-regexp-1.5.jar:lib/annotations.jar:lib/jsr305.jar"/>
         </javac>
     </target>
 </project>

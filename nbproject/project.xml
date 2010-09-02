@@ -104,7 +104,7 @@
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/2">
             <compilation-unit>
                 <package-root>src</package-root>
-                <classpath mode="compile">lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/MRJAdapter.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar</classpath>
+                <classpath mode="compile">lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/javacsv.jar;lib/jdom.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/MRJAdapter.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/activation.jar;lib/mailapi.jar;lib/smtp.jar;lib/jfcunit.jar;lib/jakarta-regexp-1.5.jar;lib/ExternalLinkContentViewerUI.jar;lib/annotations.jar;lib/jsr305.jar</classpath>
                 <built-to>classes</built-to>
                 <javadoc-built-to>doc</javadoc-built-to>
                 <source-level>1.5</source-level>
@@ -112,7 +112,7 @@
             <compilation-unit>
                 <package-root>test</package-root>
                 <unit-tests/>
-                <classpath mode="compile">classes;lib/junit.jar;lib/activation.jar;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/jakarta-regexp-1.5.jar;lib/javacsv.jar;lib/jdom.jar;lib/jfcunit.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/mailapi.jar;lib/jython.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar</classpath>
+                <classpath mode="compile">classes;lib/junit.jar;lib/activation.jar;lib/ch.ntb.usb.jar;lib/comm-rxtx.jar;lib/xercesImpl.jar;lib/gluegen-rt.jar;lib/jakarta-regexp-1.5.jar;lib/javacsv.jar;lib/jdom.jar;lib/jfcunit.jar;lib/jhall.jar;lib/jinput.jar;lib/jmdns.jar;lib/joal.jar;lib/junit.jar;lib/jython.jar;lib/log4j.jar;lib/mailapi.jar;lib/jython.jar;lib/RXTXcomm.jar;lib/Serialio.jar;lib/servlet.jar;lib/vecmath.jar;lib/annotations.jar;lib/jsr305.jar</classpath>
                 <built-to>classes</built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>
