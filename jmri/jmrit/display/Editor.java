@@ -1257,7 +1257,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         };
         editor.makeIconPanel();
         editor.complete(addIconAction, changeIconAction, true, false);
-        frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
+        frame.addHelpMenu("package.jmri.jmrit.display.SlipTurnoutIcon", true);
     }
 
     protected void addSensorEditor() {
