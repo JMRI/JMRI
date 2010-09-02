@@ -15,14 +15,14 @@ import java.util.Vector;*/
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
-        mInstance=this;
+        //mInstance=this;
     }
     /**
      * set up all of the other objects to operate with an ECOS command
@@ -46,9 +46,11 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) {
-            mInstance = new NetworkDriverAdapter();
-            mInstance.setPort(15471);
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+            NetworkDriverAdapter newadap = new NetworkDriverAdapter();
+            //mInstance = new NetworkDriverAdapter();
+            newadap.setPort(15471);
+            newadap.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+            mInstance = newadap;
         }
         return mInstance;
     }

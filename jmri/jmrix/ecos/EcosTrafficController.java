@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -142,16 +142,17 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     static public EcosTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
-            self = new EcosTrafficController();
+            EcosTrafficController newinstance = new EcosTrafficController();
             // set as command station too
-            jmri.InstanceManager.setCommandStation(self);
-            self.setAllowUnexpectedReply(true);
+            jmri.InstanceManager.setCommandStation(newinstance);
+            newinstance.setAllowUnexpectedReply(true);
+            self = newinstance;
         }
         return self;
     }
 
-    static protected EcosTrafficController self = null;
-    protected void setInstance() { self = this; }
+    static private EcosTrafficController self = null;
+    protected void setInstance() { if(self==null) self=this; }
 
     protected AbstractMRReply newReply() { 
         EcosReply reply = new EcosReply();
@@ -207,7 +208,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             }
         return true;
     }
-
+    
+    @Override
     protected void finalize() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established

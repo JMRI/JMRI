@@ -13,7 +13,7 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
@@ -38,8 +38,8 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
 
     EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
-    protected static Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
-    protected static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
+    private static Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
+    private static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
     
     public String getSystemPrefix() { return "U"; }
     
@@ -118,7 +118,7 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
             //The first part of the messages is always the object id.
             int object = Integer.parseInt(lines[0].substring(startobj, endobj));
             if ((100<=object) && (object<200)){
-                es = _tecos.get(object);
+                //es = _tecos.get(object);
                 if(lines[0].contains("state")){
                     int startstate = msg.indexOf("state[");
                     int endstate = msg.indexOf("]");

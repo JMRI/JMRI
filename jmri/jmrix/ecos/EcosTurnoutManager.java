@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -46,7 +46,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     EcosTrafficController tc;
     
     //The hash table simply holds the object number against the EcosTurnout ref.
-    protected static Hashtable <Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
+    private static Hashtable <Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
     
     public String getSystemPrefix() { return "U"; }
     final String prefix = getSystemPrefix()+typeLetter();
@@ -304,9 +304,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             }
             
         } else if (( 30000<=object) && (object<40000)){  //This is a ecos route
-            start = lines.indexOf('[')+1;
-            end = lines.indexOf(']');
-            //int addr = Integer.parseInt(lines[i].substring(start, end));
 
             log.debug("Found route object " + object);
 
@@ -468,12 +465,13 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public String stripChar(String s) {  
         String allowed =
           ",0123456789";
-        String result = "";
+        StringBuffer result = new StringBuffer();
         for ( int i = 0; i < s.length(); i++ ) {
             if ( allowed.indexOf(s.charAt(i)) >= 0 )
-               result += s.charAt(i);
-            }
-        return result;
+               result.append(s.charAt(i));
+        }
+        
+        return result.toString();
     }
 
     public void message(EcosMessage m) {

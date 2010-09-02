@@ -19,18 +19,18 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
 
-    protected static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
-    protected static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
+    private static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
+    private static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
 
     public String getSystemPrefix() { return "U"; }
     public char typeLetter() { return 'Z'; }
 
-    private static RosterEntry _re;
-    private static boolean addLocoToRoster = false;
+    private RosterEntry _re;
+    private boolean addLocoToRoster = false;
 
     public void clearLocoToRoster(){
         addLocoToRoster = false;
@@ -162,7 +162,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         return out;
     }
 
-    protected static EcosLocoAddressManager _instance = null;
+    private static EcosLocoAddressManager _instance = null;
     /*public static synchronized EcosLocoAddressManager instance() {
         if (_instance == null) {
             _instance = new EcosLocoAddressManager();
@@ -206,15 +206,17 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         //We should always have at least a DCC address to register a loco.
         //We may not always first time round on initial registration have the Ecos Object.
         String ecosObject = s.getEcosObject();
-
+        int oldsize=0;
         if(ecosObject !=null){
+            oldsize = _tecos.size();
             _tecos.put(ecosObject, s);
-            firePropertyChange("length", null, new Integer(_tecos.size()));
+            firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tecos.size()));
         }
 
+        oldsize = _tdcc.size();
         int dccAddress = s.getEcosLocoAddress();
         _tdcc.put(dccAddress, s);
-        firePropertyChange("length", null, new Integer(_tdcc.size()));
+        firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
     }
@@ -228,11 +230,14 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
     public void deregister(EcosLocoAddress s) {
         s.removePropertyChangeListener(this);
         String ecosObject = s.getEcosObject();
+        int oldsize = _tecos.size();
         _tecos.remove(ecosObject);
+        firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tecos.size()));
+        
         int dccAddress = s.getEcosLocoAddress();
+        oldsize = _tdcc.size();
         _tdcc.remove(dccAddress);
-        firePropertyChange("length", null, new Integer(_tecos.size()));
-        firePropertyChange("length", null, new Integer(_tdcc.size()));
+        firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
         // listen for name and state changes to forward
     }
     
@@ -786,7 +791,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
             setLocoToRoster();
             EcosLocoToRoster tmp = new EcosLocoToRoster();
             tmp.ecosLocoToRoster(tmploco.getEcosObject());
-        } else if(p.getAddLocoToJMRI()==0x00 && tmploco.AddToRoster() && (tmploco.getRosterId()==null)){
+        } else if(p.getAddLocoToJMRI()==0x00 && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
             final JDialog dialog = new JDialog();
             dialog.setTitle("Add Roster Entry From JMRI?");
             dialog.setLocationRelativeTo(null);

@@ -85,7 +85,7 @@ public class EcosLocoToRoster implements EcosListener {
             SelectedDecoder(pDecoderFile);
             
         } else {
-        	ComboPanel();
+        	comboPanel();
         }
     }
     
@@ -143,7 +143,7 @@ public class EcosLocoToRoster implements EcosListener {
 
     JComboBox combo;
     
-	public void ComboPanel()
+	public void comboPanel()
 	{
        	frame.setTitle( "Decoder Selection For Loco " + ecosLoco.getEcosDescription() );
 		frame.getContentPane().setLayout( new BorderLayout() );
@@ -433,7 +433,7 @@ public class EcosLocoToRoster implements EcosListener {
         return iddecoder;
     }*/
         // from http://www.codeguru.com/java/articles/143.shtml
-    class DecoderTreeNode extends DefaultMutableTreeNode {
+    static class DecoderTreeNode extends DefaultMutableTreeNode {
         private String toolTipText;
         private String title;
 
@@ -501,10 +501,15 @@ public class EcosLocoToRoster implements EcosListener {
 	void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {
-            String msg = "Identified "+pList.size()+" matches: ";
-            for (int i = 0 ; i< pList.size(); i++)
-                msg = msg+pList.get(i).getModel()+":";
-            log.debug(msg);
+            //String msg = "Identified "+pList.size()+" matches: ";
+            StringBuffer buf = new StringBuffer();
+            buf.append("Identified "+pList.size()+" matches: ");
+            for (int i = 0 ; i< pList.size(); i++){
+                buf.append(pList.get(i).getModel());
+                buf.append(":");
+                //msg = msg+pList.get(i).getModel()+":";
+            }
+            log.debug(buf.toString());
         }
         if (pList.size()<=0) {
             log.error("Found empty list in updateForDecoderTypeID, should not happen");
@@ -576,7 +581,8 @@ public class EcosLocoToRoster implements EcosListener {
 
         try {
             decoderRoot = df.rootFromName(DecoderFile.fileLocation+df.getFilename());
-        } catch (Exception e) { log.error("Exception while loading decoder XML file: "+df.getFilename()); }
+        } catch (org.jdom.JDOMException e) { log.error("JDOM Exception while loading decoder XML file: "+df.getFilename()); }
+        catch (java.io.IOException e) { log.error("IO Exception while loading decoder XML file: "+df.getFilename()); }
         // load variables from decoder tree
         df.getProductID();
         df.loadVariableModel(decoderRoot.getChild("decoder"), variableModel);

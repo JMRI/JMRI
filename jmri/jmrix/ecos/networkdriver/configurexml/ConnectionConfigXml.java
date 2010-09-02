@@ -22,7 +22,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
@@ -31,7 +31,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = NetworkDriverAdapter.instance();
     }
     
-    protected void extendedElement(Element e){
+    @Override
+    protected void extendElement(Element e){
         Element ecosPrefElem = new Element("commandStationPreferences");
         EcosPreferences p = EcosPreferences.instance();
 
@@ -77,6 +78,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
     
     @SuppressWarnings("unchecked")
+    @Override
     protected void unpackElement(Element e) {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
         EcosPreferences p = EcosPreferences.instance();

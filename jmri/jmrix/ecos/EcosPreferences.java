@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class EcosPreferences {
@@ -37,6 +37,7 @@ public class EcosPreferences {
                 jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
             }
         }
+        self = this;
     }
     
     ShutDownTask ecosPreferencesShutDownTask = null;
@@ -47,7 +48,7 @@ public class EcosPreferences {
     @SuppressWarnings("unused")
     private static final int YES = 0x02; //ie always perform the operation
     
-    private static boolean _changeMade = false;
+    private boolean _changeMade = false;
     
     public boolean getChangeMade(){ return _changeMade; }
     //The reset is used after the preferences have been loaded for the first time
@@ -58,7 +59,7 @@ public class EcosPreferences {
      * Currently not implemented.
      */
      
-    protected static int _addlocotoecos = ASK;
+    private int _addlocotoecos = ASK;
     
     public int getAddLocoToEcos(){
         return _addlocotoecos;
@@ -75,7 +76,7 @@ public class EcosPreferences {
      * Currently not implemented.
      */
      
-    protected static int _addlocotojmri = ASK;
+    private int _addlocotojmri = ASK;
     
     public int getAddLocoToJMRI(){
         return _addlocotojmri;
@@ -92,7 +93,7 @@ public class EcosPreferences {
      * Currently not implemented
      */    
     
-    protected static String _ecoslocodescription = null;
+    private String _ecoslocodescription = null;
     
     public String getEcosLocoDescription(){
         return _ecoslocodescription;
@@ -114,7 +115,7 @@ public class EcosPreferences {
     private static final int JMRI       = 0x02;
     private static final int ECOS       = 0x03;
     
-    protected static int _locomaster = 0x00;
+    private int _locomaster = 0x00;
     
     public int getLocoMaster(){
         return _locomaster;
@@ -151,7 +152,7 @@ public class EcosPreferences {
     * Currently not implemented.
     */
      
-    protected static int _adhoclocofromecos = ASK;
+    private int _adhoclocofromecos = ASK;
     
     //0x00 - always ask
     //0x01 - always leave loco
@@ -170,7 +171,7 @@ public class EcosPreferences {
     * Stores the users preferance to deal with if another device has control over the loco
     */
      
-    protected static int _forcecontrolfromecos = ASK;
+    private int _forcecontrolfromecos = ASK;
     
     //0x00 - always ask
     //0x01 - always always fail
@@ -191,7 +192,7 @@ public class EcosPreferences {
     * Currently not implemented.
     */
 
-    protected static String _defaultecosprotocol = "DCC128";
+    private String _defaultecosprotocol = "DCC128";
 
     public String getDefaultEcosProtocol(){
         return _defaultecosprotocol;
@@ -212,7 +213,7 @@ public class EcosPreferences {
     //0x01 - always leave loco
     //0x02 - always remove loco
       
-    protected static int _removelocofromecos = ASK;
+    private int _removelocofromecos = ASK;
     
     public int getRemoveLocoFromEcos(){
         return _removelocofromecos;
@@ -229,7 +230,7 @@ public class EcosPreferences {
     * Currently not implemented.
     */
     
-    protected static int _removelocofromjmri = ASK;
+    private int _removelocofromjmri = ASK;
 
     public int getRemoveLocoFromJMRI(){
         return _removelocofromjmri;
@@ -245,7 +246,7 @@ public class EcosPreferences {
     * also be created on the ECOS.
     * Currently not implemented.
     */    
-    protected static int _addturnoutstoecos = ASK;
+    private int _addturnoutstoecos = ASK;
     
     public int getAddTurnoutsToEcos(){
         return _addturnoutstoecos;
@@ -262,7 +263,7 @@ public class EcosPreferences {
     * Currently not implemented.
     */
     
-    protected static int _addturnoutstojmri = ASK;
+    private int _addturnoutstojmri = ASK;
 
     public int getAddTurnoutsToJMRI(){
         return _addturnoutstojmri;
@@ -279,7 +280,7 @@ public class EcosPreferences {
     * Currently not implemented.
     */
     
-    protected static int _removeturnoutsfromjmri = ASK;
+    private int _removeturnoutsfromjmri = ASK;
 
     public int getRemoveTurnoutsFromJMRI(){
         return _removeturnoutsfromjmri;
@@ -295,7 +296,7 @@ public class EcosPreferences {
     * also be removed from the ECOS.
     * Currently not implemented.
     */    
-    protected static int _removeturnoutsfromecos = ASK;
+    private int _removeturnoutsfromecos = ASK;
     
     public int getRemoveTurnoutsFromEcos(){
         return _removeturnoutsfromecos;
@@ -315,7 +316,7 @@ public class EcosPreferences {
        if (_instance == null) _instance = new EcosPreferences();
         return _instance; 
     }
-    protected static EcosPreferences _instance = null;*/
+    private EcosPreferences _instance = null;*/
 
     static public EcosPreferences instance() {
         if (self == null) {
@@ -326,8 +327,8 @@ public class EcosPreferences {
         return self;
     }
 
-    static protected EcosPreferences self = null;
-    protected void setInstance() { self = this; }
+    static private EcosPreferences self = null;
+    private void setInstance() { self = this; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
 
