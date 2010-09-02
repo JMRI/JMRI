@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * Display memory usage on request
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class MemoryFrameAction extends AbstractAction {
 
@@ -87,6 +87,7 @@ public class MemoryFrameAction extends AbstractAction {
 			}
 		});
 		gcButton.addActionListener(new ActionListener() {
+            @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_GC")  // Garbage collection OK here
 			public void actionPerformed(ActionEvent event) {
 				Runtime.getRuntime().gc();
 				updateDisplay();
