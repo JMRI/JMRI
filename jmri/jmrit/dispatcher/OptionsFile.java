@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -47,6 +47,11 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 
 	public OptionsFile () {
 		super();
+	}
+	public OptionsFile (String testLocation) {
+	    super();
+		defaultFileName = testLocation;
+		_instance = this;
 	}
 	
 	// operational variables
