@@ -80,6 +80,10 @@ jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
   from <https://jinput.dev.java.net/> jinput_dist_20090401
   (most recent as of 2010-Jan-02)
 
+annotations.jar, jsr305.jar:
+    From Findbugs 1.3.9 from http://findbugs.sourceforge.net
+    Only needed at compile/build time, not runtime
+    
 servlet.jar:
   jakarta-servletapi-3.2.3-src/lib/servlet.jar
 
