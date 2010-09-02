@@ -16,7 +16,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -197,7 +197,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         p.setWarnTransitInUse(getChoiceType(_warnTransitInUse));
 
         for (int i = 0; i<data.length; i++){
-            if (((String)data[i][1]).toLowerCase()=="true"){
+            if (((String)data[i][1]).toLowerCase().equals("true")){
                 p.setPreferenceState((String)data[i][0], true);
                 data[i][1]="true";
             } else {
