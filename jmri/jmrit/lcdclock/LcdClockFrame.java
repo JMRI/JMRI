@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * 
  * This was a very direct steal from the Nixie clock code, ver 1.12.
  * Thank you Bob Jacobson.
@@ -135,8 +135,8 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
       else {
         //this DOES NOT allow space for the Run/Stop button, if it is
         //enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        iconWidth = (int) ((double)frameWidth / 4.5);
-        iconHeight = (int) ((double)iconWidth / iconAspect);
+        iconWidth = (int) (frameWidth / 4.5);
+        iconHeight = (int) (iconWidth / iconAspect);
       }
       for (int i = 0; i < 10; i++) {
         Image scaledImage = baseTubes[i].getImage().getScaledInstance(iconWidth,iconHeight,Image.SCALE_SMOOTH);
