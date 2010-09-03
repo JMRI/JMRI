@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: USBtoSerial.shtml,v 1.5 2008-04-02 16:16:42 jacobsen Exp $ -->
+<!-- $Id: USBtoSerial.shtml,v 1.6 2010-09-03 20:09:52 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: Use of USB to Serial adapters</TITLE>
@@ -33,9 +33,9 @@ doesn't have any RS232 ports, what do you do? This is becoming more
 common as new computers are sold with USB ports instead of RS232 serial
 ports.</P>
 <P>One solution is to use a "USB to Serial" adapter to solve this. A
-typical unit is one of the ones made by 
-<a href="http://keyspan.com/">Keyspan</a>, e.g. one of their 
-<A HREF="http://keyspan.com/products/usa19hs/">their USA19 series of adapters</A>. 
+typical unit is the 
+<A HREF="http://www.tripplite.com/en/products/model.cfm?txtmodelid=3914">Keyspan USA-19HS series of adapters</A>
+by Tripplite. 
 We recommend these Keyspan adapters; we use a
 Keyspan 19-series adapter during the release testing, and have found
 them to work reliably in all cases so far.</P>

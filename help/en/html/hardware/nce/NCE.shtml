@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.24 2010-08-09 06:22:51 jacobsen Exp $ -->
+<!-- $Id: NCE.shtml,v 1.25 2010-09-03 20:09:53 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -46,10 +46,18 @@ on their front panel.
 <OL>
 	<LI>To connect your computer to an NCE Power Pro or PowerHouse system, you
 	can usually just connect the command station to the computer's serial
-	port using a 9-pin serial cable.  On newer computers there might not be
+	port using a 9-pin serial cable. This cable must be a 'straight through' extension
+	cable and not a 'modem' type cable.
+	On newer computers there might not be
 	a serial port, so you will need to use one of the computers USB ports and a USB
-	to serial adaptor. See <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a> for
+	to serial adaptor. 
+	<br>
+	See <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a> for
 	more information.
+	<br>
+	Many USB-Serial devices will still need a serial extension cable for this connection due
+	to mounting hardware on the command station and the USB-Serial adapter.
+	<br>
 	Note that this is <em>not</em> the same thing
 	as the 
 	<a href="#powercab">NCE USB adapter</a>, 
