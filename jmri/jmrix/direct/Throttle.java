@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class Throttle extends AbstractThrottle
 {
@@ -86,6 +86,7 @@ public class Throttle extends AbstractThrottle
      * This intentionally skips the emergency stop value of 1.
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;
