@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -57,12 +58,13 @@ public class TrainCommon {
 		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");
 		String carDestination = (Setup.isShowCarDestinationEnabled() ? ", destination "+splitString(car.getDestinationName()) : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
+		String carPickupComment = " " +CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
 		addLine(file, BOX + rb.getString("Pickup")+" " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0]
 				+ carLength + carLoad + carColor 
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+")" : "")
 				+ (car.hasFred() ? " ("+rb.getString("FRED")+")" : "") + " " + rb.getString("from")+ " "
-				+ splitString(car.getTrackName()) + carDestination + carComment);
+				+ splitString(car.getTrackName()) + carDestination + carComment + carPickupComment);
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
@@ -70,14 +72,15 @@ public class TrainCommon {
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
 		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose() ? " "+car.getLoad() : "");
-		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");
+		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");	
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
+		String carDropComment = " " +CarLoads.instance().getDropComment(car.getType(), car.getLoad());
 		addLine(file, BOX + rb.getString("Drop")+ " " + car.getRoad() + " "
 				+ carNumber[0] + " " + carType[0]
 				+ carLength + carLoad + carColor
 				+ (car.isHazardous() ? " ("+rb.getString("Hazardous")+") " : " ")
 				+ rb.getString("to") + " " + splitString(car.getDestinationTrackName())
-				+ carComment);
+				+ carComment + carDropComment);
 	}
 	
 	// writes string with level to console and file

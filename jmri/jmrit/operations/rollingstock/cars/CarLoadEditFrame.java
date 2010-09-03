@@ -9,12 +9,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import jmri.jmrit.operations.setup.Control;
@@ -28,7 +31,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -37,20 +40,22 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	CarLoads carLoads = CarLoads.instance();
 	
 	// labels
-	JLabel textLoad = new JLabel();
 	JLabel textSep = new JLabel();
 	JLabel quanity = new JLabel("0");
 
 	// major buttons
-	JButton addButton = new JButton();
-	JButton deleteButton = new JButton();
-	JButton replaceButton = new JButton();
+	JButton addButton = new JButton(rb.getString("Add"));
+	JButton deleteButton = new JButton(rb.getString("Delete"));
+	JButton replaceButton = new JButton(rb.getString("Replace"));
+	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	// combo box
 	JComboBox comboBox;
 	
 	// text box
 	JTextField addTextBox = new JTextField(10);
+	JTextField pickupCommentTextField = new JTextField(35);
+	JTextField dropCommentTextField = new JTextField(35);
 	
     public CarLoadEditFrame() {}
     
@@ -67,39 +72,62 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         _type = type;
         loadCombobox();
         
-        // general GUI config
-        getContentPane().setLayout(new GridBagLayout());
-        
-        textLoad.setText(rb.getString("Load"));
-
-		addButton.setText(rb.getString("Add"));
-		addButton.setVisible(true);
-        deleteButton.setText(rb.getString("Delete"));
-		deleteButton.setVisible(true);
-        replaceButton.setText(rb.getString("Replace"));
-        replaceButton.setVisible(true);
-        
+        // general GUI config    
         quanity.setVisible(showQuanity);
         
-		// row 1
-		addItem(textLoad,2,1);
+		// load panel
+		JPanel pLoad = new JPanel();
+		pLoad.setLayout(new GridBagLayout());
+		pLoad.setBorder(BorderFactory.createTitledBorder(rb.getString("Load")));
+        
 		// row 2
-		addItem(addTextBox, 2, 2);
-        addItem(addButton, 3, 2);
+		addItem(pLoad, addTextBox, 2, 2);
+        addItem(pLoad, addButton, 3, 2);
         
         // row 3
-        addItem(quanity, 1, 3);
-        addItem(comboBox, 2, 3);
-        addItem(deleteButton, 3, 3);
+        addItem(pLoad, quanity, 1, 3);
+        addItem(pLoad, comboBox, 2, 3);
+        addItem(pLoad, deleteButton, 3, 3);
         
         // row 4 
-        addItem(replaceButton, 3, 4);
+        addItem(pLoad, replaceButton, 3, 4);
+        
+        // row 6
+		// optional panel
+		JPanel pOptionalPickup = new JPanel();
+		pOptionalPickup.setLayout(new BoxLayout(pOptionalPickup, BoxLayout.Y_AXIS));
+		pOptionalPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalPickup")));
+		
+		addItem(pOptionalPickup, pickupCommentTextField, 0, 0);
+		
+		// row 8
+		JPanel pOptionalDrop = new JPanel();
+		pOptionalDrop.setLayout(new BoxLayout(pOptionalDrop, BoxLayout.Y_AXIS));
+		pOptionalDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalDrop")));
+		
+		addItem(pOptionalDrop, dropCommentTextField, 0, 0);
+		
+		// row 10
+		JPanel pControl = new JPanel();
+		pControl.setLayout(new BoxLayout(pControl, BoxLayout.Y_AXIS));
+		
+		addItem(pControl, saveButton, 0, 0);
+
+		// add panels
+		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().add(pLoad);
+		getContentPane().add(pOptionalPickup);
+		getContentPane().add(pOptionalDrop);
+		getContentPane().add(pControl);
         
 		addButtonAction(addButton);
         addButtonAction(deleteButton);
 		addButtonAction(replaceButton);
+		addButtonAction(saveButton);
 		
 		addComboBoxAction(comboBox);
+		
+		updateCarCommentFields();
  
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -118,7 +146,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     	setVisible(true);
     }
  
-	// add or delete button
+	// add, delete, replace, and save buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == addButton){
 			String addLoad = addTextBox.getText();
@@ -197,11 +225,18 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 			replaceLoad(_type, oldLoad, newLoad);
 			deleteLoadFromCombobox (_type, oldLoad);
 		}
+		if (ae.getSource() == saveButton){
+			log.debug("CarLoadEditFrame save button pressed");
+			carLoads.setPickupComment(_type, (String)comboBox.getSelectedItem(), pickupCommentTextField.getText());
+			carLoads.setDropComment(_type, (String)comboBox.getSelectedItem(), dropCommentTextField.getText());
+			CarManagerXml.instance().writeOperationsCarFile();
+		}
 	}
 	
 	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("Combo box action");
 		updateCarQuanity();
+		updateCarCommentFields();
 	}
 	
 	// replace the default empty and load for all car types
@@ -259,6 +294,11 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 				number++;
 		}
 		quanity.setText(Integer.toString(number));
+	}
+	
+	private void updateCarCommentFields(){
+		pickupCommentTextField.setText(carLoads.getPickupComment(_type, (String)comboBox.getSelectedItem()));
+		dropCommentTextField.setText(carLoads.getDropComment(_type, (String)comboBox.getSelectedItem()));
 	}
 
     public void dispose() {

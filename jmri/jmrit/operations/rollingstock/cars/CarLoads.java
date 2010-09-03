@@ -17,13 +17,13 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class CarLoads {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	
-	protected Hashtable<String, List<String>> list = new Hashtable<String, List<String>>();
+	protected Hashtable<String, List<CarLoad>> list = new Hashtable<String, List<CarLoad>>();
 	protected String _emptyName = rb.getString("EmptyCar");	
 	protected String _loadName = rb.getString("LoadedCar");
 	
@@ -62,7 +62,7 @@ public class CarLoads {
      * @param type car type
      */
     public void addType(String type){
-    	list.put(type, new ArrayList<String>());
+    	list.put(type, new ArrayList<CarLoad>());
     }
     
     public void replaceType(String oldType, String newType){
@@ -105,53 +105,69 @@ public class CarLoads {
     
     public List<String> getNames(String type){
     	if (type == null){
-    		List<String> loads = new ArrayList<String>();
-    		loads.add(getDefaultEmptyName());
-    		loads.add(getDefaultLoadName());
-    		return loads;
+    		List<String> names = new ArrayList<String>();
+    		names.add(getDefaultEmptyName());
+    		names.add(getDefaultLoadName());
+    		return names;
     	}
-    	List<String> loads = list.get(type);
+    	List<CarLoad> loads = list.get(type);
     	if (loads == null){
     		addType(type);
     		loads = list.get(type);
     	}
     	if (loads.size() == 0){
-    		loads.add(getDefaultEmptyName());
-    		loads.add(getDefaultLoadName());
+    		loads.add(new CarLoad(getDefaultEmptyName()));
+    		loads.add(new CarLoad(getDefaultLoadName()));
     	}
-    	return loads;
+    	List<String> names = new ArrayList<String>();
+    	for (int i=0; i<loads.size(); i++){
+    		names.add(loads.get(i).getName());
+    	}
+    	return names;
     }
-    
+
     public void addName(String type, String name){
-    	List<String> loads = list.get(type);
+    	List<CarLoad> loads = list.get(type);
     	if (loads == null){
     		log.debug("car type ("+type+") does not exist");
     		return;
     	}
-    	if (loads.contains(name))
+    	// don't add if name already exists
+    	if (containsName(type, name))
     		return;
-    	loads.add(0, name);
+    	loads.add(0, new CarLoad(name));
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()-1, loads.size());
     }
-    
+
     public void deleteName(String type, String name){
-    	List<String> loads = list.get(type);
+    	List<CarLoad> loads = list.get(type);
     	if (loads == null){
     		log.debug("car type ("+type+") does not exist");
     		return;
+    	}
+    	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name)){
+    			loads.remove(i);
+    			break;
+    		}
     	}
     	loads.remove(name);
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()+1, loads.size());
     }
     
     public boolean containsName(String type, String name){
-       	List<String> loads = list.get(type);
+       	List<CarLoad> loads = list.get(type);
     	if (loads == null){
     		log.debug("car type ("+type+") does not exist");
     		return false;
     	}
-    	if (loads.contains(name))
-    		return true;
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name)){
+    			return true;
+    		}
+    	}
     	return false;
     }
     
@@ -189,6 +205,52 @@ public class CarLoads {
     	firePropertyChange (LOAD_NAME_CHANGED_PROPERTY, old, name);
     }
     
+    public void setPickupComment(String type, String name, String comment){
+    	if (!containsName(type, name))
+    		return;
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			cl.setPickupComment(comment);
+       	}
+    }
+    
+    public String getPickupComment(String type, String name){
+    	if (!containsName(type, name))
+    		return "";
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			return cl.getPickupComment();
+       	}
+       	return "";
+    }
+    
+    public void setDropComment(String type, String name, String comment){
+    	if (!containsName(type, name))
+    		return;
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			cl.setDropComment(comment);
+       	}
+    }
+    
+    public String getDropComment(String type, String name){
+    	if (!containsName(type, name))
+    		return "";
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			return cl.getDropComment();
+       	}
+       	return "";
+    }
+    
 	/**
 	 * Create an XML element to represent this Entry. This member has to remain
 	 * synchronized with the detailed DTD in operations-cars.dtd.
@@ -208,12 +270,24 @@ public class CarLoads {
 			String key = en.nextElement();
 			Element load = new Element("load");
 			load.setAttribute("type", key);
-			List<String> loads = list.get(key);
+			List<CarLoad> loads = list.get(key);
 			String names ="";
+			String pickupComments ="";
+			String dropComments ="";
 			for (int j=0; j<loads.size(); j++){
-				names = names + loads.get(j) + "%%";
+				names = names + loads.get(j).getName() + "%%";
+				pickupComments = pickupComments + loads.get(j).getPickupComment() + "%%";
+				dropComments = dropComments + loads.get(j).getDropComment() + "%%";
+				Element carLoad = new Element("carLoad");
+				carLoad.setAttribute("name", loads.get(j).getName());
+				if (!loads.get(j).getPickupComment().equals(""))
+					carLoad.setAttribute("pickupComment", loads.get(j).getPickupComment());
+				if (!loads.get(j).getDropComment().equals(""))
+					carLoad.setAttribute("dropComment", loads.get(j).getDropComment());
+				load.addContent(carLoad);
 			}
-			load.setAttribute("names", names);
+			// old style saved a list of names
+			//load.setAttribute("names", names);
 			// only store loads that aren't the defaults
 			if(!names.equals(getDefaultEmptyName()+"%%"+getDefaultLoadName()+"%%"))
 				values.addContent(load);
@@ -240,6 +314,7 @@ public class CarLoads {
         	if((a = load.getAttribute("type")) != null){
         		String type = a.getValue();
         		addType(type);
+        		// old style had a list of names
         		if((a = load.getAttribute("names")) != null){
         			String names = a.getValue();
         			String[] loadNames = names.split("%%");
@@ -248,6 +323,23 @@ public class CarLoads {
         			// addName puts new items at the start, so reverse load
         			for (int j=loadNames.length; j>0;){
         				addName(type, loadNames[--j]);
+        			}
+        		}
+        		// new style load and comments
+        		@SuppressWarnings("unchecked")
+        		List<Element> loads = load.getChildren("carLoad");
+        		if (log.isDebugEnabled()) log.debug(loads.size()+" car loads for type: "+type);
+        		for (int j=0; j<loads.size(); j++){
+        			Element carLoad = loads.get(j);      			
+        			if ((a = carLoad.getAttribute("name")) != null){
+        				String name = a.getValue();
+        				addName(type, name);
+        				if ((a = carLoad.getAttribute("pickupComment")) != null){
+        					setPickupComment(type, name, a.getValue());
+        				}
+           				if ((a = carLoad.getAttribute("dropComment")) != null){
+        					setDropComment(type, name, a.getValue());
+        				}
         			}
         		}
         	}
