@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.7 2010-08-22 16:07:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.8 2010-09-03 19:59:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -229,6 +229,21 @@ Lionel Jeanson made multiple improvements to throttles:
 <p>
 Kevin Dickerson improved the C/MRI sensor add process so that it now displays an error message when an invalid system name is entered.
 Sensor manager now allows for multiple sensors to be added.
+
+<p>
+Kevin Dickerson added a double & single slip and a three way turnout to the panel editor.
+
+<p>
+Matt Harris added 'Copy to clipboard' button in context window.
+
+<p>
+Dan Boudreau improved operations staging warning messages
+
+<p>
+Jim LeFevre added support for F5 through F14 on TMCC throttles.
+
+<p>
+Dan Boudreau added a new operations feature:  User can now specify a pickup or drop comment for a car based on the car's load.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
