@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.75 $
+ * @version   $Revision: 1.76 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1751,7 +1751,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 //  bars using old style printing classes.  It results in blank bars on Windows,
                 //  but hangs Macs. The version check is a workaround.
                 float v = Float.valueOf(java.lang.System.getProperty("java.version").substring(0, 3)).floatValue();
-                if (originalName.equals("Speed Table")& v < 1.5) {
+                if (originalName.equals("Speed Table") && v < 1.5) {
                  // set the height of the speed table graph in lines
                  int speedFrameLineHeight = 11;
                  s = "\n";
