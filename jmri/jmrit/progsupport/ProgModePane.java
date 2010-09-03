@@ -22,7 +22,7 @@ import jmri.Programmer;
  * Note that you should call the dispose() method when you're really done, so that
  * a ProgModePane object can disconnect its listeners.
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class ProgModePane extends ProgModeSelector {
 
@@ -69,7 +69,7 @@ public class ProgModePane extends ProgModeSelector {
             return null;
         } else if (mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
-        } else if (mOpsPane!=null & mOpsPane.isSelected()) {
+        } else if (mOpsPane!=null && mOpsPane.isSelected()) {
             return mOpsPane.getProgrammer();
         } else return null;
     }
