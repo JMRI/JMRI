@@ -48,7 +48,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -203,6 +203,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
      * @throws IllegalArgumentException when intensity is not greater than the current value of the minIntensity property
     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMaxIntensity(double intensity) {
         if (intensity<0.0 || intensity>1.0) 
             throw new IllegalArgumentException("Illegal intensity value: "+intensity);
@@ -211,6 +212,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 
         double oldValue = mMaxIntensity;
         mMaxIntensity = intensity;
+        
         if (oldValue != intensity)
             firePropertyChange("MaxIntensity", new Double(oldValue), new Double(intensity));
     }
@@ -233,6 +235,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * @throws IllegalArgumentException when intensity is less than 0.0 or more than 1.0
      * @throws IllegalArgumentException when intensity is not less than the current value of the maxIntensity property
     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMinIntensity(double intensity) {
         if (intensity<0.0 || intensity>1.0) 
             throw new IllegalArgumentException("Illegal intensity value: "+intensity);
@@ -241,6 +244,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 
         double oldValue = mMinIntensity;
         mMinIntensity = intensity;
+
         if (oldValue != intensity)
             firePropertyChange("MinIntensity", new Double(oldValue), new Double(intensity));
     }
@@ -328,6 +332,7 @@ public abstract class AbstractLight extends AbstractNamedBean
      * Change the stored target intensity value and do notification, but don't
      * change anything in the hardware
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
 	protected void notifyTargetIntensityChange(double intensity) {
 	    double oldValue = mCurrentIntensity;
 	    mCurrentIntensity = intensity;
