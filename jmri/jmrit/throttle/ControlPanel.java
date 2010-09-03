@@ -40,7 +40,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.87 $
+ * @version    $Revision: 1.88 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -746,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.87 $
+     * @version    $Revision: 1.88 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -759,11 +759,11 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         {
         	if (e.isAltDown() || e.isControlDown() || e.isMetaDown() || e.isShiftDown() )
         		return; // we don't want speed change while changing Frame/Panel/Window
-            if ( (e.getKeyCode() == accelerateKey) | (e.getKeyCode() == accelerateKey1) ) {
+            if ( (e.getKeyCode() == accelerateKey) || (e.getKeyCode() == accelerateKey1) ) {
                 accelerate1();
             } else if ( e.getKeyCode() == accelerateKey2 ) {
                 accelerate10();
-            } else if ( (e.getKeyCode() == decelerateKey) | (e.getKeyCode() == decelerateKey1) ) {
+            } else if ( (e.getKeyCode() == decelerateKey) || (e.getKeyCode() == decelerateKey1) ) {
                 decelerate1();
             } else if ( e.getKeyCode() == decelerateKey2 ) {
                 decelerate10();

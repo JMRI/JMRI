@@ -55,7 +55,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -1154,16 +1154,16 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 		if (dirButton2.getText().equals(QUESTION))
 			return false;
 		if (!locoTextField3.getText().equals(EMPTY)
-				& dirButton3.getText().equals(QUESTION))
+				&& dirButton3.getText().equals(QUESTION))
 			return false;
 		if (!locoTextField4.getText().equals(EMPTY)
-				& dirButton4.getText().equals(QUESTION))
+				&& dirButton4.getText().equals(QUESTION))
 			return false;
 		if (!locoTextField5.getText().equals(EMPTY)
-				& dirButton5.getText().equals(QUESTION))
+				&& dirButton5.getText().equals(QUESTION))
 			return false;
 		if (!locoTextField6.getText().equals(EMPTY)
-				& dirButton6.getText().equals(QUESTION))
+				&& dirButton6.getText().equals(QUESTION))
 			return false;
 		// okay to load, clean up empty loco fields
 		if (locoTextField3.getText().equals(EMPTY))
