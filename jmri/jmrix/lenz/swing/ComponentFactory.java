@@ -9,14 +9,13 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @author		Paul Bender   Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  * @since 2.11.1
  */
 public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
     public ComponentFactory(XNetSystemConnectionMemo memo) {
         this.memo = memo;
-        new java.lang.Exception().printStackTrace();
     }
     
     XNetSystemConnectionMemo memo;
