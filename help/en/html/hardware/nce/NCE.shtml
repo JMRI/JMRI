@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.25 2010-09-03 20:09:53 ken_c Exp $ -->
+<!-- $Id: NCE.shtml,v 1.26 2010-09-04 00:07:29 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -29,9 +29,9 @@
 <P>JMRI supports three NCE layout connections:
 Power Pro (PowerHouse) via serial cable, 
 Power Pro (PowerHouse) via network connection, 
-and NCE USB adapter via a USB cable. 
+and NCE USB Interface via a USB cable. 
 They are shown in the preferences menu as NCE, NCE via network,
-and NCE USB respectively.</P>
+and NCE USB Interface respectively.</P>
 
 <a name="phpro">
 <H2>Power Pro (PowerHouse) via serial cable</H2>
@@ -50,17 +50,18 @@ on their front panel.
 	cable and not a 'modem' type cable.
 	On newer computers there might not be
 	a serial port, so you will need to use one of the computers USB ports and a USB
-	to serial adaptor. 
-	<br>
-	See <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a> for
-	more information.
+	to serial adapter. 
+	<br><br>
+	See
+    <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a>
+    for more information.
 	<br>
 	Many USB-Serial devices will still need a serial extension cable for this connection due
 	to mounting hardware on the command station and the USB-Serial adapter.
 	<br>
 	Note that this is <em>not</em> the same thing
 	as the 
-	<a href="#powercab">NCE USB adapter</a>, 
+	<a href="#powercab">NCE USB Interface</a>, 
 	which is mostly for 
 	<a href="#usblimitations">use with the PowerCab</a>, 
 	not the Power Pro or Powerhouse system.</LI>
@@ -233,27 +234,32 @@ user's manual under "Setup Command Station".</P>
 
 
 <a name="powercab">
-<H2>NCE USB Adapter</H2>
+<H2>NCE USB Interface</H2>
 
-<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB" >
+<IMG SRC="../images/nceUSB.jpg" WIDTH="85" HEIGHT="85" ALIGN="right" ALT="NCE USB Interface" >
 
-<P>The NCE USB Adapter can be connected to three NCE systems,
+<P>The NCE USB Interface can be connected to three NCE systems,
 Power Cab, SB3 (SmartBooster) or Power Pro. You must select the correct
 system from the preference menu for reliable operation.</P>
 
 <H3>Setup</H3>
 
 <OL>
-	<LI>To connect your computer using a NCE USB adaptor, you will need in
-    addition to the USB adaptor, a USB A to USB B cable to connect the adapter
-    to your computer and a RJ11 to RJ11 cable to connect the adapter to your NCE
+	<LI>To connect your computer using a NCE USB Interface, you will need in
+    addition to the USB adapter, a USB A to USB B cable to connect the adapter
+    to your computer and a throttle cable to connect the adapter to your NCE
     system.
+	The throttle cable may be another of the 'coily cords' that came with another throttle
+	or the PowerCab system.
+	<br>
     It is important to use a straight through RJ11 cable and not a crossover
     like some phone cables. Look at the end connectors to make sure that the
     colors are in the same order. You can use a RJ12 cable with six conductors
     in place of the RJ11 because it's only the four center conductors that are
     used, but it must also be a straight through cable.
-	<p>
+    <br>
+    NOTE: If using with a PowerCab, you must have firmware version 1.28c or later installed.
+	<br>
 	The connection order is also thought to be important:
 	<ul>
 	    <li>Plug in the cab-bus side and power up the
@@ -262,9 +268,9 @@ system from the preference menu for reliable operation.</P>
 	        plug the USB cable into the computer.
 	</ul>
 	</LI>
-	<LI>On some computers, you'll need to install a driver for the
-    <a href="https://www.silabs.com/products/interface/usbtouart/Pages/default.aspx">USB interface chip</a>
-	in the NCE USB adapter.
+	<LI>On most computers, you'll need to install a driver for the
+    <a href="https://www.silabs.com/products/mcu/Pages/USBtoUARTBridgeVCPDrivers.aspx">USB interface chip</a>
+	in the NCE USB Interface. 
 	    <UL>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/CP210x_VCP_Win2K_XP_S2K3.zip">Windows driver</a>
 	    <LI><a href="https://www.silabs.com/Support%20Documents/Software/Mac_OSX_VCP_Driver.zip">MacOS X driver</a>
@@ -278,7 +284,7 @@ system from the preference menu for reliable operation.</P>
 	    </UL>
 	Download the proper file, unpack it, and execute the installer.
 	Be sure to follow the directions:  On some computers,
-	it matters whether or not the NCE-USB adapter is connected
+	it matters whether or not the NCE USB Interface is connected
 	and powered on when you do the install.
 	<LI>Now go to the preferences panel of a JMRI-based program. This
 	opens automatically the first time a program is run, or you can select
@@ -288,9 +294,9 @@ system from the preference menu for reliable operation.</P>
 	<LI>If given the option to select a baud rate choose 9,600 which
 	is the default for NCE.</LI>
 	<LI>Select the type of system that you are connecting the USB
-	adaptor to, Power Cab, SB3, or Power Pro (PowerHouse). The default is Power Cab, no
+	adapter to, Power Cab, SB3, or Power Pro (PowerHouse). The default is Power Cab, no
 	jumpers installed.</LI>
-	<LI>Now confirm that the adaptor's baud rate is also set for 9,600
+	<LI>Now confirm that the adapter's baud rate is also set for 9,600
 	by removing jumper #1. Installing jumper #1 sets the baud rate to
 	19,200.</LI>
 	<LI>The series of radio buttons labeled "GUI style" allows you to
@@ -309,9 +315,9 @@ system from the preference menu for reliable operation.</P>
 </OL>
 
 <a name="usblimitations">
-<H3>NCE USB Adapter Limitations</H3>
+<H3>NCE USB Interface Limitations</H3>
 
-<P>The NCE USB Adapter doesn't support all of the current JMRI
+<P>The NCE USB Interface doesn't support all of the current JMRI
 features and functions. Some of the restrictions are based on the type
 of system the USB Adapter is connected to. The USB can't get information
 from AIUs, so they can't be used to get feedback from the layout. The
@@ -320,10 +326,10 @@ the Clock functions found in tools are also not available. The USB when
 connected to a Power Pro system doesn't support any type of loco
 programming, and when connected to a SB3 only operation mode (no program
 track) is available for loco programming. Most functions and features
-that are not supported by the NCE USB are disabled or grayed out in the
+that are not supported by the NCE USB Interface are disabled or grayed out in the
 JMRI program.</P>
 
-<P>The USB Adapter when connected to a Power Cab or SB3 can only
+<P>The NCE USB Interface when connected to a Power Cab or SB3 can only
 address accessories (turnouts) between 1 and 250. There isn't a
 limitation when connected to a Power Pro.</P>
 
