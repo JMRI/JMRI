@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JBuilder.shtml,v 1.9 2010-03-21 23:28:41 dan_boudreau Exp $ -->
+<!-- $Id: JBuilder.shtml,v 1.10 2010-09-04 19:15:25 zoo Exp $ -->
 <html lang="en">
 <head>
 <TITLE>JMRI: Building with JBuilder</TITLE>
@@ -99,8 +99,8 @@ changes to the JMRI code!
 
 <H2>JavaCC</H2>
 
-In March of 2010 JMRI developers started using JavaCC (Java Complier
-Complier) to generate code. Currently the complier places the output
+In March of 2010 JMRI developers started using JavaCC (Java Compiler
+Compiler) to generate code. Currently the compiler places the output
 files in the "tmp" directory under "java". The easiest way to create and
 populate the "tmp" directory is to use the ant build.
 
