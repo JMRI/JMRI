@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FileNames.shtml,v 1.2 2009-07-26 16:34:11 jacobsen Exp $ -->
+<!-- $Id: FileNames.shtml,v 1.3 2010-09-04 19:04:07 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -31,7 +31,7 @@
 
 <H1>JMRI: Portable File Access</H1>
 
-JMRI uses files for icons, images, pahel files, scripts, and
+JMRI uses files for icons, images, panel files, scripts, and
 lots of other things.  References to those are routinely used
 by various code, and stored in XML files.  Some of the files
 are distributed with JMRI, and some are created outside the
