@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.9 2010-03-22 00:55:27 dan_boudreau Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.10 2010-09-04 18:58:03 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -154,7 +154,7 @@
     
     <H2>JavaCC</H2>
 
-In March of 2010 JMRI developers started using JavaCC (Java Complier
+In March of 2010 JMRI developers started using JavaCC (Java Compiler
 Complier) to generate code. Currently the complier places the output
 files in the "tmp" directory under "java". The easiest way to create and
 populate the "tmp" directory is to use the ant build.
