@@ -26,7 +26,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	
@@ -39,8 +39,44 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	private String del = ","; 		// delimiter
 
 	public RollingStockLogger() {
+	}
+	
+	/** record the single instance **/
+	private static RollingStockLogger _instance = null;
+
+	public static synchronized RollingStockLogger instance() {
+		if (_instance == null) {
+			if (log.isDebugEnabled()) log.debug("RollingStockLogger creating instance");
+			// create and load
+			_instance = new RollingStockLogger();
+		}
+		if (Control.showInstance && log.isDebugEnabled()) log.debug("RollingStockLogger returns instance "+_instance);
+		return _instance;
+	}
+	
+	public void enableCarLogging(boolean enable){
+		if (enable){
+			createFile();
+			addCarListeners();
+		} else {
+			removeCarListeners();
+		}
+	}
+	
+	public void enableEngineLogging(boolean enable){
+		if (enable){
+			createFile();
+			addEngineListeners();
+		} else {
+			removeEngineListeners();
+		}
+	}
+	
+	private void createFile(){
 		if (!Setup.isEngineLoggerEnabled() && !Setup.isCarLoggerEnabled())
 			return;
+		if (fileLogger != null)
+			return;	// log file has already been created
 		// create the logging file for this session
 		try {
 			if (!checkFile(getFullLoggerFileName())) {
@@ -60,39 +96,13 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		} catch (Exception e) {
 			log.error("Exception while making logging directory: "+ e);
 		}
-	}
-	
-	/** record the single instance **/
-	private static RollingStockLogger _instance = null;
-
-	public static synchronized RollingStockLogger instance() {
-		if (_instance == null) {
-			if (log.isDebugEnabled()) log.debug("RollingStockLogger creating instance");
-			// create and load
-			_instance = new RollingStockLogger();
-		}
-		if (Control.showInstance && log.isDebugEnabled()) log.debug("RollingStockLogger returns instance "+_instance);
-		return _instance;
-	}
-	
-	public void enableCarLogging(boolean enable){
-		if (enable)
-			addCarListeners();
-		else
-			removeCarListeners();
-	}
-	
-	public void enableEngineLogging(boolean enable){
-		if (enable)
-			addEngineListeners();
-		else
-			removeEngineListeners();
+		
 	}
 	
 	private boolean mustHaveTrack = true;	// when true only updates that have a track are saved
 	private void store(RollingStock rs){
 		if (fileLogger == null){
-			log.debug("Log file doesn't exist");
+			log.error("Log file doesn't exist");
 			return;
 		}
 		if (rs.getTrack() == null && mustHaveTrack)
