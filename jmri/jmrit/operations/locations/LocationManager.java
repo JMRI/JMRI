@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -297,7 +297,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
-		// get Train Edit attributes
+		// get Location Edit attributes
 		Element e = values.getChild("locationEditOptions");
 		if (e != null){
 			try {
@@ -308,9 +308,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 				_editFrameDimension = new Dimension(width, height);
 				_editFramePosition = new Point(x,y);
 			} catch ( org.jdom.DataConversionException ee) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find location edit frame attributes");
 			} catch ( NullPointerException ne) {
-				log.debug("Did not find train edit frame attributes");
+				log.debug("Did not find location edit frame attributes");
 			}
 		}
 	}

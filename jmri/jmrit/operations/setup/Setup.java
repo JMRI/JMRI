@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -15,6 +15,7 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.rollingstock.RollingStockLogger;
 
 import org.jdom.Element;
 
@@ -151,6 +152,8 @@ public class Setup {
 	private static boolean enableRfid = false;			//when true show RFID fields for rolling stock
 	private static boolean carRoutingEnabled = true;	//when true enable car routing
 	private static boolean carRoutingStaging = false;	//when true staging tracks can be used for car routing
+	private static boolean carLogger = false;			//when true car logger is enabled
+	private static boolean engineLogger = false;		//when true engine logger is enabled
 	
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
 	
@@ -404,6 +407,24 @@ public class Setup {
 		fontName = name;
 	}
 	
+	public static boolean isCarLoggerEnabled(){
+		return carLogger;
+	}
+	
+	public static void setCarLoggerEnabled(boolean enable){
+		carLogger = enable;
+		RollingStockLogger.instance().enableCarLogging(enable);
+	}
+	
+	public static boolean isEngineLoggerEnabled(){
+		return engineLogger;
+	}
+	
+	public static void setEngineLoggerEnabled(boolean enable){
+		engineLogger = enable;
+		RollingStockLogger.instance().enableEngineLogging(enable);
+	}
+	
 	public static String getDropTextColor(){
 		return dropColor;
 	}
@@ -467,7 +488,6 @@ public class Setup {
 			log.error("Scale not set");
 		return ratioTons;
 	}
-	
 	
 	public static int getInitalWeight(){
 		if (scale == 0)
@@ -664,6 +684,8 @@ public class Setup {
     	values.setAttribute("showRfid", isRfidEnabled()?"true":"false");
     	values.setAttribute("carRoutingEnabled", isCarRoutingEnabled()?"true":"false");
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
+    	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
+       	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("panel"));
     	values.setAttribute("name", getPanelName());
@@ -818,6 +840,16 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("carRoutingViaStaging: "+enable);
         		Setup.setCarRoutingViaStagingEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("carLogger"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("carLogger: "+enable);
+        		Setup.setCarLoggerEnabled(enable.equals("true"));
+        	}
+           	if ((a = operations.getChild("settings").getAttribute("engineLogger"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
+        		Setup.setEngineLoggerEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("panel") != null){

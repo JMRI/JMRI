@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -37,11 +37,11 @@ public class CarManagerXml extends XmlFile {
 			if (log.isDebugEnabled()) log.debug("CarManagerXml creating instance");
 			// create and load
 			_instance = new CarManagerXml();
-	           try {
-	                _instance.readFile(defaultOperationsFilename());
-	            } catch (Exception e) {
-	                log.error("Exception during operations car file reading: "+e);
-	            }
+			try {
+				_instance.readFile(defaultOperationsFilename());
+			} catch (Exception e) {
+				log.error("Exception during operations car file reading: "+e);
+			}
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManagerXml returns instance "+_instance);
 		return _instance;
@@ -66,13 +66,8 @@ public class CarManagerXml extends XmlFile {
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 	        
-	        //Check the Comment and Decoder Comment fields for line breaks and
+	        //Check the Comment fields for line breaks and
 	        //convert them to a processor directive for storage in XML
-	        //Note: this is also done in the LocoFile.java class to do
-	        //the same thing in the indidvidual locomotive roster files
-	        //Note: these changes have to be undone after writing the file
-	        //since the memory version of the roster is being changed to the
-	        //file version for writing
 	        CarManager manager = CarManager.instance();
 	        List<String> carList = manager.getByRoadNameList();
 	        
@@ -98,8 +93,7 @@ public class CarManagerXml extends XmlFile {
 	            }
 	            c.setComment(xmlComment);
 	        }
-	        //All Comments and Decoder Comment line feeds have been changed to processor directives
-
+	        //All Comments line feeds have been changed to processor directives
 
 	        // add top-level elements
 	        root.addContent(manager.store());
@@ -152,9 +146,8 @@ public class CarManagerXml extends XmlFile {
 	        writeXML(file, doc);
 
 	        //Now that the roster has been rewritten in file form we need to
-	        //restore the RosterEntry object to its normal \n state for the
-	        //Comment and Decoder comment fields, otherwise it can cause problems in
-	        //other parts of the program (e.g. in copying a roster)
+	        //restore the RosterEntry object to its normal \n state.
+
 	        for (int i=0; i<carList.size(); i++){
 	        	Car c = manager.getById(carList.get(i));
 	            String xmlComment = c.getComment();

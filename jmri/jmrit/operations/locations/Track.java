@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.37 $
+ * @version             $Revision: 1.38 $
  */
 public class Track {
 	
@@ -710,6 +710,7 @@ public class Track {
      *
      * @param e  Consist XML element
      */
+    private boolean debugFlag = false;
     public Track(org.jdom.Element e) {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
         org.jdom.Attribute a;
@@ -724,28 +725,28 @@ public class Track {
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
            	String[] types = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("track (" +getName()+ ") accepts car types: "+ names);
+        	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") accepts car types: "+ names);
         	setTypeNames(types);
         }
         if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
         if ((a = e.getAttribute("dropIds")) != null ) {
         	String names = a.getValue();
            	String[] ids = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("track (" +getName()+ ") has drop ids : "+ names);
+        	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") has drop ids : "+ names);
         	setDropIds(ids);
         }
         if ((a = e.getAttribute("dropOption")) != null )  _dropOption = a.getValue();
         if ((a = e.getAttribute("pickupIds")) != null ) {
         	String names = a.getValue();
            	String[] ids = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("track (" +getName()+ ") has pickup ids : "+ names);
+        	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") has pickup ids : "+ names);
         	setPickupIds(ids);
         }
         if ((a = e.getAttribute("pickupOption")) != null )  _pickupOption = a.getValue();
         if ((a = e.getAttribute("carRoads")) != null ) {
         	String names = a.getValue();
            	String[] roads = names.split("%%");
-        	if (log.isDebugEnabled()) log.debug("track (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
+        	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
         if ((a = e.getAttribute("schedule")) != null ) _scheduleName = a.getValue();

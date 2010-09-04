@@ -10,7 +10,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -19,7 +18,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -36,6 +35,8 @@ public class OptionFrame extends OperationsFrame{
     // check boxes
 	JCheckBox routerCheckBox = new JCheckBox(rb.getString("EnableCarRouting"));
 	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
+	JCheckBox carLoggerCheckBox = new JCheckBox(rb.getString("EnableCarLogging"));
+	JCheckBox engineLoggerCheckBox = new JCheckBox(rb.getString("EnableEngineLogging"));
 	
 	// text field
 	
@@ -52,33 +53,40 @@ public class OptionFrame extends OperationsFrame{
 		// load checkboxes	
 		rfidCheckBox.setSelected(Setup.isRfidEnabled());
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
+		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
+		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 			
-		// Router panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		
+		// Router panel
 		JPanel pRouter = new JPanel();
 		pRouter.setLayout(new GridBagLayout());
-		JScrollPane pRouterPane = new JScrollPane(pRouter);
-		pRouterPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRouterOptions")));
+		pRouter.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRouterOptions")));	
+		addItem (pRouter, routerCheckBox, 1,0);
 		
-		addItem (pRouter, routerCheckBox, 1,8);
+		// Logger panel
+		JPanel pLogger = new JPanel();
+		pLogger.setLayout(new GridBagLayout());
+		pLogger.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLoggerOptions")));		
+		addItem (pLogger, engineLoggerCheckBox, 1,0);
+		addItem (pLogger, carLoggerCheckBox, 1,1);
 		
 		JPanel pOption = new JPanel();
 		pOption.setLayout(new GridBagLayout());
-		JScrollPane pOptionPane = new JScrollPane(pOption);
-		pOptionPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
-		
-		addItem (pOption, rfidCheckBox, 1,8);
+		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));		
+		addItem (pOption, rfidCheckBox, 1,0);
 		
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, saveButton, 3, 9);
 		
-		getContentPane().add(pRouterPane);
-		getContentPane().add(pOptionPane);
+		getContentPane().add(pRouter);
+		getContentPane().add(pLogger);
+		getContentPane().add(pOption);
 		getContentPane().add(pControl);
 
 		// setup buttons
@@ -99,6 +107,9 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// RFID enabled?
 			Setup.setRfidEnabled(rfidCheckBox.isSelected());
+			// Logging enabled?		
+			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
+			Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
 			OperationsXml.instance().writeOperationsFile();
 		}
 	}
