@@ -6,7 +6,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.5 $
+# $Revision: 1.6 $
 ##
 # A ActionListener is used to get timeout events.
 #
@@ -62,18 +62,21 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         # I don't bother with the event, I just check everything again
         self.delayTimer.stop()
         newState = self.watchedSensor.getKnownState()
-        if (self.isChangingOn == False & self.isChangingOff == False) :
-            # nothing changing
+        #print("DebounceProp " + self.resultSensorName + ":" + newState.toString() + " event: " + event.propertyName + " has " + event.newValue.toString() + "\n")
+        if (self.isChangingOn == False and self.isChangingOff == False) :
+            # nothing changing, normal change starting
             if (newState == ACTIVE) :
+                self.isChangingOn = True
                 self.changeOffToOn()
             else :
+                self.isChangingOff = True
                 self.changeOnToOff()
-        elif (self.isChangingOn & self.isChangingOff == False) :
+        elif (self.isChangingOn == True and self.isChangingOff == False) :
             # we were changing to on, but got another change
             if (newState == INACTIVE) :
                 # must have been a spike before the on timeout
                 self.isChangingOn = False
-        elif (self.isChangingOn == False & self.isChangingOff) :
+        elif (self.isChangingOn == False and self.isChangingOff == True) :
             # we were changing to off, but got another change
             if (newState == ACTIVE) :
                 # must have been a spike before off timeout
@@ -84,8 +87,9 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         return
 
     def changeOnToOff(self) :
+        # the source went from on to off
+        #print("changeOnToOff")
         if (self.offTimeout != 0) :
-            self.isChangingOff = True
             self.delayTimer.setInitialDelay(self.offTimeout)
             self.delayTimer.start()
         else :
@@ -93,9 +97,9 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         return
 
     def changeOffToOn(self) :
+        #print("changeOffToOn")
         # the source went from off to on
         if (self.onTimeout != 0) :
-            self.isChangingOn = True
             self.delayTimer.setInitialDelay(self.onTimeout)
             self.delayTimer.start()
         else :
@@ -103,6 +107,7 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         return
 
     def resetSensors(self, newState) :
+        print("resetSensors: " + self.resultSensorName + ", shouldn't happen!")
         self.isChangingOn = False
         self.isChangingOff = False
         self.currentState = newState
@@ -125,18 +130,26 @@ class DebounceSensor(java.beans.PropertyChangeListener) :
         # see which phase we think we are in
         self.delayTimer.stop()
         newState = self.watchedSensor.getKnownState()
-        if (self.isChangingOn == False & self.isChangingOff == False) :
-            # nothing changing, this shouldn't happen, 
+        #print("DebounceTimeout " + self.resultSensorName + ":" + newState.toString() + " event: " + event.toString() 
+        #    + ":" + self.isChangingOn.toString() + ":" + self.isChangingOff.toString()
+        #    +":\n")
+        if (self.isChangingOn == False and self.isChangingOff == False) :
+            # nothing changing, this shouldn't happen
+            #print("both changing false")
             self.resetSensors(newState)
-        elif (self.isChangingOn & self.isChangingOff == False) :
-            # we were changing to on, but got another change
-            self.timeoutOnToOff()
-        elif (self.isChangingOn == False & self.isChangingOff) :
-            # we were changing to off, but got another change
-            self.timeoutOffToOn()
+        elif (self.isChangingOn == True and self.isChangingOff == False and newState == ACTIVE) :
+            # we were changing to on, got time out
+            #print("is active timeout")
+            self.resultSensor.setKnownState(ACTIVE)
+            self.isChangingOn = False
+        elif (self.isChangingOn == False and self.isChangingOff == True and newState == INACTIVE) :
+            # we were changing to off, got timeout
+            #print("is inactive timeout")
+            self.resultSensor.setKnownState(INACTIVE)
+            self.isChangingOff = False
         else :
             # shouldn't get here, so reset everything
-            self.resetSensors()
+            self.resetSensors(newState)
         return
 
     def timeoutOnToOff(self) :
