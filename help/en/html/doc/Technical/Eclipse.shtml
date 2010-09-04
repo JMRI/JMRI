@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.11 2010-09-04 19:15:25 zoo Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.12 2010-09-04 20:35:46 zoo Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -123,7 +123,7 @@
     <LI>Select the "Arguments" tab, and under VM argments enter
     <BR>
 <PRE>
--Djava.security.policy=lib/security.policy -Dpple.laf.useScreenMenuBar=true -Xms10m
+-Djava.security.policy=lib/security.policy -Dapple.laf.useScreenMenuBar=true -Xms10m
 </PRE>
     <BR>
         (You should probably cut and paste that).  Under working directory,
