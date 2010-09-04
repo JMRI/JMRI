@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: USBtoSerial.shtml,v 1.6 2010-09-03 20:09:52 ken_c Exp $ -->
+<!-- $Id: USBtoSerial.shtml,v 1.7 2010-09-04 16:17:26 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: Use of USB to Serial adapters</TITLE>
@@ -97,7 +97,8 @@ the original LocoBuffer; later models have a 9-pin serial connector.</P>
 <P>We have also had a report that the "IConcepts" adapter, purchased
 at CompUSA, works with Windows ME and Windows XP.</P>
 <P>All adapters based on the "FTDI FT232BM chip" should work fine.
-This includes the UN8E adapter provided by RR-Cirkits, and many
+This includes the UN8E adapter provided
+by <A HREF="http://www.rr-cirkits.com">RR-Cirkits</A>, and many
 do-it-yourself adapters. If you're using this adapter with a Macintosh
 or Linux computer, be sure to download the most recent drivers from the
 <A HREF="http://www.ftdichip.com/FTDrivers.htm">FTDI</A> website, as

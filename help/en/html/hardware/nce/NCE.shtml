@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: NCE.shtml,v 1.26 2010-09-04 00:07:29 ken_c Exp $ -->
+<!-- $Id: NCE.shtml,v 1.27 2010-09-04 16:17:26 ken_c Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI Hardware Guide: NCE</TITLE>
@@ -53,8 +53,8 @@ on their front panel.
 	to serial adapter. 
 	<br><br>
 	See
-    <a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a>
-    for more information.
+	<a href="../USBtoSerial.shtml">Via a USB to Serial adapter</a>
+	for more information.
 	<br>
 	Many USB-Serial devices will still need a serial extension cable for this connection due
 	to mounting hardware on the command station and the USB-Serial adapter.
@@ -79,10 +79,10 @@ on their front panel.
 	times to determine if AIU broadcasts are disabled. Press 0 to disable.
 	Now press the ENTER button once more to select the baud rate. Press 1
 	to set the baud rate to 9,600, and press PROG/ESC to exit.</LI>
-    <LI>Select the version of EPROM present in your
-    command station, either "2004 or earlier" or "2006 or later".
-    See <a href="#eeprom">below</a> for more information on this.
-    
+	<LI>Select the version of EPROM present in your
+	command station, either "2004 or earlier" or "2006 or later".
+	See <a href="#eeprom">below</a> for more information on this.
+    </LI>
 	<LI>The series of radio buttons labeled "GUI style" allows you to
 	select how the program will look. "Metal" is the native Java look
 	available on all types. Other choices will vary with your computer
@@ -120,9 +120,9 @@ installed.</P>
 </UL>
 
 <P>If you wish to use MONITORING for turnout feedback, you must
-upgrade your command station to the Mar 1 2007A EPROM or newer. 
-(For more information on turnout feedback, please see the feedback
-<a href="../../doc/Technical/TurnoutFeedback.shtml">documentation page</a>)
+upgrade your command station to the Mar 1 2007A EPROM or newer.
+(For more information on turnout feedback, please see the
+<a href="../../doc/Technical/TurnoutFeedback.shtml">feedback documentation page</a>)
 The release in the first half of 2007 had a problem with odd turnout status.
 Every other odd accessory shared the same status bit. JMRI checks the
 revision number at startup, and will send a warning to the console
@@ -167,7 +167,6 @@ normal 9-pin serial cable will not work! You'll need to make a custom
 cable that just connects the "send data", "receive data" and "ground"
 pins. See your NCE manual for details.</P>
 
-
 <a name="vianetwork">
 <H2>Power Pro (PowerHouse) via Network</H2>
 
@@ -178,8 +177,7 @@ This will let you, for example, connect a computer in one room
 to a layout in another without having to run a long serial cable.
 
 <p>
-(There's also a
-<a href="../TerminalServer.shtml">general page</a>
+(There's also a <a href="../TerminalServer.shtml">general page</a>
 on the use of serial-network adapters, also known as terminal servers)
 
 <H3>Setup</H3>
@@ -263,9 +261,9 @@ system from the preference menu for reliable operation.</P>
 	The connection order is also thought to be important:
 	<ul>
 	    <li>Plug in the cab-bus side and power up the
-	        attached PowerCab
+	        attached PowerCab</li>
 	    <li>Once the PowerCab is up and working, then
-	        plug the USB cable into the computer.
+	        plug the USB cable into the computer.</li>
 	</ul>
 	</LI>
 	<LI>On most computers, you'll need to install a driver for the
