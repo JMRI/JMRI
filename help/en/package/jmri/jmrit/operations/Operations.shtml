@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.74 2010-09-02 03:21:35 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.75 2010-09-04 18:58:00 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -228,21 +228,44 @@ JMRI to complete the restoration of the operation files.
 directory in operations called "backups", and then stores the operation
 files in a directory that is based on the day you pressed the "Backup"
 button. For example, if today was November 21, 2008, the program will
-create a backup directory named "2008_11_21".</P>
+create a backup directory named "2008_11_21".  You can also rename the
+directory to whatever name you want. This would be useful if you had
+more than one railroad that you wanted to manage.</P>
 
 <H3>Reset Databases</H3>
 
 To reset the operation databases to their original defaults, use the
-Settings Tools menu and select "Reset Databases". The "Reset Database"
+Operations Settings->Tools menu and select "Reset Databases". The "Reset Database"
 option will make a backup copy of the current operation files before
 deleting them. The results will be that the settings, cars, engines,
 locations, and trains databases will be purged.
+
+<A NAME="SettingsOptions"></A>
+<H2>Options</H2>
+
+The operations program has several options that can be modified by
+selecting Operations Settings->Tools->Options. The first option is Car
+Routing, and it is recommended that you leave this enabled. With car
+routing enabled, you can use a <A HREF="#Schedules">Schedule</A> to
+deliver a car to a specific location. The car routing algorithm will
+search for the most efficient route for the car to travel. The algorithm
+will attempt to use interchanges and then yards to move cars. Routing
+through staging is disabled by default. The algorithm will try and find
+a route using a maximum of five trains to complete the car move. 
+
+<A NAME="LoggingOptions"></A>
+<H3>Logging Options</H3>
+
+If you want the operations program to log your engine and or car movements to
+a file, select the appropriate checkboxes.  The program will create a new
+directory called "logger" in the operations directory.  For each day's session
+the program will create a new file using the day's date.
 
 <A NAME="PrintOptions"></A>
 <H2>Print Options</H2>
 
 You can modify the how the program prints the train manifests and the amount of detail
-that the build report provides.  From the "Tools" menu select "Print Options" to open
+that the build report provides.  From the "Operations Settings->Tools" menu select "Print Options" to open
 the print option window.
 <P>
 <img src="images/PrintOptions.png">
@@ -504,7 +527,10 @@ town's sidings.
 The program when generating a manifest for a train with a single
 location (local switcher) will never move a car from a siding to a
 siding or yard to a yard, only yard to siding or siding to yard. This
-rule also applies to interchanges. 
+rule also applies to interchanges. This restriction helps prevent
+unrealistic car movements between sidings (industries). If you want a
+siding to siding local move, use a <A HREF="#Schedules">Schedule</A> to
+force the car move. 
 
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
