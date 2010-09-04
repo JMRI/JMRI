@@ -19,7 +19,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
@@ -120,7 +120,7 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     Server server = Server.getInstance() ;
     autoStartCheckBox.setSelected( server.getAutoStart() );
     autoStartCheckBox.setEnabled( !server.isEnabled() );
-    if (portNumber!=null) portNumber.setValue(new Integer( server.getPortNumber() ) ) ;
+    if (portNumber!=null) portNumber.setValue(Integer.valueOf( server.getPortNumber() ) ) ;
     portNumber.setEnabled( !server.isEnabled() );
     portNumberLabel.setEnabled( !server.isEnabled() );
     startButton.setEnabled( !server.isEnabled() );

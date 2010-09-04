@@ -61,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class Maintenance
@@ -1191,7 +1191,7 @@ public class Maintenance
                 text.append(MessageFormat.format(rbm.getString("Orphan"), (Object[])names));
             } else {
                 text.append(MessageFormat.format(rbm.getString("ReferenceFound"), 
-                                       new Object[] {new Integer(referenceCount), userName, sysName}));
+                                       new Object[] {Integer.valueOf(referenceCount), userName, sysName}));
             }
         }
         if (names[0] != null && Integer.parseInt(names[3]) > referenceCount)

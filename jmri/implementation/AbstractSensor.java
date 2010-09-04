@@ -10,7 +10,7 @@ import jmri.Sensor;
  * Sensor system names are always upper case.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2009
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public abstract class AbstractSensor extends AbstractNamedBean implements Sensor, java.io.Serializable {
 
@@ -39,7 +39,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
+            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
         }
     }
 
@@ -50,7 +50,7 @@ public abstract class AbstractSensor extends AbstractNamedBean implements Sensor
         if (_knownState != s) {
             int oldState = _knownState;
             _knownState = s;
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(_knownState));
+            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
         }
     }
 

@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the DefaultSignalSystem interface implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class DefaultSignalSystemTest extends TestCase {
 
@@ -23,31 +23,31 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testOneAspectOneProperty() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
 	    
-	    Assert.assertEquals(new Integer(0), t.getProperty("Stop", "Speed"));
+	    Assert.assertEquals(Integer.valueOf(0), t.getProperty("Stop", "Speed"));
     }
     
     public void testTwoAspectOneProperty() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
-	    t.setProperty("Clear", "Speed", new Integer(10));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
+	    t.setProperty("Clear", "Speed", Integer.valueOf(10));
 	    
-	    Assert.assertEquals("Stop", new Integer(0), t.getProperty("Stop", "Speed"));
-	    Assert.assertEquals("Clear", new Integer(10), t.getProperty("Clear", "Speed"));
+	    Assert.assertEquals("Stop", Integer.valueOf(0), t.getProperty("Stop", "Speed"));
+	    Assert.assertEquals("Clear", Integer.valueOf(10), t.getProperty("Clear", "Speed"));
     }
     
     public void testTwoAspectTwoProperties() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
-	    t.setProperty("Clear", "Speed", new Integer(10));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
+	    t.setProperty("Clear", "Speed", Integer.valueOf(10));
 	    t.setProperty("Stop", "Biff", "ffiB");
 	    t.setProperty("Clear", "Biff", "beef");
 	    
-	    Assert.assertEquals("Stop", new Integer(0), t.getProperty("Stop", "Speed"));
-	    Assert.assertEquals("Clear", new Integer(10), t.getProperty("Clear", "Speed"));
+	    Assert.assertEquals("Stop", Integer.valueOf(0), t.getProperty("Stop", "Speed"));
+	    Assert.assertEquals("Clear", Integer.valueOf(10), t.getProperty("Clear", "Speed"));
 	    Assert.assertEquals("Stop", "ffiB", t.getProperty("Stop", "Biff"));
 	    Assert.assertEquals("Clear", "beef", t.getProperty("Clear", "Biff"));
     }
@@ -55,9 +55,9 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testGetAspects() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
-	    t.setProperty("Approach", "Speed", new Integer(5));
-	    t.setProperty("Clear", "Speed", new Integer(10));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
+	    t.setProperty("Approach", "Speed", Integer.valueOf(5));
+	    t.setProperty("Clear", "Speed", Integer.valueOf(10));
 	    
 	    java.util.Enumeration<String> e = t.getAspects();
 	    
@@ -72,8 +72,8 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testGetNullProperties() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
-	    t.setProperty("Approach", "Speed", new Integer(5));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
+	    t.setProperty("Approach", "Speed", Integer.valueOf(5));
 	    
 	    Assert.assertEquals("Stop", null, t.getProperty("Stop", "None"));
 	    Assert.assertEquals("Clear", null, t.getProperty("Clear", "Speed"));
@@ -83,8 +83,8 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testCheckAspect() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "Speed", new Integer(0));
-	    t.setProperty("Approach", "Speed", new Integer(5));
+	    t.setProperty("Stop", "Speed", Integer.valueOf(0));
+	    t.setProperty("Approach", "Speed", Integer.valueOf(5));
 	    
 	    Assert.assertTrue("Stop", t.checkAspect("Stop"));
 	    Assert.assertFalse("Clear", t.checkAspect("Clear"));
@@ -94,9 +94,9 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testGetKeys() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "A", new Integer(0));
-	    t.setProperty("Approach", "C", new Integer(5));
-	    t.setProperty("Clear", "B", new Integer(10));
+	    t.setProperty("Stop", "A", Integer.valueOf(0));
+	    t.setProperty("Approach", "C", Integer.valueOf(5));
+	    t.setProperty("Clear", "B", Integer.valueOf(10));
 	    
 	    java.util.Enumeration<String> e = t.getKeys();
 	    
@@ -111,11 +111,11 @@ public class DefaultSignalSystemTest extends TestCase {
     public void testGetKeysOverlap() {
 	    SignalSystem t = new DefaultSignalSystem("sys", "user");
 	    
-	    t.setProperty("Stop", "A", new Integer(0));
-	    t.setProperty("Approach", "C", new Integer(5));
-	    t.setProperty("Approach", "A", new Integer(5));
-	    t.setProperty("Approach", "B", new Integer(5));
-	    t.setProperty("Clear", "B", new Integer(10));
+	    t.setProperty("Stop", "A", Integer.valueOf(0));
+	    t.setProperty("Approach", "C", Integer.valueOf(5));
+	    t.setProperty("Approach", "A", Integer.valueOf(5));
+	    t.setProperty("Approach", "B", Integer.valueOf(5));
+	    t.setProperty("Clear", "B", Integer.valueOf(10));
 	    
 	    java.util.Enumeration<String> e = t.getKeys();
 	    

@@ -14,7 +14,7 @@ import java.util.List;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class RpsBlock implements java.beans.PropertyChangeListener, jmri.ThrottleListener {
 
@@ -80,7 +80,7 @@ public class RpsBlock implements java.beans.PropertyChangeListener, jmri.Throttl
     
     public void notifyThrottleFound(DccThrottle t) {
         // put in map
-        Integer num = new Integer( ((DccLocoAddress)t.getLocoAddress()).getNumber() );
+        Integer num = Integer.valueOf( ((DccLocoAddress)t.getLocoAddress()).getNumber() );
         throttleTable.put(num, t);
     }
         

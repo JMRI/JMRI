@@ -85,7 +85,7 @@ public class RouteFinder implements Runnable {
         while (level < _maxBlocks && !_quit) {
             nodes = makeLevel(nodes, level);
             level++;
-            _pcs.firePropertyChange("RouteSearch", new Integer(level), new Integer(_destNodes.size()));
+            _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
         }
         if (_destNodes.size()==0) {
             _caller.debugRoute(_tree);
@@ -140,7 +140,7 @@ public class RouteFinder implements Runnable {
                         children.add(child);
                     }
                 }
-                _pcs.firePropertyChange("RouteSearch", new Integer(level), new Integer(_destNodes.size()));
+                _pcs.firePropertyChange("RouteSearch", Integer.valueOf(level), Integer.valueOf(_destNodes.size()));
             } else {
                 if (log.isDebugEnabled()) log.debug("Dead branch: block= "+pBlock.getDisplayName()+
                                                     " has no exit portal");

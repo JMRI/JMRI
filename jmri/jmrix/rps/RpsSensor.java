@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -37,7 +37,7 @@ public class RpsSensor extends AbstractSensor
 
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
-        Integer id = new Integer(r.getReading().getID());
+        Integer id = Integer.valueOf(r.getReading().getID());
         
         // ignore if code not OK
         if (!r.isOkPoint()) return;

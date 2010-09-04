@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * objects (for now).
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class LnSecurityElementManager {
 
@@ -59,11 +59,11 @@ public class LnSecurityElementManager {
      * Create a new object as needed
      */
     public SecurityElement getSecurityElement(int i) {
-        SecurityElement se = mHashSE.get(new Integer(i));
+        SecurityElement se = mHashSE.get(Integer.valueOf(i));
         if (se!=null) return se;
         else {
             se = new SecurityElement(i);
-            mHashSE.put(new Integer(i), se);
+            mHashSE.put(Integer.valueOf(i), se);
             return se;
         }
     }
@@ -76,11 +76,11 @@ public class LnSecurityElementManager {
      * Create a new object as needed
      */
     public AspectGenerator getAspectGenerator(int i) {
-        AspectGenerator ag = mHashAG.get(new Integer(i));
+        AspectGenerator ag = mHashAG.get(Integer.valueOf(i));
         if (ag!=null) return ag;
         else {
             ag = new AspectGenerator(i);
-            mHashAG.put(new Integer(i), ag);
+            mHashAG.put(Integer.valueOf(i), ag);
             return ag;
         }
     }

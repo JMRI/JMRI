@@ -17,7 +17,7 @@ import org.jdom.*;
  * JPanel to create a new SignalMast
  *
  * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -120,7 +120,7 @@ public class AddSignalMastPanel extends JPanel {
                     String name = root.getChild("name").getText();
                     mastBox.addItem(name);
                     
-                    map.put(name, new Integer(root.getChild("appearances")
+                    map.put(name, Integer.valueOf(root.getChild("appearances")
                                     .getChild("appearance")
                                     .getChildren("show")
                                     .size()));

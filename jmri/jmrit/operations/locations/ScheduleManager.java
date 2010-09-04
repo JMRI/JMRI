@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
@@ -87,9 +87,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     	if (schedule == null){
     		_id++;						
     		schedule = new Schedule(Integer.toString(_id), name);
-    		Integer oldSize = new Integer(_scheduleHashTable.size());
+    		Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
     		_scheduleHashTable.put(schedule.getId(), schedule);
-    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_scheduleHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
     	}
     	return schedule;
     }
@@ -98,13 +98,13 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(Schedule schedule) {
-    	Integer oldSize = new Integer(_scheduleHashTable.size());
+    	Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
         _scheduleHashTable.put(schedule.getId(), schedule);
         // find last id created
         int id = Integer.parseInt(schedule.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_scheduleHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
     }
 
     /**
@@ -114,9 +114,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     	if (schedule == null)
     		return;
         schedule.dispose();
-        Integer oldSize = new Integer(_scheduleHashTable.size());
+        Integer oldSize = Integer.valueOf(_scheduleHashTable.size());
     	_scheduleHashTable.remove(schedule.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_scheduleHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_scheduleHashTable.size()));
     }
 
     /**

@@ -319,7 +319,7 @@ public class ImageIndexEditor extends JmriJFrame {
             int numIcons = countIcons(selectedNode);
             int response = JOptionPane.showConfirmDialog(this, java.text.MessageFormat.format(
                                     rb.getString("confirmDeleteNode"), new Object[] 
-                                        {(String)selectedNode.getUserObject(), new Integer(numNodes), new Integer(numIcons)}),
+                                        {(String)selectedNode.getUserObject(), Integer.valueOf(numNodes), Integer.valueOf(numIcons)}),
                                         rb.getString("question"), JOptionPane.YES_NO_OPTION,
                                                         JOptionPane.QUESTION_MESSAGE);
             if (response == JOptionPane.YES_OPTION) {

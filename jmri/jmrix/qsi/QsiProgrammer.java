@@ -13,7 +13,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the QSI programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
 
@@ -93,7 +93,7 @@ public class QsiProgrammer extends AbstractProgrammer implements QsiListener {
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
 

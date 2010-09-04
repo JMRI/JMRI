@@ -124,7 +124,7 @@ public class MultiSensorIconAdder extends IconAdder {
             JPanel p1 =new JPanel(); 
             p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
             String label = java.text.MessageFormat.format(rb.getString("MultiSensorPosition"),
-                                                   new Object[] { new Integer(i-2) }); 
+                                                   new Object[] { Integer.valueOf(i-2) }); 
             p1.add(new JLabel(label));
             p1.add(_iconMap.get(key));
 

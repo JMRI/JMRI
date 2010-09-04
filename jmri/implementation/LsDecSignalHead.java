@@ -78,7 +78,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
             updateOutput();
 		
             // notify listeners, if any
-            firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(newAppearance));
         }
     }
     

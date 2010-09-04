@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -346,7 +346,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         // store back into context
                         ThrottleContext tc = new ThrottleContext();
                         tc.throttle = t;
-                        Integer address = new Integer( ((DccLocoAddress)t.getLocoAddress()).getNumber());
+                        Integer address = Integer.valueOf( ((DccLocoAddress)t.getLocoAddress()).getNumber());
                         map.put(address, tc);
                     }
                 });

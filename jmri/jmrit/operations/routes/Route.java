@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 
@@ -88,10 +88,10 @@ public class Route implements java.beans.PropertyChangeListener {
     	log.debug("adding new location to (" +getName()+ ") id: " + id);
     	RouteLocation rl = new RouteLocation(id, location);
     	rl.setSequenceId(_sequenceNum);
-    	Integer old = new Integer(_routeHashTable.size());
+    	Integer old = Integer.valueOf(_routeHashTable.size());
     	_routeHashTable.put(rl.getId(), rl);
 
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
+    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
     	// listen for drop and pickup changes to forward
     	rl.addPropertyChangeListener(this);
     	return rl;
@@ -117,7 +117,7 @@ public class Route implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(RouteLocation rl) {
-    	Integer old = new Integer(_routeHashTable.size());
+    	Integer old = Integer.valueOf(_routeHashTable.size());
         _routeHashTable.put(rl.getId(), rl);
 
         // find last id created
@@ -128,7 +128,7 @@ public class Route implements java.beans.PropertyChangeListener {
         // find highest sequence number
         if (rl.getSequenceId() > _sequenceNum)
         	_sequenceNum = rl.getSequenceId();
-       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
+       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
         // listen for drop and pickup changes to forward
         rl.addPropertyChangeListener(this);
     }
@@ -143,10 +143,10 @@ public class Route implements java.beans.PropertyChangeListener {
     		// subtract from the locations's available track length
     		String id = rl.getId();
     		rl.dispose();
-    		Integer old = new Integer(_routeHashTable.size());
+    		Integer old = Integer.valueOf(_routeHashTable.size());
     		_routeHashTable.remove(id);
     		resequenceIds();
-           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_routeHashTable.size()));
+           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_routeHashTable.size()));
      	}
     }
     

@@ -38,7 +38,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Ken Cameron Copyright (C) 2008,2009
  * @author	Bob Jacobsen Copyright (C) 2008,2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class AbstractVariableLight extends AbstractLight
     implements java.io.Serializable {
@@ -292,7 +292,7 @@ public abstract class AbstractVariableLight extends AbstractLight
     		}
     	}
     	if (origState != mState) {
-            firePropertyChange("KnownState", new Integer(origState), new Integer(mState));
+            firePropertyChange("KnownState", Integer.valueOf(origState), Integer.valueOf(mState));
     		if (log.isDebugEnabled()){
         		log.debug("firePropertyChange intensity " + origCurrent + " -> " + mCurrentIntensity);
     		}

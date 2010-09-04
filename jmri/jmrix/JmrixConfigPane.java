@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.75 $
+ * @version	$Revision: 1.76 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -44,13 +44,13 @@ public class JmrixConfigPane extends JPanel {
      * @param index 1-N based index of the communications object to configure.
      */
     public static JmrixConfigPane instance(int index) {
-        JmrixConfigPane retval = configPaneTable.get(new Integer(index));
+        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
         if (retval != null) return retval;
         Object c = InstanceManager.configureManagerInstance()
                                 .findInstance(ConnectionConfig.class, 0);
         log.debug("findInstance returned "+c);
         retval = new JmrixConfigPane((ConnectionConfig)c);
-        configPaneTable.put(new Integer(index), retval);
+        configPaneTable.put(Integer.valueOf(index), retval);
         InstanceManager.configureManagerInstance().registerPref(retval);
         InstanceManager.configureManagerInstance().deregister(c);
         return retval;
@@ -59,7 +59,7 @@ public class JmrixConfigPane extends JPanel {
     public static int getNumberOfInstances() { return configPaneTable.size(); }
     
     public static void dispose(int index){
-        JmrixConfigPane retval = configPaneTable.get(new Integer(index));
+        JmrixConfigPane retval = configPaneTable.get(Integer.valueOf(index));
         if (retval == null){
             log.debug("no instance found therefore can not dispose of it!");
             return;
@@ -70,7 +70,7 @@ public class JmrixConfigPane extends JPanel {
         }
 
         InstanceManager.configureManagerInstance().deregister(retval);
-        configPaneTable.remove(new Integer(index));
+        configPaneTable.remove(Integer.valueOf(index));
     }
     
     public static int getInstanceNumber(JmrixConfigPane confPane){

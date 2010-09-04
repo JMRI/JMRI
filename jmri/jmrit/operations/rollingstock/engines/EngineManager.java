@@ -23,7 +23,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class EngineManager extends RollingStockManager{
 
@@ -88,9 +88,9 @@ public class EngineManager extends RollingStockManager{
     	Consist consist = getConsistByName(name);
     	if (consist == null){
     		consist = new Consist(name);
-    		Integer oldSize = new Integer(_consistHashTable.size());
+    		Integer oldSize = Integer.valueOf(_consistHashTable.size());
     		_consistHashTable.put(name, consist);
-    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_consistHashTable.size()));
+    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
     	}
     	return consist;
     }
@@ -99,9 +99,9 @@ public class EngineManager extends RollingStockManager{
     	Consist consist = getConsistByName(name);
     	if (consist != null){
     		consist.dispose();
-    		Integer oldSize = new Integer(_consistHashTable.size());
+    		Integer oldSize = Integer.valueOf(_consistHashTable.size());
     		_consistHashTable.remove(name);
-    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_consistHashTable.size()));
+    		firePropertyChange(CONSISTLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_consistHashTable.size()));
     	}
     }
     

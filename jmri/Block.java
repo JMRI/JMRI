@@ -82,7 +82,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  * @author  Dave Duchamp Copywright (C) 2009
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  * GT 10-Aug-2008 - Fixed problem in goingActive() that resulted in a 
  * NULL pointer exception when no sensor was associated with the block
  */
@@ -156,7 +156,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         int old = _current;
         _current = v;
         // notify
-        firePropertyChange("state", new Integer(old), new Integer(_current));
+        firePropertyChange("state", Integer.valueOf(old), Integer.valueOf(_current));
     }
     
     /**
@@ -179,7 +179,7 @@ public class Block extends jmri.implementation.AbstractNamedBean {
         int oldDirection = _direction;
         _direction = direction;
         // this is a bound parameter
-        firePropertyChange("direction", new Integer(oldDirection), new Integer(direction));
+        firePropertyChange("direction", Integer.valueOf(oldDirection), Integer.valueOf(direction));
     }
     public int getDirection() { return _direction; }
 	

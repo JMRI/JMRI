@@ -14,7 +14,7 @@ import org.jdom.Attribute;
  * using reflection.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  * @since 2.3.1
  */
 public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapter {
@@ -64,7 +64,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
                         if (type.equals("class java.lang.String"))
                             m.invoke(o,new Object[]{value});
                         else if (type.equals("int"))
-                            m.invoke(o,new Object[]{new Integer(value)});
+                            m.invoke(o,new Object[]{Integer.valueOf(value)});
                         else
                             log.error("Can't handle type: "+type);
                         break;

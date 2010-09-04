@@ -15,7 +15,7 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -96,7 +96,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
 

@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -113,9 +113,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	if (location == null){
     		_id++;						
     		location = new Location(Integer.toString(_id), name);
-    		Integer oldSize = new Integer(_locationHashTable.size());
+    		Integer oldSize = Integer.valueOf(_locationHashTable.size());
     		_locationHashTable.put(location.getId(), location);
-    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
     	}
     	return location;
     }
@@ -124,13 +124,13 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(Location location) {
-    	Integer oldSize = new Integer(_locationHashTable.size());
+    	Integer oldSize = Integer.valueOf(_locationHashTable.size());
         _locationHashTable.put(location.getId(), location);
         // find last id created
         int id = Integer.parseInt(location.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
     }
 
     /**
@@ -140,9 +140,9 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     	if (location == null)
     		return;
         location.dispose();
-        Integer oldSize = new Integer(_locationHashTable.size());
+        Integer oldSize = Integer.valueOf(_locationHashTable.size());
     	_locationHashTable.remove(location.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_locationHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
     }
 
     /**

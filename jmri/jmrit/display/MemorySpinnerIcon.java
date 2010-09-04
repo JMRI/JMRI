@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  * @since 2.7.2
  */
 
@@ -169,14 +169,14 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         Integer num = null;
         if (memory.getValue().getClass() == String.class) {
             try {
-                num =new Integer((String)memory.getValue());
+                num =Integer.valueOf((String)memory.getValue());
             } catch (NumberFormatException e) {
                 return;
             }
         } else if (memory.getValue().getClass() == Integer.class) {
             num = ((Number)memory.getValue()).intValue();
         } else if (memory.getValue().getClass() == Float.class) {
-            num = new Integer(Math.round((Float)memory.getValue()));
+            num = Integer.valueOf(Math.round((Float)memory.getValue()));
             if (debug) log.debug("num= "+num.toString());
         } else {
             //spinner.setValue(getMemory().getValue());
@@ -184,10 +184,10 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         }
         int n = num.intValue();
         if (n>_max) {
-            num =new Integer(_max);
+            num =Integer.valueOf(_max);
         }
         else if (n<_min) {
-            num =new Integer(_min);
+            num =Integer.valueOf(_min);
         }
         spinner.setValue(num);
     }

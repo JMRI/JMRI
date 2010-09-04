@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -148,7 +148,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      */
     public void slotFromLocoAddress(int i, SlotListener l) {
         // store connection between this address and listener for later
-        mLocoAddrHash.put(new Integer(i), l);
+        mLocoAddrHash.put(Integer.valueOf(i), l);
 
         // send info request
         LocoNetMessage m = new LocoNetMessage(4);
@@ -471,10 +471,10 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
             // slot i has the address of this request
             int addr = _slots[i].locoAddr();
             if (log.isDebugEnabled()) log.debug("LOCO_ADR resp of slot "+i+" loco "+addr);
-            SlotListener l = mLocoAddrHash.get(new Integer(addr));
+            SlotListener l = mLocoAddrHash.get(Integer.valueOf(addr));
             if (l!=null) {
                 // only notify once per request
-                mLocoAddrHash.remove(new Integer(addr));
+                mLocoAddrHash.remove(Integer.valueOf(addr));
                 // and send the notification
                 if (log.isDebugEnabled()) log.debug("notify listener");
                 l.notifyChangedSlot(_slots[i]);
@@ -588,7 +588,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
 

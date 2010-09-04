@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class CarLoads {
 	
@@ -152,7 +152,6 @@ public class CarLoads {
     			break;
     		}
     	}
-    	loads.remove(name);
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()+1, loads.size());
     }
     

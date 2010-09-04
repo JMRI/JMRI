@@ -27,7 +27,7 @@ import jmri.Throttle;
  * should it not restart? Optional restart?)
  * </UL>
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class StoppingBlock {
     
@@ -44,7 +44,7 @@ public class StoppingBlock {
     
     void handleBlockChange(java.beans.PropertyChangeEvent e) {
         // check for going occupied
-        if (e.getPropertyName().equals("state") && e.getNewValue().equals(new Integer(Block.OCCUPIED)) ) {
+        if (e.getPropertyName().equals("state") && e.getNewValue().equals(Integer.valueOf(Block.OCCUPIED)) ) {
             if (sig1 == null) return;
         
             if (direction != block.getDirection()) return;  // no interesting

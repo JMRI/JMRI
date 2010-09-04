@@ -17,7 +17,7 @@ import jmri.ProgrammerException;
  * when a read to the same CV is made.
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2007
- * @version         $Revision: 1.29 $
+ * @version         $Revision: 1.30 $
  */
 public class ProgDebugger implements Programmer  {
 
@@ -34,7 +34,7 @@ public class ProgDebugger implements Programmer  {
      * Does not change the "lastWrite" and "lastWriteCv" results.
      */
     public void resetCv(int cv, int val) {
-        mValues.put(new Integer(cv), new Integer(val));
+        mValues.put(Integer.valueOf(cv), Integer.valueOf(val));
     }
     
     /**
@@ -45,7 +45,7 @@ public class ProgDebugger implements Programmer  {
      */
     public int getCvVal(int cv) {
         // try to get something from hash table
-        Integer saw = (mValues.get(new Integer(cv)));
+        Integer saw = (mValues.get(Integer.valueOf(cv)));
         if (saw!=null) return saw.intValue();
         log.warn("CV "+cv+" has no defined value");
         return -1;
@@ -67,7 +67,7 @@ public class ProgDebugger implements Programmer  {
         _lastWriteVal = val;
         _lastWriteCv = CV;
         // save for later retrieval
-        mValues.put(new Integer(CV), new Integer(val));
+        mValues.put(Integer.valueOf(CV), Integer.valueOf(val));
 
         // return a notification via the queue to ensure end
         Runnable r = new Runnable() {
@@ -93,7 +93,7 @@ public class ProgDebugger implements Programmer  {
         final ProgListener m = p;
         
         // guess by comparing current value in val to has table
-        Integer saw = mValues.get(new Integer(CV));
+        Integer saw = mValues.get(Integer.valueOf(CV));
         int result = -1; // what was read
         if (saw!=null) { 
             result = saw.intValue();
@@ -125,7 +125,7 @@ public class ProgDebugger implements Programmer  {
         _lastReadCv = CV;
 
         // try to get something from hash table
-        Integer saw = mValues.get(new Integer(CV));
+        Integer saw = mValues.get(Integer.valueOf(CV));
         if (saw!=null) _nextRead = saw.intValue();
 
         log.info("read CV: "+CV+" mode: "+getMode()+" will read "+_nextRead);
@@ -189,7 +189,7 @@ public class ProgDebugger implements Programmer  {
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
 

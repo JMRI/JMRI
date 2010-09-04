@@ -100,7 +100,7 @@ public class SlotManagerTest extends TestCase {
 			    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
         Assert.assertEquals("hash length", 1, slotmanager.mLocoAddrHash.size());
         Assert.assertEquals("key present", true,
-            slotmanager.mLocoAddrHash.containsKey(new Integer(0x2134)));
+            slotmanager.mLocoAddrHash.containsKey(Integer.valueOf(0x2134)));
         Assert.assertEquals("value present", true,
             slotmanager.mLocoAddrHash.contains(p2));
     }

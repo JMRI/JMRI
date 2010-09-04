@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * @since 2.7.2
  */
 
@@ -141,7 +141,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 protected void addAdditionalButtons(JPanel p) {
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
                     spinner.setMaximumSize(spinner.getPreferredSize());
-                    spinner.setValue(new Integer(_textBox.getColumns()));
+                    spinner.setValue(Integer.valueOf(_textBox.getColumns()));
                     JPanel p2 = new JPanel();
                     //p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
                     p2.setLayout(new FlowLayout(FlowLayout.TRAILING));

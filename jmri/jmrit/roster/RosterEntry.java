@@ -45,7 +45,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.48 $
+ * @version   $Revision: 1.49 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -404,7 +404,7 @@ public class RosterEntry {
         e.setAttribute("model",getModel());
         e.setAttribute("dccAddress",getDccAddress());
         e.setAttribute("comment",getComment());
-        e.setAttribute("maxSpeed", (new Integer(getMaxSpeedPCT()).toString()));
+        e.setAttribute("maxSpeed", (Integer.valueOf(getMaxSpeedPCT()).toString()));
         // file path are saved without default xml config path
         try {
         	e.setAttribute("imageFilePath", getImagePath().substring( _resourcesBasePath.length() ));

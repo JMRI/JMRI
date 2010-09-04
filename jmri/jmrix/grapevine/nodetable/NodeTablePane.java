@@ -31,7 +31,7 @@ import jmri.util.table.ButtonRenderer;
  
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grapevine.SerialListener {
 
@@ -237,7 +237,7 @@ public class NodeTablePane extends javax.swing.JPanel implements jmri.jmrix.grap
             // r is row number, from 0, and therefore r+1 is node number
             switch (c) {
             case ADDRCOL:
-                return new Integer(r+1);
+                return Integer.valueOf(r+1);
             case STATUSCOL:
                 // see if node exists
                 if (SerialTrafficController.instance().getNodeFromAddress(r+1)!=null)

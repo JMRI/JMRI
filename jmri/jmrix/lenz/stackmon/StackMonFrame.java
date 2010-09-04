@@ -27,7 +27,7 @@ import javax.swing.JScrollPane;
  * <P>
  *
  * @author	Paul Bender   Copyright (C) 2005-2010
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener {
 
@@ -264,7 +264,7 @@ public class StackMonFrame extends jmri.util.JmriJFrame implements XNetListener 
     public void message(XNetReply r) {
        if(r.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
            int address=r.getThrottleMsgAddr();
-           Integer intAddress=new Integer(address);
+           Integer intAddress=Integer.valueOf(address);
 	   switch(r.getElement(1)) {
 		case XNetConstants.LOCO_SEARCH_RESPONSE_N:
 			CurrentStatus.setText(rb.getString("SearchNormal"));

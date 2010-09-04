@@ -26,7 +26,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	
@@ -88,7 +88,8 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 						log.error("backup directory not created");
 					}
 				}
-				fileLogger.createNewFile();
+				if (fileLogger.createNewFile())
+					log.debug("new file created");
 			} else {
 				fileLogger = new java.io.File(getFullLoggerFileName());
 				newFile = false;
@@ -231,7 +232,6 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 	
 	public void dispose(){
 		removeListeners();
-		_instance = null;
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {

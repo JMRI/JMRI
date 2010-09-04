@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -80,9 +80,9 @@ public class RouteManager {
     	if (route == null){
     		_id++;						
     		route = new Route(Integer.toString(_id), name);
-    		Integer oldSize = new Integer(_routeHashTable.size());
+    		Integer oldSize = Integer.valueOf(_routeHashTable.size());
     		_routeHashTable.put(route.getId(), route);
-    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
     	}
     	return route;
     }
@@ -91,13 +91,13 @@ public class RouteManager {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(Route route) {
-    	Integer oldSize = new Integer(_routeHashTable.size());
+    	Integer oldSize = Integer.valueOf(_routeHashTable.size());
         _routeHashTable.put(route.getId(), route);
         // find last id created
         int id = Integer.parseInt(route.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -108,9 +108,9 @@ public class RouteManager {
     	if (route == null)
     		return;
         route.dispose();
-        Integer oldSize = new Integer(_routeHashTable.size());
+        Integer oldSize = Integer.valueOf(_routeHashTable.size());
     	_routeHashTable.remove(route.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_routeHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_routeHashTable.size()));
     }
 
     /**

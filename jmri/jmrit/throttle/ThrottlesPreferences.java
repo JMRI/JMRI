@@ -56,7 +56,7 @@ public class ThrottlesPreferences {
     	if ((a = e.getAttribute("isUsingToolBar")) != null )  setUsingToolBar( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isResizingWindow")) != null )  setResizeWindow( a.getValue().compareTo("true") == 0 );
     	if (((a = e.getAttribute("windowDimensionWidth")) != null ) && ((b = e.getAttribute("windowDimensionHeight")) != null ))
-    		setWindowDimension( new Dimension ( new Integer(a.getValue()),  new Integer( b.getValue()) ));
+    		setWindowDimension( new Dimension ( Integer.valueOf(a.getValue()),  Integer.valueOf( b.getValue()) ));
     	if ((a = e.getAttribute("isSavingThrottleOnLayoutSave")) != null ) setSaveThrottleOnLayoutSave( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isUsingRosterImage")) != null )  setUseRosterImage( a.getValue().compareTo("true") == 0 );
     	if ((a = e.getAttribute("isEnablingRosterSearch")) != null )  setEnableRosterSearch( a.getValue().compareTo("true") == 0 );

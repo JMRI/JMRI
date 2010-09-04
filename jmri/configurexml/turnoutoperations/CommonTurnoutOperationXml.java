@@ -55,7 +55,7 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         // constructor takes care of enrolling the new operation
         try {
         	result =
-        		(TurnoutOperation)constr.newInstance(new Object[]{name, new Integer(interval), new Integer(maxTries)});
+        		(TurnoutOperation)constr.newInstance(new Object[]{name, Integer.valueOf(interval), Integer.valueOf(maxTries)});
         } catch (Exception except) {			// too many to list!
         	log.warn("failed to create instance of "+constr.getDeclaringClass().getName()+" for \""+name+"\"");
         }

@@ -17,7 +17,7 @@ import javax.swing.table.*;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class PollDataModel extends AbstractTableModel
     implements MeasurementListener {
@@ -114,7 +114,7 @@ public class PollDataModel extends AbstractTableModel
         case IDCOL:
             return Engine.instance().getTransmitter(r).getID();
         case ADDRCOL:
-            return new Integer(Engine.instance().getTransmitter(r).getAddress());
+            return Integer.valueOf(Engine.instance().getTransmitter(r).getAddress());
         case LONGCOL:
             return new Boolean(Engine.instance().getTransmitter(r).isLongAddress());
         case POLLCOL:
@@ -141,7 +141,7 @@ public class PollDataModel extends AbstractTableModel
             m = Engine.instance().getTransmitter(r).getLastMeasurement();
             if (m == null) return null;
             int time = m.getReading().getTime();
-            return new Integer(time);
+            return Integer.valueOf(time);
         default:
             return null;
         }

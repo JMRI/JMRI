@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class ConnectivityUtil 
@@ -102,32 +102,32 @@ public class ConnectivityUtil
 						if (((TrackSegment)ltx.getConnectA()).getLayoutBlock()==lb) {
 							if ( (((TrackSegment)ltx.getConnectC()).getLayoutBlock()==nlb) ||
 									(((TrackSegment)ltx.getConnectC()).getLayoutBlock()==plb) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else if ( (((TrackSegment)ltx.getConnectB()).getLayoutBlock()==nlb) ||
 									(((TrackSegment)ltx.getConnectB()).getLayoutBlock()==plb) ) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if (((TrackSegment)ltx.getConnectB()).getLayoutBlock()==lb) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if (((TrackSegment)ltx.getConnectC()).getLayoutBlock()==lb) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else {
 								log.error("Cannot determine turnout setting - "+ltx.getTurnoutName());
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 						}
 						else if (((TrackSegment)ltx.getConnectB()).getLayoutBlock()==lb) {
-							companion.add(new Integer(Turnout.CLOSED));
+							companion.add(Integer.valueOf(Turnout.CLOSED));
 						}
 						else if (((TrackSegment)ltx.getConnectC()).getLayoutBlock()==lb) {
-							companion.add(new Integer(Turnout.THROWN));
+							companion.add(Integer.valueOf(Turnout.THROWN));
 						}
 						else {
 							log.error("Cannot determine turnout setting for "+ltx.getTurnoutName());
-							companion.add(new Integer(Turnout.CLOSED));
+							companion.add(Integer.valueOf(Turnout.CLOSED));
 						}
 						break;
 					case LayoutTurnout.RH_XOVER:
@@ -136,65 +136,65 @@ public class ConnectivityUtil
 						if (ltx.getLayoutBlock()==lb) {
 							if ( (tTyp!=LayoutTurnout.LH_XOVER) && ((ltx.getLayoutBlockC()==nlb) ||
 										(ltx.getLayoutBlockC()==plb)) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else if ( (ltx.getLayoutBlockB()==nlb) ||
 										(ltx.getLayoutBlockB()==plb) ) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if (ltx.getLayoutBlockB()==lb) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if ( (tTyp!=LayoutTurnout.LH_XOVER) &&
 												(ltx.getLayoutBlockC()==lb) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else {
 								log.error("Cannot determine turnout setting(A) - "+ltx.getTurnoutName());
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 						}
 						else if (ltx.getLayoutBlockB()==lb) {
 							if ( (ltx.getLayoutBlock()==nlb) || (ltx.getLayoutBlock()==plb) ) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if ( (tTyp!=LayoutTurnout.RH_XOVER) && ((ltx.getLayoutBlockD()==nlb) ||
 										(ltx.getLayoutBlockD()==plb) || (ltx.getLayoutBlockD()==lb)) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else {
 								log.error("Cannot determine turnout setting(B) - "+ltx.getTurnoutName());
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 						}
 						else if (ltx.getLayoutBlockC()==lb) {
 							if ( (tTyp!=LayoutTurnout.LH_XOVER) && ((ltx.getLayoutBlock()==nlb) ||
 										(ltx.getLayoutBlock()==plb)) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else if ( (ltx.getLayoutBlockD()==nlb) ||
 										(ltx.getLayoutBlockD()==plb) || (ltx.getLayoutBlockD()==lb) ) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if ( (tTyp!=LayoutTurnout.LH_XOVER) && (ltx.getLayoutBlockD()==lb) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else {
 								log.error("Cannot determine turnout setting(C) - "+ltx.getTurnoutName());
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 						}
 						else if (ltx.getLayoutBlockD()==lb) {
 							if ( (ltx.getLayoutBlockC()==nlb) || (ltx.getLayoutBlockC()==plb) ) {
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 							else if ( (tTyp!=LayoutTurnout.RH_XOVER) && ((ltx.getLayoutBlockB()==nlb) ||
 										(ltx.getLayoutBlockB()==plb)) ) {
-								companion.add(new Integer(Turnout.THROWN));
+								companion.add(Integer.valueOf(Turnout.THROWN));
 							}
 							else {
 								log.error("Cannot determine turnout setting(D) - "+ltx.getTurnoutName());
-								companion.add(new Integer(Turnout.CLOSED));
+								companion.add(Integer.valueOf(Turnout.CLOSED));
 							}
 						}
 						break;
@@ -270,7 +270,7 @@ public class ConnectivityUtil
 						}
 						break;
 				}
-				companion.add(new Integer(setting));
+				companion.add(Integer.valueOf(setting));
 				notFound = false;
 			} 
 			else if ( (lc.getBlock1()==lb) && (lc.getBlock2()==plb) ) {
@@ -399,19 +399,19 @@ public class ConnectivityUtil
 							else if (lt.getLayoutBlockB()==nlb) {
 								// exits Block at B
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockC()==nlb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// exits Block at C, either Double or RH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockB()==lb) {
 								// block continues at B
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectB();
 								prevConnectType = LayoutEditor.TURNOUT_B;
 								prevConnectObject = cObject;
@@ -419,7 +419,7 @@ public class ConnectivityUtil
 							else if ( (lt.getLayoutBlockC()==lb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// block continues at C, either Double or RH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectC();
 								prevConnectType = LayoutEditor.TURNOUT_C;
 								prevConnectObject = cObject;
@@ -438,19 +438,19 @@ public class ConnectivityUtil
 							else if (lt.getLayoutBlock()==nlb) {
 								// exits Block at A
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockD()==nlb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// exits Block at D, either Double or LH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlock()==lb) {
 								// block continues at A
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
@@ -458,7 +458,7 @@ public class ConnectivityUtil
 							else if ( (lt.getLayoutBlockD()==lb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// block continues at D, either Double or LH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectD();
 								prevConnectType = LayoutEditor.TURNOUT_D;
 								prevConnectObject = cObject;
@@ -477,19 +477,19 @@ public class ConnectivityUtil
 							else if (lt.getLayoutBlockD()==nlb) {
 								// exits Block at D
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlock()==nlb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// exits Block at A, either Double or RH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockD()==lb) {
 								// block continues at D
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectD();
 								prevConnectType = LayoutEditor.TURNOUT_D;
 								prevConnectObject = cObject;
@@ -497,7 +497,7 @@ public class ConnectivityUtil
 							else if ( (lt.getLayoutBlock()==lb) && (tType!=LayoutTurnout.LH_XOVER) ) {
 								// block continues at A, either Double or RH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectA();
 								prevConnectType = LayoutEditor.TURNOUT_A;
 								prevConnectObject = cObject;
@@ -516,19 +516,19 @@ public class ConnectivityUtil
 							else if (lt.getLayoutBlockC()==nlb) {
 								// exits Block at C
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = null;
 							}
 							else if ( (lt.getLayoutBlockB()==nlb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// exits Block at B, either Double or LH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = null;
 							}								
 							else if (lt.getLayoutBlockC()==lb) {
 								// block continues at C
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.CLOSED));
+								companion.add( Integer.valueOf(Turnout.CLOSED));
 								tr = (TrackSegment)lt.getConnectC();
 								prevConnectType = LayoutEditor.TURNOUT_C;
 								prevConnectObject = cObject;
@@ -536,7 +536,7 @@ public class ConnectivityUtil
 							else if ( (lt.getLayoutBlockB()==lb) && (tType!=LayoutTurnout.RH_XOVER) ) {
 								// block continues at B, either Double or LH
 								list.add((LayoutTurnout)cObject);
-								companion.add( new Integer(Turnout.THROWN));
+								companion.add( Integer.valueOf(Turnout.THROWN));
 								tr = (TrackSegment)lt.getConnectB();
 								prevConnectType = LayoutEditor.TURNOUT_B;
 								prevConnectObject = cObject;
@@ -1589,7 +1589,7 @@ public class ConnectivityUtil
 			if (setting == Turnout.THROWN) setting = Turnout.CLOSED;
 			else if (setting == Turnout.CLOSED) setting = Turnout.THROWN;
 		}
-		return (new Integer(setting));
+		return (Integer.valueOf(setting));
 	}
 	private void setupOpposingTrackSegment(LevelXing x, int cType) {
 		switch (cType) {

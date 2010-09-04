@@ -16,7 +16,7 @@ import jmri.jmrit.roster.*;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision: 1.20 $
+ * @version         $Revision: 1.21 $
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -109,8 +109,8 @@ public class PaneProgPaneTest extends TestCase {
         // test by invoking
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null);
         assertEquals("variable list length", 2, p.varList.size());
-        assertEquals("1st variable index ", new Integer(1), p.varList.get(0));
-        assertEquals("2nd variable index ", new Integer(0), p.varList.get(1));
+        assertEquals("1st variable index ", Integer.valueOf(1), p.varList.get(0));
+        assertEquals("2nd variable index ", Integer.valueOf(0), p.varList.get(1));
     }
 
     // test storage of programming info in list

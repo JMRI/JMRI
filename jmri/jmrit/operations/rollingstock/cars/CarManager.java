@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -107,9 +107,9 @@ public class CarManager extends RollingStockManager{
     	Kernel kernel = getKernelByName(name);
     	if (kernel == null){
     		kernel = new Kernel(name);
-    		Integer oldSize = new Integer(_kernelHashTable.size());
+    		Integer oldSize = Integer.valueOf(_kernelHashTable.size());
     		_kernelHashTable.put(name, kernel);
-    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_kernelHashTable.size()));
+    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
     	}
     	return kernel;
     }
@@ -122,9 +122,9 @@ public class CarManager extends RollingStockManager{
     	Kernel kernel = getKernelByName(name);
     	if (kernel != null){
     		kernel.dispose();
-    		Integer oldSize = new Integer(_kernelHashTable.size());
+    		Integer oldSize = Integer.valueOf(_kernelHashTable.size());
     		_kernelHashTable.remove(name);
-    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_kernelHashTable.size()));
+    		firePropertyChange(KERNELLISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_kernelHashTable.size()));
     	}
     }
     

@@ -14,7 +14,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -105,7 +105,7 @@ public class AcelaLight extends AbstractLight {
             mState = newState;
             
             // notify listeners, if any
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
 	}
     }
 

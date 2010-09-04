@@ -16,7 +16,7 @@ import java.util.Hashtable;
  *
  * @see             jmri.ProgrammerManager
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class DebugProgrammerManager extends DefaultProgrammerManager {
 
@@ -36,14 +36,14 @@ public class DebugProgrammerManager extends DefaultProgrammerManager {
         int address = pAddress;
         if (!pLongAddress) address = -address;
         // look for an existing entry by getting something from hash table
-        ProgDebugger saw = opsProgrammers.get(new Integer(address));
+        ProgDebugger saw = opsProgrammers.get(Integer.valueOf(address));
         if (saw!=null) {
             if (log.isDebugEnabled()) log.debug("return existing ops-mode programmer "
                                                 +pAddress+" "+pLongAddress);
             return saw;
         }
         // if not, save a new one & return it
-        opsProgrammers.put(new Integer(address), saw = new ProgDebugger());
+        opsProgrammers.put(Integer.valueOf(address), saw = new ProgDebugger());
         if (log.isDebugEnabled()) log.debug("return new ops-mode programmer "
                                                 +pAddress+" "+pLongAddress);
         return saw;

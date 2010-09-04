@@ -17,7 +17,7 @@ import jmri.*;
  * at the present time.  They're just names...
  *
  * @author      Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 abstract public class AbstractManager
     implements Manager, java.beans.PropertyChangeListener {
@@ -98,7 +98,7 @@ abstract public class AbstractManager
         _tsys.put(systemName, s);
         String userName = s.getUserName();
         if (userName != null) _tuser.put(userName, s);
-        firePropertyChange("length", null, new Integer(_tsys.size()));
+        firePropertyChange("length", null, Integer.valueOf(_tsys.size()));
         // listen for name and state changes to forward
         s.addPropertyChangeListener(this);
     }
@@ -115,7 +115,7 @@ abstract public class AbstractManager
         _tsys.remove(systemName);
         String userName = s.getUserName();
         if (userName != null) _tuser.remove(userName);
-        firePropertyChange("length", null, new Integer(_tsys.size()));
+        firePropertyChange("length", null, Integer.valueOf(_tsys.size()));
         // listen for name and state changes to forward
     }
 

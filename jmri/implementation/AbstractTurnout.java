@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -69,8 +69,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		if (_commandedState != s) {
 			int oldState = _commandedState;
 			_commandedState = s;
-			firePropertyChange("CommandedState", new Integer(oldState),
-					new Integer(_commandedState));
+			firePropertyChange("CommandedState", Integer.valueOf(oldState),
+					Integer.valueOf(_commandedState));
 		}
 	}
 
@@ -129,8 +129,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		if (_knownState != s) {
 			int oldState = _knownState;
 			_knownState = s;
-			firePropertyChange("KnownState", new Integer(oldState),
-					new Integer(_knownState));
+			firePropertyChange("KnownState", Integer.valueOf(oldState),
+					Integer.valueOf(_knownState));
 		}
 		// if known state has moved to Thrown or Closed,
 		// set the commanded state to match
@@ -246,8 +246,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		int oldMode = _activeFeedbackType;
 		_activeFeedbackType = mode;
 		if (oldMode != _activeFeedbackType)
-			firePropertyChange("feedbackchange", new Integer(oldMode),
-					new Integer(_activeFeedbackType));
+			firePropertyChange("feedbackchange", Integer.valueOf(oldMode),
+					Integer.valueOf(_activeFeedbackType));
 		// unlock turnout if feedback is changed 
 		setLocked(CABLOCKOUT, false);
 	}

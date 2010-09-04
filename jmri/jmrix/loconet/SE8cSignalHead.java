@@ -32,7 +32,7 @@ import jmri.implementation.DefaultSignalHead;
  * contact Digitrax Inc for separate permission.
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener {
 
@@ -204,7 +204,7 @@ public class SE8cSignalHead extends DefaultSignalHead implements LocoNetListener
         }
         // reach here if the state has updated
         if (oldAppearance != mAppearance) {
-            firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(mAppearance));
+            firePropertyChange("Appearance", Integer.valueOf(oldAppearance), Integer.valueOf(mAppearance));
         }
     }
     

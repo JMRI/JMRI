@@ -31,7 +31,7 @@ import java.util.List;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author  Dennis Miller Copyright 2004, 2005
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class RosterEntryPane extends javax.swing.JPanel  {
 
@@ -349,7 +349,7 @@ public class RosterEntryPane extends javax.swing.JPanel  {
         decoderFamily.setText(r.getDecoderFamily());
         decoderComment.setText(r.getDecoderComment());
         dateUpdated.setText(r.getDateUpdated());
-        maxSpeedSpinner.setValue(new Integer(r.getMaxSpeedPCT()));
+        maxSpeedSpinner.setValue(Integer.valueOf(r.getMaxSpeedPCT()));
     }
     
     public void setDccAddress(String a) {

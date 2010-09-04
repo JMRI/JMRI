@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.4 $
+ *	@version $Revision: 1.5 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
@@ -38,7 +38,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     	if ((a = child.getAttribute("isUseEStop")) != null )  setUseEStop(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("getEStopDelay")) != null )
             try{
-                setEStopDelay(new Integer(a.getValue()));
+                setEStopDelay(Integer.valueOf(a.getValue()));
             }catch (NumberFormatException e){
                 log.debug(e);
             }

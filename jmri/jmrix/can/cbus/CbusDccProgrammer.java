@@ -15,7 +15,7 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -94,7 +94,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         int cnt = v.size();
         for (int i=0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, name, new Integer(oldval), new Integer(newval)));
+            client.propertyChange(new PropertyChangeEvent(this, name, Integer.valueOf(oldval), Integer.valueOf(newval)));
         }
     }
 

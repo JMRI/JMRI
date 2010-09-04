@@ -21,7 +21,7 @@ import javax.swing.table.TableColumnModel;
  *
  *
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -104,7 +104,7 @@ public class AutomatTableDataModel extends javax.swing.table.AbstractTableModel
         case NAMECOL:
             return summary.get(row).getName();
         case TURNSCOL:
-            return new Integer(summary.get(row).getCount());
+            return Integer.valueOf(summary.get(row).getCount());
         case KILLCOL:  // return button text here
             return rb.getString("ButtonKill");
         default:

@@ -13,7 +13,7 @@ import javax.swing.*;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -111,11 +111,11 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 
         switch (col) {
         case SLOTCOLUMN:  // slot number
-            return new Integer(slotNum(row));
+            return Integer.valueOf(slotNum(row));
 //        case ESTOPCOLUMN:  //
 //            return "E Stop";          // will be name of button in default GUI
         case ADDRCOLUMN:  //
-            return new Integer(s.locoAddr());
+            return Integer.valueOf(s.locoAddr());
         case SPDCOLUMN:  //
             String t;
             if (s.speed() == 1) t = "(estop) 1";

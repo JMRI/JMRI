@@ -128,11 +128,11 @@ public class LocoIOData
     }
 
     public void setUnitAddress(int unit) {
-        dataListeners.firePropertyChange("UnitAddress", new Integer(unitAddress), new Integer(0x0100 | (unit&0x07F)));
+        dataListeners.firePropertyChange("UnitAddress", Integer.valueOf(unitAddress), Integer.valueOf(0x0100 | (unit&0x07F)));
         unitAddress    = 0x0100 | (unit&0x07F);  // protect against high bits set
     }
     public void setUnitSubAddress(int unitSub) {
-        dataListeners.firePropertyChange("UnitSubAddress", new Integer(unitSubAddress), new Integer(unitSub & 0x07F));
+        dataListeners.firePropertyChange("UnitSubAddress", Integer.valueOf(unitSubAddress), Integer.valueOf(unitSub & 0x07F));
         unitSubAddress = unitSub & 0x07F;
     }
     public int getUnitAddress() {
@@ -157,7 +157,7 @@ public class LocoIOData
               ((0           & 0x01) << 0x02) |  // bit 2
               ((isServo     & 0x01) << 0x03) |  // bit 3
               ((blinkRate   & 0x0F) << 0x04);   // bits 4-7
-        dataListeners.firePropertyChange("UnitConfig", new Integer(sv0), new Integer(newsv0));
+        dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0));
         sv0 = newsv0;
     }
     public int getUnitConfig() {
@@ -189,7 +189,7 @@ public class LocoIOData
 
     public void setSV(int channel, int value) {
         sv[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public int getSV(int channel) {
         return sv[channel] & 0xFF;
@@ -199,7 +199,7 @@ public class LocoIOData
     }
     public void setV1(int channel, int value) {
         v1[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public int getV1(int channel) {
         return v1[channel] & 0xFF;
@@ -209,7 +209,7 @@ public class LocoIOData
     }
     public void setV2(int channel, int value) {
         v2[channel] = value & 0xFF;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public int getV2(int channel) {
         return v2[channel] & 0xFF;
@@ -222,7 +222,7 @@ public class LocoIOData
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public int getAddr(int channel) {
         return addr[channel] & 0x7FF;
@@ -230,7 +230,7 @@ public class LocoIOData
 
     public void setMode(int channel, String m) {
         mode[channel] = m;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public String getMode(int channel) {
         return mode[channel];
@@ -248,7 +248,7 @@ public class LocoIOData
     }
     public void setLIM(int channel, LocoIOMode m) {
         lim[channel] = m;
-        dataListeners.firePropertyChange("PortChange", new Integer(-1), new Integer(channel));
+        dataListeners.firePropertyChange("PortChange", Integer.valueOf(-1), Integer.valueOf(channel));
     }
     public LocoIOMode getLIM(int channel) {
         return lim[channel];

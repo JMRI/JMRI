@@ -21,7 +21,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RollingStockManager {
 	
@@ -117,9 +117,9 @@ public class RollingStockManager {
      * Load RollingStock.
  	 */
     public void register(RollingStock rs) {
-    	Integer oldSize = new Integer(_hashTable.size());
+    	Integer oldSize = Integer.valueOf(_hashTable.size());
         _hashTable.put(rs.getId(), rs);
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_hashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
 
     /**
@@ -127,23 +127,23 @@ public class RollingStockManager {
      */
     public void deregister(RollingStock rs) {
     	rs.dispose();
-        Integer oldSize = new Integer(_hashTable.size());
+        Integer oldSize = Integer.valueOf(_hashTable.size());
     	_hashTable.remove(rs.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_hashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
     
     /**
      * Remove all RollingStock from roster
      */
     public void deleteAll(){
-    	Integer oldSize = new Integer(_hashTable.size());
+    	Integer oldSize = Integer.valueOf(_hashTable.size());
     	Enumeration<String> en = _hashTable.keys();
     	while (en.hasMoreElements()) { 
     		RollingStock rs = getById(en.nextElement());
     		rs.dispose();
             _hashTable.remove(rs.getId());
     	}
-    	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_hashTable.size()));
+    	firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_hashTable.size()));
     }
     
    /**

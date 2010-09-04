@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
@@ -52,7 +52,7 @@ public class MemorySpinnerIconTest extends jmri.util.SwingTestCase {
 
         toi1.setMemory("IM2");
         toi2.setMemory("IM2");
-        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(new Integer(10));
+        jmri.InstanceManager.memoryManagerInstance().getMemory("IM2").setValue(Integer.valueOf(10));
 
         tos3 = new MemorySpinnerIcon(panel);
         jf.getContentPane().add(tos3);

@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -307,8 +307,8 @@ public class DefaultConditional extends AbstractNamedBean
             if ( index >= 0 && index < variableList.size() ) {
                 return java.text.MessageFormat.format(
                             rbx.getString("ParseError5"), 
-                            new Object[] { new Integer(variableList.size()), 
-                                            new Integer(index+1) }); 
+                            new Object[] { Integer.valueOf(variableList.size()), 
+                                            Integer.valueOf(index+1) }); 
             }
         } catch ( NumberFormatException nfe) {
             return rbx.getString("ParseError6") + nfe.getMessage();
@@ -1226,7 +1226,7 @@ public class DefaultConditional extends AbstractNamedBean
         if (_currentState != state) {
             int oldState = _currentState;
             _currentState = state;
-            firePropertyChange("KnownState", new Integer(oldState), new Integer(_currentState));
+            firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_currentState));
         }
     }
 	

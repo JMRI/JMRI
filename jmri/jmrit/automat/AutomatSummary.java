@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class AutomatSummary  {
 
@@ -44,7 +44,7 @@ public class AutomatSummary  {
         }
         
 		//notify length changed
-		notify("Insert", null, new Integer(indexOf(a)));
+		notify("Insert", null, Integer.valueOf(indexOf(a)));
 
 	}
 
@@ -60,7 +60,7 @@ public class AutomatSummary  {
         }
         
 		//notify length changed
-		notify("Remove", null, new Integer(index));
+		notify("Remove", null, Integer.valueOf(index));
 	}
 
 	public int length() {
@@ -117,7 +117,7 @@ public class AutomatSummary  {
 	    synchronized (automats) {
 		    i = automats.indexOf(a);
 	    }
-		notify("Count", null, new Integer(i));
+		notify("Count", null, Integer.valueOf(i));
 	}
 
     void notify(String property, Object arg1, Object arg2){

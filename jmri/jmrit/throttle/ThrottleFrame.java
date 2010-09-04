@@ -47,15 +47,15 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
 	private static final ResourceBundle rb = ThrottleBundle.bundle();
 
-    private final Integer BACKPANEL_LAYER = new Integer(Integer.MIN_VALUE);
-    private final Integer PANEL_LAYER_FRAME = new Integer(1);
-    private final Integer PANEL_LAYER_PANEL = new Integer(2);
+    private final Integer BACKPANEL_LAYER = Integer.valueOf(Integer.MIN_VALUE);
+    private final Integer PANEL_LAYER_FRAME = Integer.valueOf(1);
+    private final Integer PANEL_LAYER_PANEL = Integer.valueOf(2);
     
     private static int NEXT_FRAME_KEY = KeyEvent.VK_RIGHT;
     private static int PREV_FRAME_KEY = KeyEvent.VK_LEFT;

@@ -394,7 +394,7 @@ public class PreviewDialog extends JDialog {
                     } catch (OutOfMemoryError oome) {
                         JOptionPane.showMessageDialog(this, 
                                 java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                                new Object[] {new Integer(_cnt)}),
+                                new Object[] {Integer.valueOf(_cnt)}),
                                 rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
                         _noMemory = true;
                     }
@@ -407,10 +407,10 @@ public class PreviewDialog extends JDialog {
         gridbag.setConstraints(bottom, c);
         _preview.add(bottom);
         String msg = java.text.MessageFormat.format(rb.getString("numImagesInDir"),
-                              new Object[] {_currentDir.getName(), new Integer(cnt)});
+                              new Object[] {_currentDir.getName(), Integer.valueOf(cnt)});
         if (startNum>0) {
             msg = msg +" "+ java.text.MessageFormat.format(rb.getString("numImagesShown"), 
-                              new Object[] {new Integer(startNum)});
+                              new Object[] {Integer.valueOf(startNum)});
         }
         _previewLabel.setText(msg);
         _preview.setMinimumSize(new Dimension(CatalogPanel.ICON_WIDTH, 2*CatalogPanel.ICON_HEIGHT));
@@ -419,7 +419,7 @@ public class PreviewDialog extends JDialog {
         if (_noMemory) {
             JOptionPane.showMessageDialog(this, 
                     java.text.MessageFormat.format(rb.getString("OutOfMemory"), 
-                    new Object[] {new Integer(_cnt)}),
+                    new Object[] {Integer.valueOf(_cnt)}),
                     rb.getString("error"), JOptionPane.INFORMATION_MESSAGE);
         }
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());

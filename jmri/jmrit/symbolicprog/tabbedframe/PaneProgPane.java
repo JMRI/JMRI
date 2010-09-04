@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.76 $
+ * @version   $Revision: 1.77 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -427,7 +427,7 @@ public class PaneProgPane extends javax.swing.JPanel
                     // always of interest
                     CvValue cv = cvs[j];
                     if (!changes || VariableValue.considerChanged(cv))
-                        set.add( new Integer(cv.number()));
+                        set.add( Integer.valueOf(cv.number()));
                 }
             }
         }
@@ -1227,7 +1227,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 // remember which CVs to read/write
                 for (int j=0; j<_cvModel.getRowCount(); j++) {
-                    cvList.add(new Integer(j));
+                    cvList.add(Integer.valueOf(j));
                 }
 
                 _cvTable = true;
@@ -1257,7 +1257,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" +_indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(new Integer(in));
+                    indexedCvList.add(Integer.valueOf(in));
                 }
 
                 _cvTable = true;
@@ -1368,7 +1368,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
                 // remember which CVs to read/write
                 for (int j=0; j<_cvModel.getRowCount(); j++) {
-                    cvList.add(new Integer(j));
+                    cvList.add(Integer.valueOf(j));
                 }
                 _cvTable = true;
                 log.debug("end of building CvTable pane");
@@ -1397,7 +1397,7 @@ public class PaneProgPane extends javax.swing.JPanel
                 for (int j=0; j<_indexedCvModel.getRowCount(); j++) {
                     String sz = "CV" +_indexedCvModel.getName(j);
                     int in = _varModel.findVarIndex(sz);
-                    indexedCvList.add(new Integer(in));
+                    indexedCvList.add(Integer.valueOf(in));
                 }
 
                 _cvTable = true;
@@ -1471,7 +1471,7 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // get representation; store into the list to be programmed
         JComponent rep = getRepresentation(name, var);
-        if (i>=0) varList.add(new Integer(i));
+        if (i>=0) varList.add(Integer.valueOf(i));
 
         // create the paired label
         JLabel l = new WatchingLabel(" "+label+" ", rep);
@@ -1938,20 +1938,20 @@ public class PaneProgPane extends javax.swing.JPanel
 
         // note we want Short Address first, as it might change others
         iVar = _varModel.findVarIndex("Short Address");
-        if (iVar>=0) varList.add(new Integer(iVar));
+        if (iVar>=0) varList.add(Integer.valueOf(iVar));
         else log.debug("addDccAddressPanel did not find Short Address");
 
         iVar = _varModel.findVarIndex("Address Format");
-        if (iVar>=0) varList.add(new Integer(iVar));
+        if (iVar>=0) varList.add(Integer.valueOf(iVar));
         else log.debug("addDccAddressPanel did not find Address Format");
 
         iVar = _varModel.findVarIndex("Long Address");
-        if (iVar>=0) varList.add(new Integer(iVar));
+        if (iVar>=0) varList.add(Integer.valueOf(iVar));
         else log.debug("addDccAddressPanel did not find Long Address");
 
         // included here because CV1 can modify it, even if it doesn't show on pane;
         iVar = _varModel.findVarIndex("Consist Address");
-        if (iVar>=0) varList.add(new Integer(iVar));
+        if (iVar>=0) varList.add(Integer.valueOf(iVar));
         else log.debug("addDccAddressPanel did not find CV19 Consist Address");
 
         return l;

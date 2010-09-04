@@ -585,7 +585,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         Thread.setDefaultUncaughtExceptionHandler(new jmri.util.exceptionhandler.UncaughtExceptionHandler());
         IconAdder.getParentFrame(this).pack();
         return java.text.MessageFormat.format(rb.getString("numImagesInNode"),
-                              new Object[] {node.getUserObject(),new Integer(leaves.size())});
+                              new Object[] {node.getUserObject(),Integer.valueOf(leaves.size())});
     }
 
     /**

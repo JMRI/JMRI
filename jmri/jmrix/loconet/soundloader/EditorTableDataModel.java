@@ -22,7 +22,7 @@ import javax.swing.table.TableCellEditor;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.13 $
+ * @version		$Revision: 1.14 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -101,9 +101,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     public Object getValueAt(int row, int col) {
         switch (col) {
         case HEADERCOL:
-            return new Integer(row);
+            return Integer.valueOf(row);
         case HANDLECOL:
-            return new Integer(file.getHeader(row+1).getHandle());
+            return Integer.valueOf(file.getHeader(row+1).getHandle());
         case MAPCOL: 
             return file.getMapEntry(file.getHeader(row+1).getHandle());
         case FILENAMECOL: 

@@ -54,7 +54,7 @@ public class TrainCommon {
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
-		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose()  ? " "+car.getLoad() : "");
+		String carLoad = (Setup.isShowCarLoadEnabled() && !car.isCaboose()  ? " "+car.getLoad() : "");
 		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");
 		String carDestination = (Setup.isShowCarDestinationEnabled() ? ", destination "+splitString(car.getDestinationName()) : "");
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
@@ -71,7 +71,7 @@ public class TrainCommon {
 		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
 		String[] carType = car.getType().split("-"); // ignore lading
 		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
-		String carLoad = (Setup.isShowCarLoadEnabled()& !car.isCaboose() ? " "+car.getLoad() : "");
+		String carLoad = (Setup.isShowCarLoadEnabled() && !car.isCaboose() ? " "+car.getLoad() : "");
 		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");	
 		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
 		String carDropComment = " " +CarLoads.instance().getDropComment(car.getType(), car.getLoad());

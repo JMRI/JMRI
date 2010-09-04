@@ -14,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SDI GUI 
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
 
@@ -42,12 +42,12 @@ public class SdiJfcUnitTests extends jmri.util.SwingTestCase {
         // Close 2 directly
         TestHelper.disposeWindow(f2, this);
         Assert.assertEquals("one pane disposed", 1, SamplePane.disposed.size() );
-        Assert.assertEquals("pane 2 disposed", new Integer(2), SamplePane.disposed.get(0) );
+        Assert.assertEquals("pane 2 disposed", Integer.valueOf(2), SamplePane.disposed.get(0) );
 
         // Close 1 directly
         TestHelper.disposeWindow(f1, this);
         Assert.assertEquals("one pane disposed", 2, SamplePane.disposed.size() );
-        Assert.assertEquals("pane 1 disposed", new Integer(1), SamplePane.disposed.get(1) );
+        Assert.assertEquals("pane 1 disposed", Integer.valueOf(1), SamplePane.disposed.get(1) );
 
     }
             

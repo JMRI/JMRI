@@ -8,7 +8,7 @@ import java.util.*;
 /**
  * Sample Pane class for tests
  * @author			Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 
 // sample class
@@ -55,7 +55,7 @@ public class SamplePane extends jmri.util.swing.JmriPanel {
     }
 
     public void dispose() {
-        disposed.add(new Integer(num));
+        disposed.add(Integer.valueOf(num));
         super.dispose();
     }
     

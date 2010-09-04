@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -689,7 +689,7 @@ public class AcelaNode extends AbstractNode {
         //  the starting address.  If we are not going to do a bulk command
         //  then the address will start from the starting address.
 
-        Integer tempint = new Integer(startingOutputAddress);
+        Integer tempint = Integer.valueOf(startingOutputAddress);
         addrlo = tempint.byteValue();
 
         // For each nodetype set up variables that will end up in the msg
@@ -740,7 +740,7 @@ public class AcelaNode extends AbstractNode {
                     // Need to adjust addr to address the actual output
                     // circuit rather than the starting output address
                     // That it currently points to.
-                    Integer tempaddr = new Integer(c + addrlo);
+                    Integer tempaddr = Integer.valueOf(c + addrlo);
                     addrlo = tempaddr.byteValue();
 
                     // Reset the needtosend flag for this output circuit

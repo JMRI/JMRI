@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -226,9 +226,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	if (train == null){
     		_id++;						
     		train = new Train(Integer.toString(_id), name);
-    		Integer oldSize = new Integer(_trainHashTable.size());
+    		Integer oldSize = Integer.valueOf(_trainHashTable.size());
     		_trainHashTable.put(train.getId(), train);
-    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
+    		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
     	}
     	return train;
     }
@@ -237,13 +237,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(Train train) {
-    	Integer oldSize = new Integer(_trainHashTable.size());
+    	Integer oldSize = Integer.valueOf(_trainHashTable.size());
         _trainHashTable.put(train.getId(), train);
         // find last id created
         int id = Integer.parseInt(train.getId());
         if (id > _id)
         	_id = id;
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
         // listen for name and state changes to forward
     }
 
@@ -254,9 +254,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	if (train == null)
     		return;
         train.dispose();
-        Integer oldSize = new Integer(_trainHashTable.size());
+        Integer oldSize = Integer.valueOf(_trainHashTable.size());
     	_trainHashTable.remove(train.getId());
-        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, new Integer(_trainHashTable.size()));
+        firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_trainHashTable.size()));
     }
     
     public void replaceLoad(String oldLoadName, String newLoadName){

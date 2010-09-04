@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -197,7 +197,7 @@ public class OBlock extends jmri.Block {
         log.debug("removePortal: block "+getSystemName()+" portals decreased from "
                   +oldSize+" to "+_portals.size()+" - paths decreased from "+
                   oldPathSize+" to "+getPaths().size());
-        //firePropertyChange("portalCount", new Integer(oldSize), new Integer(_portals.size()));
+        //firePropertyChange("portalCount", Integer.valueOf(oldSize), Integer.valueOf(_portals.size()));
     }
 
     public Portal getPortalByName(String name) {
@@ -248,7 +248,7 @@ public class OBlock extends jmri.Block {
         }
         int oldSize = list.size();
         super.addPath(path);
-        firePropertyChange("pathCount", new Integer(oldSize), new Integer(getPaths().size()));
+        firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
         return true;
     }
 
@@ -259,7 +259,7 @@ public class OBlock extends jmri.Block {
         path.clearSettings();
         int oldSize = getPaths().size();
         super.removePath(path);
-        firePropertyChange("pathCount", new Integer(oldSize), new Integer(getPaths().size()));
+        firePropertyChange("pathCount", Integer.valueOf(oldSize), Integer.valueOf(getPaths().size()));
     }
 
     /**

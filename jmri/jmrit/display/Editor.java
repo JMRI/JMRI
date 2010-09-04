@@ -1086,7 +1086,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         JComponent c = (JComponent)l;
         c.invalidate();
     	_targetPanel.remove(c);
-        _targetPanel.add(c, new Integer(l.getDisplayLevel()));
+        _targetPanel.add(c, Integer.valueOf(l.getDisplayLevel()));
         _targetPanel.moveToFront(c);
 		c.repaint();
         _targetPanel.validate();

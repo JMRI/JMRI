@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -173,11 +173,11 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
 
         switch (col) {
         case SLOTCOLUMN:  // slot number
-            return new Integer(slotNum(row));
+            return Integer.valueOf(slotNum(row));
         case ESTOPCOLUMN:  //
             return "E Stop";          // will be name of button in default GUI
         case ADDRCOLUMN:  //
-            return new Integer(s.locoAddr());
+            return Integer.valueOf(s.locoAddr());
         case SPDCOLUMN:  //
             switch (s.consistStatus()) {
             case LnConstants.CONSIST_TOP:

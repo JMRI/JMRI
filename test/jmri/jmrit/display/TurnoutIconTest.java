@@ -13,7 +13,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class TurnoutIconTest extends jmri.util.SwingTestCase {
 
@@ -76,22 +76,22 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     // animate the visible frame
     public void throwButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "KnownState", null, new Integer(jmri.Turnout.THROWN));
+            "KnownState", null, Integer.valueOf(jmri.Turnout.THROWN));
         to.propertyChange(e);
     }
     public void closeButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "KnownState", null, new Integer(jmri.Turnout.CLOSED));
+            "KnownState", null, Integer.valueOf(jmri.Turnout.CLOSED));
         to.propertyChange(e);
     }
     public void unknownButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "KnownState", null, new Integer(jmri.Turnout.UNKNOWN));
+            "KnownState", null, Integer.valueOf(jmri.Turnout.UNKNOWN));
         to.propertyChange(e);
     }
     public void inconsistentButtonPushed() {
         java.beans.PropertyChangeEvent e = new PropertyChangeEvent(this,
-            "KnownState", null, new Integer(23));
+            "KnownState", null, Integer.valueOf(23));
         to.propertyChange(e);
     }
 

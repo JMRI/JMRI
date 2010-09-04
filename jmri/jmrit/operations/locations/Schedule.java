@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Represents a car delivery schedule for a location
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class Schedule implements java.beans.PropertyChangeListener {
 
@@ -81,10 +81,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
     	log.debug("adding new item to "+getName()+ " id: " + id);
     	ScheduleItem si = new ScheduleItem(id, type);
     	si.setSequenceId(_sequenceNum);
-    	Integer old = new Integer(_scheduleHashTable.size());
+    	Integer old = Integer.valueOf(_scheduleHashTable.size());
     	_scheduleHashTable.put(si.getId(), si);
 
-    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_scheduleHashTable.size()));
+    	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
     	// listen for drop and pickup changes to forward
     	si.addPropertyChangeListener(this);
     	return si;
@@ -110,7 +110,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(ScheduleItem si) {
-    	Integer old = new Integer(_scheduleHashTable.size());
+    	Integer old = Integer.valueOf(_scheduleHashTable.size());
         _scheduleHashTable.put(si.getId(), si);
 
         // find last id created
@@ -121,7 +121,7 @@ public class Schedule implements java.beans.PropertyChangeListener {
         // find highest sequence number
         if (si.getSequenceId() > _sequenceNum)
         	_sequenceNum = si.getSequenceId();
-       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_scheduleHashTable.size()));
+       	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
         // listen for drop and pickup changes to forward
         si.addPropertyChangeListener(this);
     }
@@ -136,10 +136,10 @@ public class Schedule implements java.beans.PropertyChangeListener {
     		// subtract from the items's available track length
     		String id = si.getId();
     		si.dispose();
-    		Integer old = new Integer(_scheduleHashTable.size());
+    		Integer old = Integer.valueOf(_scheduleHashTable.size());
     		_scheduleHashTable.remove(id);
     		resequenceIds();
-           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, new Integer(_scheduleHashTable.size()));
+           	firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, old, Integer.valueOf(_scheduleHashTable.size()));
      	}
     }
     

@@ -48,7 +48,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -347,7 +347,7 @@ public abstract class AbstractLight extends AbstractNamedBean
 	protected void notifyStateChange(int oldState, int newState) {
 	    mState = newState;
 	    if (oldState!=newState)
-	        firePropertyChange("KnownState", new Integer(oldState), new Integer(newState));
+	        firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(newState));
 	}
 	
 	/**
