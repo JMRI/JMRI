@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.5 $
+ *	@version $Revision: 1.6 $
  */
 
 import java.awt.Color;
@@ -260,6 +260,6 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     }
 
-    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePrefsPanel.class.getName());
+    //private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WiThrottlePrefsPanel.class.getName());
 
 }
