@@ -9,7 +9,7 @@ package jmri.jmrit.withrottle;
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Created by Brett Hoffman on:
  *	@author 7/20/09.
- *	@version $Revision: 1.19 $
+ *	@version $Revision: 1.20 $
  *
  *	Thread with input and output streams for each connected device.
  *	Creates an invisible throttle window for each.
@@ -375,7 +375,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
             }
 
         };
-        ekg.scheduleAtFixedRate(task, (long)(pulseInterval * 900), (long)(pulseInterval * 900));
+        ekg.scheduleAtFixedRate(task, pulseInterval * 900, pulseInterval * 900);
     }
     
     public void stopEKG(){
