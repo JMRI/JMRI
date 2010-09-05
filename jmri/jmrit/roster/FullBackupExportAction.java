@@ -12,7 +12,6 @@ import java.util.zip.ZipOutputStream;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
-import javax.swing.filechooser.FileNameExtensionFilter;
 
 
 /**
@@ -52,9 +51,12 @@ public class FullBackupExportAction extends AbstractAction {
 			String roster_filename_extension = ".roster";
 
 			JFileChooser chooser = new JFileChooser();
+			/* restore this when Java 1.6 is acceptable
 			FileNameExtensionFilter filter = new FileNameExtensionFilter(
 					"JMRI Roster files", roster_filename_extension);
 			chooser.setFileFilter(filter);
+			*/
+			
 			int returnVal = chooser.showSaveDialog(_who);
 			if (returnVal != JFileChooser.APPROVE_OPTION) {
 				return;
