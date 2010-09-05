@@ -34,9 +34,6 @@ import org.jdom.ProcessingInstruction;
  * <P>
  * The entries are stored in an ArrayList, sorted alphabetically.  That
  * sort is done manually each time an entry is added.
- * <p>
- * This predates the "XmlFile" base class, so doesn't use it.  Not sure
- * whether it should...
  * <P>
  * The roster is stored in a "Roster Index", which can be read or written.
  * Each individual entry (once stored) contains a filename which can
@@ -46,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.53 $
+ * @version	$Revision: 1.54 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -330,10 +327,13 @@ public class Roster extends XmlFile {
     }
 
     /**
-     * Write the entire roster to a file. This does not do backup; that has
-     * to be done separately. See writeRosterFile() for a public function that
-     * finds the default location, does a backup and then calls this.
+     * Write the entire roster to a file. 
+	 *
+	 * Creates a new file with the given name, and then calls writeFile (File) 
+	 * to perform the actual work.
+	 * 
      * @param name Filename for new file, including path info as needed.
+     * @throws FileNotFoundException
      * @throws IOException
      */
     void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
@@ -343,6 +343,18 @@ public class Roster extends XmlFile {
         if (file == null) {
             file = new File(name);
         }
+        
+        writeFile (file);
+    }
+ 
+    /**
+     * Write the entire roster to a file object. This does not do backup; that has
+     * to be done separately. See writeRosterFile() for a public function that
+     * finds the default location, does a backup and then calls this.
+     * @param file an op
+     * @throws IOException
+     */
+    void writeFile (File file) throws java.io.IOException {
         // create root element
         Element root = new Element("roster-config");
         Document doc = newDocument(root, dtdLocation+"roster-config.dtd");
