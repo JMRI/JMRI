@@ -18,9 +18,11 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class TrainManagerXml extends XmlFile {
+	
+	private boolean fileLoaded = false;
 	
 	public TrainManagerXml(){
 		
@@ -165,7 +167,7 @@ public class TrainManagerXml extends XmlFile {
     	// suppress rootFromName(name) warning message by checking to see if file exists
     	if (findFile(name) == null) {
     		log.debug(name + " file could not be found");
-    		manager.setTrainsLoaded();	// set flag, could be the first time
+    		fileLoaded = true;	// set flag, could be the first time
     		return;
     	}
     	// find root
@@ -189,7 +191,7 @@ public class TrainManagerXml extends XmlFile {
     			manager.register(new Train(l.get(i)));
     		}
 
-    		manager.setTrainsLoaded();	// set flag
+    		fileLoaded = true;	// set flag
 
     		List<String> trainList = manager.getTrainsByIdList();
 
@@ -228,6 +230,10 @@ public class TrainManagerXml extends XmlFile {
     	else {
     		log.error("Unrecognized operations train file contents in file: "+name);
     	}
+    }
+    
+    public boolean isTrainFileLoaded(){
+    	return fileLoaded;
     }
 
 	/**

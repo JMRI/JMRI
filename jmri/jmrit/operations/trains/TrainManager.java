@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -65,7 +65,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	/** record the single instance **/
 	private static TrainManager _instance = null;
 	private int _id = 0;		// train ids
-	private boolean trainsloaded = false;
 
 	public static synchronized TrainManager instance() {
 		if (_instance == null) {
@@ -77,11 +76,6 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("TrainManager returns instance "+_instance);
 		return _instance;
-	}
-
-	public void setTrainsLoaded(){
-		trainsloaded = true;
-		log.debug("Trains have been loaded!");
 	}
  
 	/**
@@ -194,7 +188,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
      
     public Train getTrainByName(String name) {
-		if (!trainsloaded)
+		if (!TrainManagerXml.instance().isTrainFileLoaded())
 			log.error("TrainManager getTrainByName called before trains completely loaded!");
     	Train train;
     	Enumeration<Train> en =_trainHashTable.elements();
@@ -209,7 +203,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
     
     public Train getTrainById (String id){
-		if (!trainsloaded)
+		if (!TrainManagerXml.instance().isTrainFileLoaded())
 			log.error("TrainManager getTrainById called before trains completely loaded!");
     	return _trainHashTable.get(id);
     }
@@ -418,7 +412,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
  
     private List<String> getList() {
-		if (!trainsloaded)
+		if (!TrainManagerXml.instance().isTrainFileLoaded())
 			log.error("TrainManager getList called before trains completely loaded!");
         List<String> out = new ArrayList<String>();
         Enumeration<String> en = _trainHashTable.keys();
