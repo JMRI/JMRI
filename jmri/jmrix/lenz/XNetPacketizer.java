@@ -21,7 +21,7 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.10 $
+ * @version 		$Revision: 2.11 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
@@ -46,7 +46,7 @@ public class XNetPacketizer extends XNetTrafficController {
 	public void sendXNetMessage(XNetMessage m, XNetListener reply) {
 		if(m.length()!=0){
 			sendMessage(m,reply);
-                        java.lang.Thread.currentThread().yield();
+                        java.lang.Thread.yield();
                 }
 	}
 
