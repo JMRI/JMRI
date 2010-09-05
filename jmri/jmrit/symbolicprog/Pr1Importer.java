@@ -27,7 +27,7 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
@@ -41,8 +41,11 @@ public class Pr1Importer {
   public Pr1Importer( File file ) throws IOException {
     m_CVs = new Properties() ;
     FileInputStream fileStream = new FileInputStream( file);
-    m_CVs.load( fileStream );
-
+    try {
+        m_CVs.load( fileStream );
+    } finally {
+        fileStream.close();
+    }
     // First check to see if the file contains a Version=x entry and if it
     // does assume it is a PR1WIN file that has packed values
     if( m_CVs.containsKey( VERSION_KEY ) ) {
