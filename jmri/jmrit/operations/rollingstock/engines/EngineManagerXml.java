@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -27,7 +27,7 @@ public class EngineManagerXml extends XmlFile {
 	}
 	
 	/** record the single instance **/
-	static protected EngineManagerXml _instance = null;
+	private static EngineManagerXml _instance = null;
 
 	public static synchronized EngineManagerXml instance() {
 		if (_instance == null) {

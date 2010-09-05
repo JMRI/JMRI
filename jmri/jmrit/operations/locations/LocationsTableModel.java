@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -97,7 +97,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
-    public int getRowCount() { return sysList.size(); }
+    public synchronized int getRowCount() { return sysList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
 
@@ -138,7 +138,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    public Object getValueAt(int row, int col) {
+    public synchronized Object getValueAt(int row, int col) {
     	// Funky code to put the lef frame in focus after the edit table buttons is used.
     	// The button editor for the table does a repaint of the button cells after the setValueAt code
     	// is called which then returns the focus back onto the table.  We need the edit frame
@@ -147,7 +147,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     		focusLef = false;
     		lef.requestFocus();
     	}
-    	if (row >= sysList.size())
+    	if (row >= getRowCount())
     		return "ERROR row "+row;
     	String locId = sysList.get(row);
     	Location l = manager.getLocationById(locId);

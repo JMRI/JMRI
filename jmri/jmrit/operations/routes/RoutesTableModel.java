@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -56,7 +56,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         fireTableDataChanged();
     }
      
-    synchronized void updateList() {
+    private synchronized void updateList() {
 		// first, remove listeners from the individual objects
     	removePropertyChangeRoutes();
     	
@@ -90,7 +90,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
-    public int getRowCount() { return sysList.size(); }
+    public synchronized int getRowCount() { return sysList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
 
@@ -123,7 +123,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public Object getValueAt(int row, int col) {
+    public synchronized Object getValueAt(int row, int col) {
     	// Funky code to put the ref frame in focus after the edit table buttons is used.
     	// The button editor for the table does a repaint of the button cells after the setValueAt code
     	// is called which then returns the focus back onto the table.  We need the edit frame
@@ -157,7 +157,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     }
     boolean focusRef = false;
     RouteEditFrame ref = null;
-    private void editRoute (int row){
+    private synchronized void editRoute (int row){
     	log.debug("Edit route");
     	if (ref != null)
     		ref.dispose();

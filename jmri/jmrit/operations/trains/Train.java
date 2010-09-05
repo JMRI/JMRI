@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.84 $
+ * @version $Revision: 1.85 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1720,11 +1720,11 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // build list of locations that this train skips
         String[] locationIds = getTrainSkipsLocations();
-        String names ="";
+        StringBuffer buf = new StringBuffer();
         for (int i=0; i<locationIds.length; i++){
-        	names = names + locationIds[i]+"%%";
+        	buf.append(locationIds[i]+"%%");
         }
-        e.setAttribute("skip", names);        
+        e.setAttribute("skip", buf.toString());        
         if (getCurrentLocation() != null)
         	e.setAttribute("current", getCurrentLocation().getId());
     	e.setAttribute("carRoadOperation", getRoadOption());
@@ -1747,39 +1747,39 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("comment", getComment());
         // build list of car types for this train
         String[] types = getTypeNames();
-        String typeNames ="";
+        buf = new StringBuffer();
         for (int i=0; i<types.length; i++){
        		// remove types that have been deleted by user
     		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
-    			typeNames = typeNames + types[i]+"%%";
+    			buf.append(types[i]+"%%");
         }
-        e.setAttribute("carTypes", typeNames);
+        e.setAttribute("carTypes", buf.toString());
       	// save list of car roads for this train
         if (!getRoadOption().equals(ALLROADS)){
         	String[] roads = getRoadNames();
-        	String roadNames ="";
+        	buf = new StringBuffer();
         	for (int i=0; i<roads.length; i++){
-        		roadNames = roadNames + roads[i]+"%%";
+        		buf.append(roads[i]+"%%");
         	}
-        	e.setAttribute("carRoads", roadNames);
+        	e.setAttribute("carRoads", buf.toString());
         }
         // save list of car loads for this train
         if (!getLoadOption().equals(ALLLOADS)){
         	String[] loads = getLoadNames();
-        	String loadNames ="";
+        	buf = new StringBuffer();
         	for (int i=0; i<loads.length; i++){
-        		loadNames = loadNames + loads[i]+"%%";
+        		buf.append(loads[i]+"%%");
         	}
-        	e.setAttribute("carLoads", loadNames);
+        	e.setAttribute("carLoads", buf.toString());
         }
         // save list of car owners for this train
         if (!getOwnerOption().equals(ALLOWNERS)){
         	String[] owners = getOwnerNames();
-        	String ownerNames ="";
+        	buf = new StringBuffer();
         	for (int i=0; i<owners.length; i++){
-        		ownerNames = ownerNames + owners[i]+"%%";
+        		buf.append(owners[i]+"%%");
         	}
-        	e.setAttribute("carOwners", ownerNames);
+        	e.setAttribute("carOwners", buf.toString());
         }
         // save list of move scripts for this train
         if (getMoveScripts().size()>0 || getTerminationScripts().size()>0){

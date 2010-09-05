@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.29 $
+ * @version   $Revision: 1.30 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -92,7 +92,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		addPropertyChangeTrains();
 	}
     
-    public List<String> getSelectedTrainList(){
+    public synchronized List<String> getSelectedTrainList(){
 		return sysList;
     }
 
@@ -123,13 +123,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
     
-    public int getRowCount() { return sysList.size(); }
+    public synchronized int getRowCount() { return sysList.size(); }
 
     public int getColumnCount( ){ return HIGHESTCOLUMN;}
 
     public String getColumnName(int col) {
         switch (col) {
-        case IDCOLUMN: {
+        case IDCOLUMN: synchronized(this){
         	if (_sort == SORTBYID)
         		return rb.getString("Id");
         	return rb.getString("Time");
@@ -179,7 +179,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public Object getValueAt(int row, int col) {
+    public synchronized Object getValueAt(int row, int col) {
     	// Funky code to put the tef frame in focus after the edit table buttons is used.
     	// The button editor for the table does a repaint of the button cells after the setValueAt code
     	// is called which then returns the focus back onto the table.  We need the edit frame
@@ -194,7 +194,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
       	if (train == null)
     		return "ERROR train unknown "+row;
         switch (col) {
-        case IDCOLUMN: {
+        case IDCOLUMN: synchronized (this) {
         	if (_sort == SORTBYID){
            		return train.getId();
         	}
@@ -259,7 +259,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	focusTef = true;
     }
     
-    private void buildTrain (int row){
+    private synchronized void buildTrain (int row){
      	Train train = manager.getTrainById(sysList.get(row));
      	if (!train.getBuilt()){
      		train.build();
@@ -270,7 +270,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	}
     }
     
-    private void moveTrain (int row){
+    private synchronized void moveTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
     	if (train.getBuildFailed()){
     		train.printBuildReport();

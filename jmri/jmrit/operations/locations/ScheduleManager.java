@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
@@ -44,10 +44,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 	}
 
     public void dispose() {
-    	CarTypes.instance().removePropertyChangeListener(this);
-    	CarRoads.instance().removePropertyChangeListener(this);
         _scheduleHashTable.clear();
-        _instance = null;
     }
 
     protected Hashtable<String, Schedule> _scheduleHashTable = new Hashtable<String, Schedule>();   // stores known Schedule instances by id
