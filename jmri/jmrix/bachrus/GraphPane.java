@@ -12,7 +12,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curveSpeed curve
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -80,7 +80,7 @@ public class GraphPane extends JPanel implements Printable {
         g2.drawString(xLabel, sx, sy);
         
         // Used to scale values into drawing area
-        float scale = (float)(h - 2*PAD)/_sp.getMax();
+        float scale = (h - 2*PAD)/_sp.getMax();
         // space between values along the ordinate
         // start with an increment of 10
         int valInc = 10;
