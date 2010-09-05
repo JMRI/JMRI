@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.77 $
+ * @version   $Revision: 1.78 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -80,12 +80,12 @@ public class PaneProgPane extends javax.swing.JPanel
 
     static final java.util.ResourceBundle rbt = jmri.jmrit.symbolicprog.SymbolicProgBundle.bundle();
 
-    ItemListener l1;
-    ItemListener l2;
-    ItemListener l3;
-    ItemListener l4;
-    ItemListener l5;
-    ItemListener l6;
+    transient ItemListener l1;
+    transient ItemListener l2;
+    transient ItemListener l3;
+    transient ItemListener l4;
+    transient ItemListener l5;
+    transient ItemListener l6;
 
     String mName = "";
     
