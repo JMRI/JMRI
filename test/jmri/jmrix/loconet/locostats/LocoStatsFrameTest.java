@@ -10,7 +10,7 @@ import jmri.util.JmriJFrame;
 /**
  * Tests for the LocoStatsFrame class
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class LocoStatsFrameTest extends TestCase {
 
@@ -32,7 +32,7 @@ public class LocoStatsFrameTest extends TestCase {
     }
 
     public void testDefaultFormat() throws Exception {
-        LocoStatsPanel p = getFrame("Default LocoStats Window",0);
+        getFrame("Default LocoStats Window",0);
     }
     
     public void testLocoBufferFormat()throws Exception {

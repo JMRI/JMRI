@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit.log tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class PackageTest extends TestCase {
     
@@ -27,10 +27,9 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.swing.PackageTest");   // no tests in this class itself
 
-        org.apache.log4j.Logger log;
-        log = org.apache.log4j.Logger.getLogger("jmri.jmrix");
-        log = org.apache.log4j.Logger.getLogger("apps.foo");
-        log = org.apache.log4j.Logger.getLogger("jmri.util");
+        org.apache.log4j.Logger.getLogger("jmri.jmrix");
+        org.apache.log4j.Logger.getLogger("apps.foo");
+        org.apache.log4j.Logger.getLogger("jmri.util");
 
         try { new jmri.util.swing.JmriNamedPaneAction("Log4J Tree", 
             new jmri.util.swing.sdi.JmriJFrameInterface(),
