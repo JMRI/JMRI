@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -49,7 +49,9 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     private int _sort = SORTBYNAME;
     
     public void setSort (int sort){
-    	_sort = sort;
+    	synchronized(this){
+    		_sort = sort;
+    	}
         updateList();
         fireTableDataChanged();
     }
@@ -172,7 +174,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
              updateList();
              fireTableDataChanged();
     	 }
-    	 else {
+    	 else synchronized(this) {
     		 String locId = ((Route) e.getSource()).getId();
     		 int row = sysList.indexOf(locId);
     		 if (Control.showProperty && log.isDebugEnabled()) log.debug("Update route table row: "+row + " id: " + locId);
@@ -181,7 +183,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
     	 }
     }
     
-    private void removePropertyChangeRoutes() {
+    private synchronized void removePropertyChangeRoutes() {
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it

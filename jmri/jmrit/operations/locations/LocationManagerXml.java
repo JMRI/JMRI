@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -147,36 +147,36 @@ public class LocationManagerXml extends XmlFile {
 	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	            String xmlComment = loc.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                    buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            loc.setComment(tempComment);
+	            loc.setComment(buf.toString());
 	        }
 	        
 	        for (int i=0; i<scheduleList.size(); i++){
 	        	String scheduleId = scheduleList.get(i);
 	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
 	            String xmlComment = sch.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                    buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            sch.setComment(tempComment);
+	            sch.setComment(buf.toString());
 	        }
 
 	        // done - location file now stored, so can't be dirty

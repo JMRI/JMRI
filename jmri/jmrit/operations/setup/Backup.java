@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class Backup extends XmlFile {
 
@@ -201,7 +201,8 @@ public class Backup extends XmlFile {
 		    //
 			log.debug("deleting file: " + operationFileNames[i]);
 			File file = new File(operationsDirectory + File.separator + operationFileNames[i]);
-			file.delete();
+			if (!file.delete())
+				log.debug("file not deleted");
 		}
 	}
 	

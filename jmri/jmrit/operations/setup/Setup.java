@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -158,9 +158,9 @@ public class Setup {
 	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
 	
 	// Setup frame attributes
-	protected static OperationsSetupFrame _operationsSetupFrame = null;
-	protected static Dimension _operationsSetupFrameDimension = null;
-	protected static Point _operationsSetupFramePosition = null;
+	private static OperationsSetupFrame _operationsSetupFrame = null;
+	private static Dimension _operationsSetupFrameDimension = null;
+	private static Point _operationsSetupFramePosition = null;
 	
 	public static void setOperationsSetupFrame(OperationsSetupFrame frame){
 		_operationsSetupFrame = frame;

@@ -5,7 +5,6 @@ package jmri.jmrit.operations.trains;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
 import java.util.List;
-import java.awt.Frame;
 import java.io.File;
 
 import javax.swing.BorderFactory;
@@ -28,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -68,9 +67,9 @@ public class TrainScriptFrame extends OperationsFrame {
       	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenTerminated")));  	
  	}
 
-	public void initComponents(Frame parent) {
+	public void initComponents(TrainEditFrame parent) {
 		// remember who called us
-		_trainEditFrame = (TrainEditFrame)parent;
+		_trainEditFrame = parent;
 		_trainEditFrame.setChildFrame(this);
 		_train = _trainEditFrame._train;
 

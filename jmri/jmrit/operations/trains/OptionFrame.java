@@ -16,7 +16,6 @@ import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 
-import java.awt.Frame;
 import java.io.File;
 
 
@@ -24,7 +23,7 @@ import java.io.File;
  * Frame for user edit of train options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -57,10 +56,10 @@ public class OptionFrame extends OperationsFrame{
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitleOptions"));
 	}
 
-	public void initComponents(Frame parent) {
+	public void initComponents(TrainEditFrame parent) {
 		
 		// the following code sets the frame's initial state
-		_trainEditFrame = (TrainEditFrame)parent;
+		_trainEditFrame = parent;
 		_trainEditFrame.setChildFrame(this);
 		_train = _trainEditFrame._train;
 		

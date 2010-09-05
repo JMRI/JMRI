@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.37 $
+ * @version	$Revision: 1.38 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -64,8 +64,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     
 	/** record the single instance **/
 	private static TrainManager _instance = null;
-	private static int _id = 0;		// train ids
-	private static boolean trainsloaded = false;
+	private int _id = 0;		// train ids
+	private boolean trainsloaded = false;
 
 	public static synchronized TrainManager instance() {
 		if (_instance == null) {
@@ -569,11 +569,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("height", ""+size.height);
         e.setAttribute("width", ""+size.width);
         // convert column widths to strings
-        String columnWidths = "";
+        StringBuffer buf = new StringBuffer();
         for (int i=0; i<_tableColumnWidths.length; i++){
-        	columnWidths += Integer.toString(_tableColumnWidths[i])+" ";
+        	buf.append(Integer.toString(_tableColumnWidths[i])+" ");
         }
-        e.setAttribute("columnWidths", columnWidths);
+        e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
         // now save Train Edit frame size and position
         e = new org.jdom.Element("trainEditOptions");

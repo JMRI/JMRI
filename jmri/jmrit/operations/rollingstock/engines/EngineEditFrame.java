@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -555,7 +555,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		});
 	}
 	
-	static boolean filesModified = false;
+	private boolean filesModified = false;
 	/**
 	 * Need to also write the location and train files if a road name
 	 * was deleted. Need to also write files if car type was changed.

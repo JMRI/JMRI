@@ -13,17 +13,17 @@ import javax.swing.AbstractAction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TrainScriptAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public TrainScriptAction(String s, Frame frame) {
+    public TrainScriptAction(String s, TrainEditFrame frame) {
     	super(s);
     	this.frame = frame;
     }
     
-    Frame frame;	// the parent frame that is launching the TrainScriptFrame.
+    TrainEditFrame frame;	// the parent frame that is launching the TrainScriptFrame.
 
     TrainScriptFrame f = null;
     public void actionPerformed(ActionEvent e) {

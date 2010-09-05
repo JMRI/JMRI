@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -27,7 +27,7 @@ public class RouteManager {
     
 	/** record the single instance **/
 	private static RouteManager _instance = null;
-	private static int _id = 0;
+	private int _id = 0;
 
 	public static synchronized RouteManager instance() {
 		if (_instance == null) {

@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
-import java.awt.Frame;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -34,7 +33,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -136,9 +135,9 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
       	builtPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BuiltTrain")));
  	}
 
-	public void initComponents(Frame parent) {
+	public void initComponents(TrainEditFrame parent) {
 
-		_trainEditFrame = (TrainEditFrame)parent;
+		_trainEditFrame = parent;
 		_trainEditFrame.setChildFrame(this);
 		_train = _trainEditFrame._train;
 

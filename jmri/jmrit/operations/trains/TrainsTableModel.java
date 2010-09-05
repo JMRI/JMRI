@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.28 $
+ * @version   $Revision: 1.29 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -63,13 +63,15 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private int _sort = SORTBYNAME;
     
     public void setSort (int sort){
-    	_sort = sort;
+    	synchronized(this){
+    		_sort = sort;
+    	}
         updateList();
         fireTableStructureChanged();
         initTable(table, frame);
     }
      
-    synchronized void updateList() {
+    private synchronized void updateList() {
 		// first, remove listeners from the individual objects
     	removePropertyChangeTrains();
     	
@@ -201,8 +203,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case NAMECOLUMN: return train.getIconName();
         case DESCRIPTIONCOLUMN: return train.getDescription();
         case BUILDBOXCOLUMN: {
-            boolean val = train.getBuild();
-            return new Boolean(val);
+            return Boolean.valueOf(train.getBuild());
         }
         case ROUTECOLUMN: return train.getTrainRouteName();
         case DEPARTSCOLUMN: return train.getTrainDepartsName();
@@ -299,7 +300,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     			e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
-    	} else {
+    	} else synchronized(this) {
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
@@ -308,7 +309,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	}
     }
     
-    private void removePropertyChangeTrains() {
+    private synchronized void removePropertyChangeTrains() {
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it
@@ -319,7 +320,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	}
     }
     
-    private void addPropertyChangeTrains() {
+    private synchronized void addPropertyChangeTrains() {
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it

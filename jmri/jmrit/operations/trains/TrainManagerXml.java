@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -208,21 +208,21 @@ public class TrainManagerXml extends XmlFile {
 
     			//Extract the Comment field and create a new string for output
     			String tempComment = train.getComment();
-    			String xmlComment = new String();
+    			StringBuffer buf = new StringBuffer();
 
     			//transfer tempComment to xmlComment one character at a time, except
     			//when <?p?> is found.  In that case, insert a \n and skip over those
     			//characters in tempComment.
     			for (int k = 0; k < tempComment.length(); k++) {
     				if (tempComment.startsWith("<?p?>", k)) {
-    					xmlComment = xmlComment + "\n";
+    					buf.append("\n");
     					k = k + 4;
     				}
     				else {
-    					xmlComment = xmlComment + tempComment.substring(k, k + 1);
+    					buf.append(tempComment.substring(k, k + 1));
     				}
     			}
-    			train.setComment(xmlComment);
+    			train.setComment(buf.toString());
     		}
     	}
     	else {
@@ -283,10 +283,12 @@ public class TrainManagerXml extends XmlFile {
 				// The file does not exist, create it before writing
 				file = new File(defaultManifestFilename(name));
 				File parentDir = file.getParentFile();
-				if (!parentDir.exists()) {
-					parentDir.mkdir();
+				if (!parentDir.exists()){
+					if (!parentDir.mkdir())
+						log.error("Directory wasn't created");
 				}
-				file.createNewFile();
+				if (file.createNewFile())
+					log.debug("File created");
 			} else {
 				file = new File(defaultManifestFilename(name));
 			}
@@ -321,10 +323,12 @@ public class TrainManagerXml extends XmlFile {
 				// The file does not exist, create it before writing
 				file = new File(defaultSwitchListName(name));
 				File parentDir = file.getParentFile();
-				if (!parentDir.exists()) {
-					parentDir.mkdir();
+				if (!parentDir.exists()){
+					if (!parentDir.mkdir())
+						log.error("Directory wasn't created");
 				}
-				file.createNewFile();
+				if (file.createNewFile())
+					log.debug("File created");
 			} else {
 				file = new File(defaultSwitchListName(name));
 			}

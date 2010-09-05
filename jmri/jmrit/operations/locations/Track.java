@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.39 $
+ * @version             $Revision: 1.40 $
  */
 public class Track {
 	
@@ -780,27 +780,27 @@ public class Track {
      	e.setAttribute("carRoadOperation", getRoadOption());
        	// build list of car roads for this track
     	String[] roads = getRoadNames();
-    	String roadNames ="";
+    	buf = new StringBuffer();
     	for (int i=0; i<roads.length; i++){
-    		roadNames = roadNames + roads[i]+"%%";
+    		buf.append(roads[i]+"%%");
     	}
-    	e.setAttribute("carRoads", roadNames);
+    	e.setAttribute("carRoads", buf.toString());
     	e.setAttribute("dropOption", getDropOption());
       	// build list of drop ids for this track
     	String[] dropIds = getDropIds();
-    	String ids ="";
+    	buf = new StringBuffer();
     	for (int i=0; i<dropIds.length; i++){
-    		ids = ids + dropIds[i]+"%%";
+    		buf.append(dropIds[i]+"%%");
     	}
-    	e.setAttribute("dropIds", ids);
+    	e.setAttribute("dropIds", buf.toString());
     	e.setAttribute("pickupOption", getPickupOption());
      	// build list of pickup ids for this track
     	String[] pickupIds = getPickupIds();
-    	ids ="";
+    	buf = new StringBuffer();
     	for (int i=0; i<pickupIds.length; i++){
-    		ids = ids + pickupIds[i]+"%%";
+    		buf.append(pickupIds[i]+"%%");
     	}
-    	e.setAttribute("pickupIds", ids);
+    	e.setAttribute("pickupIds", buf.toString());
     	if (!getScheduleName().equals("")){
     		e.setAttribute("schedule", getScheduleName());
     		e.setAttribute("itemId", getScheduleItemId());
