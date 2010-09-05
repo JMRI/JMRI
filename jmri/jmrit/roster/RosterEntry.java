@@ -45,7 +45,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.49 $
+ * @version   $Revision: 1.50 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -99,6 +99,11 @@ public class RosterEntry {
 
     public void   setFileName(String s) { _fileName = s; }
     public String getFileName() { return _fileName; }
+    
+    public String getPathName() { 
+    	return LocoFile.getFileLocation() + "/" + _fileName;
+    }
+    
     /**
      * Ensure the entry has a valid filename. If none
      * exists, create one based on the ID string. Does _not_
