@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 
 public class EcosPreferences {
@@ -328,7 +328,6 @@ public class EcosPreferences {
     }
 
     static private EcosPreferences self = null;
-    private void setInstance() { self = this; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
 
