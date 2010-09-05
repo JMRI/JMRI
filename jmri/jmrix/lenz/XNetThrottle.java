@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.38 $
+ * @version    $Revision: 2.39 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -1477,9 +1477,12 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
            try{
              msg=requestList.take();
            } catch (java.lang.InterruptedException ie) {
+              return; // if there was an error, exit.
            }
-           requestState=msg.getState();
-           tc.sendXNetMessage(msg.getMsg(),this);
+           if(msg!=null) {
+             requestState=msg.getState();
+             tc.sendXNetMessage(msg.getMsg(),this);
+           }
         } else {
           if(log.isDebugEnabled()) log.debug("message queue empty");
           // if the queue is empty, set the state to idle.
