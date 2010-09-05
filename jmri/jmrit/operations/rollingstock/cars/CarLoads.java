@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarLoads {
 	
@@ -48,13 +48,10 @@ public class CarLoads {
 	}
 
     public synchronized void dispose() {
-    	list.clear();
-    	
+    	list.clear(); 	
     	// remove all listeners
     	for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners() )
     	    pcs.removePropertyChangeListener(p);
-        
-        _instance = null;
     }
     
     /**

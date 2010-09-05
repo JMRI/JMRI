@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -489,6 +489,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		
+		CarColors.instance().dispose();	// reset colors
 
 	}
 

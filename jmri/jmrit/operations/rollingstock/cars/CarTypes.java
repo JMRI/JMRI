@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class CarTypes {
 	
@@ -44,12 +44,9 @@ public class CarTypes {
 
     public synchronized void dispose() {
     	list.clear();
-    	
     	// remove all listeners
     	for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners() )
     	    pcs.removePropertyChangeListener(p);
-        
-        _instance = null;
     }
     
     protected List<String> list = new ArrayList<String>();

@@ -25,7 +25,7 @@ import java.util.List;
  * Tests for the Operations Engines GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 
@@ -33,6 +33,7 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
 		// remove previous Engines
 		EngineManager.instance().dispose();
 		CarRoads.instance().dispose();
+		EngineModels.instance().dispose();
 
 		// add Owner1 and Owner2
 		CarOwners co = CarOwners.instance();

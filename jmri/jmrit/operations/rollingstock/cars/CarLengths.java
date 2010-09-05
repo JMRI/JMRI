@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
@@ -40,13 +40,10 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 	}
 
     public synchronized void dispose() {
-    	list.clear();
-    	
+    	list.clear();    	
     	// remove all listeners
     	for (java.beans.PropertyChangeListener p : pcs.getPropertyChangeListeners() )
     	    pcs.removePropertyChangeListener(p);
-        
-        _instance = null;
     }
     
     /**

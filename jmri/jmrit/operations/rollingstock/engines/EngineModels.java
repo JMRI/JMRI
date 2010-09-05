@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class EngineModels {
 	
@@ -85,7 +85,7 @@ public class EngineModels {
 
     public void dispose() {
     	list.clear();
-    	_instance = null;
+    	loadDefaults();
     }
 
     List<String> list = new ArrayList<String>();
