@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 
 public class LayoutEditor extends Editor {
@@ -3036,17 +3036,17 @@ public class LayoutEditor extends Editor {
                 }
             } else {
             
-                PositionableLabel s = (PositionableLabel)checkSensorIcons(dLoc);
+                PositionableLabel s = checkSensorIcons(dLoc);
 				if (s!=null) {
 					amendSelectionGroup(s);
 				}
                 else {
-                    PositionableLabel sh = (PositionableLabel)checkSignalHeadIcons(dLoc);
+                    PositionableLabel sh = checkSignalHeadIcons(dLoc);
                     if (sh!=null) {
                         amendSelectionGroup(sh);
                     }
                     else {
-                        PositionableLabel ms = (PositionableLabel)checkMultiSensors(dLoc);
+                        PositionableLabel ms = checkMultiSensors(dLoc);
                         if (ms!=null) {
                             amendSelectionGroup(ms);
                         }
