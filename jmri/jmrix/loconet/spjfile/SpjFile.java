@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Four-byte quantities in SPJ files are little-endian.
  *
  * @author		Bob Jacobsen  Copyright (C) 2006, 2009
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 
 public class SpjFile {
@@ -289,8 +289,11 @@ public class SpjFile {
     void writeSubFile(int i, String name) throws IOException {
         File outfile = new File(name);
         OutputStream ostream = new FileOutputStream(outfile);
-        ostream.write(headers[i].getByteArray());
-        ostream.close();
+        try {
+            ostream.write(headers[i].getByteArray());
+        } finally {
+            ostream.close();
+        }
     }
        
     public void dispose() {
