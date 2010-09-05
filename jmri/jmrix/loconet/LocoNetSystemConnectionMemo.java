@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -108,9 +108,10 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     /** 
      * Currently provides only Programmer this way
      */
-    public Object get(Class type) {
-        if (type.equals(jmri.ProgrammerManager.class))
-            return getProgrammerManager();
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class T) {
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
         return null; // nothing, by default
     }
         
