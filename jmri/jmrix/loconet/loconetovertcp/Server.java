@@ -14,7 +14,7 @@ import jmri.util.zeroconf.ZeroConfUtil;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 
 public class Server{
@@ -56,8 +56,11 @@ public class Server{
 
         try {
             java.io.InputStream settingsStream = new FileInputStream(settingsFileName);
-            settings.load( settingsStream );
-            settingsStream.close();
+            try {
+                settings.load( settingsStream );
+            } finally {
+                settingsStream.close();
+            }
             
             String val = settings.getProperty( AUTO_START_KEY, "0" );
             autoStart = (val.equals("1"));

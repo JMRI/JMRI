@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.54 $
+ * @version	$Revision: 1.55 $
  */
 public abstract class XmlFile {
 
@@ -252,12 +252,15 @@ public abstract class XmlFile {
     public void writeXML(File file, Document doc) throws java.io.IOException, java.io.FileNotFoundException {
         // write the result to selected file
         java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-        XMLOutputter fmt = new XMLOutputter();
+        try {
+            XMLOutputter fmt = new XMLOutputter();
         
-        fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
+            fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
         
-        fmt.output(doc, o);
-        o.close();
+            fmt.output(doc, o);
+        } finally {
+            o.close();
+        }
     }
 
     /**
@@ -534,7 +537,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.54 2010-06-07 20:50:13 kevin-dickerson Exp $";
+                        +" $Id: XmlFile.java,v 1.55 2010-09-05 22:17:50 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

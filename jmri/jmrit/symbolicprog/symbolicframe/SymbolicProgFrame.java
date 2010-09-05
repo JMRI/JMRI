@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -441,11 +441,14 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
             // write the result to selected file
             java.io.FileOutputStream o = new java.io.FileOutputStream(file);
-            XMLOutputter fmt = new XMLOutputter();
-            // fmt.setNewlines(true);   // pretty printing
-            // fmt.setIndent(true);
-            fmt.output(doc, o);
-            o.close();
+            try {
+                XMLOutputter fmt = new XMLOutputter();
+                // fmt.setNewlines(true);   // pretty printing
+                // fmt.setIndent(true);
+                fmt.output(doc, o);
+            } finally {
+                o.close();
+            }
 
             // mark file as OK
             variableModel.setFileDirty(false);
