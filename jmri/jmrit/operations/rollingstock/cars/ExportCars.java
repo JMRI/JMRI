@@ -15,7 +15,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
 /**
  * Exports the car roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  */
 public class ExportCars extends XmlFile {
@@ -41,11 +41,12 @@ public class ExportCars extends XmlFile {
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
+                 if (!parentDir.exists()){
+                     if (!parentDir.mkdir())
+                     	log.error("Directory wasn't created");
+                  }
+                  if (file.createNewFile())
+                 	 log.debug("File created");
              }
         	writeFile(defaultOperationsFilename());
         } catch (Exception e) {

@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class CarManagerXml extends XmlFile {
 	
@@ -79,19 +79,19 @@ public class CarManagerXml extends XmlFile {
 	            //back when the file is read
 	        	Car c = manager.getById(carList.get(i));
 	            String tempComment = c.getComment();
-	            String xmlComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            //transfer tempComment to xmlComment one character at a time, except
 	            //when \n is found.  In that case, insert <?p?>
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                	buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            c.setComment(xmlComment);
+	            c.setComment(buf.toString());
 	        }
 	        //All Comments line feeds have been changed to processor directives
 
@@ -151,18 +151,18 @@ public class CarManagerXml extends XmlFile {
 	        for (int i=0; i<carList.size(); i++){
 	        	Car c = manager.getById(carList.get(i));
 	            String xmlComment = c.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                	buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            c.setComment(tempComment);
+	            c.setComment(buf.toString());
 	        }
 
 	        // done - car file now stored, so can't be dirty
@@ -176,16 +176,16 @@ public class CarManagerXml extends XmlFile {
     public void writeOperationsCarFile() {
     	makeBackupFile(defaultOperationsFilename());
         try {
-          	 if(!checkFile(defaultOperationsFilename()))
-             {
+          	 if(!checkFile(defaultOperationsFilename())){
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
+                 if (!parentDir.exists()){
+                     if (!parentDir.mkdir())
+                     	log.error("Directory wasn't created");
+                  }
+                  if (file.createNewFile())
+                 	 log.debug("File created");
              }
         	writeFile(defaultOperationsFilename());
         } catch (Exception e) {

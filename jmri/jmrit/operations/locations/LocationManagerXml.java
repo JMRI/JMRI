@@ -18,7 +18,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class LocationManagerXml extends XmlFile {
 	
@@ -65,7 +65,7 @@ public class LocationManagerXml extends XmlFile {
 	        //Check the Comment and Decoder Comment fields for line breaks and
 	        //convert them to a processor directive for storage in XML
 	        //Note: this is also done in the LocoFile.java class to do
-	        //the same thing in the indidvidual locomotive roster files
+	        //the same thing in the individual locomotive roster files
 	        //Note: these changes have to be undone after writing the file
 	        //since the memory version of the roster is being changed to the
 	        //file version for writing
@@ -81,19 +81,18 @@ public class LocationManagerXml extends XmlFile {
 	        	String locationId = locationList.get(i);
 	        	Location loc = manager.getLocationById(locationId);
 	            String tempComment = loc.getComment();
-	            String xmlComment = new String();
-
+	            StringBuffer buf = new StringBuffer();
 	            //transfer tempComment to xmlComment one character at a time, except
 	            //when \n is found.  In that case, insert <?p?>
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                    buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            loc.setComment(xmlComment);
+	            loc.setComment(buf.toString());
 	        }
 	        
 	        // do the same for schedules
@@ -105,17 +104,17 @@ public class LocationManagerXml extends XmlFile {
 	        	String scheduleId = scheduleList.get(i);
 	        	Schedule sch = scheduleManager.getScheduleById(scheduleId);
 	            String tempComment = sch.getComment();
-	            String xmlComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                    buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            sch.setComment(xmlComment);
+	            sch.setComment(buf.toString());
 	        }
 	        //All Comments line feeds have been changed to processor directives
 
@@ -191,16 +190,16 @@ public class LocationManagerXml extends XmlFile {
     public void writeOperationsLocationFile() {
     	LocationManagerXml.instance().makeBackupFile(defaultOperationsFilename());
         try {
-          	 if(!LocationManagerXml.instance().checkFile(defaultOperationsFilename()))
-             {
+          	 if(!LocationManagerXml.instance().checkFile(defaultOperationsFilename())){
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
+                 if (!parentDir.exists()){
+                    if (!parentDir.mkdir())
+                    	log.error("Directory wasn't created");
                  }
-                 file.createNewFile();
+                 if (file.createNewFile())
+                	 log.debug("File created");
              }
         	LocationManagerXml.instance().writeFile(defaultOperationsFilename());
         } catch (Exception e) {
@@ -257,21 +256,21 @@ public class LocationManagerXml extends XmlFile {
 
     			//Extract the Comment field and create a new string for output
     			String tempComment = loc.getComment();
-    			String xmlComment = new String();
+    			StringBuffer buf = new StringBuffer();
 
     			//transfer tempComment to xmlComment one character at a time, except
     			//when <?p?> is found.  In that case, insert a \n and skip over those
     			//characters in tempComment.
     			for (int k = 0; k < tempComment.length(); k++) {
     				if (tempComment.startsWith("<?p?>", k)) {
-    					xmlComment = xmlComment + "\n";
+    					buf.append("\n");
     					k = k + 4;
     				}
     				else {
-    					xmlComment = xmlComment + tempComment.substring(k, k + 1);
+    					buf.append(tempComment.substring(k, k + 1));
     				}
     			}
-    			loc.setComment(xmlComment);
+    			loc.setComment(buf.toString());
     		}
     	}
     	else {

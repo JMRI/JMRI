@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ImportCars extends Thread {
 	
@@ -40,7 +40,7 @@ public class ImportCars extends Thread {
 	public void run() {
 		// Get file to read from
 		JFileChooser fc = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-		fc.addChoosableFileFilter(new importFilter());
+		fc.addChoosableFileFilter(new ImportFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // canceled
@@ -366,7 +366,7 @@ public class ImportCars extends Thread {
 		return outLine;
 	}
 
-	protected class importFilter extends javax.swing.filechooser.FileFilter {
+	protected class ImportFilter extends javax.swing.filechooser.FileFilter {
 
 		public boolean accept(File f){
 			if (f.isDirectory())

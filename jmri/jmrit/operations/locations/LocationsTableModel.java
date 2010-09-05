@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class LocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -52,12 +52,14 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     private int _sort = SORTBYNAME;
     
     public void setSort (int sort){
-    	_sort = sort;
-        updateList();
-        fireTableDataChanged();
+    	synchronized (this) {
+    		_sort = sort;
+    	}
+    	updateList();
+    	fireTableDataChanged();
     }
      
-    synchronized void updateList() {
+    private synchronized void updateList() {
 		// first, remove listeners from the individual objects
     	removePropertyChangeLocations();
     	
@@ -201,7 +203,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
     	 }
     }
     
-    private void removePropertyChangeLocations() {
+    private synchronized void removePropertyChangeLocations() {
     	if (sysList != null) {
     		for (int i = 0; i < sysList.size(); i++) {
     			// if object has been deleted, it's not here; ignore it

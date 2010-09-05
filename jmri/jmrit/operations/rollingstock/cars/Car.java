@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.39 $
+ * @version             $Revision: 1.40 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -215,6 +215,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	private String testSchedule(Track track){
+		if (track == null)
+			return SCHEDULE +" track is null";
 		if (track.getScheduleName().equals("")){
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))

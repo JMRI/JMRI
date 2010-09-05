@@ -19,7 +19,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.12 $
+ * @version   $Revision: 1.13 $
  */
 public class TrackTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -60,24 +60,23 @@ public class TrackTableModel extends javax.swing.table.AbstractTableModel implem
     synchronized void updateList() {
     	if (_location == null)
     		return;
-		// first, remove listeners from the individual objects
+    	// first, remove listeners from the individual objects
     	removePropertyChangeTracks();
-    	
-//		if (_sort == SORTBYID)
-//			tracksList = _location.getTracksByIdList();
-//		else
-			tracksList = _location.getTracksByNameList(_trackType);
-		// and add them back in
-		for (int i = 0; i < tracksList.size(); i++){
-			log.debug("tracks ids: " + tracksList.get(i));
-			_location.getTrackById(tracksList.get(i))
-					.addPropertyChangeListener(this);
-		}
-	}
+
+    	tracksList = _location.getTracksByNameList(_trackType);
+    	// and add them back in
+    	for (int i = 0; i < tracksList.size(); i++){
+    		log.debug("tracks ids: " + tracksList.get(i));
+    		_location.getTrackById(tracksList.get(i))
+    		.addPropertyChangeListener(this);
+    	}
+    }
     
 	protected void initTable(JTable table, Location location, String trackType) {
 		_location = location;
-		_trackType = trackType;
+		synchronized (this){
+			_trackType = trackType;
+		}
 		if (_location != null)
 			_location.addPropertyChangeListener(this);
 		// Install the button handlers

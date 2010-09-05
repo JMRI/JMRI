@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class TrainManagerXml extends XmlFile {
 	
@@ -75,19 +75,19 @@ public class TrainManagerXml extends XmlFile {
 	        	String trainId = trainList.get(i);
 	        	Train train = manager.getTrainById(trainId);
 	            String tempComment = train.getComment();
-	            String xmlComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            //transfer tempComment to xmlComment one character at a time, except
 	            //when \n is found.  In that case, insert <?p?>
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                    buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            train.setComment(xmlComment);
+	            train.setComment(buf.toString());
 	        }
 	        //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -112,18 +112,18 @@ public class TrainManagerXml extends XmlFile {
 	        	String trainId = trainList.get(i);
 	        	Train train = manager.getTrainById(trainId);
 	            String xmlComment = train.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                    buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            train.setComment(tempComment);
+	            train.setComment(buf.toString());
 	        }
 
 	        // done - train file now stored, so can't be dirty
@@ -137,16 +137,16 @@ public class TrainManagerXml extends XmlFile {
     public void writeOperationsTrainFile() {
     	makeBackupFile(defaultOperationsFilename());
         try {
-          	 if(!checkFile(defaultOperationsFilename()))
-             {
+          	 if(!checkFile(defaultOperationsFilename())){
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
+                 if (!parentDir.exists()){
+                     if (!parentDir.mkdir())
+                     	log.error("Directory wasn't created");
+                  }
+                  if (file.createNewFile())
+                 	 log.debug("File created");
              }
         	writeFile(defaultOperationsFilename());
         } catch (Exception e) {
@@ -242,10 +242,12 @@ public class TrainManagerXml extends XmlFile {
 				// The file does not exist, create it before writing
 				file = new File(defaultBuildReportFilename(name));
 				File parentDir = file.getParentFile();
-				if (!parentDir.exists()) {
-					parentDir.mkdir();
+				if (!parentDir.exists()){
+					if (!parentDir.mkdir())
+						log.error("Directory wasn't created");
 				}
-				file.createNewFile();
+				if (file.createNewFile())
+					log.debug("File created");
 			} else {
 				file = new File(defaultBuildReportFilename(name));
 			}

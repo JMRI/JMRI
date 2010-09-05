@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -582,15 +582,15 @@ public class Location implements java.beans.PropertyChangeListener {
         e.setAttribute("switchList", getSwitchList()?"true":"false");
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
-        String typeNames ="";
         CarTypes ct = CarTypes.instance();
         EngineTypes et = EngineTypes.instance();
+        StringBuffer buf = new StringBuffer();
         for (int i=0; i<types.length; i++){
     		// remove types that have been deleted by user
     		if (ct.containsName(types[i]) || et.containsName(types[i]))
-    			typeNames = typeNames + types[i]+"%%";
+    			buf.append(types[i]+"%%");
         }
-        e.setAttribute("carTypes", typeNames);
+        e.setAttribute("carTypes", buf.toString());
         
         e.setAttribute("comment", getComment());
         

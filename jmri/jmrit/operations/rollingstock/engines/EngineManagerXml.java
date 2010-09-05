@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * models, engine types, engine lengths, and engine consist names.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class EngineManagerXml extends XmlFile {
 	
@@ -75,19 +75,19 @@ public class EngineManagerXml extends XmlFile {
 	            //back when the file is read.
 	        	Engine e = manager.getById(engineList.get(i));
 	            String tempComment = e.getComment();
-	            String xmlComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            //transfer tempComment to xmlComment one character at a time, except
 	            //when \n is found.  In that case, insert <?p?>
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                    buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	 buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            e.setComment(xmlComment);
+	            e.setComment(buf.toString());
 	        }
 	        //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -136,18 +136,18 @@ public class EngineManagerXml extends XmlFile {
 	        	String engineId = engineList.get(i);
 	        	Engine c = manager.getById(engineId);
 	            String xmlComment = c.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                    buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            c.setComment(tempComment);
+	            c.setComment(buf.toString());
 	        }
 
 	        // done - engine file now stored, so can't be dirty
@@ -161,16 +161,16 @@ public class EngineManagerXml extends XmlFile {
     public void writeOperationsEngineFile() {
     	makeBackupFile(defaultOperationsFilename());
         try {
-          	 if(!checkFile(defaultOperationsFilename()))
-             {
+          	 if(!checkFile(defaultOperationsFilename())){
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
+                 if (!parentDir.exists()){
+                     if (!parentDir.mkdir())
+                     	log.error("Directory wasn't created");
+                  }
+                  if (file.createNewFile())
+                 	 log.debug("File created");
              }
         	writeFile(defaultOperationsFilename());
         } catch (Exception e) {

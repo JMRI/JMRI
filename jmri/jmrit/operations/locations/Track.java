@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.38 $
+ * @version             $Revision: 1.39 $
  */
 public class Track {
 	
@@ -770,13 +770,13 @@ public class Track {
     	e.setAttribute("moves", Integer.toString(getMoves()-getDropRS()));
     	// build list of car types for this track
     	String[] types = getTypeNames();
-    	String typeNames ="";
+    	StringBuffer buf = new StringBuffer();
     	for (int i=0; i<types.length; i++){
     		// remove types that have been deleted by user
     		if (CarTypes.instance().containsName(types[i]) || EngineTypes.instance().containsName(types[i]))
-    			typeNames = typeNames + types[i]+"%%";
+    			buf.append(types[i]+"%%");
     	}
-    	e.setAttribute("carTypes", typeNames);
+    	e.setAttribute("carTypes", buf.toString());
      	e.setAttribute("carRoadOperation", getRoadOption());
        	// build list of car roads for this track
     	String[] roads = getRoadNames();

@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsXml extends XmlFile {
 	
@@ -95,16 +95,16 @@ public class OperationsXml extends XmlFile {
 	public void writeOperationsFile() {
 		makeBackupFile(defaultOperationsFilename());
 		try {
-			if(!checkFile(defaultOperationsFilename()))
-			{
+			if(!checkFile(defaultOperationsFilename())){
 				//The file does not exist, create it before writing
 				java.io.File file=new java.io.File(defaultOperationsFilename());
 				java.io.File parentDir=file.getParentFile();
-				if(!parentDir.exists())
-				{
-					parentDir.mkdir();
-				}
-				file.createNewFile();
+                if (!parentDir.exists()){
+                    if (!parentDir.mkdir())
+                    	log.error("Directory wasn't created");
+                 }
+                 if (file.createNewFile())
+                	 log.debug("File created");
 			}
 			writeFile(defaultOperationsFilename());
 		} catch (Exception e) {

@@ -17,7 +17,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores routes using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class RouteManagerXml extends XmlFile {
 	
@@ -77,19 +77,19 @@ public class RouteManagerXml extends XmlFile {
 	        	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
 	            String tempComment = route.getComment();
-	            String xmlComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            //transfer tempComment to xmlComment one character at a time, except
 	            //when \n is found.  In that case, insert <?p?>
 	            for (int k = 0; k < tempComment.length(); k++) {
 	                if (tempComment.startsWith("\n", k)) {
-	                    xmlComment = xmlComment + "<?p?>";
+	                    buf.append("<?p?>");
 	                }
 	                else {
-	                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+	                	buf.append(tempComment.substring(k, k + 1));
 	                }
 	            }
-	            route.setComment(xmlComment);
+	            route.setComment(buf.toString());
 	        }
 	        //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -114,18 +114,18 @@ public class RouteManagerXml extends XmlFile {
 	        	String routeId = routeList.get(i);
 	        	Route route = manager.getRouteById(routeId);
 	            String xmlComment = route.getComment();
-	            String tempComment = new String();
+	            StringBuffer buf = new StringBuffer();
 
 	            for (int k = 0; k < xmlComment.length(); k++) {
 	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    tempComment = tempComment + "\n";
+	                    buf.append("\n");
 	                    k = k + 4;
 	                }
 	                else {
-	                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+	                	buf.append(xmlComment.substring(k, k + 1));
 	                }
 	            }
-	            route.setComment(tempComment);
+	            route.setComment(buf.toString());
 	        }
 
 	        // done - route file now stored, so can't be dirty
@@ -139,16 +139,16 @@ public class RouteManagerXml extends XmlFile {
     public void writeOperationsRouteFile() {
     	makeBackupFile(defaultOperationsFilename());
         try {
-          	 if(!RouteManagerXml.instance().checkFile(defaultOperationsFilename()))
-             {
+          	 if(!RouteManagerXml.instance().checkFile(defaultOperationsFilename())){
                  //The file does not exist, create it before writing
                  java.io.File file=new java.io.File(defaultOperationsFilename());
                  java.io.File parentDir=file.getParentFile();
-                 if(!parentDir.exists())
-                 {
-                    parentDir.mkdir();
-                 }
-                 file.createNewFile();
+                 if (!parentDir.exists()){
+                     if (!parentDir.mkdir())
+                     	log.error("Directory wasn't created");
+                  }
+                  if (file.createNewFile())
+                 	 log.debug("File created");
              }
         	RouteManagerXml.instance().writeFile(defaultOperationsFilename());
         } catch (Exception e) {

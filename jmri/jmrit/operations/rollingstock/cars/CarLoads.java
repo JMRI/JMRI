@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class CarLoads {
 	
@@ -270,13 +270,9 @@ public class CarLoads {
 			Element load = new Element("load");
 			load.setAttribute("type", key);
 			List<CarLoad> loads = list.get(key);
-			String names ="";
-			String pickupComments ="";
-			String dropComments ="";
+			StringBuffer buf = new StringBuffer();
 			for (int j=0; j<loads.size(); j++){
-				names = names + loads.get(j).getName() + "%%";
-				pickupComments = pickupComments + loads.get(j).getPickupComment() + "%%";
-				dropComments = dropComments + loads.get(j).getDropComment() + "%%";
+				buf.append(loads.get(j).getName());
 				Element carLoad = new Element("carLoad");
 				carLoad.setAttribute("name", loads.get(j).getName());
 				if (!loads.get(j).getPickupComment().equals(""))
@@ -285,10 +281,8 @@ public class CarLoads {
 					carLoad.setAttribute("dropComment", loads.get(j).getDropComment());
 				load.addContent(carLoad);
 			}
-			// old style saved a list of names
-			//load.setAttribute("names", names);
 			// only store loads that aren't the defaults
-			if(!names.equals(getDefaultEmptyName()+"%%"+getDefaultLoadName()+"%%"))
+			if(!buf.toString().equals(getDefaultEmptyName()+getDefaultLoadName()))
 				values.addContent(load);
 		}
 		return values;

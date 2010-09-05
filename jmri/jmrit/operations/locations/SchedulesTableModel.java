@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.8 $
+ * @version   $Revision: 1.9 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -52,7 +52,9 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
     private int _sort = SORTBYNAME;
     
     public void setSort (int sort){
-    	_sort = sort;
+    	synchronized (this){
+    		_sort = sort;
+    	}
         updateList();
         fireTableDataChanged();
     }
