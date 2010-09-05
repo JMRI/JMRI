@@ -40,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 
@@ -49,7 +49,7 @@ jmri.jmrix.nce.NceListener {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
-	private static boolean syncOK = true;		// used to flag status messages
+	private boolean syncOK = true;		// used to flag status messages
 	EngineManager engineManager = EngineManager.instance();
 	List<String> engineList;
 	List<String> consists;
@@ -62,9 +62,9 @@ jmri.jmrix.nce.NceListener {
 	private static final int CS_CON_MEM_MID = 0x200; 	// array offset mid consist locos
 	
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
-	private static int replyLen = 0;				// expected byte length
-	private static int waiting = 0;					// to catch responses not intended for this module
-	private static int index = 0;					// byte index when reading NCE consist memory
+	private int replyLen = 0;				// expected byte length
+	private int waiting = 0;					// to catch responses not intended for this module
+	private int index = 0;					// byte index when reading NCE consist memory
 	private static final int CONSIST_LNTH = 128*6*2;		// 128 consists x 6 engines per consists x 2 bytes
 	private static final int NUM_CONSIST_READS = CONSIST_LNTH/REPLY_16;	// read 16 bytes each time from NCE memory
 	
