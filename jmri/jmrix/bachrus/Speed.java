@@ -9,7 +9,7 @@ package jmri.jmrix.bachrus;
  * Useful stuff for speed conversion
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class Speed {
 
@@ -21,10 +21,10 @@ public class Speed {
     static final float KPH_TO_MPH = 1/MPH_KPH_FACTOR;
     
     public static float mphToKph(float m) {
-        return m*(float)MPH_TO_KPH;
+        return m*MPH_TO_KPH;
     }
 
     public static float kphToMph(float k) {
-        return k*(float)KPH_TO_MPH;
+        return k*KPH_TO_MPH;
     }
 }
