@@ -32,7 +32,7 @@ public class FullBackupExportAction
     /**
      * @param s
      *            Name of this action, e.g. in menus
-     * @param who
+     * @param parent
      *            Component that action is associated with, used to ensure
      *            proper position in of dialog boxes
      */
