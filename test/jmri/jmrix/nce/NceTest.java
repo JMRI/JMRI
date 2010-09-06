@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * tests for the jmri.jmrix.nce package
  * @author			Bob Jacobsen
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class NceTest extends TestCase {
 
@@ -38,13 +38,17 @@ public class NceTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceTurnoutManagerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceAIUTest.suite());
-        suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
         suite.addTest(jmri.jmrix.nce.NceProgrammerTest.suite());
-        suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
         suite.addTest(jmri.jmrix.nce.NceTrafficControllerTest.suite());
         suite.addTest(jmri.jmrix.nce.NceMessageTest.suite());
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
         suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.nce.ncemon.NceMonFrameTest.suite());
+            suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenFrameTest.suite());
+        }
+        
         return suite;
     }
 

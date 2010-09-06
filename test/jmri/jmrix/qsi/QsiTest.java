@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.qsi package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class QsiTest extends TestCase {
 
@@ -34,11 +34,15 @@ public class QsiTest extends TestCase {
 	public static Test suite() {
 		apps.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.jmrix.qsi.QsiTest");
-		suite.addTest(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.suite());
-		suite.addTest(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.suite());
 		suite.addTest(jmri.jmrix.qsi.QsiTrafficControllerTest.suite());
 		suite.addTest(jmri.jmrix.qsi.QsiMessageTest.suite());
 		suite.addTest(jmri.jmrix.qsi.QsiReplyTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.qsi.qsimon.QsiMonFrameTest.suite());
+            suite.addTest(jmri.jmrix.qsi.packetgen.PacketGenFrameTest.suite());
+        }
+        
 		return suite;
 	}
 

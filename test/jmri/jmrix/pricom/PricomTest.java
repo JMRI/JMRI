@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.pricom package.
  * @author      Bob Jacobsen  Copyright 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class PricomTest extends TestCase {
 
@@ -29,8 +29,12 @@ public class PricomTest extends TestCase {
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.pricom.PricomTest");
-        suite.addTest(jmri.jmrix.pricom.pockettester.PocketTesterTest.suite());
-        suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
+        
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.pricom.pockettester.PocketTesterTest.suite());
+            suite.addTest(jmri.jmrix.pricom.downloader.DownloaderTest.suite());
+        }
+        
         return suite;
     }
 

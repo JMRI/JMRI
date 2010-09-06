@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.easydcc package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class EasyDccTest extends TestCase {
 
@@ -34,15 +34,20 @@ public class EasyDccTest extends TestCase {
 	public static Test suite() {
 		apps.tests.AllTest.initLogging();
 		TestSuite suite = new TestSuite("jmri.jmrix.easydcc.EasyDccTest");
+
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutManagerTest.suite());
-		suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccProgrammerTest.suite());
-		suite.addTest(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccTrafficControllerTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccMessageTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccReplyTest.suite());
 		suite.addTest(jmri.jmrix.easydcc.EasyDccPowerManagerTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+		    suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
+		    suite.addTest(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.suite());
+        }
+        
 		return suite;
 	}
 

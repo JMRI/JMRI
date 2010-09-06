@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.grapevine package.
  * @author      Bob Jacobsen  Copyright 2003, 2007
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class SerialTest extends TestCase {
 
@@ -48,7 +48,11 @@ public class SerialTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.grapevine.serialmon.SerialMonTest.suite());
+        }
+        
         return suite;
     }
 

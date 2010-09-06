@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.tmcc package.
  * @author      Bob Jacobsen  Copyright 2003
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class SerialTest extends TestCase {
 
@@ -35,7 +35,11 @@ public class SerialTest extends TestCase {
         suite.addTest(SerialReplyTest.suite());
         suite.addTest(SerialTrafficControllerTest.suite());
         suite.addTest(SerialAddressTest.suite());
-        suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.tmcc.serialmon.SerialMonFrameTest.suite());
+        }
+        
         return suite;
     }
 

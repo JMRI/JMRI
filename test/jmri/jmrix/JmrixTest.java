@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version         $Revision: 1.25 $
+ * @version         $Revision: 1.26 $
  */
 public class JmrixTest extends TestCase {
 
@@ -32,27 +32,27 @@ public class JmrixTest extends TestCase {
 		suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
 		suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
 		suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
-		
+
+        suite.addTest(jmri.jmrix.acela.AcelaTest.suite());
+        suite.addTest(jmri.jmrix.can.CanTest.suite());		
+        suite.addTest(jmri.jmrix.cmri.serial.SerialTest.suite());
+        suite.addTest(jmri.jmrix.direct.DirectTest.suite());
+        suite.addTest(jmri.jmrix.easydcc.EasyDccTest.suite());
+        suite.addTest(jmri.jmrix.grapevine.SerialTest.suite());
+        suite.addTest(jmri.jmrix.lenz.XNetTest.suite());
         suite.addTest(jmri.jmrix.loconet.LocoNetTest.suite());
+        suite.addTest(jmri.jmrix.nce.NceTest.suite());
+        suite.addTest(jmri.jmrix.oaktree.SerialTest.suite());
+        suite.addTest(jmri.jmrix.maple.SerialTest.suite());
+        suite.addTest(jmri.jmrix.powerline.SerialTest.suite());
+        suite.addTest(jmri.jmrix.pricom.PricomTest.suite());
+        suite.addTest(jmri.jmrix.qsi.QsiTest.suite());
+        suite.addTest(jmri.jmrix.rps.RpsTest.suite());
+        suite.addTest(jmri.jmrix.secsi.SerialTest.suite());
+        suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
+        suite.addTest(jmri.jmrix.xpa.XpaTest.suite());
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(jmri.jmrix.can.CanTest.suite());
-            suite.addTest(jmri.jmrix.cmri.serial.SerialTest.suite());
-            suite.addTest(jmri.jmrix.direct.DirectTest.suite());
-            suite.addTest(jmri.jmrix.easydcc.EasyDccTest.suite());
-            suite.addTest(jmri.jmrix.grapevine.SerialTest.suite());
-            suite.addTest(jmri.jmrix.lenz.XNetTest.suite());
-            suite.addTest(jmri.jmrix.maple.SerialTest.suite());
-            suite.addTest(jmri.jmrix.nce.NceTest.suite());
-            suite.addTest(jmri.jmrix.oaktree.SerialTest.suite());
-            suite.addTest(jmri.jmrix.powerline.SerialTest.suite());
-            suite.addTest(jmri.jmrix.pricom.PricomTest.suite());
-            suite.addTest(jmri.jmrix.qsi.QsiTest.suite());
-            suite.addTest(jmri.jmrix.rps.RpsTest.suite());
-            suite.addTest(jmri.jmrix.secsi.SerialTest.suite());
-            suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
-            suite.addTest(jmri.jmrix.acela.AcelaTest.suite());
-            suite.addTest(jmri.jmrix.xpa.XpaTest.suite());
         }
         
 		return suite;
