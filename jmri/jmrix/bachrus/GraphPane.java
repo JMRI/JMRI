@@ -12,7 +12,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curveSpeed curve
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -163,7 +163,7 @@ public class GraphPane extends JPanel implements Printable {
         g2.scale(scale, scale);
 
         // Draw the graph
-        drawGraph((Graphics2D)g);
+        drawGraph(g);
 
         // Add annotation
         g2.setPaint(Color.BLACK);
