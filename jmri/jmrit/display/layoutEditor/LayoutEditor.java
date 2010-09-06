@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 
 public class LayoutEditor extends Editor {
@@ -3088,7 +3088,7 @@ public class LayoutEditor extends Editor {
         if (_positionableSelection!=null){
             for (int i = 0; i<_positionableSelection.size(); i++) {
                 Positionable c = _positionableSelection.get(i);
-                g.drawRect(_positionableSelection.get(i).getX(), _positionableSelection.get(i).getY(), _positionableSelection.get(i).maxWidth(), _positionableSelection.get(i).maxHeight());
+                g.drawRect(c.getX(), c.getY(), c.maxWidth(), c.maxHeight());
             }
         }
         // loop over all defined turnouts
@@ -3136,7 +3136,7 @@ public class LayoutEditor extends Editor {
             for (int i = 0; i<_pointSelection.size();i++) {
                 PositionablePoint p = _pointSelection.get(i);
                 Point2D coord = p.getCoords();
-                g.drawRect((int)p.getCoords().getX()-4, (int)p.getCoords().getY()-4, 9, 9);
+                g.drawRect((int)coord.getX()-4, (int)coord.getY()-4, 9, 9);
             }
         }
         g.setColor(color);
