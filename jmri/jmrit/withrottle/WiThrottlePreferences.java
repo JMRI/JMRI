@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.5 $
+ *	@version $Revision: 1.6 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
@@ -54,7 +54,6 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     }
 
     public boolean compareValuesDifferent(WiThrottlePreferences prefs){
-        WiThrottlePreferences stored = WiThrottleManager.withrottlePreferencesInstance();
         if (isAllowTrackPower() != prefs.isAllowTrackPower()) return true;
         if (isAllowTurnout() != prefs.isAllowTurnout()) return true;
         if (isAllowRoute() != prefs.isAllowRoute()) return true;
