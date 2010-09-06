@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.33 $
+ * @version			$Revision: 2.34 $
  */
 
 package jmri.jmrix.lenz;
@@ -140,23 +140,27 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	if(modeNames == null) {
            if (_validFeedbackNames.length != _validFeedbackModes.length)
                 log.error("int and string feedback arrays different length");
-           modeNames  = new String[_validFeedbackNames.length+3];  
-           modeValues = new int[_validFeedbackNames.length+3];
-           for (int i = 0; i<_validFeedbackNames.length; i++) {
-               modeNames[i] = _validFeedbackNames[i];
-               modeValues[i] = _validFeedbackModes[i];
+           synchronized(modeNames) {
+             modeNames  = new String[_validFeedbackNames.length+3];  
+             modeValues = new int[_validFeedbackNames.length+3];
+             for (int i = 0; i<_validFeedbackNames.length; i++) {
+                 modeNames[i] = _validFeedbackNames[i];
+                 modeValues[i] = _validFeedbackModes[i];
+             }
+             modeNames[_validFeedbackNames.length] = "MONITORING";
+             modeValues[_validFeedbackNames.length] = MONITORING;
+             modeNames[_validFeedbackNames.length+1] = "EXACT";
+             modeValues[_validFeedbackNames.length+1] = EXACT;  
+             modeNames[_validFeedbackNames.length+2] = "SIGNAL";
+             modeValues[_validFeedbackNames.length+2] = SIGNAL;  
            }
-           modeNames[_validFeedbackNames.length] = "MONITORING";
-           modeValues[_validFeedbackNames.length] = MONITORING;
-           modeNames[_validFeedbackNames.length+1] = "EXACT";
-           modeValues[_validFeedbackNames.length+1] = EXACT;  
-           modeNames[_validFeedbackNames.length+2] = "SIGNAL";
-           modeValues[_validFeedbackNames.length+2] = SIGNAL;  
         }
 
-        // set the mode names and values based on the static values.
-        _validFeedbackNames = modeNames;
-        _validFeedbackModes = modeValues;
+        synchronized(modeNames) {
+          // set the mode names and values based on the static values.
+          _validFeedbackNames = modeNames;
+          _validFeedbackModes = modeValues;
+        }
 
 	// Register to get property change information from the superclass
 	_stateListener=new XNetTurnoutStateListener(this);
@@ -544,7 +548,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
                 log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " +java.lang.Thread.currentThread().getName());
             }
-            synchronized(this) {
+            synchronized(t) {
                // Generate the message
                XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   getCommandedState()==_mClosed,
