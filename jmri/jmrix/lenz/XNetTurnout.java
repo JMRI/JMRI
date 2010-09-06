@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.31 $
+ * @version			$Revision: 2.32 $
  */
 
 package jmri.jmrix.lenz;
@@ -330,7 +330,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	     for(int i=1;i<numDataBytes;i+=2) {
                 int messageType= l.getFeedbackMessageType(i);
 	        if(messageType==0 || messageType == 1) {
-                   if ((mNumber%2==1 && 
+                   if ((mNumber%2!=0 && 
                        (l.getTurnoutMsgAddr(i) == mNumber)) ||
                       (((mNumber%2)==0) && 
                        (l.getTurnoutMsgAddr(i) == mNumber-1))) {
@@ -449,7 +449,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
           if(l.isFeedbackBroadcastMessage()) {
              int numDataBytes=l.getElement(0)&0x0f;
              for(int i=1;i<numDataBytes;i+=2) {
-                if ((mNumber%2==1 && 
+                if ((mNumber%2!=0 && 
                     (l.getTurnoutMsgAddr(i) == mNumber)) ||
                    (((mNumber%2)==0) && 
                     (l.getTurnoutMsgAddr(i) == mNumber-1))) {
@@ -544,11 +544,13 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 log.debug("Sending off message for turnout " + mNumber + " commanded state= " +getCommandedState());
                 log.debug("Current Thread ID: " + java.lang.Thread.currentThread().getId() + " Thread Name " +java.lang.Thread.currentThread().getName());
             }
-            // Generate the message
-            XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
+            synchronized(this) {
+               // Generate the message
+               XNetMessage msg = XNetMessage.getTurnoutCommandMsg(mNumber,
                                                   getCommandedState()==_mClosed,
                                                   getCommandedState()==_mThrown,
                                                   false ); 
+            }
             // Then send the message.
             tc.sendXNetMessage(msg, t);
         }
@@ -569,7 +571,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // right response from .getTurnoutMsgAddr.  If this is an even 
         // numbered turnout, we need to check the messages for the odd 
         // numbered turnout in the nibble as well.
-        if (mNumber%2==1 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
+        if (mNumber%2!=0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
             if (log.isDebugEnabled()) log.debug("Message for turnout " + mNumber);
             if(l.getTurnoutStatus(startByte,1)==THROWN) {
@@ -637,7 +639,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
         // right response from .getTurnoutMsgAddr.  If this is an even 
         // numbered turnout, we need to check the messages for the odd 
         // numbered turnout in the nibble as well.
-        if (mNumber%2==1 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
+        if (mNumber%2!=0 && (l.getTurnoutMsgAddr(startByte) == mNumber)) {
             // is for this object, parse the message
             int messageType= l.getFeedbackMessageType(startByte);
 	  if(messageType == 1) {
