@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.11 $
+ *	@version $Revision: 1.12 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -210,7 +210,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         int i;
         for (i = 0; i<29; i++){
             functionString.append("]\\[");
-            if (rosterLoco.getFunctionLabel(i) != null) functionString.append(rosterLoco.getFunctionLabel(i));
+            if ((rosterLoco.getFunctionLabel(i) != null) && (rosterLoco != null)) functionString.append(rosterLoco.getFunctionLabel(i));
         }
         for (ControllerInterface listener : controllerListeners){
             listener.sendPacketToDevice(functionString.toString());
@@ -318,10 +318,6 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                     idle();
                     break;
 
-                default:	//	Idle
-                        idle();
-                        
-                        break;
             }
             }catch (NullPointerException e){
                 log.warn("No throttle frame to receive: " + inPackage);
