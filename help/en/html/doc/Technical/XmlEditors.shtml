@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlEditors.shtml,v 1.4 2008-07-25 17:21:43 jacobsen Exp $ -->
+<!-- $Id: XmlEditors.shtml,v 1.5 2010-09-06 18:52:13 matthewharris Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -69,7 +69,7 @@ For more information on XML itself, please see our
 <dd><a href="http://www.lopesoft.com/en/index.html">http://www.lopesoft.com/en/index.html</a>
 
 <dt>Notepad++
-<dd><a href="http://www.microsoft.com/downloads/details.aspx?familyid=72d6aa49-787d-4118-ba5f-4f30fe913628&displaylang=en">http://notepad-plus.sourceforge.net/uk/site.htm</a>
+<dd><a href="http://notepad-plus-plus.org/">http://notepad-plus-plus.org/</a>
 
 <dt>XML Marker
 <dd><a href="http://symbolclick.com/">http://symbolclick.com/</a>
