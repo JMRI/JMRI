@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.32 $
+ * @version			$Revision: 2.33 $
  */
 
 package jmri.jmrix.lenz;
@@ -550,9 +550,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                                                   getCommandedState()==_mClosed,
                                                   getCommandedState()==_mThrown,
                                                   false ); 
+               // Then send the message.
+               tc.sendXNetMessage(msg, t);
             }
-            // Then send the message.
-            tc.sendXNetMessage(msg, t);
         }
     }
 
