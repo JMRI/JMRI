@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -194,7 +194,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
       	if (train == null)
     		return "ERROR train unknown "+row;
         switch (col) {
-        case IDCOLUMN: synchronized (this) {
+        case IDCOLUMN: {
         	if (_sort == SORTBYID){
            		return train.getId();
         	}
@@ -228,7 +228,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    public void setValueAt(Object value, int row, int col) {
+    public synchronized void setValueAt(Object value, int row, int col) {
         switch (col) {
         case EDITCOLUMN: editTrain (row);
         	break;
@@ -248,7 +248,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     boolean focusTef = false;
     TrainEditFrame tef = null;
-    private void editTrain (int row){
+    private synchronized void editTrain (int row){
     	if (tef != null)
     		tef.dispose();
     	tef = new TrainEditFrame();
