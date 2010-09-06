@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.79 $ -->
+<!-- Revision $Revision: 1.80 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -563,6 +563,20 @@
        <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>
        <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
        <jvmarg value="-Xrunhprof:cpu=samples,heap=sites,file=log.txt,depth=10" />
+    </java>
+  </target>
+
+  <target name="headlesstest" depends="runtime-library-selection" description="run headless test suite">
+    <java classname="jmri.HeadLessTest"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="log4j.ignoreTCL" path="true/"/>       
+       <sysproperty key="java.library.path" path=".:lib:${arch.lib.path}"/>       
+       <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+       <arg value="${antargline}"/>
     </java>
   </target>
 
