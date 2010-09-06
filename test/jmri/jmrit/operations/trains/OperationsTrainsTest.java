@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -691,6 +691,9 @@ public class OperationsTrainsTest extends TestCase {
 
 		// disable build messages
 		tmanager.setBuildMessages(false);
+		// disable build reports
+		tmanager.setBuildReport(false);
+		
 		// Try building without engines
 		train1.build();
 		train2.build();
@@ -1669,6 +1672,8 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Bob Test Train train2 Departs Name", "Midtown", train2.getTrainDepartsName());
 		Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2.getTrainTerminatesName());
 
+		// disable build messages
+		tmanager.setBuildMessages(false);
 		// Build trains
 		train1.build();
 		train2.build();

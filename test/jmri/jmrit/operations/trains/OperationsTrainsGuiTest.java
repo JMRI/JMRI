@@ -22,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -40,6 +40,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testTrainsTableFrame(){
+		TrainManager tmanager = TrainManager.instance();
+		// turn off build fail messages
+		tmanager.setBuildMessages(true);
+		// turn off print preview
+		tmanager.setPrintPreview(false);
+
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
 		f.setLocation(10,20);
@@ -48,8 +54,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		// frame location can move just a bit on MacOS
 		Point p = f.getLocation();
-		
-		TrainManager tmanager = TrainManager.instance();
+				
 		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());

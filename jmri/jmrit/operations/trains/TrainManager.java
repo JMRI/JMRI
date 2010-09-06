@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.39 $
+ * @version	$Revision: 1.40 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -171,12 +171,12 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 	
 	public void dispose() {
-    	CarTypes.instance().removePropertyChangeListener(this);
-    	CarRoads.instance().removePropertyChangeListener(this);
-    	CarOwners.instance().removePropertyChangeListener(this);
-    	EngineTypes.instance().removePropertyChangeListener(this);
+    	//CarTypes.instance().removePropertyChangeListener(this);
+    	//CarRoads.instance().removePropertyChangeListener(this);
+    	//CarOwners.instance().removePropertyChangeListener(this);
+    	// EngineTypes.instance().removePropertyChangeListener(this);
         _trainHashTable.clear();
-        _instance = null;
+        //_instance = null;
         _id = 0;
     }
 	
