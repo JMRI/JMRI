@@ -1,7 +1,5 @@
 package jmri.jmrix.lenz;
 
-import javax.swing.JFrame;
-
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
@@ -10,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.13 $
+ * @version $Revision: 2.14 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -48,10 +46,6 @@ public class XNetPacketizerTest extends TestCase {
             protected void reportReceiveLoopException(Exception e) {}           
             protected void portWarn(Exception e) {}
         };
-
-        // make sure Swing is up
-        JFrame j = new JFrame();
-        j.pack();
 
         // connect to iostream via port controller
         XNetPortControllerScaffold p = new XNetPortControllerScaffold();
