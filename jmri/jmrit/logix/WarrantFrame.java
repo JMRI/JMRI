@@ -1362,7 +1362,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(java.text.MessageFormat.format(
-                    rb.getString("NumberRoutes1"), new Integer(destNodes.size()))));
+                    rb.getString("NumberRoutes1"), Integer.valueOf(destNodes.size()))));
         panel.add(new JLabel(rb.getString("NumberRoutes2")));
 
         mainPanel.add(panel, BorderLayout.NORTH);
@@ -1372,8 +1372,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for (int i=0; i<destNodes.size(); i++) {
             JRadioButton button = new JRadioButton(java.text.MessageFormat.format(
-                    rb.getString("RouteSize"), new Integer(i+1), 
-                    new Integer(destNodes.get(i).getLevel())) );
+                    rb.getString("RouteSize"), Integer.valueOf(i+1), 
+                    Integer.valueOf(destNodes.get(i).getLevel())) );
             button.setActionCommand(""+i);
             buttons.add(button);
             panel.add(button);
@@ -1952,7 +1952,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             }
             switch (col) {
                 case ROW_NUM:
-                    return new Integer(row+1);
+                    return Integer.valueOf(row+1);
                 case TIME_COLUMN:
                     return ts.getTime();
                 case COMMAND_COLUMN: 

@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -42,15 +42,15 @@ public class RosterTableModelTest extends TestCase {
         RosterTableModel t = new RosterTableModel();
         
         Assert.assertEquals("id 1", t.getValueAt(0,RosterTableModel.IDCOL));    
-        Assert.assertEquals(new Integer(12), t.getValueAt(0,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals(Integer.valueOf(12), t.getValueAt(0,RosterTableModel.ADDRESSCOL));    
         Assert.assertEquals("33", t.getValueAt(0,RosterTableModel.DECODERCOL));    
         
         Assert.assertEquals("id 2", t.getValueAt(1,RosterTableModel.IDCOL));    
-        Assert.assertEquals(new Integer(13), t.getValueAt(1,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals(Integer.valueOf(13), t.getValueAt(1,RosterTableModel.ADDRESSCOL));    
         Assert.assertEquals("34", t.getValueAt(1,RosterTableModel.DECODERCOL));    
 
         Assert.assertEquals("id 3", t.getValueAt(2,RosterTableModel.IDCOL));    
-        Assert.assertEquals(new Integer(14), t.getValueAt(2,RosterTableModel.ADDRESSCOL));    
+        Assert.assertEquals(Integer.valueOf(14), t.getValueAt(2,RosterTableModel.ADDRESSCOL));    
         Assert.assertEquals("35", t.getValueAt(2,RosterTableModel.DECODERCOL));    
     }
     

@@ -49,7 +49,7 @@ import jmri.implementation.AbstractNamedBean;
  *
  * @author			Dave Duchamp Copyright (C) 2008
  * 
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class Transit extends AbstractNamedBean
 					implements java.io.Serializable {
@@ -90,7 +90,7 @@ public class Transit extends AbstractNamedBean
 		if ( (state==Transit.IDLE) || (state==Transit.ASSIGNED) ) {
 			int old = mState;
 			mState = state;
-			firePropertyChange("state", new Integer(old), new Integer(mState));
+			firePropertyChange("state", Integer.valueOf(old), Integer.valueOf(mState));
 		}
 		else
 			log.error("Attempt to set Transit state to illegal value - "+state);
@@ -162,7 +162,7 @@ public class Transit extends AbstractNamedBean
 		for (int i = 0; i<mTransitSectionList.size(); i++) {
 			TransitSection ts = mTransitSectionList.get(i);
 			if (s == ts.getSection()) {
-				list.add(new Integer(ts.getSequenceNumber()));
+				list.add(Integer.valueOf(ts.getSequenceNumber()));
 			}
 		}
 		return list;
@@ -257,7 +257,7 @@ public class Transit extends AbstractNamedBean
 			ArrayList<Block> bList = ts.getSection().getBlockList();
 			for (int j = 0; j<bList.size(); j++) {
 				list.add(bList.get(j));
-				blockSecSeqList.add(new Integer(ts.getSequenceNumber()));
+				blockSecSeqList.add(Integer.valueOf(ts.getSequenceNumber()));
 			}
 		}
 		return list;
@@ -300,7 +300,7 @@ public class Transit extends AbstractNamedBean
 				if (!isInternal) {
 					// not an internal Block, keep it
 					list.add(b);
-					blockSecSeqList.add(new Integer(ts.getSequenceNumber()));
+					blockSecSeqList.add(Integer.valueOf(ts.getSequenceNumber()));
 				}				
 			}
 		}

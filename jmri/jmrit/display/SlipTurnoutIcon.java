@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -856,15 +856,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setUpperWestToLowerEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.THROWN));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.CLOSED));        
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.CLOSED));        
             if (!singleSlipRoute){
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), new Integer(jmri.Turnout.CLOSED));
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), new Integer(jmri.Turnout.THROWN));
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), Integer.valueOf(jmri.Turnout.THROWN));
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.CLOSED));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.CLOSED));
         }
         setSlip();
     }
@@ -877,15 +877,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setLowerWestToUpperEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.THROWN));
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.CLOSED));        
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.CLOSED));        
             if (!singleSlipRoute){
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), new Integer(jmri.Turnout.THROWN));
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), new Integer(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), Integer.valueOf(jmri.Turnout.THROWN));
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
             }
         } else {
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.THROWN));
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.THROWN));
         }
         setSlip();
     }
@@ -899,15 +899,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setUpperWestToUpperEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.CLOSED));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.CLOSED));        
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.CLOSED));        
             if (!singleSlipRoute){
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), new Integer(jmri.Turnout.CLOSED));
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), new Integer(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.THROWN));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.CLOSED));
         }
         setSlip();
     }
@@ -921,15 +921,15 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     private void setLowerWestToLowerEast(){
         reset();
         if (getTurnoutType()==SCISSOR){
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.CLOSED));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.CLOSED));
             if (!singleSlipRoute){
-                _turnoutSetting.put(namedTurnoutWestLower.getBean(), new Integer(jmri.Turnout.CLOSED));
-                _turnoutSetting.put(namedTurnoutEastLower.getBean(), new Integer(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutWestLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
+                _turnoutSetting.put(namedTurnoutEastLower.getBean(), Integer.valueOf(jmri.Turnout.CLOSED));
             }
         } else {
-            _turnoutSetting.put(getTurnout(WEST), new Integer(jmri.Turnout.CLOSED));
-            _turnoutSetting.put(getTurnout(EAST), new Integer(jmri.Turnout.THROWN));
+            _turnoutSetting.put(getTurnout(WEST), Integer.valueOf(jmri.Turnout.CLOSED));
+            _turnoutSetting.put(getTurnout(EAST), Integer.valueOf(jmri.Turnout.THROWN));
         }
         setSlip();
     }

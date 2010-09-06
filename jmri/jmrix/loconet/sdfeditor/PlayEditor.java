@@ -11,7 +11,7 @@ import javax.swing.event.*;
  * Editor panel for the PLAY macro from the Digitrax sound definition language
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 class PlayEditor extends SdfMacroEditor {
@@ -93,7 +93,7 @@ class PlayEditor extends SdfMacroEditor {
         // find & set index of selected trigger
         Play instruction = (Play)inst;
         int handleVal = Integer.parseInt(instruction.handleVal());
-        handleModel.setValue(new Integer(handleVal));
+        handleModel.setValue(Integer.valueOf(handleVal));
     
         // loop flag
         loop.setSelectedItem(instruction.brkVal());

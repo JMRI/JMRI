@@ -99,7 +99,7 @@ import java.beans.PropertyChangeListener;
  *
  * @author			Dave Duchamp Copyright (C) 2008,2010
  * 
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class Section extends AbstractNamedBean
     implements  java.io.Serializable {
@@ -167,7 +167,7 @@ public class Section extends AbstractNamedBean
 		if ( (state==Section.FREE) || (state==FORWARD) || (state==Section.REVERSE) ) {
 			int old = mState;
 			mState = state;
-			firePropertyChange("state", new Integer(old), new Integer(mState));
+			firePropertyChange("state", Integer.valueOf(old), Integer.valueOf(mState));
 			// update the forward/reverse blocking sensors as needed
 			if (state==FORWARD) {
 				try {
@@ -227,7 +227,7 @@ public class Section extends AbstractNamedBean
 	private void setOccupancy(int occupancy) {
         int old = mOccupancy;
         mOccupancy = occupancy;
-        firePropertyChange("occupancy", new Integer(old), new Integer(mOccupancy));
+        firePropertyChange("occupancy", Integer.valueOf(old), Integer.valueOf(mOccupancy));
     }
 		
 	/**

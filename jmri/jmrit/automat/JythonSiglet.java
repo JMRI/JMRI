@@ -19,7 +19,7 @@ import jmri.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class JythonSiglet extends Siglet {
     Object interp;
@@ -68,13 +68,13 @@ public class JythonSiglet extends Siglet {
             set.invoke(interp, new Object[]{"signals", InstanceManager.signalHeadManagerInstance()});
             set.invoke(interp, new Object[]{"dcc", InstanceManager.commandStationInstance()});
 
-            set.invoke(interp, new Object[]{"CLOSED", new Integer(jmri.Turnout.CLOSED)});
-            set.invoke(interp, new Object[]{"THROWN", new Integer(jmri.Turnout.THROWN)});
-            set.invoke(interp, new Object[]{"ACTIVE", new Integer(jmri.Sensor.ACTIVE)});
-            set.invoke(interp, new Object[]{"INACTIVE", new Integer(jmri.Sensor.INACTIVE)});
-            set.invoke(interp, new Object[]{"GREEN", new Integer(jmri.SignalHead.GREEN)});
-            set.invoke(interp, new Object[]{"YELLOW", new Integer(jmri.SignalHead.YELLOW)});
-            set.invoke(interp, new Object[]{"RED", new Integer(jmri.SignalHead.RED)});
+            set.invoke(interp, new Object[]{"CLOSED", Integer.valueOf(jmri.Turnout.CLOSED)});
+            set.invoke(interp, new Object[]{"THROWN", Integer.valueOf(jmri.Turnout.THROWN)});
+            set.invoke(interp, new Object[]{"ACTIVE", Integer.valueOf(jmri.Sensor.ACTIVE)});
+            set.invoke(interp, new Object[]{"INACTIVE", Integer.valueOf(jmri.Sensor.INACTIVE)});
+            set.invoke(interp, new Object[]{"GREEN", Integer.valueOf(jmri.SignalHead.GREEN)});
+            set.invoke(interp, new Object[]{"YELLOW", Integer.valueOf(jmri.SignalHead.YELLOW)});
+            set.invoke(interp, new Object[]{"RED", Integer.valueOf(jmri.SignalHead.RED)});
 
             // set up the method to exec python functions
             exec = interp.getClass().getMethod("exec", new Class[]{String.class});

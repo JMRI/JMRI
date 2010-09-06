@@ -82,7 +82,7 @@ import java.util.ResourceBundle;
  * <P>
  *
  * @author	Dave Duchamp  Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class ActiveTrain {
 
@@ -201,7 +201,7 @@ public class ActiveTrain {
 			if (mStatus!=status) {
 				int old = mStatus;
 				mStatus = status;
-				firePropertyChange("status", new Integer(old), new Integer(mStatus));
+				firePropertyChange("status", Integer.valueOf(old), Integer.valueOf(mStatus));
 			}
 		}
 		else
@@ -260,7 +260,7 @@ public class ActiveTrain {
 				(mode==DISPATCHED) ) {
 			int old = mMode;
 			mMode = mode;
-			firePropertyChange("mode", new Integer(old), new Integer(mMode));
+			firePropertyChange("mode", Integer.valueOf(old), Integer.valueOf(mMode));
 		}
 		else
 			log.error("Attempt to set ActiveTrain mode to illegal value - "+mode);

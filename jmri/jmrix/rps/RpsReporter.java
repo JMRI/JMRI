@@ -12,7 +12,7 @@ import jmri.implementation.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -33,7 +33,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
 
     public void notify(Measurement r) {
         Point3d p = new Point3d(r.getX(), r.getY(), r.getZ());
-        Integer id = new Integer(r.getReading().getID());
+        Integer id = Integer.valueOf(r.getReading().getID());
         
         // ignore if code not OK
         if (!r.isOkPoint()) return;

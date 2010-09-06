@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -420,7 +420,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         }
         _runMode = mode;
-        firePropertyChange("runMode", new Integer(oldMode), new Integer(_runMode));
+        firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
         if(log.isDebugEnabled()) log.debug("Exit setRunMode()  _runMode= "+_runMode+", msg= "+msg);
         return msg;
     }
@@ -451,7 +451,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 return false;
             }
         }
-        firePropertyChange("controlChange", new Integer(oldIndex), new Integer(idx));
+        firePropertyChange("controlChange", Integer.valueOf(oldIndex), Integer.valueOf(idx));
         return true;
     }
 
@@ -663,7 +663,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         if (_runMode==MODE_LEARN || _tempRunBlind) {
             // recording must done with signals and occupancy clear.
-            firePropertyChange("blockChange", new Integer(oldIndex), new Integer(_idxCurrentOrder));
+            firePropertyChange("blockChange", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
             return;
         }
         String currentSpeed = getCurrentSpeedAt(_idxCurrentOrder);
@@ -702,7 +702,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _routeSet = false;
             firePropertyChange("setRoute", new Boolean(old), new Boolean(_routeSet));
         } else {
-            firePropertyChange("blockChange", new Integer(oldIndex), new Integer(_idxCurrentOrder));
+            firePropertyChange("blockChange", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
         }
     }
 
@@ -886,7 +886,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         boolean isTrue = Boolean.parseBoolean(ts.getValue());
                         setLockFunction(cmdNum, isTrue);
                     }
-                    firePropertyChange("Command", new Integer(_idxCurrentCommand-1), new Integer(_idxCurrentCommand));
+                    firePropertyChange("Command", Integer.valueOf(_idxCurrentCommand-1), Integer.valueOf(_idxCurrentCommand));
                     et = System.currentTimeMillis()-et;
                     if (log.isDebugEnabled()) log.debug("Cmd #"+_idxCurrentCommand+": "+
                                                         ts.toString()+" et= "+et);

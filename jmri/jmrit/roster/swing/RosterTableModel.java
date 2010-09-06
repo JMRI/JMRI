@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {
@@ -87,7 +87,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         }    
         switch (col) {
         case IDCOL:         return re.getId();
-        case ADDRESSCOL:    return new Integer(re.getDccLocoAddress().getNumber());
+        case ADDRESSCOL:    return Integer.valueOf(re.getDccLocoAddress().getNumber());
         case DECODERCOL:    return re.getDecoderModel();
         case ROADNAMECOL:   return re.getRoadName();
         case ROADNUMBERCOL: return re.getRoadNumber();

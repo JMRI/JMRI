@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -276,14 +276,14 @@ public class CoordinateEdit extends JmriJFrame {
                 }
             };
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(pl.getX()));
+        spinX.setValue(Integer.valueOf(pl.getX()));
         spinX.setToolTipText("Enter x coordinate");
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0,0,10000,1);
         spinY = new javax.swing.JSpinner(model);
-        spinY.setValue(new Integer(pl.getY()));
+        spinY.setValue(Integer.valueOf(pl.getY()));
         spinY.setToolTipText("Enter y coordinate");
         spinY.setMaximumSize(new Dimension(
 				spinY.getMaximumSize().width, spinY.getPreferredSize().height));
@@ -320,7 +320,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,10,1);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(pl.getDisplayLevel()));
+        spinX.setValue(Integer.valueOf(pl.getDisplayLevel()));
         spinX.setToolTipText("Enter display level");
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -387,7 +387,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,1000,1);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(util.getBorderSize()));
+        spinX.setValue(Integer.valueOf(util.getBorderSize()));
         spinX.setToolTipText("Enter border size");
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -423,7 +423,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,1000,1);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(util.getMargin()));
+        spinX.setValue(Integer.valueOf(util.getMargin()));
         spinX.setToolTipText("Enter margin size");
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
@@ -463,13 +463,13 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,0,1000,1);
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(util.getFixedHeight()));
+        spinX.setValue(Integer.valueOf(util.getFixedHeight()));
         spinX.setToolTipText(rb.getString("FixedSizeHeight"));
         spinX.setMaximumSize(new Dimension(
 				spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         model = new javax.swing.SpinnerNumberModel(0,0,1000,1);
         spinY = new javax.swing.JSpinner(model);
-        spinY.setValue(new Integer(util.getFixedWidth()));
+        spinY.setValue(Integer.valueOf(util.getFixedWidth()));
         spinY.setToolTipText(rb.getString("FixedSizeWidth"));
         spinY.setMaximumSize(new Dimension(
 				spinY.getMaximumSize().width, spinY.getPreferredSize().height));
@@ -508,7 +508,7 @@ public class CoordinateEdit extends JmriJFrame {
 
         SpinnerNumberModel model = new SpinnerNumberModel(0,-360,360,1);
         spinX = new javax.swing.JSpinner(model);
-//        spinX.setValue(new Integer(((NamedIcon)pLabel.getIcon()).getDegrees()));
+//        spinX.setValue(Integer.valueOf(((NamedIcon)pLabel.getIcon()).getDegrees()));
         spinX.setValue(0);
         spinX.setToolTipText(rb.getString("enterDegrees"));
         spinX.setMaximumSize(new Dimension(

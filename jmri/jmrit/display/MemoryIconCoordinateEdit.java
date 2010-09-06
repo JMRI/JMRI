@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {
@@ -94,14 +94,14 @@ public class MemoryIconCoordinateEdit extends CoordinateEdit {
                 }
             };
         spinX = new javax.swing.JSpinner(model);
-        spinX.setValue(new Integer(pl.getOriginalX()));
+        spinX.setValue(Integer.valueOf(pl.getOriginalX()));
         spinX.setToolTipText("Enter x coordinate");
         spinX.setMaximumSize(new Dimension(
 		spinX.getMaximumSize().width, spinX.getPreferredSize().height));
         spinX.addChangeListener(listener);
         model = new javax.swing.SpinnerNumberModel(0,0,10000,1);
         spinY = new javax.swing.JSpinner(model);
-        spinY.setValue(new Integer(pl.getOriginalY()));
+        spinY.setValue(Integer.valueOf(pl.getOriginalY()));
         spinY.setToolTipText("Enter y coordinate");
         spinY.setMaximumSize(new Dimension(
 				spinY.getMaximumSize().width, spinY.getPreferredSize().height));

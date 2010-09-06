@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.20 $
+ * @version 		$Revision: 2.21 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -182,7 +182,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 	addListener(l);
         // This is adds all the mask information.  A better way to do
         // this would be to allow updating individual bits
-	mListenerMasks.put(l,new Integer(mask));
+	mListenerMasks.put(l,Integer.valueOf(mask));
     }
 
     public synchronized void removeXNetListener(int mask, XNetListener l) {
