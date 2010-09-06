@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.35 $
+ * @version			$Revision: 2.36 $
  */
 
 package jmri.jmrix.lenz;
@@ -119,7 +119,9 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     protected int _mThrown = jmri.Turnout.THROWN;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
     protected int _mClosed = jmri.Turnout.CLOSED;
 
     protected XNetTrafficController tc = null;
