@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.10 2010-02-11 16:43:57 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.11 2010-09-06 20:02:44 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -267,6 +267,18 @@ For the simplest possible test, displaying a window
 for manual interaction, it's OK to create and invoke a Swing
 object from a JUnit test.  Just don't try to interact with it once
 it's been displayed!
+
+<p>
+Because we run tests in "headless" mode during the
+<a href="">continuous integration builds</a>,
+it's important that Swing (and AWT) access in tests
+be enclosed within a mode check:
+<pre><code>
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(myTest.suite());
+        }
+</code></pre>
+This will run the myTest suite of tests only when a display is available.
 
 <p>
 For many tests, you'll both make testing reliable and improve the structure 
