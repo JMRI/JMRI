@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: JUnit.shtml,v 1.11 2010-09-06 20:02:44 jacobsen Exp $ -->
+<!-- $Id: JUnit.shtml,v 1.12 2010-09-06 20:03:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -270,7 +270,7 @@ it's been displayed!
 
 <p>
 Because we run tests in "headless" mode during the
-<a href="">continuous integration builds</a>,
+<a href="ContinousIntegration.shtml">continuous integration builds</a>,
 it's important that Swing (and AWT) access in tests
 be enclosed within a mode check:
 <pre><code>
