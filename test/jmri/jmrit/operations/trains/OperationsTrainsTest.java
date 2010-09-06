@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3006,6 +3006,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c13 track 12", "Westford Yard 1", c13.getTrackName());
 
 		// interchange testing done, now test replace car type and road
+		
+		Assert.assertTrue("loc1 should accept Boxcar", loc1.acceptsTypeName("Boxcar"));
+		Assert.assertTrue("loc2 should accept Boxcar", loc2.acceptsTypeName("Boxcar"));
 		
 		// replace should modify locations and trains
 		ct.replaceName("Boxcar", "boxcar");

@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1010,7 +1010,7 @@ public class OperationsLocationsTest extends TestCase {
 		
 		// load options
 		LocationEditFrame frame = new LocationEditFrame();
-		frame.setSize(10, 12);
+		frame.setSize(700, 720);
 		frame.setLocation(14, 16);
 		manager.setLocationEditFrame(frame);
 		
@@ -1191,8 +1191,8 @@ public class OperationsLocationsTest extends TestCase {
 		// check options
 		Dimension frameDim = manager.getLocationEditFrameSize();
 		Point frameLoc = manager.getLocationEditFramePosition();
-		Assert.assertEquals("LocationEditFrame size X", 10.0, frameDim.getWidth());
-		Assert.assertEquals("LocationEditFrame size Y", 12.0, frameDim.getHeight());
+		Assert.assertEquals("LocationEditFrame size X", 700.0, frameDim.getWidth());
+		Assert.assertEquals("LocationEditFrame size Y", 720.0, frameDim.getHeight());
 		Assert.assertEquals("LocationEditFrame Postion X", 14.0, frameLoc.getX());
 		Assert.assertEquals("LocationEditFrame Postion Y", 16.0, frameLoc.getY());
 		
