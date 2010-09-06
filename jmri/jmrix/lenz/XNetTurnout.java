@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.34 $
+ * @version			$Revision: 2.35 $
  */
 
 package jmri.jmrix.lenz;
@@ -135,32 +135,11 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	// Default feedback mode is MONITORING
 	_activeFeedbackType = MONITORING;
 
-	// if it hasn't been done already, create static arrays to hold 
-        // the Lenz specific feedback information.
-	if(modeNames == null) {
-           if (_validFeedbackNames.length != _validFeedbackModes.length)
-                log.error("int and string feedback arrays different length");
-           synchronized(modeNames) {
-             modeNames  = new String[_validFeedbackNames.length+3];  
-             modeValues = new int[_validFeedbackNames.length+3];
-             for (int i = 0; i<_validFeedbackNames.length; i++) {
-                 modeNames[i] = _validFeedbackNames[i];
-                 modeValues[i] = _validFeedbackModes[i];
-             }
-             modeNames[_validFeedbackNames.length] = "MONITORING";
-             modeValues[_validFeedbackNames.length] = MONITORING;
-             modeNames[_validFeedbackNames.length+1] = "EXACT";
-             modeValues[_validFeedbackNames.length+1] = EXACT;  
-             modeNames[_validFeedbackNames.length+2] = "SIGNAL";
-             modeValues[_validFeedbackNames.length+2] = SIGNAL;  
-           }
-        }
+        setModeInformation(_validFeedbackNames,_validFeedbackModes);
 
-        synchronized(modeNames) {
-          // set the mode names and values based on the static values.
-          _validFeedbackNames = modeNames;
-          _validFeedbackModes = modeValues;
-        }
+        // set the mode names and values based on the static values.
+        _validFeedbackNames = getModeNames();
+        _validFeedbackModes = getModeValues();
 
 	// Register to get property change information from the superclass
 	_stateListener=new XNetTurnoutStateListener(this);
@@ -168,6 +147,31 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 	// Finally, request the current state from the layout.
     	requestUpdateFromLayout();
     }
+
+    //Set the mode information for XPressNet Turnouts.
+    synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes){
+	// if it hasn't been done already, create static arrays to hold 
+        // the Lenz specific feedback information.
+	if(modeNames == null) {
+           if (feedbackNames.length != feedbackModes.length)
+               log.error("int and string feedback arrays different length");
+           modeNames  = new String[feedbackNames.length+3];  
+           modeValues = new int[feedbackNames.length+3];
+           for (int i = 0; i<feedbackNames.length; i++) {
+              modeNames[i] = feedbackNames[i];
+              modeValues[i] = feedbackModes[i];
+           }
+           modeNames[feedbackNames.length] = "MONITORING";
+           modeValues[feedbackNames.length] = MONITORING;
+           modeNames[feedbackNames.length+1] = "EXACT";
+           modeValues[feedbackNames.length+1] = EXACT;  
+           modeNames[feedbackNames.length+2] = "SIGNAL";
+           modeValues[feedbackNames.length+2] = SIGNAL;  
+        }
+    }
+
+    static int[] getModeValues() {return modeValues;}
+    static String[] getModeNames() {return modeNames;}
 
     public int getNumber() { return mNumber; }
 
