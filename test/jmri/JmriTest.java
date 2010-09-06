@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Invoke complete set of tests for the Jmri package
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.22 $
+ * @version         $Revision: 1.23 $
  */
 public class JmriTest extends TestCase {
 
@@ -36,7 +36,10 @@ public class JmriTest extends TestCase {
 		suite.addTest(jmri.BeanSettingTest.suite());
 		suite.addTest(jmri.PathTest.suite());
         suite.addTest(jmri.DccLocoAddressTest.suite());
-        suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());
+        
+        if (!System.getProperty("jmri.headlesstest","false").equals("true"))
+            suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());
+        
         suite.addTest(jmri.NmraPacketTest.suite());
         suite.addTest(jmri.configurexml.ConfigXmlTest.suite());
         suite.addTest(jmri.managers.ManagersTest.suite());

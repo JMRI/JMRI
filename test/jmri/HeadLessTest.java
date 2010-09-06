@@ -23,7 +23,7 @@ import junit.framework.TestSuite;
  * for more details.
  * <P>
  * @author	Bob Jacobsen, Copyright (C) 2001, 2002, 2007
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class HeadLessTest extends TestCase {
 
@@ -35,6 +35,11 @@ public class HeadLessTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
+        // force headless operation
+        System.setProperty("java.awt.headless", "true");
+        System.setProperty("jmri.headlesstest", "true");
+        
+        // start tests
         String[] testCaseName = {"-noloading", HeadLessTest.class.getName()};
         junit.textui.TestRunner.main(testCaseName);
     }
@@ -44,34 +49,8 @@ public class HeadLessTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.JmriTest");  // no tests in this class itself
         
-        // add that were headless August 2010
-		suite.addTest(jmri.InstanceManagerTest.suite());
-		suite.addTest(jmri.LightTest.suite());
-		suite.addTest(jmri.BlockTest.suite());
-		suite.addTest(jmri.implementation.ImplementationTest.suite());
-		suite.addTest(jmri.BlockManagerTest.suite());
-		suite.addTest(jmri.BeanSettingTest.suite());
-		suite.addTest(jmri.PathTest.suite());
-        suite.addTest(jmri.DccLocoAddressTest.suite());
-        suite.addTest(jmri.progdebugger.ProgDebuggerTest.suite());
-        suite.addTest(jmri.NmraPacketTest.suite());
-        suite.addTest(jmri.configurexml.ConfigXmlTest.suite());
-        suite.addTest(jmri.managers.ManagersTest.suite());
-        //suite.addTest(jmri.jmrix.JmrixTest.suite());  // last due to threading issues?
-        //suite.addTest(jmri.jmrit.JmritTest.suite());  // last due to classloader issues?
-        //suite.addTest(jmri.util.UtilTest.suite());
-            suite.addTest(jmri.util.FileUtilTest.suite());
-            suite.addTest(jmri.util.JUnitAppenderTest.suite());
-            suite.addTest(jmri.util.NamedBeanHandleTest.suite());
-            suite.addTest(jmri.util.OrderedHashtableTest.suite());
-            suite.addTest(jmri.util.StringUtilTest.suite());
-            //suite.addTest(jmri.util.SwingTestCaseTest.suite());
-            suite.addTest(jmri.util.docbook.DocBookTest.suite());
-            suite.addTest(jmri.util.exceptionhandler.PackageTest.suite());
-            suite.addTest(jmri.util.jdom.PackageTest.suite());
-            // suite.addTest(jmri.util.swing.PackageTest.suite());
-        suite.addTest(jmri.web.WebTest.suite());
-
+        suite.addTest(jmri.JmriTest.suite());
+        
         return suite;
     }
 

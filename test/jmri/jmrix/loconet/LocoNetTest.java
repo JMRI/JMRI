@@ -7,7 +7,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet package.
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class LocoNetTest extends TestCase {
 
@@ -26,14 +26,19 @@ public class LocoNetTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.loconet.LocoNetTest");  // no tests in this class itself
+
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
-        suite.addTest(jmri.jmrix.loconet.sdf.SdfTest.suite());
-        suite.addTest(jmri.jmrix.loconet.locomon.LocoMonTest.suite());
-        suite.addTest(jmri.jmrix.loconet.locostats.LocoStatsTest.suite());
-        suite.addTest(jmri.jmrix.loconet.soundloader.SoundLoaderTest.suite());
-        suite.addTest(jmri.jmrix.loconet.spjfile.SpjFileTest.suite());
-        suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
-        suite.addTest(new TestSuite(SecurityElementTest.class));
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.loconet.sdf.SdfTest.suite());
+            suite.addTest(jmri.jmrix.loconet.locomon.LocoMonTest.suite());
+            suite.addTest(jmri.jmrix.loconet.locostats.LocoStatsTest.suite());
+            suite.addTest(jmri.jmrix.loconet.soundloader.SoundLoaderTest.suite());
+            suite.addTest(jmri.jmrix.loconet.spjfile.SpjFileTest.suite());
+            suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
+            suite.addTest(new TestSuite(SecurityElementTest.class));
+        }
+        
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
@@ -48,8 +53,12 @@ public class LocoNetTest extends TestCase {
         suite.addTest(LnSensorTest.suite());
         suite.addTest(LnSensorAddressTest.suite());
         suite.addTest(LnSensorManagerTest.suite());
-        suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());
-        suite.addTest(jmri.jmrix.loconet.locogen.LocoGenPanelTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.loconet.locoio.LocoIOTest.suite());
+            suite.addTest(jmri.jmrix.loconet.locogen.LocoGenPanelTest.suite());
+        }
+        
         return suite;
     }
 
