@@ -46,7 +46,7 @@
 		<dd>
 			<ul>
 			<LI><a href="RP.shtml">Recommended Practices</a>
-			<LI><a href="ContinousIntegration.shtml">Continous Integration</a>
+			<LI><a href="ContinuousIntegration.shtml">Continuous Integration</a>
 			<LI><a href="I8N.shtml">Internationalization</a>
 			<LI><a href="Logging.shtml">Logging &amp; Error Handling</a>
 			<LI><a href="JUnit.shtml">Unit testing with JUnit</a>
