@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.1 2009-06-03 15:07:30 jacobsen Exp $ -->
+<!-- $Id: FindBugs.shtml,v 1.2 2010-09-07 01:33:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -45,6 +45,22 @@ anybody noticing until it's too late.
 <P>
 For more information on FindBugs, see
 <A HREF="http://findbugs.sourceforge.net/">the FindBugs home page</A>.
+
+<p>
+We routinely run FindBugs as part of our 
+<a href="ContinuousIntegration.shtml">continuous integration process</a>.
+You can see the results of the most
+recent build online
+<a href="http://builds.jmri.org/hudson/job/FindBugs/lastBuild/">here</a>.
+
+<p>
+If FindBugs is finding a false positive, a bug that's not really a 
+bug, you can turn it off with an annotation such as:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY")
+// OK to compare floats, as even tiny differences should trigger update
+</code></pre>
+Please include a comment that explains why what FindBugs flagged really isn't a bug.
 
 <p>
 Simon White added FindBugs support to our Ant-based build
