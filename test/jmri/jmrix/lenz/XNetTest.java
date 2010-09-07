@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.5 $
+ * @version			$Revision: 2.6 $
  */
 public class XNetTest extends TestCase {
 
@@ -33,6 +33,7 @@ public class XNetTest extends TestCase {
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
         suite.addTest(new TestSuite(XNetSensorTest.class));
         suite.addTest(new TestSuite(XNetLightTest.class));
+        suite.addTest(new TestSuite(XNetPacketizerTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(XNetSensorManagerTest.class));
         suite.addTest(new TestSuite(XNetLightManagerTest.class));
@@ -40,10 +41,6 @@ public class XNetTest extends TestCase {
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetThrottleTest.class));
         suite.addTest(new TestSuite(XNetInitilizationManagerTest.class));
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(new TestSuite(XNetPacketizerTest.class));  // invokes Swing, but doesn't present GUI?
-        }
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(new TestSuite(jmri.jmrix.lenz.packetgen.PacketGenFrameTest.class));
