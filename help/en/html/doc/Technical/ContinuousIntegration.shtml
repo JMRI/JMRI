@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ContinuousIntegration.shtml,v 1.2 2010-09-07 01:33:17 jacobsen Exp $ -->
+<!-- $Id: ContinuousIntegration.shtml,v 1.3 2010-09-07 02:30:13 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -55,7 +55,7 @@ There are also pages of the
 showing status of the more-extensive tests done periodically.
 There are also pages of the 
 <a href="http://builds.jmri.org/hudson/job/FindBugs/changes">most recent changes<a> and the
-<a href="http://builds.jmri.org/hudson/job/FindBugs/lastBuild/">most results<a>.
+<a href="http://builds.jmri.org/hudson/job/FindBugs/lastBuild/">most recent results<a>.
 <p>
 For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
