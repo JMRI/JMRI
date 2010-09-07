@@ -13,12 +13,12 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.20 $
+ * @version			$Revision: 2.21 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
-	static protected int _nRetries = 5;
+	static private int _nRetries = 5;
 	
 	/* According to the specification, XPressNet has a maximum timing 
 	   interval of 500 milliseconds durring normal communications */

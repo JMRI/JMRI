@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.14 $
+ * @version			$Revision: 2.15 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -63,7 +63,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
                       // turnout
                       ((XNetTurnout)getBySystemName(s)).message(l);
                    }
-                   if (addr%2==1) {
+                   if (addr%2!=0) {
                    // If the address we got was odd, we need to check to 
                    // see if the even address should be added as well.
                    int a2=l.getElement(i+1);

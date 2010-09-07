@@ -9,7 +9,7 @@ import jmri.Sensor;
  * Extend jmri.AbstractSensor for XPressNet layouts.
  * <P>
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version         $Revision: 2.14 $
+ * @version         $Revision: 2.15 $
  */
 public class XNetSensor extends AbstractSensor implements XNetListener {
 
@@ -41,7 +41,7 @@ public class XNetSensor extends AbstractSensor implements XNetListener {
      */
     private void init(String id) {
         // store address
-	systemName=new String(id);
+	systemName=id;
         address = Integer.parseInt(id.substring(2,id.length()));
 	// calculate the base address, the nibble, and the bit to examine
 	baseaddress = ((address-1) / 8);

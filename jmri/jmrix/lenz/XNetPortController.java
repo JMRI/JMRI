@@ -13,7 +13,7 @@ import jmri.util.SystemType;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 2.8 $
+ * @version			$Revision: 2.9 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
 
@@ -52,7 +52,7 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortCo
     /* Option 2 is not currently used with RxTx 2.0.  In the past, it
        was used for the "check buffer status when sending" If this is still set        in a configuration file, we need to handle it, but we are not writing it        to new configuration files. */
     public String getCurrentOption2Setting() {
-        if(mOpt2==null) return(new String("no"));
+        if(mOpt2==null) return("no");
         else return mOpt2;
     }
 

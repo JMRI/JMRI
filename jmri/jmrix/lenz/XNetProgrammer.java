@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.30 $
+ * @version $Revision: 2.31 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -63,7 +63,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 	static public XNetProgrammer instance() {
 		return self;
 		}
-	protected static XNetProgrammer self = null;  // needs to be accessible from tests
+	static XNetProgrammer self = null;  // needs to be accessible from tests
 
 	// handle mode
 	protected int _mode = Programmer.DIRECTBYTEMODE;
@@ -89,7 +89,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 			notifyPropertyChange("Mode", mode, _mode);
 		}
 	}
-	public int getMode() { return _mode; }
+	synchronized public int getMode() { return _mode; }
     /**
      * Signifies mode's available
      * @param mode

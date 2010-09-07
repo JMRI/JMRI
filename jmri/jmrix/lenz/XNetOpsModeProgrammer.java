@@ -14,7 +14,7 @@ import jmri.ProgrammerException;
  * @see            jmri.Programmer
  * @author         Paul Bender Copyright (C) 2003-2010
  * @author         Girgio Terdina Copyright (C) 2007
- * @version        $Revision: 2.17 $
+ * @version        $Revision: 2.18 $
 */
 
 public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implements XNetListener 
@@ -157,7 +157,7 @@ public class XNetOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer impleme
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
     }
 
-    protected void timeout(){
+    synchronized protected void timeout(){
 	progState=XNetProgrammer.NOTPROGRAMMING;
         stopTimer();
         progListener.programmingOpReply(value,jmri.ProgListener.FailedTimeout);
