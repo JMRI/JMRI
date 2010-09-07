@@ -10,12 +10,11 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public NceTurnoutManager() {
-        _instance = this;
     }
 
     public String getSystemPrefix() { return "N"; }

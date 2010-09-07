@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.43 $
+ * @version			$Revision: 1.44 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -45,7 +45,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 // find the baud rate value, configure comm options
                 int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
@@ -169,8 +169,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 		return validSpeeds;
 	}
 
-	protected String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
-	protected int [] validSpeedValues = new int[]{9600, 19200};
+	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+	private int [] validSpeedValues = new int[]{9600, 19200};
 
     /**
      * Option 1 is binary vs ASCII command set.
@@ -187,7 +187,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      * Set the binary vs ASCII command set option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
+    private String mOpt1 = null;
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[1];
         return mOpt1;

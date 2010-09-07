@@ -19,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * 
  */
 
@@ -48,10 +48,10 @@ public class NceConnectionStatus implements NceListener {
 	private static final int ERROR6_STATE = 21;
 	private static final int ERROR7_STATE = 22;
 	
-	private static int epromState = INIT_STATE;	//Eprom state
-	private static boolean epromChecked = false;
+	private int epromState = INIT_STATE;	//Eprom state
+	private boolean epromChecked = false;
 
-	public static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
+	protected static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
 	
 	// Our current knowledge of NCE Command Station EPROMs
 	private static final int VV_1999 = 4; // Revision of Apr 1999 EPROM VV.MM.mm = 4.0.1
@@ -91,7 +91,7 @@ public class NceConnectionStatus implements NceListener {
 	private static final int mm_USB_PC161 = 4; 	// Future use, PowerCab 1.61, not currently used
 	private static final int mm_USB_SB161 = 5; 	// Future use, SB3 1.61, not currently used
 
-	public NceMessage NceEpromPoll() {
+	public NceMessage nceEpromPoll() {
 		
 		if (NceMessage.getCommandOptions() <= NceMessage.OPTION_1999)
 			return null;

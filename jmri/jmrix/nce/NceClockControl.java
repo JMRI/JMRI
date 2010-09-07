@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -206,34 +206,36 @@ public class NceClockControl extends DefaultClockControl implements NceListener
         }
         // unhandled reply, nothing to do about it
         if (log.isDebugEnabled()) {
-	        String txt = "NceReply(len " + r.getNumDataElements() + ")";
+        	StringBuffer buf = new StringBuffer();
+        	buf.append("NceReply(len " + r.getNumDataElements() + ")");
 	        if (waiting > 0) {
-	        	txt = txt + " waiting: " + waiting;
+	        	buf.append(" waiting: " + waiting);
 	        }
 	        if (waitingForCmdRead) {
-	            txt = txt + " waitingForCmdRead: " + waitingForCmdRead;
+	        	buf.append(" waitingForCmdRead: " + waitingForCmdRead);
 	        }
 	        if (waitingForCmdTime) {
-	        	txt = txt + " waitingForCmdTime: " + waitingForCmdTime;
+	        	buf.append(" waitingForCmdTime: " + waitingForCmdTime);
 	        }
 	        if (waitingForCmd1224) {
-	        	txt = txt + " waitingForCmd1224: " + waitingForCmd1224;
+	        	buf.append(" waitingForCmd1224: " + waitingForCmd1224);
 	        }
 	        if (waitingForCmdRatio) {
-	        	txt = txt + " waitingForCmdRatio: " + waitingForCmdRatio;
+	        	buf.append(" waitingForCmdRatio: " + waitingForCmdRatio);
 	        }
 	        if (waitingForCmdStop) {
-	        	txt = txt + " waitingForCmdStop: " + waitingForCmdStop;
+	        	buf.append(" waitingForCmdStop: " + waitingForCmdStop);
 	        }
 	        if (waitingForCmdStart) {
-	        	txt = txt + " waitingForCmdStart: " + waitingForCmdStart;
+	        	buf.append(" waitingForCmdStart: " + waitingForCmdStart);
 	        }
-	        log.debug(txt);
-	        txt = rb.getString("LogReplyUnexpected") + ":";
+	        log.debug(buf.toString());
+	        buf = new StringBuffer();
+	        buf.append(rb.getString("LogReplyUnexpected") + ":");
 	        for (int i = 0; i < r.getNumDataElements(); i++) {
-	            txt = txt + " " + r.getElement(i);
+	        	buf.append(" " + r.getElement(i));
 	        }
-	        log.debug(txt);
+	        log.debug(buf.toString());
         }
         return;
     }

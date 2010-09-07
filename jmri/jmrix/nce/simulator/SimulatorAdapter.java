@@ -123,7 +123,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -267,18 +267,20 @@ public class SimulatorAdapter extends NcePortController implements
 			}
 			NceMessage m = readMessage();
 			if (log.isDebugEnabled()) {
-				String f = "Nce Simulator Thread received message: ";
+				StringBuffer buf = new StringBuffer();
+				buf.append("Nce Simulator Thread received message: ");
 				for (int i = 0; i < m.getNumDataElements(); i++)
-					f = f + Integer.toHexString(0xFF & m.getElement(i)) + " ";
-				log.debug(f);
+					buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
+				log.debug(buf.toString());
 			}
 			NceReply r = generateReply(m);
 			writeReply(r);
 			if (log.isDebugEnabled() && r != null) {
-				String f = "Nce Simulator Thread sent reply: ";
+				StringBuffer buf = new StringBuffer();
+				buf.append("Nce Simulator Thread sent reply: ");
 				for (int i = 0; i < r.getNumDataElements(); i++)
-					f = f + Integer.toHexString(0xFF & r.getElement(i)) + " ";
-				log.debug(f);
+					buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+				log.debug(buf.toString());
 			}
 		}
 	}

@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -84,7 +84,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 		
 		// Keep checking the state of the communication link by polling
 		// the command station using the EPROM checker
-		NceMessage m = pollEprom.NceEpromPoll();
+		NceMessage m = pollEprom.nceEpromPoll();
 		if (m != null){
 			expectReplyEprom = true;
 			return m;
@@ -97,7 +97,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 		if (pollAiuStatus == null){
 			// No, do it this time
 			pollAiuStatus = new NceAIUChecker();
-			return pollAiuStatus.NceAiuPoll();
+			return pollAiuStatus.nceAiuPoll();
 		}
 
 		// Start NCE memory poll for accessory states
@@ -165,7 +165,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
         return self;
     }
 
-    static protected NceTrafficController self = null;
+    protected static NceTrafficController self = null;
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { 

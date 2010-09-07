@@ -29,7 +29,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -1119,7 +1119,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     }
     
     private void recomputeOffset() {
-        Date now = internalClock.getTime();
+        
         double sumDiff = 0;
         if (priorOffsetErrors.size() > 1) {
             sumDiff = priorOffsetErrors.get(0).doubleValue() + priorOffsetErrors.get(1).doubleValue();
@@ -1133,6 +1133,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         	syncInterval = 58;
         }
         if (log.isDebugEnabled() && false) {
+           	Date now = internalClock.getTime();
             String txt = "";
             for (int i = 0; i < priorOffsetErrors.size(); i++) {
                 txt = txt + " " + priorOffsetErrors.get(i).doubleValue();

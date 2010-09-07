@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionStatus;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  * 
  */
 
@@ -21,9 +21,9 @@ public class NceAIUChecker implements NceListener {
 
 	private static final int MEM_AIU = 0xDC15; 	// NCE CS AIU memory address 
 	private static final int REPLY_LEN = 1; 	// number of bytes read
-	private static boolean EXPECT_REPLY = false; // flag 
+	private boolean EXPECT_REPLY = false; 		// flag 
 
-	public NceMessage NceAiuPoll() {
+	public NceMessage nceAiuPoll() {
 
 		if (NceMessage.getCommandOptions() <= NceMessage.OPTION_1999)
 			return null;

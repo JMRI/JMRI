@@ -15,14 +15,13 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
 
     public NceSensorManager() {
         super();
-        mInstance = this;
         for (int i=MINAIU; i<=MAXAIU; i++)
             aiuArray[i] = null;
         listener = new NceListener() {
@@ -35,7 +34,8 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     }
 
     static public NceSensorManager instance() {
-        if (mInstance == null) new NceSensorManager();
+        if (mInstance == null) 
+        	mInstance = new NceSensorManager();
         return mInstance;
     }
     static private NceSensorManager mInstance = null;
@@ -193,14 +193,13 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     	    				lastMessageReceived>=System.currentTimeMillis()-maxSilentInterval) {
     	    			delay = longCycleInterval;
     	    		}
-    				if (awaitingReply) {
-    					log.warn("timeout awaiting poll response for AIU "+aiuNo);
-    					// slow down the poll since we're not getting responses
-    					// this lets NceConnectionStatus to do its thing
-    					delay = pollTimeout;
-    				}
-   
-    	    		synchronized (this) {
+    	    		synchronized (this){
+    	    			if (awaitingReply) {
+    	    				log.warn("timeout awaiting poll response for AIU "+aiuNo);
+    	    				// slow down the poll since we're not getting responses
+    	    				// this lets NceConnectionStatus to do its thing
+    	    				delay = pollTimeout;
+    	    			}
     	    			try {
     	    				awaitingDelay = true;
     	    				wait(delay);

@@ -22,7 +22,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class NetworkDriverAdapter extends NcePortController {
 
@@ -121,7 +121,7 @@ public class NetworkDriverAdapter extends NcePortController {
      * Set the binary vs ASCII command set option.
      */
     public void configureOption2(String value) { mOpt2 = value; }
-    protected String mOpt2 = null;
+    private String mOpt2 = null;
     public String getCurrentOption2Setting() {
         if (mOpt2 == null) return validOption2()[1];
         return mOpt2;

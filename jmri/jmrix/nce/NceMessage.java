@@ -1,6 +1,7 @@
 // NceMessage.java
 
 package jmri.jmrix.nce;
+import java.util.Arrays;
 
 /**
  * Encodes a message to an NCE command station.
@@ -26,7 +27,7 @@ package jmri.jmrix.nce;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -49,10 +50,10 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 
 	// some constants
 	
-    static protected int NCE_PAGED_CV_TIMEOUT=20000;
-    static protected int NCE_DIRECT_CV_TIMEOUT=10000;			
-    static protected int SHORT_TIMEOUT=10000;					// worst case is when loading the first panel
-    static protected boolean ncsProgMode = false;				// Do not use exit program mode unless active
+    protected static final int NCE_PAGED_CV_TIMEOUT=20000;
+    protected static final int NCE_DIRECT_CV_TIMEOUT=10000;			
+    protected static final int SHORT_TIMEOUT=10000;				// worst case is when loading the first panel
+    protected static boolean ncsProgMode = false;				// Do not use exit program mode unless active
     
     public NceMessage() {
         super();
@@ -363,8 +364,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     	}
 		if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
-                log.error("Send of NCE track packet too short or long:"+(bytes.length)+
-                    " packet:"+bytes);
+                log.error("Send of NCE track packet too short or long:"+Integer.toString(bytes.length)+
+                    " packet:"+Arrays.toString(bytes));
             NceMessage m = new NceMessage(2+bytes.length);
             m.setBinary(true);
             m.setTimeout(SHORT_TIMEOUT);
@@ -437,8 +438,8 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     	}
         if (getCommandOptions() >= OPTION_1999) {
             if (bytes.length<3 || bytes.length>6)
-                log.error("Queue of NCE track packet too long:"+(bytes.length)+
-                    " packet:"+bytes);
+                log.error("Queue of NCE track packet too long:"+Integer.toString(bytes.length)+
+                    " packet :"+Arrays.toString(bytes));
             NceMessage m = new NceMessage(1+bytes.length);
             m.setBinary(true);
             m.setReplyLen(1);

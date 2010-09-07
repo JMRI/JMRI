@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 
@@ -69,9 +69,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	private static final int MACRO_LNTH = 20;		// 20 bytes per macro
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
 	private static int replyLen = 0;				// expected byte length
-	private static int waiting = 0;					// to catch responses not intended for this module
-	private static boolean secondRead = false;		// when true, another 16 byte read expected
-	private static boolean fileValid = false;		// used to flag backup status messages
+	private int waiting = 0;						// to catch responses not intended for this module
+	private boolean secondRead = false;				// when true, another 16 byte read expected
+	private boolean fileValid = false;				// used to flag backup status messages
 	
 	private static byte[] nceMacroData = new byte [MACRO_LNTH];
 	
@@ -89,9 +89,9 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		
 		int retVal = fc.showSaveDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // cancelled
+			return; // Canceled
 		if (fc.getSelectedFile() == null)
-			return; // cancelled
+			return; // Canceled
 
 		File f = fc.getSelectedFile();
         if (fc.getFileFilter() != fc.getAcceptAllFileFilter()){
@@ -122,6 +122,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		if (JOptionPane.showConfirmDialog(null,
 				"Backup can take over a minute, continue?", "NCE Macro Backup",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			fileOut.close();
 			return;
 		}
 		
@@ -144,8 +145,6 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		
 		waiting = 0;			// reset in case there was a previous error
 		fileValid = true;		// assume we're going to succeed
-		String line;			// output string to file
-
 
 		for (int macroNum = 0; macroNum < NUM_MACRO; macroNum++) {
 			
@@ -158,23 +157,24 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 				macroNum = NUM_MACRO;  // break out of for loop
 
 			if (fileValid) {
-				line = ":" + Integer.toHexString(CS_MACRO_MEM + (macroNum * MACRO_LNTH));
+				StringBuffer buf = new StringBuffer();
+				buf.append(":" + Integer.toHexString(CS_MACRO_MEM + (macroNum * MACRO_LNTH)));
 
 				for (int i = 0; i < MACRO_LNTH; i++) {
-					line += " " + StringUtil.twoHexFromInt(nceMacroData[i++]);
-					line +=	StringUtil.twoHexFromInt(nceMacroData[i]);
+					buf.append(" " + StringUtil.twoHexFromInt(nceMacroData[i++]));
+					buf.append(StringUtil.twoHexFromInt(nceMacroData[i]));
 				}
 
 				if (log.isDebugEnabled()) 
-					log.debug("macro " + line);
+					log.debug("macro " + buf.toString());
 
-				fileOut.println(line);
+				fileOut.println(buf.toString());
 			}
 		}
 		
 		if (fileValid) {
 			// NCE file terminator
-			line = ":0000";
+			String line = ":0000";
 			fileOut.println(line);
 		}
 
@@ -245,7 +245,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	public void message(NceMessage m) {
 	} // ignore replies
 
-	// this reply always expects two consective reads
+	// this reply always expects two consecutive reads
 	public void reply(NceReply r) {
 
 		if (waiting <= 0) {
@@ -276,7 +276,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		}
 	}
 	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
+	private static class textFilter extends javax.swing.filechooser.FileFilter {
 		
 		public boolean accept(File f){
 			if (f.isDirectory())

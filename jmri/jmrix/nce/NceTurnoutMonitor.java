@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -158,7 +158,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 				log.debug("memory poll reply received for memory block "
 						+ currentBlock + ": " + r.toString());
 			}
-			// Copy recieve data into buffer and process later
+			// Copy receive data into buffer and process later
 			for (int i = 0; i < REPLY_LEN; i++){
 				dataBuffer[i + currentBlock * BLOCK_LEN] = (byte)r.getElement(i);
 			}
