@@ -19,7 +19,7 @@ import gnu.io.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -146,18 +146,15 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
      * Get an array of valid baud rates.
      */
     public String[] validBaudRates() {
-        return validSpeeds;
+        return new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
     }
     
     /**
      * And the corresponding values.
      */
     public int[] validBaudValues() {
-        return validSpeedValues;
+        return new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     }
-    
-    protected String [] validSpeeds = new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
-    protected int [] validSpeedValues = new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     
     /**
      * Option 1 is CAN-based protocol
@@ -174,7 +171,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
      * Set the CAN protocol option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[0];
         return mOpt1;
@@ -186,7 +182,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public String[] validOption2() { return new String[]{""}; }
     public String option2Name() { return "Option 2"; }
     public void configureOption2(String value) { mOpt2 = value; }
-    protected String mOpt2 = null;
     public String getCurrentOption2Setting() {
         if (mOpt2 == null) return validOption2()[0];
         return mOpt2;

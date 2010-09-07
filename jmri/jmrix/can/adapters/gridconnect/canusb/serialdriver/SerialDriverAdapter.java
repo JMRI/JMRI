@@ -13,7 +13,7 @@ import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
  *
  * @author			Andrew Crosland Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2009
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.jmrix.SerialPortAdapter {
 
@@ -21,19 +21,16 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
      * Get an array of valid baud rates.
      */
     public String[] validBaudRates() {
-        return validSpeeds;
+        return new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
     }
     
     /**
      * And the corresponding values.
      */
     public int[] validBaudValues() {
-        return validSpeedValues;
+        return new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     }
-    
-    protected String [] validSpeeds = new String[]{"57,600", "115,200", "250,000", "333,333", "460,800", "500,000"};
-    protected int [] validSpeedValues = new int[]{57600, 115200, 250000, 333333, 460800, 500000};
-    
+        
     static public SerialDriverAdapter instance() {
         if (mInstance == null) mInstance = new SerialDriverAdapter();
         return mInstance;
