@@ -16,11 +16,14 @@ import jmri.InstanceManager;
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
 
     public void testLoadStoreCurrent() throws Exception {
+        // skip if headless, as requires display to show
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+    
         // load manager
         java.io.File inFile = new java.io.File("java/test/jmri/jmrit/display/configurexml/ScaledIconTest.xml");
         
@@ -68,6 +71,9 @@ public class LoadFileTest extends jmri.configurexml.LoadFileTestBase {
     }
 
     public void testLoadStoreOld() throws Exception {
+        // skip if headless, as requires display to show
+        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+
         // load manager
         java.io.File inFile = new java.io.File("java/test/jmri/jmrit/display/configurexml/OldScaledIconTest.xml");
         
