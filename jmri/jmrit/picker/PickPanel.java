@@ -43,29 +43,29 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         _tabPane.addChangeListener(this);
     }
 
-    private JTable makeTable(PickListModel model) {
-        model.init();
-        JTable table = new JTable(model);
-        table.setRowSelectionAllowed(true);
-        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        table.getSelectionModel().addListSelectionListener(this);
-        table.setDragEnabled(true);
-        TableColumnModel columnModel = table.getColumnModel();
-
-        TableColumn sNameColumnT = columnModel.getColumn(PickListModel.SNAME_COLUMN);
-        sNameColumnT.setResizable(true);
-        sNameColumnT.setMinWidth(50);
-        sNameColumnT.setMaxWidth(200);
-
-        TableColumn uNameColumnT = columnModel.getColumn(PickListModel.UNAME_COLUMN);
-        uNameColumnT.setResizable(true);
-        uNameColumnT.setMinWidth(100);
-        uNameColumnT.setMaxWidth(300);
-
-        ROW_HEIGHT = table.getRowHeight();
-        table.setPreferredScrollableViewportSize(new java.awt.Dimension(200,7*ROW_HEIGHT));
-        return table;
-    }
+//     private JTable makeTable(PickListModel model) {
+//         model.init();
+//         JTable table = new JTable(model);
+//         table.setRowSelectionAllowed(true);
+//         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//         table.getSelectionModel().addListSelectionListener(this);
+//         table.setDragEnabled(true);
+//         TableColumnModel columnModel = table.getColumnModel();
+// 
+//         TableColumn sNameColumnT = columnModel.getColumn(PickListModel.SNAME_COLUMN);
+//         sNameColumnT.setResizable(true);
+//         sNameColumnT.setMinWidth(50);
+//         sNameColumnT.setMaxWidth(200);
+// 
+//         TableColumn uNameColumnT = columnModel.getColumn(PickListModel.UNAME_COLUMN);
+//         uNameColumnT.setResizable(true);
+//         uNameColumnT.setMinWidth(100);
+//         uNameColumnT.setMaxWidth(300);
+// 
+//         ROW_HEIGHT = table.getRowHeight();
+//         table.setPreferredScrollableViewportSize(new java.awt.Dimension(200,7*ROW_HEIGHT));
+//         return table;
+//     }
 
     private JPanel makeAddToTablePanel() {
 
@@ -117,9 +117,10 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     public void valueChanged(ListSelectionEvent e) {
         if (log.isDebugEnabled()) log.debug("ListSelectionEvent from "+e.getSource().getClass().getName()
                                             +" idx= "+e.getFirstIndex());
-        //PickListModel model =  (PickListModel)e.getSource();
-        int row = e.getFirstIndex();
         /*
+        PickListModel model =  (PickListModel)e.getSource();
+        int row = e.getFirstIndex();
+
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
