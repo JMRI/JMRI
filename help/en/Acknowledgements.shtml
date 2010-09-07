@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.115 2010-08-22 16:04:25 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.116 2010-09-07 01:32:47 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -267,7 +267,8 @@
 	<LI>Al Lautenslager of CVP Products, who loaned some EasyDCC hardware
 	and found answers to programming questions
 	<LI>Jeff Law provided two Umelec decoder definitions
-	<LI>Jim LeFevre, who did the testing on the TMCC implementation, including buying components so we could do a more complete job
+	<LI>Jim LeFevre, who did the testing on the TMCC implementation, including buying components so we could do a more complete job,
+	    and coded the function support
     <LI>Peter Lloyd-Jones, who contributed a script for playing a sound when a function key is pressed on a throttle 
     and wrote instructions and an installer Ubuntu Linux
 	<LI>Kelly Loyd, who contributed throttle code for EasyDCC
