@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.81 $ -->
+<!-- Revision $Revision: 1.82 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -26,8 +26,8 @@
   <!-- options you might want to change during development,   -->
   <!-- but please change them back before commiting this file -->
   
-    <!-- should compiler warn of use of deprecated APIs? (yes/no) -->
-    <property name="deprecation" value="no" />
+    <!-- should compiler warn of use of deprecated APIs? (on/off) -->
+    <property name="deprecation" value="off" />
   
     <!-- SDK version (1.5 as of JMRI 2.5.1) -->
     <property name="sdk_version" value="1.5" />
@@ -216,9 +216,11 @@
  	       fork="true"
            memoryinitialsize="256m"
            memorymaximumsize="256m"
+           deprecation="${deprecation}"
            debug="yes" >
        <compilerarg value="-Xlint"/>
        <compilerarg value="-Xlint:-serial"/>
+       <compilerarg value="-Xlint:-deprecation"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
