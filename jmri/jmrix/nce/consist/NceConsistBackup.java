@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 
@@ -50,11 +50,11 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	
 	private static final int CONSIST_LNTH = 16;		// 16 bytes per line
 	private static final int REPLY_16 = 16;			// reply length of 16 byte expected
-	private static int replyLen = 0;				// expected byte length
-	private static int waiting = 0;					// to catch responses not intended for this module
-	private static boolean fileValid = false;		// used to flag backup status messages
+	private int replyLen = 0;					// expected byte length
+	private int waiting = 0;					// to catch responses not intended for this module
+	private boolean fileValid = false;			// used to flag backup status messages
 	
-	private static byte[] nceConsistData = new byte [CONSIST_LNTH];
+	private byte[] nceConsistData = new byte [CONSIST_LNTH];
 	
 	JLabel textConsist = new JLabel();
 	JLabel consistNumber = new JLabel();
@@ -70,9 +70,9 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		
 		int retVal = fc.showSaveDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // cancelled
+			return; // Canceled
 		if (fc.getSelectedFile() == null)
-			return; // cancelled
+			return; // Canceled
 
 		File f = fc.getSelectedFile();
         if (fc.getFileFilter() != fc.getAcceptAllFileFilter()){
@@ -103,6 +103,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		if (JOptionPane.showConfirmDialog(null,
 				"Backup can take over a minute, continue?", "NCE Consist Backup",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+			fileOut.close();
 			return;
 		}
 		
@@ -125,7 +126,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		
 		waiting = 0;			// reset in case there was a previous error
 		fileValid = true;		// assume we're going to succeed
-		String line;			// output string to file
+	// output string to file
 
 
 		for (int consistNum = 0; consistNum < NUM_CONSIST; consistNum++) {
@@ -139,23 +140,24 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 				consistNum = NUM_CONSIST;  // break out of for loop
 
 			if (fileValid) {
-				line = ":" + Integer.toHexString(CS_CONSIST_MEM + (consistNum * CONSIST_LNTH));
+				StringBuffer buf = new StringBuffer();
+				buf.append(":" + Integer.toHexString(CS_CONSIST_MEM + (consistNum * CONSIST_LNTH)));
 
 				for (int i = 0; i < CONSIST_LNTH; i++) {
-					line += " " + StringUtil.twoHexFromInt(nceConsistData[i++]);
-					line +=	StringUtil.twoHexFromInt(nceConsistData[i]);
+					buf.append(" " + StringUtil.twoHexFromInt(nceConsistData[i++]));
+					buf.append(StringUtil.twoHexFromInt(nceConsistData[i]));
 				}
 
 				if (log.isDebugEnabled()) 
-					log.debug("consist " + line);
+					log.debug("consist " + buf.toString());
 
-				fileOut.println(line);
+				fileOut.println(buf.toString());
 			}
 		}
 		
 		if (fileValid) {
 			// NCE file terminator
-			line = ":0000";
+			String line = ":0000";
 			fileOut.println(line);
 		}
 
@@ -218,7 +220,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	public void message(NceMessage m) {
 	} // ignore replies
 
-	// this reply always expects two consective reads
+	// this reply always expects two consecutive reads
 	public void reply(NceReply r) {
 
 		if (waiting <= 0) {
@@ -242,7 +244,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		}
 	}
 	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
+	private static class textFilter extends javax.swing.filechooser.FileFilter {
 		
 		public boolean accept(File f){
 			if (f.isDirectory())

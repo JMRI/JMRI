@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -243,19 +243,19 @@ public class NceConsistRoster extends XmlFile {
             //back when the file is read.
             NceConsistRosterEntry r = _list.get(i);
             String tempComment = r.getComment();
-            String xmlComment = new String();
+            StringBuffer buf = new StringBuffer();
 
             //transfer tempComment to xmlComment one character at a time, except
             //when \n is found.  In that case, insert <?p?>
             for (int k = 0; k < tempComment.length(); k++) {
                 if (tempComment.startsWith("\n", k)) {
-                    xmlComment = xmlComment + "<?p?>";
+                	buf.append("<?p?>");
                 }
                 else {
-                    xmlComment = xmlComment + tempComment.substring(k, k + 1);
+                	buf.append(tempComment.substring(k, k + 1));
                 }
             }
-            r.setComment(xmlComment);
+            r.setComment(buf.toString());
         }
         //All Comments and Decoder Comment line feeds have been changed to processor directives
 
@@ -276,18 +276,18 @@ public class NceConsistRoster extends XmlFile {
         for (int i=0; i<numEntries(); i++){
             NceConsistRosterEntry r = _list.get(i);
             String xmlComment = r.getComment();
-            String tempComment = new String();
+            StringBuffer buf = new StringBuffer();
 
             for (int k = 0; k < xmlComment.length(); k++) {
                 if (xmlComment.startsWith("<?p?>", k)) {
-                    tempComment = tempComment + "\n";
+                    buf.append("\n");
                     k = k + 4;
                 }
                 else {
-                    tempComment = tempComment + xmlComment.substring(k, k + 1);
+                	 buf.append(xmlComment.substring(k, k + 1));
                 }
             }
-            r.setComment(tempComment);
+            r.setComment(buf.toString());
 
         }
 

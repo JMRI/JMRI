@@ -28,7 +28,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate consist address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 
@@ -37,9 +37,9 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 	private static final int CS_CONSIST_MEM = 0xF500;	// start of NCE CS Consist memory 
 	private static final int CONSIST_LNTH = 16;		// 16 bytes per consist line
 	private static final int REPLY_1 = 1;			// reply length of 1 byte expected
-	private static int replyLen = 0;				// expected byte length
-	private static int waiting = 0;					// to catch responses not intended for this module
-	private static boolean fileValid = false;		// used to flag status messages
+	private int replyLen = 0;						// expected byte length
+	private int waiting = 0;						// to catch responses not intended for this module
+	private boolean fileValid = false;				// used to flag status messages
 	
 	javax.swing.JLabel textConsist = new javax.swing.JLabel();
 	javax.swing.JLabel consistNumber = new javax.swing.JLabel();
@@ -51,9 +51,9 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 		fc.addChoosableFileFilter(new textFilter());
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
-			return; // cancelled
+			return; // Canceled
 		if (fc.getSelectedFile() == null)
-			return; // cancelled
+			return; // Canceled
 		File f = fc.getSelectedFile();
 		BufferedReader in;
 		try {
@@ -181,7 +181,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 	}
 
 	// writes 16 bytes of NCE consist memory
-	private static NceMessage writeNceConsistMemory(int curConsist, byte[] b) {
+	private NceMessage writeNceConsistMemory(int curConsist, byte[] b) {
 
 		replyLen = REPLY_1; // Expect 1 byte response
 		waiting++;
@@ -227,7 +227,7 @@ public class NceConsistRestore extends Thread implements jmri.jmrix.nce.NceListe
 		}
 	}
 	
-	private class textFilter extends javax.swing.filechooser.FileFilter {
+	private static class textFilter extends javax.swing.filechooser.FileFilter {
 		
 		public boolean accept(File f){
 			if (f.isDirectory())

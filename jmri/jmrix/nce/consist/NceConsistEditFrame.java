@@ -55,7 +55,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C) 2007 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
@@ -664,7 +664,7 @@ public class NceConsistEditFrame extends jmri.util.JmriJFrame implements
 	private void rosterBoxSelect(JComboBox locoRosterBox,
 			JTextField locoTextField, JButton adrButton) {
 		String rosterEntryTitle = locoRosterBox.getSelectedItem().toString();
-		if (rosterEntryTitle == EMPTY)
+		if (rosterEntryTitle.equals(EMPTY))
 			return;
 		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
 		DccLocoAddress a = entry.getDccLocoAddress();
