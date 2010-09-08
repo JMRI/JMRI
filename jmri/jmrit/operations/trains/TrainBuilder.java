@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.84 $
+ * @version             $Revision: 1.85 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -815,6 +815,13 @@ public class TrainBuilder extends TrainCommon{
     		// remove cars that don't have a valid track
     		if (c.getTrack() == null){
     			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildErrorRsNoLoc"),new Object[]{c.toString(), c.getLocationName()}));
+				carList.remove(carList.get(carIndex));
+				carIndex--;
+				continue;
+    		}
+    		// remove cars that have been reported as missing
+    		if (c.isLocationUnknown()){
+       			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarLocUnknown"),new Object[]{c.toString()}));
 				carList.remove(carList.get(carIndex));
 				carIndex--;
 				continue;
@@ -1721,6 +1728,9 @@ public class TrainBuilder extends TrainCommon{
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 		}
+		// Are there any cars that need to be found?
+		getCarsLocationUnknown(fileOut);
+		
 		fileOut.flush();
 		fileOut.close();
 	}

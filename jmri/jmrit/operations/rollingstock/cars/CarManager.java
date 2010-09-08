@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -310,7 +310,17 @@ public class CarManager extends RollingStockManager{
 				car.setLoad(newLoadName);
 		}
 	}
-
+	
+	public List<String> getCarsLocationUnknown(){
+		List<String> mias = new ArrayList<String>();
+		List<String> cars = getByIdList();
+		for (int i = 0; i < cars.size(); i++) {
+			Car car = getById(cars.get(i));
+			if (car.isLocationUnknown())
+				mias.add(cars.get(i));	// return unknown location car ids
+		}
+		return mias;
+	}
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
 		// get Car Edit attributes

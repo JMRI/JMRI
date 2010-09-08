@@ -17,6 +17,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -25,7 +26,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -65,6 +66,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("Comment"));
 	
 	// text field
+	JTextField commentTextField = new JTextField(60);
 	
 	// combo boxes
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
@@ -141,6 +143,15 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItemLeft (pReport, buildReportMax, 3, 16);
 		addItemLeft (pReport, buildReportVD, 4, 16);
 		
+		// manifest options
+		JPanel pComment = new JPanel();
+		pComment.setLayout(new GridBagLayout());
+		JScrollPane pCommentPane = new JScrollPane(pComment);
+		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
+		addItem (pComment, commentTextField, 0, 0);
+		
+		commentTextField.setText(Setup.getMiaComment());
+		
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
 
@@ -149,7 +160,8 @@ public class PrintOptionFrame extends OperationsFrame{
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, saveButton, 3, 9);
 		
-		getContentPane().add(pManifestPane);
+		getContentPane().add(pManifestPane);	
+		getContentPane().add(pCommentPane);
 		getContentPane().add(pReportPane);
 		getContentPane().add(pControl);
 
@@ -162,7 +174,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		pack();
-		setSize(getWidth(), getHeight()+25);	// pad out a bit
+		setSize(getWidth(), getHeight()+55);	// pad out a bit
 		setVisible(true);
 	}
 	
@@ -195,6 +207,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			Setup.setShowCarDestinationEnabled(showDestinationCheckBox.isSelected());
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
+			// misplaced car comment
+			Setup.setMiaComment(commentTextField.getText());
 			// build report level
 			if (buildReportMin.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);

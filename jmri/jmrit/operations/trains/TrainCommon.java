@@ -4,9 +4,11 @@ package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
 import java.util.ResourceBundle;
+import java.util.List;
 
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -123,6 +125,30 @@ public class TrainCommon {
 			}
 		}
 		return parsedName;
+	}
+	
+	protected void getCarsLocationUnknown(PrintWriter file){
+		CarManager cManager = CarManager.instance();
+		List<String> cars = cManager.getCarsLocationUnknown();
+		if (cars.size() == 0)
+			return;	// no cars to search for!
+		newLine(file);
+		addLine(file, Setup.getMiaComment());
+		for (int i=0; i<cars.size(); i++){
+			Car car = cManager.getById(cars.get(i));
+			searchForCar(file, car);
+		}
+	}
+	
+	protected void searchForCar(PrintWriter file, Car car){
+		String[] carNumber = car.getNumber().split("-"); // ignore any duplicate car numbers
+		String[] carType = car.getType().split("-"); // ignore lading
+		String carLength = (Setup.isShowCarLengthEnabled() ? " "+car.getLength()+ LENGTHABV : "");
+		String carColor = (Setup.isShowCarColorEnabled() ? " "+car.getColor() : "");	
+		String carComment = (Setup.isAppendCarCommentEnabled() ? " "+car.getComment() : "");
+		addLine(file, car.getRoad() + " "
+				+ carNumber[0] + " " + carType[0]
+				+ carLength + carColor + carComment);
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

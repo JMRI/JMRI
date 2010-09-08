@@ -134,6 +134,8 @@ public class TrainSwitchLists extends TrainCommon {
 				addLine(fileOut, rb.getString("NoCarDrops"));
 			}
 		}
+		// Are there any cars that need to be found?
+		getCarsLocationUnknown(fileOut);
 		fileOut.flush();
 		fileOut.close();
 	}

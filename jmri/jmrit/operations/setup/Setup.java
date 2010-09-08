@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -127,6 +127,7 @@ public class Setup {
 	private static String fontName = MONOSPACED;
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
+	private static String miaComment = rb.getString("misplacedCars");
 	private static String logoURL ="";
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;
@@ -221,6 +222,14 @@ public class Setup {
 	
 	public static void setRailroadName(String name){
 		railroadName = name;
+	}
+	
+	public static String getMiaComment(){
+		return miaComment;
+	}
+	
+	public static void setMiaComment(String comment){
+		miaComment = comment;
 	}
 	
 	public static void setTrainDirection(int direction){
@@ -722,6 +731,9 @@ public class Setup {
     	values.setAttribute("local", getTrainIconColorLocal());
     	values.setAttribute("terminate", getTrainIconColorTerminate());
     	
+      	e.addContent(values = new Element("comments"));
+    	values.setAttribute("misplacedCars", getMiaComment());
+    	
     	Element options;
     	e.addContent(options = new Element("options"));
     	options.addContent(values = new Element("setupFrameOptions"));
@@ -941,6 +953,13 @@ public class Setup {
         		String color = a.getValue();
         		if (log.isDebugEnabled()) log.debug("terminate color: "+color);
         		Setup.setTrainIconColorTerminate(color);
+        	}
+        }
+        if (operations.getChild("comments") != null){
+        	if ((a = operations.getChild("comments").getAttribute("misplacedCars"))!= null){
+           		String comment = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("Misplaced comment: "+comment);
+        		Setup.setMiaComment(comment);
         	}
         }
         Element frameOptions;
