@@ -119,9 +119,11 @@ public class TurnoutOperationManager {
 	 */
 	static public TurnoutOperationManager getInstance() {
 		if (theInstance==null) {
-			theInstance = new TurnoutOperationManager();
-	        // now create the default instances of each of the known operation types
+	        // create the default instances of each of the known operation types
 			theInstance.loadOperationTypes();
+
+            // and make available
+			theInstance = new TurnoutOperationManager();
 		}
 		return theInstance;
 	}
