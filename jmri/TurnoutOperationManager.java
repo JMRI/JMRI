@@ -24,7 +24,7 @@ public class TurnoutOperationManager {
 	private SortedMap<String,TurnoutOperation> turnoutOperations = new TreeMap<String,TurnoutOperation>();
 	private List<TurnoutOperation> operationTypes = new LinkedList<TurnoutOperation>(); // array of the defining instances of each class, held in order of appearance
 	boolean doOperations = false;			// global on/off switch
-	static TurnoutOperationManager theInstance;
+	private static TurnoutOperationManager theInstance;
 	
     public TurnoutOperationManager() {
     }
@@ -115,15 +115,22 @@ public class TurnoutOperationManager {
 	 * get the one-and-only instance of this class, if necessary creating it first.
 	 * At creation also preload the known TurnoutOperator subclasses (done here
 	 * to avoid constructor ordering problems).
+	 *
+	 * There's a threading problem here, because this invokes loadOperationTypes,
+	 * which gets the current turnout manager, often the proxy manager, which
+	 * in turn invokes loadOperationTypes again.  This is bad.
+	 *
 	 * @return	the TurnoutOperationManager
 	 */
 	static public TurnoutOperationManager getInstance() {
 		if (theInstance==null) {
-	        // create the default instances of each of the known operation types
-			theInstance.loadOperationTypes();
 
             // and make available
 			theInstance = new TurnoutOperationManager();
+
+	        // create the default instances of each of the known operation types
+			theInstance.loadOperationTypes();
+
 		}
 		return theInstance;
 	}
@@ -136,6 +143,12 @@ public class TurnoutOperationManager {
 	 * All we do is instantiate the classes. The constructors take care of putting
 	 * everything in the right places. We allow multiple occurrences of the same
 	 * name without complaining so the Proxy stuff works.
+     *
+	 * There's a threading problem here, because this invokes 
+	 * gets the current turnout manager, often the proxy manager, which
+	 * in turn invokes loadOperationTypes again.  This is bad. It's not clear
+	 * why it even works.
+	 *
 	 */
 	public void loadOperationTypes() {
 		String[] validTypes = InstanceManager.turnoutManagerInstance().getValidOperationTypes();
