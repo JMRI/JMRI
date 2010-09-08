@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.28 $
+ * @version			$Revision: 1.29 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
@@ -33,7 +33,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
         NceTrafficController.instance().addNceListener(listener);
     }
 
-    static public NceSensorManager instance() {
+   public static synchronized NceSensorManager instance() {
         if (mInstance == null) 
         	mInstance = new NceSensorManager();
         return mInstance;
