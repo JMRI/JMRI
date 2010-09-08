@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.41 $
+ * @version             $Revision: 1.42 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -160,6 +160,10 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public boolean isLocationUnknown(){
 		return _locationUnknown;
+	}
+	
+	public String getLocationName(){
+		return (isLocationUnknown()?"<?> ":"") + super.getLocationName();
 	}
 	
 	public void setCaboose(boolean caboose){
