@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -22,9 +23,12 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class PrintEngineRosterAction  extends AbstractAction {
+	
+	final int ownerMaxLen = 4;	// Only show the first 4 characters of the owner's name
+	final int locMaxLen = 33;	// limit the number of characters for location and track
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
@@ -72,10 +76,10 @@ public class PrintEngineRosterAction  extends AbstractAction {
         List<String> engines = panel.getSortByList();
         try {
         	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-					+ "\t" + rb.getString("Model") + "\t    "
-					+ rb.getString("Type") + "    " + rb.getString("Length")
+					+ "\t" + rb.getString("Model") + "\t     "
+					+ rb.getString("Type") + "      " + rb.getString("Length")
 					+ " " + rb.getString("Owner") + " "
-					+ rb.getString("Built") + "\t" + rb.getString("Location")
+					+ rb.getString("Built") + " " + rb.getString("Location")
 					+ newLine;
         	writer.write(s, 0, s.length());
         	for (int i=0; i<engines.size(); i++){
@@ -83,47 +87,58 @@ public class PrintEngineRosterAction  extends AbstractAction {
         		location = "";
         		if (!engine.getLocationName().equals("")){
         			location = engine.getLocationName() + " - " + engine.getTrackName();
-           			if (location.length() > 34)
-        				location = location.substring(0, 34);
+           			if (location.length() > locMaxLen)
+        				location = location.substring(0, locMaxLen);
         		}
          		
-        		road = engine.getRoad().trim();
+           		road = engine.getRoad().trim();
         		if (road.length() > 7)
         			road = road.substring(0, 7);
-         		for (int j=road.length(); j<7; j++)
-         			road += " ";
+        		StringBuffer buf = new StringBuffer(road);
+        		for (int j=road.length(); j<7; j++)
+        			buf.append(" ");
+        		road = buf.toString();
          		
          		model = engine.getModel();
-         		if (model.length() > 11)
-         			model = model.substring(0, 11);
-         		for (int j=model.length(); j<11; j++)
-         			model += " ";
+         		if (model.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+         			model = model.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+         		buf = new StringBuffer(model);
+         		for (int j=model.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)		
+         			buf.append(" ");
+         		model = buf.toString();
          		
         		type = engine.getType().trim();
-           		if (type.length() > 11)
-        			type = type.substring(0, 11);
-         		for (int j=type.length(); j<11; j++)
-         			type += " ";
+        		if (type.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
+        			type = type.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+           		buf = new StringBuffer(type);
+        		for (int j=type.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
+        			buf.append(" ");
+        		type = buf.toString();
          		
-           		length = engine.getLength().trim();
-         		for (int j=length.length(); j<3; j++)
-         			length += " ";
+      			length = engine.getLength().trim();
+    			buf = new StringBuffer(length);
+    			for (int j=length.length(); j<Control.MAX_LEN_STRING_LENGTH_NAME+1; j++)
+    				buf.append(" ");
+    			length = buf.toString();
  		
-         		owner = engine.getOwner().trim();
-          		if (owner.length() > 4)
-          			owner = owner.substring(0, 4);
-         		for (int j=owner.length(); j<4; j++)
-         			owner += " ";
+       			owner = engine.getOwner().trim();
+    			if (owner.length() > ownerMaxLen)
+    				owner = owner.substring(0, ownerMaxLen);
+    			buf = new StringBuffer(owner);
+    			for (int j=owner.length(); j<ownerMaxLen+1; j++)
+       				buf.append(" ");
+    			owner = buf.toString();
          		
-           		built = engine.getBuilt().trim();
-          		if (built.length() > 4)
-          			built = built.substring(0, 4);
-         		for (int j=built.length(); j<4; j++)
-         			built += " ";
+       			built = engine.getBuilt().trim();
+    			if (built.length() > 4)
+    				built = built.substring(0, 4);
+    			buf = new StringBuffer(built);
+    			for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
+     				buf.append(" ");
+    			built = buf.toString();
          		
-				s = engine.getNumber() + "\t" + road + " " + model + " " + type
-						+ " " + length + " " + owner + " "
-						+ built + " " + location + newLine;
+				s = engine.getNumber() + "\t" + road + " " + model + type
+						+ length + owner + built + location + newLine;			
         		writer.write(s, 0, s.length());
         	}
 

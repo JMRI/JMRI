@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.43 $
+ * @version             $Revision: 1.44 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -90,21 +90,7 @@ public class TrainsTableFrame extends OperationsFrame {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
         
         // create ShutDownTasks
-        if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
-        	trainDirtyTask = new SwingShutDownTask(
-        			"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
-        			rb.getString("PromptSaveQuit"), this) {
-        		public boolean checkPromptNeeded() {
-        			return !trainManagerXml.isDirty();
-        		}
-
-        		public boolean doPrompt() {
-        			storeValues();
-        			return true;
-        		}
-        	};
-        	jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);        
-        }
+        createShutDownTask();
 
         // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -423,6 +409,24 @@ public class TrainsTableFrame extends OperationsFrame {
 		for (int i=0; i<tcm.getColumnCount(); i++)
 			widths[i] = tcm.getColumn(i).getWidth();
 		return widths;
+	}
+	
+	private synchronized void createShutDownTask(){
+		if (jmri.InstanceManager.shutDownManagerInstance() != null && trainDirtyTask == null) {
+			trainDirtyTask = new SwingShutDownTask(
+					"Operations Train Window Check", rb.getString("PromptQuitWindowNotWritten"),
+					rb.getString("PromptSaveQuit"), this) {
+				public boolean checkPromptNeeded() {
+					return !trainManagerXml.isDirty();
+				}
+
+				public boolean doPrompt() {
+					storeValues();
+					return true;
+				}
+			};
+			jmri.InstanceManager.shutDownManagerInstance().register(trainDirtyTask);        
+		}
 	}
 	
     public void dispose() {

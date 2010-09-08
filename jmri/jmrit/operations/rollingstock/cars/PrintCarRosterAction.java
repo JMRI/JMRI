@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -136,67 +136,88 @@ public class PrintCarRosterAction  extends AbstractAction {
         				location = location.substring(0, locMaxLen);
         		}else if (printOnly)
         			continue;	// car doesn't have a location skip
-        		// pad out the fields
+        		
+        		// car number
         		number = car.getNumber().trim();
+        		StringBuffer buf = new StringBuffer(number);
         		for (int j=number.length(); j<7; j++)
-        			number += " ";
-
+        			buf.append(" ");
+        		number = buf.toString();
+        		
+        		// car road
         		road = car.getRoad().trim();
         		if (road.length() > 7)
         			road = road.substring(0, 7);
+        		buf = new StringBuffer(road);
         		for (int j=road.length(); j<7; j++)
-        			road += " ";
-
+        			buf.append(" ");
+        		road = buf.toString();
+        		
+        		// car type
         		type = car.getType().trim();
         		if (type.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
         			type = type.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+           		buf = new StringBuffer(type);
         		for (int j=type.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        			type += " ";
-
+        			buf.append(" ");
+        		type = buf.toString();
+ 
         		if (printLength){
         			length = car.getLength().trim();
+        			buf = new StringBuffer(length);
         			for (int j=length.length(); j<Control.MAX_LEN_STRING_LENGTH_NAME+1; j++)
-        				length += " ";
+        				buf.append(" ");
+        			length = buf.toString();
         		}
 
         		if (printWeight){
         			weight = car.getWeight().trim();
         			if (weight.length() > 4)
         				weight = weight.substring(0, 4);
+        			buf = new StringBuffer(weight);
         			for (int j=weight.length(); j<Control.MAX_LEN_STRING_WEIGHT_NAME+1; j++)
-        				weight += " ";
+        				buf.append(" ");
+        			weight = buf.toString();
         		}
 
         		if (printColor){
         			color = car.getColor().trim();
         			if (color.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
         				color = color.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+        			buf = new StringBuffer(color);
         			for (int j=color.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        				color += " ";
+        				buf.append(" ");
+        			color = buf.toString();
         		}
         		
            		if (printLoad){
         			load = car.getLoad().trim();
         			if (load.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
         				load = load.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
+        			buf = new StringBuffer(load);
         			for (int j=load.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        				load += " ";
+           				buf.append(" ");
+        			load = buf.toString();
         		}
 
         		if (printOwner){
         			owner = car.getOwner().trim();
         			if (owner.length() > ownerMaxLen)
         				owner = owner.substring(0, ownerMaxLen);
+        			buf = new StringBuffer(owner);
         			for (int j=owner.length(); j<ownerMaxLen+1; j++)
-        				owner += " ";
+           				buf.append(" ");
+        			owner = buf.toString();
         		}
 
         		if (printBuilt){
         			built = car.getBuilt().trim();
         			if (built.length() > 4)
         				built = built.substring(0, 4);
+        			buf = new StringBuffer(built);
         			for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
-        				built += " ";
+         				buf.append(" ");
+        			built = buf.toString();
         		}
 
         		s = number + " " + road + " " + type
