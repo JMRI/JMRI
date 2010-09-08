@@ -11,7 +11,7 @@ import jmri.*;
  * update process.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
     static final int RED    = SignalHead.RED;
@@ -99,6 +99,8 @@ public abstract class CrrSection extends jmri.jmrit.automat.AbstractAutomaton {
         return true;   // never terminate permanently
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="LI_LAZY_INIT_UPDATE_STATIC")
+    // this code uses statics poorly, but it's not threaded, and too old to fix, so mark as OK
     CrrSection() {
         SensorManager tm = InstanceManager.sensorManagerInstance();
         // initialize the static turnout list
