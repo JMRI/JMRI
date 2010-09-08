@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.20 2010-09-04 16:08:05 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.21 2010-09-08 18:48:25 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT operations-config (operations)*>
-<!ELEMENT operations (railRoad | settings | panel | fontName | manifestColors | manifestLogo | buildOptions | buildReport | owner | iconColor | options)*>
+<!ELEMENT operations (railRoad | settings | panel | fontName | manifestColors | manifestLogo | buildOptions | buildReport | owner | iconColor | options | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
@@ -28,6 +28,7 @@
 <!ELEMENT iconColor EMPTY>
 <!ELEMENT options (setupFrameOptions)*>
 <!ELEMENT setupFrameOptions EMPTY>
+<!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
 <!ATTLIST settings mainMenu			(true | false ) "false">         
@@ -69,5 +70,7 @@
 <!ATTLIST setupFrameOptions y		CDATA #IMPLIED> 
 <!ATTLIST setupFrameOptions height	CDATA #IMPLIED> 
 <!ATTLIST setupFrameOptions width	CDATA #IMPLIED> 
+
+<!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
 
