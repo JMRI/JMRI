@@ -15,7 +15,7 @@ package jmri;
  * Once created, the number and long/short status cannot be changed.
  *
  * @author			Bob Jacobsen Copyright (C) 2005
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class DccLocoAddress implements LocoAddress {
@@ -31,6 +31,7 @@ public class DccLocoAddress implements LocoAddress {
 	}
 
     public boolean equals(Object a) {
+        if (a==null) return false;
         try {
             DccLocoAddress other = (DccLocoAddress) a;
             if (this.number != other.number) return false;
