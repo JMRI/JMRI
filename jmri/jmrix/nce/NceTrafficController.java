@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -155,7 +155,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * @return The registered NceTrafficController instance for general use,
      *         if need be creating one.
      */
-    static public NceTrafficController instance() {
+    public static synchronized NceTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new NceTrafficController object");
             self = new NceTrafficController();
@@ -166,7 +166,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     protected static NceTrafficController self = null;
-    protected void setInstance() { self = this; }
+    protected synchronized void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { 
         NceReply reply = new NceReply();
