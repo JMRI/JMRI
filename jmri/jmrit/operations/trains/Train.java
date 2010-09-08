@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1296,10 +1296,11 @@ public class Train implements java.beans.PropertyChangeListener {
 						start = 1;
 					}
 					// rebuild line
-					line = "";
+					StringBuffer buf = new StringBuffer();
 					for (int i = start; i < inputLine.length; i++) {
-						line += inputLine[i] + " ";
+						buf.append(inputLine[i] + " ");
 					}
+					line = buf.toString();
 				} else {
 					log.debug("ERROR first characters of build report not valid ("
 									+ line + ")");
@@ -1419,10 +1420,12 @@ public class Train implements java.beans.PropertyChangeListener {
             trainIcon.getTooltip().setBackgroundColor(Color.white);
 			if (rl != null){
 				if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
-					if (animation)
-						new TrainIconAnimation(trainIcon, rl);
-					else
+					if (animation){
+						TrainIconAnimation ta = new TrainIconAnimation(trainIcon, rl);
+						ta.start();	// start the animation
+					} else {
 						trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+					}
 				}
 			}
 		} 

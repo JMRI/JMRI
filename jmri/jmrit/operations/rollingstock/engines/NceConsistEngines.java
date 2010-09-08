@@ -40,7 +40,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 
@@ -243,6 +243,7 @@ jmri.jmrix.nce.NceListener {
 	public void message(NceMessage m) {
 	} // ignore replies
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY")
 	public void reply(NceReply r) {
 
 		if (waiting <= 0) {

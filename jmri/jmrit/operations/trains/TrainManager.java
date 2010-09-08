@@ -29,26 +29,26 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.40 $
+ * @version	$Revision: 1.41 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
 	// Train frame attributes
-	protected String _sortBy = "";				// Trains frame sort radio button
-	protected String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
-	protected boolean _buildMessages = true;	// when true, show build messages
-	protected boolean _buildReport = false;		// when true, print/preview build reports
-	protected boolean _printPreview = false;	// when true, preview train manifest
-	protected TrainsTableFrame _trainFrame = null;
-	protected Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
-	protected Point _framePosition = new Point();
+	private String _sortBy = "";				// Trains frame sort radio button
+	private String _trainAction = TrainsTableFrame.MOVE;	// Trains frame table button action
+	private boolean _buildMessages = true;	// when true, show build messages
+	private boolean _buildReport = false;		// when true, print/preview build reports
+	private boolean _printPreview = false;	// when true, preview train manifest
+	private TrainsTableFrame _trainFrame = null;
+	private Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
+	private Point _framePosition = new Point();
 	// Train frame table column widths (12), starts with Time column and ends with Edit
-	protected int[] _tableColumnWidths = {40, 38, 72, 100, 120, 100, 100, 100, 100, 100, 66, 60};
+	private int[] _tableColumnWidths = {40, 38, 72, 100, 120, 100, 100, 100, 100, 100, 66, 60};
 	
 	// Edit Train frame attributes
-	protected TrainEditFrame _trainEditFrame = null;
-	protected Dimension _editFrameDimension = null;
-	protected Point _editFramePosition = null;
+	private TrainEditFrame _trainEditFrame = null;
+	private Dimension _editFrameDimension = null;
+	private Point _editFramePosition = null;
 	
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
@@ -181,7 +181,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     }
 	
 	//	 stores known Train instances by id
-    protected Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();   
+    private Hashtable<String, Train> _trainHashTable = new Hashtable<String, Train>();   
 
     /**
      * @return requested Train object or null if none exists
@@ -618,7 +618,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+    private void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManager.class.getName());
 
