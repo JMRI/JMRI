@@ -12,7 +12,7 @@ import jmri.jmris.AbstractPowerServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class simplePowerServer extends AbstractPowerServer {
@@ -22,6 +22,7 @@ public class simplePowerServer extends AbstractPowerServer {
    public simplePowerServer(DataInputStream inStream,DataOutputStream outStream){
 
         output=outStream;
+        mgrOK();
     }
 
 

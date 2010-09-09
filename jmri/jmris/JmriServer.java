@@ -122,7 +122,7 @@ public class JmriServer {
 	      while(running) {
 	         Socket clientSocket = listenSocket.accept();
 	         if(log.isDebugEnabled())
-		    log.debug(" Client Connected ");
+		    log.debug(" Client Connected from IP " + clientSocket.getInetAddress() + " port " +clientSocket.getPort() );
 	         addClient(new clientListener(clientSocket));
 	      }
 	      } catch (IOException e) {
@@ -154,6 +154,7 @@ public class JmriServer {
      Thread clientThread = null;     
 
      public clientListener(Socket socket) {
+        if(log.isDebugEnabled()) log.debug("Starting new Client");
 	clientSocket = socket;
 	try {
 	  inStream = new DataInputStream(socket.getInputStream());

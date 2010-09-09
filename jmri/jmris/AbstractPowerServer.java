@@ -12,7 +12,7 @@ import jmri.PowerManager;
  * Abstract interface between the JMRI power manager and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 abstract public class AbstractPowerServer implements java.beans.PropertyChangeListener {
@@ -20,7 +20,7 @@ abstract public class AbstractPowerServer implements java.beans.PropertyChangeLi
    public AbstractPowerServer(){
 
         // Check to see if the Power Manger has a current status
-        if(mgrOK()) {
+/*        if(mgrOK()) {
                 try {
                         sendStatus(p.getPower());
                 } catch (JmriException ex) {
@@ -32,10 +32,10 @@ abstract public class AbstractPowerServer implements java.beans.PropertyChangeLi
                 } catch(IOException ie2) {
                 } catch (java.lang.NullPointerException je2) {
                 }
-        }
+        }*/
     }
 
-    private boolean mgrOK() {
+    protected boolean mgrOK() {
         if (p==null) {
             p = InstanceManager.powerManagerInstance();
             if (p == null) {

@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  *
  */
 public class simpleServer extends JmriServer{
@@ -39,7 +39,6 @@ public class simpleServer extends JmriServer{
      public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes
 	String cmd; 
-	int index=0;
 
         // interface components
         simplePowerServer powerServer = new simplePowerServer(inStream,outStream);
@@ -54,28 +53,27 @@ public class simpleServer extends JmriServer{
 	   // Read the command from the client
            cmd = inStream.readLine();
            
-           index = 0;
            if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
-              if(cmd.substring(index).startsWith("POWER")){
+              if(cmd.startsWith("POWER")){
 	         try {
                      powerServer.parseStatus(cmd);
 		     powerServer.sendStatus(InstanceManager.powerManagerInstance().getPower());
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
-                 } else if(cmd.substring(index).startsWith("TURNOUT")){
+                 } else if(cmd.startsWith("TURNOUT")){
 	         try {
                      turnoutServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
-                 } else if(cmd.substring(index).startsWith("LIGHT")){
+                 } else if(cmd.startsWith("LIGHT")){
 	         try {
                      lightServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {
                        outStream.writeBytes("not supported\n");
                      }
-                 } else if(cmd.substring(index).startsWith("SENSOR")){
+                 } else if(cmd.startsWith("SENSOR")){
 	         try {
                      sensorServer.parseStatus(cmd);
                      } catch(jmri.JmriException je) {

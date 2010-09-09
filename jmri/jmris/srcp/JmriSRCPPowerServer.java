@@ -12,7 +12,7 @@ import jmri.jmris.AbstractPowerServer;
  * SRCP interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class JmriSRCPPowerServer extends AbstractPowerServer {
@@ -21,6 +21,7 @@ public class JmriSRCPPowerServer extends AbstractPowerServer {
 
    public JmriSRCPPowerServer(DataOutputStream outStream){
         output=outStream;
+        mgrOK();
     }
 
 
