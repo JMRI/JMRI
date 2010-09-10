@@ -8,7 +8,6 @@ import javax.help.HelpSet;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.Icon;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -25,7 +24,7 @@ import java.net.URL;
  * It assumes that Java Help 1.1.8 is in use
  *
  * @author Bob Jacobsen  Copyright 2007
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class HelpUtil {
@@ -73,6 +72,10 @@ public class HelpUtil {
             JMenuItem context = new JMenuItem(rb.getString("MenuItemContext"));
             helpMenu.add(context);
             context.addActionListener(new apps.ReportContextAction());
+
+            JMenuItem console = new JMenuItem(rb.getString("MenuItemConsole"));
+            helpMenu.add(console);
+            console.addActionListener(new apps.SystemConsoleAction());
 
             helpMenu.add(new jmri.jmrit.mailreport.ReportAction());
         }

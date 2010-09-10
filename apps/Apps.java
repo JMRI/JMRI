@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.116 $
+ * @version     $Revision: 1.117 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -603,6 +603,11 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     		log.debug("initLog4J already initialized!");
     		return;
     	}
+        // Initialise JMRI System Console
+        // Need to do this before initialising log4j so that the new
+        // stdout and stderr streams are set-up and usable by the ConsoleAppender
+        SystemConsole.init();
+
         log4JSetUp = true;
         // initialize log4j - from logging control file (lcf) only
         // if can find it!
