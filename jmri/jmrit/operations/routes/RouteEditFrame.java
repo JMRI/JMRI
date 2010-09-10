@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -231,7 +231,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void saveNewRoute(){
-		if (!checkName())
+		if (!checkName(rb.getString("add")))
 			return;
 		Route route = manager.newRoute(routeNameTextField.getText());
 		routeModel.initTable(routeTable, route);
@@ -242,7 +242,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	}
 	
 	private void saveRoute (){
-		if (!checkName())
+		if (!checkName(rb.getString("save")))
 			return;
 		_route.setName(routeNameTextField.getText());
 		_route.setComment(commentTextField.getText());
@@ -261,13 +261,18 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	 * 
 	 * @return true if name is less than 26 characters
 	 */
-	private boolean checkName(){
-		if (routeNameTextField.getText().trim().equals(""))
+	private boolean checkName(String s){
+		if (routeNameTextField.getText().trim().equals("")){
+			log.debug("Must enter a name for the route");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("MustEnterName"), MessageFormat.format(rb.getString("CanNotRoute"), new Object[] {s}),
+					JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
 		if (routeNameTextField.getText().length() > 25){
 			log.error("Route name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
-					rb.getString("RouteNameLess"), rb.getString("CanNotAddRoute"),
+					rb.getString("RouteNameLess"), MessageFormat.format(rb.getString("CanNotRoute"), new Object[] {s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}

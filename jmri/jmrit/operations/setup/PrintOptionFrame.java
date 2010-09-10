@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.File;
 import java.util.ResourceBundle;
@@ -17,7 +18,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 
 import jmri.jmrit.operations.OperationsFrame;
 
@@ -26,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -66,7 +67,11 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("Comment"));
 	
 	// text field
-	JTextField commentTextField = new JTextField(60);
+	
+	// text area
+	JTextArea commentTextArea	= new JTextArea(2,60);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	Dimension minScrollerDim = new Dimension(500,60);
 	
 	// combo boxes
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
@@ -148,9 +153,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		pComment.setLayout(new GridBagLayout());
 		JScrollPane pCommentPane = new JScrollPane(pComment);
 		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
-		addItem (pComment, commentTextField, 0, 0);
+		addItem (pComment, commentScroller, 0, 0);
 		
-		commentTextField.setText(Setup.getMiaComment());
+		commentTextArea.setText(Setup.getMiaComment());
 		
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
@@ -208,7 +213,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			// append car comment
 			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
 			// misplaced car comment
-			Setup.setMiaComment(commentTextField.getText());
+			Setup.setMiaComment(commentTextArea.getText());
 			// build report level
 			if (buildReportMin.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_MINIMAL);

@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -605,15 +605,20 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 
 	/**
 	 * 
-	 * @return true if name is less than 26 characters
+	 * @return true if name is less than 26 characters and is at least one character
 	 */
-	private boolean checkName(String operation){
-		if (trainNameTextField.getText().trim().equals(""))
-				return false;
+	private boolean checkName(String s){
+		if (trainNameTextField.getText().trim().equals("")){
+			log.debug("Must enter a train name");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("MustEnterName"), MessageFormat.format(rb.getString("CanNot"), new Object[] {s}), 
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		if (trainNameTextField.getText().length() > 25){
 			log.error("Train name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
-					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {operation}),
+					rb.getString("TrainNameLess26"), MessageFormat.format(rb.getString("CanNot"), new Object[] {s}),
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
@@ -886,7 +891,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null)
 			route = _train.getRoute();
 		if (route != null){
-			textRouteStatus.setText(route.getStatus()?"     ":rb.getString("Error"));
+			textRouteStatus.setText(route.getStatus());
 			List<String> locations = route.getLocationsBySequenceList();
 			for (int i=0; i<locations.size(); i++){
 				RouteLocation rl = route.getLocationById(locations.get(i));

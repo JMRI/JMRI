@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 
 import org.jdom.Element;
 
@@ -14,9 +17,11 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class Route implements java.beans.PropertyChangeListener {
+	
+	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
 	protected String _id = "";
 	protected String _name = "";
@@ -305,18 +310,25 @@ public class Route implements java.beans.PropertyChangeListener {
     
     /**
      * Gets the status of the route
-     * @return true if route is okay.
+     * @return string with status of route.
      */
-    public boolean getStatus(){
+    public String getStatus(){
     	List<String> routeIds = getLocationsByIdList();
     	if(routeIds.size() == 0)
-    		return false;
+    		return rb.getString("Error");
     	for (int i=0; routeIds.size()>i; i++){
     		RouteLocation rl = getLocationById(routeIds.get(i));
     		if (rl.getName().equals(RouteLocation.DELETED))
-    			return false;
+    			return rb.getString("Error");
     	}
-    	return true;
+    	// check to see if this route is used by a train
+		List<String> trains = TrainManager.instance().getTrainsByIdList();
+		for (int i=0; i<trains.size(); i++){
+			Train train = TrainManager.instance().getTrainById(trains.get(i));
+			if (train.getRoute() == this)
+				return rb.getString("Okay");
+		}
+	   	return rb.getString("Orphan");
     }
 
  	

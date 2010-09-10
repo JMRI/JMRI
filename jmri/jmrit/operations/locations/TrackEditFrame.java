@@ -11,6 +11,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 
 import java.awt.*;
+
 import javax.swing.*;
 
 import java.text.MessageFormat;
@@ -23,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -68,7 +69,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// text field
 	JTextField trackNameTextField = new JTextField(20);
 	JTextField trackLengthTextField = new JTextField(5);
-	JTextField commentTextField = new JTextField(35);
+	
+	// text area
+	JTextArea commentTextArea	= new JTextArea(2,60);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	Dimension minScrollerDim = new Dimension(500,42);
 
 	// for padding out panels
 	JLabel space1 = new JLabel("     ");
@@ -141,7 +146,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
     	panelComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
-		addItem(panelComment, commentTextField, 0, 0);
+		addItem(panelComment, commentScroller, 0, 0);
 				
 		// row 12
 		JPanel panelButtons = new JPanel();
@@ -187,7 +192,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_track !=null){
 			_track.addPropertyChangeListener(this);
 			trackNameTextField.setText(_track.getName());
-			commentTextField.setText(_track.getComment());
+			commentTextArea.setText(_track.getComment());
 			trackLengthTextField.setText(Integer.toString(_track.getLength()));
 			enableButtons(true);
 			trackName = _track.getName();
@@ -275,14 +280,16 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		checkLength(_track);
 		//update check boxes
 		updateCheckboxes();
-		// store comment
-		_track.setComment(commentTextField.getText());
+
 		_track.addPropertyChangeListener(this);
-		// enable 
-		enableButtons(true);
+
 		// setup check boxes
 		selectCheckboxes(true);
 		updateTrainDir();
+		// store comment
+		_track.setComment(commentTextArea.getText());
+		// enable 
+		enableButtons(true);
 		// save location file
 		managerXml.writeOperationsFile();
 	}
@@ -305,7 +312,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		track.setTrainDirections(direction);
 		track.setName(trackNameTextField.getText());
 		
-		track.setComment(commentTextField.getText());
+		track.setComment(commentTextArea.getText());
 		// enable 
 		enableButtons(true);
 		// save location file
@@ -334,6 +341,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(String s){
+		if (trackNameTextField.getText().trim().equals("")){
+			log.debug("Must enter a track name");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("MustEnterName"),
+					MessageFormat.format(rb.getString("CanNotTrack"),new Object[]{s }),
+					JOptionPane.ERROR_MESSAGE);
+			return false;
+		}
 		if (trackNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Track name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" charaters");
 			JOptionPane.showMessageDialog(this,
@@ -342,8 +357,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (trackNameTextField.getText().trim().equals(""))
-			return false;
 		return true;
 	}
 	

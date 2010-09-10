@@ -8,10 +8,13 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 import java.io.File;
@@ -30,7 +33,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -486,6 +489,26 @@ public class OperationsRoutesTest extends TestCase {
 		listByName = rm.getRoutesByNameList();
 		Assert.assertEquals("Route id list is empty", true, listById.isEmpty());
 		Assert.assertEquals("Route name list is empty", true, listByName.isEmpty());
+	}
+	
+	// test route status
+	public void testRouteStatus(){
+		RouteManager rm = RouteManager.instance();
+		Route r = rm.newRoute("TestRouteStatus");		
+		// note that the status strings are defined in JmritOperationsRoutesBundle.properties
+		Assert.assertEquals("Route status error", "Error", r.getStatus());
+		
+		// now add a location to the route
+		Location l = LocationManager.instance().newLocation("TestRouteStatusLoc");
+		r.addLocation(l);
+		// note that the status strings are defined in JmritOperationsRoutesBundle.properties
+		Assert.assertEquals("Route status ophan", "Orphan", r.getStatus());
+		
+		// now connect route to a train
+		Train t = TrainManager.instance().newTrain("TestRouteStatusTrain");
+		t.setRoute(r);
+		// note that the status strings are defined in JmritOperationsRoutesBundle.properties
+		Assert.assertEquals("Route status ophan", "Okay", r.getStatus());
 	}
 
 	// test location Xml create support

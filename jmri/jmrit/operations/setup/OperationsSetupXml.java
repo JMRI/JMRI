@@ -12,7 +12,7 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores the operation setup using xml files. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsSetupXml extends OperationsXml {
 	
@@ -51,11 +51,12 @@ public class OperationsSetupXml extends OperationsXml {
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 
-	        // add top-level elements
-	        
+	        Setup.setMiaComment(convertToXmlComment(Setup.getMiaComment()));	        
+	        // add top-level elements	        
 	        root.addContent(Setup.store());
 
-	        writeXML(file, doc);
+	        writeXML(file, doc);	        
+	        Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
 
 	        // done, so can't be dirty
 	        setDirty(false);
@@ -73,7 +74,8 @@ public class OperationsSetupXml extends OperationsXml {
 			log.debug(name + " file could not be read");
 			return;
 		}
-		Setup.load(root);
+		Setup.load(root);		
+        Setup.setMiaComment(convertFromXmlComment(Setup.getMiaComment()));
 	}
 	
 	public void setOperationsFileName(String name) { operationsFileName = name; }

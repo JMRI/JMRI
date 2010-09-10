@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.13 $
+ * @version   $Revision: 1.14 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -141,7 +141,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case IDCOLUMN: return r.getId();
         case NAMECOLUMN: return r.getName();
-        case STATUSCOLUMN: return r.getStatus()?rb.getString("Okay"):rb.getString("Error");
+        case STATUSCOLUMN: return r.getStatus();
         case EDITCOLUMN: return rb.getString("Edit");
         default: return "unknown "+col;
         }

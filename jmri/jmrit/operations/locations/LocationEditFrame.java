@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -78,7 +78,11 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         
 	// text field
 	JTextField locationNameTextField = new JTextField(20);
-	JTextField commentTextField = new JTextField(35);
+	
+	// text area
+	JTextArea commentTextArea	= new JTextArea(2,60);
+	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+	Dimension minScrollerDim = new Dimension(500,42);
 	
 	// combo boxes
 
@@ -131,7 +135,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (_location != null){
 			enableButtons(true);
 			locationNameTextField.setText(_location.getName());
-			commentTextField.setText(_location.getComment());
+			commentTextArea.setText(_location.getComment());
 	      	yardModel.initTable(yardTable, location);
 	      	sidingModel.initTable(sidingTable, location);
 	      	interchangeModel.initTable(interchangeTable, location);
@@ -198,7 +202,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     	JPanel pC = new JPanel();
     	pC.setLayout(new GridBagLayout());
     	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
-		addItem(pC, commentTextField, 0, 0);
+    	commentScroller.setMinimumSize(minScrollerDim);
+		addItem(pC, commentScroller, 0, 0);
 				
 		// row 12
 	   	JPanel pB = new JPanel();
@@ -398,7 +403,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		if (!checkName(rb.getString("save")))
 			return;
 		_location.setName(locationNameTextField.getText());
-		_location.setComment(commentTextField.getText());
+		_location.setComment(commentTextArea.getText());
 
 		if (sidingRadioButton.isSelected() || yardRadioButton.isSelected() || interchangeRadioButton.isSelected()){
 			_location.setLocationOps(Location.NORMAL);
@@ -418,8 +423,14 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 	 * @return true if name is less than 26 characters
 	 */
 	private boolean checkName(String s){
-		if (locationNameTextField.getText().trim().equals(""))
+		if (locationNameTextField.getText().trim().equals("")){
+			log.debug("Must enter a location name");
+			JOptionPane.showMessageDialog(this,
+					rb.getString("MustEnterName"),
+					MessageFormat.format(rb.getString("CanNotLocation"),new Object[]{s }),
+					JOptionPane.ERROR_MESSAGE);
 			return false;
+		}
 		if (locationNameTextField.getText().length() > MAX_NAME_LENGTH){
 			log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
 			JOptionPane.showMessageDialog(this,
