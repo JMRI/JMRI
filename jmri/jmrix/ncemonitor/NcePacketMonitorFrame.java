@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -350,7 +350,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         t.stop();
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread!=null) stopThread(readerThread);
 
@@ -381,7 +381,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         return portNameVector;
     }
 
-    public String openPort(String portName, String appName)  {
+    public synchronized String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
