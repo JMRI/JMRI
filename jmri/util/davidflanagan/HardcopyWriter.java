@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -58,7 +58,7 @@ public class HardcopyWriter extends Writer {
     protected int pagenum = 0;
     protected Color color = Color.black;
     
-    protected static boolean isPreview;
+    protected boolean isPreview;
     protected Graphics previewedPage;
     protected Image previewImage;
     protected Graphics previewImagegr;
@@ -79,7 +79,7 @@ public class HardcopyWriter extends Writer {
     private boolean last_char_was_return = false;
 
     // A static variable to hold prefs between print jobs
-    protected static Properties printprops = new Properties();
+    private static Properties printprops = new Properties();
 
     // constructor modified to add print preview parameter
     public HardcopyWriter(Frame frame, String jobname, int fontsize,
