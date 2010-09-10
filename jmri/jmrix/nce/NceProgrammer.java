@@ -10,12 +10,12 @@ import java.beans.PropertyChangeListener;
 import java.util.Vector;
 
 /**
- * Convert the jmri.Programmer interface into commands for the NCE powerstation.
+ * Convert the jmri.Programmer interface into commands for the NCE power house.
  * <P>
- * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transistions
+ * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transitions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
@@ -111,7 +111,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = false;
@@ -136,7 +136,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         readCV(CV, p);
     }
 
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    public synchronized void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;
@@ -198,7 +198,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         log.error("message received unexpectedly: "+m.toString());
     }
 
-    synchronized public void reply(NceReply m) {
+    public synchronized void reply(NceReply m) {
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
             if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
@@ -221,7 +221,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
                     // read was in progress - get return value
                     _val = m.value();
                 }
-                // if this was a read, we retreived the value above.  If its a
+                // if this was a read, we retrieved the value above.  If its a
                 // write, we're to return the original write value
                 notifyProgListenerEnd(_val, jmri.ProgListener.OK);
             }
@@ -238,7 +238,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     /**
      * Internal routine to handle a timeout
      */
-    synchronized protected void timeout() {
+    protected synchronized void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
             if (log.isDebugEnabled()) log.debug("timeout!");

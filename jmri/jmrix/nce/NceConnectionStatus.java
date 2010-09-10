@@ -19,7 +19,7 @@ import jmri.jmrix.ConnectionStatus;
  * Also checks for March 2007 EPROM and warns user about Monitoring feedback.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * 
  */
 
@@ -51,7 +51,7 @@ public class NceConnectionStatus implements NceListener {
 	private int epromState = INIT_STATE;	//Eprom state
 	private boolean epromChecked = false;
 
-	protected static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
+	private static boolean nceEpromMarch2007 = false; // flag to allow JMRI to be bug for bug compatible
 	
 	// Our current knowledge of NCE Command Station EPROMs
 	private static final int VV_1999 = 4; // Revision of Apr 1999 EPROM VV.MM.mm = 4.0.1
@@ -256,7 +256,7 @@ public class NceConnectionStatus implements NceListener {
 			
 			// Warn about the March 2007 CS EPROM	
 			if (VV == VV_2007 && MM == MM_2007 && mm == mm_2007) {
-				nceEpromMarch2007 = true;
+				setNceEpromMarch2007(true);
 				epromState = WARN2_STATE;
 			}
 
@@ -311,6 +311,14 @@ public class NceConnectionStatus implements NceListener {
 
 		} else
 			log.warn("wrong number of read bytes for revision check");
+	}
+	
+	public static boolean isNceEpromMarch2007(){
+		return nceEpromMarch2007;
+	}
+	
+	private static void setNceEpromMarch2007(boolean b){
+		nceEpromMarch2007 = b;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

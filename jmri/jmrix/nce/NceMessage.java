@@ -27,7 +27,7 @@ import java.util.Arrays;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 public class NceMessage extends jmri.jmrix.AbstractMRMessage {
 	
@@ -53,7 +53,7 @@ public class NceMessage extends jmri.jmrix.AbstractMRMessage {
     protected static final int NCE_PAGED_CV_TIMEOUT=20000;
     protected static final int NCE_DIRECT_CV_TIMEOUT=10000;			
     protected static final int SHORT_TIMEOUT=10000;				// worst case is when loading the first panel
-    protected static boolean ncsProgMode = false;				// Do not use exit program mode unless active
+    private static boolean ncsProgMode = false;					// Do not use exit program mode unless active
     
     public NceMessage() {
         super();

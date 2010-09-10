@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -211,7 +211,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 									// MSB isn't used and the bit map is skewed
 									// by one bit, ie accy num 2 is in bit 0,
 									// should have been in bit 1.
-									if (NceConnectionStatus.nceEpromMarch2007) {
+									if (NceConnectionStatus.isNceEpromMarch2007()) {
 										// bit 3 is shared by two accessories!!!!
 										if (i == 3)
 											monitorActionCommanded(NTnum - 3,
@@ -252,7 +252,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 									// MSB isn't used and the bit map is skewed
 									// by one bit, ie accy num 2 is in bit 0,
 									// should have been in bit 1.
-									if (NceConnectionStatus.nceEpromMarch2007) {
+									if (NceConnectionStatus.isNceEpromMarch2007()) {
 										if (!sentWarnMessage){
 											log.warn("The installed NCE Command Station EPROM has problems when using turnout MONITORING feedback");
 											sentWarnMessage = true;

@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 
@@ -220,6 +220,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	public void message(NceMessage m) {
 	} // ignore replies
 
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY")
 	// this reply always expects two consecutive reads
 	public void reply(NceReply r) {
 
