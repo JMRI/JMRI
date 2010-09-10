@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class LocationManagerXml extends OperationsXml {
 	
@@ -175,7 +175,7 @@ public class LocationManagerXml extends OperationsXml {
 		return operationsFileName;
 	}
 
-    private static String operationsFileName = "OperationsLocationRoster.xml";
+    private String operationsFileName = "OperationsLocationRoster.xml";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocationManagerXml.class.getName());
 

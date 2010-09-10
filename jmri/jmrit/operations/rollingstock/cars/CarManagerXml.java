@@ -20,7 +20,7 @@ import jmri.jmrit.operations.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class CarManagerXml extends OperationsXml {
 	
@@ -224,7 +224,7 @@ public class CarManagerXml extends OperationsXml {
 	public String getOperationsFileName(){
 		return operationsFileName;
 	}
-    protected static String operationsFileName = "OperationsCarRoster.xml";
+    private String operationsFileName = "OperationsCarRoster.xml";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManagerXml.class.getName());
 
