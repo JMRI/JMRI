@@ -26,7 +26,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
 
@@ -87,8 +87,7 @@ public abstract class AbstractAudio extends AbstractNamedBean implements Audio {
         double multiplier = Math.pow(10, places);
         value *= multiplier;
         int i = Math.round(value);
-        value = i;
-        return value /= multiplier;
+        return i /= multiplier;
     }
 
     /**
