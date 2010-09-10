@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class PrintTrainsAction  extends AbstractAction {
 	
@@ -105,10 +105,11 @@ public class PrintTrainsAction  extends AbstractAction {
 		if (string.length()>MAX_NAME_LENGTH)
 			string = string.substring(0, MAX_NAME_LENGTH);
 		// pad out the string
+		StringBuffer buf = new StringBuffer(string);
 		for (int j=string.length(); j < MAX_NAME_LENGTH; j++) {
-			string += " ";
+			buf.append(" ");
 		}
-		return string;
+		return buf.toString();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainsAction.class.getName());

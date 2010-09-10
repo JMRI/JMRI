@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -129,10 +129,11 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<sidings.size(); k++){
         				Track siding = location.getTrackById(sidings.get(k));
         				name = siding.getName();
+        				buf = new StringBuffer(name);
                 		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-                			name += " ";
+                			buf.append(" ");
                 		}
-                		s = getTrackString (siding, name);
+                		s = getTrackString (siding, buf.toString());
                 		writer.write(s, 0, s.length());
                    		numberCars += siding.getNumberCars();
                 		numberEngines += siding.getNumberEngines();
@@ -146,10 +147,11 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<interchanges.size(); k++){
         				Track interchange = location.getTrackById(interchanges.get(k));
         				name = interchange.getName();
+        				buf = new StringBuffer(name);
                 		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-                			name += " ";
+                			buf.append(" ");
                 		}
-                		s = getTrackString (interchange, name);
+                		s = getTrackString (interchange, buf.toString());
                 		writer.write(s, 0, s.length());
                 		numberCars += interchange.getNumberCars();
                 		numberEngines += interchange.getNumberEngines();
@@ -163,8 +165,9 @@ public class PrintLocationsAction  extends AbstractAction {
          			for (int k=0; k<stagings.size(); k++){
         				Track staging = location.getTrackById(stagings.get(k));
         				name = staging.getName();
+        				buf = new StringBuffer(name);
                 		for (int j=name.length(); j < TrackEditFrame.MAX_NAME_LENGTH; j++) {
-                			name += " ";
+                			buf.append(" ");
                 		}
                 		s = getTrackString (staging, buf.toString());
                 		writer.write(s, 0, s.length());
