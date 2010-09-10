@@ -14,15 +14,13 @@ package jmri.jmrix.lenz;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender Copyright (C) 2004-2010
- * @version 		$Revision: 2.8 $
+ * @version 		$Revision: 2.9 $
  *
  */
 public class XNetTrafficRouter extends XNetTrafficController implements XNetListener {
 
 	public XNetTrafficRouter(LenzCommandStation pCommandStation) {
         super(pCommandStation);
-        // set the instance to point here
-        self=this;
     }
 
     // The methods to implement the XNetInterface for clients.

@@ -8,7 +8,7 @@ import junit.framework.*;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.7 $
+ * @version $Revision: 2.8 $
  */
 public class XNetTrafficRouterTest extends TestCase {
 
@@ -27,7 +27,7 @@ public class XNetTrafficRouterTest extends TestCase {
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
-        Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
+        Assert.assertNotNull("exists",router);
 
         // connect
         router.connect(upstream);
@@ -47,6 +47,9 @@ public class XNetTrafficRouterTest extends TestCase {
 
     static int count = 0;
 
+    static void resetCount() { count = 0; }
+    static void incrementCount() { count++; }
+
     public void testReceiveAndForward() {
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation())
@@ -55,13 +58,13 @@ public class XNetTrafficRouterTest extends TestCase {
             public void receiveLoop() {}
             protected void portWarn(Exception e) {}
         };
-        Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
+        Assert.assertNotNull("exists",router);
 
-        count = 0;
+        resetCount();
         // register a listener
         XNetListener l = new XNetListener(){
             public void message(XNetReply m) {
-                count++;
+                incrementCount();
             }
             public void message(XNetMessage m) {
             }
@@ -91,7 +94,7 @@ public class XNetTrafficRouterTest extends TestCase {
 
         // create object
         XNetTrafficRouter router = new XNetTrafficRouter(new LenzCommandStation());
-        Assert.assertEquals("router is instance", XNetTrafficController.instance(), router);
+        Assert.assertNotNull("exists",router);
 
         // connect
         router.connect(upstream);

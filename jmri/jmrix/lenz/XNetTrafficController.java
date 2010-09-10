@@ -17,7 +17,7 @@ import java.util.Hashtable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2004-2010
- * @version 		$Revision: 2.21 $
+ * @version 		$Revision: 2.22 $
  *
  */
 public abstract class XNetTrafficController extends AbstractMRTrafficController implements XNetInterface {
@@ -43,7 +43,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
 		if(self==null) self=this;
 	}
 
-	static protected XNetTrafficController self = null;
+	static XNetTrafficController self = null;
 
     /**
      * Must provide a LenzCommandStation reference at creation time

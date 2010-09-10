@@ -21,14 +21,18 @@ package jmri.jmrix.lenz;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 2.11 $
+ * @version 		$Revision: 2.12 $
  *
  */
 public class XNetPacketizer extends XNetTrafficController {
 
 	public XNetPacketizer(LenzCommandStation pCommandStation) {
         super(pCommandStation);
-        self=this;
+        // The instance method (from XNetTrafficController) is deprecated
+        // But for the moment we need to make sure we set the static
+        // self variable, and hte instance method does this for us in a
+        // static way (which makes findbugs happy).
+        //instance();
     }
 
 

@@ -9,7 +9,7 @@ import java.util.Vector;
  *
  * Description:	 	Test scaffold implementation of XNetInterface
  * @author			Bob Jacobsen Copyright (C) 2002, 2006
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  *
  * Use an object of this type as a XNetTrafficController in tests
  */
@@ -17,7 +17,6 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
 
 	public XNetInterfaceScaffold(LenzCommandStation pCommandStation) {
         super(pCommandStation);
-		self = this;
 	}
 
 	// override some XNetTrafficController methods for test purposes
