@@ -12,7 +12,7 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
@@ -27,7 +27,7 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
     /**
      * Forward a write request to an ops-mode write operation
      */
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) log.debug("write CV="+CV+" val="+val);
         NceMessage msg;
         // USB can't send a NMRA packet, must use new ops mode command
@@ -60,13 +60,13 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         controller().sendNceMessage(msg, this);
     }
 
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) log.debug("read CV="+CV);
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    public synchronized void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
