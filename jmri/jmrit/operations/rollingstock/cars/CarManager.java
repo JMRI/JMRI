@@ -3,7 +3,7 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 
@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.36 $
+ * @version	$Revision: 1.37 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -45,7 +45,7 @@ public class CarManager extends RollingStockManager{
 			if (log.isDebugEnabled()) log.debug("CarManager creating instance");
 			// create and load
 			_instance = new CarManager();
-			OperationsXml.instance();					// load setup
+			OperationsSetupXml.instance();					// load setup
 	    	// create manager to load cars and their attributes
 	    	CarManagerXml.instance();
 			log.debug("Cars have been loaded!");

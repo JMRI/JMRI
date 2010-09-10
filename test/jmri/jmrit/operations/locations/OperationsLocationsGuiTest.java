@@ -5,7 +5,7 @@ package jmri.jmrit.operations.locations;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 
@@ -23,7 +23,7 @@ import java.util.List;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -526,15 +526,15 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
         super.setUp();
 		apps.tests.Log4JFixture.setUp();
 		
-		// Repoint OperationsXml to JUnitTest subdirectory
-		OperationsXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+		// Repoint OperationsSetupXml to JUnitTest subdirectory
+		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
 		// Change file names to ...Test.xml
-		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 	}
 
 	public OperationsLocationsGuiTest(String s) {

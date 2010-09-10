@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 /**
@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1144,14 +1144,14 @@ public class OperationsLocationsTest extends TestCase {
 			}
 		}
 
-		LocationManagerXml.instance().writeOperationsLocationFile();
+		LocationManagerXml.instance().writeOperationsFile();
 
 		manager.newLocation("Test Location 4");
 		manager.newLocation("Test Location 5");
 		manager.newLocation("Test Location 6");
 		manager.getLocationByName("Test Location 2").setComment("Test Location 2 Changed Comment");
 
-		LocationManagerXml.instance().writeOperationsLocationFile();
+		LocationManagerXml.instance().writeOperationsFile();
 		
 	}
 
@@ -1162,7 +1162,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 6, locationList.size());
 
 		//  Revert the main xml file back to the backup file.
-		LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
+		LocationManagerXml.instance().revertBackupFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 		
 		//  Need to dispose of the LocationManager's list and hash table
 		manager.dispose();	
@@ -1186,7 +1186,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Starting Number of Locations", 0, locationList.size());
 
 		// Need to force a re-read of the xml file.
-		LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.getOperationsFileName());
+		LocationManagerXml.instance().readFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+LocationManagerXml.instance().getOperationsFileName());
 
 		// check options
 		Dimension frameDim = manager.getLocationEditFrameSize();
@@ -1318,7 +1318,7 @@ public class OperationsLocationsTest extends TestCase {
 		// delete all schedules
 		sm.dispose();
 		// clear out the file
-		LocationManagerXml.instance().writeOperationsLocationFile();
+		LocationManagerXml.instance().writeOperationsFile();
 	}
 
 	// TODO: Add tests for adding + deleting the same cars
@@ -1342,15 +1342,15 @@ public class OperationsLocationsTest extends TestCase {
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
 
-		// Repoint OperationsXml to JUnitTest subdirectory
-		OperationsXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+		// Repoint OperationsSetupXml to JUnitTest subdirectory
+		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
 		// Change file names to ...Test.xml
-		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 	}
 
 	public OperationsLocationsTest(String s) {

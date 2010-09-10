@@ -7,7 +7,7 @@ import java.util.List;
 
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.OperationsXml;
 
 import org.jdom.Document;
 import org.jdom.Element;
@@ -17,15 +17,14 @@ import org.jdom.ProcessingInstruction;
  * Loads and stores trains using xml files. Also stores various train
  * parameters managed by the TrainManager.
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.21 $
  */
-public class TrainManagerXml extends XmlFile {
+public class TrainManagerXml extends OperationsXml {
 	
 	private boolean fileLoaded = false;
 	
 	public TrainManagerXml(){
-		
 	}
 	
 	/** record the single instance **/
@@ -36,131 +35,64 @@ public class TrainManagerXml extends XmlFile {
 			if (log.isDebugEnabled()) log.debug("TrainManagerXml creating instance");
 			// create and load
 			_instance = new TrainManagerXml();
-	           try {
-	                _instance.readFile(defaultOperationsFilename());
-	            } catch (Exception e) {
-	                log.error("Exception during operations train file reading: "+e);
-	            }
+			_instance.load();
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("TrainManagerXml returns instance "+_instance);
 		return _instance;
 	}
 	
-
 	public void writeFile(String name) throws java.io.FileNotFoundException, java.io.IOException {
-	        if (log.isDebugEnabled()) log.debug("writeFile "+name);
-	        // This is taken in large part from "Java and XML" page 368
-	        File file = findFile(name);
-	        if (file == null) {
-	            file = new File(name);
-	        }
-	        // create root element
-	        Element root = new Element("operations-config");
-	        Document doc = newDocument(root, dtdLocation+"operations-trains.dtd");
+		if (log.isDebugEnabled()) log.debug("writeFile "+name);
+		// This is taken in large part from "Java and XML" page 368
+		File file = findFile(name);
+		if (file == null) {
+			file = new File(name);
+		}
+		// create root element
+		Element root = new Element("operations-config");
+		Document doc = newDocument(root, dtdLocation+"operations-trains.dtd");
 
-	        // add XSLT processing instruction
-	        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
-	        m.put("type", "text/xsl");
-	        m.put("href", xsltLocation+"operations-trains.xsl");
-	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
-	        doc.addContent(0,p);
-	        
-	        TrainManager manager = TrainManager.instance();
-	        List<String> trainList = manager.getTrainsByIdList();
-	        
-	        for (int i=0; i<trainList.size(); i++){
+		// add XSLT processing instruction
+		java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+		m.put("type", "text/xsl");
+		m.put("href", xsltLocation+"operations-trains.xsl");
+		ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
+		doc.addContent(0,p);
 
-	            //Extract the RosterEntry at this index and inspect the Comment and
-	            //Decoder Comment fields to change any \n characters to <?p?> processor
-	            //directives so they can be stored in the xml file and converted
-	            //back when the file is read.
-	        	String trainId = trainList.get(i);
-	        	Train train = manager.getTrainById(trainId);
-	            String tempComment = train.getComment();
-	            StringBuffer buf = new StringBuffer();
+		// Inspect the comment to change any \n characters to <?p?> processor
+		TrainManager manager = TrainManager.instance();
+		List<String> trainList = manager.getTrainsByIdList();
 
-	            //transfer tempComment to xmlComment one character at a time, except
-	            //when \n is found.  In that case, insert <?p?>
-	            for (int k = 0; k < tempComment.length(); k++) {
-	                if (tempComment.startsWith("\n", k)) {
-	                    buf.append("<?p?>");
-	                }
-	                else {
-	                	buf.append(tempComment.substring(k, k + 1));
-	                }
-	            }
-	            train.setComment(buf.toString());
-	        }
-	        //All Comments and Decoder Comment line feeds have been changed to processor directives
+		// add top-level elements      
+		root.addContent(manager.store());
+		Element values;
+		root.addContent(values = new Element("trains"));
+		// add entries
+		for (int i=0; i<trainList.size(); i++) {
+			String trainId = trainList.get(i);
+			Train train = manager.getTrainById(trainId);
+			train.setComment(convertToXmlComment(train.getComment()));
+			values.addContent(train.store());
+		}
+		writeXML(file, doc);
 
+		//Now that the roster has been rewritten in file form we need to
+		//restore the RosterEntry object to its normal \n state for the
+		//comment fields.
+		for (int i=0; i<trainList.size(); i++){
+			Train train = manager.getTrainById(trainList.get(i));
+			train.setComment(convertFromXmlComment(train.getComment()));
+		}
+		// done - train file now stored, so can't be dirty
+		setDirty(false);
+	}
 
-	        // add top-level elements      
-	        root.addContent(manager.store());
-	        Element values;
-	        root.addContent(values = new Element("trains"));
-	        // add entries
-	        for (int i=0; i<trainList.size(); i++) {
-	        	String trainId = trainList.get(i);
-	        	Train train = manager.getTrainById(trainId);
- 	            values.addContent(train.store());
-	        }
-	        writeXML(file, doc);
-
-	        //Now that the roster has been rewritten in file form we need to
-	        //restore the RosterEntry object to its normal \n state for the
-	        //Comment and Decoder comment fields, otherwise it can cause problems in
-	        //other parts of the program (e.g. in copying a roster)
-	        for (int i=0; i<trainList.size(); i++){
-	        	String trainId = trainList.get(i);
-	        	Train train = manager.getTrainById(trainId);
-	            String xmlComment = train.getComment();
-	            StringBuffer buf = new StringBuffer();
-
-	            for (int k = 0; k < xmlComment.length(); k++) {
-	                if (xmlComment.startsWith("<?p?>", k)) {
-	                    buf.append("\n");
-	                    k = k + 4;
-	                }
-	                else {
-	                	buf.append(xmlComment.substring(k, k + 1));
-	                }
-	            }
-	            train.setComment(buf.toString());
-	        }
-
-	        // done - train file now stored, so can't be dirty
-	        setDirty(false);
-	    }
-
-	
-	/**
-     * Store the all of the operation train objects in the default place, including making a backup if needed
-     */
-    public void writeOperationsTrainFile() {
-    	makeBackupFile(defaultOperationsFilename());
-        try {
-          	 if(!checkFile(defaultOperationsFilename())){
-                 //The file does not exist, create it before writing
-                 java.io.File file=new java.io.File(defaultOperationsFilename());
-                 java.io.File parentDir=file.getParentFile();
-                 if (!parentDir.exists()){
-                     if (!parentDir.mkdir())
-                     	log.error("Directory wasn't created");
-                  }
-                  if (file.createNewFile())
-                 	 log.debug("File created");
-             }
-        	writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new operations file, may not be complete: "+e);
-        }
-    }
     
     /**
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
     	
     	TrainManager manager = TrainManager.instance();
     	
@@ -195,36 +127,12 @@ public class TrainManagerXml extends XmlFile {
 
     		List<String> trainList = manager.getTrainsByIdList();
 
-    		// load train icon if needed
+    		// load train icon if needed, and convert comments
     		for (int i = 0; i < trainList.size(); i++) {
     			//Get a RosterEntry object for this index
     			Train train = manager.getTrainById(trainList.get(i));
+    			train.setComment(convertFromXmlComment(train.getComment()));
     			train.loadTrainIcon();
-    		}
-
-    		//Scan the object to check the Comment and Decoder Comment fields for
-    		//any <?p?> processor directives and change them to back \n characters
-    		for (int i = 0; i < trainList.size(); i++) {
-    			//Get a RosterEntry object for this index
-    			Train train = manager.getTrainById(trainList.get(i));
-
-    			//Extract the Comment field and create a new string for output
-    			String tempComment = train.getComment();
-    			StringBuffer buf = new StringBuffer();
-
-    			//transfer tempComment to xmlComment one character at a time, except
-    			//when <?p?> is found.  In that case, insert a \n and skip over those
-    			//characters in tempComment.
-    			for (int k = 0; k < tempComment.length(); k++) {
-    				if (tempComment.startsWith("<?p?>", k)) {
-    					buf.append("\n");
-    					k = k + 4;
-    				}
-    				else {
-    					buf.append(tempComment.substring(k, k + 1));
-    				}
-    			}
-    			train.setComment(buf.toString());
     		}
     	}
     	else {
@@ -240,28 +148,7 @@ public class TrainManagerXml extends XmlFile {
      * Store the train's build status
      */
     public File createTrainBuildReportFile(String name) {
-    	if(backupFile)
-    		makeBackupFile(defaultBuildReportFilename(name));
-		File file = null;
-		try {
-			if (!checkFile(defaultBuildReportFilename(name))) {
-				// The file does not exist, create it before writing
-				file = new File(defaultBuildReportFilename(name));
-				File parentDir = file.getParentFile();
-				if (!parentDir.exists()){
-					if (!parentDir.mkdir())
-						log.error("Directory wasn't created");
-				}
-				if (file.createNewFile())
-					log.debug("File created");
-			} else {
-				file = new File(defaultBuildReportFilename(name));
-			}
-		} catch (Exception e) {
-			log.error("Exception while writing the new train build file, may not be complete: "
-							+ e);
-		}
-		return file;
+    	return createFile(defaultBuildReportFilename(name), false);	// don't backup
 	}
     
     public File getTrainBuildReportFile(String name) {
@@ -276,33 +163,11 @@ public class TrainManagerXml extends XmlFile {
     private String BuildReportFileName = "train (";
     private String fileType =").txt";
     
-    
 	/**
      * Store the train's manifest
      */
     public File createTrainManifestFile(String name) {
-    	if(backupFile)
-    		makeBackupFile(defaultManifestFilename(name));
-		File file = null;
-		try {
-			if (!checkFile(defaultManifestFilename(name))) {
-				// The file does not exist, create it before writing
-				file = new File(defaultManifestFilename(name));
-				File parentDir = file.getParentFile();
-				if (!parentDir.exists()){
-					if (!parentDir.mkdir())
-						log.error("Directory wasn't created");
-				}
-				if (file.createNewFile())
-					log.debug("File created");
-			} else {
-				file = new File(defaultManifestFilename(name));
-			}
-		} catch (Exception e) {
-			log.error("Exception while writing the new manifest file, may not be complete: "
-							+ e);
-		}
-		return file;
+    	return createFile(defaultManifestFilename(name), false);	// don't backup
 	}
     
     public File getTrainManifestFile(String name) {
@@ -321,30 +186,9 @@ public class TrainManagerXml extends XmlFile {
      * Store the switch list for a location
      */
     public File createSwitchListFile(String name) {
-    	if(backupFile)
-    		makeBackupFile(defaultSwitchListName(name));
-		File file = null;
-		try {
-			if (!checkFile(defaultSwitchListName(name))) {
-				// The file does not exist, create it before writing
-				file = new File(defaultSwitchListName(name));
-				File parentDir = file.getParentFile();
-				if (!parentDir.exists()){
-					if (!parentDir.mkdir())
-						log.error("Directory wasn't created");
-				}
-				if (file.createNewFile())
-					log.debug("File created");
-			} else {
-				file = new File(defaultSwitchListName(name));
-			}
-		} catch (Exception e) {
-			log.error("Exception while writing the new switchlist file, may not be complete: "
-							+ e);
-		}
-		return file;
+    	return createFile(defaultSwitchListName(name), false);	// don't backup
 	}
-    
+     
     public File getSwitchListFile(String name) {
     	File file = new File(defaultSwitchListName(name));
     	return file;
@@ -355,23 +199,13 @@ public class TrainManagerXml extends XmlFile {
     }
     public void setTrainSwitchListName(String name) { SwitchListFileName = name; }
     private String SwitchListFileName = "location (";
- 
-    private boolean dirty = false;
-    void setDirty(boolean b) {dirty = b;}
-    boolean isDirty() {return dirty;}
     
-    private boolean backupFile = false;		// set to true to create backups during debug
-   
-    // Operation files always use the same directory
-    public static String defaultOperationsFilename() { 
-    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
-    }
+    public void setOperationsFileName(String name) { operationsFileName = name; }
+	public String getOperationsFileName(){
+		return operationsFileName;
+	}
 
-    public static void setOperationsFileName(String name) { OperationsFileName = name; }
-    public static String getOperationsFileName(){
-    	return OperationsFileName;
-    }
-    private static String OperationsFileName = "OperationsTrainRoster.xml";
+    private String operationsFileName = "OperationsTrainRoster.xml";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainManagerXml.class.getName());
 

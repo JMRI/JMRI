@@ -24,7 +24,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -294,6 +294,18 @@ public class OperationsSetupTest extends TestCase {
 		s.setTrainIconColorTerminate("Black");
 		Assert.assertEquals("Train Icon Color Terminate", "Black", s.getTrainIconColorTerminate());
 	}
+	
+	// confirm that all operation file names have been modified
+	public void testXMLFileTestFileName(){
+		Assert.assertEquals("Test setup file name", "OperationsJUnitTest.xml", OperationsSetupXml.instance().getOperationsFileName());
+		Assert.assertEquals("Test location file name", "OperationsJUnitTestLocationRoster.xml", LocationManagerXml.instance().getOperationsFileName());
+		Assert.assertEquals("Test train file name", "OperationsJUnitTestTrainRoster.xml", TrainManagerXml.instance().getOperationsFileName());
+		Assert.assertEquals("Test car file name", "OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
+		Assert.assertEquals("Test engine file name", "OperationsJUnitTestEngineRoster.xml", EngineManagerXml.instance().getOperationsFileName());
+		Assert.assertEquals("Test route file name", "OperationsJUnitTestRouteRoster.xml", RouteManagerXml.instance().getOperationsFileName());
+		
+		Assert.assertEquals("Test directory name", "operations"+File.separator+"JUnitTest", OperationsSetupXml.getOperationsDirectoryName());
+	}
 
 	// test xml file creation
 	@SuppressWarnings("static-access")
@@ -429,17 +441,17 @@ public class OperationsSetupTest extends TestCase {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
 
-		OperationsXml ox = new OperationsXml();
+		OperationsSetupXml ox = new OperationsSetupXml();
 
 		// store files in "temp"
 //		XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
 //		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+"temp");
 
 		// change file name to OperationsTest
-		//ox.setOperationsFileName(OperationsXml.getOperationsFileName());
+		//ox.setOperationsFileName(OperationsSetupXml.getOperationsFileName());
 
 		// remove existing Operations file if its there
-		File f = new File(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
+		File f = new File(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+OperationsSetupXml.instance().getOperationsFileName());
 		f.delete();
 
 		// create a Operations file with known contents
@@ -474,30 +486,31 @@ public class OperationsSetupTest extends TestCase {
 		s.setTrainIconColorTerminate("White");
 
 		// write it
-		ox.writeFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
+		ox.writeFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+OperationsSetupXml.instance().getOperationsFileName());
 
 		// Set filename back to Operations
 		ox.setOperationsFileName("Operations.xml");
+		
+		Assert.assertEquals("confirm file name", "Operations.xml", ox.getOperationsFileName());
 
 		return s;
 	}
 
-	@SuppressWarnings("static-access")
 	public void readTestSetup() throws org.jdom.JDOMException, java.io.IOException, java.io.FileNotFoundException {
 		// this uses explicit filenames intentionally, to ensure that
 		// the resulting files go into the test tree area.
 
-		OperationsXml ox = new OperationsXml();
+		OperationsSetupXml ox = new OperationsSetupXml();
 
 		// change file name to OperationsTest
-		ox.setOperationsFileName(OperationsXml.getOperationsFileName());
+		ox.setOperationsFileName(OperationsSetupXml.instance().getOperationsFileName());
 
 		// create a Operations file with known contents
 		Setup s = new Setup();
 		Assert.assertNotNull("exists", s );
 
 		// read it
-		ox.readFile(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName()+File.separator+OperationsXml.getOperationsFileName());
+		ox.readFile(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName()+File.separator+OperationsSetupXml.instance().getOperationsFileName());
 
 		// Set filename back to Operations
 //		ox.setOperationsFileName("Operations.xml");
@@ -514,35 +527,35 @@ public class OperationsSetupTest extends TestCase {
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
 
-		// Repoint OperationsXml to JUnitTest subdirectory
-		String tempstring = OperationsXml.getOperationsDirectoryName();
+		// Repoint OperationsSetupXml to JUnitTest subdirectory
+		String tempstring = OperationsSetupXml.getOperationsDirectoryName();
 		if (!tempstring.contains(File.separator+"JUnitTest")){
-			OperationsXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+			OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
 		}
 		// Change file names to ...Test.xml
-		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
-		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsXml.getOperationsDirectoryName());
+		XmlFile.ensurePrefsPresent(XmlFile.prefsDir()+File.separator+OperationsSetupXml.getOperationsDirectoryName());
 		
 		// delete files
-		File file = new File(RouteManagerXml.defaultOperationsFilename());
+		File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
-		file = new File(EngineManagerXml.defaultOperationsFilename());
+		file = new File(EngineManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
-		file = new File(CarManagerXml.defaultOperationsFilename());
+		file = new File(CarManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
-		file = new File(LocationManagerXml.defaultOperationsFilename());
+		file = new File(LocationManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
-		file = new File(TrainManagerXml.defaultOperationsFilename());
+		file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
 	}

@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -119,7 +119,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// the following code sets the frame's initial state
 		
     	// create manager to load operation settings
-		OperationsXml.instance();
+		OperationsSetupXml.instance();
 		
 		// load fields
 		railroadNameTextField.setText(Setup.getRailroadName());				
@@ -380,13 +380,13 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 				if (!Setup.getCarTypes().equals(Setup.DESCRIPTIVE)){
 					CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
 					Setup.setCarTypes(Setup.DESCRIPTIVE);
-					CarManagerXml.instance().writeOperationsCarFile();
+					CarManagerXml.instance().writeOperationsFile();
 				}
 			} else {
 				if (!Setup.getCarTypes().equals(Setup.AAR)){
 					CarTypes.instance().changeDefaultNames(Setup.AAR);
 					Setup.setCarTypes(Setup.AAR);
-					CarManagerXml.instance().writeOperationsCarFile();
+					CarManagerXml.instance().writeOperationsFile();
 				}
 			}
 			// build option
@@ -448,7 +448,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			Setup.setRailroadName(railroadNameTextField.getText());
 			// save panel size and position
 			Setup.setOperationsSetupFrame(this);
-			OperationsXml.instance().writeOperationsFile();
+			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}
 	

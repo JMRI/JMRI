@@ -26,7 +26,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -218,7 +218,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
-			OperationsXml.instance().writeOperationsFile();
+			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}
 

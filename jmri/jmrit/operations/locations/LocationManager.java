@@ -16,7 +16,7 @@ import org.jdom.Element;
 
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -51,7 +51,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("LocationManager creating instance");
 			// create and load
 			_instance = new LocationManager();
-			OperationsXml.instance();					// load setup
+			OperationsSetupXml.instance();					// load setup
 			LocationManagerXml.instance();				// load locations
 			RouteManagerXml.instance();					// load routes
 		}

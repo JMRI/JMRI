@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -176,7 +176,7 @@ public class Setup {
 	}
 
 	public static boolean isMainMenuEnabled(){
-		OperationsXml.instance(); // load file
+		OperationsSetupXml.instance(); // load file
 		return mainMenuEnabled;
 	}
 	

@@ -10,12 +10,12 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  */
 public class ExportEngines extends XmlFile {
@@ -111,7 +111,7 @@ public class ExportEngines extends XmlFile {
     
     // Operation files always use the same directory
     public static String defaultOperationsFilename() { 
-    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
+    	return OperationsSetupXml.getFileLocation()+OperationsSetupXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
     }
 
     public static void setOperationsFileName(String name) { OperationsFileName = name; }

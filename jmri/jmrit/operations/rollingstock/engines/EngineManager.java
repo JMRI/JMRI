@@ -14,7 +14,7 @@ import javax.swing.JComboBox;
 import org.jdom.Element;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.trains.Train;
@@ -23,7 +23,7 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class EngineManager extends RollingStockManager{
 
@@ -42,7 +42,7 @@ public class EngineManager extends RollingStockManager{
 			if (log.isDebugEnabled()) log.debug("EngineManager creating instance");
 			// create and load
 			_instance = new EngineManager();
-			OperationsXml.instance();					// load setup
+			OperationsSetupXml.instance();					// load setup
 	    	// create manager to load engines and their attributes
 	    	EngineManagerXml.instance();
 			log.debug("Engines have been loaded!");

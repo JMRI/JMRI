@@ -23,13 +23,13 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.41 $
+ * @version	$Revision: 1.42 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -71,7 +71,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("TrainManager creating instance");
 			// create and load
 			_instance = new TrainManager();
-			OperationsXml.instance();				// load setup
+			OperationsSetupXml.instance();				// load setup
 			TrainManagerXml.instance();				// load trains
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("TrainManager returns instance "+_instance);
@@ -466,7 +466,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		RouteManagerXml.instance().writeFileIfDirty(); 			//Only if user used setX&Y
 		CarManagerXml.instance().writeFileIfDirty();			//save train assignments		
 		EngineManagerXml.instance().writeFileIfDirty();			//save train assignments
-		TrainManagerXml.instance().writeOperationsTrainFile();	//save train changes
+		TrainManagerXml.instance().writeOperationsFile();		//save train changes
     }
   
     /**

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -161,7 +161,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				loc.deleteTypeName((String)typeComboBox.getSelectedItem());
 			}
 		}
-		LocationManagerXml.instance().writeOperationsLocationFile();
+		LocationManagerXml.instance().writeOperationsFile();
 		updateLocations();
 	}
 	

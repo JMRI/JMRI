@@ -21,7 +21,7 @@ import apps.Apps;
  * @author	Bob Jacobsen    Copyright (C) 2007, 2009
  * @author  Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision: 1.9 $
+ * @version         $Revision: 1.10 $
  */
 public class ReportContext {
 
@@ -51,7 +51,7 @@ public class ReportContext {
         String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
         addString("Roster index location: "+roster+"  ");
 
-        //String operations = jmri.jmrit.operations.setup.OperationsXml.getFileLocation();
+        //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
 
         jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();

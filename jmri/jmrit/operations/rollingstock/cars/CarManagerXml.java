@@ -9,11 +9,10 @@ import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.ProcessingInstruction;
 
-import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.OperationsXml;
 
 /**
  * Loads and stores cars using xml files.  Also loads and stores
@@ -21,12 +20,11 @@ import jmri.jmrit.operations.setup.OperationsXml;
  * and car kernels.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
-public class CarManagerXml extends XmlFile {
+public class CarManagerXml extends OperationsXml {
 	
 	public CarManagerXml(){
-		
 	}
 	
 	/** record the single instance **/
@@ -37,11 +35,7 @@ public class CarManagerXml extends XmlFile {
 			if (log.isDebugEnabled()) log.debug("CarManagerXml creating instance");
 			// create and load
 			_instance = new CarManagerXml();
-			try {
-				_instance.readFile(defaultOperationsFilename());
-			} catch (Exception e) {
-				log.error("Exception during operations car file reading: "+e);
-			}
+			_instance.load();
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("CarManagerXml returns instance "+_instance);
 		return _instance;
@@ -66,35 +60,8 @@ public class CarManagerXml extends XmlFile {
 	        ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
 	        doc.addContent(0,p);
 	        
-	        //Check the Comment fields for line breaks and
-	        //convert them to a processor directive for storage in XML
-	        CarManager manager = CarManager.instance();
-	        List<String> carList = manager.getByRoadNameList();
-	        
-	        for (int i=0; i<carList.size(); i++){
-
-	            //Extract the RosterEntry at this index and inspect the Comment and
-	            //Decoder Comment fields to change any \n characters to <?p?> processor
-	            //directives so they can be stored in the xml file and converted
-	            //back when the file is read
-	        	Car c = manager.getById(carList.get(i));
-	            String tempComment = c.getComment();
-	            StringBuffer buf = new StringBuffer();
-
-	            //transfer tempComment to xmlComment one character at a time, except
-	            //when \n is found.  In that case, insert <?p?>
-	            for (int k = 0; k < tempComment.length(); k++) {
-	                if (tempComment.startsWith("\n", k)) {
-	                	buf.append("<?p?>");
-	                }
-	                else {
-	                	buf.append(tempComment.substring(k, k + 1));
-	                }
-	            }
-	            c.setComment(buf.toString());
-	        }
 	        //All Comments line feeds have been changed to processor directives
-
+	        CarManager manager = CarManager.instance();
 	        // add top-level elements
 	        root.addContent(manager.store());
 	        Element values;
@@ -139,8 +106,10 @@ public class CarManagerXml extends XmlFile {
 	        
 	        root.addContent(values = new Element("cars"));
 	        // add entries
+	        List<String> carList = manager.getByIdList();
 	        for (int i=0; i<carList.size(); i++) {
 	        	Car c = manager.getById(carList.get(i));
+	        	c.setComment(convertToXmlComment(c.getComment()));
 	            values.addContent(c.store());
 	        }
 	        writeXML(file, doc);
@@ -150,54 +119,17 @@ public class CarManagerXml extends XmlFile {
 
 	        for (int i=0; i<carList.size(); i++){
 	        	Car c = manager.getById(carList.get(i));
-	            String xmlComment = c.getComment();
-	            StringBuffer buf = new StringBuffer();
-
-	            for (int k = 0; k < xmlComment.length(); k++) {
-	                if (xmlComment.startsWith("<?p?>", k)) {
-	                	buf.append("\n");
-	                    k = k + 4;
-	                }
-	                else {
-	                	buf.append(xmlComment.substring(k, k + 1));
-	                }
-	            }
-	            c.setComment(buf.toString());
+	        	c.setComment(convertFromXmlComment(c.getComment()));
 	        }
-
 	        // done - car file now stored, so can't be dirty
 	        setDirty(false);
 	    }
-
-	
-	/**
-     * Store the all of the operation car objects in the default place, including making a backup if needed
-     */
-    public void writeOperationsCarFile() {
-    	makeBackupFile(defaultOperationsFilename());
-        try {
-          	 if(!checkFile(defaultOperationsFilename())){
-                 //The file does not exist, create it before writing
-                 java.io.File file=new java.io.File(defaultOperationsFilename());
-                 java.io.File parentDir=file.getParentFile();
-                 if (!parentDir.exists()){
-                     if (!parentDir.mkdir())
-                     	log.error("Directory wasn't created");
-                  }
-                  if (file.createNewFile())
-                 	 log.debug("File created");
-             }
-        	writeFile(defaultOperationsFilename());
-        } catch (Exception e) {
-            log.error("Exception while writing the new operations file, may not be complete: "+e);
-        }
-    }
     
     /**
      * Read the contents of a roster XML file into this object. Note that this does not
      * clear any existing entries.
      */
-    void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
+    public void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
     	// suppress rootFromName(name) warning message by checking to see if file exists
     	if (findFile(name) == null) {
     		log.debug(name + " file could not be found");
@@ -209,7 +141,6 @@ public class CarManagerXml extends XmlFile {
             log.debug(name + " file could not be read");
             return;
         }
-        if (log.isDebugEnabled()) XmlFile.dumpElement(root);
         
         CarManager manager = CarManager.instance();
        	if (root.getChild("options") != null) {
@@ -275,57 +206,25 @@ public class CarManagerXml extends XmlFile {
                 manager.register(new Car(l.get(i)));
             }
 
-            List<String> carList = manager.getByIdList();
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
+            List<String> carList = manager.getByIdList();
             for (int i = 0; i < carList.size(); i++) {
                 //Get a RosterEntry object for this index
 	        	Car c = manager.getById(carList.get(i));
-
-                //Extract the Comment field and create a new string for output
-                String tempComment = c.getComment();
-                StringBuffer buf = new StringBuffer();
-
-                //transfer tempComment to xmlComment one character at a time, except
-                //when <?p?> is found.  In that case, insert a \n and skip over those
-                //characters in tempComment.
-                for (int k = 0; k < tempComment.length(); k++) {
-                    if (tempComment.startsWith("<?p?>", k)) {
-                        buf.append("\n");
-                        k = k + 4;
-                    }
-                    else {
-                    	buf.append(tempComment.substring(k, k + 1));
-                    }
-                }
-                c.setComment(buf.toString());
+	        	c.setComment(convertFromXmlComment(c.getComment()));
             }
         }
         else {
-            log.error("Unrecognized operations car file contents in file: "+name);
+        	log.error("Unrecognized operations car file contents in file: "+name);
         }
     }
 
-    private boolean dirty = false;
-    public void setDirty(boolean b) {dirty = b;}
-    boolean isDirty() {return dirty;}
-    
-    public void writeFileIfDirty(){
-    	if(isDirty())
-    		writeOperationsCarFile();
-    }
-
-    
-    // Operation files always use the same directory
-    public static String defaultOperationsFilename() { 
-    	return OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName()+File.separator+getOperationsFileName();
-    }
-
-    public static void setOperationsFileName(String name) { OperationsFileName = name; }
-    public static String getOperationsFileName(){
-    	return OperationsFileName;
-    }
-    private static String OperationsFileName = "OperationsCarRoster.xml";
+    public void setOperationsFileName(String name) { operationsFileName = name; }
+	public String getOperationsFileName(){
+		return operationsFileName;
+	}
+    protected static String operationsFileName = "OperationsCarRoster.xml";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CarManagerXml.class.getName());
 

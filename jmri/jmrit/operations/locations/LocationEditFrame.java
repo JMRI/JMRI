@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -350,7 +350,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			enableCheckboxes(false);
 			enableButtons(false);
 			// save location file
-			managerXml.writeOperationsLocationFile();
+			managerXml.writeOperationsFile();
 		}
 		if (ae.getSource() == addLocationButton){
 			Location l = manager.getLocationByName(locationNameTextField.getText());
@@ -409,7 +409,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// save frame size and position
 		manager.setLocationEditFrame(this);
 		// save location file
-		managerXml.writeOperationsLocationFile();
+		managerXml.writeOperationsFile();
 	}
 	
 

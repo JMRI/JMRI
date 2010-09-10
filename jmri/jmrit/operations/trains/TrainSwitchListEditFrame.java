@@ -33,7 +33,7 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -141,7 +141,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 		if (ae.getSource() == saveButton){
 			// save location file
-			LocationManagerXml.instance().writeOperationsLocationFile();
+			LocationManagerXml.instance().writeOperationsFile();
 		}
 	}
 	

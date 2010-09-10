@@ -18,7 +18,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -110,7 +110,7 @@ public class OptionFrame extends OperationsFrame{
 			// Logging enabled?		
 			Setup.setEngineLoggerEnabled(engineLoggerCheckBox.isSelected());
 			Setup.setCarLoggerEnabled(carLoggerCheckBox.isSelected());
-			OperationsXml.instance().writeOperationsFile();
+			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}
 

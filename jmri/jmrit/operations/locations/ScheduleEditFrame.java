@@ -18,7 +18,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -206,7 +206,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 
 			enableButtons(false);
 			// save schedule file
-			managerXml.writeOperationsLocationFile();
+			managerXml.writeOperationsFile();
 		}
 		if (ae.getSource() == addScheduleButton){
 			Schedule schedule = manager.getScheduleByName(scheduleNameTextField.getText());
@@ -249,7 +249,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		}
 
 		// save schedule file
-		managerXml.writeOperationsLocationFile();
+		managerXml.writeOperationsFile();
 	}
 	
 	private void loadTypeComboBox(){

@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -4871,7 +4871,7 @@ public class OperationsTrainsTest extends TestCase {
 		 */
 
 
-		TrainManagerXml.instance().writeOperationsTrainFile();
+		TrainManagerXml.instance().writeOperationsFile();
 
 		// Add some more engines and write file again
 		// so we can test the backup facility
@@ -4880,7 +4880,7 @@ public class OperationsTrainsTest extends TestCase {
 		manager.newTrain("Test Number 6");
 //		manager.getRouteByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
 
-		TrainManagerXml.instance().writeOperationsTrainFile();
+		TrainManagerXml.instance().writeOperationsFile();
 	}
 
 	// TODO: Add test of build

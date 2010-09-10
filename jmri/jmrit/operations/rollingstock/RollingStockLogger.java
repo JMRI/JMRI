@@ -17,7 +17,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 
 import java.util.List;
@@ -26,7 +26,7 @@ import java.util.List;
  * Logs rolling stock movements by writing their locations to a file.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class RollingStockLogger extends XmlFile implements java.beans.PropertyChangeListener{
 	
@@ -254,7 +254,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 		return loggingDirectory + File.separator + getFileName();
 	}
 	
-	private String operationsDirectory = OperationsXml.getFileLocation()+OperationsXml.getOperationsDirectoryName();	
+	private String operationsDirectory = OperationsSetupXml.getFileLocation()+OperationsSetupXml.getOperationsDirectoryName();	
 	private String loggingDirectory = operationsDirectory + File.separator + "logger";
 	
 	private String defaultDirectoryName = "";

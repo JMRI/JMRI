@@ -11,7 +11,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 import java.io.File;
@@ -30,7 +30,7 @@ import javax.swing.JComboBox;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -606,7 +606,7 @@ public class OperationsRoutesTest extends TestCase {
 */
                 
 
-                RouteManagerXml.instance().writeOperationsRouteFile();
+                RouteManagerXml.instance().writeOperationsFile();
 
                 // Add some more engines and write file again
                 // so we can test the backup facility
@@ -615,7 +615,7 @@ public class OperationsRoutesTest extends TestCase {
                 manager.newRoute("Test Number 6");
 //                manager.getRouteByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
                 
-                RouteManagerXml.instance().writeOperationsRouteFile();
+                RouteManagerXml.instance().writeOperationsFile();
         }
 
 	// TODO: Add tests for Route location track location
@@ -631,15 +631,15 @@ public class OperationsRoutesTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         
-		// Repoint OperationsXml to JUnitTest subdirectory
-		OperationsXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+		// Repoint OperationsSetupXml to JUnitTest subdirectory
+		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
 		// Change file names to ...Test.xml
-		OperationsXml.setOperationsFileName("OperationsJUnitTest.xml"); 
-		RouteManagerXml.setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-		EngineManagerXml.setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-		CarManagerXml.setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-		LocationManagerXml.setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-		TrainManagerXml.setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
         // Need to clear out RouteManager global variables
         RouteManager manager = RouteManager.instance();

@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -438,7 +438,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	// Save, Delete, Add, Clear, Calculate, Edit Load buttons
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
-			// log.debug("car save button actived");
+			// log.debug("car save button pressed");
 			if (!checkCar(_car))
 				return;
 			// delete car if edit and road or road number has changed
@@ -514,11 +514,11 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	 * was deleted. Need to also write files if car type was changed.
 	 */
 	private void writeFiles(){
-		managerXml.writeOperationsCarFile();
+		managerXml.writeOperationsFile();
 		if (filesModified){
 			filesModified = false;
-			LocationManagerXml.instance().writeOperationsLocationFile();
-			TrainManagerXml.instance().writeOperationsTrainFile();
+			LocationManagerXml.instance().writeOperationsFile();
+			TrainManagerXml.instance().writeOperationsFile();
 		}
 		
 	}

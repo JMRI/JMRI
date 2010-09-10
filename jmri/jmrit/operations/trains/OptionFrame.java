@@ -23,7 +23,7 @@ import java.io.File;
  * Frame for user edit of train options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -166,7 +166,7 @@ public class OptionFrame extends OperationsFrame{
 			if (_train != null)
 				_train.setRailroadName(railroadNameTextField.getText());
 
-			TrainManagerXml.instance().writeOperationsTrainFile();
+			TrainManagerXml.instance().writeOperationsFile();
 		}
 	}
 

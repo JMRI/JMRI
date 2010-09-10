@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -235,7 +235,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				_track = null;
 				enableButtons(false);
 				// save location file
-				managerXml.writeOperationsLocationFile();
+				managerXml.writeOperationsFile();
 			}
 		}
 		if (ae.getSource() == addTrackButton){
@@ -284,7 +284,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		selectCheckboxes(true);
 		updateTrainDir();
 		// save location file
-		managerXml.writeOperationsLocationFile();
+		managerXml.writeOperationsFile();
 	}
 
 	protected void saveTrack (Track track){
@@ -309,7 +309,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// enable 
 		enableButtons(true);
 		// save location file
-		managerXml.writeOperationsLocationFile();
+		managerXml.writeOperationsFile();
 	}
 
 	private boolean checkUserInputs(Track track){

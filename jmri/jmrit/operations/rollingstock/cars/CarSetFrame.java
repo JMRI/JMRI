@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -528,7 +528,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 			// remove car from being picked up and delivered
 			_car.setRouteLocation(null);
 			_car.setRouteDestination(null);
-			managerXml.writeOperationsCarFile();
+			managerXml.writeOperationsFile();
 		}
 	}
 	

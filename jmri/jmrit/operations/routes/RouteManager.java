@@ -10,14 +10,14 @@ import java.util.List;
 import javax.swing.JComboBox;
 
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsXml;
+import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 
 /**
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -34,7 +34,7 @@ public class RouteManager {
 			if (log.isDebugEnabled()) log.debug("RouteManager creating instance");
 			// create and load
 			_instance = new RouteManager();
-			OperationsXml.instance();				// load setup
+			OperationsSetupXml.instance();				// load setup
 			RouteManagerXml.instance();				// load routes
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("RouteManager returns instance "+_instance);
