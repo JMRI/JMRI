@@ -8,7 +8,7 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2002</p>
  * @author Bob Jacobsen
- * @version $Revision: 2.14 $
+ * @version $Revision: 2.15 $
  */
 public class XNetPacketizerTest extends TestCase {
 
@@ -30,7 +30,7 @@ public class XNetPacketizerTest extends TestCase {
         XNetMessage m = XNetMessage.getTurnoutCommandMsg(22, true, false, true);
         m.setTimeout(1);  // don't want to wait a long time
         c.sendXNetMessage(m, null);
-	    Thread.sleep(100); // intermittent problem with seeing 4 characters?
+	    jmri.util.JUnitUtil.releaseThread(this, 100); // Allow time for other threads to send 4 characters
         Assert.assertEquals("total length ", 4, p.tostream.available());
         Assert.assertEquals("Char 0", 0x52, p.tostream.readByte()&0xff);
         Assert.assertEquals("Char 1", 0x05, p.tostream.readByte()&0xff);
@@ -77,11 +77,7 @@ public class XNetPacketizerTest extends TestCase {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
         while ( XNetListenerScaffold.rcvdRply == null && i++ < 100  )  {
-            try {
-                synchronized  (this) { wait(100); }
-                // Thread.sleep(10);
-            } catch (Exception e) {
-            }
+            jmri.util.JUnitUtil.releaseThread(this, 10);
         }
         if (log.isDebugEnabled()) log.debug("past loop, i="+i
                                             +" reply="+XNetListenerScaffold.rcvdRply);
