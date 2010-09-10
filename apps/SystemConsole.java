@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -58,8 +58,6 @@ public class SystemConsole extends JTextArea {
      * streams are re-directed to the console's JTextArea
      */
     public static void init() {
-
-        System.out.println("SystemConsole");
 
         if (console == null) {
             
