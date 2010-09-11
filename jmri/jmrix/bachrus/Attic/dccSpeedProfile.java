@@ -9,13 +9,15 @@ import javax.swing.JFileChooser;
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class dccSpeedProfile {
 
     protected int _length;
     protected float[] _dataPoints;
     protected float _max;
+    // index of last valid data point, -1 means no data
+    protected int _lastPoint;
 
     public dccSpeedProfile(int len) {
         _length = len;
@@ -25,12 +27,14 @@ public class dccSpeedProfile {
             _dataPoints[i] = 0.0F;
         }
         _max = 40;
+        _lastPoint = -1;
     }
     
     public boolean setPoint(int idx, float val) {
         boolean ret = false;
         if (idx < _length) {
             _dataPoints[idx] = val;
+            _lastPoint++;
             if (val > _max) {
                 // Adjust maximum value
                 _max = (float)(Math.floor(val/20)+1)*20;
@@ -44,19 +48,21 @@ public class dccSpeedProfile {
         for (int i=0; i<_length; i++) {
             _dataPoints[i] = 0.0F;
         }
+        _lastPoint = -1;
     }
     
     public float getPoint(int idx) {
-        if (idx < _length) {
+        if ((idx < _length) && (idx <= _lastPoint)) {
             return _dataPoints[idx];
         } else {
-            return 0;
+            return -1;
         }
     }
 
     public int getLength() { return _length; }
     public void setMax(float m) { _max = m; }
     public float getMax() { return _max; }
+    public int getLast() { return _lastPoint; }
 
     final JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 

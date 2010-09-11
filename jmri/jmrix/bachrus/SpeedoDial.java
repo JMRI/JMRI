@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.5 $
+ * @version                    $Revision: 1.6 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -40,8 +40,6 @@ public class SpeedoDial extends JPanel {
     int minuteHeight;
     float scaleRatio;
     int faceSize;
-    int panelWidth;
-    int panelHeight;
     int size;
     int logoWidth;
     int logoHeight;
@@ -283,10 +281,6 @@ public class SpeedoDial extends JPanel {
             speedDigits = Math.round(speed);
             speedAngle = -120+speed*priMajorTick/10;
         }
-        repaint();
-    }
-
-    void update() {
         repaint();
     }
 

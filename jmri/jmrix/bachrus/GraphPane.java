@@ -9,28 +9,39 @@ import java.awt.print.*;
 import javax.swing.*;
 
 /**
- * Frame for graph of loco speed curveSpeed curve
+ * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
 
     protected String xLabel;
     protected String yLabel;
-    protected dccSpeedProfile _sp;
+    // array to hold the speed curves
+    protected dccSpeedProfile [] _sp;
     protected String annotate;
+    protected Color [] colors = { Color.RED, Color.BLUE };
 
     // Use a default 28 step profile
     public GraphPane() {
         super();
-        _sp = new dccSpeedProfile(28);
+        _sp = new dccSpeedProfile[1];
+        _sp[0] = new dccSpeedProfile(28);
     }
 
     public GraphPane(dccSpeedProfile sp) {
         super();
-        _sp = sp;
+        _sp = new dccSpeedProfile[1];
+        _sp[0] = sp;
+    }
+
+    public GraphPane(dccSpeedProfile sp0, dccSpeedProfile sp1) {
+        super();
+        _sp = new dccSpeedProfile[2];
+        _sp[0] = sp0;
+        _sp[1] = sp1;
     }
 
     public void setXLabel (String s) { xLabel = s; }
@@ -80,7 +91,7 @@ public class GraphPane extends JPanel implements Printable {
         g2.drawString(xLabel, sx, sy);
         
         // Used to scale values into drawing area
-        float scale = (h - 2*PAD)/_sp.getMax();
+        float scale = (h - 2*PAD)/_sp[0].getMax();
         // space between values along the ordinate
         // start with an increment of 10
         int valInc = 10;
@@ -89,7 +100,7 @@ public class GraphPane extends JPanel implements Printable {
             // need inverse transform here
             yInc = Speed.mphToKph(yInc);
         }
-        if (_sp.getMax() > 100) {
+        if (_sp[0].getMax() > 100) {
             valInc = 20;
             yInc *=2;
         }
@@ -106,21 +117,24 @@ public class GraphPane extends JPanel implements Printable {
         }
         
         // The space between values along the abcissa.
-        float xInc = (float)(w - 2*PAD)/(_sp.getLength()-1);
+        float xInc = (float)(w - 2*PAD)/(_sp[0].getLength()-1);
         String abString;
-        // Draw lines.
+        // Draw lines between data points.
         g2.setPaint(Color.green.darker());
-        for(int i = 0; i < _sp.getLength(); i++) {
-            float x1 = PAD + i*xInc;
-            float y1 = h - PAD - scale*_sp.getPoint(i);
-            float x2 = PAD + (i+1)*xInc;
-            float y2 = h - PAD - scale*_sp.getPoint(i+1);
-            if (i < _sp.getLength()-1) {
-                g2.draw(new Line2D.Double(x1, y1, x2, y2));
+        for(int i = 0; i < _sp[0].getLength(); i++) {
+            float x1 = 0.0F;
+            for (int j = 0; j < _sp.length; j++) {
+                x1 = PAD + i*xInc;
+                float y1 = h - PAD - scale*_sp[j].getPoint(i);
+                float x2 = PAD + (i+1)*xInc;
+                float y2 = h - PAD - scale*_sp[j].getPoint(i+1);
+                if (i <= _sp[j].getLast()-1) {
+                    g2.draw(new Line2D.Double(x1, y1, x2, y2));
+                }
             }
             // tick marks along abcissa
             g2.draw(new Line2D.Double(x1, h-7*PAD/8, x1, h-PAD));
-            if (((i%5) == 0) || (i == _sp.getLength()-1)) {
+            if (((i%5) == 0) || (i == _sp[0].getLength()-1)) {
                 // abcissa labels every 5 ticks
                 abString = Integer.toString(i);
                 sw = (float)font.getStringBounds(abString, frc).getWidth();
@@ -131,11 +145,15 @@ public class GraphPane extends JPanel implements Printable {
         }
         
         // Mark data points.
-        g2.setPaint(Color.red);
-        for(int i = 0; i < _sp.getLength(); i++) {
-            float x = PAD + i*xInc;
-            float y = h - PAD - scale*_sp.getPoint(i);
-            g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
+        for(int i = 0; i <= _sp[0].getLast(); i++) {
+            for (int j = 0; j < _sp.length; j++) {
+                g2.setPaint(colors[j]);
+                float x = PAD + i*xInc;
+                float y = h - PAD - scale*_sp[j].getPoint(i);
+                if (i <= _sp[j].getLast()) {
+                    g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
+                }
+            }
         }
     }
 
