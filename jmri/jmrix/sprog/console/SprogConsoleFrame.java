@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -54,6 +54,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     String sprogUSB = "";
     String tmpString = null;
     boolean isSprogII = false;
+    boolean isSprog3 = false;
     State state = State.IDLE;
     
     enum State { IDLE, 
@@ -280,20 +281,26 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
     
     public void validateCurrent() {
+        String currentRange = "200 - 996";
+        int validLimit = 996;
+        if (isSprog3) {
+            currentRange = "200 - 2499";
+            validLimit = 2499;
+        }
         try {
             currentLimit = Integer.parseInt(currentTextField.getText());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid Current Limit Entered\n"
-                    + "Please enter a value in the range 200 - 1000",
+                    + "Please enter a value in the range " + currentRange,
                     "SPROG Console", JOptionPane.ERROR_MESSAGE);
-            currentLimit = 996;
+            currentLimit = validLimit;
             return;
         }
-        if ((currentLimit > 1000) || (currentLimit < 200)) {
+        if ((currentLimit > validLimit) || (currentLimit < 200)) {
             JOptionPane.showMessageDialog(null, "Invalid Current Limit Entered\n"
-                    + "Please enter a value in the range 200 - 999",
+                    + "Please enter a value in the range " + currentRange,
                     "SPROG Console", JOptionPane.ERROR_MESSAGE);
-            currentLimit = 996;
+            currentLimit = validLimit;
         }
     }
     
@@ -304,8 +311,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             validateCurrent();
             // Value written is number of ADC steps 0f 4.88mV across 0.47 ohms
             currentLimit = currentLimit*470/4880;
-            // Hack for SPROG bug where MSbyte of value must be non-zero
-            currentLimit += 256;
+            if (!isSprog3) {
+                // Hack for SPROG bug where MSbyte of value must be non-zero
+                currentLimit += 256;
+            }
             tmpString = String.valueOf(currentLimit);
             msg = new SprogMessage("I "+tmpString);
         } else {
@@ -320,7 +329,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     
     public boolean isCurrentLimitPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-                          || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))) {
+            || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
+            || isSprog3) {
             return true;
         } else
             return false;
@@ -328,7 +338,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     
     public boolean isBlueLineSupportPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-                          || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))) {
+            || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
+            || isSprog3) {
             return true;
         } else
             return false;
@@ -392,7 +403,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                     state = State.IDLE;
                     return;
                 }
-                if (replyString.indexOf("II") >= 0) {
+                if ((replyString.indexOf("3") >= 0) || (replyString.indexOf("III")) >= 0) {
+                    isSprog3 = true;
+                    sprogType = "SPROG 3 ";
+                    currentTextField.setToolTipText("Enter new current limit in milliAmps (less than 2500)");
+                } else if (replyString.indexOf("II") >= 0) {
                     isSprogII = true;
                     sprogType = "SPROG II ";
                 } else {
@@ -440,9 +455,14 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 }
             }
         } else if (state == SprogConsoleFrame.State.CURRENTQUERYSENT) {
+            int valueLength = 4;
+            if (isSprog3) {
+                valueLength = 6;
+            }
             tmpString = new String(replyString.substring(replyString.indexOf("=") + 
-                        1, replyString.indexOf("=") + 4));
+                        1, replyString.indexOf("=") + valueLength));
             // Value returned is number of ADC steps 0f 4.88mV across 0.47 ohms
+            // SPROG 3 is equivalent, using .047R sense with 10x amplifier
             // Convert to milliAmps using integer math
             try {
                 currentLimit = (Integer.parseInt(tmpString)*4880)/470;
