@@ -2,16 +2,9 @@
 
 package apps;
 
-import java.awt.FlowLayout;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ResourceBundle;
-import javax.swing.filechooser.FileFilter;
 
 import javax.swing.*;
 
@@ -23,12 +16,12 @@ import javax.swing.*;
  * a Set button is provided so that the user can select the path.
  *
  * @author      Kevin Dickerson   Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
  
 public class FileLocationPane extends JPanel {
 
-    static protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     public FileLocationPane() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -112,8 +105,8 @@ public class FileLocationPane extends JPanel {
         return p;
     }
 
-    protected static JTextField scriptLocation = new JTextField();
-    protected static JTextField userLocation = new JTextField();
+    private static JTextField scriptLocation = new JTextField();
+    private static JTextField userLocation = new JTextField();
     //protected static JTextField throttleLocation = new JTextField();
 
 }

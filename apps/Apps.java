@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.117 $
+ * @version     $Revision: 1.118 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -731,7 +731,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     	updateLine(3, cs7);
     }
     
-    static protected String jmriLog ="****** JMRI log *******";
+    private static final String jmriLog ="****** JMRI log *******";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Apps.class.getName());
     

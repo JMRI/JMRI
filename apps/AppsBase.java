@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public abstract class AppsBase {
 
@@ -43,7 +43,7 @@ public abstract class AppsBase {
     }
 
     protected static String nameString = "JMRI Base";
-    protected static String configFilename = "JmriConfig3.xml";
+    protected static final String configFilename = "JmriConfig3.xml";
     boolean configOK;
     
     /**

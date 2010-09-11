@@ -32,9 +32,9 @@ import java.util.List;
  */
 public interface CatalogTreeManager extends Manager {
 
-    public static String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
-    public static String[] SOUND_FILTER = {"wav"};
-    public static String[] SCRIPT_FILTER = {"py", "scpt"};
+    public static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
+    public static final String[] SOUND_FILTER = {"wav"};
+    public static final String[] SCRIPT_FILTER = {"py", "scpt"};
 
 
     /**

@@ -13,7 +13,7 @@ import java.util.Enumeration;
  * information.
  *
  * @author Bob Jacobsen  Copyright 2009, 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class Log4JUtil {
@@ -62,7 +62,7 @@ public class Log4JUtil {
                 +" at "+(new java.util.Date()));
     }
 
-    static protected String jmriLog ="****** JMRI log *******";
+    private static final String jmriLog ="****** JMRI log *******";
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Log4JUtil.class.getName());
 

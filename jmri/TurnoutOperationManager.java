@@ -122,7 +122,7 @@ public class TurnoutOperationManager {
 	 *
 	 * @return	the TurnoutOperationManager
 	 */
-	static public TurnoutOperationManager getInstance() {
+	public synchronized static TurnoutOperationManager getInstance() {
 		if (theInstance==null) {
 
             // and make available

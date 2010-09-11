@@ -23,11 +23,11 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class AppConfigBase extends JmriPanel {
 
-    static protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     /**
      * Remember items to persist
