@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class LayoutEditor extends Editor {
@@ -4639,7 +4639,7 @@ public class LayoutEditor extends Editor {
 		// check for valid signal head entry
 		String tName = nextSignalHead.getText().trim();
         SignalHead mHead = null;
-		if ( (tName!=null) && (tName!="") ) {
+		if ( (tName!=null) && (!tName.equals("")) ) {
 			mHead = InstanceManager.signalHeadManagerInstance().getSignalHead(tName);
 			/*if (mHead == null) 
 				mHead = InstanceManager.signalHeadManagerInstance().getByUserName(tName);
