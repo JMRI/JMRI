@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2690,7 +2690,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 Conditional.ITEM_TO_SIGNAL_HEAD_ACTION, actionType)+1);
                 if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
                     _actionBox.setSelectedIndex(DefaultConditional.getIndexInTable(
-                                AbstractSignalHead.validStates, _curAction.getActionData()));
+                                AbstractSignalHead.getDefaultValidStates(), _curAction.getActionData()));
                 }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
@@ -2952,8 +2952,8 @@ public class LogixTableAction extends AbstractTableAction {
                     JPanel p = (JPanel)_actionPanel.getComponent(0);
                     JLabel l = (JLabel)p.getComponent(0);
                     l.setText(rbx.getString("LabelActionSignal"));
-                    for (int i = 0; i < AbstractSignalHead.validStateNames.length; i++) {
-                        _actionBox.addItem(AbstractSignalHead.validStateNames[i]);
+                    for (int i = 0; i < AbstractSignalHead.getDefaultValidStateNames().length; i++) {
+                        _actionBox.addItem(AbstractSignalHead.getDefaultValidStateNames()[i]);
                     }
                     _actionPanel.setToolTipText(rbx.getString("SignalSetHint"));
                     _actionPanel.setVisible(true);
@@ -3614,7 +3614,7 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 actionType = Conditional.ITEM_TO_SIGNAL_HEAD_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_SIGNAL_APPEARANCE) {
-                    int state = AbstractSignalHead.validStates[_actionBox.getSelectedIndex()];
+                    int state = AbstractSignalHead.getDefaultValidStates()[_actionBox.getSelectedIndex()];
                     if (!referenceByMemory){
                         SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(name);
                         if (DefaultConditional.getIndexInTable(h.getValidStates(), state) < 0) {

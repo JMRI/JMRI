@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -124,7 +124,7 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     protected java.util.Hashtable<String, java.util.Hashtable<String, String>> aspectAttributeMap 
             = new java.util.Hashtable<String, java.util.Hashtable<String, String>>();
 
-    static protected java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
+    protected static java.util.Hashtable<String, DefaultSignalAppearanceMap> maps
             = new jmri.util.OrderedHashtable<String, DefaultSignalAppearanceMap>();
 
     public void loadDefaults() {

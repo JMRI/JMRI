@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.87 $
+ * @version $Revision: 1.88 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -471,7 +471,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
         return result;
     }
 
-    static public String fileLocation = "layout"+File.separator;
+    private static final String fileLocation = "layout"+File.separator;
 
     /**
      * Find a file by looking

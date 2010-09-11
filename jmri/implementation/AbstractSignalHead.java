@@ -10,7 +10,7 @@ import jmri.*;
  * SignalHead system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -97,8 +97,8 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
 		else return ("");
     }
     
-    final static private ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
-    final static public int[] validStates = new int[]{
+    private static final ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    private static final  int[] validStates = new int[]{
         DARK, 
         RED, 
         YELLOW,
@@ -109,7 +109,7 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         FLASHGREEN,
         FLASHLUNAR
     };
-    final static public String[] validStateNames = new String[]{
+   private static final String[] validStateNames = new String[]{
         rb.getString("SignalHeadStateDark"),
         rb.getString("SignalHeadStateRed"),
         rb.getString("SignalHeadStateYellow"),
