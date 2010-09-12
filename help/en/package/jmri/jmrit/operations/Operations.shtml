@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.76 2010-09-08 19:13:00 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.77 2010-09-12 02:49:42 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -82,6 +82,79 @@ and work your way down to "Trains". We also recommend that when defining
 your locations that you first use yard and siding tracks, and try
 staging and interchange tracks when you're more comfortable with how the
 program operates.
+
+<P>It is best to start off small and work your way through the
+various options and features available. We recommend that you start off
+by entering only three or four <A HREF="#Locations">locations</A> with
+each location having only two or three tracks. A first, don't make any
+of the locations or tracks restrictive with regards to the type of cars
+or engines that they will service. Also allow each track and location to
+service trains traveling in any direction.</P>
+
+<P>Now enter some <A HREF="#CarsEdit">cars</A> into the operations
+database, don't bother entering engines for now. Be sure to place the
+cars on a track using the <A HREF="#CarsSet">set car location</A>. The
+program works best if you keep at least 50% of your tracks empty, so
+don't place too many cars on tracks until you understand how the program
+builds trains.</P>
+
+<P>Now create a simple <A HREF="#Routes">route</A> for your first
+train to follow. Enter each of your locations in the route, and keep it
+simple by only entering each of your locations once in the route.</P>
+
+<P>Now you're ready to create your first <A HREF="#Trains">train</A>.
+Be sure to select the route you created for your first train. Leave all
+of the checkboxes alone which means the train will service all car and
+engine types. Leave the "Train Requires" engines or caboose alone for
+now. Save the train, close the window, and return to the Trains window.
+Press the <A HREF="#BuildingTrains">Build</A> button for the train. It
+should build. Now pressing the print or previous button will produce a
+manifest for your train. Review the manifest and you should see that the
+train serviced all car types. If you review the <A HREF="#Cars">Cars</A>
+window you can see that cars are now assigned to your train.</P>
+
+<P>Now try limiting the car types that the train will service. Use
+the train <A HREF="#TrainReset">reset</A> to release the cars that were
+assigned to the train so you can build it again without moving the
+train. With the new car types restriction in place, you should see that
+the train will only pickup and drop car types that are selected.</P>
+
+<P>Now try restricting your tracks to only certain types of cars.
+Now when you build the train, the train will only drop of cars to tracks
+that are willing to accept them.</P>
+
+<P>Press the <A HREF="#TrainMove">Move</A> button and you will see
+that the train's location will change to the next in the route. You will
+also see that the <A HREF="#Cars">Cars</A> window will update to show
+the cars serviced by the train moving to their new location as the
+trains moves from location to location.</P>
+
+<P>Now enter some <A HREF="#Engines">engines</A> into the operations
+database, and change the train requirements to require one engine. Place
+the engines on a track located at the start of the route. Note that if
+you want two or more engines servicing your train, that the engines must
+be in a <A HREF="#EnginesAdd">consist</A>. The last location in your
+route must have a track that will service the engine type or the build
+will fail.</P>
+
+<P>If you want a caboose or car with FRED for your train, first
+configure some of your cars to be a caboose by selected the caboose or
+FRED <A HREF="#CabooseFredHazardous">checkbox</A>. Now change the train
+requires radio button to Caboose or FRED. Be sure that the last location
+on your trains route has a track that will accept the caboose car or the
+train will not build properly.</P>
+
+<P>If you keep building your first train and moving it, eventually
+all of your cars will end up at the last location in your route! Create
+another route that is the inverse of your first one. Go to the <A
+	HREF="#Routes">Routes</A> window and under the "Tools" menu select
+"Copy Route". Select your original route, check the "Invert" checkbox,
+enter a name for this route, and then the "Copy" button.  Now create a
+second train that uses this route to move cars.</P>
+
+<P>You should now be well on your way with regards to JMRI
+operations. Help is also available at the <a
+	href="http://groups.yahoo.com/group/jmriusers/">jmriusers list</a></P>
 
 <H3>British Railways</H3>
 
@@ -322,6 +395,12 @@ Select the desired color from the drop down box.
 
 If you want a logo in the top right hand corner of your manifests and switch lists, press
 the "Add Logo" button and select a file with the image you want to display.
+
+<H3>Misplaced Cars Comment</H3>
+
+The program provides a comment for your operators to search for 
+<A	HREF="#CarsSet">misplaced</A> cars.  You can modify
+the comment to your liking.
 
 <A NAME="BuildReportDetails"></A>
 <H3>Build Report Details</H3>
@@ -837,7 +916,8 @@ box, and press "Replace". All cars with "UP" as their road will now have
 <H3>Set Car Location Button</H3>
 
 After creating a car, you can set the car's location, and optionally the
-car's destination and train. Normally the car's destination and assigned
+car's destination and train by using the "Set" button found for each car
+in the <A HREF="#Cars">Cars</A> window. Normally the car's destination and assigned
 train are generated by the program, but you can use these fields to
 force a car to a specific location using a specified train. 
 <P>
@@ -1094,10 +1174,10 @@ type of rolling stock.
 
 You can control the number of engines that will be assigned to this
 train, and optionally, the engine's model and road name. If you want two
-or more engines assigned to a train, the engines must be part of a
-consist. If you select "Auto", the program will calculate the number of
-engines required for this train based on the weight of the train, the
-track grade, and the horsepower of the engines.
+or more engines assigned to a train, the engines must be part of a <A
+	HREF="#EnginesAdd">consist</A>. If you select "Auto", the program will
+calculate the number of engines required for this train based on the
+weight of the train, the track grade, and the horsepower of the engines.
 
 <P>You can also require a <A HREF="#CabooseFredHazardous">caboose
 or car with FRED (Flashing Rear End Device)</A> as the last car in the
@@ -1105,6 +1185,7 @@ train, and you can optionally specify the road name for the caboose or
 car with FRED. If you leave the road name blank, the program will try
 and find a caboose with the same road name as the engine.</P>
 
+<A NAME="TrainReset"></A>
 <H3>Reset Train</H3>
 
 The "Reset Train" button allows you to remove engines and cars that have
@@ -1319,7 +1400,7 @@ the details. If the train requires an engine or several engines, the
 program will look for engines at the start of the route and then
 determines if the termination location will accept them. Note that if
 two or more engines are required for the train that the engines must be
-in a consist. The program assigns to the engines and cars the number of
+in a <A HREF="#EnginesAdd">consist</A>. The program assigns to the engines and cars the number of
 moves that they experience during each session. The move count is bumped
 up each time an engine or car is dropped off to a new location's track.
 The program sorts the engines and cars by the move count, and then tries
@@ -1343,8 +1424,6 @@ cars being processed by the program is used up. Once the car moves
 requested for a location is met, the next location in the route is
 processed. This continues until all locations in a train's route have
 been processed.</P>
-
-
 
 
 <H3>Printing Manifests</H3>
@@ -1378,6 +1457,7 @@ selections.</P>
 <P>
 <img src="images/SwitchList.png"></P>
 
+<A NAME="TrainMove"></A>
 <H3>Moving Trains</H3>
 
 After providing your operators with a printed manifest or location
