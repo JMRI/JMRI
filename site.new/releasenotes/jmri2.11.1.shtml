@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.8 2010-09-03 19:59:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.9 2010-09-12 16:22:12 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -216,7 +216,8 @@ to 5 trains to move a car from one location to another. Routing through
 staging tracks is disabled by default. A new operations feature, "Return
 When Empty" is now available. When a car's load changes to empty, the
 car can optionally return to a location or location/track. UK support
-has also been improved. 
+has also been improved. Improved operations staging warning messages.
+User can now specify a pickup or drop comment for a car based on the car's load.
 
 <p>
 Lionel Jeanson made multiple improvements to throttles:
@@ -237,13 +238,8 @@ Kevin Dickerson added a double & single slip and a three way turnout to the pane
 Matt Harris added 'Copy to clipboard' button in context window.
 
 <p>
-Dan Boudreau improved operations staging warning messages
-
-<p>
 Jim LeFevre added support for F5 through F14 on TMCC throttles.
 
-<p>
-Dan Boudreau added a new operations feature:  User can now specify a pickup or drop comment for a car based on the car's load.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
