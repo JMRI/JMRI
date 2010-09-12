@@ -24,7 +24,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -126,7 +126,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int RANGE3LO = 26;
     protected static final int RANGE3HI = 9999;
     protected static final int[] filterLength = {0, 3, 5, 8};
-    protected enum displayType {NUMERIC, DIAL};
+    protected enum displayType {NUMERIC, DIAL}
     protected displayType display = displayType.NUMERIC;
 
     /*
@@ -142,9 +142,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected dccSpeedProfile spFwd;
     protected dccSpeedProfile spRev;
-    protected enum profileState {IDLE, WAIT_FOR_THROTTLE, RUNNING};
+    protected enum profileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
     protected profileState state = profileState.IDLE;
-    protected enum profileDirection {FORWARD, REVERSE};
+    protected enum profileDirection {FORWARD, REVERSE}
     protected profileDirection profileDir = profileDirection.FORWARD;
     protected DccThrottle throttle = null;
     protected int profileStep = 0;
@@ -153,7 +153,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected int profileAddress = 0;
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
-    protected enum progState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18};
+    protected enum progState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18}
     protected progState readState = progState.IDLE;
 
     //Create the combo box, select item at index 4.
