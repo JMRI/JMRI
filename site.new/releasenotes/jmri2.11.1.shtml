@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.9 2010-09-12 16:22:12 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.10 2010-09-12 18:42:09 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -240,6 +240,23 @@ Matt Harris added 'Copy to clipboard' button in context window.
 <p>
 Jim LeFevre added support for F5 through F14 on TMCC throttles.
 
+<p>
+david zuhn added support for exporting the entire roster to one file.  
+Menu support (but a null implementation) for importing from an exported roster file.
+
+<p>
+Dan Boudreau added a new operations feature: user can now mark a car as misplaced.  
+When a car is marked misplaced, the program will not attempt to move the car.  
+Also a list of misplaced cars is now appended to manifests and switch lists.
+
+<p>
+Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
+
+<p>
+Matt Harris added a system console complete with facility to copy contents to clipboard.
+
+<p>
+Pete Cressman added a new editor tool: Item Palette
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
