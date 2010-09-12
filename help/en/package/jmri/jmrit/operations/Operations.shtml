@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.77 2010-09-12 02:49:42 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.78 2010-09-12 15:38:28 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -77,19 +77,23 @@ Panel" xml file.
 <H3>Quick Start Help</H3>
 
 In the top level menu for JMRI find the "Tools->Operations" menu. There
-are six items in this menu. We recommend that you start with "Settings"
-and work your way down to "Trains". We also recommend that when defining
-your locations that you first use yard and siding tracks, and try
-staging and interchange tracks when you're more comfortable with how the
-program operates.
+are six items in this menu. We recommend that you start with <A
+	HREF="#Settings">Settings</A> and work your way down to <A
+	HREF="#Trains">Trains</A>. We also recommend that when defining your
+locations that you first use yard and siding tracks, and try staging and
+interchange tracks when you're more comfortable with how the program
+operates.
 
-<P>It is best to start off small and work your way through the
-various options and features available. We recommend that you start off
-by entering only three or four <A HREF="#Locations">locations</A> with
-each location having only two or three tracks. A first, don't make any
-of the locations or tracks restrictive with regards to the type of cars
-or engines that they will service. Also allow each track and location to
-service trains traveling in any direction.</P>
+<P>If this is your first time using a computer generated operations
+program, it is best to start off small and gradually work your way
+through the various options and features available. Start by entering
+only three or four <A HREF="#Locations">locations</A> with each location
+having only two or three tracks. Keep things simple and don't modify the
+location and track defaults by making them restrictive with regards to
+the type of cars or engines that they will service. Also, the track and
+location default is to allow a train to service the location and track
+by trains traveling in any direction. Don't change the defaults until
+you can successfully build trains to your liking.</P>
 
 <P>Now enter some <A HREF="#CarsEdit">cars</A> into the operations
 database, don't bother entering engines for now. Be sure to place the
@@ -100,34 +104,39 @@ builds trains.</P>
 
 <P>Now create a simple <A HREF="#Routes">route</A> for your first
 train to follow. Enter each of your locations in the route, and keep it
-simple by only entering each of your locations once in the route.</P>
+simple by only entering each of your locations once in the route.  For now
+don't modify the route in any way, just use the "Add Location" button.</P>
 
 <P>Now you're ready to create your first <A HREF="#Trains">train</A>.
 Be sure to select the route you created for your first train. Leave all
-of the checkboxes alone which means the train will service all car and
-engine types. Leave the "Train Requires" engines or caboose alone for
+of the train checkboxes alone which means the train will service all car and
+engine types. Leave the "Train Requires" engines or caboose area alone for
 now. Save the train, close the window, and return to the Trains window.
 Press the <A HREF="#BuildingTrains">Build</A> button for the train. It
-should build. Now pressing the print or previous button will produce a
+should build. Now pressing the "Print" or "Preview" button will produce a
 manifest for your train. Review the manifest and you should see that the
-train serviced all car types. If you review the <A HREF="#Cars">Cars</A>
+train serviced all car types. If you examine the <A HREF="#Cars">Cars</A>
 window you can see that cars are now assigned to your train.</P>
 
-<P>Now try limiting the car types that the train will service. Use
-the train <A HREF="#TrainReset">reset</A> to release the cars that were
-assigned to the train so you can build it again without moving the
-train. With the new car types restriction in place, you should see that
-the train will only pickup and drop car types that are selected.</P>
+<P>Now try limiting the car types that the train will service by
+modifying some of the car types checkboxes in the <A HREF="#Trains">Edit Train
+</A> window. Use the train <A HREF="#TrainReset">reset</A> to release
+the cars that were assigned to the train so you can build it again
+without moving the train. With the new car types restriction in place,
+you should see that the train will only pickup and drop car types that
+are selected in the Edit Train window.</P>
 
-<P>Now try restricting your tracks to only certain types of cars.
+<P>Now try restricting your <A HREF="#Yards">tracks</A> to only
+certain types of cars by modifying the car types serviced for a track.
 Now when you build the train, the train will only drop of cars to tracks
 that are willing to accept them.</P>
 
-<P>Press the <A HREF="#TrainMove">Move</A> button and you will see
-that the train's location will change to the next in the route. You will
-also see that the <A HREF="#Cars">Cars</A> window will update to show
-the cars serviced by the train moving to their new location as the
-trains moves from location to location.</P>
+<P>Press the <A HREF="#TrainMove">Move</A> button located in the <A
+	HREF="#Trains">Trains </A> window and you will see that the train's
+location will change to the next in the route. You will also see that
+the <A HREF="#Cars">Cars</A> window will update to show the cars
+serviced by the train moving to their new location as the trains moves
+from location to location.</P>
 
 <P>Now enter some <A HREF="#Engines">engines</A> into the operations
 database, and change the train requirements to require one engine. Place
@@ -139,18 +148,19 @@ will fail.</P>
 
 <P>If you want a caboose or car with FRED for your train, first
 configure some of your cars to be a caboose by selected the caboose or
-FRED <A HREF="#CabooseFredHazardous">checkbox</A>. Now change the train
-requires radio button to Caboose or FRED. Be sure that the last location
-on your trains route has a track that will accept the caboose car or the
-train will not build properly.</P>
+FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the Edit Car
+window. Now change the train requires radio button to Caboose or FRED.
+Be sure that the last location on your trains route has a track that
+will accept the caboose car or the train will not build properly.</P>
 
 <P>If you keep building your first train and moving it, eventually
 all of your cars will end up at the last location in your route! Create
-another route that is the inverse of your first one. Go to the <A
+another route that is the inverse of your first train. Go to the <A
 	HREF="#Routes">Routes</A> window and under the "Tools" menu select
 "Copy Route". Select your original route, check the "Invert" checkbox,
 enter a name for this route, and then the "Copy" button.  Now create a
-second train that uses this route to move cars.</P>
+second train that uses this route to move cars in the opposite direction
+of your first train.</P>
 
 <P>You should now be well on your way with regards to JMRI
 operations. Help is also available at the <a
@@ -487,7 +497,13 @@ various tracks.
  <A NAME="Yards"></A>
 <H3>Yards</H3>
 
-To add a yard, press the "Add Yard Track" button. Now enter the name of
+To add a yard, press the "Add Yard Track" button. 
+
+<P>
+<img src="images/AddYard.png">
+</P>
+
+Now enter the name of
 the yard along with the length of the track in scale feet or in actual
 inches. Append a double quote (") to the length when entering actual
 inches and the program will convert the length into scale feet. Append
@@ -1347,7 +1363,7 @@ track.  The following table provides a summary of the various track statuses. </
 <H2>Building Trains</H2>
 
 To build one train, press the "Build" button in the row for the desired
-train in the "Trains" panel. The button will become "Print" or "Preview"
+train in the <A HREF="#Trains">Trains</A> panel. The button will become "Print" or "Preview"
 after the train is built. If you want to review how the train was built,
 select the "Build Reports" before pressing the "Print" or "Preview"
 button for the desired train. If the "Preview Manifest" checkbox is
@@ -1462,17 +1478,17 @@ selections.</P>
 
 After providing your operators with a printed manifest or location
 switch list, you must keep the program database synchronized with the
-actual movement of trains on your layout. This is done by the "Move"
-button located on the far right of the train menu. Pressing the "Move"
-button will cause the train to depart its current location move to the
-next location in the route. The engines and cars assigned to the train
-will travel to the next location on the railroad. At each location, cars
-can be picked up or dropped off. You can also move a train by selecting
-the train's icon and selecting "Move" from the icon's popup menu. Each
-press of the "Move" button moves the train closer to its terminal
-location. When the train arrives at the last location in the route, the
-last press of the "Move" button will terminate the train. Once a train
-is terminated, you can build it again.
+actual movement of trains on your layout. This is done by the train
+"Move" buttons located on the right side of the <A HREF="#Trains">Trains</A>
+window. Pressing the "Move" button will cause the train to depart its
+current location move to the next location in the route. The engines and
+cars assigned to the train will travel to the next location on the
+railroad. At each location, cars can be picked up or dropped off. You
+can also move a train by selecting the train's icon and selecting "Move"
+from the icon's popup menu. Each press of the "Move" button moves the
+train closer to its terminal location. When the train arrives at the
+last location in the route, the last press of the "Move" button will
+terminate the train. Once a train is terminated, you can build it again.
 
 <P>Each time an engine or car is moved a count associated with them
 is incremented. The program uses this to determine which cars haven't
