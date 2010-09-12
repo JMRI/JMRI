@@ -18,7 +18,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -74,15 +74,16 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     log.debug("start command station queuing thread");
                     slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
                     slotThread.start();
+                    jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
                     break;
             case SERVICE :
-                    jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
+                    //jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
                     break;
         }
-        log.debug("start command station queuing thread");
-        slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
-        slotThread.start();
-        jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
+        //log.debug("start command station queuing thread");
+        //slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
+        //slotThread.start();
+        //jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
     }
 
     /**
