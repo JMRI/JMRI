@@ -4,15 +4,28 @@ import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 
 import jmri.jmrit.display.*;
+import jmri.jmrit.beantable.oblock.DnDJTable;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
+
+import java.awt.datatransfer.Transferable; 
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.datatransfer.StringSelection;
+import java.awt.dnd.*;
+import java.io.IOException;
+import javax.swing.TransferHandler;
+
+import java.util.ArrayList;
 import java.util.List;
+import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
-import javax.swing.*;
+import jmri.jmrit.catalog.NamedIcon;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -52,7 +65,7 @@ import javax.swing.*;
  * 
  */
 
-public class ControlPanelEditor extends Editor {
+public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     public boolean _debug;
     private JMenuBar _menuBar;
@@ -62,10 +75,11 @@ public class ControlPanelEditor extends Editor {
     private JMenu _iconMenu;
     private JMenu _zoomMenu;
     private JMenu _markerMenu;
+    private jmri.jmrit.display.palette.ItemPalette _itemPalette;
 
     private JCheckBoxMenuItem useGlobalFlagBox = new JCheckBoxMenuItem(rb.getString("CheckBoxGlobalFlags"));
     // "CheckBoxEditable" is "show popups" (lame?)
-    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxEditable"));
+    private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
     private JCheckBoxMenuItem showCoordinatesBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowCoordinates"));
@@ -76,9 +90,9 @@ public class ControlPanelEditor extends Editor {
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
-    private Positionable _newPositonable;   // newly created item to be placed
-    private boolean _newItemAdded = true;
-    private boolean _newItem = false;       // item newly created in this session
+//    private Positionable _newPositonable;   // newly created item to be placed
+//    private boolean _newItemAdded = true;
+//    private boolean _newItem = false;       // item newly created in this session
 
     public ControlPanelEditor() {
     }
@@ -128,6 +142,7 @@ public class ControlPanelEditor extends Editor {
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
+        makeDataFlavors();
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
         scrollBoth.setSelected(true);
@@ -137,12 +152,16 @@ public class ControlPanelEditor extends Editor {
         InstanceManager.configureManagerInstance().registerUser(this);
         pack();
         setVisible(true);
+
+        // Build resource catalog and load CatalogTree.xml now
+        jmri.jmrit.catalog.CatalogPanel catalog = new jmri.jmrit.catalog.CatalogPanel();
+        catalog.createNewBranch("IFJAR", "Program Directory", "resources");
     }
 
     private void makeIconMenu() {
         _iconMenu = new JMenu(rb.getString("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-
+/*
         JMenuItem addItem = new JMenuItem(rb.getString("TextLabelEditor"));
         _iconMenu.add(addItem);
         addItem.addActionListener(new ActionListener() {
@@ -165,6 +184,41 @@ public class ControlPanelEditor extends Editor {
             mi.addActionListener(openEditorAction);
             _iconMenu.add(mi);                                                  
         }
+
+        addItem = new JMenuItem(rb.getString("AddFastClock"));
+        _iconMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					addClock();
+                }
+            });
+
+        addItem = new JMenuItem(rb.getString("AddRPSreporter"));
+        _iconMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					addRpsReporter();
+                }
+            });
+*/
+        JMenuItem mi = new JMenuItem("Item Pallette");
+        mi.addActionListener(new ActionListener() {
+                Editor editor;
+                public void actionPerformed(ActionEvent e) {
+                    if (_itemPalette==null) {
+                        _itemPalette = new jmri.jmrit.display.palette.ItemPalette("Item Pallet", editor);
+                    } else {
+                        _itemPalette.reset();
+                        _itemPalette.setVisible(true);
+                    }
+                }
+                ActionListener init(Editor ed) {
+                    editor = ed;
+                    return this;
+                }
+            }.init(this));
+
+        _iconMenu.add(mi);                                                  
     }
 
     private void makeZoomMenu() {
@@ -517,7 +571,7 @@ public class ControlPanelEditor extends Editor {
 
     // all content loaded from file.  Set putItem override.
     public void loadComplete() {
-        _newItem= true;
+//        _newItem= true;
     }
     
     /**
@@ -547,66 +601,216 @@ public class ControlPanelEditor extends Editor {
     }
 
     /***************** Overrided methods of Editor *******************/
-
-    public void putItem(Positionable l) {
-        if (_debug) log.debug("putItem: _newItem= "+_newItem);
-        if (_newItem && l.getDisplayLevel()>BKG) {
-            _newPositonable = l;
-            _newItemAdded = false;
-        } else {
-            super.putItem(l);
-        }
-    }
     
+    protected Positionable getCurrentSelection(MouseEvent event) {
+        if (_pastePending) {
+            return getCopySelection(event);
+        }
+        List <Positionable> selections = getSelectedItems(event);
+        Positionable selection = null;
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                selection = selections.get(1); 
+            } else {
+                selection = selections.get(0); 
+            }
+        }
+        return selection;
+    }
+
+    protected Positionable getCopySelection(MouseEvent event) {
+        if (_selectionGroup==null) {
+            return null;
+        }
+        double x = event.getX();
+        double y = event.getY();
+        Rectangle rect = new Rectangle();
+        if (_selectionGroup==null) {
+            return null;
+        }
+        for (int i=0; i<_selectionGroup.size(); i++) {
+            Positionable p = _selectionGroup.get(i);
+            rect= p.getBounds(rect);
+            Rectangle2D.Double rect2D = new Rectangle2D.Double(rect.x*_paintScale,
+                                                               rect.y*_paintScale,
+                                                               rect.width*_paintScale,
+                                                               rect.height*_paintScale);
+            if (rect2D.contains(x, y)) {
+                return p;
+            }
+        }
+        return null;
+    }
+
     public void mousePressed(MouseEvent event) {
-        if (_newPositonable==null) {
-            super.mousePressed(event);
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
+        _anchorX = event.getX();
+        _anchorY = event.getY();
+        _lastX = _anchorX;
+        _lastY = _anchorY;
+
+        if (!event.isPopupTrigger()) {
+            if (!event.isControlDown()) {
+                _currentSelection = getCurrentSelection(event);
+                if (_currentSelection!=null) {
+                    _currentSelection.doMousePressed(event);
+                    if (isEditable()) {
+                        if ( _currentSelection.getDisplayLevel()==BKG   ||
+                             (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
+                                _selectionGroup = null;
+                                _pastePending = false;
+                        }
+                    }
+                } else {
+                    _selectionGroup = null;
+                    _pastePending = false;
+                }
+            }
+
+        } else {
+            _selectionGroup = null;
+            _pastePending = false;
         }
+        _targetPanel.repaint(); // needed for ToolTip
     }
+
     public void mouseReleased(MouseEvent event) {
-        if (_newPositonable==null) {
-            super.mouseReleased(event);
-        } else {
-            if (_debug) log.debug("mouseReleased DROP at pt: ("+event.getX()+", "+event.getY()+")");
-            _newPositonable = null;       // drop
-            getTargetPanel().repaint();
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+                              +" selectRect is "+(_selectRect==null? "null":"not null"));
+        if (_dragging) {
+            mouseDragged(event);
         }
+        Positionable selection = getCurrentSelection(event);
+
+        if (event.isPopupTrigger()) {
+            if (selection!=null) {
+                _highlightcomponent = null;
+                    showPopUp(selection, event);
+            }
+        } else {
+            if (selection!=null) {
+                if (!event.isControlDown()) {
+                    selection.doMouseReleased(event);
+                }
+            }
+            // when dragging, don't change selection group
+            if (isEditable()) {
+                if (selection!=null && !_dragging) {
+                    modifySelectionGroup(selection, event);
+                }
+                if (_selectRect!=null) {
+                    makeSelectionGroup(event);
+                }
+            }
+            if (_pastePending) {
+                if (_selectionGroup!=null) {
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        putItem(_selectionGroup.get(i));
+                        if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
+                    }
+                }
+                _pastePending = false;
+            }
+        }
+        _currentSelection = null;
+        _selectRect = null;
+        _dragging = false;
+//        _newPositonable = null;
+        _targetPanel.repaint(); // needed for ToolTip
     }
+
+
+    public void mouseClicked(MouseEvent event) {
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
+
+        Positionable selection = getCurrentSelection(event);
+
+        if (event.isPopupTrigger()) {
+            if (selection!=null) {
+                _highlightcomponent = null;
+                    showPopUp(selection, event);
+            }
+        } else {
+            if (selection!=null) {
+                if (!event.isControlDown()) {
+                    selection.doMouseClicked(event);
+                }
+            }
+        }
+        _targetPanel.repaint(); // needed for ToolTip
+    }
+
     public void mouseDragged(MouseEvent event) {
-        if (_newPositonable==null) {
-            super.mouseDragged(event);
+        //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
+//        if (_newPositonable!=null) {
+//            return;
+//        }
+        setToolTip(null); // ends tooltip if displayed
+
+        if (!event.isPopupTrigger() && (isEditable() || _currentSelection instanceof LocoIcon)) {
+            if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
+                int deltaX = event.getX() - _lastX;
+                int deltaY = event.getY() - _lastY;
+                if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
+                    for (int i=0; i<_selectionGroup.size(); i++){
+                        moveItem(_selectionGroup.get(i), deltaX, deltaY);
+                    }
+                    _highlightcomponent = null;
+                } else {
+                    moveItem(_currentSelection, deltaX, deltaY);
+                    // don't highlight LocoIcon in edit mode
+                    if (isEditable()) {
+                        _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), 
+                                                            _currentSelection.maxWidth(), _currentSelection.maxHeight());
+                    }
+                }
+            } else {
+                if (isEditable() && _selectionGroup==null) {
+                    drawSelectRect(event.getX(), event.getY());
+                }
+            }
         }
+        _dragging = true;
+        _lastX = event.getX();
+        _lastY = event.getY();
+        _targetPanel.repaint(); // needed for ToolTip
     }
+
     public void mouseMoved(MouseEvent event) {
-        if (_newPositonable==null) {
-            super.mouseMoved(event);
-        } else {
+        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
+ /*       if (_newPositonable!=null) {
             int deltaX = event.getX() - _lastX;
             int deltaY = event.getY() - _lastY;
             moveItem(_newPositonable, deltaX, deltaY);
             _lastX = event.getX();
             _lastY = event.getY();
             getTargetPanel().repaint();
-        }
-    }
-    public void mouseEntered(MouseEvent event) {
-        //if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
-        if (_newPositonable==null) {
-            super.mouseEntered(event);
-        } else {
-            if (_debug) log.debug("mouseEntered pt: ("+event.getX()+", "+event.getY()+")");
-            _lastX = event.getX();
-            _lastY = event.getY();
-            _newPositonable.setLocation((int)(_lastX/getPaintScale()), 
-                                      (int)((_lastY-_newPositonable.getHeight())/getPaintScale()) );
-            if (!_newItemAdded) {
-                super.putItem(_newPositonable);
-                _newItemAdded = true;
+        } else */ {
+            if (_dragging || event.isPopupTrigger()) { return; }
+
+            Positionable selection = getCurrentSelection(event);
+            if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+                showToolTip(selection, event);
+                //selection.highlightlabel(true);
+            } else {
+                setToolTip(null);
             }
-            getTargetPanel().repaint();
+            _targetPanel.repaint();
         }
     }
     
+    public void mouseEntered(MouseEvent event) {
+    }
+
+    public void mouseExited(MouseEvent event) {
+        setToolTip(null);
+        _targetPanel.repaint();  // needed for ToolTip
+    }
+
+
     /*************** implementation of Abstract Editor methods ***********/
     /**
      * The target window has been requested to close, don't delete it at this
@@ -626,6 +830,45 @@ public class ControlPanelEditor extends Editor {
     public void setNextLocation(Positionable obj) {
         obj.setLocation(0, 0);
     }    
+
+    /**
+    * Set up selections for a paste
+    */
+    protected void copyItem(Positionable p) {
+        if (_selectionGroup!=null && !_selectionGroup.contains(p)) {
+            _selectionGroup = null;
+        }
+        if (_selectionGroup==null) {
+            _selectionGroup = new ArrayList <Positionable>();
+            _selectionGroup.add(p);
+        }
+        ArrayList <Positionable> selectionGroup = new ArrayList <Positionable>();
+        for (int i=0; i<_selectionGroup.size(); i++) {
+            Positionable pos = _selectionGroup.get(i).clone();
+            selectionGroup.add(pos);
+        }
+        _selectionGroup = selectionGroup;
+        _pastePending = true;
+        if (_debug) log.debug("copyItem: _selectionGroup.size()= "+_selectionGroup.size());
+    }
+        
+    /**
+    * Add an action to copy the Positionable item and the group to which is may belong.
+    */
+    public void setCopyMenu(Positionable p, JPopupMenu popup) {
+        JMenuItem edit = new JMenuItem("Copy");
+        edit.addActionListener(new ActionListener() {
+            Positionable comp;
+            public void actionPerformed(ActionEvent e) {
+                copyItem(comp);
+            }
+            ActionListener init(Positionable pos) {
+                comp = pos;
+                return this;
+            }
+        }.init(p));
+        popup.add(edit);
+    }
 
     /**
     *  Create popup for a Positionable object
@@ -652,12 +895,13 @@ public class ControlPanelEditor extends Editor {
                 setHiddenMenu(p, popup);
                 popup.addSeparator();
             }
+            setCopyMenu(p, popup);
 
             // items with defaults or using overrides
-            boolean popupSet =false;
-            popupSet = p.setRotateOrthogonalMenu(popup);        
-            popupSet = p.setRotateMenu(popup);        
-            popupSet = p.setScaleMenu(popup);        
+            boolean popupSet = false;
+            popupSet |= p.setRotateOrthogonalMenu(popup);        
+            popupSet |= p.setRotateMenu(popup);        
+            popupSet |= p.setScaleMenu(popup);        
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -676,7 +920,7 @@ public class ControlPanelEditor extends Editor {
                 util.setTextFontMenu(popup);
                 util.setBackgroundMenu(popup);
                 util.setTextJustificationMenu(popup);
-                util.copyItem(popup);
+                //util.copyItem(popup);
                 popupSet = true;
             }
             if (popupSet) { 
@@ -698,6 +942,79 @@ public class ControlPanelEditor extends Editor {
                     p.getHeight()/2+(int)((getPaintScale()-1.0)*p.getY()));
     }
 
-    // initialize logging
+    /**************************** DnD **************************************/
+
+    private void makeDataFlavors() {
+//        _targetPanel.setTransferHandler(new DnDIconHandler(this));
+        try {
+            _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
+            _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
+        } catch (ClassNotFoundException cnfe) {
+            cnfe.printStackTrace();
+        }
+        new DropTarget(this, DnDConstants.ACTION_COPY_OR_MOVE, this);
+    }
+
+    DataFlavor _positionableDataFlavor;
+    DataFlavor _namedIconDataFlavor;
+
+    /*************************** DropTargetListener ************************/
+
+    public void dragExit(DropTargetEvent evt) {
+        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dragExit ");
+        //evt.getDropTargetContext().acceptDrag(DnDConstants.ACTION_COPY);
+    }
+    public void dragEnter(DropTargetDragEvent evt) {
+        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dragEnter ");
+    }
+    public void dragOver(DropTargetDragEvent evt) {
+    }
+    public void dropActionChanged(DropTargetDragEvent evt) {
+        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dropActionChanged ");
+    }
+    public void drop(DropTargetDropEvent evt) {
+        try {
+            //Point pt = evt.getLocation(); coords relative to entire window
+            Point pt = _targetPanel.getMousePosition(true);
+            Transferable tr = evt.getTransferable();
+            if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
+                Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
+                item.setLocation(pt.x, pt.y);
+                evt.dropComplete(true);
+                putItem(item);
+                return;
+            } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
+                  NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(_namedIconDataFlavor));
+                  if (newIcon !=null) {
+                      String url = newIcon.getURL();
+                      NamedIcon icon = NamedIcon.getIconByName(url);
+                      PositionableLabel ni = new PositionableLabel(icon, this);
+                      ni.setPopupUtility(null);        // no text 
+                      ni.setDisplayLevel(ICONS);
+                      ni.setLocation(pt.x, pt.y);
+                      putItem(ni);
+                      evt.dropComplete(true);
+                      return;
+                  }
+            } else if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                String text = (String)tr.getTransferData(DataFlavor.stringFlavor);
+                PositionableLabel l = new PositionableLabel(text, this);
+                l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
+                l.setDisplayLevel(LABELS);
+                l.setLocation(pt.x, pt.y);
+                putItem(l);
+            } else {  
+                log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from "
+                         +tr.getClass().getName());
+            }
+        } catch(IOException ioe) {
+            log.warn("Editor DropTarget caught IOException", ioe);
+        } catch(UnsupportedFlavorException ufe) {
+            log.warn("Editor DropTarget caught UnsupportedFlavorException",ufe);
+        }
+        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener drop REJECTED!");
+        evt.rejectDrop();
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditor.class.getName());
 }

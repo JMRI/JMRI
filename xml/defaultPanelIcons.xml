@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/defaultPanelIcons.xsl" type="text/xsl"?>
+
+<defaultPanelIcons
+    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/defaultPanelIcons.xsd"
+>
+
+  <name>defaultPanelIcons</name>
+
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2010</year><year>2010</year><holder>JMRI</holder>
+  </copyright>
+
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+        <personname><firstname>Pete</firstname><surname>Cressman</surname></personname>
+    </author>    
+  </authorgroup>
+
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+        <revnumber>1</revnumber>
+        <date>2010-07-14</date>
+        <authorinitials>PWC</authorinitials>
+        <revremark>Initial version</revremark>
+    </revision>    
+  </revhistory>
+
+  <ItemTypes>
+
+    <Turnout>
+      <LeftTurnout>
+        <TurnoutStateClosed>
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
+        </TurnoutStateClosed>
+        <TurnoutStateThrown> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
+        </TurnoutStateThrown> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif
+        </BeanStateUnknown>
+      </LeftTurnout>
+      <RightTurnout>
+        <TurnoutStateClosed>
+          resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
+        </TurnoutStateClosed>
+        <TurnoutStateThrown> 
+          resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
+        </TurnoutStateThrown> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif
+        </BeanStateUnknown>
+      </RightTurnout>
+      <LeftCrossOver>
+        <TurnoutStateClosed>
+          resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-closed.gif
+        </TurnoutStateClosed>
+        <TurnoutStateThrown> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-thrown.gif
+        </TurnoutStateThrown> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-lefthand-crossover-east-unknown.gif
+        </BeanStateUnknown>
+      </LeftCrossOver>
+      <RightCrossOver>
+        <TurnoutStateClosed>
+          resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-closed.gif
+        </TurnoutStateClosed>
+        <TurnoutStateThrown> 
+          resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-thrown.gif
+        </TurnoutStateThrown> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-righthand-crossover-west-unknown.gif
+        </BeanStateUnknown>
+      </RightCrossOver>
+    </Turnout>
+
+    <Sensor>
+      <LargeJewel>
+        <SensorStateActive>
+          resources/icons/USS/sensor/green-on.gif
+        </SensorStateActive>
+        <SensorStateInactive> 
+          resources/icons/USS/sensor/red-off.gif
+        </SensorStateInactive> 
+        <BeanStateInconsistent>
+          resources/icons/USS/sensor/amber-on.gif 
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/USS/sensor/blue-on.gif
+        </BeanStateUnknown>
+      </LargeJewel>
+      <SmallJewel>
+        <SensorStateActive>
+          resources/icons/smallschematics/tracksegments/circuit-occupied.gif
+        </SensorStateActive>
+        <SensorStateInactive> 
+          resources/icons/smallschematics/tracksegments/circuit-empty.gif
+        </SensorStateInactive> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/circuit-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/circuit-error.gif
+        </BeanStateUnknown>
+      </SmallJewel>
+    </Sensor>
+
+    <SignalHead>
+      <TallMast>
+        <SignalHeadStateRed>
+          resources/icons/smallschematics/searchlights/left-red-marker.gif
+        </SignalHeadStateRed>
+        <SignalHeadStateYellow> 
+          resources/icons/smallschematics/searchlights/left-yellow-marker.gif
+        </SignalHeadStateYellow> 
+        <SignalHeadStateGreen>
+          resources/icons/smallschematics/searchlights/left-green-marker.gif
+        </SignalHeadStateGreen>
+        <SignalHeadStateDark>
+          resources/icons/smallschematics/searchlights/left-dark-marker.gif
+        </SignalHeadStateDark>
+        <SignalHeadStateHeld>
+          resources/icons/smallschematics/searchlights/left-held-marker.gif
+        </SignalHeadStateHeld>
+        <SignalHeadStateLunar>
+          resources/icons/smallschematics/searchlights/left-lunar-marker.gif
+        </SignalHeadStateLunar>
+        <SignalHeadStateFlashingRed> 
+          resources/icons/smallschematics/searchlights/left-flashred-marker.gif
+        </SignalHeadStateFlashingRed> 
+        <SignalHeadStateFlashingYellow> 
+          resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif
+        </SignalHeadStateFlashingYellow> 
+        <SignalHeadStateFlashingGreen>
+          resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif
+        </SignalHeadStateFlashingGreen>
+        <SignalHeadStateFlashingLunar>
+          resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif
+        </SignalHeadStateFlashingLunar>
+      </TallMast>
+      <Dwarf>
+        <SignalHeadStateRed>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+        </SignalHeadStateRed>
+        <SignalHeadStateYellow> 
+          resources/icons/mediumschematics/signals/horz_yellow_dwarf_lt.gif
+        </SignalHeadStateYellow> 
+        <SignalHeadStateGreen>
+          resources/icons/mediumschematics/signals/horz_grn_dwarf_lt.gif
+        </SignalHeadStateGreen>
+        <SignalHeadStateDark>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+        </SignalHeadStateDark>
+        <SignalHeadStateHeld>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+        </SignalHeadStateHeld>
+        <SignalHeadStateLunar>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+        </SignalHeadStateLunar>
+        <SignalHeadStateFlashingRed> 
+          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+        </SignalHeadStateFlashingRed> 
+        <SignalHeadStateFlashingYellow> 
+          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+        </SignalHeadStateFlashingYellow> 
+        <SignalHeadStateFlashingGreen>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+        </SignalHeadStateFlashingGreen>
+        <SignalHeadStateFlashingLunar>
+          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+        </SignalHeadStateFlashingLunar>
+      </Dwarf>
+    </SignalHead>
+
+    <SignalMast>
+    </SignalMast>
+
+    <MultiSensor>
+      <lever>
+        <SensorStateInactive> 
+          resources/icons/USS/plate/levers/l-inactive.gif
+        </SensorStateInactive> 
+        <BeanStateInconsistent>
+          resources/icons/USS/plate/levers/l-inconsistent.gif 
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/USS/plate/levers/l-unknown.gif
+        </BeanStateUnknown>
+        <first>
+          resources/icons/USS/plate/levers/l-left.gif
+        </first>
+        <second>
+          resources/icons/USS/plate/levers/l-vertical.gif
+        </second>
+        <third>
+          resources/icons/USS/plate/levers/l-right.gif
+        </third>
+      </lever>
+    </MultiSensor>
+
+    <Light>
+      <LeftTurnout>
+        <LightStateOff>
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif
+        </LightStateOff>
+        <LightStateOn> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif
+        </LightStateOn> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif
+        </BeanStateUnknown>
+      </LeftTurnout>
+      <RightTurnout>
+        <LightStateOff>
+          resources/icons/smallschematics/tracksegments/os-righthand-west-closed.gif
+        </LightStateOff>
+        <LightStateOn> 
+          resources/icons/smallschematics/tracksegments/os-righthand-west-thrown.gif
+        </LightStateOn> 
+        <BeanStateInconsistent> 
+          resources/icons/smallschematics/tracksegments/os-righthand-west-error.gif
+        </BeanStateInconsistent> 
+        <BeanStateUnknown>
+          resources/icons/smallschematics/tracksegments/os-righthand-west-unknown.gif
+        </BeanStateUnknown>
+      </RightTurnout>
+    </Light>
+
+    <Icon>
+      <set>
+        <track>
+          resources/icons/smallschematics/tracksegments/block.gif
+        </track>
+        <logo>
+          resources/PanelPro.gif
+        </logo>
+      </set>
+    </Icon>
+    
+    <Background>
+      <set>
+      </set>
+    </Background>
+    
+    <RPSReporter>
+      <classic>
+        <active>
+          resources/icons/smallschematics/tracksegments/circuit-occupied.gif
+        </active>
+        <error>
+          resources/icons/smallschematics/tracksegments/circuit-error.gif
+        </error>
+      </classic>
+    </RPSReporter>
+      
+    <FastClock>
+      <set>
+        <analog>
+          resources/clock2.gif
+        </analog>
+      </set>
+    </FastClock>
+      
+  </ItemTypes>
+</defaultPanelIcons>
