@@ -5,13 +5,18 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.util.JmriJFrame;
 
 import jmri.jmrit.display.*;
+import jmri.configurexml.*;
 
+import java.util.*;
+import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.geom.Rectangle2D;
 
 import jmri.jmrit.display.Editor;
 import javax.swing.*;
 
+import org.jdom.Element;
 
 /**
  * Provides a simple editor for adding jmri.jmrit.display items
@@ -409,13 +414,20 @@ public class PanelEditor extends Editor implements ItemListener {
     public void itemStateChanged(ItemEvent e) {
         if (e.getStateChange() == ItemEvent.SELECTED) {
             ComboBoxItem item = (ComboBoxItem)e.getItem();
-            JFrameItem frame = super.getIconFrame(item.getName());
+            String name = item.getName();
+            JFrameItem frame = super.getIconFrame(name);
             if (frame != null) {
                 frame.getEditor().reset();
                 frame.setVisible(true);
                 _addIconBox.setSelectedIndex(-1);
             } else {
-                log.error("Unable to open Icon Editor \""+item.getName()+"\"");
+                if (name.equals("AddFastClock")) {
+                    addClock();
+                } else if (name.equals("AddRPSreporter")) {
+                    addRpsReporter();
+                } else { 
+                    log.error("Unable to open Icon Editor \""+item.getName()+"\"");
+                }
             }
             /* Classic PanelEditor has separate text entry field
             int which = _addIconBox.getSelectedIndex()+1;
@@ -566,7 +578,7 @@ public class PanelEditor extends Editor implements ItemListener {
     /**
      * Set an object's location when it is created.
      */
-    public void setNextLocation(Positionable obj) {
+    protected void setNextLocation(Positionable obj) {
         int x = Integer.parseInt(nextX.getText());
         int y = Integer.parseInt(nextY.getText());
         obj.setLocation(x,y);
@@ -651,7 +663,7 @@ public class PanelEditor extends Editor implements ItemListener {
         tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
         setToolTip(tip);
     }
-
+/*
     public void mouseReleased(MouseEvent event) {
         super.mouseReleased(event);
 
@@ -666,10 +678,477 @@ public class PanelEditor extends Editor implements ItemListener {
 
         if (allPositionable() && _selectRect!=null) {
             if (_selectionGroup==null && _dragging) {
-                makeSelectionGroup();
+                makeSelectionGroup(event);
             }
         }
     }
+*/
+   /******************************************************/
+
+    boolean delayedPopupTrigger;
+
+    public void mousePressed(MouseEvent event) {
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mousePressed at ("+event.getX()+","+event.getY()+") _dragging="+_dragging);
+        _anchorX = event.getX();
+        _anchorY = event.getY();
+        _lastX = _anchorX;
+        _lastY = _anchorY;
+        List <Positionable> selections = getSelectedItems(event);
+        if (_dragging) {
+            return;
+        }
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                _currentSelection = selections.get(1); 
+            } else {
+                _currentSelection = selections.get(0); 
+            }
+            if (event.isPopupTrigger()) {
+                if (_debug) log.debug("mousePressed calls showPopUp");
+                if (event.isMetaDown() || event.isAltDown()){
+                    // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                    delayedPopupTrigger = true;
+                } else {
+                    // no possible conflict with moving, display the popup now
+                    if (_selectionGroup!=null){
+                        //Will show the copy option only
+                        showMultiSelectPopUp(event, _currentSelection);
+                    } else {
+                        showPopUp(_currentSelection, event);
+                    }
+                }
+            } else if (!event.isControlDown()){ 
+                _currentSelection.doMousePressed(event);
+                if (_selectRect==null)
+                    _selectionGroup = null;
+            }
+        } else {
+            if (event.isPopupTrigger()) {
+                if (event.isMetaDown() || event.isAltDown()){
+                    // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                    delayedPopupTrigger = true;
+                } else {
+                    if (_multiItemCopyGroup!=null){
+                        pasteItemPopUp(event);
+                    } else if (_selectionGroup!=null) {
+                        showMultiSelectPopUp(event, _currentSelection);
+                    } else {
+                        backgroundPopUp(event);
+                        _currentSelection = null;
+                    }
+                }
+            } else {
+                _currentSelection = null;
+            }
+        }
+        //if ((event.isControlDown() || _selectionGroup!=null) && _currentSelection!=null){
+        if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()){
+            //Don't want to do anything, just want to catch it, so that the next two else ifs are not
+            //executed
+        } else if (_currentSelection==null || 
+                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))){
+                _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
+                _selectionGroup = null;
+        } else {
+            _selectRect = null;
+            _selectionGroup = null;
+        }
+        _targetPanel.repaint(); // needed for ToolTip
+    }
+
+    public void mouseReleased(MouseEvent event) {
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+                              +" selectRect is "+(_selectRect==null? "null":"not null"));
+        List <Positionable> selections = getSelectedItems(event);
+
+        if (_dragging) {
+            mouseDragged(event);
+        }
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                _currentSelection = selections.get(1); 
+            } else {
+                _currentSelection = selections.get(0); 
+            }
+        } else {
+            if ((event.isPopupTrigger()||delayedPopupTrigger) && !_dragging){
+                if (_multiItemCopyGroup!=null)
+                    pasteItemPopUp(event);
+                else {
+                    backgroundPopUp(event);
+                    _currentSelection = null;
+                }
+            } 
+            else{
+                _currentSelection = null;
+
+            }
+        }
+        /*if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
+            amendSelectionGroup(_currentSelection, event);*/
+        if ((event.isPopupTrigger() || delayedPopupTrigger) && _currentSelection != null && !_dragging) {
+            if (_selectionGroup!=null){
+                //Will show the copy option only
+                showMultiSelectPopUp(event, _currentSelection);
+
+            } else {
+                showPopUp(_currentSelection, event);
+            }
+        } else {
+            if (_currentSelection != null && !_dragging && !event.isControlDown()) {
+                _currentSelection.doMouseReleased(event);
+            }
+            if (allPositionable() && _selectRect!=null) {
+                if (_selectionGroup==null && _dragging) {
+                    makeSelectionGroup(event);
+                }
+            }
+        }
+        delayedPopupTrigger = false;
+        _dragging = false;
+
+        // if not sending MouseClicked, do it here
+        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
+            mouseClicked(event);
+        _targetPanel.repaint(); // needed for ToolTip
+    }
+
+    public void mouseDragged(MouseEvent event) {
+        setToolTip(null); // ends tooltip if displayed
+        if ((event.isPopupTrigger()) || (!event.isMetaDown() && !event.isAltDown())) {
+            if (_currentSelection!=null) {
+                List <Positionable> selections = getSelectedItems(event);
+                if (selections.size() > 0) {
+                    if (selections.get(0)!=_currentSelection) {
+                        _currentSelection.doMouseReleased(event);
+                    }
+                } else {
+                    _currentSelection.doMouseReleased(event);
+                }
+            }
+            return; 
+        }
+        if (_currentSelection!=null || _selectionGroup!=null) {
+            if (!getFlag(OPTION_POSITION, _currentSelection.isPositionable())) { return; }
+            int deltaX = event.getX() - _lastX;
+            int deltaY = event.getY() - _lastY;
+            if (_selectionGroup!=null) {
+                for (int i=0; i<_selectionGroup.size(); i++){
+                    moveItem(_selectionGroup.get(i), deltaX, deltaY);
+                }
+                _highlightcomponent = null;
+            } else {
+                moveItem(_currentSelection, deltaX, deltaY);
+                _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), _currentSelection.maxWidth(), _currentSelection.maxHeight());
+            }
+        } else {
+            if (allPositionable() && _selectionGroup==null) {
+                drawSelectRect(event.getX(), event.getY());
+            }
+        }
+        _dragging = true;
+        _lastX = event.getX();
+        _lastY = event.getY();
+        _targetPanel.repaint(); // needed for ToolTip
+    }
+
+    public void mouseMoved(MouseEvent event) {
+        //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
+        if (_dragging || event.isPopupTrigger()) { return; }
+
+        List <Positionable> selections = getSelectedItems(event);
+        Positionable selection = null;
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                selection = selections.get(1); 
+            } else {
+                selection = selections.get(0); 
+            }
+        }
+        if (isEditable() && selection!=null && selection.getDisplayLevel()>BKG){
+            _highlightcomponent = new Rectangle(selection.getX(), selection.getY(), selection.maxWidth(), selection.maxHeight());
+            _targetPanel.repaint();
+        } else {
+            _highlightcomponent = null;
+            _targetPanel.repaint();
+        }
+        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+            showToolTip(selection, event);
+            //selection.highlightlabel(true);
+            _targetPanel.repaint();
+        } else {
+            setToolTip(null);
+            _highlightcomponent = null;
+            _targetPanel.repaint();
+        }
+    }
+
+    public void mouseClicked(MouseEvent event) {
+        setToolTip(null); // ends tooltip if displayed
+        if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
+                              +" selectRect is "+(_selectRect==null? "null":"not null"));
+        List <Positionable> selections = getSelectedItems(event);
+
+        if (selections.size() > 0) {
+            if (event.isShiftDown() && selections.size() > 1) {
+                _currentSelection = selections.get(1); 
+            } else {
+                _currentSelection = selections.get(0); 
+            }
+        } else {
+            _currentSelection = null;
+            if (event.isPopupTrigger()){
+                if (_multiItemCopyGroup==null)
+                    pasteItemPopUp(event);
+                else
+                    backgroundPopUp(event);
+            }
+        }
+        if (event.isPopupTrigger() && _currentSelection != null && !_dragging) {
+            if (_selectionGroup!=null)
+                showMultiSelectPopUp(event, _currentSelection);
+            else
+                showPopUp(_currentSelection, event);
+            //_selectionGroup = null; //Show popup only works for a single item
+
+        } else {
+            if (_currentSelection != null && !_dragging && !event.isControlDown()) {
+                _currentSelection.doMouseClicked(event);
+            }
+        }
+        _targetPanel.repaint(); // needed for ToolTip
+        if (event.isControlDown() && _currentSelection!=null && !event.isPopupTrigger()){
+            amendSelectionGroup(_currentSelection);
+        }
+    }
+
+    public void mouseEntered(MouseEvent event) {
+    }
+
+    public void mouseExited(MouseEvent event) {
+        setToolTip(null);
+        _targetPanel.repaint();  // needed for ToolTip
+    }
+
+    protected ArrayList <Positionable> _multiItemCopyGroup = null;  // items gathered inside fence
+    
+    protected void copyItem(Positionable p){
+        _multiItemCopyGroup = new ArrayList <Positionable>();
+        _multiItemCopyGroup.add(p);
+    }
+    
+    protected void pasteItemPopUp(final MouseEvent event){
+        if (!isEditable())
+            return;
+        if (_multiItemCopyGroup==null)
+            return;
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem edit = new JMenuItem("Paste");
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { pasteItem(event); }
+        });
+        setBackgroundMenu(popup);
+        popup.add(edit);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    
+    protected void backgroundPopUp(MouseEvent event){
+        if (!isEditable())
+            return;
+        JPopupMenu popup = new JPopupMenu();
+        setBackgroundMenu(popup);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    
+    protected void showMultiSelectPopUp(final MouseEvent event, Positionable p){
+        JPopupMenu popup = new JPopupMenu();
+        JMenuItem edit = new JMenuItem("Copy");
+        if (p.isPositionable()) {
+            setShowAlignmentMenu(p, popup);
+        }
+        edit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) { 
+                _multiItemCopyGroup = new ArrayList <Positionable>();
+                _multiItemCopyGroup = _selectionGroup;
+            }
+        });
+        setRemoveMenu(p, popup);
+        popup.add(edit);
+        popup.show(event.getComponent(), event.getX(), event.getY());
+    }
+    public void putItem(Positionable l) {
+        super.putItem(l);
+        /*This allows us to catch any new items that are being pasted into the panel
+        and add them to the selection group, so that the user can instantly move them around*/
+        //!!!
+        if (pasteItem){
+            amendSelectionGroup(l);
+        }
+    }
+    
+    private void amendSelectionGroup(Positionable p){
+        if (p==null) return;
+        if (_selectionGroup==null){
+            _selectionGroup = new ArrayList <Positionable>();
+        }
+        boolean removed = false;
+        for(int i=0; i<_selectionGroup.size();i++){
+            if (_selectionGroup.get(i)==p){
+                _selectionGroup.remove(i);
+                removed = true;
+                break;
+            }
+        }
+        if(!removed)
+            _selectionGroup.add(p);
+        else if (removed && _selectionGroup.isEmpty())
+            _selectionGroup=null;
+        _targetPanel.repaint();
+    }
+    
+    protected boolean pasteItem = false;
+    
+    protected void pasteItem(MouseEvent e){
+        pasteItem = true;
+        XmlAdapter adapter;
+        String className;
+        int x;
+        int y;
+        int xOrig;
+        int yOrig;
+        if (_multiItemCopyGroup!=null) {
+            JComponent copied;
+            int xoffset;
+            int yoffset;
+            x = _multiItemCopyGroup.get(0).getX();
+            y = _multiItemCopyGroup.get(0).getY();
+            xoffset=e.getX()-x;
+            yoffset=e.getY()-y;
+            for(int i = 0; i<_multiItemCopyGroup.size(); i++){
+                copied = (JComponent)_multiItemCopyGroup.get(i);
+                xOrig = copied.getX();
+                yOrig = copied.getY();
+                x = xOrig+xoffset;
+                y = yOrig+yoffset;
+                if (x<0) x=1;
+                if (y<0) y=1;
+                className=ConfigXmlManager.adapterName(copied);
+                copied.setLocation(x, y);
+                try{
+                    adapter = (XmlAdapter)Class.forName(className).newInstance();
+                    Element el = adapter.store(copied);
+                    adapter.load(el, this);
+                } catch (Exception ex) {
+                    log.debug(ex);
+                }
+                copied.setLocation(xOrig, yOrig);
+            }
+        }
+        pasteItem = false;
+        _targetPanel.repaint();
+    }
+
+    /**
+    * Add an action to remove the Positionable item.
+    */
+    public void setRemoveMenu(Positionable p, JPopupMenu popup) {
+        popup.add(new AbstractAction(rb.getString("Remove")) {
+            Positionable comp;
+            public void actionPerformed(ActionEvent e) { 
+                if (_selectionGroup==null)
+                    comp.remove();
+                else
+                    removeMultiItems();
+            }
+            AbstractAction init(Positionable pos) {
+                comp = pos;
+                return this;
+            }
+        }.init(p));
+    }
+    
+    private void removeMultiItems(){
+        boolean itemsInCopy = false;
+        if (_selectionGroup==_multiItemCopyGroup){
+            itemsInCopy=true;
+        }
+        for (int i=0; i<_selectionGroup.size(); i++) {
+            Positionable comp = _selectionGroup.get(i);
+            comp.remove();
+        }
+        //As we have removed all the items from the panel we can remove the group.
+        _selectionGroup = null;
+        //If the items in the selection group and copy group are the same we need to
+        //clear the copy group as the originals no longer exist.
+        if (itemsInCopy)
+            _multiItemCopyGroup = null;
+    }
+    
+    public void setBackgroundMenu(JPopupMenu popup){
+        JMenu edit = new JMenu(rb.getString("FontBackgroundColor"));
+        makeColorMenu(edit);
+        popup.add(edit);
+    
+    }
+        
+    protected void makeColorMenu(JMenu colorMenu) {
+        ButtonGroup buttonGrp = new ButtonGroup();
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Black"), Color.black);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("DarkGray"),Color.darkGray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Gray"),Color.gray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("LightGray"),Color.lightGray);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("White"),Color.white);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Red"),Color.red);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Orange"),Color.orange);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Yellow"),Color.yellow);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Green"),Color.green);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Blue"),Color.blue);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Magenta"),Color.magenta);
+        addColorMenuEntry(colorMenu, buttonGrp, rb.getString("Clear"), null);
+    }
+    
+    protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
+                           final String name, Color color) {
+        ActionListener a = new ActionListener() {
+            //final String desiredName = name;
+            Color desiredColor;
+            public void actionPerformed(ActionEvent e) {
+                if(desiredColor!=null)
+                    setBackgroundColor(desiredColor);
+                else
+                    clearBackgroundColor();
+            }
+            ActionListener init (Color c) {
+                desiredColor = c;
+                return this;
+            }
+        }.init(color);
+        JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
+        r.addActionListener(a);
+
+        if (color==null) { color = defaultBackgroundColor; }
+        setColorButton(getBackgroundColor(), color, r);
+        colorButtonGroup.add(r);
+        menu.add(r);
+    }
+    
+    protected void setColorButton(Color color, Color buttonColor, JRadioButtonMenuItem r) {
+        if (_debug)
+            log.debug("setColorButton: color="+color+" (RGB= "+(color==null?"":color.getRGB())+
+                      ") buttonColor= "+buttonColor+" (RGB= "+(buttonColor==null?"":buttonColor.getRGB())+")");
+        if (buttonColor!=null) {
+            if (color!=null && buttonColor.getRGB() == color.getRGB()) {
+                 r.setSelected(true);
+            } else r.setSelected(false);
+        } else {
+            if (color==null)  r.setSelected(true);
+            else  r.setSelected(false);
+        }
+    }
+
+   /******************************************************/
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PanelEditor.class.getName());
