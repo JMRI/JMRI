@@ -169,33 +169,31 @@ public class ImageIndexEditor extends JmriJFrame {
     /**
     *  Called from window close of Icon Editors
     */
-    public static void checkImageIndex(Editor editor) {
+    public static boolean checkImageIndex(Editor editor) {
         if (jmri.jmrit.catalog.ImageIndexEditor._indexChanged) {
             int result = JOptionPane.showConfirmDialog(null, rb.getString("SaveImageIndex"), 
                                           rb.getString("question"), JOptionPane.YES_NO_CANCEL_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);
             if (result == JOptionPane.YES_OPTION) {
                 storeImageIndex(editor);
+                return true;
             } else if (result == JOptionPane.NO_OPTION) {
                 _indexChanged = false;
             }
         }
+        return false;
     }
 
     public static void storeImageIndex(Editor editor) {
         // build a new Default Icons tree
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
+        // unfiltered, xml-stored, default icon tree
         CatalogTree tree = manager.getBySystemName("NXDI");
-        /*
-        if (tree != null){
-            manager.deregister(tree);
-        }
-        tree = manager.newCatalogTree("NXDI", "Default Icons");
-        */
         if (tree == null) {
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
         @SuppressWarnings("unchecked")
+        // Replace or add with latest branch from each IconAdder 
         Iterator <IconAdder>iter = editor.getIconEditors().iterator();
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();
         while (iter.hasNext()) {
@@ -215,6 +213,8 @@ public class ImageIndexEditor extends JmriJFrame {
             root.add(node);
             if (log.isDebugEnabled()) log.debug("Add node "+node);
         }
+
+        jmri.jmrit.display.palette.ItemPalette.storeIcons();
 
         if (log.isDebugEnabled()) log.debug("Start writing CatalogTree info");
         try {
