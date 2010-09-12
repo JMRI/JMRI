@@ -8,6 +8,7 @@ import jmri.jmrit.logix.WarrantManager;
 import java.beans.PropertyChangeListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import jmri.util.NamedBeanComparator;
@@ -61,6 +62,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
 
     public static final int SNAME_COLUMN = 0;
     public static final int UNAME_COLUMN = 1;
+    public static final int POSITION_COL = 2;
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
     /**
@@ -155,7 +157,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
 
     public boolean isCellEditable(int r,int c) {
-        return ( false );
+        return false;
     }
 
     public int getRowCount () {
@@ -216,12 +218,12 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         TableColumn sNameColumnT = columnModel.getColumn(SNAME_COLUMN);
         sNameColumnT.setResizable(true);
         sNameColumnT.setMinWidth(50);
-        sNameColumnT.setMaxWidth(200);
+        //sNameColumnT.setMaxWidth(200);
 
         TableColumn uNameColumnT = columnModel.getColumn(UNAME_COLUMN);
         uNameColumnT.setResizable(true);
         uNameColumnT.setMinWidth(100);
-        uNameColumnT.setMaxWidth(300);
+        //uNameColumnT.setMaxWidth(300);
 
         return table;
     }
@@ -236,6 +238,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
     public static PickListModel sensorPickModelInstance() {
         return new SensorPickModel();
+    }
+    public static PickListModel multiSensorPickModelInstance() {
+        return new MultiSensorPickModel();
     }
     public static PickListModel signalHeadPickModelInstance() {
         return new SignalHeadPickModel();
@@ -260,7 +265,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
 
     class DnDExportHandler extends TransferHandler{
-        int _type;
 
         DnDExportHandler() {
         }
@@ -333,6 +337,30 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         }
         public boolean canAddBean() {
             return true;
+        }
+    }
+
+    class MultiSensorPickModel extends SensorPickModel {
+        private HashMap <Integer, String> _position = new HashMap <Integer, String> ();
+        MultiSensorPickModel () {
+            super();
+        }
+        public boolean isCellEditable(int r,int c) {
+            if (c==POSITION_COL) {
+                return true;
+            }
+            return super.isCellEditable(r, c);
+        }
+        public Object getValueAt (int r,int c) {
+            if (c==POSITION_COL) {
+                return _position.get(new Integer(r));
+            }
+            return super.getValueAt(r, c);
+        }
+        public void setValueAt(Object type,int r,int c) {
+            if (c==POSITION_COL) {
+                _position.put(new Integer(r), (String)type);
+            }
         }
     }
 

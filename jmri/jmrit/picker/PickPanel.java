@@ -10,7 +10,13 @@ import javax.swing.table.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent; 
+import javax.swing.event.ListSelectionEvent;
+
+/**
+ * Tabbed Container for holding pick list tables
+ *
+ * @author Pete Cressman  Copyright (c) 2010
+ */
 
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
@@ -37,6 +43,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
             p.add(new JScrollPane(_tables[i]), BorderLayout.CENTER);
             _tabPane.add(p, models[i].getName());
         }
+        ROW_HEIGHT = _tables[0].getRowHeight();
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         add(makeAddToTablePanel(), BorderLayout.SOUTH);
@@ -68,7 +75,6 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
 //     }
 
     private JPanel makeAddToTablePanel() {
-
         _sysNametext = new JTextField();
         _userNametext = new JTextField();
         ActionListener listener = new ActionListener() {
@@ -88,6 +94,7 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         stateChanged(null);
         return p;
     }
+
     void addToTable() {
         String name = _sysNametext.getText();
         if (name != null && name.length() > 0) {

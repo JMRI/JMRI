@@ -50,10 +50,10 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
-public class LayoutEditor extends Editor {
+public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
 	// Defined text resource
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");

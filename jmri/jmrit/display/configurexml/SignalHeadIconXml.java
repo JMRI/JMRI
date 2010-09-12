@@ -14,7 +14,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -39,16 +39,46 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());
 
-        element.addContent(storeIcon("held", p.getHeldIcon()));
-        element.addContent(storeIcon("dark", p.getDarkIcon()));
-        element.addContent(storeIcon("red", p.getRedIcon()));
-        element.addContent(storeIcon("yellow", p.getYellowIcon()));
-        element.addContent(storeIcon("green", p.getGreenIcon()));
-        element.addContent(storeIcon("flashyellow", p.getFlashYellowIcon()));
-        element.addContent(storeIcon("lunar", p.getLunarIcon()));
-        element.addContent(storeIcon("flashred", p.getFlashRedIcon()));
-        element.addContent(storeIcon("flashgreen", p.getFlashGreenIcon()));
-        element.addContent(storeIcon("flashlunar", p.getFlashLunarIcon()));
+        NamedIcon icon = p.getHeldIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("held", icon));
+        }
+        icon = p.getDarkIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("dark", icon));
+        }
+        icon = p.getRedIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("red", icon));
+        }
+        icon = p.getYellowIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("yellow", icon));
+        }
+        icon = p.getGreenIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("green", icon));
+        }
+        icon = p.getFlashYellowIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("flashyellow", icon));
+        }
+        icon = p.getLunarIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("lunar", icon));
+        }
+        icon = p.getFlashRedIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("flashred", icon));
+        }
+        icon = p.getFlashGreenIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("flashgreen", icon));
+        }
+        icon = p.getFlashLunarIcon();
+        if (icon!=null) {
+            element.addContent(storeIcon("flashlunar", icon));
+        }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalHeadIconXml");
         return element;

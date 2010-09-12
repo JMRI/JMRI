@@ -12,22 +12,26 @@ import jmri.util.*;
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
  * @author	Bob Jacobsen  Copyright 2004, 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     public void testCreate() {
-        new BlockTableAction();
+        BlockTableAction ba = new BlockTableAction();
+        assertNotNull("BlockTableAction is null!", ba);
+        TestHelper.disposeWindow(ba.f, this);
     }
 
     public void testInvoke() {
-        new BlockTableAction().actionPerformed(null);
+        BlockTableAction ba = new BlockTableAction();
+        ba.actionPerformed(null);
         
         // create a couple blocks, and see if they show
         InstanceManager.blockManagerInstance().createNewBlock("IB1", "block 1");
         
         Block b2 = InstanceManager.blockManagerInstance().createNewBlock("IB2", "block 2");
         b2.setDirection(jmri.Path.EAST);
+        TestHelper.disposeWindow(ba.f, this);
     }
 
 

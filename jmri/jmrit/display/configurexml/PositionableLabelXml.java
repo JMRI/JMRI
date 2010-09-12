@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -69,9 +69,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             element.setAttribute("blue", ""+util.getForeground().getBlue());
         }
         if(p.isOpaque()){
-            element.setAttribute("redBack", ""+util.setBackground().getRed());
-            element.setAttribute("greenBack", ""+util.setBackground().getGreen());
-            element.setAttribute("blueBack", ""+util.setBackground().getBlue());
+            element.setAttribute("redBack", ""+util.getBackground().getRed());
+            element.setAttribute("greenBack", ""+util.getBackground().getGreen());
+            element.setAttribute("blueBack", ""+util.getBackground().getBlue());
         }
         if (util.getMargin()!=0)
             element.setAttribute("margin", ""+util.getMargin());
