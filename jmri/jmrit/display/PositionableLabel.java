@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.95 $
+ * @version $Revision: 1.96 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -141,6 +141,47 @@ public class PositionableLabel extends JLabel implements Positionable {
         else return "Background";
     }
 
+    public Positionable clone() {
+        PositionableLabel pos;
+        if (_icon) {
+            NamedIcon icon = new NamedIcon((NamedIcon)getIcon());
+            pos = new PositionableLabel(icon, _editor);
+            pos.setText(getText());
+        } else {
+            pos = new PositionableLabel(getText(), _editor);
+        }
+        finishClone(pos);
+        return pos;
+    }
+
+    protected void finishClone(PositionableLabel pos) {
+        pos.setLocation(getX(), getY());
+        pos.setDisplayLevel(getDisplayLevel());
+        pos.setControlling(isControlling());
+        pos.setHidden(isHidden());
+        pos.setPositionable(isPositionable());
+        pos.setShowTooltip(showTooltip());        
+        pos.setTooltip(getTooltip());        
+        pos.setEditable(isEditable());
+        if (getPopupUtility()==null) {
+            pos.setPopupUtility(null);
+        } else {
+            pos.setPopupUtility(getPopupUtility().clone(pos));
+        }
+        if (getIcon()!=null) {
+            pos.setIcon(cloneIcon((NamedIcon)getIcon(), pos));
+        }
+    }
+
+    protected NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {
+        NamedIcon clone = new NamedIcon(icon);
+        clone.setLoad(icon.getDegrees(), icon.getScale(), pos);
+        if (icon.getDegrees()==0) {  // backward compatibility to 2.9.3
+            clone.setRotation(icon.getRotation(), pos);
+        }
+        return clone;
+    }
+    
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {}
     public void doMouseReleased(MouseEvent event) {}
@@ -400,10 +441,13 @@ public class PositionableLabel extends JLabel implements Positionable {
         return ((NamedIcon)getIcon()).getScale();
     }
 
-    void rotate(int deg) {
+    public void rotate(int deg) {
         _namedIcon.rotate(deg, this);
         setIcon(_namedIcon);
         updateSize();
+    }
+    public int getDegrees() {
+        return ((NamedIcon)getIcon()).getDegrees();
     }
     
     /**

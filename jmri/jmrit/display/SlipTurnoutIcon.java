@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -489,7 +489,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         displayState(turnoutState());
     }
 
-    void rotate(int deg) {
+    public void rotate(int deg) {
         lowerWestToUpperEast.rotate(deg, this);
         upperWestToLowerEast.rotate(deg, this);
         lowerWestToLowerEast.rotate(deg, this);

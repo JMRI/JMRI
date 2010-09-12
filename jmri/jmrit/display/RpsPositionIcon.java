@@ -18,7 +18,7 @@ import javax.swing.JCheckBoxMenuItem;
  * In this initial version, it ignores the ID, so there's only one icon.
  *
  * @author Bob Jacobsen Copyright (C) 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class RpsPositionIcon extends PositionableLabel implements MeasurementListener {
@@ -124,7 +124,7 @@ public class RpsPositionIcon extends PositionableLabel implements MeasurementLis
         displayState();
     }
 
-    void rotate(int deg) {
+    public void rotate(int deg) {
         active.rotate(deg, this);
         error.rotate(deg, this);
         displayState();

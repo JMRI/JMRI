@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -44,7 +44,18 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     
     ArrayList<Entry> entries = new ArrayList<Entry>();
     
-
+    public Positionable clone() {
+        MultiSensorIcon pos = new MultiSensorIcon(_editor);
+        pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
+        pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
+        pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
+        for (int i=0; i<entries.size(); i++) {
+            addEntry(getSensorName(i), cloneIcon(getSensorIcon(i), pos));
+        }
+        finishClone(pos);
+        return pos;
+    }
+                                        
     public void addEntry(NamedBeanHandle<Sensor> sensor, NamedIcon icon) {
         if (sensor != null) {
             Entry e = new Entry();
@@ -154,7 +165,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         displayState();
     }
 
-    void rotate(int deg) {
+    public void rotate(int deg) {
         for (int i = 0; i<entries.size(); i++) {
             NamedIcon icon = entries.get(i).icon;
             icon.rotate(deg, this);

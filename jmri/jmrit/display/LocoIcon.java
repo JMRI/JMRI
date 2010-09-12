@@ -20,7 +20,7 @@ import javax.swing.JRadioButtonMenuItem;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class LocoIcon extends PositionableLabel {
@@ -48,6 +48,13 @@ public class LocoIcon extends PositionableLabel {
         });
     }
 	
+    public Positionable clone() {
+        LocoIcon pos = new LocoIcon(_editor);
+        pos.setRosterEntry(getRosterEntry());
+        finishClone(pos);
+        return pos;
+    }
+
 	// Marker tool tips are always disabled
 	public void setShowTooltip(boolean set){super.setShowTooltip(false);}
 

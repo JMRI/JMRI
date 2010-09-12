@@ -6,7 +6,7 @@ import jmri.NamedBean;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.XmlFile;
+//import jmri.jmrit.XmlFile;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.CatalogPanel;
@@ -17,7 +17,6 @@ import jmri.jmrit.picker.PickListModel;
 
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -46,6 +45,8 @@ import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.ListSelectionModel;
 import javax.swing.JButton;
+import javax.swing.JToggleButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -76,7 +77,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     private static int ROW_HEIGHT;
 
-    HashMap <String, JButton>   _iconMap;
+    HashMap <String, JToggleButton>   _iconMap;
     ArrayList <String>          _order;
     JScrollPane                 _pickTablePane;
     PickListModel               _pickListModel;
@@ -96,7 +97,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     public IconAdder() {
         _userDefaults = false;
-        _iconMap = new HashMap <String, JButton>();
+        _iconMap = new HashMap <String, JToggleButton>(10);   // 10 is current max of signalHead icons
         _order = new ArrayList <String>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
@@ -108,7 +109,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         }
         closeCatalog();
         if (_defaultIcons != null) {
-            _iconMap = new HashMap <String, JButton>();
+            _iconMap = new HashMap <String, JToggleButton>(10);
             _order = new ArrayList <String>();
             makeIcons(_defaultIcons);
             makeIconPanel();
@@ -168,8 +169,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
         if (log.isDebugEnabled()) log.debug("setNamedIcon: order= "+order+", key= "+label);
+        if (log.isDebugEnabled()) log.debug("setIcon: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
         icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
-        JButton button = new IconButton(label, icon);
+        JToggleButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
         _iconMap.put(label, button);
         // calls may not be in ascending order, so pad array
@@ -314,11 +316,11 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (!_addButton.isEnabled()){
             return;
         }
-        Iterator <JButton> iter = _iconMap.values().iterator();
+        Iterator <JToggleButton> iter = _iconMap.values().iterator();
         int lastWidth = 0;
         int lastHeight = 0;
         while (iter.hasNext()) {
-            JButton but = iter.next();
+            JToggleButton but = iter.next();
             int nextWidth = but.getIcon().getIconWidth();
             int nextHeight = but.getIcon().getIconHeight();
             if ((lastWidth>0 && lastWidth != nextWidth) || (lastHeight>0 && lastHeight != nextHeight)) {
@@ -437,7 +439,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.add(new JSeparator());
 
         if (changeIconAction != null) {
-            makeDefaultCatalog();
+            _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setVisible(false);
             this.add(_catalog);
         }
@@ -474,11 +476,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     public void addCatalog() {
         if (log.isDebugEnabled()) log.debug("addCatalog called:"); 
         // add the catalog, so icons can be selected
-        if (_catalog != null)  {
-            _catalog.setVisible(true);
-        } else {
-            makeDefaultCatalog();
+        if (_catalog == null)  {
+            _catalog = CatalogPanel.makeDefaultCatalog();
         }
+        _catalog.setVisible(true);
         /*
         this.add(new JSeparator());
         */
@@ -505,29 +506,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         this.pack();
     }
 
-    void makeDefaultCatalog() {
-        _catalog = new CatalogPanel("catalogs", "selectNode");
-        _catalog.init(false);
-        CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        List <String> sysNames = manager.getSystemNameList();
-        if (sysNames != null) {
-            for (int i=0; i<sysNames.size(); i++) {
-                String systemName = sysNames.get(i);
-                if (systemName.charAt(0) == 'I') {
-                    _catalog.addTree( manager.getBySystemName(systemName));
-                }
-            }
-        }
-        _catalog.createNewBranch("IFJAR", "Program Directory", "resources");
-        XmlFile.ensurePrefsPresent("resources");
-        _catalog.createNewBranch("IFPREF", "Preferences Directory", XmlFile.prefsDir()+"resources");
-    }
-
     public void addDirectoryToCatalog(java.io.File dir) {
         if (_catalog == null) {
-            _catalog = new CatalogPanel("catalogs", "selectNode");
-            _catalog.init(false);
-            makeDefaultCatalog();
+            _catalog = CatalogPanel.makeDefaultCatalog();
         }
         if (_changeButton != null) {
             _changeButton.setVisible(false);
@@ -549,30 +530,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         IconButton(String label, Icon icon) {  // init icon passed to avoid ref before ctor complete
             super(icon);
             key = label;
-            /*  Save this code in case there is a need to use an alternative
-            icon changing method to DnD.
-            addActionListener( new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        pickIcon(key);
-                    }
-                });
-            */
         }
     }
-/*  Save this code in case there is a need to use an alternative
-            icon changing method to DnD.
-    void pickIcon(String key) {
-        if (_catalog != null && _catalog.isVisible()){
-            NamedIcon newIcon = _catalog.getSelectedIcon();
-            if (newIcon !=null) {
-                JButton button = _iconMap.get(key);
-                button.setIcon(newIcon);
-                _iconMap.put(key, button);
-            }
-            this.invalidate();
-        }
-    }
-*/
+    
     /**
      * Clean up when its time to make it all go away
      */
@@ -584,7 +544,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         _catalog = null;
     }
 
-    class DropButton extends JButton implements DropTargetListener {
+    class DropButton extends JToggleButton implements DropTargetListener {
         DataFlavor dataFlavor;
         DropButton (Icon icon) {
             super(icon);
@@ -618,7 +578,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         DropTarget target = (DropTarget)e.getSource();
                         IconButton iconButton = (IconButton)target.getComponent();
                         String key = iconButton.key;
-                        JButton button = _iconMap.get(key);
+                        JToggleButton button = _iconMap.get(key);
                         button.setIcon(newIcon);
                         _iconMap.put(key, button);
                         e.dropComplete(true);
@@ -642,20 +602,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             }
         }
     }
-    
 
-    public static Frame getParentFrame(Component comp)
-    {
-        while (true)
-        {
-            if (comp instanceof Frame )
-            {
-                return (Frame)comp;
-            }
-            comp = comp.getParent();
-        }
-    }
-
-    // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconAdder.class.getName());
 }

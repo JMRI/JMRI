@@ -60,6 +60,27 @@ public class PositionablePopupUtil {
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
 
+    public PositionablePopupUtil clone(Positionable parent) {
+        PositionablePopupUtil util = parent.getPopupUtility();
+        if (util!=null) {
+            util.setHorizontalAlignment(getJustification());
+            util.setFixedWidth(getFixedWidth());
+            util.setFixedHeight(getFixedHeight());
+            util.setMargin(getMargin());
+            util.setBorderSize(getBorderSize());
+            util.setBorderColor(getBorderColor());
+            util.setFont(util.getFont().deriveFont(getFontStyle()));
+            util.setFontSize(getFontSize());
+            if (_parent.isOpaque()) {
+                util.setBackgroundColor(getBackground());
+            } else {
+                util.setBackgroundColor(null);
+            }
+            util.setForeground(getForeground());
+        }
+        return util;
+    }
+
     public String toString() {
         return _parent.getNameString()+": fixedWidth= "+fixedWidth+", fixedHeight= "+fixedHeight+
                  ", margin= "+margin+", borderSize= "+borderSize; 
@@ -150,7 +171,7 @@ public class PositionablePopupUtil {
     public void setMargin(int m) {
         margin = m;
         if (_parent.isOpaque()){
-            borderMargin = new LineBorder(setBackground(),m);
+            borderMargin = new LineBorder(getBackground(),m);
             //_parent.setBorder(new LineBorder(setBackground(), m));
             
         } else{
@@ -238,7 +259,7 @@ public class PositionablePopupUtil {
         _parent.updateSize();
     }
 
-    public Color setBackground() {
+    public Color getBackground() {
         return _textComponent.getBackground();
     }
 
@@ -270,6 +291,15 @@ public class PositionablePopupUtil {
         if (_textComponent.getFont().getSize() == size) r.setSelected(true);
         else r.setSelected(false);
         menu.add(r);
+    }
+
+    public void setFont(Font font) {
+        _textComponent.setFont(font);
+        _parent.updateSize();
+    }
+
+    public Font getFont() {
+        return _textComponent.getFont();
     }
 
     public void setFontSize(float newSize) {
@@ -454,9 +484,9 @@ public class PositionablePopupUtil {
         popup.add(justMenu);
     }
 
-    static final int LEFT   = 0x00;
-    static final int RIGHT  = 0x02;
-    static final int CENTRE = 0x04;
+    static public final int LEFT   = 0x00;
+    static public final int RIGHT  = 0x02;
+    static public final int CENTRE = 0x04;
     
     private int justification=CENTRE; //Default is always Centre
     
@@ -534,10 +564,6 @@ public class PositionablePopupUtil {
             return ((JTextField)_textComponent).getText();
         }
         return null;
-    }
-
-    public Font getFont() {
-        return _textComponent.getFont();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionablePopupUtil.class.getName());

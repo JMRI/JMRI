@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public interface Positionable  {
     public void setPositionable(boolean enabled);
@@ -62,6 +62,8 @@ public interface Positionable  {
     public void updateSize();
     public int maxWidth();
     public int maxHeight();
+
+    public Positionable clone();
 
     /** Methods to add popup menu items
     * return true if a popup item is set

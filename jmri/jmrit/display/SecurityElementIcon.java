@@ -26,7 +26,7 @@ import javax.swing.JSeparator;
  * if you move this.
  *
  * @author Bob Jacobsen Copyright 2002
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 
 public class SecurityElementIcon extends PositionableJPanel
@@ -66,6 +66,13 @@ public class SecurityElementIcon extends PositionableJPanel
 
     // the associated SecurityElement object
     SecurityElement element = null;
+
+    public Positionable clone() {
+        SecurityElementIcon pos = new SecurityElementIcon(_editor);
+        pos.setSecurityElement(getNameString());
+        finishClone(pos);
+        return pos;
+    }
 
     public SecurityElement getSecurityElement() { return element; }
 

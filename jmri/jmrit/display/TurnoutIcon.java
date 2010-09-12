@@ -21,7 +21,7 @@ import jmri.util.NamedBeanHandle;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -33,6 +33,18 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         _control = true;
         displayState(turnoutState());
         setPopupUtility(null);
+    }
+
+    public Positionable clone() {
+        TurnoutIcon pos = new TurnoutIcon(_editor);
+        pos.setTurnout(getNameString());
+        pos.setClosedIcon(cloneIcon(getClosedIcon(), pos));
+        pos.setThrownIcon(cloneIcon(getThrownIcon(), pos));
+        pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
+        pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
+        pos.setTristate(getTristate());
+        finishClone(pos);
+        return pos;
     }
 
     // the associated Turnout object
@@ -226,7 +238,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         displayState(turnoutState());
     }
 
-    void rotate(int deg) {
+    public void rotate(int deg) {
         closed.rotate(deg, this);
         thrown.rotate(deg, this);
         unknown.rotate(deg, this);

@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -42,6 +42,28 @@ public class PositionableJComponent extends JComponent implements Positionable {
         debug = log.isDebugEnabled();
     }
 
+    public Positionable clone() {
+        try {
+            PositionableJComponent pos = new PositionableJComponent(_editor);
+            finishClone(pos);
+            return pos;
+        } catch (Exception ex) {
+            log.error("Cannot clone "+this.getClass().getName()+" - "+ex);
+        }
+        return null;
+    }
+
+    protected void finishClone(Positionable pos) {
+        pos.setLocation(getX(), getY());
+        pos.setDisplayLevel(getDisplayLevel());
+        pos.setControlling(isControlling());
+        pos.setHidden(isHidden());
+        pos.setPositionable(isPositionable());
+        pos.setShowTooltip(showTooltip());        
+        pos.setTooltip(getTooltip());        
+        pos.setEditable(isEditable());        
+    }
+    
     /***************** Positionable methods **********************/
 
     public void setPositionable(boolean enabled) {
@@ -108,7 +130,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public void setEditor(Editor ed) {
         _editor = ed;
     }
-    
+    // no subclasses support rotations (yet)
+    public void rotate(int deg) {
+    }
+    public int getDegrees() {
+        return 0;
+    }
     
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {}

@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -38,6 +38,26 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(SignalHead.RED);
         setPopupUtility(null);
     }
+
+    public Positionable clone() {
+        SignalHeadIcon pos = new SignalHeadIcon(_editor);
+        pos.setSignalHead(getNameString());
+        pos.setHeldIcon(cloneIcon(getHeldIcon(), pos));
+        pos.setDarkIcon(cloneIcon(getDarkIcon(), pos));
+        pos.setRedIcon(cloneIcon(getRedIcon(), pos));
+        pos.setFlashRedIcon(cloneIcon(getFlashRedIcon(), pos));
+        pos.setYellowIcon(cloneIcon(getYellowIcon(), pos));
+        pos.setFlashYellowIcon(cloneIcon(getFlashYellowIcon(), pos));
+        pos.setGreenIcon(cloneIcon(getGreenIcon(), pos));
+        pos.setFlashGreenIcon(cloneIcon(getFlashGreenIcon(), pos));
+        pos.setLunarIcon(cloneIcon(getLunarIcon(), pos));
+        pos.setFlashLunarIcon(cloneIcon(getFlashLunarIcon(), pos));
+        pos.setClickMode(getClickMode());
+        pos.setLitMode(getLitMode());
+        finishClone(pos);
+        return pos;
+    }
+
 
 //    private SignalHead mHead;
     private NamedBeanHandle<SignalHead> namedHead;
@@ -81,7 +101,17 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         return namedHead.getBean();
     }
 
-    // display icons
+    NamedIcon red;
+    NamedIcon flashRed;
+    NamedIcon yellow;
+    NamedIcon flashYellow;
+    NamedIcon green;
+    NamedIcon flashGreen;
+    NamedIcon lunar;
+    NamedIcon flashLunar;
+    NamedIcon dark;
+    NamedIcon held;
+    /* display icons
     String redName = "resources/icons/smallschematics/searchlights/left-red-marker.gif";
     NamedIcon red = new NamedIcon(redName, redName);
 
@@ -111,7 +141,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     String heldName = "resources/icons/smallschematics/searchlights/left-held-marker.gif";
     NamedIcon held = new NamedIcon(heldName, heldName);
-
+   */
     public NamedIcon getHeldIcon() { return held; }
     public void setHeldIcon(NamedIcon i) {
         held = i;
@@ -314,10 +344,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     /*************** popup AbstractAction.actionPerformed method overrides ************/
 
     protected void rotateOrthogonal() {
-        green.setRotation(green.getRotation()+1, this);
-        red.setRotation(red.getRotation()+1, this);
-        yellow.setRotation(yellow.getRotation()+1, this);
-        lunar.setRotation(lunar.getRotation()+1, this);
+        if (green !=null) green.setRotation(green.getRotation()+1, this);
+        if (red !=null) red.setRotation(red.getRotation()+1, this);
+        if (yellow !=null) yellow.setRotation(yellow.getRotation()+1, this);
+        if (lunar !=null) lunar.setRotation(lunar.getRotation()+1, this);
         if (flashGreen !=null) flashGreen.setRotation(flashGreen.getRotation()+1, this);
         if (flashRed !=null) flashRed.setRotation(flashRed.getRotation()+1, this);
         if (flashYellow !=null) flashYellow.setRotation(flashYellow.getRotation()+1, this);
@@ -326,15 +356,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         if (held !=null) held.setRotation(held.getRotation()+1, this);
         displayState(headState());
         // bug fix, must repaint icons that have same width and height
-        repaint();
-    
+        repaint();    
     }
 
     public void setScale(double s) {
-        green.scale(s, this);
-        red.scale(s, this);
-        yellow.scale(s, this);
-        lunar.scale(s, this);
+        if (green !=null) green.scale(s, this);
+        if (red !=null) red.scale(s, this);
+        if (yellow !=null) yellow.scale(s, this);
+        if (lunar !=null) lunar.scale(s, this);
         if (flashGreen !=null) flashGreen.scale(s, this);
         if (flashYellow !=null) flashYellow.scale(s, this);
         if (flashRed !=null) flashRed.scale(s, this);
@@ -344,11 +373,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(headState());
     }
 
-    void rotate(int deg) {
-        green.rotate(deg, this);
-        red.rotate(deg, this);
-        yellow.rotate(deg, this);
-        lunar.rotate(deg, this);
+    public void rotate(int deg) {
+        if (green !=null) green.rotate(deg, this);
+        if (red !=null) red.rotate(deg, this);
+        if (yellow !=null) yellow.rotate(deg, this);
+        if (lunar !=null) lunar.rotate(deg, this);
         if (flashGreen !=null) flashGreen.rotate(deg, this);
         if (flashYellow !=null) flashYellow.rotate(deg, this);
         if (flashRed !=null) flashRed.rotate(deg, this);
@@ -465,16 +494,47 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         _iconEditor.setSelection(getSignalHead());
     }
     void updateSignal() {
-        setRedIcon(_iconEditor.getIcon("SignalHeadStateRed"));
-        setFlashRedIcon(_iconEditor.getIcon("SignalHeadStateFlashingRed"));
-        setYellowIcon(_iconEditor.getIcon("SignalHeadStateYellow"));
-        setFlashYellowIcon(_iconEditor.getIcon("SignalHeadStateFlashingYellow"));
-        setGreenIcon(_iconEditor.getIcon("SignalHeadStateGreen"));
-        setFlashGreenIcon(_iconEditor.getIcon("SignalHeadStateFlashingGreen"));
+        int deg = 0;
+        if (red !=null) { deg = red.getDegrees(); }
+        red = _iconEditor.getIcon("SignalHeadStateRed");
+        if (red !=null) { red.rotate(deg, this); }
+
+        if (flashRed !=null) { deg = flashRed.getDegrees(); }
+        flashRed = _iconEditor.getIcon("SignalHeadStateFlashingRed");
+        if (flashRed !=null) { flashRed.rotate(deg, this); }
+
+        if (yellow !=null) { deg = yellow.getDegrees(); }
+        yellow = _iconEditor.getIcon("SignalHeadStateYellow");
+        if (yellow !=null) { yellow.rotate(deg, this); }
+
+        if (flashYellow !=null) { deg = flashYellow.getDegrees(); }
+        flashYellow = _iconEditor.getIcon("SignalHeadStateFlashingYellow");
+        if (flashYellow !=null) { flashYellow.rotate(deg, this); }
+
+        if (green !=null) { deg = green.getDegrees(); }
+        green = _iconEditor.getIcon("SignalHeadStateGreen");
+        if (green !=null) { green.rotate(deg, this); }
+
+        if (flashGreen !=null) { deg = flashGreen.getDegrees(); }
+        flashGreen = _iconEditor.getIcon("SignalHeadStateFlashingGreen");
+        if (flashGreen !=null) { flashGreen.rotate(deg, this); }
+
+        if (flashRed !=null) { deg = flashRed.getDegrees(); }
         setLunarIcon(_iconEditor.getIcon("SignalHeadStateLunar"));
+        if (flashRed !=null) { flashRed.rotate(deg, this); }
+
+        if (flashRed !=null) { deg = flashRed.getDegrees(); }
         setFlashLunarIcon(_iconEditor.getIcon("SignalHeadStateFlashingLunar"));
-        setDarkIcon(_iconEditor.getIcon("SignalHeadStateDark"));
-        setHeldIcon(_iconEditor.getIcon("SignalHeadStateHeld"));
+        if (flashRed !=null) { flashRed.rotate(deg, this); }
+
+        if (dark !=null) { deg = dark.getDegrees(); }
+        dark = _iconEditor.getIcon("SignalHeadStateDark");
+        if (dark !=null) { dark.rotate(deg, this); }
+
+        if (held !=null) { deg = held.getDegrees(); }
+        held = _iconEditor.getIcon("SignalHeadStateHeld");
+        if (held !=null) { held.rotate(deg, this); }
+
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;

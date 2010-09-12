@@ -21,7 +21,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -38,17 +38,44 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     private boolean _controlling = true;
     private boolean _hidden = false;
 	private int _displayLevel;
-    private double _scale;         // user's scaling factor
+    private double _scale = 1.0;    // scaling factor
+    private int _rotation = 0;      // rotation in degrees
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
     
     public PositionableJPanel(Editor editor) {
         _editor = editor;
-        _scale = 1.0;
         debug = log.isDebugEnabled();
     }
 
+    public Positionable clone() {
+        try {
+            PositionableJPanel pos = new PositionableJPanel(_editor);
+            finishClone(pos);
+            return pos;
+        } catch (Exception ex) {
+            log.error("Cannot clone "+this.getClass().getName()+" - "+ex);
+        }
+        return null;
+    }
+
+    protected void finishClone(PositionableJPanel pos) {
+        pos.setLocation(getX(), getY());
+        pos.setDisplayLevel(getDisplayLevel());
+        pos.setControlling(isControlling());
+        pos.setHidden(isHidden());
+        pos.setPositionable(isPositionable());
+        pos.setShowTooltip(showTooltip());        
+        pos.setTooltip(getTooltip());        
+        pos.setEditable(isEditable());        
+        if (getPopupUtility()==null) {
+            pos.setPopupUtility(null);
+        } else {
+            pos.setPopupUtility(getPopupUtility().clone(pos));
+        }
+    }
+    
     public void setPositionable(boolean enabled) {_positionable = enabled;}
     public boolean isPositionable() { return _positionable; }
 
@@ -99,6 +126,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public double getScale() {
         return _scale;
     }
+    // no subclasses support rotations (yet)
+    public void rotate(int deg) {
+    }
+    public int getDegrees() {
+        return 0;
+    }
 
     public String getNameString() {
         return getName();
@@ -110,8 +143,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     public void setEditor(Editor ed) {
         _editor = ed;
     }
-    
-    
+
     // overide where used - e.g. momentary
     public void doMousePressed(MouseEvent event) {}
     public void doMouseReleased(MouseEvent event) {}
@@ -241,7 +273,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     /***************************************************************/
 
     PositionablePopupUtil _popupUtil;
-    protected void setPopupUtility(PositionablePopupUtil tu) {
+    public void setPopupUtility(PositionablePopupUtil tu) {
         _popupUtil = tu;
     }
     public PositionablePopupUtil getPopupUtility() {
