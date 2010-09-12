@@ -50,8 +50,6 @@ public class IconDialog extends ItemDialog {
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
-    * @param  family
-    * @param 
     */
     public IconDialog(String type, String family, ItemPanel parent) {
         super(type, family, 

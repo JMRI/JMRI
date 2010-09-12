@@ -17,8 +17,6 @@ public class SingleIconDialog extends IconDialog {
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
-    * @param  family
-    * @param 
     */
     public SingleIconDialog(String type, String family, ItemPanel parent) {
         super(type, family, parent); 
