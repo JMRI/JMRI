@@ -414,7 +414,7 @@ public class PreviewDialog extends JDialog {
         }
         _previewLabel.setText(msg);
         _preview.setMinimumSize(new Dimension(CatalogPanel.ICON_WIDTH, 2*CatalogPanel.ICON_HEIGHT));
-        jmri.jmrit.display.IconAdder.getParentFrame(this).pack();
+        CatalogPanel.packParentFrame(this);
 
         if (_noMemory) {
             JOptionPane.showMessageDialog(this, 
