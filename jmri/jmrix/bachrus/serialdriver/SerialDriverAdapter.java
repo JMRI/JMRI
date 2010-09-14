@@ -30,13 +30,14 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super();
         adaptermemo = new SpeedoSystemConnectionMemo();
+        mInstance=this;
     }
 
     SerialPort activeSerialPort = null;
