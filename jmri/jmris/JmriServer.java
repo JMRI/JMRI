@@ -28,7 +28,7 @@ public class JmriServer {
 
      private static JmriServer _instance = null;
 
-     public static JmriServer instance(){
+     public synchronized static JmriServer instance(){
          if(_instance==null) _instance=new JmriServer();
          return _instance;
      }
@@ -157,8 +157,8 @@ public class JmriServer {
         if(log.isDebugEnabled()) log.debug("Starting new Client");
 	clientSocket = socket;
 	try {
-	  inStream = new DataInputStream(socket.getInputStream());
-	  outStream = new DataOutputStream(socket.getOutputStream());
+	  inStream = new DataInputStream(clientSocket.getInputStream());
+	  outStream = new DataOutputStream(clientSocket.getOutputStream());
 	} catch (IOException e) {
 	  log.error("Error obtaining I/O Stream from socket.");
 	}

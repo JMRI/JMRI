@@ -1,4 +1,4 @@
-//simpleSensorServer.java
+//SimpleSensorServer.java
 
 package jmri.jmris.simpleserver;
 
@@ -12,14 +12,14 @@ import jmri.jmris.AbstractSensorServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.1 $
  */
 
-public class simpleSensorServer extends AbstractSensorServer {
+public class SimpleSensorServer extends AbstractSensorServer {
 
    private DataOutputStream output;
 
-   public simpleSensorServer(DataInputStream inStream,DataOutputStream outStream){
+   public SimpleSensorServer(DataInputStream inStream,DataOutputStream outStream){
 
         output=outStream;
     }
@@ -59,6 +59,6 @@ public class simpleSensorServer extends AbstractSensorServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simplePowerServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleSensorServer.class.getName());
 
 }

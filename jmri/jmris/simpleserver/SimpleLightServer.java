@@ -1,4 +1,4 @@
-//simpleLightServer.java
+//SimpleLightServer.java
 
 package jmri.jmris.simpleserver;
 
@@ -12,14 +12,14 @@ import jmri.jmris.AbstractLightServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.1 $
  */
 
-public class simpleLightServer extends AbstractLightServer {
+public class SimpleLightServer extends AbstractLightServer {
 
    private DataOutputStream output;
 
-   public simpleLightServer(DataInputStream inStream,DataOutputStream outStream){
+   public SimpleLightServer(DataInputStream inStream,DataOutputStream outStream){
 
         output=outStream;
     }
@@ -59,6 +59,6 @@ public class simpleLightServer extends AbstractLightServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simplePowerServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightServer.class.getName());
 
 }

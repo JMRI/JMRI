@@ -1,4 +1,4 @@
-// serviceHandler.java
+// ServiceHandler.java
 
 package jmri.jmris;
 
@@ -9,10 +9,10 @@ import jmri.InstanceManager;
  * types which can be passed to a parser visitor object.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.1 $
  *
  */
-public class serviceHandler {
+public class ServiceHandler {
 
      // private service handler objects
      private AbstractPowerServer powerServer = null;

@@ -18,7 +18,7 @@ import jmri.jmris.srcp.parser.*;
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -71,7 +71,7 @@ public class JmriSRCPServer extends JmriServer{
         int runmode=HANDSHAKEMODE;
 
         // interface components
-        serviceHandler sh= new serviceHandler();
+        ServiceHandler sh= new ServiceHandler();
         sh.setPowerServer(new JmriSRCPPowerServer(outStream));
         sh.setTurnoutServer(new JmriSRCPTurnoutServer(inStream,outStream));
 

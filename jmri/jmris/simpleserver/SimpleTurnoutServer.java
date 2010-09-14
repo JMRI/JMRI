@@ -1,4 +1,4 @@
-//simpleTurnoutServer.java
+//SimpleTurnoutServer.java
 
 package jmri.jmris.simpleserver;
 
@@ -12,14 +12,14 @@ import jmri.jmris.AbstractTurnoutServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.1 $
  */
 
-public class simpleTurnoutServer extends AbstractTurnoutServer {
+public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
    private DataOutputStream output;
 
-   public simpleTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
+   public SimpleTurnoutServer(DataInputStream inStream,DataOutputStream outStream){
 
         output=outStream;
     }
@@ -60,6 +60,6 @@ public class simpleTurnoutServer extends AbstractTurnoutServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simplePowerServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleLightServer.class.getName());
 
 }

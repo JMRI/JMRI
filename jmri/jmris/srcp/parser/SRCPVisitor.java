@@ -7,7 +7,7 @@ import jmri.InstanceManager;
 /* This class provides an interface between the JavaTree/JavaCC 
  * parser for the SRCP protocol and the JMRI back end.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class SRCPVisitor implements SRCPParserVisitor {
@@ -30,7 +30,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
     log.debug("Get " +((SimpleNode)node.jjtGetChild(1)).jjtGetValue());
     if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("POWER")) {
        try {
-       ((jmri.jmris.serviceHandler)data).getPowerServer().sendStatus(
+       ((jmri.jmris.ServiceHandler)data).getPowerServer().sendStatus(
                            InstanceManager.powerManagerInstance().getPower());
        } catch(jmri.JmriException je) {
              // We shouldn't have any errors here.
@@ -43,7 +43,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
        int bus = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(0)).jjtGetValue()));
        int address = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
        try {
-       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.serviceHandler)data).getTurnoutServer()).sendStatus(bus,address);
+       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.ServiceHandler)data).getTurnoutServer()).sendStatus(bus,address);
        } catch(java.io.IOException ie) {
        }
     }
@@ -57,7 +57,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
     if(((SimpleNode)node.jjtGetChild(1)).jjtGetValue().equals("POWER"))
     {
        try {
-       ((jmri.jmris.serviceHandler)data).getPowerServer().parseStatus(
+       ((jmri.jmris.ServiceHandler)data).getPowerServer().parseStatus(
                   ((String)((SimpleNode)node.jjtGetChild(2)).jjtGetValue()));
        } catch(jmri.JmriException je) {
              // We shouldn't have any errors here.
@@ -71,7 +71,7 @@ public class SRCPVisitor implements SRCPParserVisitor {
        int port = Integer.parseInt(((String)((SimpleNode)node.jjtGetChild(3)).jjtGetValue()));
 
        try {
-       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.serviceHandler)data).getTurnoutServer()).parseStatus(bus,address,port);
+       ((jmri.jmris.srcp.JmriSRCPTurnoutServer)((jmri.jmris.ServiceHandler)data).getTurnoutServer()).parseStatus(bus,address,port);
        } catch(jmri.JmriException je) {
              // We shouldn't have any errors here.
              // If we do, something is horibly wrong.
@@ -114,47 +114,47 @@ public class SRCPVisitor implements SRCPParserVisitor {
   }
   public Object visit(ASTgl node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("GL " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTsm node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("SM " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTga node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("GA" +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTfb node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("FB " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTtime node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("TIME " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTpower node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("POWER " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTserver node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("SERVER " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTsession node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("SESION " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTlock node, Object data)
   {
-    log.debug("TERM " +node.jjtGetValue() );
+    log.debug("LOCK " +node.jjtGetValue() );
     return node.childrenAccept(this,data);
   }
   public Object visit(ASTwait_cmd node, Object data)

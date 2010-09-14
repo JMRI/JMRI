@@ -1,4 +1,4 @@
-// simpleServer.java
+// SimpleServer.java
 
 package jmri.jmris.simpleserver;
 
@@ -13,24 +13,24 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.1 $
  *
  */
-public class simpleServer extends JmriServer{
+public class SimpleServer extends JmriServer{
 
      private static JmriServer _instance = null;
 
      public static JmriServer instance(){
-         if(_instance==null) _instance=new simpleServer();
+         if(_instance==null) _instance=new SimpleServer();
          return _instance;
      }
 
      // Create a new server using the default port
-     public simpleServer() {
+     public SimpleServer() {
 	super(2048);
      }
 
-     public simpleServer(int port) {
+     public SimpleServer(int port) {
 	super(port);
      }
 
@@ -41,10 +41,10 @@ public class simpleServer extends JmriServer{
 	String cmd; 
 
         // interface components
-        simplePowerServer powerServer = new simplePowerServer(inStream,outStream);
-        simpleTurnoutServer turnoutServer = new simpleTurnoutServer(inStream,outStream);
-        simpleLightServer lightServer = new simpleLightServer(inStream,outStream);
-        simpleSensorServer sensorServer = new simpleSensorServer(inStream,outStream);
+        SimplePowerServer powerServer = new SimplePowerServer(inStream,outStream);
+        SimpleTurnoutServer turnoutServer = new SimpleTurnoutServer(inStream,outStream);
+        SimpleLightServer lightServer = new SimpleLightServer(inStream,outStream);
+        SimpleSensorServer sensorServer = new SimpleSensorServer(inStream,outStream);
 
         // Start by sending a welcome message
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
@@ -85,5 +85,5 @@ public class simpleServer extends JmriServer{
 	 }	
        }
 
-     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simpleServer.class.getName());
+     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleServer.class.getName());
 }

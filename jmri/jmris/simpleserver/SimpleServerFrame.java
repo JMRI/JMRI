@@ -1,4 +1,4 @@
-// simpleServerFrame.java
+// SimpleServerFrame.java
 
 package jmri.jmris.simpleserver;
 
@@ -9,15 +9,15 @@ import javax.swing.*;
  * Frame displaying start/stop buttons for the JMRI server.
  *
  * @author			Paul Bender  Copyright (C) 2009
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.1 $
  */
-public class simpleServerFrame extends jmri.util.JmriJFrame {
+public class SimpleServerFrame extends jmri.util.JmriJFrame {
 
-    public simpleServerFrame() {
+    public SimpleServerFrame() {
         this("Jmri Simple Server Starter");
     }
 
-    public simpleServerFrame(String FrameName) {
+    public SimpleServerFrame(String FrameName) {
         super(FrameName);
         getContentPane().setLayout(new BoxLayout(getContentPane(), 
 				   BoxLayout.Y_AXIS));
@@ -74,13 +74,13 @@ public class simpleServerFrame extends jmri.util.JmriJFrame {
     }
 
     public void startSimpleServer() {
-	simpleServer.instance().start();
+	SimpleServer.instance().start();
     }
 
     public void stopSimpleServer() {
-	simpleServer.instance().stop();
+	SimpleServer.instance().stop();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simpleServerFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleServerFrame.class.getName());
 
 }

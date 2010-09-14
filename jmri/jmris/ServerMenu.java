@@ -12,7 +12,7 @@ import java.util.*;
  * system-independent tools
  *
  * @author	Paul Bender   Copyright 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class ServerMenu extends JMenu {
     public ServerMenu(String name) {
@@ -30,7 +30,7 @@ public class ServerMenu extends JMenu {
         // This first menu item is for connection testing only.  
         // It provides no parsing.
 	//add(new jmri.jmris.JmriServerAction(rb.getString("MenuItemStartServer")));
-        add(new jmri.jmris.simpleserver.simpleServerMenu());
+        add(new jmri.jmris.simpleserver.SimpleServerMenu());
         add(new jmri.jmris.srcp.JmriSRCPServerMenu());
 
 

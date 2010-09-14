@@ -1,4 +1,4 @@
-//simplePowerServer.java
+//SimplePowerServer.java
 
 package jmri.jmris.simpleserver;
 
@@ -12,14 +12,14 @@ import jmri.jmris.AbstractPowerServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.1 $
  */
 
-public class simplePowerServer extends AbstractPowerServer {
+public class SimplePowerServer extends AbstractPowerServer {
 
    private DataOutputStream output;
 
-   public simplePowerServer(DataInputStream inStream,DataOutputStream outStream){
+   public SimplePowerServer(DataInputStream inStream,DataOutputStream outStream){
 
         output=outStream;
         mgrOK();
@@ -58,6 +58,6 @@ public class simplePowerServer extends AbstractPowerServer {
      }
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(simplePowerServer.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimplePowerServer.class.getName());
 
 }
