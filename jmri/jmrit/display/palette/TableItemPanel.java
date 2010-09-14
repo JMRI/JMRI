@@ -77,16 +77,18 @@ public class TableItemPanel extends ItemPanel {
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
 
-        JPanel panel = new JPanel();
-        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
-        _addTableButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    makeAddToTableWindow();
-                }
-        });
-        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
-        panel.add(_addTableButton);
-        topPanel.add(panel, BorderLayout.SOUTH);
+        if (!_itemType.equals("SignalHead")) {
+            JPanel panel = new JPanel();
+            _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+            _addTableButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        makeAddToTableWindow();
+                    }
+            });
+            _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+            panel.add(_addTableButton);
+            topPanel.add(panel, BorderLayout.SOUTH);
+        }
         add(topPanel, BorderLayout.NORTH);
     }
 
