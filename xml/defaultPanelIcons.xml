@@ -154,34 +154,34 @@
       </TallMast>
       <Dwarf>
         <SignalHeadStateRed>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_lt.gif
         </SignalHeadStateRed>
         <SignalHeadStateYellow> 
-          resources/icons/mediumschematics/signals/horz_yellow_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_lt.gif
         </SignalHeadStateYellow> 
         <SignalHeadStateGreen>
-          resources/icons/mediumschematics/signals/horz_grn_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_lt.gif
         </SignalHeadStateGreen>
         <SignalHeadStateDark>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_lt.gif
         </SignalHeadStateDark>
         <SignalHeadStateHeld>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_lt.gif
         </SignalHeadStateHeld>
         <SignalHeadStateLunar>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_lt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif
         </SignalHeadStateLunar>
         <SignalHeadStateFlashingRed> 
-          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_red_dwarf_rt.gif
         </SignalHeadStateFlashingRed> 
         <SignalHeadStateFlashingYellow> 
-          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif
         </SignalHeadStateFlashingYellow> 
         <SignalHeadStateFlashingGreen>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_grn_dwarf_rt.gif
         </SignalHeadStateFlashingGreen>
         <SignalHeadStateFlashingLunar>
-          resources/icons/mediumschematics/signals/horz_red_dwarf_rt.gif
+          resources/icons/mediumschematics/Signals/DwarfHorizontal/horz_yellow_dwarf_rt.gif
         </SignalHeadStateFlashingLunar>
       </Dwarf>
     </SignalHead>
