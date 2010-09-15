@@ -30,7 +30,7 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -214,7 +214,9 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
 
     public void dispose(){
-        adaptermemo.dispose();
+        if(adaptermemo!=null){
+            adaptermemo.dispose();
+        }
         adaptermemo = null;
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
