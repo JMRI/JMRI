@@ -26,7 +26,7 @@ import org.jdom.Element;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -357,7 +357,9 @@ public class TabbedPreferences extends AppConfigBase {
             
             connectionPanel.remove(i);  //was x
             items.remove(JmrixConfigPane.instance(jmrixinstance));
-            JmrixConfigPane.dispose(jmrixinstance);
+            try{
+                JmrixConfigPane.dispose(jmrixinstance);
+            } catch (java.lang.NullPointerException ex) {log.error("Caught Null Pointer Exception while removing connection tab"); }
             connectionTabInstance.remove(i);
             if(connectionPanel.getTabCount()==1){
                 addConnectionTab();
