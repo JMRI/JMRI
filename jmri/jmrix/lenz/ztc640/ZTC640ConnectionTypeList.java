@@ -1,6 +1,6 @@
-// ConnectionTypeList.java
+// LenzConnectionTypeList.java
 
-package jmri.jmrix.lenz.hornbyelite;
+package jmri.jmrix.lenz.ztc640;
 
 
 /**
@@ -8,16 +8,16 @@ package jmri.jmrix.lenz.hornbyelite;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class ZTC640ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
-    public String[] getAvailableProtocolClasses() {
-        String[] masterList = new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses();
+    public String[] getAvailableProtocolClasses() { 
+        String[] masterList = new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
         
         String[] tempList = new String[masterList.length + 1];
-        tempList[0] = "jmri.jmrix.lenz.hornbyelite.ConnectionConfig";
+        tempList[0] = "jmri.jmrix.lenz.ztc640.ConnectionConfig";
         int x = 1;
         for (int i = 0; i<masterList.length; i++) {
             tempList[x] = masterList[i];

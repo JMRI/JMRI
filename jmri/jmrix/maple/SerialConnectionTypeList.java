@@ -1,21 +1,21 @@
-// ConnectionTypeList.java
+// SerialConnectionTypeList.java
 
-package jmri.jmrix.rps;
+package jmri.jmrix.maple;
 
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
+ * Returns a list of valid Maple Connection Types
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class SerialConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.rps.serial.ConnectionConfig"
+              "jmri.jmrix.maple.serialdriver.ConnectionConfig"
         };
     }
 

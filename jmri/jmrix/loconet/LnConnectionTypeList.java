@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// LnConnectionTypeList.java
 
 package jmri.jmrix.loconet;
 
@@ -11,7 +11,7 @@ package jmri.jmrix.loconet;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class LnConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {

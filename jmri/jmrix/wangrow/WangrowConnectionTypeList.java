@@ -1,6 +1,6 @@
-// ConnectionTypeList.java
+// WangrowConnectionTypeList.java
 
-package jmri.jmrix.secsi;
+package jmri.jmrix.wangrow;
 
 
 /**
@@ -11,11 +11,11 @@ package jmri.jmrix.secsi;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class WangrowConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.secsi.serialdriver.ConnectionConfig"
+              "jmri.jmrix.wangrow.serialdriver.ConnectionConfig"
         };
     }
 

@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// LenzConnectionTypeList.java
 
 package jmri.jmrix.lenz;
 
@@ -11,7 +11,7 @@ package jmri.jmrix.lenz;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class LenzConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {

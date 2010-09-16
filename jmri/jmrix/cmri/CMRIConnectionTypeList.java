@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// CMRIConnectionTypeList.java
 
 package jmri.jmrix.cmri;
 
@@ -11,7 +11,7 @@ package jmri.jmrix.cmri;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class CMRIConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {

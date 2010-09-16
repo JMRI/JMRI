@@ -1,21 +1,21 @@
-// ConnectionTypeList.java
+// QSIConnectionTypeList.java
 
-package jmri.jmrix.zimo;
+package jmri.jmrix.qsi;
 
 
 /**
- * Returns a list of valid Zimo Connection Types
+ * Returns a list of valid lenz XpressNet Connection Types
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class QSIConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.zimo.mx1.ConnectionConfig"
+              "jmri.jmrix.qsi.serialdriver.ConnectionConfig"
         };
     }
 

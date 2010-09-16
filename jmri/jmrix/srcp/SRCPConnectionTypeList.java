@@ -1,21 +1,21 @@
-// ConnectionTypeList.java
+// SRCPConnectionTypeList.java
 
-package jmri.jmrix.wangrow;
+package jmri.jmrix.srcp;
 
 
 /**
- * Returns a list of valid lenz XpressNet Connection Types
+ * Returns a list of valid SRCP Connection Types
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class SRCPConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.wangrow.serialdriver.ConnectionConfig"
+              "jmri.jmrix.srcp.networkdriver.ConnectionConfig"
         };
     }
 

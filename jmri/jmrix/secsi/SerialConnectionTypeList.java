@@ -1,6 +1,6 @@
-// ConnectionTypeList.java
+// SerialConnectionTypeList.java
 
-package jmri.jmrix.tmcc;
+package jmri.jmrix.secsi;
 
 
 /**
@@ -11,11 +11,11 @@ package jmri.jmrix.tmcc;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class SerialConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
-              "jmri.jmrix.tmcc.serialdriver.ConnectionConfig"
+              "jmri.jmrix.secsi.serialdriver.ConnectionConfig"
         };
     }
 

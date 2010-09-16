@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// AcelaConnectionTypeList.java
 
 package jmri.jmrix.acela;
 
@@ -11,7 +11,7 @@ package jmri.jmrix.acela;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class AcelaConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {

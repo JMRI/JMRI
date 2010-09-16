@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// SpeedoConnectionTypeList.java
 
 package jmri.jmrix.bachrus;
 
@@ -12,7 +12,7 @@ package jmri.jmrix.bachrus;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class SpeedoConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {

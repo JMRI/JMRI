@@ -7,7 +7,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  */
 public class DCCManufacturerList {
@@ -83,36 +83,36 @@ public class DCCManufacturerList {
     }
 
     public static String[] getConnectionList(String System) {
-        if(System.equals(NONE)) { return new jmri.jmrix.internal.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(LENZ)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(BACHRUS)) { return new jmri.jmrix.bachrus.ConnectionTypeList().getAvailableProtocolClasses();  }
-        if(System.equals(ESU)) { return new jmri.jmrix.ecos.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(DIGITRAX)) { return new jmri.jmrix.loconet.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(ATLAS)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(CMRI)) { return new jmri.jmrix.cmri.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(CTI)) { return new jmri.jmrix.acela.ConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(NONE)) { return new jmri.jmrix.internal.InternalConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(LENZ)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(HORNBY)) { return new jmri.jmrix.lenz.hornbyelite.EliteConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(BACHRUS)) { return new jmri.jmrix.bachrus.SpeedoConnectionTypeList().getAvailableProtocolClasses();  }
+        if(System.equals(ESU)) { return new jmri.jmrix.ecos.EcosConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(DIGITRAX)) { return new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ATLAS)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(CMRI)) { return new jmri.jmrix.cmri.CMRIConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(CTI)) { return new jmri.jmrix.acela.AcelaConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(MERG)) { return new jmri.jmrix.can.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(EASYDCC)) { return new jmri.jmrix.easydcc.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(PROTRAK)) { return new jmri.jmrix.grapevine.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(OAK)) { return new jmri.jmrix.oaktree.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(X10)) { return new jmri.jmrix.powerline.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(QSI)) { return new jmri.jmrix.qsi.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(LIONEL)) { return new jmri.jmrix.tmcc.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(WANGROW)) { return new jmri.jmrix.wangrow.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(SRCP)) { return new jmri.jmrix.srcp.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(ROCO)) { return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(MAPLE)) { return new jmri.jmrix.maple.ConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(EASYDCC)) { return new jmri.jmrix.easydcc.EasyDccConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(PROTRAK)) { return new jmri.jmrix.grapevine.SerialConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(OAK)) { return new jmri.jmrix.oaktree.SerialConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(X10)) { return new jmri.jmrix.powerline.SerialConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(QSI)) { return new jmri.jmrix.qsi.QSIConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(LIONEL)) { return new jmri.jmrix.tmcc.SerialConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(WANGROW)) { return new jmri.jmrix.wangrow.WangrowConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.Mx1ConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(SRCP)) { return new jmri.jmrix.srcp.SRCPConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ROCO)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(MAPLE)) { return new jmri.jmrix.maple.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(SPROG)) { return new jmri.jmrix.sprog.SprogConnectionTypeList().getAvailableProtocolClasses();  }
         if(System.equals(NCE)) { return new jmri.jmrix.nce.NceConnectionTypeList().getAvailableProtocolClasses();   }
-        if(System.equals(NAC)) { return new jmri.jmrix.rps.ConnectionTypeList().getAvailableProtocolClasses();   }
+        if(System.equals(NAC)) { return new jmri.jmrix.rps.RpsConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.Intellibox.ConnectionTypeList().getAvailableProtocolClasses();   }
-        if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(OTHER)) { return new jmri.jmrix.OtherConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(FLEISHMANN)) { return new jmri.jmrix.loconet.Intellibox.FleischmannConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(TRACTRONICS)) { return new jmri.jmrix.secsi.ConnectionTypeList().getAvailableProtocolClasses(); }
-        return new jmri.jmrix.lenz.ConnectionTypeList().getAvailableProtocolClasses();
+        if(System.equals(TRACTRONICS)) { return new jmri.jmrix.secsi.SerialConnectionTypeList().getAvailableProtocolClasses(); }
+        return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
     }
     
     public static String getDCCSystemFromType(char a) {

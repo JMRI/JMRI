@@ -1,4 +1,4 @@
-// ConnectionTypeList.java
+// SerialConnectionTypeList.java
 
 package jmri.jmrix.grapevine;
 
@@ -11,7 +11,7 @@ package jmri.jmrix.grapevine;
  * @version	$Revision: 1.1 $
  *
  */
-public class ConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
+public class SerialConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
 
     public String[] getAvailableProtocolClasses() { 
         return new String[] {
