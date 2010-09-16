@@ -79,14 +79,17 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     BlockOrder  _originBlockOrder;
     BlockOrder  _destBlockOrder;
     BlockOrder  _viaBlockOrder;
+    BlockOrder  _avoidBlockOrder;
 
     JTextField  _userNameBox;
     JTextField  _originBlockBox = new JTextField();
     JTextField  _destBlockBox = new JTextField();
     JTextField  _viaBlockBox =  new JTextField();
+    JTextField  _avoidBlockBox =  new JTextField();
     JComboBox   _originPathBox = new JComboBox();
     JComboBox   _destPathBox = new JComboBox();
     JComboBox   _viaPathBox = new JComboBox();
+    JComboBox   _avoidPathBox = new JComboBox();
     JComboBox   _originPortalBox = new JComboBox();     // exit
     JComboBox   _destPortalBox = new JComboBox();       // entrance
     int _thisActionEventId;     // id for the listener of the above items
@@ -177,6 +180,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             _viaPathBox.setSelectedItem(pathName);
         }
 
+        _avoidBlockOrder = _warrant.getAvoidOrder();
+        if (_avoidBlockOrder!=null) {
+            OBlock block = _avoidBlockOrder.getBlock();
+            String pathName = _avoidBlockOrder.getPathName();
+            _avoidBlockBox.setText(block.getDisplayName());
+            setPathBox(_avoidPathBox, null, block);
+            _avoidPathBox.setSelectedItem(pathName);
+        }
+
         List <BlockOrder> oList = _warrant.getOrders();
         for (int i=0; i<oList.size(); i++) {
             BlockOrder bo = new BlockOrder(oList.get(i));
@@ -202,9 +214,11 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         doSize(_originBlockBox, 500, 300);
         doSize(_destBlockBox, 500, 300);
         doSize(_viaBlockBox, 500, 300);
+        doSize(_avoidBlockBox, 500, 300);
         doSize(_originPathBox, 500, 300);
         doSize(_destPathBox, 500, 300);
         doSize(_viaPathBox, 500, 300);
+        doSize(_avoidPathBox, 500, 300);
         doSize(_originPortalBox, 500, 300);
         doSize(_destPortalBox, 500, 300);
         doSize(_searchDepth, 30, 10);
@@ -325,20 +339,29 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JPanel topLeft = new JPanel();
         topLeft.setLayout(new BoxLayout(topLeft, BoxLayout.Y_AXIS));
 
-        JPanel oPanel = makeEndPoint("OriginBlock", makeBlockBox(_originBlockBox), 
-                                     makeLabelCombo("PathName", _originPathBox), 
-                                     makeLabelCombo("ExitPortalName", _originPortalBox));
+        JPanel oPanel = makeEndPoint("OriginBlock", makeBlockBox(_originBlockBox, "OriginToolTip"), 
+                                     makeLabelCombo("PathName", _originPathBox, "OriginToolTip"), 
+                                     makeLabelCombo("ExitPortalName", _originPortalBox, "OriginToolTip"),
+                                     "OriginToolTip");
         topLeft.add(oPanel);
         topLeft.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = makeEndPoint("DestBlock", makeBlockBox(_destBlockBox), 
-                              makeLabelCombo("EntryPortalName", _destPortalBox),
-                              makeLabelCombo("PathName", _destPathBox));
+        oPanel = makeEndPoint("DestBlock", makeBlockBox(_destBlockBox, "DestToolTip"), 
+                              makeLabelCombo("EntryPortalName", _destPortalBox, "DestToolTip"),
+                              makeLabelCombo("PathName", _destPathBox, "DestToolTip"),
+                              "DestToolTip");
         topLeft.add(oPanel);
         topLeft.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        oPanel = makeEndPoint("ViaBlock", makeBlockBox(_viaBlockBox), 
-                              makeLabelCombo("PathName", _viaPathBox), null);
+        oPanel = makeEndPoint("ViaBlock", makeBlockBox(_viaBlockBox, "ViaToolTip"), 
+                              makeLabelCombo("PathName", _viaPathBox, "ViaToolTip"),
+                              null, "ViaToolTip");
+        topLeft.add(oPanel);
+        topLeft.add(Box.createVerticalStrut(STRUT_SIZE));
+
+        oPanel = makeEndPoint("AvoidBlock", makeBlockBox(_avoidBlockBox, "AvoidToolTip"), 
+                              makeLabelCombo("PathName", _avoidPathBox, "AvoidToolTip"),
+                              null, "AvoidToolTip");
         topLeft.add(oPanel);
         topLeft.add(Box.createVerticalStrut(STRUT_SIZE));
         tab1.add(topLeft);
@@ -858,7 +881,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         _invisible.setSelected(true);
     }
 
-    private JPanel makeEndPoint(String title, JPanel p0, JPanel p1, JPanel p2) {
+    private JPanel makeEndPoint(String title, JPanel p0, JPanel p1, JPanel p2, String tooltip) {
         JPanel oPanel = new JPanel();
         oPanel.setLayout(new BoxLayout(oPanel, BoxLayout.Y_AXIS));
         oPanel.add(new JLabel(rb.getString(title)));
@@ -877,12 +900,15 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
         hPanel.add(pPanel);
         oPanel.add(hPanel);
+        pPanel.setToolTipText(rb.getString(tooltip));
+        hPanel.setToolTipText(rb.getString(tooltip));
+        oPanel.setToolTipText(rb.getString(tooltip));
         oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         oPanel.setBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK));
         return oPanel;
     }
     
-    private JPanel makeBlockBox(JTextField blockBox) {
+    private JPanel makeBlockBox(JTextField blockBox, String tooltip) {
         blockBox.setDragEnabled(true);
         blockBox.setTransferHandler(new DnDImportHandler());
         blockBox.setColumns(15);
@@ -894,19 +920,23 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(rb.getString("BlockName")));
+        p.setToolTipText(rb.getString(tooltip));
+        blockBox.setToolTipText(rb.getString(tooltip));
         p.add(pp, BorderLayout.NORTH);
         p.add(blockBox, BorderLayout.CENTER);
         blockBox.addActionListener(this);
         return p;
     }
 
-    private JPanel makeLabelCombo(String title, JComboBox box) {
+    private JPanel makeLabelCombo(String title, JComboBox box, String tooltip) {
 
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(rb.getString(title)));
+        p.setToolTipText(rb.getString(tooltip));
+        box.setToolTipText(rb.getString(tooltip));
         p.add(pp, BorderLayout.NORTH);
         p.add(box, BorderLayout.CENTER);
         box.addActionListener(this);
@@ -1049,6 +1079,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                 setDestinationBlock();
             } else if (box == _viaBlockBox) {
                 setViaBlock();
+            } else if (box == _avoidBlockBox) {
+                setAvoidBlock();
             }
         } else {
             JComboBox box = (JComboBox)obj;
@@ -1063,6 +1095,9 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             } else if (box == _viaPathBox) {
                 String pathName = (String)_viaPathBox.getSelectedItem();
                 _viaBlockOrder.setPathName(pathName);
+            } else if (box == _avoidPathBox) {
+                String pathName = (String)_avoidPathBox.getSelectedItem();
+                _avoidBlockOrder.setPathName(pathName);
             }
             clearWarrant();
         }
@@ -1209,6 +1244,30 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         return false;
     }
 
+    private boolean setAvoidBlock() {
+        OBlock block = getEndPointBlock(_avoidBlockBox);
+        if (block == null) {
+            _avoidPathBox.removeAllItems();
+            _avoidBlockOrder = null;
+            return true;
+        } else {
+            if (_avoidBlockOrder!=null && block==_avoidBlockOrder.getBlock() &&
+                    pathIsValid(block, _avoidBlockOrder.getPathName())) {
+                return true;
+            } else {
+                if (pathsAreValid(block)) {
+                    _avoidBlockOrder = new BlockOrder(block);
+                    if (!setPathBox(_avoidPathBox, null, block)) {
+                        _avoidPathBox.removeAllItems();
+                        _avoidBlockBox.setText("");
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     private void clearWarrant() {
         _orders = new ArrayList <BlockOrder>();
         _routeModel.fireTableDataChanged();
@@ -1287,6 +1346,19 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     rb.getString("SetEndPoint"), rb.getString("ViaBlock"));
             }
         }
+        if (ok) {
+            ok = setAvoidBlock();
+            if (ok) {
+                if (_avoidBlockOrder!=null && _avoidBlockOrder.getPathName()==null) {
+                    msg = java.text.MessageFormat.format(
+                        rb.getString("SetPath"), rb.getString("AvoidBlock"));
+                    ok = false;
+                }
+            } else {
+                msg = java.text.MessageFormat.format(
+                    rb.getString("SetEndPoint"), rb.getString("AvoidBlock"));
+            }
+        }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -1310,7 +1382,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             } catch (NumberFormatException nfe) {
                 depth = _maxBlocks;
             }
-            _routeFinder = new RouteFinder(this, _originBlockOrder, _destBlockOrder, _viaBlockOrder, depth);
+            _routeFinder = new RouteFinder(this, _originBlockOrder, _destBlockOrder,
+                                            _viaBlockOrder, _avoidBlockOrder, depth);
             new Thread(_routeFinder).start();
             //javax.swing.SwingUtilities.invokeLater(_routeFinder);
         }
@@ -1686,6 +1759,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         }
         _warrant.clearAll();
         _warrant.setViaOrder(_viaBlockOrder);
+        _warrant.setAvoidOrder(_avoidBlockOrder);
         for (int i=0; i<_orders.size(); i++) {
             _warrant.addBlockOrder(new BlockOrder(_orders.get(i)));
         }

@@ -15,6 +15,7 @@ public class RouteFinder implements Runnable {
     BlockOrder _originBlockOrder;
     BlockOrder _destBlockOrder;
     BlockOrder _viaBlockOrder;
+    BlockOrder _avoidBlockOrder;
     ArrayList <DefaultMutableTreeNode> _destNodes;
     DefaultTreeModel _tree;
 
@@ -23,17 +24,21 @@ public class RouteFinder implements Runnable {
     String _dEntryName;
     OBlock _viaBlock;
     String _vPathName;
+    OBlock _avoidBlock;
+    String _aPathName;
 
     int _maxBlocks;
     boolean _quit = false;
     java.beans.PropertyChangeSupport _pcs = new java.beans.PropertyChangeSupport(this);
 
-    protected RouteFinder(WarrantFrame f, BlockOrder origin, BlockOrder dest, BlockOrder via, int maxB) {
+    protected RouteFinder(WarrantFrame f, BlockOrder origin, BlockOrder dest, 
+                          BlockOrder via, BlockOrder avoid, int maxB) {
         _caller = f;
         _pcs.addPropertyChangeListener(_caller);
         _originBlockOrder = origin;
         _destBlockOrder = dest;
         _viaBlockOrder = via;
+        _avoidBlockOrder = avoid;
         _maxBlocks = maxB;
     }
 
@@ -73,6 +78,12 @@ public class RouteFinder implements Runnable {
         if (_viaBlockOrder!=null) {
             _vPathName = _viaBlockOrder.getPathName();
             _viaBlock = _viaBlockOrder.getBlock();
+        }
+        _avoidBlock = null;
+        _aPathName = null;
+        if (_avoidBlockOrder!=null) {
+            _aPathName = _avoidBlockOrder.getPathName();
+            _avoidBlock = _avoidBlockOrder.getBlock();
         }
 
         _destNodes = new ArrayList <DefaultMutableTreeNode>();
@@ -120,6 +131,11 @@ public class RouteFinder implements Runnable {
                 // walk all paths
                 for (int k=0; k<paths.size(); k++) {
                     OPath path = paths.get(k);
+                    if (_avoidBlock!=null && _avoidBlock.equals(nextBlock) ) {
+                        if (_aPathName.equals(path.getName())) {
+                            continue;
+                        }
+                    }
                     String exitName = path.getOppositePortalName(pName);
                     BlockOrder nOrder = new BlockOrder((OBlock)path.getBlock(), path.getName(), pName, exitName);
                     RouteNode child = new RouteNode(nOrder, node.needsViaAncestor());
