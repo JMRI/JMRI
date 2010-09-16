@@ -11,9 +11,9 @@ import javax.swing.JPanel;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
 	public final static String NAME = "Simulator";
 	
@@ -34,15 +34,20 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return NAME; }
     
     public void loadDetails(JPanel details) {
+        super.loadDetails(details);
         details.add(new JLabel("No options"));
     }
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
+    protected void setInstance() { 
+        if (adapter == null){
+            adapter = new SimulatorAdapter();
+        }
+    }
     
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
-
-    protected void setInstance() { adapter = SimulatorAdapter.instance(); }
+    public void dispose() {
+        if (adapter != null)
+            adapter.dispose();
+        super.dispose();
+    }
 }
 

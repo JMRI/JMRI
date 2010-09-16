@@ -8,6 +8,7 @@
 
 package jmri.jmrix.nce.simulator;
 
+@Deprecated 
 public class SimulatorFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SimulatorFrame() {

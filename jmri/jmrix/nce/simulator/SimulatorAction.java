@@ -9,8 +9,10 @@ import java.awt.event.ActionEvent;
  * Swing action to create and register a SimulatorFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
+ 
+@Deprecated
 public class SimulatorAction extends AbstractAction  {
 
 	public SimulatorAction(String s) { super(s);}

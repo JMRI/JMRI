@@ -8,7 +8,7 @@ package jmri.jmrix.nce.serialdriver;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -29,7 +29,12 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     }
 
     public String name() { return NAME; }
+    
+    protected void setInstance() {
+        if (adapter == null){
+            adapter = new SerialDriverAdapter();
+        }
+    }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
 }
 

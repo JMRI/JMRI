@@ -10,6 +10,7 @@ package jmri.jmrix.nce.serialdriver;
 
 import javax.swing.*;
 
+@Deprecated
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SerialDriverFrame() {

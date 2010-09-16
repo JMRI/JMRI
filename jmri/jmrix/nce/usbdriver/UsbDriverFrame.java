@@ -9,7 +9,7 @@
 package jmri.jmrix.nce.usbdriver;
 
 import javax.swing.*;
-
+@Deprecated 
 public class UsbDriverFrame extends jmri.jmrix.SerialPortFrame {
 
 	public UsbDriverFrame() {

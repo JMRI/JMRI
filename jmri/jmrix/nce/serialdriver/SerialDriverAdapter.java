@@ -4,10 +4,8 @@ package jmri.jmrix.nce.serialdriver;
 
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceProgrammer;
-import jmri.jmrix.nce.NceProgrammerManager;
-import jmri.jmrix.nce.NceSensorManager;
 import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -27,13 +25,19 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.44 $
+ * @version			$Revision: 1.45 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
-    //Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-
+    
+    public SerialDriverAdapter() {
+        super();
+        adaptermemo = new NceSystemConnectionMemo();
+        mInstance=this;
+        mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+    }
+    
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
         try {
@@ -107,35 +111,19 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     public void configure() {
 
         if (getCurrentOption1Setting().equals(validOption1()[0])) {
-        	NceMessage.setCommandOptions(NceMessage.OPTION_2004);
+            adaptermemo.configureCommandStation(NceMessage.OPTION_2004);
         } else {
             // setting binary mode
-            NceMessage.setCommandOptions(NceMessage.OPTION_2006);
+            adaptermemo.configureCommandStation(NceMessage.OPTION_2006);
         }
         
         // connect to the traffic controller
-        NceTrafficController.instance().connectPort(this);
-
-        jmri.InstanceManager.setProgrammerManager(
-                new NceProgrammerManager(
-                    new NceProgrammer()));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-		
-		// note: the following must be changed to support multiple connections to NCE
-		NceTrafficController tc = NceTrafficController.instance();
-		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
-
-        NceSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-        NceTrafficController.instance().setSensorManager(s);
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
-
-        jmri.InstanceManager.addClockControl(new jmri.jmrix.nce.NceClockControl());
-        
+        NceTrafficController tc = NceTrafficController.instance(); 
+        tc.connectPort(this);
+     
+        adaptermemo.setNceTrafficController(tc);
+        adaptermemo.configureManagers();
+       
         jmri.jmrix.nce.ActiveFlag.setActive();
 
     }
@@ -193,21 +181,25 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         return mOpt1;
     }
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
 
     static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null){
+            mInstance = new SerialDriverAdapter();
+        }
         return mInstance;
     }
+    
     static SerialDriverAdapter mInstance = null;
-
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
 
 }

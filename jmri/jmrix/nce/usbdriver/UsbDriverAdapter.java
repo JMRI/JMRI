@@ -4,11 +4,9 @@ package jmri.jmrix.nce.usbdriver;
 
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceProgrammer;
-import jmri.jmrix.nce.NceProgrammerManager;
-import jmri.jmrix.nce.NceSensorManager;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceUSB;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -29,12 +27,19 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
+    
+    public UsbDriverAdapter() {
+        super();
+        adaptermemo = new NceSystemConnectionMemo();
+        mInstance=this;
+        mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+    }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
@@ -108,40 +113,23 @@ public class UsbDriverAdapter extends NcePortController {
      */
     public void configure() {  	
         // set binary mode
-		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-		
-        // connect to the traffic controller
-        NceTrafficController.instance().connectPort(this);
         
-		// set the system the USB is connected to
-		if (getCurrentOption1Setting().equals(validOption1()[0])) {
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERCAB);
-		} else if (getCurrentOption1Setting().equals(validOption1()[1])) {
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_SB3);
-		} else{
-			NceUSB.setUsbSystem(NceUSB.USB_SYSTEM_POWERHOUSE);
-		}
-
-		// No programmer manager if USB connected to PowerHouse
-		// this kills the programmer menu
-        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_POWERHOUSE) {
-			jmri.InstanceManager.setProgrammerManager(new NceProgrammerManager(
-					new NceProgrammer()));
-		}
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-		
-		// note: the following must be changed to support multiple connections to NCE
-		NceTrafficController tc = NceTrafficController.instance();
-		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
-
-        NceSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-        NceTrafficController.instance().setSensorManager(s);
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
+        adaptermemo.configureCommandStation(NceMessage.OPTION_2006);
+        // connect to the traffic controller
+        NceTrafficController tc = NceTrafficController.instance(); 
+        tc.connectPort(this);
+        
+        //set the system the USB is connected to
+        if (getCurrentOption1Setting().equals(validOption1()[0])) {
+                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_POWERCAB);
+        } else if (getCurrentOption1Setting().equals(validOption1()[1])) {
+                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_SB3);
+        } else{
+                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_POWERHOUSE);
+        }
+        
+        adaptermemo.setNceTrafficController(tc);
+        adaptermemo.configureManagers();
 
         jmri.jmrix.nce.ActiveFlag.setActive();
 	}
@@ -204,10 +192,18 @@ public class UsbDriverAdapter extends NcePortController {
     InputStream serialStream = null;
 
     static public UsbDriverAdapter instance() {
-        if (mInstance == null) mInstance = new UsbDriverAdapter();
+        if (mInstance == null){
+            mInstance = new UsbDriverAdapter();
+        }
         return mInstance;
     }
     static UsbDriverAdapter mInstance = null;
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(UsbDriverAdapter.class.getName());
 

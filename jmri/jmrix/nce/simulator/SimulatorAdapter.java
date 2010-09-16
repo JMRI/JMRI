@@ -7,11 +7,9 @@ import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceProgrammer;
-import jmri.jmrix.nce.NceProgrammerManager;
-import jmri.jmrix.nce.NceSensorManager;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceTurnoutMonitor;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.consist.NceConsistEditFrame;
 import jmri.jmrix.nce.macro.NceMacroEditFrame;
 
@@ -123,7 +121,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -147,13 +145,27 @@ public class SimulatorAdapter extends NcePortController implements
 	char NCE_CAB_OUT_OF_RANGE = '2';
 	char NCE_DATA_OUT_OF_RANGE = '3';
 	char NCE_BYTE_OUT_OF_RANGE = '4';
+    
+    public SimulatorAdapter (){
+        super();
+        adaptermemo= new NceSystemConnectionMemo();
+        mInstance=this;
+        mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+    }
 	
 	static SimulatorAdapter mInstance = null;
 	static public SimulatorAdapter instance() {
-		if (mInstance == null)
+		if (mInstance == null) {
 			mInstance = new SimulatorAdapter();
+        }
 		return mInstance;
 	}
+    
+    public void dispose(){
+        if (adaptermemo!=null)
+            adaptermemo.dispose();
+        adaptermemo = null;
+    }
 	
 	public String openPort(String portName, String appName) {
 		try {
@@ -176,30 +188,14 @@ public class SimulatorAdapter extends NcePortController implements
 	 */
 	public void configure() {
 		// setting binary mode
-		NceMessage.setCommandOptions(NceMessage.OPTION_2006);
-
-		// connect to the traffic controller
-		NceTrafficController.instance().connectPort(this);
-
-		jmri.InstanceManager.setProgrammerManager(new NceProgrammerManager(
-				new NceProgrammer()));
-
-		jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-
-		jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-		
-		// note: the following must be changed to support multiple connections to NCE
-		NceTrafficController tc = NceTrafficController.instance();
-		jmri.InstanceManager.setLightManager(new jmri.jmrix.nce.NceLightManager(tc,"N"));
-
-		NceSensorManager s;
-		jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-		NceTrafficController.instance().setSensorManager(s);
-
-		jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
-
-		jmri.InstanceManager.addClockControl(new jmri.jmrix.nce.NceClockControl());
-
+        adaptermemo.configureCommandStation(NceMessage.OPTION_2006);
+        
+        NceTrafficController tc = NceTrafficController.instance(); 
+        tc.connectPort(this);
+        
+        adaptermemo.setNceTrafficController(tc);
+        adaptermemo.configureManagers();
+        
 		jmri.jmrix.nce.ActiveFlag.setActive();
 
 		sourceThread = new Thread(this);
@@ -239,15 +235,6 @@ public class SimulatorAdapter extends NcePortController implements
 		return "";
 	}
 
-	String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
-	public String getManufacturer() {
-		return manufacturerName;
-	}
-
-	public void setManufacturer(String manu) {
-		manufacturerName = manu;
-	}
-	
 	public String getCurrentPortName(){
 		return JmrixConfigPane.NONE;
 	}

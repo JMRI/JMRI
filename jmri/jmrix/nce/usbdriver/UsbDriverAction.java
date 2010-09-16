@@ -9,8 +9,9 @@ import java.awt.event.ActionEvent;
  * Swing action to create and register a UsbDriverFrame object
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
+@Deprecated
 public class UsbDriverAction extends AbstractAction  {
 
 	public UsbDriverAction(String s) { super(s);}

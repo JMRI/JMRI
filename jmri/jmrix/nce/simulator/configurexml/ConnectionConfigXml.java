@@ -16,7 +16,7 @@ import jmri.jmrix.nce.simulator.SimulatorAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -24,8 +24,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
+    }
+    
     protected void getInstance() {
-        adapter = SimulatorAdapter.instance();
+        //adapter = SimulatorAdapter.instance();
     }
 
     protected void register() {
