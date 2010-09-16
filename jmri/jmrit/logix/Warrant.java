@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -32,6 +32,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     // permanent members.
     private ArrayList <BlockOrder> _savedOrders = new ArrayList <BlockOrder>();
     private BlockOrder _viaOrder;
+    private BlockOrder _avoidOrder;
     private ArrayList <ThrottleSetting> _throttleCommands = new ArrayList <ThrottleSetting>();
     private String _trainId;
     private DccLocoAddress _dccAddress;
@@ -97,6 +98,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void clearAll() {
         _savedOrders = new ArrayList <BlockOrder>();
         _viaOrder = null;
+        _avoidOrder = null;
         _throttleCommands = new ArrayList <ThrottleSetting>();
         _trainId = null;
         _dccAddress = null;
@@ -140,6 +142,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return new BlockOrder(_viaOrder);
     }
     public void setViaOrder(BlockOrder order) { _viaOrder = order; }
+
+    public BlockOrder getAvoidOrder() {
+        if (_avoidOrder==null) { return null; }
+        return new BlockOrder(_avoidOrder);
+    }
+    public void setAvoidOrder(BlockOrder order) { _avoidOrder = order; }
 
     public BlockOrder getCurrentBlockOrder() {
         return getBlockOrderAt(_idxCurrentOrder);
@@ -647,13 +655,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                             activeIdx+", _idxCurrentOrder= "+_idxCurrentOrder+
                                             " _orders.size()= "+_orders.size());
         if (activeIdx == _idxCurrentOrder+1) {
-            if (_engineer.getRunState()!=WAIT) {
+            if (_engineer!=null && _engineer.getRunState()==WAIT) {
+                // Next block just occupied, but train is stopped - must be a rouge entry.
+                rougeEntry = true;
+                log.warn("Rouge entering next Block "+block.getDisplayName());
+            } else {
                 if (log.isDebugEnabled()) log.debug("Train entering Block "+block.getDisplayName());
                 // we assume it is our train entering the block - cannot guarantee it, but what else?
                 _idxCurrentOrder = activeIdx;
-            } else {
-                // Next block just occupied, but train is stopped - must be a rouge entry.
-                rougeEntry = true;
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
             // rouge train invaded route.
