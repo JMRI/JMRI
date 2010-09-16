@@ -19,7 +19,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Paul Bender  Copyright: Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -35,7 +35,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * @return Formatted element containing no attributes except the class name
      */
     public Element store(Object o) {
-        getInstance();
+        getInstance(o);
 
         Element e = new Element("connection");
 
@@ -66,6 +66,10 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
            adapter = new XNetSimulatorAdapter();
            adapter.configure();
         }
+    }
+    
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {
