@@ -16,13 +16,14 @@ package jmri.jmris.srcp.parser;
  * the SRCP protocol.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
+// This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_METHOD_NAMING_CONVENTION")
 
 public class SRCPParser {
-
-
+  
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPParser.class.getName());
 
   }
