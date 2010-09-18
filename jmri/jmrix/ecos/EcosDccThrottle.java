@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -358,6 +358,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     //The values here might need a bit of re-working
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
         if(!_haveControl) return;
         int value;
@@ -456,6 +457,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void reply(EcosReply m) {
         int tmpstart;
         int tmpend;
@@ -464,8 +466,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         String msg = m.toString();
         String[] lines = msg.split("\n");
         log.debug("found "+(lines.length)+" response from Ecos");
-        //System.out.println("Throttle " + msg);
-        //System.out.println("End line is : " + lines[lines.length-1]);
         if (lines[lines.length-1].contains("<END 0 (OK)>")){
             if (lines[0].startsWith("<REPLY set("+this.objectNumber+",")){// || msg.startsWith("<EVENT "+this.objectNumber+">")) {
                 //log.debug("The last command was accepted by the ecos");

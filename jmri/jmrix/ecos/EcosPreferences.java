@@ -10,13 +10,14 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 
 public class EcosPreferences {
  
-    public EcosPreferences(){
+    private EcosPreferences(){
         //instance();
+        if (log.isDebugEnabled()) log.debug("creating a new EcosPreferences object");
         if (jmri.InstanceManager.configureManagerInstance()!=null) {
             jmri.InstanceManager.configureManagerInstance().registerConfig(this);
         }
@@ -37,7 +38,7 @@ public class EcosPreferences {
                 jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
             }
         }
-        self = this;
+        //self = this;
     }
     
     ShutDownTask ecosPreferencesShutDownTask = null;
@@ -306,29 +307,20 @@ public class EcosPreferences {
         _removeturnoutsfromecos = boo;
         _changeMade = true;
     }
-/*    public void setInstance(){
 
-    }*/
     public String name(){
         return null;
     }
-    /*static public synchronized EcosPreferences instance() {
-       if (_instance == null) _instance = new EcosPreferences();
-        return _instance; 
-    }
-    private EcosPreferences _instance = null;*/
 
-    static public EcosPreferences instance() {
-        if (self == null) {
-            if (log.isDebugEnabled()) log.debug("creating a new EcosPreferences object");
-            self = new EcosPreferences();
-            // set as command station too
-        }
-        return self;
+    static class EcosPreferenceHolder {
+        static EcosPreferences
+            instance = new EcosPreferences();
     }
 
-    static private EcosPreferences self = null;
-
+    public static EcosPreferences instance() {
+        return EcosPreferenceHolder.instance;
+    }
+      
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
 
  }

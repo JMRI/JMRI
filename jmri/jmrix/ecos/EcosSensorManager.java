@@ -13,13 +13,13 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
 
-    public EcosSensorManager() {
-        _instance = this;
+    private EcosSensorManager() {
+        //_instance = this;
         
         // listen for sensor creation
         // connect to the TrafficManager
@@ -155,11 +155,20 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         // messages are ignored
     }
 
-    static public EcosSensorManager instance() {
+    /*static public EcosSensorManager instance() {
         if (_instance == null) _instance = new EcosSensorManager();
         return _instance;
     }
-    static EcosSensorManager _instance = null;
+    static EcosSensorManager _instance = null;*/
+    
+    static class EcosSensorManagerHolder {
+        static EcosSensorManager
+            instance = new EcosSensorManager();
+    }
+
+    public static EcosSensorManager instance() {
+        return EcosSensorManagerHolder.instance;
+    }
     
     private void EcosSensorState(int object, int intState){
         EcosSensor es;

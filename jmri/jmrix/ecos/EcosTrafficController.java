@@ -24,12 +24,16 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
-	public EcosTrafficController() {
+	private EcosTrafficController() {
         super();
+        if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
+        // set as command station too
+        jmri.InstanceManager.setCommandStation(this);
+        this.setAllowUnexpectedReply(true);
     }
 
     // The methods to implement the EcosInterface
@@ -134,12 +138,21 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getExitProgMode();
     }
 
+    static class EcosTrafficControllerHolder {
+        static EcosTrafficController
+            instance = new EcosTrafficController();
+    }
+
+    public static EcosTrafficController instance() {
+        return EcosTrafficControllerHolder.instance;
+    }
+    
     /**
      * static function returning the EcosTrafficController instance to use.
      * @return The registered EcosTrafficController instance for general use,
      *         if need be creating one.
      */
-    static public EcosTrafficController instance() {
+    /*static public EcosTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
             EcosTrafficController newinstance = new EcosTrafficController();
@@ -149,10 +162,10 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             self = newinstance;
         }
         return self;
-    }
+    }*/
 
-    static private EcosTrafficController self = null;
-    protected void setInstance() { if(self==null) self=this; }
+    //static private EcosTrafficController self = null;
+    protected void setInstance() { instance(); }
 
     protected AbstractMRReply newReply() { 
         EcosReply reply = new EcosReply();
@@ -209,6 +222,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return true;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FI_MISSING_SUPER_CALL") // doesn't follow normal finalize
     @Override
     protected void finalize() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");

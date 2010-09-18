@@ -19,13 +19,13 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
 
-    public EcosTurnoutManager() {
-        _instance = this;
+    private EcosTurnoutManager() {
+        //_instance = this;
         
         // listen for turnout creation
         // connect to the TrafficManager
@@ -40,7 +40,6 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         m = new EcosMessage("queryObjects(11, addrext)");
         tc.sendEcosMessage(m, this);
         this.addPropertyChangeListener(this);
-        
     }
 
     EcosTrafficController tc;
@@ -616,11 +615,20 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return _tecos.get(ecosObject);
     }
     
-    static public EcosTurnoutManager instance() {
+    static class EcosTurnoutManagerHolder {
+        static EcosTurnoutManager
+            instance = new EcosTurnoutManager();
+    }
+
+    public static EcosTurnoutManager instance() {
+        return EcosTurnoutManagerHolder.instance;
+    }
+    
+    /*static public EcosTurnoutManager instance() {
         if (_instance == null) _instance = new EcosTurnoutManager();
         return _instance;
     }
-    static EcosTurnoutManager _instance = null;
+    static EcosTurnoutManager _instance = null;*/
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnoutManager.class.getName());
 }
