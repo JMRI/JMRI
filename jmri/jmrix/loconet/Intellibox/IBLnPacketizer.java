@@ -31,12 +31,15 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 1.10 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
 
-    public IBLnPacketizer() {self=this;}
+    public IBLnPacketizer() {
+        echo = true;
+        self=this;
+    }
 
     /**
      * Captive class to handle incoming characters.  This is a permanent loop,
@@ -207,6 +210,7 @@ public class IBLnPacketizer extends LnPacketizer {
                             }
 
                             if (debug) log.debug("end write to stream");
+                            messageTransmited(msg);
                         } else {
                             // no stream connected
                             log.warn("sendLocoNetMessage: no connection established");
