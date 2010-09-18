@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -55,7 +55,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
       
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.ecos.EcosPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.ecos.EcosTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.ecos.EcosTurnoutManager.instance());
 
         jmri.InstanceManager.store(
                 new jmri.jmrix.ecos.EcosLocoAddressManager(),
@@ -73,7 +73,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
 
-        jmri.InstanceManager.setSensorManager(new jmri.jmrix.ecos.EcosSensorManager());
+        jmri.InstanceManager.setSensorManager(jmri.jmrix.ecos.EcosSensorManager.instance());
     }
     
     public void dispose(){
