@@ -8,7 +8,7 @@ import java.io.File;
 /**
  *
  * @author	    Bob Jacobsen  Copyright 2003, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class PackageTest extends TestCase {
 
@@ -51,7 +51,7 @@ public class PackageTest extends TestCase {
         jmri.InstanceManager.setShutDownManager(
                 new jmri.managers.DefaultShutDownManager());
         jmri.InstanceManager.store(
-                new jmri.managers.DefaultUserMessagePreferences(), 
+                jmri.managers.DefaultUserMessagePreferences.getInstance(),
                 jmri.UserPreferencesManager.class);
     }
     

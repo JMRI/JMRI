@@ -16,13 +16,13 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 
 	public void testShowAndClose() throws Exception {
 
-        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
         
         TurnoutTableAction a = new TurnoutTableAction();

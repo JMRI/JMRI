@@ -16,12 +16,12 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the sensor table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
 	public void testShowAndClose() throws Exception {
-        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
         SensorTableAction a = new SensorTableAction();
