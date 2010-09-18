@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.24 $
+ * @version 		$Revision: 1.25 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -470,7 +470,7 @@ public class LnPacketizer extends LnTrafficController {
      * to listeners if echoing is needed
      *
      */
-     void messageTransmited(byte[] msg) {
+     protected void messageTransmited(byte[] msg) {
         if (debug) log.debug("message transmitted");
         if (!echo) return;
         // message is queued for transmit, echo it when needed
