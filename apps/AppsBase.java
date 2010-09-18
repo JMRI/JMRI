@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AppsBase {
 
@@ -97,7 +97,7 @@ public abstract class AppsBase {
         jmri.InstanceManager.getDefault(jmri.jmrit.revhistory.FileHistory.class).addOperation("app", nameString, null);
         
         // Install a user preferences manager
-        jmri.InstanceManager.store(new jmri.managers.DefaultUserMessagePreferences(), jmri.UserPreferencesManager.class);        
+        jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);        
     }
 
     protected void setAndLoadPreferenceFile() {
