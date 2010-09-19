@@ -83,7 +83,7 @@ public class BackgroundItemPanel extends IconItemPanel {
             while (it.hasNext()) {
                String name = it.next();
                NamedIcon icon = new NamedIcon(_iconMap.get(name));    // make copy for possible reduction
-               double scale = icon.reduceTo(50, 80, 0.15);
+               icon.reduceTo(50, 80, 0.15);
                JPanel panel = new JPanel();
                String borderName = null;
                try {

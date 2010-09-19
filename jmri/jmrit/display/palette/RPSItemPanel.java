@@ -132,7 +132,7 @@ public class RPSItemPanel extends ItemPanel {
         while (it.hasNext()) {
            String name = it.next();
            NamedIcon icon = new NamedIcon(iconMap.get(name));    // make copy for possible reduction
-           double scale = icon.reduceTo(100, 100, 0.2);
+           icon.reduceTo(100, 100, 0.2);
            JPanel panel = new JPanel();
            String borderName = null;
            try {
