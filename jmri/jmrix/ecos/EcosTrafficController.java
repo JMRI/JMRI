@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -147,11 +147,9 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosTrafficControllerHolder.instance;
     }
     
-    /**
-     * static function returning the EcosTrafficController instance to use.
-     * @return The registered EcosTrafficController instance for general use,
-     *         if need be creating one.
-     */
+    ///**
+    // * static function returning the EcosTrafficController instance to use.
+    // */
     /*static public EcosTrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
