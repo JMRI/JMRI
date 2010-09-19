@@ -21,7 +21,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -39,7 +39,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     private boolean _hidden = false;
 	private int _displayLevel;
     private double _scale = 1.0;    // scaling factor
-    private int _rotation = 0;      // rotation in degrees
 
     JMenuItem lock = null;
     JCheckBoxMenuItem showTooltipItem = null;
