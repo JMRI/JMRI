@@ -10,11 +10,16 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class ConfigurationManager {
 
-    private static final String[] options = new String[]{"MERG CBUS", "OpenLCB CAN", "Raw CAN", "Test - do not use"};
+    final private static String MERGCBUS = "MERG CBUS";
+    final private static String OPENLCB = "OpenLCB";
+    final private static String RAWCAN = "Raw CAN";
+    final private static String TEST = "Test - do not use";
+    
+    private static final String[] options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
     
     /**
      * Provide the current set of "Option1" 
@@ -25,8 +30,7 @@ public class ConfigurationManager {
     }
 
     static public void configure(String option) {
-        if (options[0].equals(option)) {
-            // "MERG CBUS"
+        if (MERGCBUS.equals(option)) {
 
             jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.can.cbus.CbusTurnoutManager());
             jmri.InstanceManager.setSensorManager(new jmri.jmrix.can.cbus.CbusSensorManager());
@@ -36,17 +40,16 @@ public class ConfigurationManager {
             jmri.InstanceManager.setPowerManager(new jmri.jmrix.can.cbus.CbusPowerManager());
             jmri.jmrix.can.cbus.ActiveFlag.setActive();
 
-        } if (options[1].equals(option)) {
-            // "OpenLCB CAN"
-            
-            jmri.jmrix.can.ActiveFlag.setActive();
+        } if (OPENLCB.equals(option)) {
+            // Activate menu indirectly
+            System.out.println("------- hit ---------");
+            jmri.jmrix.openlcb.ConfigurationManager.configure(option);
 
-        } if (options[2].equals(option)) {
-            // "Raw CAN"
+        } if (RAWCAN.equals(option)) {
             // This is just vanilla CAN with nothing additional
             jmri.jmrix.can.ActiveFlag.setActive();
 
-        } if (options[3].equals(option)) {
+        } if (TEST.equals(option)) {
             // "Test - do not use"
             jmri.jmrix.can.nmranet.ActiveFlag.setActive();
 

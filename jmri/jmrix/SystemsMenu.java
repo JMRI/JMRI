@@ -17,7 +17,7 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -53,11 +53,15 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
         
-        // LocoNet is now special
+        // LocoNet is migrated
         add(new jmri.jmrix.loconet.swing.LocoNetMenu(null));
         //addMenu("jmri.jmrix.loconet.swing.LocoNetMenu");
         
         addMenu("jmri.jmrix.nce.NceMenu");
+
+        // OpenLCB is migrated
+        add(new jmri.jmrix.openlcb.OpenLcbMenu(null));
+
         addMenu("jmri.jmrix.oaktree.OakTreeMenu");
         addMenu("jmri.jmrix.powerline.SystemMenu");
         addMenu("jmri.jmrix.pricom.PricomMenu");

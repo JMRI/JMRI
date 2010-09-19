@@ -17,7 +17,7 @@ import jmri.jmrix.can.adapters.gridconnect.canusb.serialdriver.SerialDriverAdapt
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @author Andrew Crosland 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -30,6 +30,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void register() {
+        new Exception("Trace back register call").printStackTrace();
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
 

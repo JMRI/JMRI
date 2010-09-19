@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -208,7 +208,7 @@ public class ActiveSystemsMenu extends JMenu {
         try {
             return (JMenu) Class.forName(className).newInstance();
         } catch (Exception e) {
-            log.error("Could not load class "+className+"; "+e);
+            log.error("Could not load class "+className,e);
             return null;
         }
     }

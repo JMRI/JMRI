@@ -15,10 +15,12 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
-abstract public class AbstractCanTrafficController extends AbstractMRTrafficController implements CanInterface {
+abstract public class AbstractCanTrafficController 
+            extends AbstractMRTrafficController 
+            implements CanInterface {
 
     public AbstractCanTrafficController() {
         super();
@@ -197,6 +199,7 @@ abstract public class AbstractCanTrafficController extends AbstractMRTrafficCont
         }
         
         if (!msg.isUnsolicited()) {
+            if (log.isDebugEnabled()) log.debug("switch on state "+mCurrentState);
             // effect on transmit:
             switch (mCurrentState) {
                 
