@@ -985,17 +985,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
                   NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(_namedIconDataFlavor));
-                  if (newIcon !=null) {
-                      String url = newIcon.getURL();
-                      NamedIcon icon = NamedIcon.getIconByName(url);
-                      PositionableLabel ni = new PositionableLabel(icon, this);
-                      ni.setPopupUtility(null);        // no text 
-                      ni.setDisplayLevel(ICONS);
-                      ni.setLocation(pt.x, pt.y);
-                      putItem(ni);
-                      evt.dropComplete(true);
-                      return;
-                  }
+                  String url = newIcon.getURL();
+                  NamedIcon icon = NamedIcon.getIconByName(url);
+                  PositionableLabel ni = new PositionableLabel(icon, this);
+                  ni.setPopupUtility(null);        // no text 
+                  ni.setDisplayLevel(ICONS);
+                  ni.setLocation(pt.x, pt.y);
+                  putItem(ni);
+                  evt.dropComplete(true);
+                  return;
             } else if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
                 String text = (String)tr.getTransferData(DataFlavor.stringFlavor);
                 PositionableLabel l = new PositionableLabel(text, this);
