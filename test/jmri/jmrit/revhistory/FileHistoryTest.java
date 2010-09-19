@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.revhistory package & jmrit.revhistory.FileHistory class.
  * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class FileHistoryTest extends TestCase {
 
@@ -45,6 +45,26 @@ public class FileHistoryTest extends TestCase {
 
         Assert.assertEquals("file 1",r2.list.get(0).history.list.get(0).filename);
         Assert.assertEquals("date 1", r2.list.get(0).history.list.get(0).date);
+    }
+
+    public void testPurge() {
+        FileHistory r1 = new FileHistory();
+        r1.addOperation("load", "date 1", "file 1", null);
+        
+        FileHistory r2 = new FileHistory();
+        r2.addOperation("load", "date 2", "file 2", r1);
+        
+        FileHistory r3 = new FileHistory();
+        r3.addOperation("load", "date 3", "file 3", r2);
+        
+        Assert.assertEquals("pre-purge r3",r2,r3.list.get(0).history);
+        Assert.assertEquals("pre-purge r2",r1,r2.list.get(0).history);
+        Assert.assertEquals("pre-purge r1",null,r1.list.get(0).history);
+
+        r3.purge(2);
+
+        Assert.assertEquals("post-purge r3",r2,r3.list.get(0).history);
+        Assert.assertEquals("post-purge r2",null,r2.list.get(0).history);
     }
 
     public void testToString() {

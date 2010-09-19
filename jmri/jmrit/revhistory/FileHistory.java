@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * These can be nested:  A revision can come with a history.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
     
 public class FileHistory {
@@ -54,6 +54,18 @@ public class FileHistory {
         list.add(r);
     }
 
+    /**
+     * @param keep Number of levels to keep
+     */
+    public void purge(int keep) {
+        for (int i = 0; i < list.size(); i++) {
+            OperationMemo r = list.get(i);
+            if (keep <= 1) r.history = null;
+            if (r.history != null) {
+                r.history.purge(keep-1);
+            }
+        }
+    }
     
     public String toString(String prefix) {
         String retval = "";
