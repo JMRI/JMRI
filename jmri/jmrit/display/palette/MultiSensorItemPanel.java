@@ -69,7 +69,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
-        Hashtable<String, NamedIcon> map = _paletteFrame.getIconMap(_itemType, family);
+        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, family);
         JPanel panel1 = new JPanel();
         _selectionModel.setPositionRange(map.size()-3);
         panel1.setToolTipText(ItemPalette.rbp.getString("ToolTipSetIconSensor"));
@@ -77,7 +77,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _selectionModel.clearSelection();
-                    _selectionModel.setPositionRange(_paletteFrame.getIconMap(_itemType, _family).size()-3);
+                    _selectionModel.setPositionRange(ItemPalette.getIconMap(_itemType, _family).size()-3);
                 }
         });
         clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
@@ -228,7 +228,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
 
         public Transferable createPositionableDnD(JTable table) {
             int[] positions = _selectionModel.getPositions();
-            Hashtable <String, NamedIcon> iconMap = _paletteFrame.getIconMap(_itemType, _family);
+            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);

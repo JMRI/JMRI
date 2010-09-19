@@ -55,7 +55,7 @@ public class IconDialog extends ItemDialog {
         super(type, family, 
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
               parent, true);
-        _iconMap = cloneMap(parent.getPaletteFrame().getIconMap(type, family));
+        _iconMap = cloneMap(ItemPalette.getIconMap(type, family));
         _familyName = new JTextField(family);
 
         JPanel panel = new JPanel();

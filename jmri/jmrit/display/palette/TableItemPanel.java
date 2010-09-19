@@ -233,7 +233,7 @@ public class TableItemPanel extends ItemPanel {
                 }
             }
         }
-        Hashtable<String, NamedIcon> iconMap = _paletteFrame.getIconMap(_itemType, _family);
+        Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
         if (iconMap==null) {
             if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
             Thread.dumpStack();
@@ -350,7 +350,7 @@ public class TableItemPanel extends ItemPanel {
             if (col<0 || row<0) {
                 return null;
             }            
-            Hashtable <String, NamedIcon> iconMap = _paletteFrame.getIconMap(_itemType, _family);
+            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
