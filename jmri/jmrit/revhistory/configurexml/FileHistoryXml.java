@@ -14,7 +14,7 @@ import jmri.jmrit.revhistory.FileHistory;
  * here.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -117,11 +117,13 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         return storeDirectly(o);
     }
     
+    static int defaultDepth = 5;
+    
     static public Element storeDirectly(Object o) {
         final FileHistory r = (FileHistory)o;
         if (r == null) return null;  // no file history object, not recording
         
-        Element e = historyElement(r);
+        Element e = historyElement(r, defaultDepth);
         
         // add one more element for this store
         FileHistory.OperationMemo rev = 
@@ -133,25 +135,25 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
                 }};
 
         e.addContent(
-            operationElement(rev)
+            operationElement(rev, 10)
         );
         // and return
         return e;
     }
-    static Element historyElement(FileHistory r) {
+    static Element historyElement(FileHistory r, int depth) {
         ArrayList<FileHistory.OperationMemo> list = r.getList();
         
         Element e = new Element("filehistory");
 
         for (int i = 0; i<list.size(); i++) {
-            Element operation = operationElement(list.get(i));
+            Element operation = operationElement(list.get(i), depth);
             e.addContent(operation);            
         }
         
         return e;
     }
     
-    static Element operationElement(FileHistory.OperationMemo r) {
+    static Element operationElement(FileHistory.OperationMemo r, int depth) {
         Element rev = new Element("operation");
 
         Element revnumber = new Element("type");
@@ -166,8 +168,8 @@ public class FileHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
         authorinitials.addContent(r.filename);
         rev.addContent(authorinitials);
         
-        if (r.history != null) 
-            rev.addContent(historyElement(r.history));
+        if (r.history != null && depth >= 1) 
+            rev.addContent(historyElement(r.history, depth-1));
             
         return rev;
     }
