@@ -11,7 +11,7 @@ import jmri.jmrix.can.TrafficController;
  * Frame displaying (and logging) OpenLCB (CAN) frames
  *
  * @author	    Bob Jacobsen   Copyright (C) 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanListener {
@@ -33,8 +33,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanList
 
     public synchronized void message(CanMessage l) {  // receive a message and log it
         if (log.isDebugEnabled()) log.debug("Message: "+l.toString());
-        String formatted = "("+Integer.toHexString(l.getHeader())
-                            + (l.isExtended() ? " ext)" : ")");
+        String formatted = (l.isExtended() ? "[" : "(")+Integer.toHexString(l.getHeader())
+                            + (l.isExtended() ? "]" : ")");
         for (int i = 0; i < l.getNumDataElements(); i++)
             formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
         nextLine("M: "+formatted+"\n", l.toString());
@@ -42,8 +42,8 @@ public class MonitorFrame extends jmri.jmrix.AbstractMonFrame implements CanList
 
     public synchronized void reply(CanReply l) {  // receive a reply and log it
         if (log.isDebugEnabled()) log.debug("Reply: "+l.toString());
-        String formatted = "("+Integer.toHexString(l.getHeader())
-                            + (l.isExtended() ? " ext)" : ")");
+        String formatted = (l.isExtended() ? "[" : "(")+Integer.toHexString(l.getHeader())
+                            + (l.isExtended() ? "]" : ")");
         for (int i = 0; i < l.getNumDataElements(); i++)
             formatted += " "+jmri.util.StringUtil.twoHexFromInt(l.getElement(i));
         nextLine("R: "+formatted+"\n", l.toString());

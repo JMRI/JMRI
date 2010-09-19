@@ -28,7 +28,7 @@ import jmri.util.javaworld.GridLayout2;
  * <LI>When the timer trips, repeat if buttons still down.
  * </UL>
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanListener {
 
@@ -36,19 +36,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     JLabel jLabel1 = new JLabel();
     JButton sendButton = new JButton();
     JTextField packetTextField = new JTextField(12);
-    JTextField srcAliasField = new JTextField("123");
-    JTextField verifyNodeField = new JTextField(18);
-    JTextField sendEventField = new JTextField(18);
-    JTextField dstAliasField = new JTextField(4);
-    JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
-    JTextField configNumberField = new JTextField("40");
-    JTextField configAddressField = new JTextField("00 00 00 00");
-    JTextField writeDataField = new JTextField("00 00");
-    JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
-    public OpenLcbCanSendFrame() {
-        super();
-    }
-
+    
     // internal members to hold sequence widgets
     static final int MAXSEQUENCE = 4;
     JTextField mPacketField[]   = new JTextField[MAXSEQUENCE];
@@ -56,25 +44,38 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
     JTextField mDelayField[]    = new JTextField[MAXSEQUENCE];
     JToggleButton    mRunButton = new JToggleButton("Go");
 
+    JTextField srcAliasField = new JTextField("123 ");
+    JTextField verifyNodeField = new JTextField("01 02 03 04 05 06 ");
+    JTextField sendEventField = new JTextField("01 02 03 04 05 06 FF FE ");
+    JTextField dstAliasField = new JTextField(4);
+    JTextField datagramContentsField = new JTextField("20 61 00 00 00 00 08");
+    JTextField configNumberField = new JTextField("40");
+    JTextField configAddressField = new JTextField("00 00 00 00");
+    JTextField writeDataField = new JTextField("00 00");
+    JComboBox addrSpace = new JComboBox(new String[]{"CDI", "All", "Config", "None"});
+
+    public OpenLcbCanSendFrame() {
+        super();
+    }
+
     public void initComponents() throws Exception {
 
-        setTitle("Send Can Frame");
+        setTitle("Send CAN Frames and OpenLCB Messages");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // handle single-packet part
-        getContentPane().add(new JLabel("Raw input format: [123] 12 34 56"));
         {
             JPanel pane1 = new JPanel();
             pane1.setLayout(new BoxLayout(pane1, BoxLayout.Y_AXIS));
 
-            jLabel1.setText("Single Frame:");
+            jLabel1.setText("Single Frame:  (Raw input format is [123] 12 34 56) ");
             jLabel1.setVisible(true);
 
             sendButton.setText("Send");
             sendButton.setVisible(true);
             sendButton.setToolTipText("Send frame");
 
-            packetTextField.setToolTipText("Frame packet as hex pairs, e.g. 82 7D; checksum should be present but is recalculated");
+            packetTextField.setToolTipText("Frame as hex pairs, e.g. 82 7D; standard header in (), extended in []");
 
 
             pane1.add(jLabel1);
@@ -127,7 +128,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2.setLayout(new FlowLayout());
         pane2.add(new JLabel("Src Node alias:"));
         pane2.add(srcAliasField);
-        pane2.add(new JLabel("Dest Node Alias: "));
+        pane2.add(new JLabel("Dest Node alias: "));
         pane2.add(dstAliasField);
         getContentPane().add(pane2);
         
@@ -145,17 +146,21 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2.add(b);
         
         
+        // send OpenLCB messages
+        getContentPane().add(new JSeparator());
+        getContentPane().add(new JLabel("Send OpenLCB message:"));
+
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        b = new JButton("Verify Node");
+        b = new JButton("Send Verify Node");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendVerifyNode(e);
                     }
                 });
         pane2.add(b); 
-        b = new JButton("Request Events");
+        b = new JButton("Send Request Events");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendRequestEvents(e);
@@ -168,21 +173,21 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        b = new JButton("Request Consumers");
+        b = new JButton("Send Request Consumers");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendReqConsumers(e);
                     }
                 });
         pane2.add(b); 
-        b = new JButton("Request Producers");
+        b = new JButton("Send Request Producers");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendReqProducers(e);
                     }
                 });
         pane2.add(b); 
-        b = new JButton("Send event");
+        b = new JButton("Send Event Produced");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendEventPerformed(e);
@@ -195,7 +200,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        b = new JButton("Send datagram");
+        b = new JButton("Send Datagram");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendDatagramPerformed(e);
@@ -204,7 +209,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2.add(b); 
         pane2.add(new JLabel("Contents: "));
         pane2.add(datagramContentsField);
-        b = new JButton("Send reply");
+        b = new JButton("Send Datagram Reply");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendDatagramReply(e);
@@ -212,12 +217,16 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
                 });
         pane2.add(b); 
         
+        // send OpenLCB Configuration message
         getContentPane().add(new JSeparator());
+        getContentPane().add(new JLabel("Send OpenLCB Configuration Command:"));
+
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        pane2.add(new JLabel("Address: "));
+        pane2.add(new JLabel("Memory Address: "));
         pane2.add(configAddressField);
+        pane2.add(new JLabel("Address Space: "));
         pane2.add(addrSpace);
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -229,7 +238,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
                     }
                 });
         pane2.add(b); 
-        pane2.add(new JLabel("Number: "));
+        pane2.add(new JLabel("Byte Count: "));
         pane2.add(configNumberField);
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
@@ -246,7 +255,7 @@ public class OpenLcbCanSendFrame extends jmri.util.JmriJFrame implements CanList
         pane2 = new JPanel();
         pane2.setLayout(new FlowLayout());
         getContentPane().add(pane2);
-        b = new JButton("Confirm ");
+        b = new JButton("Send Confirm ");
         b.addActionListener(new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         sendDatagramReply(e);
