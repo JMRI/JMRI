@@ -30,7 +30,7 @@
 # For more information, please see
 # http://jmri.sourceforge.net/install/ShellScripts.shtml
 #
-# $Revision: 1.18 $ (CVS maintains this line, do not edit please)
+# $Revision: 1.19 $ (CVS maintains this line, do not edit please)
 
 # runs from usual program directory
 cd ..
@@ -153,7 +153,7 @@ fi
 [ "${DEBUG}" ] && echo "ALTPORTS: '${ALTPORTS}'"
 
 [ "${DEBUG}" ] && echo java ${OPTIONS} "${ALTPORTS}" -cp "${CP}" "${CLASSNAME}" ${CONFIGFILE}
-java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}" 
+java ${OPTIONS} ${ALTPORTS} -cp "${CP}" "${CLASSNAME}"  /Users/jake/Desktop/BadStartExampleKenC/PanelPro-NorthAdams-Config.xml
 
 
 
