@@ -5,6 +5,7 @@ package jmri.jmrix.can.cbus;
 import jmri.Sensor;
 
 import jmri.jmrix.can.CanMessage;
+import jmri.jmrix.can.TestTrafficController;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -15,7 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class CbusSensorTest extends TestCase {
 
