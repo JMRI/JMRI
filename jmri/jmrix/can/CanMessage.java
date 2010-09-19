@@ -25,7 +25,7 @@ import jmri.jmrix.can.TrafficController;
  *
  * @author      Andrew Crosland Copyright (C) 2008
  * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class CanMessage extends AbstractMRMessage {
     
@@ -37,7 +37,10 @@ public class CanMessage extends AbstractMRMessage {
     
     // Creates a new instance of CanMessage
     public CanMessage() {
-        _header = TrafficController.instance().getCanid();
+        if (TrafficController.instance() != null)
+            _header = TrafficController.instance().getCanid();
+        else
+            _header = 0;
         _isExtended = false;
         _isRtr = false;
         _nDataChars = 8;
