@@ -37,6 +37,9 @@ log4j.jar
 
 MRJAdapter.jar
 
+openlcb.jar
+    development version from http://openlcb.org/trunk/prototypes/java
+
 javax.comm.properties
   left over from javax.comm version 2.0 (minor version unknown) from Sun
   

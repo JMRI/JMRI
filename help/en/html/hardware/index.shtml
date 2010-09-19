@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.35 2010-09-04 19:40:56 zoo Exp $ -->
+<!-- $Id: index.shtml,v 1.36 2010-09-19 03:25:25 jacobsen Exp $ -->
 <html lang="en">
 <head>
   <TITLE>
@@ -239,6 +239,11 @@
 	        and <a href="">HH-2 handheld throttle</a>.
 		</p>
 		</dd>
+
+	    <dt class="im"><a href="http://openlcb.org/">
+	    <img src="http://openlcb.org/trunk/web/logo-ajs-dph.png" alt="OpenLCB logo" height="57" width="138"></a></dt>
+	    <dt>OpenLCB</dt>
+	    <dd><p class="dl">Configure: <A HREF="openlcb/index.shtml">OpenLCB networks</a></p></dd>
 
 	    <dt class="im"><a href="http://www.protrak.cc">
 	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
