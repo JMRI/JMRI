@@ -14,7 +14,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
@@ -68,9 +68,6 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         if (mOpt2 == null) return validOption2()[1];
         return mOpt2;
     }
-
-    // private control members
-    private boolean opened = false;
 
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) {
