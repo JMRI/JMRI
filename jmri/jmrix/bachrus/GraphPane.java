@@ -6,13 +6,14 @@ import java.awt.*;
 import java.awt.font.*;
 import java.awt.geom.*;
 import java.awt.print.*;
+import java.util.ResourceBundle;
 import javax.swing.*;
 
 /**
  * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -23,6 +24,8 @@ public class GraphPane extends JPanel implements Printable {
     protected dccSpeedProfile [] _sp;
     protected String annotate;
     protected Color [] colors = { Color.RED, Color.BLUE };
+
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
     // Use a default 28 step profile
     public GraphPane() {
@@ -49,8 +52,8 @@ public class GraphPane extends JPanel implements Printable {
 
     int units = Speed.MPH;
     String unitString = "Speed (MPH)";
-    void setUnitsMph() { units = Speed.MPH; setYLabel("Speed MPH"); }
-    void setUnitsKph() { units = Speed.KPH; setYLabel("Speed KPH"); }
+    void setUnitsMph() { units = Speed.MPH; setYLabel(rb.getString("SpeedMPH")); }
+    void setUnitsKph() { units = Speed.KPH; setYLabel(rb.getString("SpeedKPH")); }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -121,13 +124,16 @@ public class GraphPane extends JPanel implements Printable {
         String abString;
         // Draw lines between data points.
         g2.setPaint(Color.green.darker());
+        // for each point in a profile
         for(int i = 0; i < _sp[0].getLength(); i++) {
             float x1 = 0.0F;
+            // for each profile in the array
             for (int j = 0; j < _sp.length; j++) {
                 x1 = PAD + i*xInc;
                 float y1 = h - PAD - scale*_sp[j].getPoint(i);
                 float x2 = PAD + (i+1)*xInc;
                 float y2 = h - PAD - scale*_sp[j].getPoint(i+1);
+                // if it's a valid data point
                 if (i <= _sp[j].getLast()-1) {
                     g2.draw(new Line2D.Double(x1, y1, x2, y2));
                 }
@@ -145,11 +151,14 @@ public class GraphPane extends JPanel implements Printable {
         }
         
         // Mark data points.
-        for(int i = 0; i <= _sp[0].getLast(); i++) {
+        // for each point in a profile
+        for(int i = 0; i <= _sp[0].getLength(); i++) {
+            // for each profile in the array
             for (int j = 0; j < _sp.length; j++) {
                 g2.setPaint(colors[j]);
                 float x = PAD + i*xInc;
                 float y = h - PAD - scale*_sp[j].getPoint(i);
+                // if it's a valid data point
                 if (i <= _sp[j].getLast()) {
                     g2.fill(new Ellipse2D.Double(x-2, y-2, 4, 4));
                 }

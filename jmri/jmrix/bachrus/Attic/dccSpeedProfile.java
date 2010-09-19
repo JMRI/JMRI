@@ -9,7 +9,7 @@ import javax.swing.JFileChooser;
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class dccSpeedProfile {
 
@@ -64,15 +64,46 @@ public class dccSpeedProfile {
     public float getMax() { return _max; }
     public int getLast() { return _lastPoint; }
 
-    final JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
     // Save data as CSV
-    @SuppressWarnings("null")
-    public void export() {
+    public static void export(dccSpeedProfile sp) {
+        openExportFile();
+
+        // Save rows
+        if ((out != null) && (p != null)) {
+            // for each data point
+            for (int i = 0; i < sp.getLength(); i++) {
+                p.print(i);
+                p.print(",");
+                p.println(sp.getPoint(i));
+            }
+        }
+        closeExportFile();
+    }
+
+    public static void export(dccSpeedProfile [] sp) {
+        openExportFile();
+        // Save rows
+        if ((out != null) && (p != null)) {
+            // for each data point
+            for (int i = 0; i < sp[0].getLength(); i++) {
+                p.print(i);
+                // for each profile
+                for (int j = 0; j < sp.length; j++) {
+                    p.print(",");
+                    p.println(sp[j].getPoint(i));
+                }
+            }
+        }
+        closeExportFile();
+    }
+
+    private static FileOutputStream out = null;
+    private static PrintWriter p = null;
+
+    private static void openExportFile() {
+        JFileChooser fileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
         String fileName = null;
-        //File saveFile;
-        
-        log.debug("Export()");
         
         // get filename
         // start at current file, show dialog
@@ -81,10 +112,7 @@ public class dccSpeedProfile {
         // handle selection or cancel
         if (retVal == JFileChooser.APPROVE_OPTION) {
           fileName = fileChooser.getSelectedFile().getPath();
-          //saveFile = new File(fileName);
         }
-        FileOutputStream out = null;
-        PrintWriter p = null;
         try {
             // Create a print writer based on the file, so we can print to it.
             out = new FileOutputStream(fileName);
@@ -92,19 +120,11 @@ public class dccSpeedProfile {
         } catch (IOException ex) {
             if (log.isDebugEnabled()) log.debug("Problem creating output stream " + ex);
         }
+        if (out == null) { log.error("Null File Output Stream"); }
+        if (p == null) { log.error("Null Print Writer"); }
+    }
 
-        if (out == null) log.error("Null File Output Stream");
-        if (p == null) log.error("Null Print Writer");
-
-        // Save rows
-        if ((out != null) && (p != null)) {
-            for (int i = 0; i < _length; i++) {
-                p.print(i);
-                p.print(",");
-                p.println(_dataPoints[i]);
-            }
-        }
-        
+    private static void closeExportFile() {
         try {
             if (p != null) {
                 p.flush();
@@ -117,6 +137,6 @@ public class dccSpeedProfile {
             log.error("Exception writing CSV " + ex);
         }
     }
-
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(dccSpeedProfile.class.getName());
 }
