@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.nodeconfig package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class NodeConfigToolActionTest extends TestCase {
 
@@ -24,7 +24,7 @@ public class NodeConfigToolActionTest extends TestCase {
 
     public void testAction() {
         // load dummy TrafficController
-        TestTrafficController t = new TestTrafficController();
+        new TestTrafficController();
         new NodeConfigToolAction().actionPerformed(null);
     }
 
