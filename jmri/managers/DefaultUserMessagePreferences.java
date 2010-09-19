@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -31,7 +31,8 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     private static boolean allowSave = true;
 
-    private DefaultUserMessagePreferences(){
+    // needs to be package or protected level for tests to be able to instantiate
+    DefaultUserMessagePreferences(){
 
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.configureManagerInstance() != null)
