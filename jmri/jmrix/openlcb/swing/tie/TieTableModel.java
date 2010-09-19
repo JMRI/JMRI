@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Table Model for access to tie info
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.1 $
+ * @version	 $Revision: 1.2 $
  * @since 2.3.7
  */
 
@@ -41,7 +41,7 @@ public class TieTableModel extends AbstractTableModel {
     public String getColumnName(int c) {
         return columnName[c];
     }
-    public Class getColumnClass(int c) {
+    public Class<?> getColumnClass(int c) {
         return String.class;
     }
     public boolean isCellEditable(int r,int c) { return false; }
@@ -84,7 +84,7 @@ public class TieTableModel extends AbstractTableModel {
         }
         float ratio = ((float)charPerLine)/((float)totalColWidth);
         for (int j = 0; j < 4; j++) {
-            columnSize[j] = ((int)(((float)colWidth[j])*ratio)) - 1;
+            columnSize[j] = (int)Math.round((((float)colWidth[j])*ratio) - 1.);
             tableLineWidth += (columnSize[j] + 1);
         }
     
