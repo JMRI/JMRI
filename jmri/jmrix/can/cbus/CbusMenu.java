@@ -11,7 +11,7 @@ import javax.swing.JMenu;
  *
  * @author	    Bob Jacobsen   Copyright 2003, 2008, 2009
  * @author      Andrew Crosland 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class CbusMenu extends JMenu {
     public CbusMenu(String name) {
@@ -32,6 +32,7 @@ public class CbusMenu extends JMenu {
         add(new jmri.jmrix.can.cbus.swing.configtool.ConfigToolAction(rb.getString("MenuItemConfigTool")));
         add(new jmri.jmrix.can.cbus.swing.eventtable.CbusEventTableAction(rb.getString("MenuItemEventTable")));
 
+        add(new jmri.jmrix.can.cbus.swing.nodeconfig.NodeConfigToolAction("Node Config Tool"));
     }
 
 }
