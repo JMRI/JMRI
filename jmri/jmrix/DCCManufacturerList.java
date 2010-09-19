@@ -10,7 +10,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  *
  */
 public class DCCManufacturerList {
@@ -118,7 +118,7 @@ public class DCCManufacturerList {
         if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.Mx1ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(OTHER)) { return new jmri.jmrix.OtherConnectionTypeList().getAvailableProtocolClasses(); }
-        return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses();
+        return new jmri.jmrix.internal.InternalConnectionTypeList().getAvailableProtocolClasses();
     }
     
     public static String getDCCSystemFromType(char a) {
