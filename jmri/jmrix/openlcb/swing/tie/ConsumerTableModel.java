@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Table Model for access to producer info
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.2 $
+ * @version	 $Revision: 1.3 $
  * @since 2.3.7
  */
 
@@ -88,7 +88,7 @@ public class ConsumerTableModel extends AbstractTableModel {
         }
         float ratio = ((float)charPerLine)/((float)totalColWidth);
         for (int j = 0; j < 4; j++) {
-            columnSize[j] = (int)Math.round((((float)colWidth[j])*ratio) - 1.);
+            columnSize[j] = (int)Math.round(colWidth[j]*ratio - 1.);
             tableLineWidth += (columnSize[j] + 1);
         }
     
