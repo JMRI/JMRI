@@ -20,13 +20,13 @@ import jmri.jmrix.can.CanMessage;
  * <P>
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class GridConnectMessage extends AbstractMRMessage {
     
     // Creates a new instance of GridConnectMessage
     public GridConnectMessage() {
-        _nDataChars = 27;
+        _nDataChars = 28;
         _dataChars = new int[_nDataChars];
         setElement(0, ':');
     }
@@ -56,7 +56,7 @@ public class GridConnectMessage extends AbstractMRMessage {
     
     // accessors to the bulk data
     public int getNumDataElements() { return _nDataChars;}
-    public void setNumDataElements(int n) { _nDataChars = (n <= 27) ? n : 27;}
+    public void setNumDataElements(int n) { _nDataChars = (n <= 28) ? n : 28;}
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) {
       _dataChars[n] = v;
