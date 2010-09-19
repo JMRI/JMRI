@@ -32,7 +32,7 @@ import jmri.jmrit.display.MemorySpinnerIcon;
 
 public class MemoryItemPanel extends TableItemPanel {
 
-    enum Type { READONLY, READWRITE, SPINNER };
+    enum Type { READONLY, READWRITE, SPINNER }
     Type _memType;
     JSpinner _spinner;
 
