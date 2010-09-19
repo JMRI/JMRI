@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OlcbAddress {
 
@@ -126,6 +126,14 @@ public class OlcbAddress {
         return true;
     }
     
+    public int hashCode() {
+        int ret = 0;
+        for (int i = 0; i<this.aFrame.length; i++) {
+            ret += this.aFrame[i];
+        }
+        return ret;
+    }
+  
     public CanMessage makeMessage() {
         return new CanMessage(aFrame);
     }
