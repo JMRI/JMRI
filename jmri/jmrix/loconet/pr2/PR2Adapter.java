@@ -13,7 +13,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR2
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class PR2Adapter extends LocoBufferAdapter {
 
@@ -86,25 +86,23 @@ public class PR2Adapter extends LocoBufferAdapter {
      * Get an array of valid baud rates. 
      */
     public String[] validBaudRates() {
-        return validSpeeds;
+        return new String[]{"57,600 baud"};
     }
-    protected String [] validSpeeds = new String[]{"57,600 baud"};
+
     /**
      * Get an array of valid baud rates as integers. This allows subclasses
      * to change the arrays of speeds.
      */
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return new int[]{57600};
     }
-    protected int [] validSpeedValues = new int[]{57600};
 
     /**
      * Option 1 controls flow control option
      */
     public String option1Name() { return "PR2 connection uses "; }
-    public String[] validOption1() { return validOption1; }
+    public String[] validOption1() { return new String[]{"hardware flow control (recommended)", "no flow control"}; }
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
 
     /**
      * The PR2 is itself a command station, so fix that choice
