@@ -13,7 +13,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -131,17 +131,16 @@ public class PR3Adapter extends LocoBufferAdapter {
      * Get an array of valid baud rates. 
      */
     public String[] validBaudRates() {
-        return validSpeeds;
+        return new String[]{"57,600 baud"};
     }
-    protected String [] validSpeeds = new String[]{"57,600 baud"};
+
     /**
      * Get an array of valid baud rates as integers. This allows subclasses
      * to change the arrays of speeds.
      */
     public int[] validBaudNumber() {
-        return validSpeedValues;
+        return new int[]{57600};
     }
-    protected int [] validSpeedValues = new int[]{57600};
 
     // Option 1 does flow control, inherited from LocoBufferAdapter
     
