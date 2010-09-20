@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.39 $
+ * @version			$Revision: 1.40 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -205,8 +205,9 @@ public class DecoderIndexFile extends XmlFile {
         }
         if (masterVersion!=null && masterVersion.equals(userVersion)) return false;
 
-        // force the update, with the version number located earlier
-        instance().fileVersion = Integer.parseInt(masterVersion);
+        // force the update, with the version number located earlier is available
+        if (masterVersion != null)
+            instance().fileVersion = Integer.parseInt(masterVersion);
 
         forceCreationOfNewIndex();
         // and force it to be used
@@ -358,7 +359,12 @@ public class DecoderIndexFile extends XmlFile {
         String parentHighVersID = ((attr = family.getAttribute("highVersionID"))     != null ? attr.getValue() : null );
         String familyName   = ((attr = family.getAttribute("name"))     != null ? attr.getValue() : null );
         String mfg   = ((attr = family.getAttribute("mfg"))     != null ? attr.getValue() : null );
-        String mfgID   = mfgIdFromName(mfg);
+        String mfgID = null;
+        if (mfg != null) {
+            mfgID  = mfgIdFromName(mfg);
+        } else {
+            log.error("Did not find required mfg attribute, may not find proper manufacturer");
+        }
 
         List<Element> l = family.getChildren("model");
         if (log.isDebugEnabled()) log.debug("readFamily sees "+l.size()+" children");
