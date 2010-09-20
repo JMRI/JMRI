@@ -224,7 +224,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
     }
     
     public void deleteSignalHead(NamedBeanHandle<SignalHead> sh){
-        _signalHeadItem.remove(sh);
+        _signalHeadItem.remove(getSignalHeadItem(sh.getName()));
     }
     
     public void setSignalHeadOnState(String name, int state){
