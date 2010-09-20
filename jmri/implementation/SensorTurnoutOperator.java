@@ -36,6 +36,7 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 			public void propertyChange(PropertyChangeEvent e) {
 				if (e.getPropertyName().equals("KnownState")) {
 					synchronized(this) {
+				        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY") // notify not naked, outside sensor is shared state
 						this.notify();
 					}
 				}
