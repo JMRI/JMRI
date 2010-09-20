@@ -207,7 +207,7 @@ public class TableItemPanel extends ItemPanel {
             }
             if (_family==null) {
                 _family = family;       // let last familiy be the selected one
-                button.setSelected(true);
+                if (button != null) button.setSelected(true);
             }
             makeIconPanel();        // need to have family identified  before calling
             _iconFamilyPanel.add(_iconPanel);
