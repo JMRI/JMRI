@@ -22,18 +22,15 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
-
-    private static DefaultUserMessagePreferences _instance = new DefaultUserMessagePreferences();
     
     private static boolean allowSave = true;
 
     // needs to be package or protected level for tests to be able to instantiate
     DefaultUserMessagePreferences(){
-
         // register this object to be stored as part of preferences
         if (jmri.InstanceManager.configureManagerInstance() != null)
             jmri.InstanceManager.configureManagerInstance().registerPref(this);
@@ -62,8 +59,13 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
     
+    static class DefaultUserMessagePreferencesHolder {
+        static DefaultUserMessagePreferences
+            instance = new DefaultUserMessagePreferences();
+    }
+
     public static DefaultUserMessagePreferences getInstance() {
-        return _instance;
+        return DefaultUserMessagePreferencesHolder.instance;
     }
     
     public synchronized void allowSave() { allowSave = true; }
@@ -256,7 +258,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     private static boolean _changeMade = false;
     
-    public boolean getChangeMade(){ return _changeMade; }
+    public synchronized boolean getChangeMade(){ return _changeMade; }
     public synchronized void setChangeMade() { _changeMade=true; }
     //The reset is used after the preferences have been loaded for the first time
     public synchronized void resetChangeMade(){ _changeMade = false; }
