@@ -269,7 +269,7 @@ public class IconDialog extends ItemDialog {
         panel.setLayout(new FlowLayout());
         JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
         newFamilyButton.addActionListener(new ActionListener() {
-                IconDialog dialog;
+                //IconDialog dialog; never used?
                 public void actionPerformed(ActionEvent a) {
                     //check text
                     String family = _familyName.getText();
@@ -298,7 +298,7 @@ public class IconDialog extends ItemDialog {
                     dispose();
                 }
                 ActionListener init(IconDialog d) {
-                    dialog = d;
+                    //dialog = d;
                     return this;
                 }
         }.init(this));
@@ -483,23 +483,21 @@ public class IconDialog extends ItemDialog {
                 Transferable tr = e.getTransferable();
                 if(e.isDataFlavorSupported(dataFlavor)) {
                     NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(dataFlavor));
-                    if (newIcon !=null) {
-                        e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-                        DropTarget target = (DropTarget)e.getSource();
-                        DropJLabel label = (DropJLabel)target.getComponent();
-                        double scale = newIcon.reduceTo(100, 100, 0.2);
-                        label.setIcon(newIcon);
-                        _catalog.setBackground(label);
-                        _iconMap.put(label.getName(), newIcon);
-                        e.dropComplete(true);
-                        ImageIndexEditor._indexChanged = true;
-                        ItemPalette._defaultsChanged = true;
-                        if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
-                                                             ", "+newIcon.getURL());
-                    } else {
-                        if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
-                        e.rejectDrop();
-                    }
+                    e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+                    DropTarget target = (DropTarget)e.getSource();
+                    DropJLabel label = (DropJLabel)target.getComponent();
+                    newIcon.reduceTo(100, 100, 0.2);
+                    label.setIcon(newIcon);
+                    _catalog.setBackground(label);
+                    _iconMap.put(label.getName(), newIcon);
+                    e.dropComplete(true);
+                    ImageIndexEditor._indexChanged = true;
+                    ItemPalette._defaultsChanged = true;
+                    if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
+                                                         ", "+newIcon.getURL());
+                } else {
+                    if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
+                    e.rejectDrop();
                 }
             } catch(IOException ioe) {
                 if (log.isDebugEnabled()) log.debug("DropPanel.drop REJECTED!");
