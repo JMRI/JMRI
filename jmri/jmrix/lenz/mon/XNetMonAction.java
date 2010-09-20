@@ -6,7 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2002
  * @author			Paul Bender     Copyright (C) 2008
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 
 package jmri.jmrix.lenz.mon;
@@ -27,6 +27,20 @@ public class XNetMonAction extends AbstractAction {
     public XNetMonAction(jmri.jmrix.lenz.XNetSystemConnectionMemo memo){
 	this("XPressNet Monitor",memo);
     }
+
+    public XNetMonAction(String s) {
+         super(s);
+         // If there is no system memo given, assume the system memo
+         // is the first one in the instance list.
+         _memo=(jmri.jmrix.lenz.XNetSystemConnectionMemo)(jmri.InstanceManager.
+               getList(jmri.jmrix.lenz.XNetSystemConnectionMemo.class).get(0));
+    }
+
+    public XNetMonAction() {
+         this("XPressNet Monitor");
+    }
+
+
 
     public void actionPerformed(ActionEvent e) {
 		// create a XNetMonFrame

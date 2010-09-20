@@ -13,11 +13,22 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.31 $
+ * @version         $Revision: 2.32 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
         protected XNetTrafficController tc = null;
+
+        public XNetMonFrame() {
+               super();
+               // If there is no system memo given, assume the system memo
+               // is the first one in the instance list.
+                  jmri.jmrix.lenz.XNetSystemConnectionMemo memo;
+                    memo=(jmri.jmrix.lenz.XNetSystemConnectionMemo)(jmri.InstanceManager.
+                    getList(jmri.jmrix.lenz.XNetSystemConnectionMemo.class).get(0));
+                 tc=memo.getXNetTrafficController();
+        }
+
 
 	public XNetMonFrame(jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
 		super();
