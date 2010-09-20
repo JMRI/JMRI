@@ -28,7 +28,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -166,6 +166,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 			recData = true;
 			//wake up turnout monitor thread
 			synchronized (this) {
+				@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY") // notify not naked, command station is shared state
 				notify();
 			}
 		}else{
