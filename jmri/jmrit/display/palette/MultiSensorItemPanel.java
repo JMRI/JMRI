@@ -161,7 +161,6 @@ public class MultiSensorItemPanel extends TableItemPanel {
         /*************** DefaultListSelectionModel overrides ********************/
 
         public boolean isSelectedIndex(int index) {
-            boolean isSelectedIndex = super.isSelectedIndex(index);
             for (int i=0; i<_postions.length; i++) {
                 if (_postions[i] == index) {
                     if (log.isDebugEnabled()) log.debug("isSelectedIndex("+index+") returned true");
@@ -227,7 +226,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         }
 
         public Transferable createPositionableDnD(JTable table) {
-            int[] positions = _selectionModel.getPositions();
+            _selectionModel.getPositions();
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
