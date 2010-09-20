@@ -75,7 +75,7 @@ public class IconItemPanel extends ItemPanel {
             while (it.hasNext()) {
                String name = it.next();
                NamedIcon icon = new NamedIcon(_iconMap.get(name));    // make copy for possible reduction
-               double scale = icon.reduceTo(50, 80, 0.2);
+               icon.reduceTo(50, 80, 0.2);
                JPanel panel = new JPanel();
                String borderName = null;
                try {
