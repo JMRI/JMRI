@@ -30,13 +30,13 @@ public class SensorTurnoutOperator extends TurnoutOperator {
 	 * if we're no longer the current operator this throws
 	 * TurnoutOperatorException which just terminates the thread.
 	 */
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY") // notify not naked, outside sensor is shared state
 	public void run() {
 		//long startTime = System.currentTimeMillis();
 		listener = new PropertyChangeListener() {
 			public void propertyChange(PropertyChangeEvent e) {
 				if (e.getPropertyName().equals("KnownState")) {
 					synchronized(this) {
-				        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NN_NAKED_NOTIFY") // notify not naked, outside sensor is shared state
 						this.notify();
 					}
 				}
