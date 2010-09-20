@@ -1,19 +1,14 @@
-/*
- * SdfConstants.java
- *
- * Created on July 14, 2007, 10:29 AM
- *
- * To change this template, choose Tools | Template Manager
- * and open the template in the editor.
- */
+// SdfConstants.java
 
 package jmri.jmrix.loconet.sdf;
 
 /**
  *
- * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.2 $
+ * @author		Bob Jacobsen  Copyright (C) 2007, 2010
+ * @version             $Revision: 1.3 $
  */
+ 
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_OOI_PKGPROTECT") // Don't worry about malicious code changing constants
 public interface SdfConstants {
     
 /* **********************
