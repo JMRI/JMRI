@@ -399,8 +399,8 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
         if (log.isDebugEnabled()) log.debug("ListSelectionEvent from "+e.getSource().getClass().getName()
                                             +" idx= "+e.getFirstIndex());
         //PickListModel model =  (PickListModel)e.getSource();
-        int row = e.getFirstIndex();
         /*
+        int row = e.getFirstIndex();
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
