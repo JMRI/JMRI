@@ -167,7 +167,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         _foregrndButton.setSelected(true);
         add(colorPanel);
 
-        JPanel chooserPanel = new JPanel();
         _chooser = new JColorChooser(_editor.getTargetPanel().getBackground());
         _chooser.getSelectionModel().addChangeListener(this);
         JPanel preview = new JPanel();
