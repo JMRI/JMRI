@@ -626,9 +626,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         double x = event.getX();
         double y = event.getY();
         Rectangle rect = new Rectangle();
-        if (_selectionGroup==null) {
-            return null;
-        }
+
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable p = _selectionGroup.get(i);
             rect= p.getBounds(rect);
