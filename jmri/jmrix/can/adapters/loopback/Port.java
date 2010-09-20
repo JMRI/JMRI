@@ -24,7 +24,7 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class Port extends AbstractSerialPortController {
 
@@ -57,7 +57,7 @@ public class Port extends AbstractSerialPortController {
      * Set the CAN protocol option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
+
     public String getCurrentOption1Setting() {
         log.debug("getCurrentOption1Setting "+mOpt1+" "+ this);
         if (mOpt1 == null) return validOption1()[0];

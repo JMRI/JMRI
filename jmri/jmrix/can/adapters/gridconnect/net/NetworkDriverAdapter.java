@@ -17,7 +17,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortController {
 
@@ -111,7 +111,7 @@ public class NetworkDriverAdapter extends jmri.jmrix.AbstractSerialPortControlle
      * Set the binary vs ASCII command set option.
      */
     public void configureOption2(String value) { mOpt2 = value; }
-    protected String mOpt2 = null;
+
     public String getCurrentOption2Setting() {
         if (mOpt2 == null) return validOption2()[1];
         return mOpt2;

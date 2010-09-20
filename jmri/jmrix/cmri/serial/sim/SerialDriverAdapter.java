@@ -14,7 +14,7 @@ import java.io.InputStream;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -117,10 +117,6 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
      * The first port option isn't used, so just ignore this call.
      */
     public void configureOption1(String value) {}
-
-    protected String [] validSpeeds = new String[]{"9,600 baud","19,200 baud", "57,600 baud"};
-    protected int [] validSpeedValues = new int[]{9600, 19200, 57600};
-    protected String selectedSpeed=validSpeeds[0];
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.

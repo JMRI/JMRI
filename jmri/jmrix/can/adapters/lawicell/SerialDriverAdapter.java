@@ -16,7 +16,7 @@ import gnu.io.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -176,7 +176,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
      * Set the CAN protocol option.
      */
     public void configureOption1(String value) { mOpt1 = value; }
-    protected String mOpt1 = null;
+
     public String getCurrentOption1Setting() {
         if (mOpt1 == null) return validOption1()[0];
         return mOpt1;
