@@ -546,15 +546,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                               ", frameWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight());
     }
 
-    private void openEditorFrame(String name) {
-        JFrameItem frame = super.getIconFrame(name);
-        if (frame != null) {
-            frame.getEditor().reset();
-            frame.setVisible(true);
-        } else {
-            log.error("Unable to open Icon Editor \""+name+"\"");
-        }
-    }
+    // private method not used, so not in API
+    //     private void openEditorFrame(String name) {
+    //         JFrameItem frame = super.getIconFrame(name);
+    //         if (frame != null) {
+    //             frame.getEditor().reset();
+    //             frame.setVisible(true);
+    //         } else {
+    //             log.error("Unable to open Icon Editor \""+name+"\"");
+    //         }
+    //     }
 
 
     public void setTitle() {
