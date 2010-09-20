@@ -13,7 +13,7 @@ import java.util.ResourceBundle;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
@@ -73,7 +73,7 @@ public class SensorTableDataModel extends BeanTableDataModel {
             }
             String name = sysNameList.get(row);
             boolean val = InstanceManager.sensorManagerInstance().getBySystemName(name).getInverted();
-            return new Boolean(val);
+            return Boolean.valueOf(val);
         } else return super.getValueAt(row, col);
     }    		
     
