@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  * 
  */
 public class PushbuttonPacket {
@@ -53,7 +53,7 @@ public class PushbuttonPacket {
 	public final static String CVP_1Bname = "CVP_AD4_1B";
 	public final static String CVP_2Bname = "CVP_AD4_2B";
 	
-	protected final static String[] VAILDDECODERNAMES = { unknown, NCEname, CVP_1Bname,
+	private final static String[] VALIDDECODERNAMES = { unknown, NCEname, CVP_1Bname,
 		CVP_2Bname };
 
 	public static byte[] pushbuttonPkt(String prefix, int turnoutNum, boolean locked) {
@@ -84,8 +84,8 @@ public class PushbuttonPacket {
 	}
 	
 	public static String[] getValidDecoderNames() {
-		return VAILDDECODERNAMES;
-	}
+		return java.util.Arrays.copyOf(VALIDDECODERNAMES, VALIDDECODERNAMES.length);
+    }
 	
 	// builds the data byte for CVP decoders, builds based on JMRI's current
 	// knowledge of turnout pushbutton lockout states. If a turnout doesn't
