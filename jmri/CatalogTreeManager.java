@@ -32,10 +32,6 @@ import java.util.List;
  */
 public interface CatalogTreeManager extends Manager {
 
-    public static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
-    public static final String[] SOUND_FILTER = {"wav"};
-    public static final String[] SCRIPT_FILTER = {"py", "scpt"};
-
 
     /**
      * Locate via user name, then system name if needed.
@@ -89,6 +85,10 @@ public interface CatalogTreeManager extends Manager {
      * Get a list of all CatalogTree objects' system names.
      */
     public List <String> getSystemNameList();
+
+    static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
+    static final String[] SOUND_FILTER = {"wav"};
+    static final String[] SCRIPT_FILTER = {"py", "scpt"};
 
 }
 
