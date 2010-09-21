@@ -161,7 +161,9 @@ public class TurnoutOperationManager {
 					Class<?> thisClass = Class.forName(thisClassName);
 					thisClass.newInstance();
 					if (log.isDebugEnabled()) { log.debug("loaded TurnoutOperation class "+thisClassName); }
-				} catch (Exception e) { }
+				} catch (ClassNotFoundException e1) { log.error("during loadOperationTypes", e1); }
+				  catch (InstantiationException e2) { log.error("during loadOperationTypes", e2); }
+				  catch (IllegalAccessException e3) { log.error("during loadOperationTypes", e3); }
 			}
 		}
 	}
@@ -219,7 +221,7 @@ public class TurnoutOperationManager {
 	public void setDoOperations(boolean b) {
 		boolean oldValue = doOperations;
 		doOperations = b;
-		firePropertyChange("doOperations", new Boolean(oldValue), new Boolean(b));
+		firePropertyChange("doOperations", Boolean.valueOf(oldValue), new Boolean(b));
 	}
 	
 	/**
