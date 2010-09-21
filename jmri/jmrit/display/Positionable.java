@@ -30,9 +30,9 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
-public interface Positionable  {
+public interface Positionable extends Cloneable  {
     public void setPositionable(boolean enabled);
     public boolean isPositionable();
     
