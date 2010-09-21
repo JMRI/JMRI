@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -511,7 +511,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         boolean old = _allocated; 
         _allocated = allocated;
-        firePropertyChange("allocate", new Boolean(old), new Boolean(_allocated));
+        firePropertyChange("allocate", Boolean.valueOf(old), Boolean.valueOf(_allocated));
         return msg;
     }
 
@@ -526,7 +526,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         boolean old = _allocated;
         _allocated = false;
         _routeSet = false;
-        firePropertyChange("allocate", new Boolean(old), new Boolean(false));
+        firePropertyChange("allocate", Boolean.valueOf(old), Boolean.valueOf(false));
     }
 
     /**
@@ -601,7 +601,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _allocated = allocated;
         boolean old = _routeSet;
         _routeSet = routeSet;
-        firePropertyChange("setRoute", new Boolean(old), new Boolean(_routeSet));
+        firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
         return msg;
     }
 
@@ -709,7 +709,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (rougeEntry) {
             boolean old = _routeSet;
             _routeSet = false;
-            firePropertyChange("setRoute", new Boolean(old), new Boolean(_routeSet));
+            firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
         } else {
             firePropertyChange("blockChange", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
         }
