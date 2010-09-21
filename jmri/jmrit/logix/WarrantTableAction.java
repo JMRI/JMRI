@@ -597,7 +597,7 @@ public class WarrantTableAction extends AbstractAction {
         try {
             f.initComponents();
             f.concatenate(startW, endW);
-        } catch (Exception ex ) {/*bogus*/ }
+        } catch (Exception ex ) { log.error("error making CreateWarrantFrame", ex);}
         f.setVisible(true);
     }
 
