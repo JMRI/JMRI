@@ -28,14 +28,14 @@ public class Address {
 		_userName = s;
 	}
 	public String getUserName() {
-		return new String(_userName);
+		return _userName;
 	}
 
 	public void setSystemName(String s) {
 		_systemName = s;
 	}
 	public String getSystemName() {
-		return new String(_systemName);
+		return _systemName;
 	}
 
 	// to free resources when no longer used
