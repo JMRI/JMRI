@@ -322,7 +322,7 @@ public class WarrantTableAction extends AbstractAction {
 
     /******************* CreateWarrant ***********************/
 
-    class CreateWarrantFrame extends JFrame {
+    static class CreateWarrantFrame extends JFrame {
 
         JTextField _sysNameBox;
         JTextField _userNameBox;
@@ -601,7 +601,7 @@ public class WarrantTableAction extends AbstractAction {
         f.setVisible(true);
     }
 
-    public class ComboBoxCellEditor extends DefaultCellEditor
+    static public class ComboBoxCellEditor extends DefaultCellEditor
     {
         ComboBoxCellEditor() {
             super(new JComboBox());
@@ -1004,7 +1004,7 @@ public class WarrantTableAction extends AbstractAction {
         */
     }
 
-    class DnDExportHandler extends TransferHandler{
+    static class DnDExportHandler extends TransferHandler{
         int _type;
 
         DnDExportHandler() {
