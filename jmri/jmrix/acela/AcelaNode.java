@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -67,7 +67,7 @@ public class AcelaNode extends AbstractNode {
         "YardMaster",
         "Sentry"
     };
-    public static final String[] moduleTips = new String[]{"Acela",
+    static final String[] moduleTips = new String[]{"Acela",
         "TrainBrain has 4 output circuits and 4 input circuits",
         "Dash-8 has 8 output circuits and no input circuits",
         "Watchman has no output circuits and 8 input circuits",
