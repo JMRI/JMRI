@@ -10,15 +10,14 @@ import junit.framework.TestSuite;
 /**
  * Tests for the PushbuttonPacket class
  * @author	Bob Jacobsen  Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PushbuttonPacketTest extends TestCase {
 
 
 	public void testImmutableNames() {
-	    PushbuttonPacket p = new PushbuttonPacket();
-	    String[] c1 = p.getValidDecoderNames();
-	    String[] c2 = p.getValidDecoderNames();
+	    String[] c1 = PushbuttonPacket.getValidDecoderNames();
+	    String[] c2 = PushbuttonPacket.getValidDecoderNames();
 	    Assert.assertEquals(c1.length, c2.length);
 	    Assert.assertTrue(c1.length > 0);
 	    Assert.assertTrue(c1[0].equals(c2[0]));
