@@ -14,7 +14,7 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SerialAddress {
 
@@ -151,13 +151,13 @@ public class SerialAddress {
     public static String makeSystemName(String type, int bitNum) {
 		String nName = "";
 		// check the type character
-        if ( (type != "S") && (type != "L") && (type != "T") ) {
+        if ( (!type.equals("S")) && (!type.equals("L")) && (!type.equals("T")) ) {
             // here if an illegal type character 
             log.error("illegal type character proposed for system name - "+type);
             return (nName);
         }
 		// check the bit number
-        if ( (bitNum < 1) || ((type=="S") && (bitNum>1000)) || (bitNum > 8000) ) {
+        if ( (bitNum < 1) || ((type.equals("S")) && (bitNum>1000)) || (bitNum > 8000) ) {
             // here if an illegal bit number 
             log.error("illegal address range proposed for system name - "+bitNum);
             return (nName);
