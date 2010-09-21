@@ -15,7 +15,7 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public abstract class AbstractServlet implements Servlet, ServletConfig {
@@ -60,7 +60,6 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
             if (inputLines[i].length() == 0) { // Blank line.
                 if (usingPost(inputLines)) {
                     readPostData(inputLines, i, in);
-                    i = i + 2;
                 }
                 break;
             }
@@ -116,8 +115,10 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
         throws IOException {
         int contentLength = contentLength(inputs);
         char[] postData = new char[contentLength];
-        in.read(postData, 0, contentLength);
-        inputs[++i] = new String(postData, 0, contentLength);
+        int seenLength = in.read(postData, 0, contentLength);
+        if (seenLength != contentLength) 
+            log.warn("requested "+contentLength+" but saw "+seenLength+" bytes");
+        inputs[++i] = new String(postData, 0, seenLength);
     }
     
     // Given a line that starts with Content-Length,
