@@ -40,7 +40,7 @@ package jmri;
  * Also note that CVP decoder's use the old legacy format for ops mode programming. 
  *
  * @author      Daniel Boudreau Copyright (C) 2007
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  * 
  */
 public class PushbuttonPacket {
@@ -84,7 +84,10 @@ public class PushbuttonPacket {
 	}
 	
 	public static String[] getValidDecoderNames() {
-		return java.util.Arrays.copyOf(VALIDDECODERNAMES, VALIDDECODERNAMES.length);
+        String[] arrayCopy = new String[VALIDDECODERNAMES.length];
+        
+        System.arraycopy(VALIDDECODERNAMES, 0, arrayCopy, 0, VALIDDECODERNAMES.length);
+        return arrayCopy;
     }
 	
 	// builds the data byte for CVP decoders, builds based on JMRI's current
