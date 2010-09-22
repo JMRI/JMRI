@@ -24,7 +24,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -410,7 +410,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
 
     // class to persist (from one usage to another)
     // throttle information
-    class ThrottleContext {
+    static class ThrottleContext {
         DccThrottle throttle;
     }
     
