@@ -37,7 +37,7 @@ import javax.swing.plaf.basic.BasicLabelUI;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class VerticalLabelUI extends BasicLabelUI {
 
@@ -54,7 +54,7 @@ public class VerticalLabelUI extends BasicLabelUI {
     /**
      * Static variable to define default instance
      */
-    protected static ComponentUI verticalLabelUI = new VerticalLabelUI();
+    private static ComponentUI verticalLabelUI = new VerticalLabelUI();
 
     /**
      * Variable to determine rotation direction
