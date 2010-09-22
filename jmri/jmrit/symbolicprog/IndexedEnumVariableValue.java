@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -486,12 +486,12 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.16 $
+     * @version $Revision: 1.17 $
      */
     public class iVarComboBox extends JComboBox {
 
         IndexedEnumVariableValue _var;
-        java.beans.PropertyChangeListener _l = null;
+        transient java.beans.PropertyChangeListener _l = null;
 
         iVarComboBox(ComboBoxModel m, IndexedEnumVariableValue var) {
             super(m);

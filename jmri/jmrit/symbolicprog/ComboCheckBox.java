@@ -62,9 +62,9 @@ public class ComboCheckBox extends JCheckBox {
 		}	
 	}
 	
-	ActionListener l1;
-	ActionListener l2;
-	PropertyChangeListener p1;
+	transient ActionListener l1;
+	transient ActionListener l2;
+	transient PropertyChangeListener p1;
 	
 	EnumVariableValue _var = null;
 	JComboBox _box = null;

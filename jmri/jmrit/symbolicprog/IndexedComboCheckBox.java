@@ -10,7 +10,7 @@ import java.beans.PropertyChangeListener;
 /* Represents a JComboBox as a JCheckBox for indexed CVs
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class IndexedComboCheckBox extends JCheckBox {
 
@@ -62,9 +62,9 @@ public class IndexedComboCheckBox extends JCheckBox {
         }
     }
 
-    ActionListener l1;
-    ActionListener l2;
-    PropertyChangeListener p1;
+    transient ActionListener l1;
+    transient ActionListener l2;
+    transient PropertyChangeListener p1;
 
     IndexedEnumVariableValue _var = null;
     JComboBox _box = null;
