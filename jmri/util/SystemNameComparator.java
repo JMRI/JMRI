@@ -14,10 +14,10 @@ import java.util.Comparator;
  * @author	Bob Jacobsen   Copyright (C) 2004
  * @author  Howard Penny
  * @author  Pete Cressman
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
-public class SystemNameComparator implements Comparator<Object> {
+public class SystemNameComparator implements Comparator<Object>, java.io.Serializable {
     public SystemNameComparator() {}
     
     public int compare(Object o1, Object o2) {
