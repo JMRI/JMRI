@@ -17,7 +17,7 @@ import org.jdom.*;
  * Install decoder definition from URL
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends AbstractAction {
@@ -91,26 +91,28 @@ public class InstallDecoderURLAction extends AbstractAction {
     }
     
     boolean copyfile(URL from, File toFile, JPanel who) {
+        InputStream in = null;
+        OutputStream out = null;
         try {
-            InputStream in = from.openConnection().getInputStream();
-          
-            // open for overwrite
-            OutputStream out = new FileOutputStream(toFile);
-    
             try {
+                in = from.openConnection().getInputStream();
+              
+                // open for overwrite
+                out = new FileOutputStream(toFile);
+        
                 byte[] buf = new byte[1024];
                 int len;
                 while ((len = in.read(buf)) > 0){
                     out.write(buf, 0, len);
                 }
+                // done
+                return true;
             
-            } finally {
-                in.close();
-                out.close();
             }
-            
-            // done
-            return true;
+            finally {
+                if (in != null) in.close();
+                if (out != null) out.close();
+            }
           
         }
         catch(FileNotFoundException ex){
