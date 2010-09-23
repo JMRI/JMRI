@@ -12,7 +12,7 @@ import java.io.StringReader;
 /**
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPTokenizer} class.
  * @author          Paul Bender
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class SRCPTokenizerTest extends TestCase {
 
@@ -32,7 +32,7 @@ public class SRCPTokenizerTest extends TestCase {
            SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
            SRCPParserTokenManager stm = new SRCPParserTokenManager(cs);
            try {
-              Token t = stm.getNextToken();
+              stm.getNextToken();
            } catch(TokenMgrError tme) {
               errorThrown=true;
            }
