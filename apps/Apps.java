@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.119 $
+ * @version     $Revision: 1.120 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -115,7 +115,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
 	// populate GUI
 	    log.debug("Start UI");
-        setResourceBundle();
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar
         menuBar = new JMenuBar();
@@ -173,10 +172,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     	it.setVisible(true);
     	_jynstrumentSpace.setVisible(true);
     	_jynstrumentSpace.add(it);
-    }
-
-    protected void setResourceBundle() {
-        rb = ResourceBundle.getBundle("apps.AppsBundle");
     }
     
     /**
@@ -531,9 +526,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     static JComponent _buttonSpace = null;
     
-    static protected ResourceBundle rb;
+    static final protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
-    static protected AppConfigPanel prefs;
+
+    static AppConfigPanel prefs;
     static public AppConfigPanel getPrefs() { return prefs; }
     
     static public String getConnection1() {
@@ -596,7 +592,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
     }
     
-    static protected boolean log4JSetUp = false;
+    static boolean log4JSetUp = false;
     
     static protected void initLog4J() {
     	if (log4JSetUp){
@@ -708,8 +704,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     }
 
-    static protected String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
-    static protected boolean configOK;
+    static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
+    static boolean configOK;
 
     // GUI members
     private JMenuBar menuBar;
