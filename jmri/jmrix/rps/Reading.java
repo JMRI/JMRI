@@ -16,7 +16,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class Reading {
 
@@ -87,6 +87,8 @@ public class Reading {
     double[] values;
     int time; // in msec since epoch
         
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") // We accept the poor performance
     public String toString() {
         String r = "Reading id="+getID()+" values=";
         for (int i = 1; i<=getNValues(); i++) 
