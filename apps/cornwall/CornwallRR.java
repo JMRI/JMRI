@@ -31,7 +31,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class CornwallRR extends Apps {
 
@@ -84,18 +84,15 @@ public class CornwallRR extends Apps {
         splash(false);
 
         // start automation
-        if (configOK) {
-            // load definitions
-            loadFile("CornwallDefinitions.xml");
+        
+        // load definitions
+        loadFile("CornwallDefinitions.xml");
 
-            // start automation (whith will work in parallel)
-            new CrrInit().start();
+        // start automation (whith will work in parallel)
+        new CrrInit().start();
 
-            // show panel
-            loadFile("CornwallMain.xml");
-        } else {
-            log.warn("Truncating startup because couldn't connect to layout");
-        }
+        // show panel
+        loadFile("CornwallMain.xml");
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CornwallRR.class.getName());
