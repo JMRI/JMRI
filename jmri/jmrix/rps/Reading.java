@@ -16,21 +16,24 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Reading {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values) {
         this.id = id;
         this.values = values;
     }
         
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values, String raw) {
         this.id = id;
         this.values = values;
         this.rawData = raw;
     }
         
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design
     public Reading(String id, double[] values, int time) {
         this.id = id;
         this.values = values;
