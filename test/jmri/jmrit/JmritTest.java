@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.29 $
+ * @version         $Revision: 1.30 $
  */
 public class JmritTest extends TestCase {
 
@@ -26,6 +26,11 @@ public class JmritTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.JmritTest");   // no tests in this class itself
+
+        // this next line causes obscure AWT errors when here,
+        // and errors in other places when later, e.g. in
+        // jmri.jmrit.beantable.MemoryTableAction$1.getValue(MemoryTableAction.java:56)
+        // suite.addTest(jmri.jmrit.MemoryContentsTest.suite());
 
         suite.addTest(jmri.jmrit.automat.AutomatTest.suite());
         suite.addTest(jmri.jmrit.blockboss.BlockBossTest.suite());
