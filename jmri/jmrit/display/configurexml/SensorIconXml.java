@@ -14,7 +14,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -162,7 +162,7 @@ public class SensorIconXml extends PositionableLabelXml {
                                              "resources/icons/smallschematics/tracksegments/circuit-error.gif"),
                                ed);
         } else {
-            l = new SensorIcon(new String("  "), ed);
+            l = new SensorIcon("  ", ed);
         }
         int rotation = 0;
         try {
