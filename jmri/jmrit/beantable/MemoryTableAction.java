@@ -22,7 +22,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -53,7 +53,9 @@ public class MemoryTableAction extends AbstractTableAction {
     void createModel() {
         m = new BeanTableDataModel() {
             public String getValue(String name) {
-            	Object m = InstanceManager.memoryManagerInstance().getBySystemName(name).getValue();
+                Memory mem = InstanceManager.memoryManagerInstance().getBySystemName(name);
+                if (mem == null) return "?";
+            	Object m = mem.getValue();
             	if (m!=null)
                 	return m.toString();
                 else
