@@ -4,12 +4,12 @@ import java.util.TreeMap;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class Layout implements LayoutEventListener, LayoutEventInterface
 {
-    private TreeMap<String,LayoutElement> mElementMap = new TreeMap<String,LayoutElement>() ;
+    private TreeMap<LayoutAddress,LayoutElement> mElementMap = new TreeMap<LayoutAddress,LayoutElement>() ;
     private LayoutElement mRootElement = new LayoutElement( "Layouts", null ) ;
 
     public Layout( String pHostname )
