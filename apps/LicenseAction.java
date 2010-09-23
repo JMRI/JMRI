@@ -12,7 +12,7 @@ import jmri.util.swing.*;
  * Swing action to display the JMRI license
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004, 2010
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
@@ -36,11 +36,16 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
         
         File file = new File("resources"+File.separator+"COPYING");
         
-        String t="";
+        String t;
+        
         try {
             BufferedReader r = new BufferedReader(new FileReader(file));
-            while (r.ready())
-                t = t+r.readLine()+"\n";
+            StringBuffer buf = new StringBuffer();
+            while (r.ready()) {
+                buf.append(r.readLine());
+                buf.append("\n");
+            }
+            t = buf.toString();
             
             r.close();
         } catch (IOException ex) {
