@@ -8,7 +8,7 @@ package jmri.jmrix.bachrus;
  * Description:		Carries the reply to an SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpeedoReply {
 	// This should be an extension af AbstractMRReply and needs re-factoring
@@ -87,7 +87,7 @@ public class SpeedoReply {
 //        return s;
         StringBuffer buf = new StringBuffer();
         for (int i = 0; i < _nDataChars; i++) {
-            buf.append((char)_dataChars[i]);
+            buf.append(_dataChars[i]);
         }
         return buf.toString();
     }
