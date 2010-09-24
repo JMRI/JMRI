@@ -10,7 +10,7 @@ import org.jdom.Element;
  * classes persisting the status of Network port adapters.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdapter {
 
@@ -24,13 +24,17 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
     abstract protected void getInstance();
     abstract protected void register();
 
+    protected void getInstance(Object object) {
+       getInstance(); // over-ridden during migration
+    }
+
     /**
      * Default implementation for storing the static contents of the Network port implementation
      * @param o Object to store, of type PositionableLabel
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        getInstance();
+        getInstance(o);
 
         Element e = new Element("connection");
         // many of the following are required by the DTD; failing to include
@@ -100,15 +104,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         } catch ( NullPointerException ex) {  // considered normal if the attributes are not present
         }
         
-        if (adapter.getSystemConnectionMemo()!=null){
-            if (e.getAttribute("userName")!=null){
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
-            }
-
-            if (e.getAttribute("systemPrefix")!=null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
-            }
-        }
         if (e.getAttribute("option1")!=null) {
             String option1Setting = e.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
@@ -124,6 +119,18 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractXmlAdap
         } catch ( NullPointerException ex) { //Considered normal if not present
             
         }
+
+
+        if (adapter.getSystemConnectionMemo()!=null){
+            if (e.getAttribute("userName")!=null){
+                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            }
+
+            if (e.getAttribute("systemPrefix")!=null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            }
+        }
+
         
         if (e.getAttribute("disabled")!=null) {
             String yesno = e.getAttribute("disabled").getValue();

@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -31,6 +31,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     public AbstractNetworkConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         adapter = p;
     }
+
     /**
      * Ctor for a functional object with no prexisting adapter.
      * Expect that the subclass setInstance() will fill the adapter member.
@@ -145,6 +146,8 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
     protected JTextField portField = new JTextField();
     protected JLabel portFieldLabel;
     protected jmri.jmrix.NetworkPortAdapter adapter = null;
+
+    public jmri.jmrix.NetworkPortAdapter getAdapter() { return adapter; }
 
     /**
      * Load the adapter with an appropriate object
@@ -350,7 +353,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
         }
     }
 
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkConnectionConfig.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractNetworkConnectionConfig.class.getName());
 
 }
 

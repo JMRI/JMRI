@@ -14,7 +14,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -46,8 +46,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             opened = true;
         } catch (Exception e) {
             log.error("error opening network connection: "+e);
-            ConnectionStatus.instance().setConnectionState(
+            if(m_port!=0){
+               ConnectionStatus.instance().setConnectionState(
+            		m_HostName+":"+m_port, ConnectionStatus.CONNECTION_DOWN);
+            } else {
+               ConnectionStatus.instance().setConnectionState(
             		m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            }
             throw(e);
         }
     }
@@ -92,8 +97,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(
+            if(m_port!=0){
+               ConnectionStatus.instance().setConnectionState(
+            		m_HostName+":"+m_port, ConnectionStatus.CONNECTION_DOWN);
+            } else {
+               ConnectionStatus.instance().setConnectionState(
             		m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            }
         }
         try {
             return new DataInputStream(socketConn.getInputStream());
@@ -110,8 +120,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         }
      	catch (java.io.IOException e) {
             log.error("getOutputStream exception: "+e);
-            ConnectionStatus.instance().setConnectionState(
+            if(m_port!=0){
+               ConnectionStatus.instance().setConnectionState(
+            		m_HostName+":"+m_port, ConnectionStatus.CONNECTION_DOWN);
+            } else {
+               ConnectionStatus.instance().setConnectionState(
             		m_HostName, ConnectionStatus.CONNECTION_DOWN);
+            }
      	}
      	return null;
     }
