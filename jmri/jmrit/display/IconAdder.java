@@ -3,6 +3,7 @@ package jmri.jmrit.display;
 
 import jmri.Manager;
 import jmri.NamedBean;
+import jmri.SignalHead;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Hashtable;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.io.IOException;
@@ -94,12 +96,18 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     JButton         _closeButton;
     CatalogPanel    _catalog;
     JFrame          _parent;
+    boolean         _allowDeletes;
 
     public IconAdder() {
         _userDefaults = false;
-        _iconMap = new HashMap <String, JToggleButton>(10);   // 10 is current max of signalHead icons
+        _iconMap = new HashMap <String, JToggleButton>(10);
         _order = new ArrayList <String>();
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+    }
+
+    public IconAdder(boolean allowDeletes) {
+        this();
+        _allowDeletes = allowDeletes;
     }
 
     public void reset() {
@@ -135,14 +143,24 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 if (_type.equals(nChild.toString())) {
                     _defaultIcons = nChild;
                     _userDefaults = true;
-                    makeIcons(_defaultIcons);
                 }
             }
         }
         if (log.isDebugEnabled()) log.debug("IconAdder."+_type+", defaultIcons= "+_defaultIcons);
     }
 
-    public CatalogTreeNode getDefaultIconNode() {
+    public void setDefaultIcons() {
+        if (_defaultIcons!=null) {
+            return;
+        }
+        getDefaultIconNodeFromMap();
+        // caller now may set icons
+        _iconMap = new HashMap <String, JToggleButton>(10);
+        _order = new ArrayList <String>();
+    }
+
+    public CatalogTreeNode getDefaultIconNodeFromMap() {
+        if (log.isDebugEnabled()) log.debug("getDefaultIconNodeFromMap for node= "+_type);
         _defaultIcons =new CatalogTreeNode(_type);
         for (int i=0; i<_order.size(); i++) {
             String key = _order.get(i);
@@ -150,6 +168,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _defaultIcons.addLeaf(new CatalogTreeLeaf(key, icon.getURL(), i));
         }
         return _defaultIcons;
+    }
+
+    public CatalogTreeNode getDefaultIconNode() {
+        if (log.isDebugEnabled()) log.debug("getDefaultIconNode for node= "+_type);
+        CatalogTreeNode defaultIcons = new CatalogTreeNode(_type);
+        ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
+        for (int i=0; i<list.size(); i++) {
+            CatalogTreeLeaf leaf = list.get(i);
+            defaultIcons.addLeaf(new CatalogTreeLeaf(leaf.getName(), leaf.getPath(), i));
+        }
+        return defaultIcons;
     }
 
     /**
@@ -173,6 +202,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
         JToggleButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
+
+        if (_allowDeletes) {
+            String fileName = "resources/icons/misc/X-red.gif";
+            button.setSelectedIcon(new jmri.jmrit.catalog.NamedIcon(fileName, fileName));
+        }
+
         _iconMap.put(label, button);
         // calls may not be in ascending order, so pad array
         if (order > _order.size()) {
@@ -219,6 +254,13 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * display.   Two columns to save space for subsequent panels.
     */
     public void makeIconPanel() {
+        if (_userDefaults) {
+            makeIcons(_defaultIcons);
+        }
+        doIconPanel();
+    }
+
+    public void doIconPanel() {
         if (_iconPanel != null) {
             this.remove(_iconPanel);
         }
@@ -235,7 +277,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             String key = _order.get(i);
             JPanel p =new JPanel(); 
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            p.add(new JLabel(rbean.getString(key)));
+            String labelName = key;
+            try {
+                labelName = rbean.getString(key);
+            } catch (java.util.MissingResourceException mre) {
+            }
+            p.add(new JLabel(labelName));
             p.add(_iconMap.get(key));
             panel.add(p);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -266,7 +313,6 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
         _table.setRowSelectionAllowed(true);
         _table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        _table.getSelectionModel().addListSelectionListener(this);
         ROW_HEIGHT = _table.getRowHeight();
         _table.setPreferredScrollableViewportSize(new java.awt.Dimension(200,7*ROW_HEIGHT));
         _table.setDragEnabled(true);
@@ -302,14 +348,56 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             return;
         }
         int row = _table.getSelectedRow();
+        if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+row);
         if (row >= 0) {
             _addButton.setEnabled(true);
             _addButton.setToolTipText(null);
+            if (_type!=null && _type.equals("SignalHeadEditor")) {
+                makeIconMap((SignalHead)_pickListModel.getBeanAt(row));
+                doIconPanel();
+            }
+
         } else {
             _addButton.setEnabled(false);
             _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
-            if (log.isDebugEnabled()) log.debug("_addButton.setEnabled(false): row= "+row);
         }
+    }
+
+    void makeIconMap(SignalHead sh) {
+        String[] states = null;
+        if (sh==null) {
+            _iconMap = new HashMap <String, JToggleButton>(12);
+        } else {
+            states = sh.getValidStateNames();
+            _iconMap = new HashMap <String, JToggleButton>(states.length+2);
+        }
+        _order = new ArrayList <String>();
+        ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
+        int k=0;
+        for (int i=0; i<list.size(); i++) {
+            CatalogTreeLeaf leaf = list.get(i);
+            if (sh==null) {
+                String path = leaf.getPath();
+                setIcon(k++, leaf.getName(), new NamedIcon(path, path));
+            } else {
+                String name = null;
+                try {
+                    name = rbean.getString(leaf.getName());
+                } catch (java.util.MissingResourceException mre) {
+                }
+                if (log.isDebugEnabled()) log.debug("makeIconMap: leafName= "+leaf.getName()+", name= "+name);
+                for (int j=0; j<states.length; j++) {
+                    if (name.equals(states[j]) ||
+                            leaf.getName().equals("SignalHeadStateDark") ||
+                            leaf.getName().equals("SignalHeadStateHeld")) {
+                        String path = leaf.getPath();
+                        setIcon(k++, leaf.getName(), new NamedIcon(path, path));
+                        break;
+                    }
+                }
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("makeIconMap: _iconMap.size()= "+_iconMap.size());
     }
 
     void checkIconSizes() {
@@ -341,12 +429,17 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * 2nd will always return null, regardless of the 1st return.
     */
     public NamedBean getTableSelection() {
+        if (ImageIndexEditor._indexChanged) {
+            checkIconSizes();
+        }
         int row = _table.getSelectedRow();
         if (row >= 0) {
             NamedBean b = _pickListModel.getBeanAt(row);
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
+            makeIconMap(null);
+            doIconPanel();
             this.validate();
             if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
             return b;
@@ -362,6 +455,29 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     public NamedIcon getIcon(String key) {
         if (log.isDebugEnabled()) log.debug("getIcon for key= "+key); 
         return new NamedIcon((NamedIcon)_iconMap.get(key).getIcon());
+    }
+
+    /**
+     * Returns a new Hashtable of only the icons selected for display.
+     */
+    public Hashtable <String, NamedIcon> getIconMap() {
+        if (log.isDebugEnabled()) log.debug("getIconMap: _allowDeletes= "+_allowDeletes);
+        Hashtable <String, NamedIcon> iconMap = new Hashtable <String, NamedIcon>();
+        Iterator<String> iter = _iconMap.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = iter.next();
+            JToggleButton button = _iconMap.get(key);
+            if (log.isDebugEnabled()) log.debug("getIconMap: key= "+key+", button.isSelected()= "+button.isSelected());
+            if (!_allowDeletes || !button.isSelected()) {
+                String labelName = key;
+                try {
+                    labelName = rbean.getString(key);
+                } catch (java.util.MissingResourceException mre) {
+                }
+                iconMap.put(labelName, (NamedIcon)button.getIcon());
+            }
+        }
+        return iconMap;
     }
 
     /*
@@ -444,9 +560,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             this.add(_catalog);
         }
         if (_type != null && _defaultIcons == null) {
-            getDefaultIconNode();
+            getDefaultIconNodeFromMap();
         }
-        valueChanged(null);
+        // Allow initial row to be set without getting callback to valueChanged
+        _table.getSelectionModel().addListSelectionListener(this);
         pack();
     }
 
@@ -579,10 +696,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         IconButton iconButton = (IconButton)target.getComponent();
                         String key = iconButton.key;
                         JToggleButton button = _iconMap.get(key);
+                        NamedIcon oldIcon = (NamedIcon)button.getIcon();
                         button.setIcon(newIcon);
                         _iconMap.put(key, button);
+                        _defaultIcons.deleteLeaf(key, oldIcon.getURL());
+                        _defaultIcons.addLeaf(key, newIcon.getURL());
                         e.dropComplete(true);
-                        checkIconSizes();
                         if (_type != null) {
                             ImageIndexEditor._indexChanged = true;
                         }

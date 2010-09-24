@@ -26,6 +26,7 @@ public class SignalMastItemPanel extends TableItemPanel {
         super.initTablePanel(model, editor);
         _table.setTransferHandler(new SignalMastDnD(editor));
     }
+
     /**
     * Extend handler to export from JList and import to PicklistTable
     */

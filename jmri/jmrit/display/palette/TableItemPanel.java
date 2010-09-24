@@ -17,6 +17,7 @@ import javax.swing.TransferHandler;
 
 
 import java.util.Hashtable;
+import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.List;
 import java.io.File;
@@ -240,7 +241,12 @@ public class TableItemPanel extends ItemPanel {
             JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
+        } else {
+            AddIconsToPanel(iconMap);
         }
+    }
+
+    protected void AddIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         Iterator <String> it = iconMap.keySet().iterator();
         while (it.hasNext()) {
            String name = it.next();
@@ -378,21 +384,6 @@ public class TableItemPanel extends ItemPanel {
                 s.setSensor(bean.getDisplayName());
                 s.setDisplayLevel(Editor.SENSORS);
                 return new PositionableDnD(s, bean.getDisplayName());
-            } else if (_itemType.equals("SignalHead")) {
-                SignalHeadIcon sh = new SignalHeadIcon(_editor);
-                sh.setRedIcon(iconMap.get("SignalHeadStateRed"));
-                sh.setFlashRedIcon(iconMap.get("SignalHeadStateFlashingRed"));
-                sh.setYellowIcon(iconMap.get("SignalHeadStateYellow"));
-                sh.setFlashYellowIcon(iconMap.get("SignalHeadStateFlashingYellow"));
-                sh.setGreenIcon(iconMap.get("SignalHeadStateGreen"));
-                sh.setFlashGreenIcon(iconMap.get("SignalHeadStateFlashingGreen"));
-                sh.setDarkIcon(iconMap.get("SignalHeadStateDark"));
-                sh.setHeldIcon(iconMap.get("SignalHeadStateHeld"));
-                sh.setDarkIcon(iconMap.get("SignalHeadStateLunar"));
-                sh.setHeldIcon(iconMap.get("SignalHeadStateFlashingLunar"));
-                sh.setSignalHead(bean.getDisplayName());
-                sh.setDisplayLevel(Editor.SIGNALS);
-                return new PositionableDnD(sh, bean.getDisplayName());
             } else if (_itemType.equals("Light")) {
                 LightIcon l = new LightIcon(_editor);
                 l.setOffIcon(iconMap.get("LightStateOff"));

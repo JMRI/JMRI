@@ -1273,7 +1273,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    protected void addSignalHeadEditor() {
+    protected IconAdder getSignalHeadEditor() {
         IconAdder editor = new IconAdder("SignalHeadEditor");
         editor.setIcon(0, "SignalHeadStateRed",
             "resources/icons/smallschematics/searchlights/left-red-marker.gif");
@@ -1295,7 +1295,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
         editor.setIcon(9, "SignalHeadStateFlashingLunar",
             "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
+        return editor;
+    }
 
+    protected void addSignalHeadEditor() {
+        IconAdder editor = getSignalHeadEditor();
         JFrameItem frame = makeAddIconFrame("SignalHeadEditor", "addIconsToPanel", 
                                                        "SelectSignalHead", editor);
         _iconEditorFrame.put("SignalHeadEditor", frame);
@@ -1628,17 +1632,14 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     protected SignalHeadIcon putSignalHead() {
         SignalHeadIcon l = new SignalHeadIcon(this);
         IconAdder editor = getIconEditor("SignalHeadEditor");
-        l.setRedIcon(editor.getIcon("SignalHeadStateRed"));
-        l.setFlashRedIcon(editor.getIcon("SignalHeadStateFlashingRed"));
-        l.setYellowIcon(editor.getIcon("SignalHeadStateYellow"));
-        l.setFlashYellowIcon(editor.getIcon("SignalHeadStateFlashingYellow"));
-        l.setGreenIcon(editor.getIcon("SignalHeadStateGreen"));
-        l.setFlashGreenIcon(editor.getIcon("SignalHeadStateFlashingGreen"));
-        l.setDarkIcon(editor.getIcon("SignalHeadStateDark"));
-        l.setHeldIcon(editor.getIcon("SignalHeadStateHeld"));
-        l.setDarkIcon(editor.getIcon("SignalHeadStateLunar"));
-        l.setHeldIcon(editor.getIcon("SignalHeadStateFlashingLunar"));
         l.setSignalHead(editor.getTableSelection().getDisplayName());
+        int[] states = l.getSignalHead().getValidStates();
+        Hashtable <String, NamedIcon> map = editor.getIconMap();
+        Enumeration <String> e = map.keys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            l.setIcon(key, map.get(key));
+        }
         l.setDisplayLevel(SIGNALS);
         setNextLocation(l);
         putItem(l);

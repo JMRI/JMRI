@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -3558,6 +3558,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     
     }
 
+    int _prevNumSel = 0;
     public void mouseMoved(MouseEvent event)
     {
         calcLocation(event, 0, 0);
@@ -3566,13 +3567,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
             yLabel.setText(Integer.toString(yLoc));
         }
         List <Positionable> selections = getSelectedItems(event);
-        if (selections.size() > 0 && selections.get(0).showTooltip()) {
-            showToolTip(selections.get(0), event); 
+        Positionable selection = null;
+        int numSel = selections.size();
+        if (numSel > 0) {
+            selection = selections.get(0); 
+        }
+        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+            showToolTip(selection, event);
         } else {
             super.setToolTip(null);
         }
-        repaint();
-        return;
+        if (numSel != _prevNumSel) {
+           repaint();
+           _prevNumSel = numSel; 
+        }
     }
 
 	private boolean isDragging = false;
@@ -4656,17 +4664,17 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		// create and set up signal icon	
         SignalHeadIcon l = new SignalHeadIcon(this);
-        l.setRedIcon(signalIconEditor.getIcon(0));
-        l.setFlashRedIcon(signalIconEditor.getIcon(1));
-        l.setYellowIcon(signalIconEditor.getIcon(2));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
-        l.setGreenIcon(signalIconEditor.getIcon(4));
-        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
-        l.setDarkIcon(signalIconEditor.getIcon(6));
-        l.setHeldIcon(signalIconEditor.getIcon(7));
-        l.setLunarIcon(signalIconEditor.getIcon(8));
-        l.setFlashLunarIcon(signalIconEditor.getIcon(9));
         l.setSignalHead(tName);
+        l.setIcon("SignalHeadStateRed", signalIconEditor.getIcon(0));
+        l.setIcon("SignalHeadStateFlashingRed", signalIconEditor.getIcon(1));
+        l.setIcon("SignalHeadStateYellow", signalIconEditor.getIcon(2));
+        l.setIcon("SignalHeadStateFlashingYellow", signalIconEditor.getIcon(3));
+        l.setIcon("SignalHeadStateGreen", signalIconEditor.getIcon(4));
+        l.setIcon("SignalHeadStateFlashingGreen", signalIconEditor.getIcon(5));
+        l.setIcon("SignalHeadStateDark", signalIconEditor.getIcon(6));
+        l.setIcon("SignalHeadStateHeld", signalIconEditor.getIcon(7));
+        l.setIcon("SignalHeadStateLunar", signalIconEditor.getIcon(8));
+        l.setIcon("SignalHeadStateFlashingLunar", signalIconEditor.getIcon(9));
 		/*SignalHead xSignal = l.getSignalHead().getBean();
 		if (xSignal != null) {
 			if ( (xSignal.getUserName()==null) || (xSignal.getUserName().equals("")) || 

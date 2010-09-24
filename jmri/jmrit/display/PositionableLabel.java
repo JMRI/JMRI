@@ -26,12 +26,13 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.96 $
+ * @version $Revision: 1.97 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
 
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     protected Editor _editor;
 
@@ -68,7 +69,6 @@ public class PositionableLabel extends JLabel implements Positionable {
         debug = log.isDebugEnabled();
         if (debug) log.debug("PositionableLabel ctor (icon) "+s.getName());
         setPopupUtility(new PositionablePopupUtil(this, this));
-        updateSize();
     }
 
     public final boolean isIcon() { return _icon; }

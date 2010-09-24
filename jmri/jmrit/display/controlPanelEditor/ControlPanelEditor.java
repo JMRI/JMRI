@@ -780,25 +780,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
- /*       if (_newPositonable!=null) {
-            int deltaX = event.getX() - _lastX;
-            int deltaY = event.getY() - _lastY;
-            moveItem(_newPositonable, deltaX, deltaY);
-            _lastX = event.getX();
-            _lastY = event.getY();
-            getTargetPanel().repaint();
-        } else */ {
-            if (_dragging || event.isPopupTrigger()) { return; }
+        if (_dragging || event.isPopupTrigger()) { return; }
 
-            Positionable selection = getCurrentSelection(event);
-            if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
-                showToolTip(selection, event);
-                //selection.highlightlabel(true);
-            } else {
-                setToolTip(null);
-            }
-            _targetPanel.repaint();
+        Positionable selection = getCurrentSelection(event);
+        if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
+            showToolTip(selection, event);
+            //selection.highlightlabel(true);
+        } else {
+            setToolTip(null);
         }
+        _targetPanel.repaint();
     }
     
     public void mouseEntered(MouseEvent event) {

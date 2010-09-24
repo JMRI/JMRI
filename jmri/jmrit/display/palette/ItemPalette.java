@@ -223,7 +223,7 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
         _itemPanelMap.put("Sensor", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Sensor"));
 
-        itemPanel = new TableItemPanel(this, "SignalHead",
+        itemPanel = new SignalHeadItemPanel(this, "SignalHead",
                                        PickListModel.signalHeadPickModelInstance(), editor);
         itemPanel.init();
         _itemPanelMap.put("SignalHead", itemPanel);

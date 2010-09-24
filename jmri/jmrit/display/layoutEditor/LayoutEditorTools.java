@@ -35,7 +35,7 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LayoutEditorTools 
@@ -1074,25 +1074,23 @@ public class LayoutEditorTools
 	public void setSignalHeadOnPanel(int rotation, String headName,
 					int xLoc, int yLoc) {
 		SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
-        l.setRedIcon(signalIconEditor.getIcon(0));
-        l.setFlashRedIcon(signalIconEditor.getIcon(1));
-        l.setYellowIcon(signalIconEditor.getIcon(2));
-        l.setFlashYellowIcon(signalIconEditor.getIcon(3));
-        l.setGreenIcon(signalIconEditor.getIcon(4));
-        l.setFlashGreenIcon(signalIconEditor.getIcon(5));
-        l.setDarkIcon(signalIconEditor.getIcon(6));
-        l.setHeldIcon(signalIconEditor.getIcon(7));
 		l.setSignalHead(headName);
+        l.setIcon("SignalHeadStateRed", signalIconEditor.getIcon(0));
+        l.setIcon("SignalHeadStateFlashingRed", signalIconEditor.getIcon(1));
+        l.setIcon("SignalHeadStateYellow", signalIconEditor.getIcon(2));
+        l.setIcon("SignalHeadStateFlashingYellow", signalIconEditor.getIcon(3));
+        l.setIcon("SignalHeadStateGreen", signalIconEditor.getIcon(4));
+        l.setIcon("SignalHeadStateFlashingGreen", signalIconEditor.getIcon(5));
+        l.setIcon("SignalHeadStateDark", signalIconEditor.getIcon(6));
+        l.setIcon("SignalHeadStateHeld", signalIconEditor.getIcon(7));
+        l.setIcon("SignalHeadStateLunar", signalIconEditor.getIcon(8));
+        l.setIcon("SignalHeadStateFlashingLunar", signalIconEditor.getIcon(9));
 		l.setLocation(xLoc,yLoc);
 		if (rotation>0) {
-			l.getRedIcon().setRotation(rotation,l);
-			l.getFlashRedIcon().setRotation(rotation,l);
-			l.getYellowIcon().setRotation(rotation,l);
-			l.getFlashYellowIcon().setRotation(rotation,l);
-			l.getGreenIcon().setRotation(rotation,l);
-			l.getFlashGreenIcon().setRotation(rotation,l);
-			l.getDarkIcon().setRotation(rotation,l);
-			l.getHeldIcon().setRotation(rotation,l);
+            java.util.Enumeration<String> e = l.getIconStateNames();
+            while (e.hasMoreElements()) {
+                l.getIcon(e.nextElement()).setRotation(rotation,l);
+            }
 		}		
 		layoutEditor.putSignal(l);
 	}
