@@ -8,23 +8,29 @@ import java.awt.event.ActionEvent;
 import javax.swing.*;
 import java.io.*;
 
+import java.util.ResourceBundle;
+
 import jmri.util.zeroconf.ZeroConfUtil;
 
 /**
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class MiniServerAction extends AbstractAction {
 
     int port = 12080;
+    ResourceBundle htmlStrings;
+    ResourceBundle serviceStrings;
     
     public MiniServerAction() { super("Start Mini Web Server");}
     
     public void actionPerformed(ActionEvent ev) {
         // make sure index page exists
         ensureIndexPage();
+        
+        port = getPort();
         
         // start server
         startServer();
@@ -46,7 +52,8 @@ public class MiniServerAction extends AbstractAction {
                 // create it
                  out = new PrintStream(new FileOutputStream(file));
     
-                java.util.ResourceBundle htmlStrings = java.util.ResourceBundle.getBundle("jmri.web.miniserver.Html");          
+                if (htmlStrings == null) htmlStrings = ResourceBundle.getBundle("jmri.web.miniserver.Html");   
+                
                 out.println(htmlStrings.getString("Index"));
             } catch (IOException e) {}
             finally {
@@ -56,6 +63,12 @@ public class MiniServerAction extends AbstractAction {
                 }
             }
         }
+    }
+    
+    int getPort() {
+        if (serviceStrings == null) serviceStrings = ResourceBundle.getBundle("jmri.web.miniserver.Services"); 
+        
+        return Integer.parseInt(serviceStrings.getString("Port"));        
     }
     
     ServerThread s;
@@ -98,8 +111,7 @@ public class MiniServerAction extends AbstractAction {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger
-	.getLogger(MiniServerAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MiniServerAction.class.getName());
 }
 
 /* @(#)MiniServerAction.java */
