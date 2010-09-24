@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -140,8 +140,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int RANGE4LO = 58;
     protected static final int RANGE4HI = 9999;
     protected static final int[] filterLength = {0, 3, 6, 10, 20};
-    protected enum displayType {NUMERIC, DIAL}
-    protected displayType display = displayType.NUMERIC;
+    protected enum DisplayType {NUMERIC, DIAL}
+    protected DisplayType display = DisplayType.NUMERIC;
 
     /*
      * Keep track of the DCC services available
@@ -156,10 +156,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected dccSpeedProfile spFwd;
     protected dccSpeedProfile spRev;
-    protected enum profileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
-    protected profileState state = profileState.IDLE;
-    protected enum profileDirection {FORWARD, REVERSE}
-    protected profileDirection profileDir = profileDirection.FORWARD;
+    protected enum ProfileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
+    protected ProfileState state = ProfileState.IDLE;
+    protected enum ProfileDirection {FORWARD, REVERSE}
+    protected ProfileDirection profileDir = ProfileDirection.FORWARD;
     protected DccThrottle throttle = null;
     protected int profileStep = 0;
     protected float profileSpeed;
@@ -167,8 +167,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected int profileAddress = 0;
     protected Programmer prog = null;
     protected CommandStation commandStation = null;
-    protected enum progState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18}
-    protected progState readState = progState.IDLE;
+    protected enum ProgState {IDLE, WAIT29, WAIT3, WAIT17, WAIT18}
+    protected ProgState readState = ProgState.IDLE;
 
     //Create the combo box, select item at index 4.
     //Indices start at 0, so 4 specifies british N.
@@ -327,14 +327,14 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // Listen to change of display
         numButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                display = displayType.NUMERIC;
+                display = DisplayType.NUMERIC;
                 CardLayout cl = (CardLayout)displayCards.getLayout();
                 cl.show(displayCards, "NUMERIC");
             }
         });
         dialButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                display = displayType.DIAL;
+                display = DisplayType.DIAL;
                 CardLayout cl = (CardLayout)displayCards.getLayout();
                 cl.show(displayCards, "DIAL");
             }
@@ -699,7 +699,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected void startProfile() {
         if (profileAddress > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
-                if (state == profileState.IDLE) {
+                if (state == ProfileState.IDLE) {
                     profileTimer = new javax.swing.Timer(4000, new java.awt.event.ActionListener() {
                         public void actionPerformed(java.awt.event.ActionEvent e) {
                             profileTimeout();
@@ -707,15 +707,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     });
                     profileTimer.setRepeats(false);
                     // Request a throttle
-                    state = profileState.WAIT_FOR_THROTTLE;
+                    state = ProfileState.WAIT_FOR_THROTTLE;
                     // Request a throttle
                     statusLabel.setText(rb.getString("StatReqThrottle"));
                     spFwd.clear();
                     spRev.clear();
                     if (dirFwdButton.isSelected()) {
-                        profileDir = profileDirection.FORWARD;
+                        profileDir = ProfileDirection.FORWARD;
                     } else {
-                        profileDir = profileDirection.REVERSE;
+                        profileDir = ProfileDirection.REVERSE;
                     }
                     profileGraphPane.repaint();
                     profileTimer.start();
@@ -731,9 +731,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     }
 
     protected void stopProfile() {
-        if (state != profileState.IDLE) {
+        if (state != ProfileState.IDLE) {
             tidyUp();
-            state = profileState.IDLE;
+            state = ProfileState.IDLE;
             log.info("Profiling stopped by user");
         }
     }
@@ -754,13 +754,13 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         } catch (JmriException e) {
             log.error("Exception during power on: "+e.toString());
         }
-        state = profileState.RUNNING;
+        state = ProfileState.RUNNING;
         // Start at step 0 with 28 step packets
         profileSpeed = 0.0F;
         profileStep = 0;
         profileIncrement = throttle.getSpeedIncrement();
         throttle.setSpeedSetting(profileSpeed);
-        if (profileDir == profileDirection.FORWARD) {
+        if (profileDir == ProfileDirection.FORWARD) {
             throttle.setIsForward(true);
             statusLabel.setText(rb.getString("StatCreateFwd"));
         } else {
@@ -852,7 +852,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
      */
     synchronized protected void throttleTimeout() {
         jmri.InstanceManager.throttleManagerInstance().cancelThrottleRequest(profileAddress, this);
-        state = profileState.IDLE;
+        state = ProfileState.IDLE;
         log.error("Timeout waiting for throttle");
 
     }
@@ -860,12 +860,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Time to change to next speed increment
      */
-    synchronized protected void profileTimeout() {
-        if (state == profileState.WAIT_FOR_THROTTLE) {
+    protected void profileTimeout() {
+        if (state == ProfileState.WAIT_FOR_THROTTLE) {
             tidyUp();
             log.error("Timeout waiting for throttle");
-        } else if (state == profileState.RUNNING) {
-            if (profileDir == profileDirection.FORWARD) {
+        } else if (state == ProfileState.RUNNING) {
+            if (profileDir == ProfileDirection.FORWARD) {
                 spFwd.setPoint(profileStep, avSpeed);
                 statusLabel.setText((rb.getString("Fwd")+" step: "+profileStep));
             } else {
@@ -874,10 +874,10 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             }
             profileGraphPane.repaint();
             if (profileStep == 29) {
-                if ((profileDir == profileDirection.FORWARD)
+                if ((profileDir == ProfileDirection.FORWARD)
                         && dirRevButton.isSelected()) {
                     // Start reverse profile
-                    profileDir = profileDirection.REVERSE;
+                    profileDir = ProfileDirection.REVERSE;
                     throttle.setIsForward(false);
                     profileStep = 0;
                     avClr();
@@ -918,11 +918,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             throttle.release();
             throttle = null;
         }
-        state = profileState.IDLE;
+        state = ProfileState.IDLE;
     }
     
     protected void readAddress() {
-        readState = progState.WAIT29;
+        readState = ProgState.WAIT29;
         statusLabel.setText(rb.getString(rb.getString("ProgRd29")));
         startRead(29);
     }
@@ -945,11 +945,11 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 case WAIT29:
                     // Check extended address bit
                     if ((value & 0x20) == 0) {
-                        readState = progState.WAIT3;
+                        readState = ProgState.WAIT3;
                         statusLabel.setText(rb.getString("ProgRdShort"));
                         startRead(3);
                     } else {
-                        readState = progState.WAIT17;
+                        readState = ProgState.WAIT17;
                         statusLabel.setText(rb.getString("ProgRdExtended"));
                         startRead(17);
                     }
@@ -958,12 +958,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 case WAIT3:
                     profileAddress = value;
                     profileAddressField.setBackground(Color.WHITE);
-                    readState = progState.IDLE;
+                    readState = ProgState.IDLE;
                     break;
 
                 case WAIT17:
                     profileAddress = value;
-                    readState = progState.WAIT18;
+                    readState = ProgState.WAIT18;
                     startRead(18);
                     break;
 
@@ -972,7 +972,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     profileAddressField.setText(Integer.toString(profileAddress));
                     profileAddressField.setBackground(Color.WHITE);
                     statusLabel.setText(rb.getString("ProgRdComplete"));
-                    readState = progState.IDLE;
+                    readState = ProgState.IDLE;
                     break;
 
             }
@@ -981,7 +981,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             log.error("Status not OK during read: " + status);
             profileAddressField.setText("Error");
             statusLabel.setText(rb.getString("ProgRdError"));
-            readState = progState.IDLE;
+            readState = ProgState.IDLE;
         }
     }
 

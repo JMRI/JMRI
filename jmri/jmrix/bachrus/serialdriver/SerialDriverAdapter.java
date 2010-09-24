@@ -30,7 +30,7 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -201,11 +201,11 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public SerialDriverAdapter instance() {
+    static public synchronized SerialDriverAdapter instance() {
         if (mInstance == null){
-            mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
-        }
+                mInstance = new SerialDriverAdapter();
+                mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
+            }
         return mInstance;
     }
     static SerialDriverAdapter mInstance = null;

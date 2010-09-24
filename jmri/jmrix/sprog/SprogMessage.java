@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -30,7 +30,7 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     public static final int WT_EEDATA = 5;
 
     // Longest boot message is 256bytes each preceded by DLE + 2xSTX + ETX
-    public static int MAXSIZE = 515;
+    public static final int MAXSIZE = 515;
 
     // create a new one
     public  SprogMessage(int i) {
@@ -206,9 +206,14 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
     public String toString() {
         String s = "";
         if (!SprogTrafficController.instance().isSIIBootMode()) {
-            for (int i=0; i<_nDataChars; i++) {
-                s+=(char)_dataChars[i];
+//            for (int i=0; i<_nDataChars; i++) {
+//                s+=(char)_dataChars[i];
+//            }
+            StringBuffer buf = new StringBuffer();
+            for (int i = 0; i < _nDataChars; i++) {
+                buf.append((char)_dataChars[i]);
             }
+            s = buf.toString();
         } else {
             for (int i=0; i<_nDataChars; i++) {
             	/* AJB - should this be a cast to a char? I can't test as I 

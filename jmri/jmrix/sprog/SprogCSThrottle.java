@@ -16,7 +16,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -110,7 +110,8 @@ public class SprogCSThrottle extends AbstractThrottle
         if (value>127) value = 127;    // max possible speed
         if (value<0) value = 1;        // emergency stop
         commandStation.setSpeed(address, value, isForward );
-        if (oldSpeed != this.speedSetting)
+//        if (oldSpeed != this.speedSetting)
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 

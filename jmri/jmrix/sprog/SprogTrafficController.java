@@ -29,7 +29,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -136,11 +136,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	     * 
 	     * @param m
 	     */
-		public void SendSprogMessage(SprogMessage m) {
+		public void sendSprogMessage(SprogMessage m) {
 			// stream to port in single write, as that's needed by serial
 			try {
 				if (ostream != null) {
-				   if (log.isDebugEnabled()) log.debug("write message: "+m.getFormattedMessage(sprogState));
 				   ostream.write(m.getFormattedMessage(sprogState));
 				}
 				else {
@@ -172,7 +171,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
           lastSender = replyTo;
           // notify all _other_ listeners
           notifyMessage(m, replyTo);
-          this.SendSprogMessage(m);
+          this.sendSprogMessage(m);
 
     }
 
@@ -261,7 +260,9 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	        		byte char1 = istream.readByte();
 	        		this.reply.setElement(i, char1);
         		
-	        	} catch (Exception e) {}
+	        	} catch (Exception e) {
+                    log.warn("Exception in DATA_AVAILABLE state: "+e);
+                }
 	            if (endReply(this.reply)) {
 	            	sendreply();
 	            	break;

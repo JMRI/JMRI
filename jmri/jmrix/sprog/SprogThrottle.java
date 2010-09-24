@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -109,7 +109,8 @@ public class SprogThrottle extends AbstractThrottle
         }
 
         SprogTrafficController.instance().sendSprogMessage(m, null);
-        if (oldSpeed != this.speedSetting)
+//        if (oldSpeed != this.speedSetting)
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 
