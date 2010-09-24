@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3464,11 +3464,11 @@ public class LogixTableAction extends AbstractTableAction {
         _curAction.setActionData(-1);
         boolean referenceByMemory = false;
         if (name.length() > 0 && name.charAt(0)== '@') {
-            String mName = name.substring(1);
+            String memName = name.substring(1);
             if (!_suppressIndirectRef)
             {
                 int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
-                                                    rbx.getString("ConfirmIndirectReference"), mName),
+                                                    rbx.getString("ConfirmIndirectReference"), memName),
                                                     rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
                                                     JOptionPane.QUESTION_MESSAGE);
                 if (response==JOptionPane.NO_OPTION) {
@@ -3477,8 +3477,8 @@ public class LogixTableAction extends AbstractTableAction {
                     _suppressIndirectRef = true;
                 }
             }
-            mName = validateMemoryReference(mName);
-            if (mName == null) {
+            memName = validateMemoryReference(memName);
+            if (memName == null) {
                 return false;
             }
             referenceByMemory = true;
@@ -3523,7 +3523,6 @@ public class LogixTableAction extends AbstractTableAction {
                 actionType = Conditional.ITEM_TO_TURNOUT_ACTION[selection-1];
                 if ((actionType==Conditional.ACTION_RESET_DELAYED_TURNOUT) || 
                                 (actionType==Conditional.ACTION_DELAYED_TURNOUT)) {
-                    _curAction.setActionString(_shortActionString.getText().trim());
                     if (!validateIntegerReference(actionType, actionString)) 
                     {
                         return (false);
