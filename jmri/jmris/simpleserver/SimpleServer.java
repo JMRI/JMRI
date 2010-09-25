@@ -6,22 +6,33 @@ import jmri.jmris.*;
 
 import java.io.*;
 
+import java.util.ResourceBundle;
+
 import jmri.InstanceManager;
+
+// imports for ZeroConf.
+import jmri.util.zeroconf.ZeroConfUtil;
+
 
 /**
  * This is an implementaiton of a simple server for JMRI.
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class SimpleServer extends JmriServer{
 
      private static JmriServer _instance = null;
 
+     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.simpleserver.SimpleServerBundle");
+
      public static JmriServer instance(){
-         if(_instance==null) _instance=new SimpleServer();
+         if(_instance==null) {
+           int port=java.lang.Integer.parseInt(rb.getString("SimpleServerPort"));
+           _instance=new SimpleServer(port);
+         }
          return _instance;
      }
 

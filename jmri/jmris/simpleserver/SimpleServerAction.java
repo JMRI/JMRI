@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * SimpleServerControlFrame object
  *
  * @author              Paul Bender Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
  public class SimpleServerAction extends AbstractAction {
 
@@ -22,9 +22,9 @@ import java.awt.event.ActionEvent;
 
     public void actionPerformed(ActionEvent e) {
 
-		SimpleServerFrame f = new SimpleServerFrame();
-		f.setVisible(true);
-
+		// SimpleServerFrame f = new SimpleServerFrame();
+		// f.setVisible(true);
+                SimpleServer.instance().start();
 	}
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimpleServerAction.class.getName());
 }
