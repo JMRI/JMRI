@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -54,10 +54,14 @@ public class MemoryIconXml extends PositionableLabelXml {
 		// include contents
 		java.util.HashMap<String, NamedIcon> map = p.getMap();
 		if (map!=null) {
-		    java.util.Iterator<String> iterator = map.keySet().iterator();
+		
+            java.util.Iterator<java.util.Map.Entry<String, NamedIcon>> iterator = map.entrySet().iterator();
+    	
     	    while (iterator.hasNext()) {
-    		    String key = iterator.next().toString();
-    		    String value = map.get(key).getName();
+    	        java.util.Map.Entry<String, NamedIcon> mi = iterator.next();
+    		    String key = mi.getKey().toString();
+    		    String value = mi.getValue().getName();
+    		    
     		    Element e2 = new Element("memorystate");
     		    e2.setAttribute("value", key);
     		    e2.setAttribute("icon", value);
