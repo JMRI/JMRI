@@ -10,7 +10,7 @@ import java.awt.event.ActionEvent;
  * JmriSRCPServerControlFrame object
  *
  * @author              Paul Bender Copyright (C) 2009
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
  public class JmriSRCPServerAction extends AbstractAction {
 
@@ -22,9 +22,9 @@ import java.awt.event.ActionEvent;
 
     public void actionPerformed(ActionEvent e) {
 
-		JmriSRCPServerFrame f = new JmriSRCPServerFrame();
-		f.setVisible(true);
-
+		//JmriSRCPServerFrame f = new JmriSRCPServerFrame();
+		//f.setVisible(true);
+                JmriSRCPServer.instance().start();
 	}
    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriSRCPServerAction.class.getName());
 }

@@ -6,6 +6,8 @@ import jmri.jmris.*;
 
 import java.io.*;
 
+import java.util.ResourceBundle;
+
 // imports for ZeroConf.
 import jmri.util.zeroconf.ZeroConfUtil;
 
@@ -18,7 +20,7 @@ import jmri.jmris.srcp.parser.*;
 /**
  * This is an implementaiton of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  *
  */
 public class JmriSRCPServer extends JmriServer{
@@ -31,9 +33,13 @@ public class JmriSRCPServer extends JmriServer{
      private int SRCPSERVERMODE = 1;
      private static JmriServer _instance = null;
 
+     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmris.srcp.JmriSRCPServerBundle");
 
      public static JmriServer instance(){
-         if(_instance==null) _instance=new JmriSRCPServer();
+         if(_instance==null) { 
+             int port=java.lang.Integer.parseInt(rb.getString("JMRISRCPServerPort"));
+             _instance=new JmriSRCPServer(port);
+         }
          return _instance;
      }
 
@@ -124,7 +130,7 @@ public class JmriSRCPServer extends JmriServer{
 
               if(parser==null) parser = new SRCPParser(inStream); 
               try {
-                  SimpleNode e = parser.command();
+                  SimpleNode e=parser.command();
                   SRCPVisitor v = new SRCPVisitor();
                   e.jjtAccept(v,sh);
               } catch (ParseException pe){
