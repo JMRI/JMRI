@@ -8,7 +8,7 @@ package jmri.jmrix.nce;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  */
 public class NceConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
@@ -17,7 +17,8 @@ public class NceConnectionTypeList  implements jmri.jmrix.ConnectionTypeList {
         return new String[] {
               "jmri.jmrix.nce.serialdriver.ConnectionConfig",
               "jmri.jmrix.nce.networkdriver.ConnectionConfig",
-              "jmri.jmrix.nce.usbdriver.ConnectionConfig"
+              "jmri.jmrix.nce.usbdriver.ConnectionConfig",
+              "jmri.jmrix.nce.simulator.ConnectionConfig"
         };
     }
 
