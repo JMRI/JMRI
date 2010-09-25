@@ -84,7 +84,7 @@ public class InsteonSequence {
     /**
      * Represent a single "set address" X10 command
      */
-    public class Address implements Command {
+    public static class Address implements Command {
         public Address(String newinsteonaddress) {
             this.insteonaddress = newinsteonaddress.toString();
         }
@@ -97,7 +97,7 @@ public class InsteonSequence {
     /**
      * Represent a single "do function" X10 command
      */
-    public class Function implements Command {
+    public static class Function implements Command {
         public Function(String newaddress, int function, int dimcount) {
             this.address = newaddress.toString();
             this.function = function;
@@ -116,15 +116,13 @@ public class InsteonSequence {
     /**
      * Represent a single "Extended Data" X10 command
      */
-    public class ExtData implements Command {
+    public static class ExtData implements Command {
         public ExtData(int value) {
             this.value = value;
             this.address = "";
-            this.function = -1;
         }
         int value;
         String address;
-        int function;
         public int getExtData() { return value; }
         public String getAddress() { return address; }
         public boolean isAddress() { return false; }

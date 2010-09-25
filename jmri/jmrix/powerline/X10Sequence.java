@@ -21,7 +21,7 @@ package jmri.jmrix.powerline;
  * you should check the coding of your new specific adapter before using them.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class X10Sequence {
 
@@ -95,7 +95,7 @@ public class X10Sequence {
     /**
      * Represent a single "set address" X10 command
      */
-    public class Address implements Command {
+    public static class Address implements Command {
         public Address(int house, int device) {
             this.house = house;
             this.device = device;
@@ -111,7 +111,7 @@ public class X10Sequence {
     /**
      * Represent a single "do function" X10 command
      */
-    public class Function implements Command {
+    public static class Function implements Command {
         public Function(int house, int function, int dimcount) {
             this.house = house;
             this.function = function;
@@ -130,15 +130,13 @@ public class X10Sequence {
     /**
      * Represent a single "Extended Data" X10 command
      */
-    public class ExtData implements Command {
+    public static class ExtData implements Command {
         public ExtData(int value) {
             this.value = value;
             this.house = -1;
-            this.function = -1;
         }
         int value;
         int house;
-        int function;
         public int getExtData() { return value; }
         public int getHouseCode() { return house; }
         public boolean isAddress() { return false; }
