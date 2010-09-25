@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.powerline.cm11 package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class CM11Test extends TestCase {
 
@@ -30,6 +30,7 @@ public class CM11Test extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.powerline.cm11.CM11Test");
         suite.addTest(SpecificMessageTest.suite());
+        suite.addTest(SpecificReplyTest.suite());
         suite.addTest(SpecificTrafficControllerTest.suite());
         return suite;
     }
