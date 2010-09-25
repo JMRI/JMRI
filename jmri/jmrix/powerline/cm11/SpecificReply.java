@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -46,23 +46,25 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
             return "CRC 0x"+jmri.util.StringUtil.twoHexFromInt(getElement(0))+" and Interface Ready\n";    
         } else if ((getElement(0)& 0xFF) == Constants.POLL_REQ ) { 
             // must be received data
-            String s = "Receive data, " + (getElement(1)& 0xFF) + " bytes; ";
+            StringBuffer sb = new StringBuffer("Receive data, ");
+            sb.append(getElement(1)& 0xFF);
+            sb.append(" bytes; ");
             int last = (getElement(1)& 0xFF) + 1;
             int bits = (getElement(2)& 0xFF);
             for (int i = 3; i <= last; i++) {
                 if (i != 3)
-                	s += "; ";  // separate all but last command
+                	sb.append("; ");  // separate all but last command
                 if ((bits & 0x01) != 0)
-                    s += X10Sequence.formatCommandByte(getElement(i) & 0xFF);
+                    sb.append(X10Sequence.formatCommandByte(getElement(i) & 0xFF));
                 else
-                    s += X10Sequence.formatAddressByte(getElement(i) & 0xFF);
+                    sb.append(X10Sequence.formatAddressByte(getElement(i) & 0xFF));
                 bits = bits >> 1;  // shift over before next byte
             }
-            return s + "\n";
+            sb.append("\n");
+            return new String(sb);
         } else {
             // don't know, just show
-            String s = "Unknown reply of length " + getNumDataElements() + " " + toString();
-            return s + "\n";
+            return "Unknown reply of length " + getNumDataElements() + " " + toString()+"\n";
         }
     }
 
