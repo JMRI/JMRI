@@ -9,7 +9,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -30,25 +30,31 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
     public String toMonitorString() {
         // check for valid length
         if (getNumDataElements() > 0) {
-            String val;
+            StringBuilder val;
             if ((getElement(0)&0xFF) == 0x02) {
-                val = "Insteon 0x02: ";
+                val = new StringBuilder("Insteon 0x02: ");
                 for (int i = 0; i < getNumDataElements(); i++) {
-                    val = val + "0x" + jmri.util.StringUtil.twoHexFromInt(getElement(i)) + " ";
+                    val.append("0x");
+                    val.append(jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+                    val.append(" ");
                 }
-                val = val + "\n";
+                val.append("\n");
             } else {
                 if (((getElement(0)&0xFF) == 0x62)){
-                    val = "Insteon 0x62: ";
+                    val = new StringBuilder("Insteon 0x62: ");
                     for (int i = 0; i < getNumDataElements(); i++) {
-                        val = val + "0x" + jmri.util.StringUtil.twoHexFromInt(getElement(i)) + " ";
+                        val.append("0x");
+                        val.append(jmri.util.StringUtil.twoHexFromInt(getElement(i)));
+                        val.append(" ");
                     }
-                    val = val + "\n";
+                    val.append("\n");
                 } else {
-                    val = "Insteon confused: 0x"+jmri.util.StringUtil.twoHexFromInt(getElement(0))+"\n";
+                    val = new StringBuilder("Insteon confused: 0x");
+                    val.append(jmri.util.StringUtil.twoHexFromInt(getElement(0)));
+                    val.append("\n");
                 }
             }
-            return val;
+            return new String(val);
         }
         return "Really bad: 0x??\n";
 /*
