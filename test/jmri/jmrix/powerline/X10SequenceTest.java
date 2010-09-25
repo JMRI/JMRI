@@ -11,12 +11,12 @@ import junit.framework.TestSuite;
  * JUnit tests for the X10Sequence class
  * @author		Bob Jacobsen  Copyright 2003, 2007, 2008
  * @author		Dave Duchamp  multi-node extensions 2003
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class X10SequenceTest extends TestCase {
 		
     public void testCtors() {
-        X10Sequence s = new X10Sequence();
+        new X10Sequence();
     }
     public void testSequence() {
         X10Sequence s = new X10Sequence();
