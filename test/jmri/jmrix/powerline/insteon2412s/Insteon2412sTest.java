@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.powerline.insteon2412s package.
  * @author      Bob Jacobsen  Copyright 2003, 2007, 2008, 2009
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class Insteon2412sTest extends TestCase {
 
@@ -30,6 +30,7 @@ public class Insteon2412sTest extends TestCase {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite("jmri.jmrix.powerline.insteon2412s.Insteon2412sTest");
         suite.addTest(SpecificMessageTest.suite());
+        suite.addTest(SpecificReplyTest.suite());
         suite.addTest(SpecificTrafficControllerTest.suite());
         return suite;
     }
