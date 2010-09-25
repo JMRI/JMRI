@@ -26,7 +26,7 @@ import java.lang.Integer;
 /**
  * Table Model for access to producer info
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.3 $
+ * @version	 $Revision: 1.4 $
  * @since 2.3.7
  */
 
@@ -138,8 +138,8 @@ public class ConsumerTableModel extends AbstractTableModel {
 
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) 
     {
-        String columnString = "";
-        String lineString = "";
+        StringBuilder columnString = new StringBuilder();
+        StringBuilder lineString = new StringBuilder();
         String[] spaces = new String[4];
         // create base strings the width of each of the columns
         for (int k = 0; k < 4; k++) {
@@ -164,8 +164,8 @@ public class ConsumerTableModel extends AbstractTableModel {
                         if (columnStrings[i].substring(k-1,k).equals(" ") 
                                 || columnStrings[i].substring(k-1,k).equals("-")
                                 || columnStrings[i].substring(k-1,k).equals("_")) {
-                            columnString = columnStrings[i].substring(0,k) 
-                                    + spaces[i].substring(columnStrings[i].substring(0,k).length());
+                            columnString = new StringBuilder(columnStrings[i].substring(0,k));
+                            columnString.append(spaces[i].substring(columnStrings[i].substring(0,k).length()));
                             columnStrings[i] = columnStrings[i].substring(k);
                             noWord = false;
                             complete = false;
@@ -173,20 +173,22 @@ public class ConsumerTableModel extends AbstractTableModel {
                         }
                     }
                     if (noWord) {
-                        columnString = columnStrings[i].substring(0,columnSize[i]);
+                        columnString = new StringBuilder(columnStrings[i].substring(0,columnSize[i]));
                         columnStrings[i] = columnStrings[i].substring(columnSize[i]);
                         complete = false;
                     }                    
                 }	
                 else {
                     // this column string will fit on one line
-                    columnString = columnStrings[i] + spaces[i].substring(columnStrings[i].length());
+                    columnString = new StringBuilder(columnStrings[i]);
+                    columnString.append(spaces[i].substring(columnStrings[i].length()));
                     columnStrings[i] = "";
                 }
-                lineString = lineString + columnString + " ";
+                lineString.append(columnString);
+                lineString.append(" ");
             }
             try {
-                w.write(lineString);
+                w.write(new String(lineString));
                 //write vertical dividing lines
                 int iLine = w.getCurrentLineNumber();
                 for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {
@@ -198,9 +200,8 @@ public class ConsumerTableModel extends AbstractTableModel {
                         i = w.getCharactersPerLine();
                     }
                 }
-                lineString = "\n";
-                w.write(lineString);
-                lineString = "";
+                w.write("\n");
+                lineString = new StringBuilder();
             } 
             catch (IOException e) { 
                 log.warn("error during printing: "+e);
