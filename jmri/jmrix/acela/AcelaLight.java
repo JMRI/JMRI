@@ -14,7 +14,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -72,7 +72,6 @@ public class AcelaLight extends AbstractLight {
      *  System dependent instance variables
      */
     String mSystemName = "";     // system name 
-    protected int mState = OFF;  // current state of this light
     int mBit = -1;                // global address from 0
 
     /**
