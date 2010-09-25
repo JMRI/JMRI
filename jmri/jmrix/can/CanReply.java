@@ -18,10 +18,10 @@ import jmri.jmrix.AbstractMRReply;
  * separate accessors.
  *
  * @author      Andrew Crosland Copyright (C) 2008
- * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version         $Revision: 1.14 $
+ * @author      Bob Jacobsen Copyright (C) 2008, 2009, 2010
+ * @version         $Revision: 1.15 $
  */
-public class CanReply extends AbstractMRReply {
+public class CanReply extends AbstractMRReply implements CanMutableFrame {
         
     // Creates a new instance of CanMessage
     public CanReply() {
@@ -74,8 +74,9 @@ public class CanReply extends AbstractMRReply {
      */
     public boolean equals(Object a) {
         if (a == null) return false;
-        if (a.getClass().equals(CanMessage.class)) {
-            CanMessage m = (CanMessage) a;
+        // check for CanFrame equality, that's sufficient
+        if (a instanceof CanFrame) {
+            CanFrame m = (CanFrame) a;
             if ( (_header!=m.getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
                 return false;
             if ( _nDataChars != m.getNumDataElements() ) return false;
@@ -83,17 +84,8 @@ public class CanReply extends AbstractMRReply {
                 if (_dataChars[i] != m.getElement(i)) return false;
             }
             return true;
-        } else if (a.getClass().equals(CanReply.class)) {
-            CanReply m = (CanReply) a;
-            if ( (_header!=getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
-                return false;
-            if ( _nDataChars != m.getNumDataElements() ) return false;
-            for (int i = 0; i<_nDataChars; i++) {
-                if (_dataChars[i] != m.getElement(i)) return false;
-            }
-            return true;
         } else return false;
-    }
+   }
     
     protected int skipPrefix(int index) { return index; }
     

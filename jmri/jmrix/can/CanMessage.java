@@ -24,10 +24,10 @@ import jmri.jmrix.can.TrafficController;
  * traffic controller.
  *
  * @author      Andrew Crosland Copyright (C) 2008
- * @author      Bob Jacobsen Copyright (C) 2008, 2009
- * @version     $Revision: 1.12 $
+ * @author      Bob Jacobsen Copyright (C) 2008, 2009, 2010
+ * @version     $Revision: 1.13 $
  */
-public class CanMessage extends AbstractMRMessage {
+public class CanMessage extends AbstractMRMessage implements CanMutableFrame {
     
     // tag whether translation is needed.
     // a "native" message has been converted already
@@ -89,8 +89,9 @@ public class CanMessage extends AbstractMRMessage {
      */
     public boolean equals(Object a) {
         if (a == null) return false;
-        if (a.getClass().equals(CanMessage.class)) {
-            CanMessage m = (CanMessage) a;
+        // check for CanFrame equality, that's sufficient
+        if (a instanceof CanFrame) {
+            CanFrame m = (CanFrame) a;
             if ( (_header!=m.getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
                 return false;
             if ( _nDataChars != m.getNumDataElements() ) return false;
@@ -98,17 +99,8 @@ public class CanMessage extends AbstractMRMessage {
                 if (_dataChars[i] != m.getElement(i)) return false;
             }
             return true;
-        } else if (a.getClass().equals(CanReply.class)) {
-            CanReply m = (CanReply) a;
-            if ( (_header!=getHeader())||(_isRtr!=m.isRtr())||(_isExtended!=m.isExtended()))
-                return false;
-            if ( _nDataChars != m.getNumDataElements() ) return false;
-            for (int i = 0; i<_nDataChars; i++) {
-                if (_dataChars[i] != m.getElement(i)) return false;
-            }
-            return true;
         } else return false;
-    }
+   }
     
     public boolean replyExpected() { return false; }
     
