@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
@@ -24,7 +24,7 @@ public class SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, SystemConnectionMemo.class); // also register as specific type
         
         // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.openlcb.swing.ComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.openlcb.swing.OpenLcbComponentFactory(this), 
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     
