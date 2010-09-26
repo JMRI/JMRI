@@ -36,18 +36,25 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
 		if (className==null) {
 			log.error("class name missing in turnout operation \""+e+"\"");
 		} else {
-			try {
-				Class<?> adapterClass = Class.forName(className);
-				if (adapterClass != null) {
-					TurnoutOperationXml adapter = (TurnoutOperationXml)adapterClass.newInstance();
-					result = adapter.loadOne(e);
-					if (result.getName().charAt(0)=='*') {
-						result.setNonce(true);
-					}
-				}
-			} catch (Exception ex) {
-				log.error("failed to find or run adapter class for "+className);
-			}
+		    try {
+                Class<?> adapterClass = Class.forName(className);
+                if (adapterClass != null) {
+                    TurnoutOperationXml adapter = (TurnoutOperationXml)adapterClass.newInstance();
+                    result = adapter.loadOne(e);
+                    if (result.getName().charAt(0)=='*') {
+                        result.setNonce(true);
+                    }
+                }
+            } catch (ClassNotFoundException e1) {
+                log.error("while creating TurnoutOperation", e1);
+                return null;
+            } catch (IllegalAccessException e2) {
+                log.error("while creating CommonTurnoutOperation", e2);
+                return null;
+            } catch (InstantiationException e3) {
+                log.error("while creating TurnoutOperation", e3);
+                return null;
+            }
 		}
 		return result;
 	}
@@ -98,5 +105,6 @@ public abstract class TurnoutOperationXml extends jmri.configurexml.AbstractXmlA
     	}
     	return adapter;
     }
-static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationXml.class.getName());
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutOperationXml.class.getName());
 }

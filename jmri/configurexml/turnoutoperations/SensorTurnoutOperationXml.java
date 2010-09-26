@@ -25,15 +25,18 @@ public class SensorTurnoutOperationXml extends CommonTurnoutOperationXml {
 	 * @param e the XML element of type "turnoutOperation"
 	 */
 	public TurnoutOperation loadOne(Element e) {
-		try {
-			Class<?> myOpClass = Class.forName("jmri.SensorTurnoutOperation");
-			return super.loadOne(e, myOpClass.getConstructor(new Class[]{String.class, int.class, int.class}),
-					NoFeedbackTurnoutOperation.getDefaultIntervalStatic(),
-					NoFeedbackTurnoutOperation.getDefaultMaxTriesStatic());
-		} catch (Exception except) {
-			log.warn("couldn't find constructor for class "+getClass().getName()+" to load XML");
-		}
-		return null;
+	    try {
+            Class<?> myOpClass = Class.forName("jmri.SensorTurnoutOperation");
+            return super.loadOne(e, myOpClass.getConstructor(new Class[]{String.class, int.class, int.class}),
+                    NoFeedbackTurnoutOperation.getDefaultIntervalStatic(),
+                    NoFeedbackTurnoutOperation.getDefaultMaxTriesStatic());
+        } catch (ClassNotFoundException e1) {
+            log.error("while creating NoFeedbackTurnoutOperation", e1);
+            return null;
+        } catch (NoSuchMethodException e2) {
+            log.error("while creating NoFeedbackTurnoutOperation", e2);
+            return null;
+        }
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTurnoutOperationXml.class.getName());

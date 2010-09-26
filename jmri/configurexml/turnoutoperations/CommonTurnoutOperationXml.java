@@ -54,10 +54,16 @@ public abstract class CommonTurnoutOperationXml extends TurnoutOperationXml {
         }
         // constructor takes care of enrolling the new operation
         try {
-        	result =
-        		(TurnoutOperation)constr.newInstance(new Object[]{name, Integer.valueOf(interval), Integer.valueOf(maxTries)});
-        } catch (Exception except) {			// too many to list!
-        	log.warn("failed to create instance of "+constr.getDeclaringClass().getName()+" for \""+name+"\"");
+            result = (TurnoutOperation)constr.newInstance(new Object[]{name, Integer.valueOf(interval), Integer.valueOf(maxTries)});
+        } catch (InstantiationException e1) {
+            log.error("while creating CommonTurnoutOperation", e1);
+            return null;
+        } catch (IllegalAccessException e2) {
+            log.error("while creating CommonTurnoutOperation", e2);
+            return null;
+        } catch (java.lang.reflect.InvocationTargetException e3) {
+            log.error("while creating CommonTurnoutOperation", e3);
+            return null;
         }
         if (log.isDebugEnabled()) log.debug("create turnout operation: ("+name+")");	
         return result;
