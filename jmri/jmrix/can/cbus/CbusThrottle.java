@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Andrew Crosland Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
@@ -193,7 +193,7 @@ public class CbusThrottle extends AbstractThrottle {
         mRefreshTimer.stop();
         mRefreshTimer.setRepeats(true);     // refresh until stopped by dispose
         mRefreshTimer.start();
-        if (oldSpeed != this.speedSetting)
+        if (Math.abs(oldSpeed - this.speedSetting) > 0.0001)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
     }
 

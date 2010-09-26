@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class CbusOpCodes {
     /**
@@ -24,7 +24,8 @@ public class CbusOpCodes {
      * Return String decoded message
      */
     public static String decode(AbstractMessage msg) {
-        String str = "";
+        //String str = "";
+        StringBuffer buf = new StringBuffer();
         int bytes;
         int value;
 
@@ -47,9 +48,11 @@ public class CbusOpCodes {
                 fields[i] = String.valueOf(value);
             }
             // concatenat to the result
-            str = str + fields[i];
+            //str = str + fields[i];
+            buf.append(fields[i]);
         }
-        return str;
+        //return str;
+        return buf.toString();
     }
 
     public static final Map<Integer, String> opcodeMap = createMap();

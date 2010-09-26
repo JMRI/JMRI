@@ -18,7 +18,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -104,8 +104,8 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
-    static final Boolean True = new Boolean(true);
-    static final Boolean False = new Boolean(false);
+    static final Boolean True = Boolean.valueOf("true");
+    static final Boolean False = Boolean.valueOf("false");
 
     public Object getValueAt(int row, int col) {
         switch (col) {
@@ -119,9 +119,9 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 return _event[row];
             case TYPECOLUMN:
                 if (_type[row])
-                    return new String("On");
+                    return "On";
                 else
-                    return new String("Off");
+                    return "Off";
             case COMMENTCOLUMN:
                 return _comment[row];
 
@@ -374,11 +374,14 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         // now print each row of data
         // create a base string the width of the column
         String spaces;
+        StringBuffer buf = new StringBuffer();
         for (int i = 0; i < this.getRowCount(); i++) {
-            spaces = "";
+            //spaces = "";
             for (int j = 0; j < columnWidth[i]; j++) {
-                spaces = spaces + " ";
+                //spaces = spaces + " ";
+                buf.append(" ");
             }
+            spaces = buf.toString();
             for (int j = 0; j < this.getColumnCount(); j++) {
                 //check for special, non string contents
                 if (this.getValueAt(i, j) == null) {
@@ -403,16 +406,19 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         String columnString = "";
         String lineString = "";
         String spaces;
+        StringBuffer buf = new StringBuffer();
         // loop through each column
         boolean complete = false;
         while (!complete){
             complete = true;
             for (int i = 0; i < columnStrings.length; i++) {
                 // create a base string the width of the column
-                spaces = "";
+                //spaces = "";
                 for (int j = 0; j < columnWidth[i]; j++) {
-                    spaces = spaces + " ";
+                    //spaces = spaces + " ";
+                    buf.append(" ");
                 }
+                spaces = buf.toString();
                 // if the column string is too wide cut it at word boundary (valid delimiters are space, - and _)
                 // use the intial part of the text,pad it with spaces and place the remainder back in the array
                 // for further processing on next line

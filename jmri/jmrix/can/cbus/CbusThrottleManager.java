@@ -19,7 +19,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -99,7 +99,6 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 log.debug("Command station received ERR " + m.getElement(3) + " for address " + rcvdIntAddr);
                 if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                     // We're expecting an engine report and it matches our address
-                    handle = 0 - m.getElement(3);
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
                     throttleRequestTimer.stop();

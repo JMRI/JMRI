@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CbusAddress {
 
@@ -117,7 +117,8 @@ public class CbusAddress {
      */
     public boolean equals(Object r) {
         if (r == null) return false;
-        if (! (r.getClass().equals(CbusAddress.class))) return false;
+//        if (! (r.getClass().equals(CbusAddress.class))) return false;
+        if (! (r.getClass().equals(this.getClass()))) return false;
         CbusAddress opp = (CbusAddress) r;
         if (opp.aFrame.length != this.aFrame.length) return false;
         for (int i = 0; i<this.aFrame.length; i++) {

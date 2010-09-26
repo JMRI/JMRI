@@ -15,7 +15,7 @@ import jmri.jmrix.can.TrafficController;
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CbusSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
@@ -52,6 +52,8 @@ public class CbusSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // ctor has to register for LocoNet events
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // There can only be one instance
     public CbusSensorManager() {
         TrafficController.instance().addCanListener(this);
         mInstance = this;

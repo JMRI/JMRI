@@ -15,7 +15,7 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -30,7 +30,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
 
         return self;
     }
-    static private CbusDccProgrammer self = null;
+    static volatile private CbusDccProgrammer self = null;
 
     // handle mode
     static protected int _mode = Programmer.DIRECTBITMODE;

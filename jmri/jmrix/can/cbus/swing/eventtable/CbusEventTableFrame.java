@@ -23,7 +23,7 @@ import javax.swing.*;
  *
  * @author	Andrew Crosland          (C) 2009
  *
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class CbusEventTableFrame extends jmri.util.JmriJFrame {
     
@@ -41,7 +41,9 @@ public class CbusEventTableFrame extends jmri.util.JmriJFrame {
         "Enter Comments in this column"
     };
 
-    public CbusEventTableFrame() {
+     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+     // There can only be one instance
+     public CbusEventTableFrame() {
         super();
         
         eventTable = new JTable(eventModel) {
