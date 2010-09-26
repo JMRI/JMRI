@@ -29,7 +29,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -41,6 +41,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     private SprogState sprogState = SprogState.NORMAL;
 
 	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // Ignore FindBugs warnings as there can only be one instance at present
 	public SprogTrafficController() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;
@@ -215,7 +217,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 		return self;
 	}
 
-	static protected SprogTrafficController self = null;
+	static volatile protected SprogTrafficController self = null;
 
         // data members to hold the streams
 	DataInputStream istream = null;

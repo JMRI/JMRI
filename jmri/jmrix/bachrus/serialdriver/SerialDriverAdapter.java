@@ -30,10 +30,12 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // There can only be one instance
     public SerialDriverAdapter() {
         super();
         adaptermemo = new SpeedoSystemConnectionMemo();

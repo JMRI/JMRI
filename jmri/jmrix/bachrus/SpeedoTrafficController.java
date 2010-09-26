@@ -23,13 +23,15 @@ import gnu.io.SerialPortEventListener;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Crosland  Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SpeedoTrafficController implements SpeedoInterface, SerialPortEventListener  {
 
 	private SpeedoReply reply = new SpeedoReply();
 	
-	public SpeedoTrafficController() {
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // Ignore FindBugs warning as we can only have on SPROG instance at this time
+    public SpeedoTrafficController() {
 		self=this;
 	}
 
@@ -127,7 +129,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
 		return self;
 	}
 
-	static protected SpeedoTrafficController self = null;
+	static volatile protected SpeedoTrafficController self = null;
 
     // data members to hold the streams
 	DataInputStream istream = null;

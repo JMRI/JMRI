@@ -27,7 +27,7 @@ import jmri.jmrix.sprog.sprogslotmon.*;
  * reduces code duplication </P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
  *              Andrew Crosland         (C) 2006 ported to SPROG
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class SprogCommandStation implements CommandStation, SprogListener, Runnable {
 
@@ -254,7 +254,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
         return self;
     }
-    static private SprogCommandStation self = null;
+    static volatile private SprogCommandStation self = null;
 
     // data members to hold contact with the slot listeners
     final private Vector<SprogSlotListener> slotListeners = new Vector<SprogSlotListener>();

@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  * <P>
  * @author			Andrew Crosland Copyright (C) 2006
  * @author			Andrew Berridge 2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
  public class SprogSlot {
 	 
@@ -323,7 +323,7 @@ private boolean f5to8Packet = false;
 	private int addressFromPacket() {
       if (isFree()) { return -1; }
       // First deal with possible extended address
-      if ((payload[0] & 0xC0) == 0xC0) { return (payload[0]<<8 | payload[1]); }
+      if ((payload[0] & 0xC0) == 0xC0) { return ((payload[0] & 0xFF)<<8 | (payload[1] & 0xFF)); }
       return payload[0];
     }
 

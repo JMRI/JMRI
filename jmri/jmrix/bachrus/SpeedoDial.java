@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.7 $
+ * @version                    $Revision: 1.8 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -120,13 +120,13 @@ public class SpeedoDial extends JPanel {
         // Draw the speed markers for the primary units
         int dashSize = size/60;
         if (units == Speed.MPH) {
-            priMajorTick = (float)240/(mphLimit/10);
+            priMajorTick = 240/((float)mphLimit/10);
             priMinorTick = priMajorTick/5;
-            secTick = 240/(Speed.mphToKph(mphLimit)/10);
+            secTick = 240/((float)Speed.mphToKph(mphLimit)/10);
         } else {
-            priMajorTick = (float)240/(kphLimit/10);
+            priMajorTick = 240/((float)kphLimit/10);
             priMinorTick = priMajorTick/5;
-            secTick = 240/(Speed.kphToMph(kphLimit)/10);
+            secTick = 240/((float)Speed.kphToMph(kphLimit)/10);
         }
         // i is degrees clockwise from the X axis
         // Add minor tick marks

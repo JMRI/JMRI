@@ -29,7 +29,7 @@ import jmri.util.JTableUtil;
  * @author	Bob Jacobsen   Copyright (C) 2001
  *              Andrew Crosland          (C) 2006 ported to SPROG
  *                                           2008 Use JmriJframe
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
 
@@ -46,6 +46,8 @@ public class SprogSlotMonFrame extends jmri.util.JmriJFrame {
     JTextArea                   status = new JTextArea("Track Current: ---A");
 
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // Ignore FindBugs warnings as there can only be one instance at present
     public SprogSlotMonFrame() {
       super();
       

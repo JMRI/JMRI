@@ -10,7 +10,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * Description:		Carries the reply to a SprogMessage
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Andrew Berridge - refactored, cleaned up, Feb 2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SprogReply extends AbstractMRReply {
 	// Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
@@ -109,17 +109,22 @@ public class SprogReply extends AbstractMRReply {
          * Returns a string representation of this SprogReply
          */
         public String toString() {
-            String s = "";
+            //String s = "";
+            StringBuffer buf = new StringBuffer();
             if (_isBoot || (_dataChars[0] == SprogMessage.STX)) {
               for (int i=0; i<_nDataChars; i++) {
-                  s+="<"+(((char)_dataChars[i]) & 0xff)+">";
+                  //s+="<"+(((char)_dataChars[i]) & 0xff)+">";
+                  buf.append("<");
+                  buf.append(_dataChars[i]);
+                  buf.append(">");
               }
             } else {
               for (int i=0; i<_nDataChars; i++) {
-                  s+=(char)_dataChars[i];
+                  //s+=;
+                  buf.append((char)_dataChars[i]);
               }
             }
-            return s;
+            return buf.toString();
         }
 
         /**

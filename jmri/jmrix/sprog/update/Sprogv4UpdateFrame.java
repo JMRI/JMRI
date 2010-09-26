@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -77,8 +77,8 @@ public class Sprogv4UpdateFrame
         requestBoot();
       }
       else {
-        sprogVersion = new String(replyString.substring(replyString.indexOf(".") -
-            1, replyString.indexOf(".") + 2));
+        sprogVersion = replyString.substring(replyString.indexOf(".") -
+            1, replyString.indexOf(".") + 2);
         sprogType = "SPROG v" + sprogVersion;
         if (log.isDebugEnabled()) {
           log.debug("Found " + sprogType);

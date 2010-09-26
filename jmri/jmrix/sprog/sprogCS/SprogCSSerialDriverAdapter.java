@@ -20,7 +20,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * not use any other options at configuration time.
  *
  * @author	Andrew Crosland   Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SprogCSSerialDriverAdapter 
 extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
@@ -52,7 +52,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         }
         return mInstance;
     }
-    static SprogCSSerialDriverAdapter mInstance = null;
+    static volatile SprogCSSerialDriverAdapter mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogCSSerialDriverAdapter.class.getName());
 

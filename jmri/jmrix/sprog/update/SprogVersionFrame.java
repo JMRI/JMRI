@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -77,8 +77,8 @@ public class SprogVersionFrame
                 setVisible(false);
                 dispose();
             } else {
-                sprogVersion = new String(replyString.substring(replyString.indexOf(".") -
-                        1, replyString.indexOf(".") + 2));
+                sprogVersion = replyString.substring(replyString.indexOf(".") -
+                        1, replyString.indexOf(".") + 2);
                 if (replyString.indexOf("II") >= 0) {
                     sprogType = "SPROG II ";
                 } else {

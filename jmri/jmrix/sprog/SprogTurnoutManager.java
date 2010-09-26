@@ -10,10 +10,12 @@ import jmri.Turnout;
  * System names are "STnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class SprogTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // Ignore FindBugs warnings as there can only be one instance at present
     public SprogTurnoutManager() {
         _instance = this;
     }

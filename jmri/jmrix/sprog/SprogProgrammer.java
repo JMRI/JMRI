@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -40,7 +40,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             _mode = Programmer.OPSBYTEMODE;
         return self;
     }
-    static private SprogProgrammer self = null;
+    static volatile private SprogProgrammer self = null;
 
     // handle mode
     static protected int _mode = Programmer.DIRECTBITMODE;

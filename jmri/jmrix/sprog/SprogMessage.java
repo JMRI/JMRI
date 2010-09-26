@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -204,26 +204,22 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
     // display format
     public String toString() {
-        String s = "";
+        StringBuffer buf = new StringBuffer();
         if (!SprogTrafficController.instance().isSIIBootMode()) {
-//            for (int i=0; i<_nDataChars; i++) {
-//                s+=(char)_dataChars[i];
-//            }
-            StringBuffer buf = new StringBuffer();
             for (int i = 0; i < _nDataChars; i++) {
                 buf.append((char)_dataChars[i]);
             }
-            s = buf.toString();
         } else {
             for (int i=0; i<_nDataChars; i++) {
-            	/* AJB - should this be a cast to a char? I can't test as I 
-            	 * don't have a suitable SPROG */
-                s+="<"+_dataChars[i]+">";
+                //s+="<"+_dataChars[i]+">";
+                buf.append("<");
+                buf.append(_dataChars[i]);
+                buf.append(">");
             }
         }
-        return s;
+        return buf.toString();
     }
-    
+
     /**
      * Get formatted message for direct output to stream - this is the final 
      * format of the message as a byte array

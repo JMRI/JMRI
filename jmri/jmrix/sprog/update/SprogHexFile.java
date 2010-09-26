@@ -99,6 +99,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
    */
   public int read() {
     // Make space for the the maximum size record to be read
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
+    // False positive
     int record[] = new int[MAX_LEN];
     do {
       record = readLine();
@@ -311,6 +313,8 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
    *
    * @return byte[]
    */
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP")
+  // Happy to pass a reference to internal data
   public int[] getData() {
     return data;
   }

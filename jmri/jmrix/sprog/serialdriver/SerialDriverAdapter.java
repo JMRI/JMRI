@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.32 $
+ * @version	$Revision: 1.33 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -168,7 +168,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         return mInstance;
     }
     
-    static SerialDriverAdapter mInstance = null;
+    static volatile SerialDriverAdapter mInstance = null;
     
     /**
      * set up all of the other objects to operate with an Sprog command
