@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * <p> Time code copied from code for the Nixie clock by Bob Jacobsen
  *
  * @author                     Dennis Miller Copyright (C) 2004
- * @version                    $Revision: 1.18 $
+ * @version                    $Revision: 1.19 $
  */
 
 public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
@@ -25,11 +25,9 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     // GUI member declarations
     
     Timebase clock;
-    javax.swing.Timer timer;
-    static int delay = 2*1000;  // update display every two seconds
-    static double minuteAngle;
-    static double hourAngle;
-    static String amPm;
+    double minuteAngle;
+    double hourAngle;
+    String amPm;
     
     public AnalogClockFrame() {
         super(java.util.ResourceBundle.getBundle("jmri.jmrit.JmritToolsBundle").getString("MenuItemAnalogClock"));
@@ -42,7 +40,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         // init GUI
         setPreferredSize(new java.awt.Dimension(200,200));
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-        JPanel analogClockPanel = new clockPanel();
+        JPanel analogClockPanel = new ClockPanel();
         analogClockPanel.setOpaque(true);
         getContentPane().add(analogClockPanel);
         
@@ -71,7 +69,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         
     }
     
-    public class clockPanel extends JPanel {
+    public class ClockPanel extends JPanel {
         // Create a Panel that has clockface drawn on it scaled to the size of the panel
         // Define common variables
         Image logo;
@@ -110,7 +108,7 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
         int centreY;
         
         
-        public clockPanel() {
+        public ClockPanel() {
             // Load the JMRI logo and hands to put on the clock
             // Icons are the original size version kept for to allow for mulitple resizing
             // and scaled Icons are the version scaled for the panel size
@@ -161,10 +159,10 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
             // Draw the hour and minute markers
             int dashSize = size/60;
             for (int i = 0; i < 360; i = i + 6) {
-                g.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i), dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
+                g.drawLine(dotX(faceSize/2., i), dotY(faceSize/2., i), dotX(faceSize/2. - dashSize, i), dotY(faceSize/2. - dashSize, i));
             }
             for (int i = 0; i < 360; i = i + 30) {
-                g.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i), dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
+                g.drawLine(dotX(faceSize/2., i), dotY(faceSize/2., i), dotX(faceSize/2. - 3 * dashSize, i), dotY(faceSize/2. - 3 * dashSize, i));
             }
             
             // Add the hour digits, with the fontsize scaled to the clock size
@@ -288,8 +286,6 @@ public class AnalogClockFrame extends JmriJFrame implements java.beans.PropertyC
     
     
     public void dispose() {
-        if (timer != null)
-            timer.stop();
         super.dispose();
     }
     
