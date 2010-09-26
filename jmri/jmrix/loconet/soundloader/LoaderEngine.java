@@ -12,7 +12,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * into a Digitrax SFX decoder.
  *
  * @author	    Bob Jacobsen   Copyright (C) 2006
- * @version	    $Revision: 1.10 $
+ * @version	    $Revision: 1.11 $
  */
 public class LoaderEngine {
     static java.util.ResourceBundle res = java.util.ResourceBundle.getBundle("jmri.jmrix.loconet.soundloader.Loader");
@@ -100,12 +100,12 @@ public class LoaderEngine {
         for (int i=1; i<spjFile.numHeaders(); i++) {
             // see if WAV
             if (spjFile.getHeader(i).isWAV()) {
-                SendOneWav(i);
+                sendOneWav(i);
             }
         }
     }
     
-    public void SendOneWav(int index) throws DelayException {
+    public void sendOneWav(int index) throws DelayException {
         notify(java.text.MessageFormat.format(
             res.getString("EngineSendWavBlock"), new Object[]{""+index}));
         // get control info, data
@@ -163,7 +163,7 @@ public class LoaderEngine {
         throw new DelayException("Ran out of time after sending "+m.toString());
     }
     
-    class DelayException extends Exception {
+    static class DelayException extends Exception {
         DelayException(String s) { super(s); }
     }
     
@@ -188,7 +188,7 @@ public class LoaderEngine {
      * You then loop calling nextWavTransfer() until it says it's complete.
      * @param type Either TYPE_SDF or TYPE_WAV for the data type
      */
-    public LocoNetMessage initTransfer(int type, int handle, String name, byte[] contents) {
+    LocoNetMessage initTransfer(int type, int handle, String name, byte[] contents) {
         transferType = type;
         transferStart = true;
         transferHandle = handle;
