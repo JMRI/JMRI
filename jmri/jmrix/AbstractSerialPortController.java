@@ -18,7 +18,7 @@ import gnu.io.CommPortIdentifier;
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
@@ -152,6 +152,6 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
     public void dispose(){
     }
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialPortController.class.getName());
+    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialPortController.class.getName());
 
 }

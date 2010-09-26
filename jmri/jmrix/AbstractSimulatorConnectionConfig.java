@@ -26,7 +26,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 //
@@ -261,5 +261,5 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         }
     }
 
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSimulatorConnectionConfig.class.getName());
+    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSimulatorConnectionConfig.class.getName());
 }

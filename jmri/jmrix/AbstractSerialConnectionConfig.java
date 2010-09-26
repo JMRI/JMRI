@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 
 //
@@ -46,6 +46,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         adapter = null;
     }
 
+    boolean init = false;
+    
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
@@ -374,5 +376,5 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         }
     }
 
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialConnectionConfig.class.getName());
+    final static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractSerialConnectionConfig.class.getName());
 }

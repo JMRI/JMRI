@@ -15,7 +15,7 @@ import jmri.InstanceManager;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  */
 abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -27,8 +27,6 @@ abstract public class AbstractConnectionConfig implements jmri.jmrix.ConnectionC
     }
     
     protected final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
-
-    protected boolean init = false;
 
     abstract void checkInitDone();
 
