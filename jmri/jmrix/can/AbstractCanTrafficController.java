@@ -2,6 +2,8 @@
 
 package jmri.jmrix.can;
 
+import java.io.IOException;
+import java.util.Arrays;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
@@ -15,7 +17,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * layout.
  *
  * @author			Andrew Crosland  Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 abstract public class AbstractCanTrafficController 
@@ -82,9 +84,14 @@ abstract public class AbstractCanTrafficController
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "formatted message: ";
-                    for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
-                    log.debug(f);
+                    //String f = "formatted message: ";
+                    StringBuffer buf = new StringBuffer("formatted message: ");
+                    //for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
+                    for (int i = 0; i<msg.length; i++) {
+                        buf.append(Integer.toHexString(0xFF&msg[i]));
+                        buf.append(" ");
+                    }
+                    log.debug(buf.toString());
                 }
                 while(hm.getRetries()>=0) {
                     if(portReadyToSend(controller)) {
@@ -102,7 +109,7 @@ abstract public class AbstractCanTrafficController
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interupted");
                         }
-                    } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+                    } else log.warn("sendMessage: port not ready for data sending: " +Arrays.toString(msg));
                 }
             } else {
                 // no stream connected
@@ -160,6 +167,8 @@ abstract public class AbstractCanTrafficController
      * Overridden to include translation form the CAN hardware format
      * @throws IOException
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
+    // Ignore false positive that msg is never used
     public void handleOneIncomingReply() throws java.io.IOException {
         // we sit in this until the message is complete, relying on
         // threading to let other stuff happen

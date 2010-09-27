@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -43,7 +43,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     static volatile private SprogProgrammer self = null;
 
     // handle mode
-    static protected int _mode = Programmer.DIRECTBITMODE;
+    static int _mode = Programmer.DIRECTBITMODE;
 
     /**
      * Switch to a new programming mode.  SPROG currently supports bit

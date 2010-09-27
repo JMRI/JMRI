@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -139,7 +139,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected static final int RANGE3HI = 62;
     protected static final int RANGE4LO = 58;
     protected static final int RANGE4HI = 9999;
-    protected static final int[] filterLength = {0, 3, 6, 10, 20};
+    static final int[] filterLength = {0, 3, 6, 10, 20};
     protected enum DisplayType {NUMERIC, DIAL}
     protected DisplayType display = DisplayType.NUMERIC;
 

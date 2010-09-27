@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -138,7 +138,7 @@ public class SprogIIUpdateFrame
 //        setCSModeButton.setEnabled(true);
         openFileChooserButton.setEnabled(true);
         if (sprogType == null) {
-          sprogType = new String("SPROG II");
+          sprogType = "SPROG II";
         }
         // We remain in this state until program button is pushed
 

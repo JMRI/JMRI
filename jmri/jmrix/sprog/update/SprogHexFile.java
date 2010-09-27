@@ -97,10 +97,10 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
    *
    * @return int
    */
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
+  // False positive
   public int read() {
     // Make space for the the maximum size record to be read
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DLS_DEAD_LOCAL_STORE")
-    // False positive
     int record[] = new int[MAX_LEN];
     do {
       record = readLine();

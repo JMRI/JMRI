@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -487,8 +487,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             	state = State.IDLE;
             }
         } else if (state == State.MODEQUERYSENT) {
-            tmpString = new String(replyString.substring(replyString.indexOf("=") + 
-                        2, replyString.indexOf("=") + 6));
+            tmpString = replyString.substring(replyString.indexOf("=") + 
+                        2, replyString.indexOf("=") + 6);
             // Value returned is in hex
             try {
                 modeWord = Integer.parseInt(tmpString, 16);

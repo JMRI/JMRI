@@ -19,12 +19,12 @@ import jmri.jmrix.can.CanReply;
  * Frame to control an instance of CBUS filter to filter events
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class CbusEventFilterFrame extends JmriJFrame {
     
     protected static final int FILTERS = 4;
-    protected static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
+    static final Color[] filterColors = {Color.RED, Color.GREEN, Color.CYAN, Color.YELLOW};
     protected CbusEventFilterPanel[] filterPanes = new CbusEventFilterPanel[FILTERS];
 
     // member to hold reference to my filters

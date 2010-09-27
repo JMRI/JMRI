@@ -15,7 +15,7 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -33,7 +33,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     static volatile private CbusDccProgrammer self = null;
 
     // handle mode
-    static protected int _mode = Programmer.DIRECTBITMODE;
+    static int _mode = Programmer.DIRECTBITMODE;
 
     /**
      * Switch to a new programming mode.  SPROG currently supports bit

@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.8 $
+ * @version                    $Revision: 1.9 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -131,20 +131,20 @@ public class SpeedoDial extends JPanel {
         // i is degrees clockwise from the X axis
         // Add minor tick marks
         for (float i = 150; i < 391; i = i + priMinorTick) {
-            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
-                       dotX(faceSize/2 - dashSize, i), dotY(faceSize/2 - dashSize, i));
+            g2.drawLine(dotX((float)faceSize/2, i), dotY((float)faceSize/2, i),
+                       dotX((float)faceSize/2 - dashSize, i), dotY((float)faceSize/2 - dashSize, i));
         }
         // Add major tick marks and digits
         int j = 0;
         for (float i = 150; i < 391; i = i + priMajorTick) {
-            g2.drawLine(dotX(faceSize/2, i), dotY(faceSize/2, i),
-                       dotX(faceSize/2 - 3 * dashSize, i), dotY(faceSize/2 - 3 * dashSize, i));
+            g2.drawLine(dotX((float)faceSize/2, i), dotY((float)faceSize/2, i),
+                       dotX((float)faceSize/2 - 3 * dashSize, i), dotY((float)faceSize/2 - 3 * dashSize, i));
             String speed = Integer.toString(10*j);
             int xOffset = fontM.stringWidth(speed);
             int yOffset = fontM.getHeight();
             // offset by 210 degrees to start in lower left quadrant and work clockwise
-            g2.drawString(speed, dotX(faceSize/2-6*dashSize,j*priMajorTick-210) - xOffset/2,
-                               dotY(faceSize/2-6*dashSize,j*priMajorTick-210) + yOffset/4);
+            g2.drawString(speed, dotX((float)faceSize/2-6*dashSize,j*priMajorTick-210) - xOffset/2,
+                               dotY((float)faceSize/2-6*dashSize,j*priMajorTick-210) + yOffset/4);
             j++;
         }
 
@@ -158,7 +158,7 @@ public class SpeedoDial extends JPanel {
         g2.setColor(Color.green);
         j = 0;
         for (float i = 150; i < 391; i = i + secTick) {
-            g2.fillOval(dotX(faceSize/2 - 10 * dashSize, i), dotY(faceSize/2 - 10 * dashSize, i),
+            g2.fillOval(dotX((float)faceSize/2 - 10 * dashSize, i), dotY((float)faceSize/2 - 10 * dashSize, i),
                         5, 5);
             if (((j & 1) == 0) ||(units == Speed.KPH)) {
                 // kph are plotted every 20 when secondary, mph every 10
@@ -166,14 +166,14 @@ public class SpeedoDial extends JPanel {
                 int xOffset = fontM.stringWidth(speed);
                 int yOffset = fontM.getHeight();
                 // offset by 210 degrees to start in lower left quadrant and work clockwise
-                g2.drawString(speed, dotX(faceSize/2-13*dashSize,j*secTick-210) - xOffset/2,
-                                   dotY(faceSize/2-13*dashSize,j*secTick-210) + yOffset/4);
+                g2.drawString(speed, dotX((float)faceSize/2-13*dashSize,j*secTick-210) - xOffset/2,
+                                   dotY((float)faceSize/2-13*dashSize,j*secTick-210) + yOffset/4);
             }
             j++;
         }
         // Draw secondary units string
-        g2.drawString(secString, dotX(faceSize/2-5*dashSize,45) - fontM.stringWidth(secString)/2,
-                           dotY(faceSize/2-5*dashSize,45) + fontM.getHeight()/4);
+        g2.drawString(secString, dotX((float)faceSize/2-5*dashSize,45) - fontM.stringWidth(secString)/2,
+                           dotY((float)faceSize/2-5*dashSize,45) + fontM.getHeight()/4);
         g2.setColor(Color.black);
 
         // Draw pointer rotated to appropriate angle
@@ -195,8 +195,8 @@ public class SpeedoDial extends JPanel {
         g2.setFont(unitsSizedFont);
         FontMetrics unitsFontM = g2.getFontMetrics(unitsSizedFont);
 //        g2.drawString(unitsString, -amPmFontM.stringWidth(unitsString)/2, faceSize/5 );
-        g2.drawString(priString, dotX(faceSize/2-5*dashSize,-225) - unitsFontM.stringWidth(priString)/2,
-                           dotY(faceSize/2-5*dashSize,-225) + unitsFontM.getHeight()/4);
+        g2.drawString(priString, dotX((float)faceSize/2-5*dashSize,-225) - unitsFontM.stringWidth(priString)/2,
+                           dotY((float)faceSize/2-5*dashSize,-225) + unitsFontM.getHeight()/4);
         
         // Show numeric speed
         String speedString = Integer.toString(speedDigits);
