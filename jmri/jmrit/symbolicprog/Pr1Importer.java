@@ -27,7 +27,7 @@ import java.util.Properties;
  * for more details.
  * <P>
  * @author			Alex Shepherd   Copyright (C) 2003
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class Pr1Importer {
   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Pr1Importer.class.getName());
@@ -152,6 +152,7 @@ public class Pr1Importer {
   /**
    * Standalone version
    */
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
   public static void main(String[] args) {
     try {
       String logFile = "default.lcf";
