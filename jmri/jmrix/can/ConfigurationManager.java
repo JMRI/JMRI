@@ -10,7 +10,7 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class ConfigurationManager {
 
@@ -19,7 +19,7 @@ public class ConfigurationManager {
     final private static String RAWCAN = "Raw CAN";
     final private static String TEST = "Test - do not use";
     
-    private static final String[] options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
+    private static String[] options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
     
     /**
      * Provide the current set of "Option1" 
@@ -29,6 +29,20 @@ public class ConfigurationManager {
         return options;
     }
 
+    /** 
+     * Set the list of protocols to start with OpenLCB
+     */
+    static public void setOpenLCB() {   
+        options = new String[]{OPENLCB, MERGCBUS, RAWCAN, TEST};
+    }
+    
+    /** 
+     * Set the list of protocols to start with MERG
+     */
+    static public void setMERG() {
+        options = new String[]{MERGCBUS, OPENLCB, RAWCAN, TEST};
+    }
+    
     static public void configure(String option) {
         if (MERGCBUS.equals(option)) {
 
@@ -42,7 +56,6 @@ public class ConfigurationManager {
 
         } if (OPENLCB.equals(option)) {
             // Activate menu indirectly
-            System.out.println("------- hit ---------");
             jmri.jmrix.openlcb.ConfigurationManager.configure(option);
 
         } if (RAWCAN.equals(option)) {
