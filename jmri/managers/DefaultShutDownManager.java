@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * logging.
  *
  * @author      Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class DefaultShutDownManager implements ShutDownManager {
 
@@ -66,6 +66,7 @@ public class DefaultShutDownManager implements ShutDownManager {
      * Does return if the shutdown was aborted by the user,
      * in which case the program should continue to operate.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT") // OK to directly exit standalone main
     public void shutdown() {
         for (int i = tasks.size()-1; i>=0; i--) {
             try {
