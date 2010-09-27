@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.CanReply class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class CanReplyTest extends CanMRCommonTest {
     
@@ -39,6 +39,26 @@ public class CanReplyTest extends CanMRCommonTest {
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanReply(m1)));        
+        Assert.assertTrue("equals same", m1.equals(m2));
+        Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+    }
+    
+    public void testEqualsMessage() {
+        CanReply m1 = new CanReply();
+        m1.setExtended(true);
+        m1.setHeader(0x12);
+        m1.setNumDataElements(0);
+
+        CanMessage m2 = new CanMessage(0);
+        m2.setExtended(true);
+        m2.setHeader(0x12);
+        m2.setNumDataElements(0);
+
+        CanMessage m3 = new CanMessage();
+        m3.setExtended(false);
+        m3.setHeader(0x12);
+        m3.setNumDataElements(0);
+
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }

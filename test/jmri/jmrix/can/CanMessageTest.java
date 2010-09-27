@@ -12,7 +12,7 @@ import jmri.jmrix.can.TrafficControllerScaffold;
  * Tests for the jmri.jmrix.can.CanMessage class
  *
  * @author      Bob Jacobsen  Copyright 2008, 2009
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class CanMessageTest extends CanMRCommonTest {
 
@@ -41,6 +41,26 @@ public class CanMessageTest extends CanMRCommonTest {
 
         Assert.assertTrue("equals self", m1.equals(m1));
         Assert.assertTrue("equals copy", m1.equals(new CanMessage(m1)));        
+        Assert.assertTrue("equals same", m1.equals(m2));
+        Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
+    }
+    
+    public void testEqualsReply() {
+        CanMessage m1 = new CanMessage(0);
+        m1.setExtended(true);
+        m1.setHeader(0x12);
+        m1.setNumDataElements(0);
+        
+        CanReply m2 = new CanReply();
+        m2.setExtended(true);
+        m2.setHeader(0x12);
+        m2.setNumDataElements(0);
+
+        CanReply m3 = new CanReply();
+        m3.setExtended(false);
+        m3.setHeader(0x12);
+        m3.setNumDataElements(0);
+
         Assert.assertTrue("equals same", m1.equals(m2));
         Assert.assertTrue("not equals diff Ext", !m1.equals(m3));
     }
