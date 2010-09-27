@@ -17,7 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * 
  */
 
@@ -208,8 +208,7 @@ public class MailMessage {
                 // Get record Folder.  Create if it does not exist.
                 Folder folder = store.getFolder(record);
                 if (folder == null) {
-                    log.error("Can't get record folder.");
-                    System.exit(1);
+                    log.error("Can't get record folder!");
                 } else {
                 	if (!folder.exists())
                 		folder.create(Folder.HOLDS_MESSAGES);
