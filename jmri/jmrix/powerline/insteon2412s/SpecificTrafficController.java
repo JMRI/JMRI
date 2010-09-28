@@ -28,7 +28,7 @@ import java.io.DataInputStream;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -113,9 +113,9 @@ public class SpecificTrafficController extends SerialTrafficController {
     }
 
     /**
-     * This system provides 22 dim steps
+     * This system provides 256 dim steps
      */
-    public int getNumberOfIntensitySteps() { return 22; }
+    public int getNumberOfIntensitySteps() { return 255; }
     
     /**
      * Get a message of a specific length for filling in.

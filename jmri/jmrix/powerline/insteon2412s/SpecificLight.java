@@ -24,8 +24,8 @@ import jmri.jmrix.powerline.*;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009
- * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @author      Ken Cameron Copyright (C) 2009, 2010
+ * @version     $Revision: 1.4 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -155,7 +155,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
     	}
                     
         // if we don't know the dim count, force it to a value.
-        if (lastOutputStep < 0) initIntensity(intensity);
+        if (!isInsteon && lastOutputStep < 0) initIntensity(intensity);
 
         // find the new correct dim count
         int newStep = (int)Math.round(intensity * maxDimStep);  // maxDimStep is full on, 0 is full off, etc
@@ -182,7 +182,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             } else {
                 function = InsteonSequence.FUNCTION_BRIGHT;
             }
-        	log.debug("function bright");
+            if (log.isDebugEnabled()) {
+            	log.debug("function bright");
+            }
         }
         else {
             if (!isInsteon) {
@@ -190,7 +192,9 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             } else {
                 function = InsteonSequence.FUNCTION_DIM;
             }
-        	log.debug("function dim");
+            if (log.isDebugEnabled()) {
+            	log.debug("function dim");
+            }
         }
 
         // check for errors
@@ -211,13 +215,17 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         } else {
             // create output sequence of address, then function
             InsteonSequence out = new InsteonSequence();
-            out.addFunction(insteonaddress, function, deltaDim);
+            out.addFunction(insteonaddress, function, newStep);
             // send
             SerialTrafficController.instance().sendInsteonSequence(out, null);
         }
 
     	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		if (isInsteon) {
+    			log.debug("sendIntensity(" + intensity + ") addr " + insteonaddress + "  " + newStep + " funct: " + function);
+    		} else {
+    			log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		}
         }
     }
 
