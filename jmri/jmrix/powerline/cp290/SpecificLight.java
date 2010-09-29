@@ -23,10 +23,10 @@ import jmri.jmrix.powerline.*;
  *
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.9 $
+ * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2010
+ * @version     $Revision: 1.10 $
  */
-public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
+public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
 
     /**
      * Create a Light object, with only system name.
@@ -92,133 +92,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             }
         }
     }
-    
-    // System-dependent instance variables
-
-    /** 
-     * Current output step 0 to maxDimStep.
-     * <p>
-     *  -1 means unknown
-     */
-    int lastOutputStep = -1;
-    
-    /**
-     * Largest X10 dim step number available.
-     * <p>
-     * Loaded from SerialTrafficController.getNumberOfIntensitySteps();
-     */
-     int maxDimStep = 0;
-   
-    /**
-     * Send a Dim/Bright commands to the X10 hardware 
-     * to reach a specific intensity.
-     */
-    protected void sendIntensity(double intensity) {
-        
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ")");
-    	}
-                    
-        // if we don't know the dim count, force it to a value.
-        if (lastOutputStep < 0) initIntensity(intensity);
-
-        // find the new correct dim count
-        int newStep = (int)Math.round(intensity*maxDimStep);  // maxDimStep is full on, 0 is full off, etc
-        
-        // check for errors
-        if (newStep <0 || newStep>maxDimStep)
-            log.error("newStep wrong: "+newStep+" intensity: "+intensity);
-
-        // find the number to send
-        int sendSteps = newStep-lastOutputStep; // + for bright, - for dim
-        
-        // figure out the function code
-        int function;
-        if (sendSteps == 0) {
-            // nothing to do!
-            if (log.isDebugEnabled()) {
-            	log.debug("intensity "+intensity+" within current step, return");
-            }
-            return;
-        
-        } else if (sendSteps >0) {
-            function = X10Sequence.FUNCTION_BRIGHT;
-        	if (log.isDebugEnabled()) {
-        		log.debug("function bright");
-        	}
-        }
-        else {
-            function = X10Sequence.FUNCTION_DIM;
-        	if (log.isDebugEnabled()) {
-        		log.debug("function dim");
-        	}
-        }
-
-        // check for errors
-        if (sendSteps <-maxDimStep || sendSteps>maxDimStep)
-            log.error("sendSteps wrong: "+sendSteps+" intensity: "+intensity);
-            
-        int deltaDim = Math.abs(sendSteps);
-
-        lastOutputStep = newStep;
-        
-        // create output sequence of address, then function
-        X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, deltaDim);
-        // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
-
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
-        }
-    }
-
-    /** 
-     * Number of steps from dim to bright is 
-     * maintained in specific SerialTrafficController implementation
-     */
-    protected int getNumberOfSteps() {
-        return SerialTrafficController.instance().getNumberOfIntensitySteps();
-    }
-    
-    /**
-     *  Send a On/Off Command to the hardware
-     */
-    protected void sendOnOffCommand(int newState) {
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newState + ") Current: " + mState);
-    	}
-
-        // figure out command 
-        int function;
-        double newDim;
-        if (newState == ON) {
-        	function = X10Sequence.FUNCTION_ON;
-        	newDim = 1;
-        }
-        else if (newState==OFF) {
-        	function = X10Sequence.FUNCTION_OFF;
-        	newDim = 0;
-        }
-        else {
-            log.warn("illegal state requested for Light: "+getSystemName());
-            return;
-        }
-
-        log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
-
-        // create output sequence of address, then function
-        X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, 0);
-        // send
-        SerialTrafficController.instance().sendX10Sequence(out, null);
-        
-    	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);
-        }
-    }
+           
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificLight.class.getName());
 }
