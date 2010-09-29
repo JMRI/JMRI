@@ -10,7 +10,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  *
  */
 public class DCCManufacturerList {
@@ -36,6 +36,7 @@ public class DCCManufacturerList {
     public static final String OAK = "Oak Tree Systems";
     public static final String OPENLCB = "OpenLCB";
     public static final String OTHER = "Others";
+    public static final String POWERLINE = "Powerline";
     public static final String PROTRAK = "Protrak";
     public static final String QSI = "QSI Solutions";
     public static final String RAIL = "RailDriver";
@@ -45,7 +46,6 @@ public class DCCManufacturerList {
     public static final String TRACTRONICS = "TracTronics";
     public static final String UHLEN = "Uhlenbrock";
     public static final String WANGROW = "Wangrow";
-    public static final String X10 = "X10";
     public static final String ZIMO = "Zimo";
     public static final String ZTC = "ZTC";    
     
@@ -72,6 +72,7 @@ public class DCCManufacturerList {
           OAK,
           OPENLCB,
           OTHER,
+          POWERLINE,
           PROTRAK,
           QSI,
           ROCO,
@@ -80,7 +81,6 @@ public class DCCManufacturerList {
           TRACTRONICS,
           UHLEN,
           WANGROW,
-          X10,
           ZIMO,
           ZTC
     };
@@ -108,6 +108,7 @@ public class DCCManufacturerList {
         if(System.equals(NCE)) { return new jmri.jmrix.nce.NceConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(OAK)) { return new jmri.jmrix.oaktree.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(OPENLCB)) { return new jmri.jmrix.openlcb.ConnectionTypeList().getAvailableProtocolClasses();  }
+        if(System.equals(POWERLINE)) { return new jmri.jmrix.powerline.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(PROTRAK)) { return new jmri.jmrix.grapevine.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(QSI)) { return new jmri.jmrix.qsi.QSIConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ROCO)) { return new jmri.jmrix.lenz.LenzConnectionTypeList().getAvailableProtocolClasses(); }
@@ -116,7 +117,6 @@ public class DCCManufacturerList {
         if(System.equals(TRACTRONICS)) { return new jmri.jmrix.secsi.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(UHLEN)) { return new jmri.jmrix.loconet.Intellibox.ConnectionTypeList().getAvailableProtocolClasses();   }
         if(System.equals(WANGROW)) { return new jmri.jmrix.wangrow.WangrowConnectionTypeList().getAvailableProtocolClasses(); }
-        if(System.equals(X10)) { return new jmri.jmrix.powerline.SerialConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.Mx1ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(OTHER)) { return new jmri.jmrix.OtherConnectionTypeList().getAvailableProtocolClasses(); }

@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Derived from the oaktree code.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -327,7 +327,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.X10;
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
     
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
