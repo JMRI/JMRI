@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.20 $
+ *	@version $Revision: 1.21 $
  */
 
 import java.awt.event.*;
@@ -30,7 +30,6 @@ import java.net.InetAddress;
 
 import javax.jmdns.*;
 
-import jmri.DccLocoAddress;
 import jmri.util.JmriJFrame;
 import jmri.util.zeroconf.ZeroConfUtil;
 import jmri.jmrit.throttle.LargePowerManagerButton;
@@ -254,7 +253,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
             //Determine the first externally accessable IP address for this system. This is presented in the GUI for
             //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
             //Adapted from http://www.rgagnon.com/javadetails/java-0390.html
-            String bound_ip_address=new String();
+            String bound_ip_address = "";
             try
             {
               Enumeration network_interface_list=NetworkInterface.getNetworkInterfaces();

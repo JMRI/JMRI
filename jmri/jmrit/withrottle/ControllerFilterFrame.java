@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.5 $
+ *	@version $Revision: 1.6 $
  */
 public class ControllerFilterFrame extends JmriJFrame implements TableModelListener{
 
@@ -232,9 +232,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 case INCLUDECOL:
                     Object o = mgr.getBySystemName(sysNameList.get(r)).getProperty("WifiControllable");
                     if ((o != null) && (o.toString().equalsIgnoreCase("false"))){
-                        return new Boolean(false);
+                        return Boolean.valueOf(false);
                     }
-                    return new Boolean(true);
+                    return Boolean.valueOf(true);
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:
@@ -279,9 +279,9 @@ public class ControllerFilterFrame extends JmriJFrame implements TableModelListe
                 case INCLUDECOL:
                     Object o = mgr.getBySystemName(sysNameList.get(r)).getProperty("WifiControllable");
                     if ((o != null) && (o.toString().equalsIgnoreCase("false"))){
-                        return new Boolean(false);
+                        return Boolean.valueOf(false);
                     }
-                    return new Boolean(true);
+                    return Boolean.valueOf(true);
                 case SNAMECOL:
                     return sysNameList.get(r);
                 case UNAMECOL:

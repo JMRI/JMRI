@@ -7,7 +7,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.1 $
+ *	@version $Revision: 1.2 $
  */
 abstract public class AbstractWiThrottlePreferences {
     private String fileName;
@@ -44,9 +44,12 @@ abstract public class AbstractWiThrottlePreferences {
     	try {
             File parentDir=file.getParentFile();
             if(!parentDir.exists()){
-                parentDir.mkdir();
+                if (!parentDir.mkdir()) {
+                    log.warn("Could not create parent directory for prefs file :"+fileName);
+                    return;
+                }
             }
-            file.createNewFile();
+            if (file.createNewFile()) log.debug("Creating new WiThrottle prefs file: "+fileName);
     	}catch (Exception ea) {
     		log.error("Could not create WiThrottle preferences file.");
     	}
@@ -63,7 +66,7 @@ abstract public class AbstractWiThrottlePreferences {
 
     public AbstractWiThrottlePreferences(){}
 
-    public class AbstractWiThrottlePreferencesXml extends XmlFile{}
+    public static class AbstractWiThrottlePreferencesXml extends XmlFile{}
 
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractWiThrottlePreferences.class.getName());
 
