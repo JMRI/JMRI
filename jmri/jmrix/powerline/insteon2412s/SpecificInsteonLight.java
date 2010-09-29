@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -161,8 +161,6 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         if ((sendSteps <- maxDimStep) || (sendSteps > maxDimStep))
             log.error("sendSteps wrong: " + sendSteps + " intensity: " + intensity);
             
-        int deltaDim = Math.abs(sendSteps);
-
         lastOutputStep = newStep;
         
         // create output sequence of address, then function
