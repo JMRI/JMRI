@@ -8,7 +8,7 @@ package jmri.jmrix.powerline.cp290;
  *
  * @author			Bob Jacobsen Copyright (C) 2008
  * @author Ken Cameron, (C) 2009, add sensors from poll replies
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class Constants {
 
@@ -112,10 +112,10 @@ public class Constants {
 	public static String deviceToText(int hByte, int lByte) {
 		int mask = 0x01;
 		int x = lByte;
-		String dev = "";
+		StringBuilder dev = new StringBuilder();
 		for (int i = 8; i > 0; i--) {
 			if ((x & mask) != 0) {
-				dev = dev + " " + i;
+				dev.append(" "+i);
 			}
 			mask = mask << 1;
 		}
@@ -123,11 +123,11 @@ public class Constants {
 		x = hByte;
 		for (int i = 16; i > 8; i--) {
 			if ((x & mask) != 0) {
-				dev = dev + " " + i;
+				dev.append(" "+i);
 			}
 			mask = mask << 1;
 		}
-		return(dev);
+		return(new String(dev));
 	}
 	
 	/**

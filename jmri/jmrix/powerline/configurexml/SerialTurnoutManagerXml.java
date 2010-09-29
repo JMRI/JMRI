@@ -11,7 +11,7 @@ import jmri.jmrix.powerline.*;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -28,8 +28,6 @@ public class SerialTurnoutManagerXml extends jmri.managers.configurexml.Abstract
     }
 
     public boolean load(Element turnouts) {
-        // create the master object
-        SerialTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(turnouts);
     }

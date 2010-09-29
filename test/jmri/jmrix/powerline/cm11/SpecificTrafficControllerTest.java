@@ -21,7 +21,7 @@ import jmri.jmrix.powerline.SerialPortController;
 /**
  * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
@@ -37,7 +37,6 @@ public class SpecificTrafficControllerTest extends TestCase {
         }
         protected void forwardToPort(jmri.jmrix.AbstractMRMessage m, jmri.jmrix.AbstractMRListener reply){
         }
-        protected void setInstance() { self = this; }
     }
     
     public void testReceiveStates1() {

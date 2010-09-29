@@ -12,14 +12,13 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
 
     public SerialSensorManager() {
         super();
-        _instance = this;
         SerialTrafficController.instance().addSerialListener(this);
     }
 
@@ -73,19 +72,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
      *  Process a reply to a poll of Sensors of one node
      */
     abstract public void reply(SerialReply r);
-    
-    /**
-     * static function returning the SerialSensorManager instance to use.
-     * @return The registered SerialSensorManager instance for general use,
-     *         if need be creating one.
-     */
-    static public SerialSensorManager instance() {
-        if (_instance == null) log.error("powerline.SerialSensorManager had no instance available");
-        return _instance;
-    }
-
-    static SerialSensorManager _instance = null;
-    
+        
     public boolean allowMultipleAdditions(String systemName) { return true;  }
     
     public String getNextValidAddress(String curAddress, String prefix){

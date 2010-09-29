@@ -11,12 +11,11 @@ import jmri.Turnout;
  * System names are "PTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
-        _instance = this;
     }
 
     public String getSystemPrefix() { return "P"; }
@@ -44,12 +43,6 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
         }
         return t;
     }
-
-    static public SerialTurnoutManager instance() {
-        if (_instance == null) _instance = new SerialTurnoutManager();
-        return _instance;
-    }
-    static SerialTurnoutManager _instance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialTurnoutManager.class.getName());
 

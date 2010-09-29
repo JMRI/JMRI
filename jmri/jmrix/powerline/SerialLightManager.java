@@ -12,12 +12,11 @@ import jmri.Light;
  *
  * @author	Dave Duchamp Copyright (C) 2004
  * @author	Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 abstract public class SerialLightManager extends AbstractLightManager {
 
     public SerialLightManager() {
-        _instance = this;
     }
 
     /**
@@ -83,20 +82,6 @@ abstract public class SerialLightManager extends AbstractLightManager {
 	 */
 	public boolean supportsVariableLights(String systemName) {return true;}
     
-    /** 
-     * Allow access to SerialLightManager
-     */
-    static public SerialLightManager instance() {
-        if (_instance == null) {
-            log.error("instance called without manager loaded");
-            _instance = new SerialLightManager(){
-                protected Light createNewSpecificLight(String systemName, String userName){return null;}
-            };
-        }
-        return _instance;
-    }
-    static SerialLightManager _instance = null;
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialLightManager.class.getName());
 
 }

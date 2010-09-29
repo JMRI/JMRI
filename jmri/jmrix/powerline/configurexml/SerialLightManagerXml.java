@@ -15,7 +15,7 @@ import jmri.jmrix.powerline.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 
@@ -32,8 +32,6 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
     }
 
     public boolean load(Element lights) {
-        // create the master object
-        SerialLightManager.instance();
         // load individual lights
         return loadLights(lights);
     }

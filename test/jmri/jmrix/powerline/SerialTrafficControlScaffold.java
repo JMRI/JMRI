@@ -7,13 +7,13 @@ import java.util.Vector;
 /**
  * Stands in for the SerialTrafficController class
  * @author			Bob Jacobsen Copyright 2004, 2007, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 
 public class SerialTrafficControlScaffold extends jmri.jmrix.powerline.cm11.SpecificTrafficController {
 	public SerialTrafficControlScaffold() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
-		self = this;
+		setInstance();
 	}
 
 	// override some SerialTrafficController methods for test purposes
