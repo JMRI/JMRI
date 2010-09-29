@@ -23,7 +23,7 @@ import java.util.regex.*;
  * @author	Dave Duchamp, Copyright (C) 2004
  * @author  Bob Jacobsen, Copyright (C) 2006, 2007, 2008, 2009
  * @author Ken Cameron, Copyright (C) 2008, 2009
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class SerialAddress {
 
@@ -105,6 +105,29 @@ public class SerialAddress {
         return true;
     }
         
+    /**
+     * Public static method determines whether a systemName names an Insteon device.
+     * 
+     * @return true if system name corresponds to Insteon device
+     */
+    public static boolean isInsteon(String systemName) {
+        // ensure that input system name has a valid format
+        if ( !validSystemNameFormat(systemName, systemName.charAt(1)) ) {
+            // No point in normalizing if a valid system name format is not present
+        } else {
+			if (hCodes.reset(systemName).matches() && hCodes.groupCount() == 2) {
+				// This is a PLaxx address
+				try {
+					return false; // is X10, or at least not Insteon
+				}
+				catch (Exception e) {
+					log.error("illegal character in house code field system name: " + systemName);
+					return false;  // can't be parsed, isn't Insteon
+				}
+			}
+        }
+        return true;
+    }
     /**
      * Public static method to normalize a system name
      * <P>

@@ -13,7 +13,7 @@ import jmri.util.JUnitAppender;
  * JUnit tests for the SerialAddress utility class.
  * @author	Dave Duchamp Copyright 2004
  * @author  Bob Jacobsen Copyright 2007, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class SerialAddressTest extends TestCase {
 
@@ -105,11 +105,22 @@ public class SerialAddressTest extends TestCase {
             Assert.assertTrue("valid config PTK16", SerialAddress.validSystemNameConfig("PTK16",'T') );
             Assert.assertTrue("valid config PTP16", SerialAddress.validSystemNameConfig("PTP16",'T') );
 
-        }        
+    }        
 
-      	public void testNormalizeSystemName() {
-            Assert.assertEquals("normalize PLB7",    "PLB7", SerialAddress.normalizeSystemName("PLB7") );
-        }
+	public void testIsInsteonTrue() {
+            Assert.assertTrue("PL01.02.03",  SerialAddress.isInsteon("PL01.02.03") );
+            Assert.assertTrue("PLA1.02.03",  SerialAddress.isInsteon("PLA1.02.03") );
+            Assert.assertTrue("PLA1.A2.03",  SerialAddress.isInsteon("PL01.A2.03") );
+            Assert.assertTrue("PLA1.02.A3",  SerialAddress.isInsteon("PL01.02.A3") );
+    }
+    
+	public void testIsInsteonFalse() {
+            Assert.assertFalse("PLA1",  SerialAddress.isInsteon("PLA1") );
+    }
+
+    public void testNormalizeSystemName() {
+        Assert.assertEquals("normalize PLB7",    "PLB7", SerialAddress.normalizeSystemName("PLB7") );
+    }
         
 	// from here down is testing infrastructure
 

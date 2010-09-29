@@ -1,11 +1,11 @@
-// SpecificLight.java
+// SpecificX10Light.java
 
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.*;
 
 /**
- * Implementation of the Light Object for Insteon 2412S interfaces.
+ * Implementation of the Light Object for X10 receivers on Insteon 2412S interfaces.
  * <P>
  * Uses X10 dimming commands to set intensity unless
  * the value is 0.0 or 1.0, in which case it uses on/off commands only.
@@ -21,13 +21,12 @@ import jmri.jmrix.powerline.*;
  * <p>
  * 
  *
- *
  * @author      Dave Duchamp Copyright (C) 2004
- * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009
+ * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.1 $
  */
-public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
+public class SpecificX10Light extends jmri.jmrix.powerline.SerialLight {
 
     // System-dependent instance variables
 
@@ -50,7 +49,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName) {
+    public SpecificX10Light(String systemName) {
         super(systemName);
         maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
@@ -59,7 +58,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
      * <P>
      * 'systemName' was previously validated in SerialLightManager
      */
-    public SpecificLight(String systemName, String userName) {
+    public SpecificX10Light(String systemName, String userName) {
         super(systemName, userName);
         maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
@@ -81,29 +80,16 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             
         // see if going to stabilize at on or off
         if (intensity <= 0.5) {
-            if (!isInsteon) {
-                // going to low, send a real off
-                X10Sequence out3 = new X10Sequence();
-                out3.addAddress(housecode, devicecode);
-                out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
-                SerialTrafficController.instance().sendX10Sequence(out3, null);
-                // going to low, send max dim count low
-                X10Sequence out2 = new X10Sequence();
-                out2.addAddress(housecode, devicecode);
-                out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
-                SerialTrafficController.instance().sendX10Sequence(out2, null);
-            } else {
-                // going to low, send a real off
-
-                InsteonSequence out3 = new InsteonSequence();
-                out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_OFF, 0);
-                SerialTrafficController.instance().sendInsteonSequence(out3, null);
-
-                // going to low, send max dim count low
-                InsteonSequence out2 = new InsteonSequence();
-                out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
-                SerialTrafficController.instance().sendInsteonSequence(out2, null);
-            }
+            // going to low, send a real off
+            X10Sequence out3 = new X10Sequence();
+            out3.addAddress(housecode, devicecode);
+            out3.addFunction(housecode, X10Sequence.FUNCTION_OFF, 0);
+            SerialTrafficController.instance().sendX10Sequence(out3, null);
+            // going to low, send max dim count low
+            X10Sequence out2 = new X10Sequence();
+            out2.addAddress(housecode, devicecode);
+            out2.addFunction(housecode, X10Sequence.FUNCTION_DIM, maxDimStep);
+            SerialTrafficController.instance().sendX10Sequence(out2, null);
 
             lastOutputStep = 0;
             
@@ -111,28 +97,17 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             	log.debug("initIntensity: sent dim reset");
             }
         } else {
-            if (!isInsteon) {
-                // going to high, send a real on
-                X10Sequence out3 = new X10Sequence();
-                out3.addAddress(housecode, devicecode);
-                out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
-                SerialTrafficController.instance().sendX10Sequence(out3, null);
-                // going to high, send max dim count high
-                X10Sequence out2 = new X10Sequence();
-                out2.addAddress(housecode, devicecode);
-                out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
-                // send
-                SerialTrafficController.instance().sendX10Sequence(out2, null);
-            } else {
-
-                InsteonSequence out3 = new InsteonSequence();
-                out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_ON, 0);
-                SerialTrafficController.instance().sendInsteonSequence(out3, null);
-
-                InsteonSequence out2 = new InsteonSequence();
-                out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
-                SerialTrafficController.instance().sendInsteonSequence(out2, null);
-            }
+            // going to high, send a real on
+            X10Sequence out3 = new X10Sequence();
+            out3.addAddress(housecode, devicecode);
+            out3.addFunction(housecode, X10Sequence.FUNCTION_ON, 0);
+            SerialTrafficController.instance().sendX10Sequence(out3, null);
+            // going to high, send max dim count high
+            X10Sequence out2 = new X10Sequence();
+            out2.addAddress(housecode, devicecode);
+            out2.addFunction(housecode, X10Sequence.FUNCTION_BRIGHT, maxDimStep);
+            // send
+            SerialTrafficController.instance().sendX10Sequence(out2, null);
             
             lastOutputStep = maxDimStep;
             
@@ -155,7 +130,7 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
     	}
                     
         // if we don't know the dim count, force it to a value.
-        if (!isInsteon && lastOutputStep < 0) initIntensity(intensity);
+        initIntensity(intensity);
 
         // find the new correct dim count
         int newStep = (int)Math.round(intensity * maxDimStep);  // maxDimStep is full on, 0 is full off, etc
@@ -177,21 +152,13 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
             return;
         
         } else if (sendSteps > 0) {
-            if (!isInsteon) {
-                function = X10Sequence.FUNCTION_BRIGHT;
-            } else {
-                function = InsteonSequence.FUNCTION_BRIGHT;
-            }
+            function = X10Sequence.FUNCTION_BRIGHT;
             if (log.isDebugEnabled()) {
             	log.debug("function bright");
             }
         }
         else {
-            if (!isInsteon) {
-                function = X10Sequence.FUNCTION_DIM;
-            } else {
-                function = InsteonSequence.FUNCTION_DIM;
-            }
+            function = X10Sequence.FUNCTION_DIM;
             if (log.isDebugEnabled()) {
             	log.debug("function dim");
             }
@@ -205,20 +172,12 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
 
         lastOutputStep = newStep;
         
-        if (!isInsteon) {
-            // create output sequence of address, then function
-            X10Sequence out = new X10Sequence();
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, function, deltaDim);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
-        } else {
-            // create output sequence of address, then function
-            InsteonSequence out = new InsteonSequence();
-            out.addFunction(insteonaddress, function, newStep);
-            // send
-            SerialTrafficController.instance().sendInsteonSequence(out, null);
-        }
+        // create output sequence of address, then function
+        X10Sequence out = new X10Sequence();
+        out.addAddress(housecode, devicecode);
+        out.addFunction(housecode, function, deltaDim);
+        // send
+        SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
     		if (isInsteon) {
@@ -262,31 +221,19 @@ public class SpecificLight extends jmri.jmrix.powerline.SerialLight {
         	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
         }
 
-        if (!isInsteon) {
-            // create output sequence of address, then function
-            X10Sequence out = new X10Sequence();
-            out.addAddress(housecode, devicecode);
-            out.addFunction(housecode, function, 0);
-            // send
-            SerialTrafficController.instance().sendX10Sequence(out, null);
-        
-    	    if (log.isDebugEnabled()) {
-    		    log.debug("end sendOnOff(" + newState + ")  house " + housecode + " device " + devicecode + " funct: " + function);
-            }
-        } else {
-            // create output sequence of just address and function together
-            InsteonSequence out = new InsteonSequence();
-            out.addFunction(insteonaddress, function, 0);
-            // send
-            SerialTrafficController.instance().sendInsteonSequence(out, null);
-
-            if (log.isDebugEnabled()) {
-    		    log.debug("end sendOnOff(" + newState + ")  insteon " + insteonaddress  + " funct: " + function);
-            }
+        // create output sequence of address, then function
+        X10Sequence out = new X10Sequence();
+        out.addAddress(housecode, devicecode);
+        out.addFunction(housecode, function, 0);
+        // send
+        SerialTrafficController.instance().sendX10Sequence(out, null);
+    
+        if (log.isDebugEnabled()) {
+            log.debug("end sendOnOff(" + newState + ")  house " + housecode + " device " + devicecode + " funct: " + function);
         }
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificLight.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificX10Light.class.getName());
 }
 
-/* @(#)SerialLight.java */
+/* @(#)SpecificX10Light.java */
