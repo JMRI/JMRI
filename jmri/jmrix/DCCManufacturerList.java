@@ -10,7 +10,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  *
  */
 public class DCCManufacturerList {
@@ -28,6 +28,7 @@ public class DCCManufacturerList {
     public static final String EASYDCC = "Easy DCC";
     public static final String DCCSPEC = "DCC Specialties";
     public static final String FLEISHMANN = "Fleishmann";
+    public static final String JMRI = "JMRI (Network)";
     public static final String LIONEL = "Lionel TMCC";
     public static final String MAPLE = "Maple Systems";
     public static final String MERG = "MERG";
@@ -61,6 +62,7 @@ public class DCCManufacturerList {
           ESU,
           FLEISHMANN,
           HORNBY,
+          JMRI,
           LENZ,
           LIONEL,
           MAPLE,
@@ -118,6 +120,7 @@ public class DCCManufacturerList {
         if(System.equals(ZIMO)) { return new jmri.jmrix.zimo.Mx1ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(ZTC)) { return new jmri.jmrix.lenz.ztc640.ZTC640ConnectionTypeList().getAvailableProtocolClasses(); }
         if(System.equals(OTHER)) { return new jmri.jmrix.OtherConnectionTypeList().getAvailableProtocolClasses(); }
+        if(System.equals(JMRI)) { return new jmri.jmrix.jmriclient.JMRIClientConnectionTypeList().getAvailableProtocolClasses(); }
         return new jmri.jmrix.internal.InternalConnectionTypeList().getAvailableProtocolClasses();
     }
     

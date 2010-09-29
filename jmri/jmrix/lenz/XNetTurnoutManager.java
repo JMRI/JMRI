@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.15 $
+ * @version			$Revision: 2.16 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -34,7 +34,7 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
     // XNet-specific methods
 
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
+        int addr = Integer.valueOf(systemName.substring(prefix.length()+1)).intValue();
         Turnout t = new XNetTurnout(addr,tc);
         t.setUserName(userName);
         return t;

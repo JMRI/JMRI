@@ -17,7 +17,7 @@ import jmri.jmrix.swing.ComponentFactory;
  *
  * @see ActiveSystemsMenu
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class SystemsMenu extends JMenu {
     public SystemsMenu(String name) {
@@ -82,6 +82,8 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.can.nmranet.NmraNetMenu");
         addMenu("jmri.jmrix.ecos.Menu");
         addMenu("jmri.jmrix.maple.MapleMenu");
+        // The JMRI Network ClientAllows Multiple Connections
+        add( new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
     }
 
     void addMenu(String className) {

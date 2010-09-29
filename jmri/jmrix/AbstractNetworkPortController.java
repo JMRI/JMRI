@@ -14,7 +14,7 @@ import java.net.*;
  *
  * @author      Kevin Dickerson  Copyright (C) 2010
  * @author      Based upon work originally done by Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  * @see         jmri.jmrix.NetworkConfigException
  */
 abstract public class AbstractNetworkPortController extends AbstractPortController implements NetworkPortAdapter{
@@ -55,6 +55,13 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
             }
             throw(e);
         }
+            if(opened && m_port!=0){
+               ConnectionStatus.instance().setConnectionState(
+            		m_HostName+":"+m_port, ConnectionStatus.CONNECTION_UP);
+            } else if(opened){
+               ConnectionStatus.instance().setConnectionState(
+            		m_HostName, ConnectionStatus.CONNECTION_UP);
+            }
     }
     
 	/** Query the status of this connection.  If all OK, at least
