@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -172,11 +172,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendInsteonSequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		if (isInsteon) {
-    			log.debug("sendIntensity(" + intensity + ") addr " + insteonaddress + "  " + newStep + " funct: " + function);
-    		} else {
-    			log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
-    		}
+    	    log.debug("sendIntensity(" + intensity + ") addr " + insteonaddress + "  " + newStep + " funct: " + function);
         }
     }
 

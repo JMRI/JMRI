@@ -28,7 +28,7 @@ import jmri.jmrix.powerline.SerialAddress;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -63,7 +63,6 @@ abstract public class SerialLight extends AbstractVariableLight {
         devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
         if (housecode == -1) {
             insteonaddress = SerialAddress.deviceCodeFromSystemName(getSystemName());
-            isInsteon = true;
         }
     }
     
@@ -80,7 +79,6 @@ abstract public class SerialLight extends AbstractVariableLight {
     protected int housecode = -1;
     protected int devicecode = -1;
     protected String insteonaddress = "";
-    protected boolean isInsteon = false;
             
     /**
      *  Send a On/Off Command to the hardware
