@@ -8,15 +8,25 @@
 >
 
   <node><name>File</name>
-    <node><name>New Locomotive</name>
+    <node><name>New DecoderPro Window</name>
     </node>
-    <node><name>Save</name>
+    <node><name>New Loco...</name>
+    </node>
+    <node><name>Identify Loco...</name>
+    </node>
+    <node><name>New Throttle</name>
+    </node>
+    <node><name>Save Loco</name>
+    </node>
+    <node><name>Print Roster Setup...</name>
+    </node>
+    <node><name>Print Loco Setup...</name>
+    </node>
+    <node><name>Print Roster...</name>
+    </node>
+    <node><name>Print Loco...</name>
     </node>
     <node><name>Print...</name>
-    </node>
-    <node><name>Print Summary...</name>
-    </node>
-    <node><name>Print All...</name>
     </node>
     <node><name>Quit</name>
         <adapter>apps.gui3.paned.QuitAction</adapter>
@@ -30,11 +40,58 @@
     </node>
     <node><name>Paste</name>
     </node>
+    <node><name>Duplicate Loco</name>
+    </node>
     <node><name>Preferences</name>
         <panel>apps.gui3.TabbedPreferences</panel>
     </node>
   </node>
 
+  <node><name>View</name>
+    <node><name>Restore View</name>
+    </node>
+    <node><name>Show/Hide Raw CVs</name>
+    </node>
+    <node><name>Show Roster Groups</name>
+    </node>
+    <node><name>Basic Programmer Format</name>
+    </node>
+    <node><name>Comprehensive Programmer Format</name>
+    </node>
+    <node><name>Other Programmer Format</name>
+        <node><name>Sample Format 1</name></node>
+        <node><name>Sample Format 2</name></node>
+    </node>
+    <node><name>Show Throttle Keys</name>
+    </node>
+    <node><name>Show Roster Media</name>
+    </node>
+  </node>
+
+  <node><name>Program</name>
+    <node><name>[] Service Mode/Programming Track</name>
+    </node>
+    <node><name>Operations Mode/Main Track</name>
+    </node>
+    <node><name>[]Direct Bit</name>
+    </node>
+    <node><name>Direct Byte</name>
+    </node>
+    <node><name>Register Mode</name>
+    </node>
+    <node><name>Page Mode</name>
+    </node>
+    <node><name>Address Mode</name>
+    </node>
+    <node><name>Service Programmer</name>
+        <node><name>Sample Connection 1</name></node>
+        <node><name>Sample Connection 2</name></node>
+    </node>
+    <node><name>Operations Programmer</name>
+        <node><name>Sample Connection 1</name></node>
+        <node><name>Sample Connection 2</name></node>
+    </node>
+  </node>
   <xi:include href="http://jmri.org/xml/config/parts/WindowsMenu.xml"/>
   <xi:include href="http://jmri.org/xml/config/parts/HelpMenu.xml"/>
 
