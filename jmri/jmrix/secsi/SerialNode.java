@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -45,9 +45,11 @@ public class SerialNode extends AbstractNode {
     public static final int DAUGHTER = 0;  // also default
     public static final int CABDRIVER = 1;
 
-    public static final String[] boardNames = new String[]{"Daughter", "CabDriver"};
-    public static final int[] outputBits = new int[]{32, 32};
-    public static final int[] inputBits = new int[]{16, 16};
+    private static final String[] boardNames = new String[]{"Daughter", "CabDriver"};
+    public static String[] getBoardNames() { return boardNames.clone(); }
+    
+    static final int[] outputBits = new int[]{32, 32};
+    static final int[] inputBits = new int[]{16, 16};
     
     // node definition instance variables (must persist between runs)
     // Node address, 0-127 allowed

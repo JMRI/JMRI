@@ -16,7 +16,7 @@ import jmri.jmrix.acela.AcelaNode;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -217,7 +217,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.setLayout(new FlowLayout());
         
         panel11.add(new JLabel(rb.getString("LabelNodeAddress")+" "));
-        nodeAddrBox = new JComboBox(AcelaNode.nodeNames);
+        nodeAddrBox = new JComboBox(AcelaNode.getNodeNames());
         nodeAddrBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
@@ -238,7 +238,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         JPanel panelNodeInfo = new JPanel();
 
         panelNodeInfo.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(AcelaNode.moduleNames);
+        nodeTypeBox = new JComboBox(AcelaNode.getModuleNames());
         nodeTypeBox.addActionListener(new java.awt.event.ActionListener() 
             {
                 public void actionPerformed(java.awt.event.ActionEvent event)
@@ -1265,7 +1265,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(false);
-        nodeTypeStatic.setText(AcelaNode.moduleNames[nodeType]);
+        nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
         nodeTypeStatic.setVisible(true);     
 
         // get information for this node if it is an output node
@@ -1378,7 +1378,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(true);
-        nodeTypeStatic.setText(AcelaNode.moduleNames[nodeType]);
+        nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
         nodeTypeStatic.setVisible(false);     
 
         // get information for this node if it is an output node
@@ -1601,7 +1601,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         nodeType = curNode.getNodeType();
         nodeTypeBox.setSelectedIndex(nodeType);
         nodeTypeBox.setVisible(false);
-        nodeTypeStatic.setText(AcelaNode.moduleNames[nodeType]);
+        nodeTypeStatic.setText(AcelaNode.getModuleNames()[nodeType]);
         nodeTypeStatic.setVisible(true);     
 
         // get information for this node if it is an output node

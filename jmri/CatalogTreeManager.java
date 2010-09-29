@@ -86,6 +86,9 @@ public interface CatalogTreeManager extends Manager {
      */
     public List <String> getSystemNameList();
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     static final String[] IMAGE_FILTER = {"gif", "jpg", "jpeg", "png"};
     static final String[] SOUND_FILTER = {"wav"};
     static final String[] SCRIPT_FILTER = {"py", "scpt"};

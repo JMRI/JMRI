@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008, 2009
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -52,12 +52,15 @@ public class AcelaNode extends AbstractNode {
     public static final byte SY = 0x08;	// Sentry (no output bits. 16 input bits)
     public static final byte UN = 0x09;	// Unidentified module -- should be FF
     public static final String moduleTypes = "ACTBD8WMSMSCSWYMSYUN";
-    public static final String[] nodeNames = new String[]{"0", "1", "2", "3", "4",
+
+    static final String[] nodeNames = new String[]{"0", "1", "2", "3", "4",
         "5", "6", "7", "8", "9",
         "10", "11", "12", "13", "14",
         "15", "16", "17", "18", "19"
     };
-    public static final String[] moduleNames = new String[]{"Acela",
+    public static String[] getNodeNames() { return nodeNames.clone(); }
+
+    static final String[] moduleNames = new String[]{"Acela",
         "TrainBrain",
         "Dash-8",
         "Watchman",
@@ -67,6 +70,8 @@ public class AcelaNode extends AbstractNode {
         "YardMaster",
         "Sentry"
     };
+    public static String[] getModuleNames() { return moduleNames.clone(); }
+    
     static final String[] moduleTips = new String[]{"Acela",
         "TrainBrain has 4 output circuits and 4 input circuits",
         "Dash-8 has 8 output circuits and no input circuits",

@@ -194,6 +194,9 @@ public interface Conditional extends NamedBean {
 				
     /***************** ConditionalVariable Maps ********************************/
     // Map state variable types to their item type
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] TEST_TO_ITEM = {TYPE_NONE,          // TYPE_NONE                0
                                     ITEM_TYPE_SENSOR,       // TYPE_SENSOR_ACTIVE       1
                                     ITEM_TYPE_SENSOR,       // TYPE_SENSOR_INACTIVE     2
@@ -228,6 +231,9 @@ public interface Conditional extends NamedBean {
                                     };
 
     // Map SignalHead comboBox items to SignalHead Conditional variable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_SIGNAL_HEAD_RED, 
                                     TYPE_SIGNAL_HEAD_YELLOW,
                                     TYPE_SIGNAL_HEAD_GREEN, 
@@ -241,30 +247,54 @@ public interface Conditional extends NamedBean {
                                     TYPE_SIGNAL_HEAD_HELD  };
 
     // Map SignalMAst comboBox items to SignalMast Conditional variable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_SIGNAL_MAST_ASPECT_EQUALS };
 
     // Map Sensor state comboBox items to Sensor Conditional variable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SENSOR_TEST = {TYPE_SENSOR_ACTIVE, TYPE_SENSOR_INACTIVE};
 
     // Map Turnout state comboBox items to Turnout Conditional variable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_TURNOUT_TEST = {TYPE_TURNOUT_THROWN, TYPE_TURNOUT_CLOSED};
 
     // Map Conditional state comboBox items to  Condition ConditionalVvariable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_CONDITIONAL_TEST = {TYPE_CONDITIONAL_TRUE, TYPE_CONDITIONAL_FALSE};
 
     // Map Memory state comboBox items to Light ConditionalVariable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_LIGHT_TEST = {TYPE_LIGHT_ON, TYPE_LIGHT_OFF};
 
     // Map Warrant state comboBox items to Warrant ConditionalVariable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_WARRANT_TEST = {TYPE_ROUTE_FREE, TYPE_ROUTE_SET, TYPE_ROUTE_ALLOCATED,
                                                         TYPE_ROUTE_OCCUPIED, TYPE_TRAIN_RUNNING};
 
     // Map Memory Compare Type comboBox items to Memory ConditionalVariable types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_MEMORY_TEST = {TYPE_MEMORY_EQUALS, TYPE_MEMORY_EQUALS_INSENSITIVE,
                                             TYPE_MEMORY_COMPARE, TYPE_MEMORY_COMPARE_INSENSITIVE};
 
     /***************** ConditionalAction Maps ********************************/
     // Map action type to the item type
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ACTION_TO_ITEM = {TYPE_NONE,
                                         TYPE_NONE,              // ACTION_NONE              1
                                         ITEM_TYPE_TURNOUT,      // ACTION_SET_TURNOUT       2
@@ -307,46 +337,82 @@ public interface Conditional extends NamedBean {
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SENSOR_ACTION = {ACTION_SET_SENSOR, ACTION_DELAYED_SENSOR,
                                 ACTION_RESET_DELAYED_SENSOR, ACTION_CANCEL_SENSOR_TIMERS};
 
     // Map Turnout Type comboBox items to Turnout action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_TURNOUT_ACTION = {ACTION_SET_TURNOUT, ACTION_DELAYED_TURNOUT,
             ACTION_LOCK_TURNOUT, ACTION_CANCEL_TURNOUT_TIMERS, ACTION_RESET_DELAYED_TURNOUT};
 
     // Map Memory Type comboBox items to Memory action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_MEMORY_ACTION = {12,26};
 
     // Map Light Type comboBox items to Light action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_LIGHT_ACTION = {ACTION_SET_LIGHT, ACTION_SET_LIGHT_INTENSITY,
                              ACTION_SET_LIGHT_TRANSITION_TIME};
 
     // Map FastClock Type comboBox items to FastClock action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_CLOCK_ACTION = {ACTION_SET_FAST_CLOCK_TIME,
                                 ACTION_START_FAST_CLOCK, ACTION_STOP_FAST_CLOCK};
 
     // Map Logix Type comboBox items to Logix action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_LOGIX_ACTION = {ACTION_ENABLE_LOGIX, ACTION_DISABLE_LOGIX};
 
     // Map Warrant Type comboBox items to Warrant action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_WARRANT_ACTION = {ACTION_ALLOCATE_WARRANT_ROUTE, 
                 ACTION_DEALLOCATE_WARRANT_ROUTE, ACTION_SET_ROUTE_TURNOUTS, ACTION_RUN_WARRANT, 
                 ACTION_CONTROL_TRAIN, ACTION_SET_TRAIN_ID, ACTION_THROTTLE_FACTOR};
 
     // Map Signal Head Type comboBox items to Signal Head action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SIGNAL_HEAD_ACTION = {ACTION_SET_SIGNAL_APPEARANCE, ACTION_SET_SIGNAL_HELD, 
                 ACTION_CLEAR_SIGNAL_HELD, ACTION_SET_SIGNAL_DARK , ACTION_SET_SIGNAL_LIT};
 
     // Map Signal Mast Type comboBox items to Signal Mast action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SIGNAL_MAST_ACTION = {ACTION_SET_SIGNALMAST_ASPECT};
 
     // Map Audio Type comboBox items to Audio action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_AUDIO_ACTION = {ACTION_PLAY_SOUND, ACTION_CONTROL_AUDIO};
 
     // Map Script Type comboBox items to Script action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_SCRIPT_ACTION = {ACTION_RUN_SCRIPT, ACTION_JYTHON_COMMAND};
 
     // Map Misc Type comboBox items to Misc action types
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
+                                                                                // just have to accept these exposed
+                                                                                // arrays. Someday...
     public static int[] ITEM_TO_OTHER_ACTION = {ACTION_TRIGGER_ROUTE};
 
     /**

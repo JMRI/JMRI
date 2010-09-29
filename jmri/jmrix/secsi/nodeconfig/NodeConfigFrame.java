@@ -16,7 +16,7 @@ import jmri.jmrix.secsi.SerialSensorManager;
  * Frame for user configuration of serial nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -83,7 +83,7 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
         panel11.add(nodeAddrStatic);
         nodeAddrStatic.setVisible(false);
         panel11.add(new JLabel("   "+rb.getString("LabelNodeType")+" "));
-        nodeTypeBox = new JComboBox(SerialNode.boardNames);
+        nodeTypeBox = new JComboBox(SerialNode.getBoardNames());
         panel11.add(nodeTypeBox);
         nodeTypeBox.setToolTipText(rb.getString("TipNodeType"));
         contentPane.add(panel11);
