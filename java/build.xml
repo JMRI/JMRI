@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.86 $ -->
+<!-- Revision $Revision: 1.87 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -373,6 +373,24 @@
   <target name="decoderpro" depends="debug, runtime-library-selection" description="build and run DecoderPro app">
     <property name="antargline" value="DecoderProConfig2.xml" />
     <java classname="apps.DecoderPro.DecoderPro"
+          dir=".." 
+	  fork="yes" >
+       <classpath refid="project.class.path"    />
+       <sysproperty key="java.security.policy" value="lib/security.policy"/> 
+       <sysproperty key="apple.laf.useScreenMenuBar" value="true"/> 
+       <sysproperty key="log4j.ignoreTCL" path="true/"/>       
+       <sysproperty key="java.library.path" path=".:${arch.lib.path}:lib"/>
+       <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+       <!-- <jvmarg value="-verbose"/> -->
+       <!-- <jvmarg value="-verbosegc"/> -->
+       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+       <arg value="${antargline}"/>
+    </java>
+ </target>
+
+  <target name="dp3" depends="debug, runtime-library-selection" description="build and run DecoderPro3 app">
+    <property name="antargline" value="DecoderProConfig3.xml" />
+    <java classname="apps.gui3.dp3.DecoderPro3"
           dir=".." 
 	  fork="yes" >
        <classpath refid="project.class.path"    />
