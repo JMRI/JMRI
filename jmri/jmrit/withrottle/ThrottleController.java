@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.13 $
+ *	@version $Revision: 1.14 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -156,7 +156,9 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             l.notifyControllerAddressFound(this);
             if (log.isDebugEnabled()) log.debug("Notify TCListener address found: " + l.getClass());
         }
-        
+
+        syncThrottleFunctions(throttle);
+
         sendAddress();
 
         sendFunctionLabels(throttle);
@@ -179,8 +181,14 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             if (eventName.contains("Momentary")){
                 return;
             }
-            StringBuilder message = new StringBuilder("RPF}|{" + whichThrottle);
-            message.append("]\\[" + eventName + "}|{" + event.getNewValue());
+//            StringBuilder message = new StringBuilder("RPF}|{" + whichThrottle);
+//            message.append("]\\[" + eventName + "}|{" + event.getNewValue());
+            StringBuilder message = new StringBuilder("RPF}|{");
+            message.append(whichThrottle);
+            message.append("]\\[");
+            message.append(eventName);
+            message.append("}|{");
+            message.append(event.getNewValue());
             
             for (ControllerInterface listener : controllerListeners){
                 listener.sendPacketToDevice(message.toString());
@@ -188,33 +196,77 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         }
         
     }
-
-    public void sendFunctionLabels(DccThrottle t){
-        StringBuilder functionString = new StringBuilder();
-        RosterEntry rosterLoco = null;
+    
+    public RosterEntry findRosterEntry(DccThrottle t){
+        RosterEntry re = null;
         if (t.getLocoAddress() != null){
             List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+((DccLocoAddress)t.getLocoAddress()).getNumber(), null, null, null, null);
             if (l.size()>0){
                 if (log.isDebugEnabled()) log.debug("Roster Loco found: "+ l.get(0).getDccAddress());
-                rosterLoco = l.get(0);
-            }else return;
+                re = l.get(0);
+            }
+        }
+        return re;
+    }
+
+    public void syncThrottleFunctions(DccThrottle t){
+        RosterEntry rosterLoco = findRosterEntry(t);
+        if (rosterLoco != null){
+            for (int funcNum = 0; funcNum < 29; funcNum++) {
+                try {
+
+                    Class partypes[] = {Boolean.TYPE};
+                    Method setMomentary = t.getClass().getMethod("setF" + funcNum + "Momentary", partypes);
+                    Object data[] = {Boolean.valueOf(!(rosterLoco.getFunctionLockable(funcNum)))};
+
+                    setMomentary.invoke(t, data);
+
+
+                } catch (NoSuchMethodException ea) {
+                    log.warn(ea);
+                } catch (IllegalAccessException eb) {
+                    log.warn(eb);
+                } catch (java.lang.reflect.InvocationTargetException ec) {
+                    log.warn(ec);
+                }
+            }
         }
 
-        if (whichThrottle.equalsIgnoreCase("S")) {
-            functionString.append("RS29}|{" + getCurrentAddressString());
-        }else{
-            //  I know, it should have been 'RT' but this was before there were two throttles.
-            functionString.append("RF29}|{" + getCurrentAddressString());
+    }
+
+    public void sendFunctionLabels(DccThrottle t){
+        StringBuilder functionString = new StringBuilder();
+        RosterEntry rosterLoco = findRosterEntry(t);
+        if (rosterLoco != null) {
+//        RosterEntry rosterLoco = null;
+//        if (t.getLocoAddress() != null){
+//            List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+((DccLocoAddress)t.getLocoAddress()).getNumber(), null, null, null, null);
+//            if (l.size()>0){
+//                if (log.isDebugEnabled()) log.debug("Roster Loco found: "+ l.get(0).getDccAddress());
+//                rosterLoco = l.get(0);
+//            }else return;
+//        }
+
+            if (whichThrottle.equalsIgnoreCase("S")) {
+                functionString.append("RS29}|{");
+            } else {
+                //  I know, it should have been 'RT' but this was before there were two throttles.
+                functionString.append("RF29}|{");
+            }
+            functionString.append(getCurrentAddressString());
+
+            int i;
+            for (i = 0; i < 29; i++) {
+                functionString.append("]\\[");
+                if ((rosterLoco.getFunctionLabel(i) != null)) {
+                    functionString.append(rosterLoco.getFunctionLabel(i));
+                }
+            }
+            for (ControllerInterface listener : controllerListeners) {
+                listener.sendPacketToDevice(functionString.toString());
+            }
         }
 
-        int i;
-        for (i = 0; i<29; i++){
-            functionString.append("]\\[");
-            if ((rosterLoco != null) && (rosterLoco.getFunctionLabel(i) != null)) functionString.append(rosterLoco.getFunctionLabel(i));
-        }
-        for (ControllerInterface listener : controllerListeners){
-            listener.sendPacketToDevice(functionString.toString());
-        }
     }
     
 /**
@@ -225,12 +277,16 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
     public void sendAllFunctionStates(String whichThrottle){
         
         log.debug("Sending state of all functions");
-        StringBuilder message = new StringBuilder("RPF}|{" + whichThrottle);
+        StringBuilder message = new StringBuilder("RPF}|{");
+        message.append(whichThrottle);
 
         try{
             for (int cnt = 0; cnt < 29; cnt++){
                 Method getF = throttle.getClass().getMethod("getF"+cnt,(Class[])null);
-                message.append("]\\[F" + cnt + "}|{" + getF.invoke(throttle, (Object[])null));
+                message.append("]\\[F");
+                message.append(cnt);
+                message.append("}|{");
+                message.append(getF.invoke(throttle, (Object[])null));
             }
 
         }catch (NoSuchMethodException ea){
@@ -486,7 +542,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                 Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
                 
                 state = (Boolean)getF.invoke(functionThrottle, (Object[])null);
-                Object data[] = {new Boolean(!state)};
+                Object data[] = {Boolean.valueOf(!state)};
 
                 setF.invoke(functionThrottle, data);
             
@@ -517,7 +573,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                 Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
                 
                 if ((Boolean)getFMom.invoke(functionThrottle, (Object[])null)){
-                    Object data[] = {new Boolean(false)};
+                    Object data[] = {Boolean.valueOf(false)};
 
                     setF.invoke(functionThrottle, data);
                 }
