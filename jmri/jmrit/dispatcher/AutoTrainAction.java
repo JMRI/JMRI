@@ -38,7 +38,7 @@ import jmri.TransitSection;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class AutoTrainAction {
 	
@@ -67,8 +67,17 @@ public class AutoTrainAction {
 		if (tsaList.size() > 0) {
 			for (int i=0; i<tsaList.size(); i++) {
 				TransitSectionAction tsa = tsaList.get(i);
-				_activeActionList.add(tsa);
-				tsa.initialize();
+				// add to list if not already there
+				boolean found = false;
+				for (int j=0;j<_activeActionList.size();j++) {
+					if (_activeActionList.get(j) == tsa) {
+						found = true;
+					}
+				}
+				if (!found) {
+					_activeActionList.add(tsa);
+					tsa.initialize();
+				}
 				switch (tsa.getWhenCode()) {
 					case TransitSectionAction.ENTRY:
 						// on entry to Section - if here Section was entered
@@ -198,7 +207,7 @@ public class AutoTrainAction {
 			if ( _activeActionList.get(i).getWaitingForSectionExit() && 
 							(_activeActionList.get(i).getTargetTransitSection() == ts) ) {
 				// this action is waiting for this Section to exit
-					 checkDelay(_activeActionList.get(i));
+				checkDelay(_activeActionList.get(i));
 			}
 		}
 	}
@@ -210,10 +219,13 @@ public class AutoTrainAction {
 			tsa.dispose();
 		}
 		tsa.initialize();
-		for (int i = _activeActionList.size()-1; i>=0; i--) {
-			if (_activeActionList.get(i) == tsa) {
-				_activeActionList.remove(i);
-				return;
+		// remove from active list if not continuous running
+		if (!_activeTrain.getResetWhenDone()) {
+			for (int i = _activeActionList.size()-1; i>=0; i--) {
+				if (_activeActionList.get(i) == tsa) {
+					_activeActionList.remove(i);
+					return;
+				}
 			}
 		}
 	}
@@ -247,7 +259,7 @@ public class AutoTrainAction {
 		}
 		else {
 			// start thread to trigger delayed action execution
-			Runnable r = new TSActionDelay(tsa,tsa.getDataWhen());
+			Runnable r = new TSActionDelay(tsa,delay);
 			Thread t = new Thread(r);
 			tsa.setWaitingThread(t);
 			t.start();
@@ -373,6 +385,8 @@ public class AutoTrainAction {
 				// start bell (only works with sound decoder)
 				if ( _autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer()!=null) ) {
 					_autoActiveTrain.getAutoEngineer().setFunction(1,true);
+// djd debugging
+//  log.error("start bell");
 				}
 				completedAction(tsa);
 				break;
@@ -380,6 +394,8 @@ public class AutoTrainAction {
 				// stop bell (only works with sound decoder)
 				if ( _autoActiveTrain.getSoundDecoder() && (_autoActiveTrain.getAutoEngineer()!=null) ) {
 					_autoActiveTrain.getAutoEngineer().setFunction(1,false);
+// djd debugging
+//  log.error("stop bell");
 				}
 				completedAction(tsa);
 				break;
@@ -516,6 +532,7 @@ public class AutoTrainAction {
 			else if (_tsa.getWhatCode() == TransitSectionAction.SOUNDHORNPATTERN) {
 				String pattern = _tsa.getStringWhat();
 				int index = 0;
+				int sleepTime = ((_tsa.getDataWhat1())*12)/10;
 				boolean keepGoing = true;
 				while (keepGoing && (index<pattern.length())) {
 					// sound horn 
@@ -546,7 +563,7 @@ public class AutoTrainAction {
 					index ++;
 					if ( keepGoing  && (index<pattern.length()) ) {
 						try {
-							Thread.sleep(_tsa.getDataWhat1());
+							Thread.sleep(sleepTime);
 						} catch (InterruptedException e) {
 							keepGoing = false;
 						}

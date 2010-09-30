@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AllocatedSection {
 
@@ -171,13 +171,26 @@ public class AllocatedSection {
 			}
 		}			
 	}
+	boolean handlingBlockChange = false; 
 	private synchronized void handleBlockChange(int index, java.beans.PropertyChangeEvent e) {
 		if (e.getPropertyName().equals("state")) {
 			if (mBlockList == null) mBlockList = mSection.getBlockList();
 			if (mBlockList!=null) {
 				jmri.Block b = mBlockList.get(index);
-				if (mActiveTrain.getAutoActiveTrain()!=null) {
-					mActiveTrain.getAutoActiveTrain().handleBlockStateChange(this, b);
+				if ( (mActiveTrain.getAutoActiveTrain()!=null) && (!handlingBlockChange) ) {
+					// filter to insure that change is not a short spike
+					int occ = b.getState();
+					handlingBlockChange = true;
+					try {
+						Thread.sleep(250);
+					} catch (InterruptedException exc) {
+						// ignore this exception
+					}
+					if (occ == b.getState()) {
+						// occupancy has not changed, must be OK
+						mActiveTrain.getAutoActiveTrain().handleBlockStateChange(this, b);
+					}
+					handlingBlockChange = false;
 				}
 			}
 		}
