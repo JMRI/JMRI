@@ -39,7 +39,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
  
 public class DecoderPro3Window 
@@ -212,10 +212,12 @@ public class DecoderPro3Window
     }
     
     // amazingly ugly temp pane code
-    static String result = null;
-    static int colCount = -1;
-    static int varCount = -1;
+    String result = null;
+    int colCount = -1;
+    int varCount = -1;
+    
     ProgDebugger p = new ProgDebugger();
+    
     JComponent createPane() {
         // create a JDOM tree with just some elements
         Element root = null;
