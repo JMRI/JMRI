@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.16.0
+; - Add start menu shortcut for DecoderPro3
+; -------------------------------------------------------------------------
 ; - Version 0.1.15.0
 ; - Remove shortcut to LocoTools JMRI application
 ; -------------------------------------------------------------------------
@@ -178,7 +181,7 @@
   !define JMRI_VER  "unknown"                   ; Application version
 !endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.15.0"                    ; Installer version
+!define INST_VER  "0.1.16.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -565,6 +568,11 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
                    "" \
                    "$INSTDIR\InstallTest80x80.ico" 0 "" "" \
                    "Start JMRI Install Test"
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\DecoderPro3.lnk" \
+                   "$INSTDIR\LaunchJMRI.exe" \
+                   "apps.gui3.dp3.DecoderPro3" \
+                   "$INSTDIR\decpro5.ico" 0 "" "" \
+                   "Start Decoder Pro 3"
     StrCmp $PROFILE "" 0 Win2k+ ; -- prior to Win2k this is blank
     ; -- Create a preferences directory for this user
     IfFileExists "$WINDIR\JMRI\*.*" +2
@@ -716,6 +724,7 @@ Section "Uninstall" ; SEC_CRUNINST
   Delete "$SMPROGRAMS\$0\Tools and Demos\CornwallRR.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.lnk"
   Delete "$SMPROGRAMS\$0\Tools and Demos\InstallTest.pif" ; -- for Win98
+  Delete "$SMPROGRAMS\$0\Tools and Demos\DecoderPro3.lnk"
   SetFileAttributes "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk" NORMAL
   Delete "$SMPROGRAMS\$0\Tools and Demos\Preferences.lnk"
   Delete "$SMPROGRAMS\$0\Uninstall.lnk"
