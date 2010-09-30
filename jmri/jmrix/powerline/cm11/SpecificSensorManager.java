@@ -18,7 +18,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -34,22 +34,28 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     	processForPollReq(r);
     }
     
+    /**
+     * These values need to persist between calls as the address is a different reply
+     * from the command packet and timing might have them in separate reads
+     */
+    private String newHouseCode = null;
+	private int newCmdCode = -1;
+	private int newAddrCode = -1;
+    
     private void processForPollReq(SerialReply l) {
         // process the POLL_REQ and update/create sensors as needed
 	    if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ ) { 
 	        // must be received data
 	        int last = (l.getElement(1)& 0xFF) + 1;
 	        int bits = (l.getElement(2)& 0xFF);
-        	String newHouseCode = null;
-        	int newCmdCode = -1;
-        	int newAddrCode = -1;
-        	Sensor sensor = null;
+	        Sensor sensor = null;
 	        for (int i = 3; i <= last; i++) {
 	        	int dat = l.getElement(i) & 0xFF;
 	            if ((bits & 0x01) != 0) {
 	            	// this is a function byte, so the address came from prior pass
 	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
 	                newCmdCode = dat & 0x0f;
+	                
             		if (newHouseCode != null && (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
             			// some sort of 'global' command, process for all matching the house code
             			List<String> sensors = getSystemNameList();
@@ -76,7 +82,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
             			}
             		} else {
             			// was not a global command, so might be a sensor
-    	            	if (newAddrCode > 0) {
+            			if (newAddrCode > 0) {
 		            		String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
 		            		sensor = provideSensor(sysName);
 		            		if (sensor != null) {
