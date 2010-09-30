@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * There is also a link there to a C port of Sam's programs
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class Analytic_AAlgorithm extends AbstractCalculator {
 
@@ -26,6 +26,7 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
     public Analytic_AAlgorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -293,7 +294,7 @@ public double sub(double[][] A, int r, int c) {
      *
      * More of a struct, really
      */
-    class RetVal {
+    static class RetVal {
         RetVal(int code, double x, double y, double z, double vs) {
             this.code = code;
             this.x = x;
@@ -301,8 +302,10 @@ public double sub(double[][] A, int r, int c) {
             this.z = z;
             this.vs = vs;
         }
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD")
         int code;
-        double x, y, z, t, vs;
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD")
+        double x, y, z, vs;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Analytic_AAlgorithm.class.getName());
