@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
  
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
@@ -180,7 +180,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             int x = (getScreen().width-w)/2;
             int y = (getScreen().height-h)/2;
 
-// Move the window
+        // Move the window
             dialog.setLocation(x, y);
 
             dialog.setModal(true);
@@ -256,14 +256,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
 
     ShutDownTask userPreferencesShutDownTask = null;
     
-    private static boolean _changeMade = false;
+    private static volatile boolean _changeMade = false;
     
     public synchronized boolean getChangeMade(){ return _changeMade; }
     public synchronized void setChangeMade() { _changeMade=true; }
     //The reset is used after the preferences have been loaded for the first time
     public synchronized void resetChangeMade(){ _changeMade = false; }
     
-    private static boolean _loading = false;
+    private static volatile boolean _loading = false;
     public void setLoading() { _loading = true; }
     public void finishLoading() { 
         _loading = false;
@@ -281,7 +281,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     @SuppressWarnings("unused")
     private static final boolean NODISPLAY = false;
     
-    private static int warnDeleteRoute = ASK;
+    private static volatile int warnDeleteRoute = ASK;
     public int getWarnDeleteRoute() { return warnDeleteRoute; }
     public void setWarnDeleteRoute(int boo) { 
         warnDeleteRoute = boo;
@@ -293,7 +293,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
      * Method to determine if the question of reloading JMRI should 
      * should be presented, and if not the default setting.
      */
-    private static int quitAfterSave = ASK;
+    private static volatile int quitAfterSave = ASK;
     public int getQuitAfterSave() { return quitAfterSave; }
     public void setQuitAfterSave(int boo) { 
         quitAfterSave = boo; 
@@ -301,7 +301,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnTurnoutInUse = ASK;
+    private static volatile int warnTurnoutInUse = ASK;
     public int getWarnTurnoutInUse() { return warnTurnoutInUse; }
     public void setWarnTurnoutInUse(int boo) { 
         warnTurnoutInUse = boo;
@@ -309,7 +309,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnSensorInUse = ASK;
+    private static volatile int warnSensorInUse = ASK;
     public int getWarnSensorInUse() { return warnSensorInUse; }
     public void setWarnSensorInUse(int boo) { 
         warnSensorInUse = boo;
@@ -317,7 +317,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnSignalHeadInUse = ASK;
+    private static volatile int warnSignalHeadInUse = ASK;
     public int getWarnSignalHeadInUse() { return warnSignalHeadInUse; }
     public void setWarnSignalHeadInUse(int boo) { 
         warnSignalHeadInUse = boo;
@@ -325,7 +325,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnTransitInUse = ASK;
+    private static volatile int warnTransitInUse = ASK;
     public int getWarnTransitInUse() { return warnTransitInUse; }
     public void setWarnTransitInUse(int boo) { 
         warnTransitInUse = boo;
@@ -333,14 +333,14 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnSignalMastInUse = ASK;
+    private static volatile int warnSignalMastInUse = ASK;
     public int getWarnSignalMastInUse() { return warnSignalMastInUse; }
     public void setWarnSignalMastInUse(int boo) { 
         warnSignalMastInUse = boo;
         setChangeMade();
         displayRememberMsg();
     }
-    private static int warnSectionInUse = ASK;
+    private static volatile int warnSectionInUse = ASK;
     public int getWarnSectionInUse() { return warnSectionInUse; }
     public void setWarnSectionInUse(int boo) { 
         warnSectionInUse = boo;
@@ -348,7 +348,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnReporterInUse = ASK;
+    private static volatile int warnReporterInUse = ASK;
     public int getWarnReporterInUse() { return warnReporterInUse; }
     public void setWarnReporterInUse(int boo) { 
         warnReporterInUse = boo;
@@ -356,7 +356,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnMemoryInUse = ASK;
+    private static volatile int warnMemoryInUse = ASK;
     public int getWarnMemoryInUse() { return warnMemoryInUse; }
     public void setWarnMemoryInUse(int boo) { 
         warnMemoryInUse = boo;
@@ -364,7 +364,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnLogixInUse = ASK;
+    private static volatile int warnLogixInUse = ASK;
     public int getWarnLogixInUse() { return warnLogixInUse; }
     public void setWarnLogixInUse(int boo) { 
         warnLogixInUse = boo;
@@ -372,7 +372,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnDeleteLogix = ASK;
+    private static volatile int warnDeleteLogix = ASK;
     public int getWarnDeleteLogix() { return warnDeleteLogix; }
     public void setWarnDeleteLogix(int boo) { 
         warnDeleteLogix = boo;
@@ -380,7 +380,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnLightInUse = ASK;
+    private static volatile int warnLightInUse = ASK;
     public int getWarnLightInUse() { return warnLightInUse; }
     public void setWarnLightInUse(int boo) { 
         warnLightInUse = boo;
@@ -388,7 +388,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnLRouteInUse = ASK;
+    private static volatile int warnLRouteInUse = ASK;
     public int getWarnLRouteInUse() { return warnLRouteInUse; }
     public void setWarnLRouteInUse(int boo) { 
         warnLRouteInUse = boo;
@@ -396,7 +396,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnBlockInUse = ASK;
+    private static volatile int warnBlockInUse = ASK;
     public int getWarnBlockInUse() { return warnBlockInUse; }
     public void setWarnBlockInUse(int boo) { 
         warnBlockInUse = boo;
@@ -404,7 +404,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         displayRememberMsg();
     }
     
-    private static int warnAudioInUse = ASK;
+    private static volatile int warnAudioInUse = ASK;
     public int getWarnAudioInUse() { return warnAudioInUse; }
     public void setWarnAudioInUse(int boo) { 
         warnAudioInUse = boo;
