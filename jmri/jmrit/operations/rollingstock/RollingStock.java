@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -62,6 +62,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location";
 	public static final String DESTINATION_CHANGED_PROPERTY = "rolling stock destination";
 	public static final String DESTINATIONTRACK_CHANGED_PROPERTY = "rolling stock track destination";
+	public static final String TRAIN_CHANGED_PROPERTY = "rolling stock train";
 	
 	public static final int COUPLER = 4;		// draw bar length between rolling stocks
 
@@ -531,7 +532,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			}
 			if(train != null)
 				train.addPropertyChangeListener(this);
-			firePropertyChange("rolling stock train", old, train);
+			firePropertyChange(TRAIN_CHANGED_PROPERTY, old, train);
 		}
 	}
 

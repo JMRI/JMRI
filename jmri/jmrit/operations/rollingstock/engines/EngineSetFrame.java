@@ -31,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -175,6 +175,7 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	
 	public void loadEngine(Engine engine){
 		_engine = engine;
+		engine.addPropertyChangeListener(this);
 		textEngineRoad.setText(engine.getRoad()+" "+engine.getNumber());
 		textEngineType.setText(engine.getType());
 		outOfServiceCheckBox.setSelected(engine.isOutOfService());
@@ -406,6 +407,8 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	}
 
 	public void dispose(){
+		if (_engine != null)
+			_engine.removePropertyChangeListener(this);
 		LocationManager.instance().removePropertyChangeListener(this);
 		trainManager.removePropertyChangeListener(this);
 		super.dispose();
@@ -414,7 +417,8 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("EngineSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)){
+				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+				e.getSource().getClass().equals(Engine.class)){
 			updateComboBoxes();
 		}
 	}

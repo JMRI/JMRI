@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -241,6 +241,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	
 	public void loadCar(Car car){
 		_car = car;
+		_car.addPropertyChangeListener(this);
 		textCarRoad.setText(car.getRoad()+" "+car.getNumber());
 		textCarType.setText(car.getType());
 		locationUnknownCheckBox.setSelected(car.isLocationUnknown());
@@ -670,6 +671,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	}
 
 	public void dispose(){
+		if (_car != null)
+			_car.removePropertyChangeListener(this);
 		LocationManager.instance().removePropertyChangeListener(this);
 		trainManager.removePropertyChangeListener(this);
 		super.dispose();
@@ -678,7 +681,8 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
 		log.debug ("CarSetFrame sees propertyChange "+e.getPropertyName()+" "+e.getNewValue());
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)){
+				e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY) ||
+				e.getSource().getClass().equals(Car.class)){
 			updateComboBoxes();
 		}
 	}
