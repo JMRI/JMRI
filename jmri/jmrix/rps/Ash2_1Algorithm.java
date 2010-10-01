@@ -20,15 +20,17 @@ import javax.vecmath.Point3d;
  * 
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class Ash2_1Algorithm extends AbstractCalculator {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public Ash2_1Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
         this.offset = offset;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
     public Ash2_1Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -122,9 +124,17 @@ public class Ash2_1Algorithm extends AbstractCalculator {
 	 *							*/
 
     int	    offset	= 0;			//  Offset (usec), add to delay
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
     static public int TMAX = 35000;			//  Max. allowable delay (usec)
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
     static public int TMIN = 150;			//  Min. allowable delay (usec)
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
     static public int SMAX = 30;			//  Max. OK std. dev. (usec)
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
     static public int NMAX = 50;			//  Max. no. of receivers used
 
 						//  Compute RPS Position  using
@@ -285,7 +295,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
      *
      * More of a struct, really
      */
-    class RetVal {
+    static class RetVal {
         RetVal(int code, double x, double y, double z, double vs) {
             this.code = code;
             this.x = x;
@@ -294,6 +304,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
             this.vs = vs;
         }
         int code;
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UUF_UNUSED_FIELD")
         double x, y, z, t, vs;
     }
     

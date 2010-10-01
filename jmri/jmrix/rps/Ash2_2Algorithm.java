@@ -61,15 +61,17 @@ import javax.vecmath.Point3d;
 * <P>
  * @author	Robert Ashenfelter  Copyright (C) 2008
  * @author	Bob Jacobsen  Copyright (C) 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class Ash2_2Algorithm extends AbstractCalculator {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public Ash2_2Algorithm(Point3d[] sensors, double vsound, int offset) {
         this(sensors, vsound);
         Ash2_2Algorithm.offset = offset;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
     public Ash2_2Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
@@ -152,10 +154,16 @@ public class Ash2_2Algorithm extends AbstractCalculator {
 
 
 static int offset	= 0;			//  Offset (usec), add to delay
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
 static public int TMAX	= 35000;			//  Max. allowable delay (usec)
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
 static public int TMIN	= 150;			//  Min. allowable delay (usec)
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
 static public int SMAX	= 30;			//  Max. OK std. dev. (usec)
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
 static public int NMAX	= 50;			//  Max. no. of receivers used
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // for script access
 static public int NERR	= 6;			//  No. of rcvrs w/error reject
 
 						//  Compute RPS Position  using
@@ -358,7 +366,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
      *
      * More of a struct, really
      */
-    class RetVal {
+    static class RetVal {
         RetVal(int code, double x, double y, double z, double vs) {
             this.code = code;
             this.x = x;
@@ -367,6 +375,7 @@ RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],//   ma
             this.vs = vs;
         }
         int code;
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UUF_UNUSED_FIELD")
         double x, y, z, t, vs;
     }
 

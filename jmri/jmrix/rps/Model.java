@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @since 2.1.7
  * @author	   Bob Jacobsen   Copyright (C) 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 
@@ -112,8 +112,10 @@ public class Model {
     static Model _instance = null;
     static public Model instance() {
         if (_instance == null) {
-            _instance = new Model();
-            _instance.loadValues();
+            Model i = new Model();
+            i.loadValues();
+            // don't expose until initialized
+            _instance = i;
         }
         return _instance;
     }

@@ -28,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  */
 
 
@@ -180,7 +180,7 @@ public class Engine implements ReadingListener {
     // Store the lastMeasurement 
     void saveLastMeasurement(String id, Measurement m) {
         for (int i=0; i<getNumTransmitters(); i++) {
-            if (getTransmitter(i).getID() == id && getTransmitter(i).isPolled()) {
+            if (getTransmitter(i).getID().equals(id) && getTransmitter(i).isPolled()) {
                 getTransmitter(i).setLastMeasurement(m);
                 // might be more than one, so don't end here
             }
@@ -505,6 +505,7 @@ public class Engine implements ReadingListener {
     }
 
     // for now, we only allow one Engine
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT") // for tests
     static protected Engine _instance = null;
     static public Engine instance() {
         if (_instance == null) {
