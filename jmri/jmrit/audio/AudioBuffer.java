@@ -37,7 +37,7 @@ import jmri.Audio;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public interface AudioBuffer extends Audio {
 
@@ -214,14 +214,14 @@ public interface AudioBuffer extends Audio {
 
     /**
      * Sets that this buffer is to be streamed as opposed to loaded in full.
-     * Can only be turned off when {@link isStreamedForced() isStreamedForced} is not set.
+     * Can only be turned off when {@link #isStreamedForced() isStreamedForced} is not set.
      * <p>
      * Applies only to sub-types:
      * <ul>
      * <li>Buffer
      * </ul>
      * @param streamed buffer is streamed from file or loaded in full
-     * @see   isStreamedForced()
+     * @see   #isStreamedForced()
      */
     public void setStreamed(boolean streamed);
 
