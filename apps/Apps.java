@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.120 $
+ * @version     $Revision: 1.121 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -320,10 +320,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         d.add(new JSeparator());
         d.add(new jmri.jmrit.withrottle.WiThrottleCreationAction());
-
-        // also add some tentative items from new GUIs
-        d.add(new JSeparator());
-        d.add(new apps.gui3.paned.DecoderProAction("New DP Window", null));
     }
 
     protected void scriptMenu(JMenuBar menuBar, JFrame frame) {
