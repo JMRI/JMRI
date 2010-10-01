@@ -36,7 +36,7 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -60,21 +60,23 @@ import jmri.implementation.AbstractTurnout;
         
         // define the static list if needed
         if (modeNames == null) {
-        
             if (_validFeedbackNames.length != _validFeedbackModes.length)
                 log.error("int and string feedback arrays different length");
-            modeNames  = new String[_validFeedbackNames.length+3];
-            modeValues = new int[_validFeedbackNames.length+3];
+            String[] tempModeNames = new String[_validFeedbackNames.length+3];
+            int [] tempModeValues = new int[_validFeedbackNames.length+3];
             for (int i = 0; i<_validFeedbackNames.length; i++) {
-                modeNames[i] = _validFeedbackNames[i];
-                modeValues[i] = _validFeedbackModes[i];
+                tempModeNames[i] = _validFeedbackNames[i];
+                tempModeValues[i] = _validFeedbackModes[i];
             }
-            modeNames[_validFeedbackNames.length] = "MONITORING";
-            modeValues[_validFeedbackNames.length] = MONITORING;
-            modeNames[_validFeedbackNames.length+1] = "INDIRECT";
-            modeValues[_validFeedbackNames.length+1] = INDIRECT;
-            modeNames[_validFeedbackNames.length+2] = "EXACT";
-            modeValues[_validFeedbackNames.length+2] = EXACT;
+            tempModeNames[_validFeedbackNames.length] = "MONITORING";
+            tempModeValues[_validFeedbackNames.length] = MONITORING;
+            tempModeNames[_validFeedbackNames.length+1] = "INDIRECT";
+            tempModeValues[_validFeedbackNames.length+1] = INDIRECT;
+            tempModeNames[_validFeedbackNames.length+2] = "EXACT";
+            tempModeValues[_validFeedbackNames.length+2] = EXACT;
+            
+            modeNames = tempModeNames;
+            modeValues = tempModeValues;
         }
         _validFeedbackNames = modeNames;
         _validFeedbackModes = modeValues;
