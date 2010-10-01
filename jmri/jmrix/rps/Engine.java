@@ -28,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  */
 
 
@@ -508,8 +508,11 @@ public class Engine implements ReadingListener {
     static protected Engine _instance = null;
     static public Engine instance() {
         if (_instance == null) {
-            _instance = new Engine();
-            _instance.loadValues();
+            // completely initialize object
+            Engine i = new Engine();
+            i.loadValues();
+            // and make available
+            _instance = i;
         }
         return _instance;
     }
