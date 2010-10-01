@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: DecoderPro.shtml,v 1.9 2010-03-06 20:07:59 jacobsen Exp $ -->
+<!-- $Id: DecoderPro.shtml,v 1.10 2010-10-01 12:31:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -26,7 +26,9 @@
 <H1>JMRI: DecoderPro Main Window</H1>
 
 The DecoderPro main window gives you access to all the 
-capabilities of JMRI.
+capabilities of JMRI. For more information on
+DecoderPro itself, please see
+<a href="../../../manual/index.shtml">the DecoderPro online manual</a>.
 
 <p>
 Help on specific menus:
