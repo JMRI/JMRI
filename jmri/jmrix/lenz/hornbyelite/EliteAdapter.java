@@ -24,7 +24,7 @@ import jmri.util.SerialUtil;
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003,2008-2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class EliteAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -304,7 +304,7 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    static EliteAdapter mInstance = null;
+    static volatile EliteAdapter mInstance = null;
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EliteAdapter.class.getName());
     

@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -211,7 +211,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         if (mInstance == null) mInstance = new SerialAdapter();
         return mInstance;
     }
-    static SerialAdapter mInstance = null;
+    static volatile SerialAdapter mInstance = null;
 
 
     // code for handling the input characters

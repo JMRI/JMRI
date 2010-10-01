@@ -23,7 +23,7 @@ import gnu.io.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -239,7 +239,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
 		return self;
 	}
 
-	static protected QsiTrafficController self = null;
+	static volatile protected QsiTrafficController self = null;
 
         // data members to hold the streams
 	DataInputStream istream = null;

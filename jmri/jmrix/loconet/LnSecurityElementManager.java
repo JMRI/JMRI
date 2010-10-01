@@ -12,7 +12,7 @@ import java.util.Enumeration;
  * objects (for now).
  *
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class LnSecurityElementManager {
 
@@ -100,7 +100,7 @@ public class LnSecurityElementManager {
 		}
 
 
-    static LnSecurityElementManager mInstance = null;
+    static volatile LnSecurityElementManager mInstance = null;
 
     public static LnSecurityElementManager instance() {
         if (mInstance == null) mInstance = new LnSecurityElementManager();

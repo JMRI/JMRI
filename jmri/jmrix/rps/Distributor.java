@@ -9,7 +9,7 @@ import java.util.Vector;
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
  *
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Distributor {
 
@@ -93,7 +93,7 @@ public class Distributor {
         }
     }
     
-    static private Distributor instance = null;
+    static volatile private Distributor instance = null;
     
     public static Distributor instance() {
         if (instance == null) instance = new Distributor();
@@ -112,7 +112,7 @@ public class Distributor {
     /**
      * Forward the Reading from the Swing thread
      */
-    class ForwardReading implements Runnable {
+    static class ForwardReading implements Runnable {
     
         Reading s;
         ReadingListener client;
@@ -130,7 +130,7 @@ public class Distributor {
     /**
      * Forward the Measurement from the Swing thread
      */
-    class ForwardMeasurement implements Runnable {
+    static class ForwardMeasurement implements Runnable {
     
         Measurement s;
         MeasurementListener client;

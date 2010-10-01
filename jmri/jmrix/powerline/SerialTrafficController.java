@@ -26,7 +26,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * communicate with an adapter.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -159,7 +159,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
         return self;
     }
 
-    static transient SerialTrafficController self;
+    static volatile SerialTrafficController self;
     protected void setInstance() {
         self = this;
     }

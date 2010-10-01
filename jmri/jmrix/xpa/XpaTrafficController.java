@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
@@ -196,7 +196,7 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 		return self;
 	}
 
-	static protected XpaTrafficController self = null;
+	static volatile protected XpaTrafficController self = null;
 
         // data members to hold the streams
 	DataInputStream istream = null;

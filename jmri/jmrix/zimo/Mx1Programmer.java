@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -51,7 +51,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		if (self == null) self = new Mx1Programmer();
 		return self;
 		}
-	static Mx1Programmer self = null;  // needs to be accessible from tests
+	static volatile Mx1Programmer self = null;  // needs to be accessible from tests
 
 	// handle mode
 	protected int _mode = Programmer.PAGEMODE;
