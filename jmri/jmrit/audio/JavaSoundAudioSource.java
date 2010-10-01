@@ -17,7 +17,7 @@ import javax.vecmath.Vector3f;
  * internal-only
  * <p>
  * For more information about the JavaSound API, visit
- * http://java.sun.com/products/java-media/sound/
+ * <a href="http://java.sun.com/products/java-media/sound/">http://java.sun.com/products/java-media/sound/</a>
  *
  * <hr>
  * This file is part of JMRI.
@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -56,12 +56,12 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     /**
      * Used for playing back sound source
      */
-    private Clip _clip = null;
+    private transient Clip _clip = null;
 
     /**
      * Holds reference to the JavaSoundAudioChannel object
      */
-    private JavaSoundAudioChannel _audioChannel = null;
+    private transient JavaSoundAudioChannel _audioChannel = null;
 
 
     private boolean _jsState;
@@ -187,7 +187,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     @Override
     public int getState() {
         boolean old = _jsState;
-        _jsState = this._clip.isActive();
+        _jsState = (this._clip!=null?this._clip.isActive():false);
         if (_jsState != old) {
             if (_jsState == true) {
                 this.setState(STATE_PLAYING);
@@ -317,7 +317,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
         // Calculate distance from listener
         Vector3f distance = new Vector3f(this.getCurrentPosition());
-        distance.sub(_activeAudioListener.getCurrentPosition());
+        if (!this.isPositionRelative()) {
+            distance.sub(_activeAudioListener.getCurrentPosition());
+        }
 
         float distanceFromListener =
                 (float) Math.sqrt( distance.dot(distance));
@@ -379,7 +381,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JavaSoundAudioSource.class.getName());
 
-    private class JavaSoundAudioChannel {
+    private static class JavaSoundAudioChannel {
 
         /**
         * Control for changing the gain of this AudioSource

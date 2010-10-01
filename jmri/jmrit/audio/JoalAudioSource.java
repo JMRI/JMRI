@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
@@ -119,14 +119,14 @@ public class JoalAudioSource extends AbstractAudioSource {
         if (!_initialised) {
             return false;
         }
-
+        
         // Bind this AudioSource to the specified AudioBuffer
         al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0]);
         if (JoalAudioFactory.checkALEError()) {
             log.warn("Error binding JoalSource (" + this.getSystemName() + ") to AudioBuffer (" + this.getAssignedBufferName() +")");
             return false;
         }
-
+        
         if (log.isDebugEnabled()) log.debug("Bind JoalAudioSource (" + this.getSystemName() +
                                             ") to JoalAudioBuffer (" + audioBuffer.getSystemName() + ")");
         return true;
@@ -137,6 +137,17 @@ public class JoalAudioSource extends AbstractAudioSource {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
             if (JoalAudioFactory.checkALEError()) {
                 log.warn("Error updating position of JoalAudioSource (" + this.getSystemName() + ")");
+            }
+        }
+    }
+
+    @Override
+    public void setPositionRelative(boolean relative) {
+        super.setPositionRelative(relative);
+        if (_initialised) {
+            al.alSourcei(_source[0], AL.AL_SOURCE_RELATIVE, relative?AL.AL_TRUE:AL.AL_FALSE);
+            if (JoalAudioFactory.checkALEError()) {
+                log.warn("Error updating relative position property of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
     }
@@ -352,7 +363,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      * unlike JavaSound, OpenAL (and, therefore, JOAL) do not provide a
      * convenient method to loop a sound a specific number of times.
      */
-    private class AudioSourceLoopThread extends AbstractAudioThread {
+    private static class AudioSourceLoopThread extends AbstractAudioThread {
 
         /**
          * Number of times to loop this source

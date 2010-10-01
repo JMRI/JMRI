@@ -21,7 +21,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioCommandThread extends AbstractAudioThread {
 
@@ -55,7 +55,7 @@ public class AudioCommandThread extends AbstractAudioThread {
 
         while (!dying()) {
             // Process the command queue
-            activeAudioFactory.AudioCommandQueue(null);
+            activeAudioFactory.audioCommandQueue(null);
 
             // Wait for more commands (5 minutes)
             if (!dying()) {

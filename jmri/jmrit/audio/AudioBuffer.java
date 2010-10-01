@@ -37,7 +37,7 @@ import jmri.Audio;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface AudioBuffer extends Audio {
 
@@ -211,6 +211,44 @@ public interface AudioBuffer extends Audio {
      * @return position of end loop point in samples
      */
     public long getEndLoopPoint();
+
+    /**
+     * Sets that this buffer is to be streamed as opposed to loaded in full.
+     * Can only be turned off when {@link isStreamedForced() isStreamedForced} is not set.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @param streamed buffer is streamed from file or loaded in full
+     * @see   isStreamedForced()
+     */
+    public void setStreamed(boolean streamed);
+
+    /**
+     * Retrieves the current streaming setting of this buffer
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @return current streaming setting
+     */
+    public boolean isStreamed();
+
+    /**
+     * Determines if this buffer can be loaded in full or if it must be
+     * streamed from the file. Forced streaming is usually restricted to
+     * larger sound samples that are otherwise too large to fit directly
+     * into memory.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Buffer
+     * </ul>
+     * @return True if buffer must be streamed; False it can be loaded in full
+     */
+    public boolean isStreamedForced();
 
 }
 

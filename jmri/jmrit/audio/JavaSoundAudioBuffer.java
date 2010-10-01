@@ -20,7 +20,7 @@ import jmri.util.FileUtil;
  * internal-only
  * <p>
  * For more information about the JavaSound API, visit
- * http://java.sun.com/products/java-media/sound/
+ * <a href="http://java.sun.com/products/java-media/sound/">http://java.sun.com/products/java-media/sound/</a>
  * 
  * <hr>
  * This file is part of JMRI.
@@ -37,14 +37,14 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     /**
      * Holds the AudioFormat of this buffer
      */
-    private AudioFormat _audioFormat;
+    private transient AudioFormat _audioFormat;
 
     /**
      * Byte array used to store the actual data read from the file
@@ -59,7 +59,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     /**
      * Reference to the AudioInputStream used to read sound data from the file
      */
-    private AudioInputStream _audioInputStream;
+    private transient AudioInputStream _audioInputStream;
 
     /**
      * Holds the initialised status of this AudioBuffer
@@ -98,8 +98,8 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this._audioFormat = null;
         _dataStorageBuffer = null;
         this._freq = 0;
-        this.setStartLoopPoint(0);
-        this.setEndLoopPoint(0);
+        this.setStartLoopPoint(0, false);
+        this.setEndLoopPoint(0, false);
         this.setState(STATE_EMPTY);
         return true;
     }
@@ -207,8 +207,9 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this._dataStorageBuffer = convertAudioEndianness(buffer, _audioFormat.getSampleSizeInBits()==16);
 
         // Set initial loop points
-        this.setStartLoopPoint(0);
-        this.setEndLoopPoint(_audioInputStream.getFrameLength());
+        this.setStartLoopPoint(0, false);
+        this.setEndLoopPoint(_audioInputStream.getFrameLength(), false);
+        this.generateLoopBuffers(LOOP_POINT_BOTH);
 
         this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
@@ -219,6 +220,29 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         }
         return true;
 
+    }
+
+    protected void generateLoopBuffers(int which) {
+        // TODO: Actually write this bit
+        //if ((which==LOOP_POINT_START)||(which==LOOP_POINT_BOTH)) {
+        //}
+        //if ((which==LOOP_POINT_END)||(which==LOOP_POINT_BOTH)) {
+        //}
+        if (log.isDebugEnabled())
+            log.debug("Method generateLoopBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
+    }
+
+    protected boolean generateStreamingBuffers() {
+        // TODO: Actually write this bit
+        if (log.isDebugEnabled())
+            log.debug("Method generateStreamingBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
+        return true;
+    }
+
+    protected void removeStreamingBuffers() {
+        // TODO: Actually write this bit
+        if (log.isDebugEnabled())
+            log.debug("Method removeStreamingBuffers() called for JavaSoundAudioBuffer " + this.getSystemName());
     }
 
     public int getFormat() {

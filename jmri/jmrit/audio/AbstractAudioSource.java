@@ -30,7 +30,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
@@ -56,6 +56,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     private long _timeOfLastPositionCheck = 0;
     private int _fading               = Audio.FADE_NONE;
     private boolean _bound            = false;
+    private boolean _positionRelative = false;
     private AudioBuffer _buffer;
 //    private AudioSourceDelayThread asdt = null;
 
@@ -88,7 +89,9 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public void setAssignedBuffer(AudioBuffer audioBuffer) {
         this._buffer = audioBuffer;
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
+        // Ensure that the source is stopped
+        this.stop(false);
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_BIND_BUFFER));
         activeAudioFactory.getCommandThread().interrupt();
         if (log.isDebugEnabled())
             log.debug("Assigned Buffer " + audioBuffer.getSystemName() + " to Source " + this.getSystemName());
@@ -139,6 +142,14 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
         return this._currentPosition;
     }
 
+    public void setPositionRelative(boolean relative) {
+        this._positionRelative = relative;
+    }
+
+    public boolean isPositionRelative() {
+        return this._positionRelative;
+    }
+
     public void setVelocity(Vector3f vel) {
         this._velocity = vel;
         if (log.isDebugEnabled())
@@ -175,7 +186,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     }
 
     public void resetCurrentPosition() {
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -490,7 +501,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 //        }
         if (this.getState()!=STATE_PLAYING) {
             this.setState(STATE_PLAYING);
-            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY));
             activeAudioFactory.getCommandThread().interrupt();
         }
     }
@@ -502,10 +513,16 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     abstract protected void doPlay();
 
     public void stop() {
+        stop(true);
+    }
+
+    private void stop(boolean interruptThread) {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_STOP));
-        activeAudioFactory.getCommandThread().interrupt();
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_STOP));
+        if (interruptThread) {
+            activeAudioFactory.getCommandThread().interrupt();
+        }
     }
 
     /**
@@ -515,7 +532,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public void togglePlay() {
         this._fading = Audio.FADE_NONE;
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY_TOGGLE));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PLAY_TOGGLE));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -534,7 +551,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void pause() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -546,7 +563,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void resume() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_PLAYING);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_RESUME));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESUME));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -557,7 +574,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
 
     public void togglePause() {
         this._fading = Audio.FADE_NONE;
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE_TOGGLE));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_PAUSE_TOGGLE));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -576,7 +593,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
     public void rewind() {
         this._fading = Audio.FADE_NONE;
         this.setState(STATE_STOPPED);
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_REWIND));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_REWIND));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -591,7 +608,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this._fadeGain = 0.0f;
             this._timeOfLastFadeCheck = System.currentTimeMillis();
             this.setState(STATE_PLAYING);
-            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_IN));
             activeAudioFactory.getCommandThread().interrupt();
         }
     }
@@ -607,7 +624,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
             this._fadeGain = 1.0f;
             this._timeOfLastFadeCheck = System.currentTimeMillis();
             this.setState(STATE_PLAYING);
-            activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
+            activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_FADE_OUT));
             activeAudioFactory.getCommandThread().interrupt();
         }
     }
@@ -645,7 +662,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      * Will exist only as long as this source is
      * in the process of fading in or out.
      */
-    protected class AudioSourceFadeThread extends AbstractAudioThread {
+    protected static class AudioSourceFadeThread extends AbstractAudioThread {
 
         /**
          * Reference to the AudioSource object being monitored
@@ -729,7 +746,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      * An internal class used to create a new thread to monitor and maintain
      * current source position with respect to velocity.
      */
-    protected class AudioSourceMoveThread extends AbstractAudioThread {
+    protected static class AudioSourceMoveThread extends AbstractAudioThread {
 
         /**
          * Reference to the AudioSource object being monitored

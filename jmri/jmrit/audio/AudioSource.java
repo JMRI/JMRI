@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public interface AudioSource extends Audio {
 
@@ -131,6 +131,31 @@ public interface AudioSource extends Audio {
      * </ul>
      */
     public void resetCurrentPosition();
+
+    /**
+     * Sets the position of this AudioSource object to be relative to the
+     * position of the AudioListener object or absolute.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @param relative position relative or absolute
+     */
+    public void setPositionRelative(boolean relative);
+
+    /**
+     * Returns a boolean value that determines if the position of this
+     * AudioSource object is relative to the position of the AudioListener
+     * object or absolute.
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @return boolean position relative
+     */
+    public boolean isPositionRelative();
 
     /**
      * Sets the velocity of this AudioSource object

@@ -30,7 +30,7 @@ import jmri.managers.AbstractAudioManager;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultAudioManager extends AbstractAudioManager {
 
@@ -97,6 +97,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return a;
     }
 
+    @Deprecated
     public List<String> getSystemNameList(int subType) {
         return this.getSystemNameList((char)subType);
     }
@@ -116,23 +117,32 @@ public class DefaultAudioManager extends AbstractAudioManager {
     /**
      * Method used to initialise the manager
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // OK to write to static variables as we only do so if not initialised
     public synchronized void init() {
         if(!_initialised) {
-            // First try to initialise JOAL
-            activeAudioFactory = new JoalAudioFactory();
+//            // First try to initialise LWJGL
+//            activeAudioFactory = new LWJGLAudioFactory();
+//            log.debug("Try to initialise LWJGLAudioFactory");
+//
+//            // If LWJGL fails, fall-back to JOAL
+//            if (!activeAudioFactory.init()) {
+                activeAudioFactory = new JoalAudioFactory();
+                log.debug("Try to initialise JoalAudioFactory");
 
-            // If JOAL fails, fall-back to JavaSound
-            log.debug("Try to initialise JoalAudioFactory");
-            if (!activeAudioFactory.init()) {
-                activeAudioFactory = new JavaSoundAudioFactory();
-                log.debug("Try to initialise JavaSoundAudioFactory");
-                // Finally, if JavaSound fails, fall-back to a Null sound system
+                // If JOAL fails, fall-back to JavaSound
                 if (!activeAudioFactory.init()) {
-                    activeAudioFactory = new NullAudioFactory();
-                    log.debug("Try to initialise NullAudioFactory");
-                    activeAudioFactory.init();
+                    activeAudioFactory = new JavaSoundAudioFactory();
+                    log.debug("Try to initialise JavaSoundAudioFactory");
+
+                    // Finally, if JavaSound fails, fall-back to a Null sound system
+                    if (!activeAudioFactory.init()) {
+                        activeAudioFactory = new NullAudioFactory();
+                        log.debug("Try to initialise NullAudioFactory");
+                        activeAudioFactory.init();
+                    }
                 }
-            }
+//            }
 
             // Create default Listener and save in map
             try {
@@ -204,7 +214,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return _instance;
     }
 
-    private static DefaultAudioManager _instance;
+    private volatile static DefaultAudioManager _instance;
 
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultAudioManager.class.getName());
 

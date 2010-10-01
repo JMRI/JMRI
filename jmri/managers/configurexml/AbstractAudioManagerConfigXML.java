@@ -42,7 +42,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanManagerConfigXML {
 
@@ -107,6 +107,11 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce = new Element("looppoint");
                     ce.setAttribute("start", ""+ab.getStartLoopPoint());
                     ce.setAttribute("end", ""+ab.getEndLoopPoint());
+                    e.addContent(ce);
+
+                    ce = new Element("streamed");
+                    ce.addContent(""+(ab.isStreamed()?"yes":"no"));
+                    e.addContent(ce);
                 }
                 else if (type==Audio.LISTENER) {
                     AudioListener al = (AudioListener) a;
@@ -206,6 +211,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     ce = new Element("dopplerfactor");
                     ce.addContent(""+as.getDopplerFactor());
                     e.addContent(ce);
+
+                    ce = new Element("positionrelative");
+                    ce.addContent(""+(as.isPositionRelative()?"yes":"no"));
+                    e.addContent(ce);
                 }
 
                 log.debug("store Audio "+sname);
@@ -289,6 +298,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                         ab.setEndLoopPoint(Integer.parseInt(value));
                 }
                 
+                if ((ce = e.getChild("streamed"))!=null) {
+                    ab.setStreamed(ce.getValue().equals("yes"));
+                }
+
             } catch (AudioException ex) {
                 log.error("Error loading AudioBuffer ("+ sysName +"): " + ex);
             }
@@ -379,6 +392,10 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
 
                 if ((ce = e.getChild("dopplerfactor"))!=null && ce.getValue().length() != 0) {
                     as.setDopplerFactor(Float.parseFloat(ce.getValue()));
+                }
+
+                if ((ce = e.getChild("positionrelative"))!=null) {
+                    as.setPositionRelative(ce.getValue().equals("yes"));
                 }
 
             } catch (AudioException ex) {

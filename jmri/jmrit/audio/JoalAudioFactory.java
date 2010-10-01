@@ -8,7 +8,12 @@ import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 
-import net.java.games.joal.*;
+import net.java.games.joal.AL;
+import net.java.games.joal.ALC;
+import net.java.games.joal.ALCdevice;
+import net.java.games.joal.ALConstants;
+import net.java.games.joal.ALException;
+import net.java.games.joal.ALFactory;
 import net.java.games.joal.util.ALut;
 
 /**
@@ -24,7 +29,7 @@ import net.java.games.joal.util.ALut;
  * deals with clean-up operations.
  * <br><br><hr><br><b>
  *    This software is based on or using the JOAL Library available from
- *    http://joal.dev.java.net/
+ *    <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
  * </b><br><br>
  *    JOAL License:
  * <br><i>
@@ -74,11 +79,15 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
     private static AL al;
+
+    private static ALC alc;
+
+    private static ALCdevice alcDevice;
 
     private static boolean _initialised = false;
 
@@ -92,7 +101,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_QUAD8   = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_QUAD8   = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit quad multi-channel audio format.
@@ -102,7 +111,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_QUAD16  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_QUAD16  = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 8-bit 5.1 multi-channel audio format.
@@ -112,7 +121,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_51CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_51CHN8  = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 5.1 multi-channel audio format.
@@ -122,7 +131,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_51CHN16 = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_51CHN16 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 8-bit 6.1 multi-channel audio format.
@@ -132,7 +141,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_61CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_61CHN8  = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 6.1 multi-channel audio format.
@@ -142,7 +151,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_61CHN16 = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_61CHN16 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 8-bit 7.1 multi-channel audio format.
@@ -152,7 +161,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_71CHN8  = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_71CHN8  = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Definition of 16-bit 7.1 multi-channel audio format.
@@ -162,7 +171,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * <p>
      * Initially set format to unknown.
      */
-    public static int AL_FORMAT_71CHN16 = AudioBuffer.FORMAT_UNKNOWN;
+    static int AL_FORMAT_71CHN16 = AudioBuffer.FORMAT_UNKNOWN;
 
     /**
      * Initialise this JoalAudioFactory and check for multi-channel support.
@@ -191,6 +200,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * @return true, if initialisation successful
      */
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // OK to write to static variables as we only do so if not initialised
     public boolean init() {
         if(_initialised) {
             return true;
@@ -207,7 +218,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                           + " version - " + al.alGetString(AL.AL_VERSION));
         } catch (ALException e) {
             if (log.isDebugEnabled()) log.debug("Error initialising JOAL: " + e);
-            return false;
+        return false;
         } catch (RuntimeException e) {
             if (log.isDebugEnabled()) log.debug("Error initialising OpenAL: " + e);
             return false;
@@ -264,7 +275,40 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                 + (AL_FORMAT_71CHN8==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
         log.debug("16 bit 7.1 surround supported? "
                 + (AL_FORMAT_71CHN16==AudioBuffer.FORMAT_UNKNOWN ? "No" : "Yes"));
-        
+
+        // Check context
+        alc = ALFactory.getALC();
+        alcDevice = alc.alcGetContextsDevice(alc.alcGetCurrentContext());
+        int[] size = new int[1];
+        alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length , size, 0);
+        log.debug("Size of ALC_ATTRIBUTES: " + size[0]);
+        int[] attributes = new int[size[0]];
+        alc.alcGetIntegerv(alcDevice, ALC.ALC_ALL_ATTRIBUTES, attributes.length, attributes, 0);
+        for (int i=0;i<attributes.length;i++) {
+            if (i % 2 != 0) {
+                continue;
+            }
+            switch (attributes[i]) {
+                case ALC.ALC_INVALID:
+                    log.debug("Invalid");
+                    break;
+                case ALC.ALC_MONO_SOURCES:
+                    log.debug("Number of mono sources: " + attributes[i+1]);
+                    break;
+                case ALC.ALC_STEREO_SOURCES:
+                    log.debug("Number of stereo sources: " + attributes[i+1]);
+                    break;
+                case ALC.ALC_FREQUENCY:
+                    log.debug("Frequency: " + attributes[i+1]);
+                    break;
+                case ALC.ALC_REFRESH:
+                    log.debug("Refresh: " + attributes[i+1]);
+                    break;
+                default:
+                log.debug("Attribute " + i + ": " + attributes[i]);
+            }
+        }
+
         super.init();
         _initialised = true;
         return true;

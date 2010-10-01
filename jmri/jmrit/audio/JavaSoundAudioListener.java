@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  * internal-only
  * <p>
  * For more information about the JavaSound API, visit
- * http://java.sun.com/products/java-media/sound/
+ * <a href="http://java.sun.com/products/java-media/sound/">http://java.sun.com/products/java-media/sound/</a>
  *
  * <hr>
  * This file is part of JMRI.
@@ -31,7 +31,7 @@ import jmri.InstanceManager;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JavaSoundAudioListener extends AbstractAudioListener {
 

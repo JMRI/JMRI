@@ -12,7 +12,7 @@ import net.java.games.joal.AL;
  * internal-only
  * <br><br><hr><br><b>
  *    This software is based on or using the JOAL Library available from
- *    http://joal.dev.java.net/
+ *    <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
  * </b><br><br>
  *    JOAL License:
  * <br><i>
@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class JoalAudioListener extends AbstractAudioListener {
 

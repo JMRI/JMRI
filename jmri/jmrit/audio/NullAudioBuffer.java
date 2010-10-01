@@ -23,7 +23,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NullAudioBuffer extends AbstractAudioBuffer {
 
@@ -60,6 +60,19 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     protected boolean loadBuffer() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
         return true;
+    }
+
+    protected void generateLoopBuffers(int which) {
+        // No need to do anything for the NullAudioBuffer
+    }
+
+    protected boolean generateStreamingBuffers() {
+        // No need to do this for the NullAudioBuffer - it's always successful ;-)
+        return true;
+    }
+
+    protected void removeStreamingBuffers() {
+        // No need to do anything for the NullAudioBuffer
     }
 
     public int getFormat() {

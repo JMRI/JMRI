@@ -28,7 +28,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
@@ -131,7 +131,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     }
 
     public void resetCurrentPosition() {
-        activeAudioFactory.AudioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
+        activeAudioFactory.audioCommandQueue(new AudioCommand(this, Audio.CMD_RESET_POSITION));
         activeAudioFactory.getCommandThread().interrupt();
     }
 
@@ -222,7 +222,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
      * An internal class used to create a new thread to monitor and maintain
      * current listener position with respect to velocity.
      */
-    protected class AudioListenerMoveThread extends AbstractAudioThread {
+    protected static class AudioListenerMoveThread extends AbstractAudioThread {
 
         /**
          * Reference to the AudioListener object being monitored

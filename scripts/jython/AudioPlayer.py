@@ -4,13 +4,14 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
-from java.awt import FlowLayout
+from java.awt import FlowLayout, Dimension
 from java.awt.event import ItemEvent
 from java.util import Hashtable
 from javax.swing import Box, BoxLayout, JButton, JComboBox, JPanel, JSlider, JLabel, JSpinner, SpinnerNumberModel
 from jmri.util import JmriJFrame
+from jmri.util.swing import VerticalLabelUI
 from jmri import Audio
 
 class AudioPlayerFrame (JmriJFrame):
@@ -70,11 +71,11 @@ class AudioPlayerFrame (JmriJFrame):
         # Now sliders
         ticksMajor = int(self.posMinMax/4)
         ticksMinor = int(ticksMajor/5)
-        labels = Hashtable(3)
-        labels.put(-self.posMinMax, JLabel("Left"))
-        labels.put(              0, JLabel("Centre"))
-        labels.put( self.posMinMax, JLabel("Right"))
-        self.positionXSlider.labelTable = labels
+        labelsX = Hashtable(3)
+        labelsX.put(-self.posMinMax, JLabel("Left"))
+        labelsX.put(              0, JLabel("Centre"))
+        labelsX.put( self.posMinMax, JLabel("Right"))
+        self.positionXSlider.labelTable = labelsX
         self.positionXSlider.minimum = -self.posMinMax
         self.positionXSlider.maximum = self.posMinMax
         self.positionXSlider.majorTickSpacing = ticksMajor
@@ -133,7 +134,9 @@ class AudioPlayerFrame (JmriJFrame):
 
         # Now sliders
         p = JPanel(FlowLayout(FlowLayout.LEADING))
-        p.add(JLabel("Y Position"))
+        label = JLabel("Y Position")
+        label.UI = VerticalLabelUI() # Default behaviour is anti-clockwise
+        p.add(label)
         p.add(self.positionYSlider)
         p2 = JPanel()
         p2.layout = BoxLayout(p2, BoxLayout.Y_AXIS)
@@ -141,13 +144,45 @@ class AudioPlayerFrame (JmriJFrame):
         p3.add(JLabel("Range"))
         p3.add(self.rangeSpinner)
         p2.add(p3)
-        p2.add(Box.createVerticalGlue())
-        p3 = JPanel(FlowLayout(FlowLayout.LEADING))
-        p3.add(JLabel("X Position"))
+        #p2.add(Box.createVerticalGlue())
+        p3 = JPanel()
+        p3.layout = BoxLayout(p3, BoxLayout.Y_AXIS)
+        label = JLabel("X Position")
+        label.alignmentX = JLabel.CENTER_ALIGNMENT
+        p3.add(label)
         p3.add(self.positionXSlider)
+        # Now the XSlider has been added, we can manipulate the labels
+        label = labelsX.get(-self.posMinMax)
+        oldHeight = label.size.height
+        label.UI = VerticalLabelUI()
+        label.size = label.preferredSize
+        newHeight = label.size.height
+        label = labelsX.get(0)
+        label.UI = VerticalLabelUI()
+        label.size = label.preferredSize
+        if (label.size.height > newHeight):
+            newHeight = label.size.height
+        label = labelsX.get(self.posMinMax)
+        label.UI = VerticalLabelUI()
+        label.size = label.preferredSize
+        if (label.size.height > newHeight):
+            newHeight = label.size.height
+        print "Old slider preferred height: %d" % self.positionXSlider.preferredSize.height
+        print "Old slider actual height: %d" % self.positionXSlider.size.height
+        print "Old slider minimum height: %d" % self.positionXSlider.minimumSize.height
+        print "Old label height: %d" % oldHeight
+        print "New label height: %d" % newHeight
+        self.positionXSlider.minimumSize = Dimension(self.positionXSlider.preferredSize.width, self.positionXSlider.minimumSize.height + newHeight - oldHeight)
+        self.positionXSlider.preferredSize = self.positionXSlider.minimumSize
+        self.positionXSlider.size = self.positionXSlider.preferredSize
+        print "New slider preferred height: %d" % self.positionXSlider.preferredSize.height
+        print "New slider actual height: %d" % self.positionXSlider.size.height
+        print "New slider minimum height: %d" % self.positionXSlider.minimumSize.height
         p2.add(p3)
         p.add(p2)
-        p.add(JLabel("Z Position"))
+        label = JLabel("Z Position")
+        label.UI = VerticalLabelUI()
+        p.add(label)
         p.add(self.positionZSlider)
         self.add(p)
 

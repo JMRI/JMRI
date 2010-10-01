@@ -33,7 +33,7 @@ package jmri.jmrit.audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public interface AudioFactory {
 
@@ -91,7 +91,7 @@ public interface AudioFactory {
      * @param newAudioCommand AudioCommand to queue or null to execute queue
      * @return true, if further commands exist; false, if empty
      */
-    public boolean AudioCommandQueue(AudioCommand newAudioCommand);
+    public boolean audioCommandQueue(AudioCommand newAudioCommand);
 
     /**
      * Return the currently active Command thread

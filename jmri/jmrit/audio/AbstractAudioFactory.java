@@ -25,7 +25,7 @@ import jmri.Audio;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
 
@@ -50,6 +50,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
      */
     private static AbstractAudioThread audioCommandThread = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public boolean init() {
         if (_initialised) {
             log.debug("Already initialised");
@@ -90,7 +91,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         }
     }
 
-    public synchronized boolean AudioCommandQueue(AudioCommand queueAudioCommand) {
+    public synchronized boolean audioCommandQueue(AudioCommand queueAudioCommand) {
         if (queueAudioCommand == null) {
             log.debug("Processing command queue");
             // Process command queue
@@ -189,6 +190,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
         return audioCommandThread;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     public void setDistanceAttenuated(boolean attenuated) {
         _distanceAttenuated = attenuated;
     }

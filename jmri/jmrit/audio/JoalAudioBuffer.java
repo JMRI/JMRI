@@ -15,7 +15,7 @@ import net.java.games.joal.util.ALut;
  * internal-only
  * <br><br><hr><br><b>
  *    This software is based on or using the JOAL Library available from
- *    http://joal.dev.java.net/
+ *    <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
  * </b><br><br>
  *    JOAL License:
  * <br><i>
@@ -65,7 +65,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
@@ -192,9 +192,9 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             return false;
         }
         // Reset buffer state
-        // Use super class methods to postpone loop buffer generation
-        super.setStartLoopPoint(0);
-        super.setEndLoopPoint(0);
+        // Use internal methods to postpone loop buffer generation
+        setStartLoopPoint(0, false);
+        setEndLoopPoint(0, false);
         this.setState(STATE_EMPTY);
 
         // Load the specified .wav file into data arrays
@@ -212,10 +212,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         this.setState(STATE_LOADED);
 
         // Set initial loop points
-        // Use super class methods to postpone loop buffer generation
-        super.setStartLoopPoint(0);
-        super.setEndLoopPoint(_size[0]);
-        generateLoopBuffers();
+        // Use internal methods to postpone loop buffer generation
+        setStartLoopPoint(0, false);
+        setEndLoopPoint(_size[0], false);
+        generateLoopBuffers(LOOP_POINT_BOTH);
 
         if (log.isDebugEnabled()) {
             log.debug("Loaded buffer: " + this.getSystemName());
@@ -226,28 +226,30 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         return true;
     }
 
-    // Override super class method to ensure loop buffers are re-generated
-    @Override
-    public void setStartLoopPoint(long startLoopPoint) {
-        super.setStartLoopPoint(startLoopPoint);
-        generateLoopBuffers();
+    protected boolean generateStreamingBuffers() {
+        // TODO: Actually write this bit
+        if (log.isDebugEnabled())
+            log.debug("Method generateStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
+        return true;
     }
 
-    // Override super class method to ensure loop buffers are re-generated
-    @Override
-    public void setEndLoopPoint(long endLoopPoint) {
-        super.setEndLoopPoint(endLoopPoint);
-        generateLoopBuffers();
+    protected void removeStreamingBuffers() {
+        // TODO: Actually write this bit
+        if (log.isDebugEnabled()) 
+            log.debug("Method removeStreamingBuffers() called for JoalAudioBuffer " + this.getSystemName());
     }
 
-    /**
-     * Method used to generate any necessary loop buffers.
-     */
-    protected void generateLoopBuffers() {
-        // TODO: Actually write this bit ;-)
-        if (log.isDebugEnabled()) {
-            log.debug("Method generateLoopBuffers() called for buffer " + this.getSystemName());
+    protected void generateLoopBuffers(int which) {
+        if ((which==LOOP_POINT_START)||(which==LOOP_POINT_BOTH)) {
+            // Create start loop buffer
+            // TODO: Actually write this bit
         }
+        if ((which==LOOP_POINT_END)||(which==LOOP_POINT_BOTH)) {
+            // Create end loop buffer
+            // TODO: Actually write this bit
+        }
+        if (log.isDebugEnabled()) 
+            log.debug("Method generateLoopBuffers() called for JoalAudioBuffer " + this.getSystemName());
     }
 
     public int getFormat() {

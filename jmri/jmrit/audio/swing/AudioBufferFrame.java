@@ -2,6 +2,7 @@
 
 package jmri.jmrit.audio.swing;
 
+//import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +10,7 @@ import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,9 +25,11 @@ import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
+//import jmri.jmrit.audio.WaveFileReader;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
+//import jmri.util.swing.VerticalLabelUI;
 
 /**
  * Defines a GUI to edit AudioBuffer objects
@@ -45,7 +49,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
@@ -57,6 +61,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JLabel urlLabel = new JLabel(rba.getString("LabelURL"));
     JTextField url = new JTextField(40);
     JButton buttonBrowse = new JButton(rba.getString("ButtonBrowse"));
+    JCheckBox stream = new JCheckBox(rba.getString("LabelStream"));
 //    JLabel formatLabel = new JLabel(rba.getString("LabelFormat"));
 //    JTextField format = new JTextField(20);
     JLabel loopStartLabel = new JLabel(rba.getString("LabelLoopStart"));
@@ -64,6 +69,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JLabel loopEndLabel = new JLabel(rba.getString("LabelLoopEnd"));
     JSpinner loopEnd = new JSpinner();
     JFileChooser fileChooser;
+//    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
 
 
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -98,12 +104,37 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         });
         p2.add(buttonBrowse);
         p.add(p2);
+        p2 = new JPanel(); p2.setLayout(new FlowLayout());
+        p2.add(stream);
+        p.add(p2);
 //        p2 = new JPanel(); p2.setLayout(new FlowLayout());
 //        p2.add(formatLabel);
 //        p2.add(format);
 //        p.add(p2);
         main.add(p);
 
+//        p = new JPanel();
+//        p.setBorder(BorderFactory.createCompoundBorder(
+//                        BorderFactory.createTitledBorder("Waveforms"),
+//                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+//
+//        JLabel label = new JLabel("Whole sample");
+//        label.setUI(new VerticalLabelUI());
+//        p.add(label);
+//
+//        waveForm.setPreferredSize(new Dimension(400, 120));
+//        p.add(waveForm);
+//
+//        label = new JLabel("Loop-point detail");
+//        label.setUI(new VerticalLabelUI());
+//        p.add(label);
+//
+//        AudioWaveFormPanel waveFormLoop = new AudioWaveFormPanel();
+//        waveFormLoop.setPreferredSize(new Dimension(80, 120));
+//        p.add(waveFormLoop);
+//
+//        main.add(p);
+//
         p = new JPanel(); p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
                         BorderFactory.createTitledBorder(rba.getString("LabelLoopPoints")),
@@ -155,6 +186,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         userName.setText(null);
         url.setText(null);
 //        format.setText(null);
+        stream.setSelected(false);
+        stream.setEnabled(false); //(true);
         loopStart.setValue(Long.valueOf(0));
         loopEnd.setValue(Long.valueOf(0));
 
@@ -170,6 +203,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         AudioBuffer b = (AudioBuffer) a;
         url.setText(b.getURL());
 //        format.setText(b.toString());
+        stream.setSelected(b.isStreamed());
+        stream.setEnabled(false); //(!b.isStreamedForced());
         loopStart.setValue(b.getStartLoopPoint());
         loopEnd.setValue(b.getEndLoopPoint());
         loopStart.setEnabled(true);
@@ -198,6 +233,12 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             String fileName = FileUtil.getPortableFilename(file);
             if (!url.getText().equals(fileName)) {
                 url.setText(fileName);
+//                try {
+//                    WaveFileReader wfr = new WaveFileReader(FileUtil.getExternalFilename(fileName));
+//                    JOptionPane.showMessageDialog(null, wfr.toString(), wfr.toString(), JOptionPane.INFORMATION_MESSAGE);
+//                } catch (AudioException ex) {
+//                    JOptionPane.showMessageDialog(null, ex.getMessage(), rba.getString("TitleReadError"), JOptionPane.ERROR_MESSAGE);
+//                }
             }
         }
     }
@@ -217,6 +258,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
                 throw new AudioException("Duplicate user name - please modify");
             }
             b.setUserName(user);
+            b.setStreamed(stream.isSelected());
             if (_newBuffer || !b.getURL().equals(url.getText())) {
                 b.setURL(url.getText());
                 log.debug("After load, end loop point = " + b.getEndLoopPoint());
@@ -228,6 +270,10 @@ public class AudioBufferFrame extends AbstractAudioFrame {
                     b.setURL(url.getText());
                 }
             }
+
+            // Update streaming checkbox if necessary
+            stream.setSelected(b.isStreamed());
+            stream.setEnabled(false); //(!b.isStreamedForced());
 
             // Notify changes
             model.fireTableDataChanged();

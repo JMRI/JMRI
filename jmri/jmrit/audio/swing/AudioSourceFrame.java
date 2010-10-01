@@ -44,7 +44,7 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
@@ -65,8 +65,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //    JSpinner loopMaxDelay = new JSpinner();
 //    JLabel loopDelayUnitsLabel = new JLabel(rba.getString("UnitMS"));
     JCheckBox loopInfinite = new JCheckBox(rba.getString("LabelLoopInfinite"));
-    JPanelVector3f position = new JPanelVector3f(rba.getString("LabelPosition"),
+    JPanelVector3f position = new JPanelVector3f("",
                                                  rba.getString("UnitUnits"));
+    JCheckBox positionRelative = new JCheckBox(rba.getString("LabelPositionRelative"));
     JPanelVector3f velocity = new JPanelVector3f(rba.getString("LabelVelocity"),
                                                  rba.getString("UnitU/S"));
     JPanelSliderf gain = new JPanelSliderf(rba.getString("LabelGain"), 0.0f, 1.0f, 5, 4);
@@ -172,7 +173,14 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //        p.add(loopDelayUnitsLabel);
 //        main.add(p);
 //
-        main.add(position);
+        p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createTitledBorder(rba.getString("LabelPosition")),
+                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        p.add(position);
+        p.add(positionRelative);
+        main.add(p);
+        
         main.add(velocity);
         main.add(gain);
         main.add(pitch);
@@ -269,6 +277,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //        loopMinDelay.setValue(0);
 //        loopMaxDelay.setValue(0);
         position.setValue(new Vector3f(0,0,0));
+        positionRelative.setSelected(false);
         velocity.setValue(new Vector3f(0,0,0));
         gain.setValue(1.0f);
         pitch.setValue(1.0f);
@@ -291,13 +300,16 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.audioManagerInstance();
         String ab = s.getAssignedBufferName();
         Audio b = am.getAudio(ab);
-        assignedBuffer.setSelectedItem(b.getUserName()==null?ab:b.getUserName());
+        if (b!=null) {
+            assignedBuffer.setSelectedItem(b.getUserName()==null?ab:b.getUserName());
+        }
         loopInfinite.setSelected((s.getMinLoops()==AudioSource.LOOP_CONTINUOUS));
         loopMin.setValue(loopInfinite.isSelected()?0:s.getMinLoops());
         loopMax.setValue(loopInfinite.isSelected()?0:s.getMaxLoops());
 //        loopMinDelay.setValue(s.getMinLoopDelay());
 //        loopMaxDelay.setValue(s.getMaxLoopDelay());
         position.setValue(s.getPosition());
+        positionRelative.setSelected(s.isPositionRelative());
         velocity.setValue(s.getVelocity());
         gain.setValue(s.getGain());
         pitch.setValue(s.getPitch());
@@ -348,6 +360,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
 //            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
+            s.setPositionRelative(positionRelative.isSelected());
             s.setVelocity(velocity.getValue());
             s.setGain(gain.getValue());
             s.setPitch(pitch.getValue());

@@ -22,7 +22,7 @@ import jmri.InstanceManager;
  * objects and deals with clean-up operations.
  * <p>
  * For more information about the JavaSound API, visit
- * http://java.sun.com/products/java-media/sound/
+ * <a href="http://java.sun.com/products/java-media/sound/">http://java.sun.com/products/java-media/sound/</a>
  * 
  * <hr>
  * This file is part of JMRI.
@@ -39,13 +39,13 @@ import jmri.InstanceManager;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class JavaSoundAudioFactory extends AbstractAudioFactory {
 
     private static boolean _initialised = false;
 
-    private static Mixer _mixer;
+    private volatile static Mixer _mixer;
 
     private JavaSoundAudioListener _activeAudioListener;
 
@@ -89,6 +89,8 @@ public class JavaSoundAudioFactory extends AbstractAudioFactory {
     }
 
     @Override
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+    // OK to write to static variable _mixer as we are cleaning up
     public void cleanup() {
         // Stop the command thread
         super.cleanup();

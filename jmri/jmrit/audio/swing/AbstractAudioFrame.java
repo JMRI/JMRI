@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
@@ -211,7 +211,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      * A convenience class to create a JPanel for editing a float value
      * using combined JSlider and JSPinner Swing objects
      */
-    class JPanelSliderf extends JPanel {
+    protected class JPanelSliderf extends JPanel {
 
         JSlider slider = new JSlider();
 
