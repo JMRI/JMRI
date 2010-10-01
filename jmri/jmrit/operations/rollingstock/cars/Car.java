@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.42 $
+ * @version             $Revision: 1.43 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -26,6 +26,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected boolean _locationUnknown = false;
+	protected boolean _outOfService = false;
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected String _nextLoad = "";
@@ -158,12 +159,31 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			firePropertyChange("car location known", old?"true":"false", unknown?"true":"false");
 	}
 	
+	/**
+	 * 
+	 * @return true when car's location is unknown
+	 */
 	public boolean isLocationUnknown(){
 		return _locationUnknown;
 	}
 	
+	public void setOutOfService(boolean outOfService){
+		boolean old = _outOfService;
+		_outOfService = outOfService;
+		if (!old == outOfService)
+			firePropertyChange("car out of service", old?"true":"false", outOfService?"true":"false");
+	}
+	
+	/**
+	 * 
+	 * @return true when car is out of service
+	 */
+	public boolean isOutOfService(){
+		return _outOfService;
+	}
+	
 	public String getLocationName(){
-		return (isLocationUnknown()?"<?> ":"") + super.getLocationName();
+		return (isLocationUnknown()?"<?> ":(isOutOfService()?"<O> ":"")) + super.getLocationName();
 	}
 	
 	public void setCaboose(boolean caboose){
@@ -431,6 +451,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			_fred = a.getValue().equals("true");
 		if ((a = e.getAttribute("locUnknown")) != null)
 			_locationUnknown = a.getValue().equals("true");
+		if ((a = e.getAttribute("outOfService")) != null)
+			_outOfService = a.getValue().equals("true");
 		if ((a = e.getAttribute("kernel")) != null){
 			Kernel k = CarManager.instance().getKernelByName(a.getValue());
 			if (k != null){
@@ -479,6 +501,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			e.setAttribute("fred", hasFred()?"true":"false");
 		if (isLocationUnknown())
 			e.setAttribute("locUnknown", isLocationUnknown()?"true":"false");
+		if (isOutOfService())
+			e.setAttribute("outOfService", isOutOfService()?"true":"false");
 		if (getKernel() != null){
 			e.setAttribute("kernel", getKernelName());
 			if (getKernel().isLeadCar(this))

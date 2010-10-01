@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class CarSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -79,6 +79,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	JCheckBox autoNextDestTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox autoReturnWhenEmptyTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox locationUnknownCheckBox = new JCheckBox(rb.getString("LocationUnknown"));
+	JCheckBox outOfServiceCheckBox = new JCheckBox(rb.getString("OutOfService"));
 		
 	public CarSetFrame() {
 		super();
@@ -113,6 +114,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		pStatus.setLayout(new GridBagLayout());
 		pStatus.setBorder(BorderFactory.createTitledBorder(rb.getString("Status")));
 		addItem(pStatus, locationUnknownCheckBox, 1, 0);
+		addItem(pStatus, outOfServiceCheckBox, 1, 1);
 		pRow1.add(pStatus);
 		
 		pPanel.add(pRow1);
@@ -207,6 +209,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		
 		// setup checkbox
 		addCheckBoxAction(locationUnknownCheckBox);
+		addCheckBoxAction(outOfServiceCheckBox);
 		addCheckBoxAction(autoTrackCheckBox);
 		addCheckBoxAction(autoDestinationTrackCheckBox);
 		addCheckBoxAction(autoNextDestTrackCheckBox);
@@ -241,6 +244,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		textCarRoad.setText(car.getRoad()+" "+car.getNumber());
 		textCarType.setText(car.getType());
 		locationUnknownCheckBox.setSelected(car.isLocationUnknown());
+		outOfServiceCheckBox.setSelected(car.isOutOfService());
 		updateComboBoxes();
 		enableComponents(!locationUnknownCheckBox.isSelected());
 		if (_car.getRouteLocation() != null)
@@ -295,8 +299,9 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
 			log.debug("Save button action");
-			// save the unknown status
+			// save the statuses
 			_car.setLocationUnknown(locationUnknownCheckBox.isSelected());
+			_car.setOutOfService(outOfServiceCheckBox.isSelected());
 			
 			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
 				_car.setLocation(null, null);
@@ -533,8 +538,10 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		if (ae.getSource() == locationUnknownCheckBox)
+		if (ae.getSource() == locationUnknownCheckBox){
+			outOfServiceCheckBox.setSelected(locationUnknownCheckBox.isSelected());
 			enableComponents(!locationUnknownCheckBox.isSelected());
+		}
 		if (ae.getSource() == autoTrackCheckBox) 
 			updateLocation();
 		if (ae.getSource() == autoDestinationTrackCheckBox) 
@@ -561,6 +568,7 @@ public class CarSetFrame extends OperationsFrame implements java.beans.PropertyC
 		autoDestinationTrackCheckBox.setEnabled(enabled);
 		autoNextDestTrackCheckBox.setEnabled(enabled);
 		autoReturnWhenEmptyTrackCheckBox.setEnabled(enabled);
+		outOfServiceCheckBox.setEnabled(enabled);
 	}
 	
 	protected void updateLocation(){
