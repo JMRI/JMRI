@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -30,7 +31,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class EngineSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -46,6 +47,7 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		
 	// labels
 	JLabel textEngineRoad = new JLabel();
+	JLabel textEngineType = new JLabel();
 	JLabel textName = new JLabel(rb.getString("Name"));
 	JLabel textTrack = new JLabel(rb.getString("Track"));
 	JLabel textName2 = new JLabel(rb.getString("Name"));
@@ -60,6 +62,9 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	JComboBox destinationBox = LocationManager.instance().getComboBox();
 	JComboBox trackDestinationBox = new JComboBox(); 
 	JComboBox trainBox = TrainManager.instance().getComboBox();
+	
+	// check boxes
+	JCheckBox outOfServiceCheckBox = new JCheckBox(rb.getString("OutOfService"));
 		
 	public EngineSetFrame() {
 		super();
@@ -73,11 +78,30 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		
 		// Layout the panel by rows
 		// row 1
+		JPanel pRow1 = new JPanel();
+		pRow1.setLayout(new BoxLayout(pRow1,BoxLayout.X_AXIS));
+		// row 1a
 		JPanel pEngine = new JPanel();
 		pEngine.setLayout(new GridBagLayout());
 		pEngine.setBorder(BorderFactory.createTitledBorder(rb.getString("Engine")));
 		addItem(pEngine, textEngineRoad, 1, 0);
-		pPanel.add(pEngine);
+		pRow1.add(pEngine);
+		
+		// row 1b
+		JPanel pType = new JPanel();
+		pType.setLayout(new GridBagLayout());
+		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
+		addItem(pType, textEngineType, 1, 0);
+		pRow1.add(pType);
+		
+		// row 1c
+		JPanel pStatus = new JPanel();
+		pStatus.setLayout(new GridBagLayout());
+		pStatus.setBorder(BorderFactory.createTitledBorder(rb.getString("Status")));
+		addItem(pStatus, outOfServiceCheckBox, 1, 1);
+		pRow1.add(pStatus);
+		
+		pPanel.add(pRow1);
 		
 		// row 2
 		JPanel pLocation = new JPanel();
@@ -94,7 +118,7 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 		// optional panel
 		JPanel pOptional = new JPanel();
 		pOptional.setLayout(new BoxLayout(pOptional,BoxLayout.Y_AXIS));
-		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptional")));
+		pOptional.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalProgram")));
 
 		// row 6
 		JPanel pDestination = new JPanel();
@@ -152,6 +176,8 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	public void loadEngine(Engine engine){
 		_engine = engine;
 		textEngineRoad.setText(engine.getRoad()+" "+engine.getNumber());
+		textEngineType.setText(engine.getType());
+		outOfServiceCheckBox.setSelected(engine.isOutOfService());
 		updateComboBoxes();
 		if (_engine.getRouteLocation() != null)
 			log.debug("engine has a pickup location "+_engine.getRouteLocation().getName());
@@ -213,6 +239,8 @@ public class EngineSetFrame extends OperationsFrame implements java.beans.Proper
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
+			// save the statuses
+			_engine.setOutOfService(outOfServiceCheckBox.isSelected());
 			if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
 				_engine.setLocation(null, null);
 			} else {

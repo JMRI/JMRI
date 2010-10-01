@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.9 2010-01-10 04:06:43 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.10 2010-10-01 20:17:52 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -55,6 +55,8 @@
 <!ATTLIST engine moves					CDATA #IMPLIED>                    
 <!ATTLIST engine comment				CDATA #IMPLIED>
 <!ATTLIST engine rfid					CDATA #IMPLIED>
+<!ATTLIST engine locUnknown				(true | false ) "false"> 
+<!ATTLIST engine outOfService			(true | false ) "false">
 
 <!ATTLIST engineEditOptions x			CDATA #IMPLIED> 
 <!ATTLIST engineEditOptions y			CDATA #IMPLIED> 

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -37,6 +37,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	protected String _comment = "";
 	protected String _routeId = "";  		// saved route for interchange tracks
 	protected String _rfid = "";
+	protected boolean _locationUnknown = false;
+	protected boolean _outOfService = false;
 	
 	protected Location _location = null;
 	protected Track _trackLocation = null;
@@ -200,6 +202,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 
 	public String getBuilt() {
 		return _built;
+	}
+	
+	public String getStatus(){
+		return (isLocationUnknown()?"<?> ":(isOutOfService()?"<O> ":""));
 	}
 	
 	public Location getLocation() {
@@ -610,6 +616,36 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public String getOwner() {
 		return _owner;
 	}
+	
+	public void setLocationUnknown(boolean unknown){
+		boolean old = _locationUnknown;
+		_locationUnknown = unknown;
+		if (!old == unknown)
+			firePropertyChange("car location known", old?"true":"false", unknown?"true":"false");
+	}
+	
+	/**
+	 * 
+	 * @return true when car's location is unknown
+	 */
+	public boolean isLocationUnknown(){
+		return _locationUnknown;
+	}
+	
+	public void setOutOfService(boolean outOfService){
+		boolean old = _outOfService;
+		_outOfService = outOfService;
+		if (!old == outOfService)
+			firePropertyChange("car out of service", old?"true":"false", outOfService?"true":"false");
+	}
+	
+	/**
+	 * 
+	 * @return true when rolling stock is out of service
+	 */
+	public boolean isOutOfService(){
+		return _outOfService;
+	}
 
 	public void setComment(String comment) {
 		_comment = comment;
@@ -710,6 +746,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			_comment = a.getValue();
 		if ((a = e.getAttribute("rfid")) != null)
 			_rfid = a.getValue();
+		if ((a = e.getAttribute("outOfService")) != null)
+			_outOfService = a.getValue().equals("true");
 	}
 
 	boolean verboseStore = false;
@@ -761,6 +799,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			e.setAttribute("comment", getComment());
 		if (!getRfid().equals("") )
 			e.setAttribute("rfid", getRfid());
+		if (isLocationUnknown())
+			e.setAttribute("locUnknown", isLocationUnknown()?"true":"false");
+		if (isOutOfService())
+			e.setAttribute("outOfService", isOutOfService()?"true":"false");
 		return e;
 	}
 	

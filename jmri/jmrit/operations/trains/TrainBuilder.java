@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.86 $
+ * @version             $Revision: 1.87 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -429,6 +429,13 @@ public class TrainBuilder extends TrainCommon{
 			// remove engines that aren't departing from the selected staging track (departStageTrack != null if staging)
 			if(!engine.getLocationName().equals(train.getTrainDepartsName()) || ((departStageTrack != null && !engine.getTrackName().equals(departStageTrack.getName())))){
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeEngineDepart"),new Object[]{engine.toString()}));
+				engineList.remove(indexEng);
+				indexEng--;
+				continue;
+			}
+			// remove engines that are out of service
+			if (engine.isOutOfService()){
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeEngineOutOfService"),new Object[]{engine.toString()}));
 				engineList.remove(indexEng);
 				indexEng--;
 				continue;

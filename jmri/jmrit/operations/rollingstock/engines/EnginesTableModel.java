@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.22 $
+ * @version   $Revision: 1.23 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -294,7 +294,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case LOCATIONCOLUMN: {
         	String s ="";
         	if (!engine.getLocationName().equals(""))
-        		s = engine.getLocationName() + " (" + engine.getTrackName() + ")";
+        		s = engine.getStatus() + engine.getLocationName() + " (" + engine.getTrackName() + ")";
         	return s;
         }
         case DESTINATIONCOLUMN: {

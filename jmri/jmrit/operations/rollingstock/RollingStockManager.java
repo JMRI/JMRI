@@ -21,7 +21,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class RollingStockManager {
 	
@@ -451,7 +451,7 @@ public class RollingStockManager {
     	case BY_ROAD: return rs.getRoad();
     	case BY_TYPE: return rs.getType();
     	case BY_COLOR: return rs.getColor();
-    	case BY_LOCATION: return rs.getLocationName() + rs.getTrackName();
+    	case BY_LOCATION: return rs.getStatus() + rs.getLocationName() + rs.getTrackName();
     	case BY_DESTINATION: return rs.getDestinationName() + rs.getDestinationTrackName();
     	case BY_TRAIN: return rs.getTrainName();
     	case BY_MOVES: return rs.getMoves(); // returns an integer
