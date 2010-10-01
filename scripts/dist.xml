@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.52 $ -->
+<!-- Revision $Revision: 1.53 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -146,12 +146,14 @@
     <delete dir="MacOSX/JMRI/JmriDemo.app" />
     <delete dir="MacOSX/JMRI/LocoTools.app" />
     <delete dir="MacOSX/JMRI/CornwallRR.app" />
+    <delete dir="MacOSX/JMRI/DecoderPro3.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/DecoderPro.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/PanelPro.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/SoundPro.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/JmriDemo.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/LocoTools.app" />
     <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/CornwallRR.app" />
+    <move todir="MacOSX/JMRI" file="MacOSX/JMRI/scripts/MacOSXapps/V1/DecoderPro3.app" />
     <delete dir="MacOSX/JMRI/scripts" />
     
     <!-- copy various files from CVS -->
@@ -208,6 +210,7 @@
       		<include name="JmriDemo"/>
       		<include name="InstallTest"/>
       		<include name="cornwall"/>
+      		<include name="DecoderPro3"/>
       		<include name="RXTXuninstall.sh"/>
       	</fileset>
     </chmod>
@@ -222,6 +225,7 @@
       		<include name="JmriDemo"/>
       		<include name="InstallTest"/>
       		<include name="cornwall"/>
+      		<include name="DecoderPro3"/>
       		<include name="default.lcf"/>
       		<include name="RXTXuninstall.sh"/>
       		<include name="COPYING"/>
@@ -271,6 +275,7 @@
                 <exclude name="JMRI/JmriDemo" />
                 <exclude name="JMRI/InstallTest" />
                 <exclude name="JMRI/cornwall" />
+                <exclude name="JMRI/DecoderPro3" />
             </tarfileset>
             <tarfileset  dir="Linux" filemode="755">
                 <include name="JMRI/DecoderPro" />
@@ -282,6 +287,7 @@
                 <include name="JMRI/JmriDemo" />
                 <include name="JMRI/InstallTest" />
                 <include name="JMRI/cornwall" />
+                <include name="JMRI/DecoderPro3" />
             </tarfileset>
     </tar>
 </target>
