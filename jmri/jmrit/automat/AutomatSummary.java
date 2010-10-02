@@ -15,13 +15,13 @@ import java.util.ArrayList;
  * Swing thread to notify it's own listeners.
  *
  * @author	Bob Jacobsen    Copyright (C) 2004, 2007 
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class AutomatSummary  {
 
     private AutomatSummary() {}
 
-	static private AutomatSummary self = null;
+	static volatile private AutomatSummary self = null;
 
 	static public AutomatSummary instance() {
 		if (self == null) self = new AutomatSummary();
