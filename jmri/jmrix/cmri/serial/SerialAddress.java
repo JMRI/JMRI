@@ -25,7 +25,7 @@ import jmri.jmrix.AbstractNode;
  *              CL11B234 (node address 11, bit234)
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialAddress {
 
@@ -380,7 +380,7 @@ public class SerialAddress {
     public static String makeSystemName(String type,int nAddress, int bitNum) {
 		String nName = "";
 		// check the type character
-        if ( (type != "S") && (type != "L") && (type != "T") ) {
+        if ( (!type.equals("S")) && (!type.equals("L")) && (!type.equals("T")) ) {
             // here if an illegal type character 
             log.error("illegal type character proposed for system name");
             return (nName);

@@ -24,7 +24,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.9 $
+ * @version	 $Revision: 1.10 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -233,7 +233,7 @@ public class ListFrame extends jmri.util.JmriJFrame {
      * Method to handle selection of a Node for info display
      */ 
 	 public void displayNodeInfo( String nodeID ) {
-		if (nodeID != selNodeID) {
+		if (!nodeID.equals(selNodeID)) {
 			// The selected node is changing - initialize it
 			int nAdd = Integer.parseInt(nodeID);
 			SerialNode s = null;

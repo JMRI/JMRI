@@ -96,13 +96,13 @@ public class OPath extends jmri.Path  {
     public String getName() { return _name; }
     
     public void setFromPortalName(String p) {
-        if (p=="" ) { p = null; }
+        if (p.equals("") ) { p = null; }
         _fromPortalName = p;
     }
     public String getFromPortalName() { return _fromPortalName; }
     
     public void setToPortalName(String p) {
-        if (p=="" ) { p = null; }
+        if (p.equals("") ) { p = null; }
         _toPortalName = p;
     }
     public String getToPortalName() { return _toPortalName; }
