@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 import java.util.List;
+import java.util.ResourceBundle;
 
 import jmri.util.swing.*;
 
@@ -19,6 +20,7 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.roster.swing.*;
+
 
 import org.jdom.*;
 
@@ -39,7 +41,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
  
 public class DecoderPro3Window 
@@ -51,19 +53,23 @@ public class DecoderPro3Window
     	        null);  // no toolbar
     	        
     	getTop().add(createTop());
-    	getLeft().add(createLeft());
-    	getRight().add(createRight());
+    	getLeft().add(createLowerLeft());
+    	getRight().add(createLowerRight());
     	
         setSize(getMaximumSize());
         setVisible(true);
     }
     
     jmri.jmrit.roster.swing.RosterTable rtable;
+    ResourceBundle rb = ResourceBundle.getBundle("apps.gui3.dp3.DecoderPro3Bundle");
     
     JComponent createTop() {
         JPanel retval = new JPanel();
         retval.setLayout(new BoxLayout(retval, BoxLayout.X_AXIS));
         
+        // left box
+        retval.add(createUpperLeft());
+
         // set up roster table
          
         rtable = new RosterTable();
@@ -79,40 +85,44 @@ public class DecoderPro3Window
             }
         );
 
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        JButton b;
-        p.add(b = new JButton("Identify"));
-        b.setAlignmentX(0.5f);
-        
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
-        p2.add(new JLabel("Paged Mode"));
-        p2.add(new JButton(">"));
-        p.add(Box.createHorizontalGlue());
-        p.add(p2);
-        
-        p.add(b = new JButton("New Locomotive"));
-        b.setAlignmentX(0.5f);
-        
-        p.add(new JSeparator());
-        p.add(Box.createVerticalGlue());
-        retval.add(p);
-
         return retval;
     }
     
+    JPanel createUpperLeft() {
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        JButton b;
+
+        p.add(b = new JButton(rb.getString("NewLocoButton"), new ImageIcon("resources/icons/misc/gui3/NewLocoButton.png")));
+        b.setHorizontalAlignment(JButton.LEFT);
+        b.setAlignmentX(0.0f);
+
+        p.add(b = new JButton(rb.getString("IdentifyButton"), new ImageIcon("resources/icons/misc/gui3/IdentifyButton.png")));
+        b.setHorizontalAlignment(JButton.LEFT);
+        b.setAlignmentX(0.0f);
+
+        JToggleButton t; 
+        p.add(t = new JToggleButton(rb.getString("ModeButton"), new ImageIcon("resources/icons/misc/gui3/SliderUp.png")));
+        t.setSelectedIcon(new ImageIcon("resources/icons/misc/gui3/SliderDown.png"));
+        t.setHorizontalAlignment(JButton.LEFT);
+        t.setAlignmentX(0.0f);
+                
+        p.add(new JSeparator());
+        p.add(Box.createVerticalGlue());
+        
+        return p;
+    }
+    
+    /**
+     * An entry has been selected in the Roster Table, 
+     * activate the bottom part of the window
+     */
     void locoSelected(String id) {
-        System.out.println("locoSelected ID "+id);
+        log.debug("locoSelected ID "+id);
         // convert to roster entry
         RosterEntry re = Roster.instance().entryFromTitle(id);
         
         // start making PaneSet
-                    //JFrame p = new PaneProgFrame(null, re,
-                    //                             "dummy title", "programmers"+File.separator+"Comprehensive"+".xml",
-                    //                             null, false){
-                    //    protected JPanel getModePane() { return null; }
-                    //};
         
         PaneSet ps = new PaneSet(null, re);
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
@@ -122,30 +132,38 @@ public class DecoderPro3Window
             ps.makePanes(pf.rootFromName(filename), re);
         }
         catch (Exception e) {
-            System.out.println("exception reading programmer file: "+filename);
-            // provide traceback too
-            e.printStackTrace();
+            log.debug("exception reading programmer file: "+filename, e);
         }
         
         List<PaneProgPane> list = ps.getList();
 
         // update the toolbar list of panes
-        paneJList.setModel(new JList(list.toArray())
-            .getModel());
+        paneJList.setModel(
+            new JList(list.toArray())
+                .getModel());
+
+        // load panes to lower right window
+        paneSpace.removeAll();
+        for (PaneProgPane p : list) {
+            paneSpace.add(p);
+        }
+        
     }
 
-    JPanel paneSpace = new JPanel();
-    JComponent createRight() {
-        JPanel retval = new JPanel();
-        retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
+    JPanel paneSpace = new JPanel(); // place where the panes go
+    JComponent createLowerRight() {
 
-        
+        paneSpace.setLayout(new BoxLayout(paneSpace, BoxLayout.Y_AXIS));
+
         JComponent l = new JLabel("Display of a particular pane will go here");
         l.setPreferredSize(new java.awt.Dimension(100, 200));
         paneSpace.add(l);
-        retval.add(paneSpace);
-
-        retval.add(Box.createVerticalGlue());
+        
+        JPanel retval = new JPanel();
+        retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
+        
+        JScrollPane sp = new JScrollPane(paneSpace);
+        retval.add(sp);
         
         return retval;
     }
@@ -155,21 +173,11 @@ public class DecoderPro3Window
                 "<nothing yet>" 
             });
             
-    JComponent createLeft() {
+    JComponent createLowerLeft() {
         JPanel retval = new JPanel();
         retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
         float defaultXAlignment = 0.f;
-        
-        JToolBar bar = JToolBarUtil.loadToolBar(
-            new java.io.File("xml/config/apps/decoderpro/GlobalProgButtons.xml"),
-            null, null);
-        bar.setOrientation(JToolBar.VERTICAL);
-        bar.setAlignmentX(defaultXAlignment);
-        retval.add(bar);
-        
-        retval.add(Box.createRigidArea(new Dimension(10,10)));
-        retval.add(new JSeparator());
-        
+                
         paneToolBar = new JToolBar("Panes");
         paneToolBar.setOrientation(JToolBar.VERTICAL);
         paneToolBar.setAlignmentX(defaultXAlignment);
@@ -184,31 +192,34 @@ public class DecoderPro3Window
                 }
             }
         );
+
+        JPanel p1 = new JPanel();
+        p1.setLayout(new GridLayout(2,2));
+        p1.add(new JButton(rb.getString("LLProgReadChanges")));
+        p1.add(new JButton(rb.getString("LLProgReadAll")));
+        p1.add(new JButton(rb.getString("LLProgWriteChanges")));
+        p1.add(new JButton(rb.getString("LLProgWriteAll")));
+        paneToolBar.add(p1);
+        
+        JPanel p3 = new JPanel();
+        p3.setLayout(new FlowLayout());
+        p3.add(new JButton(rb.getString("LLSave"), new ImageIcon("resources/icons/misc/gui3/SaveIcon.png")));
+        p3.add(new JButton(rb.getString("LLReset")));
+        paneToolBar.add(p3);
         
         retval.add(paneToolBar);
         
         retval.add(new JSeparator());
-        
-        bar = new JToolBar("Resets");
-        bar.setOrientation(JToolBar.VERTICAL);
-        bar.setAlignmentX(defaultXAlignment);
-        bar.add(new JButton("Reset All")); 
-        bar.add(new JButton("Reset Except Speed Table"));
-        retval.add(bar);
-        
-        //retval.add(new JList(new String[]{
-        //        "Reset All", 
-        //        "Reset Except Speed Table"
-        //    }));
+                
         return retval;
     }
     
     void showPane(PaneProgPane pane) {
-        System.out.println("show pane "+pane);
-        paneSpace.removeAll();
-        paneSpace.add(pane);
-        System.out.println("pref "+pane.getPreferredSize());
-        paneSpace.revalidate();
+        log.debug("show pane "+pane);
+        //paneSpace.removeAll();
+        //paneSpace.add(pane);
+        //log.debug("preferred size "+pane.getPreferredSize());
+        //paneSpace.revalidate();
     }
     
     // amazingly ugly temp pane code
@@ -218,117 +229,7 @@ public class DecoderPro3Window
     
     ProgDebugger p = new ProgDebugger();
     
-    JComponent createPane() {
-        // create a JDOM tree with just some elements
-        Element root = null;
-        Element pane1 = null;
-        Document doc = null;
-
-        root = new Element("programmer-config");
-        doc = new Document(root);
-        doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
-
-        // add some elements
-        root.addContent(new Element("programmer")
-            .addContent(pane1 = new Element("pane")
-                .setAttribute("name","Basic")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Primary Address")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Start voltage")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","checkbox")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","radiobuttons")
-                        )
-                    )
-                )
-            .addContent(new Element("pane")
-                .setAttribute("name", "CV")
-                .addContent(new Element("column")
-                    .addContent(new Element("cvtable"))
-                    )
-                )
-            .addContent(new Element("pane")
-                .setAttribute("name", "Other")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
-                )
-            )
-            ; // end of adding contents
-
-        PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            // dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
-        CvTableModel cvModel = new CvTableModel(new JLabel(), p);
-        IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-
-        String[] args = {"CV", "Name"};
-        VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        varModel.setRow(0,new Element("variable")
-                .setAttribute("label", "Primary Address")
-                .setAttribute("CV", "1")
-                .setAttribute("item", "Short Address")
-                .addContent(new Element("shortAddressVal"))            
-        );
-        varModel.setRow(1,new Element("variable")
-                .setAttribute("label", "Start Voltage")
-                .setAttribute("CV", "2")
-                .addContent(new Element("decVal"))            
-        );
-        varModel.setRow(0,new Element("variable")
-                .setAttribute("label", "Normal direction of motion")
-                .setAttribute("CV", "29")
-                .addContent(new Element("enumVal")
-                    .addContent(new Element("enumChoice").setAttribute("choice", "fwd"))
-                    .addContent(new Element("enumChoice").setAttribute("choice", "rev"))
-                )            
-        );
-        
-        // create test object with special implementation of the newColumn(String) operation
-        colCount = 0;
-        PaneProgPane retval = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null) {
-            };
-            
-        return retval;
-    }
-
-    // never invoked, because we overrode actionPerformed above
-    public void dispose() {
-        throw new IllegalArgumentException("Should not be invoked");
-    }
-    
-    // never invoked, because we overrode actionPerformed above
-    public JmriPanel makePanel() {
-        throw new IllegalArgumentException("Should not be invoked");
-    }
-
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
 }
 
-/* @(#)DecoderProAction.java */
+/* @(#)DecoderPro3Window.java */
