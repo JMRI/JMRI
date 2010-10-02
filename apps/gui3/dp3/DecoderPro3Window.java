@@ -42,7 +42,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
  
 public class DecoderPro3Window 
@@ -130,7 +130,7 @@ public class DecoderPro3Window
         DecoderPro3Panes pc = new DecoderPro3Panes();    // eventually has to handle glass pane
         PaneSet ps = new PaneSet(pc, re, programmer);
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
-        String filename = "programmers"+File.separator+"Comprehensive.xml";
+        String filename = rb.getString("PaneContentLocation")+File.separator+rb.getString("PaneContentFile");
         try {
             // load programmer config from programmer tree
             ps.makePanes(pf.rootFromName(filename), re);
@@ -182,7 +182,7 @@ public class DecoderPro3Window
 
         paneSpace.setLayout(new BoxLayout(paneSpace, BoxLayout.Y_AXIS));
 
-        JComponent l = new JLabel("Display of a particular pane will go here");
+        JComponent l = new JLabel(rb.getString("BottomStartText"));
         l.setPreferredSize(new java.awt.Dimension(100, 200));
         paneSpace.add(l);
         
@@ -191,7 +191,7 @@ public class DecoderPro3Window
         return sp;
     }
     
-    JToolBar paneToolBar = new JToolBar("Panes");
+    JToolBar paneToolBar;
     JList   paneJList = new JList(new String[]{  // really dummy content
                 "<nothing yet>" 
             });
@@ -201,7 +201,7 @@ public class DecoderPro3Window
         retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
         float defaultXAlignment = 0.f;
                 
-        paneToolBar = new JToolBar("Panes");
+        paneToolBar = new JToolBar(rb.getString("PanesToolBarTitle"));
         paneToolBar.setOrientation(JToolBar.VERTICAL);
         paneToolBar.setAlignmentX(defaultXAlignment);
         paneJList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
