@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Point;
+import java.awt.Color;
 
 import jmri.util.NamedBeanHandle;
 
@@ -22,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -33,7 +34,6 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     // the map of icons
     java.util.HashMap<String, NamedIcon> map = null;
     private NamedBeanHandle<Memory> namedMemory;
-    private boolean _tmpBorder = false;
     
     public MemoryIcon(String s, Editor editor) {
         super(s, editor);
@@ -196,6 +196,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
         return true;
     }
 
+    Color _saveColor;
     /**
      * Drive the current state of the display from the state of the
      * Memory.
@@ -215,24 +216,22 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 if (val instanceof String) {
                     String str = (String)val;
                     setText(str);
-                    if (log.isDebugEnabled()) log.debug("String str= \""+str+"\" str.trim().length()= "+str.trim().length());
+                    if (log.isDebugEnabled()) log.debug("String str= \""+str+"\" str.trim().length()= "+str.trim().length()+
+                                                        ", maxWidth()= "+maxWidth()+", maxHeight()= "+maxHeight());
                     /*  MemoryIconTest says empty strings should show blank */
-                    // use a temp border to keep item selectable 
-                    if (str.trim().length()==0 && 
-                                (maxWidth() < (PositionablePopupUtil.MIN_SIZE+2) ||
-                                    maxHeight() < (PositionablePopupUtil.MIN_SIZE+2)) ) {
-                        if (getPopupUtility().getMargin()==0) {
-                           _tmpBorder = true;
-                           getPopupUtility().setMargin(1);
-                           getPopupUtility().setBorderSize(1);
-                           getPopupUtility().setBorderColor(java.awt.Color.black);
+                    if (str.trim().length()==0) { 
+                        if (getBackground().equals(_editor.getTargetPanel().getBackground())) {
+                            _saveColor = getPopupUtility().getBackground();
+                            if (_editor.getTargetPanel().getBackground().equals(Color.white)) {
+                                getPopupUtility().setBackgroundColor(Color.gray);
+                            } else {
+                                getPopupUtility().setBackgroundColor(Color.white);
+                            }
                         }
-                       setIcon(defaultIcon);
                     } else {
-                        if (_tmpBorder) {
-                            _tmpBorder = false;
-                            getPopupUtility().setBorderSize(0);
-                            getPopupUtility().setMargin(0);
+                        if (_saveColor!=null) {
+                            getPopupUtility().setBackgroundColor(_saveColor);
+                            _saveColor = null;
                         }
                     }
                     setIcon(null);
