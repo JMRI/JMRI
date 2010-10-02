@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
  * accuracy that's needed here.
  * 
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class LocoNetThrottledTransmitter implements LocoNetInterface {
 
@@ -161,6 +161,10 @@ public class LocoNetThrottledTransmitter implements LocoNetInterface {
             if (delta > 0 ) return 1;
             else if (delta < 0 ) return -1;
             else return 0;
+        }
+        // ensure consistent with compareTo
+        public boolean equals( Object o ) {
+            return (compareTo(o) == 0);
         }
     }
     

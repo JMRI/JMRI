@@ -321,6 +321,11 @@ public class TableSorter extends AbstractTableModel {
             this.modelIndex = index;
         }
 
+        // added to ensure consistency with compareTo - Jake
+        public boolean equals( Object o ) {
+            return (compareTo(o) == 0);
+        }
+
         public int compareTo(Object o) {
             int row1 = modelIndex;
             int row2 = ((Row) o).modelIndex;
