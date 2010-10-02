@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.33 $
+ * @version	$Revision: 1.34 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -162,8 +162,9 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
 
     static public SerialDriverAdapter instance() {
         if (mInstance == null){
-            mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            SerialDriverAdapter m = new SerialDriverAdapter();
+            m.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
+            mInstance = m;
         }
         return mInstance;
     }
