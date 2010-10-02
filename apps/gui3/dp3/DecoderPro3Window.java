@@ -41,7 +41,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
  
 public class DecoderPro3Window 
@@ -226,9 +226,8 @@ public class DecoderPro3Window
         // position we want to go to 
         int dest = pane.getLocation().y;
         int end = paneSpace.size().height;
-        System.out.println("position "+dest+" of "+end);
         
-        // go there.
+        // go there, but note this might be first time
         JScrollBar bar = sp.getVerticalScrollBar();
         bar.setMinimum(0);
         bar.setMaximum(end);
