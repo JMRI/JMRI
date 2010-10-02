@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * standard, but is used as an expedient here.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SRCPThrottle extends AbstractThrottle
 {
@@ -82,6 +82,7 @@ public class SRCPThrottle extends AbstractThrottle
      * This intentionally skips the emergency stop value of 1.
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;

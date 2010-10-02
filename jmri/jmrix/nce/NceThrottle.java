@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 public class NceThrottle extends AbstractThrottle{
 	
@@ -251,6 +251,7 @@ public class NceThrottle extends AbstractThrottle{
 	 * @param speed
 	 *            Number from 0 to 1; less than zero is emergency stop
 	 */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
 		this.speedSetting = speed;

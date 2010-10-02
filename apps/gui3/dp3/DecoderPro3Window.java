@@ -1,4 +1,4 @@
-// DecoderProAction.java
+// DecoderPro3Window.java
 
  package apps.gui3.dp3;
 
@@ -31,17 +31,18 @@ import org.jdom.*;
  *
  * TODO:
  * Several methods are copied from PaneProgFrame and should be refactored
- * No programmer support yet
+ * No programmer support yet (dummy object below)
+ * Color only covering borders
  * No reset toolbar support yet
- * No glass pane support
- * Need better support for visible/non-visible panes
+ * No glass pane support (See DecoderPro3Panes class and usage below)
  * Special panes (Roster entry, attributes, graphics) not included
  * How do you pick a programmer file? (hardcoded)
+ * Initialization needs partial deferal, too for 1st pane to appear
  * 
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  */
  
 public class DecoderPro3Window 
@@ -126,7 +127,8 @@ public class DecoderPro3Window
         
         // start making PaneSet
         
-        PaneSet ps = new PaneSet(null, re);
+        DecoderPro3Panes pc = new DecoderPro3Panes();    // eventually has to handle glass pane
+        PaneSet ps = new PaneSet(pc, re, programmer);
         XmlFile pf = new XmlFile(){};  // XmlFile is abstract
         String filename = "programmers"+File.separator+"Comprehensive.xml";
         try {
@@ -148,6 +150,15 @@ public class DecoderPro3Window
         paneSpace.removeAll();
         int count = 0;
         for (PaneProgPane p : list) {
+            
+            System.out.println("start: "+p);
+            System.out.println("name: "+p.toString());
+            System.out.println("n:    "+p.getComponents().length);
+            System.out.println("--> "+p.getComponents()[0]);
+            System.out.println("--> "+p.getComponents()[1]);
+            System.out.println("end --------- ");
+            
+            
             javax.swing.border.TitledBorder border = new javax.swing.border.TitledBorder(p.getName());
             p.setBorder(border);
             paneSpace.add(p);
@@ -246,7 +257,7 @@ public class DecoderPro3Window
         
     }
     
-    ProgDebugger p = new ProgDebugger();
+    ProgDebugger programmer = new ProgDebugger();
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DecoderPro3Window.class.getName());
 }

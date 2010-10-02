@@ -11,7 +11,7 @@ import jmri.jmrix.AbstractThrottle;
  * over 100 are considered long addresses. 
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, 2006
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SerialThrottle extends AbstractThrottle
 {
@@ -144,6 +144,7 @@ public class SerialThrottle extends AbstractThrottle
      * <P>
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point, notify on any change
     public void setSpeedSetting(float speed) {
         float oldSpeed = this.speedSetting;
         this.speedSetting = speed;

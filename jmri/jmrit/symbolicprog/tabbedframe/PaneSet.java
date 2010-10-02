@@ -27,10 +27,10 @@ import jmri.jmrit.symbolicprog.*;
  * Need better support for visible/non-visible panes
  * Special panes (Roster entry, attributes, graphics) not included
  *
- * @see apps.gui3.paned.DecoderProAction
+ * @see apps.gui3.dp3.DecoderPro3Window
  *
  * @author    Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.1 $
+ * @version		$Revision: 1.2 $
  */
 public class PaneSet {
 
@@ -50,10 +50,10 @@ public class PaneSet {
     Element modelElem = null;
 
     
-    public PaneSet(PaneContainer container, RosterEntry re) {
+    public PaneSet(PaneContainer container, RosterEntry re, Programmer programmer) {
         this.container = container;
+        this.mProgrammer = programmer;
 
-        mProgrammer   = null;
         cvModel       = new CvTableModel(progStatus, mProgrammer);
         iCvModel      = new IndexedCvTableModel(progStatus, mProgrammer);
 
