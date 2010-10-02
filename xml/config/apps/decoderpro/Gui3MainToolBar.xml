@@ -8,9 +8,6 @@
 >
   <name>DecoderPro</name>
 
-  <node><name>New DP Window</name>
-    <adapter>apps.gui3.paned.DecoderProAction</adapter>
-  </node>
   <node><name>New PP Window</name>
     <adapter>apps.gui3.paned.PanelProAction</adapter>
   </node>

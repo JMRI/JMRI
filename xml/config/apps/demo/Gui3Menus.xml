@@ -27,9 +27,6 @@
 
   <node>
     <name>Windows</name>
-    <node><name>New DecoderPro Window</name>
-        <adapter>apps.gui3.paned.DecoderProAction</adapter>
-    </node>
     <node><name>New PanelPro Window</name>
         <adapter>apps.gui3.paned.PanelProAction</adapter>
     </node>

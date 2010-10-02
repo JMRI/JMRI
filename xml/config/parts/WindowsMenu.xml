@@ -13,9 +13,6 @@
         <node><name>Sample Window 2</name>
         </node>
     </node>
-    <node><name>New DecoderPro Window</name>
-        <adapter>apps.gui3.paned.DecoderProAction</adapter>
-    </node>
     <node><name>New PanelPro Window</name>
         <adapter>apps.gui3.paned.PanelProAction</adapter>
     </node>
