@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.97 $
+ * @version $Revision: 1.98 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -233,8 +233,15 @@ public class PositionableLabel extends JLabel implements Positionable {
                 max = PositionablePopupUtil.MIN_SIZE;
             }
         } else {
-            if(_text && getText()!=null && getText().trim().length()>0 ) {
-                max = getFontMetrics(getFont()).stringWidth(getText());
+            if(_text && getText()!=null) {
+                if (getText().trim().length()==0) {
+                    // show width of 1 blank character
+                    if (getFont()!=null) {
+                        max = getFontMetrics(getFont()).stringWidth("0");
+                    }
+                } else {
+                    max = getFontMetrics(getFont()).stringWidth(getText());
+                }
             }
             if(_icon && _namedIcon!=null) {
                 max = Math.max(_namedIcon.getIconWidth(), max);
@@ -261,7 +268,7 @@ public class PositionableLabel extends JLabel implements Positionable {
             }
         } else {
             //if(_text) {
-            if(_text && getText()!=null && getText().trim().length()>0 ) {
+            if(_text && getText()!=null && getFont()!=null) {
                 max = getFontMetrics(getFont()).getHeight();
             }
             if(_icon && _namedIcon!=null) {
