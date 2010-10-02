@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  * @since 2.7.2
  */
 
@@ -138,7 +138,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
     /**
     * Poppup menu iconEditor's ActionListener
     */
-    SpinnerNumberModel _spinModel = new SpinnerNumberModel(0,0,100,1);
+    SpinnerNumberModel _spinModel = new SpinnerNumberModel(3,1,100,1);
     protected void edit() {
         if (showIconEditorFrame(this)) {
             return;
