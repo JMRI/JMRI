@@ -41,7 +41,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.5 $
+ * @version		$Revision: 1.6 $
  */
  
 public class DecoderPro3Window 
@@ -146,13 +146,24 @@ public class DecoderPro3Window
 
         // load panes to lower right window
         paneSpace.removeAll();
+        int count = 0;
         for (PaneProgPane p : list) {
             javax.swing.border.TitledBorder border = new javax.swing.border.TitledBorder(p.getName());
             p.setBorder(border);
             paneSpace.add(p);
+            
+            p.setBackground(colors[count]);
+            count++;
+            if (count>=colors.length) count = 0;
+            
         }
     }
 
+    java.awt.Color[] colors = new java.awt.Color[]{
+                                new java.awt.Color(238, 238, 238),
+                                new java.awt.Color(249, 248, 231),
+                                new java.awt.Color(216, 245, 246) };
+    
     JPanel paneSpace = new JPanel(); // place where the panes go
     JScrollPane sp;
     
@@ -234,11 +245,6 @@ public class DecoderPro3Window
         bar.setValue(dest);
         
     }
-    
-    // amazingly ugly temp pane code
-    String result = null;
-    int colCount = -1;
-    int varCount = -1;
     
     ProgDebugger p = new ProgDebugger();
     
