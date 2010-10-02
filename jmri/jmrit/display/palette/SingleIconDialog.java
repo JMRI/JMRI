@@ -10,10 +10,12 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
+ * Plain icons have a single family but like MultiSensorIcons,
+ * icons can be added and deleted from a family
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class SingleIconDialog extends IconDialog {
+public class SingleIconDialog extends MultiSensorIconDialog {
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
@@ -49,26 +51,10 @@ public class SingleIconDialog extends IconDialog {
     }
 
     /**
-    * Action item for makeAddIconButtonPanel
+    * Action item for makeAddIconButtonPanel needs a name for icon
     */
-    protected boolean addNewIcon() {
-        if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
-        String name = _familyName.getText();
-        if (name==null || name.length()==0) {
-            JOptionPane.showMessageDialog(_parent.getPaletteFrame(), ItemPalette.rbp.getString("NoIconName"),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return false;
-        } else if (_iconMap.get(name)!=null) {
-            JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return false;
-        }
-        String fileName = "resources/icons/misc/X-red.gif";
-        NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
-        _iconMap.put(name, icon);
-        updateFamiliesPanel();
-        return true;
+    protected String getIconName() {
+        return _familyName.getText();
     }
 
     /**
@@ -83,8 +69,8 @@ public class SingleIconDialog extends IconDialog {
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
-        getContentPane().remove(_iconPanel);
-        updateFamiliesPanel();
+//        getContentPane().remove(_iconPanel);
+//        updateFamiliesPanel();
         return true;
     }
         

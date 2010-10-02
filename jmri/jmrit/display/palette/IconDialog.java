@@ -121,61 +121,6 @@ public class IconDialog extends ItemDialog {
     }
 
     /**
-    * add/delete icon. For Multisensor, it adds another sensor position.  For plain icons, it
-    * adds another plain icon.
-    */
-    protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
-        JPanel panel2 = new JPanel();
-        panel2.setLayout(new FlowLayout());
-        JButton addSensor = new JButton(ItemPalette.rbp.getString("addIcon"));
-        addSensor.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (addNewIcon()) {
-                        ImageIndexEditor._indexChanged = true;
-                        ItemPalette._defaultsChanged = true;
-                        getContentPane().remove(_iconPanel);
-                        _iconPanel = makeIconPanel(_iconMap); 
-                        getContentPane().add(_iconPanel, 1);
-                        pack();
-                    }
-                }
-        });
-        addSensor.setToolTipText(ItemPalette.rbp.getString(addTip));
-        panel2.add(addSensor);
-
-        JButton deleteSensor = new JButton(ItemPalette.rbp.getString("deleteDelete"));
-        deleteSensor.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (deleteIcon()) {
-                        ImageIndexEditor._indexChanged = true;
-                        ItemPalette._defaultsChanged = true;
-                        getContentPane().remove(_iconPanel);
-                        _iconPanel = makeIconPanel(_iconMap); 
-                        getContentPane().add(_iconPanel, 1);
-                        pack();
-                    }
-                }
-        });
-        deleteSensor.setToolTipText(ItemPalette.rbp.getString(deleteTip));
-        panel2.add(deleteSensor);
-        buttonPanel.add(panel2);
-    }
-
-    /**
-    * Action item for makeAddIconButtonPanel
-    */
-    protected boolean deleteIcon() {
-        return false;
-    }
-
-    /**
-    * Action item for makeAddIconButtonPanel  Dummy for some sub-classes
-    */
-    protected boolean addNewIcon() {
-        return false;
-    }
-
-    /**
     * Add/Delete icon family for types that may have more than 1 fammily
     */
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {

@@ -138,6 +138,12 @@ public class IconItemPanel extends ItemPanel {
         add(bottomPanel, BorderLayout.CENTER);
     }
 
+    protected void setFamily(String family) {
+        super.setFamily(family);
+        remove(_iconPanel);
+        initIconPanel();
+    }
+
     public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
         DataFlavor dataFlavor;
