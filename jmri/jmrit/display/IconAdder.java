@@ -563,7 +563,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             getDefaultIconNodeFromMap();
         }
         // Allow initial row to be set without getting callback to valueChanged
-        _table.getSelectionModel().addListSelectionListener(this);
+        if (_table!=null) {
+            _table.getSelectionModel().addListSelectionListener(this);
+        }
         pack();
     }
 

@@ -1348,7 +1348,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.addHelpMenu("package.jmri.jmrit.display.IconAdder", true);
     }
 
-    SpinnerNumberModel _spinCols = new SpinnerNumberModel(0,0,100,1);
+    SpinnerNumberModel _spinCols = new SpinnerNumberModel(3,1,100,1);
 
     protected void addMemoryEditor() {
         IconAdder editor = new IconAdder("MemoryEditor") {
@@ -1633,7 +1633,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         SignalHeadIcon l = new SignalHeadIcon(this);
         IconAdder editor = getIconEditor("SignalHeadEditor");
         l.setSignalHead(editor.getTableSelection().getDisplayName());
-        int[] states = l.getSignalHead().getValidStates();
         Hashtable <String, NamedIcon> map = editor.getIconMap();
         Enumeration <String> e = map.keys();
         while (e.hasMoreElements()) {
@@ -1733,11 +1732,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         IconAdder iconEditor = getIconEditor("IconEditor");
         String url = iconEditor.getIcon("plainIcon").getURL();
         NamedIcon icon = NamedIcon.getIconByName(url);
+        if (log.isDebugEnabled()) log.debug("putIcon: "+(icon==null?"null":"icon")+" url= "+url);
         PositionableLabel l = new PositionableLabel(icon, this);
         l.setPopupUtility(null);        // no text 
         l.setDisplayLevel(ICONS);
         setNextLocation(l);
         putItem(l);
+        l.updateSize();
         return l;
     }
 
