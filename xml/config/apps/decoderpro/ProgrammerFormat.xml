@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE programmer-config SYSTEM "programmer-config.dtd">
+<!-- This file is part of JMRI.  Copyright 2007.                            -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<programmer-config
+    xmlns:xi="http://www.w3.org/2001/XInclude" >
+    
+    <version version="1" author="Bob Jacobsen" lastUpdated="20101001"/>
+
+<!-- Version 1 - made from version 20 of comprehensive.xml  -->
+
+    <programmer 
+            decoderFilePanes="yes" showEmptyPanes="default"
+            showFnLanelPane="no" showRosterMediaPane="no">
+    
+    <!-- all panes -->
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/MotorPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/BasicSpeedControlPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/SpeedTablePane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/FunctionMapPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/LightsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/AnalogControlsPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/ConsistPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/AdvancedPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/SoundPane.xml"/>
+    <xi:include href="http://jmri.org/xml/programmers/parts/SoundLevelsPane.xml"/>
+
+    </programmer>
+
+</programmer-config>
+
+
+
+
+
+ 	  	 
+
+ 	  	 
