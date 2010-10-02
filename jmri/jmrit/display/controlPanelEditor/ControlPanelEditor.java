@@ -662,6 +662,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                         }
                     }
                 } else {
+                    _highlightcomponent = null;
+                    _currentSelection = null;
                     _selectionGroup = null;
                     _pastePending = false;
                 }
@@ -967,11 +969,21 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             //Point pt = evt.getLocation(); coords relative to entire window
             Point pt = _targetPanel.getMousePosition(true);
             Transferable tr = evt.getTransferable();
+            if (log.isDebugEnabled()) {
+                DataFlavor[] flavors = tr.getTransferDataFlavors();
+                String flavor = "";
+                for (int i=0; i<flavors.length; i++) {
+                    flavor += flavors[i].getRepresentationClass().getName()+", ";
+                }
+                log.debug("Editor Drop: flavor classes= "+flavor);
+            }
             if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
                 item.setLocation(pt.x, pt.y);
-                evt.dropComplete(true);
                 putItem(item);
+                item.updateSize();
+                if (log.isDebugEnabled()) log.debug("Drop positionable "+item.getNameString());
+                evt.dropComplete(true);
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
                   NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(_namedIconDataFlavor));
@@ -991,6 +1003,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 l.setDisplayLevel(LABELS);
                 l.setLocation(pt.x, pt.y);
                 putItem(l);
+                evt.dropComplete(true);
             } else {  
                 log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from "
                          +tr.getClass().getName());
