@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.17 $
+ * @version         $Revision: 1.18 $
  */
 public class CvValueTest extends TestCase {
 
@@ -85,14 +85,17 @@ public class CvValueTest extends TestCase {
         cv.setValue(123);
         cv.write(null); // force out, so dummy read works
         // release, to ensure
-        try {
-            Thread.sleep(20);
-        } catch (Exception e) {
+        int i = 0;
+        while ( cv.isBusy() && i++ < 100 )  {
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+            }
         }
 
         cv.confirm(null);
         // wait for reply (normally, done by callback; will check that later)
-        int i = 0;
+        i = 0;
         while ( cv.isBusy() && i++ < 500 )  {
             try {
                 Thread.sleep(10);
