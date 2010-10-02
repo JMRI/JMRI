@@ -33,7 +33,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {
@@ -63,8 +63,6 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
             log.error("No LocoNet connection available, can't function");
     }
     
-    LocoNetSystemConnectionMemo memo;
-
     /**
      * Provide read, write buttons and address
      */
