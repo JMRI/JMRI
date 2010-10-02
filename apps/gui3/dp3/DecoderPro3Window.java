@@ -41,7 +41,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
  
 public class DecoderPro3Window 
@@ -54,7 +54,9 @@ public class DecoderPro3Window
     	        
     	getTop().add(createTop());
     	getLeft().add(createLowerLeft());
+    	
     	getRight().add(createLowerRight());
+    	getRight().setLayout(new BoxLayout(getRight(), BoxLayout.Y_AXIS));
     	
         setSize(getMaximumSize());
         setVisible(true);
@@ -145,12 +147,15 @@ public class DecoderPro3Window
         // load panes to lower right window
         paneSpace.removeAll();
         for (PaneProgPane p : list) {
+            javax.swing.border.TitledBorder border = new javax.swing.border.TitledBorder(p.getName());
+            p.setBorder(border);
             paneSpace.add(p);
         }
-        
     }
 
     JPanel paneSpace = new JPanel(); // place where the panes go
+    JScrollPane sp;
+    
     JComponent createLowerRight() {
 
         paneSpace.setLayout(new BoxLayout(paneSpace, BoxLayout.Y_AXIS));
@@ -159,13 +164,9 @@ public class DecoderPro3Window
         l.setPreferredSize(new java.awt.Dimension(100, 200));
         paneSpace.add(l);
         
-        JPanel retval = new JPanel();
-        retval.setLayout(new BoxLayout(retval, BoxLayout.Y_AXIS));
+        sp = new JScrollPane(paneSpace);
         
-        JScrollPane sp = new JScrollPane(paneSpace);
-        retval.add(sp);
-        
-        return retval;
+        return sp;
     }
     
     JToolBar paneToolBar = new JToolBar("Panes");
@@ -186,7 +187,7 @@ public class DecoderPro3Window
         paneJList.addListSelectionListener(
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
-                    if (! e.getValueIsAdjusting()) {
+                    if (! e.getValueIsAdjusting() && paneJList.getSelectedValue() != null) {
                         showPane((PaneProgPane)paneJList.getSelectedValue());
                     }
                 }
@@ -214,12 +215,25 @@ public class DecoderPro3Window
         return retval;
     }
     
+    /**
+     * Move the pane display to a particular one
+     */
     void showPane(PaneProgPane pane) {
         log.debug("show pane "+pane);
-        //paneSpace.removeAll();
-        //paneSpace.add(pane);
-        //log.debug("preferred size "+pane.getPreferredSize());
-        //paneSpace.revalidate();
+
+        if (pane == null) log.error("showPane invoked on null", new Exception(""));
+        
+        // position we want to go to 
+        int dest = pane.getLocation().y;
+        int end = paneSpace.size().height;
+        System.out.println("position "+dest+" of "+end);
+        
+        // go there.
+        JScrollBar bar = sp.getVerticalScrollBar();
+        bar.setMinimum(0);
+        bar.setMaximum(end);
+        bar.setValue(dest);
+        
     }
     
     // amazingly ugly temp pane code
