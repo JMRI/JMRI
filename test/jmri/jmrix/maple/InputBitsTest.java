@@ -11,11 +11,11 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the InputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class InputBitsTest extends TestCase {
 		
-    private InputBits ibit = new InputBits();
+    private InputBits ibit = InputBits.instance();
        
     public void testConstructor1() {
         Assert.assertNotNull("check instance", InputBits.instance());

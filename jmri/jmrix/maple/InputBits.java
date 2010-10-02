@@ -23,12 +23,11 @@ import jmri.JmriException;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class InputBits {
 
-    public InputBits() {
-		mInstance = this;
+    private InputBits() {
         // clear the Sensor arrays
         for (int i = 0; i<MAXSENSORS+1; i++) {
             sensorArray[i] = null;
@@ -169,7 +168,10 @@ public class InputBits {
         }
     }
 
-	public static InputBits instance() {return mInstance;}
+	public static InputBits instance() {
+	    if (mInstance == null) mInstance = new InputBits();
+	    return mInstance;
+	}
 	private static InputBits mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputBits.class.getName());

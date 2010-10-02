@@ -17,16 +17,15 @@ package jmri.jmrix.maple;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class OutputBits {
 
-    public OutputBits() {
+    private OutputBits() {
         // clear all output bits
         for (int i = 0; i<256; i++) {
             outputArray[i] = 0;
         }
-		mInstance = this;
     }
 	
 	// operational variables
@@ -126,7 +125,10 @@ public class OutputBits {
         return m;
     }
 
-	public static OutputBits instance() {return mInstance;}
+	public static OutputBits instance() {
+	    if (mInstance == null) mInstance = new OutputBits();
+	    return mInstance;
+	}
 	private static OutputBits mInstance = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OutputBits.class.getName());

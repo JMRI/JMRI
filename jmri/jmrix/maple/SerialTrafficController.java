@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  * @since 2.3.7
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
@@ -46,9 +46,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
 		
 		
 		// initialize input and output utility classes
-		mInputBits = new InputBits();
+		mInputBits = InputBits.instance();
 		if (mInputBits==null) log.error("Error in initializing InputBits utility class");
-		mOutputBits = new OutputBits();
+		mOutputBits = OutputBits.instance();
 		if (mOutputBits==null) log.error("Error in initializing OutputBits utility class");
 
     }

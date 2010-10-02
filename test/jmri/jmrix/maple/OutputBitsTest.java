@@ -12,11 +12,11 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the OutputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class OutputBitsTest extends TestCase {
 		
-    private OutputBits obit = new OutputBits();
+    private OutputBits obit = OutputBits.instance();
        
     public void testConstructor1() {
         Assert.assertNotNull("check instance", OutputBits.instance());
