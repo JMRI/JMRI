@@ -14,7 +14,7 @@ import jmri.progdebugger.*;
  * Test CvValue class
  *
  * @author			Bob Jacobsen Copyright 2004, 2006
- * @version         $Revision: 1.18 $
+ * @version         $Revision: 1.19 $
  */
 public class CvValueTest extends TestCase {
 
@@ -98,10 +98,11 @@ public class CvValueTest extends TestCase {
         i = 0;
         while ( cv.isBusy() && i++ < 500 )  {
             try {
-                Thread.sleep(10);
+                jmri.util.JUnitUtil.releaseThread(this);
             } catch (Exception e) {
             }
         }
+        jmri.util.JUnitUtil.releaseThread(this);
         if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
 
         Assert.assertTrue("loop passes before 5 sec", i<500);
