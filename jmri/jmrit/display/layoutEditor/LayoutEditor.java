@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -58,6 +58,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	// Defined text resource
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
    // size of point boxes
 	private static final double SIZE = 3.0;
@@ -4665,29 +4666,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		// create and set up signal icon	
         SignalHeadIcon l = new SignalHeadIcon(this);
         l.setSignalHead(tName);
-        l.setIcon("SignalHeadStateRed", signalIconEditor.getIcon(0));
-        l.setIcon("SignalHeadStateFlashingRed", signalIconEditor.getIcon(1));
-        l.setIcon("SignalHeadStateYellow", signalIconEditor.getIcon(2));
-        l.setIcon("SignalHeadStateFlashingYellow", signalIconEditor.getIcon(3));
-        l.setIcon("SignalHeadStateGreen", signalIconEditor.getIcon(4));
-        l.setIcon("SignalHeadStateFlashingGreen", signalIconEditor.getIcon(5));
-        l.setIcon("SignalHeadStateDark", signalIconEditor.getIcon(6));
-        l.setIcon("SignalHeadStateHeld", signalIconEditor.getIcon(7));
-        l.setIcon("SignalHeadStateLunar", signalIconEditor.getIcon(8));
-        l.setIcon("SignalHeadStateFlashingLunar", signalIconEditor.getIcon(9));
-		/*SignalHead xSignal = l.getSignalHead().getBean();
-		if (xSignal != null) {
-			if ( (xSignal.getUserName()==null) || (xSignal.getUserName().equals("")) || 
-						(!(xSignal.getUserName().equals(nextSignalHead.getText().trim()))) ) {
-				nextSignalHead.setText(xSignal.getSystemName());
-			}
-		}*/
+        l.setIcon(rbean.getString("SignalHeadStateRed"), signalIconEditor.getIcon(0));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
+        l.setIcon(rbean.getString("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
+        l.setIcon(rbean.getString("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
+        l.setIcon(rbean.getString("SignalHeadStateDark"), signalIconEditor.getIcon(6));
+        l.setIcon(rbean.getString("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
+        l.setIcon(rbean.getString("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
         setNextLocation(l);
 		setDirty(true);
         putItem(l);
+        l.updateSize();
     }
     public void putSignal(SignalHeadIcon l) {
         putItem(l);
+        l.updateSize();
     }
 
     SignalHead getSignalHead(String name) {
@@ -4779,6 +4775,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         l.setDisplayLevel(ICONS);
 		setDirty(true);
         putItem(l);
+        l.updateSize();
     }
     
     /**

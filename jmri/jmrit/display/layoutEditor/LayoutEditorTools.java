@@ -35,14 +35,15 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutEditorTools 
 {
 
 	// Defined text resource
-	ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
+    static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 	
 	// constants
 	private int NONE = 0;  // Signal at Turnout Positions
@@ -1075,16 +1076,16 @@ public class LayoutEditorTools
 					int xLoc, int yLoc) {
 		SignalHeadIcon l = new SignalHeadIcon(layoutEditor);
 		l.setSignalHead(headName);
-        l.setIcon("SignalHeadStateRed", signalIconEditor.getIcon(0));
-        l.setIcon("SignalHeadStateFlashingRed", signalIconEditor.getIcon(1));
-        l.setIcon("SignalHeadStateYellow", signalIconEditor.getIcon(2));
-        l.setIcon("SignalHeadStateFlashingYellow", signalIconEditor.getIcon(3));
-        l.setIcon("SignalHeadStateGreen", signalIconEditor.getIcon(4));
-        l.setIcon("SignalHeadStateFlashingGreen", signalIconEditor.getIcon(5));
-        l.setIcon("SignalHeadStateDark", signalIconEditor.getIcon(6));
-        l.setIcon("SignalHeadStateHeld", signalIconEditor.getIcon(7));
-        l.setIcon("SignalHeadStateLunar", signalIconEditor.getIcon(8));
-        l.setIcon("SignalHeadStateFlashingLunar", signalIconEditor.getIcon(9));
+        l.setIcon(rbean.getString("SignalHeadStateRed"), signalIconEditor.getIcon(0));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), signalIconEditor.getIcon(1));
+        l.setIcon(rbean.getString("SignalHeadStateYellow"), signalIconEditor.getIcon(2));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), signalIconEditor.getIcon(3));
+        l.setIcon(rbean.getString("SignalHeadStateGreen"), signalIconEditor.getIcon(4));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), signalIconEditor.getIcon(5));
+        l.setIcon(rbean.getString("SignalHeadStateDark"), signalIconEditor.getIcon(6));
+        l.setIcon(rbean.getString("SignalHeadStateHeld"), signalIconEditor.getIcon(7));
+        l.setIcon(rbean.getString("SignalHeadStateLunar"), signalIconEditor.getIcon(8));
+        l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
 		l.setLocation(xLoc,yLoc);
 		if (rotation>0) {
             java.util.Enumeration<String> e = l.getIconStateNames();
