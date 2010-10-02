@@ -19,7 +19,7 @@ import javax.swing.JFileChooser;
  * place in the file system each time an action is invoked.
  *
  * @author	Bob Jacobsen   Copyright (C) 2004
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  * @see         jmri.jmrit.XmlFile
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
@@ -33,7 +33,7 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
 
     static JFileChooser allFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
     static JFileChooser configFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
-    public static JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
+    static JFileChooser userFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
     static {  // static class initialization
         jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("XML files");

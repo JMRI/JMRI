@@ -31,7 +31,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -142,7 +142,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
     DefaultSignalAppearanceMap map;
     SignalSystem systemDefn;
     
-    static protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
+    static final protected org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadSignalMast.class.getName());
 }
 
 /* @(#)SignalHeadSignalMast.java */

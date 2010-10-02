@@ -23,12 +23,12 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
 
-    public static ManagerDefaultSelector instance = new ManagerDefaultSelector();
+    public static final ManagerDefaultSelector instance = new ManagerDefaultSelector();
 
     private ManagerDefaultSelector() {
     }

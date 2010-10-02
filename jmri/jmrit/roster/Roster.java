@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.54 $
+ * @version	$Revision: 1.55 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -725,7 +725,7 @@ public class Roster extends XmlFile {
     
     protected ArrayList<String> _rosterGroupList = new ArrayList<String>();
     
-    protected static String _rosterGroupPrefix = "RosterGroup:";
+    static String _rosterGroupPrefix = "RosterGroup:";
     
     public String getRosterGroupPrefix(){ return _rosterGroupPrefix; }
     

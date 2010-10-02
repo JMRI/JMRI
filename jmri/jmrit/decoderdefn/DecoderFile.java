@@ -22,7 +22,7 @@ import org.jdom.filter.ElementFilter;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -318,6 +318,7 @@ public class DecoderFile extends XmlFile {
         return model+" ("+family+")";
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // script access
     static public String fileLocation = "decoders"+File.separator;
 
     // initialize logging

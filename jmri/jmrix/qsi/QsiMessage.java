@@ -10,7 +10,7 @@ package jmri.jmrix.qsi;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -28,7 +28,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
     public static final int WT_EEDATA = 5;
     
     // Longest boot message is 256bytes each preceded by DLE + 2xSTX + ETX
-    public static int MAXSIZE = 515;
+    static final int MAXSIZE = 515;
     
     // create a new one
     public  QsiMessage(int i) {

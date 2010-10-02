@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.awt.Point;
@@ -44,7 +44,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
 
      public static final String TableCellFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
                 ";class=jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection";
-     public static DataFlavor TABLECELL_FLAVOR = new DataFlavor(
+     public static final DataFlavor TABLECELL_FLAVOR = new DataFlavor(
                  jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection.class,
                  "application/x-jmri.jmrit.beantable.oblock.DnDJTable.TableCellSelection");
 

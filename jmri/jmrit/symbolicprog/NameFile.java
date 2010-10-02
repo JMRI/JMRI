@@ -20,7 +20,7 @@ import org.jdom.Element;
  * locate the one associated with the "xml/names.xml" file.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class NameFile extends XmlFile {
 
@@ -111,8 +111,8 @@ public class NameFile extends XmlFile {
 	*/
 	protected static String defaultNameFilename() { return fileLocation+nameFileName;}
 
-	static protected String fileLocation  = "";
-	static final protected String nameFileName = "names.xml";
+	static String fileLocation  = "";
+	static String nameFileName = "names.xml";
 	// initialize logging
     static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NameFile.class.getName());
 

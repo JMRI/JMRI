@@ -10,7 +10,7 @@ package jmri.jmrix.srcp;
  * class handles the response from the command station.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2004, 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
 
@@ -204,7 +204,7 @@ public class SRCPMessage extends jmri.jmrix.AbstractMRMessage {
         return m;
     }
 
-    static protected int LONG_TIMEOUT=180000;  // e.g. for programming options
+    static final int LONG_TIMEOUT=180000;  // e.g. for programming options
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPMessage.class.getName());
 

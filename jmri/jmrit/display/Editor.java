@@ -272,8 +272,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    static public int TOOLTIPSHOWDELAY = 1000; // msec
-    static public int TOOLTIPDISMISSDELAY = 4000;  // msec
+    static int TOOLTIPSHOWDELAY = 1000; // msec
+    static int TOOLTIPDISMISSDELAY = 4000;  // msec
 
     /**
     * Wait TOOLTIPSHOWDELAY then show tooltip.  Wait TOOLTIPDISMISSDELAY and disaappear

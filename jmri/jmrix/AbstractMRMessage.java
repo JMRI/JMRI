@@ -10,7 +10,7 @@ import jmri.util.StringUtil;
  * Carries a sequence of characters, with accessors.
  *
  * @author	        Bob Jacobsen  Copyright (C) 2003
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 abstract public class AbstractMRMessage extends AbstractMessage {
 
@@ -88,8 +88,8 @@ abstract public class AbstractMRMessage extends AbstractMessage {
      * <P>
      * Units are milliseconds.
      */
-    static protected int SHORT_TIMEOUT=2000;
-    static protected int LONG_TIMEOUT=60000;  // e.g. for programming options
+    static protected final int SHORT_TIMEOUT=2000;
+    static protected final int LONG_TIMEOUT=60000;  // e.g. for programming options
     int mTimeout;  // in milliseconds
     public void setTimeout(int t) { mTimeout = t; }
     public int getTimeout() { return mTimeout; }
