@@ -6,7 +6,7 @@ import jmri.jmrit.operations.setup.Control;
  * Represents one schedule item of a schedule
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -19,14 +19,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	protected Location _destination = null;	// car destination after load
 	protected Track _trackDestination = null;// car destination track after load
 	protected int _count = 1;				// the number of times this type of car must be dropped
+	protected int _wait = 0;				// how many trains this car must wait before being picked up
 	protected String _comment = "";
 			
-	public static final String NUMBER_CHANGED_PROPERTY = "number";
+	public static final String COUNT_CHANGED_PROPERTY = "count";
 	public static final String TYPE_CHANGED_PROPERTY = "type";
 	public static final String ROAD_CHANGED_PROPERTY = "road";
 	public static final String LOAD_CHANGED_PROPERTY = "load";
 	public static final String DESTINATION_CHANGED_PROPERTY = "destination";
 	public static final String DESTINATION_TRACK_CHANGED_PROPERTY = "destinationTrack";
+	public static final String WAIT_CHANGED_PROPERTY = "wait";
 	public static final String DISPOSE = "dispose";
 	
 	/**
@@ -116,7 +118,17 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setCount(int count){
 		int old = _count;
 		_count = count;
-		firePropertyChange (NUMBER_CHANGED_PROPERTY, old, count);
+		firePropertyChange (COUNT_CHANGED_PROPERTY, old, count);
+	}
+	
+	public int getWait(){
+		return _wait;
+	}
+	
+	public void setWait(int wait){
+		int old = _wait;
+		_wait = wait;
+		firePropertyChange (WAIT_CHANGED_PROPERTY, old, wait);
 	}
 	
 	public Location getDestination() {
@@ -202,6 +214,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
         else log.warn("no id attribute in Schedule Item element when reading operations");
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("count")) != null )  _count = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("wait")) != null )  _wait = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("type")) != null )  _type = a.getValue();
         if ((a = e.getAttribute("road")) != null )  _road = a.getValue();
         if ((a = e.getAttribute("load")) != null )  _load = a.getValue();
@@ -223,6 +236,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     	e.setAttribute("id", getId());
     	e.setAttribute("sequenceId", Integer.toString(getSequenceId()));
     	e.setAttribute("count", Integer.toString(getCount()));
+    	e.setAttribute("wait", Integer.toString(getWait()));
     	e.setAttribute("type", getType());
     	e.setAttribute("road", getRoad());
     	e.setAttribute("load", getLoad());

@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.45 $
+ * @version             $Revision: 1.46 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -358,6 +358,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		// get the car's next destination and track
 		setNextDestination(currentSi.getDestination());
 		setNextDestTrack(currentSi.getDestinationTrack());
+		// get the wait count
+		setNextWait(currentSi.getWait());
 		
 		log.debug("Car ("+toString()+") next load ("+getNextLoad()+")");
 		// bump and check count
@@ -386,6 +388,9 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
+				// update wait count
+				setWait(getNextWait());
+				setNextWait(0);
 				// is the next load default empty?  Check for car return when empty
 				if (getLoad().equals(carLoads.getDefaultEmptyName()))
 					setLoadEmpty();

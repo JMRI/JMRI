@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.88 $
+ * @version             $Revision: 1.89 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -682,7 +682,7 @@ public class TrainBuilder extends TrainCommon{
 							if (testCar.isCaboose() && testCar != car){
 								// need to keep caboose if departing staging
 								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
-									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarLocation"),new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
+									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
 									carList.remove(carList.get(i));		// remove this car from the list
 									i--;
 								}
@@ -711,7 +711,7 @@ public class TrainBuilder extends TrainCommon{
 			
 			// remove cabooses and cars with FRED if not needed for train
 			if (c.isCaboose() && foundCaboose || c.hasFred() && foundFred){
-				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarLocation"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
 				carList.remove(carList.get(carIndex));		// remove this car from the list
 				carIndex--;
 				continue;
@@ -904,6 +904,14 @@ public class TrainBuilder extends TrainCommon{
     					continue;
     				}
     			}
+    		}
+    		// does car have a wait count?
+    		if (c.getWait() > 0){
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarWait"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName()), c.getWait()}));
+				c.setWait(c.getWait()-1);	// decrement wait count
+				carList.remove(carList.get(carIndex));
+				carIndex--;
+				continue;
     		}
 		}
 

@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -84,7 +84,7 @@ public class OperationsLocationsTest extends TestCase {
 	// test ScheduleItem class
 	// test ScheduleItem public constants
 	public void testScheduleItemConstants() {
-		Assert.assertEquals("Location ScheduleItem Constant NUMBER_CHANGED_PROPERTY", "number", ScheduleItem.NUMBER_CHANGED_PROPERTY);
+		Assert.assertEquals("Location ScheduleItem Constant NUMBER_CHANGED_PROPERTY", "count", ScheduleItem.COUNT_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant TYPE_CHANGED_PROPERTY", "type", ScheduleItem.TYPE_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant ROAD_CHANGED_PROPERTY", "road", ScheduleItem.ROAD_CHANGED_PROPERTY);
 		Assert.assertEquals("Location ScheduleItem Constant LOAD_CHANGED_PROPERTY", "load", ScheduleItem.LOAD_CHANGED_PROPERTY);

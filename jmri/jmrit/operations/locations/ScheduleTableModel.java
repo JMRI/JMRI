@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.15 $
+ * @version   $Revision: 1.16 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -43,7 +43,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     private static final int DESTCOLUMN  = SHIPCOLUMN +1;
     private static final int TRACKCOLUMN  = DESTCOLUMN +1;
     private static final int COUNTCOLUMN  = TRACKCOLUMN +1;
-    private static final int UPCOLUMN = COUNTCOLUMN +1;
+    private static final int WAITCOLUMN  = COUNTCOLUMN +1;
+    private static final int UPCOLUMN = WAITCOLUMN +1;
     private static final int DOWNCOLUMN = UPCOLUMN +1;
     private static final int DELETECOLUMN = DOWNCOLUMN +1;
     
@@ -100,16 +101,17 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(95);
-		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(95);
-		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(95);
-		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(95);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(35);
+		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(90);
 		table.getColumnModel().getColumn(DESTCOLUMN).setPreferredWidth(130);
 		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(130);
-		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(45);
+		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
         updateList();
@@ -132,6 +134,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case DESTCOLUMN: return rb.getString("Destination");
         case TRACKCOLUMN: return rb.getString("Track");
         case COUNTCOLUMN: return rb.getString("Count");
+        case WAITCOLUMN: return rb.getString("Wait");
         case UPCOLUMN: return "";
         case DOWNCOLUMN: return "";
         case DELETECOLUMN: return "";		//edit column
@@ -150,6 +153,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case DESTCOLUMN: return JComboBox.class;
         case TRACKCOLUMN: return JComboBox.class;
         case COUNTCOLUMN: return String.class;
+        case WAITCOLUMN: return String.class;
         case UPCOLUMN: return JButton.class;
         case DOWNCOLUMN: return JButton.class;
         case DELETECOLUMN: return JButton.class;
@@ -165,6 +169,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case DESTCOLUMN:
         case TRACKCOLUMN:
         case COUNTCOLUMN:
+        case WAITCOLUMN:
         case UPCOLUMN:
         case DOWNCOLUMN:
         case DELETECOLUMN:
@@ -190,6 +195,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         case DESTCOLUMN: return getDestComboBox(si);
         case TRACKCOLUMN: return getTrackComboBox(si);
         case COUNTCOLUMN: return si.getCount();
+        case WAITCOLUMN: return si.getWait();
         case UPCOLUMN: return rb.getObject("Up");
         case DOWNCOLUMN: return rb.getObject("Down");
         case DELETECOLUMN: return rb.getObject("Delete");
@@ -215,6 +221,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			break;
         case COUNTCOLUMN: setCount(value, row);
         	break;
+        case WAITCOLUMN: setWait(value, row);
+    		break;
         case UPCOLUMN: moveUpScheduleItem(row);
         	break;
         case DOWNCOLUMN: moveDownScheduleItem(row);
@@ -328,6 +336,26 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		return;
     	}
     	si.setCount(count);
+    }
+    
+    private void setWait(Object value, int row){
+    	ScheduleItem si = _schedule.getItemById(list.get(row));
+    	int wait;
+    	try{
+     		wait = Integer.parseInt(value.toString());
+    	} catch(NumberFormatException e) {
+    		log.error("Schedule wait must be a number");
+    		return;
+    	}
+    	if (wait < 0){
+    		log.error("Schedule wait must be a positive number");
+    		return;
+    	}
+    	if (wait > 10){
+    		log.error("Schedule wait must be less than 11");
+    		return;
+    	}
+    	si.setWait(wait);
     }
     
     // note this method looks for String "Not Valid <>"
