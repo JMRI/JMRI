@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.16 2010-10-03 19:49:43 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.17 2010-10-03 21:01:25 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -19823,12 +19823,12 @@
         </column>
         <column>
           <display item="Input Interrogate" tooltip="Allows input status readout" label="  Input Interrogate">
-            <label>   Input Interrogate</label>>
+            <label>   Input Interrogate</label>
           </display>
         </column>
         <column>
           <display item="Output Interrogate" tooltip="Allows output state readout" label="    *Output Interrogate">
-            <label>     *Output Interrogate</label>>
+            <label>     *Output Interrogate</label>
           </display>
         </column>
       </row>
