@@ -265,7 +265,6 @@ public class PreviewDialog extends JDialog {
             comp[i] = null;
         }
         _preview.removeAll();
-        System.gc();        // please take the hint...
         _preview.setBackground(_currentBackground);
         _preview.invalidate();
         pack();
