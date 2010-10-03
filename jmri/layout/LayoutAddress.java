@@ -3,7 +3,7 @@ package jmri.layout;
 /**
  * Define an address consisting of a layout name, a type, and an offset number.
  * @author   Alex Shepherd Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LayoutAddress implements Comparable<Object>
@@ -31,6 +31,8 @@ public class LayoutAddress implements Comparable<Object>
         mOffset = pOffset ;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EQ_COMPARETO_USE_OBJECT_EQUALS")
+    // compareTo used for specific purpose, equals and hashCode not needed
     public int compareTo( Object o )
     {
         LayoutAddress vLayoutAddress = (LayoutAddress)o ;
