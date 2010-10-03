@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.14 $
+ * @version   $Revision: 1.15 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -83,7 +83,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
 		// set column preferred widths
 		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(30);
-		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
+		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(250);
 		table.getColumnModel().getColumn(STATUSCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)

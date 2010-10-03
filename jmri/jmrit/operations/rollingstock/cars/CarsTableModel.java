@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.30 $
+ * @version   $Revision: 1.31 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -261,7 +261,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		table.getColumnModel().getColumn(DESTINATIONCOLUMN).setPreferredWidth(190);
 		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(65);
 		table.getColumnModel().getColumn(MOVESCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(SETCOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(SETCOLUMN).setPreferredWidth(65);
 		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -302,7 +302,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         	else
         		return rb.getString("Moves");
         }
-        case SETCOLUMN: return rb.getString("Location");
+        case SETCOLUMN: return "";
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
