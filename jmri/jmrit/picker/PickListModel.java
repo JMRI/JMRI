@@ -260,11 +260,11 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     public static PickListModel oBlockPickModelInstance() {
         return new OBlockPickModel();
     }
-    public static PickListModel WarrantPickModelInstance() {
+    public static PickListModel warrantPickModelInstance() {
         return new WarrantPickModel();
     }
 
-    class DnDExportHandler extends TransferHandler{
+    static class DnDExportHandler extends TransferHandler{
 
         DnDExportHandler() {
         }
@@ -351,15 +351,15 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             }
             return super.isCellEditable(r, c);
         }
-        public Object getValueAt (int r,int c) {
+        public Object getValueAt (int r, int c) {
             if (c==POSITION_COL) {
-                return _position.get(new Integer(r));
+                return _position.get(Integer.valueOf(r));
             }
             return super.getValueAt(r, c);
         }
         public void setValueAt(Object type,int r,int c) {
             if (c==POSITION_COL) {
-                _position.put(new Integer(r), (String)type);
+                _position.put( Integer.valueOf(r), (String)type);
             }
         }
     }

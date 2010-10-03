@@ -21,14 +21,13 @@ import javax.swing.event.ListSelectionEvent;
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
     static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    private static int ROW_HEIGHT;
+    private int ROW_HEIGHT;
 
     JTable[]    _tables;
     JTabbedPane _tabPane;
 
     JPanel      _addPanel;
     JPanel      _cantAddPanel;
-    JButton     _addTableButton;
     JTextField  _sysNametext;
     JTextField  _userNametext;
 
@@ -49,30 +48,6 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         add(makeAddToTablePanel(), BorderLayout.SOUTH);
         _tabPane.addChangeListener(this);
     }
-
-//     private JTable makeTable(PickListModel model) {
-//         model.init();
-//         JTable table = new JTable(model);
-//         table.setRowSelectionAllowed(true);
-//         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-//         table.getSelectionModel().addListSelectionListener(this);
-//         table.setDragEnabled(true);
-//         TableColumnModel columnModel = table.getColumnModel();
-// 
-//         TableColumn sNameColumnT = columnModel.getColumn(PickListModel.SNAME_COLUMN);
-//         sNameColumnT.setResizable(true);
-//         sNameColumnT.setMinWidth(50);
-//         sNameColumnT.setMaxWidth(200);
-// 
-//         TableColumn uNameColumnT = columnModel.getColumn(PickListModel.UNAME_COLUMN);
-//         uNameColumnT.setResizable(true);
-//         uNameColumnT.setMinWidth(100);
-//         uNameColumnT.setMaxWidth(300);
-// 
-//         ROW_HEIGHT = table.getRowHeight();
-//         table.setPreferredScrollableViewportSize(new java.awt.Dimension(200,7*ROW_HEIGHT));
-//         return table;
-//     }
 
     private JPanel makeAddToTablePanel() {
         _sysNametext = new JTextField();
@@ -124,19 +99,6 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
     public void valueChanged(ListSelectionEvent e) {
         if (log.isDebugEnabled()) log.debug("ListSelectionEvent from "+e.getSource().getClass().getName()
                                             +" idx= "+e.getFirstIndex());
-        /*
-        PickListModel model =  (PickListModel)e.getSource();
-        int row = e.getFirstIndex();
-
-        if (row >= 0) {
-            _addButton.setEnabled(true);
-            _addButton.setToolTipText(null);
-        } else {
-            _addButton.setEnabled(false);
-            _addButton.setToolTipText(rb.getString("ToolTipPickFromTable"));
-            if (log.isDebugEnabled()) log.debug("_addButton.setEnabled(false): row= "+row);
-        }
-        */
     }
 
     // initialize logging
