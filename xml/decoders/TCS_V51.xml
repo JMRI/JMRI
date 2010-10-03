@@ -14,8 +14,10 @@
 <!-- for more details.                                                      -->
 <decoder-config>
     <version author="Michael Mosher" version="1" lastUpdated="20100430"/>
+    <version author="Michael Mosher" version="2" lastUpdated="20100717"/>
 
 <!-- V1: - Created from TCS_bemf -->
+<!-- V2: - Added EU621 & LL8 decoders -->
 
     <decoder>
         <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52">
@@ -128,6 +130,20 @@
                 <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
                 <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
                 <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+                <output name="Dim"/>
+                <output name="Ditch"/>
+                <output name="Motor"/>
+                <output name="BEMF"/>
+                <output name="Brake"/>
+            </model>
+            <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP">
+                <size length="0.78" width="0.59" height="0.13" units="inches"/>
+                <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
+                <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
+                <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
+                <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
+                <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
+                <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
                 <output name="Dim"/>
                 <output name="Ditch"/>
                 <output name="Motor"/>
@@ -324,6 +340,22 @@
                 <output name="2" label="Yellow" connection="other" maxcurrent="50 mA"/>
                 <output name="3" label="Green" connection="solder" maxcurrent="50 mA"/>
                 <output name="Dim"/>
+                <output name="Ditch"/>
+                <output name="Motor"/>
+                <output name="BEMF"/>
+                <output name="Brake"/>
+            </model>
+			<model model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" >
+                <size length="1.96" width="0.70" height="0.04" units="inches"/>
+                <output name="1" label="White" connection="other" maxcurrent="100 mA"/>
+                <output name="2" label="Yellow" connection="other" maxcurrent="100 mA"/>
+                <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+                <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+                <output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+                <output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+                <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA"/>
+                <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA"/>
+        		<output name="Dim"/>
                 <output name="Ditch"/>
                 <output name="Motor"/>
                 <output name="BEMF"/>
@@ -1977,7 +2009,7 @@
             <display item="mfgDay"/>
             <display item="mfgYear"/>
             <label label=" "/>
-            <label label="TCS_V51.xml for TCS 'X' with BEMF, v51-52. April 30 2010"/>
+            <label label="TCS_V51.xml for TCS 'X' with BEMF, v51-52. July 17 2010"/>
         </column>
     </pane>
 </decoder-config>
