@@ -15,25 +15,31 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.44 $
+ * @version             $Revision: 1.45 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
 	CarLoads carLoads = CarLoads.instance();
-	//LocationManager locationManager = LocationManager.instance();
 	
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
-	protected String _nextLoad = "";
-	protected Location _nextDestination = null;
-	protected Track _nextDestTrack = null;
-	protected Location _rweDestination = null;	// return when empty
-	protected Track _rweDestTrack = null;
+	protected int _wait = 0;
 	
+	protected Location _rweDestination = null;	// return when empty destination
+	protected Track _rweDestTrack = null;		// return when empty track
+	
+	// schedule items
+	protected String _nextLoad = "";			// next load by schedule	
+	protected int _nextWait = 0;				// next wait by schedule
+	protected Location _nextDestination = null;	// next destination by schedule
+	protected Track _nextDestTrack = null;		// next track by schedule
+		
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
+	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed";
+	public static final String NEXTWAIT_CHANGED_PROPERTY = "Next wait changed";
 	public static final String NEXTDESTINATION_CHANGED_PROPERTY = "Next destination changed";
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Return when empty changed";
 	
@@ -88,6 +94,32 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public String getNextLoad(){
 		return _nextLoad;
+	}
+	
+	public String getPriority(){
+		return (CarLoads.instance().getPriority(_type, _load));
+	}
+	
+	public void setWait(int count){
+		int old = _wait;
+		_wait = count;
+		if (old != count)
+			firePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
+	}
+	
+	public int getWait(){
+		return _wait;
+	}
+	
+	public void setNextWait(int count){
+		int old = _nextWait;
+		_nextWait = count;
+		if (old != count)
+			firePropertyChange(NEXTWAIT_CHANGED_PROPERTY, old, count);
+	}
+	
+	public int getNextWait(){
+		return _nextWait;
 	}
 	
 	public void setNextDestination(Location destination){
@@ -429,8 +461,16 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if ((a = e.getAttribute("load")) != null){
 			_load = a.getValue();
 		}
+
+		if ((a = e.getAttribute("wait")) != null){
+			_wait = Integer.parseInt(a.getValue());
+		}
 		if ((a = e.getAttribute("nextLoad")) != null){
 			_nextLoad = a.getValue();
+		}
+
+		if ((a = e.getAttribute("nextWait")) != null){
+			_nextWait = Integer.parseInt(a.getValue());
 		}
 		if ((a = e.getAttribute("nextDestId")) != null){
 			_nextDestination = LocationManager.instance().getLocationById(a.getValue());
@@ -469,8 +509,16 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (!getLoad().equals("")){
 			e.setAttribute("load", getLoad());
 		}
+
+		if (getWait() != 0){
+			e.setAttribute("wait", Integer.toString(getWait()));
+		}
 		if (!getNextLoad().equals("")){
 			e.setAttribute("nextLoad", getNextLoad());
+		}
+
+		if (getNextWait() != 0){
+			e.setAttribute("nextWait", Integer.toString(getNextWait()));
 		}
 		if (getNextDestination() != null){
 			e.setAttribute("nextDestId", getNextDestination().getId());

@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.rollingstock;
 
+import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.OperationsFrame;
@@ -21,7 +22,7 @@ import java.util.List;
  * Base class for rolling stock managers car and engine.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class RollingStockManager {
 	
@@ -493,19 +494,40 @@ public class RollingStockManager {
     	}
     	// get rolling stock by moves list
     	List<String> sortByMoves = getByMovesList();
+    	List<String> sortByPriority = sortByPriority(sortByMoves);
     	// now build list of available RollingStock for this route
      	RollingStock rs;
-     	for (int i = 0; i < sortByMoves.size(); i++) {
-    		rs = getById(sortByMoves.get(i));
+     	for (int i = 0; i < sortByPriority.size(); i++) {
+    		rs = getById(sortByPriority.get(i));
     		// only use RollingStock with a location
     		if (rs.getLocationName().equals(""))
     			continue;
     		RouteLocation rl = route.getLastLocationByName(rs.getLocationName());
     		// get RollingStock that don't have an assigned train, or the assigned train is this one 
     		if (rl != null && rl != destination && (rs.getTrain() == null || train.equals(rs.getTrain()))){
-    			out.add(sortByMoves.get(i));
+    			out.add(sortByPriority.get(i));
     		}
     	}
+    	return out;
+    }
+    
+    // sorts the high priority cars to the start of the list
+    private List<String> sortByPriority(List<String> list){
+    	List<String> out = new ArrayList<String>();
+    	RollingStock rs;
+    	// move high priority ids to the start
+    	for (int i=0; i<list.size(); i++){
+    		rs = getById(list.get(i));
+    		if (rs.getPriority().equals(CarLoad.PRIORITY_HIGH)){
+    			out.add(list.get(i));
+    			list.remove(i);
+    			i--;   			
+    		}
+    	}
+    	// now load all of the remaining low priority ids
+       	for (int i=0; i<list.size(); i++){
+       		out.add(list.get(i));
+       	}
     	return out;
     }
     

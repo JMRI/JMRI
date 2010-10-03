@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a car roster -->
-<!-- $Id: operations-cars.dtd,v 1.14 2010-10-01 18:21:41 dan_boudreau Exp $ -->
+<!-- $Id: operations-cars.dtd,v 1.15 2010-10-03 01:46:46 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -78,6 +78,7 @@
 <!ATTLIST load names				CDATA #IMPLIED> 
 
 <!ATTLIST carLoad name				CDATA #IMPLIED> 
+<!ATTLIST carLoad priority			CDATA #IMPLIED>
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
 

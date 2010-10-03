@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.87 $
+ * @version             $Revision: 1.88 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -940,7 +940,7 @@ public class TrainBuilder extends TrainCommon{
 			Car c = carManager.getById(carList.get(carIndex));
 			// only print out the first 500 cars
 			if (carIndex < 500)
-				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarAtLocWithMoves"),new Object[]{c.toString(), (c.getLocationName()+ ", " +c.getTrackName()), c.getMoves()}));
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarAtLocWithMoves"),new Object[]{c.toString(), (c.getLocationName()+ ", " +c.getTrackName()), c.getMoves(), c.getPriority()}));
 			if (carIndex == 500)
 				addLine(buildReport, FIVE, " ************* Only the first 500 cars are shown ************* ");
 			// use only the lead car in a kernel for building trains

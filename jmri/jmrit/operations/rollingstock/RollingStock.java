@@ -16,7 +16,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -646,6 +646,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 */
 	public boolean isOutOfService(){
 		return _outOfService;
+	}
+	
+	// normally overridden
+	public String getPriority(){
+		return "";
 	}
 
 	public void setComment(String comment) {

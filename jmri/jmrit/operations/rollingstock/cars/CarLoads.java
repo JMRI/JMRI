@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarLoads {
 	
@@ -100,6 +100,17 @@ public class CarLoads {
     	return box;
     }
     
+    /**
+     * Gets a combobox with the available priorities
+     * @return JComboBox with car priorities.
+     */
+    public JComboBox getPriorityComboBox(){
+    	JComboBox box = new JComboBox();
+    	box.addItem(CarLoad.PRIORITY_LOW);
+    	box.addItem(CarLoad.PRIORITY_HIGH);
+    	return box;
+    }
+    
     public List<String> getNames(String type){
     	if (type == null){
     		List<String> names = new ArrayList<String>();
@@ -155,7 +166,7 @@ public class CarLoads {
     public boolean containsName(String type, String name){
        	List<CarLoad> loads = list.get(type);
     	if (loads == null){
-    		log.debug("car type ("+type+") does not exist");
+    		//log.debug("car type ("+type+") does not exist");
     		return false;
     	}
        	for (int i=0; i<loads.size(); i++){
@@ -199,6 +210,27 @@ public class CarLoads {
     	String old = _emptyName;
     	_emptyName = name;
     	firePropertyChange (LOAD_NAME_CHANGED_PROPERTY, old, name);
+    }
+    
+    public void setPriority(String type, String name, String priority){
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			cl.setPriority(priority);
+       	}
+    }
+    
+    public String getPriority(String type, String name){
+       	if (!containsName(type, name))
+    		return CarLoad.PRIORITY_LOW;
+    	List<CarLoad> loads = list.get(type);
+       	for (int i=0; i<loads.size(); i++){
+    		CarLoad cl = loads.get(i);
+    		if (cl.getName().equals(name))
+    			return cl.getPriority();
+       	}
+       	return "error";
     }
     
     public void setPickupComment(String type, String name, String comment){
@@ -272,10 +304,18 @@ public class CarLoads {
 				buf.append(loads.get(j).getName());
 				Element carLoad = new Element("carLoad");
 				carLoad.setAttribute("name", loads.get(j).getName());
-				if (!loads.get(j).getPickupComment().equals(""))
+				if (!loads.get(j).getPriority().equals(CarLoad.PRIORITY_LOW)){
+					carLoad.setAttribute("priority", loads.get(j).getPriority());
+					buf.append("P");	// must store
+				}
+				if (!loads.get(j).getPickupComment().equals("")){
 					carLoad.setAttribute("pickupComment", loads.get(j).getPickupComment());
-				if (!loads.get(j).getDropComment().equals(""))
+					buf.append("PC");	// must store
+				}
+				if (!loads.get(j).getDropComment().equals("")){
 					carLoad.setAttribute("dropComment", loads.get(j).getDropComment());
+					buf.append("DC");	// must store
+				}
 				load.addContent(carLoad);
 			}
 			// only store loads that aren't the defaults
@@ -324,6 +364,9 @@ public class CarLoads {
         			if ((a = carLoad.getAttribute("name")) != null){
         				String name = a.getValue();
         				addName(type, name);
+        				if ((a = carLoad.getAttribute("priority")) != null){
+        					setPriority(type, name, a.getValue());
+        				}
         				if ((a = carLoad.getAttribute("pickupComment")) != null){
         					setPickupComment(type, name, a.getValue());
         				}

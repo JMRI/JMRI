@@ -31,7 +31,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -49,10 +49,11 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	JButton replaceButton = new JButton(rb.getString("Replace"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
-	// combo box
+	// combo boxes
 	JComboBox comboBox;
+	JComboBox priorityComboBox;
 	
-	// text box
+	// text boxes
 	JTextField addTextBox = new JTextField(10);
 	JTextField pickupCommentTextField = new JTextField(35);
 	JTextField dropCommentTextField = new JTextField(35);
@@ -70,7 +71,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         
         // track which combo box is being edited 
         _type = type;
-        loadCombobox();
+        loadComboboxes();
         
         // general GUI config    
         quanity.setVisible(showQuanity);
@@ -92,30 +93,34 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // row 4 
         addItem(pLoad, replaceButton, 3, 4);
         
+        // row 5
+        JPanel pPriority = new JPanel();
+		pPriority.setLayout(new BoxLayout(pPriority, BoxLayout.Y_AXIS));
+		pPriority.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPriority")));
+		addItem(pPriority, priorityComboBox, 0, 0);
+        
         // row 6
 		// optional panel
 		JPanel pOptionalPickup = new JPanel();
 		pOptionalPickup.setLayout(new BoxLayout(pOptionalPickup, BoxLayout.Y_AXIS));
-		pOptionalPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalPickup")));
-		
+		pOptionalPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalPickup")));		
 		addItem(pOptionalPickup, pickupCommentTextField, 0, 0);
 		
 		// row 8
 		JPanel pOptionalDrop = new JPanel();
 		pOptionalDrop.setLayout(new BoxLayout(pOptionalDrop, BoxLayout.Y_AXIS));
-		pOptionalDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalDrop")));
-		
+		pOptionalDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptionalDrop")));		
 		addItem(pOptionalDrop, dropCommentTextField, 0, 0);
 		
 		// row 10
 		JPanel pControl = new JPanel();
-		pControl.setLayout(new BoxLayout(pControl, BoxLayout.Y_AXIS));
-		
+		pControl.setLayout(new BoxLayout(pControl, BoxLayout.Y_AXIS));	
 		addItem(pControl, saveButton, 0, 0);
 
 		// add panels
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		getContentPane().add(pLoad);
+		getContentPane().add(pPriority);
 		getContentPane().add(pOptionalPickup);
 		getContentPane().add(pOptionalDrop);
 		getContentPane().add(pControl);
@@ -227,6 +232,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		}
 		if (ae.getSource() == saveButton){
 			log.debug("CarLoadEditFrame save button pressed");
+			carLoads.setPriority(_type, (String)comboBox.getSelectedItem(), (String)priorityComboBox.getSelectedItem());
 			carLoads.setPickupComment(_type, (String)comboBox.getSelectedItem(), pickupCommentTextField.getText());
 			carLoads.setDropComment(_type, (String)comboBox.getSelectedItem(), dropCommentTextField.getText());
 			CarManagerXml.instance().writeOperationsFile();
@@ -236,6 +242,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 	protected void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("Combo box action");
 		updateCarQuanity();
+		updatePriority();
 		updateCarCommentFields();
 	}
 	
@@ -266,9 +273,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		TrainManager.instance().replaceLoad(oldLoad, newLoad);
 	}
 	
-	private void loadCombobox(){ 
+	private void loadComboboxes(){ 
 		comboBox = carLoads.getComboBox(_type);
 		carLoads.addPropertyChangeListener(this);
+		priorityComboBox = carLoads.getPriorityComboBox();
 	}
 	
 	boolean showQuanity = false;
@@ -294,6 +302,10 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 				number++;
 		}
 		quanity.setText(Integer.toString(number));
+	}
+	
+	private void updatePriority(){
+		priorityComboBox.setSelectedItem(carLoads.getPriority(_type, (String)comboBox.getSelectedItem()));
 	}
 	
 	private void updateCarCommentFields(){
