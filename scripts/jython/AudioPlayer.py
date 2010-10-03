@@ -4,9 +4,9 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 
-from java.awt import FlowLayout, Dimension
+from java.awt import FlowLayout
 from java.awt.event import ItemEvent
 from java.util import Hashtable
 from javax.swing import Box, BoxLayout, JButton, JComboBox, JPanel, JSlider, JLabel, JSpinner, SpinnerNumberModel
@@ -71,11 +71,11 @@ class AudioPlayerFrame (JmriJFrame):
         # Now sliders
         ticksMajor = int(self.posMinMax/4)
         ticksMinor = int(ticksMajor/5)
-        labelsX = Hashtable(3)
-        labelsX.put(-self.posMinMax, JLabel("Left"))
-        labelsX.put(              0, JLabel("Centre"))
-        labelsX.put( self.posMinMax, JLabel("Right"))
-        self.positionXSlider.labelTable = labelsX
+        labels = Hashtable(3)
+        labels.put(-self.posMinMax, JLabel("Left"))
+        labels.put(              0, JLabel("Centre"))
+        labels.put( self.posMinMax, JLabel("Right"))
+        self.positionXSlider.labelTable = labels
         self.positionXSlider.minimum = -self.posMinMax
         self.positionXSlider.maximum = self.posMinMax
         self.positionXSlider.majorTickSpacing = ticksMajor
@@ -151,33 +151,6 @@ class AudioPlayerFrame (JmriJFrame):
         label.alignmentX = JLabel.CENTER_ALIGNMENT
         p3.add(label)
         p3.add(self.positionXSlider)
-        # Now the XSlider has been added, we can manipulate the labels
-        label = labelsX.get(-self.posMinMax)
-        oldHeight = label.size.height
-        label.UI = VerticalLabelUI()
-        label.size = label.preferredSize
-        newHeight = label.size.height
-        label = labelsX.get(0)
-        label.UI = VerticalLabelUI()
-        label.size = label.preferredSize
-        if (label.size.height > newHeight):
-            newHeight = label.size.height
-        label = labelsX.get(self.posMinMax)
-        label.UI = VerticalLabelUI()
-        label.size = label.preferredSize
-        if (label.size.height > newHeight):
-            newHeight = label.size.height
-        print "Old slider preferred height: %d" % self.positionXSlider.preferredSize.height
-        print "Old slider actual height: %d" % self.positionXSlider.size.height
-        print "Old slider minimum height: %d" % self.positionXSlider.minimumSize.height
-        print "Old label height: %d" % oldHeight
-        print "New label height: %d" % newHeight
-        self.positionXSlider.minimumSize = Dimension(self.positionXSlider.preferredSize.width, self.positionXSlider.minimumSize.height + newHeight - oldHeight)
-        self.positionXSlider.preferredSize = self.positionXSlider.minimumSize
-        self.positionXSlider.size = self.positionXSlider.preferredSize
-        print "New slider preferred height: %d" % self.positionXSlider.preferredSize.height
-        print "New slider actual height: %d" % self.positionXSlider.size.height
-        print "New slider minimum height: %d" % self.positionXSlider.minimumSize.height
         p2.add(p3)
         p.add(p2)
         label = JLabel("Z Position")
