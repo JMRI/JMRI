@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.10 2010-07-27 14:57:19 jacobsen Exp $ -->
+<!-- $Id: EngineDriverAndroidThrottle.shtml,v 1.11 2010-10-03 20:37:36 jacobsen Exp $ -->
 <title>JMRI: Engine Driver Throttle for Android</title>
 
 <!-- Style -->
@@ -25,29 +25,30 @@
 JMRI: Engine Driver Throttle for Android
 </h1>
 
-<p>Engine Driver version 0.8 is now available.&nbsp;This version adds Turnout, Route and Layout Power control pages, all accessed via menu from the Throttle screen.</p>
+<p>Engine Driver version 0.9 is now available.&nbsp;This version adds loco selection by roster entry, unique function mapping by roster entry, and a couple of bug fixes. &nbsp;<em><a href="http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/changelog-and-todo-list.txt" target="_blank" title="View complete EngineDriver changelog">[view complete changelog]</a></em></p>
 <p>This free application can connect to a <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">JMRI WiThrottle</a> server running on a computer, and in turn control your locomotives. Speed, direction, and up to 29 DCC functions are supported for one or two locomotives. &nbsp;You can also control layout power, turnouts and routes.&nbsp;</p>
+<p>For screenshots, visit&nbsp;<a href="http://enginedriver.rrclubs.org/" target="_blank">[Homepage for EngineDriver]</a>.</p>
 <h3>Prerequisites:</h3>
 <p>Verify your Android device can connect to your PC network via WiFi and obtain an IP address.<br />Make sure you are running one of the latest versions of&nbsp;<a href="http://jmri.sourceforge.net/" target="_blank">JMRI</a>&nbsp;(2.8 works, 2.10 works better) on your PC, connected to the layout. &nbsp;Start up JMRI and verify you can use the included "Throttle" app to control a loco.</p>
 <h3>Installation:</h3>
-<p>Download and install from the Android Market as usual. &nbsp;</p>
-<p>Or, you can <a href="http://sourceforge.net/projects/jmri/files/test%20files/EngineDriver-0.7.apk/download" target="_blank">download this file</a>&nbsp;from the JMRI site using your phone or another computer. &nbsp;Before your Android device will allow you to install this file, you will need to permit the installation of non-Market applications.  This is under Settings-&gt;Applications-&gt;Unknown sources. Once on your phone, click on the file to begin installation. &nbsp;Follow the prompts as usual. &nbsp;(Note: if you have an earlier version installed, you may need to uninstall it manually.)</p>
+<p>Download and install from the Android Market as usual (search for "JMRI throttle").</p>
+<p>OR, if you don't have Market access, you can <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.9 of EngineDriver">download this file</a>&nbsp;from the JMRI site using your phone or another computer. &nbsp;Before your Android device will allow you to install this file, you will need to permit the installation of non-Market applications.  This is under Settings-&gt;Applications-&gt;Unknown sources. Once on your phone, click on the file to begin installation. &nbsp;Follow the prompts as usual. &nbsp;(Note: if you have an earlier version installed, you may need to uninstall it manually.)</p>
 <h3>Operation:</h3>
 <p>Start the <a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/withrottle/UserInterface.shtml" target="_blank">WiThrottle</a> function of JMRI, located in DecoderPro under Tools, Throttles. &nbsp;(Or under Debug in older versions of JMRI).</p>
 <p>On your phone, start the Engine Driver app and wait for your PC's address to show up in "Discovered Services". <br />Click on the discovered address, (or you can enter the address and port of your WiThrottle server directly).</p>
-<p>On the throttle screen, click on the "Press to Select" loco button for each loco.</p>
-<p>On the next screen, enter the loco address (verify short or long), and press "Acquire". &nbsp;You will be returned to the Throttle screen.</p>
-<p>Repeat using 2nd "Press to Select" button to acquire a 2nd loco.</p>
+<p>On the throttle screen, click on the "Press to Select" loco button for each loco.<br />On the next screen, enter the loco address (verify short or long), and press "Acquire". &nbsp;You will be returned to the Throttle screen.<br />Repeat using 2nd "Press to Select" button to acquire a 2nd loco.</p>
 <p>Operate your loco using the slider for speed, and the reverse, stop and forward buttons to control direction. <br />To release all locos, just press the Back button.  This will also stop your loco (can be overridden in preferences).</p>
+<p>Press your phone's Menu button to access screens for Turnout, Route and Power control, as well as adjust settings and setup default function labels.</p>
 <h3>Configuration:</h3>
 <p>Under Preferences, set the name you'd like to call your throttle. &nbsp;(Must be unique if multiple EngineDrivers in use) &nbsp;You can turn off the "stop on release" feature if desired, and you can set a Maximum value for the throttle sliders. &nbsp;If you're planning to use Turnout control, make sure you select the correct Hardware System from the list.&nbsp;</p>
 <p>Use the Function Buttons menu option to set the labels and function numbers to display. If you have set labels in a roster entry in JMRI, these labels can be copied from the dialog (access the menu after selecting a loco). &nbsp;Remove buttons by blanking out the labels. &nbsp;</p>
 <p>On the JMRI computer side, check your WiThrottle preferences to insure you allow or disallow the control features desired. &nbsp;If you've defined your turnouts and routes in a panel, make sure to specify "user names" for those you'd like to see listed on your throttle. &nbsp;You can also "filter" the turnouts shown using the WiThrottle-&gt;Filter Controls option in the WiThrottle window. &nbsp;Turning on "Use eStop" and "Use fixed port#" are also recommended.</p>
+<p>Entering roster entries, routes and defining turnouts in JMRI will all make your Engine Driver throttle easier to use (though not required).</p>
 <h3>Download:</h3>
-<p>Latest version is 0.8, available in the Android Market and direct download&nbsp;<a href="http://sourceforge.net/projects/jmri/files/test%20files/EngineDriver-0.8.apk" target="_blank">[HERE]</a>. (Note: you may need to manually uninstall earlier versions.)</p>
-<p>Previous versions are here:&nbsp;<a href="http://sourceforge.net/projects/jmri/files/test%20files/EngineDriver-0.6.apk" target="_blank">[version 0.6]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/EngineDriver-0.5.apk" target="_blank">[version 0.5]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/EngineDriver-0.3.apk" target="_blank">[version 0.3]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.2.apk" target="_blank">[version 0.2]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.1.apk" target="_blank">[version 0.1]</a></p>
+<p>Latest version is 0.9, available in the Android Market and direct download&nbsp;<a href="http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.9 of EngineDriver">[HERE]</a>. (Note: you may need to manually uninstall earlier versions.)</p>
+<p>Previous versions are here:&nbsp; <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/tags/release-0.8/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.8 of EngineDriver">[version 0.8]</a> <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/tags/release-0.6/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.6 of EngineDriver">[version 0.6]</a> <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/tags/release-0.3/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.5 of EngineDriver">[version 0.5]</a> <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/tags/release-0.5/EngineDriver/bin/EngineDriver.apk" target="_blank" title="Download version 0.3 of EngineDriver">[version 0.3]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.2.apk" target="_blank">[version 0.2]</a> <a href="http://sourceforge.net/projects/jmri/files/test%20files/Engine_Driver-debug_v0.1.apk" target="_blank">[version 0.1]</a></p>
 <p>Current development source code (with tags for earlier releases) can be found  <a href="http://jmri.svn.sourceforge.net/viewvc/jmri/trunk/EngineDriver/" target="_blank">[HERE].</a></p>
-<p>For screenshots, visit <a href="http://enginedriver.rrclubs.org" target="_blank">[Homepage for EngineDriver]</a></p>
+<p><a href="http://enginedriver.rrclubs.org" target="_blank">[Homepage for EngineDriver]</a></p>
 <div style="clear: both;">This is the package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle help page</div>
 
 <!--#include virtual="/Footer" -->
