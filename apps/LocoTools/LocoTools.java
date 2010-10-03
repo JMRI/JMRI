@@ -32,7 +32,7 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 public class LocoTools extends Apps {
 
@@ -46,7 +46,7 @@ public class LocoTools extends Apps {
 
     protected void systemsMenu(JMenuBar menuBar, JFrame frame) {
         // separate LocoNet menu
-        menuBar.add(new jmri.jmrix.loconet.swing.ComponentFactory(
+        menuBar.add(new jmri.jmrix.loconet.swing.LnComponentFactory(
                 new jmri.jmrix.loconet.LocoNetSystemConnectionMemo(
                     jmri.jmrix.loconet.LnTrafficController.instance(),
                     new jmri.jmrix.loconet.SlotManager(jmri.jmrix.loconet.LnTrafficController.instance())

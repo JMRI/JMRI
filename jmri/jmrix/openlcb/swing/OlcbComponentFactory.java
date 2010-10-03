@@ -1,8 +1,8 @@
-// ComponentFactory.java
+// OlcbComponentFactory.java
 
 package jmri.jmrix.openlcb.swing;
 
-import jmri.jmrix.openlcb.SystemConnectionMemo;
+import jmri.jmrix.openlcb.OlcbSystemConnectionMemo;
 import jmri.jmrix.openlcb.OpenLcbMenu;
 
 /**
@@ -12,13 +12,13 @@ import jmri.jmrix.openlcb.OpenLcbMenu;
  * @version             $Revision: 1.1 $
  * @since 2.9.4
  */
-public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
+public class OlcbComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
-    public ComponentFactory(SystemConnectionMemo memo) {
+    public OlcbComponentFactory(OlcbSystemConnectionMemo memo) {
         this.memo = memo;
     }
     
-    SystemConnectionMemo memo;
+    OlcbSystemConnectionMemo memo;
     
     /**
      * Provide a menu with all items attached to this system connection
@@ -29,4 +29,4 @@ public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)ComponentFactory.java */
+/* @(#)OlcbComponentFactory.java */

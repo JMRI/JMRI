@@ -10,10 +10,10 @@ import javax.swing.JMenu;
  * Create a menu containing the JMRI OpenLCB-specific tools
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OpenLcbMenu extends JMenu {
-    public OpenLcbMenu(jmri.jmrix.openlcb.SystemConnectionMemo memo) {
+    public OpenLcbMenu(jmri.jmrix.openlcb.OlcbSystemConnectionMemo memo) {
 
         super();
 

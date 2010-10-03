@@ -1,4 +1,4 @@
-// ComponentFactory.java
+// LnComponentFactory.java
 
 package jmri.jmrix.loconet.swing;
 
@@ -8,12 +8,12 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Provide access to Swing components for the LocoNet subsystem.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.1 $
  * @since 2.9.4
  */
-public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
+public class LnComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
-    public ComponentFactory(LocoNetSystemConnectionMemo memo) {
+    public LnComponentFactory(LocoNetSystemConnectionMemo memo) {
         this.memo = memo;
     }
     
@@ -29,4 +29,4 @@ public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)ComponentFactory.java */
+/* @(#)LnComponentFactory.java */

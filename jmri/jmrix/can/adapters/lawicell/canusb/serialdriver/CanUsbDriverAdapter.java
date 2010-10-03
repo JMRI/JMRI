@@ -1,4 +1,4 @@
-// SerialDriverAdapter.java
+// CanUsbDriverAdapter.java
 
 package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
 
@@ -11,9 +11,9 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver;
  *
  * @author			Andrew Crosland Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008, 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.1 $
  */
-public class SerialDriverAdapter 
+public class CanUsbDriverAdapter
         extends jmri.jmrix.can.adapters.lawicell.SerialDriverAdapter 
         implements jmri.jmrix.SerialPortAdapter {
 
@@ -31,12 +31,12 @@ public class SerialDriverAdapter
         return new int[]{57600, 115200, 250000, 333333, 460800, 500000};
     }
         
-    static public SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+    static public CanUsbDriverAdapter instance() {
+        if (mInstance == null) mInstance = new CanUsbDriverAdapter();
         return mInstance;
     }
-    static SerialDriverAdapter mInstance = null;
+    static CanUsbDriverAdapter mInstance = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CanUsbDriverAdapter.class.getName());
 
 }

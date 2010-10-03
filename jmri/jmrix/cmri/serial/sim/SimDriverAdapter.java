@@ -1,4 +1,4 @@
-// SerialDriverAdapter.java
+// SimDriverAdapter.java
 
 package jmri.jmrix.cmri.serial.sim;
 
@@ -10,13 +10,13 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 
 /**
- * Extends the serialdriver.SerialDriverAdapter class to 
+ * Extends the serialdriver.SimDriverAdapter class to
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.1 $
  */
-public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
+public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
     public String openPort(String portName, String appName)  {
             // don't even try to get port
@@ -135,11 +135,11 @@ public class SerialDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Ser
     InputStream serialStream = null;
 
     static public jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter instance() {
-        if (mInstance == null) mInstance = new SerialDriverAdapter();
+        if (mInstance == null) mInstance = new SimDriverAdapter();
         return mInstance;
     }
-    static SerialDriverAdapter mInstance;
+    static SimDriverAdapter mInstance;
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SerialDriverAdapter.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SimDriverAdapter.class.getName());
 
 }

@@ -13,7 +13,7 @@ import gnu.io.SerialPort;
  * refers to the switch settings on the new Digitrax PR3
  
  * @author			Bob Jacobsen   Copyright (C) 2004, 2005, 2006, 2008
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class PR3Adapter extends LocoBufferAdapter {
 
@@ -67,7 +67,7 @@ public class PR3Adapter extends LocoBufferAdapter {
             // PR3 case
             // connect to a packetizing traffic controller
             // that does echoing
-            jmri.jmrix.loconet.pr2.LnPacketizer packets = new jmri.jmrix.loconet.pr2.LnPacketizer();
+            jmri.jmrix.loconet.pr2.LnPr2Packetizer packets = new jmri.jmrix.loconet.pr2.LnPr2Packetizer();
             packets.connectPort(this);
     
             // create memo

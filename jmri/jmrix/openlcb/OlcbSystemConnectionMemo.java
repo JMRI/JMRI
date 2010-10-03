@@ -1,4 +1,4 @@
-// SystemConnectionMemo.java
+// OlcbSystemConnectionMemo.java
 
 package jmri.jmrix.openlcb;
 
@@ -13,15 +13,15 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.1 $
  */
-public class SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
+public class OlcbSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
-    public SystemConnectionMemo() {
+    public OlcbSystemConnectionMemo() {
         super("M", "OpenLCB");
         log.debug("SystemConnectionMemo ctor");
         register(); // registers general type
-        InstanceManager.store(this, SystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(this, OlcbSystemConnectionMemo.class); // also register as specific type
         
         // create and register the ComponentFactory
         InstanceManager.store(cf = new jmri.jmrix.openlcb.swing.OpenLcbComponentFactory(this), 
@@ -81,14 +81,14 @@ public class SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     public void dispose() {
 //         lt = null;
 //         sm = null;
-        InstanceManager.deregister(this, SystemConnectionMemo.class);
+        InstanceManager.deregister(this, OlcbSystemConnectionMemo.class);
         if (cf != null) 
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
         super.dispose();
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConnectionMemo.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OlcbSystemConnectionMemo.class.getName());
 }
 
 
-/* @(#)SystemConnectionMemo.java */
+/* @(#)OlcbSystemConnectionMemo.java */

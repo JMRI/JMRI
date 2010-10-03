@@ -1,0 +1,30 @@
+// LnPr2Packetizer.java
+
+package jmri.jmrix.loconet.pr2;
+
+/**
+ * Special LnPr2Packetizer implementation for PR2.
+ * 
+ * Differs only in handling PR2's non-echo
+ *
+ * @author			Bob Jacobsen  Copyright (C) 2006
+ * @version 		$Revision: 1.1 $
+ *
+ */
+public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
+
+    final static boolean fulldebug = false;
+  
+  	boolean debug = false;
+  	
+    public LnPr2Packetizer() {
+        super();
+    	self=this;
+    	echo = true;
+    	debug = log.isDebugEnabled();
+   	}
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPr2Packetizer.class.getName());
+}
+
+/* @(#)LnPr2Packetizer.java */

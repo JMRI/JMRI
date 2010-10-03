@@ -7,13 +7,13 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect LAWICELL CAN-USB via SerialDriver interface and comm port
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
     
     public SerialDriverFrame() {
         super("Open CAN-USB connection");
-        adapter = new SerialDriverAdapter();
+        adapter = new CanUsbDriverAdapter();
     }
     
     public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {

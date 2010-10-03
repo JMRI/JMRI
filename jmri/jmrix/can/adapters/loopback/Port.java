@@ -24,7 +24,7 @@ import java.io.DataOutputStream;
  *	and separated by a space. Variable whitespace is not (yet) supported
  *
  * @author			Bob Jacobsen    Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class Port extends AbstractSerialPortController {
 
@@ -35,7 +35,7 @@ public class Port extends AbstractSerialPortController {
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        TrafficController.instance();
+        LoopbackTrafficController.instance();
 
         // do central protocol-specific configuration    
         jmri.jmrix.can.ConfigurationManager.configure(mOpt1);

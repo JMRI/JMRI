@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -25,8 +25,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
-        // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.ComponentFactory(this), 
+        // create and register the LnComponentFactory
+        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     
@@ -35,8 +35,8 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
         register(); // registers general type
         InstanceManager.store(this, LocoNetSystemConnectionMemo.class); // also register as specific type
         
-        // create and register the ComponentFactory
-        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.ComponentFactory(this), 
+        // create and register the LnComponentFactory
+        InstanceManager.store(cf = new jmri.jmrix.loconet.swing.LnComponentFactory(this),
                                 jmri.jmrix.swing.ComponentFactory.class);
     }
     

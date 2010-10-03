@@ -7,14 +7,14 @@ package jmri.jmrix.openlcb;
  * implementations.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class ConfigurationManager {
 
     static public void configure(String option) {
         // "OpenLCB CAN"
         ActiveFlag.setActive();
-        new SystemConnectionMemo();
+        new OlcbSystemConnectionMemo();
         
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.openlcb.OlcbTurnoutManager());
         jmri.InstanceManager.setSensorManager(new jmri.jmrix.openlcb.OlcbSensorManager());

@@ -3,13 +3,13 @@ package jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.ConnectionConfig;
-import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.SerialDriverAdapter;
+import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.CanUsbDriverAdapter;
 
 /**
  * Handle XML persistance of layout connections by persistening
- * the SerialDriverAdapter (and connections). Note this is
+ * the CanUsbDriverAdapter (and connections). Note this is
  * named as the XML version of a ConnectionConfig object,
- * but it's actually persisting the SerialDriverAdapter.
+ * but it's actually persisting the CanUsbDriverAdapter.
  * <P>
  * This class is invoked from jmrix.JmrixConfigPaneXml on write,
  * as that class is the one actually registered. Reads are brought
@@ -17,7 +17,7 @@ import jmri.jmrix.can.adapters.lawicell.canusb.serialdriver.SerialDriverAdapter;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Andrew Crosland 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -26,7 +26,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void getInstance() {
-        adapter = SerialDriverAdapter.instance();
+        adapter = CanUsbDriverAdapter.instance();
     }
 
     protected void register() {

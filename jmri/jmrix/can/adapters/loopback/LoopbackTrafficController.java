@@ -1,6 +1,6 @@
-// TrafficController.java
+// LoopbackTrafficController.java
 
-package jmri.jmrix.can.adapters.lawicell;
+package jmri.jmrix.can.adapters.loopback;
 
 import jmri.jmrix.can.*;
 
@@ -9,23 +9,14 @@ import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRListener;
 
 /**
- * Traffic controller for the LAWICELL protocol.
- * <P>
- * Lawicell adapters use messages transmitted
- * as an ASCII string of up to 24 characters of the form:
- *      ;ShhhhNd0d1d2d3d4d5d6d7:
- * The S indicates a standard CAN frame
- * hhhh is the two byte header
- * N or R indicates a normal or remote frame
- * d0 - d7 are the (up to) 8 data bytes
+ * Traffic controller for loopback CAN simulation.
  *
- * @author          Andrew Crosland Copyright (C) 2008
  * @author          Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.1 $
  */
-public class TrafficController extends jmri.jmrix.can.TrafficController {
+public class LoopbackTrafficController extends jmri.jmrix.can.TrafficController {
     
-    public TrafficController() {
+    public LoopbackTrafficController() {
         super();
     }
    
@@ -42,24 +33,15 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     protected void forwardReply(AbstractMRListener client, AbstractMRReply r) {
         ((CanListener)client).reply((CanReply)r);
     }
-    
-    // Current state
-    public static final int NORMAL = 0;
-    public static final int BOOTMODE = 1;
-    
-    public int getgcState() { return gcState; }
-    public void setgcState(int s) {
-        gcState = s;
-        if (log.isDebugEnabled()) log.debug("Setting gcState " + s);
-    }
-    public boolean isBootMode() {return gcState == BOOTMODE; }
+        
+    public boolean isBootMode() {return false; }
     
     /**
      * Forward a preformatted message to the actual interface.
      */
     public void sendCanMessage(CanMessage m, CanListener reply) {
         log.debug("TrafficController sendCanMessage() " + m.toString());
-        sendMessage(m, reply);
+        notifyMessage(m, reply);
     }
 
     /**
@@ -89,15 +71,15 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
     static public jmri.jmrix.can.TrafficController instance() {
         if (self == null) {
             if (log.isDebugEnabled()) log.debug("creating a new TrafficController object");
-            self = new TrafficController();
+            self = new LoopbackTrafficController();
         }
         return self;
     }
 
     // New message for hardware protocol
     protected AbstractMRMessage newMessage() { 
-        log.debug("New Message created");
-        Message msg = new Message();
+        log.debug("New CanMessage created");
+        CanMessage msg = new CanMessage();
         return msg;
     }
 
@@ -105,51 +87,60 @@ public class TrafficController extends jmri.jmrix.can.TrafficController {
      * Make a CanReply from a system-specific reply
      */
     public CanReply decodeFromHardware(AbstractMRReply m) {
-        if (log.isDebugEnabled()) log.debug("Decoding from hardware: '"+m+"'\n");
-	    Reply gc = (Reply)m;
-        CanReply ret = gc.createReply();
-        if (log.isDebugEnabled()) log.debug("Decoded "+gc+" as "+ret);
-        return ret;
+        log.error("decodeFromHardware unexpected");
+        return null;
+
+/*         if (log.isDebugEnabled()) log.debug("Decoding from hardware: '"+m+"'\n"); */
+/* 	    CanReply gc = (CanReply)m; */
+/*         CanReply ret = new CanReply(); */
+/*  */
+/* 	    // Get the ID */
+/*         ret.setId(gc.getID()); */
+/*          */
+/*         // Get the data */
+/*         for (int i = 0; i < gc.getNumBytes(); i++) { */
+/*             ret.setElement(i, gc.getByte(i)); */
+/*         } */
+/*         ret.setNumDataElements(gc.getNumBytes()); */
+/*         if (log.isDebugEnabled()) log.debug("Decoded as "+ret); */
+/*          */
+/*         return ret; */
     }
 
     /**
      * Encode a CanMessage for the hardware
      */
     public AbstractMRMessage encodeForHardware(CanMessage m) {
-        log.debug("Encoding for hardware");
-	    Message ret = new Message(m);
-        if (log.isDebugEnabled()) log.debug("encoded as "+ret);        
-        return ret;
+        log.error("encodeForHardware unexpected");
+        return null;
     }
 
     // New reply from hardware
     protected AbstractMRReply newReply() { 
-        log.debug("New Reply created");
-        Reply reply = new Reply();
+        log.debug("New CanReply created");
+        CanReply reply = new CanReply();
         return reply;
     }
     
     /*
-     * Normal Lawicall replies will end with CR; errors are BELL
+     * Dummy; lookback doesn't parse serial messages
      */
     protected boolean endOfMessage(AbstractMRReply r) {
-        if (endNormalReply(r)) return true;
-        return false;
+        log.error("endNormalReply unexpected");
+        return true;
     }
     
+    /*
+     * Dummy; lookback doesn't parse serial messages
+     */
     boolean endNormalReply(AbstractMRReply r) {
-        // Detect if the reply buffer ends with bell or cr
-        int num = r.getNumDataElements() - 1;
-        if (r.getElement(num) == 0x0D) return true;
-        if (r.getElement(num) == 0x07) return true;
-        return false;
+        log.error("endNormalReply unexpected");
+        return true;
     }
-    
-    private int gcState;
-    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrafficController.class.getName());
+        
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LoopbackTrafficController.class.getName());
 }
 
 
-/* @(#)TrafficController.java */
+/* @(#)LoopbackTrafficController.java */
 

@@ -1,4 +1,4 @@
-// ComponentFactory.java
+// XNetComponentFactory.java
 
 package jmri.jmrix.lenz.swing;
 
@@ -9,12 +9,12 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  * @author		Paul Bender   Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.1 $
  * @since 2.11.1
  */
-public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
+public class XNetComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
-    public ComponentFactory(XNetSystemConnectionMemo memo) {
+    public XNetComponentFactory(XNetSystemConnectionMemo memo) {
         this.memo = memo;
     }
     
@@ -30,4 +30,4 @@ public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 }
 
 
-/* @(#)ComponentFactory.java */
+/* @(#)XNetComponentFactory.java */

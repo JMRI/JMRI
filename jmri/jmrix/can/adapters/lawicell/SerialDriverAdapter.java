@@ -16,7 +16,7 @@ import gnu.io.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -105,18 +105,18 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        TrafficController.instance();
+        LawicellTrafficController.instance();
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
-        TrafficController.instance().connectPort(this);
+        LawicellTrafficController.instance().connectPort(this);
     
         // send a request for version information, set 125kbps, open channel
         log.debug("send version request");
         jmri.jmrix.can.CanMessage m = 
             new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13});
         m.setTranslated(true);
-        TrafficController.instance().sendCanMessage(m, null);
+        LawicellTrafficController.instance().sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
         jmri.jmrix.can.ConfigurationManager.configure(mOpt1);

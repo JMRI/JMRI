@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.3 $
+ * @version  $Revision: 1.4 $
  */
 
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -24,8 +24,8 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      register(); // registers general type
      InstanceManager.store(this,XNetSystemConnectionMemo.class); // also register as specific type
 
-     // create and register the ComponentFactory
-     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),
+     // create and register the XNetComponentFactory
+     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.XNetComponentFactory(this),
                            jmri.jmrix.swing.ComponentFactory.class);
 
    }
@@ -35,8 +35,8 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      register(); // registers general type
      InstanceManager.store(this,XNetSystemConnectionMemo.class); // also register as specific type
 
-     // create and register the ComponentFactory
-     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.ComponentFactory(this),                            jmri.jmrix.swing.ComponentFactory.class);
+     // create and register the XNetComponentFactory
+     InstanceManager.store(cf=new jmri.jmrix.lenz.swing.XNetComponentFactory(this),                            jmri.jmrix.swing.ComponentFactory.class);
 
    }
 
