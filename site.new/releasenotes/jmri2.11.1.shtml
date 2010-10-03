@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.12 2010-10-03 19:41:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.13 2010-10-03 21:53:32 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -210,14 +210,25 @@ Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 Pete Cressman fixed a problem selecting groups on panels
 
 
-<p>Dan Boudreau made several enhancements to operations. The
-operations program now supports car routing. The program will now use up
-to 5 trains to move a car from one location to another. Routing through
-staging tracks is disabled by default. A new operations feature, "Return
-When Empty" is now available. When a car's load changes to empty, the
-car can optionally return to a location or location/track. UK support
-has also been improved. Improved operations staging warning messages.
-User can now specify a pickup or drop comment for a car based on the car's load.
+<p>Dan Boudreau made many enhancements to operations.
+<ul>
+	<li>The operations program now supports car routing. The program
+	will now use up to 5 trains to move a car from one location to another.
+	Routing through staging tracks is disabled by default.
+	<li>A new feature, "Return When Empty" is now
+	available. When a car's load changes to empty, the car can optionally
+	return to a location or location/track.
+	<li>UK support been improved.
+	<li>Improved operations staging warning messages.
+	<li>User can now specify a pickup or drop comment for a car based
+	on the car's load.
+	<li>Users can now mark a car as misplaced. When a car is marked
+	misplaced, the program will not attempt to move the car. Also a list of
+	misplaced cars is now appended to manifests and switch lists.
+	<li>Schedules can now delay a car's pickup from a siding.
+	<li>A new feature, car loads can now have a low or high
+	priority. High priority loads are serviced before low priority loads.
+</ul>
 
 <p>
 Lionel Jeanson made multiple improvements to throttles:
@@ -245,11 +256,6 @@ david zuhn added support for exporting the entire roster to one file.
 Menu support (but a null implementation) for importing from an exported roster file.
 
 <p>
-Dan Boudreau added a new operations feature: user can now mark a car as misplaced.  
-When a car is marked misplaced, the program will not attempt to move the car.  
-Also a list of misplaced cars is now appended to manifests and switch lists.
-
-<p>
 Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
 
 <p>
@@ -258,10 +264,6 @@ Matt Harris added a system console complete with facility to copy contents to cl
 <p>
 Pete Cressman added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
 are relevant to valid states.
-
-<p>
-Dan Boudreau added new operations features: A schedule can now delay a car's pickup. 
-Car loads can now have a low or high priority.  High priority loads are serviced before low priority loads.
 
 <p>
 David Duchamp made some improvements to running trains with the Dispatcher.
