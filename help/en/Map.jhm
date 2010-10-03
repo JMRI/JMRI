@@ -406,6 +406,8 @@
 
 <mapID target="manual.Main_Panels" url="manual/Main_Panels.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_EditCarLoads" url="package/jmri/jmrit/operations/Operations.shtml#EditCarLoads"/>
+
 <mapID target="html.hardware.USBtoSerial" url="html/hardware/USBtoSerial.shtml"/>
 
 <mapID target="package.jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigFrame" url="package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml"/>
@@ -539,6 +541,8 @@
 <mapID target="manual.Ops_AddStaging_Top" url="manual/Ops_AddStaging.shtml#Top"/>
 
 <mapID target="manual.Ops_Trains" url="manual/Ops_Trains.shtml"/>
+
+<mapID target="package.apps.gui3.dp3.DecoderPro3" url="package/apps/gui3/dp3/DecoderPro3.shtml"/>
 
 <mapID target="package.jmri.jmrit.beantable.AddEditAction" url="package/jmri/jmrit/beantable/AddEditAction.shtml"/>
 
