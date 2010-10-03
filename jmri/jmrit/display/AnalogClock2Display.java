@@ -18,16 +18,16 @@ import jmri.jmrit.catalog.*;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     Timebase clock;
     double rate;
-    static double minuteAngle;
-    static double hourAngle;
-    static String amPm;
+    double minuteAngle;
+    double hourAngle;
+    String amPm;
 
     // Define common variables
     Image logo;
@@ -176,24 +176,27 @@ public class AnalogClock2Display extends PositionableJComponent {
     }
 
     void addRateMenuEntry(JMenu menu, final int newrate) {
-        JRadioButtonMenuItem r = new JRadioButtonMenuItem("" + newrate + ":1");
-        r.addActionListener(new ActionListener() {
-            final int rate = newrate;
+        JRadioButtonMenuItem button = new JRadioButtonMenuItem("" + newrate + ":1");
+        button.addActionListener(new ActionListener() {
+            final int r = newrate;
             public void actionPerformed(ActionEvent e) {
                 try {
-                    clock.userSetRate(rate);
+                    clock.userSetRate(r);
+                    rate = r;
                 }
-                catch (Exception t) {}
+                catch (TimebaseRateException t) {
+                    log.error("TimebaseRateException for rate= "+r+". "+t);
+                }
             }
         });
-        rateButtonGroup.add(r);
+        rateButtonGroup.add(button);
         if (rate == newrate) {
-            r.setSelected(true);
+            button.setSelected(true);
         }
         else {
-            r.setSelected(false);
+            button.setSelected(false);
         }
-        menu.add(r);
+        menu.add(button);
     }
 
     public void paint(Graphics g) {
