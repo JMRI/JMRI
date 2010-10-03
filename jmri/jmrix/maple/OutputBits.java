@@ -17,7 +17,7 @@ package jmri.jmrix.maple;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class OutputBits {
 
@@ -129,7 +129,7 @@ public class OutputBits {
 	    if (mInstance == null) mInstance = new OutputBits();
 	    return mInstance;
 	}
-	private static OutputBits mInstance = null;
+	static OutputBits mInstance = null; // package access for tests
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OutputBits.class.getName());
 }

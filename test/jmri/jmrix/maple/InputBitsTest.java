@@ -11,12 +11,10 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the InputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.4 $
+ * @version		$Revision: 1.5 $
  */
 public class InputBitsTest extends TestCase {
 		
-    private InputBits ibit = InputBits.instance();
-       
     public void testConstructor1() {
         Assert.assertNotNull("check instance", InputBits.instance());
     }
@@ -179,8 +177,15 @@ public class InputBitsTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    private InputBits ibit;
+       
+    protected void setUp() { 
+        // The minimal setup for log4J
+        apps.tests.Log4JFixture.setUp(); 
+        // force init
+        InputBits.mInstance = null;
+        ibit = InputBits.instance();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

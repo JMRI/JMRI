@@ -12,12 +12,10 @@ import jmri.jmrix.AbstractMRMessage;
 /**
  * JUnit tests for the OutputBits class
  * @author		Dave Duchamp  2009
- * @version		$Revision: 1.3 $
+ * @version		$Revision: 1.4 $
  */
 public class OutputBitsTest extends TestCase {
 		
-    private OutputBits obit = OutputBits.instance();
-       
     public void testConstructor1() {
         Assert.assertNotNull("check instance", OutputBits.instance());
     }
@@ -71,8 +69,14 @@ public class OutputBitsTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+    private OutputBits obit;
+       
+    protected void setUp() {
+        // The minimal setup for log4J
+        apps.tests.Log4JFixture.setUp();
+        OutputBits.mInstance = null;
+        obit = OutputBits.instance();
+    }
     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
 }

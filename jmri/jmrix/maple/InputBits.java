@@ -23,7 +23,7 @@ import jmri.JmriException;
  *		address 1001.
  * <P>
  * @author	Dave Duchamp, Copyright (C) 2009
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class InputBits {
 
@@ -172,7 +172,7 @@ public class InputBits {
 	    if (mInstance == null) mInstance = new InputBits();
 	    return mInstance;
 	}
-	private static InputBits mInstance = null;
+	static InputBits mInstance = null;  // package access for tests
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(InputBits.class.getName());
 }
