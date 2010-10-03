@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.10 2010-09-12 18:42:09 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.11 2010-10-03 16:49:06 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -256,7 +256,17 @@ Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed ve
 Matt Harris added a system console complete with facility to copy contents to clipboard.
 
 <p>
-Pete Cressman added a new editor tool: Item Palette
+Pete Cressman added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
+are relevant to valid states.
+
+<p>
+Dan Boudreau added new operations features: A schedule can now delay a car's pickup. 
+Car loads can now have a low or high priority.  High priority loads are serviced before low priority loads.
+
+<p>
+David Duchamp made some improvements to running trains with the Dispatcher.
+
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
