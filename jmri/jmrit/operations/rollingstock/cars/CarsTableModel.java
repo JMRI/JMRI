@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -362,7 +362,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
           	if (showColor)
         		return c.getColor();
         	else if (c.getPriority().equals(CarLoad.PRIORITY_HIGH))
-        	   	return c.getLoad()+" "+rb.getString("(H)");
+        	   	return c.getLoad()+" "+rb.getString("(P)");
         	else
         		return c.getLoad();
         }
