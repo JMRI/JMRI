@@ -94,8 +94,8 @@ public class TableSorter extends AbstractTableModel {
     private boolean clearSortingState = true; // New flag added by Boudreau
 
     private JTableHeader tableHeader;
-    private MouseListener mouseListener;
-    private TableModelListener tableModelListener;
+    private transient MouseListener mouseListener;
+    private transient TableModelListener tableModelListener;
     private Map<Object,Comparator<Object>> columnComparators = new HashMap<Object,Comparator<Object>>();
     private List<Directive> sortingColumns = new ArrayList<Directive>();
 
@@ -321,11 +321,6 @@ public class TableSorter extends AbstractTableModel {
             this.modelIndex = index;
         }
 
-        // added to ensure consistency with compareTo - Jake
-        public boolean equals( Object o ) {
-            return (compareTo(o) == 0);
-        }
-
         public int compareTo(Object o) {
             int row1 = modelIndex;
             int row2 = ((Row) o).modelIndex;
@@ -445,7 +440,7 @@ public class TableSorter extends AbstractTableModel {
             Color color = c == null ? Color.GRAY : c.getBackground();
             // In a compound sort, make each succesive triangle 20%
             // smaller than the previous one.
-            int dx = (int)(size/2*Math.pow(0.8, priority));
+            int dx = (int)(size/2.*Math.pow(0.8, priority));
             int dy = descending ? dx : -dx;
             // Align icon (roughly) with font baseline.
             y = y + 5*size/6 + (descending ? -dy : 0);
