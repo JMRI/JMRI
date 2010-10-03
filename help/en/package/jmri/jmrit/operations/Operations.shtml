@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.78 2010-09-12 15:38:28 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.79 2010-10-03 16:58:22 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -576,14 +576,16 @@ of 1. You can if you wish specify a particular road for the type of car
 you entered, or leave it blank if you don't care about the road name.  You
 can also specify the car load received and shipped.
 </P>
-<P> If
-you wanted more than one car type to be delivered consecutively,
+<P> If you wanted more than one car type to be delivered consecutively,
 increase the count to the number that you wish. The maximum count is 10
-and the minimum is 1. Repeat selecting the car types and pressing to
-"Add car type" until your have a delivery schedule you like. Press "Save
-Schedule" and close the schedule panel when you are done.</P>
+and the minimum is 1. The wait field allows you determine how many trains
+will visit the location before picking up the car.  Useful if you want
+want a car to remain still for several operating sessions.</P>
 
-<P>Note only car types and roads that are accepted by this siding
+<P>Repeat selecting the car types and pressing to
+"Add car type" until your have a delivery schedule you like. Press "Save
+Schedule" and close the schedule panel when you are done.
+Note only car types and roads that are accepted by this siding
 are available. If a car type or road isn't available, check the car
 types and roads for this siding and location.
 </P>
@@ -867,8 +869,8 @@ set the location to none (blank space).
 <H3>Car Load</H3>
 
 You can optionally set the load state of the car. Select E for empty or
-L for loaded. You can also create your own car loads, but there are
-restrictions. Only sidings with <A HREF="#Schedules">Schedules</A> can
+L for loaded. You can also create your own <A HREF="#EditCarLoads">car loads</A>,
+but there are restrictions. Only sidings with <A HREF="#Schedules">Schedules</A> can
 load or unload cars with loads that you've created. It is also suggested
 that you use a format similar to L(commodity) to describe your loads.
 For example a load of tools could be entered as L(Tools).
@@ -902,7 +904,6 @@ the available attributes for a car.
 <P>
 <img src="images/EditCarAttribute.png">
 </P>
-<P></P>
 
 <H3>Add Button</H3>
 
@@ -926,7 +927,27 @@ cars. Press the "Edit" button for any of your cars in the Cars panel,
 and then press the "Edit" button across from Road in the "Car Edit"
 panel. Enter the new road "UPS" in the text box, select "UP" in the menu
 box, and press "Replace". All cars with "UP" as their road will now have
-"UPS" as their road name. 
+"UPS" as their road name.
+
+<A	NAME="EditCarLoads"></A>
+<H3>Edit Car Loads</H3>
+
+To edit a car's load, press the Load "Edit" button in the Edit Car window.
+
+<P>
+<img src="images/EditCarLoads.png">
+</P>
+
+In addition to the Add, Delete, and Replace buttons and fields described above in
+the <A HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit
+car loads window allows you to set the load's priority. The default
+priority is low and you can change the priority to high for a given car
+type and load. High priority car loads are normally serviced before low priority.
+Useful if you need to get your reefer loaded with fruit to the market ASAP! 
+
+<P>You can also provide optional comments for your operators based on
+the type of car and load. The comments can be useful if you have visible
+car loads that need to be added or removed by your operators.</P> 
 
 <A NAME="CarsSet"></A>
 <H3>Set Car Location Button</H3>
