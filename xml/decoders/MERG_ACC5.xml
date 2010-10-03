@@ -2,12 +2,10 @@
 <!DOCTYPE decoder-config SYSTEM "decoder-config.dtd">
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
-<!-- $Id: MERG_ACC4.xml,v 1.6 2010-10-03 20:35:18 jacobsen Exp $ -->
+<!-- $Id: MERG_ACC5.xml,v 1.1 2010-10-03 20:32:11 jacobsen Exp $ -->
 <decoder-config>
 		<version author="ncliffe" version="4b" lastUpdated="20090330"/>
 			<!--  Version 4b (beta) by Nigel Cliffe    -->
-			
-			<!--  Based on version for steady state decoder, MERG_ACC5  -->
 			<!--  re-written main programming pane to be more intuitive -->
 			<!--  not necessary to duplicate pane for CV's in 500 region as their role duplicates low ranges -->
 			<!-- 
@@ -16,15 +14,22 @@
 				range (1-511) and the base turnout address (1-2017 in steps of four), these can appear as the addresses
 				on the Basic Pane and in the Roster.
 				Current arrangement has the base turnout address show in the Roster (Short Address).  
+				 
+				
+				Version 5.2 decoder has output inversion capability added. 
+				
 			-->
 			
 <decoder>
 	
 	
 	<!--  lowVersionID="4" highVersionID="52"   -->
-	<family name="ACC Decoders"  mfg="MERG"  comment="DCCACC4 is pulsed MERG decoder for solenoid motors.">
-	<model model="DCCACC4" productID="acc4">
-		<versionCV lowVersionID="4" highVersionID="5"/>
+	<family name="ACC Decoders"  mfg="MERG"  comment="DCCACC5 is steady state MERG decoder.">
+	<model model="DCCACC5 to V5.1" productID="51">
+		<versionCV lowVersionID="4" highVersionID="51"/>
+	</model>
+		<model model="DCCACC5 from V5.2" productID="52">
+		<versionCV lowVersionID="52" highVersionID="52"/>
 	</model>
 
 	</family>
@@ -157,15 +162,11 @@
 		<variable label="Toggle Mode output 4" CV="33" mask="XXXXVXXX" default="1">
 		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
 			</variable>
-			
-		<!-- dual address not used in ACC4 	
 		<variable label="Dual Address Mode" CV="33" mask="VXXXXXXX" default="1">
 		      <enumVal><enumChoice choice="Off" value="0"/><enumChoice choice="On" value="1"/></enumVal>
 			</variable>
 		
-		-->
-		
-		<!-- Output inversion not used in ACC4 
+
 		<variable label="Invert bit 0" CV="34" mask="XXXXXXXV" default="1" include="52">
 		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
 			</variable>
@@ -190,31 +191,86 @@
 		<variable label="Invert bit 7" CV="34" mask="VXXXXXXX" default="1" include="52">
 		      <enumVal><enumChoice choice="Off" value="1"/><enumChoice choice="On" value="0"/></enumVal>
 		</variable>
-		-->
 
 
+
+		<variable label="Decoder Address_" CV="513" mask="XVVVVVVV" comment="Decoder address"
+					item="Short Address_" default="01">
+					<decVal min="1" max="63"></decVal>
+				</variable>
+				
+				<variable label="Outputs Active_" CV="514" mask="VVVVVVVV" comment="Outputs Active"
+					 default="255" >
+					 <decVal min="1" max="255"></decVal>
+				</variable>
+				
+							
+				<variable label="A Output (x10) Millisecs_" CV="515" mask="VVVVVVVV" default="05">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				
+				<variable label="B Output (x10) Millisecs_" CV="516" mask="VVVVVVVV" default="05">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				
+				<variable label="C Output (x10) Millisecs_" CV="517" mask="VVVVVVVV" default="05">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				
+				<variable label="D Output (x10) Millisecs_" CV="518" mask="VVVVVVVV" default="05">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				<variable label="Decoder Version_" CV="519" readOnly="yes" default="4" >
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+							
+				<variable label="Manufacturer_" CV="520" readOnly="yes" default="165">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				<variable label="High Address_" CV="521" mask="XXXXXVVV">
+					<decVal min="0" max = "7"></decVal>
+				</variable>
+				
+				<variable label="Configuration_" CV="541" readOnly="yes" default="128">
+					<decVal min="0" max = "255"></decVal>
+				</variable>
+				
+				<variable label="Lenz Toggle Mode_" CV="545" mask="VVVVVVVV"
+					default="15" >
+					<decVal min="0" max = "255"></decVal>
+		</variable>
 	
 	</variables>	
 		
 	
 </decoder>
 
-<pane name="DCCACC4 Settings">
+<pane name="DCCACC5 Settings">
 	<column>
 		<row> 
 			<column>
 				<label label="CV1 to CV34          "/>
 				<label label=" "/>
 				<label label=" "/>
+				<label label=" "/>
 			</column>
 			<column>
+				<label label="If requiring 8 independent addresses, set Dual Address to off, program an address" />
+				<label label="then set Dual Address to on and program the second address block" />
 				<label label="Lenz Toggle Mode (bits set) gives a toggle action for Lenz systems." />
-				<label label="Recommend Lenz Toggle Mode is 'on' for most commercial DCC systems." />
+				<label label=" "/>
 			</column>
 		</row>
 		
 		<row>
 			<column>
+				<label label=" "/>
+				<display item="Dual Address Mode" label="Dual Address Mode  "/>
 				<label label=" "/>
 				<label label="Addressing, enter decoder address or turnout address" />
 				<separator />
@@ -232,10 +288,10 @@
 					<column>
 					<label label="    Turnout Address in blocks"/>
 					<label label="    of 4, range 1-2024"/>
-					<display item="Short Address" label="    Output pair 1 + 2 " />
-					<display item="Turnout Address 2" label="    Output pair 3 + 4 " />
-					<display item="Turnout Address 3" label="    Output pair 5 + 6 " />
-					<display item="Turnout Address 4" label="    Output pair 7 + 8 " />
+					<display item="Short Address" label="    Output 1 or 5 " />
+					<display item="Turnout Address 2" label="    Output 2 or 6 " />
+					<display item="Turnout Address 3" label="    Output 3 or 7 " />
+					<display item="Turnout Address 4" label="    Output 4 or 8 " />
 
 					</column>
 				</row>
@@ -287,18 +343,21 @@
 				</column>
 				</row>
 				<label label=" "/>
-				<label label=" "/>
+
+
 				<label label=" "/>
 
 
 			</column>
 
 			<column>
-				<label label="                           "/>
+				<label label="                                     "/>
 			</column>
 
 			<column>
 
+				<label label=" "/>
+				<label label=" "/>
 				<label label=" "/>
 				<label label="Output Duration and Toggle Mode"/>
 				<separator />
@@ -321,8 +380,8 @@
 					<display item="Toggle Mode output 2" format="checkbox" label="3+4" />
 					<display item="Toggle Mode output 3" format="checkbox" label="5+6" />
 					<display item="Toggle Mode output 4" format="checkbox" label="7+8" />
-					<label label= "         " />
-					<label label= "         " />
+					<label label ="Not used in dual"/>
+					<label label ="address mode"/>
 					</column>
 				</row>
 				<label label=" "/>
