@@ -42,7 +42,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
  
 public class DecoderPro3Window 
@@ -243,18 +243,19 @@ public class DecoderPro3Window
     void showPane(PaneProgPane pane) {
         log.debug("show pane "+pane);
 
-        if (pane == null) log.error("showPane invoked on null", new Exception(""));
-        
-        // position we want to go to 
-        int dest = pane.getLocation().y;
-        int end = paneSpace.size().height;
-        
-        // go there, but note this might be first time
-        JScrollBar bar = sp.getVerticalScrollBar();
-        bar.setMinimum(0);
-        bar.setMaximum(end);
-        bar.setValue(dest);
-        
+        if (pane == null) 
+            log.error("showPane invoked on null", new Exception(""));
+        else {
+            // position we want to go to 
+            int dest = pane.getLocation().y;
+            int end = paneSpace.size().height;
+            
+            // go there, but note this might be first time
+            JScrollBar bar = sp.getVerticalScrollBar();
+            bar.setMinimum(0);
+            bar.setMaximum(end);
+            bar.setValue(dest);
+        }        
     }
     
     ProgDebugger programmer = new ProgDebugger();
