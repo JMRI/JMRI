@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -716,7 +716,7 @@ public class OperationsCarRouterTest extends TestCase {
 		CarManager cmanager = CarManager.instance();
 		LocationManager lmanager = LocationManager.instance();
 
-		List trains = tmanager.getTrainsByNameList();
+		List<String> trains = tmanager.getTrainsByNameList();
 		Assert.assertEquals("confirm number of trains", 6, trains.size());
 		
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
