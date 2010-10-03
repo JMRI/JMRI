@@ -311,7 +311,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         CatalogTreeNode node = new CatalogTreeNode(name);
         AbstractCatalogTree tree = (AbstractCatalogTree)getCorespondingModel(parent);
         tree.insertNodeInto(node, cParent, index);
-        ImageIndexEditor._indexChanged = true;
+        ImageIndexEditor.indexChanged(true);
         return true;
     }
 
@@ -322,7 +322,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         AbstractCatalogTree tree = (AbstractCatalogTree)getCorespondingModel(node);
         tree.removeNodeFromParent(getCorrespondingNode(node));
         _model.removeNodeFromParent(node);
-        ImageIndexEditor._indexChanged = true;
+        ImageIndexEditor.indexChanged(true);
     }
 
     /**
@@ -339,7 +339,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
         tree.nodeChanged(cNode);
         _model.nodeChanged(node);
         updatePanel();
-        ImageIndexEditor._indexChanged = true;
+        ImageIndexEditor.indexChanged(true);
         updatePanel();
         return true;
     }

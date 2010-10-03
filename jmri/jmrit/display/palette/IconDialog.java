@@ -148,8 +148,7 @@ public class IconDialog extends ItemDialog {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
                     _parent.removeIconMap(_familyName.getText());
-                    ImageIndexEditor._indexChanged = true;
-                    ItemPalette._defaultsChanged = true;
+                    ImageIndexEditor.indexChanged(true);
                     updateFamiliesPanel();
                     dialog.dispose();
                 }
@@ -173,8 +172,7 @@ public class IconDialog extends ItemDialog {
                     _parent.removeIconMap(_family);
                     addFamily(_family, _iconMap);
                     updateFamiliesPanel();
-                    ImageIndexEditor._indexChanged = true;
-                    ItemPalette._defaultsChanged = true;
+                    ImageIndexEditor.indexChanged(true);
                     dialog.dispose();
                 }
                 ActionListener init(IconDialog d) {
@@ -236,8 +234,7 @@ public class IconDialog extends ItemDialog {
                     }
                     addFamily(family, _iconMap);
                     checkIconSizes();
-                    ImageIndexEditor._indexChanged = true;
-                    ItemPalette._defaultsChanged = true;
+                    ImageIndexEditor.indexChanged(true);
                     updateFamiliesPanel();
                     _parent.setFamily(family);
                     dispose();
@@ -436,8 +433,7 @@ public class IconDialog extends ItemDialog {
                     _catalog.setBackground(label);
                     _iconMap.put(label.getName(), newIcon);
                     e.dropComplete(true);
-                    ImageIndexEditor._indexChanged = true;
-                    ItemPalette._defaultsChanged = true;
+                    ImageIndexEditor.indexChanged(true);
                     if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
                                                          ", "+newIcon.getURL());
                 } else {

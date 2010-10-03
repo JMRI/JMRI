@@ -77,7 +77,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
-    private static int ROW_HEIGHT;
+    int ROW_HEIGHT;
 
     HashMap <String, JToggleButton>   _iconMap;
     ArrayList <String>          _order;
@@ -429,7 +429,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     * 2nd will always return null, regardless of the 1st return.
     */
     public NamedBean getTableSelection() {
-        if (ImageIndexEditor._indexChanged) {
+        if (ImageIndexEditor.isIndexChanged()) {
             checkIconSizes();
         }
         int row = _table.getSelectedRow();
@@ -705,7 +705,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         _defaultIcons.addLeaf(key, newIcon.getURL());
                         e.dropComplete(true);
                         if (_type != null) {
-                            ImageIndexEditor._indexChanged = true;
+                            ImageIndexEditor.indexChanged(true);
                         }
                         if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+key+
                                                              ", "+newIcon.getURL());

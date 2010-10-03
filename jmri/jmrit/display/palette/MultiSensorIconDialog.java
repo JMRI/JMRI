@@ -58,8 +58,7 @@ public class MultiSensorIconDialog extends IconDialog {
         addSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (addNewIcon(getIconName())) {
-                        ImageIndexEditor._indexChanged = true;
-                        ItemPalette._defaultsChanged = true;
+                        ImageIndexEditor.indexChanged(true);
                         getContentPane().remove(_iconPanel);
                         _iconPanel = makeIconPanel(_iconMap); 
                         getContentPane().add(_iconPanel, 1);
@@ -74,8 +73,7 @@ public class MultiSensorIconDialog extends IconDialog {
         deleteSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
-                        ImageIndexEditor._indexChanged = true;
-                        ItemPalette._defaultsChanged = true;
+                        ImageIndexEditor.indexChanged(true);
                         getContentPane().remove(_iconPanel);
                         _iconPanel = makeIconPanel(_iconMap); 
                         getContentPane().add(_iconPanel, 1);

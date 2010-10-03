@@ -57,12 +57,8 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
     HashMap <String, ItemPanel> _itemPanelMap = new HashMap <String, ItemPanel>();
 
     static HashMap <String, Hashtable> _iconMaps;
-    static public boolean  _defaultsChanged = false;
 
     public static void storeIcons() {
-        if (!_defaultsChanged) {
-            return;
-        }
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         // unfiltered, xml-stored, item palette icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");

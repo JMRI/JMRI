@@ -51,13 +51,13 @@ import jmri.InstanceManager;
  * @author			Pete Cressman  Copyright 2009
  *
  */
-public class ImageIndexEditor extends JmriJFrame {
+public final class ImageIndexEditor extends JmriJFrame {
 
     CatalogPanel    _catalog;
     CatalogPanel    _index;
 
     static ImageIndexEditor _instance;
-    static public boolean  _indexChanged = false;
+    static boolean  _indexChanged = false;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.catalog.CatalogBundle");
 
     public static final String IconDataFlavorMime = DataFlavor.javaJVMLocalObjectMimeType +
@@ -166,11 +166,18 @@ public class ImageIndexEditor extends JmriJFrame {
         setVisible(true);
     }
 
+    public static final synchronized void indexChanged (boolean changed) {
+        _indexChanged = changed;
+    }
+    public static boolean isIndexChanged() {
+        return _indexChanged;
+    }
+
     /**
     *  Called from window close of Icon Editors
     */
     public static boolean checkImageIndex(Editor editor) {
-        if (jmri.jmrit.catalog.ImageIndexEditor._indexChanged) {
+        if (_indexChanged) {
             int result = JOptionPane.showConfirmDialog(null, rb.getString("SaveImageIndex"), 
                                           rb.getString("question"), JOptionPane.YES_NO_CANCEL_OPTION,
                                                        JOptionPane.QUESTION_MESSAGE);
@@ -178,7 +185,7 @@ public class ImageIndexEditor extends JmriJFrame {
                 storeImageIndex(editor);
                 return true;
             } else if (result == JOptionPane.NO_OPTION) {
-                _indexChanged = false;
+                indexChanged(false);
             }
         }
         return false;
@@ -219,7 +226,7 @@ public class ImageIndexEditor extends JmriJFrame {
         if (log.isDebugEnabled()) log.debug("Start writing CatalogTree info");
         try {
             new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().writeCatalogTrees();
-            _indexChanged = false;
+            indexChanged(false);
             tree = manager.getBySystemName("IXII");
             if (tree != null) {
                 editor.addTreeToEditors(tree);

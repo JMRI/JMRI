@@ -91,7 +91,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 // write content to file
                 writeXML(findFile(defaultFileName),doc);
                 // memory consistent with file
-                jmri.jmrit.catalog.ImageIndexEditor._indexChanged = false;
+                jmri.jmrit.catalog.ImageIndexEditor.indexChanged(false);
             }
             catch (java.io.IOException ioe) {
                 log.error("IO Exception "+ioe);
