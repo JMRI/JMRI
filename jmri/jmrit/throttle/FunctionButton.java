@@ -46,14 +46,17 @@ public class FunctionButton extends JToggleButton implements ActionListener
 	
 	// the following two are directly accessed from jmri.jmrit.logix.LearnThrottleFrame,
 	// which needs to be fixed
-	static public int BUT_HGHT = 30;
-	static public int BUT_WDTH = 56;
+	static int BUT_HGHT = 30;
+	static int BUT_WDTH = 56;
 
     static {
         JButton sample = new JButton(" Light ");
         BUT_HGHT = java.lang.Math.max(sample.getPreferredSize().height, BUT_HGHT);
         BUT_WDTH = java.lang.Math.max(sample.getPreferredSize().width, BUT_WDTH);
     }
+    
+    public static int getButtonHeight() { return BUT_HGHT; }
+    public static int getButtonWidth() { return BUT_WDTH; }
     
     private JPopupMenu popup;
     /**

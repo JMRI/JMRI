@@ -54,7 +54,7 @@ import jmri.util.JmriJFrame;
  * @author     Bob Jacobsen    Copyright 2008
  
  * @author     Pete Cressman   Copyright 2009
- * @version    $Revision: 1.10 $
+ * @version    $Revision: 1.11 $
  */
 
 public class LearnThrottleFrame extends JmriJFrame implements java.beans.PropertyChangeListener
@@ -145,8 +145,8 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         // assumes button width of 54, height of 30 (set in class FunctionButton) with
         // horiz and vert gaps of 5 each (set in FunctionPanel class)
         // with 3 buttons across and 6 rows high
-        int width = 3*(FunctionButton.BUT_WDTH) + 2*3*5; 		// = 192
-        int height = 6*(FunctionButton.BUT_HGHT) + 2*6*5 +10;	// = 240 (another 10 needed?)
+        int width = 3*(FunctionButton.getButtonWidth()) + 2*3*5; 		// = 192
+        int height = 6*(FunctionButton.getButtonHeight()) + 2*6*5 +10;	// = 240 (another 10 needed?)
         _functionPanel.setSize(width, height);
         _functionPanel.setVisible(true);
         _functionPanel.setEnabled(false);
@@ -372,7 +372,7 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.10 $
+     * @version    $Revision: 1.11 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
