@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2006, 2007, 2008 All rights reserved -->
-<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.15 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: RR-CirKits-TC-64-basic.xml,v 1.16 2010-10-03 19:49:43 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -14,16 +14,18 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 <!-- showEmptyPanes="no" -->
+  <version author="dick@rr-cirkits.com" version="1.07" lastUpdated="20100907"/>
   <version author="dick@rr-cirkits.com" version="1.06" lastUpdated="20081209"/>
   <version author="dick@rr-cirkits.com" version="1.05" lastUpdated="20081029"/>
-  <version author="dick@rr-cirkits.com" version="1.03" lastUpdated="20071227"/>
   <version author="dick@rr-cirkits.com" version="1.04" lastUpdated="20081007"/>
+  <version author="dick@rr-cirkits.com" version="1.03" lastUpdated="20071227"/>
 <!-- Version 1.04  Update to include paired output drive option -->
 <!-- Version 1.05  Changed 'paired output' drive option to '* Dual Coil' -->
 <!-- Version 1.06 Correction of typos in secondary addressing (change at line 10544) -->
+<!-- Version 1.07 Changed wording to match Rev 6 firmware and added output interrogate option-->
   <decoder>
     <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode">
-      <model model="TC-64" comment="64 line I/O" lowVersionID="05"/>
+      <model model="TC-64" comment="64 line I/O" lowVersionID="06"/>
     </family>
     <programming direct="no" paged="yes" register="no" ops="yes"/>
     <variables>
@@ -378,7 +380,7 @@
         </enumVal>
         <label>GPON Interrogate</label>
       </variable>
-      <variable label="Special Interrogate" CV="19" mask="XXXXVXXX">
+      <variable label="Input Interrogate" CV="19" mask="XXXXVXXX">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -387,7 +389,18 @@
             <choice>Enable</choice>
           </enumChoice>
         </enumVal>
-        <label>Special Interrogate</label>
+        <label>Input Interrogate</label>
+      </variable>
+      <variable label="Output Interrogate" CV="19" mask="XXXVXXXX">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Enable">
+            <choice>Enable</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Outut Interrogate</label>
       </variable>
       <variable label="Master Mode" CV="19" mask="VXXXXXXX">
         <enumVal>
@@ -404,7 +417,7 @@
         <decVal/>
         <label>Reserved</label>
       </variable>
-      <variable label="Firmware Version" CV="21" readOnly="yes" item="Firmware Version" default="3">
+      <variable label="Firmware Version" CV="21" readOnly="yes" item="Firmware Version">
         <decVal/>
         <label>Firmware Version</label>
       </variable>
@@ -447,8 +460,8 @@
       </variable>
       <variable label="1A Secondary" CV="23" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -464,8 +477,8 @@
       </variable>
       <variable label="1A Transition" CV="23" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -722,8 +735,8 @@
       </variable>
       <variable label="1B Secondary" CV="27" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -739,8 +752,8 @@
       </variable>
       <variable label="1B Transition" CV="27" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -997,8 +1010,8 @@
       </variable>
       <variable label="1C Secondary" CV="31" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1014,8 +1027,8 @@
       </variable>
       <variable label="1C Transition" CV="31" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1272,8 +1285,8 @@
       </variable>
       <variable label="1D Secondary" CV="35" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1289,8 +1302,8 @@
       </variable>
       <variable label="1D Transition" CV="35" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1547,8 +1560,8 @@
       </variable>
       <variable label="1E Secondary" CV="39" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1564,8 +1577,8 @@
       </variable>
       <variable label="1E Transition" CV="39" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1822,8 +1835,8 @@
       </variable>
       <variable label="1F Secondary" CV="43" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -1839,8 +1852,8 @@
       </variable>
       <variable label="1F Transition" CV="43" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2097,8 +2110,8 @@
       </variable>
       <variable label="1G Secondary" CV="47" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2114,8 +2127,8 @@
       </variable>
       <variable label="1G Transition" CV="47" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2372,8 +2385,8 @@
       </variable>
       <variable label="1H Secondary" CV="51" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2389,8 +2402,8 @@
       </variable>
       <variable label="1H Transition" CV="51" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2647,8 +2660,8 @@
       </variable>
       <variable label="2A Secondary" CV="55" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2664,8 +2677,8 @@
       </variable>
       <variable label="2A Transition" CV="55" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2922,8 +2935,8 @@
       </variable>
       <variable label="2B Secondary" CV="59" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -2939,8 +2952,8 @@
       </variable>
       <variable label="2B Transition" CV="59" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3197,8 +3210,8 @@
       </variable>
       <variable label="2C Secondary" CV="63" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3214,8 +3227,8 @@
       </variable>
       <variable label="2C Transition" CV="63" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3472,8 +3485,8 @@
       </variable>
       <variable label="2D Secondary" CV="67" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3489,8 +3502,8 @@
       </variable>
       <variable label="2D Transition" CV="67" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3747,8 +3760,8 @@
       </variable>
       <variable label="2E Secondary" CV="71" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -3764,8 +3777,8 @@
       </variable>
       <variable label="2E Transition" CV="71" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4022,8 +4035,8 @@
       </variable>
       <variable label="2F Secondary" CV="75" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4039,8 +4052,8 @@
       </variable>
       <variable label="2F Transition" CV="75" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4297,8 +4310,8 @@
       </variable>
       <variable label="2G Secondary" CV="79" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4314,8 +4327,8 @@
       </variable>
       <variable label="2G Transition" CV="79" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4572,8 +4585,8 @@
       </variable>
       <variable label="2H Secondary" CV="83" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4589,8 +4602,8 @@
       </variable>
       <variable label="2H Transition" CV="83" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4847,8 +4860,8 @@
       </variable>
       <variable label="3A Secondary" CV="87" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -4864,8 +4877,8 @@
       </variable>
       <variable label="3A Transition" CV="87" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5122,8 +5135,8 @@
       </variable>
       <variable label="3B Secondary" CV="91" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5139,8 +5152,8 @@
       </variable>
       <variable label="3B Transition" CV="91" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5397,8 +5410,8 @@
       </variable>
       <variable label="3C Secondary" CV="95" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5414,8 +5427,8 @@
       </variable>
       <variable label="3C Transition" CV="95" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5672,8 +5685,8 @@
       </variable>
       <variable label="3D Secondary" CV="99" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5689,8 +5702,8 @@
       </variable>
       <variable label="3D Transition" CV="99" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5947,8 +5960,8 @@
       </variable>
       <variable label="3E Secondary" CV="103" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -5964,8 +5977,8 @@
       </variable>
       <variable label="3E Transition" CV="103" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6222,8 +6235,8 @@
       </variable>
       <variable label="3F Secondary" CV="107" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6239,8 +6252,8 @@
       </variable>
       <variable label="3F Transition" CV="107" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6497,8 +6510,8 @@
       </variable>
       <variable label="3G Secondary" CV="111" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6514,8 +6527,8 @@
       </variable>
       <variable label="3G Transition" CV="111" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6772,8 +6785,8 @@
       </variable>
       <variable label="3H Secondary" CV="115" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -6789,8 +6802,8 @@
       </variable>
       <variable label="3H Transition" CV="115" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7047,8 +7060,8 @@
       </variable>
       <variable label="4A Secondary" CV="119" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7064,8 +7077,8 @@
       </variable>
       <variable label="4A Transition" CV="119" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7322,8 +7335,8 @@
       </variable>
       <variable label="4B Secondary" CV="123" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7339,8 +7352,8 @@
       </variable>
       <variable label="4B Transition" CV="123" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7597,8 +7610,8 @@
       </variable>
       <variable label="4C Secondary" CV="127" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7614,8 +7627,8 @@
       </variable>
       <variable label="4C Transition" CV="127" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7872,8 +7885,8 @@
       </variable>
       <variable label="4D Secondary" CV="131" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -7889,8 +7902,8 @@
       </variable>
       <variable label="4D Transition" CV="131" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8147,8 +8160,8 @@
       </variable>
       <variable label="4E Secondary" CV="135" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8164,8 +8177,8 @@
       </variable>
       <variable label="4E Transition" CV="135" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8422,8 +8435,8 @@
       </variable>
       <variable label="4F Secondary" CV="139" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8439,8 +8452,8 @@
       </variable>
       <variable label="4F Transition" CV="139" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8697,8 +8710,8 @@
       </variable>
       <variable label="4G Secondary" CV="143" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8714,8 +8727,8 @@
       </variable>
       <variable label="4G Transition" CV="143" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8972,8 +8985,8 @@
       </variable>
       <variable label="4H Secondary" CV="147" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -8989,8 +9002,8 @@
       </variable>
       <variable label="4H Transition" CV="147" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9247,8 +9260,8 @@
       </variable>
       <variable label="5A Secondary" CV="151" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9264,8 +9277,8 @@
       </variable>
       <variable label="5A Transition" CV="151" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9522,8 +9535,8 @@
       </variable>
       <variable label="5B Secondary" CV="155" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9539,8 +9552,8 @@
       </variable>
       <variable label="5B Transition" CV="155" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9797,8 +9810,8 @@
       </variable>
       <variable label="5C Secondary" CV="159" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -9814,8 +9827,8 @@
       </variable>
       <variable label="5C Transition" CV="159" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10072,8 +10085,8 @@
       </variable>
       <variable label="5D Secondary" CV="163" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10089,8 +10102,8 @@
       </variable>
       <variable label="5D Transition" CV="163" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10347,8 +10360,8 @@
       </variable>
       <variable label="5E Secondary" CV="167" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10364,8 +10377,8 @@
       </variable>
       <variable label="5E Transition" CV="167" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10622,8 +10635,8 @@
       </variable>
       <variable label="5F Secondary" CV="171" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10639,8 +10652,8 @@
       </variable>
       <variable label="5F Transition" CV="171" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10897,8 +10910,8 @@
       </variable>
       <variable label="5G Secondary" CV="175" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -10914,8 +10927,8 @@
       </variable>
       <variable label="5G Transition" CV="175" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11172,8 +11185,8 @@
       </variable>
       <variable label="5H Secondary" CV="179" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11189,8 +11202,8 @@
       </variable>
       <variable label="5H Transition" CV="179" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11447,8 +11460,8 @@
       </variable>
       <variable label="6A Secondary" CV="183" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11464,8 +11477,8 @@
       </variable>
       <variable label="6A Transition" CV="183" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11722,8 +11735,8 @@
       </variable>
       <variable label="6B Secondary" CV="187" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11739,8 +11752,8 @@
       </variable>
       <variable label="6B Transition" CV="187" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -11997,8 +12010,8 @@
       </variable>
       <variable label="6C Secondary" CV="191" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12014,8 +12027,8 @@
       </variable>
       <variable label="6C Transition" CV="191" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12272,8 +12285,8 @@
       </variable>
       <variable label="6D Secondary" CV="195" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12289,8 +12302,8 @@
       </variable>
       <variable label="6D Transition" CV="195" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12547,8 +12560,8 @@
       </variable>
       <variable label="6E Secondary" CV="199" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12564,8 +12577,8 @@
       </variable>
       <variable label="6E Transition" CV="199" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12822,8 +12835,8 @@
       </variable>
       <variable label="6F Secondary" CV="203" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -12839,8 +12852,8 @@
       </variable>
       <variable label="6F Transition" CV="203" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13097,8 +13110,8 @@
       </variable>
       <variable label="6G Secondary" CV="207" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13114,8 +13127,8 @@
       </variable>
       <variable label="6G Transition" CV="207" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13372,8 +13385,8 @@
       </variable>
       <variable label="6H Secondary" CV="211" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13389,8 +13402,8 @@
       </variable>
       <variable label="6H Transition" CV="211" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13647,8 +13660,8 @@
       </variable>
       <variable label="7A Secondary" CV="215" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13664,8 +13677,8 @@
       </variable>
       <variable label="7A Transition" CV="215" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13922,8 +13935,8 @@
       </variable>
       <variable label="7B Secondary" CV="219" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -13939,8 +13952,8 @@
       </variable>
       <variable label="7B Transition" CV="219" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14197,8 +14210,8 @@
       </variable>
       <variable label="7C Secondary" CV="223" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14214,8 +14227,8 @@
       </variable>
       <variable label="7C Transition" CV="223" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14472,8 +14485,8 @@
       </variable>
       <variable label="7D Secondary" CV="227" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14489,8 +14502,8 @@
       </variable>
       <variable label="7D Transition" CV="227" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14747,8 +14760,8 @@
       </variable>
       <variable label="7E Secondary" CV="231" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -14764,8 +14777,8 @@
       </variable>
       <variable label="7E Transition" CV="231" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15022,8 +15035,8 @@
       </variable>
       <variable label="7F Secondary" CV="235" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15039,8 +15052,8 @@
       </variable>
       <variable label="7F Transition" CV="235" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15297,8 +15310,8 @@
       </variable>
       <variable label="7G Secondary" CV="239" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15314,8 +15327,8 @@
       </variable>
       <variable label="7G Transition" CV="239" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15572,8 +15585,8 @@
       </variable>
       <variable label="7H Secondary" CV="243" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15589,8 +15602,8 @@
       </variable>
       <variable label="7H Transition" CV="243" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15847,8 +15860,8 @@
       </variable>
       <variable label="8A Secondary" CV="247" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -15864,8 +15877,8 @@
       </variable>
       <variable label="8A Transition" CV="247" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16122,8 +16135,8 @@
       </variable>
       <variable label="8B Secondary" CV="251" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16139,8 +16152,8 @@
       </variable>
       <variable label="8B Transition" CV="251" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16397,8 +16410,8 @@
       </variable>
       <variable label="8C Secondary" CV="255" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16414,8 +16427,8 @@
       </variable>
       <variable label="8C Transition" CV="255" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16672,8 +16685,8 @@
       </variable>
       <variable label="8D Secondary" CV="259" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16689,8 +16702,8 @@
       </variable>
       <variable label="8D Transition" CV="259" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16947,8 +16960,8 @@
       </variable>
       <variable label="8E Secondary" CV="263" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -16964,8 +16977,8 @@
       </variable>
       <variable label="8E Transition" CV="263" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17222,8 +17235,8 @@
       </variable>
       <variable label="8F Secondary" CV="267" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17239,8 +17252,8 @@
       </variable>
       <variable label="8F Transition" CV="267" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17497,8 +17510,8 @@
       </variable>
       <variable label="8G Secondary" CV="271" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17514,8 +17527,8 @@
       </variable>
       <variable label="8G Transition" CV="271" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17772,8 +17785,8 @@
       </variable>
       <variable label="8H Secondary" CV="275" mask="XXXXVVXX">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Second Action">
+            <choice>No Second Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -17789,8 +17802,8 @@
       </variable>
       <variable label="8H Transition" CV="275" mask="XXXXXXVV" default="3">
         <enumVal>
-          <enumChoice choice="None sent">
-            <choice>None sent</choice>
+          <enumChoice choice="No Primary Action">
+            <choice>No Primary Action</choice>
           </enumChoice>
           <enumChoice choice="on Positive Edge">
             <choice>on Positive Edge</choice>
@@ -18126,36 +18139,52 @@
             <compositeSetting label="P1 Direction" value="0"/>
             <compositeSetting label="P1 Toggle" value="0"/>
             <compositeSetting label="P1 Signal" value="1"/>
+            <compositeSetting label="P1A Input Direction" value="0"/>
             <compositeSetting label="P1A Output Direction" value="1"/>
             <compositeSetting label="1A Mode" value="0"/>
+            <compositeSetting label="1A Transition" value="3"/>
             <compositeSetting label="1A I/O Type" value="2"/>
             <compositeSetting label="1A O Timing" value="10"/>
+            <compositeSetting label="P1B Input Direction" value="0"/>
             <compositeSetting label="P1B Output Direction" value="1"/>
             <compositeSetting label="1B Mode" value="0"/>
+            <compositeSetting label="1B Transition" value="3"/>
             <compositeSetting label="1B I/O Type" value="2"/>
             <compositeSetting label="1B O Timing" value="15"/>
+            <compositeSetting label="P1C Input Direction" value="0"/>
             <compositeSetting label="P1C Output Direction" value="1"/>
             <compositeSetting label="1C Mode" value="0"/>
+            <compositeSetting label="1C Transition" value="3"/>
             <compositeSetting label="1C I/O Type" value="2"/>
             <compositeSetting label="1C O Timing" value="10"/>
+            <compositeSetting label="P1D Input Direction" value="0"/>
             <compositeSetting label="P1D Output Direction" value="1"/>
             <compositeSetting label="1D Mode" value="0"/>
+            <compositeSetting label="1D Transition" value="3"/>
             <compositeSetting label="1D I/O Type" value="2"/>
             <compositeSetting label="1D O Timing" value="15"/>
+            <compositeSetting label="P1E Input Direction" value="0"/>
             <compositeSetting label="P1E Output Direction" value="1"/>
             <compositeSetting label="1E Mode" value="0"/>
+            <compositeSetting label="1E Transition" value="3"/>
             <compositeSetting label="1E I/O Type" value="2"/>
             <compositeSetting label="1E O Timing" value="10"/>
+            <compositeSetting label="P1F Input Direction" value="0"/>
             <compositeSetting label="P1F Output Direction" value="1"/>
             <compositeSetting label="1F Mode" value="0"/>
+            <compositeSetting label="1F Transition" value="3"/>
             <compositeSetting label="1F I/O Type" value="2"/>
             <compositeSetting label="1F O Timing" value="15"/>
+            <compositeSetting label="P1G Input Direction" value="0"/>
             <compositeSetting label="P1G Output Direction" value="1"/>
             <compositeSetting label="1G Mode" value="0"/>
+            <compositeSetting label="1G Transition" value="3"/>
             <compositeSetting label="1G I/O Type" value="2"/>
             <compositeSetting label="1G O Timing" value="10"/>
+            <compositeSetting label="P1H Input Direction" value="0"/>
             <compositeSetting label="P1H Output Direction" value="1"/>
             <compositeSetting label="1H Mode" value="0"/>
+            <compositeSetting label="1H Transition" value="3"/>
             <compositeSetting label="1H I/O Type" value="2"/>
             <compositeSetting label="1H O Timing" value="15"/>
           </compositeChoice>
@@ -18330,36 +18359,52 @@
             <compositeSetting label="P2 Direction" value="0"/>
             <compositeSetting label="P2 Toggle" value="0"/>
             <compositeSetting label="P2 Signal" value="1"/>
+            <compositeSetting label="P2A Input Direction" value="0"/>
             <compositeSetting label="P2A Output Direction" value="1"/>
             <compositeSetting label="2A Mode" value="0"/>
+            <compositeSetting label="2A Transition" value="3"/>
             <compositeSetting label="2A I/O Type" value="2"/>
             <compositeSetting label="2A O Timing" value="10"/>
+            <compositeSetting label="P2B Input Direction" value="0"/>
             <compositeSetting label="P2B Output Direction" value="1"/>
             <compositeSetting label="2B Mode" value="0"/>
+            <compositeSetting label="2B Transition" value="3"/>
             <compositeSetting label="2B I/O Type" value="2"/>
             <compositeSetting label="2B O Timing" value="15"/>
+            <compositeSetting label="P2C Input Direction" value="0"/>
             <compositeSetting label="P2C Output Direction" value="1"/>
             <compositeSetting label="2C Mode" value="0"/>
+            <compositeSetting label="2C Transition" value="3"/>
             <compositeSetting label="2C I/O Type" value="2"/>
             <compositeSetting label="2C O Timing" value="10"/>
+            <compositeSetting label="P2D Input Direction" value="0"/>
             <compositeSetting label="P2D Output Direction" value="1"/>
             <compositeSetting label="2D Mode" value="0"/>
+            <compositeSetting label="2D Transition" value="3"/>
             <compositeSetting label="2D I/O Type" value="2"/>
             <compositeSetting label="2D O Timing" value="15"/>
+            <compositeSetting label="P2E Input Direction" value="0"/>
             <compositeSetting label="P2E Output Direction" value="1"/>
             <compositeSetting label="2E Mode" value="0"/>
+            <compositeSetting label="2E Transition" value="3"/>
             <compositeSetting label="2E I/O Type" value="2"/>
             <compositeSetting label="2E O Timing" value="10"/>
+            <compositeSetting label="P2F Input Direction" value="0"/>
             <compositeSetting label="P2F Output Direction" value="1"/>
             <compositeSetting label="2F Mode" value="0"/>
+            <compositeSetting label="2F Transition" value="3"/>
             <compositeSetting label="2F I/O Type" value="2"/>
             <compositeSetting label="2F O Timing" value="15"/>
+            <compositeSetting label="P2G Input Direction" value="0"/>
             <compositeSetting label="P2G Output Direction" value="1"/>
             <compositeSetting label="2G Mode" value="0"/>
+            <compositeSetting label="2G Transition" value="3"/>
             <compositeSetting label="2G I/O Type" value="2"/>
             <compositeSetting label="2G O Timing" value="10"/>
+            <compositeSetting label="P2H Input Direction" value="0"/>
             <compositeSetting label="P2H Output Direction" value="1"/>
             <compositeSetting label="2H Mode" value="0"/>
+            <compositeSetting label="2H Transition" value="3"/>
             <compositeSetting label="2H I/O Type" value="2"/>
             <compositeSetting label="2H O Timing" value="15"/>
           </compositeChoice>
@@ -18534,36 +18579,52 @@
             <compositeSetting label="P3 Direction" value="0"/>
             <compositeSetting label="P3 Toggle" value="0"/>
             <compositeSetting label="P3 Signal" value="1"/>
+            <compositeSetting label="P3A Input Direction" value="0"/>
             <compositeSetting label="P3A Output Direction" value="1"/>
             <compositeSetting label="3A Mode" value="0"/>
+            <compositeSetting label="3A Transition" value="3"/>
             <compositeSetting label="3A I/O Type" value="2"/>
             <compositeSetting label="3A O Timing" value="10"/>
+            <compositeSetting label="P3B Input Direction" value="0"/>
             <compositeSetting label="P3B Output Direction" value="1"/>
             <compositeSetting label="3B Mode" value="0"/>
+            <compositeSetting label="3B Transition" value="3"/>
             <compositeSetting label="3B I/O Type" value="2"/>
             <compositeSetting label="3B O Timing" value="15"/>
+            <compositeSetting label="P3C Input Direction" value="0"/>
             <compositeSetting label="P3C Output Direction" value="1"/>
             <compositeSetting label="3C Mode" value="0"/>
+            <compositeSetting label="3C Transition" value="3"/>
             <compositeSetting label="3C I/O Type" value="2"/>
             <compositeSetting label="3C O Timing" value="10"/>
+            <compositeSetting label="P3D Input Direction" value="0"/>
             <compositeSetting label="P3D Output Direction" value="1"/>
             <compositeSetting label="3D Mode" value="0"/>
+            <compositeSetting label="3D Transition" value="3"/>
             <compositeSetting label="3D I/O Type" value="2"/>
             <compositeSetting label="3D O Timing" value="15"/>
+            <compositeSetting label="P3E Input Direction" value="0"/>
             <compositeSetting label="P3E Output Direction" value="1"/>
             <compositeSetting label="3E Mode" value="0"/>
+            <compositeSetting label="3E Transition" value="3"/>
             <compositeSetting label="3E I/O Type" value="2"/>
             <compositeSetting label="3E O Timing" value="10"/>
+            <compositeSetting label="P3F Input Direction" value="0"/>
             <compositeSetting label="P3F Output Direction" value="1"/>
             <compositeSetting label="3F Mode" value="0"/>
+            <compositeSetting label="3F Transition" value="3"/>
             <compositeSetting label="3F I/O Type" value="2"/>
             <compositeSetting label="3F O Timing" value="15"/>
+            <compositeSetting label="P3G Input Direction" value="0"/>
             <compositeSetting label="P3G Output Direction" value="1"/>
             <compositeSetting label="3G Mode" value="0"/>
+            <compositeSetting label="3G Transition" value="3"/>
             <compositeSetting label="3G I/O Type" value="2"/>
             <compositeSetting label="3G O Timing" value="10"/>
+            <compositeSetting label="P3H Input Direction" value="0"/>
             <compositeSetting label="P3H Output Direction" value="1"/>
             <compositeSetting label="3H Mode" value="0"/>
+            <compositeSetting label="3H Transition" value="3"/>
             <compositeSetting label="3H I/O Type" value="2"/>
             <compositeSetting label="3H O Timing" value="15"/>
           </compositeChoice>
@@ -18738,36 +18799,52 @@
             <compositeSetting label="P4 Direction" value="0"/>
             <compositeSetting label="P4 Toggle" value="0"/>
             <compositeSetting label="P4 Signal" value="1"/>
+            <compositeSetting label="P4A Input Direction" value="0"/>
             <compositeSetting label="P4A Output Direction" value="1"/>
             <compositeSetting label="4A Mode" value="0"/>
+            <compositeSetting label="4A Transition" value="3"/>
             <compositeSetting label="4A I/O Type" value="2"/>
             <compositeSetting label="4A O Timing" value="10"/>
+            <compositeSetting label="P4B Input Direction" value="0"/>
             <compositeSetting label="P4B Output Direction" value="1"/>
             <compositeSetting label="4B Mode" value="0"/>
+            <compositeSetting label="4B Transition" value="3"/>
             <compositeSetting label="4B I/O Type" value="2"/>
             <compositeSetting label="4B O Timing" value="15"/>
+            <compositeSetting label="P4C Input Direction" value="0"/>
             <compositeSetting label="P4C Output Direction" value="1"/>
             <compositeSetting label="4C Mode" value="0"/>
+            <compositeSetting label="4C Transition" value="3"/>
             <compositeSetting label="4C I/O Type" value="2"/>
             <compositeSetting label="4C O Timing" value="10"/>
+            <compositeSetting label="P4D Input Direction" value="0"/>
             <compositeSetting label="P4D Output Direction" value="1"/>
             <compositeSetting label="4D Mode" value="0"/>
+            <compositeSetting label="4D Transition" value="3"/>
             <compositeSetting label="4D I/O Type" value="2"/>
             <compositeSetting label="4D O Timing" value="15"/>
+            <compositeSetting label="P4E Input Direction" value="0"/>
             <compositeSetting label="P4E Output Direction" value="1"/>
             <compositeSetting label="4E Mode" value="0"/>
+            <compositeSetting label="4E Transition" value="3"/>
             <compositeSetting label="4E I/O Type" value="2"/>
             <compositeSetting label="4E O Timing" value="10"/>
+            <compositeSetting label="P4F Input Direction" value="0"/>
             <compositeSetting label="P4F Output Direction" value="1"/>
             <compositeSetting label="4F Mode" value="0"/>
+            <compositeSetting label="4F Transition" value="3"/>
             <compositeSetting label="4F I/O Type" value="2"/>
             <compositeSetting label="4F O Timing" value="15"/>
+            <compositeSetting label="P4G Input Direction" value="0"/>
             <compositeSetting label="P4G Output Direction" value="1"/>
             <compositeSetting label="4G Mode" value="0"/>
+            <compositeSetting label="4G Transition" value="3"/>
             <compositeSetting label="4G I/O Type" value="2"/>
             <compositeSetting label="4G O Timing" value="10"/>
+            <compositeSetting label="P4H Input Direction" value="0"/>
             <compositeSetting label="P4H Output Direction" value="1"/>
             <compositeSetting label="4H Mode" value="0"/>
+            <compositeSetting label="4H Transition" value="3"/>
             <compositeSetting label="4H I/O Type" value="2"/>
             <compositeSetting label="4H O Timing" value="15"/>
           </compositeChoice>
@@ -18942,36 +19019,52 @@
             <compositeSetting label="P5 Direction" value="0"/>
             <compositeSetting label="P5 Toggle" value="0"/>
             <compositeSetting label="P5 Signal" value="1"/>
+            <compositeSetting label="P5A Input Direction" value="0"/>
             <compositeSetting label="P5A Output Direction" value="1"/>
             <compositeSetting label="5A Mode" value="0"/>
+            <compositeSetting label="5A Transition" value="3"/>
             <compositeSetting label="5A I/O Type" value="2"/>
             <compositeSetting label="5A O Timing" value="10"/>
+            <compositeSetting label="P5B Input Direction" value="0"/>
             <compositeSetting label="P5B Output Direction" value="1"/>
             <compositeSetting label="5B Mode" value="0"/>
+            <compositeSetting label="5B Transition" value="3"/>
             <compositeSetting label="5B I/O Type" value="2"/>
             <compositeSetting label="5B O Timing" value="15"/>
+            <compositeSetting label="P5C Input Direction" value="0"/>
             <compositeSetting label="P5C Output Direction" value="1"/>
             <compositeSetting label="5C Mode" value="0"/>
+            <compositeSetting label="5C Transition" value="3"/>
             <compositeSetting label="5C I/O Type" value="2"/>
             <compositeSetting label="5C O Timing" value="10"/>
+            <compositeSetting label="P5D Input Direction" value="0"/>
             <compositeSetting label="P5D Output Direction" value="1"/>
             <compositeSetting label="5D Mode" value="0"/>
+            <compositeSetting label="5D Transition" value="3"/>
             <compositeSetting label="5D I/O Type" value="2"/>
             <compositeSetting label="5D O Timing" value="15"/>
+            <compositeSetting label="P5E Input Direction" value="0"/>
             <compositeSetting label="P5E Output Direction" value="1"/>
             <compositeSetting label="5E Mode" value="0"/>
+            <compositeSetting label="5E Transition" value="3"/>
             <compositeSetting label="5E I/O Type" value="2"/>
             <compositeSetting label="5E O Timing" value="10"/>
+            <compositeSetting label="P5F Input Direction" value="0"/>
             <compositeSetting label="P5F Output Direction" value="1"/>
             <compositeSetting label="5F Mode" value="0"/>
+            <compositeSetting label="5F Transition" value="3"/>
             <compositeSetting label="5F I/O Type" value="2"/>
             <compositeSetting label="5F O Timing" value="15"/>
+            <compositeSetting label="P5G Input Direction" value="0"/>
             <compositeSetting label="P5G Output Direction" value="1"/>
             <compositeSetting label="5G Mode" value="0"/>
+            <compositeSetting label="5G Transition" value="3"/>
             <compositeSetting label="5G I/O Type" value="2"/>
             <compositeSetting label="5G O Timing" value="10"/>
+            <compositeSetting label="P5H Input Direction" value="0"/>
             <compositeSetting label="P5H Output Direction" value="1"/>
             <compositeSetting label="5H Mode" value="0"/>
+            <compositeSetting label="5H Transition" value="3"/>
             <compositeSetting label="5H I/O Type" value="2"/>
             <compositeSetting label="5H O Timing" value="15"/>
           </compositeChoice>
@@ -19146,36 +19239,52 @@
             <compositeSetting label="P6 Direction" value="0"/>
             <compositeSetting label="P6 Toggle" value="0"/>
             <compositeSetting label="P6 Signal" value="1"/>
+            <compositeSetting label="P6A Input Direction" value="0"/>
             <compositeSetting label="P6A Output Direction" value="1"/>
             <compositeSetting label="6A Mode" value="0"/>
+            <compositeSetting label="6A Transition" value="3"/>
             <compositeSetting label="6A I/O Type" value="2"/>
             <compositeSetting label="6A O Timing" value="10"/>
+            <compositeSetting label="P6B Input Direction" value="0"/>
             <compositeSetting label="P6B Output Direction" value="1"/>
             <compositeSetting label="6B Mode" value="0"/>
+            <compositeSetting label="6B Transition" value="3"/>
             <compositeSetting label="6B I/O Type" value="2"/>
             <compositeSetting label="6B O Timing" value="15"/>
+            <compositeSetting label="P6C Input Direction" value="0"/>
             <compositeSetting label="P6C Output Direction" value="1"/>
             <compositeSetting label="6C Mode" value="0"/>
+            <compositeSetting label="6C Transition" value="3"/>
             <compositeSetting label="6C I/O Type" value="2"/>
             <compositeSetting label="6C O Timing" value="10"/>
+            <compositeSetting label="P6D Input Direction" value="0"/>
             <compositeSetting label="P6D Output Direction" value="1"/>
             <compositeSetting label="6D Mode" value="0"/>
+            <compositeSetting label="6D Transition" value="3"/>
             <compositeSetting label="6D I/O Type" value="2"/>
             <compositeSetting label="6D O Timing" value="15"/>
+            <compositeSetting label="P6E Input Direction" value="0"/>
             <compositeSetting label="P6E Output Direction" value="1"/>
             <compositeSetting label="6E Mode" value="0"/>
+            <compositeSetting label="6E Transition" value="3"/>
             <compositeSetting label="6E I/O Type" value="2"/>
             <compositeSetting label="6E O Timing" value="10"/>
+            <compositeSetting label="P6F Input Direction" value="0"/>
             <compositeSetting label="P6F Output Direction" value="1"/>
             <compositeSetting label="6F Mode" value="0"/>
+            <compositeSetting label="6F Transition" value="3"/>
             <compositeSetting label="6F I/O Type" value="2"/>
             <compositeSetting label="6F O Timing" value="15"/>
+            <compositeSetting label="P6G Input Direction" value="0"/>
             <compositeSetting label="P6G Output Direction" value="1"/>
             <compositeSetting label="6G Mode" value="0"/>
+            <compositeSetting label="6G Transition" value="3"/>
             <compositeSetting label="6G I/O Type" value="2"/>
             <compositeSetting label="6G O Timing" value="10"/>
+            <compositeSetting label="P6H Input Direction" value="0"/>
             <compositeSetting label="P6H Output Direction" value="1"/>
             <compositeSetting label="6H Mode" value="0"/>
+            <compositeSetting label="6H Transition" value="3"/>
             <compositeSetting label="6H I/O Type" value="2"/>
             <compositeSetting label="6H O Timing" value="15"/>
           </compositeChoice>
@@ -19350,36 +19459,52 @@
             <compositeSetting label="P7 Direction" value="0"/>
             <compositeSetting label="P7 Toggle" value="0"/>
             <compositeSetting label="P7 Signal" value="1"/>
+            <compositeSetting label="P7A Input Direction" value="0"/>
             <compositeSetting label="P7A Output Direction" value="1"/>
             <compositeSetting label="7A Mode" value="0"/>
+            <compositeSetting label="7A Transition" value="3"/>
             <compositeSetting label="7A I/O Type" value="2"/>
             <compositeSetting label="7A O Timing" value="10"/>
+            <compositeSetting label="P7B Input Direction" value="0"/>
             <compositeSetting label="P7B Output Direction" value="1"/>
             <compositeSetting label="7B Mode" value="0"/>
+            <compositeSetting label="7B Transition" value="3"/>
             <compositeSetting label="7B I/O Type" value="2"/>
             <compositeSetting label="7B O Timing" value="15"/>
+            <compositeSetting label="P7C Input Direction" value="0"/>
             <compositeSetting label="P7C Output Direction" value="1"/>
             <compositeSetting label="7C Mode" value="0"/>
+            <compositeSetting label="7C Transition" value="3"/>
             <compositeSetting label="7C I/O Type" value="2"/>
             <compositeSetting label="7C O Timing" value="10"/>
+            <compositeSetting label="P7D Input Direction" value="0"/>
             <compositeSetting label="P7D Output Direction" value="1"/>
             <compositeSetting label="7D Mode" value="0"/>
+            <compositeSetting label="7D Transition" value="3"/>
             <compositeSetting label="7D I/O Type" value="2"/>
             <compositeSetting label="7D O Timing" value="15"/>
+            <compositeSetting label="P7E Input Direction" value="0"/>
             <compositeSetting label="P7E Output Direction" value="1"/>
             <compositeSetting label="7E Mode" value="0"/>
+            <compositeSetting label="7E Transition" value="3"/>
             <compositeSetting label="7E I/O Type" value="2"/>
             <compositeSetting label="7E O Timing" value="10"/>
+            <compositeSetting label="P7F Input Direction" value="0"/>
             <compositeSetting label="P7F Output Direction" value="1"/>
             <compositeSetting label="7F Mode" value="0"/>
+            <compositeSetting label="7F Transition" value="3"/>
             <compositeSetting label="7F I/O Type" value="2"/>
             <compositeSetting label="7F O Timing" value="15"/>
+            <compositeSetting label="P7G Input Direction" value="0"/>
             <compositeSetting label="P7G Output Direction" value="1"/>
             <compositeSetting label="7G Mode" value="0"/>
+            <compositeSetting label="7G Transition" value="3"/>
             <compositeSetting label="7G I/O Type" value="2"/>
             <compositeSetting label="7G O Timing" value="10"/>
+            <compositeSetting label="P7H Input Direction" value="0"/>
             <compositeSetting label="P7H Output Direction" value="1"/>
             <compositeSetting label="7H Mode" value="0"/>
+            <compositeSetting label="7H Transition" value="3"/>
             <compositeSetting label="7H I/O Type" value="2"/>
             <compositeSetting label="7H O Timing" value="15"/>
           </compositeChoice>
@@ -19554,36 +19679,52 @@
             <compositeSetting label="P8 Direction" value="0"/>
             <compositeSetting label="P8 Toggle" value="0"/>
             <compositeSetting label="P8 Signal" value="1"/>
+            <compositeSetting label="P8A Input Direction" value="0"/>
             <compositeSetting label="P8A Output Direction" value="1"/>
             <compositeSetting label="8A Mode" value="0"/>
+            <compositeSetting label="8A Transition" value="3"/>
             <compositeSetting label="8A I/O Type" value="2"/>
             <compositeSetting label="8A O Timing" value="10"/>
+            <compositeSetting label="P8B Input Direction" value="0"/>
             <compositeSetting label="P8B Output Direction" value="1"/>
             <compositeSetting label="8B Mode" value="0"/>
+            <compositeSetting label="8B Transition" value="3"/>
             <compositeSetting label="8B I/O Type" value="2"/>
             <compositeSetting label="8B O Timing" value="15"/>
+            <compositeSetting label="P8C Input Direction" value="0"/>
             <compositeSetting label="P8C Output Direction" value="1"/>
             <compositeSetting label="8C Mode" value="0"/>
+            <compositeSetting label="8C Transition" value="3"/>
             <compositeSetting label="8C I/O Type" value="2"/>
             <compositeSetting label="8C O Timing" value="10"/>
+            <compositeSetting label="P8D Input Direction" value="0"/>
             <compositeSetting label="P8D Output Direction" value="1"/>
             <compositeSetting label="8D Mode" value="0"/>
+            <compositeSetting label="8D Transition" value="3"/>
             <compositeSetting label="8D I/O Type" value="2"/>
             <compositeSetting label="8D O Timing" value="15"/>
+            <compositeSetting label="P8E Input Direction" value="0"/>
             <compositeSetting label="P8E Output Direction" value="1"/>
             <compositeSetting label="8E Mode" value="0"/>
+            <compositeSetting label="8E Transition" value="3"/>
             <compositeSetting label="8E I/O Type" value="2"/>
             <compositeSetting label="8E O Timing" value="10"/>
+            <compositeSetting label="P8F Input Direction" value="0"/>
             <compositeSetting label="P8F Output Direction" value="1"/>
             <compositeSetting label="8F Mode" value="0"/>
+            <compositeSetting label="8F Transition" value="3"/>
             <compositeSetting label="8F I/O Type" value="2"/>
             <compositeSetting label="8F O Timing" value="15"/>
+            <compositeSetting label="P8G Input Direction" value="0"/>
             <compositeSetting label="P8G Output Direction" value="1"/>
             <compositeSetting label="8G Mode" value="0"/>
+            <compositeSetting label="8G Transition" value="3"/>
             <compositeSetting label="8G I/O Type" value="2"/>
             <compositeSetting label="8G O Timing" value="10"/>
+            <compositeSetting label="P8H Input Direction" value="0"/>
             <compositeSetting label="P8H Output Direction" value="1"/>
             <compositeSetting label="8H Mode" value="0"/>
+            <compositeSetting label="8H Transition" value="3"/>
             <compositeSetting label="8H I/O Type" value="2"/>
             <compositeSetting label="8H O Timing" value="15"/>
           </compositeChoice>
@@ -19658,28 +19799,37 @@
     <column>
       <row>
         <column>
-          <display item="Long Address" tooltip="Use 4 digit address from 0-16383" label="              Long Address">
-            <label>              Long Address</label>
+          <display item="Long Address" tooltip="Use 4 digit address from 0-16383" label="Long Address">
+            <label>Long Address</label>
           </display>
         </column>
+      </row>
+      <row>
         <column>
-          <display item="Master Mode" tooltip="Do not enable if there is a command station attached" label="        Master Mode">
-            <label>        Master Mode</label>
+          <display item="Master Mode" tooltip="Do not enable if there is a command station attached" label="       Master Mode">
+            <label>       Master Mode</label>
           </display>
         </column>
         <column>
           <display item="Port State Memory" tooltip="Remembers state of layout during power down"/>
         </column>
-      </row>
-      <row>
         <column>
           <display item="OPS Mode Programing" tooltip="Default, must be enabled"/>
         </column>
+      </row>
+      <row>
         <column>
-          <display item="GPON Interrogate" tooltip="Reports sensor status at GPON"/>
+          <display item="GPON Interrogate" tooltip="Reports sensor and output states at GPON"/>
         </column>
         <column>
-          <display item="Special Interrogate" tooltip="Allows status readout"/>
+          <display item="Input Interrogate" tooltip="Allows input status readout" label="  Input Interrogate">
+            <label>   Input Interrogate</label>>
+          </display>
+        </column>
+        <column>
+          <display item="Output Interrogate" tooltip="Allows output state readout" label="    *Output Interrogate">
+            <label>     *Output Interrogate</label>>
+          </display>
         </column>
       </row>
       <row>
@@ -19858,14 +20008,14 @@
       </row>
       <row>
         <column>
-          <label label="* Note: Firmware Version 5 or later is required.">
-            <label>* Note: Firmware Version 5 or later is required.</label>
+          <label label="* Note: Firmware Version 6 or later is required.">
+            <label>* Note: Firmware Version 6 or later is required.</label>
           </label>
           <label label="Use DecoderPro Version 2.3.2 or later to upgrade.">
             <label>Use DecoderPro Version 2.3.2 or later to upgrade.</label>
           </label>
-          <label label="Decoder File Version: 1.06.">
-            <label>Decoder File Version: 1.06.</label>
+          <label label="Decoder File Version: 1.07.">
+            <label>Decoder File Version: 1.07.</label>
           </label>
         </column>
       </row>
@@ -19916,8 +20066,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="1A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -19952,8 +20102,8 @@
       </row>
       <row>
         <column>
-          <display item="1A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -19987,8 +20137,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20022,8 +20172,8 @@
       </row>
       <row>
         <column>
-          <display item="1B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20057,8 +20207,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20092,8 +20242,8 @@
       </row>
       <row>
         <column>
-          <display item="1C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20127,8 +20277,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20162,8 +20312,8 @@
       </row>
       <row>
         <column>
-          <display item="1D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20197,8 +20347,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20232,8 +20382,8 @@
       </row>
       <row>
         <column>
-          <display item="1E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20267,8 +20417,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20302,8 +20452,8 @@
       </row>
       <row>
         <column>
-          <display item="1F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20337,8 +20487,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20372,8 +20522,8 @@
       </row>
       <row>
         <column>
-          <display item="1G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20407,8 +20557,8 @@
         </column>
         <column>
           <separator/>
-          <display item="1H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="1H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20442,8 +20592,8 @@
       </row>
       <row>
         <column>
-          <display item="1H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="1H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20509,8 +20659,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="2A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20545,8 +20695,8 @@
       </row>
       <row>
         <column>
-          <display item="2A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20580,8 +20730,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20615,8 +20765,8 @@
       </row>
       <row>
         <column>
-          <display item="2B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20650,8 +20800,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20685,8 +20835,8 @@
       </row>
       <row>
         <column>
-          <display item="2C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20720,8 +20870,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20755,8 +20905,8 @@
       </row>
       <row>
         <column>
-          <display item="2D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20790,8 +20940,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20825,8 +20975,8 @@
       </row>
       <row>
         <column>
-          <display item="2E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20860,8 +21010,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20895,8 +21045,8 @@
       </row>
       <row>
         <column>
-          <display item="2F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -20930,8 +21080,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -20965,8 +21115,8 @@
       </row>
       <row>
         <column>
-          <display item="2G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21000,8 +21150,8 @@
         </column>
         <column>
           <separator/>
-          <display item="2H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="2H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21035,8 +21185,8 @@
       </row>
       <row>
         <column>
-          <display item="2H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="2H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21102,8 +21252,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="3A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21138,8 +21288,8 @@
       </row>
       <row>
         <column>
-          <display item="3A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21173,8 +21323,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21208,8 +21358,8 @@
       </row>
       <row>
         <column>
-          <display item="3B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21243,8 +21393,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21278,8 +21428,8 @@
       </row>
       <row>
         <column>
-          <display item="3C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21313,8 +21463,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21348,8 +21498,8 @@
       </row>
       <row>
         <column>
-          <display item="3D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21383,8 +21533,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21418,8 +21568,8 @@
       </row>
       <row>
         <column>
-          <display item="3E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21453,8 +21603,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21488,8 +21638,8 @@
       </row>
       <row>
         <column>
-          <display item="3F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21523,8 +21673,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21558,8 +21708,8 @@
       </row>
       <row>
         <column>
-          <display item="3G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21593,8 +21743,8 @@
         </column>
         <column>
           <separator/>
-          <display item="3H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="3H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21628,8 +21778,8 @@
       </row>
       <row>
         <column>
-          <display item="3H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="3H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21695,8 +21845,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="4A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21731,8 +21881,8 @@
       </row>
       <row>
         <column>
-          <display item="4A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21766,8 +21916,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21801,8 +21951,8 @@
       </row>
       <row>
         <column>
-          <display item="4B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21836,8 +21986,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21871,8 +22021,8 @@
       </row>
       <row>
         <column>
-          <display item="4C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21906,8 +22056,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -21941,8 +22091,8 @@
       </row>
       <row>
         <column>
-          <display item="4D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -21976,8 +22126,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22011,8 +22161,8 @@
       </row>
       <row>
         <column>
-          <display item="4E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22046,8 +22196,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22081,8 +22231,8 @@
       </row>
       <row>
         <column>
-          <display item="4F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22116,8 +22266,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22151,8 +22301,8 @@
       </row>
       <row>
         <column>
-          <display item="4G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22186,8 +22336,8 @@
         </column>
         <column>
           <separator/>
-          <display item="4H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="4H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22221,8 +22371,8 @@
       </row>
       <row>
         <column>
-          <display item="4H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="4H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22288,8 +22438,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="5A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22324,8 +22474,8 @@
       </row>
       <row>
         <column>
-          <display item="5A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22359,8 +22509,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22394,8 +22544,8 @@
       </row>
       <row>
         <column>
-          <display item="5B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22429,8 +22579,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22464,8 +22614,8 @@
       </row>
       <row>
         <column>
-          <display item="5C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22499,8 +22649,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22534,8 +22684,8 @@
       </row>
       <row>
         <column>
-          <display item="5D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22569,8 +22719,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22604,8 +22754,8 @@
       </row>
       <row>
         <column>
-          <display item="5E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22639,8 +22789,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22674,8 +22824,8 @@
       </row>
       <row>
         <column>
-          <display item="5F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22709,8 +22859,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22744,8 +22894,8 @@
       </row>
       <row>
         <column>
-          <display item="5G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22779,8 +22929,8 @@
         </column>
         <column>
           <separator/>
-          <display item="5H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="5H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22814,8 +22964,8 @@
       </row>
       <row>
         <column>
-          <display item="5H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="5H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22881,8 +23031,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="6A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22917,8 +23067,8 @@
       </row>
       <row>
         <column>
-          <display item="6A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -22952,8 +23102,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -22987,8 +23137,8 @@
       </row>
       <row>
         <column>
-          <display item="6B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23022,8 +23172,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23057,8 +23207,8 @@
       </row>
       <row>
         <column>
-          <display item="6C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23092,8 +23242,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23127,8 +23277,8 @@
       </row>
       <row>
         <column>
-          <display item="6D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23162,8 +23312,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23197,8 +23347,8 @@
       </row>
       <row>
         <column>
-          <display item="6E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23232,8 +23382,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23267,8 +23417,8 @@
       </row>
       <row>
         <column>
-          <display item="6F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23302,8 +23452,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23337,8 +23487,8 @@
       </row>
       <row>
         <column>
-          <display item="6G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23372,8 +23522,8 @@
         </column>
         <column>
           <separator/>
-          <display item="6H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="6H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23407,8 +23557,8 @@
       </row>
       <row>
         <column>
-          <display item="6H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="6H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23474,8 +23624,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="7A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23510,8 +23660,8 @@
       </row>
       <row>
         <column>
-          <display item="7A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23545,8 +23695,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23580,8 +23730,8 @@
       </row>
       <row>
         <column>
-          <display item="7B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23615,8 +23765,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23650,8 +23800,8 @@
       </row>
       <row>
         <column>
-          <display item="7C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23685,8 +23835,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23720,8 +23870,8 @@
       </row>
       <row>
         <column>
-          <display item="7D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23755,8 +23905,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23790,8 +23940,8 @@
       </row>
       <row>
         <column>
-          <display item="7E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23825,8 +23975,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23860,8 +24010,8 @@
       </row>
       <row>
         <column>
-          <display item="7F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23895,8 +24045,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -23930,8 +24080,8 @@
       </row>
       <row>
         <column>
-          <display item="7G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -23965,8 +24115,8 @@
         </column>
         <column>
           <separator/>
-          <display item="7H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="7H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24000,8 +24150,8 @@
       </row>
       <row>
         <column>
-          <display item="7H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="7H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24067,8 +24217,8 @@
         <column>
           <separator/>
           <separator/>
-          <display item="8A Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8A Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24103,8 +24253,8 @@
       </row>
       <row>
         <column>
-          <display item="8A Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8A Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24138,8 +24288,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8B Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8B Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24173,8 +24323,8 @@
       </row>
       <row>
         <column>
-          <display item="8B Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8B Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24208,8 +24358,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8C Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8C Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24243,8 +24393,8 @@
       </row>
       <row>
         <column>
-          <display item="8C Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8C Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24278,8 +24428,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8D Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8D Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24313,8 +24463,8 @@
       </row>
       <row>
         <column>
-          <display item="8D Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8D Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24348,8 +24498,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8E Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8E Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24383,8 +24533,8 @@
       </row>
       <row>
         <column>
-          <display item="8E Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8E Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24418,8 +24568,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8F Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8F Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24453,8 +24603,8 @@
       </row>
       <row>
         <column>
-          <display item="8F Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8F Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24488,8 +24638,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8G Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8G Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24523,8 +24673,8 @@
       </row>
       <row>
         <column>
-          <display item="8G Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8G Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
@@ -24558,8 +24708,8 @@
         </column>
         <column>
           <separator/>
-          <display item="8H Transition" label="Message Sent">
-            <label>Message Sent</label>
+          <display item="8H Transition" label="Message">
+            <label>Message</label>
           </display>
         </column>
         <column>
@@ -24593,8 +24743,8 @@
       </row>
       <row>
         <column>
-          <display item="8H Secondary" label="Secondary Message">
-            <label>Secondary Message</label>
+          <display item="8H Secondary" label="Secondary Action">
+            <label>Secondary Action</label>
           </display>
         </column>
         <column>
