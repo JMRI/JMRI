@@ -21,7 +21,7 @@ import jmri.util.JmriJFrame;
  * Modified by Dennis Miller for resizing Nov, 2004
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
@@ -37,10 +37,10 @@ public class NixieClockFrame extends JmriJFrame implements java.beans.PropertyCh
 
     Timebase clock;
 
-    static NamedIcon tubes[] = new NamedIcon[10];
-    static NamedIcon baseTubes[] = new NamedIcon[10];
-    static NamedIcon colonIcon;
-    static NamedIcon baseColon;
+    NamedIcon tubes[] = new NamedIcon[10];
+    NamedIcon baseTubes[] = new NamedIcon[10];
+    NamedIcon colonIcon;
+    NamedIcon baseColon;
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public NixieClockFrame() {
