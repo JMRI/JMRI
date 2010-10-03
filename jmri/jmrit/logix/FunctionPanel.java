@@ -69,8 +69,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
                 		// adjust button width for text
                 		int butWidth = functionButton[i].getFontMetrics(functionButton[i].getFont()).stringWidth(text);
                 		butWidth = butWidth + 20;	// pad out the width a bit
-                		if (butWidth < FunctionButton.BUT_WDTH) butWidth = FunctionButton.BUT_WDTH;
-                		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.BUT_HGHT));
+                		if (butWidth < FunctionButton.getButtonWidth()) butWidth = FunctionButton.getButtonWidth();
+                		functionButton[i].setPreferredSize(new Dimension(butWidth,FunctionButton.getButtonHeight()));
                 		functionButton[i].setIsLockable(_rosterEntry.getFunctionLockable(functionNumber));
                 	}
                 }
@@ -236,7 +236,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
             }
         }
         alt1Button.setText("Alt");
-        alt1Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
+        alt1Button.setPreferredSize(new Dimension(FunctionButton.getButtonWidth(),FunctionButton.getButtonHeight()));
         alt1Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("Push_for_alternate_set_of_function_keys"));
         alt1Button.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -248,7 +248,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
         mainPanel.add(functionButton[0]);
         
         alt2Button.setText("#");
-        alt2Button.setPreferredSize(new Dimension(FunctionButton.BUT_WDTH,FunctionButton.BUT_HGHT));
+        alt2Button.setPreferredSize(new Dimension(FunctionButton.getButtonWidth(),FunctionButton.getButtonHeight()));
         alt2Button.setToolTipText(java.util.ResourceBundle.getBundle("jmri/jmrit/throttle/ThrottleBundle").getString("currently_not_used"));
         mainPanel.add(alt2Button);
 
@@ -328,7 +328,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.6 $
+	 * @version $Revision: 1.7 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter
 	{
