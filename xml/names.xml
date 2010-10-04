@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <!DOCTYPE names-config SYSTEM "names-config.dtd">
-<!-- $Id: names.xml,v 1.23 2010-01-25 17:34:00 jacobsen Exp $ -->
+<!-- $Id: names.xml,v 1.24 2010-10-04 01:48:39 jacobsen Exp $ -->
 <names-config>
+		<version author="Jack Shall lcrr@bellsouth.net" 
+			version="11" lastUpdated="20100819"/>
 		<version author="Jack Shall jack745@bellsouth.net" 
 			version="10" lastUpdated="20090115"/>
 		<version author="jake@physics.berkeley.edu" 
@@ -11,10 +13,11 @@
 		<version author="jake@physics.berkeley.edu" 
 			version="7.1" lastUpdated="20031008"/>
 
-   <!-- Version 7 - changed spelling of "behavior" (Jack Shall)       -->
-   <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests -->
-   <!-- Version 9 - add explicit EMF Enable to fix TCS confusion      -->
-   <!-- Version 10 - added four additional lighting options      -->
+   <!-- Version 7 - changed spelling of "behavior" (Jack Shall)				-->
+   <!-- Version 8 - up to date with Comprehensive.xml for JUnit tests		-->
+   <!-- Version 9 - add explicit EMF Enable to fix TCS confusion			-->
+   <!-- Version 10 - added four additional lighting options					-->
+   <!-- Version 11 - added additional lighting options to functions 3 and 4	-->
 		
 	<!-- Note 1: NMRA-standard variables show a CV value -->
 	<!-- Note 2: The CV29 control bits are now spread to the relevant -->
@@ -346,6 +349,10 @@
 		<definition item="Function 3 effect generated"/>
 		<definition item="Function 3 behavior"/>
 		<definition item="Function 3 options"/>
+		<definition item="Function 3 option 1"/>
+		<definition item="Function 3 option 2"/>
+		<definition item="Function 3 option 3"/>
+		<definition item="Function 3 option 4"/>
 		<definition item="Function 3 check 1"/>
 		<definition item="Function 3 check 2"/>
 		<definition item="Function 3 check 3"/>
@@ -355,6 +362,10 @@
 		<definition item="Function 4 effect generated"/>
 		<definition item="Function 4 behavior"/>
 		<definition item="Function 4 options"/>
+		<definition item="Function 4 option 1"/>
+		<definition item="Function 4 option 2"/>
+		<definition item="Function 4 option 3"/>
+		<definition item="Function 4 option 4"/>
 		<definition item="Function 4 check 1"/>
 		<definition item="Function 4 check 2"/>
 		<definition item="Function 4 check 3"/>

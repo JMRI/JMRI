@@ -1,5 +1,10 @@
 <?xml version="1.0"?>
 <!DOCTYPE pane SYSTEM "xml/DTD/programmer-config.dtd">
+
+   <!-- version author="Jack Shall lcrr@bellsouth.net" version="11" lastUpdated="20100819"	-->
+
+   <!-- Version 2 - added additional lighting options to functions 3 and 4	-->
+
 <pane name="Lights">
     <column>
         <label label=" "/>
@@ -69,6 +74,10 @@
         <display item="Function 3 effect generated"/>
         <display item="Function 3 behavior"/>
         <display item="Function 3 options"/>
+        <display item="Function 3 option 1"/>
+        <display item="Function 3 option 2"/>
+        <display item="Function 3 option 3"/>
+        <display item="Function 3 option 4"/>
         <display item="Function 3 check 1" format="checkbox"/>
         <display item="Function 3 check 2" format="checkbox"/>
         <display item="Function 3 check 3" format="checkbox"/>
@@ -78,6 +87,10 @@
         <display item="Function 4 effect generated"/>
         <display item="Function 4 behavior"/>
         <display item="Function 4 options"/>
+        <display item="Function 4 option 1"/>
+        <display item="Function 4 option 2"/>
+        <display item="Function 4 option 3"/>
+        <display item="Function 4 option 4"/>
         <display item="Function 4 check 1" format="checkbox"/>
         <display item="Function 4 check 2" format="checkbox"/>
         <display item="Function 4 check 3" format="checkbox"/>
