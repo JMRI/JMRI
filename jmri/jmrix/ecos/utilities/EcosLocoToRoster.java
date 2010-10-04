@@ -624,7 +624,6 @@ public class EcosLocoToRoster implements EcosListener {
         }
     }
     
-    @SuppressWarnings("unchecked")
 	void readConfig(Element root, RosterEntry r) {
         // check for "programmer" element at start
         if ( root.getChild("programmer") == null) {

@@ -169,12 +169,11 @@ public class TableItemPanel extends ItemPanel {
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
 
-        Hashtable <String, Hashtable> families = _paletteFrame.getFamilyMaps(_itemType);
+        Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
             _iconFamilyPanel.add(new JLabel(txt));
             ButtonGroup group = new ButtonGroup();
-            @SuppressWarnings("unchecked")
             Iterator <String> it = families.keySet().iterator();
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
@@ -220,7 +219,7 @@ public class TableItemPanel extends ItemPanel {
         _iconPanel = new JPanel();
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
         if (_family==null) {
-            Hashtable <String, Hashtable> families = _paletteFrame.getFamilyMaps(_itemType);
+            Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
             if (families!=null) {
                 Iterator <String> it = families.keySet().iterator();
                 while (it.hasNext()) {

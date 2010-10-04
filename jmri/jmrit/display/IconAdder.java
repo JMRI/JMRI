@@ -374,7 +374,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                 String path = leaf.getPath();
                 setIcon(k++, leaf.getName(), new NamedIcon(path, path));
             } else {
-                String name = null;
+                String name = "";
                 try {
                     name = rbean.getString(leaf.getName());
                 } catch (java.util.MissingResourceException mre) {

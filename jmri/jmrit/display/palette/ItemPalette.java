@@ -53,11 +53,11 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
     JTabbedPane _tabPane;
     HashMap <String, ItemPanel> _itemPanelMap = new HashMap <String, ItemPanel>();
 
-    static HashMap <String, Hashtable> _iconMaps;
+    static HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>> _iconMaps;
 
     public static void storeIcons() {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
-        // unfiltered, xml-stored, item palette icon tree
+        // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
         // discard old version
         if (tree != null) {
@@ -70,13 +70,11 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
         while (it.hasNext()) {
             String type = it.next();
             CatalogTreeNode typeNode = new CatalogTreeNode(type);
-            @SuppressWarnings("unchecked")
-            Hashtable <String, Hashtable> familyMap = _iconMaps.get(type);
+            Hashtable <String, Hashtable<String, NamedIcon>> familyMap = _iconMaps.get(type);
             Iterator <String> iter = familyMap.keySet().iterator();
             while (iter.hasNext()) {
                 String family = iter.next();
                 CatalogTreeNode familyNode = new CatalogTreeNode(family);
-                @SuppressWarnings("unchecked")
                 Hashtable <String, NamedIcon> iconMap = familyMap.get(family); 
                 Iterator <String> iterat = iconMap.keySet().iterator();
                 while (iterat.hasNext()) {
@@ -93,7 +91,7 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
     }
 
     static void loadIcons() {
-        _iconMaps = new HashMap <String, Hashtable> ();
+        _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>> ();
 
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         CatalogTree tree = manager.getBySystemName("NXPI");
@@ -104,7 +102,7 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
             while (e.hasMoreElements()) {
                 CatalogTreeNode node = e.nextElement();
                 String typeName = (String)node.getUserObject();
-                Hashtable <String, Hashtable> familyMap = new Hashtable <String, Hashtable> ();     // Map of all families of type, typeName
+                Hashtable <String, Hashtable<String, NamedIcon>> familyMap = new Hashtable <String, Hashtable<String, NamedIcon>> ();     // Map of all families of type, typeName
                 @SuppressWarnings("unchecked")
                 Enumeration<CatalogTreeNode> ee = node.children();
                 while (ee.hasMoreElements()) {
@@ -149,7 +147,7 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
             List<Element> typeList = root.getChild("ItemTypes").getChildren();
             for (int i = 0; i < typeList.size(); i++) {
                 String typeName = typeList.get(i).getName();
-                Hashtable <String, Hashtable> familyMap = new Hashtable <String, Hashtable> ();     // Map of all families of type, typeName
+                Hashtable <String, Hashtable<String, NamedIcon>> familyMap = new Hashtable <String, Hashtable<String, NamedIcon>> ();     // Map of all families of type, typeName
                 @SuppressWarnings("unchecked")
                 List<Element>families = typeList.get(i).getChildren();
                 for (int k = 0; k < families.size(); k++) {
@@ -321,15 +319,14 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
         _itemPanelMap.get(type).setFamily(family);
     }
 
-    @SuppressWarnings("unchecked")
-    protected Hashtable<String, Hashtable> getFamilyMaps(String type) {
+    protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps(String type) {
        return _iconMaps.get(type);
     }
 
     protected void removeIconMap(String type, String family) {
         if (log.isDebugEnabled()) log.debug("removeIconMap for family \""+family+" \" in type \""+type+"\"");
         _iconMaps.get(type).remove(family);
-        Hashtable <String, Hashtable> families = getFamilyMaps(type);
+        Hashtable <String, Hashtable<String, NamedIcon>> families = getFamilyMaps(type);
         if (families!=null && families.size()>0) {
             Iterator <String> it = families.keySet().iterator();
             while (it.hasNext()) {
@@ -348,9 +345,8 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
         pack();
     }
 
-    @SuppressWarnings("unchecked")
     static protected Hashtable<String, NamedIcon> getIconMap(String type, String family) {
-        Hashtable <String, Hashtable> itemMap = _iconMaps.get(type);
+        Hashtable <String, Hashtable<String, NamedIcon>> itemMap = _iconMaps.get(type);
         if (itemMap==null) {
             log.error("getIconMap failed. item type \""+type+"\" not found.");
             return null;

@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.util.ArrayList;
@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 
 import jmri.InstanceManager;
+import jmri.NamedBean;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
@@ -79,7 +80,7 @@ public class PortalTableModel extends AbstractTableModel {
              }
          }
         // find portals with Blocks assigned
-        Iterator bIter = _parent.getBlockModel().getBeanList().iterator();
+        Iterator<NamedBean> bIter = _parent.getBlockModel().getBeanList().iterator();
         while (bIter.hasNext()) {
             OBlock block = (OBlock)bIter.next();
             List <Portal> list = block.getPortals();

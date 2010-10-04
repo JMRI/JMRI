@@ -63,7 +63,7 @@ public class ItemDialog extends JDialog {
         _parent.getPaletteFrame().addFamily(_type, family, iconMap);
     }
 
-    protected Hashtable<String, Hashtable> getFamilyMaps() {
+    protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps() {
        return _parent.getPaletteFrame().getFamilyMaps(_type);
     }
 

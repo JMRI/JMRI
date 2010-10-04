@@ -70,7 +70,7 @@ public class OBlockManagerXml // extends XmlFile
                 se.setAttribute("systemName", s.getSystemName());
                 elem.addContent(se);
             }
-            List paths = block.getPaths();
+            List<Path> paths = block.getPaths();
             for (int j=0; j<paths.size(); j++) {
                 elem.addContent(storePath((OPath)paths.get(j)));
             }

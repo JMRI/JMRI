@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.10 $
+ * @version                    $Revision: 1.11 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -270,7 +270,6 @@ public class SpeedoDial extends JPanel {
         return ;
     }
     
-    @SuppressWarnings("deprecation")
     void update(float speed) {
         // hand rotation starts at 12 o'clock position so offset it by 120 degrees
         // scale by the angle between major tick marks divided by 10

@@ -50,9 +50,8 @@ public class ClockItemPanel extends ItemPanel {
     * Plain icons have only one family, usually named "set"
     * overide for plain icon & background and put all icons here
     */
-    @SuppressWarnings("unchecked")
     protected void initIconPanel() {
-        Hashtable <String, Hashtable> families = _paletteFrame.getFamilyMaps(_itemType);
+        Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             if (families.size()!=1) {
                 log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");

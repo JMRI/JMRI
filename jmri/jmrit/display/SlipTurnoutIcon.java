@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -1119,9 +1119,9 @@ class SetSlipThread extends Thread {
 		
         HashMap <Turnout, Integer> _turnoutSetting = s.getTurnoutSettings();
         
-        Iterator itr = _turnoutSetting.keySet().iterator();
+        Iterator<Turnout> itr = _turnoutSetting.keySet().iterator();
         while(itr.hasNext()) {
-            Turnout t = (Turnout) itr.next();
+            Turnout t = itr.next();
             int state = _turnoutSetting.get(t);
             t.setCommandedState(state);
             try {

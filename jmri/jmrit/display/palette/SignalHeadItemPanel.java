@@ -51,7 +51,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         _iconPanel = new JPanel();
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
         if (_family==null) {
-            Hashtable <String, Hashtable> families = _paletteFrame.getFamilyMaps(_itemType);
+            Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
             if (families!=null) {
                 Iterator <String> it = families.keySet().iterator();
                 while (it.hasNext()) {
