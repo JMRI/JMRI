@@ -3,7 +3,7 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.9.9 on Sun Jun 27 19:40:26 PDT 2010 $Id: decoderIndex.xml,v 1.163 2010-06-28 02:42:33 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.9 on Sun Jun 27 19:40:26 PDT 2010 $Id: decoderIndex.xml,v 1.164 2010-10-04 02:02:05 jacobsen Exp $-->
   <decoderIndex version="198">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
@@ -38,8 +38,8 @@
       <manufacturer mfg="Electronic Solutions Ulm GmbH" mfgID="151" />
       <manufacturer mfg="Electronik and Model Produktion" mfgID="35" />
       <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
+      <manufacturer mfg="Fleischmann" mfgID="155" />
       <manufacturer mfg="GFB Designs" mfgID="46" />
-      <manufacturer mfg="Gebr. Fleishmann GmbH Co." mfgID="155" />
       <manufacturer mfg="Haber and Koenig Electronics GmbH" mfgID="111" />
       <manufacturer mfg="Heljan A/S" mfgID="28" />
       <manufacturer mfg="Hornby" mfgID="48" />

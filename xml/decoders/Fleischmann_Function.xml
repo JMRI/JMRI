@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!--Copyright (C) JMRI 2003, 2004, 2008 All rights reserved -->
-<!--$Id: Fleischmann_Function.xml,v 1.1 2010-10-04 01:57:18 jacobsen Exp $ -->
+<!--$Id: Fleischmann_Function.xml,v 1.1 2010-10-04 02:02:05 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -33,7 +33,7 @@
 
 -->
   <decoder>
-    <family name="Fleischmann function decoders" mfg="Gebr. Fleishmann GmbH Co." lowVersionID="10" comment="Fleischmann 686401">
+    <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401">
       <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A">
       </model>
     </family>
