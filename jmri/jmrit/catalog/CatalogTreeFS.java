@@ -25,11 +25,18 @@ public class CatalogTreeFS extends AbstractCatalogTree {
     }
 
     public void setFilter(String[] filter) {
-        _filter = filter;
+        _filter = new String[filter.length];
+        for (int i=0; i<filter.length; i++) {
+            _filter[i] = filter[i];
+        }
     }
 
     public String[] getFilter() {
-        return _filter;
+        String[] filter = new String[_filter.length];
+        for (int i=0; i<_filter.length; i++) {
+            filter[i] = _filter[i];
+        }
+        return filter;
     }
 
     boolean filter(String ext) {

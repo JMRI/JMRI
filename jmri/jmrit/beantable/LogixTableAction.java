@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -147,11 +147,11 @@ public class LogixTableAction extends AbstractTableAction {
 				if (col == EDITCOL) {
 					return rbx.getString("ButtonSelect");
 				} else if (col == ENABLECOL) {
-				    Logix logix = (Logix) getBySystemName((String) getValueAt(row,
-									SYSNAMECOL));
-			        if (logix == null) return null;
-					return new Boolean(
-							logix.getEnabled());
+				    Logix logix = (Logix) getBySystemName((String) getValueAt(row, SYSNAMECOL));
+			        if (logix == null) {
+                        return null;
+                    }
+					return Boolean.valueOf(logix.getEnabled());
 				} else
 					return super.getValueAt(row, col);
 			}
@@ -1951,7 +1951,7 @@ public class LogixTableAction extends AbstractTableAction {
     * build the antecedent statement
     */
     void makeAntecedent() {
-        String str = new String("");
+        String str = "";
         if (_variableList.size()!=0) {
             String not = rbx.getString("LogicNOT").toLowerCase();
             String row = rbx.getString("rowAbrev");
@@ -4753,7 +4753,7 @@ public class LogixTableAction extends AbstractTableAction {
                     }
                     break;
                 case TRIGGERS_COLUMN:
-                    return new Boolean(variable.doTriggerActions());
+                    return Boolean.valueOf(variable.doTriggerActions());
                 case EDIT_COLUMN:
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:

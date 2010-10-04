@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.awt.Point;
@@ -195,7 +195,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
          return null;
      }
 
-     public class TableCellSelection extends StringSelection {
+     class TableCellSelection extends StringSelection {
          int _row;
          int _col;
          JTable _table;
@@ -210,7 +210,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
          JTable getTable() { return _table; }
      }
 
-     public class TableCellTransferable implements Transferable {
+     class TableCellTransferable implements Transferable {
          TableCellSelection _tcss;
          TableCellTransferable(TableCellSelection tcss) {
              _tcss = tcss;

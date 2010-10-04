@@ -84,7 +84,10 @@ public class PreviewDialog extends JDialog {
     public PreviewDialog(Frame frame, String title, File dir, String[] filter, boolean modality ) {
         super(frame, rb.getString(title), modality);
         _currentDir = dir;
-        _filter = filter;
+        _filter = new String[filter.length];
+        for (int i=0; i<filter.length; i++) {
+            _filter[i] = filter[i];
+        }
         _mode = modality;
     }
 

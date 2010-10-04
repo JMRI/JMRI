@@ -40,7 +40,7 @@ import javax.swing.tree.TreePath;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright 2002
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class CatalogPane extends JPanel {
     JLabel preview = new JLabel();
@@ -98,11 +98,12 @@ public class CatalogPane extends JPanel {
             if (level < 3) return null;
             if (((DefaultMutableTreeNode)path.getPathComponent(1)).getUserObject().equals("resources")) {
                 // process a .jar icon
-                String name = CatalogTreeModel.resourceRoot;
+                StringBuffer buf = new StringBuffer(CatalogTreeModel.resourceRoot);
                 for (int i=2; i<level; i++) {
-                    name = name+"/"
-                        +(String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject();
+                    buf.append("/");
+                    buf.append((String)((DefaultMutableTreeNode)path.getPathComponent(i)).getUserObject());
                 }
+                String name = buf.toString();
                 log.debug("attempt to load resource from "+name);
                 // return new NamedIcon(ClassLoader.getSystemResource(name), "resource:"+name);
                 //return new NamedIcon(name, "resource:"+name);
