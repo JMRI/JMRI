@@ -7,14 +7,14 @@ import jmri.configurexml.*;
 import jmri.managers.ManagerDefaultSelector;
 
 /**
- * Handle XML persistance of ManagerDefaultSelector
+ * Handle XML persistence of ManagerDefaultSelector
  * <P>
- * This class is named as being the persistant form of the
+ * This class is named as being the persistent form of the
  * ManagerDefaultSelector class, but there's no object of that
  * form created or used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @since 2.9.7
  */
 public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
@@ -31,7 +31,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     public Element store(Object o) {
         Element e = new Element("managerdefaults");
         e.setAttribute("class", getClass().getName());
-        for (Class c : ManagerDefaultSelector.instance.defaults.keySet()) {
+        for (Class<?> c : ManagerDefaultSelector.instance.defaults.keySet()) {
             String n = ManagerDefaultSelector.instance.defaults.get(c);
             Element p = new Element("setting");
             Element key = new Element("key");
@@ -52,7 +52,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         for (Element s : list) {
             String name = s.getChild("value").getText();
             String className = s.getChild("key").getText();
-            Class c = null;
+            Class<?> c = null;
             try {
                 c = Class.forName(className);
             } catch (java.lang.ClassNotFoundException ex) {

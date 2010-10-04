@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -81,7 +81,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /** 
      * Currently provides only Programmer this way
      */
-    public boolean provides(Class type) {
+    public boolean provides(Class<?> type) {
         if (type.equals(jmri.ProgrammerManager.class))
             return true;
         return false; // nothing, by default
@@ -91,7 +91,7 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * Currently provides only Programmer this way
      */
     @SuppressWarnings("unchecked")
-    public <T> T get(Class T) {
+    public <T> T get(Class<?> T) {
         if (getDisabled())
             return null;
         if (T.equals(jmri.ProgrammerManager.class))

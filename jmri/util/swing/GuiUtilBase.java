@@ -10,7 +10,7 @@ import org.jdom.*;
  * Common utility methods for working with GUI items
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class GuiUtilBase {
@@ -34,11 +34,11 @@ public class GuiUtilBase {
                 //    (JmriAbstractAction)Class.forName(classname).newInstance();
                 //if (wi != null)
                 //    a.setWindowInterface(wi);
-                Class c = Class.forName(classname);
-                for (java.lang.reflect.Constructor ct : c.getConstructors()) {
+                Class<?> c = Class.forName(classname);
+                for (java.lang.reflect.Constructor<?> ct : c.getConstructors()) {
                     // look for one with right arguments
                     if (icon == null) {
-                        Class[] parms = ct.getParameterTypes();
+                        Class<?>[] parms = ct.getParameterTypes();
                         if (parms.length != 2) continue;
                         if (parms[0] != String.class) continue;
                         if (parms[1] != WindowInterface.class) continue;
@@ -48,7 +48,7 @@ public class GuiUtilBase {
                         a.setContext(context);
                         return a;
                     } else {
-                        Class[] parms = ct.getParameterTypes();
+                        Class<?>[] parms = ct.getParameterTypes();
                         if (parms.length != 3) continue;
                         if (parms[0] != String.class) continue;
                         if (parms[1] != Icon.class) continue;

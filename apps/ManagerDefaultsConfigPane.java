@@ -13,7 +13,7 @@ import jmri.managers.ManagerDefaultSelector;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
@@ -84,7 +84,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
      * Captive class to track changes
      */
     class SelectionButton extends JRadioButton {
-        SelectionButton(String name, Class managerClass) {
+        SelectionButton(String name, Class<?> managerClass) {
             super();
             this.managerClass = managerClass;
             this.name = name;
@@ -101,7 +101,7 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
 
         }
         String name;
-        Class managerClass;
+        Class<?> managerClass;
         @Override
         public void setSelected(boolean t) {
             super.setSelected(t);

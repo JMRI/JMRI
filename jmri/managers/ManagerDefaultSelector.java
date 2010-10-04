@@ -23,7 +23,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
@@ -41,7 +41,7 @@ public class ManagerDefaultSelector {
      *          for which a default system is desired
      * @return userName of the system, or null if none set
      */
-    public String getDefault(Class managerClass) {
+    public String getDefault(Class<?> managerClass) {
         return defaults.get(managerClass);
     }
 
@@ -53,7 +53,7 @@ public class ManagerDefaultSelector {
      *          for which a default system is desired
      * @param userName of the system, or null if none set
      */
-    public void setDefault(Class managerClass, String userName) {
+    public void setDefault(Class<?> managerClass, String userName) {
         defaults.put(managerClass, userName);
     }
 
@@ -81,7 +81,7 @@ public class ManagerDefaultSelector {
         }
     }
     
-    public Hashtable<Class, String> defaults = new Hashtable<Class, String>();
+    public Hashtable<Class<?>, String> defaults = new Hashtable<Class<?>, String>();
     
     final public Item[] knownManagers = new Item[] {
                 //new Item("Turnouts", TurnoutManager.class, true),
@@ -94,9 +94,9 @@ public class ManagerDefaultSelector {
     
     public class Item {
         public String typeName;
-        public Class managerClass;
+        public Class<?> managerClass;
         public boolean proxy;
-        Item(String typeName, Class managerClass, boolean proxy) {
+        Item(String typeName, Class<?> managerClass, boolean proxy) {
             this.typeName = typeName;
             this.managerClass = managerClass;
             this.proxy = proxy;

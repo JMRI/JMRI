@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.14 $
+ *	@version $Revision: 1.15 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -215,7 +215,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             for (int funcNum = 0; funcNum < 29; funcNum++) {
                 try {
 
-                    Class partypes[] = {Boolean.TYPE};
+                    Class<?> partypes[] = {Boolean.TYPE};
                     Method setMomentary = t.getClass().getMethod("setF" + funcNum + "Momentary", partypes);
                     Object data[] = {Boolean.valueOf(!(rosterLoco.getFunctionLockable(funcNum)))};
 
@@ -538,7 +538,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             try{
                 Method getF = functionThrottle.getClass().getMethod("getF"+receivedFunction,(Class[])null);
 
-                Class partypes[] = {Boolean.TYPE};
+                Class<?> partypes[] = {Boolean.TYPE};
                 Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
                 
                 state = (Boolean)getF.invoke(functionThrottle, (Object[])null);
@@ -569,7 +569,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             try{
                 Method getFMom = functionThrottle.getClass().getMethod("getF"+receivedFunction+"Momentary",(Class[])null);
 
-                Class partypes[] = {Boolean.TYPE};
+                Class<?> partypes[] = {Boolean.TYPE};
                 Method setF = functionThrottle.getClass().getMethod("setF"+receivedFunction, partypes);
                 
                 if ((Boolean)getFMom.invoke(functionThrottle, (Object[])null)){
