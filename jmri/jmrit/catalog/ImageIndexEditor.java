@@ -199,7 +199,6 @@ public final class ImageIndexEditor extends JmriJFrame {
         if (tree == null) {
             tree = manager.newCatalogTree("NXDI", "Default Icons");
         }
-        @SuppressWarnings("unchecked")
         // Replace or add with latest branch from each IconAdder 
         Iterator <IconAdder>iter = editor.getIconEditors().iterator();
         CatalogTreeNode root = (CatalogTreeNode)tree.getRoot();

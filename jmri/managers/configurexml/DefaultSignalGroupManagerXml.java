@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -132,7 +132,6 @@ public class DefaultSignalGroupManagerXml
      @SuppressWarnings("unchecked")
     public boolean load(Element element) {
         // loop over contained signalgroup elements
-        @SuppressWarnings("unchecked")
         List<Element> list = element.getChildren("signalgroup");
 
         SignalGroupManager sgm = InstanceManager.signalGroupManagerInstance();
