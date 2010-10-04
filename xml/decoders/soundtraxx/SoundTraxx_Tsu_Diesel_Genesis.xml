@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2008 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Diesel_Bowser.xml,v 1.2 2010-10-04 02:10:36 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Diesel_Genesis.xml,v 1.1 2010-10-04 02:07:30 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -17,16 +17,16 @@
   <version author="Michael Mosher" version="1" lastUpdated="20100602"/>
   <version author="Michael Mosher" version="2" lastUpdated="20100828"/>
 
-<!-- This file contains the Tsunami definitions for Bowser OEM diesel locomotives	-->
+<!-- This file contains the Tsunami definitions for Genesis OEM diesel locomotives	-->
 
-<!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file. -->
-<!-- version 2	Add Rule 17 bit to CV51 & 52 -->
+<!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
+<!-- version 2	Add Rule 17 bit to CV51 & 52 and add CV 53, 54, 57, 58 and add N scale models-->
 
 <!-- Decoder Model information follows -->
 
   <decoder>
-    <family name="Tsunami Diesel Bowser OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Bowser Tsunami diesel decoders">
-      <model model="Alco C-628" numOuts="4" numFns="14" connector="other" productID="Century">
+    <family name="Tsunami Diesel Genesis OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
+      <model model="F2" numOuts="4" numFns="14" connector="other" productID="F2" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -41,7 +41,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Alco C-630" numOuts="4" numFns="14" connector="other" productID="Century">
+      <model model="F3" numOuts="4" numFns="14" connector="other" productID="F2" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -56,7 +56,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin AS-16" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="F7" numOuts="4" numFns="14" connector="other" productID="F2" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -71,7 +71,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin AS-616" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="F9" numOuts="4" numFns="14" connector="other" productID="F2" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -86,7 +86,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin DS 4-4-1000" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F2" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -101,7 +101,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin S-8" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="F45" numOuts="4" numFns="14" connector="other" productID="F45" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -116,7 +116,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin S-12" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="FP45" numOuts="4" numFns="14" connector="other" productID="F45" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -131,7 +131,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin VO-660" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="GP15-1" numOuts="4" numFns="14" connector="other" productID="MP15" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -146,7 +146,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="Baldwin VO-1000" numOuts="4" numFns="14" connector="other" productID="Baldwin">
+      <model model="GP15T" numOuts="4" numFns="14" connector="other" productID="F45" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -161,7 +161,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="EMD FT" numOuts="4" numFns="14" connector="other" productID="F">
+      <model model="MP15AC" numOuts="4" numFns="14" connector="other" productID="MP15" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -176,7 +176,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="EMD F3" numOuts="4" numFns="14" connector="other" productID="F">
+      <model model="SD45-2" numOuts="4" numFns="14" connector="other" productID="F45" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -191,7 +191,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="EMD F7" numOuts="4" numFns="14" connector="other" productID="F">
+      <model model="SD60I" numOuts="4" numFns="14" connector="other" productID="SD60" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -206,7 +206,7 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="EMD F9" numOuts="4" numFns="14" connector="other" productID="F">
+      <model model="SD60M" numOuts="4" numFns="14" connector="other" productID="SD60" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -221,7 +221,37 @@
         <output name="Brakes"/>
         <output name="Coupler"/>
       </model>
-      <model model="GE U25B" numOuts="4" numFns="14" connector="other" productID="GE">
+      <model model="SD70ACe" numOuts="4" numFns="14" connector="other" productID="SD60" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="N F45" numOuts="4" numFns="14" connector="other" productID="N_F45" >
+        <versionCV lowVersionID="64"/>
+        <output name="Air Horn"/>
+        <output name="Bell"/>
+        <output name="3" label="  FX5  "/>
+        <output name="4" label="  FX6  "/>
+        <output name="Dynamics"/>
+        <output name="Short Horn"/>
+        <output name="Fans(+)"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Comp(-)"/>
+        <output name="Brakes"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="N FP45" numOuts="4" numFns="14" connector="other" productID="N_F45" >
         <versionCV lowVersionID="64"/>
         <output name="Air Horn"/>
         <output name="Bell"/>
@@ -244,10 +274,9 @@
         <shortAddressVal/>
         <label>Primary Address (1-127)</label>
       </variable>
-      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
+      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start Voltage (0-255)</label>
-        <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
       <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
@@ -328,7 +357,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" include="N_F45" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -339,7 +368,29 @@
         </enumVal>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="1" exclude="N_F45" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog Mode Function Status - F5</label>
+      </variable>
+      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" include="SD60,N_F45" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Analog Mode Function Status - F6</label>
+      </variable>
+      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="1" include="F2,F45,MP15" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -372,7 +423,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="0" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
+      <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="1" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -383,7 +434,7 @@
         </enumVal>
         <label>Analog Mode Function Status - F0(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="0" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
+      <variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="1" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -787,7 +838,18 @@
         </enumVal>
         <label>CV Clear (CVCLR)</label>
       </variable>
-      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" include="F2,MP15,SD60" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+        <enumVal>
+          <enumChoice choice="Normal">
+            <choice>Normal</choice>
+          </enumChoice>
+          <enumChoice choice="Exchange Group 2 (F5-F8) and Group 3 (F9-F12)">
+            <choice>Exchange Group 2 (F5-F8) and Group 3 (F9-F12)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Function Group 2 and 3 Exchange</label>
+      </variable>
+      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="1" include="F45,N_F45" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -1261,7 +1323,18 @@
         </enumVal>
         <label>F4 controls output FX6</label>
       </variable>
-      <variable label="F4 controls output Dynamics" CV="38" mask="XXXXVXXX" default="1">
+      <variable label="F4 controls output Dynamics" CV="38" mask="XXXXVXXX" default="0" include="MP15">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F4 controls output Dynamics</label>
+      </variable>
+      <variable label="F4 controls output Dynamics" CV="38" mask="XXXXVXXX" default="1" include="F2,F45,SD60,N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1316,7 +1389,7 @@
         </enumVal>
         <label>F5 controls output Bell</label>
       </variable>
-      <variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1">
+      <variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1" exclude="N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1327,7 +1400,18 @@
         </enumVal>
         <label>F5 controls output FX5</label>
       </variable>
-      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0">
+      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0" include="F2,MP15,F45,N_F45">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F5 controls output FX6</label>
+      </variable>
+      <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="1" include="SD60">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1404,7 +1488,18 @@
         </enumVal>
         <label>F6 controls output FX5</label>
       </variable>
-      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1">
+      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="0" include="SD60,N_F45">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F6 controls output FX6</label>
+      </variable>
+      <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1" include="F2,MP15,F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1492,7 +1587,7 @@
         </enumVal>
         <label>F7 controls output Fans(+)</label>
       </variable>
-      <variable label="F7 controls output Dimming" CV="41" mask="XXXVXXXX" default="1">
+      <variable label="F7 controls output Dimming" CV="41" mask="XXXVXXXX" default="1" exclude="N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1580,7 +1675,7 @@
         </enumVal>
         <label>F8 controls output Dimming</label>
       </variable>
-      <variable label="F8 controls output Mute" CV="42" mask="XXVXXXXX" default="1">
+      <variable label="F8 controls output Mute" CV="42" mask="XXVXXXXX" default="1" exclude="N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1789,7 +1884,18 @@
         </enumVal>
         <label>F11 controls output Fans(+)</label>
       </variable>
-      <variable label="F11 controls output Dimming" CV="45" mask="XXXXVXXX" default="0" minFn="11">
+      <variable label="F11 controls output Dimming" CV="45" mask="XXXXVXXX" default="0" minFn="11" exclude="N_F45">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F11 controls output Dimming</label>
+      </variable>
+      <variable label="F11 controls output Dimming" CV="45" mask="XXXXVXXX" default="1" minFn="11" include="N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -1877,7 +1983,18 @@
         </enumVal>
         <label>F12 controls output Dimming</label>
       </variable>
-      <variable label="F12 controls output Mute" CV="46" mask="XXXVXXXX" default="0" minFn="12">
+      <variable label="F12 controls output Mute" CV="46" mask="XXXVXXXX" default="0" minFn="12" exclude="N_F45">
+        <enumVal>
+          <enumChoice choice="No">
+            <choice>No</choice>
+          </enumChoice>
+          <enumChoice choice="Yes">
+            <choice>Yes</choice>
+          </enumChoice>
+        </enumVal>
+        <label>F12 controls output Mute</label>
+      </variable>
+      <variable label="F12 controls output Mute" CV="46" mask="XXXVXXXX" default="1" minFn="12" include="N_F45">
         <enumVal>
           <enumChoice choice="No">
             <choice>No</choice>
@@ -2012,7 +2129,18 @@
         </enumVal>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="0" exclude="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Headlight F0(f) Light Type</label>
+      </variable>
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" default="1" include="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2109,7 +2237,7 @@
         </enumVal>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="0" exclude="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2118,9 +2246,71 @@
             <choice>LED</choice>
           </enumChoice>
         </enumVal>
-        <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="1" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" default="1" include="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="3" include="F2,MP15,F45" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Effect Selection</label>
+      </variable>
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="9" include="SD60" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2184,7 +2374,18 @@
         </enumVal>
         <label>FX5 Phase Selection</label>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="0" include="F2,MP15,F45" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Grade Crossing Logic</label>
+      </variable>
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" default="1" include="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2206,7 +2407,7 @@
         </enumVal>
         <label>FX5 Rule 17 Mode</label>
       </variable>
-      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" default="0" exclude="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2217,7 +2418,18 @@
         </enumVal>
         <label>FX5 Light Type</label>
       </variable>
-      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="1" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" default="1" include="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Light Type</label>
+      </variable>
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="3" include="F2,MP15" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2270,7 +2482,113 @@
         </enumVal>
         <label>FX6 Effect Selection</label>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="8" include="F45" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Effect Selection</label>
+      </variable>
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="9" include="SD60" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Effect Selection</label>
+      </variable>
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="0" include="F2,MP15,F45" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -2281,7 +2599,29 @@
         </enumVal>
         <label>FX6 Phase Selection</label>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" default="1" include="SD60" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <enumVal>
+          <enumChoice choice="Use phase A (normal)">
+            <choice>Use phase A (normal)</choice>
+          </enumChoice>
+          <enumChoice choice="Use phase B (opposite)">
+            <choice>Use phase B (opposite)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Phase Selection</label>
+      </variable>
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="0" include="F2,MP15,F45" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Grade Crossing Logic</label>
+      </variable>
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" default="1" include="SD60" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2303,7 +2643,7 @@
         </enumVal>
         <label>FX6 Rule 17 Mode</label>
       </variable>
-      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" default="0" exclude="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2314,12 +2654,395 @@
         </enumVal>
         <label>FX6 Light Type</label>
       </variable>
-      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" default="1" include="N_F45" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Light Type</label>
+      </variable>
+	  
+      <variable label="FX5B Effect Selection" CV="53" mask="XXXXVVVV"
+			default="15" minOut="3" 
+			tooltip="Determines the second effect associated with the FX5B light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5B Effect Selection</label>
+      </variable>
+
+      <variable label="FX5B Phase Selection" CV="53" mask="XXXVXXXX"
+			minOut="3"
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <enumVal>
+          <enumChoice choice="Use phase A (normal)">
+            <choice>Use phase A (normal)</choice>
+          </enumChoice>
+          <enumChoice choice="Use phase B (opposite)">
+            <choice>Use phase B (opposite)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5B Phase Selection</label>
+      </variable>
+
+      <variable label="FX5B Grade Crossing Logic" CV="53" mask="XXVXXXXX"
+			minOut="3" 
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5B Grade Crossing Logic</label>
+      </variable>
+
+      <variable label="FX5B Rule 17 Mode" CV="53" mask="XVXXXXXX" minOut="3" tooltip="Selects mapping for brown wire">
+        <enumVal>
+          <enumChoice choice="Disabled (FX5 mapping)">
+            <choice>Disabled (FX5 mapping)</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled (Headlight mapping)">
+            <choice>Enabled (Headlight mapping)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Rule 17 Mode</label>
+      </variable>
+	  
+      <variable label="FX5B Light Type" CV="53" mask="VXXXXXXX"
+			minOut="3" 
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5B Light Type</label>
+      </variable>
+
+      <variable label="FX6B Effect Selection" CV="54" mask="XXXXVVVV"
+			default="15" minOut="4" 
+			tooltip="Determines the second effect associated with the FX6B light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Effect Selection</label>
+      </variable>
+
+      <variable label="FX6B Phase Selection" CV="54" mask="XXXVXXXX"
+			minOut="4" 
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <enumVal>
+          <enumChoice choice="Use phase A (normal)">
+            <choice>Use phase A (normal)</choice>
+          </enumChoice>
+          <enumChoice choice="Use phase B (opposite)">
+            <choice>Use phase B (opposite)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Phase Selection</label>
+      </variable>
+
+      <variable label="FX6B Grade Crossing Logic" CV="54" mask="XXVXXXXX"
+			minOut="4"
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Grade Crossing Logic</label>
+      </variable>
+
+      <variable label="FX6B Rule 17 Mode" CV="54" mask="XVXXXXXX" minOut="4" tooltip="Selects mapping for green wire">
+        <enumVal>
+          <enumChoice choice="Disabled (FX6 mapping)">
+            <choice>Disabled (FX6 mapping)</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled (Backup Light mapping)">
+            <choice>Enabled (Backup Light mapping)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Rule 17 Mode</label>
+      </variable>
+	  
+      <variable label="FX6B Light Type" CV="54" mask="VXXXXXXX"
+			minOut="4" 
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Light Type</label>
+      </variable>
+
+      <variable label="FX5 Forward Directional Control" CV="57" mask="XXXXXXXV"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX5A function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Forward Directional Control</label>
+
+		</variable>
+
+      <variable label="FX5 Reverse Directional Control" CV="57" mask="XXXXXXVX"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX5A function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+
+      <variable label="FX5B Forward Directional Control" CV="57" mask="XXXXXVXX"
+			minOut="4"  default="1"
+			tooltip="Used to configure the directionality of FX5B function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5B Forward Directional Control</label>
+      </variable>
+
+      <variable label="FX5B Reverse Directional Control" CV="57" mask="XXXXVXXX"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX5B function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Reverse Directional Control</label>
+      </variable>
+
+      <variable label="FX6 Forward Directional Control" CV="57" mask="XXXVXXXX"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX6A function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Forward Directional Control</label>
+      </variable>
+
+      <variable label="FX6 Reverse Directional Control" CV="57" mask="XXVXXXXX"
+			minOut="4"  default="1"
+			tooltip="Used to configure the directionality of FX6A function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Reverse Directional Control</label>
+      </variable>
+
+      <variable label="FX6B Forward Directional Control" CV="57" mask="XVXXXXXX"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX6B function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Forward Directional Control</label>
+      </variable>
+
+      <variable label="FX6B Reverse Directional Control" CV="57" mask="VXXXXXXX"
+			minOut="4" default="1" 
+			tooltip="Used to configure the directionality of FX6B function output">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled">
+            <choice>Enabled</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6B Reverse Directional Control</label>
+      </variable>
+
+      <variable label="FX5 Lighting Overide" CV="58" mask="XXXXXXXV"
+			minOut="4" default="0" 
+			tooltip="When enabled, turning on FX5 will turn off all other lighting function outputs">
+        <enumVal>
+          <enumChoice choice="Normal FX5 operation">
+            <choice>Normal FX5 operation</choice>
+          </enumChoice>
+          <enumChoice choice="When FX5 is on, HL, BL and FX6 turn off">
+            <choice>When FX5 is on, HL, BL and FX6 turn off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Lighting Overide</label>
+      </variable>
+
+      <variable label="FX6 Lighting Overide" CV="58" mask="XXXXXXVX"
+			minOut="4" default="0" 
+			tooltip="When enabled, turning on FX6 will turn off all other lighting function outputs">
+        <enumVal>
+          <enumChoice choice="Normal FX6 operation">
+            <choice>Normal FX6 operation</choice>
+          </enumChoice>
+          <enumChoice choice="When FX6 is on, HL, BL and FX5 turn off">
+            <choice>When FX6 is on, HL, BL and FX5 turn off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Lighting Overide</label>
+      </variable>
+
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" include="F45,N_F45" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV"  default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="4" include="F2,MP15" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+        <decVal max="15"/>
+        <label>Hyperlight Flash Rate (0-15)</label>
+        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+      </variable>
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="6" include="SD60" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+        <decVal max="15"/>
+        <label>Hyperlight Flash Rate (0-15)</label>
+        <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
+      </variable>
+      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
         <comment>0-15 seconds</comment>
@@ -2351,7 +3074,7 @@
         </enumVal>
         <label>Transponding Control</label>
       </variable>
-      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="40" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -2379,7 +3102,7 @@
         <decVal/>
         <label>User Identifier #2 (0-255)</label>
       </variable>
-      <variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV" item="Sound Option 2" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
+      <variable label="Auto Air Compressor Enable" CV="112" mask="XXXXXXXV" item="Sound Option 2" default="1" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <enumVal>
           <enumChoice choice="Turns on and off manually with a mapped function">
             <choice>Turns on and off manually with a mapped function</choice>
@@ -2390,7 +3113,7 @@
         </enumVal>
         <label>Auto Air Compressor Enable</label>
       </variable>
-      <variable label="Auto Radiator Fan Enable" CV="112" mask="XXXXXXVX" item="Sound Option 3" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
+      <variable label="Auto Radiator Fan Enable" CV="112" mask="XXXXXXVX" item="Sound Option 3" default="1" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
         <enumVal>
           <enumChoice choice="Turns on and off manually with a mapped function">
             <choice>Turns on and off manually with a mapped function</choice>
@@ -2405,12 +3128,12 @@
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="114" item="Sound Group 3 Option 2" default="4" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable label="Bell Ring Rate" CV="114" item="Sound Group 3 Option 2" default="3" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
 <!-- Airhorn Selection follows -->
-      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Baldwin,F" tooltip="Selects which airhorn to use">
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="F2" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Leslie A200">
             <choice>Leslie A200</choice>
@@ -2433,10 +3156,10 @@
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
-      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="Baldwin,F" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="F2" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
-          <enumChoice choice="Short horn blast">
-            <choice>Short horn blast</choice>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
           </enumChoice>
           <enumChoice choice="Leslie S5T">
             <choice>Leslie S5T</choice>
@@ -2456,7 +3179,7 @@
         </enumVal>
         <label>Alternate Airhorn Select</label>
       </variable>
-      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Centry,GE" tooltip="Selects which airhorn to use">
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="F45" tooltip="Selects which airhorn to use">
         <enumVal>
           <enumChoice choice="Leslie RS3L">
             <choice>Leslie RS3L</choice>
@@ -2479,10 +3202,10 @@
         </enumVal>
         <label>Airhorn Select</label>
       </variable>
-      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="Century,GE" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="F45" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
-          <enumChoice choice="Short horn blast">
-            <choice>Short horn blast</choice>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
           </enumChoice>
           <enumChoice choice="Nathan P3">
             <choice>Nathan P3</choice>
@@ -2502,6 +3225,126 @@
         </enumVal>
         <label>Alternate Airhorn Select</label>
       </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="MP15" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="MP15" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie A200">
+            <choice>Leslie A200</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="SD60" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Modern)">
+            <choice>Nathan P5 (Modern)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="SD60" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K3LA">
+            <choice>Nathan K3LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan K5LA">
+            <choice>Nathan K5LA</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie RS5T">
+            <choice>Leslie RS5T</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P5 (Modern)">
+            <choice>Nathan P5 (Modern)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
+      <variable label="Airhorn Select" CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="N_F45" tooltip="Selects which airhorn to use">
+        <enumVal>
+          <enumChoice choice="Leslie RS3L">
+            <choice>Leslie RS3L</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Airhorn Select</label>
+      </variable>
+      <variable label="Alternate Airhorn Select" CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="N_F45" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+        <enumVal>
+          <enumChoice choice="Short Horn">
+            <choice>Short Horn</choice>
+          </enumChoice>
+          <enumChoice choice="Leslie S5T">
+            <choice>Leslie S5T</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan P3">
+            <choice>Nathan P3</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Airhorn Select</label>
+      </variable>
       <variable label="Auto Engine Start Enable" CV="116" mask="XXVXXXXX" item="Sound Option 1" default="1" tooltip="&lt;html&gt;Determines whether prime mover will start up automatically or manually&lt;br&gt;     Note: This feature is not available in all decoders&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Prime mover starts up at speed step 1">
@@ -2513,7 +3356,7 @@
         </enumVal>
         <label>Auto Engine Start Enable</label>
       </variable>
-      <variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX" item="Sound Option 4" default="0" tooltip="Controls how the dynamic brakes interact with the engine RPMs">
+      <variable label="Dynamic Brake Override" CV="116" mask="VVXXXXXX" item="Sound Option 4" default="1" tooltip="Controls how the dynamic brakes interact with the engine RPMs">
         <enumVal>
           <enumChoice choice="Dynamic Brakes operate independently of engine RPMs">
             <choice>Dynamic Brakes operate independently of engine RPMs</choice>
@@ -2594,10 +3437,6 @@
         </enumVal>
         <label>Engine Notch Rate</label>
       </variable>
-      <variable label="Motor Recovery Speed (0-255)" CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;     0 or 128 = Disabled&lt;br&gt;     1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;     129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;     Note: This feature is not available in all decoders&lt;/html&gt;">
-        <decVal/>
-        <label>Motor Recovery Speed (0-255)</label>
-      </variable>
 <!-- Volume Controls follow -->
       <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
@@ -2611,15 +3450,23 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Engine Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="180" tooltip="Sets the volume of the diesel engine exhaust">
+      <variable label="Engine Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="100" include="F45,N_F45" tooltip="Sets the volume of the diesel engine exhaust">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
-      <variable label="Air Compressor Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="100" tooltip="Sets the volume of the air compressor">
+      <variable label="Engine Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="180" exclude="F45,N_F45" tooltip="Sets the volume of the diesel engine exhaust">
+        <decVal/>
+        <label>Engine Exhaust Volume</label>
+      </variable>
+      <variable label="Air Compressor Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 23" default="125" tooltip="Sets the volume of the air compressor">
         <decVal/>
         <label>Air Compressor Volume</label>
       </variable>
-      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="92" tooltip="Sets the volume of the dynamic brakes">
+      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="100" exclude="F45,N_F45" tooltip="Sets the volume of the dynamic brakes">
+        <decVal/>
+        <label>Dynamic Brake Volume</label>
+      </variable>
+      <variable label="Dynamic Brake Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="180" include="F45,N_F45" tooltip="Sets the volume of the dynamic brakes">
         <decVal/>
         <label>Dynamic Brake Volume</label>
       </variable>
@@ -2677,31 +3524,31 @@
         <label>Equalizer Control</label>
       </variable>
 <!-- Individual Cut/Boost Controls follow -->
-      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
-      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
-      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="128" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
@@ -2765,11 +3612,11 @@
         <label>Air Compressor Reverb Level</label>
       </variable>
 <!-- Automatic Sound Controls (ASC) follow -->
-      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
+      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="10" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
       </variable>
-      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="19" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="40" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
         <decVal max="127"/>
         <label>Bell-Off Set Point</label>
       </variable>
@@ -2781,7 +3628,7 @@
         <decVal/>
         <label>Brake Squeal Sensitivity</label>
       </variable>
-      <variable label="Automatic Grade Crossing Horn Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="0" tooltip="Enables the Automatic Grade Crossing Horn in Analog Mode">
+      <variable label="Automatic Grade Crossing Horn Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="1" tooltip="Enables the Automatic Grade Crossing Horn in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2803,7 +3650,7 @@
         </enumVal>
         <label>Automatic Horn Signal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" tooltip="Enables the Automatic Bell in Analog Mode">
+      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="1" tooltip="Enables the Automatic Bell in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>

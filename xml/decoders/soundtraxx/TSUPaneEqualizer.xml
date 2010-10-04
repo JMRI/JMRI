@@ -1,0 +1,125 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+
+<pane name="Equalizer">
+  <column>
+    <row>
+      <label label="SEVEN BAND EQUALIZER">
+        <label>SEVEN BAND EQUALIZER</label>
+      </label>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <display item="Equalizer Control"/>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <row>
+          <display item="62 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="62 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="125 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="125 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="250 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="250 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="500 Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="500 Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="1K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="1K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="2K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="2K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="4K Hz Cut/Boost" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="4K Hz Cut/Boost" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+  </column>
+  <name>Equalizer</name>
+</pane>

@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+
+<!-- version 1 - new pane file for SoundTraxx Tsunami -->
+
+<pane name="ASC">
+  <column>
+    <row>
+      <label label="AUTOMATIC SOUND CONTROL">
+        <label>AUTOMATIC SOUND CONTROL</label>
+      </label>
+    </row>
+    <label label=" ">
+      <label> </label>
+    </label>
+    <row>
+      <column>
+        <display item="Automatic Grade Crossing Whistle Enable" format="checkbox"/>
+        <display item="Automatic Whistle Signal Enable" format="checkbox"/>
+        <display item="Automatic Bell Enable" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable" format="checkbox"/>
+        <display item="Automatic Steam Blow Down Enable" format="checkbox"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="          ">
+          <label>          </label>
+        </label>
+      </column>
+      <column>
+        <display item="Automatic Grade Crossing Whistle Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Whistle Signal Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
+        <display item="Automatic Steam Blow Down Enable (Analog Mode)" format="checkbox"/>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+    </row>
+    <separator/>
+    <row>
+      <column>
+        <row>
+          <column>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <label label="These CVs allow the user to set the parameters">
+              <label>These CVs allow the user to set the parameters</label>
+            </label>
+            <label label="for the Automatic Sound Control features.">
+              <label>for the Automatic Sound Control features.</label>
+            </label>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+        </row>
+        <row>
+          <display item="Bell-On Set Point" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Bell-On Set Point" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="Bell-Off Set Point" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Bell-Off Set Point" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="Grade Crossing Whistle Sensitivity" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+        <row>
+          <display item="Brake Squeal Sensitivity" layout="above" label="">
+            <label/>
+          </display>
+          <label label=" ">
+            <label> </label>
+          </label>
+          <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
+        </row>
+        <label label=" ">
+          <label> </label>
+        </label>
+      </column>
+      <column>
+        <label label="          ">
+          <label>          </label>
+        </label>
+      </column>
+      <separator/>
+      <column>
+        <label label="          ">
+          <label>          </label>
+        </label>
+      </column>
+      <column>
+        <row>
+          <column>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <label label="Set the probability that the various sound effects will occur the next time the locomotive is stopped.">
+              <label>Set the probability that the various sound effects will occur the next time the locomotive is stopped.</label>
+            </label>
+            <label label="A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.">
+              <label>A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.</label>
+            </label>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+        </row>
+        <row>
+          <column>
+            <row>
+              <display item="Probability Fireman Shovels Coal" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Shovels Coal" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Fireman Fills the Tender" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Fills the Tender" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Fireman Turns His Wrench" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Turns His Wrench" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Fireman Uses His Grease Gun" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Uses His Grease Gun" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+          <column>
+            <label label="          ">
+              <label>          </label>
+            </label>
+          </column>
+          <column>
+            <row>
+              <display item="Probability Fireman Uses His Oil Can" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Uses His Oil Can" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Fireman Uses the Injector" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Uses the Injector" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Fireman Uses the Blower" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Fireman Uses the Blower" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+            <row>
+              <display item="Probability Pop Valve Blows Off" layout="above" label="">
+                <label/>
+              </display>
+              <label label=" ">
+                <label> </label>
+              </label>
+              <display item="Probability Pop Valve Blows Off" layout="above" format="hslider"/>
+            </row>
+            <label label=" ">
+              <label> </label>
+            </label>
+          </column>
+        </row>
+      </column>
+    </row>
+  </column>
+  <name>ASC</name>
+</pane>
