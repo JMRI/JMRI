@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.1 $
+ * @version  $Revision: 1.2 $
  */
 
 public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -67,6 +67,8 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.jmriclient.JMRIClientPowerManager(this));
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.jmriclient.JMRIClientTurnoutManager(this));
+        jmri.InstanceManager.setSensorManager(new jmri.jmrix.jmriclient.JMRIClientSensorManager(this));
+        jmri.InstanceManager.setLightManager(new jmri.jmrix.jmriclient.JMRIClientLightManager(this));
     }
 
 }
