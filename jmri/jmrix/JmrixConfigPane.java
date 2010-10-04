@@ -30,7 +30,7 @@ import javax.swing.JPanel;
  * <p>
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2010
- * @version	$Revision: 1.76 $
+ * @version	$Revision: 1.77 $
  */
 public class JmrixConfigPane extends JPanel {
 
@@ -74,10 +74,10 @@ public class JmrixConfigPane extends JPanel {
     }
     
     public static int getInstanceNumber(JmrixConfigPane confPane){
-        Enumeration e = configPaneTable.keys();
+        Enumeration<Integer> e = configPaneTable.keys();
         int keyValue;
         while(e.hasMoreElements()){
-            keyValue = (Integer) e.nextElement();
+            keyValue = e.nextElement();
             if(configPaneTable.get(keyValue).equals(confPane))
                 return keyValue;
         }

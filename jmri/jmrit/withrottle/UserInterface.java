@@ -10,7 +10,7 @@ package jmri.jmrit.withrottle;
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
  *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.21 $
+ *	@version $Revision: 1.22 $
  */
 
 import java.awt.event.*;
@@ -250,17 +250,17 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
                     jmdns);
             
             portLabel.setText(serviceInfo.getName());
-            //Determine the first externally accessable IP address for this system. This is presented in the GUI for
+            //Determine the first externally accessible IP address for this system. This is presented in the GUI for
             //those users who can't, or don't want to use ZeroConf to connect to the WiThrottle.
             //Adapted from http://www.rgagnon.com/javadetails/java-0390.html
             String bound_ip_address = "";
             try
             {
-              Enumeration network_interface_list=NetworkInterface.getNetworkInterfaces();
+              Enumeration<NetworkInterface> network_interface_list=NetworkInterface.getNetworkInterfaces();
               network_interfaces: while(network_interface_list.hasMoreElements()) {
-                Enumeration interface_addresses=((NetworkInterface)network_interface_list.nextElement()).getInetAddresses();
+                Enumeration<InetAddress> interface_addresses=(network_interface_list.nextElement()).getInetAddresses();
                 while(interface_addresses.hasMoreElements()){
-                  InetAddress ip=(InetAddress)interface_addresses.nextElement();
+                  InetAddress ip=interface_addresses.nextElement();
                   bound_ip_address=ip.getHostAddress();
                   if(!bound_ip_address.equals("0.0.0.0") && !bound_ip_address.regionMatches(0, "127", 0, 3) && !(bound_ip_address.contains(":")) )
                   {

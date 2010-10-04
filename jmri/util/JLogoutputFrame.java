@@ -163,7 +163,7 @@ public class JLogoutputFrame
         // a logger changes, these Loggers probably wouldn't log to this appender. Solution is to
         // override the DefaultLoggerFactory and the Logger's setAdditivity().
         // Better solution is: Derivation of HierarchyEventListener (see mail on log4j user list "logging relative to webapp context path in tomcat" from Mi 19.03.2008 12:04)
-        Enumeration en = LogManager.getCurrentLoggers();
+        Enumeration<?> en = LogManager.getCurrentLoggers();
         
         while ( en.hasMoreElements() )
         {

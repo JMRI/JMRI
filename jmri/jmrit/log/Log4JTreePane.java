@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
@@ -42,15 +42,16 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
     
     /**
      * 2nd stage of initialization, invoked after
-     * the constuctor is complete.
+     * the constructor is complete.
      */
-    public void initComponents() throws Exception {
+    @SuppressWarnings("unchecked")
+	public void initComponents() throws Exception {
         org.apache.log4j.spi.LoggerRepository repo 
             = Logger.getRootLogger().getLoggerRepository();
             
         List<String> list = new ArrayList<String>();
-        for (java.util.Enumeration e = repo.getCurrentLoggers() ; e.hasMoreElements() ;) {
-            list.add(((Logger)e.nextElement()).getName());
+        for (java.util.Enumeration<Logger> e = repo.getCurrentLoggers() ; e.hasMoreElements() ;) {
+            list.add((e.nextElement()).getName());
         }
         java.util.Collections.sort(list);
         String result = "";

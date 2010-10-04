@@ -15,7 +15,7 @@ import java.io.BufferedReader;
  * Implement some useful tools for a Servlet.
  *
  * @author  Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public abstract class AbstractServlet implements Servlet, ServletConfig {
@@ -84,7 +84,7 @@ public abstract class AbstractServlet implements Servlet, ServletConfig {
     
     public String getInitParameter(String name) { return null; }
     
-    public java.util.Enumeration getInitParameterNames() { return null; }
+    public java.util.Enumeration<String> getInitParameterNames() { return null; }
     
     public ServletContext getServletContext() {
         if (context == null) context = new MiniServletContext();

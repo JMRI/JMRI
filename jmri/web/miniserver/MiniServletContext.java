@@ -13,7 +13,7 @@ import javax.servlet.ServletContext;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @since       2.9.4
  */
 
@@ -35,10 +35,10 @@ public class MiniServletContext implements javax.servlet.ServletContext {
     java.util.HashMap<String, Object> attributes = new java.util.HashMap<String, Object>();
     
     // following here are dummy/minimal implementations
-    public java.util.Enumeration getAttributeNames() { return null; }
+    public java.util.Enumeration<String> getAttributeNames() { return null; }
     public ServletContext getContext(String uripath) { return null; }
     public String getInitParameter(String name) { return null; }
-    public java.util.Enumeration getInitParameterNames() { return null; }
+    public java.util.Enumeration<String> getInitParameterNames() { return null; }
     public int getMajorVersion() { return -1; }
     public String getMimeType(String file) { return null; }
     public int getMinorVersion() { return -1; }
@@ -47,7 +47,7 @@ public class MiniServletContext implements javax.servlet.ServletContext {
     public RequestDispatcher getRequestDispatcher(String path) { return null; }
     public java.net.URL getResource(String path) { return null; }
     public java.io.InputStream getResourceAsStream(String path) { return null; }
-    public java.util.Set getResourcePaths(String path) { return null; }
+    public java.util.Set<String> getResourcePaths(String path) { return null; }
     public String getServerInfo() { return null; }
 
     @Deprecated
@@ -56,10 +56,10 @@ public class MiniServletContext implements javax.servlet.ServletContext {
     public String getServletContextName() { return null; }
 
     @Deprecated
-    public java.util.Enumeration getServletNames()  { return null; }
+    public java.util.Enumeration<String> getServletNames()  { return null; }
 
     @Deprecated
-    public java.util.Enumeration getServlets() { return null; }
+    public java.util.Enumeration<?> getServlets() { return null; }
 
     @Deprecated
     public void log(java.lang.Exception exception, java.lang.String msg)  {}
