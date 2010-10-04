@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004. 2007 All rights reserved -->
-<!-- $Id: SoundTraxx_OEM_Bachmann_v3.xml,v 1.1 2010-10-04 02:14:53 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_OEM_Bachmann_v3.xml,v 1.2 2010-10-04 02:34:24 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -15,7 +14,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<decoder-config>
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 		<version author="Nigel Cliffe" version="3" lastUpdated="20100906"/>
 		<version author="Peter Ulvestad" version="2" lastUpdated="20100816"/>
 		<version author="Marc Fournier" version="1" lastUpdated="20091230"/>
@@ -26,12 +25,12 @@
 
 <decoder>
 		<family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1">
-			<model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NEM651/NMRA 6 pin" >
-			<size length="13.3" width="10.0" height="3.5" units="millimeters"/>
+			<model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium" >
 				<output name="1" label="White"/>
 				<output name="2" label="Yellow"/>
 				<output name="LD" label="Light Dimming"/>
 				<output name="Bk" label="Brake Key"/>
+                <size length="13.3" width="10.0" height="3.5" units="mm"/>
 			</model>
 		</family>
 
@@ -302,7 +301,7 @@
 			</enumVal>
 		</variable>
 				
-		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" DEFAULT="0">
+		<variable label="Normal direction of motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
 			<enumVal>
 				<enumChoice choice="Forward"/>
 				<enumChoice choice="Reverse"/>
@@ -323,7 +322,7 @@
 			</enumVal>
 		</variable>
 
-		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" DEFAULT="0">
+		<variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
 			<enumVal>
 				<enumChoice choice="Don't use Speed Table"/>
 				<enumChoice choice="Use Speed Table"/>
@@ -789,11 +788,8 @@
 			<decVal/>
 		</variable>
 
-		<resets>
-			<factReset label="Reset All CVs" CV="8" default="8"/>
-		</resets>
-
 	</variables>
+
     <resets>
       <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
     </resets>
