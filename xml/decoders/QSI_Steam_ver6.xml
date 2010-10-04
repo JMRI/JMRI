@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
-<!-- $Id: QSI_Steam_ver6.xml,v 1.9 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: QSI_Steam_ver6.xml,v 1.10 2010-10-04 01:34:52 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,12 +13,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="6" lastUpdated="20100809"/>
+  <version author="Peter Ulvestad" version="5" lastUpdated="20100807"/>
   <version author="Howard G. Penny" version="4" lastUpdated="20051117"/>
 <!-- version 1 - modified for QSI CV.PI.SI Version 6 format - Howard -->
 <!-- version 2 - Added product number ivariable and build information
                    on Misc. pane - Howard -->
 <!-- version 3 - Corrected value for function outputs and defaults - Howard -->
 <!-- version 4 - Added new models - Howard -->
+<!-- version 5 - Corrected spelling on Function Output pane - Peter -->
+<!-- version 5 - Turned off Direct mode programming - Peter -->
   <decoder>
     <family name="QSI Steam Ver. 6" mfg="QSIndustries" lowVersionID="6">
       <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="6" numFns="14" numOuts="14" productID="316"/>
@@ -35,7 +39,7 @@
       <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318"/>
       <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319"/>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <programming direct="no" paged="yes" register="yes" ops="yes"/>
     <variables>
       <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
         <shortAddressVal/>
@@ -2219,7 +2223,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0" default="211" item="CV53.5.0">
+      <ivariable label="Output 5 - Forward/Reverse Only" CVname="53.5.0" CV="53" PI="5" SI="0" default="211" item="CV53.5.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2347,7 +2351,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0" default="8" item="CV53.6.0">
+      <ivariable label="Output 6 - Forward/Reverse Only" CVname="53.6.0" CV="53" PI="6" SI="0" default="8" item="CV53.6.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2475,7 +2479,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0" default="5" item="CV53.7.0">
+      <ivariable label="Output 7 - Forward/Reverse Only" CVname="53.7.0" CV="53" PI="7" SI="0" default="5" item="CV53.7.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2603,7 +2607,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0" default="65" item="CV53.8.0">
+      <ivariable label="Output 8 - Forward/Reverse Only" CVname="53.8.0" CV="53" PI="8" SI="0" default="65" item="CV53.8.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2731,7 +2735,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0" default="216" item="CV53.9.0">
+      <ivariable label="Output 9 - Forward/Reverse Only" CVname="53.9.0" CV="53" PI="9" SI="0" default="216" item="CV53.9.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2859,7 +2863,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0" default="64" item="CV53.10.0">
+      <ivariable label="Output 10 - Forward/Reverse Only" CVname="53.10.0" CV="53" PI="10" SI="0" default="64" item="CV53.10.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -2987,7 +2991,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0" default="10" item="CV53.11.0">
+      <ivariable label="Output 11 - Forward/Reverse Only" CVname="53.11.0" CV="53" PI="11" SI="0" default="10" item="CV53.11.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -3115,7 +3119,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0" default="178" item="CV53.12.0">
+      <ivariable label="Output 12 - Forward/Reverse Only" CVname="53.12.0" CV="53" PI="12" SI="0" default="178" item="CV53.12.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -3243,7 +3247,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0" default="10" item="CV53.13.0">
+      <ivariable label="Output 13 - Forward/Reverse Only" CVname="53.13.0" CV="53" PI="13" SI="0" default="10" item="CV53.13.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
@@ -3371,7 +3375,7 @@
           </ienumChoice>
         </ienumVal>
       </ivariable>
-      <ivariable label="Outout 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0" default="10" item="CV53.14.0">
+      <ivariable label="Output 14 - Forward/Reverse Only" CVname="53.14.0" CV="53" PI="14" SI="0" default="10" item="CV53.14.0">
         <ienumVal>
           <ienumChoice choice="None" value="0">
             <choice>None</choice>
