@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Steam_Bachmann.xml,v 1.3 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam_Bachmann.xml,v 1.4 2010-10-04 02:10:36 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,7 +16,8 @@
   <version author="Michael Mosher" version="1" lastUpdated="20070405"/>
   <version author="Walter Thompson wsthompson@earthlink.net" version="2" lastUpdated="20080414"/>
   <version author="Jack Shall lcrr@bellsouth.net" version="3" lastUpdated="20090626"/>
-<!-- This file contains the OEM Bachmann Tsunami definitions for ALL Bachmann steam locomotives	-->
+  <version author="Michael Mosher" version="4" lastUpdated="20100828"/>
+<!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann steam locomotives	    -->
 <!-- Version 1  Made from SoundTraxx_TSU_2Med.xml file											-->
 <!-- Version 2  Added Reset option																-->
 <!-- version 3	Added many tooltips, a bit of organization, fixed a couple bugs, deleted CVs	-->
@@ -25,10 +26,253 @@
 <!--			Different whistles are used in the different Bachmann decoders, but neither		-->
 <!--			Bachmann nor SoundTraxx seem to have a comprehensive list of what's in what.	-->
 <!--			Thanks to George Bogatiuk at SoundTraxx for his assistance.						-->
+<!-- Version 3  Add more models  																-->
 <!-- Decoder Model information follows -->
   <decoder>
-    <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
-      <model model="Tsunami Bachmann OEM" numOuts="2" numFns="14" connector="other">
+    <!--family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
+      <model model="Tsunami Bachmann OEM" numOuts="2" numFns="14" connector="other" productID="280">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>									
+    </family -->
+    <family name="Tsunami Steam Bachmann OEM" mfg="Throttle-Up (SoundTraxx)">
+      <model model="HO 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 2-8-0" numOuts="2" numFns="14" connector="other" productID="280">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 2-10-0 Russian Decapod" numOuts="2" numFns="14" connector="other" productID="2100">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 2-10-2 USRA Light" numOuts="2" numFns="14" connector="other" productID="2102">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-4-0 Low Boiler" numOuts="2" numFns="14" connector="other" productID="440l">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-4-0 High Boiler" numOuts="2" numFns="14" connector="other" productID="440h">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-6-2 K4" numOuts="2" numFns="14" connector="other" productID="462">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-8-2 USRA Heavy" numOuts="2" numFns="14" connector="other" productID="482">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 4-8-4 J Class" numOuts="2" numFns="14" connector="other" productID="484">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="HO 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="3shay">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" connector="other" productID="244">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="On30 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="On30 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="2shay">
+        <versionCV lowVersionID="80"/>
+        <output name="Whistle"/>
+        <output name="Bell"/>
+        <output name="FX5" label=" Rule 17"/>
+        <output name="FX6" label="Mode"/>
+        <output name="Dynamo"/>
+        <output name="Short-Whistle"/>
+        <output name="Steam-Release"/>
+        <output name="Water-Stop"/>
+        <output name="Dimming"/>
+        <output name="Mute"/>
+        <output name="Brake-Squeal"/>
+        <output name="Coupler"/>
+      </model>
+      <model model="On30 Climax" numOuts="2" numFns="14" connector="other" productID="climax">
         <versionCV lowVersionID="80"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -253,7 +497,7 @@
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
-      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" default="0003" tooltip="Sets the Extended (long, 4 digit) address">
+      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" tooltip="Sets the Extended (long, 4 digit) address">
         <longAddressVal/>
         <label>Extended Address (0001-9999)</label>
       </variable>
@@ -539,7 +783,7 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Alternate Power Source Enable" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
+      <variable label="Alternate Power Source Enable" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="1">
         <enumVal>
           <enumChoice choice="NMRA Digital Only">
             <choice>NMRA Digital Only</choice>
@@ -1777,12 +2021,12 @@
         <label>Analog Whistle Control (0-255)</label>
       </variable>
 <!-- Lighting Configuration follows -->
-      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" item="Function F0F effect generated" default="15" tooltip="Determines the effect generated from the headlight">
+      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" default="1" tooltip="Determines the effect generated from the headlight">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
           </enumChoice>
-          <enumChoice choice="Dimmable headlight">
+          <enumChoice choice="Dimmable light">
             <choice>Dimmable headlight</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
@@ -1791,7 +2035,7 @@
           <enumChoice choice="Pyle Gyralite">
             <choice>Pyle Gyralite</choice>
           </enumChoice>
-          <enumChoice choice="Oscillating headlight">
+          <enumChoice choice="Oscillating light">
             <choice>Oscillating headlight</choice>
           </enumChoice>
           <enumChoice choice="Single flash strobe">
@@ -1830,7 +2074,7 @@
         </enumVal>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" item="Function F0F options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -1841,7 +2085,7 @@
         </enumVal>
         <label>Headlight F0(f) Phase Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" item="Function F0F option 2" tooltip="Causes the lighting effect to become active only when the whistle has been sounded">
+      <variable label="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the whistle has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1852,7 +2096,7 @@
         </enumVal>
         <label>Headlight F0(f) Grade Crossing Logic</label>
       </variable>
-      <variable label="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" item="Function F0F option 3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable label="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Headlight mapping)">
             <choice>Disabled (Headlight mapping)</choice>
@@ -1863,7 +2107,7 @@
         </enumVal>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" item="Function F0F option 4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -1874,12 +2118,12 @@
         </enumVal>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" item="Function F0R effect generated" default="15" tooltip="Determines the effect generated from the backup light">
+      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" default="1" tooltip="Determines the effect generated from the backup light">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
           </enumChoice>
-          <enumChoice choice="Dimmable backup light">
+          <enumChoice choice="Dimmable light">
             <choice>Dimmable backup light</choice>
           </enumChoice>
           <enumChoice choice="Mars light">
@@ -1888,7 +2132,7 @@
           <enumChoice choice="Pyle Gyralite">
             <choice>Pyle Gyralite</choice>
           </enumChoice>
-          <enumChoice choice="Oscillating backup light">
+          <enumChoice choice="Oscillating light">
             <choice>Oscillating backup light</choice>
           </enumChoice>
           <enumChoice choice="Single flash strobe">
@@ -1927,7 +2171,7 @@
         </enumVal>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" item="Function F0R options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+      <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -1938,7 +2182,7 @@
         </enumVal>
         <label>Backup Light F0(r) Phase Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" item="Function F0R option 2" tooltip="Causes the lighting effect to become active only when the whistle has been sounded">
+      <variable label="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" tooltip="Causes the lighting effect to become active only when the whistle has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -1949,7 +2193,7 @@
         </enumVal>
         <label>Backup Light F0(r) Grade Crossing Logic</label>
       </variable>
-      <variable label="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" item="Function F0R option 3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+      <variable label="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Backup Light mapping)">
             <choice>Disabled (Backup Light mapping)</choice>
@@ -1960,7 +2204,7 @@
         </enumVal>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" item="Function F0R option 4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -1971,12 +2215,184 @@
         </enumVal>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" item="Global lighting option 2" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" default="1" minOut="3" tooltip="Determines the effect generated from the FX5 light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Effect Selection</label>
+      </variable>
+      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" minOut="3" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <enumVal>
+          <enumChoice choice="Use phase A (normal)">
+            <choice>Use phase A (normal)</choice>
+          </enumChoice>
+          <enumChoice choice="Use phase B (opposite)">
+            <choice>Use phase B (opposite)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Phase Selection</label>
+      </variable>
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" minOut="3" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Grade Crossing Logic</label>
+      </variable>
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" minOut="3" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Light Type</label>
+      </variable>
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" default="1" minOut="4" tooltip="Determines the effect generated from the FX6 light output">
+        <enumVal>
+          <enumChoice choice="On/Off">
+            <choice>On/Off</choice>
+          </enumChoice>
+          <enumChoice choice="Dimmable light">
+            <choice>Dimmable light</choice>
+          </enumChoice>
+          <enumChoice choice="Mars light">
+            <choice>Mars light</choice>
+          </enumChoice>
+          <enumChoice choice="Pyle Gyralite">
+            <choice>Pyle Gyralite</choice>
+          </enumChoice>
+          <enumChoice choice="Oscillating light">
+            <choice>Oscillating light</choice>
+          </enumChoice>
+          <enumChoice choice="Single flash strobe">
+            <choice>Single flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="Double flash strobe">
+            <choice>Double flash strobe</choice>
+          </enumChoice>
+          <enumChoice choice="D312 rotary beacon">
+            <choice>D312 rotary beacon</choice>
+          </enumChoice>
+          <enumChoice choice="Prime Stratolite">
+            <choice>Prime Stratolite</choice>
+          </enumChoice>
+          <enumChoice choice="Type I ditch light">
+            <choice>Type I ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="Type II ditch light">
+            <choice>Type II ditch light</choice>
+          </enumChoice>
+          <enumChoice choice="FRED (end of train flasher)">
+            <choice>FRED (end of train flasher)</choice>
+          </enumChoice>
+          <enumChoice choice="Engine exhaust flicker">
+            <choice>Engine exhaust flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Firebox flicker">
+            <choice>Firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Smart firebox flicker">
+            <choice>Smart firebox flicker</choice>
+          </enumChoice>
+          <enumChoice choice="Dyno-light">
+            <choice>Dyno-light</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Effect Selection</label>
+      </variable>
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" minOut="4" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+        <enumVal>
+          <enumChoice choice="Use phase A (normal)">
+            <choice>Use phase A (normal)</choice>
+          </enumChoice>
+          <enumChoice choice="Use phase B (opposite)">
+            <choice>Use phase B (opposite)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Phase Selection</label>
+      </variable>
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" minOut="4" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+        <enumVal>
+          <enumChoice choice="Disabled">
+            <choice>Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled when horn is ON">
+            <choice>Enabled when horn is ON</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Grade Crossing Logic</label>
+      </variable>
+      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" minOut="4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+        <enumVal>
+          <enumChoice choice="Incandescent lamp">
+            <choice>Incandescent lamp</choice>
+          </enumChoice>
+          <enumChoice choice="LED">
+            <choice>LED</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Light Type</label>
+      </variable>
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" item="Global lighting option 3" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the whistle button is released">
+      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the whistle button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
         <comment>0-15 seconds</comment>
@@ -2008,7 +2424,11 @@
         </enumVal>
         <label>Transponding Control</label>
       </variable>
-      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="0" exclude="460,2shay" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+        <decVal/>
+        <label>Analog Mode Motor Start Voltage (0-255)</label>
+      </variable>
+      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20" include="460,2shay" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
@@ -2064,7 +2484,18 @@
         </enumVal>
         <label>Slip Rate Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" exclude="2662" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+        <enumVal>
+          <enumChoice choice="(Normal) Rod Engine Chuff">
+            <choice>(Normal) Rod Engine Chuff</choice>
+          </enumChoice>
+          <enumChoice choice="Articulated Exhaust Chuff">
+            <choice>Articulated Exhaust Chuff</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Articulated Exhaust Control</label>
+      </variable>
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="1" include="2662" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
         <enumVal>
           <enumChoice choice="(Normal) Rod Engine Chuff">
             <choice>(Normal) Rod Engine Chuff</choice>
@@ -2079,36 +2510,371 @@
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="4" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="4" include="280,2100,2102,462,482,484,244" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+        <decVal max="15"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="11" include="2662" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+        <decVal max="15"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="12" include="440h,440l,460,3shay,2shay,climax" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
 <!-- Whistle Selection follows -->
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" tooltip="Select the primary whistle to use">
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="2662" tooltip="Select the primary whistle to use">
         <enumVal>
-          <enumChoice choice="Whistle No. 1">
-            <choice>Whistle No. 1</choice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
           </enumChoice>
-          <enumChoice choice="Whistle No. 2">
-            <choice>Whistle No. 2</choice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
           </enumChoice>
-          <enumChoice choice="Whistle No. 3">
-            <choice>Whistle No. 3</choice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
           </enumChoice>
         </enumVal>
         <label>Whistle Select</label>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" tooltip="Select an alternate whistle to use">
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="2662" tooltip="Select an alternate whistle to use">
         <enumVal>
-          <enumChoice choice="Whistle No. 1">
-            <choice>Whistle No. 1</choice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
           </enumChoice>
-          <enumChoice choice="Whistle No. 2">
-            <choice>Whistle No. 2</choice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
           </enumChoice>
-          <enumChoice choice="Whistle No. 3">
-            <choice>Whistle No. 3</choice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
           </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="280" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="280" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="440l" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Baldwin Class B-4G Consolidation">
+            <choice>Baldwin Class B-4G Consolidation</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="440l" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Baldwin Class B-4G Consolidation">
+            <choice>Baldwin Class B-4G Consolidation</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="440h,460" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Colorado &amp; Southern #74 (Yard Mix)">
+            <choice>Colorado &amp; Southern #74 (Yard Mix)</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan 5-Chime (Yard Mix)">
+            <choice>Nathan 5-Chime (Yard Mix)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="440h,460" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Colorado &amp; Southern #74 (Yard Mix)">
+            <choice>Colorado &amp; Southern #74 (Yard Mix)</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Nathan 5-Chime (Yard Mix)">
+            <choice>Nathan 5-Chime (Yard Mix)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="482" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Frisco #1522">
+            <choice>Frisco #1522</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="482" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Frisco #1522">
+            <choice>Frisco #1522</choice>
+          </enumChoice>
+          <enumChoice choice="USRA 6-Chime">
+            <choice>USRA 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="3shay" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Nathan 5-Chime (Road Mix)">
+            <choice>Nathan 5-Chime (Road Mix)</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="3shay" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Nathan 5-Chime (Road Mix)">
+            <choice>Nathan 5-Chime (Road Mix)</choice>
+          </enumChoice>
+          <enumChoice choice="Santa Fe Freight">
+            <choice>Santa Fe Freight</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="484" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Norfolk &amp; Western J">
+            <choice>Norfolk &amp; Western J</choice>
+          </enumChoice>
+          <enumChoice choice="Norfolk &amp; Western A">
+            <choice>Norfolk &amp; Western a</choice>
+          </enumChoice>
+          <enumChoice choice="Frisco #1522">
+            <choice>Frisco #1522</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="484" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Norfolk &amp; Western J">
+            <choice>Norfolk &amp; Western J</choice>
+          </enumChoice>
+          <enumChoice choice="Norfolk &amp; Western A">
+            <choice>Norfolk &amp; Western a</choice>
+          </enumChoice>
+          <enumChoice choice="Frisco #1522">
+            <choice>Frisco #1522</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="462" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Pennsylvania RR Banshee">
+            <choice>Pennsylvania RR Banshee</choice>
+          </enumChoice>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baldwin Class B-4G Consolidation">
+            <choice>Baldwin Class B-4G Consolidation</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="462" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Pennsylvania RR Banshee">
+            <choice>Pennsylvania RR Banshee</choice>
+          </enumChoice>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baldwin Class B-4G Consolidation">
+            <choice>Baldwin Class B-4G Consolidation</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="2100" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="2100" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="2102" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="2102" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Colorado &amp; Southern #801">
+            <choice>Colorado &amp; Southern #801</choice>
+          </enumChoice>
+          <enumChoice choice="Reading 6-Chime">
+            <choice>Reading 6-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="244" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Heisler">
+            <choice>Heisler</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Peanut Whistle">
+            <choice>Peanut Whistle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="244" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="Heisler">
+            <choice>Heisler</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Peanut Whistle">
+            <choice>Peanut Whistle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="2shay" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Peanut Whistle">
+            <choice>Peanut Whistle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="2shay" tooltip="Select an alternate whistle to use">
+        <enumVal>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Peanut Whistle">
+            <choice>Peanut Whistle</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Alternate Whistle Select</label>
+      </variable>
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" include="climax" tooltip="Select the primary whistle to use">
+        <enumVal>
+          <enumChoice choice="Baltimore &amp; Ohio 3-Chime">
+            <choice>Baltimore &amp; Ohio 3-Chime</choice>
+          </enumChoice>
+          <enumChoice choice="Peanut Whistle">
+            <choice>Peanut Whistle</choice>
+          </enumChoice>
+          <enumChoice choice="D&amp;RGW Single Chime">
+            <choice>D&amp;RGW Single Chime</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Select</label>
+      </variable>
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" include="climax" tooltip="Select an alternate whistle to use">
+        <enumVal>
         </enumVal>
         <label>Alternate Whistle Select</label>
       </variable>
@@ -2123,12 +2889,56 @@
         </enumVal>
         <label>Alternate Whistle Enable</label>
       </variable>
-      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="80" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="60" include="280" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="65" include="244" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="70" include="2100,482" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="75" include="2662" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="85" include="2102" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="90" include="462,484" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="110" include="2shay" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="124" include="440l" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="130" include="440h,climax" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="160" include="460" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+        <decVal max="255"/>
+        <label>Engine Exhaust Control</label>
+      </variable>
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="180" include="3shay" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
 <!-- Volume Controls follow -->
-      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 12" default="192" tooltip="Sets the overall volume of all sound channels">
+      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 12" default="192" exclude="460,3shay" tooltip="Sets the overall volume of all sound channels">
+        <decVal/>
+        <label>Master Volume Control</label>
+      </variable>
+      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 12" default="255" include="460,3shay" tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
@@ -2136,23 +2946,75 @@
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="128" tooltip="Sets the volume of the bell">
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="75" include="460" tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="192" tooltip="Sets the volume of the engine exhaust">
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="80" include="2662,2102,3shay" tooltip="Sets the volume of the bell">
+        <decVal/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="92" include="280,2100,440l,462,482,484,244" tooltip="Sets the volume of the bell">
+        <decVal/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 14" default="128" include="440h,2shay,climax" tooltip="Sets the volume of the bell">
+        <decVal/>
+        <label>Bell Volume</label>
+      </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="64" include="460" tooltip="Sets the volume of the engine exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
-      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 17" default="48" tooltip="Sets the volume of the air pump">
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="80" include="2662,2102" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="90" include="484" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="100" include="280,2100,440l,440h,462,482,244,climax" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="110" include="2shay" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="160" include="3shay" tooltip="Sets the volume of the engine exhaust">
+        <decVal/>
+        <label>Exhaust Volume</label>
+      </variable>
+      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 17" default="48" exclude="2662" tooltip="Sets the volume of the air pump">
         <decVal/>
         <label>Air Pump Volume</label>
       </variable>
-      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 18" default="32" tooltip="Sets the volume of the dynamo (electric power generator)">
+      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 17" default="128" include="2662" tooltip="Sets the volume of the air pump">
+        <decVal/>
+        <label>Air Pump Volume</label>
+      </variable>
+      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 18" default="24" include="440l,460,3shay" tooltip="Sets the volume of the dynamo (electric power generator)">
         <decVal/>
         <label>Dynamo Volume</label>
       </variable>
-      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 16" default="32" tooltip="Sets the volume of the rods clanking">
+      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 18" default="32" exclude="440l,460,3shay" tooltip="Sets the volume of the dynamo (electric power generator)">
+        <decVal/>
+        <label>Dynamo Volume</label>
+      </variable>
+      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 19" default="8" include="3shay" tooltip="Sets the volume of the blower">
+        <decVal/>
+        <label>Blower Volume</label>
+      </variable>
+      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 19" default="16" exclude="3shay" tooltip="Sets the volume of the blower">
+        <decVal/>
+        <label>Blower Volume</label>
+      </variable>
+      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 16" default="0" include="2shay,3shay" tooltip="Sets the volume of the rods clanking">
+        <decVal/>
+        <label>Rod Clank Volume</label>
+      </variable>
+      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 16" default="32" exclude="2shay,3shay" tooltip="Sets the volume of the rods clanking">
         <decVal/>
         <label>Rod Clank Volume</label>
       </variable>
@@ -2180,6 +3042,10 @@
         <decVal/>
         <label>Power Reverser Volume</label>
       </variable>
+      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 21" default="0" tooltip="Sets the volume of the pop valve releasing">
+        <decVal/>
+        <label>Pop Valve Volume</label>
+      </variable>
       <variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" item="Sound Setting 28" default="96" tooltip="Sets the volume of the water stop activity">
         <decVal/>
         <label>Water Stop Volume</label>
@@ -2192,7 +3058,27 @@
         <decVal/>
         <label>Throttle Gain</label>
       </variable>
-      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="32" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="8" include="2662,2100,440l" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+        <decVal/>
+        <label>Motor Load Gain</label>
+      </variable>
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="10" include="280" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+        <decVal/>
+        <label>Motor Load Gain</label>
+      </variable>
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="16" include="460" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+        <decVal/>
+        <label>Motor Load Gain</label>
+      </variable>
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="24" include="2102,482,484,244" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+        <decVal/>
+        <label>Motor Load Gain</label>
+      </variable>
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="26" include="462" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+        <decVal/>
+        <label>Motor Load Gain</label>
+      </variable>
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="64" include="440h,3shay,2shay,climax" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
         <decVal/>
         <label>Motor Load Gain</label>
       </variable>
@@ -2224,7 +3110,7 @@
         <decVal/>
         <label>DDE Filter Initial Frequency</label>
       </variable>
-      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="64" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
+      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="120" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
         <decVal max="255"/>
         <label>DDE Filter Control Gain</label>
       </variable>
@@ -2232,16 +3118,32 @@
         <decVal/>
         <label>DDE Filter Damping</label>
       </variable>
-      <variable label="DDE Tracking Coefficient" CV="188" mask="VVVVVVVV" default="102" tooltip="&lt;html&gt;Sets the no load sense level for the DDE controller when&lt;br&gt;     back-EMF is disabled, as a percentage of the track voltage.&lt;/html&gt;">
+      <variable label="DDE Tracking Coefficient" CV="188" mask="VVVVVVVV" default="75" tooltip="&lt;html&gt;Sets the no load sense level for the DDE controller when&lt;br&gt;     back-EMF is disabled, as a percentage of the track voltage.&lt;/html&gt;">
         <decVal/>
         <label>DDE Tracking Coefficient</label>
       </variable>
 <!-- Automatic Sound Controls (ASC) follow -->
-      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
+      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="12" include="3shay" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
       </variable>
-      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="19" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" exclude="440l,460,3shay" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
+        <decVal max="127"/>
+        <label>Bell-On Set Point</label>
+      </variable>
+      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="20" include="440l,460" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
+        <decVal max="127"/>
+        <label>Bell-On Set Point</label>
+      </variable>
+      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="24" exclude="440l,460,484" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+        <decVal max="127"/>
+        <label>Bell-Off Set Point</label>
+      </variable>
+      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="25" include="440l,460" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+        <decVal max="127"/>
+        <label>Bell-Off Set Point</label>
+      </variable>
+      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="28" include="484" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
         <decVal max="127"/>
         <label>Bell-Off Set Point</label>
       </variable>
@@ -2365,15 +3267,59 @@
       </variable>
 <!-- End of variables for file-specific panes -->
 <!-- Advanced Motor Control Features follow -->
-      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="30" include="3shay" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="40" include="280,440h,climax" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="45" include="2662" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="50" include="460" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="56" include="2shay" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="60" include="2100,2102,440l,462,482,484,244" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Kp Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="440h,482,climax" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="10" include="2662,280,2102,440l,460,462,3shay,244,2shay" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="12" include="484" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" include="2100" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+        <decVal/>
+        <label>Motor Ki Coefficient (0-255)</label>
+      </variable>
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="128" include="280,2100,244" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+        <decVal/>
+        <label>Motor Control Intensity (0-255)</label>
+      </variable>
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="180" include="2102,440l,462,482,484" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+        <decVal/>
+        <label>Motor Control Intensity (0-255)</label>
+      </variable>
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="200" include="3shay" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+        <decVal/>
+        <label>Motor Control Intensity (0-255)</label>
+      </variable>
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" include="2662,440h,460,2shay,climax" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
@@ -2385,294 +3331,42 @@
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="2" include="3shay" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="7" include="440h,climax" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="8" include="482" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="10" include="244" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="12" include="280,2102,482" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="16" include="2662,484,2shay" >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
+      <variable label="Analog Mode Chuff Rate" CV="218" item="Sound Group 3 Option 2" default="17" include="2100,440l,462," >
+        <decVal max="255"/>
+        <label>Analog Mode Chuff Rate</label>
+      </variable>
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="DDE">
-    <column>
-<!-- panes always start with column elements-->
-      <row>
-        <label label="DYNAMIC DIGITAL EXHAUST CONTROLS">
-          <label>DYNAMIC DIGITAL EXHAUST CONTROLS</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <row>
-            <display item="Throttle Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Throttle Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Motor Load Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Motor Load Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Attack Time Constant" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Attack Time Constant" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Release Time Constant" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Release Time Constant" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <display item="Exhaust Low Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Exhaust Low Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Exhaust High Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Exhaust High Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Side Rod Clank Low Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Side Rod Clank Low Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Side Rod Clank High Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Side Rod Clank High Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <display item="DDE Filter Initial Frequency" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Initial Frequency" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Filter Control Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Control Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Filter Damping" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Damping" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Tracking Coefficient" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Tracking Coefficient" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>DDE</name>
-  </pane>
-  <pane name="ASC">
-    <column>
-      <row>
-        <label label="AUTOMATIC SOUND CONTROL">
-          <label>AUTOMATIC SOUND CONTROL</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <display item="Automatic Grade Crossing Whistle Enable" format="checkbox"/>
-          <display item="Automatic Whistle Signal Enable" format="checkbox"/>
-          <display item="Automatic Bell Enable" format="checkbox"/>
-          <display item="Automatic Brake Squeal Enable" format="checkbox"/>
-          <display item="Automatic Steam Blow Down Enable" format="checkbox"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <display item="Automatic Grade Crossing Whistle Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Whistle Signal Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Steam Blow Down Enable (Analog Mode)" format="checkbox"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <row>
-            <column>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <label label="These CVs allow the user to set the parameters">
-                <label>These CVs allow the user to set the parameters</label>
-              </label>
-              <label label="for the Automatic Sound Control features.">
-                <label>for the Automatic Sound Control features.</label>
-              </label>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-          <row>
-            <display item="Bell-On Set Point" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Bell-On Set Point" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Bell-Off Set Point" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Bell-Off Set Point" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Grade Crossing Whistle Sensitivity" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Brake Squeal Sensitivity" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>ASC</name>
-  </pane>
+  
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneLighting.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+  
 </decoder-config>
