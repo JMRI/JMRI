@@ -23,7 +23,7 @@ import jmri.jmrix.can.CanMessage;
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class OlcbAddress {
 
@@ -117,7 +117,7 @@ public class OlcbAddress {
      */
     public boolean equals(Object r) {
         if (r == null) return false;
-        if (! (r.getClass().equals(OlcbAddress.class))) return false;
+        if (! (r.getClass().equals(this.getClass()))) return false;
         OlcbAddress opp = (OlcbAddress) r;
         if (opp.aFrame.length != this.aFrame.length) return false;
         for (int i = 0; i<this.aFrame.length; i++) {
