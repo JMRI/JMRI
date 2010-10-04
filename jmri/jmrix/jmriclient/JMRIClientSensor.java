@@ -12,14 +12,13 @@ import jmri.Sensor;
  * Description:		extend jmri.AbstractSensor for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class JMRIClientSensor extends AbstractSensor implements JMRIClientListener {
 
 	// data members
 	private int _number;   // sensor number
         private JMRIClientTrafficController tc=null;
-        private String prefix = null;
 
 	/**
 	 * JMRIClient sensors use the sensor number on the remote host.
@@ -28,7 +27,6 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
             super(memo.getSystemPrefix()+"s"+number);
             _number = number;
             tc = memo.getJMRIClientTrafficController();
-            prefix=memo.getSystemPrefix();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
 	}

@@ -11,18 +11,16 @@ import jmri.Sensor;
  * nnn is the sensor number without padding.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 
 public class JMRIClientSensorManager extends jmri.managers.AbstractSensorManager {
 
     private JMRIClientSystemConnectionMemo memo=null;
-    private JMRIClientTrafficController tc=null;
     private String prefix = null;
 
     public JMRIClientSensorManager(JMRIClientSystemConnectionMemo memo) {
         this.memo=memo;
-        tc=memo.getJMRIClientTrafficController();
         this.prefix=memo.getSystemPrefix();
     }
 

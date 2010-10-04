@@ -12,14 +12,13 @@ import jmri.Light;
  * Description:		extend jmri.AbstractLight for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 
 	// data members
 	private int _number;   // light number
         private JMRIClientTrafficController tc=null;
-        private String prefix = null;
 
 	/**
 	 * JMRIClient lights use the light number on the remote host.
@@ -28,7 +27,6 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
             super(memo.getSystemPrefix()+"l"+number);
             _number = number;
             tc = memo.getJMRIClientTrafficController();
-            prefix=memo.getSystemPrefix();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
 	}

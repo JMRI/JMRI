@@ -12,7 +12,7 @@ import jmri.Turnout;
  * Description:		extend jmri.AbstractTurnout for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 
@@ -58,7 +58,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
-                if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton "+prefix+_number);
+        if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton "+prefix+_number);
     }
 
 
