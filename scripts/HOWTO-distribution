@@ -1,5 +1,5 @@
 This is the HOWTO file to make a complete SourceForge downloadable
-distribution.  ($Revision: 1.122 $)
+distribution.  ($Revision: 1.123 $)
 
 Start in a directory, typically called "Distributions", that
 contains "scripts" and "java" (modules checked out from CVS) as subdirectories, then:
@@ -102,7 +102,7 @@ Make sure everything is up-to-date:
     
 ( ) Update version numbers in Linux scripts
 
-    bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro dp3
+    bbedit DecoderPro PanelPro SoundPro cornwall JmriDemo LocoTools InstallTest DispatcherPro SignalPro DecoderPro3
 
     Commit back to CVS
 
