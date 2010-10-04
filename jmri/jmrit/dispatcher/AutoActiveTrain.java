@@ -15,7 +15,6 @@ import jmri.Section;
 import jmri.Sensor;
 import jmri.SignalHead;
 import jmri.Timebase;
-import jmri.Transit;
 import jmri.ThrottleListener;
 
 /**
@@ -42,7 +41,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	

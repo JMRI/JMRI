@@ -5,7 +5,6 @@ package jmri.jmrix.bachrus.serialdriver;
 import jmri.jmrix.bachrus.SpeedoPortController;
 import jmri.jmrix.bachrus.SpeedoTrafficController;
 import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemo;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -30,7 +29,7 @@ import gnu.io.SerialPort;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
  * @author	Andrew Crosland   Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends SpeedoPortController implements jmri.jmrix.SerialPortAdapter {
 

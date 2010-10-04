@@ -2,22 +2,16 @@
 
 package jmri.jmrit.roster.swing;
 
-import java.util.ResourceBundle;
-
 import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-import java.text.MessageFormat;
 
 import jmri.util.com.sun.TableSorter;
-import jmri.util.swing.JmriPanel;
 
 /**
  * Provide a table of roster entries
  * as a JmriJPanel
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003, 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class RosterTable extends jmri.util.swing.JmriPanel {
 

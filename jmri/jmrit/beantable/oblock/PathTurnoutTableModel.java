@@ -18,13 +18,12 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -37,7 +36,6 @@ import jmri.BeanSetting;
 import jmri.InstanceManager;
 import jmri.Turnout;
 
-import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 
 public class PathTurnoutTableModel extends AbstractTableModel {

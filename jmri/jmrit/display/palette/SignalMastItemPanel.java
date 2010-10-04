@@ -1,15 +1,12 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.datatransfer.Transferable; 
-import javax.swing.TransferHandler;
 import javax.swing.JTable;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.NamedBean;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.SignalMastIcon;
 
 public class SignalMastItemPanel extends TableItemPanel {

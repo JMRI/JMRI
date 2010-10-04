@@ -1,17 +1,15 @@
 package apps.configurexml;
 
-import apps.CreateButtonPanel;
 
 import jmri.InstanceManager;
-import java.awt.Component;
 
 import org.jdom.Element;
 
 /**
- * Handle XML persistance of ManagerDefaultsConfigPane objects.
+ * Handle XML persistence of ManagerDefaultsConfigPane objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ManagerDefaultsConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
 

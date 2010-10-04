@@ -2,26 +2,13 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 import java.util.Hashtable;
-import java.util.Iterator;
 
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.picker.PickListModel;
 
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.

@@ -16,10 +16,11 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the TurnoutIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
+	@SuppressWarnings("unchecked")
 	public void testPanelEditor() throws Exception {
 	    
         jmri.jmrit.display.panelEditor.PanelEditor panel = 
@@ -65,8 +66,8 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
         
         // that pops dialog, find and press Delete
-        List dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        JDialog d = (JDialog) dialogList.get(0);
+        List<JDialog> dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
+        JDialog d = dialogList.get(0);
 
         // Find the button that deletes the panel
         AbstractButtonFinder bf = new AbstractButtonFinder("Delete Panel" );
@@ -78,7 +79,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         
         // that pops dialog, find and press Yes - Delete
         dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        d = (JDialog) dialogList.get(0);
+        d = dialogList.get(0);
 
         // Find the button that deletes the panel
         bf = new AbstractButtonFinder("Yes - Dele" );
@@ -90,6 +91,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         
 	}
 
+	@SuppressWarnings("unchecked")
 	public void testLayoutEditor() throws Exception {
 	    
         jmri.jmrit.display.layoutEditor.LayoutEditor panel = 
@@ -135,8 +137,8 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(panel.getTargetFrame(), this);
         
         // that pops dialog, find and press Delete
-        List dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        JDialog d = (JDialog) dialogList.get(0);
+        List<JDialog> dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
+        JDialog d = dialogList.get(0);
 
         // Find the button that deletes the panel
         AbstractButtonFinder bf = new AbstractButtonFinder("Delete Panel" );
@@ -148,7 +150,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         
         // that pops dialog, find and press Yes - Delete
         dialogList = new DialogFinder(null).findAll(panel.getTargetFrame());
-        d = (JDialog) dialogList.get(0);
+        d = dialogList.get(0);
 
         // Find the button that deletes the panel
         bf = new AbstractButtonFinder("Yes - Dele" );

@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import java.beans.PropertyChangeEvent;
 
@@ -13,7 +12,7 @@ import java.beans.PropertyChangeEvent;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class TurnoutIconTest extends jmri.util.SwingTestCase {
 

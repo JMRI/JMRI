@@ -15,12 +15,11 @@ import jmri.jmris.srcp.parser.SRCPParser;
 import jmri.jmris.srcp.parser.ParseException;
 import jmri.jmris.srcp.parser.SRCPVisitor;
 import jmri.jmris.srcp.parser.SimpleNode;
-import jmri.jmris.srcp.parser.*;
 
 /**
- * This is an implementaiton of SRCP for JMRI.
+ * This is an implementation of SRCP for JMRI.
  * @author Paul Bender Copyright (C) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  *
  */
 public class JmriSRCPServer extends JmriServer{

@@ -2,7 +2,6 @@
 
 package jmri.jmris.srcp.parser;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.framework.TestCase;
@@ -12,7 +11,7 @@ import java.io.StringReader;
 /**
  * Tests for the {@link jmri.jmris.srcp.parser.SRCPTokenizer} class.
  * @author          Paul Bender
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SRCPTokenizerTest extends TestCase {
 

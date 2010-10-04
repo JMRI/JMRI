@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -15,7 +14,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 

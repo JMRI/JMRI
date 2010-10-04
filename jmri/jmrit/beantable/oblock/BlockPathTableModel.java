@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 import java.util.ResourceBundle;
@@ -31,8 +31,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import javax.swing.table.AbstractTableModel;
-
-import jmri.InstanceManager;
 
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;

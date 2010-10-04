@@ -2,15 +2,12 @@
 
 package jmri.jmrix.loconet.hexfile;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via a LocoNet hexfile emulator
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 

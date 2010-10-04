@@ -1,7 +1,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.Insets;
@@ -15,7 +14,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
 import java.io.IOException;
-import javax.swing.TransferHandler;
 
 import javax.swing.event.ChangeListener; 
 import javax.swing.event.ChangeEvent; 
@@ -31,10 +29,8 @@ import javax.swing.JColorChooser;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 
 import jmri.jmrit.catalog.CatalogPanel;
@@ -63,7 +59,7 @@ public class BackgroundItemPanel extends IconItemPanel {
 
     /**
     * Plain icons have only one family, usually named "set"
-    * overide for plain icon & background and put all icons here
+    * Override for plain icon & background and put all icons here
     */
     @SuppressWarnings("unchecked")
     protected void initIconPanel() {

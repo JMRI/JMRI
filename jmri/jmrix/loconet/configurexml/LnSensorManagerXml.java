@@ -1,7 +1,5 @@
 package jmri.jmrix.loconet.configurexml;
 
-import jmri.jmrix.loconet.LnSensorManager;
-
 import org.jdom.Element;
 
 /**
@@ -12,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class LnSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

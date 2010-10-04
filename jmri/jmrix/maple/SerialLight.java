@@ -3,8 +3,6 @@
 package jmri.jmrix.maple;
 
 import jmri.implementation.AbstractLight;
-import jmri.Sensor;
-import jmri.Turnout;
 
 /**
  * SerialLight.java
@@ -14,7 +12,7 @@ import jmri.Turnout;
  *  Based in part on SerialTurnout.java
  *
  * @author      Dave Duchamp Copyright (C) 2004, 2009, 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialLight extends AbstractLight {
 

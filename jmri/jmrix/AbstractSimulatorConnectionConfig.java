@@ -14,9 +14,6 @@ import javax.swing.JOptionPane;
 
 import java.awt.Color;
 
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -26,7 +23,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 //

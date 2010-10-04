@@ -1,8 +1,5 @@
 package jmri.web.miniserver;
 
-import java.net.*;
-import java.io.*;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
@@ -16,7 +13,7 @@ import javax.servlet.ServletContext;
  * we can move to servlets later on.
  *
  * @author  Bob Jacobsen Copyright 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @since       2.9.4
  */
 

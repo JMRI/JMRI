@@ -2,14 +2,12 @@
 
 package jmri.jmris;
 
-import jmri.InstanceManager;
-
 /**
  * This class provides access to the service handlers for individual object
  * types which can be passed to a parser visitor object.
  * 
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  *
  */
 public class ServiceHandler {

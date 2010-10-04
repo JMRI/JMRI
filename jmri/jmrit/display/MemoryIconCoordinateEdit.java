@@ -10,9 +10,6 @@ import javax.swing.event.ChangeListener;
 
 import javax.swing.*;
 
-import jmri.jmrit.catalog.NamedIcon;
-import jmri.util.JmriJFrame;
-
 /**
  * Displays and allows user to modify x & y coordinates of
  * positionable labels
@@ -40,7 +37,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class MemoryIconCoordinateEdit extends CoordinateEdit {

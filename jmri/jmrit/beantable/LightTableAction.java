@@ -16,7 +16,6 @@ import java.awt.Container;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Dimension;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 
 public class LightTableAction extends AbstractTableAction {

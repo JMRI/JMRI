@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.locostats;
 
 import junit.framework.*;
 
-import jmri.jmrix.loconet.swing.*;
 import jmri.jmrix.loconet.*;
 
 import jmri.util.JmriJFrame;
@@ -10,7 +9,7 @@ import jmri.util.JmriJFrame;
 /**
  * Tests for the LocoStatsFrame class
  * @author	Bob Jacobsen Copyright (C) 2006, 2008, 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class LocoStatsFrameTest extends TestCase {
 

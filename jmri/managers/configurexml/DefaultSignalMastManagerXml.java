@@ -6,14 +6,13 @@ import jmri.managers.DefaultSignalMastManager;
 
 import java.util.List;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for a DefaultSignalMastManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class DefaultSignalMastManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {

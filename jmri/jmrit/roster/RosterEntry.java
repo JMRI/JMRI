@@ -15,7 +15,6 @@ import java.util.Vector;
 import javax.swing.*;
 import jmri.util.davidflanagan.HardcopyWriter;
 
-import java.lang.Math.*;
 import javax.swing.ImageIcon;
 import java.awt.Image;
 
@@ -45,7 +44,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.50 $
+ * @version   $Revision: 1.51 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */

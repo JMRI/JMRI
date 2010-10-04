@@ -7,7 +7,6 @@ import jmri.jmrix.loconet.SE8cSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 import java.util.List;
-import org.jdom.Attribute;
 import org.jdom.DataConversionException;
 import org.jdom.Element;
 
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for loconet.SE8cSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class SE8cSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 

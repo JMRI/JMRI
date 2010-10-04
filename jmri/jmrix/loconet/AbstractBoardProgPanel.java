@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet;
 
-import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetListener;
 import jmri.jmrix.loconet.LocoNetMessage;
@@ -33,7 +32,7 @@ import javax.swing.*;
  * contact Digitrax Inc for separate permission.
  *
  * @author  Bob Jacobsen   Copyright (C) 2004, 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.LnPanel 
         implements LocoNetListener {

@@ -4,7 +4,6 @@ package jmri.managers;
 
 import jmri.Light;
 import jmri.LightManager;
-import jmri.Manager;
 import jmri.NamedBean;
 
 import jmri.managers.AbstractManager;
@@ -15,7 +14,7 @@ import jmri.managers.AbstractManager;
  *
  * @author	Bob Jacobsen Copyright (C) 2010
  * @author	Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class ProxyLightManager extends AbstractProxyManager
                             implements LightManager {

@@ -4,7 +4,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SlipTurnoutIcon;
 import org.jdom.Attribute;
-import java.util.List;
 import org.jdom.Element;
 
 /**
@@ -12,7 +11,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 

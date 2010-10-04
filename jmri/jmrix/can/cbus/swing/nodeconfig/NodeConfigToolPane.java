@@ -2,15 +2,9 @@
 
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.*;
-import jmri.util.StringUtil;
 
 import java.util.ResourceBundle;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -18,7 +12,7 @@ import javax.swing.*;
  * Pane to for setting node configuration
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class NodeConfigToolPane extends JPanel implements CanListener {

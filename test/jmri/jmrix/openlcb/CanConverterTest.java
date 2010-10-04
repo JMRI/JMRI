@@ -8,13 +8,12 @@ import junit.framework.TestSuite;
 
 import jmri.jmrix.can.*;
 
-import org.openlcb.*;
 import org.openlcb.can.*;
 
 /**
  * Tests for making CAN frames into OpenLCB messages.
  * @author      Bob Jacobsen  Copyright 2010
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class CanConverterTest extends TestCase {
 

@@ -8,7 +8,6 @@ import jmri.implementation.LsDecSignalHead;
 import jmri.Turnout;
 
 import java.util.List;
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
@@ -28,7 +27,7 @@ import org.jdom.Element;
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
  * @author Petr Koud'a  Copyright: Copyright (c) 2007
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LsDecSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

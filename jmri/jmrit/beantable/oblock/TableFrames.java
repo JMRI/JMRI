@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.awt.BorderLayout;
@@ -54,7 +54,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 
 import jmri.util.com.sun.TransferActionListener;

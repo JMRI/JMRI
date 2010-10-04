@@ -4,7 +4,6 @@ import javax.swing.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import jmri.util.JUnitUtil;
@@ -14,7 +13,7 @@ import jmri.util.JUnitUtil;
  *
  * Description:
  * @author			Bob Jacobsen  Copyright 2007
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class MemoryIconTest extends jmri.util.SwingTestCase {
 

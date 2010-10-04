@@ -1,9 +1,7 @@
 package jmri.jmrit.picker;
 
 import jmri.util.JmriJFrame;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JPanel;
 
 public class PickFrame extends JmriJFrame {
 

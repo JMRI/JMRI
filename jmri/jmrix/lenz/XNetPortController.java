@@ -5,15 +5,13 @@ package jmri.jmrix.lenz;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 
-import jmri.util.SystemType;
-
 /**
  * Abstract base for classes representing a XNet communications port
  * <p>
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 2.9 $
+ * @version			$Revision: 2.10 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
 

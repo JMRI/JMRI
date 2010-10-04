@@ -2,16 +2,12 @@
 
 package jmri.jmrix.jmriclient.networkdriver;
 
-import javax.swing.*;
-
-import jmri.jmrix.JmrixConfigPane;
-
 /**
  * Definition of objects to handle configuring a connection to a remote
  * JMRI instance via the JMRI Network Protocol.
  *
  * @author      Paul Bender   Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

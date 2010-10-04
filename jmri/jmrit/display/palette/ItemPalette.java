@@ -22,9 +22,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
 import org.jdom.Element;
-import org.jdom.JDOMException;
-
-import jmri.Manager;
 import jmri.util.JmriJFrame;
 
 import jmri.CatalogTree;

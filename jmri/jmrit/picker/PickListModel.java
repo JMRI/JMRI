@@ -24,7 +24,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.DataFlavor;
 
 /**
  * Abstract class to make pick lists for NamedBeans.

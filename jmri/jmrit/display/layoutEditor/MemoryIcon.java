@@ -3,7 +3,6 @@ package jmri.jmrit.display.layoutEditor;
  * An icon to display a status of a Memory.<P>
  */
 import jmri.jmrit.catalog.NamedIcon;
-import jmri.Memory;
 
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 

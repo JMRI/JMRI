@@ -2,7 +2,6 @@
 
 package jmri;
 
-import jmri.implementation.DefaultClockControl;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -37,7 +36,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.66 $
+ * @version			$Revision: 1.67 $
  */
 public class InstanceManager {
 

@@ -3,7 +3,6 @@
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.loconet.*;
 
 /**
  * Provides load and store functionality for
@@ -13,7 +12,7 @@ import jmri.jmrix.loconet.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

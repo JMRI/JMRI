@@ -3,7 +3,6 @@
 package jmri.jmrix.lenz.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.lenz.*;
 
 /**
  * Provides load and store functionality for
@@ -13,7 +12,7 @@ import jmri.jmrix.lenz.*;
  * provides a load method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

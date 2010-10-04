@@ -2,7 +2,6 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import jmri.jmrix.loconet.*;
 
@@ -15,7 +14,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author			Alex Shepherd   Copyright (C) 2004
  * @author          Bob Jacobsen    Copyright (C) 2005, 2010
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class IntelliboxAdapter extends LocoBufferAdapter {
 

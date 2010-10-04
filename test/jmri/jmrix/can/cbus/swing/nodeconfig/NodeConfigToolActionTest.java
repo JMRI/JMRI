@@ -4,7 +4,6 @@ package jmri.jmrix.can.cbus.swing.nodeconfig;
 
 import jmri.jmrix.can.TestTrafficController;
 
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -12,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus.swing.nodeconfig package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class NodeConfigToolActionTest extends TestCase {
 

@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.*;
-import javax.swing.table.*;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 import javax.swing.event.ListSelectionListener;

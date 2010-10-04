@@ -2,15 +2,10 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 //import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.*;
-import java.io.IOException;
 import javax.swing.TransferHandler;
 
 
@@ -21,8 +16,6 @@ import javax.swing.*;
 
 //import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
-import jmri.jmrit.display.PositionableLabel;
 
 /**
 *  ItemPanel for text labels

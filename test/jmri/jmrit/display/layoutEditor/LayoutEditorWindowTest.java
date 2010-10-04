@@ -14,10 +14,11 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the LayoutEditor 
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
 
+	@SuppressWarnings("unchecked")
 	public void testShowAndClose() throws Exception {
 	    jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager(){
 	    };
@@ -36,8 +37,8 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(le, this);
         
         // Dialog has popped up, so handle that. First, locate it.
-        List dialogList = new DialogFinder(null).findAll(le);
-        JDialog d = (JDialog) dialogList.get(0);
+        List<JDialog> dialogList = new DialogFinder(null).findAll(le);
+        JDialog d = dialogList.get(0);
 
         // Find the button that deletes the panel
         AbstractButtonFinder finder = new AbstractButtonFinder("Delete Panel" );
@@ -49,7 +50,7 @@ public class LayoutEditorWindowTest extends jmri.util.SwingTestCase {
         
         // another dialog has popped up, so handle that by finding the "Yes - Delete" button.
         dialogList = new DialogFinder(null).findAll(le);
-        d = (JDialog) dialogList.get(0);
+        d = dialogList.get(0);
         finder = new AbstractButtonFinder("Yes - Delete" );
         button = ( JButton ) finder.find( d, 0);
         Assert.assertNotNull(button);   

@@ -3,13 +3,11 @@
 package jmri.jmrit.ussctc;
 
 import junit.framework.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicatorAction class
  * @author	Bob Jacobsen  Copyright 2003, 2007, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
 

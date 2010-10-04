@@ -2,8 +2,6 @@
 
 package jmri.jmrix.powerline;
 
-import jmri.jmrix.powerline.*;
-
 /**
  * Implementation of the Light class for X10-based subclasses.
  * <P>
@@ -23,7 +21,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 

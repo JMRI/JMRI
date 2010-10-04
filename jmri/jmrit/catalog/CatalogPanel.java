@@ -55,7 +55,6 @@ import java.util.ArrayList;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-import jmri.jmrit.display.IconAdder;
 import jmri.jmrit.XmlFile;
 
 /**

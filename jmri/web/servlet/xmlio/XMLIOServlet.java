@@ -11,7 +11,6 @@ import org.jdom.*;
 import org.jdom.input.*;
 import org.jdom.output.*;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 
@@ -24,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {

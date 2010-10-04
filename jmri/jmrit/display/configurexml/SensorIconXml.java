@@ -5,7 +5,6 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.SensorIcon;
 //import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
-import org.jdom.DataConversionException;
 import org.jdom.Element;
 import java.awt.Color;
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 

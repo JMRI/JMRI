@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.li100;
 import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
@@ -12,7 +11,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  */
 public class LI100XNetInitilizationManager extends AbstractXNetInitilizationManager{
 

@@ -5,11 +5,9 @@ package jmri.jmrix.loconet.slotmon;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LnTrafficController;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.jmrix.loconet.LocoNetSlot;
 import jmri.jmrix.loconet.SlotListener;
-import jmri.jmrix.loconet.SlotManager;
 
 import jmri.util.StringUtil;
 
@@ -24,7 +22,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 

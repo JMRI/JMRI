@@ -2,8 +2,6 @@
 
 package jmri.jmrix.powerline.cm11;
 
-import jmri.jmrix.powerline.*;
-
 /**
  * Implementation of the Light Object for X10 CM11 interfaces.
  * <P>
@@ -25,7 +23,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class SpecificLight extends jmri.jmrix.powerline.SerialX10Light {
          

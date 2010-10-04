@@ -3,8 +3,6 @@
 package jmri.implementation;
 
 import jmri.*;
-import jmri.util.StringUtil;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -13,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 

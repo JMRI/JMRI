@@ -8,8 +8,6 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
-import jmri.SignalSystem;
-//import jmri.Path;
 
 /**
  * An Portal is a boundary between two Blocks.

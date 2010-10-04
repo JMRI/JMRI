@@ -4,14 +4,13 @@ import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.implementation.VirtualSignalHead;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for VirtualSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2005, 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

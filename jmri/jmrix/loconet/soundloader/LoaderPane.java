@@ -10,12 +10,10 @@ import jmri.jmrix.loconet.spjfile.SpjFile;
 
 import java.io.*;
 
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
-
 /**
  * Pane for downloading .hex files
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.10 $
+ * @version	    $Revision: 1.11 $
  */
 public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel {
 

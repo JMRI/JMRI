@@ -8,14 +8,13 @@ import java.awt.*;
 import javax.swing.*;
 import java.util.ResourceBundle;
 import java.io.IOException;
-import java.util.Vector;
 
 
 /**
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;

@@ -8,14 +8,13 @@ import jmri.util.NamedBeanHandle;
 
 import java.util.List;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for SingleTurnoutSignalHead objects.
  * Based Upon DoubleTurnoutSignalHeadXML by Bob Jacobsen
  * @author Kevin Dickerson: Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SingleTurnoutSignalHeadXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 

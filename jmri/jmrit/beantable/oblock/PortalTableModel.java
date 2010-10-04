@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;

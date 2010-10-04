@@ -7,14 +7,11 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-
 /**
  * Tests for the MiniServletContext class.
  *
  * @author	    Bob Jacobsen  Copyright 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class MiniServletContextTest extends TestCase {
 

@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.JOptionPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Point;
 import java.awt.Color;
 
 import jmri.util.NamedBeanHandle;
@@ -23,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {

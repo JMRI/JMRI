@@ -3,8 +3,6 @@
 package jmri.jmrix.powerline;
 
 import jmri.implementation.AbstractVariableLight;
-import jmri.Sensor;
-import jmri.Turnout;
 import jmri.jmrix.powerline.SerialAddress;
 
 /**
@@ -28,7 +26,7 @@ import jmri.jmrix.powerline.SerialAddress;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 

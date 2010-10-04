@@ -8,9 +8,6 @@ import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.NamedBean;
-import jmri.Sensor;
-import jmri.SignalHead;
-import jmri.SignalMast;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -22,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 

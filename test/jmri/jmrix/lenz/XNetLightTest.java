@@ -3,13 +3,11 @@
 package jmri.jmrix.lenz;
 
 import junit.framework.Assert;
-import junit.framework.Test;
-import junit.framework.TestSuite;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.
  * @author	    Paul Bender 
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 public class XNetLightTest extends jmri.implementation.AbstractLightTest {
 

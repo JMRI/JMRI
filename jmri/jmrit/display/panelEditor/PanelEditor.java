@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.List;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.Rectangle2D;
 
 import jmri.jmrit.display.Editor;
 import javax.swing.*;

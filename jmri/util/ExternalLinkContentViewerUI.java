@@ -2,15 +2,6 @@
 
 package jmri.util;
 
-import java.net.*;
-
-import javax.swing.*;
-import javax.swing.event.*;
-
-import javax.help.*;
-import javax.help.plaf.*;
-import javax.help.plaf.basic.*;
-
 /**
  * A UI subclass that will open external links (website 
  * or mail links) in an external browser

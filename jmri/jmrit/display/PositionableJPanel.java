@@ -4,24 +4,19 @@ package jmri.jmrit.display;
 
 import java.util.ResourceBundle;
 
-
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.border.LineBorder;
 
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseEvent;
 import java.awt.Container;
-import java.awt.event.ActionEvent;
 import javax.swing.*;
 
 /**
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 

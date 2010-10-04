@@ -3,7 +3,6 @@
 package jmri.jmrix.powerline.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.powerline.*;
 
 /**
  * Provides load and store functionality for
@@ -15,7 +14,7 @@ import jmri.jmrix.powerline.*;
  * Based on SerialTurnoutManagerXml.java
  *
  * @author Dave Duchamp Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

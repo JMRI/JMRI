@@ -2,22 +2,16 @@
 
 package jmri.jmrit.dispatcher;
 
-import javax.swing.*;
-
-import java.util.*;
-
 import jmri.util.JmriJFrame;
 import jmri.Scale;
 
 import junit.framework.*;
 import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
 
 /**
  * Swing jfcUnit tests for dispatcher options
  * @author			Dave Duchamp
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 

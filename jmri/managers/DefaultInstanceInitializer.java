@@ -5,7 +5,6 @@ package jmri.managers;
 import jmri.*;
 
 import jmri.implementation.DefaultClockControl;
-import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
@@ -29,7 +28,7 @@ import jmri.jmrit.roster.RosterIconFactory;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since           2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {

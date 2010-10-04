@@ -5,15 +5,13 @@
  *       			XpressNet PacketGenFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002
- * @version			$Revision: 2.3 $
+ * @version			$Revision: 2.4 $
  */
 
 package jmri.jmrix.lenz.packetgen;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-
-import jmri.jmrix.lenz.XNetTrafficController;
 
 public class PacketGenAction 			extends AbstractAction {
 

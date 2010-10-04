@@ -2,13 +2,11 @@
 
 package jmri.jmrix.nce.networkdriver;
 
-import javax.swing.*;
-
 /**
  * Frame to control and connect NCE command station via NetworkDriver
  * interface.
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
  @Deprecated 
 public class NetworkDriverFrame extends jmri.jmrix.SerialPortFrame {

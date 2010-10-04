@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 import java.util.ArrayList;
@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -38,7 +37,6 @@ import jmri.InstanceManager;
 import jmri.NamedBean;
 
 import jmri.jmrit.logix.OBlock;
-import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 
 public class SignalTableModel extends AbstractTableModel {
@@ -129,9 +127,9 @@ public class SignalTableModel extends AbstractTableModel {
                 tempList.add(sr);
             }
         }
-        Iterator bIter = _parent.getPortalModel().getPortalList().iterator();
+        Iterator<Portal> bIter = _parent.getPortalModel().getPortalList().iterator();
         while (bIter.hasNext()) {
-            Portal  portal = (Portal)bIter.next();
+            Portal  portal = bIter.next();
             NamedBean signal = portal.getFromSignal();
             SignalRow sr = null;
             if (signal!=null) {

@@ -2,7 +2,6 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 import jmri.jmrix.lenz.AbstractXNetInitilizationManager;
-import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
@@ -12,7 +11,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 

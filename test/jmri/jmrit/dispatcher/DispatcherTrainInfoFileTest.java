@@ -2,22 +2,12 @@
 
 package jmri.jmrit.dispatcher;
 
-import javax.swing.*;
-
-import java.util.*;
-
-import jmri.util.JmriJFrame;
-import jmri.Scale;
-
 import junit.framework.*;
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
-import junit.extensions.jfcunit.eventdata.*;
 
 /**
  * Swing jfcUnit tests for dispatcher train info
  * @author			Dave Duchamp
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class DispatcherTrainInfoFileTest extends TestCase {
 

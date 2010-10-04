@@ -9,7 +9,6 @@ import junit.framework.TestSuite;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
-import javax.swing.JRadioButton;
 
 import jmri.*;
 import jmri.managers.*;
@@ -17,7 +16,7 @@ import jmri.managers.*;
 /**
  * Tests for the ProgServiceModePane
  * @author	Bob Jacobsen 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class ProgServiceModePaneTest extends TestCase {
 

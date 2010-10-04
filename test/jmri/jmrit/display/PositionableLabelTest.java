@@ -3,7 +3,6 @@ package jmri.jmrit.display;
 import java.awt.*;
 import javax.swing.*;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -11,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:
  * @author			Bob Jacobsen
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class PositionableLabelTest extends jmri.util.SwingTestCase {
 

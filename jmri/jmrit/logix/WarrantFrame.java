@@ -10,20 +10,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.FlowLayout;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 
@@ -35,8 +31,6 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
 import jmri.jmrit.picker.PickListModel;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
 
 /**
  * WarrantFame creates and edits Warrants

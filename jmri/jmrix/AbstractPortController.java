@@ -4,10 +4,6 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.util.Enumeration;
-import java.util.Vector;
-import gnu.io.CommPortIdentifier;
-import javax.swing.JOptionPane;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -15,12 +11,12 @@ import javax.swing.JOptionPane;
  * This is complicated by the lack of multiple inheritance.
  * SerialPortAdapter is an Interface, and its implementing
  * classes also inherit from various PortController types.  But we
- * want some common behaviours for those, so we put them here.
+ * want some common behaviors for those, so we put them here.
  *
  * @see jmri.jmrix.SerialPortAdapter
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 abstract public class AbstractPortController implements PortAdapter {
 
@@ -93,7 +89,7 @@ abstract public class AbstractPortController implements PortAdapter {
     public boolean getDisabled() { return mDisabled; }
    
     /* The set disabled is handled within the local port controller for each system
-    this is because it needs to also needs to set a disabled flag inthe system connection memo*/
+    this is because it needs to also needs to set a disabled flag in the system connection memo*/
     
     abstract public void setDisabled(boolean disabled);
     protected boolean mDisabled = false;

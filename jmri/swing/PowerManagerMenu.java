@@ -2,9 +2,7 @@
 
 package jmri.swing;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.swing.*;
 
@@ -15,7 +13,7 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {

@@ -2,31 +2,15 @@
 
 package jmri.jmrix.openlcb.swing.tie;
 
-import jmri.util.davidflanagan.HardcopyWriter;
-import jmri.jmrix.maple.SerialTrafficController;
-import jmri.jmrix.maple.SerialNode;
-import jmri.jmrix.maple.SerialAddress;
-
-import jmri.jmrix.AbstractNode;
-
-import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import java.io.IOException;
-
 import java.util.ResourceBundle;
 
-import javax.swing.border.Border;
 import javax.swing.*;
 import javax.swing.table.*;
-
-import java.lang.Integer;
 
 /**
  * Pane for showing the tie table
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.1 $
+ * @version	 $Revision: 1.2 $
  * @since 2.3.7
  */
 public class TieTablePane extends JPanel {

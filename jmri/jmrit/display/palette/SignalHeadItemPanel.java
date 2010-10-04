@@ -3,10 +3,8 @@ package jmri.jmrit.display.palette;
 import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.List;
 
 import java.awt.datatransfer.Transferable; 
-import javax.swing.TransferHandler;
 import javax.swing.JTable;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -15,7 +13,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.NamedBean;

@@ -3,8 +3,6 @@
 package jmri.jmrix.grapevine;
 
 import jmri.implementation.AbstractLight;
-import jmri.Sensor;
-import jmri.Turnout;
 
 /**
  * Implementation of the Light interface using Grapevine
@@ -15,7 +13,7 @@ import jmri.Turnout;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class SerialLight extends AbstractLight {
 

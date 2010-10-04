@@ -4,8 +4,6 @@ package jmri.jmrix.loconet.swing;
 
 import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
-import jmri.util.swing.WindowInterface;
-
 /**
  * JPanel extension to handle automatic creation
  * of window title and help reference for LocoNet panels
@@ -14,7 +12,7 @@ import jmri.util.swing.WindowInterface;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 abstract public class LnPanel extends jmri.util.swing.JmriPanel implements LnPanelInterface {

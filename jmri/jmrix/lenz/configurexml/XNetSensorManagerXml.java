@@ -2,8 +2,6 @@ package jmri.jmrix.lenz.configurexml;
 
 import org.jdom.Element;
 
-import jmri.jmrix.lenz.XNetSensorManager;
-
 /**
  * Provides load and store functionality for
  * configuring XNetSensorManagers.
@@ -12,7 +10,7 @@ import jmri.jmrix.lenz.XNetSensorManager;
  * provides a load method here.
  *
  * @author  Paul Bender Copyright (c) 2003
- * @version $Revision: 2.8 $
+ * @version $Revision: 2.9 $
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

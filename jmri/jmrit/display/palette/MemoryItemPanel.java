@@ -1,15 +1,12 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
-import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import java.awt.datatransfer.Transferable;
 
 import javax.swing.ButtonGroup;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -17,15 +14,11 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.TransferHandler;
-import javax.swing.SwingConstants;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.NamedBean;
-import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.MemoryIcon;
 import jmri.jmrit.display.MemoryInputIcon;
 import jmri.jmrit.display.MemorySpinnerIcon;

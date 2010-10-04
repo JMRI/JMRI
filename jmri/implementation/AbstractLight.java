@@ -1,8 +1,6 @@
 // AbstractLight.java
 
 package jmri.implementation;
-import javax.swing.Timer;
-import java.util.Date;
 import java.util.ArrayList;
 import jmri.*;
 
@@ -48,7 +46,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {

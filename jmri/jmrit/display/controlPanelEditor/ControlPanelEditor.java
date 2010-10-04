@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.catalog.ImageIndexEditor;
 
 import jmri.jmrit.display.*;
-import jmri.jmrit.beantable.oblock.DnDJTable;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -15,10 +14,8 @@ import java.awt.geom.Rectangle2D;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.datatransfer.StringSelection;
 import java.awt.dnd.*;
 import java.io.IOException;
-import javax.swing.TransferHandler;
 
 import java.util.ArrayList;
 import java.util.List;

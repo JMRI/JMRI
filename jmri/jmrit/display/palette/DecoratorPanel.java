@@ -1,12 +1,9 @@
 
 package jmri.jmrit.display.palette;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
+
 //import java.awt.event.ActionListener;
 //import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
@@ -19,7 +16,6 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.*;
 import java.io.IOException;
-import javax.swing.TransferHandler;
 
 
 //import java.util.Hashtable;
@@ -29,7 +25,6 @@ import javax.swing.*;
 
 //import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 

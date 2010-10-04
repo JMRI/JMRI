@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.loconet.LnReporterManager;
 
 /**
  * Provides load and store functionality for
@@ -11,7 +10,7 @@ import jmri.jmrix.loconet.LnReporterManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractReporterManagerConfigXML {
 

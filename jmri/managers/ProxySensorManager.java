@@ -4,7 +4,6 @@ package jmri.managers;
 
 import jmri.Sensor;
 import jmri.SensorManager;
-import jmri.NamedBean;
 
 import jmri.managers.AbstractManager;
 
@@ -13,7 +12,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations. 
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class ProxySensorManager extends AbstractProxyManager
                             implements SensorManager {

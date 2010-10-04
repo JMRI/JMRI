@@ -3,7 +3,6 @@ package jmri.jmrit.logix;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.beans.PropertyChangeListener;
 
 import jmri.Path;
 import jmri.Sensor;
@@ -33,7 +32,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {

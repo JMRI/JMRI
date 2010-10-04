@@ -2,10 +2,7 @@
 
 package apps;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
 
 import java.util.List;
 
@@ -16,7 +13,7 @@ import jmri.managers.ManagerDefaultSelector;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {

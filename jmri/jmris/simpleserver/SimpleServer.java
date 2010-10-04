@@ -10,16 +10,13 @@ import java.util.ResourceBundle;
 
 import jmri.InstanceManager;
 
-// imports for ZeroConf.
-import jmri.util.zeroconf.ZeroConfUtil;
-
 
 /**
  * This is an implementaiton of a simple server for JMRI.
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  *
  */
 public class SimpleServer extends JmriServer{

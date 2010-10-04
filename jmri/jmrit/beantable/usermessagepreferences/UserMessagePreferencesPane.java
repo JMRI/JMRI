@@ -5,7 +5,6 @@ package jmri.jmrit.beantable.usermessagepreferences;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Component;
-import java.awt.Color;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Dimension;
@@ -16,7 +15,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 

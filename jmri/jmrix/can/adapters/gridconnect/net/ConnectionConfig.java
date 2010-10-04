@@ -6,14 +6,12 @@ import javax.swing.*;
 
 import jmri.jmrix.JmrixConfigPane;
 
-import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
-
 /**
  * Definition of objects to handle configuring a connection
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 

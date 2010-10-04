@@ -4,8 +4,6 @@ package jmri.jmrit.beantable;
 
 import javax.swing.*;
 
-import java.util.*;
-
 import jmri.util.JmriJFrame;
 
 import junit.framework.*;
@@ -16,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the turnout table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
 

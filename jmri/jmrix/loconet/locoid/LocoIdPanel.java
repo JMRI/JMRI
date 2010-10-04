@@ -3,7 +3,6 @@
 package jmri.jmrix.loconet.locoid;
 
 import jmri.jmrix.loconet.*;
-import jmri.jmrix.loconet.swing.LnPanel;
 
 import java.util.ResourceBundle;
 
@@ -13,7 +12,7 @@ import javax.swing.*;
  * User interface for setting the LocoNet ID
  *
  * @author			Bob Jacobsen   Copyright (C) 2006, 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class LocoIdPanel extends jmri.jmrix.loconet.swing.LnPanel
                     implements LocoNetListener {

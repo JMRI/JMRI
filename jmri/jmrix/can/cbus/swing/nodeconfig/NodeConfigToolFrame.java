@@ -2,11 +2,7 @@
 
 package jmri.jmrix.can.cbus.swing.nodeconfig;
 
-import jmri.jmrix.loconet.*;
-import jmri.util.StringUtil;
-
 import java.util.ResourceBundle;
-import java.awt.event.*;
 
 import javax.swing.*;
 
@@ -14,7 +10,7 @@ import javax.swing.*;
  * Create Frame containing NodeConfig tool frame
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since 2.3.1
  */
 public class NodeConfigToolFrame extends jmri.util.JmriJFrame {
@@ -53,5 +49,5 @@ public class NodeConfigToolFrame extends jmri.util.JmriJFrame {
         super.dispose();
     }
 
-    static org.apache.log4j.Category log = org.apache.log4j.Category.getInstance(NodeConfigToolFrame.class.getName());
+    static org.apache.log4j.Category log = org.apache.log4j.Logger.getLogger(NodeConfigToolFrame.class.getName());
 }

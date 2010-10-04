@@ -9,14 +9,13 @@ import junit.framework.Assert;
 import junit.framework.TestCase;
 
 import jmri.util.JUnitUtil;
-import jmri.InstanceManager;
 
 /**
  * Base for load/store testing
  * 
  * @author Bob Jacobsen Copyright 2009
  * @since 2.5.5
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class LoadFileTestBase extends TestCase {
 

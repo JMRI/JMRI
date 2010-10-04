@@ -2,9 +2,7 @@
 
  package apps.gui3.paned;
 
-import javax.swing.*;
 import javax.swing.tree.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 
 import jmri.util.swing.*;
@@ -18,7 +16,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Ignores WindowInterface, since standalone.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
  
 public class PanelProFrame extends MultiPaneWindow {

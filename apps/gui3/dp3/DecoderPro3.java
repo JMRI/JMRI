@@ -2,8 +2,6 @@
 
 package apps.gui3.dp3;
 
-import jmri.util.swing.multipane.MultiPaneWindow;
-import java.io.File;
 
 /**
  * The JMRI application for developing the DecoderPro 3 GUI
@@ -23,7 +21,7 @@ import java.io.File;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 

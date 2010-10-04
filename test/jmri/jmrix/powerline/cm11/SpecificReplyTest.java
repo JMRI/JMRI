@@ -7,12 +7,10 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.powerline.SerialMessage;
-
 /**
  * JUnit tests for the cm11.SpecficReply class.
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class SpecificReplyTest extends TestCase {
 

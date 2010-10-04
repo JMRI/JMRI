@@ -4,13 +4,11 @@ package jmri.util.swing;
 
 import javax.swing.*;
 
-import java.util.List;
-
 /**
  * Action to create and load a JmriPanel from just its name.
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.7 $
+ * @version		$Revision: 1.8 $
  */
  
 public class JmriNamedPaneAction extends JmriAbstractAction {

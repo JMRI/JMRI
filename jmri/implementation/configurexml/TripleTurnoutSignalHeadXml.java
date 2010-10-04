@@ -8,14 +8,13 @@ import jmri.util.NamedBeanHandle;
 
 import java.util.List;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Handle XML configuration for TripleTurnoutSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 

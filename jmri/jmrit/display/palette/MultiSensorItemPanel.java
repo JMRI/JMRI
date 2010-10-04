@@ -3,10 +3,6 @@ package jmri.jmrit.display.palette;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.StringSelection;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.awt.dnd.*;
 
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -15,7 +11,6 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -25,7 +20,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.DefaultListSelectionModel;
 
 import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.Positionable;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.NamedBean;

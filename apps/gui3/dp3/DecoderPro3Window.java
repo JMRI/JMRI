@@ -5,24 +5,18 @@
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.io.File;
 
 import java.util.List;
 import java.util.ResourceBundle;
 
-import jmri.util.swing.*;
-
 // for ugly code
 import jmri.progdebugger.*;
 import jmri.jmrit.XmlFile;
-import jmri.jmrit.symbolicprog.*;
 import jmri.jmrit.symbolicprog.tabbedframe.*;
 import jmri.jmrit.roster.*;
 import jmri.jmrit.roster.swing.*;
 
-
-import org.jdom.*;
 
 /**
  * Standalone DecoderPro3 Window (new GUI)
@@ -42,7 +36,7 @@ import org.jdom.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
  
 public class DecoderPro3Window 
