@@ -84,10 +84,6 @@ public class OPath extends jmri.Path  {
     }
     private boolean portalOK(String name) {
         Portal portal = ((OBlock)getBlock()).getPortalByName(name);
-        if (portal==null) {
-            log.warn("portal \""+portal+"\" not found in block for path: "+toString());
-            return false;
-        }
         return portal.isValid();
     }
 

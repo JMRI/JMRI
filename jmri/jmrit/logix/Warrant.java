@@ -22,7 +22,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -441,22 +441,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if(log.isDebugEnabled()) log.debug("controlRunTrain= "+idx);
         int oldIndex = _engineer.getRunState();
         synchronized(_engineer) { 
-            try {
-                switch (idx) {
-                    case HALT:
-                        _engineer.setHalt(true);
-                        break;
-                    case RESUME:
-                        _engineer.setHalt(false);
-                        break;
-                    case ABORT:
-                        _engineer.abort();
-                        _engineer.notifyAll();
-                        break;
-                }
-            } catch (java.lang.IllegalMonitorStateException imse) {
-                log.error("IllegalMonitorStateException "+imse);
-                return false;
+            switch (idx) {
+                case HALT:
+                    _engineer.setHalt(true);
+                    break;
+                case RESUME:
+                    _engineer.setHalt(false);
+                    break;
+                case ABORT:
+                    _engineer.abort();
+                    _engineer.notifyAll();
+                    break;
             }
         }
         firePropertyChange("controlChange", Integer.valueOf(oldIndex), Integer.valueOf(idx));
@@ -942,11 +937,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         synchronized public void synchNotify(OBlock block) {
             if (!_halt && !_wait) {
                 if (_syncIdx <= _idxCurrentOrder) { 
-                    try {
-                        this.notify();
-                    } catch (java.lang.IllegalMonitorStateException imse) {
-                        log.error("synchNotify("+block.getDisplayName()+"): IllegalMonitorStateException "+imse);
-                    }
+                    this.notify();
                 }
             }
         }
@@ -995,17 +986,14 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         synchronized private void resetSpeed() {
             _lock.lock();
-            if (log.isDebugEnabled()) log.debug("resetSpeed: throttle speed= "+_throttle.getSpeedSetting()+" _wait= "+_wait);
-            try {
-                setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
-                if (!_wait && !_halt) {
-                    this.notify();
-                }
-            } catch (java.lang.IllegalMonitorStateException imse) {
-                log.error("resetSpeed: IllegalMonitorStateException "+imse);
-            } finally {
-              _lock.unlock();
+            setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
+            if (!_wait && !_halt) {
+                this.notify();
             }
+            if (log.isDebugEnabled()) log.debug("resetSpeed: throttle speed= "+
+                                                _throttle.getSpeedSetting()+" _wait= "+_wait);
+            this.notify();
+            _lock.unlock();
         }
 
         private float modifySpeed(float s, String sType) {
@@ -1174,11 +1162,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
                 if (!_speedType.equals("Stop")) {
                     synchronized(_engineer) {
-                        try {
-                            _engineer.notify();
-                        } catch (java.lang.IllegalMonitorStateException imse) {
-                            log.error("ThrottleRamp: IllegalMonitorStateException "+imse);
-                        }
+                        _engineer.notify();
                         _wait = false;
                     }
                 } else {
