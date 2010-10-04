@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.116 2010-09-07 01:32:47 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.117 2010-10-04 02:20:23 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -99,6 +99,7 @@
 	<LI>Peter Brandenburg, for many CT Electronik decoder definitions, definitions for Haber &amp; Koenig decoders, 
 	and for creating the SPROG web page
 	<li>Chris Bradshaw, who fixed some broken links
+	    and provided a decoder definition for the TCS Z2
 	<li>Rodolphe Braud, who updated the French translation
 	<LI>Jerry Britton, who acquired and maintained the domain registration 
 	for decoderpro.com, despite Matt Katzer's
@@ -115,25 +116,29 @@
     and Maple support
 	<LI>Bill Brown, whose layout was used for the first NCE tests
 	<LI>Graeme Brown, who helped debug the MacOS X disk images and startup scripts for 10.4
+	    and provided updates for NCE decoders
     <LI>Bob Bucklew, who as an early CTC-builder showed the way to better functionality,
         provided images, and keeps use moving toward better CTC models.
     <LI>Bob Byck, who did extensive testing of test release 1.7.3
 	<LI>Allen Byrne, who has systematically made improvements in the syntax and structure of the JMRI code
 <a name="C"></A>
-    <LI>Joan Carrancà, who provided the German DB signal set.
-    <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
     <LI>Ken Cameron, who wrote the NCE fast clock support, added 
         support for more than two systems to the preferences,
         added the Light Control, provided sample scripts, 
         improved the titling of throttle windows, 
         and created the InstallTest app.
+    <LI>Bill Carman, who located information on the MRC/Athearn F Unit and Challenger decoders
+    <LI>Joan Carrancà, who provided the German DB signal set.
+    <LI>Alain Carraso, who provided decoder definition for Arnold and Mistral Train decoders
     <li>Peter Cesaro provided MRC decoder definitions
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Nigel Cliffe, who updated the CT Elektronic decoder definitions,
 	    provided sample scripts,
 	    provided new Zimo MX620 and ZTC 471 definitions,
-	    and created a script tool for setting Zimo function options.
+	    provided MERG decoder definitions,
+	    created a script tool for setting Zimo function options,
+	    and designed the DecoderPro3 GUI
 	<LI>Normal Clymer, who contribed a TCS definition file
 	<LI>Seth Cohen, who helped get serial sensors and NCE AIUs to work, and
 	wrote the speedometer web page
@@ -254,6 +259,7 @@
 	<LI>Randy Jones, who provided identification info for several Quantum decoders
 	<LI>The Jython project, who provided a very powerful scripting engine for us
 <a name="K"></A>
+    <LI>Georg Kautzsch, who provided a decoder definition for the Uhlenbrock 67800 servo decoder.
     <LI>Scott Kitts, who helped debug the new communications library for 
     MacOS X
 	<LI>Tony Koester, who helped with signalling
@@ -279,6 +285,7 @@
         <a href="http://jmri.org/help/en/package/jmri/jmrit/withrottle/EngineDriverAndroidThrottle.shtml">Android phone throttle application</a>
         and improved the WiThrottle support.
 	<LI>Jim Malone, who created a decoder file definition the Digitrax DN163K1a
+    <li>Peter Mansvelder, who contributed Flieschmann decoder definitions
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
     <li>David McDowell of the North Raleigh Model Railroad Club created
     a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
@@ -402,7 +409,8 @@
 	    improved many help pages,
 	    and is an active jmriusers moderator.
 	<li>Steve Todd, who updated the EngineDriver throttle for Android and fixed an IPv6 problem.
-    <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual.
+    <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual
+        and provided the decoder definition for the Kato FL12
 <a name="U"></A>
     <li>Peter Ulvestad, who created some nice 
     <a href="http://jmri.org/community/clinics/">clinic presentations</a>,
