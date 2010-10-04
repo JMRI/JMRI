@@ -28,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.34 $
+ * @version   $Revision: 1.35 $
  */
 
 
@@ -507,6 +507,8 @@ public class Engine implements ReadingListener {
     // for now, we only allow one Engine
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT") // for tests
     static volatile protected Engine _instance = null;
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="LI_LAZY_INIT_UPDATE_STATIC") // see comment in method
     static public Engine instance() {
         if (_instance == null) {
             // NOTE: _instance has to be initialized before loadValues()
