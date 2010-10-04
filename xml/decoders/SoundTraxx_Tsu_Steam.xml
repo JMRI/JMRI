@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
 <!-- Copyright (C) JMRI 2005, 2006, 2007 All rights reserved -->
-<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.12 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: SoundTraxx_Tsu_Steam.xml,v 1.13 2010-10-04 02:13:14 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -12,19 +13,33 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
+
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+
   <version author="Jack Shall lcrr@bellsouth.net" version="5" lastUpdated="20090903"/>
+  <version author="Jack Shall lcrr@bellsouth.net" version="6" lastUpdated="20100828"/>
+
 <!-- This file contains the "retail version" Tsunami definitions for ALL steam locomotives			-->
+
 <!-- version 5	Rewrite based on the "Soundtraxx_Tsu_(various steam)" series of files				-->
 <!--            by a number of authors.                                     						-->
 <!--			Special thanks to Bob Jacobsen and Michael Mosher for their assistance.				-->
 <!--			This file incorporates the "include" attribute to allow proper display of			-->
 <!--			various elements based on their pertinence to a particular model.  When adding		-->
 <!--			models, the productID must be attached to the proper sets of whistle selections.	-->
+<!-- version 6	Removed default="0003" from CV17 to solve bug found by M. Fournier.					-->
+<!--			Moved custom Pane formats to external files.  Added Rule 17 mode to FX5/FX6.		-->
+<!--			Special thanks to Michael Mosher for his assistance.								-->
+
+
 <!-- Decoder Model information follows -->
+
   <decoder>
-    <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)">
-      <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
+    <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)"
+		comment="These are the -retail- version Tsunami steam decoders">
+
+      <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other"
+		productID="826001" comment="Model 826001">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -40,7 +55,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" connector="other" productID="826002" comment="Model 826002">
+      <model model="TSU-750 Medium Steam" numOuts="2" numFns="14" connector="other"
+		productID="826002" comment="Model 826002">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -56,7 +72,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" connector="other" productID="826003" comment="Model 826003">
+      <model model="TSU-750 Heavy Steam" numOuts="2" numFns="14" connector="other"
+		productID="826003" comment="Model 826003">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -72,7 +89,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" connector="other" productID="826020" comment="Model 826020">
+      <model model="TSU-750 Lt Logging Steam" numOuts="2" numFns="14" connector="other"
+		productID="826020" comment="Model 826020">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -88,7 +106,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" connector="other" productID="826016" comment="Model 826016">
+      <model model="TSU-750 DRGW C-Class Steam" numOuts="2" numFns="14" connector="other"
+		productID="826016" comment="Model 826016">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -104,7 +123,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" connector="other" productID="826004" comment="Model 826004">
+      <model model="TSU-750 DRGW K-Class Steam" numOuts="2" numFns="14" connector="other"
+		productID="826004" comment="Model 826004">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -120,7 +140,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" connector="other" productID="826005" comment="Model 826005">
+      <model model="TSU-750 SP Cab Forward Steam" numOuts="2" numFns="14" connector="other"
+		productID="826005" comment="Model 826005">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -136,7 +157,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other" productID="826101" comment="Model 826101">
+      <model model="TSU-1000 Light Steam" numOuts="4" numFns="14" connector="other"
+		productID="826101" comment="Model 826101">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -152,7 +174,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" connector="other" productID="826102" comment="Model 826102">
+      <model model="TSU-1000 Medium Steam" numOuts="4" numFns="14" connector="other"
+		productID="826102" comment="Model 826102">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -168,7 +191,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" connector="other" productID="826103" comment="Model 826103">
+      <model model="TSU-1000 Heavy Steam" numOuts="4" numFns="14" connector="other"
+		productID="826103" comment="Model 826103">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -184,7 +208,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" connector="other" productID="826120" comment="Model 826120">
+      <model model="TSU-1000 Lt Logging Steam" numOuts="4" numFns="14" connector="other"
+		productID="826120" comment="Model 826120">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -200,7 +225,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" connector="other" productID="826116" comment="Model 826116">
+      <model model="TSU-1000 DRGW C-Class Steam" numOuts="4" numFns="14" connector="other"
+		productID="826116" comment="Model 826116">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -216,7 +242,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" connector="other" productID="826104" comment="Model 826104">
+      <model model="TSU-1000 DRGW K-Class Steam" numOuts="4" numFns="14" connector="other"
+		productID="826104" comment="Model 826104">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -232,7 +259,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" connector="other" productID="826105" comment="Model 826105">
+      <model model="TSU-1000 SP Cab Forward Steam" numOuts="4" numFns="14" connector="other"
+		productID="826105" comment="Model 826105">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -248,7 +276,8 @@
         <output name="Brake-Squeal"/>
         <output name="Coupler"/>
       </model>
-      <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other" productID="826121" comment="Model 826121">
+      <model model="TSU-1000 Southern Steam" numOuts="4" numFns="14" connector="other"
+		productID="826121" comment="Model 826121">
         <versionCV lowVersionID="64"/>
         <output name="Whistle"/>
         <output name="Bell"/>
@@ -265,43 +294,68 @@
         <output name="Coupler"/>
       </model>
     </family>
+
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+
 <!-- Configuration Variable (CV) information follows -->
+
     <variables>
-      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3" tooltip="Sets the Primary (short, 2 digit) address">
+
+      <variable label="Primary Address (1-127)" CV="1" item="Short Address" default="3"
+			tooltip="Sets the Primary (short, 2 digit) address">
         <shortAddressVal/>
         <label>Primary Address (1-127)</label>
       </variable>
-      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0" comment="A value of 255 corresponds to full voltage available" tooltip="Sets the starting voltage at throttle speed step 1">
+
+      <variable label="Start Voltage (0-255)" CV="2" item="Vstart" default="0"
+			comment="A value of 255 corresponds to full voltage available"
+			tooltip="Sets the starting voltage at throttle speed step 1">
         <decVal/>
         <label>Start Voltage (0-255)</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+
+      <variable label="Acceleration Rate (0-255)" CV="3" item="Accel" default="0"
+			tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
       </variable>
-      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+
+      <variable label="Braking Rate (0-255)" CV="4" item="Decel" default="0"
+			tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
       </variable>
-      <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version" tooltip="This is the decoder software version identifier (read only)">
+
+      <variable label="Manufacturer Version ID" CV="7" readOnly="yes" item="Decoder Version"
+			tooltip="This is the decoder software version identifier (read only)">
         <decVal/>
         <label>Manufacturer Version ID</label>
       </variable>
+
       <variable label="Manufacturer ID" CV="8" readOnly="yes" item="Manufacturer">
         <decVal/>
         <label>Manufacturer ID</label>
       </variable>
-      <variable label="BEMF Cutout (0-127 or 128-255)" CV="10" item="EMF Feedback Cutout" default="0" tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;     to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
+
+      <variable label="BEMF Cutout (0-127 or 128-255)" CV="10" item="EMF Feedback Cutout" default="0"
+			tooltip="&lt;html&gt;Up to 127, this sets the speed step above which the intensity of BEMF control will be reduced&lt;br&gt;
+					to zero.  Values over 127 cause the BEMF to decrease as a percentage (up to 50%).&lt;/html&gt;">
         <decVal/>
         <label>BEMF Cutout (0-127 or 128-255)</label>
       </variable>
-      <variable label="Packet Time Out Value (0-255)" CV="11" item="Packet Time-out Value" default="0" tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;     addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
+
+      <variable label="Packet Time Out Value (0-255)" CV="11" item="Packet Time-out Value" default="0"
+		tooltip="&lt;html&gt;Sets the time period that is allowed to elapse between receipts of a valid packet&lt;br&gt;
+				addressed to the decoder before a throttle shutdown occurs.  Enter zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Packet Time Out Value (0-255)</label>
       </variable>
-      <variable label="Power Source Conversion Type" CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1" tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;     switch to whenever a DCC signal is not present.&lt;br&gt;     (Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
+
+      <variable label="Power Source Conversion Type" CV="12" mask="XXXXXXXV" item="Analog Power Conversion" default="1"
+			tooltip="&lt;html&gt;Defines the type of power source the decoder should&lt;br&gt;
+					switch to whenever a DCC signal is not present.&lt;br&gt;
+					(Tip: Alternate Power Source must be enabled)&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="No alternate power source available">
             <choice>No alternate power source available</choice>
@@ -312,7 +366,9 @@
         </enumVal>
         <label>Power Source Conversion Type</label>
       </variable>
-      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0" tooltip="Check to enable function F1 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F1" CV="13" mask="XXXXXXXV" default="0"
+			tooltip="Check to enable function F1 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -323,7 +379,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F1</label>
       </variable>
-      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0" tooltip="Check to enable function F2 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F2" CV="13" mask="XXXXXXVX" default="0"
+			tooltip="Check to enable function F2 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -334,7 +392,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F2</label>
       </variable>
-      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0" tooltip="Check to enable function F3 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F3" CV="13" mask="XXXXXVXX" default="0"
+			tooltip="Check to enable function F3 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -345,7 +405,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F3</label>
       </variable>
-      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0" tooltip="Check to enable function F4 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F4" CV="13" mask="XXXXVXXX" default="0"
+			tooltip="Check to enable function F4 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -356,7 +418,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F4</label>
       </variable>
-      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0" tooltip="Check to enable function F5 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F5" CV="13" mask="XXXVXXXX" default="0"
+			tooltip="Check to enable function F5 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -367,7 +431,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F5</label>
       </variable>
-      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0" tooltip="Check to enable function F6 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F6" CV="13" mask="XXVXXXXX" default="0"
+			tooltip="Check to enable function F6 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -378,7 +444,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F6</label>
       </variable>
-      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0" tooltip="Check to enable function F7 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F7" CV="13" mask="XVXXXXXX" default="0"
+			tooltip="Check to enable function F7 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -389,7 +457,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F7</label>
       </variable>
-      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0" tooltip="Check to enable function F8 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F8" CV="13" mask="VXXXXXXX" default="0"
+			tooltip="Check to enable function F8 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -400,7 +470,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F8</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="0" tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F0(f)" CV="14" mask="XXXXXXXV" default="0"
+			tooltip="Check to enable function F0(f) when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -411,7 +483,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F0(f)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="0" tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F0(r)" CV="14" mask="XXXXXXVX" default="0"
+			tooltip="Check to enable function F0(r) when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -422,7 +496,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F0(r)</label>
       </variable>
-      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0" tooltip="Check to enable function F9 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F9" CV="14" mask="XXXXXVXX" default="0"
+			tooltip="Check to enable function F9 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -433,7 +509,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F9</label>
       </variable>
-      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0" tooltip="Check to enable function F10 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F10" CV="14" mask="XXXXVXXX" default="0"
+			tooltip="Check to enable function F10 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -444,7 +522,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F10</label>
       </variable>
-      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0" tooltip="Check to enable function F11 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F11" CV="14" mask="XXXVXXXX" default="0"
+			tooltip="Check to enable function F11 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -455,7 +535,9 @@
         </enumVal>
         <label>Analog Mode Function Status - F11</label>
       </variable>
-      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0" tooltip="Check to enable function F12 when the unit is operating in analog power mode">
+
+      <variable label="Analog Mode Function Status - F12" CV="14" mask="XXVXXXXX" default="0"
+			tooltip="Check to enable function F12 when the unit is operating in analog power mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -466,25 +548,37 @@
         </enumVal>
         <label>Analog Mode Function Status - F12</label>
       </variable>
-      <variable label="CV Unlock Register (0-7)" CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0" tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;     (Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
+
+      <variable label="CV Unlock Register (0-7)" CV="15" mask="XXXXXVVV" item="Advanced Group 1 Option 1" default="0"
+			tooltip="&lt;html&gt;Enter the Lock ID Code to unlock access to the decoder CVs.&lt;br&gt;
+					(Tip: Establish the unlock code with CV Lock ID Code)&lt;/html&gt;">
         <decVal/>
         <label>CV Unlock Register (0-7)</label>
       </variable>
-      <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0" tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
+
+      <variable label="CV Lock ID Code (0-7)" CV="16" mask="XXXXXVVV" item="Advanced Group 1 Option 2" default="0"
+			tooltip="Sets the unlock code that must be entered into the CV Unlock Register in order to access the decoder CVs">
         <decVal/>
         <label>CV Lock ID Code (0-7)</label>
       </variable>
-      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address" default="0003" tooltip="Sets the Extended (long, 4 digit) address">
+
+      <variable label="Extended Address (0001-9999)" CV="17" item="Long Address"
+			tooltip="Sets the Extended (long, 4 digit) address">
         <longAddressVal/>
         <label>Extended Address (0001-9999)</label>
       </variable>
+
 <!-- Consisting Information follows -->
-      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0" comment="Stores consist address. Range 0-127 (direction set in bit 7)">
+
+      <variable label="Consist Address (0-127)" CV="19" mask="XVVVVVVV" item="Consist Address" default="0"
+			comment="Stores consist address. Range 0-127 (direction set in bit 7)">
         <decVal max="127"/>
         <label>Consist Address (0-127)</label>
         <comment>Stores consist address. Range 0-127 (direction set in bit 7)</comment>
       </variable>
-      <variable label="Loco Direction In Consist" CV="19" mask="VXXXXXXX" item="Consist Direction" default="0" comment="A consist address over 127 will also set this bit">
+
+      <variable label="Loco Direction In Consist" CV="19" mask="VXXXXXXX" item="Consist Direction" default="0"
+			comment="A consist address over 127 will also set this bit">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -496,7 +590,9 @@
         <label>Loco Direction In Consist</label>
         <comment>A consist address over 127 will also set this bit</comment>
       </variable>
-      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV" item="Consist Address Active For F1" default="0" minFn="1">
+
+      <variable label="Consist Address Activation for F1" CV="21" mask="XXXXXXXV"
+			item="Consist Address Active For F1" default="0" minFn="1">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -507,7 +603,9 @@
         </enumVal>
         <label>Consist Address Activation for F1</label>
       </variable>
-      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX" item="Consist Address Active For F2" default="0" minFn="2">
+
+      <variable label="Consist Address Activation for F2" CV="21" mask="XXXXXXVX"
+			item="Consist Address Active For F2" default="0" minFn="2">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -518,7 +616,9 @@
         </enumVal>
         <label>Consist Address Activation for F2</label>
       </variable>
-      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX" item="Consist Address Active For F3" default="0" minFn="3">
+
+      <variable label="Consist Address Activation for F3" CV="21" mask="XXXXXVXX"
+			item="Consist Address Active For F3" default="0" minFn="3">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -529,7 +629,9 @@
         </enumVal>
         <label>Consist Address Activation for F3</label>
       </variable>
-      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX" item="Consist Address Active For F4" default="0" minFn="4">
+
+      <variable label="Consist Address Activation for F4" CV="21" mask="XXXXVXXX"
+			item="Consist Address Active For F4" default="0" minFn="4">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -540,7 +642,9 @@
         </enumVal>
         <label>Consist Address Activation for F4</label>
       </variable>
-      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX" item="Consist Address Active For F5" default="0" minFn="5">
+
+      <variable label="Consist Address Activation for F5" CV="21" mask="XXXVXXXX"
+			item="Consist Address Active For F5" default="0" minFn="5">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -551,7 +655,9 @@
         </enumVal>
         <label>Consist Address Activation for F5</label>
       </variable>
-      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX" item="Consist Address Active For F6" default="0" minFn="6">
+
+      <variable label="Consist Address Activation for F6" CV="21" mask="XXVXXXXX"
+			item="Consist Address Active For F6" default="0" minFn="6">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -562,7 +668,9 @@
         </enumVal>
         <label>Consist Address Activation for F6</label>
       </variable>
-      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX" item="Consist Address Active For F7" default="0" minFn="7">
+
+      <variable label="Consist Address Activation for F7" CV="21" mask="XVXXXXXX"
+			item="Consist Address Active For F7" default="0" minFn="7">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -573,7 +681,9 @@
         </enumVal>
         <label>Consist Address Activation for F7</label>
       </variable>
-      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX" item="Consist Address Active For F8" default="0" minFn="8">
+
+      <variable label="Consist Address Activation for F8" CV="21" mask="VXXXXXXX"
+			item="Consist Address Active For F8" default="0" minFn="8">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -584,7 +694,9 @@
         </enumVal>
         <label>Consist Address Activation for F8</label>
       </variable>
-      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV" item="Consist Address Active For FL in Forward" default="0">
+
+      <variable label="Consist Address Activation for F0(f) in Forward" CV="22" mask="XXXXXXXV"
+			item="Consist Address Active For FL in Forward" default="0">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -595,7 +707,9 @@
         </enumVal>
         <label>Consist Address Activation for F0(f) in Forward</label>
       </variable>
-      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX" item="Consist Address Active For FL in Reverse" default="0">
+
+      <variable label="Consist Address Activation for F0(r) in Reverse" CV="22" mask="XXXXXXVX"
+			item="Consist Address Active For FL in Reverse" default="0">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -606,7 +720,9 @@
         </enumVal>
         <label>Consist Address Activation for F0(r) in Reverse</label>
       </variable>
-      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX" item="Consist Address Active For F9" default="0" minFn="9">
+
+      <variable label="Consist Address Activation for F9" CV="22" mask="XXXXXVXX"
+			item="Consist Address Active For F9" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -617,7 +733,9 @@
         </enumVal>
         <label>Consist Address Activation for F9</label>
       </variable>
-      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX" item="Consist Address Active For F10" default="0" minFn="10">
+
+      <variable label="Consist Address Activation for F10" CV="22" mask="XXXXVXXX"
+			item="Consist Address Active For F10" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -628,7 +746,9 @@
         </enumVal>
         <label>Consist Address Activation for F10</label>
       </variable>
-      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX" item="Consist Address Active For F11" default="0" minFn="11">
+
+      <variable label="Consist Address Activation for F11" CV="22" mask="XXXVXXXX"
+			item="Consist Address Active For F11" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -639,7 +759,9 @@
         </enumVal>
         <label>Consist Address Activation for F11</label>
       </variable>
-      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX" item="Consist Address Active For F12" default="0" minFn="12">
+
+      <variable label="Consist Address Activation for F12" CV="22" mask="XXVXXXXX"
+			item="Consist Address Active For F12" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="Respond to locomotive address only">
             <choice>Respond to locomotive address only</choice>
@@ -650,12 +772,18 @@
         </enumVal>
         <label>Consist Address Activation for F12</label>
       </variable>
-      <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV" item="Consist Acceleration Adjustment" default="0" comment="Additional consist acceleration (combined with CV3)" tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
+
+      <variable label="Consist Acceleration Rate (0-127)" CV="23" mask="XVVVVVVV"
+			item="Consist Acceleration Adjustment" default="0"
+			comment="Additional consist acceleration (combined with CV3)"
+			tooltip="When loco is in a consist, it's base acceleration rate is modified by this amount">
         <decVal max="127"/>
         <label>Consist Acceleration Rate (0-127)</label>
         <comment>Additional consist acceleration (combined with CV3)</comment>
       </variable>
-      <variable label="Consist Acceleration Sign" CV="23" mask="VXXXXXXX" item="Consist Acceleration Adjustment Sign" default="0">
+
+      <variable label="Consist Acceleration Sign" CV="23" mask="VXXXXXXX" 
+			item="Consist Acceleration Adjustment Sign" default="0">
         <enumVal>
           <enumChoice choice="Add value to base acceleration rate (increases acceleration delay)">
             <choice>Add value to base acceleration rate (increases acceleration delay)</choice>
@@ -666,12 +794,19 @@
         </enumVal>
         <label>Consist Acceleration Sign</label>
       </variable>
-      <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV" item="Consist Deceleration Adjustment" default="0" comment="Additional consist braking (combined with CV4)" tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
+
+      <variable label="Consist Braking Rate (0-127)" CV="24" mask="XVVVVVVV"
+			item="Consist Deceleration Adjustment" default="0"
+			comment="Additional consist braking (combined with CV4)"
+			tooltip="When loco is in a consist, it's baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>Consist Braking Rate (0-127)</label>
         <comment>Additional consist braking (combined with CV4)</comment>
       </variable>
-      <variable label="Consist Braking Sign" CV="24" mask="VXXXXXXX" item="Consist Deceleration Adjustment Sign" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
+
+      <variable label="Consist Braking Sign" CV="24" mask="VXXXXXXX" 
+			item="Consist Deceleration Adjustment Sign" default="0"
+			tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <enumVal>
           <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
             <choice>Add value to baseline braking rate (increases braking delay)</choice>
@@ -682,7 +817,9 @@
         </enumVal>
         <label>Consist Braking Sign</label>
       </variable>
-      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0" tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
+
+      <variable label="Speed Table Selection" CV="25" mask="XXXVVVVV" default="0"
+			tooltip="Select a manufacturers speed curve, or use a curve you define yourself.">
         <enumVal>
           <enumChoice choice="Disabled, Speed Curves not used">
             <choice>Disabled, Speed Curves not used</choice>
@@ -738,7 +875,9 @@
         </enumVal>
         <label>Speed Table Selection</label>
       </variable>
-      <variable label="Locomotive's Normal Direction of Motion" CV="29" mask="XXXXXXXV" item="Locomotive Direction" default="0">
+
+      <variable label="Locomotive's Normal Direction of Motion" CV="29" mask="XXXXXXXV"
+			item="Locomotive Direction" default="0">
         <enumVal>
           <enumChoice choice="Forward">
             <choice>Forward</choice>
@@ -749,6 +888,7 @@
         </enumVal>
         <label>Locomotive's Normal Direction of Motion</label>
       </variable>
+
       <variable label="Speed Steps" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1">
         <enumVal>
           <enumChoice choice="14">
@@ -760,7 +900,9 @@
         </enumVal>
         <label>Speed Steps</label>
       </variable>
-      <variable label="Alternate Power Source Enable" CV="29" mask="XXXXXVXX" item="Analog (DC) Operation" default="0">
+
+      <variable label="Alternate Power Source Enable" CV="29" mask="XXXXXVXX"
+			item="Analog (DC) Operation" default="0">
         <enumVal>
           <enumChoice choice="NMRA Digital Only">
             <choice>NMRA Digital Only</choice>
@@ -771,6 +913,7 @@
         </enumVal>
         <label>Alternate Power Source Enable</label>
       </variable>
+
       <variable label="Use Speed Table" CV="29" mask="XXXVXXXX" item="Speed Table Definition" default="0">
         <enumVal>
           <enumChoice choice="Use Start Voltage (Vstart)">
@@ -782,6 +925,7 @@
         </enumVal>
         <label>Use Speed Table</label>
       </variable>
+
       <variable label="Extended Address Mode" CV="29" mask="XXVXXXXX" item="Address Format" default="0">
         <enumVal>
           <enumChoice choice="Use 2 digit address (primary address)">
@@ -793,7 +937,9 @@
         </enumVal>
         <label>Extended Address Mode</label>
       </variable>
-      <variable label="CV Lock Enable" CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0" tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
+
+      <variable label="CV Lock Enable" CV="30" mask="XXXXXXXV" item="Advanced Group 1 Option 3" default="0"
+			tooltip="Enable locking of CVs when decoder is used in a multi-decoder installation">
         <enumVal>
           <enumChoice choice="Normal operation (no locking)">
             <choice>Normal operation (no locking)</choice>
@@ -804,7 +950,9 @@
         </enumVal>
         <label>CV Lock Enable</label>
       </variable>
-      <variable label="CV Clear (CVCLR)" CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0" tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
+
+      <variable label="CV Clear (CVCLR)" CV="30" mask="XXXXXXVX" item="Advanced Group 1 Option 4" default="0"
+			tooltip="Tip: To do a one-time decoder reset, use the menu [Reset] selection">
         <enumVal>
           <enumChoice choice="Normal operation">
             <choice>Normal operation</choice>
@@ -815,7 +963,10 @@
         </enumVal>
         <label>CV Clear (CVCLR)</label>
       </variable>
-      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX" item="Advanced Group 1 Option 5" default="0" tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
+
+      <variable label="Function Group 2 and 3 Exchange" CV="30" mask="XXXXXVXX"
+			item="Advanced Group 1 Option 5" default="0"
+			tooltip="Function Group 2 (F5-F8) assignments are swapped with Function Group 3 (F9-F12)">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -826,7 +977,10 @@
         </enumVal>
         <label>Function Group 2 and 3 Exchange</label>
       </variable>
+
+
 <!-- Function Mapping follows -->
+
       <variable label="FL(f) controls Headlight" CV="33" mask="XXXXXXXV" item="FL(f) controls output 1" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -838,6 +992,7 @@
         </enumVal>
         <label>FL(f) controls Headlight</label>
       </variable>
+
       <variable label="FL(f) controls Backup Light" CV="33" mask="XXXXXXVX" item="FL(f) controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -849,6 +1004,7 @@
         </enumVal>
         <label>FL(f) controls Backup Light</label>
       </variable>
+
       <variable label="FL(f) controls output Whistle" CV="33" mask="XXXXXVXX" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -860,6 +1016,7 @@
         </enumVal>
         <label>FL(f) controls output Whistle</label>
       </variable>
+
       <variable label="FL(f) controls output Bell" CV="33" mask="XXXXVXXX" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -871,6 +1028,7 @@
         </enumVal>
         <label>FL(f) controls output Bell</label>
       </variable>
+
       <variable label="FL(f) controls output FX5" CV="33" mask="XXXVXXXX" item="FL(f) controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -882,6 +1040,7 @@
         </enumVal>
         <label>FL(f) controls output FX5</label>
       </variable>
+
       <variable label="FL(f) controls output FX6" CV="33" mask="XXVXXXXX" item="FL(f) controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -893,6 +1052,7 @@
         </enumVal>
         <label>FL(f) controls output FX6</label>
       </variable>
+
       <variable label="FL(f) controls output Dynamo" CV="33" mask="XVXXXXXX" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -904,6 +1064,7 @@
         </enumVal>
         <label>FL(f) controls output Dynamo</label>
       </variable>
+
       <variable label="FL(f) controls output Short-Whistle" CV="33" mask="VXXXXXXX" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -915,6 +1076,7 @@
         </enumVal>
         <label>FL(f) controls output Short-Whistle</label>
       </variable>
+
       <variable label="FL(r) controls Headlight" CV="34" mask="XXXXXXXV" item="FL(r) controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -926,6 +1088,7 @@
         </enumVal>
         <label>FL(r) controls Headlight</label>
       </variable>
+
       <variable label="FL(r) controls Backup Light" CV="34" mask="XXXXXXVX" item="FL(r) controls output 2" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -937,6 +1100,7 @@
         </enumVal>
         <label>FL(r) controls Backup Light</label>
       </variable>
+
       <variable label="FL(r) controls output Whistle" CV="34" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -948,6 +1112,7 @@
         </enumVal>
         <label>FL(r) controls output Whistle</label>
       </variable>
+
       <variable label="FL(r) controls output Bell" CV="34" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -959,6 +1124,7 @@
         </enumVal>
         <label>FL(r) controls output Bell</label>
       </variable>
+
       <variable label="FL(r) controls output FX5" CV="34" mask="XXXVXXXX" item="FL(r) controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -970,6 +1136,7 @@
         </enumVal>
         <label>FL(r) controls output FX5</label>
       </variable>
+
       <variable label="FL(r) controls output FX6" CV="34" mask="XXVXXXXX" item="FL(r) controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -981,6 +1148,7 @@
         </enumVal>
         <label>FL(r) controls output FX6</label>
       </variable>
+
       <variable label="FL(r) controls output Dynamo" CV="34" mask="XVXXXXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -992,6 +1160,7 @@
         </enumVal>
         <label>FL(r) controls output Dynamo</label>
       </variable>
+
       <variable label="FL(r) controls output Short-Whistle" CV="34" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1003,6 +1172,7 @@
         </enumVal>
         <label>FL(r) controls output Short-Whistle</label>
       </variable>
+
       <variable label="F1 controls Headlight" CV="35" mask="XXXXXXXV" item="F1 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1014,6 +1184,7 @@
         </enumVal>
         <label>F1 controls Headlight</label>
       </variable>
+
       <variable label="F1 controls Backup Light" CV="35" mask="XXXXXXVX" item="F1 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1025,6 +1196,7 @@
         </enumVal>
         <label>F1 controls Backup Light</label>
       </variable>
+
       <variable label="F1 controls output Whistle" CV="35" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1036,6 +1208,7 @@
         </enumVal>
         <label>F1 controls output Whistle</label>
       </variable>
+
       <variable label="F1 controls output Bell" CV="35" mask="XXXXVXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1047,6 +1220,7 @@
         </enumVal>
         <label>F1 controls output Bell</label>
       </variable>
+
       <variable label="F1 controls output FX5" CV="35" mask="XXXVXXXX" item="F1 controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1058,6 +1232,7 @@
         </enumVal>
         <label>F1 controls output FX5</label>
       </variable>
+
       <variable label="F1 controls output FX6" CV="35" mask="XXVXXXXX" item="F1 controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1069,6 +1244,7 @@
         </enumVal>
         <label>F1 controls output FX6</label>
       </variable>
+
       <variable label="F1 controls output Dynamo" CV="35" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1080,6 +1256,7 @@
         </enumVal>
         <label>F1 controls output Dynamo</label>
       </variable>
+
       <variable label="F1 controls output Short-Whistle" CV="35" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1091,6 +1268,7 @@
         </enumVal>
         <label>F1 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F2 controls Headlight" CV="36" mask="XXXXXXXV" item="F2 controls output 1" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1102,6 +1280,7 @@
         </enumVal>
         <label>F2 controls Headlight</label>
       </variable>
+
       <variable label="F2 controls Backup Light" CV="36" mask="XXXXXXVX" item="F2 controls output 2" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1113,6 +1292,7 @@
         </enumVal>
         <label>F2 controls Backup Light</label>
       </variable>
+
       <variable label="F2 controls output Whistle" CV="36" mask="XXXXXVXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1124,6 +1304,7 @@
         </enumVal>
         <label>F2 controls output Whistle</label>
       </variable>
+
       <variable label="F2 controls output Bell" CV="36" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1135,6 +1316,7 @@
         </enumVal>
         <label>F2 controls output Bell</label>
       </variable>
+
       <variable label="F2 controls output FX5" CV="36" mask="XXXVXXXX" item="F2 controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1146,6 +1328,7 @@
         </enumVal>
         <label>F2 controls output FX5</label>
       </variable>
+
       <variable label="F2 controls output FX6" CV="36" mask="XXVXXXXX" item="F2 controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1157,6 +1340,7 @@
         </enumVal>
         <label>F2 controls output FX6</label>
       </variable>
+
       <variable label="F2 controls output Dynamo" CV="36" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1168,6 +1352,7 @@
         </enumVal>
         <label>F2 controls output Dynamo</label>
       </variable>
+
       <variable label="F2 controls output Short-Whistle" CV="36" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1179,6 +1364,7 @@
         </enumVal>
         <label>F2 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F3 controls output Bell" CV="37" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1190,6 +1376,7 @@
         </enumVal>
         <label>F3 controls output Bell</label>
       </variable>
+
       <variable label="F3 controls output FX5" CV="37" mask="XXXXXXVX" item="F3 controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1201,6 +1388,7 @@
         </enumVal>
         <label>F3 controls output FX5</label>
       </variable>
+
       <variable label="F3 controls output FX6" CV="37" mask="XXXXXVXX" item="F3 controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1212,6 +1400,7 @@
         </enumVal>
         <label>F3 controls output FX6</label>
       </variable>
+
       <variable label="F3 controls output Dynamo" CV="37" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1223,6 +1412,7 @@
         </enumVal>
         <label>F3 controls output Dynamo</label>
       </variable>
+
       <variable label="F3 controls output Short-Whistle" CV="37" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1234,6 +1424,7 @@
         </enumVal>
         <label>F3 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F3 controls output Steam-Release" CV="37" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1245,6 +1436,7 @@
         </enumVal>
         <label>F3 controls output Steam-Release</label>
       </variable>
+
       <variable label="F3 controls output Water-Stop" CV="37" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1256,6 +1448,7 @@
         </enumVal>
         <label>F3 controls output Water-Stop</label>
       </variable>
+
       <variable label="F3 controls output Dimming" CV="37" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1267,6 +1460,7 @@
         </enumVal>
         <label>F3 controls output Dimming</label>
       </variable>
+
       <variable label="F4 controls output Bell" CV="38" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1278,6 +1472,7 @@
         </enumVal>
         <label>F4 controls output Bell</label>
       </variable>
+
       <variable label="F4 controls output FX5" CV="38" mask="XXXXXXVX" item="F4 controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1289,6 +1484,7 @@
         </enumVal>
         <label>F4 controls output FX5</label>
       </variable>
+
       <variable label="F4 controls output FX6" CV="38" mask="XXXXXVXX" item="F4 controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1300,6 +1496,7 @@
         </enumVal>
         <label>F4 controls output FX6</label>
       </variable>
+
       <variable label="F4 controls output Dynamo" CV="38" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1311,6 +1508,7 @@
         </enumVal>
         <label>F4 controls output Dynamo</label>
       </variable>
+
       <variable label="F4 controls output Short-Whistle" CV="38" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1322,6 +1520,7 @@
         </enumVal>
         <label>F4 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F4 controls output Steam-Release" CV="38" mask="XXVXXXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1333,6 +1532,7 @@
         </enumVal>
         <label>F4 controls output Steam-Release</label>
       </variable>
+
       <variable label="F4 controls output Water-Stop" CV="38" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1344,6 +1544,7 @@
         </enumVal>
         <label>F4 controls output Water-Stop</label>
       </variable>
+
       <variable label="F4 controls output Dimming" CV="38" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1355,6 +1556,7 @@
         </enumVal>
         <label>F4 controls output Dimming</label>
       </variable>
+
       <variable label="F5 controls output Bell" CV="39" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1366,6 +1568,7 @@
         </enumVal>
         <label>F5 controls output Bell</label>
       </variable>
+
       <variable label="F5 controls output FX5" CV="39" mask="XXXXXXVX" item="F5 controls output 3" minOut="1" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1377,6 +1580,7 @@
         </enumVal>
         <label>F5 controls output FX5</label>
       </variable>
+
       <variable label="F5 controls output FX6" CV="39" mask="XXXXXVXX" item="F5 controls output 4" minOut="2" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1388,6 +1592,7 @@
         </enumVal>
         <label>F5 controls output FX6</label>
       </variable>
+
       <variable label="F5 controls output Dynamo" CV="39" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1399,6 +1604,7 @@
         </enumVal>
         <label>F5 controls output Dynamo</label>
       </variable>
+
       <variable label="F5 controls output Short-Whistle" CV="39" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1410,6 +1616,7 @@
         </enumVal>
         <label>F5 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F5 controls output Steam-Release" CV="39" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1421,6 +1628,7 @@
         </enumVal>
         <label>F5 controls output Steam-Release</label>
       </variable>
+
       <variable label="F5 controls output Water-Stop" CV="39" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1432,6 +1640,7 @@
         </enumVal>
         <label>F5 controls output Water-Stop</label>
       </variable>
+
       <variable label="F5 controls output Dimming" CV="39" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1443,6 +1652,7 @@
         </enumVal>
         <label>F5 controls output Dimming</label>
       </variable>
+
       <variable label="F6 controls output Bell" CV="40" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1454,6 +1664,7 @@
         </enumVal>
         <label>F6 controls output Bell</label>
       </variable>
+
       <variable label="F6 controls output FX5" CV="40" mask="XXXXXXVX" item="F6 controls output 3" minOut="1" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1465,6 +1676,7 @@
         </enumVal>
         <label>F6 controls output FX5</label>
       </variable>
+
       <variable label="F6 controls output FX6" CV="40" mask="XXXXXVXX" item="F6 controls output 4" minOut="2" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1476,6 +1688,7 @@
         </enumVal>
         <label>F6 controls output FX6</label>
       </variable>
+
       <variable label="F6 controls output Dynamo" CV="40" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1487,6 +1700,7 @@
         </enumVal>
         <label>F6 controls output Dynamo</label>
       </variable>
+
       <variable label="F6 controls output Short-Whistle" CV="40" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1498,6 +1712,7 @@
         </enumVal>
         <label>F6 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F6 controls output Steam-Release" CV="40" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1509,6 +1724,7 @@
         </enumVal>
         <label>F6 controls output Steam-Release</label>
       </variable>
+
       <variable label="F6 controls output Water-Stop" CV="40" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1520,6 +1736,7 @@
         </enumVal>
         <label>F6 controls output Water-Stop</label>
       </variable>
+
       <variable label="F6 controls output Dimming" CV="40" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1531,6 +1748,7 @@
         </enumVal>
         <label>F6 controls output Dimming</label>
       </variable>
+
       <variable label="F7 controls output Dynamo" CV="41" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1542,6 +1760,7 @@
         </enumVal>
         <label>F7 controls output Dynamo</label>
       </variable>
+
       <variable label="F7 controls output Short-Whistle" CV="41" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1553,6 +1772,7 @@
         </enumVal>
         <label>F7 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F7 controls output Steam-Release" CV="41" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1564,6 +1784,7 @@
         </enumVal>
         <label>F7 controls output Steam-Release</label>
       </variable>
+
       <variable label="F7 controls output Water-Stop" CV="41" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1575,6 +1796,7 @@
         </enumVal>
         <label>F7 controls output Water-Stop</label>
       </variable>
+
       <variable label="F7 controls output Dimming" CV="41" mask="XXXVXXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1586,6 +1808,7 @@
         </enumVal>
         <label>F7 controls output Dimming</label>
       </variable>
+
       <variable label="F7 controls output Mute" CV="41" mask="XXVXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1597,6 +1820,7 @@
         </enumVal>
         <label>F7 controls output Mute</label>
       </variable>
+
       <variable label="F7 controls output Injector" CV="41" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1608,6 +1832,7 @@
         </enumVal>
         <label>F7 controls output Injector</label>
       </variable>
+
       <variable label="F7 controls output Brake-Squeal" CV="41" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1619,6 +1844,7 @@
         </enumVal>
         <label>F7 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F8 controls output Dynamo" CV="42" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1630,6 +1856,7 @@
         </enumVal>
         <label>F8 controls output Dynamo</label>
       </variable>
+
       <variable label="F8 controls output Short-Whistle" CV="42" mask="XXXXXXVX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1641,6 +1868,7 @@
         </enumVal>
         <label>F8 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F8 controls output Steam-Release" CV="42" mask="XXXXXVXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1652,6 +1880,7 @@
         </enumVal>
         <label>F8 controls output Steam-Release</label>
       </variable>
+
       <variable label="F8 controls output Water-Stop" CV="42" mask="XXXXVXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1663,6 +1892,7 @@
         </enumVal>
         <label>F8 controls output Water-Stop</label>
       </variable>
+
       <variable label="F8 controls output Dimming" CV="42" mask="XXXVXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1674,6 +1904,7 @@
         </enumVal>
         <label>F8 controls output Dimming</label>
       </variable>
+
       <variable label="F8 controls output Mute" CV="42" mask="XXVXXXXX" default="1">
         <enumVal>
           <enumChoice choice="No">
@@ -1685,6 +1916,7 @@
         </enumVal>
         <label>F8 controls output Mute</label>
       </variable>
+
       <variable label="F8 controls output Injector" CV="42" mask="XVXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1696,6 +1928,7 @@
         </enumVal>
         <label>F8 controls output Injector</label>
       </variable>
+
       <variable label="F8 controls output Brake-Squeal" CV="42" mask="VXXXXXXX" default="0">
         <enumVal>
           <enumChoice choice="No">
@@ -1707,6 +1940,7 @@
         </enumVal>
         <label>F8 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F9 controls output Dynamo" CV="43" mask="XXXXXXXV" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1718,6 +1952,7 @@
         </enumVal>
         <label>F9 controls output Dynamo</label>
       </variable>
+
       <variable label="F9 controls output Short-Whistle" CV="43" mask="XXXXXXVX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1729,6 +1964,7 @@
         </enumVal>
         <label>F9 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F9 controls output Steam-Release" CV="43" mask="XXXXXVXX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1740,6 +1976,7 @@
         </enumVal>
         <label>F9 controls output Steam-Release</label>
       </variable>
+
       <variable label="F9 controls output Water-Stop" CV="43" mask="XXXXVXXX" default="1" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1751,6 +1988,7 @@
         </enumVal>
         <label>F9 controls output Water-Stop</label>
       </variable>
+
       <variable label="F9 controls output Dimming" CV="43" mask="XXXVXXXX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1762,6 +2000,7 @@
         </enumVal>
         <label>F9 controls output Dimming</label>
       </variable>
+
       <variable label="F9 controls output Mute" CV="43" mask="XXVXXXXX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1773,6 +2012,7 @@
         </enumVal>
         <label>F9 controls output Mute</label>
       </variable>
+
       <variable label="F9 controls output Injector" CV="43" mask="XVXXXXXX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1784,6 +2024,7 @@
         </enumVal>
         <label>F9 controls output Injector</label>
       </variable>
+
       <variable label="F9 controls output Brake-Squeal" CV="43" mask="VXXXXXXX" default="0" minFn="9">
         <enumVal>
           <enumChoice choice="No">
@@ -1795,6 +2036,7 @@
         </enumVal>
         <label>F9 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F10 controls output Short-Whistle" CV="44" mask="XXXXXXXV" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1806,6 +2048,7 @@
         </enumVal>
         <label>F10 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F10 controls output Steam-Release" CV="44" mask="XXXXXXVX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1817,6 +2060,7 @@
         </enumVal>
         <label>F10 controls output Steam-Release</label>
       </variable>
+
       <variable label="F10 controls output Water-Stop" CV="44" mask="XXXXXVXX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1828,6 +2072,7 @@
         </enumVal>
         <label>F10 controls output Water-Stop</label>
       </variable>
+
       <variable label="F10 controls output Dimming" CV="44" mask="XXXXVXXX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1839,6 +2084,7 @@
         </enumVal>
         <label>F10 controls output Dimming</label>
       </variable>
+
       <variable label="F10 controls output Mute" CV="44" mask="XXXVXXXX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1850,6 +2096,7 @@
         </enumVal>
         <label>F10 controls output Mute</label>
       </variable>
+
       <variable label="F10 controls output Injector" CV="44" mask="XXVXXXXX" default="1" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1861,6 +2108,7 @@
         </enumVal>
         <label>F10 controls output Injector</label>
       </variable>
+
       <variable label="F10 controls output Brake-Squeal" CV="44" mask="XVXXXXXX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1872,6 +2120,7 @@
         </enumVal>
         <label>F10 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F10 controls output Coupler" CV="44" mask="VXXXXXXX" default="0" minFn="10">
         <enumVal>
           <enumChoice choice="No">
@@ -1883,6 +2132,7 @@
         </enumVal>
         <label>F10 controls output Coupler</label>
       </variable>
+
       <variable label="F11 controls output Short-Whistle" CV="45" mask="XXXXXXXV" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1894,6 +2144,7 @@
         </enumVal>
         <label>F11 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F11 controls output Steam-Release" CV="45" mask="XXXXXXVX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1905,6 +2156,7 @@
         </enumVal>
         <label>F11 controls output Steam-Release</label>
       </variable>
+
       <variable label="F11 controls output Water-Stop" CV="45" mask="XXXXXVXX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1916,6 +2168,7 @@
         </enumVal>
         <label>F11 controls output Water-Stop</label>
       </variable>
+
       <variable label="F11 controls output Dimming" CV="45" mask="XXXXVXXX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1927,6 +2180,7 @@
         </enumVal>
         <label>F11 controls output Dimming</label>
       </variable>
+
       <variable label="F11 controls output Mute" CV="45" mask="XXXVXXXX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1938,6 +2192,7 @@
         </enumVal>
         <label>F11 controls output Mute</label>
       </variable>
+
       <variable label="F11 controls output Injector" CV="45" mask="XXVXXXXX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1949,6 +2204,7 @@
         </enumVal>
         <label>F11 controls output Injector</label>
       </variable>
+
       <variable label="F11 controls output Brake-Squeal" CV="45" mask="XVXXXXXX" default="1" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1960,6 +2216,7 @@
         </enumVal>
         <label>F11 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F11 controls output Coupler" CV="45" mask="VXXXXXXX" default="0" minFn="11">
         <enumVal>
           <enumChoice choice="No">
@@ -1971,6 +2228,7 @@
         </enumVal>
         <label>F11 controls output Coupler</label>
       </variable>
+
       <variable label="F12 controls output Short-Whistle" CV="46" mask="XXXXXXXV" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -1982,6 +2240,7 @@
         </enumVal>
         <label>F12 controls output Short-Whistle</label>
       </variable>
+
       <variable label="F12 controls output Steam-Release" CV="46" mask="XXXXXXVX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -1993,6 +2252,7 @@
         </enumVal>
         <label>F12 controls output Steam-Release</label>
       </variable>
+
       <variable label="F12 controls output Water-Stop" CV="46" mask="XXXXXVXX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2004,6 +2264,7 @@
         </enumVal>
         <label>F12 controls output Water-Stop</label>
       </variable>
+
       <variable label="F12 controls output Dimming" CV="46" mask="XXXXVXXX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2015,6 +2276,7 @@
         </enumVal>
         <label>F12 controls output Dimming</label>
       </variable>
+
       <variable label="F12 controls output Mute" CV="46" mask="XXXVXXXX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2026,6 +2288,7 @@
         </enumVal>
         <label>F12 controls output Mute</label>
       </variable>
+
       <variable label="F12 controls output Injector" CV="46" mask="XXVXXXXX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2037,6 +2300,7 @@
         </enumVal>
         <label>F12 controls output Injector</label>
       </variable>
+
       <variable label="F12 controls output Brake-Squeal" CV="46" mask="XVXXXXXX" default="0" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2048,6 +2312,7 @@
         </enumVal>
         <label>F12 controls output Brake-Squeal</label>
       </variable>
+
       <variable label="F12 controls output Coupler" CV="46" mask="VXXXXXXX" default="1" minFn="12">
         <enumVal>
           <enumChoice choice="No">
@@ -2059,12 +2324,19 @@
         </enumVal>
         <label>F12 controls output Coupler</label>
       </variable>
-      <variable label="Analog Whistle Control (0-255)" CV="47" mask="XVVVVVVV" item="Sound Option 12" default="0" tooltip="Value of 0 = Disabled.  See command station instructions for the value to enable this feature.">
+
+      <variable label="Analog Whistle Control (0-255)" CV="47" mask="XVVVVVVV" item="Sound Option 12" default="0"
+			tooltip="Value of 0 = Disabled.  See command station instructions for the value to enable this feature.">
         <decVal/>
         <label>Analog Whistle Control (0-255)</label>
       </variable>
+
+
 <!-- Lighting Configuration follows -->
-      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV" item="Function F0F effect generated" default="15" tooltip="Determines the effect generated from the headlight">
+
+      <variable label="Headlight F0(f) Effect Selection" CV="49" mask="XXXXVVVV"
+			item="Function F0F effect generated" default="15"
+			tooltip="Determines the effect generated from the headlight">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2117,7 +2389,9 @@
         </enumVal>
         <label>Headlight F0(f) Effect Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" item="Function F0F options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+
+      <variable label="Headlight F0(f) Phase Selection" CV="49" mask="XXXVXXXX" item="Function F0F options"
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -2128,7 +2402,9 @@
         </enumVal>
         <label>Headlight F0(f) Phase Selection</label>
       </variable>
-      <variable label="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" item="Function F0F option 2" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+
+      <variable label="Headlight F0(f) Grade Crossing Logic" CV="49" mask="XXVXXXXX" item="Function F0F option 2"
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2139,7 +2415,10 @@
         </enumVal>
         <label>Headlight F0(f) Grade Crossing Logic</label>
       </variable>
-      <variable label="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" item="Function F0F option 3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+
+      <variable label="Headlight F0(f) Rule 17 Mode" CV="49" mask="XVXXXXXX" item="Function F0F option 3"
+			tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;
+					is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Headlight mapping)">
             <choice>Disabled (Headlight mapping)</choice>
@@ -2150,7 +2429,9 @@
         </enumVal>
         <label>Headlight F0(f) Rule 17 Mode</label>
       </variable>
-      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" item="Function F0F option 4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+
+      <variable label="Headlight F0(f) Light Type" CV="49" mask="VXXXXXXX" item="Function F0F option 4"
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2161,7 +2442,10 @@
         </enumVal>
         <label>Headlight F0(f) Light Type</label>
       </variable>
-      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV" item="Function F0R effect generated" default="15" tooltip="Determines the effect generated from the backup light">
+
+      <variable label="Backup Light F0(r) Effect Selection" CV="50" mask="XXXXVVVV"
+			item="Function F0R effect generated" default="15"
+			tooltip="Determines the effect generated from the backup light">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2214,7 +2498,9 @@
         </enumVal>
         <label>Backup Light F0(r) Effect Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" item="Function F0R options" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+
+      <variable label="Backup Light F0(r) Phase Selection" CV="50" mask="XXXVXXXX" item="Function F0R options"
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -2225,7 +2511,9 @@
         </enumVal>
         <label>Backup Light F0(r) Phase Selection</label>
       </variable>
-      <variable label="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" item="Function F0R option 2" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+
+      <variable label="Backup Light F0(r) Grade Crossing Logic" CV="50" mask="XXVXXXXX" item="Function F0R option 2"
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2236,7 +2524,10 @@
         </enumVal>
         <label>Backup Light F0(r) Grade Crossing Logic</label>
       </variable>
-      <variable label="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" item="Function F0R option 3" tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;     is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+
+      <variable label="Backup Light F0(r) Rule 17 Mode" CV="50" mask="XVXXXXXX" item="Function F0R option 3"
+			tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;
+					is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Disabled (Backup Light mapping)">
             <choice>Disabled (Backup Light mapping)</choice>
@@ -2247,7 +2538,9 @@
         </enumVal>
         <label>Backup Light F0(r) Rule 17 Mode</label>
       </variable>
-      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" item="Function F0R option 4" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+
+      <variable label="Backup Light F0(r) Light Type" CV="50" mask="VXXXXXXX" item="Function F0R option 4"
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2258,7 +2551,11 @@
         </enumVal>
         <label>Backup Light F0(r) Light Type</label>
       </variable>
-      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV" item="Function 1 effect generated" default="1" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX5 light output">
+
+      <variable label="FX5 Effect Selection" CV="51" mask="XXXXVVVV"
+			item="Function 1 effect generated" default="1" minOut="3"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Determines the effect generated from the FX5 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2312,7 +2609,10 @@
         <label>FX5 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" item="Function 1 options" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+
+      <variable label="FX5 Phase Selection" CV="51" mask="XXXVXXXX" item="Function 1 options" minOut="3"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -2324,7 +2624,10 @@
         <label>FX5 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" item="Function 1 option 2" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+
+      <variable label="FX5 Grade Crossing Logic" CV="51" mask="XXVXXXXX" item="Function 1 option 2" minOut="3"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2336,7 +2639,26 @@
         <label>FX5 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" item="Function 1 option 4" minOut="3" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+
+      <variable label="FX5 Rule 17 Mode" CV="51" mask="XVXXXXXX" item="Function 1 option 3" minOut="3"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;
+					is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <enumVal>
+          <enumChoice choice="Disabled (FX5 mapping)">
+            <choice>Disabled (FX5 mapping)</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled (Headlight mapping)">
+            <choice>Enabled (Headlight mapping)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX5 Rule 17 Mode</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+
+      <variable label="FX5 Light Type" CV="51" mask="VXXXXXXX" item="Function 1 option 4" minOut="3"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2348,7 +2670,11 @@
         <label>FX5 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV" item="Function 2 effect generated" default="1" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Determines the effect generated from the FX6 light output">
+
+      <variable label="FX6 Effect Selection" CV="52" mask="XXXXVVVV"
+			item="Function 2 effect generated" default="1" minOut="4"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Determines the effect generated from the FX6 light output">
         <enumVal>
           <enumChoice choice="On/Off">
             <choice>On/Off</choice>
@@ -2402,7 +2728,10 @@
         <label>FX6 Effect Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" item="Function 2 options" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
+
+      <variable label="FX6 Phase Selection" CV="52" mask="XXXVXXXX" item="Function 2 options" minOut="4"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Alters the timing of the effect so that it's 180 degrees out of phase with the other effects">
         <enumVal>
           <enumChoice choice="Use phase A (normal)">
             <choice>Use phase A (normal)</choice>
@@ -2414,7 +2743,10 @@
         <label>FX6 Phase Selection</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" item="Function 2 option 2" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Causes the lighting effect to become active only when the horn has been sounded">
+
+      <variable label="FX6 Grade Crossing Logic" CV="52" mask="XXVXXXXX" item="Function 2 option 2" minOut="4"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Causes the lighting effect to become active only when the horn has been sounded">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -2426,7 +2758,26 @@
         <label>FX6 Grade Crossing Logic</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" item="Function 2 option 4" minOut="4" comment="Don't show this for the TSU-750 models" tooltip="Provides special compensation for lighting effect contrast when using LEDs">
+
+      <variable label="FX6 Rule 17 Mode" CV="52" mask="XVXXXXXX" item="Function 2 option 3" minOut="4"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="&lt;html&gt;Converts the headlight and backup light to independent, non-directional lights.  Headlight&lt;br&gt;
+					is controlled as if it were FX5, Function 5 and the backup light as FX6, Function 6.&lt;/html&gt;">
+        <enumVal>
+          <enumChoice choice="Disabled (FX6 mapping)">
+            <choice>Disabled (FX6 mapping)</choice>
+          </enumChoice>
+          <enumChoice choice="Enabled (Backup Light mapping)">
+            <choice>Enabled (Backup Light mapping)</choice>
+          </enumChoice>
+        </enumVal>
+        <label>FX6 Rule 17 Mode</label>
+        <comment>Don't show this for the TSU-750 models</comment>
+      </variable>
+
+      <variable label="FX6 Light Type" CV="52" mask="VXXXXXXX" item="Function 2 option 4" minOut="4"
+			comment="Don't show this for the TSU-750 models"
+			tooltip="Provides special compensation for lighting effect contrast when using LEDs">
         <enumVal>
           <enumChoice choice="Incandescent lamp">
             <choice>Incandescent lamp</choice>
@@ -2438,22 +2789,36 @@
         <label>FX6 Light Type</label>
         <comment>Don't show this for the TSU-750 models</comment>
       </variable>
-      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV" item="Global lighting option 2" default="3" comment="0 is fast, 15 is slow, 4 is recommended for start" tooltip="Sets the overall flash rate of the Hyperlight effects">
+
+      <variable label="Hyperlight Flash Rate (0-15)" CV="59" mask="XXXXVVVV"
+			item="Global lighting option 2" default="3"
+			comment="0 is fast, 15 is slow, 4 is recommended for start"
+			tooltip="Sets the overall flash rate of the Hyperlight effects">
         <decVal max="15"/>
         <label>Hyperlight Flash Rate (0-15)</label>
         <comment>0 is fast, 15 is slow, 4 is recommended for start</comment>
       </variable>
-      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV" item="Global lighting option 3" default="4" comment="0-15 seconds" tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
+
+      <variable label="Grade Crossing Hold Time (0-15)" CV="60" mask="XXXXVVVV"
+			item="Global lighting option 3" default="4"
+			comment="0-15 seconds"
+			tooltip="Sets the time (in seconds) an effect will stay on after the horn button is released">
         <decVal max="15"/>
         <label>Grade Crossing Hold Time (0-15)</label>
         <comment>0-15 seconds</comment>
       </variable>
-      <variable label="F11 Braking Rate (0-127)" CV="61" mask="XVVVVVVV" item="Advanced Group 1 Option 6" default="0" comment="Additional braking when Fll activated (combined with CV4)" tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
+
+      <variable label="F11 Braking Rate (0-127)" CV="61" mask="XVVVVVVV"
+			item="Advanced Group 1 Option 6" default="0"
+			comment="Additional braking when Fll activated (combined with CV4)"
+			tooltip="When F11 is pressed, locos baseline braking rate is modified by this amount">
         <decVal max="127"/>
         <label>F11 Braking Rate (0-127)</label>
         <comment>Additional braking when Fll activated (combined with CV4)</comment>
       </variable>
-      <variable label="F11 Braking Sign" CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0" tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
+
+      <variable label="F11 Braking Sign" CV="61" mask="VXXXXXXX" item="Advanced Group 1 Option 7" default="0"
+			tooltip="Determines whether value is added to or subtracted from loco baseline braking rate">
         <enumVal>
           <enumChoice choice="Add value to baseline braking rate (increases braking delay)">
             <choice>Add value to baseline braking rate (increases braking delay)</choice>
@@ -2464,7 +2829,9 @@
         </enumVal>
         <label>F11 Braking Sign</label>
       </variable>
-      <variable label="Transponding Control" CV="62" mask="XXXXXXXV" item="Advanced Group 1 Option 8" default="0" tooltip="Compensates for incompatibilities that may occur when using some methods of transponding">
+
+      <variable label="Transponding Control" CV="62" mask="XXXXXXXV" item="Advanced Group 1 Option 8" default="0"
+			tooltip="Compensates for incompatibilities that may occur when using some methods of transponding">
         <enumVal>
           <enumChoice choice="Normal">
             <choice>Normal</choice>
@@ -2475,15 +2842,23 @@
         </enumVal>
         <label>Transponding Control</label>
       </variable>
-      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20" tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
+
+      <variable label="Analog Mode Motor Start Voltage (0-255)" CV="63" item="Radio Power Conversion" default="20"
+			tooltip="Sets the voltage difference between when the decoder first powers up and when the locomotive starts to move">
         <decVal/>
         <label>Analog Mode Motor Start Voltage (0-255)</label>
       </variable>
-      <variable label="Analog Mode Max Motor Voltage (0-255)" CV="64" item="Zero-1 Power Conversion" default="180" tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
+
+      <variable label="Analog Mode Max Motor Voltage (0-255)" CV="64" item="Zero-1 Power Conversion" default="180"
+			tooltip="Sets the maximum average voltage applied to the motor when operating in analog mode">
         <decVal/>
         <label>Analog Mode Max Motor Voltage (0-255)</label>
       </variable>
-      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+
+      <variable label="Forward Trim (0-255)" CV="66" item="Forward Trim" default="128"
+			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the forward direction to be adjusted up or down.&lt;br&gt;
+					Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
+					Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Forward Trim (0-255)</label>
       </variable>
@@ -2491,19 +2866,33 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
-      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128" tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;     Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;     Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
+
+      <variable label="Reverse Trim (0-255)" CV="95" item="Reverse Trim" default="128"
+			tooltip="&lt;html&gt;Allows the decoders overall throttle response in the reverse direction to be adjusted up or down.&lt;br&gt;
+					Values 1-127 will decrease motor voltage, 129-255 will increase it.  A value of zero will disable.&lt;br&gt;
+					Tip: this feature only active when speed tables are enabled.&lt;/html&gt;">
         <decVal/>
         <label>Reverse Trim (0-255)</label>
       </variable>
-      <variable label="User Identifier #1 (0-255)" CV="105" item="User Id #1" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;     the decoder is reset to default values, this CV is&lt;br&gt;     preset to the softwares minor revision code.&lt;/html&gt;">
+
+      <variable label="User Identifier #1 (0-255)" CV="105" item="User Id #1"
+			tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
+					the decoder is reset to default values, this CV is&lt;br&gt;
+					preset to the softwares minor revision code.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #1 (0-255)</label>
       </variable>
-      <variable label="User Identifier #2 (0-255)" CV="106" item="User Id #2" tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;     the decoder is reset to default values, this CV is&lt;br&gt;     preset to the softwares default CV value configuration.&lt;/html&gt;">
+
+      <variable label="User Identifier #2 (0-255)" CV="106" item="User Id #2"
+			tooltip="&lt;html&gt;Use to set a custom user ID or number.  Note: when&lt;br&gt;
+					the decoder is reset to default values, this CV is&lt;br&gt;
+					preset to the softwares default CV value configuration.&lt;/html&gt;">
         <decVal/>
         <label>User Identifier #2 (0-255)</label>
       </variable>
-      <variable label="Air Pump 2 Enable" CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0" tooltip="Choose whether the locomotive has one or two air pumps">
+
+      <variable label="Air Pump 2 Enable" CV="112" mask="XXXXXXXV" item="Sound Option 1" default="0"
+			tooltip="Choose whether the locomotive has one or two air pumps">
         <enumVal>
           <enumChoice choice="Single Air Pump">
             <choice>Single Air Pump</choice>
@@ -2514,7 +2903,10 @@
         </enumVal>
         <label>Air Pump 2 Enable</label>
       </variable>
-      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;     is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
+
+      <variable label="Slip Rate Control" CV="112" mask="XXVVXXXX" item="Sound Option 2" default="0"
+			tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;
+					is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
         <enumVal>
           <enumChoice choice="Zero Slip Rate">
             <choice>Zero Slip Rate</choice>
@@ -2531,7 +2923,9 @@
         </enumVal>
         <label>Slip Rate Control</label>
       </variable>
-      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0" tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
+
+      <variable label="Articulated Exhaust Control" CV="112" mask="XVXXXXXX" item="Sound Option 3" default="0"
+			tooltip="Alters the exhaust timing to sound like a simple articulated engine when Auto Exhaust is activated.">
         <enumVal>
           <enumChoice choice="(Normal) Rod Engine Chuff">
             <choice>(Normal) Rod Engine Chuff</choice>
@@ -2542,7 +2936,9 @@
         </enumVal>
         <label>Articulated Exhaust Control</label>
       </variable>
-      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0" tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam.">
+
+      <variable label="Cam Enable" CV="112" mask="VXXXXXXX" item="Sound Option 4" default="0"
+			tooltip="When used in DCC mode, exhaust chuffs can be controlled automatically, or synced to a cam.">
         <enumVal>
           <enumChoice choice="Auto Exhaust Chuff">
             <choice>Auto Exhaust Chuff</choice>
@@ -2553,16 +2949,27 @@
         </enumVal>
         <label>Cam Enable</label>
       </variable>
-      <variable label="Quiet Mode Timeout Period" CV="113" item="Sound Group 3 Option 5" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;     off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
+
+      <variable label="Quiet Mode Timeout Period" CV="113" item="Sound Group 3 Option 5" default="0"
+			tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;
+					off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
-      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="4" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+
+      <variable label="Bell Ring Rate" CV="114" mask="XXXXVVVV" item="Sound Group 3 Option 4" default="4"
+			tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
+
+
 <!-- Whistle Selection follows -->
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(Light Steam) Show these whistles for the models (productID) listed below" include="826001,826101" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(Light Steam) Show these whistles for the models (productID) listed below"
+			include="826001,826101"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Colorado &amp; Southern #74 (Road Mix)">
             <choice>Colorado &amp; Southern #74 (Road Mix)</choice>
@@ -2592,7 +2999,11 @@
         <label>Whistle Select</label>
         <comment>(Light Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(Light Steam) Show these whistles for the models (productID) listed below" include="826001,826101" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(Light Steam) Show these whistles for the models (productID) listed below"
+			include="826001,826101"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Colorado &amp; Southern #74 (Road Mix)">
             <choice>Colorado &amp; Southern #74 (Road Mix)</choice>
@@ -2622,7 +3033,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(Light Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(Medium Steam) Show these whistles for the models (productID) listed below" include="826002,826102" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(Medium Steam) Show these whistles for the models (productID) listed below"
+			include="826002,826102"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="USRA 6-Chime">
             <choice>USRA 6-Chime</choice>
@@ -2652,7 +3067,11 @@
         <label>Whistle Select</label>
         <comment>(Medium Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(Medium Steam) Show these whistles for the models (productID) listed below" include="826002,826102" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(Medium Steam) Show these whistles for the models (productID) listed below"
+			include="826002,826102"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="USRA 6-Chime">
             <choice>USRA 6-Chime</choice>
@@ -2682,7 +3101,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(Medium Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(Heavy Steam) Show these whistles for the models (productID) listed below" include="826003,826103" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(Heavy Steam) Show these whistles for the models (productID) listed below"
+			include="826003,826103"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Frisco #1522">
             <choice>Frisco #1522</choice>
@@ -2709,7 +3132,11 @@
         <label>Whistle Select</label>
         <comment>(Heavy Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(Heavy Steam) Show these whistles for the models (productID) listed below" include="826003,826103" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(Heavy Steam) Show these whistles for the models (productID) listed below"
+			include="826003,826103"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Frisco #1522">
             <choice>Frisco #1522</choice>
@@ -2736,7 +3163,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(Heavy Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(Lt Logging Steam) Show these whistles for the models (productID) listed below" include="826020,826120" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(Lt Logging Steam) Show these whistles for the models (productID) listed below"
+			include="826020,826120"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Westside Lumber Co. Shay #14">
             <choice>Westside Lumber Co. Shay #14</choice>
@@ -2757,7 +3188,11 @@
         <label>Whistle Select</label>
         <comment>(Lt Logging Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(Lt Logging Steam) Show these whistles for the models (productID) listed below" include="826020,826120" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(Lt Logging Steam) Show these whistles for the models (productID) listed below"
+			include="826020,826120"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Westside Lumber Co. Shay #14">
             <choice>Westside Lumber Co. Shay #14</choice>
@@ -2778,7 +3213,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(Lt Logging Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(DRGW C-Class Steam) Show these whistles for the models (productID) listed below" include="826016,826116" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(DRGW C-Class Steam) Show these whistles for the models (productID) listed below"
+			include="826016,826116"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="C-19 #340 (Yard Mix)">
             <choice>C-19 #340 (Yard Mix)</choice>
@@ -2799,7 +3238,11 @@
         <label>Whistle Select</label>
         <comment>(DRGW C-Class Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(DRGW C-Class Steam) Show these whistles for the models (productID) listed below" include="826016,826116" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(DRGW C-Class Steam) Show these whistles for the models (productID) listed below"
+			include="826016,826116"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="C-19 #340 (Yard Mix)">
             <choice>C-19 #340 (Yard Mix)</choice>
@@ -2820,7 +3263,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(DRGW C-Class Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(DRGW K-Class Steam) Show these whistles for the models (productID) listed below" include="826004,826104" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(DRGW K-Class Steam) Show these whistles for the models (productID) listed below"
+			include="826004,826104"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="K-27 #463">
             <choice>K-27 #463</choice>
@@ -2844,7 +3291,11 @@
         <label>Whistle Select</label>
         <comment>(DRGW K-Class Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(DRGW K-Class Steam) Show these whistles for the models (productID) listed below" include="826004,826104" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(DRGW K-Class Steam) Show these whistles for the models (productID) listed below"
+			include="826004,826104"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="K-27 #463">
             <choice>K-27 #463</choice>
@@ -2868,7 +3319,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(DRGW K-Class Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(SP Cab Forward Steam) Show these whistles for the models (productID) listed below" include="826005,826105" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(SP Cab Forward Steam) Show these whistles for the models (productID) listed below"
+			include="826005,826105"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Southern Pacific 6-Chime">
             <choice>Southern Pacific 6-Chime</choice>
@@ -2892,7 +3347,11 @@
         <label>Whistle Select</label>
         <comment>(SP Cab Forward Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(SP Cab Forward Steam) Show these whistles for the models (productID) listed below" include="826005,826105" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(SP Cab Forward Steam) Show these whistles for the models (productID) listed below"
+			include="826005,826105"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Southern Pacific 6-Chime">
             <choice>Southern Pacific 6-Chime</choice>
@@ -2916,7 +3375,11 @@
         <label>Alternate Whistle Select</label>
         <comment>(SP Cab Forward Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0" comment="(Southern Steam) Show these whistles for the models (productID) listed below" include="826121" tooltip="Select the primary whistle to use">
+
+      <variable label="Whistle Select" CV="115" mask="XXXXXVVV" item="Sound Option 9" default="0"
+			comment="(Southern Steam) Show these whistles for the models (productID) listed below"
+			include="826121"
+			tooltip="Select the primary whistle to use">
         <enumVal>
           <enumChoice choice="Norfolk &amp; Western Class J">
             <choice>Norfolk &amp; Western Class J</choice>
@@ -2943,7 +3406,11 @@
         <label>Whistle Select</label>
         <comment>(Southern Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
-      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0" comment="(Southern Steam) Show these whistles for the models (productID) listed below" include="826121" tooltip="Select an alternate whistle to use">
+
+      <variable label="Alternate Whistle Select" CV="115" mask="XXVVVXXX" item="Sound Option 10" default="0"
+			comment="(Southern Steam) Show these whistles for the models (productID) listed below"
+			include="826121"
+			tooltip="Select an alternate whistle to use">
         <enumVal>
           <enumChoice choice="Norfolk &amp; Western Class J">
             <choice>Norfolk &amp; Western Class J</choice>
@@ -2970,8 +3437,12 @@
         <label>Alternate Whistle Select</label>
         <comment>(Southern Steam) Show these whistles for the models (productID) listed below</comment>
       </variable>
+
 <!-- End Whistle Selection -->
-      <variable label="Alternate Whistle Enable" CV="115" mask="VXXXXXXX" item="Sound Option 11" default="0" tooltip="Choose whether to use the alternate whistle or a short toot of the primary whistle">
+
+
+      <variable label="Alternate Whistle Enable" CV="115" mask="VXXXXXXX" item="Sound Option 11" default="0"
+			tooltip="Choose whether to use the alternate whistle or a short toot of the primary whistle">
         <enumVal>
           <enumChoice choice="Short Whistle Function">
             <choice>Short Whistle Function</choice>
@@ -2982,108 +3453,164 @@
         </enumVal>
         <label>Alternate Whistle Enable</label>
       </variable>
-      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="80" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;     throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
+
+      <variable label="Engine Exhaust Control" CV="116" item="Sound Group 3 Option 3" default="80"
+			tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;
+					throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
+
+
 <!-- Volume Controls follow -->
-      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192" tooltip="Sets the overall volume of all sound channels">
+
+      <variable label="Master Volume Control" CV="128" mask="VVVVVVVV" item="Sound Setting 1" default="192"
+			tooltip="Sets the overall volume of all sound channels">
         <decVal/>
         <label>Master Volume Control</label>
       </variable>
-      <variable label="Whistle Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225" tooltip="Sets the volume of the whistle">
+
+      <variable label="Whistle Volume" CV="129" mask="VVVVVVVV" item="Sound Setting 5" default="225"
+			tooltip="Sets the volume of the whistle">
         <decVal/>
         <label>Whistle Volume</label>
       </variable>
-      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="128" tooltip="Sets the volume of the bell">
+
+      <variable label="Bell Volume" CV="130" mask="VVVVVVVV" item="Sound Setting 6" default="128"
+			tooltip="Sets the volume of the bell">
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="192" tooltip="Sets the volume of the engine exhaust">
+
+      <variable label="Exhaust Volume" CV="131" mask="VVVVVVVV" item="Sound Setting 7" default="192"
+			tooltip="Sets the volume of the engine exhaust">
         <decVal/>
         <label>Exhaust Volume</label>
       </variable>
-      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="48" tooltip="Sets the volume of the air pump">
+
+      <variable label="Air Pump Volume" CV="132" mask="VVVVVVVV" item="Sound Setting 9" default="48"
+			tooltip="Sets the volume of the air pump">
         <decVal/>
         <label>Air Pump Volume</label>
       </variable>
-      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="32" tooltip="Sets the volume of the dynamo (electric power generator)">
+
+      <variable label="Dynamo Volume" CV="133" mask="VVVVVVVV" item="Sound Setting 10" default="32"
+			tooltip="Sets the volume of the dynamo (electric power generator)">
         <decVal/>
         <label>Dynamo Volume</label>
       </variable>
-      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="16" tooltip="Sets the volume of the blower">
+
+      <variable label="Blower Volume" CV="134" mask="VVVVVVVV" item="Sound Setting 14" default="16"
+			tooltip="Sets the volume of the blower">
         <decVal/>
         <label>Blower Volume</label>
       </variable>
-      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="32" tooltip="Sets the volume of the rods clanking">
+
+      <variable label="Rod Clank Volume" CV="135" mask="VVVVVVVV" item="Sound Setting 8" default="32"
+			tooltip="Sets the volume of the rods clanking">
         <decVal/>
         <label>Rod Clank Volume</label>
       </variable>
-      <variable label="Steam Release Volume" CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="128" tooltip="Sets the volume of the steam release">
+
+      <variable label="Steam Release Volume" CV="136" mask="VVVVVVVV" item="Sound Setting 23" default="128"
+			tooltip="Sets the volume of the steam release">
         <decVal/>
         <label>Steam Release Volume</label>
       </variable>
-      <variable label="Coupler Volume" CV="137" mask="VVVVVVVV" item="Sound Setting 18" default="128" tooltip="Sets the volume of the couplers coupling">
+
+      <variable label="Coupler Volume" CV="137" mask="VVVVVVVV" item="Sound Setting 18" default="128"
+			tooltip="Sets the volume of the couplers coupling">
         <decVal/>
         <label>Coupler Volume</label>
       </variable>
-      <variable label="Glad Hand Release Volume" CV="138" mask="VVVVVVVV" item="Sound Setting 19" default="0" tooltip="Sets the volume of the air hose glad hands separating">
+
+      <variable label="Glad Hand Release Volume" CV="138" mask="VVVVVVVV" item="Sound Setting 19" default="0"
+			tooltip="Sets the volume of the air hose glad hands separating">
         <decVal/>
         <label>Glad Hand Release Volume</label>
       </variable>
-      <variable label="Brake Squeal Volume" CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="128" tooltip="Sets the volume of the brakes squealing">
+
+      <variable label="Brake Squeal Volume" CV="139" mask="VVVVVVVV" item="Sound Setting 16" default="128"
+			tooltip="Sets the volume of the brakes squealing">
         <decVal/>
         <label>Brake Squeal Volume</label>
       </variable>
-      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="64" tooltip="Sets the volume of the brakes releasing">
+
+      <variable label="Brake Release Volume" CV="140" mask="VVVVVVVV" item="Sound Setting 17" default="64"
+			tooltip="Sets the volume of the brakes releasing">
         <decVal/>
         <label>Brake Release Volume</label>
       </variable>
-      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="64" tooltip="Sets the volume of the snifter valve">
+
+      <variable label="Snifter Valve Volume" CV="141" mask="VVVVVVVV" item="Sound Setting 22" default="64"
+			tooltip="Sets the volume of the snifter valve">
         <decVal/>
         <label>Snifter Valve Volume</label>
       </variable>
-      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="64" tooltip="Sets the volume of the power reverse operating">
+
+      <variable label="Power Reverse Volume" CV="142" mask="VVVVVVVV" item="Sound Setting 12" default="64"
+			tooltip="Sets the volume of the power reverse operating">
         <decVal/>
         <label>Power Reverse Volume</label>
       </variable>
-      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="128" tooltip="Sets the volume of the pop valve releasing">
+
+      <variable label="Pop Valve Volume" CV="143" mask="VVVVVVVV" item="Sound Setting 24" default="128"
+			tooltip="Sets the volume of the pop valve releasing">
         <decVal/>
         <label>Pop Valve Volume</label>
       </variable>
-      <variable label="Blower Draft Volume" CV="145" mask="VVVVVVVV" item="Sound Setting 15" default="128" tooltip="Sets the volume of the blower draft">
+
+      <variable label="Blower Draft Volume" CV="145" mask="VVVVVVVV" item="Sound Setting 15" default="128"
+			tooltip="Sets the volume of the blower draft">
         <decVal/>
         <label>Blower Draft Volume</label>
       </variable>
-      <variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" item="Sound Setting 25" default="96" tooltip="Sets the volume of the water stop activity">
+
+      <variable label="Water Stop Volume" CV="146" mask="VVVVVVVV" item="Sound Setting 25" default="96"
+			tooltip="Sets the volume of the water stop activity">
         <decVal/>
         <label>Water Stop Volume</label>
       </variable>
-      <variable label="Injector Volume" CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="64" tooltip="Sets the volume of the injector operating">
+
+      <variable label="Injector Volume" CV="147" mask="VVVVVVVV" item="Sound Setting 13" default="64"
+			tooltip="Sets the volume of the injector operating">
         <decVal/>
         <label>Injector Volume</label>
       </variable>
-      <variable label="Fireman Shovel Volume" CV="148" mask="VVVVVVVV" item="Sound Setting 26" default="64" tooltip="Sets the volume of the fireman shoveling">
+
+      <variable label="Fireman Shovel Volume" CV="148" mask="VVVVVVVV" item="Sound Setting 26" default="64"
+			tooltip="Sets the volume of the fireman shoveling">
         <decVal/>
         <label>Fireman Shovel Volume</label>
       </variable>
-      <variable label="Fireman Wrench Volume" CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="64" tooltip="Sets the volume of the fireman using his wrench">
+
+      <variable label="Fireman Wrench Volume" CV="149" mask="VVVVVVVV" item="Sound Setting 27" default="64"
+			tooltip="Sets the volume of the fireman using his wrench">
         <decVal/>
         <label>Fireman Wrench Volume</label>
       </variable>
-      <variable label="Fireman Oil Can Volume" CV="150" mask="VVVVVVVV" item="Sound Setting 28" default="64" tooltip="Sets the volume of the fireman using his oil can">
+
+      <variable label="Fireman Oil Can Volume" CV="150" mask="VVVVVVVV" item="Sound Setting 28" default="64"
+			tooltip="Sets the volume of the fireman using his oil can">
         <decVal/>
         <label>Fireman Oil Can Volume</label>
       </variable>
-      <variable label="Fireman Grease Gun Volume" CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="32" tooltip="Sets the volume of the fireman using his grease gun">
+
+      <variable label="Fireman Grease Gun Volume" CV="151" mask="VVVVVVVV" item="Sound Setting 29" default="32"
+			tooltip="Sets the volume of the fireman using his grease gun">
         <decVal/>
         <label>Fireman Grease Gun Volume</label>
       </variable>
+
+
 <!-- The following sounds CVs (currently) don't map to generic -->
 <!-- names, e.g. in the Comprehensive.xml programmer, so they  -->
 <!-- appear on pane definitions in this file -->
+
+
 <!-- Equalizer Controls follow -->
-      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0" tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
+      <variable label="Equalizer Control" CV="153" mask="XXXXXVVV" default="0"
+			tooltip="Selects one of six equalizer presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Flat (off)">
             <choice>Flat (off)</choice>
@@ -3112,37 +3639,57 @@
         </enumVal>
         <label>Equalizer Control</label>
       </variable>
+
+
 <!-- Individual Cut/Boost Controls follow -->
-      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="62 Hz Cut/Boost" CV="154" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>62 Hz Cut/Boost</label>
       </variable>
-      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="125 Hz Cut/Boost" CV="155" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>125 Hz Cut/Boost</label>
       </variable>
-      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="250 Hz Cut/Boost" CV="156" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>250 Hz Cut/Boost</label>
       </variable>
-      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="500 Hz Cut/Boost" CV="157" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>500 Hz Cut/Boost</label>
       </variable>
-      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="1K Hz Cut/Boost" CV="158" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>1K Hz Cut/Boost</label>
       </variable>
-      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="2K Hz Cut/Boost" CV="159" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>2K Hz Cut/Boost</label>
       </variable>
-      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="127" tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
+
+      <variable label="4K Hz Cut/Boost" CV="160" mask="VVVVVVVV" default="127"
+			tooltip="0 = -12dB (Cut) : 127 = 0dB (Flat) : 255 = +12dB (Boost)">
         <decVal/>
         <label>4K Hz Cut/Boost</label>
       </variable>
+
+
 <!-- Reverb Section follows -->
-      <variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0" tooltip="Selects one of four reverb presets or selects a user adjustable profile">
+
+      <variable label="Reverb Control" CV="161" mask="XXXXXVVV" default="0"
+			tooltip="Selects one of four reverb presets or selects a user adjustable profile">
         <enumVal>
           <enumChoice choice="Reverb Disabled">
             <choice>Reverb Disabled</choice>
@@ -3171,102 +3718,165 @@
         </enumVal>
         <label>Reverb Control</label>
       </variable>
+
+
 <!-- Individual Reverb Output Level Controls follow -->
-      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128" tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
+
+      <variable label="Reverb Output Level" CV="162" mask="VVVVVVVV" default="128"
+			tooltip="Specifies a percentage of the reverb output that is mixed back into the original audio signal">
         <decVal/>
         <label>Reverb Output Level</label>
       </variable>
-      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="255" tooltip="Specifies the total reverb delay time from 0 to 64mS">
+
+      <variable label="Reverb Delay" CV="163" mask="VVVVVVVV" default="255"
+			tooltip="Specifies the total reverb delay time from 0 to 64mS">
         <decVal/>
         <label>Reverb Delay</label>
       </variable>
-      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="64" tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
+
+      <variable label="Reverb Gain" CV="164" mask="VVVVVVVV" default="64"
+			tooltip="Specifies a percentage of the reverb output that is mixed back into the delay line">
         <decVal/>
         <label>Reverb Gain</label>
       </variable>
-      <variable label="Whistle Reverb Level" CV="169" mask="VVVVVVVV" default="0" tooltip="Sets the percentage of the whistle signal level to mix into the reverb input">
+
+      <variable label="Whistle Reverb Level" CV="169" mask="VVVVVVVV" default="0"
+			tooltip="Sets the percentage of the whistle signal level to mix into the reverb input">
         <decVal/>
         <label>Whistle Reverb Level</label>
       </variable>
-      <variable label="Bell Reverb Level" CV="170" mask="VVVVVVVV" default="0" tooltip="Sets the percentage of the bell signal level to mix into the reverb input">
+
+      <variable label="Bell Reverb Level" CV="170" mask="VVVVVVVV" default="0"
+			tooltip="Sets the percentage of the bell signal level to mix into the reverb input">
         <decVal/>
         <label>Bell Reverb Level</label>
       </variable>
-      <variable label="Exhaust Reverb Level" CV="171" mask="VVVVVVVV" default="0" tooltip="Sets the percentage of the locomotive exhaust signal level to mix into the reverb input">
+
+      <variable label="Exhaust Reverb Level" CV="171" mask="VVVVVVVV" default="0"
+			tooltip="Sets the percentage of the locomotive exhaust signal level to mix into the reverb input">
         <decVal/>
         <label>Exhaust Reverb Level</label>
       </variable>
-      <variable label="Air Pump Reverb Level" CV="172" mask="VVVVVVVV" default="0" tooltip="Sets the percentage of the air pump signal level to mix into the reverb input">
+
+      <variable label="Air Pump Reverb Level" CV="172" mask="VVVVVVVV" default="0"
+			tooltip="Sets the percentage of the air pump signal level to mix into the reverb input">
         <decVal/>
         <label>Air Pump Reverb Level</label>
       </variable>
+
+
 <!-- Dynamic Digital Exhaust Controls follow -->
-      <variable label="Throttle Gain" CV="177" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;     setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
+
+      <variable label="Throttle Gain" CV="177" mask="VVVVVVVV" default="10"
+			tooltip="&lt;html&gt;Specifies the DDE sensitivity to the difference between the throttle&lt;br&gt;
+					setting and the actual locomotive speed.  Set to zero to disable.&lt;/html&gt;">
         <decVal/>
         <label>Throttle Gain</label>
       </variable>
-      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="32" tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
+
+      <variable label="Motor Load Gain" CV="178" mask="VVVVVVVV" default="32"
+			tooltip="Specifies the DDE sensitivity to changes in the motor load.  Set to zero to disable.">
         <decVal/>
         <label>Motor Load Gain</label>
       </variable>
-      <variable label="Attack Time Constant" CV="179" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;     the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
+
+      <variable label="Attack Time Constant" CV="179" mask="VVVVVVVV" default="10"
+			tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will begin reshaping &lt;br&gt;
+					the audio signal once the motor or throttle input signal has begun to change.&lt;/html&gt;">
         <decVal max="255"/>
         <label>Attack Time Constant</label>
       </variable>
-      <variable label="Release Time Constant" CV="180" mask="VVVVVVVV" default="10" tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;     the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
+
+      <variable label="Release Time Constant" CV="180" mask="VVVVVVVV" default="10"
+			tooltip="&lt;html&gt;Determines the amount of time needed before the DDE processor will stop reshaping&lt;br&gt;
+					the audio signal after the motor or throttle input signal has returned to normal.&lt;/html&gt;">
         <decVal/>
         <label>Release Time Constant</label>
       </variable>
-      <variable label="Exhaust Low Volume Limit" CV="181" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;     locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
+
+      <variable label="Exhaust Low Volume Limit" CV="181" mask="VVVVVVVV" default="255"
+			tooltip="&lt;html&gt;Sets the maximum attenuation level of the exhaust sound when the&lt;br&gt;
+					locomotive is under light load.  (higher no. = greater attenuation)&lt;/html&gt;">
         <decVal/>
         <label>Exhaust Low Volume Limit</label>
       </variable>
-      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;     locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
+
+      <variable label="Exhaust High Volume Limit" CV="182" mask="VVVVVVVV" default="255"
+			tooltip="&lt;html&gt;Sets the maximum volume level of the exhaust sound when the&lt;br&gt;
+					locomotive is under heavy load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Exhaust High Volume Limit</label>
       </variable>
-      <variable label="Side Rod Clank Low Volume Limit" CV="183" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum attenuation level of the side rod clanking sound when&lt;br&gt;     the locomotive is under heavy load.  (higher no. = greater attenuation)&lt;/html&gt;">
+
+      <variable label="Side Rod Clank Low Volume Limit" CV="183" mask="VVVVVVVV" default="255"
+			tooltip="&lt;html&gt;Sets the maximum attenuation level of the side rod clanking sound when&lt;br&gt;
+					the locomotive is under heavy load.  (higher no. = greater attenuation)&lt;/html&gt;">
         <decVal/>
         <label>Side Rod Clank Low Volume Limit</label>
       </variable>
-      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="255" tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;     the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
+
+      <variable label="Side Rod Clank High Volume Limit" CV="184" mask="VVVVVVVV" default="255"
+			tooltip="&lt;html&gt;Sets the maximum volume level of the side rod clanking sound when&lt;br&gt;
+					the locomotive is under light load.  (higher no. = greater volume)&lt;/html&gt;">
         <decVal/>
         <label>Side Rod Clank High Volume Limit</label>
       </variable>
-      <variable label="DDE Filter Initial Frequency" CV="185" mask="VVVVVVVV" default="42" tooltip="Specifies the initial frequency of the DDE filter bank.  (higher no. = higher frequency)">
+
+      <variable label="DDE Filter Initial Frequency" CV="185" mask="VVVVVVVV" default="42"
+			tooltip="Specifies the initial frequency of the DDE filter bank.  (higher no. = higher frequency)">
         <decVal/>
         <label>DDE Filter Initial Frequency</label>
       </variable>
-      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="64" tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;     in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
+
+      <variable label="DDE Filter Control Gain" CV="186" mask="VVVVVVVV" default="64"
+			tooltip="&lt;html&gt;Determines the sensitivity of the DDE filter bank to changes&lt;br&gt;
+					in load and speed.  (higher no. = greater sensitivity)&lt;/html&gt;">
         <decVal max="255"/>
         <label>DDE Filter Control Gain</label>
       </variable>
-      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255" tooltip="Sets the overall damping ratio of the DDE Filter Bank.">
+
+      <variable label="DDE Filter Damping" CV="187" mask="VVVVVVVV" default="255"
+			tooltip="Sets the overall damping ratio of the DDE Filter Bank.">
         <decVal/>
         <label>DDE Filter Damping</label>
       </variable>
-      <variable label="DDE Tracking Coefficient" CV="188" mask="VVVVVVVV" default="102" tooltip="&lt;html&gt;Sets the no load sense level for the DDE controller when&lt;br&gt;     back-EMF is disabled, as a percentage of the track voltage.&lt;/html&gt;">
+
+      <variable label="DDE Tracking Coefficient" CV="188" mask="VVVVVVVV" default="102"
+			tooltip="&lt;html&gt;Sets the no load sense level for the DDE controller when&lt;br&gt;
+					back-EMF is disabled, as a percentage of the track voltage.&lt;/html&gt;">
         <decVal/>
         <label>DDE Tracking Coefficient</label>
       </variable>
+
+
 <!-- Automatic Sound Controls (ASC) follow -->
-      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15" tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
+
+      <variable label="Bell-On Set Point" CV="193" mask="XVVVVVVV" default="15"
+			tooltip="Specifies the throttle speed step where the automatic bell will first turn on">
         <decVal max="127"/>
         <label>Bell-On Set Point</label>
       </variable>
-      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="19" tooltip="Specifies the throttle speed step where the automatic bell will turn off">
+
+      <variable label="Bell-Off Set Point" CV="194" mask="XVVVVVVV" default="19"
+			tooltip="Specifies the throttle speed step where the automatic bell will turn off">
         <decVal max="127"/>
         <label>Bell-Off Set Point</label>
       </variable>
-      <variable label="Grade Crossing Whistle Sensitivity" CV="195" mask="VVVVVVVV" default="4" tooltip="Specifies the positive rate of throttle change needed to activate the automatic grade crossing whistle">
+
+      <variable label="Grade Crossing Whistle Sensitivity" CV="195" mask="VVVVVVVV" default="4"
+			tooltip="Specifies the positive rate of throttle change needed to activate the automatic grade crossing whistle">
         <decVal/>
         <label>Grade Crossing Whistle Sensitivity</label>
       </variable>
-      <variable label="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3" tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
+
+      <variable label="Brake Squeal Sensitivity" CV="196" mask="VVVVVVVV" default="3"
+			tooltip="Specifies the negative rate of throttle change needed to activate the automatic brake squeal">
         <decVal/>
         <label>Brake Squeal Sensitivity</label>
       </variable>
-      <variable label="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="0" tooltip="Enables the Automatic Grade Crossing Whistle in Analog Mode">
+
+      <variable label="Automatic Grade Crossing Whistle Enable (Analog Mode)" CV="197" mask="XXXXXXXV" default="0"
+			tooltip="Enables the Automatic Grade Crossing Whistle in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3277,7 +3887,9 @@
         </enumVal>
         <label>Automatic Grade Crossing Whistle Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0" tooltip="Enables the Automatic Whistle Signal in Analog Mode">
+
+      <variable label="Automatic Whistle Signal Enable (Analog Mode)" CV="197" mask="XXXXXXVX" default="0"
+			tooltip="Enables the Automatic Whistle Signal in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3288,7 +3900,9 @@
         </enumVal>
         <label>Automatic Whistle Signal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0" tooltip="Enables the Automatic Bell in Analog Mode">
+
+      <variable label="Automatic Bell Enable (Analog Mode)" CV="197" mask="XXXXXVXX" default="0"
+			tooltip="Enables the Automatic Bell in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3299,7 +3913,9 @@
         </enumVal>
         <label>Automatic Bell Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Brake Squeal in Analog Mode">
+
+      <variable label="Automatic Brake Squeal Enable (Analog Mode)" CV="197" mask="XXXXVXXX" default="0"
+			tooltip="Enables the Automatic Brake Squeal in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3310,7 +3926,9 @@
         </enumVal>
         <label>Automatic Brake Squeal Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Steam Blow Down Enable (Analog Mode)" CV="197" mask="XXXVXXXX" default="0" tooltip="Enables the Automatic Steam Blow Down in Analog Mode">
+
+      <variable label="Automatic Steam Blow Down Enable (Analog Mode)" CV="197" mask="XXXVXXXX" default="0"
+			tooltip="Enables the Automatic Steam Blow Down in Analog Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3321,7 +3939,9 @@
         </enumVal>
         <label>Automatic Steam Blow Down Enable (Analog Mode)</label>
       </variable>
-      <variable label="Automatic Grade Crossing Whistle Enable" CV="198" mask="XXXXXXXV" default="0" tooltip="Enables the Automatic Grade Crossing Whistle in Digital Mode">
+
+      <variable label="Automatic Grade Crossing Whistle Enable" CV="198" mask="XXXXXXXV" default="0"
+			tooltip="Enables the Automatic Grade Crossing Whistle in Digital Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3332,7 +3952,9 @@
         </enumVal>
         <label>Automatic Grade Crossing Whistle Enable</label>
       </variable>
-      <variable label="Automatic Whistle Signal Enable" CV="198" mask="XXXXXXVX" default="0" tooltip="Enables the Automatic Whistle Signal in Digital Mode">
+
+      <variable label="Automatic Whistle Signal Enable" CV="198" mask="XXXXXXVX" default="0"
+			tooltip="Enables the Automatic Whistle Signal in Digital Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3343,7 +3965,9 @@
         </enumVal>
         <label>Automatic Whistle Signal Enable</label>
       </variable>
-      <variable label="Automatic Bell Enable" CV="198" mask="XXXXXVXX" default="0" tooltip="Enables the Automatic Bell in Digital Mode">
+
+      <variable label="Automatic Bell Enable" CV="198" mask="XXXXXVXX" default="0"
+			tooltip="Enables the Automatic Bell in Digital Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3354,7 +3978,9 @@
         </enumVal>
         <label>Automatic Bell Enable</label>
       </variable>
-      <variable label="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0" tooltip="Enables the Automatic Brake Squeal in Digital Mode">
+
+      <variable label="Automatic Brake Squeal Enable" CV="198" mask="XXXXVXXX" default="0"
+			tooltip="Enables the Automatic Brake Squeal in Digital Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3365,7 +3991,9 @@
         </enumVal>
         <label>Automatic Brake Squeal Enable</label>
       </variable>
-      <variable label="Automatic Steam Blow Down Enable" CV="198" mask="XXXVXXXX" default="0" tooltip="Enables the Automatic Steam Blow Down in Digital Mode">
+
+      <variable label="Automatic Steam Blow Down Enable" CV="198" mask="XXXVXXXX" default="0"
+			tooltip="Enables the Automatic Steam Blow Down in Digital Mode">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -3376,61 +4004,98 @@
         </enumVal>
         <label>Automatic Steam Blow Down Enable</label>
       </variable>
+
+
 <!-- Event Probability Controls follow -->
-      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will shovel some coal.">
+
+      <variable label="Probability Fireman Shovels Coal" CV="201" mask="VVVVVVVV" default="64"
+			tooltip="Sets the probability that the fireman will shovel some coal.">
         <decVal max="255"/>
         <label>Probability Fireman Shovels Coal</label>
       </variable>
-      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will fill the tender with water.">
+
+      <variable label="Probability Fireman Fills the Tender" CV="202" mask="VVVVVVVV" default="32"
+			tooltip="Sets the probability that the fireman will fill the tender with water.">
         <decVal max="255"/>
         <label>Probability Fireman Fills the Tender</label>
       </variable>
-      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16" tooltip="Sets the probability that the fireman will use his wrench.">
+
+      <variable label="Probability Fireman Turns His Wrench" CV="203" mask="VVVVVVVV" default="16"
+			tooltip="Sets the probability that the fireman will use his wrench.">
         <decVal max="255"/>
         <label>Probability Fireman Turns His Wrench</label>
       </variable>
-      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32" tooltip="Sets the probability that the fireman will use the grease gun.">
+
+      <variable label="Probability Fireman Uses His Grease Gun" CV="204" mask="VVVVVVVV" default="32"
+			tooltip="Sets the probability that the fireman will use the grease gun.">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Grease Gun</label>
       </variable>
-      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the oil can.">
+
+      <variable label="Probability Fireman Uses His Oil Can" CV="205" mask="VVVVVVVV" default="64"
+			tooltip="Sets the probability that the fireman will use the oil can.">
         <decVal max="255"/>
         <label>Probability Fireman Uses His Oil Can</label>
       </variable>
-      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the water injector.">
+
+      <variable label="Probability Fireman Uses the Injector" CV="206" mask="VVVVVVVV" default="64"
+			tooltip="Sets the probability that the fireman will use the water injector.">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Injector</label>
       </variable>
-      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64" tooltip="Sets the probability that the fireman will use the firebox blower.">
+
+      <variable label="Probability Fireman Uses the Blower" CV="207" mask="VVVVVVVV" default="64"
+			tooltip="Sets the probability that the fireman will use the firebox blower.">
         <decVal max="255"/>
         <label>Probability Fireman Uses the Blower</label>
       </variable>
-      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0" tooltip="Sets the probability that the safety valve will relieve.">
+
+      <variable label="Probability Pop Valve Blows Off" CV="208" mask="VVVVVVVV" default="0"
+			tooltip="Sets the probability that the safety valve will relieve.">
         <decVal max="255"/>
         <label>Probability Pop Valve Blows Off</label>
       </variable>
+
 <!-- End of variables for file-specific panes -->
+
 <!-- Advanced Motor Control Features follow -->
-      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="25" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+
+      <variable label="Motor Kp Coefficient (0-255)" CV="209" mask="VVVVVVVV"
+			item="Advanced Group 2 Option 1" default="25"
+			tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="20" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+
+      <variable label="Motor Ki Coefficient (0-255)" CV="210" mask="VVVVVVVV"
+			item="Advanced Group 2 Option 2" default="20"
+			tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV" item="Advanced Group 2 Option 3" default="255" tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
+
+      <variable label="Motor Control Intensity (0-255)" CV="212" mask="VVVVVVVV"
+			item="Advanced Group 2 Option 3" default="255"
+			tooltip="The CV value is interpreted as n/32 that is fed back from the control loop">
         <decVal/>
         <label>Motor Control Intensity (0-255)</label>
       </variable>
-      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV" item="Advanced Group 2 Option 4" default="15" tooltip="Specifies the time period in mS (milliseconds) between measurements">
+
+      <variable label="Motor Control Sample Period (0-31)" CV="213" mask="VVVVVVVV"
+			item="Advanced Group 2 Option 4" default="15"
+			tooltip="Specifies the time period in mS (milliseconds) between measurements">
         <decVal max="31"/>
         <label>Motor Control Sample Period (0-31)</label>
       </variable>
-      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
+
+      <variable label="Motor Control Sample Aperture Time (0-255)" CV="214" mask="VVVVVVVV"
+			item="Advanced Group 2 Option 5" default="15"
+			tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
       </variable>
+
+
 <!-- highest used so far: -->
 <!-- "Advanced Group 1 Option 8" -->
 <!-- "Advanced Group 2 Option 5" -->
@@ -3438,644 +4103,17 @@
 <!-- "Sound Group 1 Option (none yet)" -->
 <!-- "Sound Group 2 Option (none yet)" -->
 <!-- "Sound Setting 29 (several intermediate nos. available)" -->
+
     </variables>
     <resets>
       <factReset label="Reset all CVs to factory defaults" CV="8" default="8"/>
     </resets>
   </decoder>
-  <pane name="Equalizer">
-    <column>
-      <row>
-        <label label="SEVEN BAND EQUALIZER">
-          <label>SEVEN BAND EQUALIZER</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <display item="Equalizer Control"/>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <row>
-            <display item="62 Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="62 Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="125 Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="125 Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="250 Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="250 Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="500 Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="500 Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="1K Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="1K Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="2K Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="2K Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="4K Hz Cut/Boost" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="4K Hz Cut/Boost" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Equalizer</name>
-  </pane>
-  <pane name="Reverb">
-    <column>
-      <row>
-        <label label="REVERB CONTROLS AND MIXER">
-          <label>REVERB CONTROLS AND MIXER</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <display item="Reverb Control"/>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <row>
-            <display item="Reverb Output Level" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Reverb Output Level" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Reverb Delay" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Reverb Delay" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Reverb Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Reverb Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Whistle Reverb Level" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Whistle Reverb Level" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Bell Reverb Level" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Bell Reverb Level" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Exhaust Reverb Level" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Exhaust Reverb Level" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Air Pump Reverb Level" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Air Pump Reverb Level" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>Reverb</name>
-  </pane>
-  <pane name="DDE">
-    <column>
-<!-- panes always start with column elements-->
-      <row>
-        <label label="DYNAMIC DIGITAL EXHAUST CONTROLS">
-          <label>DYNAMIC DIGITAL EXHAUST CONTROLS</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <row>
-            <display item="Throttle Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Throttle Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Motor Load Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Motor Load Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Attack Time Constant" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Attack Time Constant" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Release Time Constant" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Release Time Constant" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <display item="Exhaust Low Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Exhaust Low Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Exhaust High Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Exhaust High Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Side Rod Clank Low Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Side Rod Clank Low Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Side Rod Clank High Volume Limit" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Side Rod Clank High Volume Limit" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <display item="DDE Filter Initial Frequency" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Initial Frequency" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Filter Control Gain" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Control Gain" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Filter Damping" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Filter Damping" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="DDE Tracking Coefficient" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="DDE Tracking Coefficient" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-    </column>
-    <name>DDE</name>
-  </pane>
-  <pane name="ASC">
-    <column>
-      <row>
-        <label label="AUTOMATIC SOUND CONTROL">
-          <label>AUTOMATIC SOUND CONTROL</label>
-        </label>
-      </row>
-      <label label=" ">
-        <label> </label>
-      </label>
-      <row>
-        <column>
-          <display item="Automatic Grade Crossing Whistle Enable" format="checkbox"/>
-          <display item="Automatic Whistle Signal Enable" format="checkbox"/>
-          <display item="Automatic Bell Enable" format="checkbox"/>
-          <display item="Automatic Brake Squeal Enable" format="checkbox"/>
-          <display item="Automatic Steam Blow Down Enable" format="checkbox"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <display item="Automatic Grade Crossing Whistle Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Whistle Signal Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Bell Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Brake Squeal Enable (Analog Mode)" format="checkbox"/>
-          <display item="Automatic Steam Blow Down Enable (Analog Mode)" format="checkbox"/>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-      </row>
-      <separator/>
-      <row>
-        <column>
-          <row>
-            <column>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <label label="These CVs allow the user to set the parameters">
-                <label>These CVs allow the user to set the parameters</label>
-              </label>
-              <label label="for the Automatic Sound Control features.">
-                <label>for the Automatic Sound Control features.</label>
-              </label>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-          <row>
-            <display item="Bell-On Set Point" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Bell-On Set Point" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Bell-Off Set Point" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Bell-Off Set Point" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Grade Crossing Whistle Sensitivity" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Grade Crossing Whistle Sensitivity" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-          <row>
-            <display item="Brake Squeal Sensitivity" layout="above" label="">
-              <label/>
-            </display>
-            <label label=" ">
-              <label> </label>
-            </label>
-            <display item="Brake Squeal Sensitivity" layout="above" format="hslider"/>
-          </row>
-          <label label=" ">
-            <label> </label>
-          </label>
-        </column>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <separator/>
-        <column>
-          <label label="          ">
-            <label>          </label>
-          </label>
-        </column>
-        <column>
-          <row>
-            <column>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <label label="Set the probability that the various sound effects will occur the next time the locomotive is stopped.">
-                <label>Set the probability that the various sound effects will occur the next time the locomotive is stopped.</label>
-              </label>
-              <label label="A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.">
-                <label>A setting of zero effectively turns off an effect.   A setting of 255 enables the effect at every stop.</label>
-              </label>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-          <row>
-            <column>
-              <row>
-                <display item="Probability Fireman Shovels Coal" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Shovels Coal" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Fireman Fills the Tender" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Fills the Tender" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Fireman Turns His Wrench" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Turns His Wrench" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Fireman Uses His Grease Gun" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Uses His Grease Gun" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-            <column>
-              <label label="          ">
-                <label>          </label>
-              </label>
-            </column>
-            <column>
-              <row>
-                <display item="Probability Fireman Uses His Oil Can" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Uses His Oil Can" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Fireman Uses the Injector" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Uses the Injector" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Fireman Uses the Blower" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Fireman Uses the Blower" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-              <row>
-                <display item="Probability Pop Valve Blows Off" layout="above" label="">
-                  <label/>
-                </display>
-                <label label=" ">
-                  <label> </label>
-                </label>
-                <display item="Probability Pop Valve Blows Off" layout="above" format="hslider"/>
-              </row>
-              <label label=" ">
-                <label> </label>
-              </label>
-            </column>
-          </row>
-        </column>
-      </row>
-    </column>
-    <name>ASC</name>
-  </pane>
+
+<!-- References to external Pane format definitions below -->
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneEqualizer.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneReverb.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCsteam.xml"/>
+
 </decoder-config>
