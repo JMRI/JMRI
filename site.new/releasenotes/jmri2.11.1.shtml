@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.13 2010-10-03 21:53:32 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.14 2010-10-04 03:13:46 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -204,6 +204,9 @@ Ken Cameron fixed a problem where a variable-intensity Light would not step all 
 Simon Ginsburg added translation tool scripts.
 
 <p>
+Mike Mosher updated the TCS V51+ decoder definition to add LL8 & EU621 decoders
+
+<p>
 Andrew Crosland improved the SPROG throttle to better handle fractional speeds.
 
 <p>
@@ -249,11 +252,37 @@ Kevin Dickerson added a double & single slip and a three way turnout to the pane
 Matt Harris added 'Copy to clipboard' button in context window.
 
 <p>
+Graeme Brown provided updates for NCE decoders
+
+<p>
 Jim LeFevre added support for F5 through F14 on TMCC throttles.
+
+<p>
+Pete Ulvestaad fixed spelling errors in the QSI definitions,
+and provided a definition for the Bachmann Soundtraxx decoder
+
+<p>
+Alain Carasso contributed decoder definitions for Arnold - Rivarossi and Mistral Train GOLD decoders.
 
 <p>
 david zuhn added support for exporting the entire roster to one file.  
 Menu support (but a null implementation) for importing from an exported roster file.
+
+<p>
+Nigel Cliffe contributed a decoder definition for the MERG ACC5 decoder
+and did a major update to the MERG ACC4 decoder definition.
+
+<p>
+Peter Mansvelder contributed a definition for the Fleischmann function decoder
+
+<p>
+Dale Tripp provided a decoder definition for the Kato FL12 decoder
+
+<p>
+Chris Bradshaw provided a decoder definition for the TCS Z2 and DP2x decoders.
+
+<p>
+Georg Kautzsch provided a decoder definition for the Uhlenbrock 67800 servo decoder.
 
 <p>
 Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
@@ -266,9 +295,18 @@ Pete Cressman added a new editor tool: Item Palette. He also updated the signal 
 are relevant to valid states.
 
 <p>
+Dick Bronson updated the RR-CirKits Tower Controller 64 decoder definition
+
+
+<p>
 David Duchamp made some improvements to running trains with the Dispatcher.
 
+<p>
+Mike Mosher provided a "RosterMigrate2.py" script to allow users to migrate their "Soundtraxx OEM"
+decoders to specific models.
 
+<p>
+Team Digital provided a decoder definition for their Team Digital BlocD8 board.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->

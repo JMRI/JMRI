@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.1 2010-10-03 19:41:19 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.2 2010-10-04 03:11:50 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -89,6 +89,8 @@ None at the time of this release.
      <A HREF="https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.2.tgz/download">https://sourceforge.net/projects/jmri/files/test%20files/JMRI.2.11.2.tgz/download</a>
 
 <h3>Changes since production version 2.11.1</h3>
+
+Updated <a href="http://openlcb.org">OpenLCB</a> library to version 0.3.
 
 
 
