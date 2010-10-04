@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: NCE_D13SR_TC.xml,v 1.14 2010-05-10 03:38:52 jacobsen Exp $ -->
+<!-- $Id: NCE_D13SR_TC.xml,v 1.15 2010-10-04 01:44:42 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -462,13 +462,13 @@
         </enumVal>
         <label>Locomotive Direction</label>
       </variable>
-      <variable label="FL Location" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="14 Speed Step Mode not supported in this decoder">
+      <variable label="Speed Step" CV="29" mask="XXXXXXVX" item="Speed Step Mode" default="1" tooltip="14 Speed Step Mode not supported in this decoder">
         <enumVal>
-          <enumChoice choice="Not Supported">
-            <choice>Not Supported</choice>
+          <enumChoice choice="14 speed step not Supported">
+            <choice>14 speed step not Supported</choice>
           </enumChoice>
-          <enumChoice choice="28 speed step format">
-            <choice>28 speed step format</choice>
+          <enumChoice choice="28/128 speed step format">
+            <choice>28/128 speed step format</choice>
           </enumChoice>
         </enumVal>
         <label>FL Location</label>
