@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.9.9 on Sun Jun 27 19:40:26 PDT 2010 $Id: decoderIndex.xml,v 1.164 2010-10-04 02:02:05 jacobsen Exp $-->
-  <decoderIndex version="198">
+  <!--Written by JMRI version 2.11.1 on Sun Oct 03 19:22:34 PDT 2010 $Id: decoderIndex.xml,v 1.165 2010-10-04 02:24:22 jacobsen Exp $-->
+  <decoderIndex version="201">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -115,6 +115,9 @@
       </family>
       <family name="Raw CVs 1-255" mfg="NMRA" file="0NMRA_test.xml">
         <model model="Raw CVs 1-255" />
+      </family>
+      <family name="ARNOLD Digital" mfg="Arnold - Rivarossi" type="locomotive" file="Arnold.xml">
+        <model model="ARNOLD 81210-81" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="Four Function Dual Mode" mfg="Atlas" lowVersionID="46" highVersionID="46" file="Atlas_342.xml">
         <model model="Four Function Dual Mode" numOuts="4" numFns="8">
@@ -1558,6 +1561,9 @@
           <functionlabel num="21" lockable="false">pop Valve</functionlabel>
         </functionlabels>
       </family>
+      <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401" file="Fleischmann_Function.xml">
+        <model model="686401" maxInputVolts="25 V" maxTotalCurrent="0.80 A" />
+      </family>
       <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
         <model model="TT300" lowVersionID="1" highVersionID="1" />
       </family>
@@ -1587,6 +1593,9 @@
       </family>
       <family name="Digital" mfg="Hornby" file="HornbyDigitalFnOnly.xml">
         <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" />
+      </family>
+      <family name="Function Only, with transponding" mfg="Kato" type="locomotive" file="Kato_FL12.xml">
+        <model model="FL12" lowVersionID="0" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="EM13, silent, readback" mfg="Kato" lowVersionID="49" highVersionID="51" file="Kato_em13.xml">
         <model model="EM13" numOuts="1" numFns="0" maxMotorCurrent="1.0A (peak=1.5A)" formFactor="N" connector="unspecified">
@@ -1896,8 +1905,18 @@
           <output name="05" label="Brown" />
         </model>
       </family>
-      <family name="ACC Decoders" mfg="MERG" lowVersionID="4" comment="DCCACC4 is a standard MERG stationary decoder, but the software has been modified so that it can be programmed via CV1 to 33 and/or CV513 to 545. There is also a Lenz Toggle Mode for compatability with Lenz Systems." file="MERG_ACC4.xml">
-        <model model="DCCACC4" />
+      <family name="ACC Decoders" mfg="MERG" comment="DCCACC4 is pulsed MERG decoder for solenoid motors." type="locomotive" file="MERG_ACC4.xml">
+        <model model="DCCACC4" productID="acc4" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="4" highVersionID="5" />
+        </model>
+      </family>
+      <family name="ACC Decoders" mfg="MERG" comment="DCCACC5 is steady state MERG decoder." type="locomotive" file="MERG_ACC5.xml">
+        <model model="DCCACC5 to V5.1" productID="51" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="4" highVersionID="51" />
+        </model>
+        <model model="DCCACC5 from V5.2" productID="52" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <versionCV lowVersionID="52" highVersionID="52" />
+        </model>
       </family>
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
@@ -2303,6 +2322,22 @@
           <output name="8" label="F8 " maxcurrent="2.5 mA" connection="solder" />
           <size length="100" width="15" height="12" units="mm" />
         </model>
+      </family>
+      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="5" highVersionID="255" type="locomotive" file="Mistral_GOLD_V6.xml">
+        <model model="GOLD V6" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Engine</functionlabel>
+          <functionlabel num="2" lockable="false">2 tones Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Passengers Light</functionlabel>
+          <functionlabel num="4" lockable="false">Door + Whistle</functionlabel>
+          <functionlabel num="5" lockable="true">Parking lights</functionlabel>
+          <functionlabel num="6" lockable="false">Home horn</functionlabel>
+          <functionlabel num="7" lockable="true">Tail Light</functionlabel>
+          <functionlabel num="8" lockable="false">Short horn</functionlabel>
+          <functionlabel num="9" lockable="false">Air Brakes</functionlabel>
+          <functionlabel num="10" lockable="false">Door</functionlabel>
+        </functionlabels>
       </family>
       <family name="Non silent drive directional Lights" mfg="North Coast Engineering" lowVersionID="21" highVersionID="21" file="NCE_D102EU.xml">
         <model model="D102EU" numOuts="2" numFns="0" />
@@ -3720,7 +3755,7 @@
         </functionlabels>
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
-        <model model="TC-64" comment="64 line I/O" lowVersionID="05" />
+        <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
       </family>
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
@@ -3949,6 +3984,15 @@
           <output name="Mute" />
           <!-- The two electical outputs are front headlight, back -->
           <!-- headlight-->
+        </model>
+      </family>
+      <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1" type="locomotive" file="SoundTraxx_OEM_Bachmann_v3.xml">
+        <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NEM651/NMRA 6 pin" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="13.3" width="10.0" height="3.5" units="millimeters" />
+          <output name="1" label="White" connection="unspecified" />
+          <output name="2" label="Yellow" connection="unspecified" />
+          <output name="LD" label="Light Dimming" connection="unspecified" />
+          <output name="Bk" label="Brake Key" connection="unspecified" />
         </model>
       </family>
       <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_SHS_F3.xml">
@@ -5126,8 +5170,145 @@
           <output name="Brakes" />
           <output name="Coupler" />
         </model>
+        <model model="N F45" numOuts="4" numFns="14" connector="other" productID="N_F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="N FP45" numOuts="4" numFns="14" connector="other" productID="N_F45">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
       </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam.xml">
+      <family name="Tsunami Diesel Intermountain OEM" mfg="Throttle-Up (SoundTraxx)" comment="These are OEM for Intermountain Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_IMRC.xml">
+        <model model="HO FT" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO F3" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO F7" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO F9" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO FP7" numOuts="4" numFns="14" connector="other" productID="F">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO ES44DC" numOuts="4" numFns="14" connector="other" productID="ES">
+          <versionCV lowVersionID="64" />
+          <output name="Air Horn" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamics" />
+          <output name="Short Horn" />
+          <output name="Fans(+)" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Comp(-)" />
+          <output name="Brakes" />
+          <output name="Coupler" />
+        </model>
+      </family>
+      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" comment="These are the -retail- version Tsunami steam decoders" file="SoundTraxx_Tsu_Steam.xml">
         <model model="TSU-750 Light Steam" numOuts="2" numFns="14" connector="other" productID="826001" comment="Model 826001">
           <versionCV lowVersionID="64" />
           <output name="Whistle" />
@@ -5369,8 +5550,233 @@
           <output name="Coupler" />
         </model>
       </family>
-      <family name="Tsunami Steam" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
-        <model model="Tsunami Bachmann OEM" numOuts="2" numFns="14" connector="other">
+      <family name="Tsunami Steam Bachmann OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_Bachmann.xml">
+        <model model="HO 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 2-8-0" numOuts="2" numFns="14" connector="other" productID="280">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 2-10-0 Russian Decapod" numOuts="2" numFns="14" connector="other" productID="2100">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 2-10-2 USRA Light" numOuts="2" numFns="14" connector="other" productID="2102">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-4-0 Low Boiler" numOuts="2" numFns="14" connector="other" productID="440l">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-4-0 High Boiler" numOuts="2" numFns="14" connector="other" productID="440h">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-6-2 K4" numOuts="2" numFns="14" connector="other" productID="462">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-8-2 USRA Heavy" numOuts="2" numFns="14" connector="other" productID="482">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 4-8-4 J Class" numOuts="2" numFns="14" connector="other" productID="484">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="HO 3 Truck Shay" numOuts="2" numFns="14" connector="other" productID="3shay">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 2-4-4 Forney" numOuts="2" numFns="14" connector="other" productID="244">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 2-6-6-2" numOuts="2" numFns="14" connector="other" productID="2662">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 4-6-0" numOuts="2" numFns="14" connector="other" productID="460">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 2 Truck T Boiler Shay" numOuts="2" numFns="14" connector="other" productID="2shay">
+          <versionCV lowVersionID="80" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="FX5" label=" Rule 17" />
+          <output name="FX6" label="Mode" />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+        <model model="On30 Climax" numOuts="2" numFns="14" connector="other" productID="climax">
           <versionCV lowVersionID="80" />
           <output name="Whistle" />
           <output name="Bell" />
@@ -5419,6 +5825,40 @@
           <output name="Brake-Squeal" />
           <output name="Coupler" />
         </model>
+        <model model="N Challenger" numOuts="4" numFns="14" connector="other" productID="N_Chal">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
+      </family>
+      <family name="Tsunami Steam Intermountain OEM" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_Tsu_Steam_IMRC.xml">
+        <model model="HO SP AC12" numOuts="4" numFns="14" connector="other" productID="AC12">
+          <versionCV lowVersionID="64" />
+          <output name="Whistle" />
+          <output name="Bell" />
+          <output name="3" label="  FX5  " />
+          <output name="4" label="  FX6  " />
+          <output name="Dynamo" />
+          <output name="Short-Whistle" />
+          <output name="Steam-Release" />
+          <output name="Water-Stop" />
+          <output name="Dimming" />
+          <output name="Mute" />
+          <output name="Injector" />
+          <output name="Brake-Squeal" />
+          <output name="Coupler" />
+        </model>
       </family>
       <family name="Standard Decoder" mfg="Tams Elektronik GmbH" lowVersionID="10" highVersionID="10" file="TAMS_LD-G-21.xml">
         <model model="LD-G-21" numOuts="4" numFns="10">
@@ -5442,6 +5882,11 @@
       </family>
       <family name="TCS A1X decoder" mfg="Train Control Systems" file="TCS_A1X.xml">
         <model model="A1X" numOuts="4" numFns="2" lowVersionID="32" />
+      </family>
+      <family name="TCS DP2X decoder" mfg="Train Control Systems" type="locomotive" file="TCS_DP2X.xml">
+        <model model="Z2" numOuts="2" numFns="2" lowVersionID="50" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="4" label="Purple" connection="unspecified" />
+        </model>
       </family>
       <family name="TCS Function Decoders" mfg="Train Control Systems" file="TCS_Fn.xml">
         <model model="FL2" numOuts="2" numFns="14" lowVersionID="30" highVersionID="37" formFactor="HO">
@@ -5604,6 +6049,20 @@
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
           <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
           <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="EU621" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="0.78" width="0.59" height="0.13" units="inches" />
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
@@ -5797,6 +6256,22 @@
           <output name="1" label="White" connection="other" maxcurrent="50 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="50 mA" />
+          <output name="Dim" connection="unspecified" />
+          <output name="Ditch" connection="unspecified" />
+          <output name="Motor" connection="unspecified" />
+          <output name="BEMF" connection="unspecified" />
+          <output name="Brake" connection="unspecified" />
+        </model>
+        <model model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="1.96" width="0.70" height="0.04" units="inches" />
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA" />
           <output name="Dim" connection="unspecified" />
           <output name="Ditch" connection="unspecified" />
           <output name="Motor" connection="unspecified" />
@@ -6175,6 +6650,11 @@
           <output name="Ditch" />
           <output name="Motor" />
           <size length="0.850" width="0.690" height="0.190" units="inches" />
+        </model>
+      </family>
+      <family name="TCS Z2 decoder" mfg="Train Control Systems" type="locomotive" file="TCS_Z2.xml">
+        <model model="Z2" numOuts="2" numFns="2" lowVersionID="49" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <output name="4" label="Purple" connection="unspecified" />
         </model>
       </family>
       <family name="TCS X w/BEMF" mfg="Train Control Systems" comment="TCS BEMF decoder range" lowVersionID="41" highVersionID="50" file="TCS_bemf.xml">
@@ -6637,6 +7117,9 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
       </family>
+      <family name="BlocD8" mfg="Team Digital" type="stationary" file="TD_BlocD8.xml">
+        <model model="BlocD8" lowVersionID="1" comment="BlocD8 can be programmed in the usual way" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      </family>
       <family name="SIC24" mfg="Team Digital" type="stationary" comment="SIC24 is not stationary decoder, but it can be programmed in the usual way" file="TD_SIC24.xml">
         <model model="SIC24" lowVersionID="12" />
       </family>
@@ -6666,6 +7149,9 @@
       </family>
       <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
         <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
+      </family>
+      <family name="Servo Decoder" mfg="Uhlenbrock Elektronik" type="locomotive" file="Uhlenbrock_67800.xml">
+        <model model="67800" highVersionID="3" lowVersionID="85" comment="67800 is programmable Servo Decoder" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="MicroMultiprotocol Decoder" mfg="Uhlenbrock Elektronik" file="Uhlenbrock_73400.xml">
         <model model="73400" highVersionID="2" numOuts="2" maxMotorCurrent="0.6A" formFactor="N" comment="wired version">
