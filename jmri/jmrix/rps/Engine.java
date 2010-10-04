@@ -28,7 +28,7 @@ import java.io.*;
  * class's collection must be present in the Roster.
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.33 $
+ * @version   $Revision: 1.34 $
  */
 
 
@@ -509,11 +509,10 @@ public class Engine implements ReadingListener {
     static volatile protected Engine _instance = null;
     static public Engine instance() {
         if (_instance == null) {
-            // completely initialize object
-            Engine i = new Engine();
-            i.loadValues();
-            // and make available
-            _instance = i;
+            // NOTE: _instance has to be initialized before loadValues()
+            // is called, because it invokes instance() indirectly.
+            _instance = new Engine();
+            _instance.loadValues();
         }
         return _instance;
     }
