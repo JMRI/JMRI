@@ -9,18 +9,32 @@ import jmri.jmrit.display.SignalHeadIcon;
 import jmri.util.NamedBeanHandle;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import java.util.List;
+import java.util.HashMap;
 
 /**
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
     static final java.util.ResourceBundle rbean = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    static final HashMap<String,String> _nameMap = new HashMap<String,String>();
 
     public SignalHeadIconXml() {
+        // map previous store names to actual localized names
+        _nameMap.put("red", rbean.getString("SignalHeadStateRed"));
+        _nameMap.put("yellow", rbean.getString("SignalHeadStateYellow"));
+        _nameMap.put("green", rbean.getString("SignalHeadStateGreen"));
+        _nameMap.put("lunar", rbean.getString("SignalHeadStateLunar"));
+        _nameMap.put("held", rbean.getString("SignalHeadStateHeld"));
+        _nameMap.put("dark", rbean.getString("SignalHeadStateDark"));
+        _nameMap.put("flashred", rbean.getString("SignalHeadStateFlashingRed"));
+        _nameMap.put("flashyellow", rbean.getString("SignalHeadStateFlashingYellow"));
+        _nameMap.put("flashgreen", rbean.getString("SignalHeadStateFlashingGreen"));
+        _nameMap.put("flashlunar", rbean.getString("SignalHeadStateFlashingLunar"));
     }
 
     /**
@@ -126,17 +140,28 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        loadSignalIcon("red", rotation,l,element, name);
-        loadSignalIcon("yellow", rotation,l,element, name);
-        loadSignalIcon("green", rotation,l,element, name);
-        loadSignalIcon("lunar", rotation,l,element, name);
-        loadSignalIcon("held", rotation,l,element, name);
-        loadSignalIcon("dark", rotation,l,element, name);
-        loadSignalIcon("flashred", rotation,l,element, name);
-        loadSignalIcon("flashyellow", rotation,l,element, name);
-        loadSignalIcon("flashgreen", rotation,l,element, name);
-        loadSignalIcon("flashlunar", rotation,l,element, name);
-        
+        @SuppressWarnings("unchecked")
+        List<Element>aspects = element.getChildren();
+        if (aspects.size()>0) {
+            for (int i=0; i<aspects.size(); i++) {
+                String aspect = aspects.get(i).getName();
+                NamedIcon icon = loadIcon(l, aspect, element);
+                l.setIcon(_nameMap.get(aspect), icon);
+            }
+            log.debug(aspects.size()+" icons loaded for "+l.getNameString());
+        } else {
+            // old style as attributes - somewhere around pre 2.5.4
+            loadSignalIcon("red", rotation,l,element, name);
+            loadSignalIcon("yellow", rotation,l,element, name);
+            loadSignalIcon("green", rotation,l,element, name);
+            loadSignalIcon("lunar", rotation,l,element, name);
+            loadSignalIcon("held", rotation,l,element, name);
+            loadSignalIcon("dark", rotation,l,element, name);
+            loadSignalIcon("flashred", rotation,l,element, name);
+            loadSignalIcon("flashyellow", rotation,l,element, name);
+            loadSignalIcon("flashgreen", rotation,l,element, name);
+            loadSignalIcon("flashlunar", rotation,l,element, name);
+        }      
         try {
             attr = element.getAttribute("clickmode");
             if (attr!=null) {
@@ -161,15 +186,17 @@ public class SignalHeadIconXml extends PositionableLabelXml {
     }
     
     private void loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element, String name){
-        NamedIcon icon = loadIcon( l,aspect, element);
+        NamedIcon icon = loadIcon(l, aspect, element);
         if (icon==null) {
             if (element.getAttribute(aspect) != null) {
             String iconName;
                 iconName = element.getAttribute(aspect).getValue();
                 icon = NamedIcon.getIconByName(iconName);
-                icon.setRotation(rotation, l);
+                if (icon!=null) {
+                    icon.setRotation(rotation, l);
+                }
+                else log.info("did not load file "+iconName+" for aspect "+aspect+" in SignalHead "+name);
             }
-            else log.warn("did not locate " + aspect + " icon file "+name);
         }
         if (icon!=null){
             if (aspect.equals("red")) l.setIcon(rbean.getString("SignalHeadStateRed"), icon);
