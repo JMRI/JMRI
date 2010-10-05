@@ -358,40 +358,39 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     }
 
     void makeIconMap(SignalHead sh) {
-        String[] states = null;
-        if (sh==null) {
-            _iconMap = new HashMap <String, JToggleButton>(12);
-        } else {
-            states = sh.getValidStateNames();
-            _iconMap = new HashMap <String, JToggleButton>(states.length+2);
-        }
-        _order = new ArrayList <String>();
-        ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
-        int k=0;
-        for (int i=0; i<list.size(); i++) {
-            CatalogTreeLeaf leaf = list.get(i);
-            if (sh==null) {
-                String path = leaf.getPath();
-                setIcon(k++, leaf.getName(), new NamedIcon(path, path));
-            } else {
-                String name = "";
-                try {
-                    name = rbean.getString(leaf.getName());
-                } catch (java.util.MissingResourceException mre) {
-                }
-                if (log.isDebugEnabled()) log.debug("makeIconMap: leafName= "+leaf.getName()+", name= "+name);
-                for (int j=0; j<states.length; j++) {
-                    if (name.equals(states[j]) ||
-                            leaf.getName().equals("SignalHeadStateDark") ||
-                            leaf.getName().equals("SignalHeadStateHeld")) {
-                        String path = leaf.getPath();
-                        setIcon(k++, leaf.getName(), new NamedIcon(path, path));
-                        break;
-                    }
-                }
-            }
-        }
-        if (log.isDebugEnabled()) log.debug("makeIconMap: _iconMap.size()= "+_iconMap.size());
+    	_order = new ArrayList <String>();
+    	ArrayList <CatalogTreeLeaf> list = _defaultIcons.getLeaves();
+    	int k=0;
+    	if (sh==null) {
+    		_iconMap = new HashMap <String, JToggleButton>(12);
+    		for (int i=0; i<list.size(); i++) {
+    			CatalogTreeLeaf leaf = list.get(i);
+    			String path = leaf.getPath();
+    			setIcon(k++, leaf.getName(), new NamedIcon(path, path));
+    		}
+    	} else {
+    		String[] states = sh.getValidStateNames();
+    		_iconMap = new HashMap <String, JToggleButton>(states.length+2);
+    		for (int i=0; i<list.size(); i++) {
+    			CatalogTreeLeaf leaf = list.get(i);
+    			String name = "";
+    			try {
+    				name = rbean.getString(leaf.getName());
+    			} catch (java.util.MissingResourceException mre) {
+    			}
+    			if (log.isDebugEnabled()) log.debug("makeIconMap: leafName= "+leaf.getName()+", name= "+name);
+    			for (int j=0; j<states.length; j++) {
+    				if (name.equals(states[j]) ||
+    						leaf.getName().equals("SignalHeadStateDark") ||
+    						leaf.getName().equals("SignalHeadStateHeld")) {
+    					String path = leaf.getPath();
+    					setIcon(k++, leaf.getName(), new NamedIcon(path, path));
+    					break;
+    				}
+    			}
+    		}
+    	}
+    	if (log.isDebugEnabled()) log.debug("makeIconMap: _iconMap.size()= "+_iconMap.size());
     }
 
     void checkIconSizes() {
