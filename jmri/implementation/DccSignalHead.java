@@ -32,7 +32,7 @@ import jmri.*;
  * The FLASH appearances are expected to be implemented in the decoder.
  *
  * @author Alex Shepherd Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class DccSignalHead extends AbstractSignalHead {
 
@@ -72,7 +72,7 @@ public class DccSignalHead extends AbstractSignalHead {
     if (oldLit != newLit) {
       updateOutput();
       // notify listeners, if any
-      firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
+      firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
     }
   }
 
@@ -89,7 +89,7 @@ public class DccSignalHead extends AbstractSignalHead {
     mHeld = newHeld;
     if (oldHeld != newHeld) {
       // notify listeners, if any
-      firePropertyChange("Held", new Boolean(oldHeld), new Boolean(newHeld));
+      firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
     }
   }
 

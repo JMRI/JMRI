@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -270,8 +270,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		boolean oldInverted = _inverted;
 		_inverted = inverted;
 		if (oldInverted != _inverted) {
-			firePropertyChange("inverted", new Boolean(oldInverted),
-					new Boolean(_inverted));
+			firePropertyChange("inverted", Boolean.valueOf(oldInverted),
+					Boolean.valueOf(_inverted));
             int state = _knownState;
             if (state == THROWN) {
                 newKnownState(CLOSED);
@@ -337,7 +337,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 			}
 		}
 		if (firechange)
-			firePropertyChange("locked", new Boolean(!locked), new Boolean(
+			firePropertyChange("locked", Boolean.valueOf(!locked), Boolean.valueOf(
 					locked));
 	}
 
@@ -381,8 +381,8 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		boolean oldReportLocked = _reportLocked;
 		_reportLocked = reportLocked;
 		if (oldReportLocked != _reportLocked)
-			firePropertyChange("reportlocked", new Boolean(oldReportLocked),
-					new Boolean(_reportLocked));
+			firePropertyChange("reportlocked", Boolean.valueOf(oldReportLocked),
+					Boolean.valueOf(_reportLocked));
 	}
 
 	/**

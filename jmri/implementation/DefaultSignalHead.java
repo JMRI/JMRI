@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * to DefaultLunarSignalHead.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -58,7 +58,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
             if (!mLit) stopFlash();
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
+            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
         }
         
     }
@@ -75,7 +75,7 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         mHeld = newHeld;
         if (oldHeld != newHeld) {
             // notify listeners, if any
-            firePropertyChange("Held", new Boolean(oldHeld), new Boolean(newHeld));
+            firePropertyChange("Held", Boolean.valueOf(oldHeld), Boolean.valueOf(newHeld));
         }
         
     }

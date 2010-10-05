@@ -46,7 +46,7 @@ import jmri.*;
  * @author	Dave Duchamp Copyright (C) 2004, 2010
  * @author	Ken Cameron Copyright (C) 2008
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class AbstractLight extends AbstractNamedBean
     implements Light, java.io.Serializable {
@@ -84,7 +84,7 @@ public abstract class AbstractLight extends AbstractNamedBean
     public void setEnabled(boolean v) { 
         boolean old = mEnabled;
         mEnabled = v;
-        if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+        if (old != v) firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(v));
     }
 
     /** Check if this object can handle variable intensity.
