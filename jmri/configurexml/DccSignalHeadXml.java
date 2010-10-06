@@ -6,10 +6,11 @@ package jmri.configurexml;
  * deferring to the present class.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @deprecated 2.5.4
  */
 @Deprecated
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class DccSignalHeadXml 
     extends jmri.implementation.configurexml.DccSignalHeadXml {
 }
