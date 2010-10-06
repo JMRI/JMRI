@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.8 $
+ * @version               $Revision: 1.9 $
  */
 
 
@@ -26,7 +26,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
 	public EasyDccConsistManager(){
 		super();
 		// Initilize the consist reader thread.
-		new Thread(new EasyDccConsistReader());
+		new EasyDccConsistReader();
 	}
 
 
