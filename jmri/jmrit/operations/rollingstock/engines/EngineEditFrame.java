@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -525,7 +525,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 							|| trackLocationBox.getSelectedItem()
 							.equals("")) {
 						JOptionPane.showMessageDialog(this,
-								rb.getString("engineFullySelect"), rb.getString("engineCanNotLoc"),
+								rb.getString("rsFullySelect"), rb.getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 
 					} else {
@@ -534,7 +534,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 						if (!status.equals(Engine.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
 							JOptionPane.showMessageDialog(this,
-									rb.getString("engineCanNotLocMsg")+ status, rb.getString("engineCanNotLoc"),
+									rb.getString("rsCanNotLocMsg")+ status, rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}

@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -623,7 +623,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					if (trackLocationBox.getSelectedItem() == null
 							|| trackLocationBox.getSelectedItem().equals("")) {
 						JOptionPane.showMessageDialog(this,
-								rb.getString("carFullySelect"), rb.getString("carCanNotLoc"),
+								rb.getString("rsFullySelect"), rb.getString("rsCanNotLoc"),
 								JOptionPane.ERROR_MESSAGE);
 
 					} else {
@@ -632,8 +632,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 						if (!status.equals(Car.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
 							JOptionPane.showMessageDialog(this,
-									rb.getString("carCanNotLocMsg")+ status,
-									rb.getString("carCanNotLoc"),
+									rb.getString("rsCanNotLocMsg")+ status,
+									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
