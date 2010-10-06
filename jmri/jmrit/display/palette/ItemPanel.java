@@ -2,7 +2,6 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
-
 import java.util.Hashtable;
 
 import javax.swing.JPanel;
@@ -43,6 +42,9 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void removeIconMap(String family) {
     }
+    protected void hideIcons() {
+    }
+
 
     /**
     * TableItemPanel.java overrides for its itemTypes.  This is for the remainder
@@ -51,9 +53,9 @@ public abstract class ItemPanel extends JPanel {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
         if (_family!=null) {
             if (_itemType.equals("RPSReporter")) {
-                new IconDialog(_itemType, _family, this);
+                new IconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
             } else {
-                new SingleIconDialog(_itemType, _family, this);
+                new SingleIconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
             }
         } else {
             Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);

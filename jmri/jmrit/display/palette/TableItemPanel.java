@@ -303,9 +303,9 @@ public class TableItemPanel extends ItemPanel {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
         if (_family!=null) {
             if (_itemType.equals("MultiSensor")) {
-                new MultiSensorIconDialog(_itemType, _family, this);
+                new MultiSensorIconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
             } else {
-                new IconDialog(_itemType, _family, this);
+                new IconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
             }
         } else {
             Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);

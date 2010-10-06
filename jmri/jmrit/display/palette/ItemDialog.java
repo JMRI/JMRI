@@ -32,18 +32,6 @@ public class ItemDialog extends JDialog {
         setLocationRelativeTo(_parent);
         setVisible(true);
     }
-
-    protected Hashtable<String, NamedIcon> makeNewIconMap(Iterator<String> it) {
-
-        Hashtable <String, NamedIcon> newMap = new Hashtable <String, NamedIcon>();
-        while (it.hasNext()) {
-           String name = it.next();
-           String fileName = "resources/icons/misc/X-red.gif";
-           NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
-           newMap.put(name, icon);
-        }
-        return newMap;
-    }
     
     protected void createNewFamily(Hashtable<String, NamedIcon> newMap) {
         if (_type.equals("MultiSensor")) {
@@ -56,6 +44,7 @@ public class ItemDialog extends JDialog {
     }
 
     protected void updateFamiliesPanel() {
+        _parent.hideIcons();
         _parent.getPaletteFrame().updateFamiliesPanel(_type);
     }
 

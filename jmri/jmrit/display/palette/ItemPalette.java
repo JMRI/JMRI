@@ -16,10 +16,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTabbedPane;
+/*
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
+*/
 
 import org.jdom.Element;
 import jmri.util.JmriJFrame;
@@ -43,7 +45,7 @@ import jmri.jmrit.picker.PickListModel;
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class ItemPalette extends JmriJFrame implements ListSelectionListener, ChangeListener {
+public class ItemPalette extends JmriJFrame /* implements ListSelectionListener, ChangeListener */ {
 
     public static final ResourceBundle rbp = ResourceBundle.getBundle("jmri.jmrit.display.palette.PaletteBundle");
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
@@ -277,7 +279,6 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
 
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
-        _tabPane.addChangeListener(this);
         setLocation(0,100);               
         setVisible(true);                   
         pack();
@@ -356,49 +357,20 @@ public class ItemPalette extends JmriJFrame implements ListSelectionListener, Ch
             log.error("getIconMap failed. family \""+family+"\" not found in item type \""+type+"\".");
             return null;
         }
-        return iconMap;
-    }
-/*
-    static protected Dimension getDimension(String type, String family) {
-        return (Dimension)_iconSizes.get(type).get(family);
-    }
-*/
-    /**
-    * Tab state changed
-    */
-    public void stateChanged(ChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("ChangeListener Event from "+e.getSource().getClass().getName());
-        /*
-        JTable table = _tables[_tabPane.getSelectedIndex()];
-        PickListModel model = (PickListModel)table.getModel();
-        if (model.canAddBean()) {
-            _cantAddPanel.setVisible(false);
-            _addPanel.setVisible(true);
-        } else {
-            _addPanel.setVisible(false);
-            _cantAddPanel.setVisible(true);
-        }
-        */
+        return cloneMap(iconMap);
     }
 
-    /**
-    * Table row selected 
-    */
-    public void valueChanged(ListSelectionEvent e) {
-        if (log.isDebugEnabled()) log.debug("ListSelectionEvent from "+e.getSource().getClass().getName()
-                                            +" idx= "+e.getFirstIndex());
-        //PickListModel model =  (PickListModel)e.getSource();
-        /*
-        int row = e.getFirstIndex();
-        if (row >= 0) {
-            _addButton.setEnabled(true);
-            _addButton.setToolTipText(null);
-        } else {
-            _addButton.setEnabled(false);
-            _addButton.setToolTipText(rbp.getString("ToolTipPickFromTable"));
-            if (log.isDebugEnabled()) log.debug("_addButton.setEnabled(false): row= "+row);
+    static protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
+        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+        if (map!=null) {
+            Iterator <String> it = map.keySet().iterator();
+            while (it.hasNext()) {
+               String name = it.next();
+               NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(map.get(name));
+               clone.put(name, icon);
+            }
         }
-        */
+        return clone;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ItemPalette.class.getName());

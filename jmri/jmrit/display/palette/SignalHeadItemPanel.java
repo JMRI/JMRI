@@ -76,6 +76,9 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
     Hashtable<String, NamedIcon> filterIconMap(SignalHead sh, Hashtable<String, NamedIcon> allIconsMap) {
         String[] states = sh.getValidStateNames();
+        if (states.length == 0) {
+            return ItemPalette.cloneMap(allIconsMap);
+        }
         Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>(); 
         
         Iterator <String> it = allIconsMap.keySet().iterator();
@@ -107,7 +110,15 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
         if (_family!=null) {
-            new IconDialog(_itemType, _family, this);
+            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+            Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();
+            SignalHead sh = (SignalHead)getTableSelection();
+            if (sh!=null) {
+                iconMap = filterIconMap(sh, map);
+            } else {
+                iconMap = map;
+            }
+            new IconDialog(_itemType, _family, iconMap, this);
         } else {
             Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);
             new IconDialog(_itemType, map, this);

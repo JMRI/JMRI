@@ -13,6 +13,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -26,6 +27,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import jmri.NamedBean;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
@@ -46,11 +48,11 @@ public class IconDialog extends ItemDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public IconDialog(String type, String family, ItemPanel parent) {
+    public IconDialog(String type, String family, Hashtable <String, NamedIcon> iconMap, ItemPanel parent) {
         super(type, family, 
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
               parent, true);
-        _iconMap = cloneMap(ItemPalette.getIconMap(type, family));
+        _iconMap = iconMap;
         _familyName = new JTextField(family);
 
         JPanel panel = new JPanel();
@@ -92,21 +94,6 @@ public class IconDialog extends ItemDialog {
         init();
     }
 
-    Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
-        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
-        if (map!=null) {
-            Iterator <String> it = map.keySet().iterator();
-            while (it.hasNext()) {
-               String name = it.next();
-               NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(map.get(name));
-               clone.put(name, icon);
-            }
-        } else {
-            clone = _parent.makeNewIconMap(_type);
-        }
-        return clone;
-    }
-
     protected JPanel makeButtonPanel() {
         _buttonPanel = new JPanel();
         _buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.Y_AXIS));
@@ -125,9 +112,8 @@ public class IconDialog extends ItemDialog {
         addFamilyButton.addActionListener(new ActionListener() {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    Iterator <String> it = _iconMap.keySet().iterator();
                     setVisible(false);
-                    createNewFamily(makeNewIconMap(it));
+                    createNewFamily(_parent.makeNewIconMap(_type));
                     dialog.dispose();
                 }
                 ActionListener init(IconDialog d) {

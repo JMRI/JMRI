@@ -34,7 +34,6 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
         initTextPanel();
         _decorator = new DecoratorPanel(_editor);
         add(_decorator, BorderLayout.SOUTH);
-        initButtonPanel();          // SOUTH Panel
     }
 
     /**
@@ -64,27 +63,6 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         _decorator.setText(_text.getText());
-    }
-
-    /**
-    *  SOUTH Panel
-    */
-    public void initButtonPanel() {
-        /*
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-
-        _editIconsButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
-        _editIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    openEditDialog();
-                }
-        });
-        _editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
-        bottomPanel.add(_editIconsButton);
-
-        add(bottomPanel, BorderLayout.SOUTH);
-        */
     }
 
     /**
