@@ -173,8 +173,7 @@ public class Portal  {
             for (int i=0; i<_fromPaths.size(); i++) {
                     _fromPaths.get(i).setBlock(block);
             }
-        }
-        if (!verify(_fromPaths, block)) {
+        } else if (!verify(_fromPaths, block)) {
             return false;
         }
         if (log.isDebugEnabled()) log.debug("setFromBlock: oldBlock= \""+getFromBlockName()+
@@ -381,6 +380,13 @@ public class Portal  {
     }
     
     private boolean verify(List <OPath> paths, OBlock block) {
+        if (block==null) {
+            if (paths.size()==0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
         String name = block.getSystemName();
         for (int i=0; i<paths.size(); i++) {
             String pathName = paths.get(i).getBlock().getSystemName();

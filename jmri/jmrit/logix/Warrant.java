@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -830,8 +830,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 String command = ts.getCommand().toUpperCase();
                 // actual playback total elapsed time is "ts.getTime()" before record time.
                 // current block at playback may also be before current block at record
-                _syncIdx = getIndexOfBlock(ts.getBlockName());
                 synchronized(this) {
+                    _syncIdx = getIndexOfBlock(ts.getBlockName());
                     try {
                         if (time > 0) {
                             wait(time);
@@ -983,14 +983,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
         synchronized private void resetSpeed() {
             _lock.lock();
-            setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
-            if (!_wait && !_halt) {
-                this.notify();
+            try {
+                setSpeed(modifySpeed(getLastSpeedCommand(_idxCurrentCommand), _speedType));
+                if (!_wait && !_halt) {
+                    this.notify();
+                }
+            } finally {
+                _lock.unlock();
             }
             if (log.isDebugEnabled()) log.debug("resetSpeed: throttle speed= "+
                                                 _throttle.getSpeedSetting()+" _wait= "+_wait);
-            this.notify();
-            _lock.unlock();
+//            this.notify();
         }
 
         private float modifySpeed(float s, String sType) {
@@ -1148,24 +1151,24 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
             public void run() {
                 _lock.lock();
-                float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
-                endSpeed = modifySpeed(endSpeed, endSpeedType);
-                String old = _speedType;
-                _speedType = endSpeedType;   // transistion
-                if (log.isDebugEnabled()) log.debug("rampSpeed from "+old+" to "+endSpeedType);
-                float speed = _throttle.getSpeedSetting();
-                firePropertyChange("SpeedRestriction", old, 
-                                   (endSpeed > speed ? "increasing" : "decreasing"));
-
-                if (!_speedType.equals("Stop")) {
-                    synchronized(_engineer) {
-                        _engineer.notify();
-                        _wait = false;
-                    }
-                } else {
-                    _wait = true;
-                }
                 try {
+                    float endSpeed = getLastSpeedCommand(_idxCurrentCommand);
+                    endSpeed = modifySpeed(endSpeed, endSpeedType);
+                    String old = _speedType;
+                    _speedType = endSpeedType;   // transistion
+                    if (log.isDebugEnabled()) log.debug("rampSpeed from "+old+" to "+endSpeedType);
+                    float speed = _throttle.getSpeedSetting();
+                    firePropertyChange("SpeedRestriction", old, 
+                                       (endSpeed > speed ? "increasing" : "decreasing"));
+
+                    if (!_speedType.equals("Stop")) {
+                        synchronized(_engineer) {
+                            _engineer.notify();
+                            _wait = false;
+                        }
+                    } else {
+                        _wait = true;
+                    }
                     float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
                     switch (_throttle.getSpeedStepMode()) {
                         case DccThrottle.SpeedStepMode14:

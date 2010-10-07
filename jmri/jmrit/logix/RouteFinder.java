@@ -46,7 +46,7 @@ public class RouteFinder implements Runnable {
         _quit = true;
     }
 
-    class RouteNode extends DefaultMutableTreeNode {
+    static class RouteNode extends DefaultMutableTreeNode {
 
         boolean _needsViaAncestor = false;
 

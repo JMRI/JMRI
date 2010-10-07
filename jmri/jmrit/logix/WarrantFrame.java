@@ -1936,7 +1936,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     bo.setEntryName((String)value);
                     break;
                 case PATH_COLUMN:
-                    block =bo.getBlock();
                     bo.setPathName((String)value);
                     break;
                 case DEST_PORTAL_COL: 
