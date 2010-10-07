@@ -47,8 +47,8 @@ public class IconItemPanel extends ItemPanel {
         initIconPanel();
         initButtonPanel();
         _catalog = CatalogPanel.makeDefaultCatalog();
+        add(_catalog);
         _catalog.setVisible(false);
-        add(_catalog, BorderLayout.SOUTH);
     }
 
     /**
@@ -87,7 +87,6 @@ public class IconItemPanel extends ItemPanel {
                                                                 borderName));
                JLabel label = new DragJLabel(icon);
                label.setName(borderName);
-            //   label.setTransferHandler(new DnDIconItemHandler(_editor));
                panel.add(label);
 
                _iconPanel.add(panel);
@@ -96,7 +95,8 @@ public class IconItemPanel extends ItemPanel {
         } else {
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
         }
-        add(_iconPanel, BorderLayout.NORTH);
+        add(_iconPanel);
+//        _paletteFrame.pack();
     }
 
     /**
@@ -116,7 +116,8 @@ public class IconItemPanel extends ItemPanel {
                         _catalog.setVisible(true);
                         _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
                     }
-                    _paletteFrame.pack();
+                    repaint();
+//                    _paletteFrame.pack();
                 }
         });
         _catalogButton.setToolTipText(ItemPalette.rbp.getString("ToolTipCatalog"));
@@ -131,7 +132,7 @@ public class IconItemPanel extends ItemPanel {
         editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
         bottomPanel.add(editIconsButton);
 
-        add(bottomPanel, BorderLayout.CENTER);
+        add(bottomPanel);
     }
 
     protected void setFamily(String family) {

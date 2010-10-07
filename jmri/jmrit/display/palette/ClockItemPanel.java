@@ -91,7 +91,7 @@ public class ClockItemPanel extends ItemPanel {
         } else {
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
         }
-        add(_iconPanel, BorderLayout.NORTH);
+        add(_iconPanel);
     }
 
     /**
@@ -110,7 +110,7 @@ public class ClockItemPanel extends ItemPanel {
         editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
         bottomPanel.add(editIconsButton);
 
-        add(bottomPanel, BorderLayout.CENTER);
+        add(bottomPanel);
     }
 
     public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    

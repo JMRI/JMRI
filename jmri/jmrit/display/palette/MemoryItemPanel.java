@@ -111,7 +111,7 @@ public class MemoryItemPanel extends TableItemPanel {
         panel.add(button, c);
         group.add(button);
 
-        add(panel, BorderLayout.CENTER);
+        add(panel);
     }
 
     /**

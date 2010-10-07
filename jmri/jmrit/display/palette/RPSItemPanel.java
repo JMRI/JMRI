@@ -59,8 +59,6 @@ public class RPSItemPanel extends ItemPanel {
 
         Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
-            _iconFamilyPanel.add(new JLabel(txt));
             ButtonGroup group = new ButtonGroup();
             Iterator <String> it = families.keySet().iterator();
             JPanel buttonPanel = new JPanel();
@@ -94,13 +92,18 @@ public class RPSItemPanel extends ItemPanel {
             makeIconPanel();        // need to have family identified  before calling
             _iconFamilyPanel.add(_iconPanel);
             _iconPanel.setVisible(false);
-            _iconFamilyPanel.add(buttonPanel);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
+            panel.add(new JLabel(txt));
+            panel.add(buttonPanel);
+            _iconFamilyPanel.add(panel);
         } else {
             //log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+ " families.");
             JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
         }
-        add(_iconFamilyPanel, BorderLayout.CENTER);
+        add(_iconFamilyPanel);
     }
 
     protected void makeIconPanel() {
@@ -142,6 +145,8 @@ public class RPSItemPanel extends ItemPanel {
            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                             borderName));
            panel.add(new JLabel(icon));
+           int width = Math.max(100, panel.getPreferredSize().width);
+           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
            _iconPanel.add(panel);
         }
     }
@@ -161,6 +166,7 @@ public class RPSItemPanel extends ItemPanel {
                         _iconPanel.setVisible(true);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
+                    _paletteFrame.pack();
                 }
         });
         _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
@@ -174,7 +180,7 @@ public class RPSItemPanel extends ItemPanel {
         });
         editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
         bottomPanel.add(editIconsButton);
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(bottomPanel);
     }
     
     protected void hideIcons() {

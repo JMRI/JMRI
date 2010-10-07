@@ -4,6 +4,7 @@ package jmri.jmrit.display.palette;
 import java.awt.BorderLayout;
 import java.util.Hashtable;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import jmri.jmrit.catalog.NamedIcon;
@@ -27,7 +28,7 @@ public abstract class ItemPanel extends JPanel {
         _paletteFrame = parentFrame;
         _itemType = itemType;
         _editor = editor;
-        setLayout(new BorderLayout(5,5));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
 
     abstract public void init();

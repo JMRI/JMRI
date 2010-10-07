@@ -94,7 +94,6 @@ public class BackgroundItemPanel extends IconItemPanel {
                                                                 borderName));
                JLabel label = new DragJLabel(icon);
                label.setName(borderName);
-            //   label.setTransferHandler(new DnDIconItemHandler(_editor));
                panel.add(label);
 
                _iconPanel.add(panel);
@@ -103,7 +102,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         } else {
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
         }
-        add(_iconPanel, BorderLayout.NORTH);
+        add(_iconPanel);
     }
 
     /**
@@ -130,32 +129,25 @@ public class BackgroundItemPanel extends IconItemPanel {
                     } else {
                         _catalog.setVisible(true);
                         _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
-                        _paletteFrame.pack();
                     }
                 }
         });
         _catalogButton.setToolTipText(ItemPalette.rbp.getString("ToolTipCatalog"));
         bottomPanel.add(_catalogButton);
 
-        add(bottomPanel, BorderLayout.CENTER);
+        add(bottomPanel);
     }
 
     void hideCatalog() {
         _catalog.setVisible(false);
         _catalogButton.setText(ItemPalette.rbp.getString("ShowCatalog"));
-        _paletteFrame.pack();
     }
 
     void initBottomPanel() {
-        JPanel bottomPanel = new JPanel();
         _catalog = BackgroudCatalogPanel.makeDefaultCatalog();
+        _catalog.setSize(_paletteFrame.getSize().width, _catalog.getPreferredSize().height);
         _catalog.setVisible(false);
-        String[] path = new String[] {"mainRoot","Program Directory","resources","icons","USS","background"};
-        _catalog.setSelectedNode(path);
-        //_catalog.makeVisible(path);
-        _catalog.scrollPathToVisible(path);
-        bottomPanel.add(_catalog);
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(_catalog);
     }
 
     class BackgroudCatalogPanel extends CatalogPanel {

@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
@@ -84,7 +86,7 @@ public class TableItemPanel extends ItemPanel {
             panel.add(_addTableButton);
             topPanel.add(panel, BorderLayout.SOUTH);
         }
-        add(topPanel, BorderLayout.NORTH);
+        add(topPanel);
     }
 
     private void makeAddToTableWindow() {
@@ -141,13 +143,10 @@ public class TableItemPanel extends ItemPanel {
     protected void setFamily(String family) {
         _family = family;
         if (log.isDebugEnabled()) log.debug("setFamily: for type \""+_itemType+"\", family \""+family+"\"");
-        boolean visible = _iconPanel.isVisible();
         _iconFamilyPanel.remove(_iconPanel);
         makeIconPanel();        // need to have family identified  before calling
-        _iconPanel.setVisible(visible);
         _iconFamilyPanel.add(_iconPanel, 0);
         hideIcons();
-        _paletteFrame.pack();
     }
 
     protected void removeIconFamiliesPanel() {
@@ -171,8 +170,6 @@ public class TableItemPanel extends ItemPanel {
 
         Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
-            _iconFamilyPanel.add(new JLabel(txt));
             ButtonGroup group = new ButtonGroup();
             Iterator <String> it = families.keySet().iterator();
             JPanel buttonPanel = new JPanel();
@@ -206,13 +203,18 @@ public class TableItemPanel extends ItemPanel {
             makeIconPanel();        // need to have family identified  before calling
             _iconFamilyPanel.add(_iconPanel);
             _iconPanel.setVisible(false);
-            _iconFamilyPanel.add(buttonPanel);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
+            panel.add(new JLabel(txt));
+            panel.add(buttonPanel);
+            _iconFamilyPanel.add(panel);
         } else {
             //log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+ " families.");
             JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
         }
-        add(_iconFamilyPanel, BorderLayout.CENTER);
+        add(_iconFamilyPanel);
     }
 
     protected void makeIconPanel() {
@@ -230,15 +232,73 @@ public class TableItemPanel extends ItemPanel {
         Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
         if (iconMap==null) {
             if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
-            Thread.dumpStack();
+            // Thread.dumpStack();
             JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         } else {
             AddIconsToPanel(iconMap);
         }
+//        _paletteFrame.pack();
     }
 
+    protected void AddIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+        GridBagLayout gridbag = new GridBagLayout();
+        _iconPanel.setLayout(gridbag);
+
+        int numCol = 4;
+        GridBagConstraints c = new GridBagConstraints();
+        c.fill = GridBagConstraints.NONE;
+        c.anchor = GridBagConstraints.CENTER;
+        c.weightx = 1.0;
+        c.weighty = 1.0;
+        c.gridwidth = 1;
+        c.gridheight = 1;
+        c.gridx = -1;
+        c.gridy = 0;
+
+        int cnt = iconMap.size();
+        Iterator <String> it = iconMap.keySet().iterator();
+        while (it.hasNext()) {
+           String name = it.next();
+           NamedIcon icon = new NamedIcon(iconMap.get(name));    // make copy for possible reduction
+           icon.reduceTo(100, 100, 0.2);
+           JPanel panel = new JPanel();
+           String borderName = null;
+           try {
+               borderName = ItemPalette.rbean.getString(name);
+           } catch (java.util.MissingResourceException mre) {
+               try {
+                   borderName = ItemPalette.rbp.getString(name);
+               } catch (java.util.MissingResourceException mre2) {
+                   borderName = name;
+               }
+           }
+           panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
+                                                            borderName));
+           panel.add(new JLabel(icon));
+           int width = Math.max(100, panel.getPreferredSize().width);
+           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
+           c.gridx += 1;
+           if (c.gridx >= numCol) { //start next row
+               c.gridy++;
+               c.gridx = 0;
+               if (cnt < numCol-1) { // last row
+                   JPanel p =  new JPanel();
+                   p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+                   p.add(Box.createHorizontalStrut(100));
+                   gridbag.setConstraints(p, c);
+                   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
+                   _iconPanel.add(p);
+                   c.gridx = 1;
+               }
+           }
+           cnt--;
+           gridbag.setConstraints(panel, c);
+           _iconPanel.add(panel);
+        }
+    }
+/*
     protected void AddIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         Iterator <String> it = iconMap.keySet().iterator();
         while (it.hasNext()) {
@@ -259,10 +319,12 @@ public class TableItemPanel extends ItemPanel {
            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                             borderName));
            panel.add(new JLabel(icon));
+           int width = Math.max(100, panel.getPreferredSize().width);
+           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
            _iconPanel.add(panel);
         }
     }
-
+*/
     /**
     *  SOUTH Panel
     */
@@ -278,6 +340,7 @@ public class TableItemPanel extends ItemPanel {
                         _iconPanel.setVisible(true);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
+                    _paletteFrame.pack();
                 }
         });
         _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
@@ -291,12 +354,13 @@ public class TableItemPanel extends ItemPanel {
         });
         editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
         bottomPanel.add(editIconsButton);
-        add(bottomPanel, BorderLayout.SOUTH);
+        add(bottomPanel);
     }
     
     protected void hideIcons() {
         _iconPanel.setVisible(false);
         _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
+        _paletteFrame.pack();
     }
 
     protected void openEditDialog() {

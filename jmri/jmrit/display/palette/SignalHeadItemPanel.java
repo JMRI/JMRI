@@ -44,7 +44,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         makeIconPanel();
         _iconPanel.setVisible(visible);
         _iconFamilyPanel.add(_iconPanel, 0);
-        _paletteFrame.pack();
+//        _paletteFrame.pack();
     }
 
     protected void makeIconPanel() {

@@ -33,7 +33,7 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
     public void init() {
         initTextPanel();
         _decorator = new DecoratorPanel(_editor);
-        add(_decorator, BorderLayout.SOUTH);
+        add(_decorator);
     }
 
     /**
@@ -58,7 +58,7 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         panel.add(_text, c);
-        add(panel, BorderLayout.CENTER);
+        add(panel);
     }
 
     public void actionPerformed(ActionEvent e) {

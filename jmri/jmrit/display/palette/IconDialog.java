@@ -325,7 +325,7 @@ public class IconDialog extends ItemDialog {
                   iconPanel.add(p);
                   c.gridx = numCol-cnt;
                   c.gridwidth = gridwidth;
-                  c.fill = GridBagConstraints.NONE;
+                  //c.fill = GridBagConstraints.NONE;
               } else {
                   c.gridx = 0;
               }
