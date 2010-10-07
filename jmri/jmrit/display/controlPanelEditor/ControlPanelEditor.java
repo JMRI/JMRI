@@ -991,6 +991,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                   ni.setDisplayLevel(ICONS);
                   ni.setLocation(pt.x, pt.y);
                   putItem(ni);
+                  ni.updateSize();
                   evt.dropComplete(true);
                   return;
             } else if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
