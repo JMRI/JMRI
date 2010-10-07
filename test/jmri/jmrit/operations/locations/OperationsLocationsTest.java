@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -999,6 +999,94 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Number of Cars", 3, l.getNumberRS());
 		Assert.assertEquals("Location Used Length one car", 40+4+33+4+40+4, l.getUsedLength()); // Drawbar length is 4
 
+	}
+	
+	// test track priority
+	public void testTrackPriority(){
+		LocationManager locMan = new LocationManager();
+		Location l = locMan.newLocation("TestPriority Location");
+		Track t1 = l.addTrack("Yard 1", Track.YARD);
+		Track t2 = l.addTrack("Yard 2", Track.YARD);
+		Track t3 = l.addTrack("Siding 1", Track.SIDING);
+		Track t4 = l.addTrack("Siding 2", Track.SIDING);
+		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
+		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
+		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
+		
+		// set the priority bias
+		t1.setMoves(12);
+		t2.setMoves(14);
+		t3.setMoves(18);	// lowest priority
+		t4.setMoves(11);
+		t5.setMoves(10);	// highest priority
+		t6.setMoves(16);	
+		t7.setMoves(15);	
+		
+		// get all tracks ids
+		List<String> tracks = l.getTracksByMovesList(null);
+		
+		Assert.assertEquals("number of tracks", 7 , tracks.size());		
+		Assert.assertEquals("1st track", t5 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t4 ,l.getTrackById(tracks.get(1)));
+		Assert.assertEquals("3rd track", t1 ,l.getTrackById(tracks.get(2)));
+		Assert.assertEquals("4th track", t2 ,l.getTrackById(tracks.get(3)));
+		Assert.assertEquals("5th track", t7 ,l.getTrackById(tracks.get(4)));
+		Assert.assertEquals("6th track", t6 ,l.getTrackById(tracks.get(5)));
+		Assert.assertEquals("7th track", t3 ,l.getTrackById(tracks.get(6)));
+		
+		// get interchange tracks ids
+		tracks = l.getTracksByMovesList(Track.INTERCHANGE);
+		
+		Assert.assertEquals("number of tracks", 3 , tracks.size());		
+		Assert.assertEquals("1st track", t5 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t7 ,l.getTrackById(tracks.get(1)));
+		Assert.assertEquals("3rd track", t6 ,l.getTrackById(tracks.get(2)));
+		
+		// get siding tracks ids
+		tracks = l.getTracksByMovesList(Track.SIDING);
+		
+		Assert.assertEquals("number of tracks", 2 , tracks.size());		
+		Assert.assertEquals("1st track", t4 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t3 ,l.getTrackById(tracks.get(1)));
+		
+		// get yard tracks ids
+		tracks = l.getTracksByMovesList(Track.YARD);
+		
+		Assert.assertEquals("number of tracks", 2 , tracks.size());		
+		Assert.assertEquals("1st track", t1 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t2 ,l.getTrackById(tracks.get(1)));
+		
+		// tracks with schedules get priority
+		
+		t3.setScheduleName("dummy schedule");
+		
+		// get all tracks ids
+		tracks = l.getTracksByMovesList(null);
+		
+		Assert.assertEquals("number of tracks", 7 , tracks.size());		
+		Assert.assertEquals("1st track", t3 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t5 ,l.getTrackById(tracks.get(1)));
+		Assert.assertEquals("3rd track", t4 ,l.getTrackById(tracks.get(2)));
+		Assert.assertEquals("4th track", t1 ,l.getTrackById(tracks.get(3)));
+		Assert.assertEquals("5th track", t2 ,l.getTrackById(tracks.get(4)));
+		Assert.assertEquals("6th track", t7 ,l.getTrackById(tracks.get(5)));
+		Assert.assertEquals("7th track", t6 ,l.getTrackById(tracks.get(6)));
+		
+		// t4 has less moves than t3 so it will move up in priority
+		t4.setScheduleName("dummy schedule");
+		
+		// get all tracks ids
+		tracks = l.getTracksByMovesList(null);
+		
+		Assert.assertEquals("number of tracks", 7 , tracks.size());		
+		Assert.assertEquals("1st track", t4 ,l.getTrackById(tracks.get(0)));
+		Assert.assertEquals("2nd track", t3 ,l.getTrackById(tracks.get(1)));
+		Assert.assertEquals("3rd track", t5 ,l.getTrackById(tracks.get(2)));
+		Assert.assertEquals("4th track", t1 ,l.getTrackById(tracks.get(3)));
+		Assert.assertEquals("5th track", t2 ,l.getTrackById(tracks.get(4)));
+		Assert.assertEquals("6th track", t7 ,l.getTrackById(tracks.get(5)));
+		Assert.assertEquals("7th track", t6 ,l.getTrackById(tracks.get(6)));
+		
 	}
 
 	// test location Xml create support

@@ -60,7 +60,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2383,14 +2383,14 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c2 load", "L", c2.getLoad());
 		Assert.assertEquals("c3 track", "Chelmsford Freight 1", c3.getTrackName());
 		Assert.assertEquals("c3 load", "Scrap", c3.getLoad());
-		Assert.assertEquals("c4 track", "Chelmsford Freight 4", c4.getTrackName());
-		Assert.assertEquals("c4 load", "L", c4.getLoad());
+		Assert.assertEquals("c4 track", "Chelmsford Yard 3", c4.getTrackName());
+		Assert.assertEquals("c4 load", "E", c4.getLoad());
 		Assert.assertEquals("c5 track", "Chelmsford Freight 2", c5.getTrackName());
 		Assert.assertEquals("c5 load", "Tin", c5.getLoad());
 		Assert.assertEquals("c6 track", "Chelmsford Yard 3", c6.getTrackName());
 		Assert.assertEquals("c6 load", "L", c6.getLoad());
-		Assert.assertEquals("c7 track", "Chelmsford Yard 3", c7.getTrackName());
-		Assert.assertEquals("c7 load", "E", c7.getLoad());
+		Assert.assertEquals("c7 track", "Chelmsford Freight 4", c7.getTrackName());
+		Assert.assertEquals("c7 load", "L", c7.getLoad());
 		Assert.assertEquals("c8 track", "Westford Yard 2", c8.getTrackName());
 		Assert.assertEquals("c8 load", "E", c8.getLoad());
 		Assert.assertEquals("c9 track", "Chelmsford Yard 3", c9.getTrackName());
@@ -2432,13 +2432,13 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c3 track to staging", "Bedford Yard 1", c3.getTrackName());
 		Assert.assertEquals("c3 load to staging", "E", c3.getLoad());
 		Assert.assertEquals("c4 track to staging", "Bedford Yard 1", c4.getTrackName());
-		Assert.assertEquals("c4 load to staging", "L", c4.getLoad());
+		Assert.assertEquals("c4 load to staging", "E", c4.getLoad());
 		Assert.assertEquals("c5 track to staging", "Bedford Yard 1", c5.getTrackName());
 		Assert.assertEquals("c5 load to staging", "E", c5.getLoad());
 		Assert.assertEquals("c6 track to staging", "Bedford Yard 1", c6.getTrackName());
 		Assert.assertEquals("c6 load to staging", "L", c6.getLoad());
 		Assert.assertEquals("c7 track to staging", "Bedford Yard 1", c7.getTrackName());
-		Assert.assertEquals("c7 load to staging", "E", c7.getLoad());
+		Assert.assertEquals("c7 load to staging", "L", c7.getLoad());
 		Assert.assertEquals("c8 track to staging", "Westford Yard 2", c8.getTrackName());
 		Assert.assertEquals("c8 load to staging", "E", c8.getLoad());
 		Assert.assertEquals("c9 track to staging", "Bedford Yard 1", c9.getTrackName());
@@ -2482,10 +2482,10 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c1 load from staging", "Metal 3", c1.getLoad());
 		Assert.assertEquals("c2 load from staging", "L", c2.getLoad());
 		Assert.assertEquals("c3 load from staging", "Metal 2", c3.getLoad());
-		Assert.assertEquals("c4 load from staging", "L", c4.getLoad());
+		Assert.assertEquals("c4 load from staging", "E", c4.getLoad());
 		Assert.assertEquals("c5 load from staging", "E", c5.getLoad());
 		Assert.assertEquals("c6 load from staging", "L", c6.getLoad());
-		Assert.assertEquals("c7 load from staging", "Metal 1", c7.getLoad());
+		Assert.assertEquals("c7 load from staging", "L", c7.getLoad());
 		Assert.assertEquals("c8 load from staging", "E", c8.getLoad());
 		Assert.assertEquals("c9 load from staging", "L", c9.getLoad());
 		Assert.assertEquals("c10 load from staging", "E", c10.getLoad());
@@ -2498,19 +2498,19 @@ public class OperationsTrainsTest extends TestCase {
 		train1.move();
 		train1.move();
 		
-		Assert.assertEquals("c1 track from staging terminated", "Chelmsford Freight 1", c1.getTrackName());
+		Assert.assertEquals("c1 track from staging terminated", "Chelmsford Freight 2", c1.getTrackName());
 		Assert.assertEquals("c1 load from staging terminated", "Tin", c1.getLoad());
 		Assert.assertEquals("c2 track from staging terminated", "Westford Yard 2", c2.getTrackName());
 		Assert.assertEquals("c2 load from staging terminated", "L", c2.getLoad());
-		Assert.assertEquals("c3 track from staging terminated", "Chelmsford Freight 1", c3.getTrackName());
+		Assert.assertEquals("c3 track from staging terminated", "Chelmsford Freight 2", c3.getTrackName());
 		Assert.assertEquals("c3 load from staging terminated", "Scrap", c3.getLoad());
-		Assert.assertEquals("c4 track from staging terminated", "Westford Express 4", c4.getTrackName());
+		Assert.assertEquals("c4 track from staging terminated", "Chelmsford Yard 3", c4.getTrackName());
 		Assert.assertEquals("c4 load from staging terminated", "E", c4.getLoad());
 		Assert.assertEquals("c5 track from staging terminated", "Westford Yard 1", c5.getTrackName());
 		Assert.assertEquals("c5 load from staging terminated", "E", c5.getLoad());
-		Assert.assertEquals("c6 track from staging terminated", "Westford Express 3", c6.getTrackName());
+		Assert.assertEquals("c6 track from staging terminated", "Westford Express 4", c6.getTrackName());
 		Assert.assertEquals("c6 load from staging terminated", "E", c6.getLoad());
-		Assert.assertEquals("c7 track from staging terminated", "Chelmsford Freight 1", c7.getTrackName());
+		Assert.assertEquals("c7 track from staging terminated", "Westford Express 3", c7.getTrackName());
 		Assert.assertEquals("c7 load from staging terminated", "E", c7.getLoad());
 		Assert.assertEquals("c8 track from staging terminated", "Westford Yard 2", c8.getTrackName());
 		Assert.assertEquals("c8 load from staging terminated", "E", c8.getLoad());

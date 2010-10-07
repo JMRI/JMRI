@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.89 $
+ * @version             $Revision: 1.90 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1171,7 +1171,7 @@ public class TrainBuilder extends TrainCommon{
 										if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
 												&& status.contains(Car.LOAD) 
 												&& checkDropTrainDirection(c, rld, testDestination, testTrack)){
-											log.debug("Siding ("+testTrack.getName()+") has "+status);
+											log.debug("Siding ("+testTrack.getName()+") status: "+status);
 											// is car departing a staging track that can generate schedule loads?
 											if (c.getTrack().isAddLoadsEnabled() && c.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
 												Schedule sch = ScheduleManager.instance().getScheduleByName(testTrack.getScheduleName());
@@ -1241,7 +1241,7 @@ public class TrainBuilder extends TrainCommon{
 										}
 										// car's current track is the test track or car can't be dropped
 										if(!status.equals(Car.OKAY)){
-											if (status.equals(Car.SCHEDULE))
+											if (status.contains(Car.SCHEDULE))
 												addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") load ("+c.getLoad()+") to track (" +testTrack.getName()+") due to "+status);
 											else
 												addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +testTrack.getName()+") due to "+status);
@@ -1282,6 +1282,11 @@ public class TrainBuilder extends TrainCommon{
 										// bias cars to the terminal 
 										if (rld.getName().equals(terminateLocation.getName())){
 											log.debug("Location "+rld.getName()+" is terminate location "+Double.toString(nextRatio));
+											nextRatio = nextRatio * nextRatio;
+										}
+										// bias cars to a track with a schedule
+										if (!trackTemp.getScheduleName().equals("")){
+											log.debug("Track ("+trackTemp.getName()+") has schedule ("+trackTemp.getScheduleName()+") adjust nextRatio = "+Double.toString(nextRatio));
 											nextRatio = nextRatio * nextRatio;
 										}
 										log.debug(rldSave.getName()+" = "+Double.toString(saveRatio)+ " " + rld.getName()+" = "+Double.toString(nextRatio));

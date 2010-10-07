@@ -18,7 +18,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -34,8 +34,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _usedLength = 0;			//length of track filled by cars and engines 
 	protected String _comment = "";
 	protected boolean _switchList = true;	//when true print switchlist for this location 
-	protected Hashtable<String, Track> _subLocationHashTable = new Hashtable<String, Track>(); // stores
-																								// sublocations
+	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	
 	public static final int NORMAL = 1;		// ops mode for this location
 	public static final int STAGING = 2;
@@ -223,7 +222,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Increments the number of cars and or engines that will be droped off by trains at this
+	 * Increments the number of cars and or engines that will be dropped off by trains at this
 	 * location.
 	 */
 	public void addDropRS() {
@@ -349,8 +348,8 @@ public class Location implements java.beans.PropertyChangeListener {
      * Remember a NamedBean Object created outside the manager.
  	 */
     public void register(Track track) {
-    	Integer old = Integer.valueOf(_subLocationHashTable.size());
-        _subLocationHashTable.put(track.getId(), track);
+    	Integer old = Integer.valueOf(_trackHashTable.size());
+        _trackHashTable.put(track.getId(), track);
         // add to the locations's available track length
         setLength(getLength() + track.getLength());
         // find last id created
@@ -360,13 +359,13 @@ public class Location implements java.beans.PropertyChangeListener {
         	_IdNumber = id;
         String type = track.getLocType();
         if (type.equals(Track.YARD))
-        	firePropertyChange(YARDLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+        	firePropertyChange(YARDLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     	if(type.equals(Track.SIDING))
-			firePropertyChange(SIDINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+			firePropertyChange(SIDINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
 		if(type.equals(Track.INTERCHANGE))
-			firePropertyChange(INTERCHANGELISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+			firePropertyChange(INTERCHANGELISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     	if(type.equals(Track.STAGING))
-			firePropertyChange(STAGINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+			firePropertyChange(STAGINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
         // listen for name and state changes to forward
         track.addPropertyChangeListener(this);
     }
@@ -380,16 +379,16 @@ public class Location implements java.beans.PropertyChangeListener {
     		String type = track.getLocType();
     		String id = track.getId();
     		track.dispose();
-    		Integer old = Integer.valueOf(_subLocationHashTable.size());
-    		_subLocationHashTable.remove(id);
+    		Integer old = Integer.valueOf(_trackHashTable.size());
+    		_trackHashTable.remove(id);
             if (type.equals(Track.YARD))
-            	firePropertyChange(YARDLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+            	firePropertyChange(YARDLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
         	if(type.equals(Track.SIDING))
-    			firePropertyChange(SIDINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+    			firePropertyChange(SIDINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     		if(type.equals(Track.INTERCHANGE))
-    			firePropertyChange(INTERCHANGELISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+    			firePropertyChange(INTERCHANGELISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
         	if(type.equals(Track.STAGING))
-    			firePropertyChange(STAGINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_subLocationHashTable.size()));
+    			firePropertyChange(STAGINGLISTLENGTH_CHANGED_PROPERTY, old, Integer.valueOf(_trackHashTable.size()));
     	}
     }
     
@@ -402,8 +401,8 @@ public class Location implements java.beans.PropertyChangeListener {
     
     public Track getTrackByName(String name, String type) {
     	Track track;
-    	Enumeration<Track> en =_subLocationHashTable.elements();
-    	for (int i = 0; i < _subLocationHashTable.size(); i++){
+    	Enumeration<Track> en =_trackHashTable.elements();
+    	for (int i = 0; i < _trackHashTable.size(); i++){
     		track = en.nextElement();
     		if (type == null){
     			if (track.getName().equals(name))
@@ -415,13 +414,13 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     public Track getTrackById (String id){
-    	return _subLocationHashTable.get(id);
+    	return _trackHashTable.get(id);
     }
     
     private List<String> getTracksByIdList() {
-		String[] arr = new String[_subLocationHashTable.size()];
+		String[] arr = new String[_trackHashTable.size()];
 		List<String> out = new ArrayList<String>();
-		Enumeration<String> en = _subLocationHashTable.keys();
+		Enumeration<String> en = _trackHashTable.keys();
 		int i = 0;
 		while (en.hasMoreElements()) {
 			arr[i] = en.nextElement();
@@ -480,7 +479,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		// first get id list
 		List<String> sortList = getTracksByIdList();
 		// now re-sort
-		List<String> out = new ArrayList<String>();
+		List<String> moveList = new ArrayList<String>();
 		boolean locAdded = false;
 		Track track;
 		Track trackOut;
@@ -489,20 +488,33 @@ public class Location implements java.beans.PropertyChangeListener {
 			locAdded = false;
 			track = getTrackById(sortList.get(i));
 			int moves = track.getMoves();
-			for (int j = 0; j < out.size(); j++) {
-				trackOut = getTrackById(out.get(j));
+			for (int j = 0; j < moveList.size(); j++) {
+				trackOut = getTrackById(moveList.get(j));
 				int outLocMoves = trackOut.getMoves();
 				if (moves < outLocMoves
 						&& (type != null && track.getLocType().equals(type) || type == null)) {
-					out.add(j, sortList.get(i));
+					moveList.add(j, sortList.get(i));
 					locAdded = true;
 					break;
 				}
 			}
 			if (!locAdded
 					&& (type != null && track.getLocType().equals(type) || type == null)) {
-				out.add(sortList.get(i));
+				moveList.add(sortList.get(i));
 			}
+		}
+		// bias tracks with schedules
+		List<String> out = new ArrayList<String>();
+		for (int i=0; i<moveList.size(); i++){
+			track = getTrackById(moveList.get(i));
+			if (!track.getScheduleName().equals("")){
+				out.add(moveList.get(i));
+				moveList.remove(i);
+				i--;
+			}
+		}
+		for (int i=0; i<moveList.size(); i++){
+			out.add(moveList.get(i));
 		}
 		return out;
 	}
