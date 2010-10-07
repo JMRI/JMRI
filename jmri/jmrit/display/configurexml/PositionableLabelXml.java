@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.56 $
+ * @version $Revision: 1.57 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -291,6 +291,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         a = element.getAttribute("justification");
         if(a!=null)
             util.setJustification(a.getValue());
+        else
+            util.setJustification("left");
+
     }
 
 	public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
