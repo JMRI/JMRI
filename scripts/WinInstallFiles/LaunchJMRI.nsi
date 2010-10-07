@@ -18,10 +18,20 @@
 ; -   makensisw.exe (Windows GUI)
 ; - These are part of the NSIS installation suite available from:
 ; -   http://nsis.sourceforge.net/
+; - This MUST be built using the 'Large strings' build available from:
+; -   http://nsis.sourceforge.net/Special_Builds
 ; -------------------------------------------------------------------------
 
 ; -------------------------------------------------------------------------
 ; - Version History
+; -------------------------------------------------------------------------
+; - Version 0.1.12.0
+; - Change to use javaw.exe when not 'noisy' and remove window minimising
+; - Re-introduced jinput.plugins option
+; - Due to increasing length of classpath and option string, must be built
+; - using large-string version of makensis (8192 byte length as opposed to
+; - default 1024 byte length) otherwise launch failures will occur in many
+; - configurations
 ; -------------------------------------------------------------------------
 ; - Version 0.1.11.0
 ; - Reverse out jinput.plugins option for now as it is causing problems
@@ -87,7 +97,7 @@
 !define AUTHOR     "Matt Harris for JMRI"         ; Author name
 !define APP        "LaunchJMRI"                   ; Application name
 !define COPYRIGHT  "© 1997-2010 JMRI Community"   ; Copyright string
-!define VER        "0.1.11.0"                     ; Launcher version
+!define VER        "0.1.12.0"                     ; Launcher version
 !define PNAME      "${APP}"                       ; Name of launcher
 ; -- Comment out next line to use {app}.ico
 !define ICON       "decpro5.ico"                  ; Launcher icon
@@ -104,7 +114,7 @@
 ; -------------------------------------------------------------------------
 Var JAVAPATH   ; holds the path to the location where JAVA files can be found
 Var CLASSPATH  ; holds the class path for JMRI .jars
-Var EXESTRING  ; holds the whole exe string
+#Var EXESTRING  ; holds the whole exe string
 Var OPTIONS    ; holds the JRE options
 #Var JMRIOPTIONS ; holds the JMRI-specific options (read from JMRI_OPTIONS)
 #Var JMRIPREFS  ; holds the path to user preferences (read from JMRI_PREFSDIR)
@@ -194,7 +204,11 @@ Section "Main"
     ClearErrors
     ReadRegStr $R1 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment" "CurrentVersion"
     ReadRegStr $R0 HKLM "SOFTWARE\JavaSoft\Java Runtime Environment\$R1" "JavaHome"
-    StrCpy $R0 "$R0\bin\java.exe"
+    StrCpy $R0 "$R0\bin\java"
+    StrCmp $NOISY SW_NORMAL IsNoisy
+    StrCpy $R0 "$R0w"
+    IsNoisy:
+    StrCpy $R0 "$R0.exe"
 
   ; -- Not found
   IfErrors 0 JreFound
@@ -254,7 +268,7 @@ Section "Main"
   StrCpy $OPTIONS "$OPTIONS -noverify"
   StrCpy $OPTIONS "$OPTIONS -Dsun.java2d.d3d=false"
   StrCpy $OPTIONS "$OPTIONS -Djava.security.policy=security.policy"
-#  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
+  StrCpy $OPTIONS "$OPTIONS -Djinput.plugins=net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"
   StrCmp 1 $x64JRE x64Libs x86Libs
   x86Libs:
     ; -- 32-bit libraries
@@ -344,13 +358,17 @@ Section "Main"
   StrCpy $CLASSPATH "$CLASSPATH;$9"
   DetailPrint "ClassPath: $CLASSPATH"
 
-  StrCpy $EXESTRING '$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS'
-  DetailPrint "Exestring: $EXESTRING"
+#  StrCpy $EXESTRING '$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS'
+#  DetailPrint "Exestring: $EXESTRING"
+  DetailPrint "MaxLen: ${NSIS_MAX_STRLEN}"
+  DetailPrint `ExeString: $JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS`
 
   ; -- Finally get ready to run the application
 #  SetOutPath $JMRIHOME
   SetOutPath $EXEDIR
   ; -- Launch the Java class.
+#  Exec `$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS`
+  
   ; -- use $5 to hold STARTUPINFO structure
   ; -- use $6 to hold PROCESS_INFORMATION structure
   ; -- use $7 to hold return value
@@ -362,46 +380,46 @@ Section "Main"
   ; -- create PROCESS_INFORMATION structure
   System::Call /NOUNLOAD '*(i, i, i, i)i .r6'
   ; -- create the process
-  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`$EXESTRING$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
+  System::Call /NOUNLOAD `kernel32::CreateProcess(i, t $\`$JAVAPATH $OPTIONS -Djava.class.path="$CLASSPATH" $PARAMETERS$\`, i, i, i 0, i 0, i, i, i r5, i r6)i .r7`
   System::Call /NOUNLOAD '*$6(i,i,i .r7,i)'
   DetailPrint "ProcessID: $7"
   System::Free /NOUNLOAD $5
   System::Free $6
 
-  ; -- Check if we should minimise the java console
-  StrCmp $NOISY SW_NORMAL Exit
-
-  ; -- Loop through Console windows to find one linked to this new process
-  ; -- This may loop several times as java process can take time to
-  ;    create its console window
-  DetailPrint "Search for console window to minimise..."
-  StrCpy $4 0
-  winloop:
-    ; -- Sleep for 60 ms to ensure process doesn't run away with resources
-    Sleep 60
-    ; -- Increment loop counter
-    IntOp $4 $4 + 1
-    ; -- If the console window for this new process still hasn't opened
-    ;    after 1000 iterations (~1 minute) exit anyway.
-    IntCmp $4 1000 winloopexit
-    ; -- Find top-most ConsoleWindowClass window (for Win2000 and later)
-    FindWindow $1 "ConsoleWindowClass"
-    ; -- Find the process that owns this window
-    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
-    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
-    StrCmp $3 $7 winfound
-    ; -- Find top-most tty window (for Win98)
-    FindWindow $1 "tty"
-    ; -- Find the process that owns this window
-    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
-    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
-    StrCmp $3 $7 winfound winloop
-  winfound:
-    ; -- We've found the window, so minimise it
-    DetailPrint "Found console window - minimising..."
-    Sleep 60
-    ShowWindow $1 ${SW_MINIMIZE}
-  winloopexit:
+#  ; -- Check if we should minimise the java console
+#  StrCmp $NOISY SW_NORMAL Exit
+#
+#  ; -- Loop through Console windows to find one linked to this new process
+#  ; -- This may loop several times as java process can take time to
+#  ;    create its console window
+#  DetailPrint "Search for console window to minimise..."
+#  StrCpy $4 0
+#  winloop:
+#    ; -- Sleep for 60 ms to ensure process doesn't run away with resources
+#    Sleep 60
+#    ; -- Increment loop counter
+#    IntOp $4 $4 + 1
+#    ; -- If the console window for this new process still hasn't opened
+#    ;    after 1000 iterations (~1 minute) exit anyway.
+#    IntCmp $4 1000 winloopexit
+#    ; -- Find top-most ConsoleWindowClass window (for Win2000 and later)
+#    FindWindow $1 "ConsoleWindowClass"
+#    ; -- Find the process that owns this window
+#    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
+#    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
+#    StrCmp $3 $7 winfound
+#    ; -- Find top-most tty window (for Win98)
+#    FindWindow $1 "tty"
+#    ; -- Find the process that owns this window
+#    System::Call 'user32::GetWindowThreadProcessId(i r1, *i .r3)i .r5'
+#    ; -- If it is owned by the process we launched earlier, end loop - if not, loop
+#    StrCmp $3 $7 winfound winloop
+#  winfound:
+#    ; -- We've found the window, so minimise it
+#    DetailPrint "Found console window - minimising..."
+#    Sleep 60
+#    ShowWindow $1 ${SW_MINIMIZE}
+#  winloopexit:
 
   Exit:
   DetailPrint "To copy this text to the clipboard, right click then choose"

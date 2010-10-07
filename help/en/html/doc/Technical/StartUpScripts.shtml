@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id: StartUpScripts.shtml,v 1.12 2010-04-12 12:07:28 jacobsen Exp $ -->
+<!-- $Id: StartUpScripts.shtml,v 1.13 2010-10-07 19:01:10 matthewharris Exp $ -->
 <title>JMRI: Startup Scripts</title>
 
 <!-- Style -->
@@ -243,6 +243,7 @@ In this section, we briefly describe the launcher application command-line optio
 <dd>If this option is set on the command line, a window is opened that displays various useful information for debugging purposes.
 <dt>/noisy (Optional - from JMRI 2.5.1)
 <dd>If this option is set on the command line, the launcher does not attempt to minimise the Java Console window - as from JMRI 2.5.1, the default behaviour is to minimise the Java Console window.
+<br>Starting with JMRI 2.11.1, the behaviour of this option has changed - this now determines if the Java Console window is enabled or not. System messages are now available via the 'Help > System Console ...' menu option in the main JMRI window.
 <dt>Class Parameter
 <dd>The first parameter of LaunchJMRI.exe, after any of the above options, is the name of the main class to execute.
 <dd>An example to launch DecoderPro would be "apps.DecoderPro.DecoderPro"
