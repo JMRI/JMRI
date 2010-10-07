@@ -6,7 +6,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
-    String defaultText = "   ";
+    String defaultText = " ";
 
     public MemoryIcon(String s, LayoutEditor panel) {
         super(s, panel);
