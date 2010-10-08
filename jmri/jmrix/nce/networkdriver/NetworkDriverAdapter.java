@@ -14,15 +14,14 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new NceSystemConnectionMemo();
-        mInstance=this;
-        mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
     /**
      * set up all of the other objects to operate with an NCE command

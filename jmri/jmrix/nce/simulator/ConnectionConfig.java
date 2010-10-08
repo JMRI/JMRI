@@ -11,7 +11,7 @@ import javax.swing.JPanel;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -25,7 +25,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
         super(p);
     }
     /**
-     * Ctor for a functional Swing object with no preexisting adapter
+     * Ctor for a functional Swing object with no existing adapter
      */
     public ConnectionConfig() {
         super();
@@ -39,9 +39,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
     }
     
     protected void setInstance() { 
-        if (adapter == null){
-            adapter = new SimulatorAdapter();
-        }
+    	adapter = SimulatorAdapter.instance();
     }
     
     public void dispose() {

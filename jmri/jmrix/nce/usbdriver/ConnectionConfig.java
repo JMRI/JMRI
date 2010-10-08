@@ -9,7 +9,7 @@ package jmri.jmrix.nce.usbdriver;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -23,7 +23,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         super(p);
     }
     /**
-     * Ctor for a functional Swing object with no prexisting adapter
+     * Ctor for a functional Swing object with no existing adapter
      */
     public ConnectionConfig() {
         super();
@@ -34,9 +34,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public boolean isOptList1Advanced() { return false; }
 
     protected void setInstance() { 
-        if (adapter == null){
-            adapter = UsbDriverAdapter.instance(); 
-        }
+    	adapter = UsbDriverAdapter.instance();        
     }
 }
 

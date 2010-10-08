@@ -15,7 +15,7 @@ public class SerialDriverFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SerialDriverFrame() {
 		super("Open NCE connection");
-		adapter = new SerialDriverAdapter();
+		adapter = SerialDriverAdapter.instance();
 	}
 
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {

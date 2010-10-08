@@ -13,7 +13,7 @@ public class SimulatorFrame extends jmri.jmrix.SerialPortFrame {
 
 	public SimulatorFrame() {
 		super("Open NCE connection");
-		adapter = new SimulatorAdapter();
+		adapter = SimulatorAdapter.instance();
 	}
 
 	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {

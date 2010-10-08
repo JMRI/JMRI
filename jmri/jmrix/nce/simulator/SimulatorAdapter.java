@@ -121,7 +121,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -149,8 +149,7 @@ public class SimulatorAdapter extends NcePortController implements
     public SimulatorAdapter (){
         super();
         adaptermemo= new NceSystemConnectionMemo();
-        mInstance=this;
-        mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
 	
 	static SimulatorAdapter mInstance = null;
