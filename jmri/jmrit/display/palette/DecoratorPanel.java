@@ -33,16 +33,16 @@ import jmri.jmrit.display.PositionablePopupUtil;
 */
 public class DecoratorPanel extends JPanel implements ChangeListener, ItemListener {
 
-    public static final String[] JUSTIFICATION = {ItemPalette.rbp.getString("left"), 
+    static final String[] JUSTIFICATION = {ItemPalette.rbp.getString("left"), 
                                             ItemPalette.rbp.getString("center"),
                                             ItemPalette.rbp.getString("right")};
 
-    public static final String[] STYLES = {ItemPalette.rbp.getString("plain"), 
+    static final String[] STYLES = {ItemPalette.rbp.getString("plain"), 
                                     ItemPalette.rbp.getString("bold"),
                                     ItemPalette.rbp.getString("italic"),
                                     ItemPalette.rbp.getString("bold/italic")};
 
-    public static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
+    static final String[] FONTSIZE = {"6", "8", "10", "11", "12", "14", "16",
                                         "20", "24", "28", "32", "36"};
     public static final int SIZE = 1;
     public static final int STYLE = 2;
@@ -72,7 +72,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     Editor _editor;
     public DecoratorPanel(Editor editor) {
         _editor = editor;
-        _sample = new DragPositionableLabel(ItemPalette.rbp.getString("sample"), _editor);
+        _sample = new DragDecoratorLabel(ItemPalette.rbp.getString("sample"), _editor);
         _sample.setSize(_sample.getPreferredSize().width, _sample.getPreferredSize().height);
         _sample.setDisplayLevel(Editor.LABELS);
         _sample.setVisible(true);
@@ -84,7 +84,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
        _sample.setText(text);
     }
 
-    class AJComboBox extends JComboBox {
+    static class AJComboBox extends JComboBox {
         int _which;
 
         AJComboBox(String[] items, int which) {
@@ -102,7 +102,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         return panel;
     }
 
-    class AJSpinner extends JSpinner {
+    static class AJSpinner extends JSpinner {
         int _which;
 
         AJSpinner(SpinnerModel model, int which) {
@@ -254,14 +254,12 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     /**
     * Export a Positionable item from panel 
     */
-    public class DragPositionableLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {    
+    class DragDecoratorLabel extends PositionableLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
         DataFlavor dataFlavor;
-        Editor _editor;
 
-        public DragPositionableLabel(String s, Editor editor) {
+        public DragDecoratorLabel(String s, Editor editor) {
             super(s, editor);
-            _editor = editor;
             DragSource dragSource = DragSource.getDefaultDragSource();
             dragSource.createDefaultDragGestureRecognizer(this,
                         DnDConstants.ACTION_COPY, this);
