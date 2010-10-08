@@ -87,10 +87,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
-//    private Positionable _newPositonable;   // newly created item to be placed
-//    private boolean _newItemAdded = true;
-//    private boolean _newItem = false;       // item newly created in this session
-
     public ControlPanelEditor() {
     }
 
@@ -612,6 +608,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             } else {
                 selection = selections.get(0); 
             }
+            if (selection.getDisplayLevel()<=BKG) {
+                selection = null;
+            }
+            if (event.isControlDown()) {
+                selection = selections.get(selections.size()-1); 
+            }
         }
         return selection;
     }
@@ -647,12 +649,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         _lastY = _anchorY;
 
         if (!event.isPopupTrigger()) {
-            if (!event.isControlDown()) {
+          /*  if (!event.isControlDown()) */{
                 _currentSelection = getCurrentSelection(event);
                 if (_currentSelection!=null) {
-                    _currentSelection.doMousePressed(event);
+                    if (!event.isControlDown()) {
+                        _currentSelection.doMousePressed(event);
+                    }
                     if (isEditable()) {
-                        if ( _currentSelection.getDisplayLevel()==BKG   ||
+                        if ( !event.isControlDown() &&
                              (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
                                 _selectionGroup = null;
                                 _pastePending = false;
@@ -665,7 +669,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     _pastePending = false;
                 }
             }
-
         } else {
             _selectionGroup = null;
             _pastePending = false;
@@ -686,6 +689,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             if (selection!=null) {
                 _highlightcomponent = null;
                     showPopUp(selection, event);
+            } else if (_selectRect!=null) {
+                makeSelectionGroup(event);
             }
         } else {
             if (selection!=null) {
@@ -715,7 +720,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         _currentSelection = null;
         _selectRect = null;
         _dragging = false;
-//        _newPositonable = null;
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -743,12 +747,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     public void mouseDragged(MouseEvent event) {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
-//        if (_newPositonable!=null) {
-//            return;
-//        }
         setToolTip(null); // ends tooltip if displayed
 
-        if (!event.isPopupTrigger() && (isEditable() || _currentSelection instanceof LocoIcon)) {
+        if ((!event.isPopupTrigger() && (isEditable()) || _currentSelection instanceof LocoIcon)) {
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
                 int deltaY = event.getY() - _lastY;
@@ -987,8 +988,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                   String url = newIcon.getURL();
                   NamedIcon icon = NamedIcon.getIconByName(url);
                   PositionableLabel ni = new PositionableLabel(icon, this);
-                  ni.setPopupUtility(null);        // no text 
-                  ni.setDisplayLevel(ICONS);
+                  ni.setPopupUtility(null);        // no text
+                  // infer a background icon from the size
+                  if (icon.getIconHeight()>500 || icon.getIconWidth()>600) {
+                      ni.setDisplayLevel(BKG);
+                  } else {
+                      ni.setDisplayLevel(ICONS);
+                  }
                   ni.setLocation(pt.x, pt.y);
                   putItem(ni);
                   ni.updateSize();
