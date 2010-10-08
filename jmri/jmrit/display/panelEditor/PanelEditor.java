@@ -719,8 +719,10 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
             } else if (!event.isControlDown()){ 
                 _currentSelection.doMousePressed(event);
-                if (_selectRect==null)
-                    _selectionGroup = null;
+                if ( !event.isControlDown() &&
+                     (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
+                        _selectionGroup = null;
+                }
             }
         } else {
             if (event.isPopupTrigger()) {
@@ -745,8 +747,8 @@ public class PanelEditor extends Editor implements ItemListener {
         if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()){
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
-        } else if (_currentSelection==null || 
-                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))){
+        } else if (_currentSelection==null /*|| 
+                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))*/){
                 _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
                 _selectionGroup = null;
         } else {
@@ -807,6 +809,8 @@ public class PanelEditor extends Editor implements ItemListener {
         }
         delayedPopupTrigger = false;
         _dragging = false;
+        _selectRect = null;
+
 
         // if not sending MouseClicked, do it here
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
@@ -829,19 +833,17 @@ public class PanelEditor extends Editor implements ItemListener {
             }
             return; 
         }
-        if (_currentSelection!=null || _selectionGroup!=null) {
-            if (!getFlag(OPTION_POSITION, _currentSelection.isPositionable())) { return; }
-            int deltaX = event.getX() - _lastX;
-            int deltaY = event.getY() - _lastY;
-            if (_selectionGroup!=null) {
-                for (int i=0; i<_selectionGroup.size(); i++){
-                    moveItem(_selectionGroup.get(i), deltaX, deltaY);
-                }
-                _highlightcomponent = null;
-            } else {
-                moveItem(_currentSelection, deltaX, deltaY);
-                _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), _currentSelection.maxWidth(), _currentSelection.maxHeight());
+        int deltaX = event.getX() - _lastX;
+        int deltaY = event.getY() - _lastY;
+        if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
+            for (int i=0; i<_selectionGroup.size(); i++){
+                moveItem(_selectionGroup.get(i), deltaX, deltaY);
             }
+            _highlightcomponent = null;
+        } else if (_currentSelection!=null) {
+            if (!getFlag(OPTION_POSITION, _currentSelection.isPositionable())) { return; }
+            moveItem(_currentSelection, deltaX, deltaY);
+            _highlightcomponent = new Rectangle(_currentSelection.getX(), _currentSelection.getY(), _currentSelection.maxWidth(), _currentSelection.maxHeight());
         } else {
             if (allPositionable() && _selectionGroup==null) {
                 drawSelectRect(event.getX(), event.getY());
