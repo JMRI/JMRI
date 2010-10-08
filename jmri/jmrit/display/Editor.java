@@ -812,9 +812,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * dialog memu item to edit it.
     */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
-        if (p.getDisplayLevel() == BKG) {
-            return;
-        }
         JMenu edit = new JMenu(rb.getString("EditLevel"));
         edit.add("level= " + p.getDisplayLevel());
         edit.add(CoordinateEdit.getLevelEditAction(p));
@@ -2030,13 +2027,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                                                                rect.y*_paintScale,
                                                                rect.width*_paintScale,
                                                                rect.height*_paintScale);
-            if (rect2D.contains(x, y)) {
+            if (rect2D.contains(x, y) && (p.getDisplayLevel()>BKG || event.isControlDown())) {
                 boolean added =false;
                 int level = p.getDisplayLevel();
                 for (int k=0; k<selections.size(); k++) {
                     if (level > selections.get(k).getDisplayLevel()) {
                         selections.add(k, p);
-                        added = true;
+                        added = true;       // OK to lie in the case of background icon
                         break;
                     }
                 }
@@ -2062,7 +2059,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (event.isShiftDown()) {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
-                if (_selectRect.intersects(comp.getBounds(test))) {
+                if (_selectRect.intersects(comp.getBounds(test)) && 
+                                (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
                   /*  if (_debug) {
                         log.debug("makeSelectionGroup: selection: "+ comp.getNameString()+
@@ -2073,7 +2071,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         } else {
             for (int i=0; i < list.size(); i++) {
                 Positionable comp = list.get(i);
-                if (_selectRect.contains(comp.getBounds(test))) {
+                if (_selectRect.contains(comp.getBounds(test)) && 
+                                (event.isControlDown() || comp.getDisplayLevel()>BKG)) {
                     _selectionGroup.add(comp);
                   /*  if (_debug) {
                         log.debug("makeSelectionGroup: selection: "+ comp.getNameString()+
@@ -2101,10 +2100,12 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _selectionGroup = new ArrayList <Positionable>();
         }
         boolean removed = false;
-        if (_selectionGroup.contains(selection)) {
-            removed = _selectionGroup.remove(selection);
-        } else {
-            _selectionGroup.add(selection);
+        if (selection.getDisplayLevel()>BKG || event.isControlDown()) {
+            if (_selectionGroup.contains(selection)) {
+                removed = _selectionGroup.remove(selection);
+            } else {
+                _selectionGroup.add(selection);
+            }
         }
         if (_debug) {
             log.debug("modifySelectionGroup: size= "+_selectionGroup.size()+", selection "+ 
