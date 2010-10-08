@@ -719,10 +719,9 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
             } else if (!event.isControlDown()){ 
                 _currentSelection.doMousePressed(event);
-                if ( !event.isControlDown() &&
-                     (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
-                        _selectionGroup = null;
-                }
+                if (_multiItemCopyGroup!=null && !_multiItemCopyGroup.contains(_currentSelection))
+                    _multiItemCopyGroup = null;
+//                    _selectionGroup = null;
             }
         } else {
             if (event.isPopupTrigger()) {
@@ -747,8 +746,8 @@ public class PanelEditor extends Editor implements ItemListener {
         if ((event.isControlDown()) || event.isMetaDown() || event.isAltDown()){
             //Don't want to do anything, just want to catch it, so that the next two else ifs are not
             //executed
-        } else if (_currentSelection==null /*|| 
-                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))*/){
+        } else if ((_currentSelection==null && _multiItemCopyGroup==null) || 
+                    (_selectRect!=null && !_selectRect.contains(_anchorX, _anchorY))){
                 _selectRect = new Rectangle(_anchorX, _anchorY, 0, 0);
                 _selectionGroup = null;
         } else {
@@ -773,6 +772,8 @@ public class PanelEditor extends Editor implements ItemListener {
             } else {
                 _currentSelection = selections.get(0); 
             }
+            if (_multiItemCopyGroup!=null && !_multiItemCopyGroup.contains(_currentSelection))
+                _multiItemCopyGroup = null;
         } else {
             if ((event.isPopupTrigger()||delayedPopupTrigger) && !_dragging){
                 if (_multiItemCopyGroup!=null)
@@ -972,7 +973,12 @@ public class PanelEditor extends Editor implements ItemListener {
         edit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) { 
                 _multiItemCopyGroup = new ArrayList <Positionable>();
-                _multiItemCopyGroup = _selectionGroup;
+                // must make a copy or pasteItem() will hang
+                if (_selectionGroup!=null) {
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        _multiItemCopyGroup.add(_selectionGroup.get(i));
+                    }
+                }
             }
         });
         setRemoveMenu(p, popup);
@@ -1046,6 +1052,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
                 copied.setLocation(xOrig, yOrig);
             }
+            _selectionGroup=null;
         }
         pasteItem = false;
         _targetPanel.repaint();
