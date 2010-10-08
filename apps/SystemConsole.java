@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -52,6 +52,8 @@ public class SystemConsole extends JTextArea {
 
     private static PrintStream originalOut;
     private static PrintStream originalErr;
+
+    private static JFrame frame = null;
 
     /**
      * Initialise the system console ensuring both System.out and System.err
@@ -95,8 +97,20 @@ public class SystemConsole extends JTextArea {
             init();
         }
 
+        // Check if we've created the frame and do so if not
+        if (frame==null) {
+            layoutFrame();
+        }
+
+        return frame;
+    }
+
+    /**
+     * Layout the console frame
+     */
+    private static void layoutFrame() {
         // Use a JmriJFrame to ensure that we fit on the screen
-        final JFrame frame = new JmriJFrame(rb.getString("TitleConsole"));
+        frame = new JmriJFrame(rb.getString("TitleConsole"));
 
         // Grab a reference to the system clipboard
         final Clipboard clipboard = frame.getToolkit().getSystemClipboard();
@@ -126,35 +140,33 @@ public class SystemConsole extends JTextArea {
         });
         p.add(close);
 
-//        // Add button to allow console text size to be decreased
-//        JButton decSize = new JButton("-");
-//        decSize.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent event) {
-//                Font font = console.getFont();
-//                if (font.getSize()>=6) {
-//                    console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()-1));
+//            // Add button to allow console text size to be decreased
+//            JButton decSize = new JButton("-");
+//            decSize.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent event) {
+//                    Font font = console.getFont();
+//                    if (font.getSize()>=6) {
+//                        console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()-1));
+//                    }
 //                }
-//            }
-//        });
-//        p.add(decSize);
+//            });
+//            p.add(decSize);
 //
-//        // Add button to allow console text size to be increased
-//        JButton incSize = new JButton("+");
-//        incSize.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent event) {
-//                Font font = console.getFont();
-//                if (font.getSize()<=24) {
-//                    console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()+1));
+//            // Add button to allow console text size to be increased
+//            JButton incSize = new JButton("+");
+//            incSize.addActionListener(new ActionListener() {
+//                public void actionPerformed(ActionEvent event) {
+//                    Font font = console.getFont();
+//                    if (font.getSize()<=24) {
+//                        console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()+1));
+//                    }
 //                }
-//            }
-//        });
-//        p.add(incSize);
+//            });
+//            p.add(incSize);
 
         // Add the button panel to the frame & then arrange everything
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
-
-        return frame;
     }
 
     /**

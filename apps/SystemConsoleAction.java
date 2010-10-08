@@ -3,6 +3,7 @@
 package apps;
 
 import java.awt.event.ActionEvent;
+import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 
 /**
@@ -22,12 +23,12 @@ import javax.swing.AbstractAction;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SystemConsoleAction extends AbstractAction {
 
     public SystemConsoleAction() {
-        super();
+        super(ResourceBundle.getBundle("apps.AppsBundle").getString("TitleConsole"));
     }
 
     public void actionPerformed(ActionEvent e) {
