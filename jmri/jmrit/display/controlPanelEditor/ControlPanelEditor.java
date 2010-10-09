@@ -659,19 +659,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                         if ( !event.isControlDown() &&
                              (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
                                 _selectionGroup = null;
-                                _pastePending = false;
                         }
                     }
                 } else {
                     _highlightcomponent = null;
                     _currentSelection = null;
                     _selectionGroup = null;
-                    _pastePending = false;
                 }
             }
         } else {
             _selectionGroup = null;
-            _pastePending = false;
         }
         _targetPanel.repaint(); // needed for ToolTip
     }
@@ -685,7 +682,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         }
         Positionable selection = getCurrentSelection(event);
 
-        if (event.isPopupTrigger()) {
+        if (event.isPopupTrigger() && !_dragging) {
             if (selection!=null) {
                 _highlightcomponent = null;
                     showPopUp(selection, event);
