@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -55,11 +55,11 @@ public class AcelaSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setLightManager(new jmri.jmrix.acela.AcelaLightManager());
 
         AcelaSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.acela.AcelaSensorManager());
+        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.acela.AcelaSensorManager.instance());
         AcelaTrafficController.instance().setSensorManager(s);	
 
         AcelaTurnoutManager t;
-        jmri.InstanceManager.setTurnoutManager(t = new jmri.jmrix.acela.AcelaTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(t = jmri.jmrix.acela.AcelaTurnoutManager.instance());
         AcelaTrafficController.instance().setTurnoutManager(t);	
     }
     
