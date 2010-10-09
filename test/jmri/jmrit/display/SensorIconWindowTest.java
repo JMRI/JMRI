@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class SensorIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -33,6 +33,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
+        
+        icon.setDisplayLevel(Editor.SENSORS);	//daboudreau added this for Win7
         
         panel.setVisible(true);
         //jf.setVisible(true);
@@ -104,6 +106,8 @@ public class SensorIconWindowTest extends jmri.util.SwingTestCase {
         
         Sensor sn = jmri.InstanceManager.sensorManagerInstance().provideSensor("IS1");
         icon.setSensor("IS1");
+        
+        icon.setDisplayLevel(Editor.SENSORS); //daboudreau added this for Win7
         
         panel.setVisible(true);
         //jf.setVisible(true);

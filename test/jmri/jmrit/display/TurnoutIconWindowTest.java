@@ -16,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the TurnoutIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -33,6 +33,8 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         icon.setTurnout("IT1");
+        
+        icon.setDisplayLevel(Editor.TURNOUTS);	//daboudreau added this for Win7
         
         panel.setVisible(true);
         //jf.setVisible(true);
@@ -104,6 +106,8 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         icon.setTurnout("IT1");
+        
+        icon.setDisplayLevel(Editor.TURNOUTS);	//daboudreau added this for Win7
         
         panel.setVisible(true);
         //jf.setVisible(true);
