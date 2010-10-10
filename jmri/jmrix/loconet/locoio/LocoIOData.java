@@ -166,14 +166,14 @@ public class LocoIOData
 
     public void setLBVersion(String version) {
         locoBufferVersion = version;
-        dataListeners.firePropertyChange("LBVersionChange", new String(""), locoBufferVersion);
+        dataListeners.firePropertyChange("LBVersionChange", "", locoBufferVersion);
     }
     public String getLBVersion() {
         return locoBufferVersion;
     }
     public void setLIOVersion(String version) {
         locoIOVersion = version;
-        dataListeners.firePropertyChange("LIOVersionChange", new String(""), locoIOVersion);
+        dataListeners.firePropertyChange("LIOVersionChange", "", locoIOVersion);
     }
     public String getLIOVersion() {
         return locoBufferVersion;
@@ -181,7 +181,7 @@ public class LocoIOData
 
     public void setStatus(String msg) {
         status = msg;
-        dataListeners.firePropertyChange("StatusChange", new String(""), status);
+        dataListeners.firePropertyChange("StatusChange", "", status);
     }
     public String getStatus() {
         return status;

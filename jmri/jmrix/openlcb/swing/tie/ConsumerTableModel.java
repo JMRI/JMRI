@@ -15,7 +15,7 @@ import javax.swing.table.*;
 /**
  * Table Model for access to producer info
  * @author	 Bob Jacobsen 2008
- * @version	 $Revision: 1.5 $
+ * @version	 $Revision: 1.6 $
  * @since 2.3.7
  */
 
@@ -177,7 +177,7 @@ public class ConsumerTableModel extends AbstractTableModel {
                 lineString.append(" ");
             }
             try {
-                w.write(new String(lineString));
+                w.write(lineString.toString());
                 //write vertical dividing lines
                 int iLine = w.getCurrentLineNumber();
                 for (int i = 0, k = 0; i < w.getCharactersPerLine(); k++) {

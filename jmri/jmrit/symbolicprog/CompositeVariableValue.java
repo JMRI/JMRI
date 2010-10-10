@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -208,7 +208,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     }
 
     public Object rangeVal() {
-        return new String("composite: "+_minVal+" - "+_maxVal);
+        return "composite: "+_minVal+" - "+_maxVal;
     }
 
     public void actionPerformed(ActionEvent e) {

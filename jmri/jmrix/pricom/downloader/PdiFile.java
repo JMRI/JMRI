@@ -14,7 +14,7 @@ import java.io.BufferedInputStream;
  * The PRICOM format documentation is Copyright 2003, 2005, PRICOM Corp.
  * They have kindly given permission for this use.
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class PdiFile {
 
@@ -57,7 +57,7 @@ public class PdiFile {
             else if (next != 0x0a) buffer.append((char)next);
         }
 
-        comment = new String(buffer);
+        comment = buffer.toString();
 
         // get data base address
         high= (buffIn.read()&0xFF);

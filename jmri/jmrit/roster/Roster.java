@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.55 $
+ * @version	$Revision: 1.56 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -382,7 +382,7 @@ public class Roster extends XmlFile {
             //back when the file is read.
             RosterEntry r = _list.get(i);
             String tempComment = r.getComment();
-            String xmlComment = new String();
+            String xmlComment = "";
 
             //transfer tempComment to xmlComment one character at a time, except
             //when \n is found.  In that case, insert <?p?>
@@ -398,7 +398,7 @@ public class Roster extends XmlFile {
 
             //Now do the same thing for the decoderComment field
             String tempDecoderComment = r.getDecoderComment();
-            String xmlDecoderComment = new String();
+            String xmlDecoderComment = "";
 
             for (int k = 0; k < tempDecoderComment.length(); k++) {
                 if (tempDecoderComment.startsWith("\n", k)) {
@@ -444,7 +444,7 @@ public class Roster extends XmlFile {
         for (int i=0; i<numEntries(); i++){
             RosterEntry r = _list.get(i);
             String xmlComment = r.getComment();
-            String tempComment = new String();
+            String tempComment = "";
 
             for (int k = 0; k < xmlComment.length(); k++) {
                 if (xmlComment.startsWith("<?p?>", k)) {
@@ -458,7 +458,7 @@ public class Roster extends XmlFile {
             r.setComment(tempComment);
 
             String xmlDecoderComment = r.getDecoderComment();
-            String tempDecoderComment = new String();
+            String tempDecoderComment = "";
 
             for (int k = 0; k < xmlDecoderComment.length(); k++) {
                 if (xmlDecoderComment.startsWith("<?p?>", k)) {
@@ -542,7 +542,7 @@ public class Roster extends XmlFile {
 
                 //Extract the Comment field and create a new string for output
                 String tempComment = r.getComment();
-                String xmlComment = new String();
+                String xmlComment = "";
 
                 //transfer tempComment to xmlComment one character at a time, except
                 //when <?p?> is found.  In that case, insert a \n and skip over those
@@ -560,7 +560,7 @@ public class Roster extends XmlFile {
 
                 //Now do the same thing for the decoderComment field
                 String tempDecoderComment = r.getDecoderComment();
-                String xmlDecoderComment = new String();
+                String xmlDecoderComment = "";
 
                 for (int k = 0; k < tempDecoderComment.length(); k++) {
                     if (tempDecoderComment.startsWith("<?p?>", k)) {

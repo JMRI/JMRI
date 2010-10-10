@@ -9,7 +9,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -54,7 +54,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                     val.append("\n");
                 }
             }
-            return new String(val);
+            return val.toString();
         }
         return "Really bad: 0x??\n";
 /*

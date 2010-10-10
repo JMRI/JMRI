@@ -15,7 +15,7 @@ import java.util.ArrayList;
  * Note that there's no CV associated with this.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.20 $
  *
  */
 public class ConstantValue extends VariableValue {
@@ -59,7 +59,7 @@ public class ConstantValue extends VariableValue {
     Color _defaultColor;
 
     public Object rangeVal() {
-        return new String("constant: "+_minVal+" - "+_maxVal);
+        return "constant: "+_minVal+" - "+_maxVal;
     }
 
     // to complete this class, fill in the routines to handle "Value" parameter

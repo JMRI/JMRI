@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -507,7 +507,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             }
 
             // create the String to display (as String has .equals)
-            msgString = new String(msg);
+            msgString = msg.toString();
 
             // is this a duplicate?
             if (msgString.equals(matchString)&& truncateCheckBox.isSelected()) {

@@ -30,7 +30,7 @@ import java.util.List;
  * been extended from the initial implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class Path  {
 
@@ -180,7 +180,7 @@ public class Path  {
         final int mask = NORTH|SOUTH|EAST|WEST|CW|CCW|LEFT|RIGHT|UP|DOWN;
         if ( (d & ~mask ) != 0)
             appendOne(b, "Unknown: 0x"+Integer.toHexString(d&~mask));
-        return new String(b);
+        return b.toString();
     }
 
     static private void appendOne(StringBuffer b, String t) {

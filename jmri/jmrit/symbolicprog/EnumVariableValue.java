@@ -16,7 +16,7 @@ import java.util.Vector;
  * Extends VariableValue to represent a enumerated variable.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  *
  */
 public class EnumVariableValue extends VariableValue implements ActionListener, PropertyChangeListener {
@@ -100,7 +100,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
     Color _defaultColor;
 
     public Object rangeVal() {
-        return new String("enum: "+_minVal+" - "+_maxVal);
+        return "enum: "+_minVal+" - "+_maxVal;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -310,7 +310,7 @@ public class EnumVariableValue extends VariableValue implements ActionListener, 
      * model between this object and the real JComboBox value.
      *
      * @author			Bob Jacobsen   Copyright (C) 2001
-     * @version         $Revision: 1.27 $
+     * @version         $Revision: 1.28 $
      */
     public class VarComboBox extends JComboBox {
 

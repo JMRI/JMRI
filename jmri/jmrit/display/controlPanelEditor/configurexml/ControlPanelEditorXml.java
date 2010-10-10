@@ -17,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -156,7 +156,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             value = false;
         panel.setPanelMenu(value);
 
-        String state = new String("both");
+        String state = "both";
         if ((a = element.getAttribute("scrollable"))!=null)
             state = a.getValue();
         panel.setScroll(state);

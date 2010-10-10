@@ -15,7 +15,7 @@ import jmri.util.swing.*;
 /**
  * Abstact base class for JPanels displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public abstract class AbstractMonPane extends JmriPanel  {
 
@@ -255,7 +255,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
                     else
                         out.append(sb.charAt(i));
                 }
-                logLine = new String(out);
+                logLine = out.toString();
             }
             logStream.print(logLine);
         }
@@ -312,7 +312,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
     }
     
     public synchronized String getFrameText() {
-        return new String(linesBuffer);
+        return linesBuffer.toString();
     }
 
     PrintStream logStream = null;

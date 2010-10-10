@@ -24,7 +24,7 @@ import org.jdom.ProcessingInstruction;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.33 $
+ * @version   $Revision: 1.34 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -177,7 +177,7 @@ class LocoFile extends XmlFile {
             //Note: an equivalent change also done in the Roster.java class to do the
             //same thing for the roster index file
             String tempComment =  r.getComment();
-            String xmlComment = new String();
+            String xmlComment = "";
             for (int k = 0; k < tempComment.length(); k++) {
                 if (tempComment.startsWith("\n",k)){
                     xmlComment = xmlComment + "<?p?>";
@@ -189,7 +189,7 @@ class LocoFile extends XmlFile {
 
             //Now do the same thing for the Decoder Comment field
             String tempDecoderComment =  r.getDecoderComment();
-            String xmlDecoderComment = new String();
+            String xmlDecoderComment = "";
             for (int k = 0; k < tempDecoderComment.length(); k++) {
                 if (tempDecoderComment.startsWith("\n",k)){
                     xmlDecoderComment = xmlDecoderComment + "<?p?>";

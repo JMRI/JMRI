@@ -24,7 +24,7 @@ import javax.swing.text.Document;
  * Value to put in text field = ((value in High CV) * Factor) + Low CV
  *
  * @author   Howard G. Penny  Copyright (C) 2005
- * @version  $Revision: 1.12 $
+ * @version  $Revision: 1.13 $
  *
  */
 public class IndexedPairVariableValue extends VariableValue
@@ -85,7 +85,7 @@ public class IndexedPairVariableValue extends VariableValue
     }
 
     public Object rangeVal() {
-        return new String("Split value");
+        return "Split value";
     }
 
     String oldContents = "";
@@ -494,7 +494,7 @@ public class IndexedPairVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.12 $
+     * @version     $Revision: 1.13 $
      */
     public class VarTextField extends JTextField {
 

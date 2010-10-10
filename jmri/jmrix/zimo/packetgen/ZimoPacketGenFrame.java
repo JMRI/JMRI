@@ -11,7 +11,7 @@ import jmri.jmrix.zimo.Mx1TrafficController;
  * Frame for user input of MX-1 messages.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001,2002
- * @version		$Revision: 1.6 $
+ * @version		$Revision: 1.7 $
  *
  * Adapted by Sip Bosch for use with Zimo MX-1
  *
@@ -96,13 +96,13 @@ public class ZimoPacketGenFrame extends jmri.util.JmriJFrame {
   				// need to process char for number. Is this a single digit?
   				if (ts.charAt(i+1) != ' ') {
   					// 2 char value
- 					String v = new String(""+ts.charAt(i))+ts.charAt(i+1);
+ 					String v = ""+ts.charAt(i)+ts.charAt(i+1);
 					b[saveAt] = Integer.valueOf(v,16).intValue();
 					i++;
 					saveAt++;
    				} else {
   					// 1 char value
-					String v = new String(""+ts.charAt(i));
+					String v = ""+ts.charAt(i);
 					b[saveAt] = Integer.valueOf(v,16).intValue();
 					saveAt++;
   				}

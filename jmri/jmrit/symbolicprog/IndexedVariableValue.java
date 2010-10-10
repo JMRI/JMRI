@@ -16,7 +16,7 @@ import javax.swing.text.Document;
  *
  * @author    Howard G. Penny   Copyright (C) 2005
  * @author    Bob Jacobsen   Copyright (C) 2010
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class IndexedVariableValue extends VariableValue
     implements ActionListener, PropertyChangeListener, FocusListener {
@@ -63,7 +63,7 @@ public class IndexedVariableValue extends VariableValue
     }
 
     public Object rangeVal() {
-        return new String("Decimal: "+_minVal+" - "+_maxVal);
+        return "Decimal: "+_minVal+" - "+_maxVal;
     }
 
     String oldContents = "";
@@ -480,7 +480,7 @@ public class IndexedVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.20 $
+     * @version     $Revision: 1.21 $
      */
     public class VarTextField extends JTextField {
 

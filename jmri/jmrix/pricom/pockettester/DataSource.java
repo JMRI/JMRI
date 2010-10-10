@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -422,7 +422,7 @@ public class DataSource extends jmri.util.JmriJFrame {
 
             // create the String to display (as String has .equals)
             msg.append("\n");
-            msgString = new String(msg);
+            msgString = msg.toString();
 
             // return a notification via the queue to ensure end
             Runnable r = new Runnable() {

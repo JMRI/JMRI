@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -269,7 +269,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                     else
                         out.append(sb.charAt(i));
                 }
-                logLine = new String(out);
+                logLine = out.toString();
             }
             logStream.print(logLine);
         }
@@ -326,7 +326,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     }
     
     public synchronized String getFrameText() {
-        return new String(linesBuffer);
+        return linesBuffer.toString();
     }
 
     PrintStream logStream = null;

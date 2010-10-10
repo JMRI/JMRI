@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -61,7 +61,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                 bits = bits >> 1;  // shift over before next byte
             }
             sb.append("\n");
-            return new String(sb);
+            return sb.toString();
         } else {
             // don't know, just show
             return "Unknown reply of length " + getNumDataElements() + " " + toString()+"\n";

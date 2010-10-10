@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class StringUtil {
@@ -127,7 +127,7 @@ public class StringUtil {
 		    sb.append( hexChars[ bytes[i] & 0x0F ] );
 		    sb.append(' ');
         }
-        return new String(sb);
+        return sb.toString();
     }
     
     /**
@@ -162,13 +162,13 @@ public class StringUtil {
                 // need to process char for number. Is this a single digit?
                 if (ts.charAt(i+1) != ' ') {
                     // 2 char value
-                    String v = new String(""+ts.charAt(i))+ts.charAt(i+1);
+                    String v = ""+ts.charAt(i)+ts.charAt(i+1);
                     b[saveAt] = (byte)Integer.valueOf(v,16).intValue();
                     i++;
                     saveAt++;
                 } else {
                     // 1 char value
-                    String v = new String(""+ts.charAt(i));
+                    String v = ""+ts.charAt(i);
                     b[saveAt] = (byte)Integer.valueOf(v,16).intValue();
                     saveAt++;
                 }

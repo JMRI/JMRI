@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.18 $
+ * @version	    $Revision: 1.19 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -323,7 +323,7 @@ public class LoaderPane extends javax.swing.JPanel {
 
         class Notify implements Runnable {
             Notify(StringBuffer b) {
-                message = new String(b);
+                message = b.toString();
             }
         
             Notify(byte[] b) {

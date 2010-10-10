@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -112,7 +112,7 @@ public class IndexedEnumVariableValue extends VariableValue
     Color _defaultColor;
 
     public Object rangeVal() {
-        return new String("enum: "+_minVal+" - "+_maxVal);
+        return "enum: "+_minVal+" - "+_maxVal;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -486,7 +486,7 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.17 $
+     * @version $Revision: 1.18 $
      */
     public class iVarComboBox extends JComboBox {
 

@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -4735,7 +4735,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 						rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-        MemoryIcon l = new MemoryIcon(new String("   "), this);
+        MemoryIcon l = new MemoryIcon("   ", this);
         l.setMemory(textMemory.getText().trim());
 		Memory xMemory = l.getMemory().getBean();
 		if (xMemory != null) {

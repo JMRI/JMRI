@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.84 $
+ * @version     $Revision: 1.85 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -495,8 +495,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     	}
     	java.util.Collections.sort(strings);
     	java.util.Collections.sort(defStrings);
-    	strings.insertElementAt(new String("Off"),0);
-    	strings.insertElementAt(new String("Use Global Default"),1);
+    	strings.insertElementAt("Off",0);
+    	strings.insertElementAt("Use Global Default",1);
     	for (int i=0; i<defStrings.size(); ++i) {
             try {
                 strings.insertElementAt(defStrings.elementAt(i),i+2);
@@ -562,7 +562,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             TurnoutOperationEditor dialog = new TurnoutOperationEditor(this, f, op, t, box);
             dialog.setVisible(true);
     	} else {
-            JOptionPane.showMessageDialog(f, new String("There is no operation type suitable for this turnout"),
+            JOptionPane.showMessageDialog(f, "There is no operation type suitable for this turnout",
                                           "No operation type", JOptionPane.ERROR_MESSAGE);
     	}
     }
@@ -596,7 +596,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                             String newName = JOptionPane.showInputDialog("New name for this parameter setting:");
                             if (newName != null && !newName.equals("")) {
                                 if (!myOp.rename(newName)) {
-                                    JOptionPane.showMessageDialog(self, new String("This name is already in use"),
+                                    JOptionPane.showMessageDialog(self, "This name is already in use",
                                                                   "Name already in use", JOptionPane.ERROR_MESSAGE);
                                 }
                                 setTitle();

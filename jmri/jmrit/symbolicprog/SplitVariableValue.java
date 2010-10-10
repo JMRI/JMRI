@@ -26,7 +26,7 @@ import javax.swing.text.Document;
  *</PRE>
  * decoders.
  * @author			Bob Jacobsen   Copyright (C) 2002, 2003, 2004
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  *
  */
 public class SplitVariableValue extends VariableValue
@@ -104,7 +104,7 @@ public class SplitVariableValue extends VariableValue
     int _minVal;
 
     public Object rangeVal() {
-        return new String("Split value");
+        return "Split value";
     }
 
     String oldContents = "";
@@ -375,7 +375,7 @@ public class SplitVariableValue extends VariableValue
      * an underlying variable
      *
      * @author	Bob Jacobsen   Copyright (C) 2001
-     * @version     $Revision: 1.26 $
+     * @version     $Revision: 1.27 $
      */
     public class VarTextField extends JTextField {
 

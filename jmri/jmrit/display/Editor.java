@@ -624,7 +624,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     
 
     public String getScrollable() {
-        String value = new String();
+        String value = "";
         switch (_scrollState) {
             case SCROLL_NONE:
                 value = "none";

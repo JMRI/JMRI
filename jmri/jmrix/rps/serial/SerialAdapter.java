@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -286,7 +286,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             }
 
             // create the String to display (as String has .equals)
-            msgString = new String(msg);
+            msgString = msg.toString();
             log.debug("Msg <"+msgString+">");
             
             // return a notification via the queue to ensure end
