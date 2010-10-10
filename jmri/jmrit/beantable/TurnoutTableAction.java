@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.83 $
+ * @version     $Revision: 1.84 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -186,10 +186,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     }
                     if (col==INVERTCOL) {
                         boolean val = t.getInverted();
-                        return new Boolean(val);
+                        return Boolean.valueOf(val);
                     } else if (col==LOCKCOL){
                         boolean val = t.getLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
-                        return new Boolean(val);
+                        return Boolean.valueOf(val);
                     } else if (col == LOCKOPRCOL || (col==xLOCKOPRCOL && !showFeedback)) {
                         JComboBox c = new JComboBox(lockOperations);
                         if (t.canLock(Turnout.CABLOCKOUT) && t.canLock(Turnout.PUSHBUTTONLOCKOUT)){

@@ -24,7 +24,7 @@ import jmri.util.table.ButtonRenderer;
  * Pane for user management of RPS alignment.
  
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class AlignTablePane extends javax.swing.JPanel {
 
@@ -268,7 +268,7 @@ public class AlignTablePane extends javax.swing.JPanel {
             case ACTIVECOL:
                 rc = Engine.instance().getReceiver(r+1);
                 if (rc==null) return null;
-                return new Boolean(rc.isActive());              
+                return Boolean.valueOf(rc.isActive());              
             case LASTTIMECOL:
                 rc = Engine.instance().getReceiver(r+1);
                 if (rc==null) return null;

@@ -221,7 +221,7 @@ public class TurnoutOperationManager {
 	public void setDoOperations(boolean b) {
 		boolean oldValue = doOperations;
 		doOperations = b;
-		firePropertyChange("doOperations", Boolean.valueOf(oldValue), new Boolean(b));
+		firePropertyChange("doOperations", Boolean.valueOf(oldValue), Boolean.valueOf(b));
 	}
 	
 	/**

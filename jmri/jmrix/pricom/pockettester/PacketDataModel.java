@@ -16,7 +16,7 @@ import java.util.Vector;
 /**
  * Table data model for display of DCC packet contents
  * @author		Bob Jacobsen   Copyright (C) 2005
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
 
@@ -72,8 +72,8 @@ public class PacketDataModel extends javax.swing.table.AbstractTableModel  {
         }
     }
 
-    static final Boolean True = new Boolean(true);
-    static final Boolean False = new Boolean(false);
+    static final Boolean True = Boolean.valueOf(true);
+    static final Boolean False = Boolean.valueOf(false);
 
     public Object getValueAt(int row, int col) {
 

@@ -36,7 +36,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class SignalGroupSubTableAction {
@@ -659,7 +659,7 @@ public class SignalGroupSubTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(turnoutList.get(r).isIncluded());
+                    return Boolean.valueOf(turnoutList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return turnoutList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -720,7 +720,7 @@ public class SignalGroupSubTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(sensorList.get(r).isIncluded());
+                    return Boolean.valueOf(sensorList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return sensorList.get(r).getSysName();
                 case UNAME_COLUMN:  //

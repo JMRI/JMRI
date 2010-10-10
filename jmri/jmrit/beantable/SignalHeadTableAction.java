@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.55 $
+ * @version     $Revision: 1.56 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -113,14 +113,14 @@ public class SignalHeadTableAction extends AbstractTableAction {
     			}
     		    String name = sysNameList.get(row);
                 SignalHead s = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
-                if (s==null) return new Boolean(false); // if due to race condition, the device is going away
+                if (s==null) return Boolean.valueOf(false); // if due to race condition, the device is going away
     			if (col==LITCOL) {
     				boolean val = s.getLit();
-					return new Boolean(val);
+					return Boolean.valueOf(val);
     			}
     			else if (col==HELDCOL) {
     				boolean val = s.getHeld();
-					return new Boolean(val);
+					return Boolean.valueOf(val);
     			}
 				else if (col==EDITCOL) return rb.getString("ButtonEdit");
 				else return super.getValueAt(row, col);

@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.45 $
+ * @version     $Revision: 1.46 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -118,7 +118,7 @@ public class LightTableAction extends AbstractTableAction {
     			} else if (col==INTENSITYCOL) {
     				return new Double(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getTargetIntensity());
     			} else if (col==ENABLECOL) {
-    				return new Boolean(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
+    				return Boolean.valueOf(((Light)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
     			} else 
     			    return super.getValueAt(row, col);
 			}    		

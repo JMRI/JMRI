@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -110,7 +110,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
     				return "Edit";
     			}
     			else if (col==ENABLECOL) {
-    				return new Boolean(((SignalGroup)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
+    				return Boolean.valueOf(((SignalGroup)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
                     //return true;
     			}
                 else if (col==COMMENTCOL){
@@ -884,7 +884,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(appearList.get(r).isIncluded());
+                    return Boolean.valueOf(appearList.get(r).isIncluded());
                 case APPEAR_COLUMN:  // slot number
                     return appearList.get(r).getAppearance();
                 default:
@@ -1000,7 +1000,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(signalList.get(r).isIncluded());
+                    return Boolean.valueOf(signalList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return signalList.get(r).getSysName();
                 case UNAME_COLUMN:  //

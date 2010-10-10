@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -106,7 +106,7 @@ public class DefaultLogix extends AbstractNamedBean
             _listeners.get(i).setEnabled(state);
         }
         if (old != state) {
-			firePropertyChange("Enabled", new Boolean(old), new Boolean(state));
+			firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));
 			// set the state of all Conditionals to UNKNOWN
 			if ( _isActivated ) {
 				Conditional c = null;

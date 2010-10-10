@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -168,7 +168,7 @@ public class DefaultRoute extends AbstractNamedBean
     public void setEnabled(boolean v) { 
         boolean old = _enabled;
         _enabled = v;
-        if (old != v) firePropertyChange("Enabled", new Boolean(old), new Boolean(v));
+        if (old != v) firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(v));
     }
     
     private boolean _locked = false;
@@ -179,7 +179,7 @@ public class DefaultRoute extends AbstractNamedBean
         lockTurnouts(v);
         boolean old = _locked;
         _locked = v;
-        if (old != v) firePropertyChange("Locked", new Boolean(old), new Boolean(v));
+        if (old != v) firePropertyChange("Locked", Boolean.valueOf(old), Boolean.valueOf(v));
     }
     /**
 	 * Determine if route can be locked. Requres at least one turnout that can

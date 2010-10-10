@@ -15,7 +15,7 @@ import javax.swing.*;
  *
  * @author   Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2004, 2005
  * @author   Howard G. Penny Copyright (C) 2005
- * @version  $Revision: 1.37 $
+ * @version  $Revision: 1.38 $
  */
 public abstract class VariableValue extends AbstractValue implements java.beans.PropertyChangeListener {
 
@@ -259,7 +259,7 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
     protected void setBusy(boolean newBusy) {
         boolean oldBusy = _busy;
         _busy = newBusy;
-        if (newBusy != oldBusy) prop.firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(newBusy));
+        if (newBusy != oldBusy) prop.firePropertyChange("Busy", Boolean.valueOf(oldBusy), Boolean.valueOf(newBusy));
     }
     private boolean _busy = false;
 

@@ -22,7 +22,7 @@ import java.beans.PropertyChangeSupport;
  * 
  * Description:		Represents a single CV value
  * @author			Bob Jacobsen   Copyright (C) 2001, 2005
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public abstract class AbstractValue {
     PropertyChangeSupport prop = new PropertyChangeSupport(this);
@@ -114,7 +114,7 @@ public abstract class AbstractValue {
         boolean oldval = this.available;
         this.available = available;
         if (oldval != this.available) {
-            prop.firePropertyChange("Available", new Boolean(oldval), new Boolean(available));
+            prop.firePropertyChange("Available", Boolean.valueOf(oldval), Boolean.valueOf(available));
         }
     }
     public boolean getAvailable() { return available; }

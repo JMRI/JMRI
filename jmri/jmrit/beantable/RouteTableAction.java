@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -119,16 +119,16 @@ public class RouteTableAction extends AbstractTableAction {
     				return "Edit";
     			}
     			else if (col==ENABLECOL) {
-    				return new Boolean(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
+    				return Boolean.valueOf(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getEnabled());
     			}
     			else if (col==LOCKCOL) {
     				Route r = (Route)getBySystemName((String)getValueAt(row, SYSNAMECOL));
     				if (r.canLock()){
-    					return new Boolean(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getLocked());
+    					return Boolean.valueOf(((Route)getBySystemName((String)getValueAt(row, SYSNAMECOL))).getLocked());
     				}else{
     					// this covers the case when route was locked and lockable turnouts were removed from the route 
     					r.setLocked(false);
-    					return new Boolean (false);
+    					return Boolean.valueOf (false);
     				}
      			}
 				else return super.getValueAt(row, col);
@@ -1722,7 +1722,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(turnoutList.get(r).isIncluded());
+                    return Boolean.valueOf(turnoutList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return turnoutList.get(r).getSysName();
                 case UNAME_COLUMN:  //
@@ -1783,7 +1783,7 @@ public class RouteTableAction extends AbstractTableAction {
             }
             switch (c) {
                 case INCLUDE_COLUMN:
-                    return new Boolean(sensorList.get(r).isIncluded());
+                    return Boolean.valueOf(sensorList.get(r).isIncluded());
                 case SNAME_COLUMN:  // slot number
                     return sensorList.get(r).getSysName();
                 case UNAME_COLUMN:  //

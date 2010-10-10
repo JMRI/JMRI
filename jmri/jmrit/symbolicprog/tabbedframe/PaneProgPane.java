@@ -64,7 +64,7 @@ import java.util.List;
  * @author    Bob Jacobsen   Copyright (C) 2001, 2003, 2004, 2005, 2006
  * @author    D Miller Copyright 2003
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.78 $
+ * @version   $Revision: 1.79 $
  * @see       jmri.jmrit.symbolicprog.VariableValue#isChanged
  *
  */
@@ -1031,7 +1031,7 @@ public class PaneProgPane extends javax.swing.JPanel
         if (!busy && !container.isBusy()) {
             enableButtons(true);
         }
-        if (oldBusy != busy) firePropertyChange("Busy", new Boolean(oldBusy), new Boolean(busy));
+        if (oldBusy != busy) firePropertyChange("Busy", Boolean.valueOf(oldBusy), Boolean.valueOf(busy));
     }
 
     private int retry = 0;

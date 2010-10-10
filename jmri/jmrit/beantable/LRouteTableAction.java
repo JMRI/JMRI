@@ -179,7 +179,7 @@ public class LRouteTableAction extends AbstractTableAction {
             if (col == EDITCOL) {
                 return rbx.getString("ButtonEdit");
             } else if (col == ENABLECOL) {
-                return new Boolean(
+                return Boolean.valueOf(
                         ((Logix) getBySystemName((String) getValueAt(row,
                                 SYSNAMECOL))).getEnabled());
             } else
@@ -2108,7 +2108,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case TYPE_COLUMN:
                     return inputList.get(r).getTypeString();
                 case INCLUDE_COLUMN:
-                    return new Boolean(inputList.get(r).isIncluded());
+                    return Boolean.valueOf(inputList.get(r).isIncluded());
                 case STATE_COLUMN: 
                     return inputList.get(r).getTestState();
                 default:
@@ -2173,7 +2173,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case UNAME_COLUMN:  //
                     return outputList.get(r).getUserName();
                 case INCLUDE_COLUMN:
-                    return new Boolean(outputList.get(r).isIncluded());
+                    return Boolean.valueOf(outputList.get(r).isIncluded());
                 case TYPE_COLUMN:
                     return outputList.get(r).getTypeString();
                 case STATE_COLUMN:  //
@@ -2240,7 +2240,7 @@ public class LRouteTableAction extends AbstractTableAction {
                 case UNAME_COLUMN:  //
                     return alignList.get(r).getUserName();
                 case INCLUDE_COLUMN:
-                    return new Boolean(alignList.get(r).isIncluded());
+                    return Boolean.valueOf(alignList.get(r).isIncluded());
                 case TYPE_COLUMN:
                     return rbx.getString("Sensor");
                 case STATE_COLUMN:  //

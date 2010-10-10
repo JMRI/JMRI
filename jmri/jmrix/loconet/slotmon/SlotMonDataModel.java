@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
 /**
  * Table data model for display of slot manager contents
  * @author      Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class SlotMonDataModel extends javax.swing.table.AbstractTableModel implements SlotListener  {
 
@@ -160,8 +160,8 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         }
     }
 
-    static final Boolean True = new Boolean(true);
-    static final Boolean False = new Boolean(false);
+    static final Boolean True = Boolean.valueOf(true);
+    static final Boolean False = Boolean.valueOf(false);
 
     @SuppressWarnings("null")
 	public Object getValueAt(int row, int col) {

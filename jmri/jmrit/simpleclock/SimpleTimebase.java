@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.18 $
+ * @version			$Revision: 1.19 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -139,7 +139,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 				}
 			}			    		
     	}
-    	firePropertyChange("run", new Boolean(run), new Boolean(!run));
+    	firePropertyChange("run", Boolean.valueOf(run), Boolean.valueOf(!run));
     	handleAlarm();
     }    
     public boolean getRun() { return pauseTime == null; }

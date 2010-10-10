@@ -16,7 +16,7 @@ import jmri.implementation.AbstractNamedBean;
  * Checks of basic NamedBean storage
  * 
  * @author Bob Jacobsen Copyright 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
@@ -35,7 +35,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    };
 
 	    from.setProperty("foo", "bar");
-	    from.setProperty("biff", new Boolean(true));
+	    from.setProperty("biff", Boolean.valueOf(true));
 	    
 	    // create element for properties
 	    Element p = new Element("test");
@@ -52,7 +52,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // and test
 	    Assert.assertEquals("bar", to.getProperty("foo"));
-	    Assert.assertEquals(new Boolean(true), to.getProperty("biff"));
+	    Assert.assertEquals(Boolean.valueOf(true), to.getProperty("biff"));
 
     }
     
@@ -105,7 +105,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 	    };
 
 	    from.setProperty("foo", null);
-	    from.setProperty("biff", new Boolean(true));
+	    from.setProperty("biff", Boolean.valueOf(true));
 	    
 	    // create element for properties
 	    Element p = new Element("test");
@@ -122,7 +122,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
         // and test
 	    Assert.assertEquals(null, to.getProperty("foo"));
-	    Assert.assertEquals(new Boolean(true), to.getProperty("biff"));
+	    Assert.assertEquals(Boolean.valueOf(true), to.getProperty("biff"));
 
     }
     

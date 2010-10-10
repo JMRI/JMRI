@@ -106,7 +106,7 @@ public class MergSD2SignalHead extends DefaultSignalHead {
         if (oldLit != newLit) {
             updateOutput();
             // notify listeners, if any
-            firePropertyChange("Lit", new Boolean(oldLit), new Boolean(newLit));
+            firePropertyChange("Lit", Boolean.valueOf(oldLit), Boolean.valueOf(newLit));
         }    
     }
         
