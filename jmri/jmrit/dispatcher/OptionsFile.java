@@ -37,7 +37,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class OptionsFile extends jmri.jmrit.XmlFile {
@@ -45,18 +45,16 @@ public class OptionsFile extends jmri.jmrit.XmlFile {
 	static final ResourceBundle rb = ResourceBundle
 			.getBundle("jmri.jmrit.dispatcher.DispatcherBundle");
 
-	public OptionsFile () {
+	public OptionsFile() {
 		super();
-	}
-	public OptionsFile (String testLocation) {
-	    super();
-		defaultFileName = testLocation;
-		_instance = this;
 	}
 	
 	// operational variables
 	protected DispatcherFrame dispatcher = null;
-	private static String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
+	private String defaultFileName = XmlFile.prefsDir()+"dispatcheroptions.xml";
+	public void setDefualtFileName(String testLocation){
+		defaultFileName = testLocation;
+	}
 	private Document doc = null;
 	private Element root = null;
 	
