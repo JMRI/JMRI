@@ -11,12 +11,12 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
     public SerialTurnoutManager() {
-        _instance = this;
+ 
     }
 
     public String getSystemPrefix() { return "C"; }
