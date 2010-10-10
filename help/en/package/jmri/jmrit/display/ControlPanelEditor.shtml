@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ControlPanelEditor.shtml,v 1.1 2010-01-29 16:07:33 jacobsen Exp $ -->
+<!-- $Id: ControlPanelEditor.shtml,v 1.2 2010-10-10 20:00:25 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Control Panel Editor Help</TITLE>
@@ -25,7 +25,111 @@
 
 <H1>The Control Panel Editor</H1>
 
-This is the jmri.jmrit.display.ControlPanelEditor help page.
+Control Panel Editor is simply an alternative view and controller of <b>exactly the
+same content data</b> as Panel Editor.  You may change the view and control of your 
+panel whenever and as often as you please.  Storage and loading can be done from either
+editor.  The editor used to store the panel will be the editor used at the next load.
+
+<p><b><i>Note:
+Control Panel Editor was developed and tested on Windows only.  The developer
+would very much like to have this application work on other operating systems 
+(e.g. Mac and Linux),
+but is unable to test on these environments.  Any comments would be deeply appreciated.
+</i></b> 
+
+<H2>Changing the View between Editors</H2>
+
+In either editor when in edit mode the last item in the <b>File</b> menu is <b>Change 
+view to "..."</b>. ("..."
+being the other editor).  Selecting this item switches the view from one editor mode to 
+the other editor mode.
+
+
+<H2>Differences in the View between Editors</H2>
+
+Panel Editor has a separate window for its editing functions. Control Panel Editor
+does not.  Instead three new menus are introduced to the panel: <b>Options</b>, 
+<b>Zoom</b>, <b>AddItems</b>.  When operating mode (non-edit) is selected these 
+three menus disappear.
+
+
+<H2>Control Panel Editor Menus</H2>
+<H3>File Menu</H3>
+The <b>File</b> menu changes it items between edit mode and operating mode.  In
+edit mode the items are exactly the same as the items in the File menu of the
+Panel Editor's edit window with one additional item, <b>Rename Panel</b>.  In
+operating mode Control Panel Editor's File menu has only one item, <b>Open Editor</b>.
+
+<H3>Options Menu</H3>
+The items in this menu are similar to the checkboxes in Panel Editor's edit window with
+a few additional items and features.
+<p>The first item is <b>Close Editor</b>.  This changes Control Panel Editor's mode from
+"edit" to "operating".</p>
+<p>The next item, <b>Override individual Position & Control settings</b>, enables a feature
+not found in Panel Editor.  When this item is selected, the next two items are enabled.
+Selecting these item allow you to reposition all items in the panel or to have all items
+with the capability of controlling the device they represent to control the device or not.
+<p>Unchecking the <b>Override individual Position & Control settings</b> item will 
+return the individual item settings to their previous settings.  This feature is not 
+available in Panel Editor, where checking these options will permanently set all panel
+item to those set by the Panel Editor.</p>
+<p>Setting scroll bar preferences is also found in this menu.</p>
+
+<H3>Zoom Menu</H3>
+The <b>Zoom(percentage)...</b> item will enlarge or reduce the panel size.
+<p>The <b>Zoom to Fit</b> item will enlarge or reduce the display of all panel items 
+in the panel to fit
+within the panel window without the use of scroll bars.  This can be useful if your panel
+design happens to be slightly larger that what you can fit on the screen.  Rather than 
+using scroll bars to see all items on the panel, "Zoom to Fit" will reduce the
+display to fit the panel window.  Conversely, it will expand the display to fit the
+panel window.  If you resize the panel window, then you should repeat "Zoom to Fit"
+to resize the display to fit the new panel window dimensions. 
+
+<H3>AddItems Menu</H3>
+This menu will open a tabbed window which allows you to add items to the panel.  This
+tabbed window, <b>Item Palette</b>, extends the functions found in the drop down 
+ComboBox of the Panel Editor.  The methods for adding items done by drag and drop.
+Details may be found at !!!ItemPaletteHelp - to do!!!. 
+
+<H2>Mouse operation in Control Panel Editor</H2>
+Control Panel Editor does not implement the rollover highlighting found in Panel Editor.
+<p>Another difference is selection is done with a simple click. Right click (meta-click 
+on Mac or Linux) brings up the popup menu for the item.</p>
+<p>Dragging can be donw with either a simple click or a meta-click.</p>
+
+<H3>Multiple Selection</H3>
+As with Panel Editor, a selection group can be made using the "selection fence" -
+a dotted red rectangle that will select all the items completely within the fence.  If
+the <b>Shift</b> key is held down while creating a selection fence, then all items that
+intersect the dotted red rectangle are selected.  A useful feature when items are
+located at the top and left borders of the panel.
+<p>Another shared feature is adding or deleting items from a selection group by
+holding the <b>Control</b> key dowm whhen slecting the item.  
+ 
+<H2>Copy in Control Panel Editor</H2>
+Copying an item or selection group is done by bringing up the popup for one of the
+selected items.  When the <b>Copy</b> popup menu item is clicked, a Copy of the 
+selection group is made on top of the original selections.  Drag this copy to whereever
+you wish to place the copy.  The original selection is now deselected and remains
+at its original postion.  The copy procedure can be repeated on the newly positioned
+copy to continue to make more copies.
+
+<H2>Item Popups in Control Panel Editor</H2>
+Right click (meta-click 
+on Mac or Linux) brings up the popup menu for the item.
+
+<H3>Edit Text Attributes</H3>
+The <b>Edit Text Attributes</b> popup item opens a dialog to set any of the 
+item's text attributes.
+
+<H3>Multiple Selection Editing</H3>
+When a popup menu item is invoked from an item that is a member of a selection
+group, all of the edited values that were made in the popup are applied to all
+members of the selection group if that value is relevant to the member.  For 
+example, if the font size is changed on one of the items in the selection
+group then the font size is changed in all items in the group.  If say, a fast clock
+were included in this group, then no change would be made to the clock.
 
 <!--#include virtual="/Footer" -->
 </BODY>
