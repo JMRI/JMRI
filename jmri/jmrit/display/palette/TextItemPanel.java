@@ -33,6 +33,7 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
     public void init() {
         initTextPanel();
         _decorator = new DecoratorPanel(_editor);
+        _decorator.initDecoratorPanel(null);
         add(_decorator);
     }
 

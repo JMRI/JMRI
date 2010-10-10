@@ -285,7 +285,9 @@ public class PositionablePopupUtil {
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(""+size);
         r.addActionListener(new ActionListener() {
             final float desiredSize = size+0.f;
-            public void actionPerformed(ActionEvent e) { setFontSize(desiredSize); }
+            public void actionPerformed(ActionEvent e) {
+                setFontSize(desiredSize);
+            }
         });
         fontButtonGroup.add(r);
         if (_textComponent.getFont().getSize() == size) r.setSelected(true);
@@ -347,6 +349,11 @@ public class PositionablePopupUtil {
             }
           }, Font.BOLD));
          return styleMenu;
+    }
+
+    public void setFontStyle(int style) {
+        _textComponent.setFont(jmri.util.FontUtil.deriveFont(_textComponent.getFont(),style));
+		_parent.updateSize();
     }
 
     public void setFontStyle(int addStyle, int dropStyle) {

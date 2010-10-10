@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public interface Positionable extends Cloneable  {
     public void setPositionable(boolean enabled);
@@ -103,6 +103,7 @@ public interface Positionable extends Cloneable  {
     * @return null if these item do not apply
     */
     public PositionablePopupUtil getPopupUtility();
+    public void setPopupUtility(PositionablePopupUtil tu);
 
     // Mouse-handling events.  See
     // Editor class for more information on how these are used.

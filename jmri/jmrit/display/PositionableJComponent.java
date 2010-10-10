@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -180,6 +180,7 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public PositionablePopupUtil getPopupUtility() {
          return null;
     }
+    public void setPopupUtility(PositionablePopupUtil tu) { }
 
     public void updateSize() {
     }

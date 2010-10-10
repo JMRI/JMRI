@@ -10,6 +10,8 @@ import java.io.File;
 
 import javax.swing.*;
 import javax.swing.Timer;  // disambiguate java.util.Timer
+import javax.swing.event.MenuEvent;
+import javax.swing.event.MenuListener;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.CatalogTree;
@@ -751,6 +753,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JCheckBoxMenuItem checkBox;
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 comp.setPositionable(!checkBox.isSelected());
+                setSelectionsPositionable(!checkBox.isSelected(), comp);
             }
             ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
                 comp = pos;
@@ -832,6 +835,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             JCheckBoxMenuItem checkBox;
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 comp.setHidden(checkBox.isSelected());
+                setSelectionsHidden(checkBox.isSelected(), comp);
             }
             ActionListener init(Positionable pos, JCheckBoxMenuItem cb) {
                 comp = pos;
@@ -2110,6 +2114,83 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_debug) {
             log.debug("modifySelectionGroup: size= "+_selectionGroup.size()+", selection "+ 
                       (removed ? "removed" : "added"));
+        }
+    }
+
+    protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
+        popup.add(new AbstractAction(rb.getString("TextAttributes")){
+            Positionable comp;
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                new TextAttrDialog(comp);
+            }
+            AbstractAction init(Positionable pos) {
+                comp = pos;
+                return this;
+            }
+        }.init(p));
+        return true;
+    }
+	
+    class TextAttrDialog extends JDialog {
+        Positionable _pos;
+        jmri.jmrit.display.palette.DecoratorPanel _decorator;
+        TextAttrDialog(Positionable p) {
+            super(_targetFrame, rb.getString("TextAttributes"), true);
+            _pos = p;
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            _decorator = new jmri.jmrit.display.palette.DecoratorPanel(_pos.getEditor());
+            _decorator.initDecoratorPanel(_pos);
+            panel.add(_decorator);
+            panel.add(makeDoneButtonPanel());
+            setContentPane(panel);
+            pack();
+            setLocationRelativeTo((java.awt.Component)_pos);
+            setVisible(true);
+        }
+        protected JPanel makeDoneButtonPanel() {
+            JPanel panel0 = new JPanel();
+            panel0.setLayout(new FlowLayout());
+            JButton doneButton = new JButton(rb.getString("Done"));
+            doneButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
+                        setAttributes(util, _pos);
+                        setSelectionsAttributes(util, _pos);
+                        dispose();
+                    }
+            });
+            panel0.add(doneButton);
+
+            JButton cancelButton = new JButton(rb.getString("Cancel"));
+            cancelButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        dispose();
+                    }
+            });
+            panel0.add(cancelButton);
+            return panel0;
+        }
+    }
+    
+    protected void setAttributes(PositionablePopupUtil newUtil, Positionable pos) {
+        PositionablePopupUtil util = pos.getPopupUtility();
+        pos.setPopupUtility(newUtil.clone(pos));
+    }
+
+    protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                setAttributes(util, _selectionGroup.get(i));
+            }
+        }
+    }
+
+    protected void setSelectionsHidden(boolean enabled, Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).setHidden(enabled);
+            }
         }
     }
         

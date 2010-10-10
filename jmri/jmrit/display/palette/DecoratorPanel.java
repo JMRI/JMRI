@@ -25,6 +25,7 @@ import javax.swing.*;
 
 //import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
 
@@ -67,26 +68,24 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     AJSpinner _heightSpin;
 
     JColorChooser _chooser;
+    JPanel _preview;
+    Positionable _item;
     PositionableLabel _sample;
 
     Editor _editor;
     public DecoratorPanel(Editor editor) {
         _editor = editor;
-        _sample = new DragDecoratorLabel(ItemPalette.rbp.getString("sample"), _editor);
-        _sample.setSize(_sample.getPreferredSize().width, _sample.getPreferredSize().height);
-        _sample.setDisplayLevel(Editor.LABELS);
-        _sample.setVisible(true);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        initDecoratorPanel();
     }
 
     public void setText(String text) {
-       _sample.setText(text);
+        if (_sample!=null) {
+            _sample.setText(text);
+        }
     }
 
     static class AJComboBox extends JComboBox {
         int _which;
-
         AJComboBox(String[] items, int which) {
             super(items);
             _which = which;
@@ -115,38 +114,69 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(new JLabel(ItemPalette.rbp.getString(caption)));
-        spin.setValue(0);
         spin.addChangeListener(this);
         panel.add(spin);
         return panel;
     }
 
-    protected void initDecoratorPanel() {
+    public void initDecoratorPanel(Positionable pos) {
 
+        _preview = new JPanel();
+        _preview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1)));
+        if (pos==null) {
+            _sample = new DragDecoratorLabel(ItemPalette.rbp.getString("sample"), _editor);
+            _sample.setSize(_sample.getPreferredSize().width, _sample.getPreferredSize().height);
+            _sample.setDisplayLevel(Editor.LABELS);
+            _sample.setVisible(true);
+            _preview.add(_sample);
+        } else {
+            _item = pos.clone();
+            _item.setVisible(true);
+            _preview.add((JComponent)_item);
+        }
+        PositionablePopupUtil util = getPositionablePopupUtil();
         JPanel fontPanel = new JPanel();
         _fontSizeBox = new AJComboBox(FONTSIZE, SIZE);
         fontPanel.add(makeBoxPanel("fontSize", _fontSizeBox));
-        _fontSizeBox.setSelectedIndex(4);
+        int row = 4;
+        for (int i=0; i<FONTSIZE.length; i++) {
+            if (util.getFontSize()==Integer.parseInt(FONTSIZE[i])) {
+                row = i;
+                break;
+            }
+        }
+        _fontSizeBox.setSelectedIndex(row);
+
         _fontStyleBox = new AJComboBox(STYLES, STYLE);
         fontPanel.add(makeBoxPanel("fontStyle", _fontStyleBox));
-        _fontStyleBox.setSelectedIndex(1);
+        _fontStyleBox.setSelectedIndex(util.getFont().getStyle());
+
         _fontJustBox = new AJComboBox(JUSTIFICATION, JUST);
         fontPanel.add(makeBoxPanel("justification", _fontJustBox));
-        _fontJustBox.setSelectedIndex(0);
+        switch (util.getJustification()){
+            case PositionablePopupUtil.LEFT:     row = 0;
+                            break;
+            case PositionablePopupUtil.RIGHT:    row = 2;
+                            break;
+            case PositionablePopupUtil.CENTRE:   row = 1;
+                            break;
+            default     :   row = 2;
+        }
+        _fontJustBox.setSelectedIndex(row);
         add(fontPanel);
         
 
         JPanel sizePanel = new JPanel();
-        SpinnerNumberModel model = new SpinnerNumberModel(0,0,100,1);
+        SpinnerNumberModel model = new SpinnerNumberModel(util.getBorderSize(),0,100,1);
         _borderSpin = new AJSpinner(model, BORDER);
         sizePanel.add(makeSpinPanel("borderSize", _borderSpin));
-        model = new SpinnerNumberModel(0,0,100,1);
+        model = new SpinnerNumberModel(util.getMargin(),0,100,1);
         _marginSpin = new AJSpinner(model, MARGIN);
         sizePanel.add(makeSpinPanel("marginSize", _marginSpin));
-        model = new SpinnerNumberModel(0,0,1000,1);
+        model = new SpinnerNumberModel(util.getFixedWidth(),0,1000,1);
         _widthSpin = new AJSpinner(model, FWIDTH);
         sizePanel.add(makeSpinPanel("fixedWidth", _widthSpin));
-        model = new SpinnerNumberModel(0,0,1000,1);
+        model = new SpinnerNumberModel(util.getFixedHeight(),0,1000,1);
         _heightSpin = new AJSpinner(model, FHEIGHT);
         sizePanel.add(makeSpinPanel("fixedHeight", _heightSpin));
         add(sizePanel);
@@ -164,18 +194,19 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
         _chooser = new JColorChooser(_editor.getTargetPanel().getBackground());
         _chooser.getSelectionModel().addChangeListener(this);
-        JPanel preview = new JPanel();
-        preview.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black, 1)));
-        preview.add(_sample);
-        _chooser.setPreviewPanel(preview);
-        preview.setSize(2*_sample.getPreferredSize().width, 2*_sample.getPreferredSize().height);
-        preview.setBackground(_editor.getTargetPanel().getBackground());
+        _chooser.setPreviewPanel(_preview);
+        if (_sample==null) {
+            _preview.setSize(4*_item.getPreferredSize().width, 3*_item.getPreferredSize().height);
+        } else {
+            _preview.setSize(4*_sample.getPreferredSize().width, 3*_sample.getPreferredSize().height);
+        }
+        _preview.setBackground(_editor.getTargetPanel().getBackground());
         add(_chooser);
 
     }
 
     public void stateChanged(ChangeEvent e) {
-        PositionablePopupUtil util = _sample.getPopupUtility();
+        PositionablePopupUtil util = getPositionablePopupUtil();
         Object obj = e.getSource();
         if (obj instanceof AJSpinner) {
             int num = ((Number)((AJSpinner)obj).getValue()).intValue();
@@ -204,8 +235,18 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
     }
 
+    public PositionablePopupUtil getPositionablePopupUtil() {
+        PositionablePopupUtil util;
+        if (_sample==null) {
+            util = _item.getPopupUtility();
+        } else {
+            util = _sample.getPopupUtility();
+        }
+        return util;
+    }
+
     public void itemStateChanged(ItemEvent e) {   
-        PositionablePopupUtil util = _sample.getPopupUtility();
+        PositionablePopupUtil util = getPositionablePopupUtil();
         Object obj = e.getSource();
         if (obj instanceof AJComboBox) {
             switch (((AJComboBox)obj)._which) {
@@ -229,8 +270,12 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                             style = (Font.BOLD | Font.ITALIC);
                             break;
                     }
-                    _sample.setFont(jmri.util.FontUtil.deriveFont(_sample.getFont(),style));
-                    _sample.updateSize();
+                    if (_sample==null) {
+                        util.setFontStyle(style);
+                    } else {
+                        _sample.setFont(jmri.util.FontUtil.deriveFont(_sample.getFont(), style));
+                        _sample.updateSize();
+                    }
                     break;
                 case JUST:
                     int just = 0;

@@ -676,7 +676,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     public void mouseReleased(MouseEvent event) {
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseReleased at ("+event.getX()+","+event.getY()+") dragging= "+_dragging
-                              +" selectRect is "+(_selectRect==null? "null":"not null"));
+                              +" pastePending= "+_pastePending+" selectRect is "+(_selectRect==null? "null":"not null"));
         if (_dragging) {
             mouseDragged(event);
         }
@@ -899,6 +899,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 popupSet = false;
             }
             popupSet = p.setTextEditMenu(popup);
+            popupSet |= setTextAttributes(p, popup);
+            /*
             PositionablePopupUtil util = p.getPopupUtility();
             if (util!=null) {
                 util.setFixedTextMenu(popup);        
@@ -910,6 +912,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 //util.copyItem(popup);
                 popupSet = true;
             }
+            */
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
