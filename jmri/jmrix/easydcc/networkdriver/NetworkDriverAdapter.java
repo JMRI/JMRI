@@ -15,14 +15,14 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
         super();
         adaptermemo = new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo();
-        mInstance=this;
+        setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
     }
     /**
      * set up all of the other objects to operate with an EasyDcc command
@@ -47,8 +47,7 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) {
             mInstance = new NetworkDriverAdapter();
-            mInstance.setPort(0);
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
+            mInstance.setPort(0);           
         }
         return mInstance;
     }

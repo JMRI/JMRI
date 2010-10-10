@@ -14,7 +14,7 @@ import jmri.InstanceManager;
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
  *              Kevin Dickerson
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -59,7 +59,7 @@ public class EasyDccSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.easydcc.EasyDccPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.easydcc.EasyDccTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.easydcc.EasyDccTurnoutManager.instance());
         
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.easydcc.EasyDccThrottleManager());
 

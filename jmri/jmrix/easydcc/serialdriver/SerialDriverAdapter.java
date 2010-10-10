@@ -23,14 +23,14 @@ import gnu.io.SerialPort;
  * not use any other options at configuration time.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
         super();
         adaptermemo = new EasyDccSystemConnectionMemo();
-        mInstance=this;
+        setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
     }
 
     SerialPort activeSerialPort = null;
@@ -154,7 +154,6 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
     static public SerialDriverAdapter instance() {
         if (mInstance == null){
             mInstance = new SerialDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.SPROG);
         }
         return mInstance;
     }
