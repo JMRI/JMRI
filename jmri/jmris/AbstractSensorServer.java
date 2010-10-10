@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Abstract interface between the a JMRI sensor and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 
 abstract public class AbstractSensorServer {
@@ -121,7 +121,7 @@ abstract public class AbstractSensorServer {
             try {
                sendStatus(name,now);
             } catch(java.io.IOException ie) {
-                  log.error("Error Sending Status");
+                  log.debug("Error Sending Status");
                   // if we get an error, de-register
                   sensor.removePropertyChangeListener(this);
                   removeSensorFromList(name);

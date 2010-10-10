@@ -12,7 +12,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * SRCP Server interface between the JMRI Turnout manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
@@ -29,7 +29,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
      * Protocol Specific Abstract Functions
      */
 
-     public void sendStatus(int Status) throws IOException
+     public void sendStatus(String turnoutName,int Status) throws IOException
      {
 		output.writeBytes("499 ERROR unspecified error\n");
      }
@@ -59,7 +59,7 @@ public class JmriSRCPTurnoutServer extends AbstractTurnoutServer {
         }
      }
 
-     public void sendErrorStatus() throws IOException {
+     public void sendErrorStatus(String turnoutName) throws IOException {
  	output.writeBytes("499 ERROR unspecified error\n");
      }
 

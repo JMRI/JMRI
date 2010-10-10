@@ -5,6 +5,7 @@ package jmri.jmris.simpleserver;
 import java.io.*;
 
 import jmri.Turnout;
+import jmri.InstanceManager;
 
 import jmri.jmris.AbstractTurnoutServer;
 
@@ -12,7 +13,7 @@ import jmri.jmris.AbstractTurnoutServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
@@ -29,24 +30,27 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
      * Protocol Specific Abstract Functions
      */
 
-     public void sendStatus(int Status) throws IOException
+     public void sendStatus(String turnoutName,int Status) throws IOException
      {
+        addTurnoutToList(turnoutName);
 	if(Status==Turnout.THROWN){
-		output.writeBytes("TURNOUT " + turnout.getSystemName() + " THROWN\n");
+		output.writeBytes("TURNOUT " + turnoutName + " THROWN\n");
         } else if (Status==Turnout.CLOSED){
-		output.writeBytes("TURNOUT " + turnout.getSystemName() + " CLOSED\n");
+		output.writeBytes("TURNOUT " + turnoutName + " CLOSED\n");
         } else {
                //  unknown state
+		output.writeBytes("TURNOUT " + turnoutName + " UNKNOWN\n");
         }
      }
 
-     public void sendErrorStatus() throws IOException {
+     public void sendErrorStatus(String turnoutName) throws IOException {
  	output.writeBytes("TURNOUT ERROR\n");
      }
 
      public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException {
             int index;
             index=statusString.indexOf(" ")+1;
+            log.error("stautsString");
 	    if(statusString.contains("THROWN")){
                    if(log.isDebugEnabled())
                       log.debug("Setting Turnout THROWN");
@@ -55,8 +59,11 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
                    if(log.isDebugEnabled())
                       log.debug("Setting Turnout CLOSED");
                    closeTurnout(statusString.substring(index,statusString.indexOf(" ",index+1)));
+            } else {
+            // default case, return status for this turnout
+            sendStatus(statusString.substring(index),
+            InstanceManager.turnoutManagerInstance().provideTurnout(statusString.substring(index)).getKnownState());
             }
-            sendStatus(turnout.getKnownState());
      }
 
 

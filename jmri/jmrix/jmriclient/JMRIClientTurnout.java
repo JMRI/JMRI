@@ -12,7 +12,7 @@ import jmri.Turnout;
  * Description:		extend jmri.AbstractTurnout for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 
@@ -31,6 +31,8 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
             prefix=memo.getSystemPrefix();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
+            // Then request status.
+            requestUpdateFromLayout();
 	}
 
 	public int getNumber() { return _number; }
@@ -54,8 +56,19 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
 			sendMessage(false^getInverted());
 		}
 	}
-
-
+   
+    public boolean canInvert() {
+              return true;
+    }
+ 
+    // request a stuatus update from the layout.
+    protected void requestUpdateFromLayout(){
+        // create the message
+        String text = "TURNOUT "+ getSystemName() + "\n";
+        // create and send the message itself
+                tc.sendJMRIClientMessage(new JMRIClientMessage(text), null);
+    }
+    
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
         if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton "+prefix+_number);
@@ -68,7 +81,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         if (closed) 
             text = "TURNOUT "+ getSystemName() + " CLOSED\n";
         else // thrown
-            text = "TURNOUT "+ getSystemName() +" THROWN\n";
+            text = "TURNOUT "+ getSystemName() + " THROWN\n";
             
         // create and send the message itself
 		tc.sendJMRIClientMessage(new JMRIClientMessage(text), null);
@@ -80,9 +93,9 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
                if(!message.contains(getSystemName())) return; // not for us
 
                if(m.toString().contains("THROWN"))
-                  newKnownState(jmri.Turnout.THROWN);
+                  newKnownState(!getInverted()?jmri.Turnout.THROWN:jmri.Turnout.CLOSED);
                else if(m.toString().contains("CLOSED"))
-                  newKnownState(jmri.Turnout.CLOSED);
+                  newKnownState(!getInverted()?jmri.Turnout.CLOSED:jmri.Turnout.THROWN);
                else
                   newKnownState(jmri.Turnout.UNKNOWN);
         }
