@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the maple.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -176,11 +176,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.maple.SerialTurnoutManager());
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.maple.SerialLightManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.maple.SerialTurnoutManager.instance());
+        jmri.InstanceManager.setLightManager(jmri.jmrix.maple.SerialLightManager.instance());
 
         SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.maple.SerialSensorManager());
+        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.maple.SerialSensorManager.instance());
         SerialTrafficController.instance().setSensorManager(s);
         jmri.jmrix.maple.ActiveFlag.setActive();
     }

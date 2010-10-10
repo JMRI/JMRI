@@ -14,12 +14,12 @@ import jmri.Light;
  *
  * @author  Bob Jacobsen Copyright (C) 2008
  * @author	Dave Duchamp Copyright (C) 2004, 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialLightManager extends AbstractLightManager {
 
     public SerialLightManager() {
-        _instance = this;
+    	
     }
 
     /**
