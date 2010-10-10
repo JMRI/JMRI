@@ -12,7 +12,7 @@ import jmri.Sensor;
  * Description:		extend jmri.AbstractSensor for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class JMRIClientSensor extends AbstractSensor implements JMRIClientListener {
 
@@ -29,13 +29,15 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
             tc = memo.getJMRIClientTrafficController();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
+            // Then request status.
+            requestUpdateFromLayout(); 
 	}
 
 	public int getNumber() { return _number; }
 
 	// Handle a request to change state by sending a formatted packet
         // to the server.
-	protected void forwardCommandChangeToLayout(int s) {
+	public void setKnownState(int s) throws jmri.JmriException{
 		// sort out states
 		if ( (s & Sensor.ACTIVE ) > 0) {
 			// first look for the double case, which we can't handle
@@ -51,6 +53,11 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
 			// send a INACTIVE command
 			sendMessage(false^getInverted());
 		}
+                if (_knownState != s) {
+                    int oldState = _knownState;
+                    _knownState = s;
+                    firePropertyChange("KnownState", Integer.valueOf(oldState), Integer.valueOf(_knownState));
+ 	        }
 	}
 
 	public void requestUpdateFromLayout() {
@@ -77,12 +84,13 @@ public class JMRIClientSensor extends AbstractSensor implements JMRIClientListen
        // to listen for status changes from JMRIClient system
         public void reply(JMRIClientReply m) {
                String message=m.toString();
+               log.debug("Message Received: " +m);
                if(!message.contains(getSystemName())) return; // not for us
 
-               if(m.toString().contains("ACTIVE"))
-                  setOwnState(jmri.Sensor.ACTIVE);
-               else if(m.toString().contains("INACTIVE"))
-                  setOwnState(jmri.Sensor.INACTIVE);
+               if(m.toString().contains("INACTIVE"))
+                  setOwnState(!getInverted()?jmri.Sensor.INACTIVE:jmri.Sensor.ACTIVE);
+               else if(m.toString().contains("ACTIVE"))
+                  setOwnState(!getInverted()?jmri.Sensor.ACTIVE:jmri.Sensor.INACTIVE);
                else
                   setOwnState(jmri.Sensor.UNKNOWN);
         }

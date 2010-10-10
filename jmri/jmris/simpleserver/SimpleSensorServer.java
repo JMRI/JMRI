@@ -12,7 +12,7 @@ import jmri.jmris.AbstractSensorServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SimpleSensorServer extends AbstractSensorServer {
@@ -20,7 +20,7 @@ public class SimpleSensorServer extends AbstractSensorServer {
    private DataOutputStream output;
 
    public SimpleSensorServer(DataInputStream inStream,DataOutputStream outStream){
-
+        super();
         output=outStream;
     }
 
@@ -29,18 +29,20 @@ public class SimpleSensorServer extends AbstractSensorServer {
      * Protocol Specific Abstract Functions
      */
 
-     public void sendStatus(int Status) throws IOException
+     public void sendStatus(String sensorName, int Status) throws IOException
      {
+         addSensorToList(sensorName);
+
 	if(Status==Sensor.INACTIVE){
-		output.writeBytes("SENSOR " + sensor.getSystemName() + " INACTIVE\n");
+		output.writeBytes("SENSOR " + sensorName + " INACTIVE\n");
         } else if (Status==Sensor.ACTIVE){
-		output.writeBytes("SENSOR " + sensor.getSystemName() + " ACTIVE\n");
+		output.writeBytes("SENSOR " + sensorName + " ACTIVE\n");
         } else {
-               //  unknown state
+		output.writeBytes("SENSOR " + sensorName + " UNKNOWN\n");
         }
      }
 
-     public void sendErrorStatus() throws IOException {
+     public void sendErrorStatus(String sensorName) throws IOException {
  	output.writeBytes("TURNOUT ERROR\n");
      }
 
@@ -55,6 +57,11 @@ public class SimpleSensorServer extends AbstractSensorServer {
                    if(log.isDebugEnabled())
                       log.debug("Setting Sensor ACTIVE");
                    setSensorActive(statusString.substring(index,statusString.indexOf(" ",index+1)));
+            } else {
+              // default case, return status for this sensor/
+              Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index));
+              sendStatus(statusString.substring(index),sensor.getKnownState());
+
             }
      }
 

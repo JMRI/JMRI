@@ -16,7 +16,7 @@ import jmri.InstanceManager;
  * There is currently no handshaking in this server.  You may just start 
  * sending commands.
  * @author Paul Bender Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  *
  */
 public class SimpleServer extends JmriServer{
@@ -45,6 +45,8 @@ public class SimpleServer extends JmriServer{
      // Handle communication to a client through inStream and outStream
 	 @SuppressWarnings("deprecation")
      public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
+        java.util.Scanner inputScanner=new java.util.Scanner(new InputStreamReader(inStream));
+
         // Listen for commands from the client until the connection closes
 	String cmd; 
 
@@ -58,8 +60,15 @@ public class SimpleServer extends JmriServer{
         outStream.writeBytes("JMRI " + jmri.Version.name() + " \n");
 
 	    while(true) {
+           inputScanner.skip("[\r\n]*");// skip any stray end of line characters.
 	   // Read the command from the client
-           cmd = inStream.readLine();
+           try {
+              cmd = inputScanner.nextLine();
+           } catch(java.util.NoSuchElementException nse) {
+             // we get an nse when we are finished with this client
+             // so break out of the loop.
+             break;
+           }
            
            if(log.isDebugEnabled()) log.debug("Received from client: " + cmd);
               if(cmd.startsWith("POWER")){
@@ -88,7 +97,7 @@ public class SimpleServer extends JmriServer{
                        outStream.writeBytes("not supported\n");
                      }
                  } else {
-	      outStream.writeBytes("Unknown Command\n");
+	      outStream.writeBytes("Unknown Command " + cmd +"\n");
            } 
 	 }	
        }
