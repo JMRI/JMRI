@@ -24,7 +24,7 @@ import gnu.io.SerialPort;
  * string.
  *
  * @author	Paul Bender   Copyright (C) 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -111,7 +111,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.xpa.XpaPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.xpa.XpaTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.xpa.XpaTurnoutManager.instance());
 
         // start operation
         // sourceThread = new Thread(p);

@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to Oak Tree via a serial comm port.
  * Normally controlled by the oaktree.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006, 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -178,11 +178,11 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.secsi.SerialTurnoutManager());
-        jmri.InstanceManager.setLightManager(new jmri.jmrix.secsi.SerialLightManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.secsi.SerialTurnoutManager.instance());
+        jmri.InstanceManager.setLightManager(jmri.jmrix.secsi.SerialLightManager.instance());
 
         SerialSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.secsi.SerialSensorManager());
+        jmri.InstanceManager.setSensorManager(s = jmri.jmrix.secsi.SerialSensorManager.instance());
         SerialTrafficController.instance().setSensorManager(s);
         jmri.jmrix.secsi.ActiveFlag.setActive();
     }

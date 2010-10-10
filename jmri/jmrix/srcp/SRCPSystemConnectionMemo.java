@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -59,7 +59,7 @@ public class SRCPSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
       
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.srcp.SRCPPowerManager());
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.srcp.SRCPTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.srcp.SRCPTurnoutManager.instance());
         
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.srcp.SRCPThrottleManager());
 

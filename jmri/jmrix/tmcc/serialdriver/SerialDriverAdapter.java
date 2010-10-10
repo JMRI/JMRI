@@ -19,7 +19,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to TMCC via a serial comm port.
  * Normally controlled by the tmcc.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -168,7 +168,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         // connect to the traffic controller
         SerialTrafficController.instance().connectPort(this);
 
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.tmcc.SerialTurnoutManager());
+        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.tmcc.SerialTurnoutManager.instance());
         jmri.InstanceManager.setThrottleManager(new jmri.jmrix.tmcc.SerialThrottleManager());
 
         jmri.jmrix.tmcc.ActiveFlag.setActive();
