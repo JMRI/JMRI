@@ -12,6 +12,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -39,11 +40,12 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SystemConsole extends JTextArea {
 
     static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
+    static final ResourceBundle rbc = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
     private static final int STD_ERR = 1;
     private static final int STD_OUT = 2;
@@ -54,6 +56,14 @@ public class SystemConsole extends JTextArea {
     private static PrintStream originalErr;
 
     private static JFrame frame = null;
+
+    static ArrayList<Schemes> schemes;
+
+    private static int scheme = 0; // Green on Black
+
+    private static int fontSize = 12;
+
+    private static int fontStyle = Font.PLAIN;
 
     /**
      * Initialise the system console ensuring both System.out and System.err
@@ -76,10 +86,9 @@ public class SystemConsole extends JTextArea {
             console.setColumns(120);
             console.setLineWrap(true);
             console.setWrapStyleWord(true);
-            console.setFont(new Font("Monospaced", Font.PLAIN, 12));
+            console.setFont(new Font("Monospaced", fontStyle, fontSize));
             console.setEditable(false);
-            console.setBackground(Color.BLACK);
-            console.setForeground(Color.GREEN);
+            setScheme(scheme);
 
             // Then redirect to it
             redirectSystemStreams();
@@ -140,30 +149,6 @@ public class SystemConsole extends JTextArea {
         });
         p.add(close);
 
-//            // Add button to allow console text size to be decreased
-//            JButton decSize = new JButton("-");
-//            decSize.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent event) {
-//                    Font font = console.getFont();
-//                    if (font.getSize()>=6) {
-//                        console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()-1));
-//                    }
-//                }
-//            });
-//            p.add(decSize);
-//
-//            // Add button to allow console text size to be increased
-//            JButton incSize = new JButton("+");
-//            incSize.addActionListener(new ActionListener() {
-//                public void actionPerformed(ActionEvent event) {
-//                    Font font = console.getFont();
-//                    if (font.getSize()<=24) {
-//                        console.setFont(new Font(font.getName(),font.getStyle(),font.getSize()+1));
-//                    }
-//                }
-//            });
-//            p.add(incSize);
-
         // Add the button panel to the frame & then arrange everything
         frame.add(p, BorderLayout.SOUTH);
         frame.pack();
@@ -219,6 +204,114 @@ public class SystemConsole extends JTextArea {
     private static void redirectSystemStreams() {
         System.setOut(new PrintStream(outStream(STD_OUT), true));
         System.setErr(new PrintStream(outStream(STD_ERR), true));
+    }
+
+    /**
+     * Set the console font size
+     * @param size point size of font between 6 and 24 point
+     */
+    public static void setFontSize(int size) {
+        updateFont(fontStyle, (fontSize = size<6?6:size>24?24:size));
+    }
+
+    /**
+     * Retrieve the current console font size (default 12 point)
+     * @return
+     */
+    public static int getFontSize() {
+        return fontSize;
+    }
+
+    /**
+     * Set the console font style
+     * @param style one of {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
+     */
+    public static void setFontStyle(int style) {
+
+        if (style==Font.BOLD || style==Font.ITALIC || style==Font.PLAIN || style==(Font.BOLD|Font.ITALIC)) {
+            fontStyle = style;
+        } else {
+            fontStyle = Font.PLAIN;
+        }
+        updateFont(fontStyle, fontSize);
+    }
+
+    /**
+     * Retrieve the current console font style
+     * @return selected font style - one of {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
+     */
+    public static int getFontStyle() {
+        return fontStyle;
+    }
+
+    /**
+     * Update the system console font with the specified parameters
+     * @param style font style
+     * @param size font size
+     */
+    private static void updateFont(int style, int size) {
+        Font font = console.getFont();
+        console.setFont(new Font(font.getName(), style, size));
+    }
+
+    /**
+     * Method to define console colour schemes
+     */
+    private static void defineSchemes() {
+        schemes = new ArrayList<Schemes>();
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeGreenOnBlack"), Color.GREEN, Color.BLACK));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeOrangeOnBlack"), Color.ORANGE, Color.BLACK));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeBlackOnWhite"), Color.BLACK, Color.WHITE));
+        schemes.add(new Schemes(rbc.getString("ConsoleSchemeWhiteOnBlue"), Color.WHITE, Color.BLUE));
+    }
+
+    /**
+     * Set the console colour scheme
+     * @param which the scheme to use
+     */
+    public static void setScheme(int which) {
+        scheme = which;
+
+        if (schemes == null) {
+            defineSchemes();
+        }
+
+        Schemes s;
+
+        try {
+            s = schemes.get(which);
+        } catch (IndexOutOfBoundsException ex) {
+            s = schemes.get(0);
+            scheme = 0;
+        }
+
+        console.setForeground(s.foreground);
+        console.setBackground(s.background);
+
+    }
+
+    /**
+     * Retrieve the current console colour scheme
+     * @return selected colour scheme
+     */
+    public static int getScheme() {
+        return scheme;
+    }
+
+    /**
+     * Class holding details of each scheme
+     */
+    public static final class Schemes {
+        public Color foreground;
+        public Color background;
+        public String description;
+
+        Schemes(String description, Color foreground, Color background) {
+            this.foreground = foreground;
+            this.background = background;
+            this.description = description;
+        }
     }
 }
 

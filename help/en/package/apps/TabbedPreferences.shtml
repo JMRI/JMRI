@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TabbedPreferences.shtml,v 1.8 2010-06-10 16:56:19 kevin-dickerson Exp $ -->
+<!-- $Id: TabbedPreferences.shtml,v 1.9 2010-10-11 21:27:15 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -181,6 +181,12 @@ will continue to appear in English, so you won't miss anything.  For
 more information on how to set this up, and particularly how to contribute
 new and improved translations, please see our
 <a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
+<dt>Console
+<dd>This allows you to customize the way that the JMRI System Console looks.
+It is possible to select from a number of pre-defined color schemes and to
+choose the font size and style.
+Also, you can choose to save both the size and location of the System Console
+window so that it always appears in the same place and at the same size.
 </dl>
 
 <a name="Messages">

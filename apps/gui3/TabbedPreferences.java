@@ -26,7 +26,7 @@ import org.jdom.Element;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class TabbedPreferences extends AppConfigBase {
     
@@ -176,6 +176,8 @@ public class TabbedPreferences extends AppConfigBase {
                     "LabelTabbedLayoutGUI", gui = new GuiLafConfigPane(), true, null);
         addItem(displayPanel, rb.getString("TabbedLayoutLocale"),
                     "LabelTabbedLayoutLocale", gui.doLocale(), false, null);
+        addItem(displayPanel, rb.getString("TabbedLayoutConsole"),
+                    "LabelTabbedLayoutConsole", new apps.SystemConsoleConfigPanel(), true, null);
         addItem(rosterPanel, rb.getString("TabbedLayoutRoster"),
                     "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true, null);
         addItem(filePanel, rb.getString("TabbedLayoutFileLocations"),
