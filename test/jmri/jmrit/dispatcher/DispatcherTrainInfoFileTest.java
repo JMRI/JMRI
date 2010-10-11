@@ -7,13 +7,14 @@ import junit.framework.*;
 /**
  * Swing jfcUnit tests for dispatcher train info
  * @author			Dave Duchamp
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class DispatcherTrainInfoFileTest extends TestCase {
 
 	public void testFileRead() throws Exception {
 
-		TrainInfoFile tif = new TrainInfoFile("java/test/jmri/jmrit/dispatcher/");
+		TrainInfoFile tif = new TrainInfoFile();
+		tif.setFileLocation("java/test/jmri/jmrit/dispatcher/");
 		TrainInfo ti = tif.readTrainInfo("TestTrain.xml");
 		// test input information
 		Assert.assertEquals("Transit Name",ti.getTransitName(),"IZ5( Red Main Loop CW )");

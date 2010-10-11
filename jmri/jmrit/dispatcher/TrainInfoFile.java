@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -44,14 +44,13 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 	public TrainInfoFile () {
 		super();
 	}
-	public TrainInfoFile (String testLocation) {
-		super();
-		fileLocation = testLocation;
-	}
 	
 	// operational variables
-	private static String fileLocation = XmlFile.prefsDir()+File.separator+"dispatcher"+File.separator+
+	private String fileLocation = XmlFile.prefsDir()+File.separator+"dispatcher"+File.separator+
 																			"traininfo"+File.separator;
+	public void setFileLocation(String testLocation){
+		fileLocation = testLocation;
+	}
 	private Document doc = null;
 	private Element root = null;
 	
