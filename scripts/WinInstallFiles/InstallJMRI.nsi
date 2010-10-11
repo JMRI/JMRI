@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.17.0
+; - Change branding text
+; -------------------------------------------------------------------------
 ; - Version 0.1.16.0
 ; - Add start menu shortcut for DecoderPro3
 ; -------------------------------------------------------------------------
@@ -181,7 +184,7 @@
   !define JMRI_VER  "unknown"                   ; Application version
 !endif
 !define JRE_VER   "1.5"                         ; Required JRE version
-!define INST_VER  "0.1.16.0"                    ; Installer version
+!define INST_VER  "0.1.17.0"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -260,6 +263,7 @@ AutoCloseWindow False ; do not automatically close when finished
 ; -------------------------------------------------------------------------
 Name "${APP} ${JMRI_VER}"
 Caption "${APP} ${JMRI_VER} Setup"
+BrandingText "${APP} - ${COPYRIGHT}"
 OutFile "../../${PNAME}.exe"
 
 ; -------------------------------------------------------------------------
