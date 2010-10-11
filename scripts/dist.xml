@@ -1,6 +1,6 @@
 <!-- Ant file for creating JMRI distributions -->
 <!-- Bob Jacobsen, April 2002 -->
-<!-- Revision $Revision: 1.53 $ -->
+<!-- Revision $Revision: 1.54 $ -->
 
 <project name="JMRI" basedir="." default="none">
 <!-- basedir="." means all paths are relative to the "java" subdir -->
@@ -75,7 +75,6 @@
       <fileset dir="${release}" includes="jmri.jar"  /> 
     </copy>
     <cvs command="export" reallyquiet="true" package="lib" dest="Windows/JMRI" tag="${release}"/>
-    <move todir="Windows/JMRI" file="Windows/JMRI/lib/Serialio.jar"/>
     <delete file="Windows/JMRI/lib/UmlGraph-5.2.jar" />
     <delete file="Windows/JMRI/lib/junit.jar" />
     <delete file="Windows/JMRI/lib/jfcunit.jar" />
