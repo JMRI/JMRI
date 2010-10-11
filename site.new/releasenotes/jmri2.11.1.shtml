@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.15 2010-10-11 14:47:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.16 2010-10-11 23:29:00 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -346,6 +346,16 @@ decoders to specific models.
 
 <p>
 Team Digital provided a decoder definition for their Team Digital BlocD8 board.
+
+<p>
+Matt Harris made several improvements to the Windows installer.
+
+<p>
+Team Digital updated the SIC_24AD definition to include toggle option to inputs and startup delay
+
+<p>
+Phil Klein provided "LocoNetSensorInit.py", a script to cause LocoNet sensors to send their state
+so that JMRI will update.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
