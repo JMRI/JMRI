@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.14 2010-10-04 03:13:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.15 2010-10-11 14:47:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -49,7 +49,29 @@ It contains
 many new features, including:
 
 <ul>
+
 <li>
+JMRI Simple Server adds multiple computer support to the JMRI toolkit, so multiple machines can share a common set of layout connections. 
+This is still an early implementation, but it should pass turnout, sensor, light and layout power data between multiple computers 
+after an easy setup.
+<li>
+The new JMRI System Console takes the place of the Windows Console. 
+The Windows Console didn't always auto-minimize properly 
+and would close JMRI without going through the normal shutdown procedures if someone accidentally clicked on the close button. 
+The JMRI System Console is available from the Help menu.
+As with most of the menu items, you can also setup it up in Preference to autostart with JMRI. 
+It displays the same information as the old Windows Console, is easy to resize and has a button to simplify the task of copying text to the clipboard
+<li>
+Numerous improvements to the Layout, Panel and Control Panel Editors primarily related to: Making the user interfaces and options available more consistent across the 3 editors, making it easier to copy/cut/paste objects on the panels, and adding ability to set the background color without having to import a background image
+<li>
+Layout Editor now uses a lot less CPU time when moving the mouse or updating information on the panel, particularly on older hardware
+<LI>
+Numerous improvements to Operations
+<LI>
+Several improvements to Throttles
+<li>
+Huge update to JMRI translations into other languages
+
 </ul>
 along with other changes.  See the complete list below.
 
@@ -65,7 +87,23 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None for this version)
+While safe to try out (otherwise the developers wouldn't make it public), 
+2.11.1 will pose a higher risk than normal of creating hick-ups in assorted places. 
+You don't want to install it the day before the big Open House!
+<p>
+Over the past few months the developers have setup a series of automated tools to help test the code on a daily basis. 
+These automated tests found numerous issues that needed attending to, some minor, some more serious. 
+The upshot of all this is, the code is more solid than ever, but has undergone lots of little changes in lots of places. 
+As you well know, sometimes changes in one place can have consequences in other places which are hard to predict in advance. 
+The developers have fixed the issues that popped up during the Release Candidate testing, 
+but there are surely more things that none of us have come across yet
+<p>
+All this to say that it's really important to let the installer make backups of your user files 
+(Windows installer only; it's normally checked by default when going from an older version to a newer version; 
+non-Windows users can just take a copy of their preferences folder),
+just in case something unexpected happens. 
+This is especially true for folks who are currently doing a lot of editing to their panels, 
+as panels generally aren't backward compatible to older versions of JMRI once they are saved using a newer version
 
 <h3>Older warnings</h3>
 
@@ -90,10 +128,6 @@ None at the time of this release.
 
 <h3>Changes since production version 2.10</h3>
 
-Chuck Catania contributed a new set of 
-SPTCO-1930 signal aspects.
-
-<p>
 Andrew Crosland improved the speed averaging for the Bachrus speedometer.
 
 <p>
@@ -288,7 +322,12 @@ Georg Kautzsch provided a decoder definition for the Uhlenbrock 67800 servo deco
 Matt Harris added a VerticalLabelUI class so to allow JLabels to be displayed vertically.
 
 <p>
-Matt Harris added a system console complete with facility to copy contents to clipboard.
+Matt Harris added the new JMRI System Console which takes the place of the Windows Console. 
+The Windows Console didn't always auto-minimize properly 
+and would close JMRI without going through the normal shutdown procedures if someone accidentally clicked on the close button. 
+The JMRI System Console is available from the Help menu.
+As with most of the menu items, you can also setup it up in Preference to autostart with JMRI. 
+It displays the same information as the old Windows Console, is easy to resize and has a button to simplify the task of copying text to the clipboard
 
 <p>
 Pete Cressman added a new editor tool: Item Palette. He also updated the signal head icons to only show icons that 
