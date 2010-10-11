@@ -9,7 +9,7 @@ import jmri.util.*;
 /**
  * Tests for the jmri.util.UncaughtExceptionHandler class.
  * @author	Bob Jacobsen  Copyright 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class UncaughtExceptionHandlerTest extends SwingTestCase {
 
@@ -22,6 +22,7 @@ public class UncaughtExceptionHandlerTest extends SwingTestCase {
         };
         t.start();
         flushAWT();
+        System.err.println("before check");
         JUnitAppender.assertErrorMessage("Unhandled Exception: java.lang.NullPointerException");
     }
         
