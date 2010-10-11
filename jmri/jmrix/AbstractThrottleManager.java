@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -101,8 +101,8 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      */
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         if (throttleListeners != null) {
-            Integer addressKey = Integer.valueOf(address);
-			ArrayList<ThrottleListener> a = throttleListeners.get(addressKey);
+		    DccLocoAddress la = new DccLocoAddress(address, isLong);
+			ArrayList<ThrottleListener> a = throttleListeners.get(la);
 			if (a==null) return;
 			for (int i = 0; i<a.size(); i++) {
 				if (l == a.get(i))
