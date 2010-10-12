@@ -4,6 +4,8 @@ package apps.configurexml;
 
 import apps.SystemConsole;
 import apps.SystemConsoleConfigPanel;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import org.jdom.Element;
 
 /**
@@ -23,7 +25,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -47,15 +49,15 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
         if (SystemConsoleConfigPanel.isPositionSaved()) {
             ce = new Element("position");
-            ce.setAttribute("x", ""+SystemConsole.getConsole().getLocation().x);
-            ce.setAttribute("y", ""+SystemConsole.getConsole().getLocation().y);
+            ce.setAttribute("x", ""+SystemConsole.getConsole().getX());
+            ce.setAttribute("y", ""+SystemConsole.getConsole().getY());
             e.addContent(ce);
         }
 
         if (SystemConsoleConfigPanel.isSizeSaved()) {
             ce = new Element("size");
-            ce.setAttribute("width", ""+SystemConsole.getConsole().getSize().width);
-            ce.setAttribute("height", ""+SystemConsole.getConsole().getSize().height);
+            ce.setAttribute("width", ""+SystemConsole.getConsole().getWidth());
+            ce.setAttribute("height", ""+SystemConsole.getConsole().getHeight());
             e.addContent(ce);
         }
 
@@ -84,9 +86,25 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
             if ((ce = e.getChild("position"))!=null) {
                 SystemConsoleConfigPanel.setPositionSaved(true);
-                SystemConsole.getConsole().setLocation(
-                        Integer.parseInt(ce.getAttributeValue("x")),
-                        Integer.parseInt(ce.getAttributeValue("y")));
+                boolean onScreen = false;
+
+                // Retrieve stored co-ordinates
+                int x = Integer.parseInt(ce.getAttributeValue("x"));
+                int y = Integer.parseInt(ce.getAttributeValue("y"));
+
+                // Check if stored co-ordinates are valid for at least one screen
+                for (GraphicsDevice gd: GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()) {
+                    onScreen = gd.getDefaultConfiguration().getBounds().contains(x, y)?true:onScreen;
+                }
+
+                if (!onScreen) {
+                    // Set to default position (0,0)
+                    log.warn("Stored console position is off-screen (" + x + ", " + y + ") - reset to default (0, 0)");
+                    x = y = 0;
+                }
+
+                // Finally, set the console location
+                SystemConsole.getConsole().setLocation(x, y);
             }
 
             if ((ce = e.getChild("size"))!=null) {
