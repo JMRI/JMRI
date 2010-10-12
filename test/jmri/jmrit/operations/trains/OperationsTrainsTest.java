@@ -25,7 +25,11 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 
+import java.io.IOException;
 import java.util.List;
+
+import org.jdom.JDOMException;
+
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -60,7 +64,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -4760,127 +4764,152 @@ public class OperationsTrainsTest extends TestCase {
 		List<String> temptrainList = manager.getTrainsByIdList();
 
 		Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
-		manager.newTrain("Test Number 1");
-		manager.newTrain("Test Number 2");
-		manager.newTrain("Test Number 3");
+		Train t1 = manager.newTrain("Test Number 1");
+		Train t2 = manager.newTrain("Test Number 2");
+		Train t3 = manager.newTrain("Test Number 3");
 
 		temptrainList = manager.getTrainsByIdList();
 
 		Assert.assertEquals("New Number of Trains", 3, temptrainList.size());
-		/*                
-                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getById("CPTest Number 1").getNumber());
-                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getById("ACLTest Number 2").getNumber());
-                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getById("CPTest Number 3").getNumber());
-
-                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getByRoadAndNumber("CP", "Test Number 1").getNumber());
-                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getByRoadAndNumber("ACL", "Test Number 2").getNumber());
-                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getByRoadAndNumber("CP", "Test Number 3").getNumber());
-
-                manager.getByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setColor("Black");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setDestination(destination, load to staging);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setHp("23");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setLength("50");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setMoves(5);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setTrain(train);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setWeight("87");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
-
-
-                manager.getByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
-
-                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-		 */                
-		/*
-		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 1").setSwitchList(true);
-		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 1").addTypeName("Coal");
-		manager.getLocationByName("Test Location 1").addTypeName("Engine");
-		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 2").setSwitchList(true);
-		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 2").addTypeName("Coal");
-		manager.getLocationByName("Test Location 2").addTypeName("Engine");
-		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 3").setSwitchList(true);
-		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 3").addTypeName("Coal");
-		manager.getLocationByName("Test Location 3").addTypeName("Engine");
-		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
-		 */
-		/*                
-                locationList = manager.getLocationsByIdList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
-
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
-                    }
-                }
-
-		 */
-		/*                
-                locationList = manager.getLocationsByNameList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
-
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
-                    }
-                }
-		 */
-
 
 		TrainManagerXml.instance().writeOperationsFile();
 
 		// Add some more engines and write file again
 		// so we can test the backup facility
-		manager.newTrain("Test Number 4");
-		manager.newTrain("Test Number 5");
-		manager.newTrain("Test Number 6");
-//		manager.getRouteByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
+		Train t4 = manager.newTrain("Test Number 4");
+		Train t5 = manager.newTrain("Test Number 5");
+		Train t6 = manager.newTrain("Test Number 6");
+		
+		Assert.assertNotNull("train 1",t1);
+		Assert.assertNotNull("train 2",t2);
+		Assert.assertNotNull("train 3",t3);
+		Assert.assertNotNull("train 4",t4);
+		Assert.assertNotNull("train 5",t5);
+		Assert.assertNotNull("train 6",t6);
+		
+		t1.setBuiltEndYear("1956");
+		t1.setBuiltStartYear("1932");
+		t1.setCabooseRoad("t1 caboose road");
+		t1.setComment("t1 comment");
+		t1.setDescription("t1 description");
+		t1.setEngineModel("t1 engine model");
+		t1.setEngineRoad("t1 engine road");
+		t1.setLoadOption("t1 load option");
+		t1.setManifestLogoURL("t1 pathName");
+		t1.setNumberEngines("1");
+		t1.setOwnerOption("t1 owner option");
+		t1.setRailroadName("t1 railroad name");
+		t1.setRequirements(Train.NONE);
+		t1.setRoadOption("t1 raod option");
+		t1.setStatus("t1 status");
+		
+		t3.setBuiltEndYear("1955");
+		t3.setBuiltStartYear("1931");
+		t3.setCabooseRoad("t3 caboose road");
+		t3.setComment("t3 comment");
+		t3.setDescription("t3 description");
+		t3.setEngineModel("t3 engine model");
+		t3.setEngineRoad("t3 engine road");
+		t3.setLoadOption("t3 load option");
+		t3.setManifestLogoURL("t3 pathName");
+		t3.setNumberEngines("1");
+		t3.setOwnerOption("t3 owner option");
+		t3.setRailroadName("t3 railroad name");
+		t3.setRequirements(Train.NONE);
+		t3.setRoadOption("t3 raod option");
+		t3.setStatus("t3 status");
+		
+		t5.setBuiltEndYear("1954");
+		t5.setBuiltStartYear("1930");
+		t5.setCabooseRoad("t5 caboose road");
+		t5.setComment("t5 comment");
+		t5.setDescription("t5 description");
+		t5.setEngineModel("t5 engine model");
+		t5.setEngineRoad("t5 engine road");
+		t5.setLoadOption("t5 load option");
+		t5.setManifestLogoURL("t5 pathName");
+		t5.setNumberEngines("1");
+		t5.setOwnerOption("t5 owner option");
+		t5.setRailroadName("t5 railroad name");
+		t5.setRequirements(Train.NONE);
+		t5.setRoadOption("t5 raod option");
+		t5.setStatus("t5 status");
 
 		TrainManagerXml.instance().writeOperationsFile();
+	}
+	
+	public void testXMLRead() throws JDOMException, IOException{
+		TrainManager manager = TrainManager.instance();
+		List<String> temptrainList = manager.getTrainsByIdList();
+
+		Assert.assertEquals("Starting Number of Trains", 0, temptrainList.size());
+		
+		TrainManagerXml.instance().readFile(TrainManagerXml.instance().getDefaultOperationsFilename());	
+		
+		temptrainList = manager.getTrainsByIdList();
+
+		Assert.assertEquals("Number of Trains", 6, temptrainList.size());
+		
+		Train t1 = manager.getTrainByName("Test Number 1");
+		Train t2 = manager.getTrainByName("Test Number 2");
+		Train t3 = manager.getTrainByName("Test Number 3");
+		Train t4 = manager.getTrainByName("Test Number 4");
+		Train t5 = manager.getTrainByName("Test Number 5");
+		Train t6 = manager.getTrainByName("Test Number 6");
+		
+		Assert.assertNotNull("train 1",t1);
+		Assert.assertNotNull("train 2",t2);
+		Assert.assertNotNull("train 3",t3);
+		Assert.assertNotNull("train 4",t4);
+		Assert.assertNotNull("train 5",t5);
+		Assert.assertNotNull("train 6",t6);
+		
+		Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
+		Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
+		Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
+		Assert.assertEquals("t1 comment", "t1 comment", t1.getComment());
+		Assert.assertEquals("t1 engine model", "t1 engine model", t1.getEngineModel());
+		Assert.assertEquals("t1 engine road", "t1 engine road", t1.getEngineRoad());
+		Assert.assertEquals("t1 load option", "t1 load option", t1.getLoadOption());
+		Assert.assertEquals("t1 path name", "t1 pathName", t1.getManifestLogoURL());
+		Assert.assertEquals("t1 number of engines", "1", t1.getNumberEngines());
+		Assert.assertEquals("t1 Owner option", "t1 owner option", t1.getOwnerOption());
+		Assert.assertEquals("t1 railroad name", "t1 railroad name", t1.getRailroadName());
+		Assert.assertEquals("t1 requirements", Train.NONE, t1.getRequirements());
+		Assert.assertEquals("t1 raod option", "t1 raod option", t1.getRoadOption());
+		Assert.assertEquals("t1 status", "t1 status", t1.getStatus());
+		
+		Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
+		Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
+		Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
+		Assert.assertEquals("t3 comment", "t3 comment", t3.getComment());
+		Assert.assertEquals("t3 engine model", "t3 engine model", t3.getEngineModel());
+		Assert.assertEquals("t3 engine road", "t3 engine road", t3.getEngineRoad());
+		Assert.assertEquals("t3 load option", "t3 load option", t3.getLoadOption());
+		Assert.assertEquals("t3 path name", "t3 pathName", t3.getManifestLogoURL());
+		Assert.assertEquals("t3 number of engines", "1", t3.getNumberEngines());
+		Assert.assertEquals("t3 Owner option", "t3 owner option", t3.getOwnerOption());
+		Assert.assertEquals("t3 railroad name", "t3 railroad name", t3.getRailroadName());
+		Assert.assertEquals("t3 requirements", Train.NONE, t3.getRequirements());
+		Assert.assertEquals("t3 raod option", "t3 raod option", t3.getRoadOption());
+		Assert.assertEquals("t3 status", "t3 status", t3.getStatus());
+		
+		Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
+		Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
+		Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
+		Assert.assertEquals("t5 comment", "t5 comment", t5.getComment());
+		Assert.assertEquals("t5 engine model", "t5 engine model", t5.getEngineModel());
+		Assert.assertEquals("t5 engine road", "t5 engine road", t5.getEngineRoad());
+		Assert.assertEquals("t5 load option", "t5 load option", t5.getLoadOption());
+		Assert.assertEquals("t5 path name", "t5 pathName", t5.getManifestLogoURL());
+		Assert.assertEquals("t5 number of engines", "1", t5.getNumberEngines());
+		Assert.assertEquals("t5 Owner option", "t5 owner option", t5.getOwnerOption());
+		Assert.assertEquals("t5 railroad name", "t5 railroad name", t5.getRailroadName());
+		Assert.assertEquals("t5 requirements", Train.NONE, t5.getRequirements());
+		Assert.assertEquals("t5 raod option", "t5 raod option", t5.getRoadOption());
+		Assert.assertEquals("t5 status", "t5 status", t5.getStatus());
+		
+	
 	}
 
 	// TODO: Add test of build

@@ -3,8 +3,12 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.JComboBox;
+
+import org.jdom.JDOMException;
+
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
@@ -28,7 +32,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -655,7 +659,7 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("find c5 by rfid", c5, manager.getByRfid("93F"));
         Assert.assertEquals("find c6 by rfid", c6, manager.getByRfid("B12"));
         
-        // chance car types so sort will work
+        // change car types so sort will work
         c1.setType("F");
         c2.setType("D");
         c3.setType("A");
@@ -690,134 +694,336 @@ public class OperationsCarsTest extends TestCase {
 	}
 
 	// test location Xml create support
-	public void testXMLCreate() throws Exception {
+	public void testXMLCreate(){
+		
+		// confirm that file name has been modified for testing
+		Assert.assertEquals("OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
 
-                CarManager manager = CarManager.instance();
-                List<String> tempcarList = manager.getByIdList();
+		CarManager manager = CarManager.instance();
+		List<String> tempcarList = manager.getByIdList();
 
-                Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
-                manager.newCar("CP", "Test Number 1");
-                manager.newCar("ACL", "Test Number 2");
-                manager.newCar("CP", "Test Number 3");
+		Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
+		Car c1 = manager.newCar("CP", "Test Number 1");
+		Car c2 = manager.newCar("ACL", "Test Number 2");
+		Car c3 = manager.newCar("CP", "Test Number 3");
 
-                tempcarList = manager.getByIdList();
+		// modify car attributes
+		c1.setBuilt("5619");
+		c1.setCaboose(false);
+		c1.setColor("black");
+		c1.setComment("no comment");
+		c1.setLength("04");
+		c1.setLoad("FULL");
+		c1.setMoves(1);
+		c1.setNumber("X Test Number c1");  
+		c1.setOutOfService(false);
+		c1.setRfid("norfidc1");
+		c1.setRoad("OLDRoad");
+		c1.setType("noCaboose");
+		c1.setWait(6);
+		c1.setWeight("54");
+		c1.setWeightTons("001");
 
-                Assert.assertEquals("New Number of Cars", 3, tempcarList.size());
-/*                
-                Assert.assertEquals("New Engine by Id 1", "Test Number 1", manager.getById("CPTest Number 1").getNumber());
-                Assert.assertEquals("New Engine by Id 2", "Test Number 2", manager.getById("ACLTest Number 2").getNumber());
-                Assert.assertEquals("New Engine by Id 3", "Test Number 3", manager.getById("CPTest Number 3").getNumber());
+		c2.setBuilt("1234");
+		c2.setFred(true);
+		c2.setColor("red");
+		c2.setComment("c2 comment");
+		c2.setLength("77");
+		c2.setLoad("c2 Load");
+		c2.setMoves(10000);
+		c2.setNumber("X Test Number c2");  
+		c2.setOutOfService(true);
+		c2.setRfid("rfidc2");
+		c2.setRoad("c2 Road");
+		c2.setType("c2 Boxcar");
+		c2.setWait(61);
+		c2.setWeight("33");
+		c2.setWeightTons("798");
 
-                Assert.assertEquals("New Location by Road+Name 1", "Test Number 1", manager.getByRoadAndNumber("CP", "Test Number 1").getNumber());
-                Assert.assertEquals("New Location by Road+Name 2", "Test Number 2", manager.getByRoadAndNumber("ACL", "Test Number 2").getNumber());
-                Assert.assertEquals("New Location by Road+Name 3", "Test Number 3", manager.getByRoadAndNumber("CP", "Test Number 3").getNumber());
+		c3.setBuilt("234");
+		c3.setCaboose(true);
+		c3.setColor("green");
+		c3.setComment("c3 comment");
+		c3.setLength("453");
+		c3.setLoad("c3 Load");
+		c3.setMoves(243);
+		c3.setNumber("X Test Number c3");  
+		c3.setOutOfService(false);
+		c3.setRfid("rfidc3");
+		c3.setRoad("c3 Road");
+		c3.setType("c3 Boxcar");
+		c3.setWait(0);
+		c3.setWeight("345");
+		c3.setWeightTons("1798");
 
-                manager.getByRoadAndNumber("CP", "Test Number 1").setBuilt("1923");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setColor("Black");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setComment("Nice runner");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setConsist(consist);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setDestination(destination, track);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setHp("23");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setLength("50");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setLocation(location, track);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setMoves(5);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setOwner("TestOwner");
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteDestination(routeDestination);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setRouteLocation(routeLocation);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setSavedRouteId(id);
-//                manager.getByRoadAndNumber("CP", "Test Number 1").setTrain(train);
-                manager.getByRoadAndNumber("CP", "Test Number 1").setWeight("87");
-                manager.getByRoadAndNumber("CP", "Test Number 1").setWeightTons("97");
-                
-                
-                manager.getByRoadAndNumber("CP", "Test Number 1").setType("Gas Turbine");
-                
-                manager.getByRoadAndNumber("CP", "Test Number 1").setModel("E8");
-*/                
-/*
-		manager.getLocationByName("Test Location 1").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 1").setSwitchList(true);
-		manager.getLocationByName("Test Location 1").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 1").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 1").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 1").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 1").addTypeName("Coal");
-		manager.getLocationByName("Test Location 1").addTypeName("Engine");
-		manager.getLocationByName("Test Location 1").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 2").setComment("Test Location 2 Comment");
-		manager.getLocationByName("Test Location 2").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 2").setSwitchList(true);
-		manager.getLocationByName("Test Location 2").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 2").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 2").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 2").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 2").addTypeName("Coal");
-		manager.getLocationByName("Test Location 2").addTypeName("Engine");
-		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
-                manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
-		manager.getLocationByName("Test Location 3").setLocationOps(Location.NORMAL);
-		manager.getLocationByName("Test Location 3").setSwitchList(true);
-		manager.getLocationByName("Test Location 3").setTrainDirections(Location.EAST+Location.WEST);
-		manager.getLocationByName("Test Location 3").addTypeName("Baggage");
-		manager.getLocationByName("Test Location 3").addTypeName("BoxCar");
-		manager.getLocationByName("Test Location 3").addTypeName("Caboose");
-		manager.getLocationByName("Test Location 3").addTypeName("Coal");
-		manager.getLocationByName("Test Location 3").addTypeName("Engine");
-		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
-*/
-/*                
-                locationList = manager.getLocationsByIdList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+		tempcarList = manager.getByIdList();
+		Assert.assertEquals("New Number of Cars", 3, tempcarList.size());
 
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Id List 1", "Test Location 2", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Id List 2", "Test Location 1", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Id List 3", "Test Location 3", locname);
-                    }
-                }
+		CarManagerXml.instance().writeOperationsFile();
 
-*/
-/*                
-                locationList = manager.getLocationsByNameList();
-                Assert.assertEquals("New Number of Locations", 3, locationList.size());
+		// Add some more cars and write file again
+		// so we can test the backup facility
+		Car c4 = manager.newCar("PC", "Test Number 4");
+		Car c5 = manager.newCar("BM", "Test Number 5");
+		Car c6 = manager.newCar("SP", "Test Number 6");
 
-                for (int i = 0; i < locationList.size(); i++) {
-                    String locationId = (String)locationList.get(i);
-                    Location loc = manager.getLocationById(locationId);
-                    String locname = loc.getName();
-                    if (i == 0) {
-                        Assert.assertEquals("New Location by Name List 1", "Test Location 1", locname);
-                    }
-                    if (i == 1) {
-                        Assert.assertEquals("New Location by Name List 2", "Test Location 2", locname);
-                    }
-                    if (i == 2) {
-                        Assert.assertEquals("New Location by Name List 3", "Test Location 3", locname);
-                    }
-                }
-*/
-                
+		Assert.assertNotNull("car c4 exists", c4);
+		Assert.assertNotNull("car c5 exists", c5);
+		Assert.assertNotNull("car c6 exists", c6);
 
-                CarManagerXml.instance().writeOperationsFile();
+		// modify car attributes
+		c1.setBuilt("1956");
+		c1.setCaboose(true);
+		c1.setColor("white");
+		c1.setComment("c1 comment");
+		c1.setLength("40");
+		c1.setLoad("Empty");
+		c1.setMoves(3);
+		c1.setNumber("New Test Number c1");  
+		c1.setOutOfService(true);
+		c1.setRfid("rfidc1");
+		c1.setRoad("newRoad");
+		c1.setType("bigCaboose");
+		c1.setWait(5);
+		c1.setWeight("45");
+		c1.setWeightTons("100");
 
-                // Add some more engines and write file again
-                // so we can test the backup facility
-                manager.newCar("CP", "Test Number 4");
-                manager.newCar("CP", "Test Number 5");
-                manager.newCar("CP", "Test Number 6");
-                manager.getByRoadAndNumber("ACL", "Test Number 2").setComment("Test Engine 2 Changed Comment");
-                
-                CarManagerXml.instance().writeOperationsFile();
-        }
+		c5.setBuilt("2010");
+		c5.setCaboose(false);
+		c5.setColor("blue");
+		c5.setComment("c5 comment");
+		c5.setLength("44");
+		c5.setLoad("Full");
+		c5.setMoves(5);
+		c5.setNumber("New Test Number c5");  
+		c5.setOutOfService(true);
+		c5.setRfid("rfidc5");
+		c5.setRoad("c5Road");
+		c5.setType("smallCaboose");
+		c5.setWait(55);
+		c5.setWeight("66");
+		c5.setWeightTons("77");      
+		
+		tempcarList = manager.getByIdList();
+		Assert.assertEquals("New Number of Cars", 6, tempcarList.size());
+
+		CarManagerXml.instance().writeOperationsFile();
+	}
+
+	/**
+	 * Test reading xml car file
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void testXMLRead() throws JDOMException, IOException{
+		CarManager manager = CarManager.instance();
+		List<String> tempcarList = manager.getByIdList();
+		Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
+
+		CarManagerXml.instance().readFile(CarManagerXml.instance().getDefaultOperationsFilename());	
+
+		tempcarList = manager.getByIdList();
+		Assert.assertEquals("Number of Cars", 6, tempcarList.size());
+
+		Car c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
+		Car c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
+		Car c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
+		Car c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
+		Car c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
+		Car c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+
+		Assert.assertNotNull("car c1 exists", c1);
+		Assert.assertNotNull("car c2 exists", c2);
+		Assert.assertNotNull("car c3 exists", c3);
+		Assert.assertNotNull("car c4 exists", c4);
+		Assert.assertNotNull("car c5 exists", c5);
+		Assert.assertNotNull("car c6 exists", c6);
+
+		Assert.assertEquals("car c1 built date", "1956", c1.getBuilt());
+		Assert.assertEquals("car c1 caboose", true, c1.isCaboose());
+		Assert.assertEquals("car c1 color", "white", c1.getColor());
+		Assert.assertEquals("car c1 comment", "c1 comment", c1.getComment());
+		Assert.assertEquals("car c1 length", "40", c1.getLength());
+		Assert.assertEquals("car c1 load", "Empty", c1.getLoad());
+		Assert.assertEquals("car c1 moves", 3, c1.getMoves());
+		Assert.assertEquals("car c1 number", "New Test Number c1", c1.getNumber());
+		Assert.assertEquals("car c1 out of service", true, c1.isOutOfService());
+		Assert.assertEquals("car c1 rfid", "rfidc1", c1.getRfid());
+		Assert.assertEquals("car c1 road", "newRoad", c1.getRoad());
+		Assert.assertEquals("car c1 type", "bigCaboose", c1.getType());
+		Assert.assertEquals("car c1 wait", 5, c1.getWait());
+		Assert.assertEquals("car c1 weight", "45", c1.getWeight());
+		Assert.assertEquals("car c1 weight tons", "100", c1.getWeightTons());
+
+		Assert.assertEquals("car c2 built date", "1234", c2.getBuilt());
+		Assert.assertEquals("car c2 caboose", false, c2.isCaboose());
+		Assert.assertEquals("car c2 fred", true, c2.hasFred());
+		Assert.assertEquals("car c2 color", "red", c2.getColor());
+		Assert.assertEquals("car c2 comment", "c2 comment", c2.getComment());
+		Assert.assertEquals("car c2 length", "77", c2.getLength());
+		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoad());
+		Assert.assertEquals("car c2 moves", 10000, c2.getMoves());
+		Assert.assertEquals("car c2 number", "X Test Number c2", c2.getNumber());
+		Assert.assertEquals("car c2 out of service", true, c2.isOutOfService());
+		Assert.assertEquals("car c2 rfid", "rfidc2", c2.getRfid());
+		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoad());
+		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getType());
+		Assert.assertEquals("car c2 wait", 61, c2.getWait());
+		Assert.assertEquals("car c2 weight", "33", c2.getWeight());
+		Assert.assertEquals("car c2 weight tons", "798", c2.getWeightTons());
+
+		Assert.assertEquals("car c3 built date", "234", c3.getBuilt());
+		Assert.assertEquals("car c3 caboose", true, c3.isCaboose());
+		Assert.assertEquals("car c3 fred", false, c3.hasFred());
+		Assert.assertEquals("car c3 color", "green", c3.getColor());
+		Assert.assertEquals("car c3 comment", "c3 comment", c3.getComment());
+		Assert.assertEquals("car c3 length", "453", c3.getLength());
+		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoad());
+		Assert.assertEquals("car c3 moves", 243, c3.getMoves());
+		Assert.assertEquals("car c3 number", "X Test Number c3", c3.getNumber());
+		Assert.assertEquals("car c3 out of service", false, c3.isOutOfService());
+		Assert.assertEquals("car c3 rfid", "rfidc3", c3.getRfid());
+		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoad());
+		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
+		Assert.assertEquals("car c3 wait", 0, c3.getWait());
+		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
+		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
+
+		// c4 and c6 use defaults for most of their attributes.
+		Assert.assertEquals("car c4 built date", "", c4.getBuilt());
+		Assert.assertEquals("car c4 caboose", false, c4.isCaboose());
+		Assert.assertEquals("car c4 fred", false, c4.hasFred());
+		Assert.assertEquals("car c4 color", "", c4.getColor());
+		Assert.assertEquals("car c4 comment", "", c4.getComment());
+		Assert.assertEquals("car c4 length", "", c4.getLength());
+		Assert.assertEquals("car c4 load", "E", c4.getLoad());
+		Assert.assertEquals("car c4 moves", 0, c4.getMoves());
+		Assert.assertEquals("car c4 number", "Test Number 4", c4.getNumber());
+		Assert.assertEquals("car c4 out of service", false, c4.isOutOfService());
+		Assert.assertEquals("car c4 rfid", "", c4.getRfid());
+		Assert.assertEquals("car c4 road", "PC", c4.getRoad());
+		Assert.assertEquals("car c4 type", "", c4.getType());
+		Assert.assertEquals("car c4 wait", 0, c4.getWait());
+		Assert.assertEquals("car c4 weight", "0", c4.getWeight());
+		Assert.assertEquals("car c4 weight tons", "0", c4.getWeightTons());
+
+		Assert.assertEquals("car c5 built date", "2010", c5.getBuilt());
+		Assert.assertEquals("car c5 caboose", false, c5.isCaboose());
+		Assert.assertEquals("car c5 color", "blue", c5.getColor());
+		Assert.assertEquals("car c5 comment", "c5 comment", c5.getComment());
+		Assert.assertEquals("car c5 length", "44", c5.getLength());
+		Assert.assertEquals("car c5 load", "Full", c5.getLoad());
+		Assert.assertEquals("car c5 moves", 5, c5.getMoves());
+		Assert.assertEquals("car c5 number", "New Test Number c5", c5.getNumber());
+		Assert.assertEquals("car c5 out of service", true, c5.isOutOfService());
+		Assert.assertEquals("car c5 rfid", "rfidc5", c5.getRfid());
+		Assert.assertEquals("car c5 road", "c5Road", c5.getRoad());
+		Assert.assertEquals("car c5 type", "smallCaboose", c5.getType());
+		Assert.assertEquals("car c5 wait", 55, c5.getWait());
+		Assert.assertEquals("car c5 weight", "66", c5.getWeight());
+		Assert.assertEquals("car c5 weight tons", "77", c5.getWeightTons());
+
+		Assert.assertEquals("car c6 built date", "", c6.getBuilt());
+		Assert.assertEquals("car c6 caboose", false, c6.isCaboose());
+		Assert.assertEquals("car c6 fred", false, c6.hasFred());
+		Assert.assertEquals("car c6 color", "", c6.getColor());
+		Assert.assertEquals("car c6 comment", "", c6.getComment());
+		Assert.assertEquals("car c6 length", "", c6.getLength());
+		Assert.assertEquals("car c6 load", "E", c6.getLoad());
+		Assert.assertEquals("car c6 moves", 0, c6.getMoves());
+		Assert.assertEquals("car c6 number", "Test Number 6", c6.getNumber());
+		Assert.assertEquals("car c6 out of service", false, c6.isOutOfService());
+		Assert.assertEquals("car c6 rfid", "", c6.getRfid());
+		Assert.assertEquals("car c6 road", "SP", c6.getRoad());
+		Assert.assertEquals("car c6 type", "", c6.getType());
+		Assert.assertEquals("car c6 wait", 0, c6.getWait());
+		Assert.assertEquals("car c6 weight", "0", c6.getWeight());
+		Assert.assertEquals("car c6 weight tons", "0", c6.getWeightTons());
+
+	}
+
+	/**
+	 * Test backup file.
+	 * @throws JDOMException
+	 * @throws IOException
+	 */
+	public void testXMLReadBackup() throws JDOMException, IOException{
+		CarManager manager = CarManager.instance();
+		List<String> tempcarList = manager.getByIdList();
+		Assert.assertEquals("Starting Number of Cars", 0, tempcarList.size());
+
+		// change default file name to backup
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml.bak");
+
+		CarManagerXml.instance().readFile(CarManagerXml.instance().getDefaultOperationsFilename());	
+
+		tempcarList = manager.getByIdList();
+		Assert.assertEquals("Number of Cars", 3, tempcarList.size());
+
+		Car c1 = manager.getByRoadAndNumber("CP", "Test Number 1"); // must find car by original id
+		Car c2 = manager.getByRoadAndNumber("ACL", "Test Number 2"); // must find car by original id
+		Car c3 = manager.getByRoadAndNumber("CP", "Test Number 3"); // must find car by original id
+		Car c4 = manager.getByRoadAndNumber("PC", "Test Number 4"); // must find car by original id 
+		Car c5 = manager.getByRoadAndNumber("BM", "Test Number 5"); // must find car by original id
+		Car c6 = manager.getByRoadAndNumber("SP", "Test Number 6"); // must find car by original id
+
+		Assert.assertNotNull("car c1 exists", c1);
+		Assert.assertNotNull("car c2 exists", c2);
+		Assert.assertNotNull("car c3 exists", c3);
+		Assert.assertNull("car c4 does not exist", c4);
+		Assert.assertNull("car c5 does not exist", c5);
+		Assert.assertNull("car c6 does not exist", c6);
+
+		Assert.assertEquals("car c1 built date", "5619", c1.getBuilt());
+		Assert.assertEquals("car c1 caboose", false, c1.isCaboose());
+		Assert.assertEquals("car c1 color", "black", c1.getColor());
+		Assert.assertEquals("car c1 comment", "no comment", c1.getComment());
+		Assert.assertEquals("car c1 length", "04", c1.getLength());
+		Assert.assertEquals("car c1 load", "FULL", c1.getLoad());
+		Assert.assertEquals("car c1 moves", 1, c1.getMoves());
+		Assert.assertEquals("car c1 number", "X Test Number c1", c1.getNumber());
+		Assert.assertEquals("car c1 out of service", false, c1.isOutOfService());
+		Assert.assertEquals("car c1 rfid", "norfidc1", c1.getRfid());
+		Assert.assertEquals("car c1 road", "OLDRoad", c1.getRoad());
+		Assert.assertEquals("car c1 type", "noCaboose", c1.getType());
+		Assert.assertEquals("car c1 wait", 6, c1.getWait());
+		Assert.assertEquals("car c1 weight", "54", c1.getWeight());
+		Assert.assertEquals("car c1 weight tons", "001", c1.getWeightTons());
+
+		Assert.assertEquals("car c2 built date", "1234", c2.getBuilt());
+		Assert.assertEquals("car c2 caboose", false, c2.isCaboose());
+		Assert.assertEquals("car c2 fred", true, c2.hasFred());
+		Assert.assertEquals("car c2 color", "red", c2.getColor());
+		Assert.assertEquals("car c2 comment", "c2 comment", c2.getComment());
+		Assert.assertEquals("car c2 length", "77", c2.getLength());
+		Assert.assertEquals("car c2 load", "c2 Load", c2.getLoad());
+		Assert.assertEquals("car c2 moves", 10000, c2.getMoves());
+		Assert.assertEquals("car c2 number", "X Test Number c2", c2.getNumber());
+		Assert.assertEquals("car c2 out of service", true, c2.isOutOfService());
+		Assert.assertEquals("car c2 rfid", "rfidc2", c2.getRfid());
+		Assert.assertEquals("car c2 road", "c2 Road", c2.getRoad());
+		Assert.assertEquals("car c2 type", "c2 Boxcar", c2.getType());
+		Assert.assertEquals("car c2 wait", 61, c2.getWait());
+		Assert.assertEquals("car c2 weight", "33", c2.getWeight());
+		Assert.assertEquals("car c2 weight tons", "798", c2.getWeightTons());
+
+		Assert.assertEquals("car c3 built date", "234", c3.getBuilt());
+		Assert.assertEquals("car c3 caboose", true, c3.isCaboose());
+		Assert.assertEquals("car c3 fred", false, c3.hasFred());
+		Assert.assertEquals("car c3 color", "green", c3.getColor());
+		Assert.assertEquals("car c3 comment", "c3 comment", c3.getComment());
+		Assert.assertEquals("car c3 length", "453", c3.getLength());
+		Assert.assertEquals("car c3 load", "c3 Load", c3.getLoad());
+		Assert.assertEquals("car c3 moves", 243, c3.getMoves());
+		Assert.assertEquals("car c3 number", "X Test Number c3", c3.getNumber());
+		Assert.assertEquals("car c3 out of service", false, c3.isOutOfService());
+		Assert.assertEquals("car c3 rfid", "rfidc3", c3.getRfid());
+		Assert.assertEquals("car c3 road", "c3 Road", c3.getRoad());
+		Assert.assertEquals("car c3 type", "c3 Boxcar", c3.getType());
+		Assert.assertEquals("car c3 wait", 0, c3.getWait());
+		Assert.assertEquals("car c3 weight", "345", c3.getWeight());
+		Assert.assertEquals("car c3 weight tons", "1798", c3.getWeightTons());
+	}
 
 	// TODO: Add tests for location
 
