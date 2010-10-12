@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AppsBase {
 
@@ -43,7 +43,7 @@ public abstract class AppsBase {
     }
 
     protected static String nameString = "JMRI Base";
-    protected static final String configFilename = "JmriConfig3.xml";
+    protected static final String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
     boolean configOK;
     
     /**
@@ -83,11 +83,12 @@ public abstract class AppsBase {
     
     protected void installConfigurationManager() {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         InstanceManager.setConfigureManager(cm);
+        cm.setPrefsLocation(new File(configFilename));
         log.debug("config manager installed");
         // Install Config Manager error handler
         jmri.configurexml.ConfigXmlManager.setErrorHandler(new jmri.configurexml.swing.DialogErrorHandler());
-
     }
     
     protected void installManagers() {

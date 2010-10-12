@@ -26,7 +26,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public abstract class Apps3 extends apps.AppsBase {
 
@@ -39,9 +39,18 @@ public abstract class Apps3 extends apps.AppsBase {
     static public void preInit() {
         nameString = "JMRI GUI3 Demo";
 
+        // need to call ConfigXmlManager.setPrefsLocation(someFile) somewhere
+        
+        // Initialise system console
+        // Put this here rather than in apps.AppsBase as this is only relevant
+        // for GUI applications - non-gui apps will use STDOUT & STDERR
+        apps.SystemConsole.init();
+
         // TODO Launch splash screen: splash(true)
         
         apps.AppsBase.preInit();
+
+
     }
     
     /**
