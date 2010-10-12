@@ -21,7 +21,7 @@ package apps.gui3.dp3;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007, 2009, 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DecoderPro3 extends apps.gui3.Apps3 {
 
@@ -30,6 +30,15 @@ public class DecoderPro3 extends apps.gui3.Apps3 {
         mainFrame = new DecoderPro3Window();
     }
     
+    /**
+     * Force our test size. Superclass method set to max size, filling
+     * real window.
+     */
+    protected void displayMainFrame(java.awt.Dimension d) {
+        mainFrame.setSize(new java.awt.Dimension(1024, 600));
+        mainFrame.setVisible(true);
+    }
+
     // Main entry point
     public static void main(String args[]) {
 
