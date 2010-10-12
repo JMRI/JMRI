@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.1.shtml,v 1.16 2010-10-11 23:29:00 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.1.shtml,v 1.17 2010-10-12 21:50:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,11 +29,13 @@
       Release Notes for JMRI 2.11.1 release
       </h2>
 
-	<p>Date: MMM DD, 2010</p>
+	<p>Date: October 12, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.11.1 of JMRI/DecoderPro is available for download.
  
+<!-- 
 <br><b>This is a draft release note only; the download links do not yet work</b>
+ -->
 
 <h3>Notes:</h3>
 
