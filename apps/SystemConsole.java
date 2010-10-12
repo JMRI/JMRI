@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -216,7 +216,7 @@ public class SystemConsole extends JTextArea {
 
     /**
      * Retrieve the current console font size (default 12 point)
-     * @return
+     * @return selected font size in points
      */
     public static int getFontSize() {
         return fontSize;
