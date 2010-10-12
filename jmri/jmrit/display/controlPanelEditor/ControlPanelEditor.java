@@ -225,6 +225,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 }
             });
 
+        addItem = new JMenuItem(rb.getString("SelectAll"));
+        _zoomMenu.add(addItem);
+        addItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    _selectionGroup = _contents;
+                    _targetPanel.repaint();
+                }
+            });
+
         addItem = new JMenuItem(rb.getString("Zoom"));
         _zoomMenu.add(addItem);
         PositionableJComponent z = new PositionableJComponent(this);
@@ -747,9 +756,29 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         setToolTip(null); // ends tooltip if displayed
 
         if ((!event.isPopupTrigger() && (isEditable()) || _currentSelection instanceof LocoIcon)) {
+            moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
                 int deltaY = event.getY() - _lastY;
+                int minX = getItemX(_currentSelection, deltaX);
+                int minY = getItemY(_currentSelection, deltaY);
+                if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
+                    for (int i=0; i<_selectionGroup.size(); i++){
+                        minX = Math.min(getItemX(_selectionGroup.get(i), deltaX), minX);
+                        minY = Math.min(getItemY(_selectionGroup.get(i), deltaY), minY);
+                    }
+                }
+                if (minX<0 || minY<0) {
+//                    break moveIt;
+                    if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
+                        List <Positionable> allItems = getContents();
+                        for (int i=0; i<allItems.size(); i++){
+                            moveItem(allItems.get(i), -deltaX, -deltaY);
+                        }
+                    } else {
+                        moveItem(_currentSelection, -deltaX, -deltaY);
+                    }
+                }
                 if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
                     for (int i=0; i<_selectionGroup.size(); i++){
                         moveItem(_selectionGroup.get(i), deltaX, deltaY);

@@ -1914,6 +1914,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     private void removeFromTarget(Positionable l) {
         _targetPanel.remove((Component)l);
+        _highlightcomponent = null;
     }
 
     public boolean removeFromContents(Positionable l) {
@@ -1987,22 +1988,31 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         setToolTip(tip);
     }
 
+    protected int getItemX(Positionable p, int deltaX) {
+        if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
+            MemoryIcon pm = (MemoryIcon) p;
+            return pm.getOriginalX() + (int)Math.round(deltaX/getPaintScale());
+        } else {
+            return p.getX() + (int)Math.round(deltaX/getPaintScale());
+        }
+    }
+    protected int getItemY(Positionable p, int deltaY) {
+        if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
+            MemoryIcon pm = (MemoryIcon) p;
+            return pm.getOriginalY() + (int)Math.round(deltaY/getPaintScale());
+        } else {
+            return p.getY() + (int)Math.round(deltaY/getPaintScale());
+        }
+    }
+
     /**
     * Relocate item
     */
     protected void moveItem(Positionable p, int deltaX, int deltaY) {
         //if (_debug) log.debug("moveItem at ("+p.getX()+","+p.getY()+") delta ("+deltaX+", "+deltaY+")");
         if (getFlag(OPTION_POSITION, p.isPositionable())) {
-            int xObj;
-            int yObj;
-            if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
-                MemoryIcon pm = (MemoryIcon) p;
-                xObj = pm.getOriginalX() + (int)Math.round(deltaX/getPaintScale());
-                yObj = pm.getOriginalY() + (int)Math.round(deltaY/getPaintScale());
-            } else {
-                xObj = p.getX() + (int)Math.round(deltaX/getPaintScale());
-                yObj = p.getY() + (int)Math.round(deltaY/getPaintScale());
-            }
+            int xObj = getItemX( p, deltaX);
+            int yObj = getItemY( p, deltaY);
             // don't allow negative placement, icon can become unreachable 
             if (xObj < 0) xObj = 0;
             if (yObj < 0) yObj = 0;
