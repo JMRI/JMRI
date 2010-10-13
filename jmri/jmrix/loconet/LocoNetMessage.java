@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.LnConstants;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -201,7 +201,6 @@ public class LocoNetMessage implements Serializable {
      * Two messages are the same if their entire data content
      * is the same.  We ignore the error-check byte to ease
      * comparisons before a message is transmitted.
-     * @param m
      * @return true if objects contain the same message contents
      */
     public boolean equals(Object o) {

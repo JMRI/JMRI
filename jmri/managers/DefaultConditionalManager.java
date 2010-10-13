@@ -27,7 +27,7 @@ import jmri.jmrit.sensorgroup.SensorGroupFrame;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author      Pete Cresman Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class DefaultConditionalManager extends AbstractManager
     implements ConditionalManager, java.beans.PropertyChangeListener {
@@ -44,7 +44,7 @@ public class DefaultConditionalManager extends AbstractManager
 	 *   If the parent Logix cannot be found, the userName cannot be checked, but
 	 *		the Conditional is still created. The scenario can happen when a Logix
 	 *      is loaded from a file after its Conditionals.
-     * @returns null if a Conditional with the same systemName or userName
+     * @return null if a Conditional with the same systemName or userName
      *       already exists, or if there is trouble creating a new Conditional
      */
 	public Conditional createNewConditional(String systemName, String userName) {
