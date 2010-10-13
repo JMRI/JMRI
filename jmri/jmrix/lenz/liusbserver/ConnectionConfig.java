@@ -17,14 +17,13 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  *
  * @see LIUSBServerAdapter
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
 
-    protected jmri.jmrix.PortAdapter adapter = null;
     protected JTextField ipField = new JTextField(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
     protected JTextField commPortField = new JTextField(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
     protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
