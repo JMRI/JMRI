@@ -23,13 +23,11 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
     
-    protected int maxRequestLines = 50;
-        
     public String getServletInfo() { return "XMLIO Servlet"; }
     
     public void service(ServletRequest req, ServletResponse res) throws java.io.IOException {

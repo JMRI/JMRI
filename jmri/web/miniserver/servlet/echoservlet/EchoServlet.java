@@ -20,12 +20,11 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 public class EchoServlet extends AbstractServlet {
-    protected int maxRequestLines = 50;
-    
+
     public void service(ServletRequest req, ServletResponse res) 
             throws java.io.IOException {
         
