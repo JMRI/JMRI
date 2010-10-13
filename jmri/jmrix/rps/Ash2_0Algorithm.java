@@ -125,7 +125,7 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -244,6 +244,7 @@ final static int SMAX	=   30;			//  Max. OK std. dev. (usec)
 final static int NMAX	=   50;			//  Max. no. of receivers used
 
 						//  Compute RPS Position using
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
 RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
           double Vs, double Xt, double Yt, double Zt) {//         receivers
 

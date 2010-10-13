@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -133,6 +133,7 @@ double	    x, y, z, x0, y0, z0, x1, y1, z1, x2, y2, z2, Rmax;
 double	    xi, yi, zi, ri, xj, yj, zj, rj, xk, yk, zk, rk;
 
 						//  Compute RPS Position using
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IP_PARAMETER_IS_DEAD_BUT_OVERWRITTEN") // it's secretly FORTRAN..
 RetVal RPSpos(int nr, double Tr[], double Xr[], double Yr[], double Zr[],// many
           double Vs, double Xt, double Yt, double Zt) {//         receivers
 
