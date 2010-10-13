@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -407,17 +407,18 @@ public class HardcopyWriter extends Writer {
      */
     protected void newpage() {
         // get a page graphics or image graphics object depending on output destination
-        if (page==null && !isPreview){
-    		page = job.getGraphics();
-    		}
-        else if (page==null && isPreview){
-            previewImage = previewPanel.createImage(pagesize.width, pagesize.height);
-            page = previewImage.getGraphics();
-            page.setColor(Color.white);
-            page.fillRect(0, 0, previewImage.getWidth(previewPanel),
-                    previewImage.getHeight(previewPanel));
-            page.setColor(color);
+        if (page==null) {
+            if (!isPreview){
+    		    page = job.getGraphics();
+    		} else {  // Preview
+                previewImage = previewPanel.createImage(pagesize.width, pagesize.height);
+                page = previewImage.getGraphics();
+                page.setColor(Color.white);
+                page.fillRect(0, 0, previewImage.getWidth(previewPanel),
+                        previewImage.getHeight(previewPanel));
+                page.setColor(color);
             }
+        }
         pagenum++;
         linenum = 0; charnum = 0;
         page.setFont(headerfont);
