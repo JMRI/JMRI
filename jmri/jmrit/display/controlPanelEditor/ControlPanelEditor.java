@@ -756,7 +756,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         setToolTip(null); // ends tooltip if displayed
 
         if ((!event.isPopupTrigger() && (isEditable()) || _currentSelection instanceof LocoIcon)) {
-            moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
                 int deltaY = event.getY() - _lastY;
@@ -769,7 +768,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     }
                 }
                 if (minX<0 || minY<0) {
-//                    break moveIt;
                     if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
                         List <Positionable> allItems = getContents();
                         for (int i=0; i<allItems.size(); i++){
