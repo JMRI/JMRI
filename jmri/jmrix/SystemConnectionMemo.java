@@ -11,7 +11,7 @@ import java.util.ArrayList;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 abstract public class SystemConnectionMemo {
 
@@ -37,20 +37,18 @@ abstract public class SystemConnectionMemo {
     final protected static ArrayList<String> sysPrefixes = new ArrayList<String>();
     
     private synchronized static boolean addUserName(String userName){      
-        if(userNames!=null){
-            if (userNames.contains(userName))
-                return false;
-        }
+        if (userNames.contains(userName))
+            return false;
+
         userNames.add(userName);
         return true;
     }
     
     //This should probably throwing an exception
     private synchronized static boolean addSystemPrefix(String systemPrefix){
-        if(sysPrefixes!=null){
-            if (sysPrefixes.contains(systemPrefix))
-                return false;
-        }
+        if (sysPrefixes.contains(systemPrefix))
+            return false;
+
         sysPrefixes.add(systemPrefix);
         return true;
     }
