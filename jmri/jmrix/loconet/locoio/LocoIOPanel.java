@@ -19,7 +19,7 @@ import java.beans.*;
  * Panel displaying and programming a LocoIO configuration.
  *
  * @author	Bob Jacobsen   Copyright (C) 2002
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 
 public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
@@ -209,7 +209,7 @@ public class LocoIOPanel extends jmri.jmrix.loconet.swing.LnPanel
 
         if ((address&0x7F00) != 0x0100) log.warn("High part of address should be 0x01, was "
                                             +(address&0x7F00)/256);
-        if ((address&0x7F00) == 0x0180) log.warn("Only a LocoBuffer can use address 0x80");
+        if ((address&0x7FFF) == 0x0180) log.warn("Only a LocoBuffer can use address 0x80");
 
         if (subAddress > 126) log.warn("subAddress must be [1..126]" +
 			", was " + subAddress);
