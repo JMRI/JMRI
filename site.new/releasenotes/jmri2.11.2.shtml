@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.3 2010-10-11 14:47:58 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.4 2010-10-13 15:09:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -97,7 +97,12 @@ SPTCO-1930 signal aspects.
 <p>
 Updated <a href="http://openlcb.org">OpenLCB</a> library to version 0.3.
 
+<p>
+Matt Harris updated the system console window for multiple screens
 
+<p>
+Pete Cressman fixed stacking of a multiple selection in the editors when moved 
+beyond the left or top border of the panel
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
