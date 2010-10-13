@@ -175,12 +175,12 @@ public class JTextPaneAppender extends AppenderSkeleton
 
     private void setColor( Level p, Color v )
     {
-        StyleConstants.setForeground( myAttributeSet.get( p ), v );
+        StyleConstants.setForeground( myAttributeSet.get( p.toString() ), v );
     }
 
     private Color getColor( Level p )
     {
-        Color c = StyleConstants.getForeground( myAttributeSet.get( p ) );
+        Color c = StyleConstants.getForeground( myAttributeSet.get( p.toString() ) );
         return c == null ? null : c;
     }
 
