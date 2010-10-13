@@ -16,7 +16,6 @@ import jmri.managers.AbstractSignalHeadManager;
  * To release the current thread and allow other listeners to execute:
 <code><pre>
     JUnitUtil.releaseThread(this);
-    super.tearDown();
 </pre></code>
  * Note that this is not appropriate for Swing objects;
  * you need to use JFCUnit for that.
@@ -40,7 +39,7 @@ import jmri.managers.AbstractSignalHeadManager;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  * @since 2.5.3
  */
 
