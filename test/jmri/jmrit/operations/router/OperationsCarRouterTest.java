@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -847,6 +847,8 @@ public class OperationsCarRouterTest extends TestCase {
 	@Override
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
+		
+		RouteManager.instance().dispose();
 	}
 
 	public OperationsCarRouterTest(String s) {
