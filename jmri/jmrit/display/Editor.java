@@ -2184,7 +2184,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
     
     protected void setAttributes(PositionablePopupUtil newUtil, Positionable pos) {
-        PositionablePopupUtil util = pos.getPopupUtility();
         pos.setPopupUtility(newUtil.clone(pos));
     }
 
