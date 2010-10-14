@@ -17,6 +17,7 @@ import junit.framework.TestSuite;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
@@ -28,7 +29,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Last manually cross-checked on 20090131
  * 
  * Still to do:
- *   Engine: Type, HP, Destination
+ *   Engine: Destination
  *   Engine: Verify everything else 
  *   EngineTypes: get/set Names lists 
  *   EngineModels: get/set Names lists
@@ -39,7 +40,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -1132,10 +1133,6 @@ public class OperationsEnginesTest extends TestCase {
 
 	// TODO: Add test for import
 
-	// TODO: Add test to create xml file
-
-	// TODO: Add test to read xml file
-
     // from here down is testing infrastructure
 
     // Ensure minimal setup for log4J
@@ -1148,7 +1145,7 @@ public class OperationsEnginesTest extends TestCase {
 		// Change file names to ...Test.xml
 		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
 		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
 		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
 		LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
