@@ -4,14 +4,15 @@ package jmri.util.exceptionhandler;
 
 /**
  * Class to log exceptions that rise to the top of 
+ * threads, including to the top of 
  * the AWT event processing loop.
  *
  * Using code must install this with
 <pre>
   Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
 </pre>
- * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.1 $
+ * @author Bob Jacobsen  Copyright 2003, 2010
+ * @version $Revision: 1.2 $
  */
 
 public class UncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
