@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -117,10 +117,11 @@ public class DefaultSignalGroupManagerXml
                     return "LUNAR";
             case SignalHead.FLASHLUNAR:
                     return "FLASHLUNAR";
+        	case SignalHead.DARK:
+                    return "DARK";
         	default:
                     log.warn("Unexpected appearance: "+mAppearance);
                 // go dark
-        	case SignalHead.DARK:
                     return "DARK";
         }
     }
