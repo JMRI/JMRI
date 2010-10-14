@@ -10,7 +10,7 @@ import jmri.jmrit.XmlFile;
  * Persist RPS polling information
  * <P>
  * @author  Bob Jacobsen   Copyright 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class PollingFile extends XmlFile {
 
@@ -85,7 +85,7 @@ public class PollingFile extends XmlFile {
         int value = 0;
         try {
             if (a != null) value = a.getIntValue();
-        } catch (org.jdom.DataConversionException ex) {}
+        } catch (org.jdom.DataConversionException ex) {log.error("in getPollValues", ex);}
         Engine.instance().setPollingInterval(value);
 
         Engine.instance().setDirectPollMode();

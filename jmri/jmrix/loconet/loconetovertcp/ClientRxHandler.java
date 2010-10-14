@@ -14,7 +14,7 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 
 public class ClientRxHandler extends Thread implements LocoNetListener{
@@ -137,7 +137,7 @@ public void run(){
     try {
       clientSocket.close();
     }
-    catch (IOException ex1) {}
+    catch (IOException ex1) {log.error("close, which closing clientSocket", ex1);}
   }
 
   class ClientTxHandler implements Runnable{

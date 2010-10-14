@@ -11,7 +11,7 @@ import javax.vecmath.Point3d;
  * Persist RPS configuration information
  * <P>
  * @author  Bob Jacobsen   Copyright 2007, 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class PositionFile extends XmlFile {
 
@@ -179,7 +179,7 @@ public class PositionFile extends XmlFile {
             if (a==null) continue;
             int n = -1;
             try { n = a.getIntValue(); }
-            catch (org.jdom.DataConversionException e) {}
+            catch (org.jdom.DataConversionException e) {log.error("in maxReceiver", e);}
             max = Math.max(max, n);
         }
         return max;
@@ -198,7 +198,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex) {}
+            catch (org.jdom.DataConversionException ex) {log.error("in getReceiverPosition", ex);}
             if (num == n) return positionFromElement(e.getChild("position"));
         }
         return null;
@@ -217,7 +217,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex) {}
+            catch (org.jdom.DataConversionException ex) {log.error("in getReceiverActive", ex);}
             if (num != n) continue;
             a = e.getAttribute("active");
             if (a==null) return true; // default value
@@ -240,7 +240,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex1) {}
+            catch (org.jdom.DataConversionException ex1) {log.error("in getReceiverMin", ex1);}
             if (num != n) continue;
             a = e.getAttribute("mintime");
             if (a==null) return 0; // default value
@@ -266,7 +266,7 @@ public class PositionFile extends XmlFile {
             if (a == null) continue;
             int num = -1;
             try { num = a.getIntValue(); }
-            catch (org.jdom.DataConversionException ex1) {}
+            catch (org.jdom.DataConversionException ex1) {log.error("in getReceiverMax", ex1);}
             if (num != n) continue;
             a = e.getAttribute("maxtime");
             if (a==null) return 99999; // default value
@@ -314,5 +314,5 @@ public class PositionFile extends XmlFile {
     }
     
     // initialize logging
-    //static private org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionFile.class.getName());
 }
