@@ -127,7 +127,7 @@ public class TurnoutOperationFrame extends JDialog {
 					firstPane = pane;
 				}
 				tabPane.add(op.getName(), pane);
-				if (op.getName()==previousSelectionName) {
+				if (op.getName().equals(previousSelectionName)) {
 					tabPane.setSelectedComponent(pane);
 				}
 			}

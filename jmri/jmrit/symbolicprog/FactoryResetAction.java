@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * to execute.  The user can cancel this dialog skipping any resets
  *
  * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class FactoryResetAction extends AbstractAction {
 
@@ -44,7 +44,7 @@ public class FactoryResetAction extends AbstractAction {
         //If a string was returned, a reset has been requested.
         if ((s != null) && (s.length() > 0)) {
             int i = 0;
-            while (options[i] != s) i++;
+            while (!options[i].equals(s)) i++;
             rModel.performReset(i);
             return;
         }

@@ -38,7 +38,7 @@ import java.util.ResourceBundle;
  * @author      Ken Cameron Copyright (C) 2007
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class NceClockControl extends DefaultClockControl implements NceListener
 {
@@ -335,7 +335,7 @@ public class NceClockControl extends DefaultClockControl implements NceListener
 		if (DEBUG_SHOW_PUBLIC_CALLS && log.isDebugEnabled()){
 			log.debug("startHardwareClock: " + now);
 		}
-		if (!internalClock.getInternalMaster() && internalClock.getMasterName() == getHardwareClockName()){
+		if (!internalClock.getInternalMaster() && internalClock.getMasterName().equals(getHardwareClockName())){
 			
 		}
 		issueClockSet(now.getHours(), now.getMinutes(), now.getSeconds());
