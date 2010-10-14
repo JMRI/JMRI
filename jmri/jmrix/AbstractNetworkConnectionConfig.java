@@ -21,7 +21,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 abstract public class AbstractNetworkConnectionConfig extends AbstractConnectionConfig implements jmri.jmrix.ConnectionConfig {
 
@@ -205,8 +205,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             NUMOPTIONS++;
             opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
             opt1Box.setEnabled(true);
-            if(adapter!=null)
-                opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
+            opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
         } else {
             opt1Box.setToolTipText("There are no options for this protocol");
             opt1Box.setEnabled(false);
@@ -215,8 +214,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
             NUMOPTIONS++;
             opt2Box.setToolTipText("");
             opt2Box.setEnabled(true);
-            if(adapter!=null)
-                opt2Box.setSelectedItem(adapter.getCurrentOption1Setting());
+            opt2Box.setSelectedItem(adapter.getCurrentOption1Setting());
         } else {
             opt2Box.setToolTipText("There are no options for this protocol");
             opt2Box.setEnabled(false);
