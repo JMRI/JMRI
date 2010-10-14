@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -63,7 +63,7 @@ public class TrafficController implements jmri.CommandStation {
 
 		if (msgAsInt[0] == 0) {
 			// failed to make packet
-			log.error("Failed to convert packet to transmitable form: "+packet);
+			log.error("Failed to convert packet to transmitable form: "+java.util.Arrays.toString(packet));
 			return;
 		}
 

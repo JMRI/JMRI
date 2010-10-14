@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.84 $
+ * @version         $Revision: 1.85 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -559,7 +559,7 @@ abstract public class AbstractMRTrafficController {
                             Thread.currentThread().interrupt(); // retain if needed later
                             log.error("retry wait interupted");
                         }
-                    } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+                    } else log.warn("sendMessage: port not ready for data sending: " +java.util.Arrays.toString(msg));
                 }
             } else {  // ostream is null
                 // no stream connected

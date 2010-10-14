@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class SerialTrafficController extends AbstractMRTrafficController implements SerialInterface {
 
@@ -218,7 +218,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
                         xmtRunnable.wait(m.getTimeout());
                         }
                      } catch (InterruptedException e) { log.error("retry wait interupted"); }
-		  } else log.warn("sendMessage: port not ready for data sending: " +msg.toString());
+		  } else log.warn("sendMessage: port not ready for data sending: " +java.util.Arrays.toString(msg));
 		}
             }
             else {
