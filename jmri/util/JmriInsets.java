@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class JmriInsets {
 
@@ -92,7 +92,7 @@ public class JmriInsets {
                 }
 
             }
-            catch (Exception e) {
+            catch (IOException e) {
                 log.error("IO Exception");
             }
         }
