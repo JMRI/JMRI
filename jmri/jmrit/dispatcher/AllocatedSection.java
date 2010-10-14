@@ -33,12 +33,13 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AllocatedSection {
 
 	/**
 	 * Main constructor method
+	 * @param s cannot be null
 	 */
 	public AllocatedSection(jmri.Section s, ActiveTrain at, int seq, jmri.Section next, int nextSeqNo) {
         mSection = s;
@@ -46,22 +47,20 @@ public class AllocatedSection {
 		mSequence = seq;
         mNextSection = next;
 		mNextSectionSequence = nextSeqNo;
-		if (s.getOccupancy() == jmri.Section.OCCUPIED) {
+		if (mSection.getOccupancy() == jmri.Section.OCCUPIED) {
 			mEntered = true;
 		}
 		// listen for changes in Section occupancy
-		if (mSection!=null) {
-			mSection.addPropertyChangeListener(mSectionListener = new java.beans.PropertyChangeListener() {
-                public void propertyChange(java.beans.PropertyChangeEvent e) { handleSectionChange(e); }
-            });
-        }
-		if (s.getState()==jmri.Section.FORWARD) {
-			mForwardStoppingSensor = s.getForwardStoppingSensor();
-			mReverseStoppingSensor = s.getReverseStoppingSensor();
+        mSection.addPropertyChangeListener(mSectionListener = new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent e) { handleSectionChange(e); }
+        });
+		if (mSection.getState()==jmri.Section.FORWARD) {
+			mForwardStoppingSensor = mSection.getForwardStoppingSensor();
+			mReverseStoppingSensor = mSection.getReverseStoppingSensor();
 		}
 		else {
-			mForwardStoppingSensor = s.getReverseStoppingSensor();
-			mReverseStoppingSensor = s.getForwardStoppingSensor();
+			mForwardStoppingSensor = mSection.getReverseStoppingSensor();
+			mReverseStoppingSensor = mSection.getForwardStoppingSensor();
 		}		
 	}
 

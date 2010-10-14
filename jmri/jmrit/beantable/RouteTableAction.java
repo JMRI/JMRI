@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.61 $
+ * @version     $Revision: 1.62 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -1494,14 +1494,13 @@ public class RouteTableAction extends AbstractTableAction {
         return list;
     }
 
-    @SuppressWarnings("null")
 	ConditionalVariable makeCtrlSensorVar(JTextField nameText, JComboBox sensorbox,
                                            boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
-        if (devName.length() == 0) {
+        if (devName == null || devName.length() == 0) {
             return null;
         }
-        if (devName != null && devName.length()>0) {
+        if (devName.length()>0) {
             // verify name (logix doesn't use "provideXXX") 
             Sensor s = InstanceManager.sensorManagerInstance().getByUserName(devName);
             if (s == null) {
@@ -1559,14 +1558,13 @@ public class RouteTableAction extends AbstractTableAction {
         return null;
     }
 
-    @SuppressWarnings("null")
 	ConditionalVariable makeCtrlTurnoutVar(JTextField nameText, JComboBox box,
                                             boolean makeVeto, boolean onChange) {
         String devName = nameText.getText();
         if (devName.length() == 0) {
             return null;
         }
-        if (devName != null && devName.length()>0) {
+        if (devName.length()>0) {
             Turnout t = InstanceManager.turnoutManagerInstance().getByUserName(devName);
             if (t == null) {
                 t = InstanceManager.turnoutManagerInstance().getBySystemName(devName);
