@@ -17,7 +17,7 @@ import org.jdom.*;
  * Install decoder definition from URL
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  * @see jmri.jmrit.XmlFile
  */
 public class InstallDecoderURLAction extends AbstractAction {
@@ -110,8 +110,12 @@ public class InstallDecoderURLAction extends AbstractAction {
             
             }
             finally {
-                if (in != null) in.close();
-                if (out != null) out.close();
+                try {
+                    if (in != null) in.close();
+                } catch (IOException e1) { log.error("exception closing in stream", e1);}
+                try {
+                    if (out != null) out.close();
+                } catch (IOException e2) { log.error("exception closing out stream", e2);}
             }
           
         }

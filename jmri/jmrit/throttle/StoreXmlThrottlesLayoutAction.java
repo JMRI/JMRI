@@ -17,7 +17,7 @@ import org.jdom.output.*;
  *
  * @author			Glen Oberhauser
  * @author Daniel Boudreau (C) Copyright 2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 
@@ -81,11 +81,15 @@ public class StoreXmlThrottlesLayoutAction extends AbstractAction {
 			root.setContent(children);
 
 			FileOutputStream o = new java.io.FileOutputStream(f);
-			XMLOutputter fmt = new XMLOutputter();
-			fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
-			fmt.output(doc, o);
-			o.close();
-
+			try {
+			    XMLOutputter fmt = new XMLOutputter();
+			    fmt.setFormat(org.jdom.output.Format.getPrettyFormat());
+			    fmt.output(doc, o);
+		    } catch (IOException ex) {
+			    log.warn("Exception in storing throttle xml: " + ex);
+		    } finally {
+			    o.close();
+            }
 		} catch (FileNotFoundException ex) {
 			log.warn("Exception in storing throttle xml: " + ex);
 		} catch (IOException ex) {
