@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -693,7 +693,7 @@ public class OperationsCarsTest extends TestCase {
         Assert.assertEquals("After dispose Number of Cars", 0, carList.size());		
 	}
 
-	// test location Xml create support
+	// test Xml create support
 	public void testXMLCreate(){
 		
 		// confirm that file name has been modified for testing

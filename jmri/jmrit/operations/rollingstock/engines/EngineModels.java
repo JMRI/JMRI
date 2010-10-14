@@ -44,7 +44,7 @@ import jmri.jmrit.operations.setup.Control;
  * U28B		2800	60		Diesel
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class EngineModels {
 	
@@ -59,6 +59,7 @@ public class EngineModels {
 	
 	public static final String ENGINEMODELS_CHANGED_PROPERTY = "EngineModels";
 	
+	protected List<String> _list = new ArrayList<String>();
 	protected Hashtable<String, String> _engineHorsepowerHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineLengthHashTable = new Hashtable<String, String>();
 	protected Hashtable<String, String> _engineTypeHashTable = new Hashtable<String, String>();
@@ -84,21 +85,23 @@ public class EngineModels {
 	}
 
     public void dispose() {
-    	list.clear();
+    	_list.clear();
+    	_engineHorsepowerHashTable.clear();
+    	_engineLengthHashTable.clear();
+    	_engineTypeHashTable.clear();
+    	_engineWeightHashTable.clear();
     	loadDefaults();
     }
-
-    List<String> list = new ArrayList<String>();
     
     public String[] getNames(){
-     	if (list.size() == 0){
+     	if (_list.size() == 0){
      		String[] types = MODELS.split("%%");
      		for (int i=0; i<types.length; i++)
-     			list.add(types[i]);
+     			_list.add(types[i]);
     	}
-     	String[] models = new String[list.size()];
-     	for (int i=0; i<list.size(); i++)
-     		models[i] = list.get(i);
+     	String[] models = new String[_list.size()];
+     	for (int i=0; i<_list.size(); i++)
+     		models[i] = _list.get(i);
    		return models;
     }
     
@@ -106,27 +109,27 @@ public class EngineModels {
     	if (models.length == 0) return;
     	jmri.util.StringUtil.sort(models);
  		for (int i=0; i<models.length; i++)
- 			if (!list.contains(models[i]))
- 				list.add(models[i]);
+ 			if (!_list.contains(models[i]))
+ 				_list.add(models[i]);
     }
     
     public void addName(String model){
     	// insert at start of list, sort later
-    	if (list.contains(model))
+    	if (_list.contains(model))
     		return;
-    	list.add(0,model);
-    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, list.size()-1, list.size());
+    	_list.add(0,model);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, _list.size()-1, _list.size());
     }
     
     public void deleteName(String model){
-    	if (!list.contains(model))
+    	if (!_list.contains(model))
     		return;
-    	list.remove(model);
-    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, list.size()+1, list.size());
+    	_list.remove(model);
+    	firePropertyChange (ENGINEMODELS_CHANGED_PROPERTY, _list.size()+1, _list.size());
      }
     
     public boolean containsName(String model){
-    	return list.contains(model);
+    	return _list.contains(model);
      }
     
     public JComboBox getComboBox (){
@@ -172,6 +175,11 @@ public class EngineModels {
     	_engineWeightHashTable.put(model, type);
     }
     
+    /**
+     * 
+     * @param model The engine model (example GP20)
+     * @return This model's weight in tons
+     */
     public String getModelWeight(String model){
     	return _engineWeightHashTable.get(model);
     }
