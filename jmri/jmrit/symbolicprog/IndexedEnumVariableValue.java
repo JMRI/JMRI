@@ -16,7 +16,7 @@ import java.util.List;
  * Extends VariableValue to represent a enumerated indexed variable.
  *
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  *
  */
 public class IndexedEnumVariableValue extends VariableValue
@@ -210,7 +210,7 @@ public class IndexedEnumVariableValue extends VariableValue
             return b;
         } else {
             // return a new JComboBox representing the same model
-            iVarComboBox b = new iVarComboBox(_value.getModel(), this);
+            IVarComboBox b = new IVarComboBox(_value.getModel(), this);
             b.setPreferredSize(new Dimension(284, b.getPreferredSize().height));
             comboVars.add(b);
             updateRepresentation(b);
@@ -220,7 +220,7 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     List<IndexedComboCheckBox> comboCBs = new ArrayList<IndexedComboCheckBox>();
-    List<iVarComboBox> comboVars = new ArrayList<iVarComboBox>();
+    List<IVarComboBox> comboVars = new ArrayList<IVarComboBox>();
 
     // implement an abstract member to set colors
     void setColor(Color c) {
@@ -486,14 +486,14 @@ public class IndexedEnumVariableValue extends VariableValue
      * model between this object and the real JComboBox value.
      *
      * @author  Bob Jacobsen   Copyright (C) 2001
-     * @version $Revision: 1.18 $
+     * @version $Revision: 1.19 $
      */
-    public class iVarComboBox extends JComboBox {
+    public class IVarComboBox extends JComboBox {
 
         IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;
 
-        iVarComboBox(ComboBoxModel m, IndexedEnumVariableValue var) {
+        IVarComboBox(ComboBoxModel m, IndexedEnumVariableValue var) {
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
