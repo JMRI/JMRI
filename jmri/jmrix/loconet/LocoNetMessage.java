@@ -29,7 +29,7 @@ import jmri.jmrix.loconet.LnConstants;
  * <P>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  * @see             jmri.jmrix.nce.NceMessage
  *
  */
@@ -213,6 +213,13 @@ public class LocoNetMessage implements Serializable {
 	return true;
     }
 
+    public int hashCode() {
+        int r = _nDataBytes;
+        if (_nDataBytes>0) r+= _dataBytes[0];
+        if (_nDataBytes>1) r+= _dataBytes[1]*128;
+        if (_nDataBytes>2) r+= _dataBytes[2]*128*128;
+        return r;
+    }
     /**
      * Return a newly created OPC_PEER_XFR message.
      * @param src Source address

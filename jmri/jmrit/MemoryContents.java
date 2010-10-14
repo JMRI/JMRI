@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * in which case a sparse implementation (e.g. 16 bit pages) will be needed.
  *
  * @author	    Bob Jacobsen    Copyright (C) 2005, 2008
- * @version         $Revision: 1.10 $
+ * @version         $Revision: 1.11 $
  */
 public class MemoryContents {
 
@@ -123,6 +123,11 @@ public class MemoryContents {
                 }
             }
         } catch (Exception e) { log.error("Exception reading file",e);}
+        finally { 
+            try {
+                fileStream.close();
+            } catch (IOException e2) { log.error("Exception closing file", e2); }
+        }
 
     }
            

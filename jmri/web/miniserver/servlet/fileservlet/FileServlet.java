@@ -19,7 +19,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -59,11 +59,15 @@ public class FileServlet extends AbstractServlet {
                 // send redirect
                 printHeader(out, "text/html");
                 OutputStreamWriter writer = new OutputStreamWriter(res.getOutputStream());
-                writer.write("<head>\n");
-                writer.write("<META HTTP-EQUIV=\"PRAGMA\" CONTENT=\"NO-CACHE\">");
-                writer.write("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL="+filename+"/ \">");
-                writer.write("</html>");
-                writer.flush();
+                try {
+                    writer.write("<head>\n");
+                    writer.write("<META HTTP-EQUIV=\"PRAGMA\" CONTENT=\"NO-CACHE\">");
+                    writer.write("<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL="+filename+"/ \">");
+                    writer.write("</html>");
+                    writer.flush();
+                } finally {
+                    writer.close();
+                }
                 out.flush();
             }
         }        

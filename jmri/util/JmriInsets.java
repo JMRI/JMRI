@@ -19,7 +19,7 @@ import java.util.*;
  *
  * 
  * @author      Matt Harris
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class JmriInsets {
 
@@ -69,17 +69,28 @@ public class JmriInsets {
                 Process p = Runtime.getRuntime().exec("ps ax");
                 BufferedReader r = new BufferedReader(new InputStreamReader(p.getInputStream()));
                 
-                java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|"));
-                
-                String line = r.readLine();
-                while (line != null) {
-                    for (int i=0; i < desktopList.size(); i++) {
-                        String s = desktopList.get(i).toString();
-                        if(line.contains(s) && !line.contains("grep"))
-                            return desktopList.indexOf(s);
+                try {
+                    java.util.List<String> desktopList = Arrays.asList(DESKTOP_ENVIRONMENTS.split("\\|"));
+                    
+                    String line = r.readLine();
+                    while (line != null) {
+                        for (int i=0; i < desktopList.size(); i++) {
+                            String s = desktopList.get(i).toString();
+                            if(line.contains(s) && !line.contains("grep"))
+                                return desktopList.indexOf(s);
+                        }
+                        line = r.readLine();
                     }
-                    line = r.readLine();
+                } catch (java.io.IOException e1) {
+                    log.error("error reading file", e1);
+                    throw e1;
                 }
+                finally { 
+                    try {
+                        r.close();
+                    } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+                }
+
             }
             catch (Exception e) {
                 log.error("IO Exception");
@@ -237,30 +248,42 @@ public class JmriInsets {
                 return -1;
             
             boolean found = false;
+            String value = null;
             FileReader reader = new FileReader(f);
             BufferedReader buffer = new BufferedReader(reader);
-            String value = null;
-            String temp = buffer.readLine();
-            while(temp !=null) {
-                if(temp.trim().equals("[" + category + "]")) {
-                    temp = buffer.readLine();
-                    while(temp != null) {
-                        if(temp.trim().startsWith("["))
-                            return -1;
-                        else if (temp.startsWith(component + "=")) {
-                            value = temp.substring(component.length() + 1);
-                            found = true;
-                            break;
-                        }
+            try {
+                String temp = buffer.readLine();
+                while(temp !=null) {
+                    if(temp.trim().equals("[" + category + "]")) {
                         temp = buffer.readLine();
+                        while(temp != null) {
+                            if(temp.trim().startsWith("["))
+                                return -1;
+                            else if (temp.startsWith(component + "=")) {
+                                value = temp.substring(component.length() + 1);
+                                found = true;
+                                break;
+                            }
+                            temp = buffer.readLine();
+                        }
                     }
+                    if(found == true)
+                        break;
+                    temp = buffer.readLine();
                 }
-                if(found == true)
-                    break;
-                temp = buffer.readLine();
+            } catch (java.io.IOException e1) {
+                log.error("error reading file", e1);
+                throw e1;
             }
-            buffer.close();
-            reader.close();
+            finally { 
+                try {
+                    buffer.close();
+                } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+                try {
+                    reader.close();
+                } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+            }
+
             if(found)
                 return Integer.parseInt(value);
         }

@@ -5,7 +5,7 @@ package jmri.jmrit.sound;
  * Wrap a byte array to provide WAV file functionality
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 
 public class WavBuffer {
@@ -34,11 +34,21 @@ public class WavBuffer {
         java.io.InputStream s = new java.io.BufferedInputStream(
                                     new java.io.FileInputStream(file));
 
-        buffer = new byte[(int)file.length()];
-        s.read(buffer);
+        try {
+            buffer = new byte[(int)file.length()];
+            s.read(buffer);
         
-        initFmt();
-        initData();
+            initFmt();
+            initData();
+        } catch (java.io.IOException e1) {
+            log.error("error reading file", e1);
+            throw e1;
+        }
+        finally { 
+            try {
+                s.close();
+            } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+        }
     }
     
     /**

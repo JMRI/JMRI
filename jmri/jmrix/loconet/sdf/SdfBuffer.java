@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 
 public class SdfBuffer {
@@ -41,13 +41,23 @@ public class SdfBuffer {
         
         InputStream s = new java.io.BufferedInputStream(new java.io.FileInputStream(file));
         
-        // Assume we can get all this in memory
-        buffer = new byte[length];
-        
-        for (int i=0; i<length; i++) {
-            buffer[i] = (byte)(s.read()&0xFF);
+        try {
+            // Assume we can get all this in memory
+            buffer = new byte[length];
+            
+            for (int i=0; i<length; i++) {
+                buffer[i] = (byte)(s.read()&0xFF);
+            }
+            loadMacroList();
+        } catch (java.io.IOException e1) {
+            log.error("error reading file", e1);
+            throw e1;
         }
-        loadMacroList();
+        finally { 
+            try {
+                s.close();
+            } catch (java.io.IOException e2) { log.error("Exception closing file", e2); }
+        }
     }
 
 
