@@ -8,7 +8,7 @@ import java.util.Vector;
 /**
  * Abstract base Frame to open and configure a SerialPortAdapter
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 
@@ -89,6 +89,7 @@ abstract public class SerialPortFrame extends jmri.util.JmriJFrame {
 	/**
 	 * Closing this window ends the program
 	 */
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DM_EXIT")
 	void thisWindowClosing(java.awt.event.WindowEvent e) {
 		System.exit(0);
 	}
