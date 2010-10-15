@@ -152,7 +152,7 @@ public class LocoIOData
      * Bit 4-7: Blink Rate<br>
      */
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
-        int newsv0 = ((portRefresh & 0x01) << 0x00) |  // bit 0
+        int newsv0 = ((portRefresh & 0x01) ) |  // bit 0
               ((altCodePBs  & 0x01) << 0x01) |  // bit 1
               ((0           & 0x01) << 0x02) |  // bit 2
               ((isServo     & 0x01) << 0x03) |  // bit 3
