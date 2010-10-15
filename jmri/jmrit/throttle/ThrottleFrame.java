@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -156,8 +156,10 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 			//The file does not exist, create it before writing
 			File parentDir=file.getParentFile();
 			if(!parentDir.exists())
-				parentDir.mkdir();
-			file.createNewFile();
+				if (!parentDir.mkdir()) // make directory and check result
+				    log.error("could not make parent directory");
+			if (!file.createNewFile()) // create file, check success
+			    log.error("createNewFile failed");
 		} catch (Exception exp) {
 			log.error("Exception while writing the throttle file, may not be complete: "+exp);
 		}

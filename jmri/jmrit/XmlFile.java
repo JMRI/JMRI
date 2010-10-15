@@ -32,7 +32,7 @@ import org.jdom.output.XMLOutputter;
  * {@link jmri.util.JmriLocalEntityResolver} class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.56 $
+ * @version	$Revision: 1.57 $
  */
 public abstract class XmlFile {
 
@@ -489,7 +489,8 @@ public abstract class XmlFile {
         File f = new File(name);
         if (! f.exists()) {
             log.warn("Creating a missing preferences directory: "+name);
-            f.mkdirs();
+            if (!f.mkdirs())
+                log.error("Failed to make preferences directory: "+name);
         }
     }
 
@@ -537,7 +538,7 @@ public abstract class XmlFile {
     static public void addDefaultInfo(Element root) {
         String content = "Written by JMRI version "+jmri.Version.name()
                         +" on "+(new java.util.Date()).toString()
-                        +" $Id: XmlFile.java,v 1.56 2010-09-11 01:21:48 dan_boudreau Exp $";
+                        +" $Id: XmlFile.java,v 1.57 2010-10-15 04:13:38 jacobsen Exp $";
         Comment comment = new Comment(content);
         root.addContent(comment);
     }

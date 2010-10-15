@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.40 $
+ * @version			$Revision: 1.41 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -225,7 +225,8 @@ public class DecoderIndexFile extends XmlFile {
         File oldfile = new File(XmlFile.prefsDir()+File.separator+"decoderIndex.xml");
         if (oldfile.exists()) {
             log.debug("remove existing user decoderIndex.xml file");
-            oldfile.delete();
+            if (!oldfile.delete())  // delete file, check for success
+                log.error("Failed to delete old index file");
             // force read from distributed file
             resetInstance();
             instance();

@@ -33,7 +33,7 @@ import org.jdom.Element;
  * for more details.
  *
  * @author			Dave Duchamp    Copyright (C) 2009
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class TrainInfoFile extends jmri.jmrit.XmlFile {
@@ -242,7 +242,8 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
 			if (!checkFile(fileLocation+name)) {
 				// file does not exist, create it
 				File file = new File(fileLocation+name);
-				file.createNewFile();
+				if (!file.createNewFile())  // create file and check result
+				    log.error("createNewFile failed");
 			}
 			// write content to file
 			writeXML(findFile(fileLocation+name),doc);

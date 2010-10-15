@@ -139,8 +139,10 @@ public class ThrottlesPreferences {
     		//The file does not exist, create it before writing
     		File parentDir=file.getParentFile();
     		if(!parentDir.exists())
-    			parentDir.mkdir();
-    		file.createNewFile();
+    			if (!parentDir.mkdir()) // make directory, check result
+    			    log.error("failed to make parent directory");
+    		if (!file.createNewFile()) // create file, check result
+    		    log.error("createNewFile failed");
     	} catch (Exception exp) {
     		log.error("Exception while writing the new throttles preferences file, may not be complete: "+exp);
     	}

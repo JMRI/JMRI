@@ -17,7 +17,7 @@ import org.jdom.Attribute;
  * This class manipulates files conforming to the block_value DTD.
  *
  * @author      Dave Duchamp Copyright (C) 2008
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 
 public class BlockValueFile extends jmri.jmrit.XmlFile {
@@ -137,7 +137,8 @@ public class BlockValueFile extends jmri.jmrit.XmlFile {
 					if (!checkFile(defaultFileName)) {
 						// file does not exist, create it
 						File file = new File(defaultFileName);
-						file.createNewFile();
+						if (!file.createNewFile()) // create and check result
+						    log.error("createNewFile failed");
 					}
 					// write content to file
 					writeXML(findFile(defaultFileName),doc);

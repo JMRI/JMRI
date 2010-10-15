@@ -86,7 +86,8 @@ public class DefaultCatalogTreeManagerXml extends XmlFile
                 if (!checkFile(defaultFileName)) {
                     // file does not exist, create it
                     File file = new File(defaultFileName);
-                    file.createNewFile();
+                    if (!file.createNewFile())
+                        log.error("createNewFile failed");
                 }
                 // write content to file
                 writeXML(findFile(defaultFileName),doc);

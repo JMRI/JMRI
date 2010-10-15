@@ -35,7 +35,7 @@ import javax.swing.JOptionPane;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see         jmri.jmrit.XmlFile
  */
 public class DeleteRosterItemAction extends AbstractAction {
@@ -102,7 +102,8 @@ public class DeleteRosterItemAction extends AbstractAction {
 
                 // locate the file and delete
                 File f = new File(fullFilename);
-                f.delete();
+                if (!f.delete()) // delete file and check success
+                    log.error("failed to delete file");
 
             } catch (Exception ex) {
                 log.error("error during locomotive file output: "+ex);

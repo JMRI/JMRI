@@ -262,7 +262,8 @@ public class ResizableImagePanel extends JPanel implements FileDrop.Listener, Co
     }
 
     private static void copyFile(File in, File out) throws Exception {
-        out.getParentFile().mkdirs();
+        if (!out.getParentFile().mkdirs()) // make directorys, check success
+            log.error("failed to make directories to copy file");
     	FileInputStream fis = new FileInputStream(in);
         FileOutputStream fos = new FileOutputStream(out);
         try {
