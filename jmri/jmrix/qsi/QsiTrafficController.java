@@ -23,7 +23,7 @@ import gnu.io.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
@@ -271,7 +271,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
           QsiReply msg = new QsiReply();
           // message exists, now fill it
           int i;
-          for (i = 0; i < QsiReply.maxSize; i++) {
+          for (i = 0; i < QsiReply.MAXSIZE; i++) {
             byte char1 = istream.readByte();
             if (log.isDebugEnabled()) log.debug("   Rcv char: "+jmri.util.StringUtil.twoHexFromInt(char1));
             msg.setElement(i, char1);
