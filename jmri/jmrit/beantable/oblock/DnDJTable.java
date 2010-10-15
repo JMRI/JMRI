@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 import java.awt.Point;
@@ -307,7 +307,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
                          do {
                              parent = parent.getParent();
                          } while (parent!=null && !(parent instanceof JInternalFrame));
-                         if (parent!=null && (parent instanceof JInternalFrame)) {
+                         if (parent!=null) {
                              ((JInternalFrame)parent).moveToFront();
                          }
                          //if (log.isDebugEnabled()) 
