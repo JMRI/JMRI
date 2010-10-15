@@ -18,7 +18,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -35,11 +35,11 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     }
     
     private void processForPollReq(SerialReply l) {
-        // process the POLL_REQ and update/create sensors as needed
-	    if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ_X10 ) { 
+        // process the POLL_REQ_X10 and update/create sensors as needed
+	    if ((l.getElement(1)& 0xFF) == Constants.POLL_REQ_X10 ) { 
 	        // must be received data
-	        int last = (l.getElement(1)& 0xFF) + 1;
-	        int bits = (l.getElement(2)& 0xFF);
+	        int last = (l.getElement(2)& 0xFF) + 1;
+	        int bits = (l.getElement(3)& 0xFF);
         	String newHouseCode = null;
         	int newCmdCode = -1;
         	int newAddrCode = -1;
@@ -74,7 +74,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
             				}
             			}
             		} else {
-    	            	if (newCmdCode != -1 && newHouseCode != null && newAddrCode > 0) {
+    	            	if (newHouseCode != null && newAddrCode > 0) {
 		            		String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
 		            		sensor = provideSensor(sysName);
 		            		if (sensor != null) {
@@ -102,8 +102,10 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
 	            	newAddrCode = X10Sequence.decode(dat & 0x0f);
 	            }
-                bits = bits >> 1;  // shift over before next byte
+	            bits = bits >> 1;  // shift over before next byte
 	        }
+	    } else if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ_STD ) {
+	    	// figure how to decode an Insteon poll command
 	    }
     }
     
