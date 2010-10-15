@@ -12,7 +12,7 @@ import javax.swing.JInternalFrame;
  * object.
  * @author		Original Unknown
  * @author		Ken Cameron, copyright 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class ThrottleFramePropertyEditor extends JDialog
 {
@@ -147,7 +147,6 @@ public class ThrottleFramePropertyEditor extends JDialog
      */
     public void setThrottleFrame(ThrottleWindow f)
     {
-    	Dimension bSize = new Dimension (0,0);
         this.frame = f;
         initGUI();
         pack();
@@ -155,7 +154,7 @@ public class ThrottleFramePropertyEditor extends JDialog
 		titleField.selectAll();
 		
         if (((javax.swing.plaf.basic.BasicInternalFrameUI)frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane()!=null) {
-            bSize=((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane().getPreferredSize();
+            Dimension bSize=((javax.swing.plaf.basic.BasicInternalFrameUI) frame.getCurentThrottleFrame().getControlPanel().getUI()).getNorthPane().getPreferredSize();
             if (bSize.height == 0) borderOff.setSelected(true);
             else borderOff.setSelected(false);
         }
