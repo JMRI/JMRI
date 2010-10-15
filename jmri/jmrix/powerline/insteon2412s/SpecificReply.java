@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -63,6 +63,9 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 	            			text.append(" Unknown cmd: " + String.format("0x%1$2.2X", getElement(6) & 0xFF));
 	            			break;
 		            	}
+		            	if ((getElement(8) & 0xFF) == Constants.REPLY_NAK) {
+		            		text.append(" NAK - command not processed");
+		            	}
 	            	} else {
 	            		text.append(" !! Length wrong: " + len);
 	            	}
@@ -90,6 +93,9 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                     } else {
                     	text.append(X10Sequence.formatAddressByte(getElement(2)& 0xFF));
                     }
+	            	if ((getElement(4) & 0xFF) == Constants.REPLY_NAK) {
+	            		text.append(" NAK - command not processed");
+	            	}
 	            	break;
 	            case Constants.POLL_REQ_X10 :
 	            	text.append("Poll Cmd X10 ");
