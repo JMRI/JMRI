@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -401,7 +401,7 @@ public class DefaultConditional extends AbstractNamedBean
                 leftArg = !leftArg;
             } else {
                 throw new JmriException(java.text.MessageFormat.format(
-                    rbx.getString("ParseError9"), new Object[] { s.substring(i) }));
+                    rbx.getString("ParseError9"), new Object[] { s }));
             }
         }
         // crank away to the right until a matching paren is reached

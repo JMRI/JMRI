@@ -44,7 +44,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.51 $
+ * @version   $Revision: 1.52 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -809,11 +809,10 @@ public class RosterEntry {
         //Check each token to see if it needs to have a line wrap.
         //Get a piece of the token, either the size of the allowed space or
         //a shorter piece if there isn't enough text to fill the space
-        if (commentToken.substring(startIndex).length() < startIndex+textSpace)
+        if (commentToken.length() < startIndex+textSpace)
         {
           //the piece will fit so extract it and put it in the vector
-          String tokenPiece = commentToken.substring(startIndex);
-          textVector.addElement(tokenPiece);
+          textVector.addElement(commentToken);
         }
         else
         {
