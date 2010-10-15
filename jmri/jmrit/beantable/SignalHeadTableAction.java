@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.56 $
+ * @version     $Revision: 1.57 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -149,7 +149,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
                 if (s==null) return "<lost>"; // if due to race condition, the device is going away
                 String val = s.getAppearanceName();
                 if (val != null) return val;
-                else return "Unexpected value: "+val;
+                else return "Unexpected null value";
             }
             public Manager getManager() { return InstanceManager.signalHeadManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.signalHeadManagerInstance().getBySystemName(name);}

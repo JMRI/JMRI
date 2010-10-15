@@ -426,7 +426,7 @@ public class LRouteTableAction extends AbstractTableAction {
 		// Logix was found, initialize for edit
 		Logix logix = _logixManager.getBySystemName(sName);
         if (logix == null) {
-            log.error("Logix \""+logix+"\" not Found.");
+            log.error("Logix \""+sName+"\" not Found.");
             return;
         }
 		// deactivate this Logix

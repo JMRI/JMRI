@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.46 $
+ * @version     $Revision: 1.47 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -884,8 +884,8 @@ public class LightTableAction extends AbstractTableAction {
             g.setUserName(uName);     
         }
 		else if ( (uName==null) && (prevUName!=null) ) {
-			// user name has been cleared, change it
-            g.setUserName(uName);     
+			// user name has been cleared
+            g.setUserName(null);     
         }			
         setLightControlInformation(g);
         // Variable intensity, transitions
