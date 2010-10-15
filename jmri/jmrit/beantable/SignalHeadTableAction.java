@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.57 $
+ * @version     $Revision: 1.58 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -1233,8 +1233,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
                         return;
                     } else
                         nbt1 = new NamedBeanHandle<Turnout>(to3.getText(),t1);
-        }
-                    if (checkBeforeCreating(systemName.getText())) {
         }
         if (checkBeforeCreating(systemName.getText())) {
             boolean home;
