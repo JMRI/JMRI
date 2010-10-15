@@ -296,7 +296,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _targetPanel.repaint();
     }
 
-    class ToolTipTimer extends Timer {
+    static class ToolTipTimer extends Timer {
         ToolTip tooltip;
         ToolTipTimer(int delay, ActionListener listener, ToolTip tip) {
             super(delay, listener);

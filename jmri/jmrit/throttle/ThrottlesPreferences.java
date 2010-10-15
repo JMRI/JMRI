@@ -71,7 +71,7 @@ public class ThrottlesPreferences {
 	 * An extension of the abstract XmlFile. No changes made to that class.
 	 * 
 	 */
-	class ThrottlesPrefsXml extends XmlFile {
+	static class ThrottlesPrefsXml extends XmlFile {
 
 	}
 	

@@ -37,7 +37,7 @@ import jmri.*;
  * and Bob Jacobsen.  Some of the message formats are copyright Digitrax, Inc.
  *
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class AspectGenerator implements java.beans.PropertyChangeListener{
 
@@ -157,7 +157,7 @@ public class AspectGenerator implements java.beans.PropertyChangeListener{
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AspectGenerator.class.getName());
 
     // for now, this is an internal class
-    class Aspect {
+    static class Aspect {
         public Aspect(int speed, int appearance) {}
     }
 }

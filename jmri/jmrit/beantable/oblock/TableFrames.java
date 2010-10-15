@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 import java.awt.BorderLayout;
@@ -496,7 +496,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
 
 
     /***********************  BlockPathFrame ******************************/
-    class BlockPathFrame extends JInternalFrame {
+    static class BlockPathFrame extends JInternalFrame {
         BlockPathTableModel blockPathModel;
 
         public BlockPathFrame(String title, boolean resizable, boolean closable, 
@@ -654,7 +654,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         }
     }
 
-    class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
+    static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
 
         public java.awt.Component getTableCellRendererComponent(JTable table, 
                                                        Object value, boolean isSelected, 

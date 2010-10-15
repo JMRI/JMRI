@@ -781,7 +781,7 @@ public class PositionablePropertiesUtil {
         }
     }
     
-    class textDetails {
+    static class textDetails {
         textDetails(String desc, String txt, Color fore, Color back){
             if (txt == null)
                 text = "";

@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Sound  {
 
@@ -114,7 +114,7 @@ public class Sound  {
      */
     public AudioClip audioClip = null;
 
-    public class WavBuffer {
+    public static class WavBuffer {
         public WavBuffer(byte[] content) {
             buffer = content;
             

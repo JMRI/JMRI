@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -540,13 +540,13 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 		}
 	}
 
-	class NullComboBoxItem {
+	static class NullComboBoxItem {
 		public String toString() {
 			return rb.getString("NoLocoSelected");
 		}
 	}
 
-	class NullComboBoxConsist {
+	static class NullComboBoxConsist {
 		public String toString() {
 			return rb.getString("NoConsistSelected");
 		}

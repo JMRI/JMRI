@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.37 $
+ * @version			$Revision: 2.38 $
  */
 
 package jmri.jmrix.lenz;
@@ -677,7 +677,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
    
     // Internal class to use for listening to state changes
-    private class XNetTurnoutStateListener implements java.beans.PropertyChangeListener {
+    private static class XNetTurnoutStateListener implements java.beans.PropertyChangeListener {
 
     XNetTurnout _turnout=null;
 

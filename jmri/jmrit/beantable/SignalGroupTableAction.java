@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -1108,7 +1108,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
     private ArrayList <SignalMastAppearances> _mastAppearancesList;        // array of all Sensorsy
     private ArrayList <SignalMastAppearances> _includedMastAppearancesList;
 
-    private class SignalGroupSignal {
+    private static class SignalGroupSignal {
     
         String _sysName=null;
         String _userName=null;
@@ -1251,7 +1251,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
     }
     
-    private class SignalMastAppearances{
+    private static class SignalMastAppearances{
         SignalMastAppearances(String appearance){
             _appearance=appearance;
         }

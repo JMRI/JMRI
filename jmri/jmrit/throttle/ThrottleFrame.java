@@ -47,7 +47,7 @@ import org.jdom.Element;
  * and don't want to break dependencies (particularly in Jython code)
  * @author Glen Oberhauser
  * @author Andrew Berridge  Copyright 2010
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 public class ThrottleFrame extends JDesktopPane  implements ComponentListener, AddressListener
 {
@@ -429,7 +429,7 @@ public class ThrottleFrame extends JDesktopPane  implements ComponentListener, A
 
 	private HashMap <Container, JInternalFrame> contentPanes;
 	
-	private class TranslucentJPanel extends JPanel {
+	private static class TranslucentJPanel extends JPanel {
 		private Color TRANS_COL = new Color(100, 100, 100, 100);
 		
 		public TranslucentJPanel() {

@@ -42,7 +42,7 @@ import javax.swing.*;
  *		in the direction of the turntable center.
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutTurntable
@@ -497,7 +497,7 @@ public class LayoutTurntable
         return active;
     }
 	
-	class RayTrack
+	static class RayTrack
 	{
 		public RayTrack(double angle, int index) 
 		{ 

@@ -38,7 +38,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -381,7 +381,7 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
     }
 
     // from http://www.codeguru.com/java/articles/143.shtml
-   class DecoderTreeNode extends DefaultMutableTreeNode {
+   static class DecoderTreeNode extends DefaultMutableTreeNode {
         private String toolTipText;
         private String title;
 

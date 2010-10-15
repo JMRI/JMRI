@@ -18,7 +18,7 @@ import java.io.*;
  * Table data model for display of Cbus events
  *
  * @author		Andrew Crosland          (C) 2009
- * @version		$Revision: 1.8 $
+ * @version		$Revision: 1.9 $
  */
 public class CbusEventTableDataModel extends javax.swing.table.AbstractTableModel implements CanListener  {
 
@@ -232,7 +232,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
         }
     }
 
-    class Notify implements Runnable {
+    static class Notify implements Runnable {
         private int _row;
         javax.swing.table.AbstractTableModel _model;
         public Notify(int row, javax.swing.table.AbstractTableModel model) {

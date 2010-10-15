@@ -23,7 +23,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
@@ -92,7 +92,7 @@ public class ManagerDefaultSelector {
                 new Item("Programmer", ProgrammerManager.class, false)
     };
     
-    public class Item {
+    public static class Item {
         public String typeName;
         public Class<?> managerClass;
         public boolean proxy;

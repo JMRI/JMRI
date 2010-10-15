@@ -13,7 +13,7 @@ import javax.swing.*;
  * Table data model for display of slot manager contents
  * @author		Bob Jacobsen   Copyright (C) 2001
  *                      Andrew Crosland          (C) 2006 ported to SPROG
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel implements SprogSlotListener  {
 
@@ -251,7 +251,7 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
       javax.swing.SwingUtilities.invokeLater(r);
     }
 
-    class Notify implements Runnable {
+    static class Notify implements Runnable {
         private int _row;
         javax.swing.table.AbstractTableModel _model;
         public Notify(int row, javax.swing.table.AbstractTableModel model) {

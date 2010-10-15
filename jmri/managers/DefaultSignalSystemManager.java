@@ -22,7 +22,7 @@ import org.jdom.Element;
  *
  *
  * @author  Bob Jacobsen Copyright (C) 2009
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class DefaultSignalSystemManager extends AbstractManager
     implements SignalSystemManager, java.beans.PropertyChangeListener {
@@ -129,7 +129,7 @@ public class DefaultSignalSystemManager extends AbstractManager
     /** 
      * XmlFile is abstract, so this extends for local use
      */
-    class AspectFile extends XmlFile {
+    static class AspectFile extends XmlFile {
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultSignalSystemManager.class.getName());

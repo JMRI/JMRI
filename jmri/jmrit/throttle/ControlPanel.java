@@ -40,7 +40,7 @@ import org.jdom.Element;
  * @author Bob Jacobsen Copyright (C) 2007
  * @author Ken Cameron Copyright (C) 2008
  *
- * @version    $Revision: 1.89 $
+ * @version    $Revision: 1.90 $
  */
 public class ControlPanel extends JInternalFrame implements java.beans.PropertyChangeListener, ActionListener, AddressListener 
 {
@@ -746,7 +746,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *  A KeyAdapter that listens for the keys that work the control pad buttons
      *
      * @author     glen
-     * @version    $Revision: 1.89 $
+     * @version    $Revision: 1.90 $
      */
     class ControlPadKeyListener extends KeyAdapter
     {
@@ -859,7 +859,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * A PopupListener to handle mouse clicks and releases. Handles
      * the popup menu.
      */
-    class PopupListener extends MouseInputAdapter
+    static class PopupListener extends MouseInputAdapter
     {
         
 	JPopupMenu _menu;

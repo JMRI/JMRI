@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.85 $
+ * @version         $Revision: 1.86 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -927,7 +927,7 @@ abstract public class AbstractMRTrafficController {
      * Internal class to remember the Reply object and destination
      * listener with a reply is received.
      */
-    protected class RcvNotifier implements Runnable {
+    protected static class RcvNotifier implements Runnable {
         AbstractMRReply mMsg;
         AbstractMRListener mDest;
         AbstractMRTrafficController mTC;
@@ -953,7 +953,7 @@ abstract public class AbstractMRTrafficController {
      * Internal class to remember the Message object and destination
      * listener when a message is queued for notification.
      */
-    protected class XmtNotifier implements Runnable {
+    protected static class XmtNotifier implements Runnable {
         AbstractMRMessage mMsg;
         AbstractMRListener mDest;
         AbstractMRTrafficController mTC;
@@ -974,7 +974,7 @@ abstract public class AbstractMRTrafficController {
      * the primary task of this thread is to make sure the DCC system has 
      * exited service mode when the program exits.
      */
-    class cleanupHook implements Runnable {
+    static class cleanupHook implements Runnable {
         AbstractMRTrafficController mTC;
         
         cleanupHook(AbstractMRTrafficController pTC) {

@@ -376,7 +376,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
     }
     ArrayList <SignalHeadItem> _signalHeadItem = new ArrayList<SignalHeadItem>();
-    private class SignalHeadItem {
+    private static class SignalHeadItem {
         SignalHeadItem(NamedBeanHandle<SignalHead> sh){
             namedHead = sh;
             if (namedHead.getBean().getClass().getName().contains("SingleTurnoutSignalHead")){

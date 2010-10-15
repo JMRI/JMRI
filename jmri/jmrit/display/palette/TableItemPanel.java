@@ -460,7 +460,7 @@ public class TableItemPanel extends ItemPanel {
         }
     }
 
-    protected class PositionableDnD implements Transferable {
+    static protected class PositionableDnD implements Transferable {
         Positionable _pos;
         String _name;
         DataFlavor _dataFlavor;

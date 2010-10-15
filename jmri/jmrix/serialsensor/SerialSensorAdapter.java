@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SerialSensorAdapter extends AbstractSerialPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -216,7 +216,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
      * Internal class to remember the Message object and destination
      * listener when a message is queued for notification.
      */
-    class SerialNotifier implements Runnable {
+    static class SerialNotifier implements Runnable {
         String mSensor;
         boolean mValue;
         SerialNotifier(String pSensor, boolean pValue) {

@@ -22,7 +22,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -363,7 +363,7 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         super.dispose();
     }
 
-    class Entry {
+    static class Entry {
         NamedBeanHandle<Sensor> namedSensor;
         NamedIcon icon; 
     }

@@ -2366,7 +2366,7 @@ public class LRouteTableAction extends AbstractTableAction {
     /**
     * Sorts RouteElement                                                            
     */
-    public class RouteElementComparator extends SystemNameComparator {
+    public static class RouteElementComparator extends SystemNameComparator {
         RouteElementComparator() {
         }
         public int compare(Object o1, Object o2) {

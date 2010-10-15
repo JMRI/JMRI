@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -257,7 +257,7 @@ public class DefaultConditional extends AbstractNamedBean
         return true;
     }
 
-    class DataPair {
+    static class DataPair {
         boolean result = false;
         int indexCount = 0;         // index reached when parsing completed
         BitSet argsUsed = null;     // error detection for missing arguments

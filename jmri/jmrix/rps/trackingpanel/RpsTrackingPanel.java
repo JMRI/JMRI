@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.20 $
+ * @version   $Revision: 1.21 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -271,7 +271,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
     /**
      * Store draw representation of a measurement (set)
      */
-    class MeasurementRep {
+    static class MeasurementRep {
         void draw(Graphics2D g2) {
             g2.setPaint(color);
             g2.draw(rep1);

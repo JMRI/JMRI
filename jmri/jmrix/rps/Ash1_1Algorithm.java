@@ -123,7 +123,7 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
@@ -401,7 +401,7 @@ int gps3()						{// GPS Position Solver
      *
      * More of a struct, really
      */
-    class RetVal {
+    static class RetVal {
         RetVal(int code, double x, double y, double z, double vs) {
             this.code = code;
             this.x = x;

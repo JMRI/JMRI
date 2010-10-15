@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -92,7 +92,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
     /**
      * Define objects to save and manipulate a particular setting
      */
-    class Setting {
+    static class Setting {
         String varName;
         VariableValue variable;
         int value;

@@ -13,7 +13,7 @@ import javax.swing.JMenu;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -27,7 +27,7 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
     // suppress inappropriate menu items
-    class ReporterPopupUtil extends PositionablePopupUtil {
+    static class ReporterPopupUtil extends PositionablePopupUtil {
         ReporterPopupUtil(Positionable parent, javax.swing.JComponent textComp) {
             super(parent, textComp);
         }

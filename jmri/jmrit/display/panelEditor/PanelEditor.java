@@ -390,7 +390,7 @@ public class PanelEditor extends Editor implements ItemListener {
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());
     }
 
-    class ComboBoxItem {
+    static class ComboBoxItem {
         String name;
         ComboBoxItem(String n) {
             name = n;

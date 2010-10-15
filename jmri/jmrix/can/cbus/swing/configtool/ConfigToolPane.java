@@ -18,7 +18,7 @@ import javax.swing.*;
  * that are linked to CBUS events.
  *
  * @author			Bob Jacobsen   Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @since 2.3.1
  */
 public class ConfigToolPane extends JPanel implements CanListener {
@@ -194,7 +194,7 @@ public class ConfigToolPane extends JPanel implements CanListener {
     /**
      * Class to handle recording and presenting one event.
      */
-    class CbusEventRecorder extends JPanel implements CanListener {
+    static class CbusEventRecorder extends JPanel implements CanListener {
         CbusEventRecorder() {
             super();
             this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));

@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.25 $
+ * @version 		$Revision: 1.26 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -478,7 +478,7 @@ public class LnPacketizer extends LnTrafficController {
         javax.swing.SwingUtilities.invokeLater(new Echo(this, new LocoNetMessage(msg)));
     }
     
-    class Echo implements Runnable {
+    static class Echo implements Runnable {
         Echo(LnPacketizer t, LocoNetMessage m) {
             myTc = t;
             msgForLater = m;

@@ -17,7 +17,7 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
@@ -318,7 +318,7 @@ double    Ca, Cb, Cc, Cd, Ce, Cf, Ci, Cj, Cx, Cy, Cz;//  xi, yi, zi, ri
      *
      * More of a struct, really
      */
-    class RetVal {
+    static class RetVal {
         RetVal(int code, double x, double y, double z, double vs) {
             this.code = code;
             this.x = x;
