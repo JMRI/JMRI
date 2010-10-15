@@ -14,40 +14,40 @@ import jmri.DccLocoAddress;
  * system specific consist managers can be built.
  *
  * @author                Paul Bender Copyright (C) 2004
- * @version               $Revision: 1.9 $
+ * @version               $Revision: 1.10 $
  */
 abstract public class AbstractConsistManager implements jmri.ConsistManager{
 
-	protected Hashtable<DccLocoAddress,Consist> ConsistTable = null;
+	protected Hashtable<DccLocoAddress,Consist> consistTable = null;
     
-	protected ArrayList<DccLocoAddress> ConsistList = null;
+	protected ArrayList<DccLocoAddress> consistList = null;
 
 	public AbstractConsistManager(){
-	      ConsistTable = new Hashtable<DccLocoAddress,Consist>();
-	      ConsistList = new ArrayList<DccLocoAddress>();
+	      consistTable = new Hashtable<DccLocoAddress,Consist>();
+	      consistList = new ArrayList<DccLocoAddress>();
 	}
 
 	/**
 	 *    Find a Consist with this consist address, and return it.
 	 **/
 	public Consist getConsist(DccLocoAddress address){
-		if(ConsistTable.containsKey(address)) {
-			return(ConsistTable.get(address));
+		if(consistTable.containsKey(address)) {
+			return(consistTable.get(address));
 		} else {
 			return(addConsist(address));
 		}
 	   }
 
 	/**
-	 *     Add a new Consist with the given address to the ConsistTable/ConsistList
+	 *     Add a new Consist with the given address to the consistTable/consistList
 	 **/
 	abstract public Consist addConsist(DccLocoAddress address);
 	
 	// remove the old Consist
 	public void delConsist(DccLocoAddress address){
-		ConsistTable.get(address).dispose();
-		ConsistTable.remove(address);
-		ConsistList.remove(address);
+		consistTable.get(address).dispose();
+		consistTable.remove(address);
+		consistList.remove(address);
 	}
 
 	/**
@@ -64,7 +64,7 @@ abstract public class AbstractConsistManager implements jmri.ConsistManager{
 	/**
   	 *  Return the list of consists we know about.
 	 **/
-	public ArrayList<DccLocoAddress> getConsistList() { return ConsistList; }
+	public ArrayList<DccLocoAddress> getConsistList() { return consistList; }
 
 	public String decodeErrorCode(int ErrorCode){
 		StringBuffer buffer = new StringBuffer("");

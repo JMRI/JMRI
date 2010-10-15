@@ -23,7 +23,7 @@ import jmri.util.SerialUtil;
  *					Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 2.25 $
+ * @version			$Revision: 2.26 $
  */
 
 public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -179,7 +179,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
      */
     public boolean okToSend() {
         if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            if(CheckBuffer) {
+            if(checkBuffer) {
                 log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
                 return (activeSerialPort.isCTS() && OutputBufferEmpty);
             } else {
@@ -188,7 +188,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
             }
         }
         else {
-            if(CheckBuffer) {
+            if(checkBuffer) {
                 log.debug("Buffer Empty: " + OutputBufferEmpty);
                 return (OutputBufferEmpty);
             } else {
@@ -263,7 +263,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
             flow = 0;
         activeSerialPort.setFlowControlMode(flow);
         if (mOpt2.equals(validOption2[0]))
-            CheckBuffer = true;    
+            checkBuffer = true;
     }
     
     

@@ -100,7 +100,7 @@
  * </P>
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author                      Paul Bender Copyright (C) 2003-2010 
- * @version			$Revision: 2.36 $
+ * @version			$Revision: 2.37 $
  */
 
 package jmri.jmrix.lenz;
@@ -113,7 +113,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
     protected static final int IDLE = 0;
-    protected int InternalState = IDLE;
+    protected int internalState = IDLE;
 
     /* Static arrays to hold Lenz specific feedback mode information */
     static String[] modeNames = null;
@@ -215,7 +215,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
            sendOffMessage();
          } else {
            tc.sendXNetMessage(msg, this);
-           InternalState=COMMANDSENT;
+           internalState=COMMANDSENT;
          }
     }
     
@@ -262,12 +262,12 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
      */
     synchronized public void message(XNetReply l) {
 	if(log.isDebugEnabled()) log.debug("recieved message: " +l);
-        if(InternalState==OFFSENT) {
+        if(internalState==OFFSENT) {
 	  if(l.isOkMessage() && !l.isUnsolicited()) {
 	    /* the command was successfully recieved */
             synchronized(this) {
 	       newKnownState(getCommandedState());
-	       InternalState=IDLE;
+	       internalState=IDLE;
             }
 	    return;
           } else if(l.isRetransmittableErrorMsg()) {
@@ -305,7 +305,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
     {
        if(log.isDebugEnabled()) log.debug("Notified of timeout on message" + msg.toString());
        // If we're in the OFFSENT state, we need to send another OFF message.
-       if(InternalState==OFFSENT) sendOffMessage();
+       if(internalState==OFFSENT) sendOffMessage();
 
     }
 
@@ -334,7 +334,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
 
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 	  mNumber + " in DIRECT feedback mode ");
-       if(getCommandedState()!=getKnownState() || InternalState==COMMANDSENT) {
+       if(getCommandedState()!=getKnownState() || internalState==COMMANDSENT) {
           if(l.isFeedbackBroadcastMessage()) {
 	     int numDataBytes=l.getElement(0)&0x0f;
 	     for(int i=1;i<numDataBytes;i+=2) {
@@ -382,8 +382,8 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        */
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 	                   mNumber + " in MONITORING feedback mode "); 
-       //if(getCommandedState()==getKnownState() && InternalState==IDLE) {
-       if(InternalState==IDLE) {
+       //if(getCommandedState()==getKnownState() && internalState==IDLE) {
+       if(internalState==IDLE) {
 	  if(l.isFeedbackBroadcastMessage()) {
              // This is a feedback message, we need to check and see if it
              // indicates this turnout is to change state or if it is for 
@@ -397,7 +397,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
              }
           }
        } else if(getCommandedState()!=getKnownState() || 
-                 InternalState==COMMANDSENT) {
+                 internalState==COMMANDSENT) {
           if(l.isFeedbackBroadcastMessage()) {
 	     int numDataBytes=l.getElement(0)&0x0f;
 	     for(int i=1;i<numDataBytes;i+=2) {
@@ -442,7 +442,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
        // state
        if(log.isDebugEnabled()) log.debug("Handle Message for turnout " + 
 				mNumber + " in EXACT feedback mode "); 
-       if(getCommandedState()==getKnownState() && InternalState==IDLE) {
+       if(getCommandedState()==getKnownState() && internalState==IDLE) {
           if(l.isFeedbackBroadcastMessage()) {
              // This is a feedback message, we need to check and see if it
              // indicates this turnout is to change state or if it is for 
@@ -455,7 +455,7 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                 }
              }
        } else if(getCommandedState()!=getKnownState() || 
-                 InternalState==COMMANDSENT) {
+                 internalState==COMMANDSENT) {
           if(l.isFeedbackBroadcastMessage()) {
              int numDataBytes=l.getElement(0)&0x0f;
              for(int i=1;i<numDataBytes;i+=2) {
@@ -525,17 +525,17 @@ public class XNetTurnout extends AbstractTurnout implements XNetListener {
                    // To avoid some of the command station busy 
                    // messages, add a short delay before sending the 
                    // first off message.  
-                   if(InternalState != OFFSENT) {
+                   if(internalState != OFFSENT) {
                         new java.util.Timer().schedule(new offTask(this),30);
                         newKnownState(getCommandedState());
-                        InternalState = OFFSENT;
+                        internalState = OFFSENT;
                         return;
                    }
                //} catch(java.lang.InterruptedException ie) {
                //    log.debug("wait interrupted");
                //}
 	       newKnownState(getCommandedState());
-	       InternalState = OFFSENT;
+	       internalState = OFFSENT;
             }
             // Then send the message.
             tc.sendHighPriorityXNetMessage(msg, this);

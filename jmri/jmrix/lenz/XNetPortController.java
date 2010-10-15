@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 2.10 $
+ * @version			$Revision: 2.11 $
  */
 public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortController {
 
@@ -55,7 +55,7 @@ public abstract class XNetPortController extends jmri.jmrix.AbstractSerialPortCo
     }
 
     protected String [] validOption2 = new String[]{"yes", "no"};
-    protected boolean CheckBuffer = false;
+    protected boolean checkBuffer = false;
 
     protected XNetSystemConnectionMemo adaptermemo = null;
 

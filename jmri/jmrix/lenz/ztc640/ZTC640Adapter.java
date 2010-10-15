@@ -25,7 +25,7 @@ import jmri.util.SerialUtil;
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -180,7 +180,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      */
     public boolean okToSend() {
         if((activeSerialPort.getFlowControlMode() & SerialPort.FLOWCONTROL_RTSCTS_OUT) == SerialPort.FLOWCONTROL_RTSCTS_OUT) {
-            if(CheckBuffer) {
+            if(checkBuffer) {
                 log.debug("CTS: " + activeSerialPort.isCTS() + " Buffer Empty: " + OutputBufferEmpty);
                 return (activeSerialPort.isCTS() && OutputBufferEmpty);
             } else {
@@ -189,7 +189,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
             }
         }
         else {
-            if(CheckBuffer) {
+            if(checkBuffer) {
                 log.debug("Buffer Empty: " + OutputBufferEmpty);
                 return (OutputBufferEmpty);
             } else {
@@ -262,7 +262,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
             flow = SerialPort.FLOWCONTROL_RTSCTS_OUT;
         activeSerialPort.setFlowControlMode(flow);
         if (mOpt2.equals(validOption2[0]))
-            CheckBuffer = true;    
+            checkBuffer = true;
     }
     
     

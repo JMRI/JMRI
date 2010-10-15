@@ -6,7 +6,7 @@
  *                      See XNetTurnout for further documentation.
  * </P>
  * @author			Paul Bender Copyright (C) 2008 
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 
 package jmri.jmrix.lenz.hornbyelite;
@@ -26,9 +26,9 @@ public class EliteXNetTurnout extends jmri.jmrix.lenz.XNetTurnout {
     protected synchronized void sendOffMessage() {
                // The Elite appears to react to the on and off messages
                // in the same manner, and does not handle feedback properly
-               // Set the known state to the command state and the InternalState               // to idlestate.
+               // Set the known state to the command state and the internalState               // to idlestate.
                newKnownState(getCommandedState());
-               InternalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
+               internalState = jmri.jmrix.lenz.XNetTurnout.IDLE;
     }
 
 

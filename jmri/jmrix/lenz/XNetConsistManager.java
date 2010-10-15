@@ -10,7 +10,7 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004-2010
- * @version               $Revision: 2.14 $
+ * @version               $Revision: 2.15 $
  */
 
 public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
@@ -49,13 +49,13 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
         public boolean csConsistNeedsSeperateAddress() { return false; }
 
 	/**
-	 *    Add a new XNetConsist with the given address to ConsistTable/ConsistList
+	 *    Add a new XNetConsist with the given address to consistTable/consistList
 	 */
 	public Consist addConsist(DccLocoAddress address){ 
 		        XNetConsist consist;
                         consist = new XNetConsist(address,tc);
-                        ConsistTable.put(address,consist);
-                        ConsistList.add(address);
+                        consistTable.put(address,consist);
+                        consistList.add(address);
                         return(consist);
 	}
 
@@ -211,8 +211,8 @@ public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implem
                          }
 
                          // We need to check and see if this consist exists
-                         if(!XNetConsistManager.this.ConsistTable.containsKey(firstMember) && 
-                            !XNetConsistManager.this.ConsistTable.containsKey(new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>99))) {
+                         if(!XNetConsistManager.this.consistTable.containsKey(firstMember) &&
+                            !XNetConsistManager.this.consistTable.containsKey(new DccLocoAddress(_lastMemberAddress,_lastMemberAddress>99))) {
 	                       CurrentConsist=(XNetConsist)addConsist(firstMember); 
                                CurrentConsist.setConsistType(Consist.CS_CONSIST);
                                CurrentConsist.restore(firstMember,

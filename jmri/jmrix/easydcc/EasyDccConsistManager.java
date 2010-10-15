@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.9 $
+ * @version               $Revision: 1.10 $
  */
 
 
@@ -43,13 +43,13 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
         public boolean csConsistNeedsSeperateAddress() { return true; }
 
 	/**
-	 *    Add a new EasyDccConsist with the given address to ConsistTable/ConsistList
+	 *    Add a new EasyDccConsist with the given address to consistTable/consistList
 	 */
 	public Consist addConsist(DccLocoAddress address){ 
 		        EasyDccConsist consist;
                         consist = new EasyDccConsist(address);
-                        ConsistTable.put(address,consist);
-                        ConsistList.add(address);
+                        consistTable.put(address,consist);
+                        consistList.add(address);
                         return consist;
 	}
 
