@@ -16,7 +16,7 @@ import java.util.ArrayList;
  * "RS(0,0,0);(1,0,0);(1,1,0);(0,1,0)".
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class RpsSensor extends AbstractSensor
                     implements MeasurementListener {
@@ -88,7 +88,7 @@ public class RpsSensor extends AbstractSensor
         }
     }
     
-    Region region;
+    transient Region region;
     ArrayList<Integer> contents = new ArrayList<Integer>();
     
     /**

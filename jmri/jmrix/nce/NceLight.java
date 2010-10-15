@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class NceLight extends AbstractLight {
 
@@ -41,7 +41,7 @@ public class NceLight extends AbstractLight {
         initializeLight(systemName);
     }
         
-    NceTrafficController tc;
+    transient NceTrafficController tc;
     NceLightManager mgr;
     
     private void initializeLight(String systemName) {

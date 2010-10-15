@@ -12,7 +12,7 @@ import jmri.implementation.AbstractReporter;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @since 2.3.1
  */
 public class RpsReporter extends AbstractReporter implements MeasurementListener {
@@ -65,7 +65,7 @@ public class RpsReporter extends AbstractReporter implements MeasurementListener
         }
     }
     
-    Region region;
+    transient Region region;
     ArrayList<Integer> contents = new ArrayList<Integer>();
     
     /**
