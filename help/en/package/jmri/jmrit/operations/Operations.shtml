@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.79 2010-10-03 16:58:22 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.80 2010-10-15 20:20:32 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -147,7 +147,7 @@ route must have a track that will service the engine type or the build
 will fail.</P>
 
 <P>If you want a caboose or car with FRED for your train, first
-configure some of your cars to be a caboose by selected the caboose or
+configure some of your cars to be a caboose by selecting the caboose or
 FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the Edit Car
 window. Now change the train requires radio button to Caboose or FRED.
 Be sure that the last location on your trains route has a track that
@@ -200,6 +200,14 @@ If your railroad depicts trains traveling north and south select the
 "East/West" box. You must select at least one direction, and can if
 desired select both.
 
+<H3>Scale</H3>
+
+Next select the scale you are modeling. This is useful when you enter
+the length of cars and tracks. You can enter the number of actual inches
+and the program will convert to scale feet. Append a double quote to the
+length when entering actual inches. The program will also automatically
+assign the proper NMRA weight for a car based on scale and length.
+
 <H3>Maximum Train Length</H3>
 
 Now enter the default "Maximum Train Length" you desire for your trains.
@@ -223,24 +231,12 @@ average number of minutes it takes to drop or pickup a car on your
 railroad. Then enter the average amount of time in minutes it takes to
 travel from one location to the another.
 
-<H3>Scale</H3>
-
-Next select the scale you are modeling. This is useful when you enter
-the length of cars and tracks. You can enter the number of actual inches
-and the program will convert to scale feet. Append a double quote to the
-length when entering actual inches. The program will also automatically
-assign the proper NMRA weight for a car based on scale and length.
-
 <H3>Car Types</H3>
 
 The program has two sets of car types for you to use. Descriptive
 provides type names like "Boxcar" and "Tankcar", and AAR provides type
 names like "XM" and "T" for boxcars and tank cars respectively. Select
 the one that you prefer.
-
-<H3>Owner Name</H3>
-
-You can optionally enter your name in the "Owner" field.
 
 <H3>Build Option</H3>
 
