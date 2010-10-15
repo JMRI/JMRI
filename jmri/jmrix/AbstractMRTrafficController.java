@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.86 $
+ * @version         $Revision: 1.87 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -39,7 +39,7 @@ abstract public class AbstractMRTrafficController {
         allowUnexpectedReply=false;
         setInstance();
         selfLock = this;
-        jmri.util.RuntimeUtil.addShutdownHook(new Thread(new cleanupHook(this)));
+        jmri.util.RuntimeUtil.addShutdownHook(new Thread(new CleanupHook(this)));
     }
     
     // this is a local variable, used here only;
@@ -974,10 +974,10 @@ abstract public class AbstractMRTrafficController {
      * the primary task of this thread is to make sure the DCC system has 
      * exited service mode when the program exits.
      */
-    static class cleanupHook implements Runnable {
+    static class CleanupHook implements Runnable {
         AbstractMRTrafficController mTC;
         
-        cleanupHook(AbstractMRTrafficController pTC) {
+        CleanupHook(AbstractMRTrafficController pTC) {
             mTC = pTC;
         }
         public void run() {

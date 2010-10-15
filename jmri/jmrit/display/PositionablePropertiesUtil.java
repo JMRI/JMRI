@@ -659,20 +659,20 @@ public class PositionablePropertiesUtil {
     
     private void getCurrentValues(){
         pop = _parent.getPopupUtility();
-        txtList = new ArrayList<textDetails>();
+        txtList = new ArrayList<TextDetails>();
         
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
             if (si.isIcon()){
-                txtList.add(new textDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
+                txtList.add(new TextDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
             } else {
-                txtList.add(new textDetails("Active", si.getActiveText(), si.getTextActive(), si.getBackgroundActive()));
-                txtList.add(new textDetails("InActive", si.getInactiveText(), si.getTextInActive(), si.getBackgroundInActive()));
-                txtList.add(new textDetails("Unknown", si.getUnknownText(), si.getTextUnknown(), si.getBackgroundUnknown()));
-                txtList.add(new textDetails("Inconsistent", si.getInconsistentText(), si.getTextInconsistent(), si.getBackgroundInconsistent()));
+                txtList.add(new TextDetails("Active", si.getActiveText(), si.getTextActive(), si.getBackgroundActive()));
+                txtList.add(new TextDetails("InActive", si.getInactiveText(), si.getTextInActive(), si.getBackgroundInActive()));
+                txtList.add(new TextDetails("Unknown", si.getUnknownText(), si.getTextUnknown(), si.getBackgroundUnknown()));
+                txtList.add(new TextDetails("Inconsistent", si.getInconsistentText(), si.getTextInconsistent(), si.getBackgroundInconsistent()));
             }
         } else {
-            txtList.add(new textDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
+            txtList.add(new TextDetails("Text", pop.getText(), pop.getForeground(), _parent.getBackground()));
         }
         
         fixedWidth = pop.getFixedWidth();
@@ -710,7 +710,7 @@ public class PositionablePropertiesUtil {
     private int xPos;
     private int yPos;
     
-    private ArrayList <textDetails> txtList = null;
+    private ArrayList <TextDetails> txtList = null;
     
     private JCheckBox italic = new JCheckBox("Italic", false);
     private JCheckBox bold = new JCheckBox("Bold", false);
@@ -781,8 +781,8 @@ public class PositionablePropertiesUtil {
         }
     }
     
-    static class textDetails {
-        textDetails(String desc, String txt, Color fore, Color back){
+    static class TextDetails {
+        TextDetails(String desc, String txt, Color fore, Color back){
             if (txt == null)
                 text = "";
             else
