@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -923,7 +923,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
         r.start();
     }
     
-    class NotifyDelay extends Thread {
+    static class NotifyDelay extends Thread {
         int delay;
         ProgListener p;
         int value;

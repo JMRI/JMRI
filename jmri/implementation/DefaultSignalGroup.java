@@ -450,7 +450,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalTurnout> _signalTurnoutList = new ArrayList<SignalTurnout>();
-        private class SignalTurnout {
+        private static class SignalTurnout {
             NamedBeanHandle<Turnout> _turnout;
             int _state;
 
@@ -531,7 +531,7 @@ public class DefaultSignalGroup extends AbstractNamedBean implements jmri.Signal
         }
         
         ArrayList <SignalSensor> _signalSensorList = new ArrayList<SignalSensor>();
-        private class SignalSensor {
+        private static class SignalSensor {
             NamedBeanHandle<Sensor> _Sensor;
             int _state;
 

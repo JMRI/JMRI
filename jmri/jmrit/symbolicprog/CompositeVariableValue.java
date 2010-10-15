@@ -48,7 +48,7 @@ import java.util.Iterator;
  *</ol>
  * <P>
  * @author	Bob Jacobsen   Copyright (C) 2001, 2005
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  *
  */
 public class CompositeVariableValue extends EnumVariableValue implements ActionListener, PropertyChangeListener {
@@ -118,7 +118,7 @@ public class CompositeVariableValue extends EnumVariableValue implements ActionL
      * Defines a list of Setting objects.
      * <P> Serves as a home for various service methods
      */
-    class SettingList extends ArrayList<Setting> {
+    static class SettingList extends ArrayList<Setting> {
         public SettingList() {
             super();
             if (log.isDebugEnabled()) log.debug("New setting list");
