@@ -4,6 +4,12 @@ package jmri.jmrit.display.layoutEditor;
  */
 import jmri.jmrit.catalog.NamedIcon;
 
+// This is the same name as display.MemoryIcon, but a very
+// separate class. That's not good. Unfortunately, it's too 
+// hard to disentangle that now because it's resident in the
+// panel file that have been written out, so we just annote 
+// the fact.
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class MemoryIcon extends jmri.jmrit.display.MemoryIcon {
 
     String defaultText = " ";
