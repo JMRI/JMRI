@@ -35,7 +35,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -371,8 +371,8 @@ public class JmriJFrameServlet implements Servlet {
         throws IOException {
         int contentLength = contentLength(inputs);
         char[] postData = new char[contentLength];
-        in.read(postData, 0, contentLength);
-        inputs[++i] = new String(postData, 0, contentLength);
+        int length = in.read(postData, 0, contentLength);
+        inputs[++i] = new String(postData, 0, length);
     }
     
     // Given a line that starts with Content-Length,

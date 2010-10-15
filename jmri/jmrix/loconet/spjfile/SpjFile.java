@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Four-byte quantities in SPJ files are little-endian.
  *
  * @author		Bob Jacobsen  Copyright (C) 2006, 2009
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 
 public class SpjFile {
@@ -499,10 +499,10 @@ public class SpjFile {
             spare7 = readInt4(s);
                         
             byte[] name = new byte[72];
-            s.read(name);
+            int readLength = s.read(name);
             // name is zero-terminated, so we have to truncate that array
             int len = 0;
-            for (len=0; len<72; len++) if (name[len]==0) break;
+            for (len=0; len< readLength; len++) if (name[len]==0) break;
             byte[] shortname = new byte[len];
             for (int i=0; i<len; i++) shortname[i] = name[i];
             filename = new String(shortname);

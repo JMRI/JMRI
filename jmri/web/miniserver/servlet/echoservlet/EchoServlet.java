@@ -20,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class EchoServlet extends AbstractServlet {
@@ -99,8 +99,8 @@ public class EchoServlet extends AbstractServlet {
         throws IOException {
         int contentLength = contentLength(inputs);
         char[] postData = new char[contentLength];
-        in.read(postData, 0, contentLength);
-        inputs[++i] = new String(postData, 0, contentLength);
+        int length = in.read(postData, 0, contentLength);
+        inputs[++i] = new String(postData, 0, length);
     }
     
     // Given a line that starts with Content-Length,
