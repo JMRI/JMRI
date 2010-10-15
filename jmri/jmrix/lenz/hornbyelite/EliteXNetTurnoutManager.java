@@ -10,7 +10,7 @@ import jmri.Turnout;
  * System names are "XTnnn", where nnn is the turnout number without padding.
  *
  * @author			Paul Bender Copyright (C) 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager implements jmri.jmrix.lenz.XNetListener {
 
@@ -56,7 +56,7 @@ public class EliteXNetTurnoutManager extends jmri.jmrix.lenz.XNetTurnoutManager 
                       // turnout
                       ((EliteXNetTurnout)getBySystemName(s)).message(l);
                    }
-                   if (addr%2==1) {
+                   if ((addr&0x01)==1) {
                    // If the address we got was odd, we need to check to 
                    // see if the even address should be added as well.
                    int a2=l.getElement(i+1);
