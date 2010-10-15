@@ -242,6 +242,7 @@ public class TableItemPanel extends ItemPanel {
 //        _paletteFrame.pack();
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR") // while loop accesses both key and value, so key interator faster
     protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         GridBagLayout gridbag = new GridBagLayout();
         _iconPanel.setLayout(gridbag);
