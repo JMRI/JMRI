@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.117 2010-10-04 02:20:23 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.118 2010-10-15 03:58:04 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -250,6 +250,7 @@
 	reliable LocoNet communications routine
 	<LI>Bob Jacobsen, who wrote some of the early code and does packaging and user support
 	<li>Martin Jahner, who built a replacement library for Mac OS X
+	<li>Jay Janzen, who debugged a RobotThrottle problem
     <LI>Lionel Jeanson, who added images to the roster,
         updated the throttle to add preferences for displaying them,
         cleaned up some code problems in the throttle,
