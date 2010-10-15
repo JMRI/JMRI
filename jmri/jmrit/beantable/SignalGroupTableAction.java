@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -167,7 +167,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
               
               void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
-                setColumnToHoldButton(table, DELETECOL, 
+                SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL, 
                 new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
             }
 
