@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;
  * via an C/MRI Simulator object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -46,8 +46,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         
     }
 
-	JFrame frame;
-	
     public String name() { return "Simulator"; }
 
     protected void setInstance() { adapter = SimDriverAdapter.instance(); }
