@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -140,7 +140,7 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     }
     
     // Longest boot reply is 256bytes each preceded by DLE + 2xSTX + ETX
-    static public int maxSize = 515;
+    static public final int maxSize = 515;
     
     // contents (private)
     private boolean _isBoot = false;
