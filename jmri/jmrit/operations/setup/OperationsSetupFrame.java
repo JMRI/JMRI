@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -41,24 +41,14 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 	
 	// labels
-	JLabel textScale = new JLabel(" "+ rb.getString("Scale"));
-	JLabel textCarType = new JLabel(" "+ rb.getString("CarTypes"));
-	JLabel textRailroadName = new JLabel(" " + rb.getString("RailroadName") + " ");
-	JLabel textDirection = new JLabel(rb.getString("direction"));
-	JLabel textMaxTrain = new JLabel(rb.getString("MaxLength"));
-	JLabel textMaxEngine = new JLabel(rb.getString("MaxEngine"));
-	JLabel textMoveTime = new JLabel(rb.getString("MoveTime"));
-	JLabel textTravelTime = new JLabel(rb.getString("TravelTime"));
-	JLabel textOwner = new JLabel(" "+rb.getString("Owner"));
-	JLabel textPanel = new JLabel(" "+rb.getString("Panel"));
+
 	JLabel textIconNorth = new JLabel(rb.getString("IconNorth"));
 	JLabel textIconSouth = new JLabel(rb.getString("IconSouth"));
 	JLabel textIconEast = new JLabel(rb.getString("IconEast"));
 	JLabel textIconWest = new JLabel(rb.getString("IconWest"));
 	JLabel textIconLocal = new JLabel(rb.getString("IconLocal"));
 	JLabel textIconTerminate = new JLabel(rb.getString("IconTerminate"));
-	JLabel textComment = new JLabel(rb.getString("Comment"));
-	JLabel textBuild = new JLabel(rb.getString("BuildOption"));
+	//JLabel textComment = new JLabel(rb.getString("Comment"));
 
 	// major buttons	
 	JButton backupButton = new JButton(rb.getString("Backup"));
@@ -96,7 +86,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JTextField ownerTextField = new JTextField(10);
 	JTextField panelTextField = new JTextField(35);
 	JTextField railroadNameTextField = new JTextField(35);
-	JTextField maxLengthTextField = new JTextField(10);
+	JTextField maxLengthTextField = new JTextField(5);
 	JTextField maxEngineSizeTextField = new JTextField(3);
 	JTextField switchTimeTextField = new JTextField(3);
 	JTextField travelTimeTextField = new JTextField(3);
@@ -140,41 +130,69 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		backupButton.setToolTipText(rb.getString("BackupToolTip"));
 		restoreButton.setToolTipText(rb.getString("RestoreToolTip"));
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
+		
+		panelTextField.setToolTipText(rb.getString("EnterPanelName"));
 
 		// Layout the panel by rows
-		// row 1
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		JPanel panel = new JPanel();
 		JScrollPane panelPane = new JScrollPane(panel);
-		panel.setLayout(new GridBagLayout());
+		panel.setLayout(new BoxLayout(panel ,BoxLayout.Y_AXIS));
 		panelPane.setBorder(BorderFactory.createTitledBorder(""));
-		addItem (panel, textRailroadName, 0, 1);
-		addItemWidth (panel, railroadNameTextField, 3, 1, 1);
 		
-		// row 2
-		addItem (panel, textDirection, 0, 2);
-		addItemLeft (panel, northCheckBox, 1, 2);
-		addItemLeft (panel, eastCheckBox, 2, 2);
+		// row 1a
+	   	JPanel p1 = new JPanel();
+    	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+    	
+		JPanel pRailroadName = new JPanel();
+		pRailroadName.setLayout(new GridBagLayout());
+		pRailroadName.setBorder(BorderFactory.createTitledBorder(rb.getString("RailroadName")));
+		addItem (pRailroadName, railroadNameTextField, 0, 0);
+		p1.add(pRailroadName);
+		
+		// row 1b
+		JPanel pTrainDir = new JPanel();
+		pTrainDir.setLayout(new GridBagLayout());
+		pTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("direction")));		
+		addItemLeft (pTrainDir, northCheckBox, 1, 2);
+		addItemLeft (pTrainDir, eastCheckBox, 2, 2);
+		p1.add(pTrainDir);
+
 		setDirectionCheckBox(Setup.getTrainDirection());
 		
-		// row 3
-		addItem (panel, textMaxTrain, 0, 3);
-		addItemLeft (panel, maxLengthTextField, 1, 3);
+		// row 3a
+	   	JPanel p3 = new JPanel();
+    	p3.setLayout(new BoxLayout(p3,BoxLayout.X_AXIS));
+
+		JPanel pTrainLength = new JPanel();
+		pTrainLength.setBorder(BorderFactory.createTitledBorder(rb.getString("MaxLength")));		
+		addItem (pTrainLength, maxLengthTextField, 0, 0);
+		p3.add(pTrainLength);
 		
-		// row 4
-		addItem (panel, textMaxEngine, 0, 4);
-		addItemLeft (panel, maxEngineSizeTextField, 1, 4);
+		// row 3b
+		JPanel pMaxEngine = new JPanel();
+		pMaxEngine.setBorder(BorderFactory.createTitledBorder(rb.getString("MaxEngine")));		
+		addItem (pMaxEngine, maxEngineSizeTextField, 0, 0);
+		p3.add(pMaxEngine);
 		
-		// row 5
-		addItem (panel, textMoveTime, 0, 5);
-		addItemLeft (panel, switchTimeTextField, 1, 5);
+		// row 5a
+	   	JPanel p5 = new JPanel();
+    	p5.setLayout(new BoxLayout(p5,BoxLayout.X_AXIS));
+
+		JPanel pSwitchTime = new JPanel();
+		pSwitchTime.setBorder(BorderFactory.createTitledBorder(rb.getString("MoveTime")));		
+		addItem (pSwitchTime, switchTimeTextField, 0, 0);
+		p3.add(pSwitchTime);
 		
-		// row 6
-		addItem (panel, textTravelTime, 0, 6);
-		addItemLeft (panel, travelTimeTextField, 1, 6);
+		// row 5b
+		JPanel pTravelTime = new JPanel();
+		pTravelTime.setBorder(BorderFactory.createTitledBorder(rb.getString("TravelTime")));		
+		addItem (pTravelTime, travelTimeTextField, 0, 0);
+		p3.add(pTravelTime);
 		
-		// row 7
-		JPanel p = new JPanel();
+		// row 2
+		JPanel pScale = new JPanel();
+		pScale.setBorder(BorderFactory.createTitledBorder(rb.getString("Scale")));
 
 		ButtonGroup scaleGroup = new ButtonGroup();
 		scaleGroup.add(scaleZ);
@@ -189,77 +207,105 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		scaleGroup.add(scaleO);
 		scaleGroup.add(scaleG);
 		
-		p.add(scaleZ);
-		p.add(scaleN);
-		p.add(scaleTT);
-		p.add(scaleHOn3);
-		p.add(scaleOO);
-		p.add(scaleHO);
-		p.add(scaleSn3);
-		p.add(scaleS);
-		p.add(scaleOn3);
-		p.add(scaleO);
-		p.add(scaleG);
-		addItem(panel, textScale, 0, 7);
-		addItemWidth(panel, p, 3, 1, 7);
+		pScale.add(scaleZ);
+		pScale.add(scaleN);
+		pScale.add(scaleTT);
+		pScale.add(scaleHOn3);
+		pScale.add(scaleOO);
+		pScale.add(scaleHO);
+		pScale.add(scaleSn3);
+		pScale.add(scaleS);
+		pScale.add(scaleOn3);
+		pScale.add(scaleO);
+		pScale.add(scaleG);
 		setScale();
 		
-		// row 9
-		JPanel carTypeButtons = new JPanel();
+		// row 9a
+	   	JPanel p9 = new JPanel();
+    	p9.setLayout(new BoxLayout(p9,BoxLayout.X_AXIS));
+
+		JPanel pCarTypeButtons = new JPanel();
+		pCarTypeButtons.setBorder(BorderFactory.createTitledBorder(rb.getString("CarTypes")));
 		ButtonGroup carTypeGroup = new ButtonGroup();
 		carTypeGroup.add(typeDesc);
 		carTypeGroup.add(typeAAR);
-		carTypeButtons.add(typeDesc);
-		carTypeButtons.add(typeAAR);
-		addItem (panel, textCarType, 0, 9);
-		addItemWidth(panel, carTypeButtons, 3, 1, 9);
+		pCarTypeButtons.add(typeDesc);
+		pCarTypeButtons.add(typeAAR);
+		
+		p9.add(pCarTypeButtons);
+		
 		setCarTypes();
 		
-		// row 10
-		addItem (panel, textOwner, 0, 10);
-		addItemLeft (panel, ownerTextField, 1, 10);
-		
-		// row 12 
-		JPanel buildButtons = new JPanel();
+		// row 9b
+		JPanel pBuildOption = new JPanel();
+		pBuildOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BuildOption")));
 		ButtonGroup buildGroup = new ButtonGroup();
 		buildGroup.add(buildNormal);
 		buildGroup.add(buildAggressive);
-		buildButtons.add(buildNormal);
-		buildButtons.add(buildAggressive);
-		addItem (panel, textBuild, 0, 12);
-		addItemWidth(panel, buildButtons, 3, 1, 12);
+		pBuildOption.add(buildNormal);
+		pBuildOption.add(buildAggressive);
+
+		p9.add(pBuildOption);
+		
 		setBuildOption();
+		
+		// 1st scroll panel
+		panel.add(p1);
+		panel.add(pScale);
+		panel.add(p3);
+		panel.add(p5);
+		panel.add(p9);
 		
 		// Option panel
 		JPanel options = new JPanel();
 		options.setLayout(new GridBagLayout());
 		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
-		addItem (options, mainMenuCheckBox, 1,7);
-		// addItem (options, rfidCheckBox, 1,8);		
+		addItem (options, mainMenuCheckBox, 1,7);		
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
-		pIcon.setLayout(new GridBagLayout());	
+		pIcon.setLayout(new BoxLayout(pIcon,BoxLayout.Y_AXIS));	
 		JScrollPane pIconPane = new JScrollPane(pIcon);
 		pIconPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPanelOptions")));
+		
+		// row 1 Icon panel
+	   	JPanel p1Icon = new JPanel();
+	   	p1Icon.setLayout(new BoxLayout(p1Icon,BoxLayout.X_AXIS));
+    	
+		JPanel pPanelName = new JPanel();
+		pPanelName.setLayout(new GridBagLayout());
+		pPanelName.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayourPanelName")));
+		addItem (pPanelName, panelTextField, 0, 0);
+		p1Icon.add(pPanelName);
 
-		addItem (pIcon, textPanel, 0, 1);
-		addItemLeft (pIcon, panelTextField, 1, 1);
-		panelTextField.setToolTipText(rb.getString("EnterPanelName"));
-		addItem (pIcon, iconCheckBox, 0, 2);
-		addItem (pIcon, appendCheckBox, 0, 3);
-		addItem (pIcon, textIconNorth, 0, 4);
-		addItemLeft (pIcon, northComboBox, 1, 4);
-		addItem (pIcon, textIconSouth, 0, 5);
-		addItemLeft (pIcon, southComboBox, 1, 5);
-		addItem (pIcon, textIconEast, 0, 8);
-		addItemLeft (pIcon, eastComboBox, 1, 8);
-		addItem (pIcon, textIconWest, 0, 9);
-		addItemLeft (pIcon, westComboBox, 1, 9);
-		addItem (pIcon, textIconLocal, 0, 10);
-		addItemLeft (pIcon, localComboBox, 1, 10);
-		addItem (pIcon, textIconTerminate, 0, 11);
-		addItemLeft (pIcon, terminateComboBox, 1, 11);
+		JPanel pIconControl = new JPanel();
+		pIconControl.setLayout(new GridBagLayout());
+		pIconControl.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutIconOptions")));
+		addItem (pIconControl, appendCheckBox, 0, 0);
+		addItem (pIconControl, iconCheckBox, 1, 0);
+		p1Icon.add(pIconControl);
+		
+		pIcon.add(p1Icon);
+		
+		JPanel pIconColors = new JPanel();
+		pIconColors.setLayout(new GridBagLayout());
+		pIconColors.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutIconColors")));
+		
+		addItem (pIconColors, textIconNorth, 0, 4);
+		addItemLeft (pIconColors, northComboBox, 1, 4);
+		addItem (pIconColors, textIconSouth, 0, 5);
+		addItemLeft (pIconColors, southComboBox, 1, 5);
+		addItem (pIconColors, textIconEast, 0, 8);
+		addItemLeft (pIconColors, eastComboBox, 1, 8);
+		addItem (pIconColors, textIconWest, 0, 9);
+		addItemLeft (pIconColors, westComboBox, 1, 9);
+		addItem (pIconColors, textIconLocal, 0, 10);
+		addItemLeft (pIconColors, localComboBox, 1, 10);
+		addItem (pIconColors, textIconTerminate, 0, 11);
+		addItemLeft (pIconColors, terminateComboBox, 1, 11);
+		
+		pIcon.add(pIconColors);
+		
 		loadIconComboBox(northComboBox);
 		loadIconComboBox(southComboBox);
 		loadIconComboBox(eastComboBox);
@@ -342,7 +388,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			try {
 				Integer.parseInt(maxLengthTextField.getText());
 			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, textMaxTrain.getText(),
+				JOptionPane.showMessageDialog(this, rb.getString("MaxLength"),
 						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -350,7 +396,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			try {
 				Integer.parseInt(maxEngineSizeTextField.getText());
 			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, textMaxEngine.getText(),
+				JOptionPane.showMessageDialog(this, rb.getString("MaxEngine"),
 						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -358,7 +404,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			try {
 				Integer.parseInt(switchTimeTextField.getText());
 			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, textMoveTime.getText(),
+				JOptionPane.showMessageDialog(this, rb.getString("MoveTime"),
 						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -366,7 +412,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			try {
 				Integer.parseInt(travelTimeTextField.getText());
 			} catch (NumberFormatException e){
-				JOptionPane.showMessageDialog(this, textTravelTime.getText(),
+				JOptionPane.showMessageDialog(this, rb.getString("TravelTime"),
 						rb.getString("CanNotAcceptNumber"),
 						JOptionPane.ERROR_MESSAGE);
 				return;
