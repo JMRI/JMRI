@@ -2,8 +2,10 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
+import jmri.jmrix.powerline.SerialLight;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
+import jmri.jmrix.powerline.insteon2412s.Constants;
 
 /**
  * Contains the data payload of a serial
@@ -20,8 +22,9 @@ import jmri.jmrix.powerline.X10Sequence;
  * remain atomic)
  * </ul>
  *
- * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
- * @version   $Revision: 1.3 $
+ * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
+ * @author	Ken Cameron Copyright (C) 2010
+ * @version	$Revision: 1.4 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -54,37 +57,82 @@ public class SpecificMessage extends SerialMessage {
     public void setInterlocked(boolean v) { interlocked = v; }
     public boolean getInterlocked() { return interlocked; }
     
-    @SuppressWarnings("fallthrough")
 	public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();
-        String text;
-        switch (getElement(0)&0xFF) {
-            case 0xFB : text = "Macro load reply"; break;
-            case 0x9B : text = "Set CM11 time"; break;
-            case 0xC3 : if (len == 1) {
-            		text = "Poll Ack"; break;
-            	} // else fall through
-            case 0x00 : if (len == 1) {
-                    text = "OK for transmission"; break;
-                } // else fall through
-            default: {
-            	if (len == 4) {
-                    if (((getElement(0)&0xFF) == 0x02) && ((getElement(1)&0xFF) == 0x63)) {
-                        if ((getElement(3)&0xFF) == 0x80) {
-                    	    text = Constants.formatHeaderByte(getElement(2) & 0xFF)
-                    		    + ' ' + X10Sequence.formatCommandByte(getElement(2)&0xFF);
-                        } else {
-                    	    text = Constants.formatHeaderByte(getElement(2) & 0xFF)
-                		    + ' ' + X10Sequence.formatAddressByte(getElement(2)&0xFF);
-                        }
+        StringBuilder text = new StringBuilder();
+        if ((getElement(0)& 0xFF) != Constants.HEAD_STX) {
+        	text.append("INVALID HEADER: " + String.format("0x%1X", getElement(0)& 0xFF));
+        	text.append(" len: " + len);
+        } else {
+	        switch (getElement(1)& 0xFF) {
+	            case Constants.FUNCTION_REQ_STD :
+	            	text.append("Send Cmd ");
+	            	if (len == 8 || len == 22) {
+		            	if ((getElement(5) & Constants.FLAG_BIT_STDEXT) == Constants.FLAG_STD) {
+		            		text.append(" Std");
+		            	} else if (len == 22) {
+		            		text.append(" Ext");
+		            	}
+		            	text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
+		            	switch (getElement(6) & 0xFF) {
+		            	case Constants.CMD_LIGHT_ON:
+		            		text.append(" ON ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_OFF:
+		            		text.append(" ON ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_CHG:
+		            		text.append(" CHG ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+	            		default:
+	            			text.append(" Unknown cmd: " + String.format("0x%1$2.2X", getElement(6) & 0xFF));
+	            			break;
+		            	}
+	            	} else {
+	            		text.append(" !! Length wrong: " + len);
+	            	}
+	            	break;
+	            case Constants.POLL_REQ_BUTTON :
+	            	text.append("Poll Button ");
+	            	int button = ((getElement(2) & Constants.BUTTON_BITS_ID) >> 4) + 1;
+	            	text.append(button);
+	            	int op = getElement(2) & Constants.BUTTON_BITS_OP;
+	            	if (op == Constants.BUTTON_HELD) {
+		            	text.append(" HELD");
+	            	} else if (op == Constants.BUTTON_REL) {
+		            	text.append(" RELEASED");
+	            	} else if (op == Constants.BUTTON_TAP) {
+		            	text.append(" TAP");
+	            	}
+	            	break;
+	            case Constants.POLL_REQ_BUTTON_RESET :
+	            	text.append("Reset by Button at Power Cycle");
+	            	break;
+	            case Constants.FUNCTION_REQ_X10 :
+	            	text.append("Send Cmd X10 ");
+                    if ((getElement(3)& Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
+                    	text.append(X10Sequence.formatCommandByte(getElement(2) & 0xFF));
                     } else {
-                        text = "Really in trouble now";
+                    	text.append(X10Sequence.formatAddressByte(getElement(2)& 0xFF));
                     }
-            	} else {
-            		text = "Reply was short, len: " + len + " value: " + Constants.formatHeaderByte(getElement(0 & 0xFF));
-            	}
-            }
+	            	break;
+	            case Constants.POLL_REQ_X10 :
+	            	text.append("Poll Cmd X10 ");
+                    if ((getElement(3)& Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
+                    	text.append(X10Sequence.formatCommandByte(getElement(2) & 0xFF));
+                    } else {
+                    	text.append(X10Sequence.formatAddressByte(getElement(2)& 0xFF));
+                    }
+	            	break;
+	            default: {
+	            	text.append(" Unknown command: " + String.format("0x%1$2.2X", getElement(1)& 0xFF));
+	            	text.append(" len: " + len);
+	            }
+	        }
         }
         return text+"\n";
     }
@@ -109,60 +157,41 @@ public class SpecificMessage extends SerialMessage {
 
     // static methods to return a formatted message
     static public SerialMessage getPoll(int addr) {
-        // eventually this will have to include logic for reading 
-        // various bytes on the card, but our supported 
-        // cards don't require that yet
-        // SerialMessage m = new SerialMessage(1);
-        // m.setResponseLength(2);
-        // m.setElement(0, addr);
-        //  m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
-        
         // Powerline implementation does not currently poll
         return null;
     }
-    static public SpecificMessage setCM11Time(int housecode) {
-        SpecificMessage msg = new SpecificMessage(7);
-        msg.setElement(0, 0x9B);
-        msg.setElement(5, 0x01);
-        msg.setElement(6, housecode<<4);
-        return msg;
-    }
-    static public SpecificMessage getAddress(int housecode, int devicecode) {
+
+    /**
+     * create an Insteon message with the X10 address
+     * @param housecode
+     * @param devicecode
+     * @return
+     */
+    static public SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
-//        m.setInterlocked(true);
         m.setInterlocked(false);
-        m.setElement(0,0x02);
-        m.setElement(1,0x63);
-        m.setElement(2,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
-        m.setElement(3,0x00);  //  0x00 Means address
+        m.setElement(0, Constants.HEAD_STX);
+        m.setElement(1, Constants.FUNCTION_REQ_X10);
+        m.setElement(2, (X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(3, 0x00);  //  0x00 Means address
         return m;
     }
-    static public SpecificMessage getInsteonAddress(String address) {
-        SpecificMessage m = new SpecificMessage(8);
-//        m.setInterlocked(true);
-        m.setInterlocked(false);
-        m.setElement(0,0x02);
-        m.setElement(1,0x62);
-        m.setElement(2,0x12);
-        m.setElement(3,0x48);
-        m.setElement(4,0xF4);
-        m.setElement(5,0x0F);
-        m.setElement(6,0x11);
-        m.setElement(7,0xFF);
-        return m;
-    }
-    static public SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
+    
+    static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
-        m.setInterlocked(true);
+        m.setInterlocked(false);
+        m.setElement(0, Constants.HEAD_STX);
+        m.setElement(1, Constants.FUNCTION_REQ_X10);
         if (dimcode > 0) {
-        	m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
+        	m.setElement(2, 0x04 | ((dimcode & 0x1f) << 3));
         } else {
-        	m.setElement(0, 0x04);
+        	m.setElement(2, 0x04);
         }
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(3,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(3, 0x80);  //  0x00 Means address
         return m;
     }
-    static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
+    static public SpecificMessage getX10FunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         if (dimcode > 0) {
@@ -173,63 +202,48 @@ public class SpecificMessage extends SerialMessage {
         m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
         return m;
     }
-    static public SpecificMessage getFunction(int housecode, int function) {
+    
+    static public SpecificMessage getX10Function(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(4);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
-        m.setElement(0,0x02);
-        m.setElement(1,0x63);
+        m.setElement(0, Constants.HEAD_STX);
+        m.setElement(1, Constants.FUNCTION_REQ_X10);
         m.setElement(2,(X10Sequence.encode(housecode)<<4)+function);
         m.setElement(3,0x80);  //  0x80 means function
         return m;
     }
-    static public SpecificMessage getInsteonFunction(String address, int function) {
-        String b0 = address.substring(0,2);
-        String b1 = address.substring(2,4);
-        String b2 = address.substring(4,6);
+
+    static public SpecificMessage getInsteonAddress(int idhighbyte, int idmiddlebyte, int idlowbyte) {
         SpecificMessage m = new SpecificMessage(8);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
-        m.setElement(0,0x02);
-        m.setElement(1,0x62);
-        m.setElement(2,Integer.parseInt(b0, 16));
-        m.setElement(3,Integer.parseInt(b1, 16));
-        m.setElement(4,Integer.parseInt(b2, 16));
-        m.setElement(5,0x0F);
-        if (function == 2) {
-            m.setElement(6,0x11);
-            m.setElement(7,0xFF);
-        } else {
-            m.setElement(6,0x13);
-            m.setElement(7,0x00);
-        }
+        m.setElement(0, Constants.HEAD_STX);
+        m.setElement(1, Constants.FUNCTION_REQ_STD);
+        m.setElement(2, idhighbyte);
+        m.setElement(3, idmiddlebyte);
+        m.setElement(4, idlowbyte);
+        m.setElement(5, 0x0F);
+        m.setElement(6, 0x11);
+        m.setElement(7, 0xFF);
         return m;
     }
-    static public SpecificMessage getInsteonFunctionDim(String address, int function, int dimcode) {
-        String b0 = address.substring(0,2);
-        String b1 = address.substring(2,4);
-        String b2 = address.substring(4,6);
+    
+    static public SpecificMessage getInsteonFunction(int idhighbyte, int idmiddlebyte, int idlowbyte, int function, int flag, int cmd1, int cmd2) {
         SpecificMessage m = new SpecificMessage(8);
 //        m.setInterlocked(true);
         m.setInterlocked(false);
-        m.setElement(0,0x02);
-        m.setElement(1,0x62);
-        m.setElement(2,Integer.parseInt(b0, 16));
-        m.setElement(3,Integer.parseInt(b1, 16));
-        m.setElement(4,Integer.parseInt(b2, 16));
-        m.setElement(5,0x0F);
-        if ((function == 2) | (function == 4) | (function == 5)) {
-            m.setElement(6,0x11);
-        } else {
-            m.setElement(6,0x13);
-        }
-        if (dimcode > 0) {
-        	m.setElement(7, Integer.parseInt(Integer.toHexString(dimcode), 16));
-        } else {
-        	m.setElement(7, 0x00);
-        }
+        m.setElement(0, Constants.HEAD_STX);
+        m.setElement(1, Constants.FUNCTION_REQ_STD);
+        m.setElement(2, idhighbyte);
+        m.setElement(3, idmiddlebyte);
+        m.setElement(4, idlowbyte);
+        m.setElement(5, flag);
+        m.setElement(6, cmd1);
+        m.setElement(7, cmd2);
         return m;
     }
+    
 }
 
 /* @(#)SpecificMessage.java */

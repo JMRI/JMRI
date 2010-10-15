@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -38,11 +38,9 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     int lastOutputStep = -1;
     
     /**
-     * Largest X10 dim step number available.
-     * <p>
-     * Loaded from SerialTrafficController.getNumberOfIntensitySteps();
+     * Largest Insteon dim step number available.
      */
-     int maxDimStep = 0;
+     int maxDimStep = 255;
      
     /**
      * Create a Light object, with only system name.
@@ -51,7 +49,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      */
     public SpecificInsteonLight(String systemName) {
         super(systemName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+        // maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
     /**
      * Create a Light object, with both system and user names.
@@ -60,7 +58,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      */
     public SpecificInsteonLight(String systemName, String userName) {
         super(systemName, userName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+        //maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
 
     /**
@@ -74,47 +72,12 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
             log.debug("initIntensity("+intensity+")");
     	}
         
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
+        //maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
 
-        // Set initial state
-            
-        // see if going to stabilize at on or off
-        if (intensity <= 0.5) {
-            // going to low, send a real off
-
-            InsteonSequence out3 = new InsteonSequence();
-            out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_OFF, 0);
-            SerialTrafficController.instance().sendInsteonSequence(out3, null);
-
-            // going to low, send max dim count low
-            InsteonSequence out2 = new InsteonSequence();
-            out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
-            SerialTrafficController.instance().sendInsteonSequence(out2, null);
-
-            lastOutputStep = 0;
-            
-            if (log.isDebugEnabled()) {
-            	log.debug("initIntensity: sent dim reset");
-            }
-        } else {
-            InsteonSequence out3 = new InsteonSequence();
-            out3.addFunction(insteonaddress, InsteonSequence.FUNCTION_ON, 0);
-            SerialTrafficController.instance().sendInsteonSequence(out3, null);
-
-            InsteonSequence out2 = new InsteonSequence();
-            out2.addFunction(insteonaddress, InsteonSequence.FUNCTION_DIM, maxDimStep);
-            SerialTrafficController.instance().sendInsteonSequence(out2, null);
-            
-            lastOutputStep = maxDimStep;
-            
-            if (log.isDebugEnabled()) {
-            	log.debug("initIntensity: sent bright reset");
-            }
-        }
     }
     
     /**
-     * Send a Dim/Bright commands to the X10 hardware 
+     * Send a Dim/Bright command to the Insteon hardware 
      * to reach a specific intensity. Acts immediately, and 
      * changes no general state.
      *<p>
@@ -132,46 +95,30 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         if ((newStep < 0) || (newStep > maxDimStep))
             log.error("newStep wrong: " + newStep + " intensity: " + intensity);
 
-        // find the number to send
-        int sendSteps = newStep - lastOutputStep; // + for bright, - for dim
-        
-        // figure out the function code
-        int function;
-        if (sendSteps == 0) {
+        // do we have any change to make
+        if (newStep == lastOutputStep) {
             // nothing to do!
             if (log.isDebugEnabled()) {
             	log.debug("intensity " + intensity + " within current step, return");
             }
             return;
-        
-        } else if (sendSteps > 0) {
-            function = InsteonSequence.FUNCTION_BRIGHT;
-            if (log.isDebugEnabled()) {
-            	log.debug("function bright");
-            }
         }
-        else {
-            function = X10Sequence.FUNCTION_DIM;
-            if (log.isDebugEnabled()) {
-            	log.debug("function dim");
-            }
+        
+        if (log.isDebugEnabled()) {
+        	log.debug("function set Intensity " + intensity);
         }
 
-        // check for errors
-        if ((sendSteps <- maxDimStep) || (sendSteps > maxDimStep))
-            log.error("sendSteps wrong: " + sendSteps + " intensity: " + intensity);
-            
-        lastOutputStep = newStep;
-        
         // create output sequence of address, then function
         InsteonSequence out = new InsteonSequence();
-        out.addFunction(insteonaddress, function, newStep);
+        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, Constants.CMD_LIGHT_CHG, newStep);
         // send
         SerialTrafficController.instance().sendInsteonSequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    	    log.debug("sendIntensity(" + intensity + ") addr " + insteonaddress + "  " + newStep + " funct: " + function);
+    	    log.debug("sendIntensity(" + intensity + ") addr " + idhighbyte + idmiddlebyte + idlowbyte + " newStep " + newStep);
         }
+
+        lastOutputStep = newStep;
     }
 
     /** 
@@ -179,7 +126,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
      * maintained in specific SerialTrafficController implementation
      */
     protected int getNumberOfSteps() {
-        return SerialTrafficController.instance().getNumberOfIntensitySteps();
+        return maxDimStep;
     }
     
     /**
@@ -191,30 +138,30 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     	}
 
         // figure out command 
-        int function;
+        int command1;
         if (newState == ON) {
-        	function = X10Sequence.FUNCTION_ON;
+        	command1 = Constants.CMD_LIGHT_ON;
         }
         else if (newState==OFF) {
-        	function = X10Sequence.FUNCTION_OFF;
+        	command1 = Constants.CMD_LIGHT_OFF;
         }
         else {
-            log.warn("illegal state requested for Light: "+getSystemName());
+            log.warn("illegal state requested for Light: " + getSystemName());
             return;
         }
 
         if (log.isDebugEnabled()) {
-        	log.debug("set state "+newState+" house "+housecode+" device "+devicecode);
+        	log.debug("set state " + newState + " " + getSystemName());
         }
 
         // create output sequence of just address and function together
         InsteonSequence out = new InsteonSequence();
-        out.addFunction(insteonaddress, function, 0);
+        out.addFunction(idhighbyte, idmiddlebyte, idlowbyte, Constants.FUNCTION_REQ_STD, Constants.FLAG_STD, command1, 0);
         // send
         SerialTrafficController.instance().sendInsteonSequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("end sendOnOff(" + newState + ")  insteon " + insteonaddress  + " funct: " + function);
+            log.debug("end sendOnOff(" + newState + ")  insteon " + idhighbyte + idmiddlebyte + idlowbyte + " cmd1: " + command1);
         }
     }
 

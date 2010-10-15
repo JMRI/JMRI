@@ -7,19 +7,42 @@ package jmri.jmrix.powerline.insteon2412s;
  * Constants and functions specific to the Insteon 2412S interface
  *
  * @author			Bob Jacobsen Copyright (C) 2008, 2009
- * @version			$Revision: 1.1 $
+ * @author			Ken Cameron Copyright (C) 2010
+ * @version			$Revision: 1.2 $
  */
 public class Constants {
 
-    public static final int POLL_REQ        = 0x5a;
-    public static final int TIME_REQ        = 0xa5;
-    public static final int MACRO_INITIATED = 0x5b;
-    public static final int CHECKSUM_OK     = 0x00;
-    public static final int READY_REQ       = 0x55;
+    public static final int	HEAD_STX		= 0x02;
+    
+    public static final int	POLL_REQ_STD	= 0x50;
+    public static final int	POLL_REQ_EXT	= 0x51;
+    public static final int	POLL_REQ_X10	= 0x52;
+    public static final int	POLL_REQ_BUTTON	= 0x54;
+    public static final int	POLL_REQ_BUTTON_RESET	= 0x55;
+    public static final int	FUNCTION_REQ_STD		= 0x62;
+    public static final int	FUNCTION_REQ_X10		= 0x63;
 
-    public static final int POLL_ACK        = 0xc3;
-    public static final int TIMER_DOWNLOAD  = 0x9b;
+    public static final int	CMD_LIGHT_ON		= 0x12;
+    public static final int	CMD_LIGHT_OFF		= 0x13;
+    public static final int	CMD_LIGHT_CHG		= 0x21;
 
+    public static final int	BUTTON_TAP	= 0x02;
+    public static final int	BUTTON_HELD	= 0x03;
+    public static final int	BUTTON_REL	= 0x04;
+    public static final int	BUTTON_BITS_ID	= 0xF0;
+    public static final int	BUTTON_BITS_OP	= 0x0F;
+    
+    public static final int	REPLY_ACK		= 0x06;
+    public static final int	REPLY_NAK		= 0x15;
+    
+    // flag values
+    public static final int	FLAG_BIT_STDEXT		= 0x10;
+    public static final int	FLAG_STD		= 0x00;
+    public static final int	FLAG_EXT		= 0x10;
+    
+    public static final int FLAG_BIT_X10_CMDUNIT	= 0x80;
+    public static final int FLAG_X10_RECV_CMD	= 0x80;
+    public static final int FLAG_X10_RECV_UNIT	= 0x00;
 
     /**
      * Pretty-print a header code

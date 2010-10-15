@@ -12,6 +12,7 @@ import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.InsteonSequence;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
+import jmri.jmrix.powerline.insteon2412s.Constants;
 
 import java.io.DataInputStream;
 
@@ -28,7 +29,8 @@ import java.io.DataInputStream;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
- * @version			$Revision: 1.5 $
+ * @author			Ken Cameron Copyright (C) 2010
+ * @version			$Revision: 1.6 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -54,13 +56,13 @@ public class SpecificTrafficController extends SerialTrafficController {
         while ( (c = s.getCommand() ) !=null) {
             SpecificMessage m;
             if (c.isAddress()) 
-                m = SpecificMessage.getAddress(c.getHouseCode(), ((X10Sequence.Address)c).getAddress());
+                m = SpecificMessage.getX10Address(c.getHouseCode(), ((X10Sequence.Address)c).getAddress());
             else {
                 X10Sequence.Function f = (X10Sequence.Function)c;
                 if (f.getDimCount() > 0)
-                    m = SpecificMessage.getFunctionDim(f.getHouseCode(), f.getFunction(), f.getDimCount());
+                    m = SpecificMessage.getX10FunctionDim(f.getHouseCode(), f.getFunction(), f.getDimCount());
                 else
-                    m = SpecificMessage.getFunction(f.getHouseCode(), f.getFunction());
+                    m = SpecificMessage.getX10Function(f.getHouseCode(), f.getFunction());
             }
             sendSerialMessage(m, l);
             // Someone help me improve this
@@ -88,14 +90,10 @@ public class SpecificTrafficController extends SerialTrafficController {
             if (c.isAddress()) {
                 // We should not get here
                 // Clean this up later
-                m = SpecificMessage.getInsteonAddress("Error");
+                m = SpecificMessage.getInsteonAddress(-1, -1, -1);
             } else {
                 InsteonSequence.Function f = (InsteonSequence.Function)c;
-                if (f.getDimCount() > 0) {
-                    m = SpecificMessage.getInsteonFunctionDim(f.getAddress(), f.getFunction(), f.getDimCount());
-                } else {
-                    m = SpecificMessage.getInsteonFunction(f.getAddress(), f.getFunction());
-                }
+                m = SpecificMessage.getInsteonFunction(f.getAddressHigh(), f.getAddressMiddle(), f.getAddressLow(), f.getFunction(), f.getFlag(), f.getCommand1(), f.getCommand2());
             }
             sendSerialMessage(m, l);
             // Someone help me improve this
@@ -112,11 +110,6 @@ public class SpecificTrafficController extends SerialTrafficController {
         }
     }
 
-    /**
-     * This system provides 256 dim steps
-     */
-    public int getNumberOfIntensitySteps() { return 255; }
-    
     /**
      * Get a message of a specific length for filling in.
      */
@@ -163,19 +156,13 @@ public class SpecificTrafficController extends SerialTrafficController {
             return false; // wait for one more
         }
         // check for data available
-        if ((msg.getElement(0)&0xFF)==Constants.POLL_REQ) {
+        if ((msg.getElement(0)&0xFF)==Constants.FUNCTION_REQ_STD) {
             // get message
             SerialMessage m = new SpecificMessage(1);
-            m.setElement(0, Constants.POLL_ACK);
+            m.setElement(0, Constants.POLL_REQ_STD);
             expectLength = true;  // next byte is length
             forwardToPort(m, null);
             return false;  // reply message will get data appended            
-        }
-        // check for request time
-        if ((msg.getElement(0)&0xFF)==Constants.TIME_REQ) {
-            SerialMessage m = SpecificMessage.setCM11Time(X10Sequence.encode(1));
-            forwardToPort(m, null);
-            return true;  // message done
         }
         // if the interlock is present, send it
         if (sendInterlock) {
@@ -190,12 +177,17 @@ public class SpecificTrafficController extends SerialTrafficController {
         return true;
     }
 
+    /**
+     * read a stream and pick packets out of it.
+     * knows the size of the packets from the contents.
+     */
     protected void loadChars(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         byte char1 = readByteProtected(istream);
-        if (char1 == 0x02) {  // 0x02 means start of command.
+        if (logDebug) log.debug("loadChars: " + char1);
+        if ((char1 & 0xFF) == Constants.HEAD_STX) {  // 0x02 means start of command.
             msg.setElement(0, char1);
             byte char2 = readByteProtected(istream);
-            if ((char2&0xFF) == 0x62) {  // 0x62 means send command.
+            if ((char2 & 0xFF) == Constants.FUNCTION_REQ_STD) {  // 0x62 means normal send command reply.
                 msg.setElement(1, char2);
                 byte addr1 = readByteProtected(istream);
                 msg.setElement(2, addr1);
@@ -205,115 +197,55 @@ public class SpecificTrafficController extends SerialTrafficController {
                 msg.setElement(4, addr3);
                 byte flag1 = readByteProtected(istream);
                 msg.setElement(5, flag1);
+            	int bufsize = 2 + 1;
+                if ((flag1 & Constants.FLAG_BIT_STDEXT) != 0x00) {
+                	bufsize = 14 + 1;
+                }
+            	for (int i=6; i < (5 + bufsize); i++) {
+                    byte byt = readByteProtected(istream);
+                    msg.setElement(i, byt);
+            	}
+            } else if ((char2 & 0xFF) == Constants.FUNCTION_REQ_X10) {  // 0x63 means normal send X10 command reply.
+                msg.setElement(1, char2);
+                byte addrx1 = readByteProtected(istream);
+                msg.setElement(2, addrx1);
                 byte cmd1 = readByteProtected(istream);
-                msg.setElement(6, cmd1);
-                byte cmd2 = readByteProtected(istream);
-                msg.setElement(7, cmd2);
+                msg.setElement(3, cmd1);
                 byte ack1 = readByteProtected(istream);
-                if (ack1 == 0x06) {  // 0x06 means command sent.
-                    msg.setElement(8, ack1);
+                msg.setElement(4, ack1);
+            } else if ((char2 & 0xFF) == Constants.POLL_REQ_STD) {  // 0x50 means normal command received.
+                msg.setElement(1, char2);
+                for (int i = 2; i < (2 + 9); i++){
+                    byte byt = readByteProtected(istream);
+                    msg.setElement(2, byt);
                 }
-            } else {
-                if ((char2&0xFF) == 0x50) {  // 0x50 means reply command.
-                    msg.setElement(1, char2);
-                    byte addrt1 = readByteProtected(istream);
-                    msg.setElement(2, addrt1);
-                    byte addrt2 = readByteProtected(istream);
-                    msg.setElement(3, addrt2);
-                    byte addrt3 = readByteProtected(istream);
-                    msg.setElement(4, addrt3);
-                    byte addrf1 = readByteProtected(istream);
-                    msg.setElement(5, addrf1);
-                    byte addrf2 = readByteProtected(istream);
-                    msg.setElement(6, addrf2);
-                    byte addrf3 = readByteProtected(istream);
-                    msg.setElement(7, addrf3);
-                    byte flag1 = readByteProtected(istream);
-                    msg.setElement(8, flag1);
-                    byte cmd1 = readByteProtected(istream);
-                    msg.setElement(9, cmd1);
-                    byte cmd2 = readByteProtected(istream);
-                    msg.setElement(10, cmd2);
-                    byte ack1 = readByteProtected(istream);
-                    if (ack1 == 0x06) {  // 0x06 means command sent.
-                       msg.setElement(11, ack1);
-                    }
-                } else {
-                    if ((char2&0xFF) == 0x63) {  // 0x63 means X10 command.
-                        msg.setElement(1, char2);
-                        byte addrx1 = readByteProtected(istream);
-                        msg.setElement(2, addrx1);
-                        byte cmd1 = readByteProtected(istream);
-                        msg.setElement(3, cmd1);
-                        byte ack1 = readByteProtected(istream);
-                        if (ack1 == 0x06) {  // 0x06 means command sent.
-                           msg.setElement(4, ack1);
-                        }
-                    } else {
-                        msg.setElement(1, char2);
-                    }
+            } else if ((char2 & 0xFF) == Constants.POLL_REQ_EXT) {  // 0x51 means extended command received.
+                msg.setElement(1, char2);
+                for (int i = 2; i < (2 + 23); i++){
+                    byte byt = readByteProtected(istream);
+                    msg.setElement(2, byt);
                 }
-            }
-        } else {
-            if ((char1 == 0x15)) {
-                msg.setElement(0, char1);
-            } else {
-                if ((char1&0xFF) == 0x62) {  // 0x62 means send command.
-                    msg.setElement(0, char1);
-                    byte addr1 = readByteProtected(istream);
-                    msg.setElement(1, addr1);
-                    byte addr2 = readByteProtected(istream);
-                    msg.setElement(2, addr2);
-                    byte addr3 = readByteProtected(istream);
-                    msg.setElement(3, addr3);
-                    byte flag1 = readByteProtected(istream);
-                    msg.setElement(4, flag1);
-                    byte cmd1 = readByteProtected(istream);
-                    msg.setElement(5, cmd1);
-                    byte cmd2 = readByteProtected(istream);
-                    msg.setElement(6, cmd2);
-                    byte ack1 = readByteProtected(istream);
-//                    if (ack1 == 0x06) {  // 0x06 means command sent.
-                        msg.setElement(7, ack1);
-//                    }
-                } else {
-                    if ((char1&0xFF) == 0x50) {  // 0x62 means send command.
-                        msg.setElement(0, char1);
-                        byte addr1 = readByteProtected(istream);
-                        msg.setElement(1, addr1);
-                        byte addr2 = readByteProtected(istream);
-                        msg.setElement(2, addr2);
-                        byte addr3 = readByteProtected(istream);
-                        msg.setElement(3, addr3);
-                        byte faddr1 = readByteProtected(istream);
-                        msg.setElement(4, faddr1);
-                        byte faddr2 = readByteProtected(istream);
-                        msg.setElement(5, faddr2);
-                        byte faddr3 = readByteProtected(istream);
-                        msg.setElement(6, faddr3);
-                        byte flag1 = readByteProtected(istream);
-                        msg.setElement(7, flag1);
-                        byte cmd1 = readByteProtected(istream);
-                        msg.setElement(8, cmd1);
-                        byte cmd2 = readByteProtected(istream);
-                        msg.setElement(9, cmd2);
-                        byte ack1 = readByteProtected(istream);
-                        msg.setElement(10, ack1);
-                    } else {
-                        if ((char1&0xFF) == 0x63) {  // 0x62 means send command.
-                            msg.setElement(0, char1);
-                            byte addr1 = readByteProtected(istream);
-                            msg.setElement(1, addr1);
-                            byte addr2 = readByteProtected(istream);
-                            msg.setElement(2, addr2);
-                            byte addr3 = readByteProtected(istream);
-                            msg.setElement(3, addr3);
-                        } else {
-                            msg.setElement(0, char1);
-                        }
-                    }
-                }
-            }
+	        } else if ((char2 & 0xFF) == Constants.POLL_REQ_X10) {  // 0x52 means standard X10 received command.
+	            msg.setElement(1, char2);
+	            byte rawX10data = readByteProtected(istream);
+	            msg.setElement(2, rawX10data);
+	            byte X10Flag = readByteProtected(istream);
+	            msg.setElement(3, X10Flag);
+	            if (X10Flag == Constants.FLAG_X10_RECV_CMD) {
+	            	if (logDebug) log.debug("loadChars: X10 Command Poll Received " + X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4) + " " + X10Sequence.functionName((rawX10data & 0x0F)) );
+	            } else {
+	            	if (logDebug) log.debug("loadChars: X10 Unit Poll Received " + X10Sequence.houseValueToText((rawX10data & 0xF0) >> 4) + " " + X10Sequence.formatCommandByte(rawX10data));
+	            }
+	        } else if ((char2 & 0xFF) == Constants.POLL_REQ_BUTTON) {  // 0x54 means interface button received command.
+	            msg.setElement(1, char2);
+	            byte dat = readByteProtected(istream);
+	            msg.setElement(2, dat);
+	        } else if ((char2 & 0xFF) == Constants.POLL_REQ_BUTTON_RESET) {  // 0x55 means interface button received command.
+	            msg.setElement(1, char2);
+	        } else {
+	            msg.setElement(1, char2);
+	            if (logDebug) log.debug("loadChars: Unknown cmd byte " + char2);
+	        }
         }
     }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificTrafficController.class.getName());

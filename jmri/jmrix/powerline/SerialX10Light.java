@@ -20,8 +20,8 @@ package jmri.jmrix.powerline;
  *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
- * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @author      Ken Cameron Copyright (C) 2009, 2010
+ * @version     $Revision: 1.3 $
  */
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
@@ -173,7 +173,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
 
@@ -219,7 +219,7 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
         
     	if (log.isDebugEnabled()) {
-    		log.debug("sendOnOff(" + newDim + ")  house " + housecode + " device " + devicecode + " funct: " + function);
+    		log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);
         }
     }
 

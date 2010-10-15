@@ -6,7 +6,7 @@ import jmri.Sensor;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialAddress;
-import jmri.jmrix.powerline.cm11.Constants;
+import jmri.jmrix.powerline.insteon2412s.Constants;
 import java.util.List;
 
 /**
@@ -17,8 +17,8 @@ import java.util.List;
  * Sensors are numbered from 1.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
- * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.2 $
+ * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
+ * @version			$Revision: 1.3 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -36,7 +36,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     
     private void processForPollReq(SerialReply l) {
         // process the POLL_REQ and update/create sensors as needed
-	    if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ ) { 
+	    if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ_X10 ) { 
 	        // must be received data
 	        int last = (l.getElement(1)& 0xFF) + 1;
 	        int bits = (l.getElement(2)& 0xFF);
@@ -48,7 +48,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	        	int dat = l.getElement(i) & 0xFF;
 	            if ((bits & 0x01) != 0) {
 	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
-	                newCmdCode = dat & 0x0f;
+	            	newCmdCode = dat & 0x0f;
             		if (newHouseCode != null && (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
             			// some sort of 'global' command, process for all matching the house code
             			List<String> sensors = getSystemNameList();

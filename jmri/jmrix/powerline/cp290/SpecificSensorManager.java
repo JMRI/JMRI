@@ -19,8 +19,8 @@ import jmri.jmrix.powerline.SerialReply;
  * Created from the cm11 version
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
- * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.2 $
+ * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
+ * @version			$Revision: 1.3 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -66,7 +66,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	    			unitMask = unitMask >> 1;
 	    			unitCnt++;
 	    			int hCode = newAddrCode & unitMask;
-	            	if (newCmdCode != -1 && newHouseCode != null && hCode != 0) {
+	            	if (hCode != 0) {
 	            		String sysName = getSystemPrefix() + "S" + newHouseCode + unitCnt;
 	            		sensor = provideSensor(sysName);
 	            		if (sensor != null) {

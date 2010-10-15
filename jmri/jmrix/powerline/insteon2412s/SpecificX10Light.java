@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -35,7 +35,6 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      */
     public SpecificX10Light(String systemName) {
         super(systemName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
     /**
      * Create a Light object, with both system and user names.
@@ -44,10 +43,22 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      */
     public SpecificX10Light(String systemName, String userName) {
         super(systemName, userName);
-        maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
     }
 
+    // System-dependent instance variables
+
+    /** 
+     * Current output step 0 to maxDimStep.
+     * <p>
+     *  -1 means unknown
+     */
+    int lastOutputStep = -1;
     
+    /**
+     * Largest Insteon dim step number available.
+     */
+     int maxDimStep = 22;
+     
     /**
      * Send a Dim/Bright commands to the X10 hardware 
      * to reach a specific intensity. Acts immediately, and 
@@ -111,7 +122,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
     	if (log.isDebugEnabled()) {
-    	    log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    	    log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
         }
     }
     

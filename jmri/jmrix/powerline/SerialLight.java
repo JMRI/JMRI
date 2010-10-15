@@ -6,27 +6,28 @@ import jmri.implementation.AbstractVariableLight;
 import jmri.jmrix.powerline.SerialAddress;
 
 /**
- * Implementation of the Light Object for X10.
+ * Implementation of the Light Object for Powerline devices.
  * <P>
- * Uses X10 dimming commands to set intensity unless
+ * For X10 devices, uses dimming commands to set intensity unless
  * the value is 0.0 or 1.0, in which case it uses on/off commands only.
  * <p>
- * Since the dim/bright step of the hardware is unknown then the Light
+ * For Insteon devices, uses direct setting of intensity level unless
+ * the value is 0.0 or 1.0, in which case it uses on/off commands only.
+ * <p>
+ * For X10, since the dim/bright step of the hardware is unknown then the Light
  * object is first created, the first time the intensity (not state)
  * is set to other than 0.0 or 1.0, 
  * the output is run to it's maximum dim or bright step so
  * that we know the count is right.
  * <p>
- * Keeps track of the controller's "dim count", and if 
+ * For X10, keeps track of the controller's "dim count", and if 
  * not certain forces it to zero to be sure.
  * <p>
  * 
- *
- *
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008
- * @author      Ken Cameron Copyright (C) 2009
- * @version     $Revision: 1.27 $
+ * @author      Ken Cameron Copyright (C) 2009, 2010
+ * @version     $Revision: 1.28 $
  */
 abstract public class SerialLight extends AbstractVariableLight {
 
@@ -59,8 +60,11 @@ abstract public class SerialLight extends AbstractVariableLight {
         // Convert to the two-part X10 address
         housecode = SerialAddress.houseCodeAsValueFromSystemName(getSystemName());
         devicecode = SerialAddress.deviceCodeAsValueFromSystemName(getSystemName());
+        // not an X10, try Insteon
         if (housecode == -1) {
-            insteonaddress = SerialAddress.deviceCodeFromSystemName(getSystemName());
+        	idhighbyte = SerialAddress.idHighCodeAsValueFromSystemName(getSystemName());
+        	idmiddlebyte = SerialAddress.idMiddleCodeAsValueFromSystemName(getSystemName());
+        	idlowbyte = SerialAddress.idLowCodeAsValueFromSystemName(getSystemName());
         }
     }
     
@@ -73,10 +77,12 @@ abstract public class SerialLight extends AbstractVariableLight {
      */
     protected void initIntensity(double intensity) {}
          
-    // data members holding the X10 address
+    // data members holding the address forms
     protected int housecode = -1;
     protected int devicecode = -1;
-    protected String insteonaddress = "";
+    protected int idhighbyte = -1;
+    protected int idmiddlebyte = -1;
+    protected int idlowbyte = -1;
             
     /**
      *  Send a On/Off Command to the hardware
@@ -114,7 +120,7 @@ abstract public class SerialLight extends AbstractVariableLight {
         SerialTrafficController.instance().sendX10Sequence(out, null);
 
  	    if (log.isDebugEnabled()) {
- 		    log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseCodeToText(housecode) + " device " + devicecode + " funct: " + function);
+ 		    log.debug("sendOnOff(" + newDim + ")  house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " funct: " + function);
         }
     }
 
