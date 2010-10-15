@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Tests for the jmri.util.OrderedHashtable class.
  * @author	Bob Jacobsen  Copyright 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class OrderedHashtableTest extends TestCase {
 
@@ -98,6 +98,35 @@ public class OrderedHashtableTest extends TestCase {
         
     }
 
+    public void testEquals() {
+        OrderedHashtable<String, Turnout> oht1 = new OrderedHashtable<String, Turnout>();
+        OrderedHashtable<String, Turnout> oht2 = new OrderedHashtable<String, Turnout>();
+
+        Turnout t1 = new TestTurnout("t1");
+        Turnout t2 = new TestTurnout("t2");
+        Turnout t3 = new TestTurnout("t3");
+        Turnout t4 = new TestTurnout("t4");
+        Turnout t5 = new TestTurnout("t5");
+        
+        oht1.put("1", t1);
+        oht2.put("1", t1);
+        oht1.put("2", t2);
+        oht2.put("2", t2);
+        Assert.assertTrue("initial content", oht1.equals(oht2));
+        
+        oht1.put("3", t3);
+        Assert.assertFalse("after add to one", oht1.equals(oht2));
+        oht2.put("3", t3);
+        Assert.assertTrue("after add to both", oht1.equals(oht2));
+
+        oht1.put("4", t4);
+        oht1.put("5", t5);
+        oht2.put("5", t5);
+        oht2.put("4", t4);
+        Assert.assertFalse("check order matters", oht1.equals(oht2));
+
+    }
+    
 	// from here down is testing infrastructure
 
 	public OrderedHashtableTest(String s) {
