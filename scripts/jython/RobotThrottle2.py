@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.25 $
+# $Revision: 1.26 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -439,7 +439,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             self.signalNextText.text = ""
         if (farSignal != None) :
             self.signalBeyond.setIcon(self.cvtAppearanceIcon(farSignal))
-            self.signalBeyondText.text = self.cvtAppearanceText(nearSignal)
+            self.signalBeyondText.text = self.cvtAppearanceText(farSignal)
             self.testAddSignalListener(farSignal)
             self.farSignal = farSignal
             self.farSignalAspect = farSignal.getAppearance()
