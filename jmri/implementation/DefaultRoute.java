@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -108,9 +108,9 @@ public class DefaultRoute extends AbstractNamedBean
         }
     }
     protected Turnout mTurnout = null;
-    protected PropertyChangeListener mTurnoutListener = null;
+    protected transient PropertyChangeListener mTurnoutListener = null;
     protected Turnout mLockTurnout = null;
-    protected PropertyChangeListener mLockTurnoutListener = null;
+    protected transient PropertyChangeListener mLockTurnoutListener = null;
     
     ArrayList <OutputTurnout> _outputTurnoutList = new ArrayList<OutputTurnout>();
     private class OutputTurnout implements PropertyChangeListener {

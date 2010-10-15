@@ -47,7 +47,7 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2010
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
@@ -112,7 +112,7 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
 	private AutoTrainsFrame _autoTrainsFrame = null;
 	private Timebase fastClock = InstanceManager.timebaseInstance();
 	private Sensor fastClockSensor = InstanceManager.sensorManagerInstance().provideSensor("ISCLOCKRUNNING");
-	private java.beans.PropertyChangeListener minuteChangeListener = null;
+	private transient java.beans.PropertyChangeListener minuteChangeListener = null;
 			
 	// dispatcher window variables
 	protected JmriJFrame dispatcherFrame=null;

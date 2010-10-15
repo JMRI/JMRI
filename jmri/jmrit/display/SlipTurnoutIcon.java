@@ -37,10 +37,10 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
-public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
+public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
     public SlipTurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label

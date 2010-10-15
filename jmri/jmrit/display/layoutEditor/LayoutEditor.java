@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -153,8 +153,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     private JLabel yLabel = new JLabel("00");
 
 	private boolean delayedPopupTrigger = false;
-	private Point2D currentPoint = new Point2D.Double(100.0,100.0);
-	private Point2D dLoc = new Point2D.Double(0.0,0.0);
+	private transient Point2D currentPoint = new Point2D.Double(100.0,100.0);
+	private transient Point2D dLoc = new Point2D.Double(0.0,0.0);
 	//private int savedMSX = 0;
 	//private int savedMSY = 0;
     private int height = 100;
@@ -210,20 +210,20 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     //private final static int TURNOUT = 1;      // possible object types
     //private final static int LEVEL_XING = 2;
     //private final static int POINT = 3;
-	private Point2D startDel = new Point2D.Double(0.0,0.0); // starting delta coordinates
+	private transient Point2D startDel = new Point2D.Double(0.0,0.0); // starting delta coordinates
 	private Object selectedObject = null; // selected object, null if nothing selected
 	private Object prevSelectedObject = null; // previous selected object, for undo
 	private int selectedPointType = 0;   // connection type within the selected object
 	//private boolean selectedNeedsConnect = false; // true if selected object is unconnected
 	private Object foundObject = null; // found object, null if nothing found
-	private Point2D foundLocation = new Point2D.Double(0.0,0.0);  // location of found object
+	private transient Point2D foundLocation = new Point2D.Double(0.0,0.0);  // location of found object
 	private int foundPointType = 0;   // connection type within the found object
 	@SuppressWarnings("unused")
 	private boolean foundNeedsConnect = false; // true if found point needs a connection
 	private Object beginObject = null; // begin track segment connection object, null if none
-	private Point2D beginLocation = new Point2D.Double(0.0,0.0);  // location of begin object
+	private transient Point2D beginLocation = new Point2D.Double(0.0,0.0);  // location of begin object
 	private int beginPointType = 0;   // connection type within begin connection object
-	private Point2D currentLocation = new Point2D.Double(0.0,0.0); // current location
+	private transient Point2D currentLocation = new Point2D.Double(0.0,0.0); // current location
 	
 	// program default turnout size parameters
 	private double turnoutBXDefault = 20.0;  // RH, LH, WYE

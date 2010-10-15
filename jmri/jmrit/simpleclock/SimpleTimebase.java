@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.19 $
+ * @version			$Revision: 1.20 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -50,7 +50,7 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 			} catch (jmri.JmriException e) {
 				log.warn("Exception setting ISCLOCKRUNNING sensor ACTIVE: "+e);
 			}
-			clockSensor.addPropertyChangeListener(clockSensorListener =
+			clockSensor.addPropertyChangeListener(
 					new java.beans.PropertyChangeListener() {
 				public void propertyChange(java.beans.PropertyChangeEvent e) {
 					clockSensorChanged();
@@ -430,9 +430,6 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 	private Date pauseTime;   // null value indicates clock is running
 	private Sensor clockSensor = null;   // active when clock is running, inactive when stopped
 	private Memory clockMemory = null;   // contains current time on each tick
-	
-	@SuppressWarnings("unused")
-	private java.beans.PropertyChangeListener clockSensorListener = null;
 	
 	private boolean internalMaster = true;     // false indicates a hardware clock is the master
 	private String masterName = "";		// name of hardware time source, if not internal master

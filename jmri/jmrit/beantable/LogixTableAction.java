@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3157,7 +3157,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
     
-    ActionListener variableSignalMastNameListener = new ActionListener() {
+    transient ActionListener variableSignalMastNameListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
@@ -3166,7 +3166,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     };
     
-    ActionListener actionSignalMastNameListener = new ActionListener() {
+    transient ActionListener actionSignalMastNameListener = new ActionListener() {
         public void actionPerformed(ActionEvent e) {
             // fired when signal mast name changes, but only
             // while in signal mast mode
