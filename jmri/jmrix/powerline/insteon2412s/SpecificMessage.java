@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.insteon2412s.Constants;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -165,7 +165,7 @@ public class SpecificMessage extends SerialMessage {
      * create an Insteon message with the X10 address
      * @param housecode
      * @param devicecode
-     * @return
+     * @return message
      */
     static public SpecificMessage getX10Address(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(4);
@@ -176,7 +176,14 @@ public class SpecificMessage extends SerialMessage {
         m.setElement(3, 0x00);  //  0x00 Means address
         return m;
     }
-    
+
+    /**
+     * create an Insteon message with the X10 address and dim steps
+     * @param housecode
+     * @param devicecode
+     * @param dimcode
+     * @return message
+     */
     static public SpecificMessage getX10AddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(4);
         m.setInterlocked(false);
