@@ -28,7 +28,7 @@ import Serialio.SerialPortLocal;
  * Neither the baud rate configuration nor the "option 1" option are used.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  */
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -301,6 +301,7 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption2() { return commandStationNames; }
 
     /**

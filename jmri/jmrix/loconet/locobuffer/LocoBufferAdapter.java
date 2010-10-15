@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * <P>
  * Normally controlled by the LocoBufferFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2001, 2008, 2010
- * @version			$Revision: 1.49 $
+ * @version			$Revision: 1.50 $
  */
 public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -262,6 +262,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * Get an array of valid baud rates as strings. This allows subclasses
      * to change the arrays of speeds.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -270,6 +271,7 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * Get an array of valid baud rates as integers. This allows subclasses
      * to change the arrays of speeds.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudNumber() {
         return validSpeedValues;
     }
@@ -278,12 +280,14 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
      * Option 1 controls flow control option
      */
     public String option1Name() { return "Connection uses: "; }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { return validOption1; }
 
     /**
      * Get an array of valid values for "option 2"; used to display valid options.
      * May not be null, but may have zero entries
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption2() { return commandStationNames; }
 
     /**

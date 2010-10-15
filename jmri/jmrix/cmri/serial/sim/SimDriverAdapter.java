@@ -14,7 +14,7 @@ import java.io.InputStream;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -87,6 +87,7 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

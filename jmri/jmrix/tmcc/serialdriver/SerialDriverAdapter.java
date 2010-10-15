@@ -19,7 +19,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to TMCC via a serial comm port.
  * Normally controlled by the tmcc.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2006
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -220,6 +220,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

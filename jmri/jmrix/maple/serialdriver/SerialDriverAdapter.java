@@ -20,7 +20,7 @@ import gnu.io.SerialPortEventListener;
  * Provide access to C/MRI via a serial comm port.
  * Normally controlled by the maple.serialdriver.SerialDriverFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -231,6 +231,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }

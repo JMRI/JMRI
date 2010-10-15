@@ -25,7 +25,7 @@ import jmri.util.SerialUtil;
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 
 public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -270,6 +270,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      * Get an array of valid baud rates. This is currently just a message
      * saying its fixed
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -278,6 +279,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
      * Option 1 controls flow control option
      */
     public String option1Name() { return "ZTC640 connection uses "; }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { return validOption1; }
         
     protected String [] validSpeeds = new String[]{"19,200 baud"};

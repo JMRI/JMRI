@@ -18,7 +18,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -108,6 +108,7 @@ public class LnTcpDriverAdapter extends LnPortController {
         return null;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] getCommandStationNames() { return commandStationNames; }
     public String   getCurrentCommandStation() { return commandStationName; }
     

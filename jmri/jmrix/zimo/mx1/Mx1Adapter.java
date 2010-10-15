@@ -5,7 +5,7 @@
  * Description:		Provide access to Zimo's MX-1 on an attached serial comm port.
  *			Normally controlled by the zimo.mx1.Mx1Frame class.
  * @author		Bob Jacobsen   Copyright (C) 2002
- * @version		$Revision: 1.12 $
+ * @version		$Revision: 1.13 $
  *
  * Adapted for use with Zimo MX-1 by Sip Bosch
  *
@@ -234,37 +234,39 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 	 * Get an array of valid baud rates. This is currently just a message
 	 * saying its fixed
 	 */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
 	public String[] validBaudRates() {
 		return validSpeeds;
 	}
 
-        /**
-         * Option 1 controls flow control option
-         */
-        public String option1Name() { return "MX-1 connection uses "; }
-        public String[] validOption1() { return validOption1; }
+    /**
+     * Option 1 controls flow control option
+     */
+    public String option1Name() { return "MX-1 connection uses "; }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    public String[] validOption1() { return validOption1; }
 
-        protected String [] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
-        "9,600 baud", "19,200 baud", "38,400 baud"};
-        protected int [] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
+    protected String [] validSpeeds = new String[]{"1,200 baud", "2,400 baud", "4,800 baud",
+    "9,600 baud", "19,200 baud", "38,400 baud"};
+    protected int [] validSpeedValues = new int[]{1200, 2400, 4800, 9600, 19200, 38400};
 
-        // meanings are assigned to these above, so make sure the order is consistent
-        protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
-        protected String selectedOption1=validOption1[0];
+    // meanings are assigned to these above, so make sure the order is consistent
+    protected String [] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String selectedOption1=validOption1[0];
 
-        private boolean opened = false;
-        InputStream serialStream = null;
+    private boolean opened = false;
+    InputStream serialStream = null;
 
-        static public Mx1Adapter instance() {
-            if (mInstance == null) mInstance = new Mx1Adapter();
-            return mInstance;
-        }
-        static Mx1Adapter mInstance = null;
-        
-        String manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
-        
-        public String getManufacturer() { return manufacturerName; }
-        public void setManufacturer(String manu) { manufacturerName=manu; }
+    static public Mx1Adapter instance() {
+        if (mInstance == null) mInstance = new Mx1Adapter();
+        return mInstance;
+    }
+    static Mx1Adapter mInstance = null;
+    
+    String manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
+    
+    public String getManufacturer() { return manufacturerName; }
+    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Mx1Adapter.class.getName());
 

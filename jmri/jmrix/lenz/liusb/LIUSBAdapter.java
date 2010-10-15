@@ -23,7 +23,7 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005-2010
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 
 public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -271,6 +271,7 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
      * Get an array of valid baud rates. This is currently just a message
      * saying its fixed
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -279,6 +280,7 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
      * Option 1 controls flow control option
      */
     public String option1Name() { return "LIUSB connection uses "; }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { return validOption1; }
     
     protected String [] validSpeeds = new String[]{"57,600 baud"};

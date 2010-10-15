@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 
 public class SdfBuffer {
@@ -101,6 +101,7 @@ public class SdfBuffer {
         return out;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getByteArray() { return buffer; }
     public List<SdfMacro> getMacroList() { return ops; }
     

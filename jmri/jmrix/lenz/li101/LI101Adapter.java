@@ -25,7 +25,7 @@ import jmri.util.SerialUtil;
  * Normally controlled by the lenz.li101.LI101Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 2.21 $
+ * @version			$Revision: 2.22 $
  */
 
 public class LI101Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
@@ -273,6 +273,7 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
      * Get an array of valid baud rates. This is currently just a message
      * saying its fixed
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -281,6 +282,7 @@ public class LI101Adapter extends XNetPortController implements jmri.jmrix.Seria
      * Option 1 controls flow control option
      */
     public String option1Name() { return "LI101 connection uses "; }
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validOption1() { return validOption1; }
     
     protected String [] validSpeeds = new String[]{"19,200 baud","38,400 baud","57,600 baud","115,200 baud"};

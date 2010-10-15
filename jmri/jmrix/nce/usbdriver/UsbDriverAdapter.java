@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -158,6 +158,7 @@ public class UsbDriverAdapter extends NcePortController {
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
 	public String[] validBaudRates() {
 		return validSpeeds;
 	}

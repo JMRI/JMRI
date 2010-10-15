@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -173,6 +173,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
 	public String[] validBaudRates() {
 		return validSpeeds;
 	}

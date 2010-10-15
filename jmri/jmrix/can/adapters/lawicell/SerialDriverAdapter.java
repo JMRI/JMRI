@@ -16,7 +16,7 @@ import gnu.io.SerialPort;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
  * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -147,6 +147,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     /**
      * Get an array of valid baud rates.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
@@ -154,6 +155,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     /**
      * And the corresponding values.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudValues() {
         return validSpeedValues;
     }

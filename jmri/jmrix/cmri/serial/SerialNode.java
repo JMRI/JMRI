@@ -27,7 +27,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -123,6 +123,7 @@ public class SerialNode extends AbstractNode {
     	num2LSearchLights = n;
     }
     	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getLocSearchLightBits() {
     	return locSearchLightBits;
     }
@@ -131,6 +132,7 @@ public class SerialNode extends AbstractNode {
     	locSearchLightBits[num] = (byte)(value&0xFF);
     }
     	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public byte[] getCardTypeLocation() {
     	return cardTypeLocation;
     }
