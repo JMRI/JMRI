@@ -71,7 +71,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         } else {
            iconMap = allIconsMap;
         }
-        AddIconsToPanel(iconMap);
+        addIconsToPanel(iconMap);
     }
 
     Hashtable<String, NamedIcon> filterIconMap(SignalHead sh, Hashtable<String, NamedIcon> allIconsMap) {

@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener, java.io.Serializable {
@@ -1018,13 +1018,13 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         popup.add(new AbstractAction(popuptext) {
             public void actionPerformed(ActionEvent e) {
                 String name = getNameString();
-                SlipTurnoutTextEdit(name);
+                slipTurnoutTextEdit(name);
             }
         });
         return true;
     }
     
-    public void SlipTurnoutTextEdit(String name) {
+    public void slipTurnoutTextEdit(String name) {
         if (debug) log.debug("make text edit menu");
 
         SlipTurnoutTextEdit f = new SlipTurnoutTextEdit();

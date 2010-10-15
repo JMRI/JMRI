@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -253,13 +253,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             if(isIcon()){
                 popup.add(new AbstractAction(rb.getString("ChangeToText")) {
                     public void actionPerformed(ActionEvent e) {
-                        ChangeLayoutSensorType();
+                        changeLayoutSensorType();
                     }
                 });
             } else {
                 popup.add(new AbstractAction(rb.getString("ChangeToIcon")) {
                     public void actionPerformed(ActionEvent e) {
-                        ChangeLayoutSensorType();
+                        changeLayoutSensorType();
                     }
                 });
             }
@@ -286,7 +286,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             popup.add(new AbstractAction(rb.getString("SetSensorText")) {
                 public void actionPerformed(ActionEvent e) {
                     String name = getNameString();
-                    SensorTextEdit(name);
+                    sensorTextEdit(name);
                 }
             });
             if (isText() && !isIcon()) {
@@ -301,7 +301,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         return true;
     }
 
-    public void SensorTextEdit(String name) {
+    public void sensorTextEdit(String name) {
         if (debug) log.debug("make text edit menu");
 
         SensorTextEdit f = new SensorTextEdit();
@@ -662,7 +662,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         return menu;
     }
 
-    void ChangeLayoutSensorType(){
+    void changeLayoutSensorType(){
         NamedBeanHandle <Sensor> handle = getNamedSensor();
         if (isIcon()) {
             _icon = false;

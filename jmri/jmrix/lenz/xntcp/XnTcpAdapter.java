@@ -15,7 +15,7 @@ import jmri.jmrix.ConnectionStatus;
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 adapter by Bob Jacobsen, Copyright (C) 2002, Portions by Paul Bender, Copyright (C) 2003
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  * GT - May 2008 - Added updating of connection status in the main menu panel (using ConnectionStatus by Daniel Boudreau)
  */
@@ -176,7 +176,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 		 * implies that we may have a higher number of pending commands for a while,
 		 * without any negative consequence (the maximum is however arbitrary).
          **/
-        synchronized protected void XnTcpSetPendingPackets(int s)
+        synchronized protected void xnTcpSetPendingPackets(int s)
         {
 			pendingPackets += s;
 			if(pendingPackets < 0) pendingPackets = 0;
@@ -189,7 +189,7 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 		 * any more and the input and output threads will soon exit, user must save possible
 		 * changes, quit, fix the problem and then restart JMRI.
          */
-        synchronized protected void XnTcpError()
+        synchronized protected void xnTcpError()
         {
 			// If the error message was already posted to the SWING thread
 			// simply ignore this call
@@ -321,11 +321,11 @@ public class XnTcpAdapter extends XNetPortController implements jmri.jmrix.Seria
 					else if(count-- == 0) {
 						tcpOut.flush();
 						log.debug("XnTcpAdatper: flush ");
-						XnTcpSetPendingPackets(1);
+						xnTcpSetPendingPackets(1);
 					}
 				}
 				catch (java.io.IOException ex) {
-					XnTcpError();
+					xnTcpError();
 					throw ex;
 				}
 			}

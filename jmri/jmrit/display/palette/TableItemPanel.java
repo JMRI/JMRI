@@ -237,12 +237,12 @@ public class TableItemPanel extends ItemPanel {
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         } else {
-            AddIconsToPanel(iconMap);
+            addIconsToPanel(iconMap);
         }
 //        _paletteFrame.pack();
     }
 
-    protected void AddIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         GridBagLayout gridbag = new GridBagLayout();
         _iconPanel.setLayout(gridbag);
 
@@ -299,7 +299,7 @@ public class TableItemPanel extends ItemPanel {
         }
     }
 /*
-    protected void AddIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
         Iterator <String> it = iconMap.keySet().iterator();
         while (it.hasNext()) {
            String name = it.next();

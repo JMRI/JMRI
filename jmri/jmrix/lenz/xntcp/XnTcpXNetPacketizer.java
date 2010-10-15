@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
  * <P>
  * In particular, XnTcpXNetPacketizer counts the number of commands received.
  * @author		Giorgio Terdina Copyright (C) 2008, based on LIUSB packetizer by Paul Bender, Copyright (C) 2005
- * @version 	$Revision: 1.3 $
+ * @version 	$Revision: 1.4 $
  *
  */
 public class XnTcpXNetPacketizer extends XNetPacketizer {
@@ -46,7 +46,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 				// Was the communication closed by the XpressNet/Tcp interface, or lost?
 				if(char1 < 0) {
 					// We cannot communicate anymore!
-					XnTcpAdapter.instance().XnTcpError();
+					XnTcpAdapter.instance().xnTcpError();
 					throw new java.io.EOFException("Lost communication with XnTcp interface");
 				}
 				// Store the byte.
@@ -60,11 +60,11 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
 			// Packet received
 			// Assume that the last packet sent was acknowledged, either by the Command Station,
 			// either by the interface itself.
-			XnTcpAdapter.instance().XnTcpSetPendingPackets(-1);
+			XnTcpAdapter.instance().xnTcpSetPendingPackets(-1);
 			log.debug("XnTcpNetPacketizer: received end of packet");
 		}
 		catch (java.io.IOException ex) {
-			XnTcpAdapter.instance().XnTcpError();
+			XnTcpAdapter.instance().xnTcpError();
 			throw ex;
 		}
 
