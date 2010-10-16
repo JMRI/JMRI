@@ -19,7 +19,8 @@ import java.util.Date;
  * The Loconet Fast Clock is controlled by the user via the Fast Clock Setup GUI
  * that is accessed from the JMRI Tools menu.
  * <P>
- * For this implementation, "synchronize" implies "correct", since the two clocks run 
+ * For this implementation, "synchronize" implies "correct", 
+ * since the two clocks run 
  * at a different rate.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
@@ -42,7 +43,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -86,16 +87,16 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 	private int curRate = 1;
 	private int savedRate = 1;
 	/* current options and flags */
-	private static boolean setInternal = false;   // true if Loconet Clock is the master
-	private static boolean synchronizeWithInternalClock = false;
-	private static boolean inSyncWithInternalFastClock = false;
-	private static boolean timebaseErrorReported = false;
-	private static boolean correctFastClock = false;
-	private static boolean readInProgress = false;
+	private boolean setInternal = false;   // true if Loconet Clock is the master
+	private boolean synchronizeWithInternalClock = false;
+	private boolean inSyncWithInternalFastClock = false;
+	private boolean timebaseErrorReported = false;
+	private boolean correctFastClock = false;
+	private boolean readInProgress = false;
 	/* constants */
-	static long mSecPerHour = 3600000;
-	static long mSecPerMinute = 60000;
-	
+	final static long MSECPERHOUR = 3600000;
+	final static long MSECPERMINUTE = 60000;
+	final static double CORRECTION = 915.0;
 	/**
 	 * Accessor routines
 	 */
@@ -129,11 +130,11 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		Date tem = clock.getTime();
 		int cHours = tem.getHours();
 		long cNumMSec = tem.getTime();
-		long nNumMSec = ((cNumMSec/mSecPerHour)*mSecPerHour) - (cHours*mSecPerHour) +
-                    (curHours*mSecPerHour) + (curMinutes*mSecPerMinute) ;
+		long nNumMSec = ((cNumMSec/MSECPERHOUR)*MSECPERHOUR) - (cHours*MSECPERHOUR) +
+                    (curHours*MSECPERHOUR) + (curMinutes*MSECPERMINUTE) ;
 		// Work out how far through the current fast minute we are
 		// and add that on to the time.
-		nNumMSec += (long) ( ( ( 915 - curFractionalMinutes) / 915.0 * 60000) ) ;
+		nNumMSec += (long) ( ( ( CORRECTION - curFractionalMinutes) / CORRECTION * MSECPERMINUTE) ) ;
 		return (new Date(nNumMSec));
 	}
 	public void startHardwareClock(Date now) {
@@ -207,9 +208,9 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 				long millis = now.getTime() ;
 				// How many ms are we into the fast minute as we want to sync the
 				// Fast Clock Master Frac_Mins to the right 65.535 ms tick
-				long elapsedMS = millis % 60000 ;
-				double frac_min = elapsedMS / 60000.0 ;
-				curFractionalMinutes = 915 - (int)( 915 * frac_min ) ;
+				long elapsedMS = millis % MSECPERMINUTE ;
+				double frac_min = elapsedMS / MSECPERMINUTE ;
+				curFractionalMinutes = (int)CORRECTION - (int)( CORRECTION * frac_min ) ;
 				setClock();
 			}
 		}
@@ -259,13 +260,13 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 		Date tem = clock.getTime();
 		int cHours = tem.getHours();
 		long cNumMSec = tem.getTime();
-		long nNumMSec = ((cNumMSec/mSecPerHour)*mSecPerHour) - (cHours*mSecPerHour) +
-                    (curHours*mSecPerHour) + (curMinutes*mSecPerMinute) ;
+		long nNumMSec = ((cNumMSec/MSECPERHOUR)*MSECPERHOUR) - (cHours*MSECPERHOUR) +
+                    (curHours*MSECPERHOUR) + (curMinutes*MSECPERMINUTE) ;
 		// set the internal timebase based on the Loconet clock
         if (readInProgress && !inSyncWithInternalFastClock) {
 			// Work out how far through the current fast minute we are
 			// and add that on to the time.
-            nNumMSec += (long) ( ( ( 915 - curFractionalMinutes) / 915.0 * 60000) ) ;
+            nNumMSec += (long) ( ( ( CORRECTION - curFractionalMinutes) / CORRECTION * MSECPERMINUTE) ) ;
             clock.setTime(new Date(nNumMSec));
         }
 		else if (setInternal) {
