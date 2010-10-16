@@ -111,7 +111,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _paletteFrame.updateFamiliesPanel(_itemType);
     }
 
-    static protected String[] POSITION = {"first", "second", "third", "fourth", "fifth",
+    static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
                                          "sixth", "seventh", "eighth", "nineth", "tenth" };
 
     protected class MultiSensorSelectionModel extends DefaultListSelectionModel {

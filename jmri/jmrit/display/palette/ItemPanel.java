@@ -73,23 +73,23 @@ public abstract class ItemPanel extends JPanel {
     }
 
     /******** Default family icon names ********/
-    static protected String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
+    static final String[] TURNOUT = {"TurnoutStateClosed", "TurnoutStateThrown",
                                          "BeanStateInconsistent", "BeanStateUnknown"};
-    static protected String[] SENSOR = {"SensorStateActive", "SensorStateInactive",
+    static final String[] SENSOR = {"SensorStateActive", "SensorStateInactive",
                                         "BeanStateInconsistent", "BeanStateUnknown"};
-    static protected String[] SIGNAL = {"SignalHeadStateRed", "SignalHeadStateYellow",
+    static final String[] SIGNAL = {"SignalHeadStateRed", "SignalHeadStateYellow",
                                         "SignalHeadStateGreen", "SignalHeadStateDark",
                                         "SignalHeadStateHeld", "SignalHeadStateLunar",
                                         "SignalHeadStateFlashingRed", "SignalHeadStateFlashingYellow",
                                         "SignalHeadStateFlashingGreen", "SignalHeadStateFlashingLunar"};
-    static protected String[] LIGHT = {"LightStateOff", "LightStateOn",
+    static final String[] LIGHT = {"LightStateOff", "LightStateOn",
                                        "BeanStateInconsistent", "BeanStateUnknown"};
-    static protected String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
+    static final String[] MULTISENSOR = {"SensorStateInactive", "BeanStateInconsistent",
                                              "BeanStateUnknown", "first", "second", "third"};
 
-    static protected String[] RPSREPORTER = {"active", "error"};
-    static protected String[] ICON = {"Icon"};
-    static protected String[] BACKGROUND = {"Background"};
+    static final String[] RPSREPORTER = {"active", "error"};
+    static final String[] ICON = {"Icon"};
+    static final String[] BACKGROUND = {"Background"};
 
 
     protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
