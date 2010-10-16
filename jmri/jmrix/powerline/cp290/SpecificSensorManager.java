@@ -20,7 +20,7 @@ import jmri.jmrix.powerline.SerialReply;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -59,7 +59,7 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 	    	newCmdCode = m.getElement(7) & 0x0F;
 	    	newHouseCode = X10Sequence.houseCodeToText((m.getElement(7) >> 4) & 0x0F);
 	    	newAddrCode = (m.getElement(8) & 0x00FF) + ((m.getElement(9) & 0x00FF) << 8);
-	    	if (goodSync && goodCheckSum && newHouseCode != "" && newAddrCode != -1 && newCmdCode != -1) {
+	    	if (goodSync && goodCheckSum) {
 	    		int unitMask = 1 << 16;
 	    		int unitCnt = 0;
 	    		while (unitMask > 0 ) {
