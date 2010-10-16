@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -1013,7 +1013,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * from elsewhere to start the process of scanning all
      * slots to update their contents.
      */
-    public void update() {
+    synchronized public void update() {
         nextReadSlot = 0;
         readNextSlot();
     }
