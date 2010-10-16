@@ -16,7 +16,7 @@ import org.jdom.filter.*;
  * Check the names in an XML decoder file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * @see jmri.jmrit.XmlFile
  */
 public class NameCheckAction extends AbstractAction {
@@ -31,6 +31,9 @@ public class NameCheckAction extends AbstractAction {
     JPanel _who;
     
     @SuppressWarnings("unchecked")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
 	public void actionPerformed(ActionEvent e) {
         if (fci==null) {
             fci = jmri.jmrit.XmlFile.userFileChooser("XML files", "xml");

@@ -19,7 +19,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -31,6 +31,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
      * Write out the SerialNode objects too
      * @param e Element being extended
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected void extendElement(Element e) {
         SerialNode node = (SerialNode) SerialTrafficController.instance().getNode(0);
         int index = 1;

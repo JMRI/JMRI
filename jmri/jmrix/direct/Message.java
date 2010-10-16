@@ -9,7 +9,7 @@ import jmri.Programmer;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class Message extends jmri.jmrix.AbstractMRMessage {
 
@@ -40,7 +40,9 @@ public class Message extends jmri.jmrix.AbstractMRMessage {
     public int getElement(int n) {return _dataChars[n];}
     public void setElement(int n, int v) { _dataChars[n] = v&0x7F; }
 
-    // display format
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String s = "";
         for (int i=0; i<_nDataChars; i++) {

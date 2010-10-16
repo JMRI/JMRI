@@ -19,7 +19,7 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class Region {
     
@@ -80,6 +80,9 @@ public class Region {
         initPath(points);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String retval = "";
         for (int i=0; i<points.length; i++) {

@@ -989,6 +989,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     public void dropActionChanged(DropTargetDragEvent evt) {
         if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dropActionChanged ");
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void drop(DropTargetDropEvent evt) {
         try {
             //Point pt = evt.getLocation(); coords relative to entire window

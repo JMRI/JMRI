@@ -23,7 +23,7 @@ import java.util.List;
  *</UL>
  *
  * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 
 public class SdfBuffer {
@@ -91,6 +91,9 @@ public class SdfBuffer {
         if (index!=length) log.error("Lengths did not match: "+index+" "+length);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String out ="";
         for (int i = 0; i<ops.size(); i++) {

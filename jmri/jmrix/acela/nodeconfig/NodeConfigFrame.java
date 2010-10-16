@@ -16,7 +16,7 @@ import jmri.jmrix.acela.AcelaNode;
  * Frame for user configuration of Acela nodes
  * @author	Bob Jacobsen   Copyright (C) 2004, 2007, 2008
  * @author	Dave Duchamp   Copyright (C) 2004, 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class NodeConfigFrame extends jmri.util.JmriJFrame {
 
@@ -159,6 +159,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /** 
      *  Initialize the config window
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void initComponents() {
         setTitle(rb.getString("WindowTitle"));
 			
@@ -1232,6 +1235,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle info state 
      */        
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void infoButtonActionPerformed() {
 
         // lookup the nodes
@@ -1565,6 +1571,9 @@ public class NodeConfigFrame extends jmri.util.JmriJFrame {
     /**
      * Method to handle cancel button 
      */        
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void cancelButtonActionPerformed() {
         // Reset 
         editMode = false;

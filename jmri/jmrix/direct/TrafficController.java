@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -54,6 +54,9 @@ public class TrafficController implements jmri.CommandStation {
      * @param repeats Number of times to repeat the transmission,
      *      but is ignored in the current implementation
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void sendPacket(byte[] packet, int repeats) {
 
         if (repeats!=1) log.warn("Only single transmissions currently available");

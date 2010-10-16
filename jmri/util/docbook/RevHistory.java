@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * These can be nested:  A revision can come with a history.
  *
  * @author Bob Jacobsen  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
     
 public class RevHistory {
@@ -70,6 +70,9 @@ public class RevHistory {
                 revremark);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString(String prefix) {
         String retval = "";
         for (int i = 0; i < list.size(); i++) {

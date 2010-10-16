@@ -14,7 +14,7 @@ import java.io.IOException;
  * Display and edit the function labels in a RosterEntry
  *
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class FunctionLabelPane extends javax.swing.JPanel {
     RosterEntry re;
@@ -140,6 +140,9 @@ public class FunctionLabelPane extends javax.swing.JPanel {
     public void includeInPrint(boolean inc) { print = inc; }
     boolean print = false;
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void printPane(HardcopyWriter w) {
         // if pane is empty, don't print anything
         //if (varList.size() == 0 && cvList.size() == 0) return;

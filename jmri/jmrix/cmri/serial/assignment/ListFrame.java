@@ -24,7 +24,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI assignment list.
  * @author	 Dave Duchamp   Copyright (C) 2006
- * @version	 $Revision: 1.10 $
+ * @version	 $Revision: 1.11 $
  */
 public class ListFrame extends jmri.util.JmriJFrame {
 
@@ -459,6 +459,9 @@ public class ListFrame extends jmri.util.JmriJFrame {
 			w.close();
 		}
     
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+        // Only used occasionally, so inefficient String processing not really a problem
+        // though it would be good to fix it if you're working in this area
 		protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize[]) 
 		{
 			String columnString = "";

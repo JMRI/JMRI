@@ -16,7 +16,7 @@ import java.util.regex.*;
  * Check the names in an XML programmer file against the names.xml definitions
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2007
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see         jmri.jmrit.XmlFile
  */
 public class ProgCheckAction extends AbstractAction {
@@ -76,6 +76,9 @@ public class ProgCheckAction extends AbstractAction {
             JOptionPane.showMessageDialog(_who,result);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     static String checkMissingNames(File file) {
         try {
             Element root = readFile(file);
@@ -133,6 +136,9 @@ public class ProgCheckAction extends AbstractAction {
             JOptionPane.showMessageDialog(_who,result);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     static String checkIncompleteComprehensive(File file) {
         // handle the file (later should be outside this thread?)
         try {

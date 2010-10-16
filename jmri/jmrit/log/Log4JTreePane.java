@@ -13,7 +13,7 @@ import org.apache.log4j.Logger;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class Log4JTreePane extends jmri.util.swing.JmriPanel {
@@ -45,6 +45,9 @@ public class Log4JTreePane extends jmri.util.swing.JmriPanel {
      * the constructor is complete.
      */
     @SuppressWarnings("unchecked")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
 	public void initComponents() throws Exception {
         org.apache.log4j.spi.LoggerRepository repo 
             = Logger.getRootLogger().getLoggerRepository();

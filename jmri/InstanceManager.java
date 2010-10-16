@@ -36,7 +36,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.67 $
+ * @version			$Revision: 1.68 $
  */
 public class InstanceManager {
 
@@ -102,6 +102,9 @@ public class InstanceManager {
      * by type.
      */
     @SuppressWarnings("unchecked")   // checked by construction
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     static public String contentsToString() {
         String retval = "";
         for (Class c : managerLists.keySet()) {

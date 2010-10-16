@@ -16,7 +16,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
@@ -96,6 +96,9 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
 
     protected java.util.Vector<String> keys = new java.util.Vector<String>();
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String retval = "SignalSystem "+getSystemName()+"\n";
         Enumeration<String> e1 = getAspects();

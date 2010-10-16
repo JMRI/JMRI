@@ -38,7 +38,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -211,6 +211,9 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
      * Decoder identify has matched one or more specific types
      */
     @SuppressWarnings("unchecked")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
 	void updateForDecoderTypeID(List<DecoderFile> pList) {
         // find and select the first item
         if (log.isDebugEnabled()) {

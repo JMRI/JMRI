@@ -61,7 +61,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class Maintenance
@@ -455,6 +455,9 @@ public class Maintenance
         return (new String[] {"", userName, sysName});
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     static boolean search(String name, JTextArea text) {
         String[] names = getTypeAndNames(name);
         if (names[0].length() == 0)

@@ -8,7 +8,7 @@ package jmri.jmrix.tmcc;
  * packet.  Note that _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -23,7 +23,9 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
         super(l);
     }
 
-    // display format
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String s = "";
         for (int i=0; i<getNumDataElements(); i++) {

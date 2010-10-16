@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.33 $
+ * @version		$Revision: 1.34 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -421,6 +421,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * vertical lines between each column. Data is word wrapped within a column.
      * Can handle data as strings, comboboxes or booleans
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine()- this.getColumnCount() - 1)/this.getColumnCount();
@@ -465,6 +468,9 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         w.close();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
         String lineString = "";

@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -183,6 +183,9 @@ public abstract class SdfMacro implements SdfConstants {
      * @return "+" separated list of labels, 
      * or "&lt;ERROR&gt;" if none matched
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     String decodeFlags(int input, int[] values, int[] masks, String[] labels) {
         String[] names = jmri.util.StringUtil.getNamesFromStateMasked(input, values, masks, labels);
         if (names == null) return "<ERROR>"; // unexpected case, internal error, should also log?

@@ -10,7 +10,7 @@ import jmri.jmrix.cmri.serial.SerialTrafficController;
 /**
  * Frame displaying (and logging) CMRI serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.11 $
+ * @version         $Revision: 1.12 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -40,22 +40,36 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         } else if (l.isPoll()) {
             nextLine("Poll ua="+l.getUA()+"\n", l.toString());
         } else if (l.isXmt()) {
-            String s = "Transmit ua="+l.getUA()+" OB=";
-            for (int i=2; i<l.getNumDataElements(); i++)
-                s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
-            nextLine(s+"\n", l.toString());
-        } else if (l.isInit()) {
-            String s = "Init ua="+l.getUA()
-                +" type="+((char)l.getElement(2));
-            int len = l.getNumDataElements();
-            if (len>=5)
-                s +=" DL="+(l.getElement(3)*256+l.getElement(4));
-            if (len>=6) {
-                s+=" NS="+l.getElement(5)+" CT: ";
-                for (int i=6; i<l.getNumDataElements(); i++)
-                    s+=Integer.toHexString(l.getElement(i)&0x000000ff)+" ";
+            StringBuilder sb = new StringBuilder("Transmit ua=");
+            sb.append(l.getUA());
+            sb.append(" OB=");
+            for (int i=2; i<l.getNumDataElements(); i++) {
+                sb.append(Integer.toHexString(l.getElement(i)&0x000000ff));
+                sb.append(" ");
             }
-            nextLine(s+"\n", l.toString());
+            sb.append("\n");
+            nextLine(new String(sb), l.toString());
+        } else if (l.isInit()) {
+            StringBuilder sb = new StringBuilder("Init ua=");
+            sb.append(l.getUA());
+            sb.append(" type=");
+            sb.append((char)l.getElement(2));
+            int len = l.getNumDataElements();
+            if (len>=5) {
+                sb.append(" DL=");
+                sb.append(l.getElement(3)*256+l.getElement(4));
+            }
+            if (len>=6) {
+                sb.append(" NS=");
+                sb.append(l.getElement(5));
+                sb.append(" CT: ");
+                for (int i=6; i<l.getNumDataElements(); i++) {
+                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff));
+                    sb.append(" ");
+                }
+            }
+            sb.append("\n");
+            nextLine(new String(sb), l.toString());
         } else
             nextLine("unrecognized cmd: \""+l.toString()+"\"\n", "");
     }
@@ -67,10 +81,15 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
                             l.toString());
             return;
         } else if (l.isRcv()) {
-            String s = "Receive ua="+l.getUA()+" IB=";
-            for (int i=2; i<l.getNumDataElements(); i++)
-                s = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i), s)+" ";
-            nextLine(s+"\n", l.toString());
+            StringBuilder sb = new StringBuilder("Receive ua=");
+            sb.append(l.getUA());
+            sb.append(" IB=");
+            for (int i=2; i<l.getNumDataElements(); i++) {
+                    sb.append(Integer.toHexString(l.getElement(i)&0x000000ff));
+                    sb.append(" ");
+            }
+            sb.append("\n");
+            nextLine(new String(sb), l.toString());
         } else
             nextLine("unrecognized rep: \""+l.toString()+"\"\n", "");
     }

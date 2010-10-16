@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.56 $
+ * @version	$Revision: 1.57 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -354,6 +354,9 @@ public class Roster extends XmlFile {
      * @param file an op
      * @throws IOException
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     void writeFile (File file) throws java.io.IOException {
         // create root element
         Element root = new Element("roster-config");
@@ -511,6 +514,9 @@ public class Roster extends XmlFile {
      * @name filename of roster file
      */
     @SuppressWarnings("unchecked")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
 	void readFile(String name) throws org.jdom.JDOMException, java.io.IOException {
         // roster exists?  
         if (!(new File(name)).exists()) {

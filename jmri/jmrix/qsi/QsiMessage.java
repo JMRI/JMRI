@@ -10,7 +10,7 @@ package jmri.jmrix.qsi;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -159,7 +159,9 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         return f;
     }
     
-    // display format
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String s = "";
         if (!QsiTrafficController.instance().isSIIBootMode()) {

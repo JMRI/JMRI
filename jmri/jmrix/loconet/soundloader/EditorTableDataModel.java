@@ -22,7 +22,7 @@ import javax.swing.table.TableCellEditor;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.14 $
+ * @version		$Revision: 1.15 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -332,6 +332,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
      * vertical lines between each column. Data is word wrapped within a column.
      * Can handle data as strings, comboboxes or booleans
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public void printTable(HardcopyWriter w) {
         // determine the column size - evenly sized, with space between for lines
         int columnSize = (w.getCharactersPerLine()- this.getColumnCount() - 1)/this.getColumnCount();
@@ -376,6 +379,9 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
         w.close();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected void printColumns(HardcopyWriter w, String columnStrings[], int columnSize) {
         String columnString = "";
         String lineString = "";

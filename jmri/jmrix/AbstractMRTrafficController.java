@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.87 $
+ * @version         $Revision: 1.88 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -506,6 +506,9 @@ abstract public class AbstractMRTrafficController {
         return len+cr;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // String + only used for debug, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected boolean xmtException = false;
     /**
      * Actually transmits the next message to the port
@@ -539,7 +542,8 @@ abstract public class AbstractMRTrafficController {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
                     String f = "formatted message: ";
-                    for (int i = 0; i<msg.length; i++) f=f+Integer.toHexString(0xFF&msg[i])+" ";
+                    for (int i = 0; i<msg.length; i++) 
+                        f=f+Integer.toHexString(0xFF&msg[i])+" ";
                     log.debug(f);
                 }
                 while(m.getRetries()>=0) {

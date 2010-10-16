@@ -12,7 +12,7 @@ package jmri.jmrix.tmcc;
  * are included. These are added during transmission.
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
@@ -61,8 +61,9 @@ public class SerialMessage extends jmri.jmrix.AbstractMRMessage {
         setTimeout(100);
     }
 
-
-    // display format
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String s = "";
         for (int i=0; i<getNumDataElements(); i++) {

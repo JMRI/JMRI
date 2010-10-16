@@ -1,3 +1,4 @@
+
 // AcelaMessage.java
 
 package jmri.jmrix.acela;
@@ -8,7 +9,7 @@ package jmri.jmrix.acela;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  *
  * @author	Bob Coleman Copyright (C) 2007, 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -51,7 +52,9 @@ public class AcelaMessage extends jmri.jmrix.AbstractMRMessage {
         super(String.valueOf(a));
     }
 
-    // display format
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public String toString() {
         String s = "";
         for (int i=0; i<getNumDataElements(); i++) {

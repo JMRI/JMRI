@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.11 $
+ * @version	 $Revision: 1.12 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -444,6 +444,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run an Output Test
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected void runOutputTest() {
         // Set up timer to update output pattern periodically
         outTimer = new Timer(obsDelay,new ActionListener() {
@@ -553,6 +556,9 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     /**
      * Local Method to run a Wraparound Test
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     protected void runWraparoundTest() {
         // Display Status Message
         statusText1.setText("Running Wraparound Test");

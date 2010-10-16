@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -28,7 +28,9 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
         super(s);
     }
     
-    // from String
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
+    // Only used occasionally, so inefficient String processing not really a problem
+    // though it would be good to fix it if you're working in this area
     public QsiReply(String s, boolean b) {
         super(s);
         _isBoot = b;
