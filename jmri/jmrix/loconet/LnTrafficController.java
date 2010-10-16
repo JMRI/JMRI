@@ -12,7 +12,7 @@ import java.util.Vector;
  * statistics support.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.16 $
+ * @version 		$Revision: 1.17 $
  *
  */
 public abstract class LnTrafficController implements LocoNetInterface {
@@ -26,6 +26,9 @@ public abstract class LnTrafficController implements LocoNetInterface {
         return self;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT")
+    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // migration is complete
     static protected LnTrafficController self = null;
 
     // Abstract methods for the LocoNetInterface
