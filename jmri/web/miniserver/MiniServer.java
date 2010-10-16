@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -84,20 +84,25 @@ public class MiniServer extends NetworkServer {
         // get the request string, being sure to be able to put Reader back
         in.mark(2000);   // If this is exceeded, probably should be using POST
         String line = in.readLine();
+
         in.reset();
         
-        try {
-            // decode the request, and select a servlet
-            String request = line.substring(Math.max(0, line.indexOf(" ")+1), line.lastIndexOf(" ")>0 ? line.lastIndexOf(" ") : line.length());
-            if (log.isDebugEnabled()) log.debug("Request ["+request+"]");
-        
-            Servlet s = pickServlet(request);
-        
-            // invoke        
-            s.service(req, res);
-        } catch (Exception e) {
-            log.error("exception handling request: "+e);
-            e.printStackTrace();
+        if (line != null) {
+            try {
+                // decode the request, and select a servlet
+                String request = line.substring(Math.max(0, line.indexOf(" ")+1), line.lastIndexOf(" ")>0 ? line.lastIndexOf(" ") : line.length());
+                if (log.isDebugEnabled()) log.debug("Request ["+request+"]");
+            
+                Servlet s = pickServlet(request);
+            
+                // invoke        
+                s.service(req, res);
+            } catch (Exception e) {
+                log.error("exception handling request: "+e);
+                e.printStackTrace();
+            }
+        } else {
+            log.error("found no info in request");
         }
         
         server.close();
