@@ -152,7 +152,7 @@ public class PositionablePropertiesUtil {
         int fontCurrentColor = 0;
         for (int i = 0; i < _fontcolors.length; i++) {
             
-            intArray[i] = new Integer(i);
+            intArray[i] = Integer.valueOf(i);
             try {
                 Field f = Color.class.getField((_fontcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
