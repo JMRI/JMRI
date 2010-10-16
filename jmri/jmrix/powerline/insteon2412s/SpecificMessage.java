@@ -6,6 +6,7 @@ import jmri.jmrix.powerline.SerialLight;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.insteon2412s.Constants;
+import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial
@@ -24,7 +25,7 @@ import jmri.jmrix.powerline.insteon2412s.Constants;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -89,7 +90,7 @@ public class SpecificMessage extends SerialMessage {
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
 	            		default:
-	            			text.append(" Unknown cmd: " + String.format("0x%1$2.2X", getElement(6) & 0xFF));
+	            			text.append(" Unknown cmd: " + StringUtil.twoHexFromInt(getElement(6) & 0xFF));
 	            			break;
 		            	}
 	            	} else {
@@ -130,7 +131,7 @@ public class SpecificMessage extends SerialMessage {
 //                    }
 //	            	break;
 	            default: {
-	            	text.append(" Unknown command: " + String.format("0x%1$2.2X", getElement(1)& 0xFF));
+	            	text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1)& 0xFF));
 	            	text.append(" len: " + len);
 	            }
 	        }

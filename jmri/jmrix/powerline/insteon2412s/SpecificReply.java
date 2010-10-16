@@ -4,13 +4,14 @@ package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.X10Sequence;
+import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial reply
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -60,7 +61,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
 	            		default:
-	            			text.append(" Unknown cmd: " + String.format("0x%1$2.2X", getElement(6) & 0xFF));
+	            			text.append(" Unknown cmd: " + StringUtil.twoHexFromInt(getElement(6) & 0xFF));
 	            			break;
 		            	}
 		            	if ((getElement(8) & 0xFF) == Constants.REPLY_NAK) {
@@ -106,7 +107,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                     }
 	            	break;
 	            default: {
-	            	text.append(" Unknown command: " + String.format("0x%1$2.2X", getElement(1)& 0xFF));
+	            	text.append(" Unknown command: " + StringUtil.twoHexFromInt(getElement(1)& 0xFF));
 	            	text.append(" len: " + len);
 	            }
 	        }
