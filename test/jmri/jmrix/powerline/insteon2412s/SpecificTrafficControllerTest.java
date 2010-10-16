@@ -16,11 +16,12 @@ import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.insteon2412s.Constants;
 
 /**
  * JUnit tests for the SpecificTrafficController class
  * @author			Bob Jacobsen Copyright 2005, 2007, 2008, 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SpecificTrafficControllerTest extends TestCase {
 
@@ -42,32 +43,53 @@ public class SpecificTrafficControllerTest extends TestCase {
         TestSerialTC c = new TestSerialTC();
         SerialReply r = new SpecificReply();
 
-        r.setElement(0, 0x12);
-        Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
+        r.setElement(0, Constants.HEAD_STX);
+        Assert.assertTrue("STX", !c.testEndOfMessage(r));
+        
+        r.setElement(1, Constants.POLL_REQ_BUTTON_RESET);
+        Assert.assertTrue("Reset", c.testEndOfMessage(r));
     }
     public void testReceiveStatesRead() {
+    	// build a dim for address 11.22.33 to 50%
         TestSerialTC c = new TestSerialTC();
         SerialReply r = new SpecificReply();
 
-        r.setElement(0, 0x5A);        
+        r.setElement(0, Constants.HEAD_STX);        
         Assert.assertTrue("wait for read", !c.testEndOfMessage(r));
 
-        r.setElement(1, 0x03);        
-        Assert.assertTrue("get count", !c.testEndOfMessage(r));
+        r.setElement(1, Constants.POLL_REQ_STD);        
+        Assert.assertTrue("IM Command", !c.testEndOfMessage(r));
 
-        r.setElement(2, 0x01);        
-        Assert.assertTrue("1st byte", !c.testEndOfMessage(r));
+        r.setElement(2, 0x11);        
+        Assert.assertTrue("Addr High", !c.testEndOfMessage(r));
 
-        r.setElement(3, 0x02);        
-        Assert.assertTrue("2nd byte", !c.testEndOfMessage(r));
+        r.setElement(3, 0x22);        
+        Assert.assertTrue("Addr Middle", !c.testEndOfMessage(r));
 
-        r.setElement(4, 0x03);        
-        Assert.assertTrue("3rd byte", c.testEndOfMessage(r));
-    
+        r.setElement(4, 0x33);        
+        Assert.assertTrue("Addr Low", !c.testEndOfMessage(r));
+
+        r.setElement(5, 0x44);        
+        Assert.assertTrue("Addr High", !c.testEndOfMessage(r));
+
+        r.setElement(6, 0x55);        
+        Assert.assertTrue("Addr Middle", !c.testEndOfMessage(r));
+
+        r.setElement(7, 0x66);        
+        Assert.assertTrue("Addr Low", !c.testEndOfMessage(r));
+
+        r.setElement(8, 0x00);        
+        Assert.assertTrue("Flags", !c.testEndOfMessage(r));
+
+        r.setElement(9, Constants.CMD_LIGHT_CHG);        
+        Assert.assertTrue("Dim Cmd", !c.testEndOfMessage(r));
+        
+        r.setElement(10, 0x80);        
+        Assert.assertTrue("50% dim", c.testEndOfMessage(r));
+        
         // and next reply OK
-        r = new SpecificReply();
-        r.setElement(0, 0x12);        
-        Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
+        //r.setElement(8, Constants.REPLY_ACK);        
+        //Assert.assertTrue("single byte reply", c.testEndOfMessage(r));
         
     }
     

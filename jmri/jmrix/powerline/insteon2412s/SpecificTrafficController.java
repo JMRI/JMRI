@@ -30,7 +30,7 @@ import java.io.DataInputStream;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
  * @author			Ken Cameron Copyright (C) 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -134,47 +134,41 @@ public class SpecificTrafficController extends SerialTrafficController {
     int remainingBytes = 0;        // count of bytes _left_
     
     protected boolean endOfMessage(AbstractMRReply msg) {
-        // check if this byte is length
-        if (expectLength) {
-            expectLength = false;
-            countingBytes = true;
-            remainingBytes = msg.getElement(1)&0xF; // 0 was the read command; max 9, really
-            if (logDebug) log.debug("Receive count set to "+remainingBytes);
-            return false;
-        }
-        if (remainingBytes>0) {
-            if (remainingBytes>8) {
-                log.error("Invalid remainingBytes: "+remainingBytes);
-                remainingBytes = 0;
-                return true;
-            }
-            remainingBytes--;
-            if (remainingBytes == 0) {
-                countingBytes = false;
-                return true;  // done
-            }
-            return false; // wait for one more
-        }
-        // check for data available
-        if ((msg.getElement(0)&0xFF)==Constants.FUNCTION_REQ_STD) {
-            // get message
-            SerialMessage m = new SpecificMessage(1);
-            m.setElement(0, Constants.POLL_REQ_STD);
-            expectLength = true;  // next byte is length
-            forwardToPort(m, null);
-            return false;  // reply message will get data appended            
-        }
-        // if the interlock is present, send it
-        if (sendInterlock) {
-        	if (logDebug) log.debug("Send interlock");
-            sendInterlock = false;
-            SerialMessage m = new SpecificMessage(1);
-            m.setElement(0,0); // not really needed, but this is a slow protocol anyway
-            forwardToPort(m, null);
-            return false; // just leave in buffer
-        }
-        if (logDebug) log.debug("end of message: "+msg);
-        return true;
+    	if (msg.getNumDataElements() >= 2) {
+    		if (msg.getElement(0) != Constants.HEAD_STX) {
+    			return false;
+    		}
+    		int cmd = msg.getElement(1);
+        	switch (msg.getNumDataElements()) {
+        	case 2:
+        		if (cmd == Constants.POLL_REQ_BUTTON_RESET) {
+        			return true;
+        		}
+        		break;
+        	case 3:
+        		if (cmd == Constants.POLL_REQ_BUTTON) {
+        			return true;
+        		}
+        		break;
+        	case 4:
+        		if (cmd == Constants.POLL_REQ_X10) {
+        			return true;
+        		}
+        		break;
+        	case 11:
+        		if (cmd == Constants.POLL_REQ_STD) {
+        			return true;
+        		}
+        		break;
+        	case 25:
+        		if (cmd == Constants.POLL_REQ_EXT) {
+        			return true;
+        		}
+        		break;
+        	}
+    	}
+        if (logDebug) log.debug("end of message: " + msg);
+        return false;
     }
 
     /**
