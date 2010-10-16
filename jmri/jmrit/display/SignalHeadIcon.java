@@ -27,7 +27,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.71 $
+ * @version $Revision: 1.72 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -247,8 +247,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             r = new JRadioButtonMenuItem(rb.getString("ShowAppearance"));
             r.setIconTextGap(10);
             r.addActionListener(new ActionListener() {
-                final boolean desired = false;
-                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+                public void actionPerformed(ActionEvent e) { setLitMode(false); }
             });
             litButtonGroup.add(r);
             if (!litMode)  r.setSelected(true);
@@ -257,8 +256,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             r = new JRadioButtonMenuItem(rb.getString("ShowDarkIcon"));
             r.setIconTextGap(10);
             r.addActionListener(new ActionListener() {
-                final boolean desired = true;
-                public void actionPerformed(ActionEvent e) { setLitMode(desired); }
+                public void actionPerformed(ActionEvent e) { setLitMode(true); }
             });
             litButtonGroup.add(r);
             if (litMode)  r.setSelected(true);
