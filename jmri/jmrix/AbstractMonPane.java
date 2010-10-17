@@ -15,7 +15,7 @@ import jmri.util.swing.*;
 /**
  * Abstact base class for JPanels displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public abstract class AbstractMonPane extends JmriPanel  {
 
@@ -243,21 +243,23 @@ public abstract class AbstractMonPane extends JmriPanel  {
 
         // if requested, log to a file.
         if (logStream != null) {
-            String logLine = sb.toString();
-            if (!newline.equals("\n")) {
-                // have to massage the line-ends
-                int i = 0;
-                int lim = sb.length();
-                StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
-                for ( i = 0; i<lim; i++) {
-                    if (sb.charAt(i) == '\n')
-                        out.append(newline);
-                    else
-                        out.append(sb.charAt(i));
+            synchronized (logStream) {
+                String logLine = sb.toString();
+                if (!newline.equals("\n")) {
+                    // have to massage the line-ends
+                    int i = 0;
+                    int lim = sb.length();
+                    StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
+                    for ( i = 0; i<lim; i++) {
+                        if (sb.charAt(i) == '\n')
+                            out.append(newline);
+                        else
+                            out.append(sb.charAt(i));
+                    }
+                    logLine = out.toString();
                 }
-                logLine = out.toString();
+                logStream.print(logLine);
             }
-            logStream.print(logLine);
         }
     }
 
@@ -287,10 +289,12 @@ public abstract class AbstractMonPane extends JmriPanel  {
     public synchronized void stopLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // stop logging by removing the stream
         if (logStream!=null) {
-            logStream.flush();
-            logStream.close();
+            synchronized (logStream) {
+                logStream.flush();
+                logStream.close();
+            }
+            logStream = null;
         }
-        logStream = null;
     }
 
     public void openFileChooserButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -315,7 +319,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
         return linesBuffer.toString();
     }
 
-    PrintStream logStream = null;
+    transient PrintStream logStream = null;
 
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");

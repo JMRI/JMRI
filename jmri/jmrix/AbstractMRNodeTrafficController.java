@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     
@@ -35,7 +35,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int minNode = -1;
     protected int maxNode = -1;
 
-    private int numNodes = 0;       // Incremented as Serial Nodes are created and registered
+    private transient int numNodes = 0;       // Incremented as Serial Nodes are created and registered
                                     // Corresponds to next available address in nodeArray
     private AbstractNode[] nodeArray;
     private boolean[] mustInit;
@@ -98,7 +98,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
      *              Returns 'null' if a SerialNode with the specified address
      *                  was not found
      */
-    public AbstractNode getNodeFromAddress(int addr) {
+    synchronized public AbstractNode getNodeFromAddress(int addr) {
         for (int i=0; i<numNodes; i++) {
             if (getNode(i).getNodeAddress() == addr) {
                 return(getNode(i));

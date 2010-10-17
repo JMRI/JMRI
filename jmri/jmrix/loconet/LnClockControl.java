@@ -43,7 +43,7 @@ import java.util.Date;
  *
  * @author      Dave Duchamp Copyright (C) 2007
  * @author		Bob Jacobsen, Alex Shepherd
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class LnClockControl extends DefaultClockControl implements SlotListener
 {
@@ -209,7 +209,7 @@ public class LnClockControl extends DefaultClockControl implements SlotListener
 				// How many ms are we into the fast minute as we want to sync the
 				// Fast Clock Master Frac_Mins to the right 65.535 ms tick
 				long elapsedMS = millis % MSECPERMINUTE ;
-				double frac_min = elapsedMS / MSECPERMINUTE ;
+				double frac_min = elapsedMS / (double)MSECPERMINUTE ;
 				curFractionalMinutes = (int)CORRECTION - (int)( CORRECTION * frac_min ) ;
 				setClock();
 			}
