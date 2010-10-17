@@ -19,7 +19,7 @@ import javax.vecmath.Point3d;
  * @see jmri.jmrix.rps.Measurement
  *
  * @author	   Bob Jacobsen   Copyright (C) 2006, 2008
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  */
 public class RpsTrackingPanel extends javax.swing.JPanel 
     implements MeasurementListener {
@@ -263,7 +263,7 @@ public class RpsTrackingPanel extends javax.swing.JPanel
      * Simple tuple class for storing information
      * about a single transmitter being tracked
      */
-    class TransmitterStatus {
+    static class TransmitterStatus {
         Color color;
         Measurement measurement;  // last seen location
     }
