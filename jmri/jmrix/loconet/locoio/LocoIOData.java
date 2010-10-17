@@ -154,7 +154,7 @@ public class LocoIOData
     public void setUnitConfig(int portRefresh, int altCodePBs, int isServo, int blinkRate) {
         int newsv0 = ((portRefresh & 0x01) ) |  // bit 0
               ((altCodePBs  & 0x01) << 0x01) |  // bit 1
-              ((0           & 0x01) << 0x02) |  // bit 2
+                                                // bit 2 left at zero
               ((isServo     & 0x01) << 0x03) |  // bit 3
               ((blinkRate   & 0x0F) << 0x04);   // bits 4-7
         dataListeners.firePropertyChange("UnitConfig", Integer.valueOf(sv0), Integer.valueOf(newsv0));
