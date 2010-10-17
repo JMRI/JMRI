@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.10 $
+ * @version               $Revision: 1.11 $
  */
 
 
@@ -109,11 +109,11 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                             DccLocoAddress locoAddress;
                             int tempAddr;
                             boolean directionNormal=true;
-                            //String sb = "" + (char)r.getElement(i) + 
-                            //         (char)r.getElement(i+1) +
-                            //         (char)r.getElement(i+2) +
-                            //         (char)r.getElement(i+3);
-                            tempAddr=Integer.valueOf(sa,16).intValue();
+                            String sb = "" + (char)r.getElement(i) + 
+                                     (char)r.getElement(i+1) +
+                                     (char)r.getElement(i+2) +
+                                     (char)r.getElement(i+3);
+                            tempAddr=Integer.valueOf(sb,16).intValue();
                             directionNormal=((tempAddr&0x8000)==0);
                             if(tempAddr!=0) {
                                if(i==3){
