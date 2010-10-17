@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class StringUtil {
@@ -69,7 +69,7 @@ public class StringUtil {
     }
     
 
-    static final public char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
+    static final char[] hexChars = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' } ;
 
     /**
      * Convert an int to a exactly two hexadecimal characters

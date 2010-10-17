@@ -109,8 +109,8 @@ public class BasicCellEditor implements CellEditor,
         }
     }
 
-    protected static JCheckBox checkBox = new JCheckBox();
-    protected static ChangeEvent changeEvent;
+    static JCheckBox checkBox = new JCheckBox();
+    static ChangeEvent changeEvent;
     protected JComponent editor;
     protected EventListenerList listeners = new EventListenerList();
     protected EventObject editingEvent;

@@ -15,7 +15,7 @@ import org.jdom.*;
  * Tests for the roster.swing.RosterTableModel class.
  *
  * @author	Bob Jacobsen     Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class RosterTableModelTest extends TestCase {
 
@@ -62,12 +62,9 @@ public class RosterTableModelTest extends TestCase {
     public void setUp() {
         apps.tests.Log4JFixture.setUp();
 
-        // Reset Roster instance to ensure empty
-        Roster.resetInstance();
-        new Roster(){
-            { _instance = this; }
-        };
-
+        // Create empty test instance
+        Roster.installNullInstance();
+        
         // first entry
         Element e;
         RosterEntry r;

@@ -41,18 +41,16 @@ import org.jdom.ProcessingInstruction;
  * Note that the RosterEntry information is duplicated in both the Roster
  * (stored in the roster.xml file) and in the specific file for the entry.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2008
+ * @author	Bob Jacobsen   Copyright (C) 2001, 2008, 2010
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.57 $
+ * @version	$Revision: 1.58 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
 
     /** record the single instance of Roster **/
-    protected static Roster _instance = null;
+    static transient Roster _instance = null;
     
-
-
     public synchronized static void resetInstance() { 
         _instance = null; 
     }
@@ -67,7 +65,6 @@ public class Roster extends XmlFile {
             // create and load
             _instance = new Roster();
             try {
-                //_instance._rosterGroupList.add("Global");
                 _instance.readFile(defaultRosterFilename());
             } catch (Exception e) {
                 log.error("Exception during roster reading: "+e);
@@ -77,6 +74,15 @@ public class Roster extends XmlFile {
         return _instance;
     }
 
+    /**
+     * Provide a null (empty) roster instance
+     * 
+     */
+    
+    public static synchronized void installNullInstance() {
+        _instance = new Roster();
+    }
+    
     /**
      * Add a RosterEntry object to the in-memory Roster.
      * @param e Entry to add
@@ -709,7 +715,7 @@ public class Roster extends XmlFile {
     }
     
         
-    protected static String _rostergroup = null;
+    static String _rostergroup = null;
     
     public static void setRosterGroup(String group){
         if (group==null) _rostergroup=null;
