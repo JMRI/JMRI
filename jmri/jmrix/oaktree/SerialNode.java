@@ -23,7 +23,7 @@ import jmri.jmrix.AbstractNode;
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SerialNode extends AbstractNode {
 
@@ -157,6 +157,7 @@ public class SerialNode extends AbstractNode {
      * Public method to set node type.
      */
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	public void setNodeType(int type) {
         nodeType = type;
         switch (nodeType) {

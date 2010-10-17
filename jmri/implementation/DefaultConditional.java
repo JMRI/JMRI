@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -500,6 +500,9 @@ public class DefaultConditional extends AbstractNamedBean
 	 * Only get here if a change in state has occurred when calculating this Conditional
 	 */
 	@SuppressWarnings({ "deprecation", "fallthrough" })
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
+    // it's unfortunate that this is such a huge method, because these annotation
+    // have to apply to more than 500 lines of code - jake
 	private void takeActionIfNeeded() {
         int actionCount = 0;
         int actionNeeded = 0;

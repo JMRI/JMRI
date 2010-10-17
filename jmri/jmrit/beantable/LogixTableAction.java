@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1906,6 +1906,7 @@ public class LogixTableAction extends AbstractTableAction {
 
 
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	boolean logicTypeChanged(ActionEvent e) {
         int type = _operatorBox.getSelectedIndex() + 1;
         if (type == _logicType) {

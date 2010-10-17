@@ -21,7 +21,7 @@ import jmri.util.NamedBeanHandle;
  * been changed via some other mechanism.
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2008
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class DoubleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -38,6 +38,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
     }
 
 	@SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	protected void updateOutput() {
 	    // assumes that writing a turnout to an existing state is cheap!
 		if (mLit == false) {
@@ -72,7 +73,7 @@ public class DoubleTurnoutSignalHead extends DefaultSignalHead {
             		break;
         		default:
             		log.warn("Unexpected new appearance: "+mAppearance);
-            		// go dark
+            		// go dark by falling through
         		case DARK:
             		mRed.getBean().setCommandedState(Turnout.CLOSED);
             		mGreen.getBean().setCommandedState(Turnout.CLOSED);

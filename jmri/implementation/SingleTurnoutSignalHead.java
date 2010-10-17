@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class SingleTurnoutSignalHead extends DefaultSignalHead {
 
@@ -150,6 +150,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     final static private java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
             case SignalHead.RED:
@@ -170,7 +171,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
                     return rb.getString("SignalHeadStateFlashingLunar");
         	default:
                     log.warn("Unexpected appearance: "+mAppearance);
-                // go dark
+                // go dark by falling through
         	case SignalHead.DARK:
                     return  rb.getString("SignalHeadStateDark");
         }

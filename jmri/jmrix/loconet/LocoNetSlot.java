@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <P>
  * @author			Bob Jacobsen  Copyright (C) 2001
  * @author			Stephen Williams  Copyright (C) 2008
- * @version         $Revision: 1.23 $
+ * @version         $Revision: 1.24 $
  */
 public class LocoNetSlot {
 
@@ -127,6 +127,7 @@ public class LocoNetSlot {
     
     // methods to interact with LocoNet
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	public void setSlot(LocoNetMessage l) throws LocoNetException { // exception if message can't be parsed
         // sort out valid messages, handle
         switch (l.getOpCode()) {

@@ -93,6 +93,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
     }
         
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
 	if (mLit == false) {
@@ -120,7 +121,7 @@ public class LsDecSignalHead extends DefaultSignalHead {
                     break;
         	default:
                     log.warn("Unexpected new appearance: "+mAppearance);
-                // go dark
+                // go dark by falling through
         	case DARK:
                     mDark.setCommandedState(mDarkState);
                     break;

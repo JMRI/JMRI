@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.58 $
+ * @version     $Revision: 1.59 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -917,7 +917,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 				AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
 	}
     //@TODO We could do with checking the to make sure that the user has entered a turnout into a turnout field if it has been presented. Otherwise an error is recorded in the console window
-    //@SuppressWarnings("fallthrough")
     void okPressed(ActionEvent e) {
         if (!checkUserName(userName.getText()))
             return;
@@ -1198,6 +1197,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	}
 	
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	void handleMergSignalDriverOkPressed() {
         SignalHead s;
         // Adding Merg Signal Driver.
@@ -1665,6 +1665,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 	}
 	
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	void updatePressed(ActionEvent e) {
     	String nam = eUserName.getText();
 		// check if user name changed

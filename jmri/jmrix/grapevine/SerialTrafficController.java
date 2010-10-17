@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -252,6 +252,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Returns true when the message has been completely loaded.
      */
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	boolean doNextStep(AbstractMRReply msg, DataInputStream istream) throws java.io.IOException {
         switch (state) {
             case 0:

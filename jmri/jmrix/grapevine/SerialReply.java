@@ -8,7 +8,7 @@ package jmri.jmrix.grapevine;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SerialReply extends jmri.jmrix.AbstractMRReply {
 
@@ -81,6 +81,7 @@ public class SerialReply extends jmri.jmrix.AbstractMRReply {
      * and reply, this uses the Message method.
      */
     @SuppressWarnings("fallthrough")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SF_SWITCH_FALLTHROUGH")
 	public String format() {
         int b1 = -1;
         int b2 = -1;
