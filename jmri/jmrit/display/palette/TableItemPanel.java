@@ -15,6 +15,7 @@ import java.io.IOException;
 import javax.swing.TransferHandler;
 
 
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.Iterator;
 
@@ -425,11 +426,12 @@ public class TableItemPanel extends ItemPanel {
 
             if (_itemType.equals("Turnout")) {
                 TurnoutIcon t = new TurnoutIcon(_editor);
-                t.setClosedIcon(iconMap.get("TurnoutStateClosed"));
-                t.setThrownIcon(iconMap.get("TurnoutStateThrown"));
-                t.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-                t.setUnknownIcon(iconMap.get("BeanStateUnknown"));
                 t.setTurnout(bean.getDisplayName());
+                Enumeration <String> e = iconMap.keys();
+                while (e.hasMoreElements()) {
+                    String key = e.nextElement();
+                    t.setIcon(ItemPalette.rbean.getString(key), iconMap.get(key));
+                }
                 t.setDisplayLevel(Editor.TURNOUTS);
                 return new PositionableDnD(t, bean.getDisplayName());
             } else if (_itemType.equals("Sensor")) {

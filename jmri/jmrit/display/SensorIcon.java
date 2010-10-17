@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -388,7 +388,8 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public boolean setEditIconMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
@@ -397,33 +398,21 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder();
+        makeIconEditorFrame(this, "Sensor", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
         _iconEditor.setIcon(3, "SensorStateActive", getActiveIcon());
         _iconEditor.setIcon(2, "SensorStateInactive", getInactiveIcon());
         _iconEditor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
         _iconEditor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
-
-        _iconEditorFrame = makeAddIconFrame("EditSensor", "addIconsToPanel", 
-                                            "SelectSensor", _iconEditor, this);
+//        _iconEditor.setDefaultIcons();
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
-
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateSensor();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(getSensor());
     }
     void updateSensor() {

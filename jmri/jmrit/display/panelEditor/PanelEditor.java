@@ -229,20 +229,20 @@ public class PanelEditor extends Editor implements ItemListener {
         _addIconBox = new JComboBox();
         _addIconBox.setMinimumSize(new Dimension(75,75));
         _addIconBox.setMaximumSize(new Dimension(200,200));
-        _addIconBox.addItem(new ComboBoxItem("RightTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("LeftTOEditor"));
+        _addIconBox.addItem(new ComboBoxItem("RightTurnout"));
+        _addIconBox.addItem(new ComboBoxItem("LeftTurnout"));
         _addIconBox.addItem(new ComboBoxItem("SlipTOEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SensorEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SignalHeadEditor"));
-        _addIconBox.addItem(new ComboBoxItem("SignalMastEditor"));
-        _addIconBox.addItem(new ComboBoxItem("MemoryEditor"));
-        _addIconBox.addItem(new ComboBoxItem("ReporterEditor"));
-        _addIconBox.addItem(new ComboBoxItem("LightEditor"));
-        _addIconBox.addItem(new ComboBoxItem("BackgroundEditor"));
-        _addIconBox.addItem(new ComboBoxItem("MultiSensorEditor"));
-        _addIconBox.addItem(new ComboBoxItem("AddRPSreporter"));
-        _addIconBox.addItem(new ComboBoxItem("AddFastClock"));
-        _addIconBox.addItem(new ComboBoxItem("IconEditor"));
+        _addIconBox.addItem(new ComboBoxItem("Sensor"));
+        _addIconBox.addItem(new ComboBoxItem("SignalHead"));
+        _addIconBox.addItem(new ComboBoxItem("SignalMast"));
+        _addIconBox.addItem(new ComboBoxItem("Memory"));
+        _addIconBox.addItem(new ComboBoxItem("Reporter"));
+        _addIconBox.addItem(new ComboBoxItem("Light"));
+        _addIconBox.addItem(new ComboBoxItem("Background"));
+        _addIconBox.addItem(new ComboBoxItem("MultiSensor"));
+        _addIconBox.addItem(new ComboBoxItem("RPSreporter"));
+        _addIconBox.addItem(new ComboBoxItem("FastClock"));
+        _addIconBox.addItem(new ComboBoxItem("Icon"));
         _addIconBox.setSelectedIndex(-1);
         _addIconBox.addItemListener(this);  // must be AFTER no selection is set
         JPanel p1 = new JPanel();
@@ -420,73 +420,14 @@ public class PanelEditor extends Editor implements ItemListener {
                 frame.setVisible(true);
                 _addIconBox.setSelectedIndex(-1);
             } else {
-                if (name.equals("AddFastClock")) {
+                if (name.equals("FastClock")) {
                     addClock();
-                } else if (name.equals("AddRPSreporter")) {
+                } else if (name.equals("RPSreporter")) {
                     addRpsReporter();
                 } else { 
                     log.error("Unable to open Icon Editor \""+item.getName()+"\"");
                 }
             }
-            /* Classic PanelEditor has separate text entry field
-            int which = _addIconBox.getSelectedIndex()+1;
-            _addIconBox.setSelectedIndex(-1);
-            switch (which) {
-                case 0:
-                    addTextEditor();
-                    // no frame (uses JOptionPane)
-                    return;
-                case 1:
-                    addRightTOEditor();
-                    break;
-                case 2:
-                    addLeftTOEditor();
-                    break;
-                case 3:
-                    addSensorEditor();
-                    break;
-                case 4:
-                    addSignalHeadEditor();
-                    break;
-                case 5:
-                    addSignalMastEditor();
-                    break;
-                case 6:
-                    addMemoryEditor();
-                    break;
-                case 7:
-                    addReporterEditor();
-                    break;
-                case 8:
-                    addLightEditor();
-                    break;
-                case 9:
-                    addBackgroundEditor();
-                    break;
-                case 10:
-                    addMultiSensorEditor();
-                    break;
-                case 11:
-                    addRpsReporter();
-                    return;
-                case 12:
-                    addClock();
-                    return;
-                case 13:
-                    addIconEditor();
-                    break;
-                default:
-                    return;
-            }
-            // frame added in the above switch 
-            frame = super.getIconFrame(item.getName());
-            frame.setLocation(locationX, locationY);
-            locationX += DELTA;
-            locationY += DELTA;
-            frame.setVisible(true);
-            
-            _addIconBox.setSelectedIndex(-1);
-            */
         }
     }
 

@@ -154,46 +154,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     private void makeIconMenu() {
         _iconMenu = new JMenu(rb.getString("MenuIcon"));
         _menuBar.add(_iconMenu, 0);
-/*
-        JMenuItem addItem = new JMenuItem(rb.getString("TextLabelEditor"));
-        _iconMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					addTextEditor();
-                }
-            });
-
-        ActionListener openEditorAction = new ActionListener()
-        {
-            public void actionPerformed(ActionEvent e)
-            {
-                String name = e.getActionCommand();
-                openEditorFrame(name);
-            }
-        };
-        for (int i = 0; i < ICON_EDITORS.length; i++) {
-            JMenuItem mi = new JMenuItem(rb.getString(ICON_EDITORS[i]));
-            mi.setActionCommand(ICON_EDITORS[i]);
-            mi.addActionListener(openEditorAction);
-            _iconMenu.add(mi);                                                  
-        }
-
-        addItem = new JMenuItem(rb.getString("AddFastClock"));
-        _iconMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					addClock();
-                }
-            });
-
-        addItem = new JMenuItem(rb.getString("AddRPSreporter"));
-        _iconMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-					addRpsReporter();
-                }
-            });
-*/
         JMenuItem mi = new JMenuItem("Item Pallette");
         mi.addActionListener(new ActionListener() {
                 Editor editor;
@@ -548,18 +508,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                               ", frameWidth= "+frame.getWidth()+", frameHeight= "+frame.getHeight());
     }
 
-    // private method not used, so not in API
-    //     private void openEditorFrame(String name) {
-    //         JFrameItem frame = super.getIconFrame(name);
-    //         if (frame != null) {
-    //             frame.getEditor().reset();
-    //             frame.setVisible(true);
-    //         } else {
-    //             log.error("Unable to open Icon Editor \""+name+"\"");
-    //         }
-    //     }
-
-
     public void setTitle() {
         String name = getName();
         if (name==null || name.length()==0) {
@@ -574,7 +522,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     // all content loaded from file.  Set putItem override.
     public void loadComplete() {
-//        _newItem= true;
     }
     
     /**
@@ -927,19 +874,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             }
             popupSet = p.setTextEditMenu(popup);
             popupSet |= setTextAttributes(p, popup);
-            /*
-            PositionablePopupUtil util = p.getPopupUtility();
-            if (util!=null) {
-                util.setFixedTextMenu(popup);        
-                util.setTextMarginMenu(popup);        
-                util.setTextBorderMenu(popup);        
-                util.setTextFontMenu(popup);
-                util.setBackgroundMenu(popup);
-                util.setTextJustificationMenu(popup);
-                //util.copyItem(popup);
-                popupSet = true;
-            }
-            */
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
