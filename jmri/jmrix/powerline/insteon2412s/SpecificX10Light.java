@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -46,6 +46,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
      */
     public SpecificX10Light(String systemName, String userName) {
         super(systemName, userName);
+        maxDimStep = 22;
     }
 
     // System-dependent instance variables
