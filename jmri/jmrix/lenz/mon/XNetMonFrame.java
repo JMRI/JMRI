@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.33 $
+ * @version         $Revision: 2.34 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -570,13 +570,13 @@ import jmri.jmrix.lenz.XNetConstants;
 					} else {
 					   text = text + "Bit Mode Verify: ";
 					}
-					text = text + new String(((l.getElement(6) &0x08)>>3)
+					text = text + ((l.getElement(6) &0x08)>>3)
 					   +" to CV "
 					   + (1+l.getElement(5)+((l.getElement(4)&0x03)<<8))
 					   +" bit " 
 					   + (l.getElement(6)&0x07)
 					   +" For Decoder Address "
-					   +calcLocoAddress(l.getElement(2),l.getElement(3)));
+					   +calcLocoAddress(l.getElement(2),l.getElement(3));
 				break;
 				}
 				//fall through
