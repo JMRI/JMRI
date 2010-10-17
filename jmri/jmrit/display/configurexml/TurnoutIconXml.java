@@ -5,16 +5,26 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.TurnoutIcon;
 import org.jdom.Attribute;
 import org.jdom.Element;
+import java.util.List;
+import java.util.HashMap;
 
 /**
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
+    static final java.util.ResourceBundle rbean = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
+    static final HashMap<String,String> _nameMap = new HashMap<String,String>();
+
     public TurnoutIconXml() {
+        // map previous store names to actual localized names
+        _nameMap.put("closed", rbean.getString("TurnoutStateClosed"));
+        _nameMap.put("thrown", rbean.getString("TurnoutStateThrown"));
+        _nameMap.put("unknown", rbean.getString("BeanStateUnknown"));
+        _nameMap.put("inconsistent", rbean.getString("BeanStateInconsistent"));
     }
 
     /**
@@ -42,10 +52,10 @@ public class TurnoutIconXml extends PositionableLabelXml {
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
         // new style
-        element.addContent(storeIcon("closed", p.getClosedIcon()));
-        element.addContent(storeIcon("thrown", p.getThrownIcon()));
-        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
-        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+        element.addContent(storeIcon("closed", p.getIcon(rbean.getString("TurnoutStateClosed"))));
+        element.addContent(storeIcon("thrown", p.getIcon(rbean.getString("TurnoutStateThrown"))));
+        element.addContent(storeIcon("unknown", p.getIcon(rbean.getString("BeanStateUnknown"))));
+        element.addContent(storeIcon("inconsistent", p.getIcon(rbean.getString("BeanStateInconsistent"))));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
@@ -84,43 +94,28 @@ public class TurnoutIconXml extends PositionableLabelXml {
             log.error("incorrect information for turnout; must use turnout name");
             return;
         }
-
-        loadTurnoutIcon("closed", rotation, l, element, name);
-        loadTurnoutIcon("thrown", rotation, l, element, name);
-        loadTurnoutIcon("unknown", rotation, l, element, name);
-        loadTurnoutIcon("inconsistent", rotation, l, element, name);
+        l.setTurnout(name);
         
+        @SuppressWarnings("unchecked")
+        List<Element>states = element.getChildren();
+        if (states.size()>0) {
+            for (int i=0; i<states.size(); i++) {
+                String state = states.get(i).getName();
+                NamedIcon icon = loadIcon(l, state, element);
+                l.setIcon(_nameMap.get(state), icon);
+            }
+            log.debug(states.size()+" icons loaded for "+l.getNameString());
+        }
         Attribute a = element.getAttribute("tristate");
         if ( (a==null) || ((a!=null) && a.getValue().equals("true")))
             l.setTristate(true);
         else
             l.setTristate(false);
             
-        l.setTurnout(name);
-        
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
     
-    private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name){
-        NamedIcon icon = loadIcon( l,state, element);
-        if (icon==null){
-            if (element.getAttribute(state) != null) {
-                String iconName;
-                iconName = element.getAttribute(state).getValue();
-                icon = NamedIcon.getIconByName(iconName);
-                icon.setRotation(rotation, l);
-            }
-            else log.warn("did not locate " + state + " icon file "+name);
-        }
-        if (icon!=null) {
-            if(state.equals("closed")) l.setClosedIcon(icon);
-            else if (state.equals("thrown")) l.setThrownIcon(icon);
-            else if (state.equals("unknown")) l.setUnknownIcon(icon);
-            else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
-        }
-    }
-
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());
 }
