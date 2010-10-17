@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009-2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -217,7 +217,8 @@ public class LIUSBServerAdapter extends XNetPortController {
         String s = "";
         s = istream.readLine(); 
         if(log.isDebugEnabled()) log.debug("Received from port: " +s);
-        return ( new XNetReply(s));
+        if (s == null) return null;
+        else return new XNetReply(s);
     }
  
         //Internal class for broadcast port connection
