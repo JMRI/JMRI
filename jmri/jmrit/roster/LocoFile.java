@@ -24,7 +24,7 @@ import org.jdom.ProcessingInstruction;
  * @author    Bob Jacobsen     Copyright (C) 2001, 2002, 2008
  * @author    Dennis Miller    Copyright (C) 2004
  * @author    Howard G. Penny  Copyright (C) 2005
- * @version   $Revision: 1.35 $
+ * @version   $Revision: 1.36 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.roster.Roster
  */
@@ -253,9 +253,8 @@ class LocoFile extends XmlFile {
             writeXML(file, doc);
 
         }
-        catch (Exception ex) {
-            // need to trace this one back
-            ex.printStackTrace();
+        catch (java.io.IOException ex) {
+            log.error("IOException", ex);
         }
     }
 

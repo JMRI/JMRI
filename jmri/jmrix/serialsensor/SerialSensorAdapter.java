@@ -22,7 +22,7 @@ import gnu.io.SerialPortEventListener;
  * serial port.  Sensor "1" will be via DCD, and sensor "2" via DSR
  *
  * @author			Bob Jacobsen   Copyright (C) 2003
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SerialSensorAdapter extends AbstractSerialPortController
                 implements jmri.jmrix.SerialPortAdapter  {
@@ -124,11 +124,18 @@ public class SerialSensorAdapter extends AbstractSerialPortController
 
             opened = true;
 
-        }
-        catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+        } catch (gnu.io.NoSuchPortException ex1) {
+            log.error("No such port "+portName, ex1);
+            return "No such port "+portName+": "+ex1;
+        } catch (gnu.io.UnsupportedCommOperationException ex2) {
+            log.error("Exception to operation on port "+portName, ex2);
+            return "Exception to operation on port "+portName+": "+ex2;
+        } catch (java.util.TooManyListenersException ex3) {
+            log.error("Too Many Listeners on port "+portName, ex3);
+            return "Too Many Listeners on port "+portName+": "+ex3;
+        } catch (java.io.IOException ex4) {
+            log.error("I/O error on port "+portName, ex4);
+            return "I/O error on port "+portName+": "+ex4;
         }
 
         return null; // indicates OK return
