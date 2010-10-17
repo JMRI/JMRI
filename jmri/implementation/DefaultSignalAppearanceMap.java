@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -137,13 +137,16 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
         
         String ra;
         ra = rb.getString("SignalAspectDefaultRed");
-        addAspect(ra, new int[]{SignalHead.RED});
+        if (ra!=null) addAspect(ra, new int[]{SignalHead.RED});
+        else log.error("no default red aspect");
 
         ra = rb.getString("SignalAspectDefaultYellow");
-        addAspect(ra, new int[]{SignalHead.YELLOW});
+        if (ra!=null) addAspect(ra, new int[]{SignalHead.YELLOW});
+        else log.error("no default yellow aspect");
 
         ra = rb.getString("SignalAspectDefaultGreen");
-        addAspect(ra, new int[]{SignalHead.GREEN});
+        if (ra!=null) addAspect(ra, new int[]{SignalHead.GREEN});
+        else log.error("no default green aspect");
     }
     
     public void setAppearances(String aspect, List<NamedBeanHandle<SignalHead>> heads) {
