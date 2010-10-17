@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * day)
  *
  * @author		Bob Jacobsen  Copyright (C) 2007
- * @version             $Revision: 1.17 $
+ * @version             $Revision: 1.18 $
  */
 
 public abstract class SdfMacro implements SdfConstants {
@@ -161,11 +161,6 @@ public abstract class SdfMacro implements SdfConstants {
             if ( (m=FourByteMacro.match(buff)) != null) return m; else
             if ( (m=TwoByteMacro.match(buff)) != null) return m;
             
-            // bail
-            if (m==null) {
-                log.error("PANIC");
-                return null;
-            }
             log.warn("dropped through");
             return null;
     }
