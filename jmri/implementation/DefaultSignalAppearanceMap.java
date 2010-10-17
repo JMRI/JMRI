@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -107,8 +107,11 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 }                
                 map.aspectAttributeMap.put(name, hm);
             }
-        } catch (Exception e) {
-            log.error("error reading file \""+file.getName()+"\" due to: "+e);
+        } catch (java.io.IOException e) {
+            log.error("error reading file \""+file.getName(), e);
+            return null;
+        } catch (org.jdom.JDOMException e) {
+            log.error("error parsing file \""+file.getName(), e);
             return null;
         }
         return map;
