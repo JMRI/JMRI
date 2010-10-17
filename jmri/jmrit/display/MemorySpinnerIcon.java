@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  * @since 2.7.2
  */
 
@@ -130,28 +130,25 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
     public boolean isSelectable() { return selectable;}
     boolean selectable = false;
     
-    protected void addToPopup(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
+    public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
             });
+        return true;
     }
 
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder("MemoryEditor");
+        makeIconEditorFrame(this, "Memory", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
-        _iconEditorFrame = PositionableLabel.makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
-                                             "SelectMemory", _iconEditor, this);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(memory);
     }
     void editMemory() {

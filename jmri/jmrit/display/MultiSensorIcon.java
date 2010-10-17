@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractAction;
+import javax.swing.JPopupMenu;
 
 import jmri.util.NamedBeanHandle;
 
@@ -22,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -179,52 +181,51 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         displayState();
     }
     
+    public boolean setEditIconMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("MultiSensor"));
+        popup.add(new AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+        return true;
+    }
 
-    MultiSensorIconAdder _iconEditor;
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new MultiSensorIconAdder("MultiSensorEditor");
+        MultiSensorIconAdder iconEditor = new MultiSensorIconAdder("MultiSensor");
+        makeIconEditorFrame(this, "MultiSensor", false, iconEditor);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
         _iconEditor.setIcon(2, "SensorStateInactive", inactive);
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
-        _iconEditor.setMultiIcon(entries);
-        _iconEditorFrame = makeAddIconFrame("EditMultiSensor", "addIconsToPanel", 
-                                           "SelectMultiSensor", _iconEditor, this);
+        ((MultiSensorIconAdder)_iconEditor).setMultiIcon(entries);
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateSensor();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        iconEditor.complete(addIconAction, true, true, true);
     }
 
     void updateSensor() {
-        setInactiveIcon(_iconEditor.getIcon("SensorStateInactive"));
-        setInconsistentIcon(_iconEditor.getIcon("BeanStateInconsistent"));
-        setUnknownIcon(_iconEditor.getIcon("BeanStateUnknown"));
+        MultiSensorIconAdder iconEditor = (MultiSensorIconAdder)_iconEditor;
+        setInactiveIcon(iconEditor.getIcon("SensorStateInactive"));
+        setInconsistentIcon(iconEditor.getIcon("BeanStateInconsistent"));
+        setUnknownIcon(iconEditor.getIcon("BeanStateUnknown"));
         for (int i = 0; i<entries.size(); i++) {
             entries.get(i).namedSensor.getBean()
                 .removePropertyChangeListener(this);
         }
-        int numPositions = _iconEditor.getNumIcons();
+        int numPositions = iconEditor.getNumIcons();
         entries = new ArrayList<Entry>(numPositions);
         for (int i=3; i<numPositions; i++) {
-            NamedIcon icon = _iconEditor.getIcon(i);
-            NamedBeanHandle<Sensor> namedSensor = _iconEditor.getSensor(i);
+            NamedIcon icon = iconEditor.getIcon(i);
+            NamedBeanHandle<Sensor> namedSensor = iconEditor.getSensor(i);
             addEntry(namedSensor, icon);
         }
-        setUpDown(_iconEditor.getUpDown());
+        setUpDown(iconEditor.getUpDown());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
         _iconEditor = null;

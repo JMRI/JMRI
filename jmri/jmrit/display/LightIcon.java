@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class LightIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -190,31 +190,20 @@ public class LightIcon extends PositionableLabel implements java.beans.PropertyC
     }
 
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder();
+        makeIconEditorFrame(this, "Light", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
         _iconEditor.setIcon(3, "LightStateOff", off);
         _iconEditor.setIcon(2, "LightStateOn", on);
         _iconEditor.setIcon(0, "BeanStateInconsistent", inconsistent);
         _iconEditor.setIcon(1, "BeanStateUnknown", unknown);
-        _iconEditorFrame = makeAddIconFrame("EditLight", "addIconsToPanel", 
-                                            "SelectLight", _iconEditor, this);
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.lightPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateLight();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        _iconEditor.complete(addIconAction, true, true, true);
         _iconEditor.setSelection(light);
     }
     void updateLight() {

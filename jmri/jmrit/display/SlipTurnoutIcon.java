@@ -37,7 +37,7 @@ import java.util.Iterator;
  *<P>
  * Based upon the TurnoutIcon by Bob Jacobsen
  * @author Kevin Dickerson Copyright (c) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class SlipTurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -622,10 +622,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     SlipIconAdder _iconEditor;
     
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new SlipIconAdder();
+        makeIconEditorFrame(this, "SlipTOEditor", true, null);
+            _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
         _iconEditor.setTurnoutType(getTurnoutType());
         switch(getTurnoutType()){
             case DOUBLESLIP : 
@@ -663,23 +661,14 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
         _iconEditor.setTurnout("west", namedTurnoutWest);
         _iconEditor.setTurnout("east", namedTurnoutEast);
 
-        _iconEditorFrame = makeAddIconFrame("EditSl", "addIconsToPanel", 
-                                           "SelectTO", _iconEditor, this);
         _iconEditor.makeIconPanel();
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.turnoutPickModelInstance());
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateTurnout();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, true, true);
+        _iconEditor.complete(addIconAction, true, true, true);
     }
     
     void updateTurnout() {

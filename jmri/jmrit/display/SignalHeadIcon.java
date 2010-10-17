@@ -27,7 +27,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -350,45 +350,36 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         return;
     }
 
+    public boolean setEditIconMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead"));
+        popup.add(new AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+        return true;
+    }
+
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = _editor.getSignalHeadEditor();
-        // set default icons, then override with this signalHead's icons
-        _iconEditor.setDefaultIcons();
+        makeIconEditorFrame(this, "SignalHead", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
+        _iconEditor.setSelection(getSignalHead());
         Enumeration <String> e = _iconMap.keys();
-        int i = 0;
+        int i=0;
         while (e.hasMoreElements()) {
             String key = e.nextElement();
             _iconEditor.setIcon(i++, key, _iconMap.get(key));
         }
-        _iconEditorFrame = makeAddIconFrame("EditSignalHead", "addIconsToPanel", 
-                                           "SelectSignalHead", _iconEditor, this);
-        _iconEditor.doIconPanel();
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.signalHeadPickModelInstance());
-        _iconEditor.setSelection(getSignalHead());
+        _iconEditor.makeIconPanel();
 
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateSignal();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, false, true);
-        _iconEditorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosing(java.awt.event.WindowEvent e) {
-                _iconEditorFrame.dispose();
-                _iconEditorFrame = null;
-                _iconEditor = null;
-            }
-        });
+        _iconEditor.complete(addIconAction, true, false, true);
     }
+
     void updateSignal() {
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
         _iconMap = _iconEditor.getIconMap();

@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -236,6 +236,10 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
           max = Math.max((n!=null) ? n.getIconWidth() : 0, max);
         }
         return max;
+    }
+
+    public boolean setEditIconMenu(JPopupMenu popup) {
+        return false;
     }
     
     public boolean setRotateOrthogonalMenu(JPopupMenu popup) {

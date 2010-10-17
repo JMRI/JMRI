@@ -13,7 +13,7 @@ import javax.swing.JMenu;
  * An icon to display info from a Reporter, e.g. transponder or RFID reader.<P>
  *
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class ReporterIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -117,19 +117,14 @@ public class ReporterIcon extends PositionableLabel implements java.beans.Proper
     }
 
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder();
+        makeIconEditorFrame(this, "Reporter", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.reporterPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editReporter();
             }
         };
-        _iconEditorFrame = makeAddIconFrame("EditReporter", "addReportValueToPanel", 
-                                     "SelectReporter", _iconEditor, this);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.reporterPickModelInstance());
-        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(reporter);
 
     }

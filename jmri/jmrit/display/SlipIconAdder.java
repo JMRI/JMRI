@@ -421,9 +421,9 @@ public class SlipIconAdder extends IconAdder {
     * Override
     *
     */
-    public void complete(ActionListener addIconAction, ActionListener changeIconAction,
+    public void complete(ActionListener addIconAction, boolean changeIcon,
                           boolean addToTable, boolean update) {
-        super.complete(addIconAction, changeIconAction, addToTable, update);
+        super.complete(addIconAction, changeIcon, addToTable, update);
         _table.setDragEnabled(true);
         _table.setTransferHandler(new ExportHandler());
         valueChanged(null);

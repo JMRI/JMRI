@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.98 $
+ * @version $Revision: 1.99 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -332,7 +332,8 @@ public class PositionableLabel extends JLabel implements Positionable {
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
         if (_icon && !_text) {
-            popup.add(new AbstractAction(rb.getString("EditIcon")) {
+            String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Icon"));
+            popup.add(new AbstractAction(txt) {
                     public void actionPerformed(ActionEvent e) {
                         edit();
                     }
@@ -342,26 +343,23 @@ public class PositionableLabel extends JLabel implements Positionable {
         return false;
     }
 
-    protected boolean showIconEditorFrame(Container pos) {
-        if (_iconEditorFrame != null) {
-            _iconEditorFrame.setLocationRelativeTo(pos);
-            _iconEditorFrame.toFront();
-            _iconEditorFrame.setVisible(true);
-            return true;
+    protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
+        boolean ret = false;
+        if (editor!=null) {
+            _iconEditor = editor;
+        } else {
+            _iconEditor = new IconAdder(name);
         }
-        return false;
+        _iconEditorFrame = _editor.makeAddIconFrame(name, false, table, _iconEditor);
+        _iconEditorFrame.setLocationRelativeTo(pos);
+        _iconEditorFrame.toFront();
+        _iconEditorFrame.setVisible(true);
     }
 
     protected void edit() {
-        if (debug) log.debug("Has _iconEditorFrame? "+!(_iconEditorFrame==null));
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder();
+        makeIconEditorFrame(this, "Icon", false, null);
         NamedIcon icon = new NamedIcon(_namedIcon);
         _iconEditor.setIcon(0, "plainIcon", icon);
-        _iconEditorFrame = makeAddIconFrame("EditIcon", "addIconToPanel", 
-                                     "pressAdd", _iconEditor, this);
         _iconEditor.makeIconPanel();
 
         ActionListener addIconAction = new ActionListener() {
@@ -369,13 +367,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 editIcon();
             }
         };
-        ActionListener changeIconAction = new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    _iconEditor.addCatalog();
-                    _iconEditorFrame.pack();
-                }
-        };
-        _iconEditor.complete(addIconAction, changeIconAction, false, true);
+        _iconEditor.complete(addIconAction, true, false, true);
 
     }
 
@@ -480,38 +472,6 @@ public class PositionableLabel extends JLabel implements Positionable {
      */
     public boolean isActive() {
         return active;
-    }
-
-    public static JFrame makeAddIconFrame(String title, String select1, String select2, 
-                                IconAdder editor, Container pos) {
-        JFrame frame = new JFrame(rb.getString(title));
-        JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-        if (select1 != null) p.add(new JLabel(rb.getString(select1)));
-        if (select2 != null) p.add(new JLabel(rb.getString(select2)));
-        frame.getContentPane().add(p,BorderLayout.NORTH);
-        if (editor != null) {
-            frame.getContentPane().add(editor);
-            editor.setParent(frame);
-        }
-
-        frame.addWindowListener(new java.awt.event.WindowAdapter() {
-                JFrame frame;
-				public void windowClosing(java.awt.event.WindowEvent e) {
-                    if (frame!=null) {
-                        frame.dispose();
-                        frame = null;
-                    }
-                }
-                java.awt.event.WindowAdapter init(JFrame f) {
-                    frame = f;
-                    return this;
-                }
-            }.init(frame));
-        frame.setLocationRelativeTo(pos);
-        frame.setVisible(true);
-        frame.pack();
-        return frame;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PositionableLabel.class.getName());

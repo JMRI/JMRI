@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  * @since 2.7.2
  */
 
@@ -135,15 +135,22 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         memory.setValue(str);
     }
 
+    public boolean setEditIconMenu(javax.swing.JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        popup.add(new javax.swing.AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    edit();
+                }
+            });
+        return true;
+    }
+
     /**
     * Poppup menu iconEditor's ActionListener
     */
     SpinnerNumberModel _spinModel = new SpinnerNumberModel(3,1,100,1);
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder("MemoryEditor") {
+        IconAdder iconEditor = new IconAdder("Memory") {
                 JSpinner spinner = new JSpinner(_spinModel);
                 protected void addAdditionalButtons(JPanel p) {
                     ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField().setColumns(2);
@@ -158,15 +165,14 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
                 }
         };
 
+        makeIconEditorFrame(this, "Memory", true, iconEditor);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
-        _iconEditorFrame = PositionableLabel.makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
-                                             "SelectMemory", _iconEditor, this);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(memory);
     }
     void editMemory() {

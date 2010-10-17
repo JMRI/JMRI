@@ -22,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -325,7 +325,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
     
     public boolean setEditIconMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Memory"));
+        popup.add(new AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
                     edit();
                 }
@@ -334,19 +335,14 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void edit() {
-        if (showIconEditorFrame(this)) {
-            return;
-        }
-        _iconEditor = new IconAdder();
+        makeIconEditorFrame(this, "Memory", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
         ActionListener addIconAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 editMemory();
             }
         };
-        _iconEditorFrame = makeAddIconFrame("ChangeMemory", "addMemValueToPanel", 
-                                             "SelectMemory", _iconEditor, this);
-        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.memoryPickModelInstance());
-        _iconEditor.complete(addIconAction, null, true, true);
+        _iconEditor.complete(addIconAction, false, true, true);
         _iconEditor.setSelection(memory);
     }
     void editMemory() {

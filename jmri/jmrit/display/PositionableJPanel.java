@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -178,26 +178,35 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     JFrame _iconEditorFrame;
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
-        popup.add(new AbstractAction(rb.getString("EditIcon")) {
-                public void actionPerformed(ActionEvent e) {
-                    edit();
-                }
-            });
-        return true;
+        return false;
     }
 
     /**
     *  Utility
     */
-    protected boolean showIconEditorFrame(Container pos) {
-        if (_iconEditorFrame != null) {
-            _iconEditorFrame.setLocationRelativeTo(pos);
-            _iconEditorFrame.toFront();
-            _iconEditorFrame.setVisible(true);
-            return true;
+    protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
+        boolean ret = false;
+        if (editor!=null) {
+            _iconEditor = editor;
+        } else {
+            _iconEditor = new IconAdder(name);
         }
-        return false;
+        _iconEditor = new IconAdder(name);
+        _iconEditorFrame = _editor.makeAddIconFrame(name, false, table, _iconEditor);
+        _iconEditorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
+                JFrame frame;
+                public void windowClosing(java.awt.event.WindowEvent e) {
+                    if (frame!=null) {
+                        _iconEditorFrame.dispose();
+                        _iconEditorFrame = null;
+                    }
+                }
+            });
+        _iconEditorFrame.setLocationRelativeTo(pos);
+        _iconEditorFrame.toFront();
+        _iconEditorFrame.setVisible(true);
     }
+
     void edit() {
     }
 
