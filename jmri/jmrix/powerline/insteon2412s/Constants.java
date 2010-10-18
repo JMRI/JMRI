@@ -8,7 +8,7 @@ package jmri.jmrix.powerline.insteon2412s;
  *
  * @author			Bob Jacobsen Copyright (C) 2008, 2009
  * @author			Ken Cameron Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class Constants {
 
@@ -22,8 +22,10 @@ public class Constants {
     public static final int	FUNCTION_REQ_STD		= 0x62;
     public static final int	FUNCTION_REQ_X10		= 0x63;
 
-    public static final int	CMD_LIGHT_ON		= 0x12;
-    public static final int	CMD_LIGHT_OFF		= 0x13;
+    public static final int	CMD_LIGHT_ON_RAMP		= 0x11;
+    public static final int	CMD_LIGHT_ON_FAST		= 0x12;
+    public static final int	CMD_LIGHT_OFF_RAMP		= 0x13;
+    public static final int	CMD_LIGHT_OFF_FAST		= 0x14;
     public static final int	CMD_LIGHT_CHG		= 0x21;
 
     public static final int	BUTTON_TAP	= 0x02;

@@ -25,7 +25,7 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -77,12 +77,20 @@ public class SpecificMessage extends SerialMessage {
 		            	}
 		            	text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
 		            	switch (getElement(6) & 0xFF) {
-		            	case Constants.CMD_LIGHT_ON:
-		            		text.append(" ON ");
+		            	case Constants.CMD_LIGHT_ON_RAMP:
+		            		text.append(" ON RAMP ");
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
-		            	case Constants.CMD_LIGHT_OFF:
-		            		text.append(" ON ");
+		            	case Constants.CMD_LIGHT_ON_FAST:
+		            		text.append(" ON FAST ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_OFF_FAST:
+		            		text.append(" OFF FAST ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_OFF_RAMP:
+		            		text.append(" OFF ");
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
 		            	case Constants.CMD_LIGHT_CHG:

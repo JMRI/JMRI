@@ -11,7 +11,7 @@ import jmri.util.StringUtil;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008, 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -48,12 +48,20 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 		            	}
 		            	text.append(" addr " + String.format("%1$X.%2$X.%3$X", (getElement(2) & 0xFF), (getElement(3) & 0xFF), (getElement(4) & 0xFF)));
 		            	switch (getElement(6) & 0xFF) {
-		            	case Constants.CMD_LIGHT_ON:
-		            		text.append(" ON ");
+		            	case Constants.CMD_LIGHT_ON_FAST:
+		            		text.append(" ON FAST ");
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
-		            	case Constants.CMD_LIGHT_OFF:
-		            		text.append(" ON ");
+		            	case Constants.CMD_LIGHT_ON_RAMP:
+		            		text.append(" ON RAMP ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_OFF_FAST:
+		            		text.append(" OFF FAST ");
+		            		text.append((getElement(7) & 0xFF) / 256.0);
+		            		break;
+		            	case Constants.CMD_LIGHT_OFF_RAMP:
+		            		text.append(" OFF RAMP ");
 		            		text.append((getElement(7) & 0xFF) / 256.0);
 		            		break;
 		            	case Constants.CMD_LIGHT_CHG:

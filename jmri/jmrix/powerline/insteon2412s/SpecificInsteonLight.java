@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -140,10 +140,10 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         // figure out command 
         int command1;
         if (newState == ON) {
-        	command1 = Constants.CMD_LIGHT_ON;
+        	command1 = Constants.CMD_LIGHT_ON_FAST;
         }
         else if (newState==OFF) {
-        	command1 = Constants.CMD_LIGHT_OFF;
+        	command1 = Constants.CMD_LIGHT_OFF_FAST;
         }
         else {
             log.warn("illegal state requested for Light: " + getSystemName());
