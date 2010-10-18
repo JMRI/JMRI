@@ -12,7 +12,7 @@ import jmri.Turnout;
  * Description:		extend jmri.AbstractTurnout for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientListener {
 
@@ -66,7 +66,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
         // create the message
         String text = "TURNOUT "+ getSystemName() + "\n";
         // create and send the message itself
-                tc.sendJMRIClientMessage(new JMRIClientMessage(text), null);
+        tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
     }
     
 
@@ -84,7 +84,7 @@ public class JMRIClientTurnout extends AbstractTurnout implements JMRIClientList
             text = "TURNOUT "+ getSystemName() + " THROWN\n";
             
         // create and send the message itself
-		tc.sendJMRIClientMessage(new JMRIClientMessage(text), null);
+	tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
 	}
 
        // to listen for status changes from JMRIClient system

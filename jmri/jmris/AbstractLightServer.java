@@ -3,6 +3,7 @@
 package jmri.jmris;
 
 import java.io.*;
+import java.util.ArrayList;
 
 import jmri.InstanceManager;
 import jmri.Light;
@@ -11,33 +12,50 @@ import jmri.Light;
  * Abstract interface between the a JMRI Light and a 
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
-abstract public class AbstractLightServer implements java.beans.PropertyChangeListener {
+abstract public class AbstractLightServer {
 
    public AbstractLightServer(){
+      lights= new ArrayList<String>();
    }
 
     /*
      * Protocol Specific Abstract Functions
      */
 
-     abstract public void sendStatus(int Status) throws IOException; 
-     abstract public void sendErrorStatus() throws IOException;
+     abstract public void sendStatus(String lightName,int Status) throws IOException; 
+     abstract public void sendErrorStatus(String lightName) throws IOException;
      abstract public void parseStatus(String statusString) throws jmri.JmriException,java.io.IOException;
-	
+
+    synchronized protected void addLightToList(java.lang.String lightName){
+       if(!lights.contains(lightName)){
+         lights.add(lightName);
+         InstanceManager.lightManagerInstance().provideLight(lightName)
+            .addPropertyChangeListener(new LightListener(lightName));
+       }
+    }
+
+ 
+   synchronized protected void removeLightFromList(java.lang.String lightName) {
+      if(lights.contains(lightName)){
+         lights.remove(lightName);
+      }
+   }
+
+
     public void lightOff(java.lang.String lightName) {
+                Light light=null;
 		// load address from switchAddrTextField
 		try {
-			if (light != null)
-				light.removePropertyChangeListener(this);
+
+                        addLightToList(lightName); 
 			light= InstanceManager.lightManagerInstance().provideLight(lightName);
 			if (light == null) {
 				log.error("Light " + lightName
 						+ " is not available");
 			} else {
-				light.addPropertyChangeListener(this);
 				if (log.isDebugEnabled())
 					log.debug("about to command OFF");
 				// and set state to OFF 
@@ -50,17 +68,16 @@ abstract public class AbstractLightServer implements java.beans.PropertyChangeLi
 	}
 
         public void lightOn(java.lang.String lightName) {
+                Light light=null;
 		// load address from switchAddrTextField
 		try {
-			if (light!= null)
-				light.removePropertyChangeListener(this);
+                        addLightToList(lightName); 
 			light= InstanceManager.lightManagerInstance().provideLight(lightName);
 
 			if (light== null) {
 				log.error("Light " + lightName
 						+ " is not available");
 			} else {
-				light.addPropertyChangeListener(this);
 				if (log.isDebugEnabled())
 					log.debug("about to command ON");
 				// and set state to ON
@@ -72,20 +89,38 @@ abstract public class AbstractLightServer implements java.beans.PropertyChangeLi
 		}
 	}
 
-    // update state as state of light changes
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-    	// If the Commanded State changes, show transition state as "<inconsistent>" 
-        if (e.getPropertyName().equals("KnownState")) {
-            int now = ((Integer) e.getNewValue()).intValue();
-            try {
-               sendStatus(now);
-            } catch(java.io.IOException ie) {
-                  log.error("Error Sending Status");
-            }
+    class LightListener implements java.beans.PropertyChangeListener {
+
+
+       LightListener(String lightName) {
+           name = lightName;
+           light = InstanceManager.lightManagerInstance().provideLight(lightName);
+       }
+
+       // update state as state of light changes
+       public void propertyChange(java.beans.PropertyChangeEvent e) {
+      	   // If the Commanded State changes, show transition state as "<inconsistent>" 
+           if (e.getPropertyName().equals("KnownState")) {
+               int now = ((Integer) e.getNewValue()).intValue();
+               try {
+                  sendStatus(name,now);
+               } catch(java.io.IOException ie) {
+                  log.debug("Error Sending Status");
+                  // if we get an error, de-register
+                  light.removePropertyChangeListener(this);
+                  removeLightFromList(name);
+               }
+           }
         }
-     }
-    
-    protected Light light = null;
+
+
+
+       Light light = null;
+       String name = null;
+
+    }    
+
+    protected ArrayList<String> lights = null;
 
     String newState = "";
 

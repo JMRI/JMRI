@@ -12,7 +12,7 @@ import jmri.Light;
  * Description:		extend jmri.AbstractLight for JMRIClient layouts
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author			Paul Bender Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  */
 public class JMRIClientLight extends AbstractLight implements JMRIClientListener {
 
@@ -29,9 +29,20 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
             tc = memo.getJMRIClientTrafficController();
             // At construction, register for messages
             tc.addJMRIClientListener(this);
+            // then request status
+            requestUpdateFromLayout();
 	}
 
 	public int getNumber() { return _number; }
+
+        //request a status update from the layout
+        protected void requestUpdateFromLayout(){
+            // create the message
+            String text="LIGHT " + getSystemName() + "\n";
+            // create and send the message
+            tc.sendJMRIClientMessage(new JMRIClientMessage(text),this);
+        }
+
 
 	// Handle a request to change state by sending a formatted packet
         // to the server.
@@ -66,7 +77,7 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
             text = "LIGHT "+ getSystemName() +" OFF\n";
             
         // create and send the message itself
-		tc.sendJMRIClientMessage(new JMRIClientMessage(text), null);
+		tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
 	}
 
        // to listen for status changes from JMRIClient system
@@ -84,9 +95,6 @@ public class JMRIClientLight extends AbstractLight implements JMRIClientListener
 
         public void message(JMRIClientMessage m) {
         }
-
-
-
 
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JMRIClientLight.class.getName());

@@ -12,7 +12,7 @@ import jmri.jmris.AbstractLightServer;
  * Simple Server interface between the JMRI power manager and a
  * network connection
  * @author          Paul Bender Copyright (C) 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 
 public class SimpleLightServer extends AbstractLightServer {
@@ -29,18 +29,19 @@ public class SimpleLightServer extends AbstractLightServer {
      * Protocol Specific Abstract Functions
      */
 
-     public void sendStatus(int Status) throws IOException
+     public void sendStatus(String lightName, int Status) throws IOException
      {
 	if(Status==Light.ON){
-		output.writeBytes("LIGHT " + light.getSystemName() + " ON\n");
+		output.writeBytes("LIGHT " + lightName + " ON\n");
         } else if (Status==Light.OFF){
-		output.writeBytes("LIGHT " + light.getSystemName() + " OFF\n");
+		output.writeBytes("LIGHT " + lightName + " OFF\n");
         } else {
                //  unknown state
+		output.writeBytes("LIGHT " + lightName + " UNKNOWN\n");
         }
      }
 
-     public void sendErrorStatus() throws IOException {
+     public void sendErrorStatus(String lightName) throws IOException {
  	output.writeBytes("TURNOUT ERROR\n");
      }
 
