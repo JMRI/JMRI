@@ -1074,7 +1074,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /************** Icon editors for adding content ************/
 
     static final public String[] ICON_EDITORS = {"Sensor", "RightTurnout", "LeftTurnout",
-                        "SlipTOEditor", "SignalHead", "SignalMast", "Memory", 
+                        "SlipTOEditor", "SignalHead", "SignalMast", "Memory", "Light", 
                         "Reporter", "Background", "MultiSensor", "Icon"};
     /**
     * @param name Icon editor's name
@@ -1098,7 +1098,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 addMemoryEditor();
             } else if ("Reporter".equals(name)) {
                 addReporterEditor();
-            } else if ("LightEditor".equals(name)) {
+            } else if ("Light".equals(name)) {
                 addLightEditor();
             } else if ("Background".equals(name)) {
                 addBackgroundEditor();
@@ -1494,7 +1494,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         addTurnout(editor);
     }
     
-    void addTurnout(IconAdder editor){
+    protected TurnoutIcon  addTurnout(IconAdder editor){
     	TurnoutIcon l = new TurnoutIcon(this);
         l.setTurnout(editor.getTableSelection().getDisplayName());
         Hashtable <String, NamedIcon> map = editor.getIconMap();
@@ -1506,6 +1506,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(TURNOUTS);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
     
     void addSlip(){
@@ -1584,7 +1585,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         putItem(l);
     }
 
-    void putMemory() {
+    protected MemoryIcon putMemory() {
         MemoryIcon l = new MemoryIcon(new NamedIcon("resources/icons/misc/X-red.gif",
                             "resources/icons/misc/X-red.gif"), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
@@ -1593,9 +1594,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(MEMORIES);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
     
-    void addMemorySpinner() {
+    protected MemorySpinnerIcon addMemorySpinner() {
         MemorySpinnerIcon l = new MemorySpinnerIcon(this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
         l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
@@ -1603,9 +1605,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(MEMORIES);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
 
-    void addMemoryInputBox() {
+    protected MemoryInputIcon addMemoryInputBox() {
         MemoryInputIcon l = new MemoryInputIcon(_spinCols.getNumber().intValue(), this);
         IconAdder memoryIconEditor = getIconEditor("Memory");
         l.setMemory(memoryIconEditor.getTableSelection().getDisplayName());
@@ -1613,12 +1616,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(MEMORIES);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
     
     /**
      * Add a Light indicator to the target
      */
-    void addLight() {
+    protected LightIcon addLight() {
         LightIcon l = new LightIcon(this);
         IconAdder editor = getIconEditor("Light");
         l.setOffIcon(editor.getIcon("LightStateOff"));
@@ -1629,9 +1633,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(LIGHTS);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
 
-    void addReporter() {
+    protected ReporterIcon addReporter() {
         ReporterIcon l = new ReporterIcon(this);
         IconAdder reporterIconEditor = getIconEditor("Reporter");
         l.setReporter((Reporter)reporterIconEditor.getTableSelection());
@@ -1639,6 +1644,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setDisplayLevel(REPORTERS);
         setNextLocation(l);
         putItem(l);
+        return l;
     }
     /**
      * Button pushed, add a background image. Note that a background image
