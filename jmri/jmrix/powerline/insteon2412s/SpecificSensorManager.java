@@ -7,6 +7,8 @@ import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialAddress;
 import jmri.jmrix.powerline.insteon2412s.Constants;
+import jmri.util.StringUtil;
+
 import java.util.List;
 
 /**
@@ -18,7 +20,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008, 2009
  * @author			Ken Cameron, (C) 2009, 2010 sensors from poll replies
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorManager {
 
@@ -35,46 +37,43 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
     }
     
     private void processForPollReq(SerialReply l) {
-        // process the POLL_REQ_X10 and update/create sensors as needed
-	    if ((l.getElement(1)& 0xFF) == Constants.POLL_REQ_X10 ) { 
-	        // must be received data
-	        int last = (l.getElement(2)& 0xFF) + 1;
-	        int bits = (l.getElement(3)& 0xFF);
-        	String newHouseCode = null;
-        	int newCmdCode = -1;
-        	int newAddrCode = -1;
-        	Sensor sensor = null;
-	        for (int i = 3; i <= last; i++) {
-	        	int dat = l.getElement(i) & 0xFF;
-	            if ((bits & 0x01) != 0) {
-	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
-	            	newCmdCode = dat & 0x0f;
-            		if (newHouseCode != null && (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
-            			// some sort of 'global' command, process for all matching the house code
-            			List<String> sensors = getSystemNameList();
-            			for (int ii = 0; ii < sensors.size(); ii++) {
-            				String sName = sensors.get(ii);
-            				if (newHouseCode.compareTo(SerialAddress.houseCodeFromSystemName(sName)) == 0) {
-                				sensor = provideSensor(sName);
-            					if (sensor != null) {
-            						try {
-            							if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-            								sensor.setKnownState(Sensor.INACTIVE);
-            							} else {
-            								sensor.setKnownState(Sensor.ACTIVE);
-            							}
-            						} catch (jmri.JmriException e) {
-            							if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
-            								log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
-            							} else {
-            								log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
-            							}
+    	if ((l.getElement(0) & 0xFF) == Constants.HEAD_STX) {
+	        // process the POLL_REQ_X10 and update/create sensors as needed
+		    if (((l.getElement(1)& 0xFF) == Constants.POLL_REQ_X10) && l.getNumDataElements() == 4) { 
+		        // valid poll of X10 message
+		    	int dat = l.getElement(2) & 0xFF;
+		    	int flag = l.getElement(3) & 0xFF;
+	        	String newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
+	        	int newCmdCode = dat & 0x0F;
+	        	int newAddrCode = -1;
+	        	Sensor sensor = null;
+		        if ((flag & Constants.FLAG_BIT_X10_CMDUNIT) == Constants.FLAG_X10_RECV_CMD) {
+		        	if ((newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_ON)) {
+	        			// some sort of 'global' command, process for all matching the house code
+	        			List<String> sensors = getSystemNameList();
+	        			for (int ii = 0; ii < sensors.size(); ii++) {
+	        				String sName = sensors.get(ii);
+	        				if (newHouseCode.compareTo(SerialAddress.houseCodeFromSystemName(sName)) == 0) {
+	            				sensor = provideSensor(sName);
+	        					if (sensor != null) {
+	        						try {
+	        							if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+	        								sensor.setKnownState(Sensor.INACTIVE);
+	        							} else {
+	        								sensor.setKnownState(Sensor.ACTIVE);
+	        							}
+	        						} catch (jmri.JmriException e) {
+	        							if (newCmdCode == X10Sequence.FUNCTION_ALL_LIGHTS_OFF || newCmdCode == X10Sequence.FUNCTION_ALL_UNITS_OFF) {
+	        								log.error("Exception setting " + sName + " sensor INACTIVE: " + e);
+	        							} else {
+	        								log.error("Exception setting " + sName + " sensor ACTIVE: " + e);
+	        							}
 		            				}
-            					}
-            				}
-            			}
-            		} else {
-    	            	if (newHouseCode != null && newAddrCode > 0) {
+	        					}
+	        				}
+	        			}
+	        		} else {
+		            	if (newHouseCode != null && newAddrCode > 0) {
 		            		String sysName = getSystemPrefix() + "S" + newHouseCode + newAddrCode;
 		            		sensor = provideSensor(sysName);
 		            		if (sensor != null) {
@@ -95,18 +94,41 @@ public class SpecificSensorManager extends jmri.jmrix.powerline.SerialSensorMana
 		            		}
 	            		}
 	            	}
-	            	newHouseCode = null;
-	            	newCmdCode = -1;
-	            	newAddrCode = -1;
-	            } else {
-	            	newHouseCode = X10Sequence.houseValueToText(X10Sequence.decode((dat >> 4) & 0x0F));
-	            	newAddrCode = X10Sequence.decode(dat & 0x0f);
-	            }
-	            bits = bits >> 1;  // shift over before next byte
-	        }
-	    } else if ((l.getElement(0)& 0xFF) == Constants.POLL_REQ_STD ) {
-	    	// figure how to decode an Insteon poll command
-	    }
+		        }
+		    } else if (((l.getElement(1)& 0xFF) == Constants.POLL_REQ_STD) && l.getNumDataElements() == 11) {
+		    	// figure how to decode an standard Insteon poll command
+		    	int highAddr = l.getElement(5) & 0xFF;
+		    	int middleAddr = l.getElement(6) & 0xFF;
+		    	int lowAddr = l.getElement(7) & 0xFF;
+		    	int cmd1 = l.getElement(9) & 0xFF;
+		    	StringBuilder sysName = new StringBuilder();
+        		sysName.append(getSystemPrefix());
+        		sysName.append("S");
+        		sysName.append(StringUtil.twoHexFromInt(highAddr));
+        		sysName.append(".");
+        		sysName.append(StringUtil.twoHexFromInt(middleAddr));
+        		sysName.append(".");
+        		sysName.append(StringUtil.twoHexFromInt(lowAddr));
+        		Sensor sensor = null;
+        		sensor = provideSensor(new String(sysName));
+        		if (sensor != null) {
+    		    	if (cmd1 == Constants.CMD_LIGHT_ON_FAST || cmd1 == Constants.CMD_LIGHT_ON_RAMP) {
+        				try {				
+        					sensor.setKnownState(Sensor.ACTIVE);
+        				} catch (jmri.JmriException e) {
+        					log.error("Exception setting " + sysName + " sensor ACTIVE: " + e);
+        				}
+        			}
+        			if (cmd1 == Constants.CMD_LIGHT_OFF_FAST || cmd1 == Constants.CMD_LIGHT_OFF_RAMP) {
+        				try {				
+        					sensor.setKnownState(Sensor.INACTIVE);
+        				} catch (jmri.JmriException e) {
+        					log.error("Exception setting " + sysName + " sensor INACTIVE: " + e);
+        				}
+        			}
+		    	}
+		    }
+    	}
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SpecificSensorManager.class.getName());

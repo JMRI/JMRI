@@ -30,7 +30,7 @@ import java.io.DataInputStream;
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008, 2009
  * @author			Ken Cameron Copyright (C) 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -119,7 +119,6 @@ public class SpecificTrafficController extends SerialTrafficController {
 
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         if (logDebug) log.debug("forward "+m);
-        sendInterlock = ((SerialMessage)m).getInterlocked();
         super.forwardToPort(m, reply);
     }
         
@@ -127,11 +126,6 @@ public class SpecificTrafficController extends SerialTrafficController {
         SpecificReply reply = new SpecificReply();
         return reply;
     }
-
-    boolean sendInterlock = false; // send the 00 interlock when CRC received
-    boolean expectLength = false;  // next byte is length of read
-    boolean countingBytes = false; // counting remainingBytes into reply buffer
-    int remainingBytes = 0;        // count of bytes _left_
     
     protected boolean endOfMessage(AbstractMRReply msg) {
     	if (msg.getNumDataElements() >= 2) {
@@ -155,13 +149,28 @@ public class SpecificTrafficController extends SerialTrafficController {
         			return true;
         		}
         		break;
+        	case 5:	// reply from send X10 command
+        		if (cmd == Constants.FUNCTION_REQ_X10) {
+        			return true;
+        		}
+        		break;
         	case 11:
         		if (cmd == Constants.POLL_REQ_STD) {
         			return true;
         		}
         		break;
+        	case 12:	// reply from send standard Insteon command
+        		if ((cmd == Constants.FUNCTION_REQ_STD) && ((msg.getElement(5) & Constants.FLAG_BIT_STDEXT) == Constants.FLAG_STD)) {
+        			return true;
+        		}
+        		break;
         	case 25:
         		if (cmd == Constants.POLL_REQ_EXT) {
+        			return true;
+        		}
+        		break;
+        	case 26:	// reply from send extended Insteon command
+        		if ((cmd == Constants.FUNCTION_REQ_STD) && ((msg.getElement(5) & Constants.FLAG_BIT_STDEXT) == Constants.FLAG_EXT)) {
         			return true;
         		}
         		break;
