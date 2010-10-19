@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.88 $
+ * @version         $Revision: 1.89 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -250,62 +250,46 @@ abstract public class AbstractMRTrafficController {
             }
             // if a message has been extracted, process it
             if (m!=null) {
-                // check for need to change mode
-                if (log.isDebugEnabled()) log.debug("Start msg, state ="+mCurrentMode);
-                if (m.getNeededMode()!=mCurrentMode) {
-                    AbstractMRMessage modeMsg;
-                    if (m.getNeededMode() == PROGRAMINGMODE ) {
-                        // change state and send message
-                        modeMsg = enterProgMode();
-                        mCurrentState = WAITREPLYINPROGMODESTATE;
-                        log.debug("Enter Programming Mode");
-                    } else { // must be normal mode
-                        // change state and send message
-                        modeMsg = enterNormalMode();
-                        mCurrentState = WAITREPLYINNORMMODESTATE;
-                        log.debug("Enter Normal Mode");
-                    }
-                    if(modeMsg!=null) {
-                        forwardToPort(modeMsg, null);
-                        // wait for reply
-                        try {
-                            synchronized(xmtRunnable) {
-                                xmtRunnable.wait(modeMsg.getTimeout());
-                            }
-                        } catch (InterruptedException e) { 
-                            Thread.currentThread().interrupt(); // retain if needed later
-                            log.error("transmitLoop interrupted"); 
-                        }
-                        checkReplyInDispatch();
-                        if (mCurrentState != OKSENDMSGSTATE){
-                            handleTimeout(modeMsg,l);
-                        }
-                        mCurrentState = WAITMSGREPLYSTATE;
-                    }
-                }
-                forwardToPort(m, l);
-                
-                // reply expected?
+            	// check for need to change mode
+            	if (log.isDebugEnabled()) log.debug("Start msg, state ="+mCurrentMode);
+            	if (m.getNeededMode()!=mCurrentMode) {
+            		AbstractMRMessage modeMsg;
+            		if (m.getNeededMode() == PROGRAMINGMODE ) {
+            			// change state to programming mode and send message
+            			modeMsg = enterProgMode();
+            			mCurrentState = WAITREPLYINPROGMODESTATE;
+            			log.debug("Enter Programming Mode");
+            			if(modeMsg!=null) {
+            				forwardToPort(modeMsg, null);
+            				// wait for reply
+            				transmitWait(m.getTimeout(), WAITREPLYINPROGMODESTATE, "enter programming mode interrupted");
+            			}
+            		} else { 
+            			// change state to normal and send message
+            			modeMsg = enterNormalMode();
+            			mCurrentState = WAITREPLYINNORMMODESTATE;
+            			log.debug("Enter Normal Mode");
+            			if(modeMsg!=null) {
+            				forwardToPort(modeMsg, null);
+            				// wait for reply
+            				transmitWait(m.getTimeout(), WAITREPLYINNORMMODESTATE, "enter normal mode interrupted");
+            			}
+            		}
+            		if(modeMsg!=null) {
+           				checkReplyInDispatch();
+        				if (mCurrentState != OKSENDMSGSTATE){
+        					handleTimeout(modeMsg,l);
+        				}
+        				mCurrentState = WAITMSGREPLYSTATE;
+            		}
+            	}
+            	forwardToPort(m, l);
+            	// reply expected?
                 if (m.replyExpected()) {
-                    // wait for a reply, or eventually timeout
-                    try {
-                        synchronized(xmtRunnable) { 
-                            // Do not wait if the current
-                            // state has changed since we
-                            // last set it.
-                            if(mCurrentState==WAITMSGREPLYSTATE) 
-                               xmtRunnable.wait(m.getTimeout()); // rcvr normally ends this w state change
-                            else 
-                               if(log.isDebugEnabled()) 
-                                  log.debug("Skipping Wait for normal message.  mCurrentState: "+
-                                             mCurrentState);
-                        }
-                    } catch (InterruptedException e) { 
-                        Thread.currentThread().interrupt(); // retain if needed later
-                        log.error("transmitLoop interrupted"); 
-                    }
-                    checkReplyInDispatch();
-                    if (mCurrentState == WAITMSGREPLYSTATE) {
+                	// wait for a reply, or eventually timeout
+                	transmitWait(m.getTimeout(), WAITMSGREPLYSTATE, "transmitLoop interrupted");
+                	checkReplyInDispatch();
+                	if (mCurrentState == WAITMSGREPLYSTATE) {
                         handleTimeout(m,l);
                     } else if(mCurrentState == AUTORETRYSTATE) {
                          log.error("Message added back to queue: " + m.toString());
@@ -320,9 +304,9 @@ abstract public class AbstractMRTrafficController {
                 } // just continue to the next message from here
             } else {
                 // nothing to do
-                if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
-                mCurrentState =IDLESTATE;
-                // wait for something to send
+            	if (mCurrentState!=IDLESTATE) log.debug("Setting IDLESTATE");
+            	mCurrentState =IDLESTATE;
+            	// wait for something to send
                 if (mWaitBeforePoll > waitTimePoll || mCurrentMode == PROGRAMINGMODE){
                 	try {
                 		long startTime = Calendar.getInstance().getTimeInMillis();
@@ -336,15 +320,12 @@ abstract public class AbstractMRTrafficController {
                 		log.error("transmitLoop interrupted");
                 	}
                 }
-                // we need to synchronize since mCurrentState can change during the if statement
-                synchronized(selfLock){
-                	if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE){
-                		log.error("left timeout in unexpected state: "+mCurrentState);
-                	}
-                }
                 // once we decide that mCurrentState is in the IDLESTATE and there's an xmt msg we must guarantee
                 // the change of mCurrentState to one of the waiting for reply states.  Therefore we need to synchronize.
                 synchronized(selfLock){
+                   	if (mCurrentState!=NOTIFIEDSTATE && mCurrentState!=IDLESTATE){
+                		log.error("left timeout in unexpected state: "+mCurrentState);
+                	}
                 	if (mCurrentState == IDLESTATE) {
                 		mCurrentState = POLLSTATE;	// this prevents other transitions from the IDLESTATE 
                 	}
@@ -359,14 +340,7 @@ abstract public class AbstractMRTrafficController {
                 	if (msg!=null) {
                 		forwardToPort(msg, null);
                 		// wait for reply
-                		try {
-                			synchronized(xmtRunnable) {
-                				xmtRunnable.wait(msg.getTimeout());
-                			}
-                		} catch (InterruptedException e) { 
-                			Thread.currentThread().interrupt(); // retain if needed later
-                			log.error("interrupted while leaving programming mode");
-                		}
+                		transmitWait(msg.getTimeout(), WAITREPLYINNORMMODESTATE, "interrupted while leaving programming mode");
                 		checkReplyInDispatch();
                 		// exit program mode timeout?
                 		if (mCurrentState == WAITREPLYINNORMMODESTATE){
@@ -385,22 +359,7 @@ abstract public class AbstractMRTrafficController {
                 		mCurrentState = WAITMSGREPLYSTATE;
                 		forwardToPort(msg, pollReplyHandler());
                 		// wait for reply
-                		try {
-                			synchronized(xmtRunnable) {
-                                               // Do not wait if the current
-                                               // state has changed since we
-                                               // last set it.
-                                               if(mCurrentState==WAITMSGREPLYSTATE) 
-                			    	  xmtRunnable.wait(msg.getTimeout());
-                                                else 
-                                                   if(log.isDebugEnabled()) 
-                                                      log.debug("Skipping Wait for poll message.  mCurrentState: "+
-                                                       mCurrentState);
-                			}
-                		} catch (InterruptedException e) { 
-                			Thread.currentThread().interrupt(); // retain if needed later
-                			log.error("interrupted while waiting poll reply");
-                		}
+                		transmitWait(msg.getTimeout(), WAITMSGREPLYSTATE, "interrupted while waiting poll reply");
                 		checkReplyInDispatch();
                 		// and go around again
                 		if (mCurrentState == WAITMSGREPLYSTATE) {
@@ -417,7 +376,30 @@ abstract public class AbstractMRTrafficController {
                 }
             }
         }
-    }   // end of permanent loop; go around again
+    }   // end of transmit loop; go around again
+    
+    protected void transmitWait(int waitTime, int state, String InterruptMessage){
+		// wait() can have spurious wakeup!
+    	// so we protect by making sure the entire timeout time is used
+    	long currentTime = Calendar.getInstance().getTimeInMillis();
+		long endTime = currentTime + waitTime;
+		while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())){
+			long wait = endTime - currentTime;
+			try {
+				synchronized(xmtRunnable) { 
+					// Do not wait if the current state has changed since we
+					// last set it.
+					if (mCurrentState != state)
+						return;
+					xmtRunnable.wait(wait); // rcvr normally ends this w state change
+				}
+			} catch (InterruptedException e) { 
+				Thread.currentThread().interrupt(); // retain if needed later
+				log.error(InterruptMessage); 
+			}
+		}
+		log.debug("Timeout in transmitWait, mCurrentState:" + mCurrentState);
+    }
 
     // Dispatch control and timer
     protected boolean replyInDispatch = false;          // true when reply has been received but dispatch not completed
@@ -459,7 +441,7 @@ abstract public class AbstractMRTrafficController {
     private int timeouts = 0;
     protected boolean flushReceiveChars = false;
     protected void handleTimeout(AbstractMRMessage msg,AbstractMRListener l) {
-       	log.debug("Timeout mCurrentState:" + mCurrentState);
+       	//log.debug("Timeout mCurrentState:" + mCurrentState);
         log.warn("Timeout on reply to message: "+msg.toString()+
                  " consecutive timeouts = "+timeouts);
         timeouts++;
@@ -550,7 +532,7 @@ abstract public class AbstractMRTrafficController {
                     if(portReadyToSend(controller)) {
                         ostream.write(msg);
                         ostream.flush();
-                        log.debug("written");
+                        log.debug("written, msg timeout: "+m.getTimeout()+" mSec");
                         break;
                     } else if(m.getRetries()>=0) {
                         if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
