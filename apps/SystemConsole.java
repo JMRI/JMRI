@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -55,7 +55,7 @@ public class SystemConsole extends JTextArea {
     private static PrintStream originalOut;
     private static PrintStream originalErr;
 
-    private static JFrame frame = null;
+    private static JmriJFrame frame = null;
 
     static ArrayList<Schemes> schemes;
 
@@ -107,8 +107,27 @@ public class SystemConsole extends JTextArea {
         }
 
         // Check if we've created the frame and do so if not
+        log.debug("Check if frame created");
         if (frame==null) {
-            layoutFrame();
+            log.debug("No, do frame layout");
+            // To avoid possible locks, frame layout should be
+            // performed on the Swing thread
+            if (SwingUtilities.isEventDispatchThread()) {
+                layoutFrame();
+            } else {
+                try {
+                    // Use invokeAndWait method as we don't want to
+                    // return until the frame layout is completed
+                    SwingUtilities.invokeAndWait(new Runnable() {
+                        public void run() {
+                            layoutFrame();
+                        }
+                    });
+                } catch (Exception ex) {
+                    log.error("Exception creating system console frame: "+ex);
+                }
+                log.debug("Layout done");
+            }
         }
 
         return frame;
@@ -313,6 +332,9 @@ public class SystemConsole extends JTextArea {
             this.description = description;
         }
     }
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SystemConsole.class.getName());
+
 }
 
 /* @(#)SystemConsole.java */
