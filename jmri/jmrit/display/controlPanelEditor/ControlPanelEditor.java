@@ -703,6 +703,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         setToolTip(null); // ends tooltip if displayed
 
         if ((!event.isPopupTrigger() && (isEditable()) || _currentSelection instanceof LocoIcon)) {
+            moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
                 int deltaY = event.getY() - _lastY;
@@ -715,6 +716,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     }
                 }
                 if (minX<0 || minY<0) {
+                    // Don't allow move beyond the left or top borders
+                    break moveIt;
+                    /*
+                    // or use this choice:
+                    // Expand the panel to the left or top as needed by the move
+                    // Probably not the preferred solution - use the above break
                     if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
                         List <Positionable> allItems = getContents();
                         for (int i=0; i<allItems.size(); i++){
@@ -723,6 +730,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     } else {
                         moveItem(_currentSelection, -deltaX, -deltaY);
                     }
+                    */
                 }
                 if (_selectionGroup!=null && _selectionGroup.contains(_currentSelection)) {
                     for (int i=0; i<_selectionGroup.size(); i++){
