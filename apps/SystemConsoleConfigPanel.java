@@ -34,7 +34,7 @@ import javax.swing.ListCellRenderer;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class SystemConsoleConfigPanel extends JPanel {
 
@@ -46,8 +46,11 @@ public class SystemConsoleConfigPanel extends JPanel {
         10,
         11,
         12,
+        13,
         14,
+        16,
         18,
+        20,
         24 };
 
     private static final Integer fontStyles[] = {
