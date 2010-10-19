@@ -25,7 +25,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -62,6 +62,17 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         }
 
         return e;
+    }
+
+    /**
+     * Object should be loaded after basic GUI constructed
+     * @return true to defer loadng
+     * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     */
+    @Override
+    public boolean loadDeferred() {
+        return true;
     }
 
     /**

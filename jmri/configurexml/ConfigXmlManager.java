@@ -22,7 +22,7 @@ import org.apache.log4j.Level;
  * systems, etc.
  * @see <A HREF="package-summary.html">Package summary for details of the overall structure</A>
  * @author Bob Jacobsen  Copyright (c) 2002, 2008
- * @version $Revision: 1.88 $
+ * @version $Revision: 1.89 $
  */
 public class ConfigXmlManager extends jmri.jmrit.XmlFile
     implements jmri.ConfigureManager {
@@ -154,6 +154,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     ArrayList<Object> clist = new ArrayList<Object>();
     ArrayList<Object> tlist = new ArrayList<Object>();
     ArrayList<Object> ulist = new ArrayList<Object>();
+    ArrayList<Element> loadDeferredList = new ArrayList<Element>();
 
     /**
      * Find the name of the adapter class for an object.
@@ -383,8 +384,25 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * method. 
      * @return true if no problems during the load
      */
+    public boolean load(File fi) throws JmriConfigureXmlException {
+        return load(fi, false);
+    }
+
+    /**
+     * Load a file.
+     * <p>
+     * Handles problems locally to the extent that it can,
+     * by routing them to the creationErrorEncountered
+     * method.
+     * @param fi file to load
+     * @param registerDeferred true to register objects to defer
+     * @return true if no problems during the load
+     * @throws JmriConfigureXmlException
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     * @since 2.11.2
+     */
     @SuppressWarnings("unchecked")
-	public boolean load(File fi) throws JmriConfigureXmlException {
+    public boolean load(File fi, boolean registerDeferred) throws JmriConfigureXmlException {
         boolean result = true;
         Element root = null;
         try {
@@ -408,12 +426,18 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
                     // loadVersion(root, adapter);
                     
                     // and do it
-                    boolean loadStatus = adapter.load(item);
-                    log.debug("load status for "+adapterName+" is "+loadStatus);
+                    if (adapter.loadDeferred() && registerDeferred) {
+                        // register in the list for deferred load
+                        loadDeferredList.add(item);
+                        log.debug("deferred load registered for " + adapterName);
+                    } else {
+                        boolean loadStatus = adapter.load(item);
+                        log.debug("load status for "+adapterName+" is "+loadStatus);
                     
-                    // if any adaptor load fails, then the entire load has failed
-                    if (!loadStatus)
-                    	result = false;
+                        // if any adaptor load fails, then the entire load has failed
+                        if (!loadStatus)
+                            result = false;
+                    }
                 } catch (Exception e) {
                     creationErrorEncountered (adapter, "load("+fi.getName()+")",Level.ERROR,
                                               "Unexpected error (Exception)",null,null,e);
@@ -468,6 +492,38 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 		InstanceManager.logixManagerInstance().activateAllLogixs();
 		InstanceManager.layoutBlockManagerInstance().initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
+        return result;
+    }
+
+    public boolean loadDeferred(File fi) {
+        boolean result = true;
+        // Now process the load-later list
+        log.debug("Start processing deferred load list (size): "+loadDeferredList.size());
+        if (!loadDeferredList.isEmpty()) {
+            for(Element item: loadDeferredList) {
+                String adapterName = item.getAttribute("class").getValue();
+                log.debug("deferred load via "+adapterName);
+                XmlAdapter adapter = null;
+                try {
+                    adapter = (XmlAdapter)Class.forName(adapterName).newInstance();
+                    boolean loadStatus = adapter.load(item);
+                    log.debug("deferred load status for "+adapterName+" is "+loadStatus);
+
+                    // if any adaptor load fails, then the entire load has failed
+                    if (!loadStatus)
+                        result = false;
+                } catch (Exception e) {
+                    creationErrorEncountered (adapter, "deferred load("+fi.getName()+")",Level.ERROR,
+                                              "Unexpected error (Exception)",null,null,e);
+                    result = false;  // keep going, but return false to signal problem
+                } catch (Throwable et) {
+                    creationErrorEncountered (adapter, "in deferred load("+fi.getName()+")", Level.ERROR,
+                                              "Unexpected error (Throwable)",null,null,et);
+                    result = false;  // keep going, but return false to signal problem
+                }
+            }
+        }
+        log.debug("Done processing deferred load list with result: "+result);
         return result;
     }
 

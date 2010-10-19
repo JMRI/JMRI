@@ -4,7 +4,7 @@ package jmri.configurexml;
  * Abstract class to provide basic error handling for XmlAdapter
  *
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  * @see XmlAdapter
  */
 
@@ -36,6 +36,21 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
                 null, null,
                 level, description, systemName, userName, exception
         );
+    }
+
+    /**
+     * Determine if this set of configured objects should
+     * be loaded after basic GUI construction is completed.
+     * <p>
+     * Default behaviour is to load when requested.
+     * Classes that should wait until basic GUI is constructed
+     * should override this method and return true
+     * @return true to defer loading
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     * @since 2.11.2
+     */
+    public boolean loadDeferred() {
+        return false;
     }
      
     private ConfigXmlManager c;

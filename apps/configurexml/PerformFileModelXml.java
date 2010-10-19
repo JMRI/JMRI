@@ -12,7 +12,7 @@ import org.jdom.Element;
  * Handle XML persistance of PerformFileModel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @see apps.PerformFilePanel
  */
 public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -33,6 +33,17 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         e.setAttribute("type", "XmlFile");
         e.setAttribute("class", this.getClass().getName());
         return e;
+    }
+
+    /**
+     * Object should be loaded after basic GUI constructed
+     * @return true to defer loading
+     * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     */
+    @Override
+    public boolean loadDeferred() {
+        return true;
     }
 
     /**

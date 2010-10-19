@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.121 $
+ * @version     $Revision: 1.122 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -102,7 +102,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         if (file.exists()) {
             log.debug("start load config file");
             try {
-                configOK = InstanceManager.configureManagerInstance().load(file);
+                configOK = InstanceManager.configureManagerInstance().load(file, true);
             } catch (JmriException e) {
                 log.error("Unhandled problem loading configuration: "+e);
                 configOK = false;
@@ -122,9 +122,23 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, frame);
 
+        // Now load deferred config items
+        if (file.exists()) {
+            log.debug("start deferred load from config");
+            try {
+                configDeferredLoadOK = InstanceManager.configureManagerInstance().loadDeferred(file);
+            } catch (JmriException e) {
+                log.error("Unhandled problem loading deferred configuration: "+e);
+                configDeferredLoadOK = false;
+            }
+            log.debug("end deferred load from config file, OK="+configDeferredLoadOK);
+        } else {
+            configDeferredLoadOK = false;
+        }
+
         // if the configuration didn't complete OK, pop the prefs frame and help
-        log.debug("Config go OK? "+configOK);
-        if (!configOK) { 
+        log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
+        if (!configOK||!configDeferredLoadOK) {
             jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
             doPreferences();
         }
@@ -702,6 +716,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     static String configFilename = "jmriconfig2.xml";  // usually overridden, this is default
     static boolean configOK;
+    static boolean configDeferredLoadOK;
 
     // GUI members
     private JMenuBar menuBar;

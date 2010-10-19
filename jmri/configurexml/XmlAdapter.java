@@ -6,7 +6,7 @@ import org.jdom.Element;
  * Interface assumed during configuration operations.
  *
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @see ConfigXmlManager
  */
 
@@ -20,6 +20,14 @@ public interface XmlAdapter {
      * @return true if successful 
      */
     public boolean load(Element e) throws Exception;
+
+    /**
+     * Determine if this set of configured objects should
+     * be loaded after basic GUI construction is completed
+     * @return true to defer loading
+     * @since 2.11.2
+     */
+    public boolean loadDeferred();
 
     /**
      * Create a set of configured objects from their

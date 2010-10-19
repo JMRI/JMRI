@@ -45,7 +45,7 @@ import java.util.ArrayList;
  * for more details.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  * @see jmri.InstanceManager
  * @see jmri.configurexml.ConfigXmlManager
  */
@@ -122,6 +122,29 @@ public interface ConfigureManager {
      * @return true if succeeded
      */
     public boolean load(File file) throws JmriException;
+
+    /**
+     * Create the objects defined in a particular configuration
+     * file
+     * @param file Input file
+     * @param registerDeferred true to register actions for deferred load
+     * @return true if succeeded
+     * @throws JmriException
+     * @since 2.11.2
+     */
+    public boolean load(File file, boolean registerDeferred) throws JmriException;
+
+    /**
+     * Create the objects defined in a particular configuration
+     * file that have been deferred until after basic GUI construction
+     * completed
+     * @param file Input file
+     * @return true if succeeded
+     * @throws JmriException
+     * @see jmri.configurexml.XmlAdapter#loadDeferred()
+     * @since 2.11.2
+     */
+    public boolean loadDeferred(File file) throws JmriException;
 
     /**
      * Provide a method-specific way of locating a file to be
