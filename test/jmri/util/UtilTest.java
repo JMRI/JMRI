@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.util tree
  *
  * @author	    Bob Jacobsen  Copyright 2003
- * @version         $Revision: 1.14 $
+ * @version         $Revision: 1.15 $
  */
 public class UtilTest extends TestCase {
 
@@ -42,6 +42,8 @@ public class UtilTest extends TestCase {
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true"))
             suite.addTest(jmri.util.swing.PackageTest.suite());
+
+        suite.addTest(jmri.util.WaitHandlerTest.suite());
 
         return suite;
     }

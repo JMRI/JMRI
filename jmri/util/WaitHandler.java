@@ -1,0 +1,63 @@
+// WaitHandler.java
+
+package jmri.util;
+
+import java.util.Calendar;
+
+/**
+ * Common utility class for handling the 
+ * "spurious wakeup from wait()" 
+ * problem described in the 
+ * {@link java.lang.Object} JavaDocs
+ *
+ * Generally, when waiting for a notify() operation,
+ * you need to provide a test that a valid notify
+ * had happened due to e.g. a state change, etc.
+<code><pre>
+new WaitHandler(this, 120) {
+    protected boolean wasSpurious() {
+        return !(state == expectedNextState); 
+    }
+};
+</pre></code>
+ * 
+ * @author Bob Jacobsen  Copyright 2010
+ * @version $Revision: 1.1 $
+ */
+
+public class WaitHandler {
+    
+    /**
+     * Wait for a specified interval,
+     * robustly handling "spurious wake"
+     * @param self waiting Object
+     * @param interval in milliseconds
+     */
+    public WaitHandler(Object self, long interval) {
+        long currentTime = Calendar.getInstance().getTimeInMillis();
+        long endTime = currentTime+interval;
+        while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())){
+            long wait = endTime - currentTime;
+            try {
+                synchronized(self) {
+                    self.wait(interval);
+                    if (!wasSpurious()) break;
+                }
+            } catch (InterruptedException e) { 
+                Thread.currentThread().interrupt(); // retain if needed later
+                break;
+            }    
+        }
+    }
+    
+    /**
+     * Method to determine if a wake was
+     * spurious or not.  By default, all
+     * wakes are spurious and the full time will
+     * elapse.  Override to provide a test (returning false)
+     * for a non-spurious wake.
+     */
+    protected boolean wasSpurious() { return true; }
+
+}
+
