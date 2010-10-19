@@ -19,7 +19,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -263,7 +263,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemoryIcon memIcon = _editor.putMemory();
         Assert.assertNotNull(memIcon);
-        Memory memory = (Memory)((NamedBeanHandle<Memory>)memIcon.getMemory()).getBean();
+        Memory memory = memIcon.getMemory().getBean();
         Assert.assertNotNull(memory);
 
         int x = 20;
@@ -289,7 +289,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemorySpinnerIcon memSpinIcon = _editor.addMemorySpinner();
         Assert.assertNotNull(memSpinIcon);
-        memory = (Memory)((NamedBeanHandle<Memory>)memSpinIcon.getMemory()).getBean();
+        memory = memSpinIcon.getMemory().getBean();
         Assert.assertNotNull(memory);
 
         x = 70;
@@ -315,7 +315,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
         MemoryInputIcon memInputIcon = _editor.addMemoryInputBox();
         Assert.assertNotNull(memInputIcon);
-        memory = (Memory)((NamedBeanHandle<Memory>)memInputIcon.getMemory()).getBean();
+        memory = memInputIcon.getMemory().getBean();
         Assert.assertNotNull(memory);
 
         x = 150;
@@ -410,6 +410,8 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         _panel = _editor.getTargetPanel();
         Assert.assertNotNull(_panel);
     }
+    
+    @SuppressWarnings("unchecked")  // OK in test classes
     protected void tearDown() throws Exception {
         
         TestHelper.disposeWindow(_editor.getTargetFrame(), this);
