@@ -12,7 +12,7 @@ import java.util.Calendar;
 /**
  * Tests for the jmri.util.FileUtil class.
  * @author	Bob Jacobsen  Copyright 2003, 2009
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -145,7 +145,7 @@ public class WaitHandlerTest extends TestCase {
         Thread t = new Thread(){
             public void run() {
                 flag1 = true;
-                new WaitHandler(this, 50) {
+                new WaitHandler(this, 100) {
                     public boolean wasSpurious() { return false; }
                 };
                 flag2 = true;
@@ -177,7 +177,7 @@ public class WaitHandlerTest extends TestCase {
         long endTime = Calendar.getInstance().getTimeInMillis();
         Assert.assertTrue("ended", flag2);
 
-        Assert.assertTrue("run time shortened", 50 > endTime-beginTime);
+        Assert.assertTrue("run time shortened", 100 > endTime-beginTime);
     }
 
 

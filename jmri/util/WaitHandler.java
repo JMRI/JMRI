@@ -22,7 +22,7 @@ new WaitHandler(this, 120) {
 </pre></code>
  * 
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class WaitHandler {
@@ -40,7 +40,7 @@ public class WaitHandler {
             long wait = endTime - currentTime;
             try {
                 synchronized(self) {
-                    self.wait(interval);
+                    self.wait(wait);
                     if (!wasSpurious()) break;
                 }
             } catch (InterruptedException e) { 
