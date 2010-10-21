@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.11 $
+ * @version               $Revision: 1.12 $
  */
 
 
@@ -97,6 +97,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                          // The bytes 2 and 3 are the
 
                          int consistAddr= -1;
+                         Boolean newConsist = true;
                          EasyDccConsist currentConsist = null;
                          String sa = "" + (char)r.getElement(1) + 
                                      (char)r.getElement(2);
@@ -109,6 +110,7 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                             DccLocoAddress locoAddress;
                             int tempAddr;
                             boolean directionNormal=true;
+                            while((char)r.getElement(i)==' ') i++; // skip any spaces in the input
                             String sb = "" + (char)r.getElement(i) + 
                                      (char)r.getElement(i+1) +
                                      (char)r.getElement(i+2) +
@@ -116,11 +118,12 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                             tempAddr=Integer.valueOf(sb,16).intValue();
                             directionNormal=((tempAddr&0x8000)==0);
                             if(tempAddr!=0) {
-                               if(i==3){
+                               if(newConsist){
                                   // This is the first address, add the 
                                   // consist
                                   currentConsist=(EasyDccConsist)addConsist(
                                                         new DccLocoAddress(consistAddr,false));
+                                  newConsist=false;
                                }
                                locoAddress=new DccLocoAddress(
                                            tempAddr&0x7fff,(tempAddr&0x7fff)>99);
