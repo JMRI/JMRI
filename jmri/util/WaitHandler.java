@@ -8,7 +8,7 @@ import java.util.Calendar;
  * Common utility class for handling the 
  * "spurious wakeup from wait()" 
  * problem described in the 
- * {@link java.lang.Object} JavaDocs
+ * {@link java.lang.Object#wait(long)} JavaDocs
  *
  * Generally, when waiting for a notify() operation,
  * you need to provide a test that a valid notify
@@ -21,8 +21,11 @@ new WaitHandler(this, 120) {
 };
 </pre></code>
  * 
+ * Interrupting the thread leaves the wait early with
+ * the interrupted flag set.
+ *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class WaitHandler {
@@ -45,7 +48,7 @@ public class WaitHandler {
                 }
             } catch (InterruptedException e) { 
                 Thread.currentThread().interrupt(); // retain if needed later
-                break;
+                break;  // and leave the wait now
             }    
         }
     }
