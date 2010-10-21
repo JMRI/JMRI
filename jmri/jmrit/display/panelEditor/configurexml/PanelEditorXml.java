@@ -17,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -197,6 +197,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
 
         // display the results, with the editor in back
         panel.pack();
+        panel.setAllEditable(panel.isEditable());
 
         // we don't pack the target frame here, because size was specified
         // TODO: Work out why, when calling this method, panel size is increased
