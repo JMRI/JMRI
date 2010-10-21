@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.99 $
+ * @version $Revision: 1.100 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -344,7 +344,6 @@ public class PositionableLabel extends JLabel implements Positionable {
     }
 
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
-        boolean ret = false;
         if (editor!=null) {
             _iconEditor = editor;
         } else {

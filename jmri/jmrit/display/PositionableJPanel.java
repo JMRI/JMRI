@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -185,7 +185,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     *  Utility
     */
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {
-        boolean ret = false;
         if (editor!=null) {
             _iconEditor = editor;
         } else {
