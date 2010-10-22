@@ -15,12 +15,7 @@ import junit.framework.Assert;
 
 public class EasyDccConsistTest extends TestCase {
 
-	private EasyDccTrafficControlScaffold tcis = null;
-
         public void testCtor() {
-          // prepare an interface
-          tcis = new EasyDccTrafficControlScaffold();
-
           EasyDccConsist m = new EasyDccConsist(5);
           Assert.assertNotNull(m);
         }
