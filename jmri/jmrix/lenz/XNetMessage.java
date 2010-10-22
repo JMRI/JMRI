@@ -13,7 +13,7 @@ import java.io.Serializable;
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.21 $
+ * @version			$Revision: 2.22 $
  *
  */
 public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
@@ -206,6 +206,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         // store and send
         l.setElement(1,hiadr);
         l.setElement(2,loadr);
+        l.setParity(); // Set the parity bit
         
         return l;
     }
@@ -227,6 +228,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         // information request is for the upper or lower nibble.
         if (pLowerNibble) { l.setElement(2,0x80);
 	} else { l.setElement(2,0x81); }
+        l.setParity(); // Set the parity bit
         
         return l;
     }
@@ -240,6 +242,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
 	m.setTimeout(XNetProgrammingTimeout);
         m.setElement(0, XNetConstants.CS_REQUEST);
         m.setElement(1, XNetConstants.SERVICE_MODE_CSRESULT);
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -259,6 +262,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_PAGED);
         m.setElement(2,  (0xff & cv));
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -276,6 +280,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         else               /* and the version 3.6 command for CVs > 256 */
           m.setElement(1,0x18|((cv&0x0300)>>8));
         m.setElement(2, (0xff &cv));
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -287,6 +292,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_PAGED);
         m.setElement(2, (0xff & cv));
         m.setElement(3, val);
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -305,6 +311,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
           m.setElement(1,0x1c|((cv&0x0300)>>8));
         m.setElement(2, (0xff & cv));
         m.setElement(3, val);
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -316,6 +323,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(0, XNetConstants.PROG_READ_REQUEST);
         m.setElement(1, XNetConstants.PROG_READ_MODE_REGISTER);
         m.setElement(2, (0x0f & reg));
+        m.setParity(); // Set the parity bit
         return m;
     }
     
@@ -328,6 +336,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         m.setElement(1, XNetConstants.PROG_WRITE_MODE_REGISTER);
         m.setElement(2, (0x0f & reg));
         m.setElement(3, val);
+        m.setParity(); // Set the parity bit
         return m;
     }
 
@@ -346,6 +355,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         /* Element 5 is the lower 8 bits of the cv */
         m.setElement(5, ((0x00ff & cv)-1));
         m.setElement(6, val);
+        m.setParity(); // Set the parity bit
         return m;
     }
 
@@ -364,6 +374,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         /* Element 5 is the lower 8 bits of the cv */
         m.setElement(5, ((0x00ff & cv)-1));
         m.setElement(6, val);
+        m.setParity(); // Set the parity bit
         return m;
     }
 
@@ -389,6 +400,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         	m.setElement(6, ((0xe8) | (bit & 0xff)) );
 	else // value == false
         	m.setElement(6, ((0xe0) | (bit & 0xff)) );
+        m.setParity(); // Set the parity bit
         return m;
     }
 
@@ -414,6 +426,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
         	m.setElement(6, ((0xf8) | (bit & 0xff)) );
 	else // value == false
         	m.setElement(6, ((0xf0) | (bit & 0xff)) );
+        m.setParity(); // Set the parity bit
         return m;
     }
 
