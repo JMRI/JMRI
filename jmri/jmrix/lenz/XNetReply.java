@@ -7,7 +7,7 @@ package jmri.jmrix.lenz;
  *<P>
  *
  * @author			Paul Bender Copyright (C) 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  *
  */
 public class XNetReply extends jmri.jmrix.AbstractMRReply {
@@ -42,11 +42,18 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
     public XNetReply(String message) {
        super();
        setBinary (true);
-       for(int i=0,j=0;i<message.length();i+=2,j++)
+       // gather bytes in result
+       byte b[] = jmri.util.StringUtil.bytesFromHexString(message);
+       if (b.length == 0)
        {
-          setElement(j,Integer.parseInt(message.substring(i,i+2),16));
+          // no such thing as a zero-length message
+          _nDataChars=0;
+          _dataChars = null;
+          return;
        }
-       log.error("String constructor produced: " +this.toString());
+       _nDataChars = b.length;
+       _dataChars = new int[_nDataChars];
+       for (int i=0; i<b.length; i++) setElement(i, b[i]);
     }
 
     /* Get the opcode as a string in hex format */
