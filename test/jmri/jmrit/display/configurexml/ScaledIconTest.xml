@@ -21,7 +21,7 @@
   <signalmasts class="jmri.managers.configurexml.DefaultSignalMastManagerXml" />
   <signalgroups class="jmri.managers.configurexml.DefaultSignalGroupManagerXml" />
   <oblocks class="jmri.jmrit.logix.configurexml.OBlockManagerXml" />
-  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Scaled Icon Test" x="468" y="398" height="412" width="358" editable="yes" positionable="yes" showcoordinates="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
+  <paneleditor class="jmri.jmrit.display.panelEditor.configurexml.PanelEditorXml" name="Scaled Icon Test" x="468" y="398" height="412" width="358" editable="no" positionable="yes" showcoordinates="yes" showtooltips="yes" controlling="yes" hide="yes" panelmenu="yes" scrollable="both">
     <positionablelabel x="168" y="42" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Scaled to 150%" size="14" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="43" y="16" level="5" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Scaled to 75%" size="14" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="242" y="98" level="3" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" icon="yes" class="jmri.jmrit.display.configurexml.PositionableLabelXml">
@@ -67,6 +67,6 @@
     <positionablelabel x="51" y="293" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Upsidedown" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
     <positionablelabel x="160" y="277" level="4" forcecontroloff="false" hidden="no" positionable="true" showtooltip="true" editable="false" text="Clockwise 45 degrees" size="12" style="1" red="51" green="51" blue="51" justification="left" class="jmri.jmrit.display.configurexml.PositionableLabelXml" />
   </paneleditor>
-  <!--Written by JMRI version 2.11 on Sun Aug 15 00:00:10 PDT 2010 $Id: ScaledIconTest.xml,v 1.16 2010-08-15 07:41:30 jacobsen Exp $-->
+  <!--Written by JMRI version 2.11 on Sun Aug 15 00:00:10 PDT 2010 $Id: ScaledIconTest.xml,v 1.17 2010-10-22 04:41:37 pete_cressman Exp $-->
 </layout-config>
 
