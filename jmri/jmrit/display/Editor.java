@@ -1740,7 +1740,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
     
-    public class JFrameItem extends JmriJFrame {
+    public static class JFrameItem extends JmriJFrame {
         IconAdder _editor;
         JFrameItem (String name, IconAdder editor) {
             super(name);
@@ -1851,24 +1851,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                             return this;
                         }
                 }.init(this));
-            } else {
-                frame.addWindowListener(new java.awt.event.WindowAdapter() {
-                        Editor editor;
-                        IconAdder iconEd;
-                        JFrameItem frame;
-                        public void windowClosing(java.awt.event.WindowEvent e) {
-                            if (_debug) log.debug("windowClosing: CLOSE "+toString());
-                            jmri.jmrit.catalog.ImageIndexEditor.checkImageIndex(editor);
-                            iconEd = null;
-                            frame = null;
-                        }
-                        java.awt.event.WindowAdapter init(Editor ed, IconAdder iEd, JFrameItem fr) {
-                            editor = ed;
-                            iconEd = iEd;
-                            frame = fr;
-                            return this;
-                        }
-                }.init(this, editor, frame));
             }
         } else {
             log.error("No icon editor specified for "+name);

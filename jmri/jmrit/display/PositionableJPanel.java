@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -193,12 +193,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         _iconEditor = new IconAdder(name);
         _iconEditorFrame = _editor.makeAddIconFrame(name, false, table, _iconEditor);
         _iconEditorFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                JFrame frame;
                 public void windowClosing(java.awt.event.WindowEvent e) {
-                    if (frame!=null) {
-                        _iconEditorFrame.dispose();
-                        _iconEditorFrame = null;
-                    }
+                    _iconEditorFrame.dispose();
+                    _iconEditorFrame = null;
                 }
             });
         _iconEditorFrame.setLocationRelativeTo(pos);

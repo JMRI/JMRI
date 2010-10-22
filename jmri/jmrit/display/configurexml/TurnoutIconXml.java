@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -79,13 +79,6 @@ public class TurnoutIconXml extends PositionableLabelXml {
         Editor p = (Editor)o;
 
         TurnoutIcon l = new TurnoutIcon(p);
-        int rotation = 0;
-        try {
-            Attribute a = element.getAttribute("rotate");
-            rotation = a.getIntValue();
-        } catch (org.jdom.DataConversionException e) {
-        } catch ( NullPointerException e) {  // considered normal if the attributes are not present
-        }
         
         String name;
         try {
