@@ -3,7 +3,7 @@
  *
  * Description:	    JUnit tests for the XNetProgrammer class
  * @author			Bob Jacobsen
- * @version         $Revision: 2.6 $
+ * @version         $Revision: 2.7 $
  */
 
 package jmri.jmrix.lenz;
@@ -30,6 +30,16 @@ public class XNetProgrammerTest extends TestCase {
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
                 Assert.assertEquals("write message contents", "23 16 0A 14 2B", t.outbound.elementAt(0).toString());
+                // send reply
+                XNetReply mr1 = new XNetReply();
+                mr1.setElement(0,0x61);
+                mr1.setElement(1,0x02);
+                mr1.setElement(2,0x63);
+                t.sendTestMessage(mr1);
+
+	        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+                Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+
 	}
 
 	public void testWriteRegisterSequence() throws JmriException {
@@ -74,6 +84,17 @@ public class XNetProgrammerTest extends TestCase {
 		// check "prog mode" message sent
 		Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 15 0A 3D", t.outbound.elementAt(0).toString());
+
+                // send reply
+                XNetReply mr1 = new XNetReply();
+                mr1.setElement(0,0x61);
+                mr1.setElement(1,0x02);
+                mr1.setElement(2,0x63);
+                t.sendTestMessage(mr1);
+
+	        Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+                Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
+
 	}
 
 	public void testReadRegisterSequence() throws JmriException {
@@ -92,6 +113,15 @@ public class XNetProgrammerTest extends TestCase {
         // check "prog mode" message sent
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("read message contents", "22 11 05 36", t.outbound.elementAt(0).toString());
+        // send reply
+        XNetReply mr1 = new XNetReply();
+        mr1.setElement(0,0x61);
+        mr1.setElement(1,0x02);
+        mr1.setElement(2,0x63);
+        t.sendTestMessage(mr1);
+
+	Assert.assertEquals("enquire message sent", 2, t.outbound.size());
+        Assert.assertEquals("enquire message contents", "21 10 31", t.outbound.elementAt(1).toString());
     }
 
 	// internal class to simulate a XNetListener
