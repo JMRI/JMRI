@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.15 2010-09-02 03:22:05 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.16 2010-10-22 01:10:49 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -13,11 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (trains | options)*>
+<!ELEMENT operations-config (trains | options | schedules)*>
 
-<!ELEMENT options (trainOptions | trainEditOptions)*>
+<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions)*>
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
+<!ELEMENT trainScheduleOptions EMPTY>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -35,6 +36,12 @@
 <!ATTLIST trainEditOptions height			CDATA #IMPLIED>
 <!ATTLIST trainEditOptions width			CDATA #IMPLIED>
 
+<!ATTLIST trainScheduleOptions x			CDATA #IMPLIED>
+<!ATTLIST trainScheduleOptions y			CDATA #IMPLIED>
+<!ATTLIST trainScheduleOptions height		CDATA #IMPLIED>
+<!ATTLIST trainScheduleOptions width		CDATA #IMPLIED>
+<!ATTLIST trainScheduleOptions columnWidths	CDATA #IMPLIED>
+
 <!ELEMENT trains (train)*>
 <!ELEMENT train (scripts | railRoad | manifestLogo)*>
 <!ELEMENT scripts (move | terminate)*>
@@ -42,6 +49,9 @@
 <!ELEMENT terminate EMPTY>
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT manifestLogo EMPTY>
+
+<!ELEMENT schedules (schedule)*>
+<!ELEMENT schedule EMPTY>
 
 <!ATTLIST train id					CDATA #REQUIRED>          
 <!ATTLIST train name				CDATA #IMPLIED>
@@ -80,4 +90,10 @@
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>
+
+<!ATTLIST schedule id				CDATA #REQUIRED>          
+<!ATTLIST schedule name				CDATA #IMPLIED>
+<!ATTLIST schedule comment			CDATA #IMPLIED>
+<!ATTLIST schedule trainIds			CDATA #IMPLIED>
+
 
