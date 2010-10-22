@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.6 $
+ * @version			$Revision: 2.7 $
  */
 public class XNetTest extends TestCase {
 
@@ -40,6 +40,8 @@ public class XNetTest extends TestCase {
         suite.addTest(new TestSuite(XNetTrafficControllerTest.class));
         suite.addTest(new TestSuite(XNetTrafficRouterTest.class));
         suite.addTest(new TestSuite(XNetThrottleTest.class));
+        suite.addTest(new TestSuite(XNetConsistManagerTest.class));
+        suite.addTest(new TestSuite(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetInitilizationManagerTest.class));
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
