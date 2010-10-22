@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.5 $
+ * @version         $Revision: 2.6 $
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -20,13 +20,13 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 	XNetInterfaceScaffold lnis;
 
 	public void checkClosedMsgSent() {
-		Assert.assertEquals("closed message","52 05 88 00",
+		Assert.assertEquals("closed message","52 05 88 DF",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("CLOSED state",jmri.Turnout.CLOSED,t.getCommandedState());
 	}
 
 	public void checkThrownMsgSent() {
-		Assert.assertEquals("thrown message","52 05 89 00",
+		Assert.assertEquals("thrown message","52 05 89 DE",
                 lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
 		Assert.assertEquals("THROWN state",jmri.Turnout.THROWN,t.getCommandedState());
 	}

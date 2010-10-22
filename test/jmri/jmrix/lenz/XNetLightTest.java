@@ -7,7 +7,7 @@ import junit.framework.Assert;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetLight} class.
  * @author	    Paul Bender 
- * @version         $Revision: 2.2 $
+ * @version         $Revision: 2.3 $
  */
 public class XNetLightTest extends jmri.implementation.AbstractLightTest {
 
@@ -18,13 +18,13 @@ public class XNetLightTest extends jmri.implementation.AbstractLightTest {
 	XNetInterfaceScaffold xnis;
 
 	public void checkOnMsgSent() {
-		Assert.assertEquals("ON message","52 05 80 00",
+		Assert.assertEquals("ON message","52 05 80 D7",
                 xnis.outbound.elementAt(xnis.outbound.size()-1).toString());
 		Assert.assertEquals("ON state",jmri.Light.ON,t.getState());
 	}
 
 	public void checkOffMsgSent() {
-		Assert.assertEquals("OFF message","52 05 81 00",
+		Assert.assertEquals("OFF message","52 05 81 D6",
                 xnis.outbound.elementAt(xnis.outbound.size()-1).toString());
 		Assert.assertEquals("OFF state",jmri.Light.OFF,t.getState());
 	}

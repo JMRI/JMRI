@@ -8,7 +8,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.XNetSensor class.
  * @author	    Paul Bender  Copyright 2004
- * @version         $Revision: 2.7 $
+ * @version         $Revision: 2.8 $
  */
 public class XNetSensorTest extends TestCase {
 
@@ -79,7 +79,7 @@ public class XNetSensorTest extends TestCase {
 
         t.requestUpdateFromLayout();
         // check that the correct message was sent
-        Assert.assertEquals("Sensor Status Request Sent","42 05 80 00",xnis.outbound.elementAt(0).toString());
+        Assert.assertEquals("Sensor Status Request Sent","42 05 80 C3",xnis.outbound.elementAt(0).toString());
 
     }
 
