@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -370,9 +370,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
 		// place frame
-		if (manager.getTrainEditFramePosition()!= null){
-			setLocation(manager.getTrainEditFramePosition());
-		}	
+		setLocation(manager.getTrainEditFramePosition());	
 		
 		// load route location checkboxes
 		updateLocationCheckboxes();

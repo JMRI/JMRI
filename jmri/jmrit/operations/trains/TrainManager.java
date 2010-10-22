@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.44 $
+ * @version	$Revision: 1.45 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -39,6 +39,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private boolean _buildMessages = true;	// when true, show build messages
 	private boolean _buildReport = false;		// when true, print/preview build reports
 	private boolean _printPreview = false;	// when true, preview train manifest
+	
+	// Train frame attributes
 	private TrainsTableFrame _trainFrame = null;
 	private Dimension _frameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
 	private Point _framePosition = new Point();
@@ -48,7 +50,13 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	// Edit Train frame attributes
 	private TrainEditFrame _trainEditFrame = null;
 	private Dimension _editFrameDimension = null;
-	private Point _editFramePosition = null;
+	private Point _editFramePosition = new Point();
+	
+	// Train Schedule frame attributes
+	private TrainsScheduleTableFrame _trainScheduleFrame = null;
+	private Dimension _trainScheduleFrameDimension = new Dimension(800, Control.panelHeight);
+	private Point _trainScheduleFramePosition = new Point();
+	private int[] _tableScheduleColumnWidths = {50, 70, 120};
 	
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
@@ -169,6 +177,26 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public Point getTrainEditFramePosition(){
     	return _editFramePosition;
     }
+    
+    public void setTrainScheduleFrame(TrainsScheduleTableFrame frame){
+    	_trainScheduleFrame = frame;
+    }
+    
+    public Dimension getTrainScheduleFrameSize(){
+    	return _trainScheduleFrameDimension;
+    }
+    
+    public Point getTrainScheduleFramePosition(){
+    	return _trainScheduleFramePosition;
+    }
+    public int[] getTrainScheduleFrameTableColumnWidths(){
+    	return _tableScheduleColumnWidths.clone();
+    }
+    
+    public void setTrainScheduleFrameTableColumnWidths(int[] tableColumnWidths){
+    	_tableScheduleColumnWidths = tableColumnWidths;
+    }
+    
 	
 	public void dispose() {
         _trainHashTable.clear();
@@ -469,11 +497,11 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      */
     public int numEntries() { return _trainHashTable.size(); }
     
-    public void options (org.jdom.Element values) {
+    public void options (Element values) {
     	if (log.isDebugEnabled()) log.debug("ctor from element "+values);
     	Element e = values.getChild("trainOptions");
-    	if (e != null){
-    		org.jdom.Attribute a;
+    	org.jdom.Attribute a;
+    	if (e != null){   		
     		if ((a = e.getAttribute("sortBy")) != null)
     			_sortBy = a.getValue();
     		if ((a = e.getAttribute("buildMessages")) != null)
@@ -528,6 +556,38 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     			log.debug("Did not find train edit frame attributes");
     		}
     	}
+    	e = values.getChild("trainScheduleOptions");
+    	if (e != null){
+    		// determine panel position
+    		int x = 0;
+    		int y = 0;
+    		int height = Control.panelHeight;
+    		int width = Control.panelWidth;
+    		try {
+    			x = e.getAttribute("x").getIntValue();
+    			y = e.getAttribute("y").getIntValue();
+    			height = e.getAttribute("height").getIntValue();
+    			width = e.getAttribute("width").getIntValue();
+    			_trainScheduleFrameDimension = new Dimension(width, height);
+    			_trainScheduleFramePosition = new Point(x,y);
+    		} catch ( org.jdom.DataConversionException ee) {
+    			log.debug("Did not find train frame attributes");
+    		} catch ( NullPointerException ne) {
+    			log.debug("Did not find train frame attributes");
+    		}
+      		if ((a = e.getAttribute("columnWidths")) != null){
+             	String[] widths = a.getValue().split(" ");
+             	_tableScheduleColumnWidths = new int[widths.length];
+             	for (int i=0; i<widths.length; i++){
+             		try{
+             			_tableScheduleColumnWidths[i] = Integer.parseInt(widths[i]);
+             		} catch (NumberFormatException ee){
+             			log.error("Number format exception when reading trains column widths");
+             		}
+             	}
+    		}
+    	}
+
     }
 
     
@@ -536,9 +596,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * detailed DTD in operations-trains.dtd.
      * @return Contents in a JDOM Element
      */
-    public org.jdom.Element store() {
+    public Element store() {
     	Element values = new Element("options");
-        org.jdom.Element e = new org.jdom.Element("trainOptions");
+        Element e = new Element("trainOptions");
         e.setAttribute("sortBy", getTrainsFrameSortBy());
         e.setAttribute("buildMessages", getBuildMessages()?"true":"false");
         e.setAttribute("buildReport", getBuildReport()?"true":"false");
@@ -565,7 +625,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
         // now save Train Edit frame size and position
-        e = new org.jdom.Element("trainEditOptions");
+        e = new Element("trainEditOptions");
         size = getTrainEditFrameSize();
         posn = getTrainEditFramePosition();
         if (_trainEditFrame != null){
@@ -582,6 +642,26 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         	e.setAttribute("height", ""+size.height);
         	e.setAttribute("width", ""+size.width); 
         }
+        values.addContent(e);
+        // now save train schedule frame size and position
+        e = new Element("trainScheduleOptions");
+        size = getTrainScheduleFrameSize();
+        posn = getTrainScheduleFramePosition();
+        if (_trainScheduleFrame != null){
+        	size = _trainScheduleFrame.getSize();
+        	posn = _trainScheduleFrame.getLocation();
+        	_trainScheduleFrameDimension = size;
+        	_trainScheduleFramePosition = posn;
+        }      
+        e.setAttribute("x", ""+posn.x);
+        e.setAttribute("y", ""+posn.y);
+        e.setAttribute("height", ""+size.height);
+        e.setAttribute("width", ""+size.width);
+        buf = new StringBuffer();
+        for (int i=0; i<_tableScheduleColumnWidths.length; i++){
+        	buf.append(Integer.toString(_tableScheduleColumnWidths[i])+" ");
+        }
+        e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
         return values;
     }

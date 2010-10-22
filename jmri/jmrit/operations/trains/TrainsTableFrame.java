@@ -31,7 +31,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.44 $
+ * @version             $Revision: 1.45 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -208,6 +208,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new TrainsByCarTypeAction(rb.getString("TitleModifyTrains")));
+		toolMenu.add(new TrainsScheduleAction(rb.getString("TitleTimeTableTrains")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     
@@ -403,9 +404,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		setModifiedFlag(false);
 	}
 	
-	protected int[] getCurrentTableColumnWidths(){
-		int[] widths = new int[12];
+	protected int[] getCurrentTableColumnWidths(){	
 		TableColumnModel tcm = trainsTable.getColumnModel();
+		int[] widths = new int[tcm.getColumnCount()];
 		for (int i=0; i<tcm.getColumnCount(); i++)
 			widths[i] = tcm.getColumn(i).getWidth();
 		return widths;

@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class TrainManagerXml extends OperationsXml {
 	
@@ -65,6 +65,7 @@ public class TrainManagerXml extends OperationsXml {
 
 		// add top-level elements      
 		root.addContent(manager.store());
+		root.addContent(TrainScheduleManager.instance().store());
 		Element values;
 		root.addContent(values = new Element("trains"));
 		// add entries
@@ -114,6 +115,8 @@ public class TrainManagerXml extends OperationsXml {
     		Element e = root.getChild("options");
     		manager.options(e);
     	}
+    	
+    	TrainScheduleManager.instance().load(root);
 
     	if (root.getChild("trains") != null) {
     		@SuppressWarnings("unchecked")
