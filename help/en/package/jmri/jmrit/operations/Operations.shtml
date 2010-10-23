@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.80 2010-10-15 20:20:32 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.81 2010-10-23 20:03:26 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1113,7 +1113,7 @@ point or out and back. To build a route, select
 
 <P><img src="images/Routes.png"></P>
 
-<P>Then press the "Add" button located at the bottom of the page.</P>
+<P>Then press the "Add" button located at the bottom of the window.</P>
 
 <P><img src="images/EditRoute.png"></P>
 
@@ -1129,15 +1129,18 @@ through. Each time you add a location to the route, the table shows the
 order in which the train will visit. You can move a location up or down
 in the sequence if needed.</P>
 
-<H3>Route Train Direction, Moves, Drops, Pickups, Train Length,
-Grade, X and Y</H3>
+<A NAME="EditRoute"></A>
+<H3>Edit Route</H3>
 
 Each location has the train's departure direction, number of desired car
 moves, and whether car pickups and or car drops are allowed at that
-location. You can also adjust the maximum train length that can depart
-that location. A car move can be a car pickup or car drop at that
-location. For example, 5 moves can be 5 pickups or 5 drops or any
+location. A car move can be a car pickup or car drop at that
+location. For example, 5 moves can be 5 pickups, or 5 drops, or any
 combination of 5 pickups or drops.
+
+<P>If you want to delay the departure of the train from a location,
+enter the number of minutes desired in the "Wait" cell. You can also
+adjust the maximum train length that can depart that location.</P>
 
 <P>The grade is used to determine how many engines the train will
 require for that segment. The X and Y are the coordinates on your
@@ -1149,6 +1152,9 @@ manually move the icon or you're not using the icon feature. After
 setting the number of moves, maximum length, or coordinates, click on
 the table to make sure it is recognized by the program, then hit "Save
 Route."</P>
+
+<p>You can also enter an optional comment for the location that will
+appear on on the train manifests.</p>
 
 <H3>Save Route</H3>
 
@@ -1396,6 +1402,14 @@ to "Report". Pressing "Report" will print or preview the build report
 for this train. Whenever a train fails to build, a build failure message
 will appear. If you want to disable this feature deselect the checkbox
 "Build Messages".</P>
+
+<H3>Timetable</H3>
+
+The Timetable tool allows you to define which trains will run on any given day, and can
+be found under the Trains->Tools.  For each day of the week, select which trains you
+want to build.  Then select which day you want by selecting the appropriate radio button.
+Then press the "Apply" button to update the Trains build checkboxes.  Use the "Save"
+button to store any changes you made to the timetable.
 
 <A	NAME="TroubleShootingBuildingTrains"></A>
 <H2>Problems Building Trains</H2>
