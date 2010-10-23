@@ -47,8 +47,8 @@ import jmri.jmrit.display.Editor;
 /**
  * Represents a train on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version $Revision: 1.87 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @version $Revision: 1.88 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -152,16 +152,24 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	// for combo boxes
+	/**
+	 * Get's a train's name
+	 * @return train's name
+	 */
 	public String toString(){
 		return _name;
 	}
 
+	/**
+	 * Get's a train's name
+	 * @return train's name
+	 */
 	public String getName() {
 		return _name;
 	}
 	
 	/**
-	 * Get's trains departure time
+	 * Get's train's departure time
 	 * @return train's departure time in the String format hh:mm
 	 */
 	public String getDepartureTime(){
@@ -223,6 +231,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		int carPickups = 0;
 		int carDrops = 0;
 		int numberOfLocations = 0;
+		int waitTime = 0;
 		boolean trainAt = false;
 		CarManager carManager = CarManager.instance();
 		List<String> carList = carManager.getByTrainList(this);
@@ -232,6 +241,8 @@ public class Train implements java.beans.PropertyChangeListener {
 				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
 				if (rl == routeLocation)
 					break; // done
+				// add wait time
+				waitTime = waitTime + rl.getWait();
 				if (rl == getCurrentLocation())
 					trainAt = true;
 				if (trainAt)
@@ -250,10 +261,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			}
 		}
 		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), "+numberOfLocations+" locations and a total " 
-				+carPickups+ " pickups and "+carDrops+ " drops");
+				+carPickups+ " pickups and "+carDrops+ " drops, wait time " +waitTime);
 		// TODO use fast clock to get current time vs departure time
 		// for now use relative
-		int minutes = numberOfLocations*Setup.getTravelTime() + carPickups*Setup.getSwitchTime() + carDrops*Setup.getSwitchTime(); 
+		int minutes = numberOfLocations*Setup.getTravelTime() + carPickups*Setup.getSwitchTime() + carDrops*Setup.getSwitchTime() + waitTime; 
 		int hours = 0;
 		int days = 0;
 		
@@ -296,6 +307,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			firePropertyChange("requires", Integer.toString(old), Integer.toString(requires));
 	}
 	
+	/**
+	 * Get a train's requirements with regards to the last car in the train.
+	 * @return NONE CABOOSE FRED
+	 */
 	public int getRequirements(){
 		return _requires;
 	}
@@ -330,7 +345,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
 	/**
-	 * 
+	 * Get the train's departure location's name
 	 * @return train's departure location's name
 	 */
 	public String getTrainDepartsName(){
@@ -352,6 +367,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return null;
 	}
 
+	/**
+	 * Get train's final location's name
+	 * @return train's final location's name
+	 */
 	public String getTrainTerminatesName(){
 		if (getTrainTerminatesRouteLocation() != null){
 			return getTrainTerminatesRouteLocation().getName();
@@ -377,12 +396,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	public void setCurrentLocation(RouteLocation location) {
 		RouteLocation old = _current;
 		_current = location;
-		if (old == null || !old.equals(location)){
+		if ((old != null && !old.equals(location)) || (old == null && location != null)){
 			firePropertyChange("current", old, location);
 		}
 	}
 
 	/**
+	 * Get train's current location name
 	 * @return Train's current route location name
 	 */
 	public String getCurrentLocationName() {
@@ -392,6 +412,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Get train's current location
 	 * @return Train's current route location
 	 */
 	public RouteLocation getCurrentLocation(){
@@ -404,6 +425,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Get the train's next location name
 	 * @return Train's next route location name
 	 */
 	public String getNextLocationName(){
@@ -422,7 +444,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		return getCurrentLocationName();	// At end of route
 	}
 	
-	// Train status
 	public void setStatus(String status) {
 		String old = _status;
 		_status = status;
@@ -432,7 +453,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
+	 * Get train status
 	 * @return Train's status
 	 */
 	public String getStatus() {
@@ -440,7 +461,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
+	 * Used to determine if train has departed its 
 	 * @return true if train is in route
 	 */
 	public boolean isTrainInRoute() {
@@ -495,9 +516,9 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Set the type of cars this will service, see types in
-     * Cars.
-     * @param types 
+     * Set the type of cars or engines this train will service, see types in
+     * Cars and Engines.
+     * @param types The type names for cars or engines
      */
     public void setTypeNames(String[] types){
     	if (types.length == 0) return;
@@ -506,6 +527,10 @@ public class Train implements java.beans.PropertyChangeListener {
  			_typeList.add(types[i]);
     }
     
+    /**
+     * Add a car or engine type name that this train will service.
+     * @param type The new type name to service.
+     */
     public void addTypeName(String type){
     	// insert at start of list, sort later
     	if (_typeList.contains(type))
@@ -523,6 +548,11 @@ public class Train implements java.beans.PropertyChangeListener {
      	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
      }
     
+    /**
+     * Returns true if this train will service the type of car or engine.
+     * @param type The car or engine type name. 
+     * @return true if this train will service the particular type.
+     */
     public boolean acceptsTypeName(String type){
     	return _typeList.contains(type);
     }
@@ -539,7 +569,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
  	/**
- 	 * Set how this train deals with car road names
+ 	 * Set how this train deals with car road names.
  	 * @param option ALLROADS INCLUDEROADS EXCLUDEROADS
  	 */
     public void setRoadOption (String option){
@@ -995,7 +1025,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 
 	/**
-	 * 
+	 * Get the number of engines that this train requires.
 	 * @return The number of engines that this train requires.
 	 */
 	public String getNumberEngines() {
@@ -1003,19 +1033,23 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
+	 * Set the road name of engines servicing this train.
 	 * @param road The road name of engines servicing this train.
 	 */
 	public void setEngineRoad(String road) {
 		_engineRoad = road;
 	}
 
+	/**
+	 * Get the road name of engines servicing this train.
+	 * @return The road name of engines servicing this train.
+	 */
 	public String getEngineRoad() {
 		return _engineRoad;
 	}
 	
 	/**
-	 * 
+	 * Set the model name of engines servicing this train.
 	 * @param model The model name of engines servicing this train.
 	 */
 	public void setEngineModel(String model) {
@@ -1027,7 +1061,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
+	 * Set the road name of the caboose servicing this train.
 	 * @param road The road name of the caboose servicing this train.
 	 */
 	public void setCabooseRoad(String road) {
@@ -1090,6 +1124,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return railroadName;
 	}
 	
+	/**
+	 * Overrides the default railroad name for this train.
+	 * @param name The railroad name for this train.
+	 */
 	public void setRailroadName(String name){
 		railroadName = name;
 	}
@@ -1111,13 +1149,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * 
+	 * Used to determine if this train has been built.
 	 * @return true if the train was successfully built.
 	 */
 	public boolean getBuilt() {
 		return _built;
 	}
-	
+	/**
+	 * Control flag used to decide if this train is to be built.
+	 * @param build When true, build this train.
+	 */
 	public void setBuild(boolean build) {
 		boolean old = _build;
 		_build = build;
@@ -1130,6 +1171,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _build;
 	}
 	
+	/**
+	 * Build this train if the build control flag is true.
+	 * @return True only if train is successfully built.
+	 */
 	public boolean buildIfSelected(){
 		if(_build && !_built){
 			build();
@@ -1139,6 +1184,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		return false;
 	}
 
+	/**
+	 * Build this train.  Creates a train manifest.
+	 */
 	public void build(){
 		reset();
 		TrainBuilder tb = new TrainBuilder();

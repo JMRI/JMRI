@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.18 $
+ * @version   $Revision: 1.19 $
  */
 public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -34,7 +34,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private static final int MAXMOVESCOLUMN = TRAINCOLUMN +1;
     private static final int PICKUPCOLUMN = MAXMOVESCOLUMN +1;
     private static final int DROPCOLUMN = PICKUPCOLUMN +1;
-    private static final int MAXLENGTHCOLUMN = DROPCOLUMN +1;
+    private static final int WAITCOLUMN = DROPCOLUMN +1;
+    private static final int MAXLENGTHCOLUMN = WAITCOLUMN +1;
     private static final int GRADE = MAXLENGTHCOLUMN +1;
     private static final int TRAINICONX = GRADE +1;
     private static final int TRAINICONY = TRAINICONX + 1;
@@ -84,16 +85,17 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(150);
 		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
-		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
-		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(40);
+		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(45);
+		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(45);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
@@ -114,6 +116,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case MAXMOVESCOLUMN: return rb.getString("MaxMoves");
         case PICKUPCOLUMN: return rb.getString("Pickups");
         case DROPCOLUMN: return rb.getString("Drops");
+        case WAITCOLUMN: return rb.getString("Wait");
         case MAXLENGTHCOLUMN: return rb.getString("MaxLength");
         case GRADE: return rb.getString("Grade");
         case TRAINICONX: return rb.getString("X");
@@ -133,6 +136,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case MAXMOVESCOLUMN: return String.class;
         case PICKUPCOLUMN: return JComboBox.class;
         case DROPCOLUMN: return JComboBox.class;
+        case WAITCOLUMN: return String.class;
         case MAXLENGTHCOLUMN: return String.class;
         case GRADE: return String.class;
         case TRAINICONX: return String.class;
@@ -151,6 +155,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case MAXMOVESCOLUMN:
         case PICKUPCOLUMN:
         case DROPCOLUMN:
+        case WAITCOLUMN:
         case MAXLENGTHCOLUMN:
         case GRADE:
         case TRAINICONX:
@@ -188,6 +193,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         	cb.setSelectedItem(rl.canDrop()?rb.getObject("yes"):rb.getObject("no")); 
         	return cb;
         }
+        case WAITCOLUMN: return Integer.toString(rl.getWait());
         case MAXLENGTHCOLUMN: return Integer.toString(rl.getMaxTrainLength());
         case GRADE: return Double.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
@@ -223,6 +229,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 			break;
 		case DROPCOLUMN:
 			setDrop(value, row);
+			break;
+		case WAITCOLUMN:
+			setWait(value, row);
 			break;
 		case MAXLENGTHCOLUMN:
 			setMaxTrainLength(value, row);
@@ -307,6 +316,21 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     
     public int getLastMaxTrainLength(){
     	return _maxTrainLength;
+    }
+    
+    private void setWait (Object value, int row){
+    	RouteLocation rl = _route.getLocationById(list.get(row));
+    	int wait;
+    	try{
+     		wait = Integer.parseInt(value.toString());
+    	} catch(NumberFormatException e) {
+    		log.error("Location wait must be a number");
+			JOptionPane.showMessageDialog(null,
+					"Enter wait time in minutes", "Wait time isn't valid",
+					JOptionPane.ERROR_MESSAGE);
+    		return;
+    	}
+     	rl.setWait(wait);
     }
     
     private void setMaxTrainLength (Object value, int row){
