@@ -24,7 +24,7 @@ import java.util.List;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -144,6 +144,8 @@ public class RouteCopyFrame extends OperationsFrame {
 		RouteLocation newRl = newRoute.addLocation(l);
 		// now copy the route location objects we want
 		newRl.setMaxCarMoves(oldRl.getMaxCarMoves());
+		newRl.setWait(oldRl.getWait());
+		newRl.setComment(oldRl.getComment());
 		if(!invert){
 			newRl.setCanDrop(oldRl.canDrop());
 			newRl.setCanPickup(oldRl.canPickup());
