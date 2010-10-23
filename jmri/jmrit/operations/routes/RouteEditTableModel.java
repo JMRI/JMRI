@@ -1,4 +1,4 @@
-// RouteLocationTableModel.java
+// RouteEditTableModel.java
 
 package jmri.jmrit.operations.routes;
 
@@ -21,9 +21,9 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.19 $
+ * @version   $Revision: 1.1 $
  */
-public class RouteLocationsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
+public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
     
@@ -39,13 +39,14 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     private static final int GRADE = MAXLENGTHCOLUMN +1;
     private static final int TRAINICONX = GRADE +1;
     private static final int TRAINICONY = TRAINICONX + 1;
-    private static final int UPCOLUMN = TRAINICONY +1;
+    private static final int COMMENTCOLUMN = TRAINICONY +1;
+    private static final int UPCOLUMN = COMMENTCOLUMN +1;
     private static final int DOWNCOLUMN = UPCOLUMN +1;
     private static final int DELETECOLUMN = DOWNCOLUMN +1;
     
     private static final int HIGHESTCOLUMN = DELETECOLUMN+1;
 
-    public RouteLocationsTableModel() {
+    public RouteEditTableModel() {
         super();
     }
  
@@ -75,6 +76,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+		tcm.getColumn(COMMENTCOLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(COMMENTCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(UPCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(UPCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(DOWNCOLUMN).setCellRenderer(buttonRenderer);
@@ -94,8 +97,9 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
 		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
-		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(45);
-		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(45);
+		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
+		table.getColumnModel().getColumn(TRAINICONY).setPreferredWidth(40);
+		table.getColumnModel().getColumn(COMMENTCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
 		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
@@ -121,6 +125,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case GRADE: return rb.getString("Grade");
         case TRAINICONX: return rb.getString("X");
         case TRAINICONY: return rb.getString("Y");
+        case COMMENTCOLUMN: return rb.getString("Comment");
         case UPCOLUMN: return "";
         case DOWNCOLUMN: return "";
         case DELETECOLUMN: return "";		//edit column
@@ -141,6 +146,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case GRADE: return String.class;
         case TRAINICONX: return String.class;
         case TRAINICONY: return String.class;
+        case COMMENTCOLUMN: return JButton.class;
         case UPCOLUMN: return JButton.class;
         case DOWNCOLUMN: return JButton.class;
         case DELETECOLUMN: return JButton.class;
@@ -160,6 +166,7 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case GRADE:
         case TRAINICONX:
         case TRAINICONY:
+        case COMMENTCOLUMN:
         case UPCOLUMN:
         case DOWNCOLUMN:
         	return true;
@@ -185,12 +192,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case MAXMOVESCOLUMN: return Integer.toString(rl.getMaxCarMoves());
         case PICKUPCOLUMN:{
         	JComboBox cb = getYesNoComboBox();
-        	cb.setSelectedItem(rl.canPickup()?rb.getObject("yes"):rb.getObject("no")); 
+        	cb.setSelectedItem(rl.canPickup()?rb.getString("yes"):rb.getString("no")); 
         	return cb;
         }
         case DROPCOLUMN:{
         	JComboBox cb = getYesNoComboBox();
-        	cb.setSelectedItem(rl.canDrop()?rb.getObject("yes"):rb.getObject("no")); 
+        	cb.setSelectedItem(rl.canDrop()?rb.getString("yes"):rb.getString("no")); 
         	return cb;
         }
         case WAITCOLUMN: return Integer.toString(rl.getWait());
@@ -198,9 +205,15 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         case GRADE: return Double.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
         case TRAINICONY: return Integer.toString(rl.getTrainIconY());
-        case UPCOLUMN: return rb.getObject("Up");
-        case DOWNCOLUMN: return rb.getObject("Down");
-        case DELETECOLUMN: return rb.getObject("Delete");
+        case COMMENTCOLUMN: {
+        	if (rl.getComment().equals(""))
+        		return rb.getString("Add");
+        	else
+        		return rb.getString("Edit");
+        }
+        case UPCOLUMN: return rb.getString("Up");
+        case DOWNCOLUMN: return rb.getString("Down");
+        case DELETECOLUMN: return rb.getString("Delete");
         default: return "unknown "+col;
         }
     }
@@ -211,6 +224,8 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     		return;
     	}
         switch (col) {
+        case COMMENTCOLUMN: setComment(row);
+        	break;
         case UPCOLUMN: moveUpRouteLocation(row);
         	break;
         case DOWNCOLUMN: moveDownRouteLocation(row);
@@ -304,12 +319,12 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     
     private void setDrop (Object value, int row){
     	RouteLocation rl = _route.getLocationById(list.get(row));
-    	rl.setCanDrop(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
+    	rl.setCanDrop(((String)((JComboBox)value).getSelectedItem()).equals(rb.getString("yes")));
     }
     
     private void setPickup (Object value, int row){
     	RouteLocation rl = _route.getLocationById(list.get(row));
-    	rl.setCanPickup(((String)((JComboBox)value).getSelectedItem()).equals(rb.getObject("yes")));
+    	rl.setCanPickup(((String)((JComboBox)value).getSelectedItem()).equals(rb.getString("yes")));
     }
     
     private int _maxTrainLength = Setup.getTrainLength();
@@ -395,11 +410,22 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
     	}
     	rl.setTrainIconY(y);
     }
+    
+    private void setComment(int row){
+    	log.debug("Set comment for row "+row);
+    	RouteLocation rl = _route.getLocationById(list.get(row));
+		Object comment =  JOptionPane.showInputDialog(null,
+				"Comment", "Enter comment for location "+rl.getName(),
+				JOptionPane.PLAIN_MESSAGE, null, null, rl.getComment());
+		if(comment == null)
+			return;
+		rl.setComment((String)comment);
+    }
 
     private JComboBox getYesNoComboBox(){
     	JComboBox cb = new JComboBox();
-    	cb.addItem(rb.getObject("yes"));
-    	cb.addItem(rb.getObject("no"));
+    	cb.addItem(rb.getString("yes"));
+    	cb.addItem(rb.getString("no"));
     	return cb;
     }
 
@@ -439,6 +465,6 @@ public class RouteLocationsTableModel extends javax.swing.table.AbstractTableMod
         fireTableDataChanged();
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteLocationsTableModel.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteEditTableModel.class.getName());
 }
 

@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -25,7 +25,6 @@ public class Route implements java.beans.PropertyChangeListener {
 
 	protected String _id = "";
 	protected String _name = "";
-
 	protected String _comment = "";
 	
 	//	 stores location names for this route
@@ -70,7 +69,11 @@ public class Route implements java.beans.PropertyChangeListener {
 	}
 
 	public void setComment(String comment) {
+		String old = _comment;
 		_comment = comment;
+		if (!old.equals(comment)){
+			firePropertyChange("comment", old, comment);
+		}
 	}
 
 	public String getComment() {

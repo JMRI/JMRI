@@ -20,14 +20,14 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 	
-	RouteLocationsTableModel routeModel = new RouteLocationsTableModel();
+	RouteEditTableModel routeModel = new RouteEditTableModel();
 	JTable routeTable = new JTable(routeModel);
 	JScrollPane routePane;
 	
@@ -167,8 +167,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// set frame size and route for display
 		pack();
-		if((getWidth()<960)) setSize(960, getHeight());
-		setSize(getWidth(), Control.panelHeight);
+		setSize(Control.panelWidth, Control.panelHeight);
 		setVisible(true);
 	}
 	

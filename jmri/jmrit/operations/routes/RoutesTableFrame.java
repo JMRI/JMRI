@@ -24,7 +24,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version             $Revision: 1.12 $
+ * @version             $Revision: 1.13 $
  */
 public class RoutesTableFrame extends OperationsFrame {
 	
@@ -88,6 +88,7 @@ public class RoutesTableFrame extends OperationsFrame {
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
     	
     	pack();
+    	setSize(730, getHeight());
     	
     }
     

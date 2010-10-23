@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame {
 	
@@ -99,7 +99,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     	
     	//row 3
     	//tool tips, see setPrintButtonText() for more tool tips
-    	//applyButton.setToolTipText(rb.getString("Apply"));
+    	applyButton.setToolTipText(rb.getString("ApplyButtonTip"));
 		//saveButton.setToolTipText(rb.getString("SaveBuildsTip"));
 			
     	JPanel cp3 = new JPanel();
