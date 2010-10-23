@@ -31,12 +31,13 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.45 $
+ * @version             $Revision: 1.46 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_CANNOT_BE_FINAL")
 	public static SwingShutDownTask trainDirtyTask;
 	
 	public static final String NAME = rb.getString("Name");	// Sort by choices

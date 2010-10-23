@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.45 $
+ * @version	$Revision: 1.46 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -162,6 +162,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	return _tableColumnWidths.clone();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
     public void setTrainsFrameTableColumnWidths(int[] tableColumnWidths){
     	_tableColumnWidths = tableColumnWidths;
     }
@@ -193,6 +194,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	return _tableScheduleColumnWidths.clone();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
     public void setTrainScheduleFrameTableColumnWidths(int[] tableColumnWidths){
     	_tableScheduleColumnWidths = tableColumnWidths;
     }
