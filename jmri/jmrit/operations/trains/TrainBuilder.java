@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.91 $
+ * @version             $Revision: 1.92 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1199,17 +1199,17 @@ public class TrainBuilder extends TrainCommon{
 												break;
 											}
 											// No local moves from siding to siding
-											if (routeList.size() == 1 && testTrack.getLocType().equals(Track.SIDING) && c.getTrack().getLocType().equals(Track.SIDING)){
+											if (routeList.size() == 1 && !Setup.isLocalSidingMovesEnabled() && testTrack.getLocType().equals(Track.SIDING) && c.getTrack().getLocType().equals(Track.SIDING)){
 												addLine(buildReport, FIVE, "Local siding to siding move not allowed (" +testTrack.getName()+ ")");
 												continue;
 											}
 											// No local moves from yard to yard
-											if (routeList.size() == 1 && testTrack.getLocType().equals(Track.YARD) && c.getTrack().getLocType().equals(Track.YARD)){
+											if (routeList.size() == 1 && !Setup.isLocalYardMovesEnabled() && testTrack.getLocType().equals(Track.YARD) && c.getTrack().getLocType().equals(Track.YARD)){
 												addLine(buildReport, FIVE, "Local yard to yard move not allowed (" +testTrack.getName()+ ")");
 												continue;
 											}
 											// No local moves from interchange to interchange
-											if (routeList.size() == 1 && testTrack.getLocType().equals(Track.INTERCHANGE) && c.getTrack().getLocType().equals(Track.INTERCHANGE)){
+											if (routeList.size() == 1 && !Setup.isLocalInterchangeMovesEnabled() && testTrack.getLocType().equals(Track.INTERCHANGE) && c.getTrack().getLocType().equals(Track.INTERCHANGE)){
 												addLine(buildReport, FIVE, "Local interchange to interchange move not allowed (" +testTrack.getName()+ ")");
 												continue;
 											}

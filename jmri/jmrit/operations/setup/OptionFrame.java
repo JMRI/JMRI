@@ -18,7 +18,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -38,6 +38,10 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox carLoggerCheckBox = new JCheckBox(rb.getString("EnableCarLogging"));
 	JCheckBox engineLoggerCheckBox = new JCheckBox(rb.getString("EnableEngineLogging"));
 	
+	JCheckBox localInterchangeCheckBox = new JCheckBox(rb.getString("AllowLocalInterchange"));
+	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
+	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
+	
 	// text field
 	
 	// combo boxes
@@ -55,35 +59,47 @@ public class OptionFrame extends OperationsFrame{
 		routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
 		carLoggerCheckBox.setSelected(Setup.isCarLoggerEnabled());
 		engineLoggerCheckBox.setSelected(Setup.isEngineLoggerEnabled());
+		localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());
+		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
+		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 			
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 		
+		// Build Options panel
+		JPanel pBuild = new JPanel();
+		pBuild.setLayout(new GridBagLayout());
+		pBuild.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutBuildOptions")));	
+		addItemLeft (pBuild, localInterchangeCheckBox, 1,0);
+		addItemLeft (pBuild, localSidingCheckBox, 1,1);
+		addItemLeft (pBuild, localYardCheckBox, 1,2);
+		
 		// Router panel
 		JPanel pRouter = new JPanel();
 		pRouter.setLayout(new GridBagLayout());
 		pRouter.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutRouterOptions")));	
-		addItem (pRouter, routerCheckBox, 1,0);
+		addItemLeft (pRouter, routerCheckBox, 1,0);
 		
 		// Logger panel
 		JPanel pLogger = new JPanel();
 		pLogger.setLayout(new GridBagLayout());
 		pLogger.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLoggerOptions")));		
-		addItem (pLogger, engineLoggerCheckBox, 1,0);
-		addItem (pLogger, carLoggerCheckBox, 1,1);
+		addItemLeft (pLogger, engineLoggerCheckBox, 1,0);
+		addItemLeft (pLogger, carLoggerCheckBox, 1,1);
 		
 		JPanel pOption = new JPanel();
 		pOption.setLayout(new GridBagLayout());
 		pOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));		
-		addItem (pOption, rfidCheckBox, 1,0);
+		addItemLeft (pOption, rfidCheckBox, 1,0);
 		
 		// row 11
 		JPanel pControl = new JPanel();
 		pControl.setLayout(new GridBagLayout());
 		addItem(pControl, saveButton, 3, 9);
 		
+		getContentPane().add(pBuild);
 		getContentPane().add(pRouter);
 		getContentPane().add(pLogger);
 		getContentPane().add(pOption);
@@ -103,6 +119,10 @@ public class OptionFrame extends OperationsFrame{
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
+			// Local moves?
+			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
+			Setup.setLocalSidingMovesEnabled(localSidingCheckBox.isSelected());
+			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// RFID enabled?

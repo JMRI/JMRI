@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -156,7 +156,11 @@ public class Setup {
 	private static boolean carLogger = false;			//when true car logger is enabled
 	private static boolean engineLogger = false;		//when true engine logger is enabled
 	
-	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length 
+	private static boolean aggressiveBuild = false;		//when true subtract car length from track reserve length
+	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
+	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
+	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
+
 	
 	// Setup frame attributes
 	private static OperationsSetupFrame _operationsSetupFrame = null;
@@ -214,6 +218,30 @@ public class Setup {
 	
 	public static void setBuildAggressive(boolean enabled){
 		aggressiveBuild = enabled;
+	}
+	
+	public static boolean isLocalInterchangeMovesEnabled(){
+		return allowLocalInterchangeMoves;
+	}
+	
+	public static void setLocalInterchangeMovesEnabled(boolean enabled){
+		allowLocalInterchangeMoves = enabled;
+	}
+	
+	public static boolean isLocalYardMovesEnabled(){
+		return allowLocalYardMoves;
+	}
+	
+	public static void setLocalYardMovesEnabled(boolean enabled){
+		allowLocalYardMoves = enabled;
+	}
+	
+	public static boolean isLocalSidingMovesEnabled(){
+		return allowLocalSidingMoves;
+	}
+	
+	public static void setLocalSidingMovesEnabled(boolean enabled){
+		allowLocalSidingMoves = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -716,6 +744,9 @@ public class Setup {
     	
     	e.addContent(values = new Element("buildOptions"));
     	values.setAttribute("aggressive", isBuildAggressive()?"true":"false");
+    	values.setAttribute("allowLocalInterchange", isLocalInterchangeMovesEnabled()?"true":"false");
+    	values.setAttribute("allowLocalSiding", isLocalSidingMovesEnabled()?"true":"false");
+    	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -905,11 +936,27 @@ public class Setup {
         		Setup.setManifestLogoURL(a.getValue());
         	}
     	}
-        if ((operations.getChild("buildOptions") != null)
-				&& (a = operations.getChild("buildOptions").getAttribute("aggressive")) != null) {
-      		String enable = a.getValue();
-    		if (log.isDebugEnabled()) log.debug("aggressive: "+enable);
-    		Setup.setBuildAggressive(enable.equals("true"));
+        if ((operations.getChild("buildOptions") != null)){
+        	if((a = operations.getChild("buildOptions").getAttribute("aggressive")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("aggressive: "+enable);
+        		Setup.setBuildAggressive(enable.equals("true"));
+        	}
+        	if((a = operations.getChild("buildOptions").getAttribute("allowLocalInterchange")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("noLocalInterchange: "+enable);
+        		Setup.setLocalInterchangeMovesEnabled(enable.equals("true"));
+        	}
+        	if((a = operations.getChild("buildOptions").getAttribute("allowLocalSiding")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("noLocalSiding: "+enable);
+        		Setup.setLocalSidingMovesEnabled(enable.equals("true"));
+        	}
+        	if((a = operations.getChild("buildOptions").getAttribute("allowLocalYard")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("noLocalYard: "+enable);
+        		Setup.setLocalYardMovesEnabled(enable.equals("true"));
+        	}
         }
         if ((operations.getChild("buildReport") != null)
 				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {
