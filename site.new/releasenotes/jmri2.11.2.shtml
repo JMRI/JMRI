@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.4 2010-10-13 15:09:21 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.5 2010-10-24 18:48:56 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -103,6 +103,51 @@ Matt Harris updated the system console window for multiple screens
 <p>
 Pete Cressman fixed stacking of a multiple selection in the editors when moved 
 beyond the left or top border of the panel
+
+<p>
+Ken Cameron fixed a problem with RobotThrottle debugged by Jay Janzen.
+
+<p>
+Ken Cameron worked on X10 and Insteon light support.
+
+<p>
+Paul Bender updated EasyDCC consist support.
+
+<p>
+Dan Boudreau fixed a problem that prevented NCE communications on certain
+computer types.
+
+<p>
+Pete Cressman change the editor's drag behavior from auto expand left &amp; 
+top border to stop move at left &amp; top border
+
+<p>
+Matt Harris fixed a problem during startup when certain options are used
+
+<p>
+Dan Boudreau added a new operations feature: "Timetable".  
+Allows user to determine which trains run on any given day of the week.
+
+<p>
+Paul Bender made some internal improvements to the XPressNet support.
+If you've written scripts that directly use the XPressNet communications,
+you may have to revisit them.
+
+<p>
+Dan Boudreau added a new operations feature: User can now specify additional wait time in a route.  
+This allows the user to adjust a train's manifest arrival times to their liking.
+
+<p>
+Dan Boudreau added a new operations feature:  
+User can now add an optional comment to each stop in a route
+
+<p>
+Simon Ginsburg updated the German translation
+
+<p>
+Dan Boudreau added a new operations feature to
+allow local moves between sidings, yards, and interchanges.  
+Users can control each of these build options in Settings->Options.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
