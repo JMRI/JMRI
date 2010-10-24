@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -146,6 +146,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
     	panelComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+    	commentScroller.setMinimumSize(minScrollerDim);
 		addItem(panelComment, commentScroller, 0, 0);
 				
 		// row 12
