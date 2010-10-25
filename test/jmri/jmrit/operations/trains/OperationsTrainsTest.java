@@ -64,7 +64,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -631,7 +631,10 @@ public class OperationsTrainsTest extends TestCase {
 		rl1.setSequenceId(1);
 		rl1.setTrainDirection(RouteLocation.SOUTH);
 		rl1.setMaxCarMoves(5);
-		rl1.setMaxTrainLength(1000);
+		rl1.setMaxTrainLength(1000);		
+		rl1.setTrainIconX(25);	// set the train icon coordinates
+		rl1.setTrainIconY(25);
+
 		Assert.assertEquals("Route Location 1 Id", "1r1", rl1.getId());
 		Assert.assertEquals("Route Location 1 Name", "North End", rl1.getName());
 		RouteLocation rl2 = new RouteLocation("1r2", l2);
@@ -640,6 +643,9 @@ public class OperationsTrainsTest extends TestCase {
 		// test for only 1 pickup and 1 drop
 		rl2.setMaxCarMoves(2);
 		rl2.setMaxTrainLength(1000);
+		rl2.setTrainIconX(75);	// set the train icon coordinates
+		rl2.setTrainIconY(25);
+
 		Assert.assertEquals("Route Location 2 Id", "1r2", rl2.getId());
 		Assert.assertEquals("Route Location 2 Name", "North Industries", rl2.getName());
 		RouteLocation rl3 = new RouteLocation("1r3", l3);
@@ -647,6 +653,9 @@ public class OperationsTrainsTest extends TestCase {
 		rl3.setTrainDirection(RouteLocation.SOUTH);
 		rl3.setMaxCarMoves(5);
 		rl3.setMaxTrainLength(1000);
+		rl3.setTrainIconX(125);	// set the train icon coordinates
+		rl3.setTrainIconY(25);
+
 		Assert.assertEquals("Route Location 3 Id", "1r3", rl3.getId());
 		Assert.assertEquals("Route Location 3 Name", "South End", rl3.getName());
 
@@ -657,9 +666,9 @@ public class OperationsTrainsTest extends TestCase {
 		rmanager.register(r1);
 
 		// Finally ready to define the trains.
-		Train train1 = new Train("1", "Southbound Through Freight");
+		Train train1 = new Train("1", "STF");
 		Assert.assertEquals("Train Id", "1", train1.getId());
-		Assert.assertEquals("Train Name", "Southbound Through Freight", train1.getName());
+		Assert.assertEquals("Train Name", "STF", train1.getName());
 		train1.setRequirements(Train.CABOOSE);
 		train1.setCabooseRoad("CP");
 		train1.deleteTypeName("Flat");
@@ -668,9 +677,9 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setDepartureTime("6", "5");
 		tmanager.register(train1);
 		
-		Train train2 = new Train("2", "Southbound Fast Freight");
+		Train train2 = new Train("2", "SFF");
 		Assert.assertEquals("Train Id", "2", train2.getId());
-		Assert.assertEquals("Train Name", "Southbound Fast Freight", train2.getName());
+		Assert.assertEquals("Train Name", "SFF", train2.getName());
 		// there are boxcars waiting in staging so build should fail
 		train2.deleteTypeName("Boxcar");
 		train2.deleteTypeName("Flat");
@@ -1290,7 +1299,6 @@ public class OperationsTrainsTest extends TestCase {
 		cld.dispose(); // Clear out the CarLoads
 		em.dispose();  // Clear out the EngineModels
 	
-
 		// register the car colors used
 		Assert.assertEquals("Bob Test CarColor Silver false", false, cc.containsName("Silver"));
 		Assert.assertEquals("Bob Test CarColor Black false", false, cc.containsName("Black"));
@@ -1626,12 +1634,16 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation rte1rln1;
 		rte1rln1 = rte1.addLocation(loc2);
 		rte1rln1.setTrainDirection(RouteLocation.EAST);
+		rte1rln1.setTrainIconX(175);	// set the train icon coordinates
+		rte1rln1.setTrainIconY(25);
 		Assert.assertEquals("Bob Test Route Location rte1rln1 Name", "Midtown", rte1rln1.getName());
 		Assert.assertEquals("Bob Test Route Location rte1rln1 Seq", 1, rte1rln1.getSequenceId());
 
 		RouteLocation rte1rln2;
 		rte1rln2 = rte1.addLocation(loc3);
 		rte1rln2.setTrainDirection(RouteLocation.EAST);
+		rte1rln2.setTrainIconX(25);	// set the train icon coordinates
+		rte1rln2.setTrainIconY(50);
 		Assert.assertEquals("Bob Test Route Location rte1rln2 Name", "Eastend", rte1rln2.getName());
 		Assert.assertEquals("Bob Test Route Location rte1rln2 Seq", 2, rte1rln2.getSequenceId());
 
@@ -1642,37 +1654,43 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation rte2rln1;
 		rte2rln1 = rte2.addLocation(loc2);
 		rte2rln1.setTrainDirection(RouteLocation.WEST);
+		rte2rln1.setTrainIconX(75);	// set the train icon coordinates
+		rte2rln1.setTrainIconY(50);
+
 		Assert.assertEquals("Bob Test Route Location rte2rln1 Name", "Midtown", rte2rln1.getName());
 		Assert.assertEquals("Bob Test Route Location rte2rln1 Seq", 1, rte2rln1.getSequenceId());
 
 		RouteLocation rte2rln2;
 		rte2rln2 = rte2.addLocation(loc1);
 		rte2rln2.setTrainDirection(RouteLocation.WEST);
+		rte2rln2.setTrainIconX(125);	// set the train icon coordinates
+		rte2rln2.setTrainIconY(50);
+
 		Assert.assertEquals("Bob Test Route Location rte2rln2 Name", "Westend", rte2rln2.getName());
 		Assert.assertEquals("Bob Test Route Location rte2rln2 Seq", 2, rte2rln2.getSequenceId());
 
 		// Create trains used
 		Train train1;
-		train1 = tmanager.newTrain("Midtown to Eastend Through 0800");
+		train1 = tmanager.newTrain("MET");
 		train1.setRoute(rte1);
 		train1.setNumberEngines("1");
 		train1.setRequirements(Train.CABOOSE);
 		//train1.addTypeName("Diesel");
 		//train1.addTypeName("Boxcar");
 		//train1.addTypeName("Caboose");
-		Assert.assertEquals("Bob Test Train train1 Name", "Midtown to Eastend Through 0800", train1.getName());
+		Assert.assertEquals("Bob Test Train train1 Name", "MET", train1.getName());
 		Assert.assertEquals("Bob Test Train train1 Departs Name", "Midtown", train1.getTrainDepartsName());
 		Assert.assertEquals("Bob Test Train train1 Terminates Name", "Eastend", train1.getTrainTerminatesName());
 
 		Train train2;
-		train2 = tmanager.newTrain("Midtown to Westend Through 0900");
+		train2 = tmanager.newTrain("MWT");
 		train2.setRoute(rte2);
 		train2.setNumberEngines("1");
 		train2.setRequirements(Train.CABOOSE);
 		//train2.addTypeName("Diesel");
 		//train2.addTypeName("Boxcar");
 		//train2.addTypeName("Caboose");
-		Assert.assertEquals("Bob Test Train train2 Name", "Midtown to Westend Through 0900", train2.getName());
+		Assert.assertEquals("Bob Test Train train2 Name", "MWT", train2.getName());
 		Assert.assertEquals("Bob Test Train train2 Departs Name", "Midtown", train2.getTrainDepartsName());
 		Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2.getTrainTerminatesName());
 
@@ -1685,6 +1703,35 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("Bob test train1 built", train1.getBuilt());
 		Assert.assertTrue("Bob test train2 built", train2.getBuilt());
 		
+		// check train icon location and name
+		TrainIcon ti1 = train1.getTrainIcon();
+		Assert.assertNotNull("Train 1 icon exists", ti1);
+		Assert.assertEquals("Train 1 icon text", "MET 5501", ti1.getText());
+		TrainIcon ti2 = train2.getTrainIcon();
+		Assert.assertNotNull("Train 2 icon exists", ti2);
+		Assert.assertEquals("Train 2 icon text", "MWT 5888", ti2.getText());
+		
+		// icon uses TrainIconAnimation 2 pixels every 3 mSec
+		// X=0 to X=150 175/2 * 3 = 225 mSec
+		// Y=0 to Y=25 25/2 * 3 = 38 mSec		
+		sleep(400);
+		
+		Assert.assertEquals("Train 1 icon X", 175, ti1.getX());
+		Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
+		Assert.assertEquals("Train 2 icon X", 75, ti2.getX());
+		Assert.assertEquals("Train 2 icon Y", 50, ti2.getY());
+		
+		//move the trains
+		train1.move();
+		train2.move();
+			
+		// icon uses TrainIconAnimation 2 pixels every 3 mSec	
+		sleep(350);
+		
+		Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
+		Assert.assertEquals("Train 1 icon Y", 50, ti1.getY());
+		Assert.assertEquals("Train 2 icon X", 125, ti2.getX());
+		Assert.assertEquals("Train 2 icon Y", 50, ti2.getY());		
 	}
 	
 	// Test a route of one location (local train).
@@ -1770,14 +1817,12 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk7.setMoves(8);		// this will be the first and 4th location assigned
 
 		// Create route with only one location
-		Route rte1;
-		rte1 = rmanager.newRoute("Local Route");
+		Route rte1 = rmanager.newRoute("Local Route");
 		Setup.setCarMoves(7);	// set the default moves to 7
 		RouteLocation rl1 = rte1.addLocation(loc1);
 		
 		// Create train
-		Train train1;
-		train1 = tmanager.newTrain("Local Train");
+		Train train1 = tmanager.newTrain("Local Train");
 		train1.setRoute(rte1);
 		// Flat Car isn't registered yet so add it now
 		train1.addTypeName("Flat Car");
@@ -2077,6 +2122,9 @@ public class OperationsTrainsTest extends TestCase {
 		// and assign the new route to train 1
 		train1.setRoute(rte3);
 		rl4.setMaxCarMoves(10);
+		rl4.setTrainIconX(175);	// set the train icon coordinates
+		rl4.setTrainIconY(50);
+
 		train1.build();
 		// should not pick up cars at Westford Siding 3, Westford Siding 4, Westford Interchange 5
 		// and Westford Interchange 7
@@ -2243,13 +2291,19 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation rl1 = rte1.addLocation(loc1);
 		rl1.setTrainDirection(RouteLocation.EAST);
 		rl1.setMaxCarMoves(12);
+		rl1.setTrainIconX(25);	// set the train icon coordinates
+		rl1.setTrainIconY(75);
+
 		RouteLocation rl2 = rte1.addLocation(loc2);
 		rl2.setTrainDirection(RouteLocation.EAST);
 		rl2.setMaxCarMoves(12);
+		rl2.setTrainIconX(75);	// set the train icon coordinates
+		rl2.setTrainIconY(75);
+
 		
 		// Create train
 		Train train1;
-		train1 = tmanager.newTrain("New Westford to New Chelmsford");
+		train1 = tmanager.newTrain("NWNC");
 		train1.setRoute(rte1);
 		
 		// Set up 13 cars
@@ -2416,9 +2470,14 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation r2rl1 = rte2.addLocation(loc2);
 		r2rl1.setTrainDirection(RouteLocation.EAST);
 		r2rl1.setMaxCarMoves(12);
+		r2rl1.setTrainIconX(125);	// set the train icon coordinates
+		r2rl1.setTrainIconY(75);
 		RouteLocation r2rl3 = rte2.addLocation(loc3);
 		r2rl3.setTrainDirection(RouteLocation.EAST);
 		r2rl3.setMaxCarMoves(12);
+		r2rl3.setTrainIconX(175);	// set the train icon coordinates
+		r2rl3.setTrainIconY(75);
+
 		
 		train1.setRoute(rte2);
 		train1.setName("Chelmsford to Bedford");
@@ -2464,12 +2523,16 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation r3rl1 = rte3.addLocation(loc3);
 		r3rl1.setTrainDirection(RouteLocation.EAST);
 		r3rl1.setMaxCarMoves(0);		// all cars must move from staging
+		r3rl1.setTrainIconX(25);	// set the train icon coordinates
+		r3rl1.setTrainIconY(100);
 		RouteLocation r3rl2 = rte3.addLocation(loc2);
 		r3rl2.setTrainDirection(RouteLocation.EAST);
 		r3rl2.setMaxCarMoves(12);
 		RouteLocation r3rl3 = rte3.addLocation(loc1);
 		r3rl3.setTrainDirection(RouteLocation.EAST);
 		r3rl3.setMaxCarMoves(12);
+		r3rl3.setTrainIconX(75);	// set the train icon coordinates
+		r3rl3.setTrainIconY(100);
 		
 		loc3trk1.enableRemoveLoads(false);
 		loc3trk1.enableAddLoads(true);		// generate schedule loads
@@ -2479,7 +2542,7 @@ public class OperationsTrainsTest extends TestCase {
 		sch1Item3.setLoad("Metal 3");
 		
 		train1.setRoute(rte3);
-		train1.setName("Bedford Chelmsford Westford");
+		train1.setName("BCW");
 		train1.build();
 		
 		Assert.assertEquals("Train Bedford Chelmsford Westford build status", true, train1.getBuilt());
@@ -2611,12 +2674,18 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation r1l1 = rte1.addLocation(loc1);
 		r1l1.setTrainDirection(RouteLocation.EAST);
 		r1l1.setMaxCarMoves(4);
+		r1l1.setTrainIconX(125);	// set the train icon coordinates
+		r1l1.setTrainIconY(100);
 		RouteLocation r1l2 = rte1.addLocation(loc2);
 		r1l2.setTrainDirection(RouteLocation.EAST);
 		r1l2.setMaxCarMoves(3);
+		r1l2.setTrainIconX(25);	// set the train icon coordinates
+		r1l2.setTrainIconY(125);
 		RouteLocation r1l3 = rte1.addLocation(loc3);
 		r1l3.setTrainDirection(RouteLocation.EAST);
 		r1l3.setMaxCarMoves(3);
+		r1l3.setTrainIconX(75);	// set the train icon coordinates
+		r1l3.setTrainIconY(125);
 		
 		// Create route with 3 location
 		Route rte2;
@@ -2624,24 +2693,30 @@ public class OperationsTrainsTest extends TestCase {
 		RouteLocation r2l1 = rte2.addLocation(loc1);
 		r2l1.setTrainDirection(RouteLocation.EAST);
 		r2l1.setMaxCarMoves(2);
+		r2l1.setTrainIconX(125);	// set the train icon coordinates
+		r2l1.setTrainIconY(125);
 		RouteLocation r2l2 = rte2.addLocation(loc2);
 		r2l2.setTrainDirection(RouteLocation.EAST);
 		r2l2.setMaxCarMoves(6);
+		r2l2.setTrainIconX(175);	// set the train icon coordinates
+		r2l2.setTrainIconY(125);
 		RouteLocation r2l3 = rte2.addLocation(loc3);
 		r2l3.setTrainDirection(RouteLocation.EAST);
 		r2l3.setMaxCarMoves(6);
+		r2l3.setTrainIconX(25);	// set the train icon coordinates
+		r2l3.setTrainIconY(150);
 		
 		// Create trains
 		Train train1;
-		train1 = tmanager.newTrain("Train 1 Old Westford to Old Bedford");
+		train1 = tmanager.newTrain("T1OWOB");
 		train1.setRoute(rte1);
 		
 		Train train2;
-		train2 = tmanager.newTrain("Train 2 Old Westford to Old Bedford");
+		train2 = tmanager.newTrain("T2OWOB");
 		train2.setRoute(rte1);
 		
 		Train train3;
-		train3 = tmanager.newTrain("Train 3 Old Westford to Old Bedford");
+		train3 = tmanager.newTrain("T3OWOB");
 		train3.setRoute(rte1);
 		
 		// Set up 7 box cars and 2 flat cars
@@ -3211,11 +3286,21 @@ public class OperationsTrainsTest extends TestCase {
 		// define the route
 		Setup.setCarMoves(6);	// set default to 6 moves per location
 		Route r1 = rmanager.newRoute("Foxboro-Acton-Nashua-Acton-Foxboro");
-		r1.addLocation(l1);
-		r1.addLocation(l2);
-		r1.addLocation(l3);
-		r1.addLocation(l2);
-		r1.addLocation(l1);
+		RouteLocation rl1 = r1.addLocation(l1);
+		rl1.setTrainIconX(25);	// set the train icon coordinates
+		rl1.setTrainIconY(225);
+		RouteLocation rl2 = r1.addLocation(l2);
+		rl2.setTrainIconX(75);	// set the train icon coordinates
+		rl2.setTrainIconY(225);
+		RouteLocation rl3 = r1.addLocation(l3);
+		rl3.setTrainIconX(125);	// set the train icon coordinates
+		rl3.setTrainIconY(225);
+		RouteLocation rl4 = r1.addLocation(l2);
+		rl4.setTrainIconX(175);	// set the train icon coordinates
+		rl4.setTrainIconY(225);
+		RouteLocation rl5 = r1.addLocation(l1);
+		rl5.setTrainIconX(225);	// set the train icon coordinates
+		rl5.setTrainIconY(225);
 		
 		// turn off build fail messages
 		tmanager.setBuildMessages(false);
@@ -3613,10 +3698,14 @@ public class OperationsTrainsTest extends TestCase {
 		Route rte1 = rmanager.newRoute("Route 2 Boston");
 		rte1.addLocation(loc1);
 		RouteLocation rl2 = rte1.addLocation(loc2);
+		rl2.setTrainIconX(75);	// set the train icon coordinates
+		rl2.setTrainIconY(150);
 		RouteLocation rl3 = rte1.addLocation(loc3);
+		rl3.setTrainIconX(125);	// set the train icon coordinates
+		rl3.setTrainIconY(150);
 		
 		// Create train
-		Train train1 = tmanager.newTrain("Harvard to Boston");
+		Train train1 = tmanager.newTrain("HTB");
 		train1.setRoute(rte1);
 		
 		// turn off build fail messages
@@ -4293,8 +4382,14 @@ public class OperationsTrainsTest extends TestCase {
 		Route rte1 = rmanager.newRoute("Route 2 Westford");
 		rte1.addLocation(loc1);
 		RouteLocation rl2 = rte1.addLocation(loc2);
+		rl2.setTrainIconX(175);	// set the train icon coordinates
+		rl2.setTrainIconY(150);
 		RouteLocation rl3 = rte1.addLocation(loc3);
-		rte1.addLocation(loc4);
+		rl3.setTrainIconX(25);	// set the train icon coordinates
+		rl3.setTrainIconY(175);
+		RouteLocation rl4 = rte1.addLocation(loc4);
+		rl4.setTrainIconX(75);	// set the train icon coordinates
+		rl4.setTrainIconY(175);
 		
 		// don't allow pickup or drops at Arlington
 		rl2.setCanDrop(false);
@@ -4752,8 +4847,6 @@ public class OperationsTrainsTest extends TestCase {
 	    // confirm panel creation
 		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
         Assert.assertNotNull(f);
-
-        // kill panel
         
 	}
 
@@ -4774,8 +4867,14 @@ public class OperationsTrainsTest extends TestCase {
 		Location Bedford = lmanager.newLocation("Bedford");
 		
 		RouteLocation startA = A.addLocation(Westford);
+		startA.setTrainIconX(125);	// set the train icon coordinates
+		startA.setTrainIconY(175);
 		RouteLocation startB = B.addLocation(Arlington);
+		startB.setTrainIconX(175);	// set the train icon coordinates
+		startB.setTrainIconY(175);
 		RouteLocation startC = C.addLocation(Bedford);
+		startC.setTrainIconX(25);	// set the train icon coordinates
+		startC.setTrainIconY(200);
 		
 		TrainManager manager = TrainManager.instance();
 		List<String> temptrainList = manager.getTrainsByIdList();
@@ -5057,6 +5156,15 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 status", "t3 X status", t3.getStatus());
 		
 		LocationManager.instance().dispose();
+
+	}
+	
+	private synchronized void sleep(int time){
+		try {
+			wait(time);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 
 	}
 

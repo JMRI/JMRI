@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -109,28 +109,28 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Track BI Name", "Bedford Interchange", BI.getName());
 		Assert.assertEquals("Track BI Length", 500, BI.getLength());
 		
-		Location Chelmsford = lmanager.newLocation("Chelmsford MA");
-		Assert.assertEquals("Location 1 Name", "Chelmsford MA", Chelmsford.getName());
-		Assert.assertEquals("Location 1 Initial Length", 0, Chelmsford.getLength());
+		Location Clinton = lmanager.newLocation("Clinton MA");
+		Assert.assertEquals("Location 1 Name", "Clinton MA", Clinton.getName());
+		Assert.assertEquals("Location 1 Initial Length", 0, Clinton.getLength());
 
-		Track CS1 = Chelmsford.addTrack("Chelmsford Siding 1", Track.SIDING);
+		Track CS1 = Clinton.addTrack("Clinton Siding 1", Track.SIDING);
 		CS1.setLength(300);
-		Assert.assertEquals("Location CS1 Name", "Chelmsford Siding 1", CS1.getName());
+		Assert.assertEquals("Location CS1 Name", "Clinton Siding 1", CS1.getName());
 		Assert.assertEquals("Location CS1 Length", 300, CS1.getLength());
 		
-		Track CS2 = Chelmsford.addTrack("Chelmsford Siding 2", Track.SIDING);
+		Track CS2 = Clinton.addTrack("Clinton Siding 2", Track.SIDING);
 		CS2.setLength(300);
-		Assert.assertEquals("Location CS2 Name", "Chelmsford Siding 2", CS2.getName());
+		Assert.assertEquals("Location CS2 Name", "Clinton Siding 2", CS2.getName());
 		Assert.assertEquals("Location CS2 Length", 300, BS2.getLength());
 		
-		Track CY = Chelmsford.addTrack("Chelmsford Yard", Track.YARD);
+		Track CY = Clinton.addTrack("Clinton Yard", Track.YARD);
 		CY.setLength(400);
-		Assert.assertEquals("Location CY Name", "Chelmsford Yard", CY.getName());
+		Assert.assertEquals("Location CY Name", "Clinton Yard", CY.getName());
 		Assert.assertEquals("Location CY Length", 400, CY.getLength());
 		
-		Track CI = Chelmsford.addTrack("Chelmsford Interchange", Track.INTERCHANGE);
+		Track CI = Clinton.addTrack("Clinton Interchange", Track.INTERCHANGE);
 		CI.setLength(500);
-		Assert.assertEquals("Track CI Name", "Chelmsford Interchange", CI.getName());
+		Assert.assertEquals("Track CI Name", "Clinton Interchange", CI.getName());
 		Assert.assertEquals("Track CI Length", 500, CI.getLength());
 		
 		Location Danbury = lmanager.newLocation("Danbury MA");
@@ -143,14 +143,14 @@ public class OperationsCarRouterTest extends TestCase {
 		Track DI = Danbury.addTrack("Danbury Interchange", Track.INTERCHANGE);
 		DI.setLength(500);
 		
-		Location Egartown = lmanager.newLocation("Egartown MA");
-		Track ES1 = Egartown.addTrack("Egartown Siding 1", Track.SIDING);
+		Location Essex = lmanager.newLocation("Essex MA");
+		Track ES1 = Essex.addTrack("Essex Siding 1", Track.SIDING);
 		ES1.setLength(300);	
-		Track ES2 = Egartown.addTrack("Egartown Siding 2", Track.SIDING);
+		Track ES2 = Essex.addTrack("Essex Siding 2", Track.SIDING);
 		ES2.setLength(300);		
-		Track EY = Egartown.addTrack("Egartown Yard", Track.YARD);
+		Track EY = Essex.addTrack("Essex Yard", Track.YARD);
 		EY.setLength(400);		
-		Track EI = Egartown.addTrack("Egartown Interchange", Track.INTERCHANGE);
+		Track EI = Essex.addTrack("Essex Interchange", Track.INTERCHANGE);
 		EI.setLength(500);
 		
 		Location Foxboro = lmanager.newLocation("Foxboro MA");
@@ -207,6 +207,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Train ActonTrain = tmanager.newTrain("Acton Local");
 		Route routeA = rmanager.newRoute("A");
 		RouteLocation rlA = routeA.addLocation(Acton);
+		rlA.setTrainIconX(25);	// set train icon coordinates
+		rlA.setTrainIconY(250);
 		ActonTrain.setRoute(routeA);
 		
 		c3.setNextDestination(Acton);
@@ -404,6 +406,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Route routeAB = rmanager.newRoute("AB");
 		RouteLocation rlActon = routeAB.addLocation(Acton);
 		RouteLocation rlBedford = routeAB.addLocation(Bedford);
+		rlBedford.setTrainIconX(100);	// set train icon coordinates
+		rlBedford.setTrainIconY(250);
 		ActonToBedfordTrain.setRoute(routeAB);
 		
 		// should work
@@ -627,18 +631,20 @@ public class OperationsCarRouterTest extends TestCase {
 		// two train testing done!
 		// now try up to 5 trains to route car
 		
-		// set next destination Chelmsford
-		c3.setNextDestination(Chelmsford);
+		// set next destination Clinton
+		c3.setNextDestination(Clinton);
 		c3.setDestination(null, null);	// clear previous destination
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setCarNextDestination(c3));
 
-		// create a train with a route from Bedford to Chelmsford
-		Train BedfordToChelmsfordTrain = tmanager.newTrain("Bedford to Chelmsford");
+		// create a train with a route from Bedford to Clinton
+		Train BedfordToClintonTrain = tmanager.newTrain("Bedford to Clinton");
 		Route routeBC = rmanager.newRoute("BC");
 		routeBC.addLocation(Bedford);
-		routeBC.addLocation(Chelmsford);
-		BedfordToChelmsfordTrain.setRoute(routeBC);
+		RouteLocation rlchelmsford = routeBC.addLocation(Clinton);
+		rlchelmsford.setTrainIconX(175);	// set train icon coordinates
+		rlchelmsford.setTrainIconY(250);
+		BedfordToClintonTrain.setRoute(routeBC);
 		
 		// should work
 		Assert.assertTrue("Try routing with next destination and train", router.setCarNextDestination(c3));
@@ -651,30 +657,34 @@ public class OperationsCarRouterTest extends TestCase {
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setCarNextDestination(c3));
 	
-		// create a train with a route from Chelmsford to Danbury
-		Train ChelmsfordToDanburyTrain = tmanager.newTrain("Chelmsford to Danbury");
+		// create a train with a route from Clinton to Danbury
+		Train ClintonToDanburyTrain = tmanager.newTrain("Clinton to Danbury");
 		Route routeCD = rmanager.newRoute("CD");
-		routeCD.addLocation(Chelmsford);
-		routeCD.addLocation(Danbury);
-		ChelmsfordToDanburyTrain.setRoute(routeCD);
+		routeCD.addLocation(Clinton);
+		RouteLocation rlDanbury = routeCD.addLocation(Danbury);
+		rlDanbury.setTrainIconX(250);	// set train icon coordinates
+		rlDanbury.setTrainIconY(250);
+		ClintonToDanburyTrain.setRoute(routeCD);
 		
 		// should work
 		Assert.assertTrue("Try routing with next destination and train", router.setCarNextDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		Assert.assertEquals("Check car's destination track", "Acton Interchange", c3.getDestinationTrackName());
 		
-		// set next destination Egartown
-		c3.setNextDestination(Egartown);
+		// set next destination Essex
+		c3.setNextDestination(Essex);
 		c3.setDestination(null, null);	// clear previous destination
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setCarNextDestination(c3));
 		
-		// create a train with a route from Danbury to Egartown
-		Train DanburyToEgartownTrain = tmanager.newTrain("Danbury to Egartown");
+		// create a train with a route from Danbury to Essex
+		Train DanburyToEssexTrain = tmanager.newTrain("Danbury to Essex");
 		Route routeDE = rmanager.newRoute("DE");
 		routeDE.addLocation(Danbury);
-		routeDE.addLocation(Egartown);
-		DanburyToEgartownTrain.setRoute(routeDE);
+		RouteLocation rlEssex = routeDE.addLocation(Essex);
+		rlEssex.setTrainIconX(25);	// set train icon coordinates
+		rlEssex.setTrainIconY(275);
+		DanburyToEssexTrain.setRoute(routeDE);
 		
 		// should work
 		Assert.assertTrue("Try routing with next destination and train", router.setCarNextDestination(c3));
@@ -687,12 +697,14 @@ public class OperationsCarRouterTest extends TestCase {
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setCarNextDestination(c3));
 		
-		// create a train with a route from Egartown to Foxboro
-		Train EgartownToFoxboroTrain = tmanager.newTrain("Egartown to Foxboro");
+		// create a train with a route from Essex to Foxboro
+		Train EssexToFoxboroTrain = tmanager.newTrain("Essex to Foxboro");
 		Route routeEF = rmanager.newRoute("EF");
-		routeEF.addLocation(Egartown);
-		routeEF.addLocation(Foxboro);
-		EgartownToFoxboroTrain.setRoute(routeEF);
+		routeEF.addLocation(Essex);
+		RouteLocation rlFoxboro = routeEF.addLocation(Foxboro);
+		rlFoxboro.setTrainIconX(100);	// set train icon coordinates
+		rlFoxboro.setTrainIconY(275);
+		EssexToFoxboroTrain.setRoute(routeEF);
 		
 		// 6th train should fail!  Only 5 trains supported
 		Assert.assertFalse("Try routing with next destination and train", router.setCarNextDestination(c3));
@@ -721,16 +733,16 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		Train ActonTrain = tmanager.getTrainByName("Acton Local");
 		Train ActonToBedfordTrain = tmanager.getTrainByName("Acton to Bedford");
-		Train BedfordToChelmsfordTrain = tmanager.getTrainByName("Bedford to Chelmsford");
-		Train ChelmsfordToDanburyTrain = tmanager.getTrainByName("Chelmsford to Danbury");
-		Train DanburyToEgartownTrain = tmanager.getTrainByName("Danbury to Egartown");
-		Train EgartownToFoxboroTrain = tmanager.getTrainByName("Egartown to Foxboro");
+		Train BedfordToClintonTrain = tmanager.getTrainByName("Bedford to Clinton");
+		Train ClintonToDanburyTrain = tmanager.getTrainByName("Clinton to Danbury");
+		Train DanburyToEssexTrain = tmanager.getTrainByName("Danbury to Essex");
+		Train EssexToFoxboroTrain = tmanager.getTrainByName("Essex to Foxboro");
 		
 		Car c3 = cmanager.getByRoadAndNumber("BA", "3");
 		Car c4 = cmanager.getByRoadAndNumber("BB", "4");
 		
-		Location Egartown = lmanager.getLocationByName("Egartown MA");
-		Track ES2 = Egartown.getTrackByName("Egartown Siding 2", Track.SIDING);
+		Location Essex = lmanager.getLocationByName("Essex MA");
+		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
 		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
 		// confirm cars are in Acton
@@ -740,8 +752,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("car's location Acton","Acton MA", c4.getLocationName());
 		Assert.assertEquals("car's location Acton","Acton Siding 1", c4.getTrackName());
 		
-		// set next destination Egartown
-		c3.setNextDestination(Egartown);
+		// set next destination Essex
+		c3.setNextDestination(Essex);
 		c3.setNextDestTrack(ES2);
 		c3.setDestination(null, null);	// clear previous destination
 		c3.setLoad("L");
@@ -771,8 +783,8 @@ public class OperationsCarRouterTest extends TestCase {
 		// confirm cars have moved
 		Assert.assertEquals("car's location Bedford","Bedford MA", c3.getLocationName());
 		Assert.assertEquals("car's location Bedford","Bedford Interchange", c3.getTrackName());
-		Assert.assertEquals("car's destination","Chelmsford MA", c3.getDestinationName());
-		Assert.assertEquals("car's destination track","Chelmsford Interchange", c3.getDestinationTrackName());
+		Assert.assertEquals("car's destination","Clinton MA", c3.getDestinationName());
+		Assert.assertEquals("car's destination track","Clinton Interchange", c3.getDestinationTrackName());
 		Assert.assertEquals("car's load","L", c3.getLoad());
 		
 		Assert.assertEquals("car's location Bedford","Bedford MA", c4.getLocationName());
@@ -780,29 +792,29 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
 
-		BedfordToChelmsfordTrain.build();
-		BedfordToChelmsfordTrain.terminate();
+		BedfordToClintonTrain.build();
+		BedfordToClintonTrain.terminate();
 		
 		// confirm cars have moved
-		Assert.assertEquals("car's location Chelmsford","Chelmsford MA", c3.getLocationName());
-		Assert.assertEquals("car's location Chelmsford","Chelmsford Interchange", c3.getTrackName());
+		Assert.assertEquals("car's location Clinton","Clinton MA", c3.getLocationName());
+		Assert.assertEquals("car's location Clinton","Clinton Interchange", c3.getTrackName());
 		Assert.assertEquals("car's destination","Danbury MA", c3.getDestinationName());
 		Assert.assertEquals("car's destination track","Danbury Interchange", c3.getDestinationTrackName());
 		Assert.assertEquals("car's load","L", c3.getLoad());
 		
-		Assert.assertEquals("car's location Chelmsford","Chelmsford MA", c4.getLocationName());
-		Assert.assertEquals("car's location Chelmsford","Chelmsford Siding 1", c4.getTrackName());
+		Assert.assertEquals("car's location Clinton","Clinton MA", c4.getLocationName());
+		Assert.assertEquals("car's location Clinton","Clinton Siding 1", c4.getTrackName());
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
 		
-		ChelmsfordToDanburyTrain.build();
-		ChelmsfordToDanburyTrain.terminate();
+		ClintonToDanburyTrain.build();
+		ClintonToDanburyTrain.terminate();
 		
 		// confirm cars have moved
 		Assert.assertEquals("car's location Danbury","Danbury MA", c3.getLocationName());
 		Assert.assertEquals("car's location Danbury","Danbury Interchange", c3.getTrackName());
-		Assert.assertEquals("car's destination","Egartown MA", c3.getDestinationName());
-		Assert.assertEquals("car's destination track","Egartown Siding 2", c3.getDestinationTrackName());
+		Assert.assertEquals("car's destination","Essex MA", c3.getDestinationName());
+		Assert.assertEquals("car's destination track","Essex Siding 2", c3.getDestinationTrackName());
 		Assert.assertEquals("car's load","L", c3.getLoad());
 		
 		Assert.assertEquals("car's location Danbury","Danbury MA", c4.getLocationName());
@@ -810,24 +822,24 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
 		
-		DanburyToEgartownTrain.build();
-		DanburyToEgartownTrain.terminate();
+		DanburyToEssexTrain.build();
+		DanburyToEssexTrain.terminate();
 		
-		// confirm cars have moved car has arrived at final destination Egartown
+		// confirm cars have moved car has arrived at final destination Essex
 		// car when empty must return to Foxboro
-		Assert.assertEquals("car's location Egartown","Egartown MA", c3.getLocationName());
-		Assert.assertEquals("car's location Egartown","Egartown Siding 2", c3.getTrackName());
+		Assert.assertEquals("car's location Essex","Essex MA", c3.getLocationName());
+		Assert.assertEquals("car's location Essex","Essex Siding 2", c3.getTrackName());
 		Assert.assertEquals("car's destination","Foxboro MA", c3.getDestinationName());
 		Assert.assertEquals("car's destination track","", c3.getDestinationTrackName());
 		Assert.assertEquals("car's load","E", c3.getLoad());
 		
-		Assert.assertEquals("car's location Egartown","Egartown MA", c4.getLocationName());
-		Assert.assertEquals("car's location Egartown","Egartown Siding 1", c4.getTrackName());
+		Assert.assertEquals("car's location Essex","Essex MA", c4.getLocationName());
+		Assert.assertEquals("car's location Essex","Essex Siding 1", c4.getTrackName());
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
 		
-		EgartownToFoxboroTrain.build();
-		EgartownToFoxboroTrain.terminate();
+		EssexToFoxboroTrain.build();
+		EssexToFoxboroTrain.terminate();
 		
 		// confirm cars have moved
 		Assert.assertEquals("car's location Foxboro","Foxboro MA", c3.getLocationName());

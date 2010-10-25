@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.88 $
+ * @version $Revision: 1.89 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1393,7 +1393,7 @@ public class Train implements java.beans.PropertyChangeListener {
         writer.close();
 	}
 		
-	protected RouteLocation trainIconRl = null; // saves the icon current route location
+	protected RouteLocation _trainIconRl = null; // saves the icon current route location
 
 	/**
 	 * Sets the panel position for the train icon   
@@ -1402,8 +1402,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public boolean setTrainIconCoordinates(){
 		if (Setup.isTrainIconCordEnabled()){
-			trainIconRl.setTrainIconX(trainIcon.getX());
-			trainIconRl.setTrainIconY(trainIcon.getY());
+			_trainIconRl.setTrainIconX(_trainIcon.getX());
+			_trainIconRl.setTrainIconY(_trainIcon.getY());
 			RouteManagerXml.instance().setDirty(true);
 			return true;
 		}
@@ -1452,28 +1452,28 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	private boolean animation = true;	// when true use animation for icon moves
 	protected void moveTrainIcon(RouteLocation rl){
-		trainIconRl = rl;
+		_trainIconRl = rl;
 		// create train icon if at departure or if program has been restarted
-		if (rl == getTrainDepartsRouteLocation() || trainIcon == null){
+		if (rl == getTrainDepartsRouteLocation() || _trainIcon == null){
 			createTrainIcon();
 		}
-		if (trainIcon != null && trainIcon.isActive()){
+		if (_trainIcon != null && _trainIcon.isActive()){
 			setTrainIconColor();
-			trainIcon.setShowTooltip(true);
+			_trainIcon.setShowTooltip(true);
             String txt = null;
 			if (getCurrentLocationName().equals(""))
 				txt= getDescription() + " "+TERMINATED+" ("+ getTrainTerminatesName()+")";
 			else
 				txt = getDescription() + " at " + getCurrentLocationName() + " next "+getNextLocationName();
-            trainIcon.getTooltip().setText(txt);
-            trainIcon.getTooltip().setBackgroundColor(Color.white);
+            _trainIcon.getTooltip().setText(txt);
+            _trainIcon.getTooltip().setBackgroundColor(Color.white);
 			if (rl != null){
 				if (rl.getTrainIconX()!=0 || rl.getTrainIconY()!=0){
 					if (animation){
-						TrainIconAnimation ta = new TrainIconAnimation(trainIcon, rl);
+						TrainIconAnimation ta = new TrainIconAnimation(_trainIcon, rl);
 						ta.start();	// start the animation
 					} else {
-						trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+						_trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
 					}
 				}
 			}
@@ -1505,18 +1505,22 @@ public class Train implements java.beans.PropertyChangeListener {
 		leadEngine = engine;
 	}
 	
-	protected TrainIcon trainIcon = null;
+	protected TrainIcon _trainIcon = null;
+	public TrainIcon getTrainIcon(){
+		return _trainIcon;
+	}
+	
 	private void createTrainIcon() {
-		if (trainIcon != null && trainIcon.isActive()) {
-			trainIcon.remove();
-			trainIcon.dispose();
+		if (_trainIcon != null && _trainIcon.isActive()) {
+			_trainIcon.remove();
+			_trainIcon.dispose();
 		}
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor != null) { 
-            trainIcon = editor.addTrainIcon(getIconName());
-			trainIcon.setTrain(this);
+            _trainIcon = editor.addTrainIcon(getIconName());
+			_trainIcon.setTrain(this);
 			if (getIconName().length() > 9) {
-				trainIcon.setFont(jmri.util.FontUtil.deriveFont(trainIcon.getFont(), 8.f));
+				_trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
 			}
 			// add throttle if there's a throttle manager
 			if (jmri.InstanceManager.throttleManagerInstance()!=null) {
@@ -1537,9 +1541,9 @@ public class Train implements java.beans.PropertyChangeListener {
 					}
 				}
 				if (entry != null){
-					trainIcon.setRosterEntry(entry);
+					_trainIcon.setRosterEntry(entry);
 					if(getLeadEngine().getConsist() != null)
-						trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
+						_trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
 				} else{
 					log.debug("Loco roster entry not found for train ("+getName()+")");
 				}
@@ -1550,23 +1554,23 @@ public class Train implements java.beans.PropertyChangeListener {
 	private void setTrainIconColor(){
 		// Terminated train?
 		if (getCurrentLocationName().equals("")){
-			trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
+			_trainIcon.setLocoColor(Setup.getTrainIconColorTerminate());
 			return;
 		}
 		// local train?
 		if (getRoute().getLocationsBySequenceList().size()==1){
-			trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
+			_trainIcon.setLocoColor(Setup.getTrainIconColorLocal());
 			return;
 		}
 		// set color based on train direction at current location
-		if (trainIconRl.getTrainDirection() == RouteLocation.NORTH)
-			trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
-		if (trainIconRl.getTrainDirection() == RouteLocation.SOUTH)
-			trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
-		if (trainIconRl.getTrainDirection() == RouteLocation.EAST)
-			trainIcon.setLocoColor(Setup.getTrainIconColorEast());
-		if (trainIconRl.getTrainDirection() == RouteLocation.WEST)
-			trainIcon.setLocoColor(Setup.getTrainIconColorWest());
+		if (_trainIconRl.getTrainDirection() == RouteLocation.NORTH)
+			_trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
+		if (_trainIconRl.getTrainDirection() == RouteLocation.SOUTH)
+			_trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
+		if (_trainIconRl.getTrainDirection() == RouteLocation.EAST)
+			_trainIcon.setLocoColor(Setup.getTrainIconColorEast());
+		if (_trainIconRl.getTrainDirection() == RouteLocation.WEST)
+			_trainIcon.setLocoColor(Setup.getTrainIconColorWest());
 	}
 	
 	LocationManager locationManager = LocationManager.instance();
@@ -1606,9 +1610,9 @@ public class Train implements java.beans.PropertyChangeListener {
 		// remove cars and engines from this train via property change
 		setStatus(TRAINRESET);
 		// remove train icon
-		if (trainIcon != null && trainIcon.isActive()) {
-			trainIcon.remove();
-			trainIcon.dispose();
+		if (_trainIcon != null && _trainIcon.isActive()) {
+			_trainIcon.remove();
+			_trainIcon.dispose();
 		}
 		return true;
 	}
