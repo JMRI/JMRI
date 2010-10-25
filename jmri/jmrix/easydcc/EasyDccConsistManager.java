@@ -5,7 +5,7 @@
  *                        EasyDccConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2006
- * @version               $Revision: 1.12 $
+ * @version               $Revision: 1.13 $
  */
 
 
@@ -110,7 +110,8 @@ public class EasyDccConsistManager extends jmri.jmrix.AbstractConsistManager imp
                             DccLocoAddress locoAddress;
                             int tempAddr;
                             boolean directionNormal=true;
-                            while((char)r.getElement(i)==' ') i++; // skip any spaces in the input
+                            if((char)r.getElement(i)==' ') i++; // skip a space
+                            else if(java.lang.Character.digit((char)r.getElement(i),16)==-1) break; // stop the loop if we don't have a hex digit.
                             String sb = "" + (char)r.getElement(i) + 
                                      (char)r.getElement(i+1) +
                                      (char)r.getElement(i+2) +
