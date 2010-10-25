@@ -12,10 +12,11 @@ import javax.swing.AbstractAction;
  *       			EasyDccMonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class EasyDccMonAction 			extends AbstractAction {
 
+    public EasyDccMonAction() {this("EasyDCC Command Monitor"); }
 	public EasyDccMonAction(String s) { super(s);}
 
     public void actionPerformed(ActionEvent e) {
