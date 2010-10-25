@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.easydcc package
  * @author			Bob Jacobsen
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class EasyDccTest extends TestCase {
 
@@ -48,6 +48,7 @@ public class EasyDccTest extends TestCase {
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
 		    suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonFrameTest.suite());
+		    suite.addTest(jmri.jmrix.easydcc.easydccmon.EasyDccMonActionTest.suite());
 		    suite.addTest(jmri.jmrix.easydcc.packetgen.EasyDccPacketGenFrameTest.suite());
         }
         
