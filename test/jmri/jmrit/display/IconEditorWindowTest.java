@@ -19,7 +19,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 
@@ -417,7 +417,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         TestHelper.disposeWindow(_editor.getTargetFrame(), this);
  
         // close window that pops dialog, find and press Delete
-        List<JDialog> dialogList = new DialogFinder(null).findAll(_panel);
+        List<JDialog> dialogList = new DialogFinder(null).findAll(_editor.getTargetFrame());
         JDialog d = dialogList.get(0);
 
         // Find the button that deletes the panel
@@ -429,7 +429,7 @@ public class IconEditorWindowTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave( new MouseEventData( this, button ) );
         
         // that pops dialog, find and press Yes - Delete
-        dialogList = new DialogFinder(null).findAll(_panel);
+        dialogList = new DialogFinder(null).findAll(_editor.getTargetFrame());
         d = dialogList.get(0);
 
         // Find the button that deletes the panel
