@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -655,6 +655,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (log.isDebugEnabled()) log.debug("Train entering Block "+block.getDisplayName());
                 // we assume it is our train entering the block - cannot guarantee it, but what else?
                 _idxCurrentOrder = activeIdx;
+                // set block state to show our train occupies the block
+                block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
             // rouge train invaded route.

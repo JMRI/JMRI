@@ -32,16 +32,22 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
 
     ArrayList <Portal> _portals = new ArrayList <Portal>();     // portals to this block
 
+    /*
+    * Block state. Add the following to the 4 sensor states.
+    * States are OR'ed to show combination.  e.g. ALLOCATED | OCCUPIED = allocated block is occupied by rouge
+    */
     static final public int ALLOCATED = 0x10;   // reserve the block for subsequent use by a train
-    static final public int SHORTED = 0x08;     // duplicate of INCONSISTENT = 0x08
-    static final public int DARK = 0x20;        // Block has no Sensor
+    static final public int RUNNING = 0x20;     // Block that running train has reached 
+    static final public int OUT_OF_SERVICE = 0x40;     // Block that running train has reached 
+    static final public int DARK = 0x08;        // Block has no Sensor - same as INCONSISTENT
+    static final public int TRACK_ERROR = 0x80; // Block has Error
 
     private Warrant _warrant;       // when not null, block is allocateds to this warrant
     private float _scaleRatio   = 87.1f;
@@ -126,7 +132,7 @@ public class OBlock extends jmri.Block {
                 _warrant = null;
                 firePropertyChange("deallocate", warrant, _warrant);
                 if (sensor != null)  {
-                    setState(sensor.getState());  // unset allocated bit
+                    setState(sensor.getState() & ~ALLOCATED);  // unset allocated bit
                 }
             }
         }
@@ -286,7 +292,8 @@ public class OBlock extends jmri.Block {
             super.goingInactive();
             return;
         }
-        setState((getState() & ~OCCUPIED) | UNOCCUPIED);
+        // unset occupied and running bits, set unoccupied bit
+        setState((getState() & ~(OCCUPIED & RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         _warrant.goingInactive(this);

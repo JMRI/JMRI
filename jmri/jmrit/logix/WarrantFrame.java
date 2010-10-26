@@ -941,7 +941,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
 
 
     class DnDImportHandler extends TransferHandler{
-        int _type;
 
         DnDImportHandler() {
         }
