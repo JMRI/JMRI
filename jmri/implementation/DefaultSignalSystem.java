@@ -16,7 +16,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class DefaultSignalSystem extends AbstractNamedBean implements SignalSystem  {
 
@@ -34,6 +34,9 @@ public class DefaultSignalSystem extends AbstractNamedBean implements SignalSyst
     }
     
     public Object getProperty(String aspect, String key) {
+        if (aspect==null) {
+            return null;
+        }
         return getTable(aspect).get(key);
     }
 
