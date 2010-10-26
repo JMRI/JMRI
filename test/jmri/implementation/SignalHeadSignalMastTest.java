@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -24,6 +24,32 @@ public class SignalHeadSignalMastTest extends TestCase {
 	    new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
 	}
 
+    public void testHeld() {
+	    SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
+
+        Assert.assertTrue(!m.getHeld());
+
+        m.setHeld(true);
+        Assert.assertTrue(m.getHeld());
+
+        m.setHeld(false);
+        Assert.assertTrue(!m.getHeld());
+
+    }
+    
+    public void testLit() {
+	    SignalMast m = new SignalHeadSignalMast("IF$shsm:basic:one-searchlight(IH1)", "user");
+
+        Assert.assertTrue(m.getLit());
+
+        m.setLit(false);
+        Assert.assertTrue(!m.getLit());
+
+        m.setLit(true);
+        Assert.assertTrue(m.getLit());
+
+    }
+    
 	public void testTwoNameSe8cHeadCtorOK() {
 	    new SignalHeadSignalMast("IF$shsm:AAR-1946:PL-2-high(IH:SE8C:\"255\";\"256\")(IH:SE8C:\"257\";\"258\")", "user");
 	}
