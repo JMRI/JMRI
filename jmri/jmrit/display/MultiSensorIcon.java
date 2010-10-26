@@ -24,7 +24,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -46,20 +46,25 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
     
     ArrayList<Entry> entries = new ArrayList<Entry>();
     
-    public Positionable clone() {
+    public Positionable deepClone() {
         MultiSensorIcon pos = new MultiSensorIcon(_editor);
+        return finishClone(pos);
+    }
+                                        
+    public Positionable finishClone(Positionable p) {
+        MultiSensorIcon pos = (MultiSensorIcon)p;
         pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
         pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
         pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
         for (int i=0; i<entries.size(); i++) {
-            addEntry(getSensorName(i), cloneIcon(getSensorIcon(i), pos));
+            pos.addEntry(getSensorName(i), cloneIcon(getSensorIcon(i), pos));
         }
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
-                                        
+
     public void addEntry(NamedBeanHandle<Sensor> sensor, NamedIcon icon) {
         if (sensor != null) {
+            if (log.isDebugEnabled()) log.debug("addEntry: sensor= "+sensor.getName());       
             Entry e = new Entry();
             sensor.getBean().addPropertyChangeListener(this);
             e.namedSensor = sensor;
@@ -118,8 +123,8 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         if (log.isDebugEnabled()) {
             String prop = e.getPropertyName();
             Sensor sen = (Sensor)e.getSource();
-             log.debug("property change("+prop+") Sensor state= "+sen.getKnownState()+
-                       " - old= "+e.getOldValue()+", New= "+e.getNewValue());
+            if (log.isDebugEnabled()) log.debug("property change("+prop+") Sensor state= "+
+                        sen.getKnownState()+" - old= "+e.getOldValue()+", New= "+e.getNewValue());
         }
         if (e.getPropertyName().equals("KnownState")) {
             displayState();

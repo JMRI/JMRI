@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  * @since 2.7.2
  */
 
@@ -59,11 +59,15 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
         setPopupUtility(new PositionablePopupUtil(this, _textBox));
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         MemoryInputIcon pos = new MemoryInputIcon(_nCols, _editor);
+        return finishClone(pos);
+    }
+
+    public Positionable finishClone(Positionable p) {
+        MemoryInputIcon pos = (MemoryInputIcon)p;
         pos.setMemory(getNameString());
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
 
     public void mouseExited(java.awt.event.MouseEvent e) {

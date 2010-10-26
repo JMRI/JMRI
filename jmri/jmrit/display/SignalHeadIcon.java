@@ -27,7 +27,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -45,10 +45,14 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         setPopupUtility(null);
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         SignalHeadIcon pos = new SignalHeadIcon(_editor);
-        pos.setSignalHead(getNameString());
+        return finishClone(pos);
+    }
 
+    public Positionable finishClone(Positionable p) {
+        SignalHeadIcon pos = (SignalHeadIcon)p;
+        pos.setSignalHead(getNameString());
         Enumeration <String> e = _iconMap.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();
@@ -56,8 +60,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         }
         pos.setClickMode(getClickMode());
         pos.setLitMode(getLitMode());
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
 
 

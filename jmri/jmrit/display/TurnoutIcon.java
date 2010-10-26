@@ -10,6 +10,8 @@ import javax.swing.JPopupMenu;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import jmri.util.NamedBeanHandle;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 /**
  * An icon to display a status of a turnout.<P>
@@ -23,7 +25,7 @@ import jmri.util.NamedBeanHandle;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -40,17 +42,17 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         setPopupUtility(null);
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         TurnoutIcon pos = new TurnoutIcon(_editor);
+        return finishClone(pos);
+    }
+
+    public Positionable finishClone(Positionable p) {
+        TurnoutIcon pos = (TurnoutIcon)p;
         pos.setTurnout(getNameString());
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            Integer key = e.nextElement();
-            pos.setIcon(_state2nameMap.get(key), _iconMap.get(key));
-        }
+        pos._iconMap = cloneMap(_iconMap, pos);
         pos.setTristate(getTristate());
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
 
     // the associated Turnout object
@@ -106,9 +108,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     * Place icon by its bean state name key found in jmri.NamedBeanBundle.properties
     * That is, by its localized bean state name
     */
-    public void setIcon(String state, NamedIcon icon) {
-        if (log.isDebugEnabled()) log.debug("setIcon for "+state+" state= "+_name2stateMap.get(state));
-        _iconMap.put(_name2stateMap.get(state), icon);
+    public void setIcon(String name, NamedIcon icon) {
+        if (log.isDebugEnabled()) log.debug("setIcon for name \""+name+
+                                            "\" state= "+_name2stateMap.get(name));
+        _iconMap.put(_name2stateMap.get(name), icon);
         displayState(turnoutState());
     }
 
@@ -124,17 +127,19 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     public int maxHeight() {
         int max = 0;
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            max = Math.max(_iconMap.get(e.nextElement()).getIconHeight(), max);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            max = Math.max(entry.getValue().getIconHeight(), max);
         }
         return max;
     }
     public int maxWidth() {
         int max = 0;
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            max = Math.max(_iconMap.get(e.nextElement()).getIconWidth(), max);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            max = Math.max(entry.getValue().getIconWidth(), max);
         }
         return max;
     }
@@ -176,6 +181,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 		}
 	}
 
+    public String getStateName(int state) {
+        return _state2nameMap.get(Integer.valueOf(state));
+
+    }
     public String getNameString() {
         String name;
         if (namedTurnout == null) name = rb.getString("NotConnected");
@@ -223,10 +232,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     /******** popup AbstractAction.actionPerformed method overrides *********/
 
     protected void rotateOrthogonal() {
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            NamedIcon icon = _iconMap.get(e.nextElement()); 
-            icon.setRotation(icon.getRotation()+1, this);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().setRotation(entry.getValue().getRotation()+1, this);
         }
         displayState(turnoutState());
         // bug fix, must repaint icons that have same width and height
@@ -234,17 +243,19 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     public void setScale(double s) {
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            _iconMap.get(e.nextElement()).scale(s, this); 
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().scale(s, this);
         }
         displayState(turnoutState());
     }
 
     public void rotate(int deg) {
-        Enumeration <Integer> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            _iconMap.get(e.nextElement()).rotate(deg, this); 
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().rotate(deg, this);
         }
         displayState(turnoutState());
     }
@@ -302,16 +313,22 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         _iconEditor.setSelection(getTurnout());
     }
     void updateTurnout() {
+        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setTurnout(_iconEditor.getTableSelection().getDisplayName());
         Hashtable <String, NamedIcon> iconMap = _iconEditor.getIconMap();
-        if (log.isDebugEnabled()) log.debug("iconMap.size()= "+iconMap.size());
+//        if (log.isDebugEnabled()) log.debug("iconMap.size()= "+iconMap.size());
 
-        Enumeration<String> e = iconMap.keys();
-        while (e.hasMoreElements()) {
-            String name = e.nextElement();
-            NamedIcon icon = iconMap.get(name);
-            setIcon(name, icon);
-            icon.rotate(icon.getDegrees(), this);
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+            NamedIcon newIcon = entry.getValue();
+            NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+            newIcon.setRotation(oldIcon.getRotation(), this);
+//            if (log.isDebugEnabled()) log.debug("oldIcon Rotation= "+oldIcon.getRotation()+
+//            " Degrees= "+oldIcon.getDegrees()+" Scale= "+oldIcon.getScale());
+            setIcon(entry.getKey(), newIcon);
         }
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
@@ -346,6 +363,20 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         _state2nameMap = null;
 
         super.dispose();
+    }
+
+    protected Hashtable<Integer, NamedIcon> cloneMap(Hashtable<Integer, NamedIcon> map,
+                                                             TurnoutIcon pos) {
+        Hashtable<Integer, NamedIcon> clone = new Hashtable<Integer, NamedIcon>();
+        if (map!=null) {
+            Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<Integer, NamedIcon> entry = it.next();
+                clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
+                pos.setIcon(_state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+            }
+        }
+        return clone;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIcon.class.getName());

@@ -22,7 +22,7 @@ import jmri.util.NamedBeanHandle;
  * The value of the memory can't be changed with this icon.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2004
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 
 public class MemoryIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -55,8 +55,13 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
 
     }
     
-    public Positionable clone() {
+    public Positionable deepClone() {
         MemoryIcon pos = new MemoryIcon("", _editor);
+        return finishClone(pos);
+    }
+
+    public Positionable finishClone(Positionable p) {
+        MemoryIcon pos = (MemoryIcon)p;
         pos.setMemory(getNameString());
         pos.setOriginalLocation(getOriginalX(), getOriginalY());
         if (map!=null) {
@@ -67,8 +72,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                 pos.addKeyAndIcon(NamedIcon.getIconByName(url), key);         
     	    }
         }
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
 
     public void resetDefaultIcon() {

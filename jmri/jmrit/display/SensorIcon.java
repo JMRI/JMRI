@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -67,17 +67,20 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         setPopupUtility(new SensorPopupUtil(this, this));
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         SensorIcon pos = new SensorIcon(_editor);
+        return finishClone(pos);
+    }
+
+    public Positionable finishClone(Positionable p) {
+        SensorIcon pos = (SensorIcon)p;
         pos.setSensor(getNameString());
         pos.setActiveIcon(cloneIcon(getActiveIcon(), pos));
         pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
         pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
         pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
         pos.setMomentary(getMomentary());
-        finishClone(pos);
-
-        return pos;
+        return super.finishClone(pos);
     }
 
     // the associated Sensor object

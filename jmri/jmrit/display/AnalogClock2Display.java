@@ -18,7 +18,7 @@ import jmri.jmrit.catalog.*;
  * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
  * @author  Howard G. Penny - Copyright (C) 2005
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class AnalogClock2Display extends PositionableJComponent {
 
@@ -81,11 +81,15 @@ public class AnalogClock2Display extends PositionableJComponent {
         init();
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         AnalogClock2Display pos = new AnalogClock2Display(_editor);
+        return finishClone(pos);
+    }
+
+    public Positionable finishClone(Positionable p) {
+        AnalogClock2Display pos = (AnalogClock2Display)p;
         pos.setScale(getScale());
-        finishClone(pos);
-        return pos;
+        return super.finishClone(pos);
     }
 
     void init() {

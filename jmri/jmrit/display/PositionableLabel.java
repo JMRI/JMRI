@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.101 $
+ * @version $Revision: 1.102 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -141,20 +141,22 @@ public class PositionableLabel extends JLabel implements Positionable {
         else return "Background";
     }
 
-    public Positionable clone() {
+    public Positionable deepClone() {
         PositionableLabel pos;
         if (_icon) {
             NamedIcon icon = new NamedIcon((NamedIcon)getIcon());
             pos = new PositionableLabel(icon, _editor);
-            pos.setText(getText());
         } else {
             pos = new PositionableLabel(getText(), _editor);
         }
-        finishClone(pos);
-        return pos;
+        return finishClone(pos);
     }
 
-    protected void finishClone(PositionableLabel pos) {
+    public Positionable finishClone(Positionable p) {
+        PositionableLabel pos = (PositionableLabel)p;
+        pos._text = _text;
+        pos._icon = _icon;
+        pos.setText(getText());
         pos.setLocation(getX(), getY());
         pos.setDisplayLevel(getDisplayLevel());
         pos.setControlling(isControlling());
@@ -170,7 +172,9 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         if (getIcon()!=null) {
             pos.setIcon(cloneIcon((NamedIcon)getIcon(), pos));
+            pos.updateSize();
         }
+        return pos;
     }
 
     protected NamedIcon cloneIcon(NamedIcon icon, PositionableLabel pos) {

@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -42,18 +42,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
         debug = log.isDebugEnabled();
     }
 
-    public Positionable clone() {
-        try {
-            PositionableJComponent pos = new PositionableJComponent(_editor);
-            finishClone(pos);
-            return pos;
-        } catch (Exception ex) {
-            log.error("Cannot clone "+this.getClass().getName()+" - "+ex);
-        }
-        return null;
+    public Positionable deepClone() {
+        PositionableJComponent pos = new PositionableJComponent(_editor);
+        return finishClone(pos);
     }
 
-    protected void finishClone(Positionable pos) {
+    public Positionable finishClone(Positionable pos) {
         pos.setLocation(getX(), getY());
         pos.setDisplayLevel(getDisplayLevel());
         pos.setControlling(isControlling());
@@ -61,7 +55,8 @@ public class PositionableJComponent extends JComponent implements Positionable {
         pos.setPositionable(isPositionable());
         pos.setShowTooltip(showTooltip());        
         pos.setTooltip(getTooltip());        
-        pos.setEditable(isEditable());        
+        pos.setEditable(isEditable());
+        return pos;
     }
     
     /***************** Positionable methods **********************/

@@ -16,7 +16,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -43,18 +43,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         debug = log.isDebugEnabled();
     }
 
-    public Positionable clone() {
-        try {
-            PositionableJPanel pos = new PositionableJPanel(_editor);
-            finishClone(pos);
-            return pos;
-        } catch (Exception ex) {
-            log.error("Cannot clone "+this.getClass().getName()+" - "+ex);
-        }
-        return null;
+    public Positionable deepClone() {
+        PositionableJPanel pos = new PositionableJPanel(_editor);
+        return finishClone(pos);
     }
 
-    protected void finishClone(PositionableJPanel pos) {
+    public Positionable finishClone(Positionable pos) {
         pos.setLocation(getX(), getY());
         pos.setDisplayLevel(getDisplayLevel());
         pos.setControlling(isControlling());
@@ -68,6 +62,7 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         } else {
             pos.setPopupUtility(getPopupUtility().clone(pos));
         }
+        return pos;
     }
     
     public void setPositionable(boolean enabled) {_positionable = enabled;}
