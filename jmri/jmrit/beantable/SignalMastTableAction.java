@@ -18,8 +18,8 @@ import jmri.util.JmriJFrame;
  * Swing action to create and register a
  * SignalMastTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.5 $
+ * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
+ * @version     $Revision: 1.6 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
