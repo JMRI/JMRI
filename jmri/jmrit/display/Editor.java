@@ -879,6 +879,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         popup.add(new AbstractAction(rb.getString("Remove")) {
             Positionable comp;
             public void actionPerformed(ActionEvent e) { 
+                if (_selectionGroup!=null && _selectionGroup.contains(comp)) {
+                    _selectionGroup.remove(comp);
+                }
                 comp.remove();
             }
             AbstractAction init(Positionable pos) {
