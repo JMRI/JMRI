@@ -3,8 +3,6 @@
 package jmri.jmrit.operations.routes;
  
 import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManager;
 
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
@@ -15,16 +13,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import java.util.List;
-
 
 
 /**
  * Frame for copying a route for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.10 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010
+ * @version             $Revision: 1.11 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
@@ -78,7 +74,7 @@ public class RouteCopyFrame extends OperationsFrame {
 		getContentPane().add(p1);
     	
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_CopyRoute", true);
     	
     	pack();
     	setSize(getWidth()+20, getHeight()+20);
@@ -111,70 +107,15 @@ public class RouteCopyFrame extends OperationsFrame {
 				reportRouteDoesNotExist();
 				return;
 			}
-			newRoute = routeManager.newRoute(routeNameTextField.getText());
+			
 			// now copy
-			List<String> oldRouteLocations = oldRoute.getLocationsBySequenceList();
-			if (!invertCheckBox.isSelected()){
-				for (int i=0; i<oldRouteLocations.size(); i++){
-					copyRouteLocation(oldRoute, newRoute, oldRouteLocations.get(i), null, invertCheckBox.isSelected());
-				}
-			// invert route order
-			} else {
-				for (int i=oldRouteLocations.size()-1; i>=0; i--){
-					int y = i-1;
-					if (y<0)
-						y=0;
-					copyRouteLocation(oldRoute, newRoute, oldRouteLocations.get(i), oldRouteLocations.get(y),invertCheckBox.isSelected());
-				}
-			}
+			newRoute = routeManager.copyRoute(oldRoute, routeNameTextField.getText(), invertCheckBox.isSelected());
+
 			RouteEditFrame f = new RouteEditFrame();
 			f.initComponents(newRoute);
 			f.setTitle(rb.getString("TitleRouteEdit"));
 			f.setVisible(true);
 		}
-	}
-	
-	LocationManager locationManager = LocationManager.instance();
-	private void copyRouteLocation(Route oldRoute, Route newRoute, String id, String nextId, boolean invert){
-		RouteLocation oldRl = oldRoute.getLocationById(id);
-		RouteLocation oldNextRl = null;
-		if (nextId != null)
-			oldNextRl = oldRoute.getLocationById(nextId);
-		Location l = locationManager.getLocationByName(oldRl.getName());
-		RouteLocation newRl = newRoute.addLocation(l);
-		// now copy the route location objects we want
-		newRl.setMaxCarMoves(oldRl.getMaxCarMoves());
-		newRl.setWait(oldRl.getWait());
-		newRl.setComment(oldRl.getComment());
-		if(!invert){
-			newRl.setCanDrop(oldRl.canDrop());
-			newRl.setCanPickup(oldRl.canPickup());
-			newRl.setGrade(oldRl.getGrade());
-			newRl.setTrainDirection(oldRl.getTrainDirection());
-			newRl.setMaxTrainLength(oldRl.getMaxTrainLength());
-		}else{
-			// flip drops and pickups
-			newRl.setCanDrop(oldRl.canPickup());
-			newRl.setCanPickup(oldRl.canDrop());
-			// invert train directions
-			int oldDirection = oldRl.getTrainDirection();
-			if (oldDirection == RouteLocation.NORTH)
-				newRl.setTrainDirection(RouteLocation.SOUTH);
-			else if (oldDirection == RouteLocation.SOUTH)
-				newRl.setTrainDirection(RouteLocation.NORTH);
-			else if (oldDirection == RouteLocation.EAST)
-				newRl.setTrainDirection(RouteLocation.WEST);
-			else if (oldDirection == RouteLocation.WEST)
-				newRl.setTrainDirection(RouteLocation.EAST);
-			// get the max length between location
-			if(oldNextRl == null){
-				log.error("Can not copy route, oldNextRl is null!");
-				return;
-			}
-			newRl.setMaxTrainLength(oldNextRl.getMaxTrainLength());
-		}
-		newRl.setTrainIconX(oldRl.getTrainIconX());
-		newRl.setTrainIconY(oldRl.getTrainIconY());
 	}
 	
 	private void reportRouteExists(String s){

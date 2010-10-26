@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.JComboBox;
 
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
@@ -16,8 +18,8 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 /**
  * Manages the routes
  * @author      Bob Jacobsen Copyright (C) 2003
- * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.18 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
+ * @version	$Revision: 1.19 $
  */
 public class RouteManager {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "routesListLength"; 
@@ -51,8 +53,7 @@ public class RouteManager {
 
     /**
      * @return requested Route object or null if none exists
-     */
-     
+     */  
     public Route getRouteByName(String name) {
     	Route l;
     	Enumeration<Route> en =_routeHashTable.elements();
@@ -64,7 +65,7 @@ public class RouteManager {
         return null;
     }
     
-    public Route getRouteById (String id){
+    public Route getRouteById(String id){
     	return _routeHashTable.get(id);
     }
  
@@ -75,7 +76,7 @@ public class RouteManager {
      * 
      * @return new route or existing route
      */
-    public Route newRoute (String name){
+    public Route newRoute(String name){
     	Route route = getRouteByName(name);
     	if (route == null){
     		_id++;						
@@ -163,16 +164,16 @@ public class RouteManager {
     	
     	for (int i=0; i<sortList.size(); i++){
     		routeAdded = false;
-    		route = getRouteById (sortList.get(i));
+    		route = getRouteById(sortList.get(i));
     		try{
-    			routeNumber = Integer.parseInt (route.getId());
+    			routeNumber = Integer.parseInt(route.getId());
     		}catch (NumberFormatException e) {
     			log.error("route id number isn't a number");
     		}
     		for (int j=0; j<out.size(); j++ ){
-    			route = getRouteById (out.get(j));
+    			route = getRouteById(out.get(j));
         		try{
-        			int outRouteNumber = Integer.parseInt (route.getId());
+        			int outRouteNumber = Integer.parseInt(route.getId());
         			if (routeNumber < outRouteNumber){
         				out.add(j, sortList.get(i));
         				routeAdded = true;
@@ -203,7 +204,7 @@ public class RouteManager {
         return out;
     }
     
-    public JComboBox getComboBox (){
+    public JComboBox getComboBox(){
     	JComboBox box = new JComboBox();
     	box.addItem("");
 		List<String> routes = getRoutesByNameList();
@@ -223,6 +224,76 @@ public class RouteManager {
 			box.addItem(route);
 		}
     }
+    
+    /**
+     * Copy route, returns a new route named routeName.  If invert is
+     * true the reverse of the route is returned.
+     * @param route The route to be copied
+     * @param routeName The name of the new route
+     * @param invert If true, return the inversion of route
+     * @return A copy of the route
+     */
+    public Route copyRoute(Route route, String routeName, boolean invert){
+    	Route newRoute = newRoute(routeName);
+		List<String> oldRouteLocations = route.getLocationsBySequenceList();
+		if (!invert){
+			for (int i=0; i<oldRouteLocations.size(); i++){
+				copyRouteLocation(route, newRoute, oldRouteLocations.get(i), null, invert);
+			}
+		// invert route order
+		} else {
+			for (int i=oldRouteLocations.size()-1; i>=0; i--){
+				int y = i-1;
+				if (y<0)
+					y=0;
+				copyRouteLocation(route, newRoute, oldRouteLocations.get(i), oldRouteLocations.get(y), invert);
+			}
+		}
+		return newRoute;
+    }
+    
+	private void copyRouteLocation(Route oldRoute, Route newRoute, String id, String nextId, boolean invert){
+		LocationManager locationManager = LocationManager.instance();
+		RouteLocation oldRl = oldRoute.getLocationById(id);
+		RouteLocation oldNextRl = null;
+		if (nextId != null)
+			oldNextRl = oldRoute.getLocationById(nextId);
+		Location l = locationManager.getLocationByName(oldRl.getName());
+		RouteLocation newRl = newRoute.addLocation(l);
+		// now copy the route location objects we want
+		newRl.setMaxCarMoves(oldRl.getMaxCarMoves());
+		newRl.setWait(oldRl.getWait());
+		newRl.setComment(oldRl.getComment());
+		if(!invert){
+			newRl.setCanDrop(oldRl.canDrop());
+			newRl.setCanPickup(oldRl.canPickup());
+			newRl.setGrade(oldRl.getGrade());
+			newRl.setTrainDirection(oldRl.getTrainDirection());
+			newRl.setMaxTrainLength(oldRl.getMaxTrainLength());
+		}else{
+			// flip drops and pickups
+			newRl.setCanDrop(oldRl.canPickup());
+			newRl.setCanPickup(oldRl.canDrop());
+			// invert train directions
+			int oldDirection = oldRl.getTrainDirection();
+			if (oldDirection == RouteLocation.NORTH)
+				newRl.setTrainDirection(RouteLocation.SOUTH);
+			else if (oldDirection == RouteLocation.SOUTH)
+				newRl.setTrainDirection(RouteLocation.NORTH);
+			else if (oldDirection == RouteLocation.EAST)
+				newRl.setTrainDirection(RouteLocation.WEST);
+			else if (oldDirection == RouteLocation.WEST)
+				newRl.setTrainDirection(RouteLocation.EAST);
+			// get the max length between location
+			if(oldNextRl == null){
+				log.error("Can not copy route, oldNextRl is null!");
+				return;
+			}
+			newRl.setMaxTrainLength(oldNextRl.getMaxTrainLength());
+		}
+		newRl.setTrainIconX(oldRl.getTrainIconX());
+		newRl.setTrainIconY(oldRl.getTrainIconY());
+	}
   
     /**
      * @return Number of routes
