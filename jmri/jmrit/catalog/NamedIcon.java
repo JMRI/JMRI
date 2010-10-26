@@ -26,18 +26,31 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class NamedIcon extends ImageIcon {
 
     /**
-     * Create a NamedIcon that is a complete copy 
+     * Create a NamedIcon that is a complete copy
      * of an existing NamedIcon
      * @param pOld Object to copy
+     * i.e. copy of the original icon, but NOT a complete
+     * copy of pOld (no transformations done)  
      */
     public NamedIcon(NamedIcon pOld) {
         this(pOld.mURL, pOld.mName);
+    }
+    
+    /**
+     * Create a NamedIcon that is really a complete copy 
+     * of an existing NamedIcon
+     * @param pOld Object to copy
+     */
+    public NamedIcon(NamedIcon pOld, Component comp) {
+        this(pOld.mURL, pOld.mName);
+        setLoad(pOld._deg, pOld._scale, comp);
+        setRotation(pOld.mRotation, comp);
     }
     
     /**
