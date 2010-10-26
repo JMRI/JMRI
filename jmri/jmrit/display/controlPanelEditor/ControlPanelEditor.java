@@ -804,6 +804,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     * Set up selections for a paste
     */
     protected void copyItem(Positionable p) {
+        if (_debug) log.debug("Enter copyItem: _selectionGroup "+(_selectionGroup!=null ?
+                                                  "size= "+_selectionGroup.size() : "null"));
         if (_selectionGroup!=null && !_selectionGroup.contains(p)) {
             _selectionGroup = null;
         }
@@ -813,12 +815,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         }
         ArrayList <Positionable> selectionGroup = new ArrayList <Positionable>();
         for (int i=0; i<_selectionGroup.size(); i++) {
-            Positionable pos = _selectionGroup.get(i).clone();
+//            if (_debug) log.debug("copyItem: clone "+_selectionGroup.get(i).getClass().getName());
+            Positionable pos = _selectionGroup.get(i).deepClone();
             selectionGroup.add(pos);
         }
         _selectionGroup = selectionGroup;
         _pastePending = true;
-        if (_debug) log.debug("copyItem: _selectionGroup.size()= "+_selectionGroup.size());
+//        if (_debug) log.debug("Exit copyItem: _selectionGroup.size()= "+_selectionGroup.size());
     }
         
     /**

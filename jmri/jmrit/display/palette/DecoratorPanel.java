@@ -130,7 +130,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             _sample.setVisible(true);
             _preview.add(_sample);
         } else {
-            _item = pos.clone();
+            _item = pos.deepClone();
             _item.setVisible(true);
             _preview.add((JComponent)_item);
         }
@@ -345,7 +345,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             if (!isDataFlavorSupported(flavor)) {
                 return null;
             }
-            return _sample.clone();
+            return _sample.deepClone();
         }
     }
 
