@@ -11,26 +11,19 @@ import java.util.ResourceBundle;
 import javax.swing.BoxLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-
-
 
 /**
  * Frame for copying a route for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.11 $
+ * @version             $Revision: 1.12 $
  */
 public class RouteCopyFrame extends OperationsFrame {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle");
 
-	RoutesTableModel routesModel = new RoutesTableModel();
-	javax.swing.JTable routesTable = new javax.swing.JTable(routesModel);
 	RouteManager routeManager = RouteManager.instance();
-	JScrollPane routesPane;
-	String routeName;
 	
 	// labels
 	javax.swing.JLabel textCopyRoute = new javax.swing.JLabel(rb.getString("CopyRoute"));
@@ -153,7 +146,6 @@ public class RouteCopyFrame extends OperationsFrame {
 	}
 
     public void dispose() {
-    	routesModel.dispose();
         super.dispose();
     }
     

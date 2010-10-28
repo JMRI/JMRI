@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -158,6 +158,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy"), routeName));
+		toolMenu.add(new SetTrainIconPositionAction(rb.getString("MenuSetTrainIcon")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
@@ -220,13 +221,16 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void addNewRouteLocation(){
 		// add location to this route
+		Location l = (Location)locationBox.getSelectedItem();
 		RouteLocation rl;
 		if (addLocAtTop.isSelected())
-			rl = _route.addLocation((Location)locationBox.getSelectedItem(),0);
+			rl = _route.addLocation(l,0);
 		else
-			rl =_route.addLocation((Location)locationBox.getSelectedItem());
+			rl =_route.addLocation(l);
 		rl.setTrainDirection(routeModel.getLastTrainDirection());
 		rl.setMaxTrainLength(routeModel.getLastMaxTrainLength());
+		// set train icon location
+		rl.setTrainIconCoordinates();
 	}
 	
 	private void saveNewRoute(){

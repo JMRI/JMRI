@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
@@ -284,6 +284,30 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	
 	public Track getStagingTrack(){
 		return _stagingTrack;
+	}
+	
+	/**
+	 * Set the train icon panel coordinates to the location defaults.  Coordinates
+	 * are dependent on the train's departure direction.
+	 */
+	public void setTrainIconCoordinates(){
+		Location l = LocationManager.instance().getLocationByName(getName());
+		if ((getTrainDirection() & Location.EAST) > 0){
+			setTrainIconX(l.getTrainIconEast().x);
+			setTrainIconY(l.getTrainIconEast().y);
+		}
+		if ((getTrainDirection() & Location.WEST) > 0){
+			setTrainIconX(l.getTrainIconWest().x);
+			setTrainIconY(l.getTrainIconWest().y);
+		}
+		if ((getTrainDirection() & Location.NORTH) > 0){
+			setTrainIconX(l.getTrainIconNorth().x);
+			setTrainIconY(l.getTrainIconNorth().y);
+		}
+		if ((getTrainDirection() & Location.SOUTH) > 0){
+			setTrainIconX(l.getTrainIconSouth().x);
+			setTrainIconY(l.getTrainIconSouth().y);
+		}
 	}
 
     public void dispose(){

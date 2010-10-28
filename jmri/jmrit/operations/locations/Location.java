@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.locations;
 
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -12,13 +13,14 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
 
 /**
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -34,6 +36,10 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _usedLength = 0;			//length of track filled by cars and engines 
 	protected String _comment = "";
 	protected boolean _switchList = true;	//when true print switchlist for this location 
+	protected Point _trainIconEast = new Point();	//coordinates of east bound train icons
+	protected Point _trainIconWest = new Point();
+	protected Point _trainIconNorth = new Point();
+	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	
 	public static final int NORMAL = 1;		// ops mode for this location
@@ -180,6 +186,38 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	public boolean getSwitchList() {
 		return _switchList;
+	}
+	
+	public void setTrainIconEast(Point point){
+		_trainIconEast = point;
+	}
+	
+	public Point getTrainIconEast(){
+		return _trainIconEast;
+	}
+	
+	public void setTrainIconWest(Point point){
+		_trainIconWest = point;
+	}
+	
+	public Point getTrainIconWest(){
+		return _trainIconWest;
+	}
+	
+	public void setTrainIconNorth(Point point){
+		_trainIconNorth = point;
+	}
+	
+	public Point getTrainIconNorth(){
+		return _trainIconNorth;
+	}
+	
+	public void setTrainIconSouth(Point point){
+		_trainIconSouth = point;
+	}
+	
+	public Point getTrainIconSouth(){
+		return _trainIconSouth;
 	}
 	
 	
@@ -545,15 +583,30 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param e  Consist XML element
      */
-    public Location(org.jdom.Element e) {
+    public Location(Element e) {
 //        if (log.isDebugEnabled()) log.debug("ctor from element "+e);
-        org.jdom.Attribute a;
+        Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in location element when reading operations");
         if ((a = e.getAttribute("name")) != null )  _name = a.getValue();
         if ((a = e.getAttribute("ops")) != null )  _locationOps = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("dir")) != null )  _trainDir = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("switchList")) != null )  _switchList = (a.getValue().equals("true"));
+        // load train icon coordinates
+        Attribute x;
+        Attribute y;
+        if ((x = e.getAttribute("eastTrainIconX")) != null && (y = e.getAttribute("eastTrainIconY"))!= null){
+        	setTrainIconEast(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
+        }
+        if ((x = e.getAttribute("westTrainIconX")) != null && (y = e.getAttribute("westTrainIconY"))!= null){
+        	setTrainIconWest(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
+        }
+        if ((x = e.getAttribute("northTrainIconX")) != null && (y = e.getAttribute("northTrainIconY"))!= null){
+        	setTrainIconNorth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
+        }
+        if ((x = e.getAttribute("southTrainIconX")) != null && (y = e.getAttribute("southTrainIconY"))!= null){
+        	setTrainIconSouth(new Point(Integer.parseInt(x.getValue()),Integer.parseInt(y.getValue())));
+        }      
         if ((a = e.getAttribute("comment")) != null )  _comment = a.getValue();
         if ((a = e.getAttribute("carTypes")) != null ) {
         	String names = a.getValue();
@@ -585,13 +638,29 @@ public class Location implements java.beans.PropertyChangeListener {
      * detailed DTD in operations-locations.dtd.
      * @return Contents in a JDOM Element
      */
-    public org.jdom.Element store() {
-        org.jdom.Element e = new org.jdom.Element("location");
+    public Element store() {
+        Element e = new Element("location");
         e.setAttribute("id", getId());
         e.setAttribute("name", getName());
         e.setAttribute("ops", Integer.toString(getLocationOps()));
         e.setAttribute("dir", Integer.toString(getTrainDirections()));
         e.setAttribute("switchList", getSwitchList()?"true":"false");
+        if (!getTrainIconEast().equals(new Point())){
+        	e.setAttribute("eastTrainIconX", Integer.toString(getTrainIconEast().x));
+        	e.setAttribute("eastTrainIconY", Integer.toString(getTrainIconEast().y));
+        }
+        if (!getTrainIconWest().equals(new Point())){
+        	e.setAttribute("westTrainIconX", Integer.toString(getTrainIconWest().x));
+        	e.setAttribute("westTrainIconY", Integer.toString(getTrainIconWest().y));
+        }
+        if (!getTrainIconNorth().equals(new Point())){
+        	e.setAttribute("northTrainIconX", Integer.toString(getTrainIconNorth().x));
+        	e.setAttribute("northTrainIconY", Integer.toString(getTrainIconNorth().y));
+        }
+        if (!getTrainIconSouth().equals(new Point())){
+        	e.setAttribute("southTrainIconX", Integer.toString(getTrainIconSouth().x));
+        	e.setAttribute("southTrainIconY", Integer.toString(getTrainIconSouth().y));
+        }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
         CarTypes ct = CarTypes.instance();

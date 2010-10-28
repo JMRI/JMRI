@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a location roster -->
-<!-- $Id: operations-locations.dtd,v 1.10 2010-10-22 01:10:49 dan_boudreau Exp $ -->
+<!-- $Id: operations-locations.dtd,v 1.11 2010-10-28 00:58:00 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -32,6 +32,14 @@
 <!ATTLIST location dir				CDATA #IMPLIED> 
 <!ATTLIST location carTypes			CDATA #IMPLIED> 
 <!ATTLIST location switchList		(true | false) "false">
+<!ATTLIST location eastTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location eastTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location westTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location westTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location northTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location northTrainIconY	CDATA #IMPLIED>
+<!ATTLIST location southTrainIconX	CDATA #IMPLIED>
+<!ATTLIST location southTrainIconY	CDATA #IMPLIED>
 <!ATTLIST location comment			CDATA #IMPLIED>
 
 <!ATTLIST track id				CDATA #REQUIRED>          

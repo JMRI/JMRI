@@ -11,13 +11,14 @@ import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSpinner;
 
 
 /**
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -125,6 +126,18 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 	
 	protected void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("check box action not overridden");
+	}
+	
+	protected void addSpinnerChangeListerner(JSpinner s) {
+		s.addChangeListener(new javax.swing.event.ChangeListener() {
+			public void stateChanged(javax.swing.event.ChangeEvent e) {
+				spinnerChangeEvent(e);
+			}
+		});
+	}
+	
+	protected void spinnerChangeEvent(javax.swing.event.ChangeEvent ae) {
+		log.debug("spinner action not overridden");
 	}
 	
 	protected void addComboBoxAction(JComboBox b) {

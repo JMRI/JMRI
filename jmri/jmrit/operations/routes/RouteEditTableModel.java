@@ -11,7 +11,6 @@ import javax.swing.table.TableColumnModel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
@@ -21,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -296,6 +295,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	RouteLocation rl = _route.getLocationById(list.get(row));
     	_trainDirection = Setup.getDirectionInt((String)((JComboBox)value).getSelectedItem());
     	rl.setTrainDirection(_trainDirection);
+    	// update train icon 
+    	rl.setTrainIconCoordinates();
     }
     
     private void setMaxTrainMoves (Object value, int row){
