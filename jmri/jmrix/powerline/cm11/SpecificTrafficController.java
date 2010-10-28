@@ -23,7 +23,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -48,14 +48,18 @@ public class SpecificTrafficController extends SerialTrafficController {
         X10Sequence.Command c;
         while ( (c = s.getCommand() ) !=null) {
             SpecificMessage m;
-            if (c.isAddress()) 
+            if (c.isAddress()) {
                 m = SpecificMessage.getAddress(c.getHouseCode(), ((X10Sequence.Address)c).getAddress());
-            else {
+            } else if (c.isFunction()) {
                 X10Sequence.Function f = (X10Sequence.Function)c;
                 if (f.getDimCount() > 0)
                     m = SpecificMessage.getFunctionDim(f.getHouseCode(), f.getFunction(), f.getDimCount());
                 else
                     m = SpecificMessage.getFunction(f.getHouseCode(), f.getFunction());
+            } else {
+            	// isn't address or function
+            	X10Sequence.ExtData e = (X10Sequence.ExtData)c;
+            	m = SpecificMessage.getExtCmd(c.getHouseCode(), e.getAddress(), e.getExtCmd(), e.getExtData());
             }
             sendSerialMessage(m, l);
         }
@@ -64,7 +68,7 @@ public class SpecificTrafficController extends SerialTrafficController {
     /**
      * This system provides 22 dim steps
      */
-    public int getNumberOfIntensitySteps() { return 22; }
+    public int getNumberOfIntensitySteps() { return 63; }
     
     /**
      * Get a message of a specific length for filling in.

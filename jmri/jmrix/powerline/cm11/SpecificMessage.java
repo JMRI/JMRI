@@ -4,6 +4,7 @@ package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
+import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial
@@ -21,7 +22,7 @@ import jmri.jmrix.powerline.X10Sequence;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -58,26 +59,37 @@ public class SpecificMessage extends SerialMessage {
 	public String toMonitorString() {
         // check for valid length
         int len = getNumDataElements();
-        String text;
+        StringBuilder text = new StringBuilder();
         switch (getElement(0)&0xFF) {
-            case 0xFB : text = "Macro load reply"; break;
-            case 0x9B : text = "Set CM11 time"; break;
+            case 0xFB : text.append("Macro load reply"); break;
+            case 0x9B : text.append("Set CM11 time"); break;
             case 0xC3 : if (len == 1) {
-            		text = "Poll Ack"; break;
+            		text.append("Poll Ack"); break;
             	} // else fall through
             case 0x00 : if (len == 1) {
-                    text = "OK for transmission"; break;
+                    text.append("OK for transmission"); break;
                 } // else fall through
             default: {
-            	if (len == 2) {
+            	if ((len == 2) || (len == 5)) {
+                	text.append(Constants.formatHeaderByte(getElement(0 & 0xFF)));
                     if ((getElement(0)& 0x02) == 0x02) {
-                    	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-                    		+ ' ' + X10Sequence.formatCommandByte(getElement(1)&0xFF);
-                    } else
-                    	text = Constants.formatHeaderByte(getElement(0 & 0xFF)) 
-                		+ ' ' + X10Sequence.formatAddressByte(getElement(1)&0xFF);
+                    	text.append(" ");
+                    	text.append(X10Sequence.formatCommandByte(getElement(1) & 0xFF));
+                    } else {
+                    	text.append(" ");
+                		text.append(X10Sequence.formatAddressByte(getElement(1) & 0xFF));
+                    }
+                    if (len == 5) {
+                    	text.append(" ");
+                		text.append(X10Sequence.formatAddressByte(getElement(2) & 0xFF));
+                    	text.append(" cmd: 0x");
+                    	text.append(StringUtil.twoHexFromInt(getElement(3) & 0xFF));
+                    	text.append(" data: 0x");
+                    	text.append(StringUtil.twoHexFromInt(getElement(4) & 0xFF));
+                    }
             	} else {
-            		text = "Reply was short, len: " + len + " value: " + Constants.formatHeaderByte(getElement(0 & 0xFF));
+            		text.append("Reply was not expected, len: " + len);
+            		text.append(" value: " + Constants.formatHeaderByte(getElement(0 & 0xFF)));
             	}
             }
         }
@@ -137,7 +149,7 @@ public class SpecificMessage extends SerialMessage {
         } else {
         	m.setElement(0, 0x04);
         }
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(1,(X10Sequence.encode(housecode)<<4) + X10Sequence.encode(devicecode));
         return m;
     }
     static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
@@ -148,14 +160,24 @@ public class SpecificMessage extends SerialMessage {
         } else {
         	m.setElement(0, 0x06);
         }
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
+        m.setElement(1,(X10Sequence.encode(housecode) << 4) + function);
         return m;
     }
     static public SpecificMessage getFunction(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(2);
         m.setInterlocked(true);
         m.setElement(0,0x06);
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
+        m.setElement(1,(X10Sequence.encode(housecode) << 4) + function);
+        return m;
+    }
+    static public SpecificMessage getExtCmd(int housecode, int devicecode, int function, int dimcode) {
+        SpecificMessage m = new SpecificMessage(5);
+        m.setInterlocked(true);
+        m.setElement(0, 0x07);
+        m.setElement(1,(X10Sequence.encode(housecode)<<4) + X10Sequence.FUNCTION_EXTENDED_CODE);
+        m.setElement(2,X10Sequence.encode(devicecode));
+        m.setElement(4, function);
+        m.setElement(3, dimcode);
         return m;
     }
 }

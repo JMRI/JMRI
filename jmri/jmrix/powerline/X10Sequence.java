@@ -21,7 +21,7 @@ package jmri.jmrix.powerline;
  * you should check the coding of your new specific adapter before using them.
  *
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.5 $
+ * @version			$Revision: 1.6 $
  */
 public class X10Sequence {
 
@@ -42,13 +42,14 @@ public class X10Sequence {
     public static final int FUNCTION_STATUS_OFF             = 14;
     public static final int FUNCTION_STATUS_REQUEST         = 15;
 
+    public static final int EXTCMD_DIM        = 0x31;
+
     // First implementation of this class uses a fixed length
     // array to hold the sequence; there's a practical limit to how
     // many X10 commands anybody would want to send at once!
     private static final int MAXINDEX = 32;
     int index = 0;
     Command[] cmds = new Command[MAXINDEX];  // doesn't scale, but that's for another day
-    
     
     /**
      * Append a new "do function" operation to the sequence
@@ -67,7 +68,16 @@ public class X10Sequence {
         cmds[index] = new Address(house, device);
         index++;
     }
-    
+
+    /**
+     * Append a new "do function" operation to the sequence
+     */
+    public void addExtData(int house, int device, int cmd, int data) {
+        if (index >= MAXINDEX) throw new IllegalArgumentException("Sequence too long");
+        cmds[index] = new ExtData(house, device, cmd, data);
+        index++;
+    }
+
     /**
      * Next getCommand will be the first in the sequence
      */
@@ -131,14 +141,20 @@ public class X10Sequence {
      * Represent a single "Extended Data" X10 command
      */
     public static class ExtData implements Command {
-        public ExtData(int value) {
-            this.value = value;
-            this.house = -1;
+        public ExtData(int house, int device, int cmd, int data) {
+            this.house = house;
+            this.device = device;
+            this.cmd = cmd;
+            this.data = data;
         }
-        int value;
         int house;
-        public int getExtData() { return value; }
+        int device;
+        int cmd;
+        int data;
+        public int getExtData() { return data; }
+        public int getExtCmd() { return cmd; }
         public int getHouseCode() { return house; }
+        public int getAddress()  { return device; }
         public boolean isAddress() { return false; }
         public boolean isFunction() { return false; }
     }
@@ -277,7 +293,6 @@ public class X10Sequence {
 		}
 	    return hCode;
 	}
-
 }
 
 /* @(#)X10Sequence.java */
