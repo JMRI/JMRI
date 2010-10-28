@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.5 2010-08-16 17:12:52 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.6 2010-10-28 19:06:46 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -158,15 +158,9 @@ JMRI Install Guide: Windows
 <li>In your e-mail client, the Yahoo! "Post Message" pane, Notepad, Wordpad, favorite word processor, etc, position your cursor and left-click on Edit and then Paste, or press the "Ctrl" and "V" keys.
 </ol>
 
-<h4>Keeping The Log Window Open</h4>
-<p>Usually the log window closes when the program ends, and that's what you want.  Sometimes, you want it to stay around so you can see error messages that happen during shutdown, or even caused the shutdown.</p>
-
-<p>To get the window to stay open:</p>
-<ol>
-<li>Right click and select "show properties" on the program icon
-<li>Deselect "Close window on program end"
-</ol>
-
+<h4>Startup issues</h4>
+<p>For information on updating the JMRI shortcuts to assist with start-up issues,
+see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">page outlining the start-up procedure on Windows</a>.</p>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
