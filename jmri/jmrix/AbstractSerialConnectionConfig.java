@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 
 //
@@ -117,6 +117,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 public void focusGained(FocusEvent e){ }
             });
         }
+        portBox.addFocusListener( new FocusListener() {
+            public void focusGained(FocusEvent e){
+                refreshPortBox();
+            }
+            public void focusLost(FocusEvent e){}
+        
+        });
         init = true;
     }
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -137,6 +144,25 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         String t = (String)portBox.getSelectedItem();
         if (t!=null) return t;
         else return JmrixConfigPane.NONE;
+    }
+    
+    public void refreshPortBox() {
+        Vector<String> v;
+        v = adapter.getPortNames();
+        if(portBox.getActionListeners().length >0)
+        	portBox.removeActionListener(portBox.getActionListeners()[0]);
+        portBox.removeAllItems();
+        log.debug("getting fresh list of available Serial Ports");
+        if(v==null){
+        	log.error("port name Vector v is null!");
+        	return;
+        }
+        for (int i=0; i<v.size(); i++) {
+                portBox.addItem(v.elementAt(i));
+        }
+        if (v.size()==0)
+        	portBox.addItem(rb.getString("noPortsFound"));
+    
     }
    
 	public void loadDetails(final JPanel details) {
@@ -165,20 +191,9 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
             NUMOPTIONS=NUMOPTIONS+2;
         }
-        // need to remove ActionListener before addItem() or action event will occur
-        if(portBox.getActionListeners().length >0)
-        	portBox.removeActionListener(portBox.getActionListeners()[0]);
-        portBox.removeAllItems();
-        if(v==null){
-        	log.error("port name Vector v is null!");
-        	return;
-        }
-        for (int i=0; i<v.size(); i++) {
-                portBox.addItem(v.elementAt(i));
-        }
-        if (v.size()==0)
-        	portBox.addItem(rb.getString("noPortsFound"));
 
+        refreshPortBox();
+        
         baudList = adapter.validBaudRates();
         // need to remove ActionListener before addItem() or action event will occur
         if(baudBox.getActionListeners().length >0)
@@ -355,7 +370,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public boolean isBaudAdvanced() { return true; }
     
     public String getManufacturer() { return adapter.getManufacturer(); }
-    public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
+        
+    public void setManufacturer(String manufacturer) { 
+        if (adapter!=null){
+            adapter.setManufacturer(manufacturer); 
+        }
+    }
     
     public boolean getDisabled() {
         if (adapter==null) return true;
