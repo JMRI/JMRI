@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.92 $
+ * @version             $Revision: 1.93 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -482,17 +482,19 @@ public class TrainBuilder extends TrainCommon{
 			return false;	// can't use this track		
 		}
 		// test to see if departure track has cars assigned to another train
+		/*
+		 * // TODO Not sure if the following code needs to be executed, checkDepartureStagingTrack() is called before getEngines()
 		if (leavingStaging && engineList.size() == 0 && departStageTrack.getNumberCars()>0){
-			// TODO Not sure if the following code is ever executed, checkDepartureStagingTrack() is called before getEngines()
-			List<String> carList = carManager.getByIdList();
+						List<String> carList = carManager.getByIdList();
 			for (int i=0; i<carList.size(); i++){
 				Car car = carManager.getById(carList.get(i));
-				if (car.getTrackName().equals(departStageTrack.getName()) && car.getRouteDestination()!=null){
+				if (car.getTrack() == departStageTrack && car.getRouteDestination()!=null){
 					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarsAlreadyAssigned"),new Object[]{departStageTrack.getName()}));
 					return false;	// can't use this track		
 				}
 			}
 		}
+		*/
 		// show how many engines were found
 		if (engineList.size()>0){
 			if (reqNumEngines > 1)
@@ -843,7 +845,7 @@ public class TrainBuilder extends TrainCommon{
     		// all cars in staging must be accepted, so don't exclude if in staging
     		// note that for trains departing staging the engine and car roads and types were
     		// checked in the routine checkDepartureStagingTrack().
-    		if (departStageTrack == null || !c.getTrack().getName().equals(departStageTrack.getName())){
+    		if (departStageTrack == null || c.getTrack() != departStageTrack){
     			if (!train.acceptsRoadName(c.getRoad())){
     				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarWrongRoad"),new Object[]{c.toString(), c.getType(), c.getRoad()}));
     				carList.remove(carList.get(carIndex));
