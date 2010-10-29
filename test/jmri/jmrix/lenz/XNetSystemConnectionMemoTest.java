@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
  *
  * Description:	    tests for the jmri.jmrix.lenz.XNetSystemConnectionMemo class
  * @author			Paul Bender
- * @version         $Revision: 2.1 $
+ * @version         $Revision: 2.2 $
  */
 public class XNetSystemConnectionMemoTest extends TestCase {
 
@@ -20,6 +20,26 @@ public class XNetSystemConnectionMemoTest extends TestCase {
 
         XNetSystemConnectionMemo t = new XNetSystemConnectionMemo(tc);
         Assert.assertNotNull(t);
+        Assert.assertNotNull(t.getXNetTrafficController());
+        // While we are constructing the memo, we should also set the 
+        // SystemMemo parameter in the traffic controller.
+        Assert.assertNotNull(tc.getSystemConnectionMemo());
+    }
+
+    public void testXNetTrafficControllerSetCtor() {
+       // infrastructure objects
+       XNetInterfaceScaffold tc = new XNetInterfaceScaffold(new LenzCommandStation());
+
+        XNetSystemConnectionMemo t = new XNetSystemConnectionMemo();
+        Assert.assertNotNull(t);
+        // the default constructor does not set the traffic controller
+        Assert.assertNull(t.getXNetTrafficController());
+        // so we need to do this ourselves.
+        t.setXNetTrafficController(tc);
+        Assert.assertNotNull(t.getXNetTrafficController());
+        // and while we're doing that, we should also set the SystemMemo 
+        // parameter in the traffic controller.
+        Assert.assertNotNull(tc.getSystemConnectionMemo());
     }
 
 	// from here down is testing infrastructure
