@@ -12,7 +12,7 @@ import jmri.*;
  * instance manager to activate their particular system.
  *
  * @author   Paul Bender Copyright (C) 2010
- * @version  $Revision: 1.4 $
+ * @version  $Revision: 1.5 $
  */
 
 public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
@@ -28,6 +28,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      InstanceManager.store(cf=new jmri.jmrix.lenz.swing.XNetComponentFactory(this),
                            jmri.jmrix.swing.ComponentFactory.class);
 
+     if(log.isDebugEnabled()) log.debug("Created XNetSystemConnectionMemo");
    }
 
    public XNetSystemConnectionMemo(){
@@ -38,6 +39,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      // create and register the XNetComponentFactory
      InstanceManager.store(cf=new jmri.jmrix.lenz.swing.XNetComponentFactory(this),                            jmri.jmrix.swing.ComponentFactory.class);
 
+     if(log.isDebugEnabled()) log.debug("Created XNetSystemConnectionMemo");
    }
 
    jmri.jmrix.swing.ComponentFactory cf = null;
@@ -48,7 +50,12 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public XNetTrafficController getXNetTrafficController() { return xt; }
     private XNetTrafficController xt;
-    public void setXNetTrafficController(XNetTrafficController xt) { this.xt = xt; }
+    public void setXNetTrafficController(XNetTrafficController xt) { 
+               this.xt = xt; 
+               // in addition to setting the traffic controller in this object,
+               // set the systemConnectionMemo in the traffic controller
+               xt.setSystemConnectionMemo(this);
+    }
 
     /**
      * Provides access to the Programmer for this particular connection.
@@ -73,6 +80,7 @@ public class XNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
 
+        static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XNetSystemConnectionMemo.class.getName());
 
 
 }
