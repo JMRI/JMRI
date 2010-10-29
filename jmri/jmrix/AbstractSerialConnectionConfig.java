@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 
 //
@@ -51,13 +51,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
-        portBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                adapter.setPort((String)portBox.getSelectedItem());
-                p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
-                pref.disallowSave();
-            }
-        });
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
@@ -146,30 +139,59 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         else return JmrixConfigPane.NONE;
     }
     
+    Vector<String> v;
+    
     public void refreshPortBox() {
-        Vector<String> v;
         v = adapter.getPortNames();
         if(portBox.getActionListeners().length >0)
         	portBox.removeActionListener(portBox.getActionListeners()[0]);
         portBox.removeAllItems();
         log.debug("getting fresh list of available Serial Ports");
-        if(v==null){
-        	log.error("port name Vector v is null!");
-        	return;
-        }
-        for (int i=0; i<v.size(); i++) {
+        if(v!=null){
+            for (int i=0; i<v.size(); i++) {
                 portBox.addItem(v.elementAt(i));
+            }
+        } else {
+            log.error("port name Vector v is null!");
+        	return;
         }
         if (v.size()==0)
         	portBox.addItem(rb.getString("noPortsFound"));
-    
+            String portName = adapter.getCurrentPortName();
+        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
+            // portBox must contain portName even if it doesn't exist
+            if(!v.contains(portName))
+                portBox.insertItemAt(portName, 0);
+            portBox.setSelectedItem(portName);
+        } else {
+            if (p.getComboBoxLastSelection(adapter.getClass().getName()+".port")!=null){
+                portName = p.getComboBoxLastSelection(adapter.getClass().getName()+".port");
+                if(v.contains(portName)){
+                    portBox.setSelectedItem(portName);
+                    adapter.setPort(portName);
+                }
+                else{
+                    portBox.insertItemAt(rb.getString("noneSelected"),0);
+                    portBox.setSelectedIndex(0);
+                }
+            } else {
+                    portBox.insertItemAt(rb.getString("noneSelected"),0);
+                    portBox.setSelectedIndex(0);                                    
+            }
+        }
+        portBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                adapter.setPort((String)portBox.getSelectedItem());
+                p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
+                pref.disallowSave();
+            }
+        });
     }
    
 	public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
 
-        Vector<String> v;
         try {
             v = adapter.getPortNames();
     	    if (log.isDebugEnabled()) {
@@ -246,7 +268,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBoxLabel = new JLabel("Serial port: ");
         
-        String portName = adapter.getCurrentPortName();
+        /*String portName = adapter.getCurrentPortName();
         if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
             // portBox must contain portName even if it doesn't exist
             if(!v.contains(portName))
@@ -267,7 +289,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                     portBox.insertItemAt(rb.getString("noneSelected"),0);
                     portBox.setSelectedIndex(0);                                    
             }
-        }
+        }*/
         baudBoxLabel = new JLabel("Baud rate:");
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());        
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
@@ -383,6 +405,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
     public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
     
+
     public String getConnectionName() { 
         if((adapter!=null) && (adapter.getSystemConnectionMemo()!=null))
             return adapter.getSystemConnectionMemo().getUserName();
