@@ -32,7 +32,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
@@ -63,8 +63,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 	// combo boxes
 	javax.swing.JComboBox locationBox = LocationManager.instance().getComboBox();
 	
-    //Spinners
-	SpinnerNumberModel model = new SpinnerNumberModel(0,0,10000,1);
+    //Spinners	 
     JSpinner spinTrainIconEastX = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
     JSpinner spinTrainIconEastY = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
     JSpinner spinTrainIconWestX = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
@@ -74,14 +73,21 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JSpinner spinTrainIconSouthX = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
     JSpinner spinTrainIconSouthY = new JSpinner(new SpinnerNumberModel(0,0,10000,1));
     
+	// Four test train icons
+	TrainIcon _tIonEast;
+	TrainIcon _tIonWest;
+	TrainIcon _tIonNorth;
+	TrainIcon _tIonSouth;
+    
     public SetTrainIconPositionFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.routes.JmritOperationsRoutesBundle").getString("MenuSetTrainIcon"));
+        
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
         
         // set tool tips
         placeButton.setToolTipText(rb.getString("TipPlaceButton") +" "+ Setup.getPanelName());
-        applyButton.setToolTipText(rb.getString("TipApplyButton"));
+        applyButton.setToolTipText(rb.getString("TipApplyAllButton"));
         saveButton.setToolTipText(rb.getString("TipSaveButton"));
 	    
         //      Set up the panels
@@ -129,11 +135,12 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
         addItem(pControl, saveButton, 2, 0);
         
         // only show valid directions
+
         pEast.setVisible((Setup.getTrainDirection() & Setup.EAST) > 0);
         pWest.setVisible((Setup.getTrainDirection() & Setup.WEST) > 0);
         pNorth.setVisible((Setup.getTrainDirection() & Setup.NORTH) > 0);
         pSouth.setVisible((Setup.getTrainDirection() & Setup.SOUTH) > 0);
-        
+
         getContentPane().add(pLocation);
         getContentPane().add(pNorth);
         getContentPane().add(pSouth);
@@ -170,8 +177,10 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
      
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	// check to see if a location has been selected 
-    	if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(""))
+    	if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")){
+    		JOptionPane.showMessageDialog(null, "Select a location to edit", "No Location Selected!", JOptionPane.ERROR_MESSAGE);
     		return;
+    	}
     	Location l = (Location)locationBox.getSelectedItem();
     	if (l == null)
     		return;		
@@ -183,12 +192,22 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     				"Update train icon coordinates for "+l.getName()+"?",
 					"Do you want to update all routes?", 
 					JOptionPane.YES_NO_OPTION);
-    		if (value == JOptionPane.OK_OPTION)
+    		if (value == JOptionPane.YES_OPTION)
     			updateTrainIconCoordinates(l);
+    		if (value == JOptionPane.NO_OPTION){
+    	  		value = JOptionPane.showConfirmDialog(null,
+        				"Update train icon coordinates for "+l.getName()+"?",
+    					"Update the defaults for this location?", 
+    					JOptionPane.YES_NO_OPTION);
+    	   		if (value == JOptionPane.YES_OPTION)
+    	   			saveSpinnerValues(l);
+    		}
+    			
     	}
     	if (ae.getSource() == saveButton){
     		saveSpinnerValues(l);
     		LocationManagerXml.instance().writeOperationsFile();
+    		RouteManagerXml.instance().writeOperationsFile();
     	}
     }
 	
@@ -275,20 +294,18 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 		l.setTrainIconSouth(new Point((Integer)spinTrainIconSouthX.getValue(), (Integer)spinTrainIconSouthY.getValue()));	
 	}
 	
-	// Four test train icons
-	TrainIcon _tIonEast;
-	TrainIcon _tIonWest;
-	TrainIcon _tIonNorth;
-	TrainIcon _tIonSouth;
-	
 	// place test markers on panel
 	private void placeTestIcons(){
 		removeIcons();
 		if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(""))
 			return;
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+		if (editor == null) {
+			JOptionPane.showMessageDialog(null, "Load panel \""+Setup.getPanelName()+"\"", "Panel not found!", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
         Location l = (Location)locationBox.getSelectedItem();
-		if (editor != null && l != null) { 
+		if (l != null) { 
 			// East icon
 			if ((Setup.getTrainDirection() & Setup.EAST) > 0){
 				_tIonEast = editor.addTrainIcon(rb.getString("East"));

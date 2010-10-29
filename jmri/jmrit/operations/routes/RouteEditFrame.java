@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -158,7 +158,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPrint"), new Frame(), false, _route));
 		toolMenu.add(new PrintRouteAction(rb.getString("MenuItemPreview"), new Frame(), true, _route));
 		toolMenu.add(new RouteCopyAction(rb.getString("MenuItemCopy"), routeName));
-		toolMenu.add(new SetTrainIconPositionAction(rb.getString("MenuSetTrainIcon")));
+		toolMenu.add(new SetTrainIconRouteAction(rb.getString("MenuSetTrainIconRoute"), routeName));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
