@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.5 2010-10-24 18:48:56 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.6 2010-10-29 20:17:43 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -148,6 +148,26 @@ Simon Ginsburg updated the German translation
 Dan Boudreau added a new operations feature to
 allow local moves between sidings, yards, and interchanges.  
 Users can control each of these build options in Settings->Options.
+
+<p>
+Dan Boudreau added a new operations tool, 
+the ability update train icon coordinates for a location in all routes.
+
+<p>
+Ken Cameron changes the X10 support for 
+dim to use extended command which is a single direct command. 
+May not work with older dim modules. 
+Also may cause cp290 interface issues, not tested yet on cp290.
+
+<p>
+Kevin Dickerson: Re-creates the serial port drop down list box each time it becomes active, thus picking up any new serial/usb interfaces that have been added since JMRI was started.
+
+<p>
+Dan Boudreau:
+<ul>
+<li>Fix build bug when staging track doesn't have an engine, and staging track name is the same as another in a different location.
+<li>New operations tool, visually update train icon coordinates for a route.
+</ul>
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
