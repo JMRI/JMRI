@@ -10,7 +10,7 @@ import jmri.jmrix.powerline.SerialReply;
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -38,6 +38,7 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
                 case Constants.TIME_REQ: val = "CP11 time request\n";break;
                 case 0xA6: val = "CP10 time request\n";break;
                 case 0xF3: val = "Input Filter Failed\n";break;
+                case 0x5B: val = "EPROM Address Transmission\n";break;
                 case Constants.READY_REQ: val = "Interface Ready\n";break;
                 default: val = "One byte, probably CRC\n";break;
             }

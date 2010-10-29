@@ -22,7 +22,7 @@ import jmri.util.StringUtil;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -60,17 +60,75 @@ public class SpecificMessage extends SerialMessage {
         // check for valid length
         int len = getNumDataElements();
         StringBuilder text = new StringBuilder();
-        switch (getElement(0)&0xFF) {
-            case 0xFB : text.append("Macro load reply"); break;
-            case 0x9B : text.append("Set CM11 time"); break;
-            case 0xC3 : if (len == 1) {
-            		text.append("Poll Ack"); break;
+        switch (getElement(0) & 0xFF) {
+            case 0xFB :
+            	text.append("Macro load reply");
+            	break;
+            case 0x5B :
+            	text.append("Macro Poll");
+            	break;
+            case 0xA5 :
+            	text.append("Power Fail Poll");
+            	break;
+            case 0x9B :
+            	text.append("Set CM11 time");
+            	break;
+            case 0x07:	// extended command
+            	text.append("Extended Cmd");
+                if (len == 5) {
+                	text.append(" house ");
+            		text.append(X10Sequence.houseValueToText(X10Sequence.decode((getElement(1) >> 4) & 0x0F)));
+            		text.append(" address device ");
+            		text.append(X10Sequence.decode(getElement(2) & 0x0F));
+            		int d = getElement(3) & 0xFF;
+            		switch (getElement(4) & 0xFF) {
+            		case X10Sequence.EXTCMD_DIM:
+            			text.append(" Direct Dim: ");
+            			if ((d & 0x3F) <= 0x3E) {
+            				text.append(((d & 0x3F) / 0.63) + "%");
+            			} else if (d == 0x3F) {
+            				text.append("Full On");
+            			} else {
+                        	text.append(" data: 0x");
+                        	text.append(StringUtil.twoHexFromInt(d));
+            			}
+//            			switch ((d >> 6) & 0x03) {
+//            			case 0:
+//            				text.append(" 3.7 Sec");
+//            				break;
+//            			case 1:
+//            				text.append(" 30 Sec");
+//            				break;
+//            			case 2:
+//            				text.append(" 1 Min");
+//            				break;
+//            			case 3:
+//            				text.append(" 5 Min");
+//            				break;
+//            			}
+            			break;
+        			default:
+                    	text.append(" cmd: 0x");
+                    	text.append(StringUtil.twoHexFromInt(getElement(4) & 0xFF));
+                    	text.append(" data: 0x");
+                    	text.append(StringUtil.twoHexFromInt(getElement(3) & 0xFF));
+            		}
+                } else {
+                	text.append(" wrong length: " + len);
+                }
+            	break;
+            case 0xC3 :
+            	if (len == 1) {
+            		text.append("Poll Ack");
+            		break;
             	} // else fall through
-            case 0x00 : if (len == 1) {
-                    text.append("OK for transmission"); break;
+            case 0x00 :
+            	if (len == 1) {
+                    text.append("OK for transmission");
+                    break;
                 } // else fall through
             default: {
-            	if ((len == 2) || (len == 5)) {
+            	if (len == 2) {
                 	text.append(Constants.formatHeaderByte(getElement(0 & 0xFF)));
                     if ((getElement(0)& 0x02) == 0x02) {
                     	text.append(" ");
@@ -78,14 +136,6 @@ public class SpecificMessage extends SerialMessage {
                     } else {
                     	text.append(" ");
                 		text.append(X10Sequence.formatAddressByte(getElement(1) & 0xFF));
-                    }
-                    if (len == 5) {
-                    	text.append(" ");
-                		text.append(X10Sequence.formatAddressByte(getElement(2) & 0xFF));
-                    	text.append(" cmd: 0x");
-                    	text.append(StringUtil.twoHexFromInt(getElement(3) & 0xFF));
-                    	text.append(" data: 0x");
-                    	text.append(StringUtil.twoHexFromInt(getElement(4) & 0xFF));
                     }
             	} else {
             		text.append("Reply was not expected, len: " + len);
@@ -174,10 +224,10 @@ public class SpecificMessage extends SerialMessage {
         SpecificMessage m = new SpecificMessage(5);
         m.setInterlocked(true);
         m.setElement(0, 0x07);
-        m.setElement(1,(X10Sequence.encode(housecode)<<4) + X10Sequence.FUNCTION_EXTENDED_CODE);
-        m.setElement(2,X10Sequence.encode(devicecode));
-        m.setElement(4, function);
+        m.setElement(1, (X10Sequence.encode(housecode)<<4) + X10Sequence.FUNCTION_EXTENDED_CODE);
+        m.setElement(2, X10Sequence.encode(devicecode));
         m.setElement(3, dimcode);
+        m.setElement(4, function);
         return m;
     }
 }

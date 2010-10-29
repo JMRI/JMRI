@@ -23,7 +23,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -129,6 +129,14 @@ public class SpecificTrafficController extends SerialTrafficController {
             SerialMessage m = SpecificMessage.setCM11Time(X10Sequence.encode(1));
             forwardToPort(m, null);
             return true;  // message done
+        }
+        // check for reporting macro trigger
+        if ((msg.getElement(0) & 0xFF) == 0x5B) {
+        	if (msg.getNumDataElements() >= 3) {
+        		return true;
+        	} else {
+        		return false;	// waiting for high-low addr
+        	}
         }
         // if the interlock is present, send it
         if (sendInterlock) {
