@@ -25,7 +25,7 @@ public class EasyDccConsistManagerTest extends TestCase {
     // test the initilization loop
     public void testInitSequence(){
         EasyDccInterfaceScaffold t = new EasyDccInterfaceScaffold();
-        EasyDccListenerScaffold l = new EasyDccListenerScaffold();
+        new EasyDccListenerScaffold();
         EasyDccConsistManager m = new EasyDccConsistManager();
         
         for(int i=1;i<255;i++){
