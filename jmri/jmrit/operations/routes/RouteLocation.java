@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.19 $
+ * @version             $Revision: 1.20 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
@@ -29,6 +29,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _sequenceId = 0;			// used to determine location order in route
 	protected double _grade = 0;			// maximum grade between locations
 	protected int _wait = 0;				// wait time at this location
+	protected String _departureTime = "";	// departure time from this location
 	protected int _trainIconX = 0;			// the x & y coordinates for the train icon
 	protected int _trainIconY = 0;
 	protected String _comment = "";
@@ -241,6 +242,17 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		return _wait;
 	}
 	
+	public void setDepartureTime(String time){
+		String old = _departureTime;
+		_departureTime = time;
+		if (!old.equals(time))
+			firePropertyChange("departureTime", old, time);
+	}
+	
+	public String getDepartureTime(){
+		return _departureTime;
+	}
+	
 	public void setGrade(double grade){
 		double old = _grade;
 		_grade = grade;
@@ -361,6 +373,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("pickups")) != null ) _pickups = a.getValue().equals("yes");
         if ((a = e.getAttribute("drops")) != null ) _drops = a.getValue().equals("yes");
         if ((a = e.getAttribute("wait")) != null )  _wait = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("departTime")) != null )  _departureTime = a.getValue();
         if ((a = e.getAttribute("trainIconX")) != null )  _trainIconX = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("trainIconY")) != null )  _trainIconY = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("sequenceId")) != null )  _sequenceId = Integer.parseInt(a.getValue());
@@ -385,6 +398,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
        	e.setAttribute("pickups", canPickup()?"yes":"no");
        	e.setAttribute("drops", canDrop()?"yes":"no");
     	e.setAttribute("wait", Integer.toString(getWait()));
+    	e.setAttribute("departTime", getDepartureTime());
        	e.setAttribute("trainIconX", Integer.toString(getTrainIconX()));
       	e.setAttribute("trainIconY", Integer.toString(getTrainIconY()));
     	e.setAttribute("comment", getComment());

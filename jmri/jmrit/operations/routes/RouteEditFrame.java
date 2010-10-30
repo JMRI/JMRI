@@ -19,8 +19,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of route
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.35 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.36 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -39,10 +39,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	RouteLocation _routeLocation = null;
 
 	// major buttons
-	JButton addLocationButton = new JButton();
-	JButton saveRouteButton = new JButton();
-	JButton deleteRouteButton = new JButton();
-	JButton addRouteButton = new JButton();
+	JButton addLocationButton = new JButton(rb.getString("AddLocation"));
+	JButton saveRouteButton = new JButton(rb.getString("SaveRoute"));
+	JButton deleteRouteButton = new JButton(rb.getString("DeleteRoute"));
+	JButton addRouteButton = new JButton(rb.getString("AddRoute"));
 
 	// check boxes
 	JCheckBox checkBox;
@@ -51,6 +51,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton addLocAtTop = new JRadioButton(rb.getString("Top"));
     JRadioButton addLocAtBottom = new JRadioButton(rb.getString("Bottom"));
     ButtonGroup group = new ButtonGroup();
+    
+    JRadioButton showWait = new JRadioButton(rb.getString("Wait"));
+    JRadioButton showDepartTime = new JRadioButton(rb.getString("DepartTime"));
+    ButtonGroup groupTime = new ButtonGroup();
 	
 	// text field
 	JTextField routeNameTextField = new JTextField(20);
@@ -74,15 +78,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// load managers
 		manager = RouteManager.instance();
 		managerXml = RouteManagerXml.instance();
-
-		deleteRouteButton.setText(rb.getString("DeleteRoute"));
-		deleteRouteButton.setVisible(true);
-		addRouteButton.setText(rb.getString("AddRoute"));
-		addRouteButton.setVisible(true);
-		saveRouteButton.setText(rb.getString("SaveRoute"));
-		saveRouteButton.setVisible(true);
-		addLocationButton.setText(rb.getString("AddLocation"));
-		addLocationButton.setVisible(true);
 		
 	   	// Set up the jtable in a Scroll Pane..
     	routePane = new JScrollPane(routeTable);
@@ -102,34 +97,52 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
 	    //      Set up the panels
+	    JPanel p1 = new JPanel();
+	    p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+	    
+	    // name panel
     	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
-				
-		// Layout the panel by rows
-		// row 1
-
 		addItem(pName, routeNameTextField, 1, 1);
-
-		// row 2
-    	JPanel p3 = new JPanel();
-    	p3.setLayout(new GridBagLayout());
-    	p3.setBorder(BorderFactory.createTitledBorder(""));
-    	addItem(p3, locationBox, 0, 1);
-    	addItem(p3, addLocationButton, 1, 1);
-    	addItem(p3, addLocAtTop, 2, 1);
-    	addItem(p3, addLocAtBottom, 3, 1);
+		
+		// comment panel
+	   	JPanel pComment = new JPanel();
+    	pComment.setLayout(new GridBagLayout());
+    	pComment.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pComment, commentTextField, 0, 0);
+		
+		p1.add(pName);
+		p1.add(pComment);
+		
+	    JPanel p2 = new JPanel();
+	    p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+		
+		// location panel
+    	JPanel pLoc = new JPanel();
+    	pLoc.setLayout(new GridBagLayout());
+    	pLoc.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+    	addItem(pLoc, locationBox, 0, 1);
+    	addItem(pLoc, addLocationButton, 1, 1);
+    	addItem(pLoc, addLocAtTop, 2, 1);
+    	addItem(pLoc, addLocAtBottom, 3, 1);
     	group.add(addLocAtTop);
     	group.add(addLocAtBottom);
     	addLocAtBottom.setSelected(true);
     	
-    	
-		// row 11 comment
-	   	JPanel pC = new JPanel();
-    	pC.setLayout(new GridBagLayout());
-    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
-		addItem(pC, commentTextField, 0, 0);
+    	// Wait or Depart Time panel
+    	JPanel pWait = new JPanel();
+    	pWait.setLayout(new GridBagLayout());
+    	pWait.setBorder(BorderFactory.createTitledBorder(rb.getString("Display")));
+    	addItem(pWait, showWait, 0, 1);
+    	addItem(pWait, showDepartTime, 1, 1);
+    	groupTime.add(showWait);
+    	groupTime.add(showDepartTime);
+    	showWait.setSelected(true);
 
+    	p2.add(pLoc);
+    	p2.add(pWait);
+    	
 		// row 12 buttons
     	JPanel pB = new JPanel();
     	pB.setLayout(new GridBagLayout());
@@ -137,10 +150,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addItem(pB, addRouteButton, 1, 0);
 		addItem(pB, saveRouteButton, 3, 0);
 		
-		getContentPane().add(pName);
+		getContentPane().add(p1);
        	getContentPane().add(routePane);
-       	getContentPane().add(p3);
-       	getContentPane().add(pC);
+       	getContentPane().add(p2);
        	getContentPane().add(pB);
 		
 		// setup buttons
@@ -149,8 +161,9 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		addButtonAction(addRouteButton);
 		addButtonAction(saveRouteButton);
 		
-		// setup combobox
-       	
+		// setup radio buttons
+		addRadioButtonAction(showWait);
+		addRadioButtonAction(showDepartTime);
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -217,6 +230,10 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 			saveNewRoute();
 		}
+	}
+	
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
+		routeModel.setWait(showWait.isSelected());
 	}
 	
 	private void addNewRouteLocation(){

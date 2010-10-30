@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.93 $
+ * @version             $Revision: 1.94 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1718,12 +1718,16 @@ public class TrainBuilder extends TrainCommon{
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			newLine(fileOut);
 			String routeLocationName = splitString(rl.getName());
-			if (r == 0)
+			if (r == 0){
 				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 						+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
-			else
+			} else if (!rl.getDepartureTime().equals("")){
+				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
+						+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+			} else {
 				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
 						+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
+			}
 			// add comment
 			if (!rl.getComment().equals(""))
 				addLine(fileOut, rl.getComment());

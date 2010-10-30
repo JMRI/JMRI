@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.89 $
+ * @version $Revision: 1.90 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -83,8 +83,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
 	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved
-	protected String railroadName ="";		// optional railroad name for this train
-	protected String logoURL ="";			// optional manifest logo for this train
+	protected String _railroadName ="";		// optional railroad name for this train
+	protected String _logoURL ="";			// optional manifest logo for this train
+	protected Engine _leadEngine = null; 	// lead engine for icon
 	protected String _comment = "";
 	
 	// property change names
@@ -223,16 +224,17 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Gets the expected time when this train will arrive at
 	 * the location rl.  Expected arrival time is based on the
 	 * number of car pickup and drops for this train.
-	 * TODO Doesn't provide correct expected arrival time if train
+	 * TODO Doesn't provide expected arrival time if train
 	 * is in route, instead provides relative time.
 	 * @return expected arrival time
 	 */
 	public String getExpectedArrivalTime(RouteLocation routeLocation){
-		int carPickups = 0;
-		int carDrops = 0;
-		int numberOfLocations = 0;
-		int waitTime = 0;
-		boolean trainAt = false;
+		int minutes = 0;
+		if (!isTrainInRoute()){
+			minutes += _departureTime.get(Calendar.MINUTE); 
+			minutes += 60*_departureTime.get(Calendar.HOUR_OF_DAY);
+		}
+		//boolean trainAt = false;
 		CarManager carManager = CarManager.instance();
 		List<String> carList = carManager.getByTrainList(this);
 		if (getRoute() != null){
@@ -241,38 +243,38 @@ public class Train implements java.beans.PropertyChangeListener {
 				RouteLocation rl = getRoute().getLocationById(routeList.get(i));
 				if (rl == routeLocation)
 					break; // done
+				// is there a departure time from this location?
+				if (!rl.getDepartureTime().equals("")){
+					String dt = rl.getDepartureTime();
+					log.debug("Location "+rl.getName()+" departure time "+dt);
+					String[] time = dt.split(":");
+					minutes = 60*Integer.parseInt(time[0])+Integer.parseInt(time[1]);
+					//log.debug("New minutes: "+minutes);
+				}
 				// add wait time
-				waitTime = waitTime + rl.getWait();
-				if (rl == getCurrentLocation())
-					trainAt = true;
-				if (trainAt)
-					numberOfLocations++;
-				if (i == 0)
-					continue; // don't count work at departure
+				minutes += rl.getWait();
+				// add travel time
+				minutes += Setup.getTravelTime();	
+				// don't count work if there's a departure time
+				if (i == 0 || !rl.getDepartureTime().equals(""))
+					continue; 
 				for (int j=0; j<carList.size(); j++){
 					Car car = carManager.getById(carList.get(j));
 					if (car.getRouteLocation() == rl && !car.getTrackName().equals("")){
-						carPickups++;
+						minutes += Setup.getSwitchTime();
 					}
 					if (car.getRouteDestination() == rl){
-						carDrops++;
+						minutes += Setup.getSwitchTime();
 					}
 				}
 			}
 		}
-		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), "+numberOfLocations+" locations and a total " 
-				+carPickups+ " pickups and "+carDrops+ " drops, wait time " +waitTime);
+		log.debug("Calculate arrival time for train (" +getName()+ ") at ("+routeLocation.getName()+"), minutes from departure: "+minutes);
 		// TODO use fast clock to get current time vs departure time
 		// for now use relative
-		int minutes = numberOfLocations*Setup.getTravelTime() + carPickups*Setup.getSwitchTime() + carDrops*Setup.getSwitchTime() + waitTime; 
 		int hours = 0;
 		int days = 0;
-		
-		if (!isTrainInRoute()){
-			minutes += _departureTime.get(Calendar.MINUTE); 
-			hours = _departureTime.get(Calendar.HOUR_OF_DAY);
-		}
-		
+				
 		if (minutes >= 60){
 			int h = minutes/60;
 			minutes = minutes-h*60;
@@ -1121,7 +1123,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public String getRailroadName(){
-		return railroadName;
+		return _railroadName;
 	}
 	
 	/**
@@ -1129,15 +1131,15 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @param name The railroad name for this train.
 	 */
 	public void setRailroadName(String name){
-		railroadName = name;
+		_railroadName = name;
 	}
 	
 	public String getManifestLogoURL(){
-		return logoURL;
+		return _logoURL;
 	}
 	
 	public void setManifestLogoURL(String pathName){
-		logoURL = pathName;
+		_logoURL = pathName;
 	}
 	
 	public void setBuilt(boolean built) {
@@ -1480,7 +1482,6 @@ public class Train implements java.beans.PropertyChangeListener {
 		} 
 	}
 	
-	protected Engine leadEngine = null; 				// lead engine for icon
 	public String getIconName(){
 		String name = getName();
 		if (getBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled())
@@ -1493,16 +1494,16 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return lead engine for this train
 	 */
 	public Engine getLeadEngine(){
-		if (leadEngine == null  && !_leadEngineId.equals("")){
-			leadEngine = EngineManager.instance().getById(_leadEngineId);
+		if (_leadEngine == null  && !_leadEngineId.equals("")){
+			_leadEngine = EngineManager.instance().getById(_leadEngineId);
 		}
-		return leadEngine;
+		return _leadEngine;
 	}
 	
 	public void setLeadEngine(Engine engine){
 		if (engine == null)
 			_leadEngineId = "";
-		leadEngine = engine;
+		_leadEngine = engine;
 	}
 	
 	protected TrainIcon _trainIcon = null;

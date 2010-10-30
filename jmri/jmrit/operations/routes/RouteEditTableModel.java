@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -44,9 +44,18 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     private static final int DELETECOLUMN = DOWNCOLUMN +1;
     
     private static final int HIGHESTCOLUMN = DELETECOLUMN+1;
+    
+    private boolean _showWait = true;
+    private JTable _table;
 
     public RouteEditTableModel() {
         super();
+    }
+    
+    public void setWait(boolean showWait){
+    	_showWait = showWait;
+    	fireTableStructureChanged();
+    	initTable(_table);
     }
  
     Route _route;
@@ -68,9 +77,14 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 	List<String> list = new ArrayList<String>();
     
 	void initTable(JTable table, Route route) {
+		_table = table;
 		_route = route;
 		if (_route != null)
 			_route.addPropertyChangeListener(this);
+		initTable(table);
+	}
+	
+	void initTable(JTable table) {
 		// Install the button handlers
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
@@ -93,7 +107,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		table.getColumnModel().getColumn(MAXMOVESCOLUMN).setPreferredWidth(45);
 		table.getColumnModel().getColumn(PICKUPCOLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(DROPCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(45);
+		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(55);
 		table.getColumnModel().getColumn(MAXLENGTHCOLUMN).setPreferredWidth(75);
 		table.getColumnModel().getColumn(GRADE).setPreferredWidth(50);
 		table.getColumnModel().getColumn(TRAINICONX).setPreferredWidth(40);
@@ -119,7 +133,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         case MAXMOVESCOLUMN: return rb.getString("MaxMoves");
         case PICKUPCOLUMN: return rb.getString("Pickups");
         case DROPCOLUMN: return rb.getString("Drops");
-        case WAITCOLUMN: return rb.getString("Wait");
+        case WAITCOLUMN: {
+        	if (_showWait)
+        		return rb.getString("Wait");
+        	else
+        		return rb.getString("Time");
+        }
         case MAXLENGTHCOLUMN: return rb.getString("MaxLength");
         case GRADE: return rb.getString("Grade");
         case TRAINICONX: return rb.getString("X");
@@ -140,7 +159,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         case MAXMOVESCOLUMN: return String.class;
         case PICKUPCOLUMN: return JComboBox.class;
         case DROPCOLUMN: return JComboBox.class;
-        case WAITCOLUMN: return String.class;
+        case WAITCOLUMN: {
+        	if (_showWait)
+        		return String.class;
+        	else
+        		return JComboBox.class;
+        }
         case MAXLENGTHCOLUMN: return String.class;
         case GRADE: return String.class;
         case TRAINICONX: return String.class;
@@ -199,7 +223,15 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         	cb.setSelectedItem(rl.canDrop()?rb.getString("yes"):rb.getString("no")); 
         	return cb;
         }
-        case WAITCOLUMN: return Integer.toString(rl.getWait());
+        case WAITCOLUMN: {
+        	if (_showWait){
+        		return Integer.toString(rl.getWait());
+        	} else {
+        		JComboBox cb = getTimeComboBox();
+        		cb.setSelectedItem(rl.getDepartureTime());
+        		return cb;
+        	}
+        }
         case MAXLENGTHCOLUMN: return Integer.toString(rl.getMaxTrainLength());
         case GRADE: return Double.toString(rl.getGrade());
         case TRAINICONX: return Integer.toString(rl.getTrainIconX());
@@ -244,8 +276,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 		case DROPCOLUMN:
 			setDrop(value, row);
 			break;
-		case WAITCOLUMN:
-			setWait(value, row);
+		case WAITCOLUMN:{
+			if (_showWait)
+				setWait(value, row);
+			else
+				setDepartureTime(value, row);
+		}
 			break;
 		case MAXLENGTHCOLUMN:
 			setMaxTrainLength(value, row);
@@ -349,6 +385,11 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
      	rl.setWait(wait);
     }
     
+    private void setDepartureTime (Object value, int row){
+    	RouteLocation rl = _route.getLocationById(list.get(row));
+    	rl.setDepartureTime(((String)((JComboBox)value).getSelectedItem()));
+    }
+    
     private void setMaxTrainLength (Object value, int row){
     	RouteLocation rl = _route.getLocationById(list.get(row));
     	int length;
@@ -428,6 +469,28 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	cb.addItem(rb.getString("yes"));
     	cb.addItem(rb.getString("no"));
     	return cb;
+    }
+    
+    private JComboBox getTimeComboBox(){
+    	JComboBox timeBox = new JComboBox();
+    	String hour;
+    	String minute;
+    	timeBox.addItem("");
+		for (int i=0; i<24; i++){
+			if (i<10)
+				hour = "0"+Integer.toString(i);
+			else
+				hour = Integer.toString(i);
+			for (int j=0; j<60; j=j+5){
+				if (j<10)
+					minute = "0"+Integer.toString(j);
+				else
+					minute = Integer.toString(j);
+				
+				timeBox.addItem(hour+":"+minute);
+			}
+		}
+    	return timeBox;
     }
 
     // this table listens for changes to a route and it's locations
