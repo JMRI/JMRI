@@ -37,7 +37,7 @@ import jmri.util.FileUtil;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
@@ -342,6 +342,8 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         this.dispose();
     }
 
+    private static final long serialVersionUID = 1L;
+    
     private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JavaSoundAudioBuffer.class.getName());
 
 }

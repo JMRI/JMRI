@@ -10,7 +10,7 @@ package jmri.implementation;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
@@ -42,6 +42,8 @@ public class DefaultRoute extends AbstractNamedBean
     
     protected String soundFilename;
     protected String scriptFilename;
+    
+    private static final long serialVersionUID = 1L;
     
     /**
      *  Operational instance variables (not saved between runs)

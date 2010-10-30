@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -523,6 +523,8 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
                 log.debug("Set pitch of JavaSoundAudioSource " + this._audio + " to " + pitch);
         }
     }
+    
+    private static final long serialVersionUID = 1L;
 }
 
 /* $(#)JavaSoundAudioSource.java */
