@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: XmlSchema.shtml,v 1.8 2010-05-05 16:35:08 jacobsen Exp $ -->
+<!-- $Id: XmlSchema.shtml,v 1.9 2010-10-30 02:19:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -151,7 +151,7 @@ schema document, and commit them back to CVS.
 <li>
 You <em>do not</em> need
 to version the schema if you add or change things such that
-existing files continue on validate.
+existing files continue to validate.
 <p>
 In this case, the steps to version the schema are:
     <ol>
