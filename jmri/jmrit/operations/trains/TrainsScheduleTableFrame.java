@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame {
 	
@@ -66,9 +66,15 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 	
 	// check boxes
 	
+	// active schedule id
+	private String _activeId = "";
+	
     public TrainsScheduleTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTimeTableTrains"));
 
+        // set active id
+        _activeId = trainManager.getTrainScheduleActiveId();
+        
         // general GUI configuration
         getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
@@ -93,8 +99,11 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
     		JRadioButton b = new JRadioButton();
     		b.setText(ts.getName());
+    		b.setName(l.get(i));
     		cp2.add(b);
     		schGroup.add(b);
+    		if (b.getName().equals(_activeId))
+    			b.setSelected(true);
     	}
     	
     	//row 3
@@ -190,6 +199,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 			b = en.nextElement();
 			if (b.isSelected()){
 				log.debug("schedule radio button "+b.getText());
+				_activeId = b.getName();
 				TrainSchedule ts = TrainScheduleManager.instance().getScheduleByName(b.getText());
 				List<String> trains = trainManager.getTrainsByIdList();
 				for (int j=0; j<trains.size(); j++){
@@ -204,6 +214,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 	protected void storeValues(){
 		trainManager.setTrainScheduleFrame(this);
 		trainManager.setTrainScheduleFrameTableColumnWidths(getCurrentTableColumnWidths()); // save column widths
+		trainManager.setTrainSecheduleActiveId(_activeId);
 		trainManager.save();
 	}
 	

@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.46 $
+ * @version	$Revision: 1.47 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -57,6 +57,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private Dimension _trainScheduleFrameDimension = new Dimension(800, Control.panelHeight);
 	private Point _trainScheduleFramePosition = new Point();
 	private int[] _tableScheduleColumnWidths = {50, 70, 120};
+	private String _trainScheduleActiveId = "";
 	
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
@@ -199,7 +200,18 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	_tableScheduleColumnWidths = tableColumnWidths;
     }
     
-	
+    /**
+     * Sets the selected schedule id
+     * @param id Selected schedule id
+     */
+    public void setTrainSecheduleActiveId(String id){
+    	_trainScheduleActiveId = id;
+    }
+    
+    public String getTrainScheduleActiveId(){
+    	return _trainScheduleActiveId;
+    }
+    
 	public void dispose() {
         _trainHashTable.clear();
         _id = 0;
@@ -560,6 +572,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	}
     	e = values.getChild("trainScheduleOptions");
     	if (e != null){
+    		if ((a = e.getAttribute("activeId")) != null){
+    			_trainScheduleActiveId = a.getValue();
+    		}
     		// determine panel position
     		int x = 0;
     		int y = 0;
@@ -647,6 +662,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         values.addContent(e);
         // now save train schedule frame size and position
         e = new Element("trainScheduleOptions");
+        e.setAttribute("activeId", getTrainScheduleActiveId());
         size = getTrainScheduleFrameSize();
         posn = getTrainScheduleFramePosition();
         if (_trainScheduleFrame != null){
