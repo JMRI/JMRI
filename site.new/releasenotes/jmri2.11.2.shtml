@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.6 2010-10-29 20:17:43 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.7 2010-10-30 22:02:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -167,6 +167,7 @@ Dan Boudreau:
 <ul>
 <li>Fix build bug when staging track doesn't have an engine, and staging track name is the same as another in a different location.
 <li>New operations tool, visually update train icon coordinates for a route.
+<li>New operations feature.  Allow users to set a departure time anywhere in a route.  Nice feature for passenger trains.
 </ul>
 
 <!--#include virtual="/Footer" -->
