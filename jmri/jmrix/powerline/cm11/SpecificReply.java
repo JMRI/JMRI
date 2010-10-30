@@ -4,13 +4,14 @@ package jmri.jmrix.powerline.cm11;
 
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.SerialReply;
+import jmri.util.StringUtil;
 
 /**
  * Contains the data payload of a serial reply
  * packet.  Note that its _only_ the payload.
  *
  * @author	Bob Jacobsen  Copyright (C) 2002, 2006, 2007, 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
@@ -30,24 +31,38 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
 
     public String toMonitorString() {
         // check for valid length
+        StringBuffer sb = new StringBuffer();
         if (getNumDataElements() == 1) {
-            String val;
             int msg = getElement(0);
             switch (msg&0xFF) {
-                case Constants.POLL_REQ: val = "Data Available\n";break;
-                case Constants.TIME_REQ: val = "CP11 time request\n";break;
-                case 0xA6: val = "CP10 time request\n";break;
-                case 0xF3: val = "Input Filter Failed\n";break;
-                case 0x5B: val = "EPROM Address Transmission\n";break;
-                case Constants.READY_REQ: val = "Interface Ready\n";break;
-                default: val = "One byte, probably CRC\n";break;
+                case Constants.POLL_REQ:
+                	sb.append("Data Available\n");
+                	break;
+                case Constants.TIME_REQ_CP11:
+                	sb.append("CP11 time request\n");
+                	break;
+                case Constants.TIME_REQ_CP10:
+                	sb.append("CP10 time request\n");
+                	break;
+                case Constants.FILTER_FAIL:
+                	sb.append("Input Filter Failed\n");
+                	break;
+                case Constants.READY_REQ:
+                	sb.append("Interface Ready\n");
+                	break;
+                default:
+                	sb.append("One byte, probably CRC\n");
+                	break;
             }
-            return val;
+            return sb.toString();
         } else if ((getNumDataElements() == 2) && ((getElement(1)&0xFF) == Constants.READY_REQ)) {
-            return "CRC 0x"+jmri.util.StringUtil.twoHexFromInt(getElement(0))+" and Interface Ready\n";    
+            sb.append("CRC 0x");
+            sb.append(jmri.util.StringUtil.twoHexFromInt(getElement(0)));
+    		sb.append(" and Interface Ready\n");
+            return sb.toString();
         } else if ((getElement(0)& 0xFF) == Constants.POLL_REQ ) { 
             // must be received data
-            StringBuffer sb = new StringBuffer("Receive data, ");
+            sb.append("Receive data, ");
             sb.append(getElement(1)& 0xFF);
             sb.append(" bytes; ");
             int last = (getElement(1)& 0xFF) + 1;
@@ -63,9 +78,27 @@ public class SpecificReply extends jmri.jmrix.powerline.SerialReply {
             }
             sb.append("\n");
             return sb.toString();
-        } else {
+        } else if ((getElement(0)& 0xFF) == 0x5B ) {
+        	if (getNumDataElements() == 3) {
+        		sb.append("EPROM Address Poll: ");
+        		sb.append(StringUtil.twoHexFromInt(getElement(1) & 0xFF));
+        		sb.append(":");
+        		sb.append(StringUtil.twoHexFromInt(getElement(2) & 0xFF));
+        		sb.append("\n");
+            	return sb.toString();
+        	} else {
+        		sb.append("EPROM Address Poll, invalid length: ");
+        		sb.append(getNumDataElements());
+        		return sb.toString();
+        	}
+        }else {
             // don't know, just show
-            return "Unknown reply of length " + getNumDataElements() + " " + toString()+"\n";
+        	sb.append("Unknown reply of length ");
+			sb.append(getNumDataElements());
+			sb.append(" ");
+            sb.append(toString()+"\n");
+            sb.append("\n");
+            return sb.toString();
         }
     }
 

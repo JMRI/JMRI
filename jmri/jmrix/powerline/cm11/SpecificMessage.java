@@ -22,7 +22,7 @@ import jmri.util.StringUtil;
  * </ul>
  *
  * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 
 public class SpecificMessage extends SerialMessage {
@@ -61,19 +61,19 @@ public class SpecificMessage extends SerialMessage {
         int len = getNumDataElements();
         StringBuilder text = new StringBuilder();
         switch (getElement(0) & 0xFF) {
-            case 0xFB :
+            case Constants.MACRO_LOAD :
             	text.append("Macro load reply");
             	break;
-            case 0x5B :
+            case Constants.MACRO_INITIATED :
             	text.append("Macro Poll");
             	break;
-            case 0xA5 :
+            case Constants.TIME_REQ_CP11 :
             	text.append("Power Fail Poll");
             	break;
-            case 0x9B :
+            case Constants.TIMER_DOWNLOAD :
             	text.append("Set CM11 time");
             	break;
-            case 0x07:	// extended command
+            case Constants.EXT_CMD_HEADER:	// extended command
             	text.append("Extended Cmd");
                 if (len == 5) {
                 	text.append(" house ");
@@ -117,12 +117,12 @@ public class SpecificMessage extends SerialMessage {
                 	text.append(" wrong length: " + len);
                 }
             	break;
-            case 0xC3 :
+            case Constants.POLL_ACK :
             	if (len == 1) {
             		text.append("Poll Ack");
             		break;
             	} // else fall through
-            case 0x00 :
+            case Constants.CHECKSUM_OK :
             	if (len == 1) {
                     text.append("OK for transmission");
                     break;

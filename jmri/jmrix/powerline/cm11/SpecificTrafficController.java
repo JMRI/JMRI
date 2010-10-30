@@ -23,7 +23,7 @@ import jmri.jmrix.powerline.SerialMessage;
  * with it.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SpecificTrafficController extends SerialTrafficController {
 
@@ -125,7 +125,7 @@ public class SpecificTrafficController extends SerialTrafficController {
             return false;  // reply message will get data appended            
         }
         // check for request time
-        if ((msg.getElement(0)&0xFF)==Constants.TIME_REQ) {
+        if (((msg.getElement(0) & 0xFF) == Constants.TIME_REQ_CP10) || ((msg.getElement(0) & 0xFF) == Constants.TIME_REQ_CP11)) {
             SerialMessage m = SpecificMessage.setCM11Time(X10Sequence.encode(1));
             forwardToPort(m, null);
             return true;  // message done
