@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
  * Four-byte quantities in SPJ files are little-endian.
  *
  * @author		Bob Jacobsen  Copyright (C) 2006, 2009
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 
 public class SpjFile {
@@ -327,12 +327,26 @@ public class SpjFile {
         
         int time;
         
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare1;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare2;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare3;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare4;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare5;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare6;
+                
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD") // we maintain this, but don't use it for anything yet
         int spare7;
         
         String filename;

@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Sound  {
 
@@ -143,6 +143,8 @@ public class Sound  {
             
         }
         
+        // we maintain this, but don't use it for anything yet
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="URF_UNREAD_FIELD")
         int fmtOffset;
         
         byte[] buffer;
