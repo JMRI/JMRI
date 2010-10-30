@@ -23,7 +23,7 @@ import jmri.SignalSystem;
  *
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmri.SignalAppearanceMap {
 
@@ -132,9 +132,13 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
 
     public void loadDefaults() {
         
-        if (rbr == null || rbr.get() == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
+        if (rbr == null) rbr = new java.lang.ref.SoftReference<ResourceBundle>(
                                                     java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle"));
+
         ResourceBundle rb = rbr.get();
+        if (rb == null) {
+            log.error("Failed to load defaults because of missing bundle");
+        }
         
         log.debug("start loadDefaults");
         
