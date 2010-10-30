@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class NceLight extends AbstractLight {
 
@@ -40,7 +40,9 @@ public class NceLight extends AbstractLight {
         this.mgr = mgr;
         initializeLight(systemName);
     }
-        
+    
+    private static final long serialVersionUID = 1L;
+    
     transient NceTrafficController tc;
     NceLightManager mgr;
     
