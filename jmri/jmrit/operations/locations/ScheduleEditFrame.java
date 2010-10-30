@@ -8,7 +8,6 @@ import jmri.jmrit.operations.setup.Control;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 
 import java.text.MessageFormat;
 import java.util.ResourceBundle;
@@ -18,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -38,13 +37,12 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	Track _track = null;
 
 	// labels
-	JLabel textComment = new JLabel("Comment");
 
 	// major buttons
-	JButton addTypeButton = new JButton();
-	JButton saveScheduleButton = new JButton();
-	JButton deleteScheduleButton = new JButton();
-	JButton addScheduleButton = new JButton();
+	JButton addTypeButton = new JButton(rb.getString("AddType"));
+	JButton saveScheduleButton = new JButton(rb.getString("SaveSchedule"));
+	JButton deleteScheduleButton = new JButton(rb.getString("DeleteSchedule"));
+	JButton addScheduleButton = new JButton(rb.getString("AddSchedule"));
 
 	// check boxes
 	JCheckBox checkBox;
@@ -78,15 +76,6 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		// load managers
 		manager = ScheduleManager.instance();
 		managerXml = LocationManagerXml.instance();
-
-		deleteScheduleButton.setText(rb.getString("DeleteSchedule"));
-		deleteScheduleButton.setVisible(true);
-		addScheduleButton.setText(rb.getString("AddSchedule"));
-		addScheduleButton.setVisible(true);
-		saveScheduleButton.setText(rb.getString("SaveSchedule"));
-		saveScheduleButton.setVisible(true);
-		addTypeButton.setText(rb.getString("AddType"));
-		addTypeButton.setVisible(true);
 		
 	   	// Set up the jtable in a Scroll Pane..
     	schedulePane = new JScrollPane(scheduleTable);
@@ -104,16 +93,28 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
  				
 		// Layout the panel by rows
-	    
-		// row 1 name
+	    JPanel p1 = new JPanel();
+    	p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+    	
+		// row 1a name
 	   	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
 		addItem(pName, scheduleNameTextField, 0, 0);
+		
+		// row 1b comment
+    	JPanel pC = new JPanel();
+    	pC.setLayout(new GridBagLayout());
+    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
+		addItem(pC, commentTextField, 0, 0);
+		
+		p1.add(pName);
+		p1.add(pC);
 
 		// row 2
     	JPanel p3 = new JPanel();
     	p3.setLayout(new GridBagLayout());
+    	p3.setBorder(BorderFactory.createTitledBorder(rb.getString("AddItem")));
     	addItem(p3, typeBox, 0, 1);
     	addItem(p3, addTypeButton, 1, 1);
     	addItem(p3, addLocAtTop, 2, 1);
@@ -121,28 +122,20 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     	group.add(addLocAtTop);
     	group.add(addLocAtBottom);
     	addLocAtBottom.setSelected(true);
-		Border border = BorderFactory.createEtchedBorder();
-		p3.setBorder(border);
-		
-		// row 9 comment
-    	JPanel pC = new JPanel();
-    	pC.setLayout(new GridBagLayout());
-    	pC.setBorder(BorderFactory.createTitledBorder(rb.getString("Comment")));
-		addItem(pC, commentTextField, 0, 0);
     	
 		// row 11 buttons
     	JPanel pB = new JPanel();
     	pB.setLayout(new GridBagLayout());
+    	pB.setBorder(BorderFactory.createTitledBorder(""));
 
 		// row 13
 		addItem(pB, deleteScheduleButton, 0, 0);
 		addItem(pB, addScheduleButton, 1, 0);
 		addItem(pB, saveScheduleButton, 3, 0);
 		
-		getContentPane().add(pName);
+		getContentPane().add(p1);
        	getContentPane().add(schedulePane);
        	getContentPane().add(p3);
-       	getContentPane().add(pC);
        	getContentPane().add(pB);
 		
 		// setup buttons

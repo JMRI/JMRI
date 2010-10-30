@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -146,6 +146,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// row 12 buttons
     	JPanel pB = new JPanel();
     	pB.setLayout(new GridBagLayout());
+    	pB.setBorder(BorderFactory.createTitledBorder(""));
 		addItem(pB, deleteRouteButton, 0, 0);
 		addItem(pB, addRouteButton, 1, 0);
 		addItem(pB, saveRouteButton, 3, 0);

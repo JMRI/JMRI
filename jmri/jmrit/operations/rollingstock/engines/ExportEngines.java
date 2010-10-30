@@ -9,13 +9,15 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 
 /**
  * Exports the Engine roster into a comma delimitated file (CSV).
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  *
  */
 public class ExportEngines extends XmlFile {
@@ -107,6 +109,10 @@ public class ExportEngines extends XmlFile {
 		fileOut.flush();
 		fileOut.close();
 		log.info("Exported "+engineList.size()+" engines to file "+defaultOperationsFilename());
+		JOptionPane.showMessageDialog(null,"Exported "+engineList.size()+" engines to file "+defaultOperationsFilename(),
+				"Export complete",
+				JOptionPane.INFORMATION_MESSAGE);
+
     }
     
     // Operation files always use the same directory
