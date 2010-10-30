@@ -13,18 +13,17 @@ import java.util.List;
  *
  * @author Bob Jacobsen  Copyright 2010
  * @since 2.9.4
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class JmriJInternalFrameInterface implements jmri.util.swing.WindowInterface {
 
     public JmriJInternalFrameInterface(jmri.util.JmriJFrame mainFrame,
                                        JDesktopPane desktop) {
-        this.mainFrame = mainFrame;
+        // mainFrame not used in this implementation
         this.desktop = desktop;
     }
 
-    jmri.util.JmriJFrame      mainFrame;
     JDesktopPane    desktop;
 
     public void show(final jmri.util.swing.JmriPanel child, 

@@ -6,14 +6,13 @@ package jmri.jmrit.symbolicprog;
  * Watches a specific Variable to qualify others.
  *
  * @author			Bob Jacobsen   Copyright (C) 2010
- * @version			$Revision: 1.2 $
+ * @version			$Revision: 1.3 $
  *
  */
 public abstract class AbstractQualifier implements Qualifier, java.beans.PropertyChangeListener {
 
     public AbstractQualifier(AbstractValue qualifiedVal, AbstractValue watchedVal) {
         this.qualifiedVal = qualifiedVal;
-        this.watchedVal = watchedVal;
 
         // set up listener
         watchedVal.addPropertyChangeListener(this);
@@ -34,7 +33,6 @@ public abstract class AbstractQualifier implements Qualifier, java.beans.Propert
     abstract protected boolean availableStateFromValue(int value);
 
     AbstractValue qualifiedVal;
-    AbstractValue watchedVal;
     
     protected void setWatchedAvailable(boolean enable) {
         qualifiedVal.setAvailable(enable);
