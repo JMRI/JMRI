@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
@@ -48,8 +48,6 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
      */
     @SuppressWarnings("unchecked")
 	public boolean load(Element element) {
-        @SuppressWarnings("unused")
-		List<Element> l = element.getChildren();
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
         SignalHead h;

@@ -14,7 +14,7 @@ package jmri.jmrix.maple;
  *		node number in the address.
   * <P>
  * @author	Dave Duchamp, Copyright (C) 2004 - 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SerialAddress {
 
@@ -62,16 +62,16 @@ public class SerialAddress {
                                                                 +systemName);
             return (false);
         }
+
 		// This is a KLxxxx (or KTxxxx or KSxxxx) address, make sure xxxx is OK 
-		@SuppressWarnings("unused")
-		int num;
 		try {
-			num = Integer.valueOf(systemName.substring(2)).intValue();
+		    // we're justing using this to check, and failure is interesting
+			Integer.valueOf(systemName.substring(2)).intValue();
 		}
 		catch (Exception e) {
 			log.error("illegal character in number field of system name: "
                                                     +systemName);
-			return (false);
+			return false;
 		}        
         return true;
     }
