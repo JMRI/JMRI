@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.66 $
+ * @version $Revision: 1.67 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -897,10 +897,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		locationPanelCheckBoxes.removeAll();
 		int y = 0;		// vertical position in panel
 		Route route = null;
+		textRouteStatus.setText("");	// clear out previous status
 		if (_train != null)
 			route = _train.getRoute();
 		if (route != null){
-			textRouteStatus.setText(route.getStatus());
+			if (!route.getStatus().equals(Route.OKAY))
+				textRouteStatus.setText(route.getStatus());
 			List<String> locations = route.getLocationsBySequenceList();
 			for (int i=0; i<locations.size(); i++){
 				RouteLocation rl = route.getLocationById(locations.get(i));

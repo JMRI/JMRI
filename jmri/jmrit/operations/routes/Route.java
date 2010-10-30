@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -39,6 +39,10 @@ public class Route implements java.beans.PropertyChangeListener {
 	
 	public static final String LISTCHANGE_CHANGED_PROPERTY = "routeListChange";
 	public static final String DISPOSE = "dispose";
+	
+	public static final String OKAY = rb.getString("Okay");
+	public static final String ORPHAN = rb.getString("Orphan");
+	public static final String ERROR = rb.getString("Error");
 	
 
 	public Route(String id, String name) {
@@ -312,26 +316,26 @@ public class Route implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * Gets the status of the route
+     * Gets the status of the route: OKAY ORPHAN ERROR
      * @return string with status of route.
      */
     public String getStatus(){
     	List<String> routeIds = getLocationsByIdList();
     	if(routeIds.size() == 0)
-    		return rb.getString("Error");
+    		return ERROR;
     	for (int i=0; routeIds.size()>i; i++){
     		RouteLocation rl = getLocationById(routeIds.get(i));
     		if (rl.getName().equals(RouteLocation.DELETED))
-    			return rb.getString("Error");
+    			return ERROR;
     	}
     	// check to see if this route is used by a train
 		List<String> trains = TrainManager.instance().getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = TrainManager.instance().getTrainById(trains.get(i));
 			if (train.getRoute() == this)
-				return rb.getString("Okay");
+				return OKAY;
 		}
-	   	return rb.getString("Orphan");
+	   	return ORPHAN;
     }
 
  	

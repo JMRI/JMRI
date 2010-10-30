@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -111,28 +111,32 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
 
 	    //      Set up the panels
+		// Layout the panel by rows
+		// row 1
+    	JPanel p1 = new JPanel();
+    	p1.setLayout(new BoxLayout(p1,BoxLayout.X_AXIS));
+	    
+    	// row 1a
     	JPanel pName = new JPanel();
     	pName.setLayout(new GridBagLayout());
     	pName.setBorder(BorderFactory.createTitledBorder(rb.getString("Name")));
-				
-		// Layout the panel by rows
-		// row 1
-		addItem(pName, trackNameTextField, 0, 0);
+    	addItem(pName, trackNameTextField, 0, 0);	
 
-		// row 2
+		// row 1b
     	JPanel pLength = new JPanel();
     	pLength.setLayout(new GridBagLayout());
     	pLength.setBorder(BorderFactory.createTitledBorder(rb.getString("Length")));
 		addItem(pLength, trackLengthTextField, 0, 0);
+		
+		p1.add(pName);
+		p1.add(pLength);
 			
 		// row 3
 		panelTrainDir.setLayout(new GridBagLayout());
 		panelTrainDir.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainTrack")));
-		updateTrainDir();
 
 		// row 4
 	   	panelCheckBoxes.setLayout(new GridBagLayout());
-		updateCheckboxes();
 		
 		// row 5
 		panelRoadNames.setLayout(new GridBagLayout());
@@ -140,7 +144,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
-		updateRoadNames();
 		
 		// row 11
     	JPanel panelComment = new JPanel();
@@ -160,8 +163,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			
 		paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesTrack")));
 		
-		getContentPane().add(pName);
-		getContentPane().add(pLength);
+		getContentPane().add(p1);
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(paneRoadNames);
@@ -207,6 +209,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
+		
+		// load
+		updateCheckboxes();
+		updateRoadNames();
+		updateTrainDir();
 		
 		// set frame location for display
 		setLocation(Control.panelX, Control.panelY);	
@@ -643,12 +650,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     }
     
     protected void packFrame(){
-		pack();
+    	pack();
 		// make some room so rolling stock type scroll window doesn't always appear
+    	/*
 		if (getWidth()+50 < Control.panelWidth)
 			setSize (getWidth()+50, getHeight());
 		if (getHeight()+50 < Control.panelMaxHeight)
 			setSize (getWidth(), getHeight()+50);
+	   	*/
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());
