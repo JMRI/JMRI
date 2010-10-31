@@ -16,7 +16,7 @@ import java.util.Calendar;
  * on a very busy computer.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -74,7 +74,6 @@ public class WaitHandlerTest extends TestCase {
     }
 
     public void testInterrupt() {
-        long beginTime = Calendar.getInstance().getTimeInMillis();
         flag1 = false;
         flag2 = false;
         Thread t = new Thread(){
@@ -112,7 +111,6 @@ public class WaitHandlerTest extends TestCase {
     }
 
     public void testSpuriousWake() {
-        long beginTime = Calendar.getInstance().getTimeInMillis();
         flag1 = false;
         flag2 = false;
         Thread t = new Thread(){
