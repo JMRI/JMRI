@@ -10,7 +10,7 @@ package jmri.jmrix.qsi;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class QsiMessage extends jmri.jmrix.AbstractMessage {
 
@@ -368,31 +368,7 @@ public class QsiMessage extends jmri.jmrix.AbstractMessage {
         m.setChecksum();
         return m.frame();
     }
-    
-	private static String addSpace(QsiMessage m, int offset) {
-        String s = " ";
-        m.setElement(offset, ' ');
-        return s;
-    }
-    
-	private static String addIntAsTwo(int val, QsiMessage m, int offset) {
-        String s = ""+val;
-        if (s.length() != 2) s = "0"+s;  // handle <10
-        m.setElement(offset,s.charAt(0));
-        m.setElement(offset+1,s.charAt(1));
-        return s;
-    }
-    
-	private static String addIntAsThree(int val, QsiMessage m, int offset) {
-        String s = ""+val;
-        if (s.length() != 3) s = "0"+s;  // handle <10
-        if (s.length() != 3) s = "0"+s;  // handle <100
-        m.setElement(offset,s.charAt(0));
-        m.setElement(offset+1,s.charAt(1));
-        m.setElement(offset+2,s.charAt(2));
-        return s;
-    }
-    
+        
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(QsiMessage.class.getName());
     
 }
