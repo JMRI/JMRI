@@ -16,7 +16,7 @@ import javax.swing.*;
  * a Set button is provided so that the user can select the path.
  *
  * @author      Kevin Dickerson   Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
  
 public class FileLocationPane extends JPanel {
@@ -65,7 +65,7 @@ public class FileLocationPane extends JPanel {
             }
         });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        p = new JPanel();
+        JPanel p = new JPanel();
         JLabel scripts = new JLabel(rb.getString("ScriptDir"));
         p.add(scripts);
         p.add(scriptLocation);
