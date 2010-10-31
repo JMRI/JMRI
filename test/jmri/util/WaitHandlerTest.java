@@ -16,7 +16,7 @@ import java.util.Calendar;
  * on a very busy computer.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -25,6 +25,9 @@ public class WaitHandlerTest extends TestCase {
     static final int THREAD_DELAY = 200;   // time to delay thread under test
     static final int TEST_DELAY = THREAD_DELAY+250;  // time to wait for thread to complete
     
+    transient long startTime;
+    transient long endTime;
+
     public void testInlineWait() {
         long startTime = Calendar.getInstance().getTimeInMillis();
 
@@ -35,8 +38,6 @@ public class WaitHandlerTest extends TestCase {
         long endTime = Calendar.getInstance().getTimeInMillis();
         Assert.assertTrue("wait time long enough", 50 <= endTime-startTime);
     }
-    
-    transient long startTime;
     
     public void testSeparateThreadWaiting() {
         long beginTime = Calendar.getInstance().getTimeInMillis();
@@ -49,6 +50,7 @@ public class WaitHandlerTest extends TestCase {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
                 new WaitHandler(this, THREAD_DELAY);
+                endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
         };
@@ -67,7 +69,6 @@ public class WaitHandlerTest extends TestCase {
             if (flag2) break;
             JUnitUtil.releaseThread(this, 1);
         }
-        long endTime = Calendar.getInstance().getTimeInMillis();
 
         Assert.assertTrue("ended", flag2);
         Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-startTime);
@@ -82,6 +83,7 @@ public class WaitHandlerTest extends TestCase {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
                 new WaitHandler(this, THREAD_DELAY);
+                endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
         };
@@ -105,10 +107,9 @@ public class WaitHandlerTest extends TestCase {
             if (flag2) break;
             JUnitUtil.releaseThread(this, 1);
         }
-        long endTime = Calendar.getInstance().getTimeInMillis();
 
         Assert.assertTrue("ended", flag2);
-        Assert.assertTrue("ended early", THREAD_DELAY >= endTime-beginTime);
+        Assert.assertTrue("ended early", THREAD_DELAY >= endTime-startTime);
     }
 
     public void testSpuriousWake() {
@@ -120,6 +121,7 @@ public class WaitHandlerTest extends TestCase {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
                 new WaitHandler(this, THREAD_DELAY);
+                endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
         };
@@ -146,10 +148,10 @@ public class WaitHandlerTest extends TestCase {
             if (flag2) break;
             JUnitUtil.releaseThread(this, 1);
         }
-        long endTime = Calendar.getInstance().getTimeInMillis();
+
         Assert.assertTrue("ended", flag2);
 
-        Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-beginTime);
+        Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-startTime);
     }
 
     public void testCheckMethod() {
@@ -163,6 +165,7 @@ public class WaitHandlerTest extends TestCase {
                 new WaitHandler(this, THREAD_DELAY) {
                     public boolean wasSpurious() { return false; }
                 };
+                endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
         };
@@ -173,7 +176,6 @@ public class WaitHandlerTest extends TestCase {
             if (flag1) break;
             JUnitUtil.releaseThread(this, 1);
         }
-        long startTime = Calendar.getInstance().getTimeInMillis();
         Assert.assertTrue("started", flag1);
         Assert.assertTrue("still running", !flag2);
         Assert.assertTrue("start delay short enough", THREAD_DELAY > startTime-beginTime);
@@ -189,11 +191,11 @@ public class WaitHandlerTest extends TestCase {
             if (flag2) break;
             JUnitUtil.releaseThread(this, 1);
         }
-        long endTime = Calendar.getInstance().getTimeInMillis();
+
         Assert.assertTrue("ended", flag2);
 
-        if (THREAD_DELAY <= endTime-beginTime) log.error("run time not shortened: "+(endTime-beginTime));
-        Assert.assertTrue("run time shortened", THREAD_DELAY > endTime-beginTime);
+        if (THREAD_DELAY <= endTime-startTime) log.error("run time not shortened: "+(endTime-startTime));
+        Assert.assertTrue("run time shortened", THREAD_DELAY > endTime-startTime);
     }
 
 
