@@ -25,7 +25,7 @@ new WaitHandler(this, 120) {
  * the interrupted flag set.
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class WaitHandler {
@@ -39,11 +39,17 @@ public class WaitHandler {
     public WaitHandler(Object self, long interval) {
         long currentTime = Calendar.getInstance().getTimeInMillis();
         long endTime = currentTime+interval;
+        
+        // loop until interrupted, or non-spurious wake
         while (endTime > (currentTime = Calendar.getInstance().getTimeInMillis())){
             long wait = endTime - currentTime;
             try {
                 synchronized(self) {
-                    self.wait(wait);
+                    if (wait > 0)
+                        self.wait(wait);
+                    else
+                        self.wait();
+                        
                     if (!wasSpurious()) break;
                 }
             } catch (InterruptedException e) { 
@@ -51,6 +57,14 @@ public class WaitHandler {
                 break;  // and leave the wait now
             }    
         }
+    }
+
+    /**
+     * Wait forever, robustly handling "spurious wake"
+     * @param self waiting Object
+     */
+    public WaitHandler(Object self) {
+        this(self, -1);
     }
     
     /**
