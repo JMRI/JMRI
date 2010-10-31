@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -160,6 +160,7 @@ public class Setup {
 	private static boolean allowLocalInterchangeMoves = false;	// when true local interchange to interchange moves are allowed
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
 	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
+	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
 
 	
 	// Setup frame attributes
@@ -242,6 +243,14 @@ public class Setup {
 	
 	public static void setLocalSidingMovesEnabled(boolean enabled){
 		allowLocalSidingMoves = enabled;
+	}
+	
+	public static boolean isTrainIntoStagingCheckEnabled(){
+		return trainIntoStagingCheck;
+	}
+	
+	public static void setTrainIntoStagingCheckEnabled(boolean enabled){
+		trainIntoStagingCheck = enabled;
 	}
 	
 	public static String getRailroadName(){
@@ -698,7 +707,7 @@ public class Setup {
     		return 0; // return unknown
     }
     
-    public static org.jdom.Element store(){
+    public static Element store(){
     	Element values;
     	Element e = new Element("operations");
     	e.addContent(values = new Element("railRoad"));
@@ -747,6 +756,7 @@ public class Setup {
     	values.setAttribute("allowLocalInterchange", isLocalInterchangeMovesEnabled()?"true":"false");
     	values.setAttribute("allowLocalSiding", isLocalSidingMovesEnabled()?"true":"false");
     	values.setAttribute("allowLocalYard", isLocalYardMovesEnabled()?"true":"false");
+    	values.setAttribute("stagingRestrictionEnabled", isTrainIntoStagingCheckEnabled()?"true":"false");
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
@@ -787,7 +797,7 @@ public class Setup {
     	return e;
     }
     
-    public static void load(org.jdom.Element e) {
+    public static void load(Element e) {
         if (log.isDebugEnabled()) XmlFile.dumpElement(e);
         
         if (e.getChild("operations") == null){
@@ -956,6 +966,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("noLocalYard: "+enable);
         		Setup.setLocalYardMovesEnabled(enable.equals("true"));
+        	}
+           	if((a = operations.getChild("buildOptions").getAttribute("stagingRestrictionEnabled")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("stagingRestrictionEnabled: "+enable);
+        		Setup.setTrainIntoStagingCheckEnabled(enable.equals("true"));
         	}
         }
         if ((operations.getChild("buildReport") != null)

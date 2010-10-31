@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.94 $
+ * @version             $Revision: 1.95 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -684,7 +684,7 @@ public class TrainBuilder extends TrainCommon{
 							if (testCar.isCaboose() && testCar != car){
 								// need to keep caboose if departing staging
 								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
-									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
+									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
 									carList.remove(carList.get(i));		// remove this car from the list
 									i--;
 								}
@@ -713,7 +713,7 @@ public class TrainBuilder extends TrainCommon{
 			
 			// remove cabooses and cars with FRED if not needed for train
 			if (c.isCaboose() && foundCaboose || c.hasFred() && foundFred){
-				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
 				carList.remove(carList.get(carIndex));		// remove this car from the list
 				carIndex--;
 				continue;
@@ -736,7 +736,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 				// remove cars that can't be picked up due to train and track directions
 				if(!checkPickUpTrainDirection(c, train.getRoute().getLocationById(routeList.get(0)))){
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+" "+c.getTrackName())}));
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+" "+c.getTrackName())}));
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
 					continue;
@@ -788,7 +788,7 @@ public class TrainBuilder extends TrainCommon{
 				} 
 				// remove caboose or FRED from list couldn't find a destination track
 				if((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)) {
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+" "+c.getTrackName())}));
+					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+" "+c.getTrackName())}));
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
 				}
@@ -853,7 +853,7 @@ public class TrainBuilder extends TrainCommon{
     				continue;
     			}
     			if (!train.acceptsTypeName(c.getType())){
-    				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
+    				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{c.toString(), c.getType(), (c.getLocationName()+", "+c.getTrackName())}));
     				carList.remove(carList.get(carIndex));
     				carIndex--;
     				continue;
@@ -1594,6 +1594,8 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, FIVE, "Staging track ("+terminateStageTrack.getName()+") is not available");
 			return false;
 		}
+		if (!Setup.isTrainIntoStagingCheckEnabled())
+			return true;
 		// check go see if location/track will accept the train's car and engine types
 		String[] types = train.getTypeNames();
 		for (int i=0; i<types.length; i++){

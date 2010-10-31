@@ -18,7 +18,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -41,6 +41,7 @@ public class OptionFrame extends OperationsFrame{
 	JCheckBox localInterchangeCheckBox = new JCheckBox(rb.getString("AllowLocalInterchange"));
 	JCheckBox localSidingCheckBox = new JCheckBox(rb.getString("AllowLocalSiding"));
 	JCheckBox localYardCheckBox = new JCheckBox(rb.getString("AllowLocalYard"));
+	JCheckBox trainIntoStagingCheckBox = new JCheckBox(rb.getString("TrainIntoStaging"));
 	
 	// text field
 	
@@ -62,6 +63,7 @@ public class OptionFrame extends OperationsFrame{
 		localInterchangeCheckBox.setSelected(Setup.isLocalInterchangeMovesEnabled());
 		localSidingCheckBox.setSelected(Setup.isLocalSidingMovesEnabled());
 		localYardCheckBox.setSelected(Setup.isLocalYardMovesEnabled());
+		trainIntoStagingCheckBox.setSelected(Setup.isTrainIntoStagingCheckEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -75,6 +77,7 @@ public class OptionFrame extends OperationsFrame{
 		addItemLeft (pBuild, localInterchangeCheckBox, 1,0);
 		addItemLeft (pBuild, localSidingCheckBox, 1,1);
 		addItemLeft (pBuild, localYardCheckBox, 1,2);
+		addItemLeft (pBuild, trainIntoStagingCheckBox, 1,3);
 		
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -123,6 +126,8 @@ public class OptionFrame extends OperationsFrame{
 			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
 			Setup.setLocalSidingMovesEnabled(localSidingCheckBox.isSelected());
 			Setup.setLocalYardMovesEnabled(localYardCheckBox.isSelected());
+			// Staging restriction?
+			Setup.setTrainIntoStagingCheckEnabled(trainIntoStagingCheckBox.isSelected());
 			// Car routing enabled?
 			Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
 			// RFID enabled?
