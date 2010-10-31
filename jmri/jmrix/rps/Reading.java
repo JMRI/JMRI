@@ -16,8 +16,9 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
+@net.jcip.annotations.Immutable
 public class Reading {
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design

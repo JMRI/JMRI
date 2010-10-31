@@ -19,8 +19,9 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
+@net.jcip.annotations.Immutable
 public class Region {
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy

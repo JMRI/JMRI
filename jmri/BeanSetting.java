@@ -13,8 +13,9 @@ package jmri;
  * change, because it's a function of the current bean setting(s).
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
+@net.jcip.annotations.Immutable
 public class BeanSetting  {
 
     public BeanSetting(jmri.NamedBean t, int setting) {
