@@ -22,7 +22,7 @@ import org.jdom.filter.ElementFilter;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.21 $
+ * @version   $Revision: 1.22 $
  * @see       jmri.jmrit.decoderdefn.DecoderIndexFile
  */
 public class DecoderFile extends XmlFile {
@@ -85,6 +85,7 @@ public class DecoderFile extends XmlFile {
      * return array of versions
      * 
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public boolean[] getVersions() { return(versions); }
     
     public String getVersionsAsString() {

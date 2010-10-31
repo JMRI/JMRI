@@ -10,7 +10,7 @@ import jmri.*;
  * SignalHead system names are always upper case.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public abstract class AbstractSignalHead extends AbstractNamedBean
     implements SignalHead, java.io.Serializable {
@@ -121,9 +121,12 @@ public abstract class AbstractSignalHead extends AbstractNamedBean
         rb.getString("SignalHeadStateFlashingLunar"),
     };
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }
