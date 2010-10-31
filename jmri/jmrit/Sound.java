@@ -19,7 +19,7 @@ import javax.sound.sampled.*;
  * S@see jmri.jmrit.sound
  *
  * @author	Bob Jacobsen  Copyright (C) 2004, 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class Sound  {
 
@@ -115,6 +115,7 @@ public class Sound  {
     public AudioClip audioClip = null;
 
     public static class WavBuffer {
+        @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
         public WavBuffer(byte[] content) {
             buffer = content;
             

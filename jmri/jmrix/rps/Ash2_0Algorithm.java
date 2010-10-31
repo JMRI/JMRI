@@ -125,7 +125,7 @@ with six receivers.
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2007
  * @author	Bob Jacobsen  Copyright (C) 2007
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class Ash2_0Algorithm extends AbstractCalculator {
 
@@ -134,6 +134,7 @@ public class Ash2_0Algorithm extends AbstractCalculator {
         this.offset = offset;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash2_0Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;

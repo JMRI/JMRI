@@ -23,7 +23,7 @@ import jmri.util.jdom.LocaleSelector;
  * @author      Bob Jacobsen        Copyright (C) 2001, 2006, 2010
  * @author      Howard G. Penny     Copyright (C) 2005
  * @author      Daniel Boudreau     Copyright (C) 2007
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 public class VariableTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
 
@@ -39,6 +39,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
     /** Defines the columns; values understood are:
      *  "Name", "Value", "Range", "Read", "Write", "Comment", "CV", "Mask", "State"
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public VariableTableModel(JLabel status, String h[], CvTableModel cvModel, IndexedCvTableModel iCvModel) {
         super();
         _status = status;

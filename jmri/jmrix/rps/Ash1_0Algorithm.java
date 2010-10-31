@@ -17,10 +17,11 @@ import javax.vecmath.Point3d;
  * Use it at your own risk.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Ash1_0Algorithm implements Calculator {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash1_0Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;

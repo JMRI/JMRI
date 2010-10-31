@@ -22,14 +22,13 @@ import java.util.List;
  * limit containing the entire thing.
  *</UL>
  *
- * @author		Bob Jacobsen  Copyright (C) 2007, 2008
- * @version             $Revision: 1.8 $
+ * @author		Bob Jacobsen  Copyright (C) 2007, 2008, 2010
+ * @version             $Revision: 1.9 $
  */
 
 public class SdfBuffer {
 
-    // jmri.util.StringUtil.hexStringFromBytes
-    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public SdfBuffer(byte[] buffer) {
         this.buffer = buffer;
         loadMacroList();

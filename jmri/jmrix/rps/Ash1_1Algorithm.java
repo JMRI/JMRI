@@ -123,10 +123,11 @@ more receivers (1.0 GHz Pentium III).
 <P>
  * @author	Robert Ashenfelter  Copyright (C) 2006
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class Ash1_1Algorithm implements Calculator {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // OK until Java 1.6 allows cheap array copy
     public Ash1_1Algorithm(Point3d[] sensors, double vsound) {
         this.sensors = sensors;
         this.Vs = vsound;
