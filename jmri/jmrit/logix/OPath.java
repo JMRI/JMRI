@@ -53,6 +53,10 @@ public class OPath extends jmri.Path  {
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
+    // OPath ctor invokes Path ctor via super(), which calls this, before the internal
+    // _block variable has been set so that Path.getPath() can work.  In this implementation,
+    // getPath() only controls whether log.debug(...) is fired, but this might change if/when
+    // super.setBlock(...) is changed, in which case this logic will fail.
     public void setBlock(Block block) {
         if (getBlock()==block) { return; }
         if (log.isDebugEnabled()) log.debug("OPath \""+_name+"\" changing blocks from "+
