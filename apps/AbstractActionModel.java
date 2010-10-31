@@ -14,7 +14,7 @@ import java.util.Enumeration;
  * They are displayed in lexical order by human-readable name.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * @see PerformActionPanel
  */
 public abstract class AbstractActionModel {
@@ -50,10 +50,13 @@ public abstract class AbstractActionModel {
         className = n;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     static public String[] nameList() {
         if (names==null) loadArrays();
         return names;
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     static public Class<?>[] classList() {
         if (classes==null) loadArrays();
         return classes;

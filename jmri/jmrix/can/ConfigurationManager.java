@@ -10,7 +10,7 @@ package jmri.jmrix.can;
  * method for redirecting to classes in particular subpackages.
  *
  * @author		Bob Jacobsen  Copyright (C) 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class ConfigurationManager {
 
@@ -25,6 +25,7 @@ public class ConfigurationManager {
      * Provide the current set of "Option1" 
      * values
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     static public String[] getSystemOptions() {
         return options;
     }
