@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.6 2010-10-28 19:06:46 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.7 2010-10-31 11:27:38 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -159,8 +159,24 @@ JMRI Install Guide: Windows
 </ol>
 
 <h4>Startup issues</h4>
-<p>For information on updating the JMRI shortcuts to assist with start-up issues,
-see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">page outlining the start-up procedure on Windows</a>.</p>
+<p>To assist with resolving JMRI start-up issues, it is possible to modify the start menu shortcut used to launch JMRI.</p>
+
+<p>Shortcuts are modified as follows:</p>
+
+<ol>
+<li>From the Start button, navigate to the JMRI menu and right-click the DecoderPro icon
+<br /><img src="images/WinDebug-01_StartMenuItemProperties.png" height="358" width="456" alt="start menu properties"/>
+
+<li>Insert the '/debug' option into the shortcut 'Target'
+<br /><img src="images/WinDebug-02_ModifyShortcutTarget.png" height="509" width="367" alt="modify shortcut target"/>
+</ol>
+
+<ul>
+<p>When launched, the following window will appear showing various useful information:
+<br /><img src="images/WinDebug-03_LauncherDebugWindow.png" height="295" width="426" alt="launcher debug window"/></p>
+</ul>
+
+<p>For further information on the JMRI shortcuts, see the <a href="/help/en/html/doc/Technical/StartUpScripts.shtml#windows">page outlining the start-up procedure on Windows</a>.</p>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
