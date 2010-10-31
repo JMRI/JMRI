@@ -5,7 +5,7 @@ package jmri.jmrit.sound;
  * Wrap a byte array to provide WAV file functionality
  *
  * @author	Bob Jacobsen  Copyright (C) 2006
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 
 public class WavBuffer {
@@ -142,6 +142,7 @@ public class WavBuffer {
                 +(buffer[index+3]&0xFF)*256*256*256;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public byte[] getByteArray() {
         return buffer;
     }

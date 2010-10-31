@@ -81,6 +81,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 		}
 	}
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
 	public FunctionButton[] getFunctionButtons() { return functionButton; }
 
 	/**
@@ -405,7 +406,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.64 $
+	 * @version $Revision: 1.65 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;

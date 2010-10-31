@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -223,6 +223,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 		return _validFeedbackTypes;
 	}
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
 	public String[] getValidFeedbackNames() {
 		return _validFeedbackNames;
 	}
@@ -402,6 +403,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	protected String[] _validDecoderNames = PushbuttonPacket
 			.getValidDecoderNames();
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
 	public String[] getValidDecoderNames() {
 		return _validDecoderNames;
 	}

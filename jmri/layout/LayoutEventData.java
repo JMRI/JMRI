@@ -6,7 +6,7 @@ package jmri.layout;
  * Copyright:    Copyright (c) 2002
  * Company:
  * @author
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 import java.util.Date ;
@@ -24,6 +24,7 @@ public class LayoutEventData
         mLayoutAddress = new LayoutAddress( pLayoutName, pType, pOffset ) ;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK in hibernating code
     public Date getTimeStamp() { return mTimeStamp ; }
 
     public LayoutAddress getLayoutAddress() { return mLayoutAddress ; }

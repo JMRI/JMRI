@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
  * to DefaultLunarSignalHead.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class DefaultSignalHead extends AbstractSignalHead {
 
@@ -160,9 +160,12 @@ public abstract class DefaultSignalHead extends AbstractSignalHead {
         rb.getString("SignalHeadStateFlashingGreen"),
     };
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public int[] getValidStates() {
         return validStates;
     }
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public String[] getValidStateNames() {
         return validStateNames;
     }

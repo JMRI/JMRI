@@ -24,7 +24,7 @@ import net.java.games.input.*;
  * so we use a pseudo-singlet "instance" approach
  *
  * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class TreeModel extends DefaultTreeModel {
     private TreeModel() {
@@ -154,6 +154,7 @@ public class TreeModel extends DefaultTreeModel {
     // note they might not arrive for a while
     Controller[] ca;
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
     public Controller[] controllers() { return ca; }
     
     /**

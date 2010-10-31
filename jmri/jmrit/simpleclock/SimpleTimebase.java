@@ -26,7 +26,7 @@ import jmri.ClockControl;
  *
  * @author			Bob Jacobsen Copyright (C) 2004, 2007
  *                  Dave Duchamp - 2007 additions/revisions for handling one hardware clock
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
@@ -317,6 +317,8 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
 		startTime = time;
 	}
 	public boolean getStartSetTime() {return startSetTime;}
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
 	public Date getStartTime() {return startTime;}
 	
 	public void setStartClockOption(int option) {startClockOption = option;}
