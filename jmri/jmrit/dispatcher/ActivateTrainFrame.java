@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class ActivateTrainFrame {
 
@@ -366,7 +366,7 @@ public class ActivateTrainFrame {
 				return;
 			}
 		}
-		catch (Exception ehr) {
+		catch (NumberFormatException ehr) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 					"BadEntry2"),new Object[] { departureHrField.getText() }), 
 							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);		
@@ -925,7 +925,7 @@ public class ActivateTrainFrame {
 				speedFactorField.setText("1.0");
 				return false;
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 				"Error30"),new Object[] { speedFactorField.getText() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);	
