@@ -11,7 +11,7 @@ import java.util.Date;
 /**
  * Tests for the SimpleTimebase class
  * @author	Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SimpleTimebaseTest extends TestCase {
 
@@ -40,6 +40,25 @@ public class SimpleTimebaseTest extends TestCase {
 		Assert.assertTrue("delta lt 100 msec (nominal value)", delta<100);
 	}
 
+    public void testSetStartTime() {
+		SimpleTimebase p = new SimpleTimebase();
+		Date now = new Date();
+
+		p.setStartSetTime(true, now);
+		
+		Assert.assertTrue("startSetTime true", p.getStartSetTime());
+
+		p.setStartSetTime(false, now);
+		Assert.assertTrue("startSetTime false", !p.getStartSetTime());
+				
+		Assert.assertEquals("setTime now", now, p.getStartTime());
+		
+		Date then = new Date(now.getTime()+100);
+		p.setStartSetTime(false, then);
+
+		Assert.assertEquals("setTime then", then, p.getStartTime());
+    }
+    
 /* 	public void testShortDelay() { */
 /* 		SimpleTimebase p = new SimpleTimebase(); */
 /* 		Date now = new Date(); */
