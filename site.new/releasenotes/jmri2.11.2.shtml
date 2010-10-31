@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.7 2010-10-30 22:02:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.8 2010-10-31 22:35:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -163,12 +163,26 @@ Also may cause cp290 interface issues, not tested yet on cp290.
 Kevin Dickerson: Re-creates the serial port drop down list box each time it becomes active, thus picking up any new serial/usb interfaces that have been added since JMRI was started.
 
 <p>
+Signal Masts now have Lit and Held properties
+
+<p>
 Dan Boudreau:
 <ul>
 <li>Fix build bug when staging track doesn't have an engine, and staging track name is the same as another in a different location.
 <li>New operations tool, visually update train icon coordinates for a route.
 <li>New operations feature.  Allow users to set a departure time anywhere in a route.  Nice feature for passenger trains.
+<li> User can now configure if staging tracks are restrictive.  Option is under Settings->Tools->Options.
+<li>New operations feature, allow user to move train anywhere in the route via the train icon.
 </ul>
+
+<p>
+Pete Cressman changed icon selection in the editor so it's the top one that's selected.
+
+<p>
+Pete Cressman added signal mast Lit and Held states and actions to Logix and Conditionals
+
+<p>
+Pete Cressman added the conditional table to the Logix picklist
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
