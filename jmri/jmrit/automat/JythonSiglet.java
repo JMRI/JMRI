@@ -19,7 +19,7 @@ import jmri.*;
  * read the code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class JythonSiglet extends Siglet {
     Object interp;
@@ -87,9 +87,16 @@ public class JythonSiglet extends Siglet {
 
             System.out.println("inputs[0]: "+inputs[0]);
 
-        } catch (Exception e) {
-            log.error("Exception creating jython system objects: "+e);
-            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            log.error("IllegalAccessException creating jython system objects",e);
+        } catch (NoSuchMethodException e) {
+            log.error("NoSuchMethodException creating jython system objects",e);
+        } catch (ClassNotFoundException e) {
+            log.error("ClassNotFoundException creating jython system objects",e);
+        } catch (InstantiationException e) {
+            log.error("InstantiationException creating jython system objects",e);
+        } catch (java.lang.reflect.InvocationTargetException e) {
+            log.error("InvocationTargetException creating jython system objects",e);
         }
     }
 
