@@ -32,7 +32,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -293,7 +293,7 @@ public class OBlock extends jmri.Block {
             return;
         }
         // unset occupied and running bits, set unoccupied bit
-        setState((getState() & ~(OCCUPIED & RUNNING)) | UNOCCUPIED);
+        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         _warrant.goingInactive(this);
