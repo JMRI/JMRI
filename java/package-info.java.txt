@@ -1,0 +1,6 @@
+
+/**
+ * Package-level comment, replaces package.html
+ */
+//@annotations
+package foo;
