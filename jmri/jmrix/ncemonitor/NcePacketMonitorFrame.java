@@ -20,7 +20,7 @@ import java.io.DataInputStream;
  * The rest of the GUI then appears.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
 
@@ -441,11 +441,15 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
             }
 
 
-        }
-        catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
-            ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+        } catch (java.io.IOException ex) {
+            log.error("IO error while opening port "+portName, ex);
+            return "IO error while opening port "+portName+": "+ex;
+        } catch (gnu.io.UnsupportedCommOperationException ex) {
+            log.error("Unsupported communications operation while opening port "+portName, ex);
+            return "Unsupported communications operation while opening port "+portName+": "+ex;
+        } catch (gnu.io.NoSuchPortException ex) {
+            log.error("No such port: "+portName, ex);
+            return "No such port: "+portName+": "+ex;
         }
         return null; // indicates OK return
     }
