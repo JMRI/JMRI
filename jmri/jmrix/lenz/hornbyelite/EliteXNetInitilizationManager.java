@@ -11,7 +11,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003,2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class EliteXNetInitilizationManager extends AbstractXNetInitilizationManager{
 
@@ -22,12 +22,12 @@ public class EliteXNetInitilizationManager extends AbstractXNetInitilizationMana
 
     protected void init() {
 	if(log.isDebugEnabled()) log.debug("Init called");
-        @SuppressWarnings("unused")
-		float CSSoftwareVersion = systemMemo.getXNetTrafficController()
+        // float CSSoftwareVersion
+		systemMemo.getXNetTrafficController()
                                        .getCommandStation()
                                        .getCommandStationSoftwareVersion();
-        @SuppressWarnings("unused")
-		int CSType = systemMemo.getXNetTrafficController()
+        // int
+		systemMemo.getXNetTrafficController()
                                           .getCommandStation()
                                           .getCommandStationType();
 

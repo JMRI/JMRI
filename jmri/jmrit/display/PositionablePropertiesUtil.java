@@ -127,7 +127,11 @@ public class PositionablePropertiesUtil {
                 // try to get a color by name using reflection
                 Field f = Color.class.getField((_backgroundcolors[i].toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
-              } catch (Exception ce) {
+              } catch (NoSuchFieldException ce) {
+                desiredColor = null;
+              } catch (SecurityException ce) {
+                desiredColor = null;
+              } catch (IllegalAccessException ce) {
                 desiredColor = null;
               }
             if (desiredColor!=null){
@@ -468,9 +472,13 @@ public class PositionablePropertiesUtil {
                 String selectedColor = _fontcolors[fontColor.getSelectedIndex()];
                 Field f = Color.class.getField(((selectedColor).toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
-        } catch (Exception ce) {
+          } catch (NoSuchFieldException ce) {
             desiredColor = Color.black;
-        }
+          } catch (SecurityException ce) {
+            desiredColor = Color.black;
+          } catch (IllegalAccessException ce) {
+            desiredColor = Color.black;
+          }
         
         if (_parent instanceof SensorIcon) {
             SensorIcon si = (SensorIcon) _parent;
@@ -727,8 +735,12 @@ public class PositionablePropertiesUtil {
                 String selectedColor = _backgroundcolors[select.getSelectedIndex()];
                 Field f = Color.class.getField((selectedColor.toUpperCase()).replaceAll(" ", "_"));
                 desiredColor = (Color) f.get(null);
-        } catch (Exception ce) {
-                desiredColor = defaultColor;
+        } catch (NoSuchFieldException ce) {
+            desiredColor = defaultColor;
+        } catch (SecurityException ce) {
+            desiredColor = defaultColor;
+        } catch (IllegalAccessException ce) {
+            desiredColor = defaultColor;
         }
         return desiredColor;
     }

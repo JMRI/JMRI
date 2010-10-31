@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -354,10 +354,14 @@ public class DataSource extends jmri.util.JmriJFrame {
                          );
             }
 
-        }
-        catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
-            ex.printStackTrace();
+        } catch (java.io.IOException ex) {
+            log.error("Unexpected I/O exception while opening port "+portName,ex);
+            return "Unexpected error while opening port "+portName+": "+ex;
+        } catch (gnu.io.NoSuchPortException ex) {
+            log.error("No such port while opening port "+portName,ex);
+            return "Unexpected error while opening port "+portName+": "+ex;
+        } catch (gnu.io.UnsupportedCommOperationException ex) {
+            log.error("Unexpected comm exception while opening port "+portName,ex);
             return "Unexpected error while opening port "+portName+": "+ex;
         }
         return null; // indicates OK return
