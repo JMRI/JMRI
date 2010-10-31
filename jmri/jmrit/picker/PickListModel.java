@@ -56,7 +56,7 @@ import java.awt.datatransfer.StringSelection;
 */
 public abstract class PickListModel extends AbstractTableModel implements PropertyChangeListener {
 
-    private ArrayList <NamedBean>       _pickList;
+    protected ArrayList <NamedBean>       _pickList;
     protected String  _name;
 
     public static final int SNAME_COLUMN = 0;
@@ -261,6 +261,9 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
     public static PickListModel warrantPickModelInstance() {
         return new WarrantPickModel();
+    }
+    public static PickListModel conditionalPickModelInstance() {
+        return new ConditionalPickModel();
     }
 
     static class DnDExportHandler extends TransferHandler{
@@ -532,3 +535,44 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return true;
         }
     }
+    class ConditionalPickModel extends PickListModel {
+        ConditionalManager manager;
+        ConditionalPickModel () {
+            manager = InstanceManager.conditionalManagerInstance();
+            _name = rb.getString("TitleConditionalTable");
+        }
+        public Manager getManager() {
+            return manager;
+        }
+        public NamedBean getBySystemName(String name) {
+            return manager.getBySystemName(name);
+        }
+        public NamedBean addBean(String name) {
+            return manager.createNewConditional(name, null);
+        }
+        public NamedBean addBean(String sysName, String userName) {
+            return manager.createNewConditional(sysName, userName);
+        }
+        public boolean canAddBean() {
+            return true;
+        }
+
+        public JTable makePickTable() {
+            JTable table = super.makePickTable();
+            TableColumn column = new TableColumn(PickListModel.POSITION_COL);
+            column.setResizable(true);
+            column.setMinWidth(100);
+            column.setHeaderValue("Logix");
+            table.addColumn(column);
+            return table;
+        }
+        
+        public Object getValueAt (int r, int c) {
+            if (c==POSITION_COL) {
+                jmri.Logix l = manager.getParentLogix(_pickList.get(r).getSystemName());
+                return l.getDisplayName();
+            }
+            return super.getValueAt(r, c);
+        }
+    }
+
