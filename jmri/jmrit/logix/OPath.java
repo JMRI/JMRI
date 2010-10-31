@@ -52,6 +52,7 @@ public class OPath extends jmri.Path  {
                   ", fromPortal= "+_fromPortalName+", toPortal= "+_toPortalName);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UR_UNINIT_READ_CALLED_FROM_SUPER_CONSTRUCTOR")
     public void setBlock(Block block) {
         if (getBlock()==block) { return; }
         if (log.isDebugEnabled()) log.debug("OPath \""+_name+"\" changing blocks from "+
