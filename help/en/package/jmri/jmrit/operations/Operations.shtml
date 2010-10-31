@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.82 2010-10-24 15:04:50 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.83 2010-10-31 18:49:38 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -333,6 +333,15 @@ picture moving a boxcar from a shoe manufacture directly to an auto manufacture.
 Also moving a car from one yard track to another can have your operators
 wondering what kind of busy work is being generated! But if you need
 these types of moves, select the appropriate checkbox.
+
+<P>The next option is restricting trains to staging tracks that only
+accept the train's rolling stock type and road names. When "Enable Type
+and Road Restrictions into Staging" selected, the program will only
+deliver a train into a staging track has the same rolling stock and road
+name restrictions. This is useful when you want trains be delivered to
+staging tracks based on the train's rolling stock restrictions. However,
+if you want certain car or road names to be transported by the train,
+but not delivered to staging, deselect this feature.</P>
 
 <P>The next option is Car Routing, and it is recommended that you
 leave this enabled. With car routing enabled, you can use a <A
@@ -678,7 +687,7 @@ A staging track allows you to have all cars and engines in a train
 delivered to one track. When terminating a train into staging, the
 program will search for a completely empty track, one with no engines or
 cars. The staging track must also service all of the train's car and
-engine types. Trains can not share staging tracks; the program will only
+engine types and roads. Trains can not share staging tracks; the program will only
 place one train per track. When departing a location with a staging
 track, all cars and engines on one track will be assigned to the train.
 A location can have multiple staging tracks, but can't have any other

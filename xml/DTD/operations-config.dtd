@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.22 2010-10-24 01:11:14 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.23 2010-10-31 18:51:09 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -59,7 +59,8 @@
 <!ATTLIST buildOptions aggressive	(true | false ) "false">  
 <!ATTLIST buildOptions allowLocalInterchange	(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSiding	(true | false ) "false">
-<!ATTLIST buildOptions allowLocalYard	(true | false ) "false">            
+<!ATTLIST buildOptions allowLocalYard	(true | false ) "false">   
+<!ATTLIST buildOptions stagingRestrictionEnabled	(true | false ) "true">           
 <!ATTLIST buildReport level			CDATA #IMPLIED>                                   
 <!ATTLIST owner name				CDATA #IMPLIED>
 <!ATTLIST iconColor north			CDATA #IMPLIED>    
