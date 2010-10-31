@@ -31,8 +31,8 @@ import java.util.ResourceBundle;
 
 public class ConditionalVariable {
 
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public static final int NUM_COMPARE_OPERATIONS  = 5;
     public static final int LESS_THAN          = 1;
@@ -266,9 +266,18 @@ public class ConditionalVariable {
 					log.error("invalid signal mast name= \""+_name+"\" in state variable");
 					return (false);
 				}
-                if (f.getAspect() == null) result = false;
-                else if (f.getAspect().equals(_dataString)) result = true;
-                else result = false; 
+                switch ((_type)) {
+                    case Conditional.TYPE_SIGNAL_MAST_LIT:
+                        result = f.getLit(); 
+                        break;
+                    case Conditional.TYPE_SIGNAL_MAST_HELD:
+                        result = f.getHeld();
+                        break;
+                    case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                        if (f.getAspect() == null) result = false;
+                        else if (f.getAspect().equals(_dataString)) result = true;
+                        else result = false; 
+                }
                 break;
             case Conditional.ITEM_TYPE_SIGNALHEAD:
 				SignalHead h = InstanceManager.signalHeadManagerInstance().getSignalHead(_name);
@@ -601,6 +610,12 @@ public class ConditionalVariable {
                 return (rbx.getString("StateTrainRunning"));
             case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
                 return (rbx.getString("TypeSignalMastAspectEquals"));
+            case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
+                return (rbx.getString("TypeSignalHeadAspectEquals"));
+            case Conditional.TYPE_SIGNAL_MAST_LIT:
+                return (rbx.getString("StateSignalMastLit"));
+            case Conditional.TYPE_SIGNAL_MAST_HELD:
+                return (rbx.getString("StateSignalMastHeld"));
         }
         return "";
     }
@@ -672,6 +687,12 @@ public class ConditionalVariable {
                 return (rbx.getString("TypeTrainRunning"));
             case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
                 return (rbx.getString("TypeSignalMastAspectEquals"));
+            case Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS:
+                return (rbx.getString("TypeSignalHeadAspectEquals"));
+            case Conditional.TYPE_SIGNAL_MAST_LIT:
+                return (rbx.getString("TypeSignalMastLit"));
+            case Conditional.TYPE_SIGNAL_MAST_HELD:
+                return (rbx.getString("TypeSignalMastHeld"));
         }
         return ("");
     }
@@ -710,6 +731,47 @@ public class ConditionalVariable {
         return ("");
     }
 
+	/**
+	 * Identifies action Data from Text String Note: if string does not
+	 * correspond to an action Data as defined in
+	 * ConditionalAction, returns -1.
+	 */
+	public static int stringToVariableTest(String str) {
+		if (str.equals(rbean.getString("SignalHeadStateRed"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_RED;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateYellow"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_YELLOW;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateGreen"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_GREEN;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateDark"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_DARK;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingRed"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_FLASHRED;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingYellow"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_FLASHYELLOW;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingGreen"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_FLASHGREEN;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateLunar"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_LUNAR;
+        }
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingLunar"))) {
+            return Conditional.TYPE_SIGNAL_HEAD_FLASHLUNAR;
+        }
+        // empty strings can occur frequently with types that have no integer data
+        if (str.length() > 0)
+        {
+            log.warn("Unexpected parameter to stringToVariableTest("+str+")");
+        }
+		return -1;
+	}
+	
     public String toString() {
         String type = getTestTypeString(_type);
         int itemType = Conditional.TEST_TO_ITEM[_type];
@@ -732,11 +794,15 @@ public class ConditionalVariable {
                     return java.text.MessageFormat.format(rbx.getString("SignalHeadStateDescrpt"),
                                  new Object[] {rbx.getString("SignalHead"), _name, type} );
                 }
-
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
+                if ((_type==Conditional.TYPE_SIGNAL_MAST_LIT) ||
+                        (_type==Conditional.TYPE_SIGNAL_MAST_HELD)) {
+                    return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                                 new Object[] {rbx.getString("SignalMast"), _name, type} );
+                } else {
+                    return java.text.MessageFormat.format(rbx.getString("SignalMastStateDescrpt"),
                                  new Object[] {rbx.getString("SignalMast"), _name, _dataString} );
-                                 
+                }
             case Conditional.ITEM_TYPE_MEMORY:
                 if ((_type==Conditional.TYPE_MEMORY_EQUALS) ||
                         (_type==Conditional.TYPE_MEMORY_EQUALS_INSENSITIVE)) {

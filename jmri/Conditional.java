@@ -96,6 +96,9 @@ public interface Conditional extends NamedBean {
     public static final int TYPE_ROUTE_SET = 28;
     public static final int TYPE_TRAIN_RUNNING = 29;
     public static final int TYPE_SIGNAL_MAST_ASPECT_EQUALS = 30;
+	public static final int TYPE_SIGNAL_MAST_LIT = 31;
+	public static final int TYPE_SIGNAL_MAST_HELD = 32;
+    public static final int TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
 	
 	// action definitions
 	public static final int ACTION_OPTION_ON_CHANGE_TO_TRUE = 1;
@@ -104,7 +107,7 @@ public interface Conditional extends NamedBean {
 	public static final int NUM_ACTION_OPTIONS = 3;
 
 	// action types
-    public static final int NUM_ACTION_TYPES = 36;
+    public static final int NUM_ACTION_TYPES = 42;
 	public static final int ACTION_NONE = 1;
 	public static final int ACTION_SET_TURNOUT = 2;
 	// allowed settings for turnout are Thrown and Closed (in data)
@@ -167,6 +170,10 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_SET_TRAIN_ID = 36;
 	public static final int ACTION_SET_SIGNALMAST_ASPECT = 37;
     public static final int ACTION_THROTTLE_FACTOR = 38;
+    public static final int ACTION_SET_SIGNALMAST_HELD = 39;
+    public static final int ACTION_CLEAR_SIGNALMAST_HELD = 40;
+    public static final int ACTION_SET_SIGNALMAST_DARK = 41;
+    public static final int ACTION_SET_SIGNALMAST_LIT = 42;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -227,30 +234,29 @@ public interface Conditional extends NamedBean {
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_ALLOCATED     27
                                     ITEM_TYPE_WARRANT,      // TYPE_ROUTE_SET           28
                                     ITEM_TYPE_WARRANT,      // TYPE_TRAIN_RUNNING       29
-                                    ITEM_TYPE_SIGNALMAST    // TYPE_SIGNAL_MAST_ASPECT_EQUALS 30
+                                    ITEM_TYPE_SIGNALMAST,   // TYPE_SIGNAL_MAST_ASPECT_EQUALS 30
+                                    ITEM_TYPE_SIGNALMAST,   // TYPE_SIGNAL_MAST_LIT = 31;
+                                    ITEM_TYPE_SIGNALMAST,   // TYPE_SIGNAL_MAST_HELD = 32
+                                    ITEM_TYPE_SIGNALHEAD    // TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS = 33;
                                     };
 
     // Map SignalHead comboBox items to SignalHead Conditional variable types
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
                                                                                 // just have to accept these exposed
                                                                                 // arrays. Someday...
-    public static int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_SIGNAL_HEAD_RED, 
-                                    TYPE_SIGNAL_HEAD_YELLOW,
-                                    TYPE_SIGNAL_HEAD_GREEN, 
-                                    TYPE_SIGNAL_HEAD_LUNAR,
-                                    TYPE_SIGNAL_HEAD_FLASHRED, 
-                                    TYPE_SIGNAL_HEAD_FLASHYELLOW, 
-                                    TYPE_SIGNAL_HEAD_FLASHGREEN,
-                                    TYPE_SIGNAL_HEAD_FLASHLUNAR,
-                                    TYPE_SIGNAL_HEAD_DARK,
+    public static int[] ITEM_TO_SIGNAL_HEAD_TEST = {TYPE_NONE,
+                                    TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS,
                                     TYPE_SIGNAL_HEAD_LIT, 
-                                    TYPE_SIGNAL_HEAD_HELD  };
+                                    TYPE_SIGNAL_HEAD_HELD };
 
     // Map SignalMAst comboBox items to SignalMast Conditional variable types
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
                                                                                 // just have to accept these exposed
                                                                                 // arrays. Someday...
-    public static int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_SIGNAL_MAST_ASPECT_EQUALS };
+    public static int[] ITEM_TO_SIGNAL_MAST_TEST = {TYPE_NONE,
+                                            TYPE_SIGNAL_MAST_ASPECT_EQUALS, 
+                                            TYPE_SIGNAL_MAST_LIT, 
+                                            TYPE_SIGNAL_MAST_HELD};
 
     // Map Sensor state comboBox items to Sensor Conditional variable types
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
@@ -333,7 +339,11 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_WARRANT,      // ACTION_CONTROL_TRAIN     35
                                         ITEM_TYPE_WARRANT,      // ACTION_SET_TRAIN_ID      36
                                         ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_ASPECT 37                                        ITEM_TYPE_SIGNALHEAD,
-                                        ITEM_TYPE_WARRANT       // ACTION_THROTTLE_FACTOR   38
+                                        ITEM_TYPE_WARRANT,      // ACTION_THROTTLE_FACTOR   38
+                                        ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_HELD = 39;
+                                        ITEM_TYPE_SIGNALMAST,   // ACTION_CLEAR_SIGNALMAST_HELD = 40                                        ITEM_TYPE_SIGNALHEAD,
+                                        ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_DARK = 41                                        ITEM_TYPE_SIGNALHEAD,
+                                        ITEM_TYPE_SIGNALMAST    // ACTION_SET_SIGNALMAST_LIT = 42                                        ITEM_TYPE_SIGNALHEAD,
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -395,7 +405,8 @@ public interface Conditional extends NamedBean {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
                                                                                 // just have to accept these exposed
                                                                                 // arrays. Someday...
-    public static int[] ITEM_TO_SIGNAL_MAST_ACTION = {ACTION_SET_SIGNALMAST_ASPECT};
+    public static int[] ITEM_TO_SIGNAL_MAST_ACTION = {ACTION_SET_SIGNALMAST_ASPECT, ACTION_SET_SIGNALMAST_HELD, 
+                ACTION_CLEAR_SIGNALMAST_HELD, ACTION_SET_SIGNALMAST_DARK , ACTION_SET_SIGNALMAST_LIT};
 
     // Map Audio Type comboBox items to Audio action types
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 

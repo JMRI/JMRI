@@ -20,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 
@@ -38,8 +38,8 @@ public class DefaultConditionalAction implements ConditionalAction {
     private boolean _timerActive = false; 
     private Sound _sound = null;
 
-	static final ResourceBundle rbx = ResourceBundle
-			.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.beantable.LogixTableBundle");
+	static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
 
     public DefaultConditionalAction() {
     }
@@ -323,12 +323,20 @@ public class DefaultConditionalAction implements ConditionalAction {
     			return (rbx.getString("ActionRunWarrant"));
     		case Conditional.ACTION_CONTROL_TRAIN:
     			return (rbx.getString("ActionControlTrain"));
-           case Conditional.ACTION_SET_TRAIN_ID:
+            case Conditional.ACTION_SET_TRAIN_ID:
                return (rbx.getString("ActionSetTrainId"));
-           case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
+            case Conditional.ACTION_SET_SIGNALMAST_ASPECT:
                return (rbx.getString("ActionSetSignalMastAspect"));                
             case Conditional.ACTION_THROTTLE_FACTOR:
-                return (rbx.getString("ActionSetThrottleFactor"));                
+               return (rbx.getString("ActionSetThrottleFactor"));                
+            case Conditional.ACTION_SET_SIGNALMAST_HELD:
+               return (rbx.getString("ActionSetSignalMastHeld"));                
+            case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
+               return (rbx.getString("ActionClearSignalMastHeld"));                
+            case Conditional.ACTION_SET_SIGNALMAST_DARK:
+               return (rbx.getString("ActionSetSignalMastDark"));                
+            case Conditional.ACTION_SET_SIGNALMAST_LIT:
+               return (rbx.getString("ActionClearSignalMastDark"));                
 		}
         log.warn("Unexpected parameter to getActionTypeString("+t+")");
 		return ("");
@@ -414,31 +422,31 @@ public class DefaultConditionalAction implements ConditionalAction {
         else if (str.equals(rbx.getString("TurnoutLock"))) {
             return Turnout.LOCKED;
         }
-        else if (str.equals(rbx.getString("AppearanceRed"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateRed"))) {
             return SignalHead.RED;
         }
-        else if (str.equals(rbx.getString("AppearanceYellow"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateYellow"))) {
             return SignalHead.YELLOW;
         }
-        else if (str.equals(rbx.getString("AppearanceGreen"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateGreen"))) {
             return SignalHead.GREEN;
         }
-        else if (str.equals(rbx.getString("AppearanceDark"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateDark"))) {
             return SignalHead.DARK;
         }
-        else if (str.equals(rbx.getString("AppearanceFlashRed"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingRed"))) {
             return SignalHead.FLASHRED;
         }
-        else if (str.equals(rbx.getString("AppearanceFlashYellow"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingYellow"))) {
             return SignalHead.FLASHYELLOW;
         }
-        else if (str.equals(rbx.getString("AppearanceFlashGreen"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingGreen"))) {
             return SignalHead.FLASHGREEN;
         }
-        else if (str.equals(rbx.getString("AppearanceLunar"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateLunar"))) {
             return SignalHead.LUNAR;
         }
-        else if (str.equals(rbx.getString("AppearanceFlashLunar"))) {
+        else if (str.equals(rbean.getString("SignalHeadStateFlashingLunar"))) {
             return SignalHead.FLASHLUNAR;
         }
         else if (str.equals(rbx.getString("AudioSourcePlay"))) {
@@ -579,6 +587,10 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                 case Conditional.ACTION_ALLOCATE_WARRANT_ROUTE:
                 case Conditional.ACTION_DEALLOCATE_WARRANT_ROUTE:
+                case Conditional.ACTION_SET_SIGNALMAST_HELD:
+                case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
+                case Conditional.ACTION_SET_SIGNALMAST_DARK:
+                case Conditional.ACTION_SET_SIGNALMAST_LIT:
                     str = str + ", \""+ _deviceName+"\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:
