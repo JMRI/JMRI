@@ -21,7 +21,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * always active.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class TrainIcon extends LocoIcon {
@@ -127,6 +127,7 @@ public class TrainIcon extends LocoIcon {
 					dropCars++;
 				}
 			}
+			String rText = "";
 			String pickups = "";
 			String drops = "";
 			if (pickupCars > 0)
@@ -134,22 +135,64 @@ public class TrainIcon extends LocoIcon {
 			if (dropCars > 0)
 				drops = " Drops " + dropCars;
 			if (pickupCars > 0 || dropCars > 0)
-				routeMenu.add(current + rl.getName() +"  (" + pickups + drops +" )");
+				rText = current + rl.getName() +"  (" + pickups + drops +" )";
 			else
-				routeMenu.add(current + rl.getName());
+				rText = current + rl.getName();
+			routeMenu.add(new RouteAction(rText, rl));
 		}
 		return routeMenu;
 	}
 
-	public class ThrottleAction extends AbstractAction {	
+	public class ThrottleAction extends AbstractAction {
 	    public ThrottleAction(String actionName) {
 	        super(actionName);
-	        // only enable if connected to an NCE system
 			if (entry == null)
 				setEnabled(false);
 	    }
 		public void actionPerformed(ActionEvent e) {
 			createThrottle();
+		}
+	}
+	
+	/**
+	 * Moves train from current location to the one selected by user.
+	 *
+	 */
+	public class RouteAction extends AbstractAction{
+		RouteLocation _rl;
+		public RouteAction(String actionName, RouteLocation rl) {
+			super(actionName);
+			_rl = rl;
+		}
+		public void actionPerformed(ActionEvent e) {
+			log.debug("Route location selected "+_rl.getName());
+			Route route = train.getRoute();
+			List<String> routeList = route.getLocationsBySequenceList();
+			// determine where the train is in the route
+			for (int r=0; r<routeList.size(); r++){
+				RouteLocation rl = route.getLocationById(routeList.get(r));
+				if (train.getCurrentLocation() == rl){
+					log.debug("Train is at location "+rl.getName());
+					// Is train at this route location?
+					if (rl == _rl)
+						break;
+					for (int i=r+1; i<routeList.size(); i++){
+						RouteLocation nextRl = route.getLocationById(routeList.get(i));
+						// did user select the next location in the route?
+						if (nextRl == _rl && i == r+1){
+							train.move();
+						}else if (nextRl == _rl){
+							if (JOptionPane.showConfirmDialog(null,
+									"Move train to "+_rl.getName()+"?", "Move Train "+train.getIconName()+"?",
+									JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+								while (train.getCurrentLocation() != _rl){
+									train.move();
+								}
+							}
+						}
+					}
+				}
+			}
 		}
 	}
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LocoIcon.class.getName());
