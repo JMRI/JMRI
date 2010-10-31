@@ -19,7 +19,7 @@ import java.awt.Shape;
  * It uses a Java2D GeneralPath to handle the inside/outside calculations.
  *
  * @author	Bob Jacobsen  Copyright (C) 2007, 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 @net.jcip.annotations.Immutable
 public class Region {
@@ -35,6 +35,7 @@ public class Region {
         this.points = points;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="JCIP_FIELD_ISNT_FINAL_IN_IMMUTABLE_CLASS", justification="internal state, not changeable from outside")
     GeneralPath path;
     
     /**
@@ -118,7 +119,7 @@ public class Region {
         return code;
     }    
    
-   Point3d[] points;
+   final Point3d[] points;
     
     private final static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Region.class.getName());
 }

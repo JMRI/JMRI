@@ -16,7 +16,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 @net.jcip.annotations.Immutable
 public class Reading {
@@ -25,6 +25,7 @@ public class Reading {
     public Reading(String id, double[] values) {
         this.id = id;
         this.values = values;
+        this.time = 0;
     }
         
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design
@@ -32,6 +33,7 @@ public class Reading {
         this.id = id;
         this.values = values;
         this.rawData = raw;
+        this.time = 0;
     }
         
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2") // We accept the external access by design
@@ -44,6 +46,7 @@ public class Reading {
     public Reading(Reading r) {
         this.id = r.getID();
         this.values = r.getValues();
+        this.time = r.getTime();
     }
     
     /**
@@ -84,9 +87,9 @@ public class Reading {
         return retval;
     }
         
-    String id;
-    double[] values;
-    int time; // in msec since epoch
+    final String id;
+    final double[] values;
+    final int time; // in msec since epoch
         
     
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") // We accept the poor performance
