@@ -16,8 +16,8 @@ import org.jdom.*;
 /**
  * JPanel to create a new SignalMast
  *
- * @author	Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision: 1.9 $
+ * @author	Bob Jacobsen    Copyright (C) 2009, 2010
+ * @version     $Revision: 1.10 $
  */
 
 public class AddSignalMastPanel extends JPanel {
@@ -126,8 +126,12 @@ public class AddSignalMastPanel extends JPanel {
                                     .size()));
                 }
             }
-        } catch (Exception e) {
-            mastBox.addItem("select a system first");
+        } catch (org.jdom.JDOMException e) {
+            mastBox.addItem("Failed to create definition, did you select a system?");
+            log.warn("in loadMastDefinitions", e);
+        } catch (java.io.IOException e) {
+            mastBox.addItem("Failed to read definition, did you select a system?");
+            log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener(){
             public void itemStateChanged(ItemEvent e) { enableHeadFields(); }

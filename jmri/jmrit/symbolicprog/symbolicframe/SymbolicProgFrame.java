@@ -16,7 +16,7 @@ import org.jdom.output.*;
 /**
  * Frame providing a table-organized command station programmer from decoder definition files
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2007
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
 public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
 
@@ -379,6 +379,7 @@ public class SymbolicProgFrame extends jmri.util.JmriJFrame  {
         variableModel.setFileDirty(false);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="REC_CATCH_EXCEPTION") // dead class doesn't need this fixed right now
     void writeFile() {
         log.warn("SymbolicProgFrame writeFile invoked - is this still right, or should the LocoFile method be used?");
         log.warn("Note use of VersionID attribute...");
