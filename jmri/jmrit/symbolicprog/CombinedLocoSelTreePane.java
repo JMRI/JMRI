@@ -38,7 +38,7 @@ import java.util.List;
  * Here, the lack of a selection indicates there's no selection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
 
@@ -343,11 +343,11 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane  {
         String titleString = DecoderFile.titleString(modelString, familyString);
 
         // find the decoder mfg
-        @SuppressWarnings("unused")
-		String mfgString = DecoderIndexFile.instance().fileFromTitle(titleString)
-                                    .getMfg();
-        // close the entire GUI
+        DecoderIndexFile.instance().fileFromTitle(titleString).getMfg();
+        
+        // close the entire GUI (not currently done, users want left open)
         //collapseAll();
+        
         // find this one to select it
         Enumeration<DefaultMutableTreeNode> e = dRoot.breadthFirstEnumeration();
         while (e.hasMoreElements()) {
