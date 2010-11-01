@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.95 $
+ * @version             $Revision: 1.96 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -542,7 +542,7 @@ public class TrainBuilder extends TrainCommon{
 							cEngine.setTrain(train);
 							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
 							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
-							cEngine.setDestination(terminateLocation, terminateTrack);
+							cEngine.setDestination(terminateLocation, terminateTrack, true); // force destination
 							int cWeight = 0;
 							try {
 								cWeight = Integer.parseInt(cEngine.getWeightTons());
@@ -1365,7 +1365,7 @@ public class TrainBuilder extends TrainCommon{
 					kCar.setTrain(train);
 					kCar.setRouteLocation(rl);
 					kCar.setRouteDestination(rld);
-					kCar.setDestination(destination, track);
+					kCar.setDestination(destination, track, true);	//force destination
 				}
 				// not part of kernel, add one car	
 			} else {

@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.31 $
+ * @version   $Revision: 1.32 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -143,7 +143,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case CURRENTCOLUMN: return rb.getString("Current");
         case TERMINATESCOLUMN: return rb.getString("Terminates");
         case STATUSCOLUMN: return rb.getString("Status");
-        case MOVECOLUMN: return "";
+        case MOVECOLUMN: return rb.getString("Action");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }

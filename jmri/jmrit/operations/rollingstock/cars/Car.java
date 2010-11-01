@@ -15,7 +15,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.46 $
+ * @version             $Revision: 1.47 $
  */
 public class Car extends RollingStock implements java.beans.PropertyChangeListener{
 	
@@ -302,10 +302,25 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	 * Also changes the car load status when the car reaches its destination.
 	 */
 	public String setDestination(Location destination, Track track) {
+		return setDestination(destination, track, false);
+	}
+	
+	/**
+	 * Sets the car's destination on the layout
+	 * @param destination 
+	 * @param track (yard, siding, staging, or interchange track)
+	 * @param force when true ignore track length, type, & road when setting destination
+	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
+	 * acceptable, or "length" if the rolling stock length didn't fit, or 
+	 * Schedule if the destination will not accept the car because the siding
+	 * has a schedule and the car doesn't meet the schedule requirements.
+	 * Also changes the car load status when the car reaches its destination.
+	 */
+	public String setDestination(Location destination, Track track, boolean force) {
 		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
 		Track destTrack = getDestinationTrack();
-		String status = super.setDestination(destination, track);
+		String status = super.setDestination(destination, track, force);
 		// return if not Okay 
 		if (!status.equals(OKAY))
 			return status;
@@ -456,7 +471,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 			Kernel k = CarManager.instance().getKernelByName(a.getValue());
 			if (k != null){
 				setKernel(k);
-				if ((a = e.getAttribute("leadKernel")) != null){
+				if ((a = e.getAttribute("leadKernel")) != null && a.getValue().equals("true")){
 					_kernel.setLeadCar(this);
 				}
 			} else {
