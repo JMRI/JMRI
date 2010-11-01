@@ -22,11 +22,14 @@ import net.java.games.input.*;
  * jinput requires that there be only one of these 
  * for a given USB system in a given JVM
  * so we use a pseudo-singlet "instance" approach
+ * 
+ * Class is final because it starts a survey thread, which runs
+ * while constructor is still active.
  *
- * @author			Bob Jacobsen  Copyright 2008
- * @version			$Revision: 1.12 $
+ * @author			Bob Jacobsen  Copyright 2008, 2010
+ * @version			$Revision: 1.13 $
  */
-public class TreeModel extends DefaultTreeModel {
+public final class TreeModel extends DefaultTreeModel {
     private TreeModel() {
 
         super(new DefaultMutableTreeNode("Root"));
