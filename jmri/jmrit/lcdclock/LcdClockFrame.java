@@ -20,7 +20,7 @@ import jmri.util.JmriJFrame;
  *
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  * 
  * This was a very direct steal from the Nixie clock code, ver 1.12.
  * Thank you Bob Jacobson.
@@ -40,10 +40,10 @@ public class LcdClockFrame extends JmriJFrame implements java.beans.PropertyChan
 
     Timebase clock;
 
-    static NamedIcon tubes[] = new NamedIcon[10];
-    static NamedIcon baseTubes[] = new NamedIcon[10];
-    static NamedIcon colonIcon;
-    static NamedIcon baseColon;
+    NamedIcon tubes[] = new NamedIcon[10];
+    NamedIcon baseTubes[] = new NamedIcon[10];
+    NamedIcon colonIcon;
+    NamedIcon baseColon;
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public LcdClockFrame() {
