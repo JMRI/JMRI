@@ -16,7 +16,7 @@ import java.util.Calendar;
  * on a very busy computer.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -175,11 +175,12 @@ public class WaitHandlerTest extends TestCase {
         }
         Assert.assertTrue("started", flag1);
         Assert.assertTrue("still running", !flag2);
-        Assert.assertTrue("start delay short enough", THREAD_DELAY > startTime-beginTime);
+        if (TEST_DELAY < startTime-beginTime) log.error("start delay too long: "+(startTime-beginTime));
+        Assert.assertTrue("start delay short enough", TEST_DELAY >= startTime-beginTime);
 
         // fire intentional wake, which will pass test
         synchronized (t) {
-            Assert.assertTrue("notify early enough", THREAD_DELAY > Calendar.getInstance().getTimeInMillis() - startTime);
+            Assert.assertTrue("notify early enough", TEST_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime);
             t.notify();
         }
         
