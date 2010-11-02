@@ -17,11 +17,11 @@ import org.jdom.JDOMException;
  * A singleton class for use by all SignalHeads and SignalMasts
  *
  * @author	Pete Cressman Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class SignalSpeedMap {
 
-    static protected SignalSpeedMap _map;
+    static private SignalSpeedMap _map;
     static private Hashtable<String, Float> _table = new Hashtable<String, Float>();
     static private Hashtable<String, String> _headTable = new Hashtable<String, String>();
     static private boolean _percentNormal;
