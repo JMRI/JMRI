@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3446,7 +3446,7 @@ public class LogixTableAction extends AbstractTableAction {
                 testType = Conditional.ITEM_TO_SIGNAL_HEAD_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
-                testType = Conditional.ITEM_TO_SIGNAL_MAST_TEST[_variableStateBox.getSelectedIndex()-1];
+                testType = Conditional.ITEM_TO_SIGNAL_MAST_TEST[_variableStateBox.getSelectedIndex()];
                 break;
             case Conditional.ITEM_TYPE_MEMORY:
                 testType = Conditional.ITEM_TO_MEMORY_TEST[_variableCompareTypeBox.getSelectedIndex()];
@@ -3527,21 +3527,25 @@ public class LogixTableAction extends AbstractTableAction {
                 if (name == null) {
                     return false;
                 }
-                String appStr = (String)_variableSignalBox.getSelectedItem();
-                _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
-                _curVariable.setDataString(appStr);
-                if (log.isDebugEnabled()) log.debug("SignalHead \""+name+"\"of type '"+testType+
-                                                    "' _variableSignalBox.getSelectedItem()= "+
-                                                    _variableSignalBox.getSelectedItem()); 
+                if (testType==Conditional.TYPE_SIGNAL_HEAD_APPEARANCE_EQUALS) {
+                    String appStr = (String)_variableSignalBox.getSelectedItem();
+                    _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
+                    _curVariable.setDataString(appStr);
+                    if (log.isDebugEnabled()) log.debug("SignalHead \""+name+"\"of type '"+testType+
+                                                        "' _variableSignalBox.getSelectedItem()= "+
+                                                        _variableSignalBox.getSelectedItem()); 
+                }
                 break;
             case Conditional.ITEM_TYPE_SIGNALMAST:
                 name = validateSignalMastReference(name);
                 if (name == null) {
                     return false;
                 }
-                // save the selected aspect for comparison
-                _curVariable.setDataString((String)_variableSignalBox.getSelectedItem());
-//                _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
+                if (testType==Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS) {
+                    // save the selected aspect for comparison
+                    _curVariable.setDataString((String)_variableSignalBox.getSelectedItem());
+  //                _curVariable.setType(ConditionalVariable.stringToVariableTest(appStr));
+                }
                 break;
             case Conditional.ITEM_TYPE_WARRANT:
                 name = validateWarrantReference(name);
