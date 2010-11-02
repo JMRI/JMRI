@@ -17,7 +17,7 @@ package jmri.jmrit.decoderdefn;
  * 
  * @author    Bob Jacobsen   Copyright (C) 2001, 2010
  * @author    Howard G. Penny   Copyright (C) 2005
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  * @see       jmri.jmrit.roster.RosterEntry
  * @see       jmri.jmrit.symbolicprog.CombinedLocoSelPane
  * @see       jmri.jmrit.symbolicprog.NewLocoSelPane
@@ -52,8 +52,8 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             writeCV(49, 254);
             return false;
         } else if (mfgID == 153) {
-            statusUpdate("Read decoder ID CV 248");
-            readCV(248);
+            statusUpdate("Read decoder ID CV 249");
+            readCV(249);
             return false;
         }
         return true;
