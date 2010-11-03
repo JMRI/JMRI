@@ -32,7 +32,7 @@ import java.util.List;
  * to navigate to a single one.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision: 1.41 $
+ * @version			$Revision: 1.42 $
  *
  */
 public class DecoderIndexFile extends XmlFile {
@@ -490,7 +490,7 @@ public class DecoderIndexFile extends XmlFile {
         writeXML(file, doc);
 
         // force a read of the new file next time
-        _instance = null;
+        resetInstance();
     }
 
     String nmraListDate = null;
