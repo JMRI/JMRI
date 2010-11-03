@@ -31,7 +31,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -106,6 +106,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         }
     }   
 
+    @Override
     public void setAspect(String aspect) { 
         // check it's a choice
         if ( !map.checkAspect(aspect)) {
@@ -121,6 +122,7 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
     
+    @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
@@ -130,12 +132,32 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         return v;
     }
 
+    @Override
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
     
+    @Override
     public SignalAppearanceMap getAppearanceMap() {
         return map;
+    }
+    
+    @Override
+    public void setHeld(boolean state) {
+        // set all Heads to state
+        for (NamedBeanHandle<SignalHead> h : heads) {
+            h.getBean().setHeld(state);
+        }
+        super.setHeld(state);
+    }
+
+    @Override
+    public void setLit(boolean state) {
+        // set all Heads to state
+        for (NamedBeanHandle<SignalHead> h : heads) {
+            h.getBean().setLit(state);
+        }
+        super.setLit(state);
     }
     
     List<NamedBeanHandle<SignalHead>> heads;
