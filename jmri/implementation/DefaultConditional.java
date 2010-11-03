@@ -31,7 +31,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1078,44 +1078,44 @@ public class DefaultConditional extends AbstractNamedBean
 					case Conditional.ACTION_SET_SIGNALMAST_HELD:
 						f = InstanceManager.signalMastManagerInstance().
 									getSignalMast(devName);
-						if (h == null) {
+						if (f == null) {
 							log.error(getDisplayName()+" invalid signal mast name in action - "+action.getDeviceName());
 						}
 						else {
-							h.setHeld(true);
+							f.setHeld(true);
                             actionCount++;
 						}
 						break;
 					case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
 						f = InstanceManager.signalMastManagerInstance().
 									getSignalMast(devName);
-						if (h == null) {
+						if (f == null) {
 							log.error(getDisplayName()+" invalid signal mast name in action - "+action.getDeviceName());
 						}
 						else {
-							h.setHeld(false);
+							f.setHeld(false);
                             actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNALMAST_DARK:
 						f = InstanceManager.signalMastManagerInstance().
 									getSignalMast(devName);
-						if (h == null) {
+						if (f == null) {
 							log.error(getDisplayName()+" invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
-							h.setLit(false);
+							f.setLit(false);
                             actionCount++;
 						}
 						break;
 					case Conditional.ACTION_SET_SIGNALMAST_LIT:
 						f = InstanceManager.signalMastManagerInstance().
 									getSignalMast(devName);
-						if (h == null) {
+						if (f == null) {
 							log.error(getDisplayName()+" invalid signal head name in action - "+action.getDeviceName());
 						}
 						else {
-							h.setLit(true);
+							f.setLit(true);
                             actionCount++;
 						}
 						break;
