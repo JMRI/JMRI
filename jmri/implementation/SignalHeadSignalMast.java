@@ -31,7 +31,7 @@ IF:basic:one-searchlight:(IH1)(IH2)
  * </ul>
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SignalHeadSignalMast extends AbstractSignalMast {
 
@@ -122,7 +122,6 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         super.setAspect(aspect);
     }
     
-    @Override
     public Vector<String> getValidAspects() {
         java.util.Enumeration<String> e = map.getAspects();
         Vector<String> v = new Vector<String>();
@@ -132,12 +131,10 @@ public class SignalHeadSignalMast extends AbstractSignalMast {
         return v;
     }
 
-    @Override
     public SignalSystem getSignalSystem() {
         return systemDefn;
     }
     
-    @Override
     public SignalAppearanceMap getAppearanceMap() {
         return map;
     }
