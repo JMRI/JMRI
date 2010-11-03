@@ -26,7 +26,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public abstract class Apps3 extends apps.AppsBase {
 
@@ -166,13 +166,16 @@ public abstract class Apps3 extends apps.AppsBase {
 
         // write file
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        // decide whether name is absolute or relative
-        File file = new File(configFilename);
-        if (!file.isAbsolute()) {
-            // must be relative, but we want it to 
-            // be relative to the preferences directory
-            file = new File(XmlFile.prefsDir()+configFilename);
-        }
+        
+        // next is dead code, not sure why it was left here
+
+        // //decide whether name is absolute or relative
+        //File file = new File(configFilename);
+        //if (!file.isAbsolute()) {
+        //    // must be relative, but we want it to 
+        //    // be relative to the preferences directory
+        //    file = new File(XmlFile.prefsDir()+configFilename);
+        //}
 
         InstanceManager.configureManagerInstance().storePrefs();
     }
