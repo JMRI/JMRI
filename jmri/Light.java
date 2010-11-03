@@ -67,40 +67,40 @@ import java.util.ArrayList;
  * @author			Dave Duchamp Copyright (C) 2004, 2010
  * @author			Ken Cameron Copyright (C) 2008
  * @author			Bob Jacobsen Copyright (C) 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public interface Light extends NamedBean {
 
     /** State value indicating output intensity is at or above maxIntensity */
-    public static final int ON          = 0x01;
+    public static final int ON          = 0x02;
     
     /** State value indicating output intensity is at or below minIntensity */
-    public static final int OFF         = 0x00;
+    public static final int OFF         = 0x04;
     
     /** State value indicating output intensity is
      * less than maxIntensity and more than minIntensity, 
      * and no transition is in progress */
-    public static final int INTERMEDIATE         = 0x02;
+    public static final int INTERMEDIATE         = 0x08;
     
     
     /** State value indicating output intensity is currently changing toward higher intensity, and will
         continue until full ON is reached */
-    public static final int TRANSITIONINGTOFULLON   = 0x38;
+    public static final int TRANSITIONINGTOFULLON   = 0x310;
     
     /** State value indicating output intensity is currently changing toward higher intensity. The current
         transition will stop before full ON is reached. */
-    public static final int TRANSITIONINGHIGHER 	      = 0x28;
+    public static final int TRANSITIONINGHIGHER 	      = 0x210;
     
     /** State value indicating output intensity is currently changing toward lower intensity. The current
         transition will stop before full OFF is reached. */
-    public static final int TRANSITIONINGLOWER        = 0x18;
+    public static final int TRANSITIONINGLOWER        = 0x110;
     
     /** State value indicating output intensity is currently changing toward lower intensity, and will
         continue until full OFF is reached */
-    public static final int TRANSITIONINGTOFULLOFF = 0x08;
+    public static final int TRANSITIONINGTOFULLOFF = 0x010;
     
     /** State value mask representing status where output is changing due to a request to transition. */
-    public static final int TRANSITIONING         = 0x08;
+    public static final int TRANSITIONING         = 0x010;
     
     
     /**
