@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.8 2010-10-31 22:35:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.9 2010-11-03 05:43:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -173,6 +173,8 @@ Dan Boudreau:
 <li>New operations feature.  Allow users to set a departure time anywhere in a route.  Nice feature for passenger trains.
 <li> User can now configure if staging tracks are restrictive.  Option is under Settings->Tools->Options.
 <li>New operations feature, allow user to move train anywhere in the route via the train icon.
+<li>Fix two minor bugs.  Lead car in kernel wasn't always set correctly.  Cars in a kernel didn't always have a proper destination and track.
+<li>Remember the state of auto checkboxes for car and engine set frames.
 </ul>
 
 <p>
@@ -183,6 +185,12 @@ Pete Cressman added signal mast Lit and Held states and actions to Logix and Con
 
 <p>
 Pete Cressman added the conditional table to the Logix picklist
+
+<p>
+The numerical values of "ON" and "OFF" for Lights have changed, along with
+some of the other constants in the class.  This will have no impact on 
+people just using the program.  If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
