@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the SignalHeadSignalMast implementation
  * @author	Bob Jacobsen  Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SignalHeadSignalMastTest extends TestCase {
 
@@ -31,9 +31,11 @@ public class SignalHeadSignalMastTest extends TestCase {
 
         m.setHeld(true);
         Assert.assertTrue(m.getHeld());
+        Assert.assertTrue(InstanceManager.signalHeadManagerInstance().getSignalHead("IH1").getHeld());
 
         m.setHeld(false);
         Assert.assertTrue(!m.getHeld());
+        Assert.assertTrue(!InstanceManager.signalHeadManagerInstance().getSignalHead("IH1").getHeld());
 
     }
     
@@ -44,9 +46,11 @@ public class SignalHeadSignalMastTest extends TestCase {
 
         m.setLit(false);
         Assert.assertTrue(!m.getLit());
+        Assert.assertTrue(!InstanceManager.signalHeadManagerInstance().getSignalHead("IH1").getLit());
 
         m.setLit(true);
         Assert.assertTrue(m.getLit());
+        Assert.assertTrue(InstanceManager.signalHeadManagerInstance().getSignalHead("IH1").getLit());
 
     }
     
