@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.18 $
+ * @version	$Revision: 1.19 $
  */
 
 //
@@ -228,11 +228,13 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     											+baudBox.getItemAt(0));        
     	
         opt1List = adapter.validOption1();
+        opt1BoxLabel = new JLabel(adapter.option1Name());
         // need to remove ActionListener before addItem() or action event will occur
         if(opt1Box.getActionListeners().length >0)
         	opt1Box.removeActionListener(opt1Box.getActionListeners()[0]);
         opt1Box.removeAllItems();
         for (int i=0; i<opt1List.length; i++) opt1Box.addItem(opt1List[i]);
+        opt2BoxLabel = new JLabel(adapter.option2Name());
         opt2List = adapter.validOption2();
         // need to remove ActionListener before addItem() or action event will occur
         if(opt2Box.getActionListeners().length >0)
@@ -337,11 +339,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
                 _details.add(baudBox);
             }
             if ((isOptList1Advanced())&&(opt1List.length>1)) {
-                _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
+                _details.add(opt1BoxLabel);
                 _details.add(opt1Box);
             }
             if ((isOptList2Advanced())&&(opt2List.length>1)) {
-                _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
+                _details.add(opt2BoxLabel);
                 _details.add(opt2Box);
             }
         } else {
