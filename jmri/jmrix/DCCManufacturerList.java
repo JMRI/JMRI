@@ -10,7 +10,7 @@ package jmri.jmrix;
  * <P>
  * @author      Bob Jacobsen   Copyright (C) 2010
  * @author      Kevin Dickerson    Copyright (C) 2010
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  *
  */
 public class DCCManufacturerList {
@@ -85,7 +85,7 @@ public class DCCManufacturerList {
           ZTC
     };
     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK until Java 1.6 allows return of cheap array copy
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings({"EI_EXPOSE_REP", "MS_EXPOSE_REP"}) // OK until Java 1.6 allows return of cheap array copy
     public static String[] getSystemNames() {
         return systemNames;
     }
