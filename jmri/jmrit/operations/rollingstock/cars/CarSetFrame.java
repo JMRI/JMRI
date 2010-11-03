@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -56,6 +56,8 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	protected void updateComboBoxes(){
+		if (_disableComboBoxUpdate)
+			return;
 		super.updateComboBoxes();
 		finalDestinationBox.setSelectedItem(_car.getNextDestination());
 		destReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestination());

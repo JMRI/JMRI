@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -47,6 +47,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected TrainManager trainManager = TrainManager.instance();
 	
 	RollingStock _rs;
+	protected boolean _disableComboBoxUpdate = false;
 		
 	// labels
 	JLabel textRoad = new JLabel();
@@ -85,6 +86,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// optional panels
 	protected JPanel pOptionalrwe = new JPanel();
 	protected JPanel pFinalDestination = new JPanel();
+	
+	// Auto checkbox states
+	protected static boolean autoTrackCheckBoxSelected = false;
+	protected static boolean autoDestinationTrackCheckBoxSelected = false;
+	protected static boolean autoFinalDestTrackCheckBoxSelected = false;
+	protected static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
 		
 	public RollingStockSetFrame() {
 		super();
@@ -212,6 +219,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 		addCheckBoxAction(autoFinalDestTrackCheckBox);
 		addCheckBoxAction(autoReturnWhenEmptyTrackCheckBox);
 		
+		// set auto check box selected
+		autoTrackCheckBox.setSelected(autoTrackCheckBoxSelected);
+		autoDestinationTrackCheckBox.setSelected(autoDestinationTrackCheckBoxSelected);
+		autoFinalDestTrackCheckBox.setSelected(autoFinalDestTrackCheckBoxSelected);
+		autoReturnWhenEmptyTrackCheckBox.setSelected(autoReturnWhenEmptyTrackCheckBoxSelected);
+		
 		// add tool tips
 		autoTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
 		autoDestinationTrackCheckBox.setToolTipText(getRb().getString("TipAutoTrack"));
@@ -252,7 +265,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
+			_disableComboBoxUpdate = true;
 			save();
+			_disableComboBoxUpdate = false;
 		}
 	}
 	
@@ -262,6 +277,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	protected boolean save(){
 		log.debug("Save button action");
+		// save the auto buttons
+		autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
+		autoDestinationTrackCheckBoxSelected = autoDestinationTrackCheckBox.isSelected();
+		autoFinalDestTrackCheckBoxSelected = autoFinalDestTrackCheckBox.isSelected();
+		autoReturnWhenEmptyTrackCheckBoxSelected = autoReturnWhenEmptyTrackCheckBox.isSelected();
+		
 		// save the statuses
 		_rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
 		_rs.setOutOfService(outOfServiceCheckBox.isSelected());
@@ -404,6 +425,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	protected void updateComboBoxes(){
+		if (_disableComboBoxUpdate)
+			return;
 		log.debug("update combo boxes");
 		locationManager.updateComboBox(locationBox);
 		locationBox.setSelectedItem(_rs.getLocation());	
