@@ -38,7 +38,7 @@ import java.util.List;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2009
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class ActivateTrainFrame {
 
@@ -384,7 +384,7 @@ public class ActivateTrainFrame {
 				return;
 			}
 		}
-		catch (Exception emn) {
+		catch (NumberFormatException emn) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 					"BadEntry2"),new Object[] { departureMinField.getText() }), 
 							rb.getString("ErrorTitle"), JOptionPane.ERROR_MESSAGE);		
@@ -439,7 +439,7 @@ public class ActivateTrainFrame {
 			try {
 				address = Integer.parseInt(dccAddress);
 			}
-			catch (Exception ex) {
+			catch (NumberFormatException ex) {
 				JOptionPane.showMessageDialog(initiateFrame, rb.getString("Error23"), 
 						rb.getString("ErrorTitle"),JOptionPane.ERROR_MESSAGE);
 				log.error ("Conversion exception in dccAddress field");
@@ -456,7 +456,7 @@ public class ActivateTrainFrame {
 		try {
 			priority = Integer.parseInt(priorityField.getText());
 		} 
-		catch (Exception ex) {
+		catch (NumberFormatException ex) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 						"BadEntry"),new Object[] { priorityField.getText() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);		
@@ -943,7 +943,7 @@ public class ActivateTrainFrame {
 				speedFactorField.setText("0.6");
 				return false;
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 				"Error38"),new Object[] { maxSpeedField.getText() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);	
@@ -964,7 +964,7 @@ public class ActivateTrainFrame {
 				maxTrainLengthField.setText("18.0");
 				return false;
 			}
-		} catch (Exception e) {
+		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(initiateFrame,java.text.MessageFormat.format(rb.getString(
 				"Error32"),new Object[] { maxTrainLengthField.getText() }), rb.getString("ErrorTitle"),
 							JOptionPane.ERROR_MESSAGE);	

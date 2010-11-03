@@ -240,7 +240,9 @@ public class PositionablePropertiesUtil {
                 // try to get a color by name using reflection
                     Field f = Color.class.getField((_backgroundcolors[j].toUpperCase()).replaceAll(" ", "_"));
                     desiredColor = (Color) f.get(null);
-                  } catch (Exception ce) {
+                  } catch (NoSuchFieldException ce) {
+                    desiredColor = null;
+                  } catch (IllegalAccessException ce) {
                     desiredColor = null;
                   }
                 if (desiredColor!=null){
