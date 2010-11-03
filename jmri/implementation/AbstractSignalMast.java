@@ -8,7 +8,7 @@ import jmri.*;
  * Abstract class providing the basic logic of the SignalMast interface.
  *
  * @author	Bob Jacobsen Copyright (C) 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public abstract class AbstractSignalMast extends AbstractNamedBean
     implements SignalMast, java.io.Serializable {
@@ -21,6 +21,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
         super(systemName);
     }
       
+	@edu.umd.cs.findbugs.annotations.OverrideMustInvoke
     public void setAspect(String aspect) { 
         String oldAspect = this.aspect;
         this.aspect = aspect;
@@ -29,10 +30,10 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     }
 
     public String getAspect() { return aspect; }
-    String aspect = null;
+    private String aspect = null;
     
     public String getSpeed() { return speed; }
-    String speed = null;
+    private String speed = null;
 
     /**
      * The state is the index of the current aspect
@@ -47,7 +48,7 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
     /**
      * By default, signals are lit.
      */
-	protected boolean mLit = true;
+	private boolean mLit = true;
 	/**
 	 * Default behavior for "lit" parameter is
 	 * to track value and return it.
@@ -57,13 +58,20 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
 	/** 
 	 * By default, signals are not held.
 	 */
-	protected boolean mHeld = false;
+	private boolean mHeld = false;
 
 	/**
 	 * "Held" parameter is just tracked and notified.
 	 */
 	public boolean getHeld() {return mHeld;}
 	
+    /**
+     * Set the lit parameter.
+     * 
+     * This acts on all the SignalHeads included 
+     * in this SignalMast
+     */
+	@edu.umd.cs.findbugs.annotations.OverrideMustInvoke
     public void setLit(boolean newLit) {
         boolean oldLit = mLit;
         mLit = newLit;
@@ -80,8 +88,9 @@ public abstract class AbstractSignalMast extends AbstractNamedBean
      * <P>
      * Note that this does not directly effect the output on the layout;
      * the held parameter is a local variable which effects the aspect
-     * only via higher-level logic
+     * only via higher-level logic.
      */
+	@edu.umd.cs.findbugs.annotations.OverrideMustInvoke
     public void setHeld(boolean newHeld) {
         boolean oldHeld = mHeld;
         mHeld = newHeld;
