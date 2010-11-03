@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.96 $
+ * @version             $Revision: 1.97 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1701,7 +1701,8 @@ public class TrainBuilder extends TrainCommon{
 		for (int i =0; i < engineList.size(); i++){
 			engine = engineManager.getById(engineList.get(i));
 			comment = (Setup.isAppendCarCommentEnabled() ? " "+engine.getComment() : "");
-			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.toString() + " (" +engine.getModel()+  ") "
+			String[] engineNumber = engine.getNumber().split("-"); // ignore any duplicate engine numbers
+			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.getRoad() +" "+engineNumber[0]+" (" +engine.getModel()+  ") "
 					+rb.getString("assignedToThisTrain") + comment);
 		}
 		

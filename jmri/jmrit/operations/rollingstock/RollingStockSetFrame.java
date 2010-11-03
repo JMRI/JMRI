@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -265,7 +265,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton) {
-			_disableComboBoxUpdate = true;
+			_disableComboBoxUpdate = true;	// need to stop property changes while we update
 			save();
 			_disableComboBoxUpdate = false;
 		}
@@ -591,10 +591,12 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	protected void packFrame(){
 		pack();
+		/*
 		if ((getWidth()<450)) 
 			setSize(500, getHeight()+50);
 		else
-			setSize (getWidth()+50, getHeight()+50);		
+			setSize (getWidth()+50, getHeight()+50);
+		*/		
 		setVisible(true);
 	}
 

@@ -31,10 +31,11 @@ public class TrainCommon {
 	protected void pickupEngine(PrintWriter file, Engine engine){
 		String comment = (Setup.isAppendCarCommentEnabled() ? " "
 				+ engine.getComment(): "");
+		String[] engineNumber = engine.getNumber().split("-");
 		addLine(file, BOX + rb.getString("Pickup") +" "
 				+ rb.getString("Engine") + " "
 				+ engine.getRoad() + " "
-				+ engine.getNumber() + " ("
+				+ engineNumber[0] + " ("
 				+ engine.getModel() + ") "
 				+ rb.getString("from") + " "
 				+ engine.getTrackName() + comment);
@@ -43,10 +44,11 @@ public class TrainCommon {
 	protected void dropEngine(PrintWriter file, Engine engine){
 		String comment = (Setup.isAppendCarCommentEnabled() ? " "
 				+ engine.getComment(): "");
+		String[] engineNumber = engine.getNumber().split("-");
 		addLine(file, BOX + rb.getString("Drop") +" "
 				+ rb.getString("Engine") + " "
 				+ engine.getRoad() + " "
-				+ engine.getNumber() + " ("
+				+ engineNumber[0] + " ("
 				+ engine.getModel() + ") "
 				+ rb.getString("to") + " "
 				+ engine.getDestinationTrackName() + comment);
