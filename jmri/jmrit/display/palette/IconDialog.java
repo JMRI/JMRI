@@ -46,8 +46,11 @@ public class IconDialog extends ItemDialog {
     JTextField      _familyName;
 
     /**
-    * Constructor for existing family to change icons, add/delete icons, or to delete the family
+    * Constructor for existing family to change icons, add/delete icons, or to delete the family.
+    *
+    * @param parent existing map, retained internally; do not modify argument after using here
     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_REP2") // accept Hashtable without copying it
     public IconDialog(String type, String family, Hashtable <String, NamedIcon> iconMap, ItemPanel parent) {
         super(type, family, 
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
@@ -72,7 +75,10 @@ public class IconDialog extends ItemDialog {
 
     /**
     * Constructor for creating a new family
+    *
+    * @param parent existing map, retained internally; do not modify argument after using here
     */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_REP2") // accept Hashtable without copying it
     public IconDialog(String type, Hashtable <String, NamedIcon> newMap, ItemPanel parent) {
         super(type, null, 
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
