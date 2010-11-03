@@ -16,7 +16,7 @@ package jmri.jmrix.rps;
  * Objects of this class are immutable once created.
  *
  * @author	Bob Jacobsen  Copyright (C) 2006, 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 @net.jcip.annotations.Immutable
 public class Reading {
@@ -25,6 +25,7 @@ public class Reading {
     public Reading(String id, double[] values) {
         this.id = id;
         this.values = values;
+        this.rawData = null;
         this.time = 0;
     }
         
@@ -40,12 +41,14 @@ public class Reading {
     public Reading(String id, double[] values, int time) {
         this.id = id;
         this.values = values;
+        this.rawData = null;
         this.time = time;
     }
         
     public Reading(Reading r) {
         this.id = r.getID();
         this.values = r.getValues();
+        this.rawData = null;
         this.time = r.getTime();
     }
     
@@ -106,9 +109,9 @@ public class Reading {
      */
     public Object getRawData() {return rawData;}
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Reading.class.getName());
+    final static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Reading.class.getName());
 
-    Object rawData;
+    final Object rawData;
 }
 
 /* @(#)Reading.java */
