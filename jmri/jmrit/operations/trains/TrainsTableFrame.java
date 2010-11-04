@@ -24,6 +24,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
 
 /**
@@ -31,7 +32,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.46 $
+ * @version             $Revision: 1.47 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -207,6 +208,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
+		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new TrainsByCarTypeAction(rb.getString("TitleModifyTrains")));
 		toolMenu.add(new TrainsScheduleAction(rb.getString("TitleTimeTableTrains")));

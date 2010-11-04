@@ -26,14 +26,13 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.trains.TrainManager;
 
 
 /**
  * Frame for user edit of operation parameters
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.45 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.46 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -70,9 +69,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     
     JRadioButton typeDesc = new JRadioButton(rb.getString("Descriptive"));
     JRadioButton typeAAR = new JRadioButton(rb.getString("AAR"));
-    
-    JRadioButton buildNormal = new JRadioButton(rb.getString("Normal"));
-    JRadioButton buildAggressive = new JRadioButton(rb.getString("Aggressive"));
 		    
     // check boxes
     JCheckBox eastCheckBox = new JCheckBox(rb.getString("eastwest"));
@@ -237,17 +233,19 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		setCarTypes();
 		
 		// row 9b
-		JPanel pBuildOption = new JPanel();
-		pBuildOption.setBorder(BorderFactory.createTitledBorder(rb.getString("BuildOption")));
-		ButtonGroup buildGroup = new ButtonGroup();
-		buildGroup.add(buildNormal);
-		buildGroup.add(buildAggressive);
-		pBuildOption.add(buildNormal);
-		pBuildOption.add(buildAggressive);
+		JPanel pOwnerName = new JPanel();
+		pOwnerName.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOwnerName")));
+		pOwnerName.add(ownerTextField);
 
-		p9.add(pBuildOption);
+		//p9.add(pOwnerName);
 		
-		setBuildOption();
+		// Option panel
+		JPanel options = new JPanel();
+		options.setLayout(new GridBagLayout());
+		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
+		addItem (options, mainMenuCheckBox, 1,7);
+		
+		//p9.add(options);
 		
 		// 1st scroll panel
 		panel.add(p1);
@@ -256,11 +254,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		panel.add(p5);
 		panel.add(p9);
 		
-		// Option panel
-		JPanel options = new JPanel();
-		options.setLayout(new GridBagLayout());
-		options.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOptions")));
-		addItem (options, mainMenuCheckBox, 1,7);		
 
 		// Icon panel
 		JPanel pIcon = new JPanel();
@@ -274,7 +267,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
     	
 		JPanel pPanelName = new JPanel();
 		pPanelName.setLayout(new GridBagLayout());
-		pPanelName.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayourPanelName")));
+		pPanelName.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPanelName")));
 		addItem (pPanelName, panelTextField, 0, 0);
 		p1Icon.add(pPanelName);
 
@@ -337,9 +330,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addButtonAction(saveButton);
 		addCheckBoxAction(eastCheckBox);
 		addCheckBoxAction(northCheckBox);
-		addRadioButtonAction(buildNormal);
-		addRadioButtonAction(buildAggressive);
-
+		
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
@@ -435,8 +426,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 					CarManagerXml.instance().writeOperationsFile();
 				}
 			}
-			// build option
-			Setup.setBuildAggressive(buildAggressive.isSelected());
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// RFID enabled?
@@ -520,17 +509,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		packFrame();
 	}
 	
-	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae){
-		log.debug("radio button selected");
-		// can't change the build option if there are trains built
-		if (TrainManager.instance().getAnyTrainBuilt()){
-			setBuildOption();	// restore the correct setting
-			JOptionPane.showMessageDialog(this, rb.getString("CanNotChangeBuild"),
-					rb.getString("MustTerminateOrReset"),
-					JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	
 	private void setScale(){
 		int scale = Setup.getScale();
 		switch (scale){
@@ -575,11 +553,6 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	private void setCarTypes(){
 		typeDesc.setSelected(Setup.getCarTypes().equals(Setup.DESCRIPTIVE));
 		typeAAR.setSelected(Setup.getCarTypes().equals(Setup.AAR));
-	}
-	
-	private void setBuildOption(){
-		buildNormal.setSelected(!Setup.isBuildAggressive());
-		buildAggressive.setSelected(Setup.isBuildAggressive());
 	}
 	
 	private void setDirectionCheckBox(int direction){

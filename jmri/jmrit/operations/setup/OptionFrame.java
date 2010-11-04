@@ -7,18 +7,22 @@ import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.trains.TrainManager;
 
 
 /**
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -30,8 +34,10 @@ public class OptionFrame extends OperationsFrame{
 	// major buttons	
 	JButton saveButton = new JButton(rb.getString("Save"));
 
-	// radio buttons		
-    
+	// radio buttons
+	JRadioButton buildNormal = new JRadioButton(rb.getString("Normal"));
+	JRadioButton buildAggressive = new JRadioButton(rb.getString("Aggressive"));
+ 
     // check boxes
 	JCheckBox routerCheckBox = new JCheckBox(rb.getString("EnableCarRouting"));
 	JCheckBox rfidCheckBox = new JCheckBox(rb.getString("EnableRfid"));
@@ -73,11 +79,19 @@ public class OptionFrame extends OperationsFrame{
 		// Build Options panel
 		JPanel pBuild = new JPanel();
 		pBuild.setLayout(new GridBagLayout());
-		pBuild.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutBuildOptions")));	
-		addItemLeft (pBuild, localInterchangeCheckBox, 1,0);
-		addItemLeft (pBuild, localSidingCheckBox, 1,1);
-		addItemLeft (pBuild, localYardCheckBox, 1,2);
-		addItemLeft (pBuild, trainIntoStagingCheckBox, 1,3);
+		pBuild.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutBuildOptions")));
+		
+		JPanel pOpt = new JPanel();
+		pOpt.setLayout(new GridBagLayout());
+		
+		addItem(pOpt, buildNormal, 1, 0);
+		addItem(pOpt, buildAggressive, 2, 0);
+		
+		addItem(pBuild, pOpt, 1, 0);
+		addItemLeft(pBuild, localInterchangeCheckBox, 1,1);
+		addItemLeft(pBuild, localSidingCheckBox, 1,2);
+		addItemLeft(pBuild, localYardCheckBox, 1,3);
+		addItemLeft(pBuild, trainIntoStagingCheckBox, 1,4);
 		
 		// Router panel
 		JPanel pRouter = new JPanel();
@@ -110,6 +124,15 @@ public class OptionFrame extends OperationsFrame{
 
 		// setup buttons
 		addButtonAction(saveButton);
+		
+		// radio buttons
+		ButtonGroup buildGroup = new ButtonGroup();
+		buildGroup.add(buildNormal);
+		buildGroup.add(buildAggressive);
+		addRadioButtonAction(buildNormal);
+		addRadioButtonAction(buildAggressive);
+		
+		setBuildOption();
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
@@ -119,9 +142,27 @@ public class OptionFrame extends OperationsFrame{
 		setVisible(true);
 	}
 	
+	private void setBuildOption(){
+		buildNormal.setSelected(!Setup.isBuildAggressive());
+		buildAggressive.setSelected(Setup.isBuildAggressive());
+	}
+	
+	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae){
+		log.debug("radio button selected");
+		// can't change the build option if there are trains built
+		if (TrainManager.instance().getAnyTrainBuilt()){
+			setBuildOption();	// restore the correct setting
+			JOptionPane.showMessageDialog(this, rb.getString("CanNotChangeBuild"),
+					rb.getString("MustTerminateOrReset"),
+					JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
 	// Save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == saveButton){
+			// build option
+			Setup.setBuildAggressive(buildAggressive.isSelected());
 			// Local moves?
 			Setup.setLocalInterchangeMovesEnabled(localInterchangeCheckBox.isSelected());
 			Setup.setLocalSidingMovesEnabled(localSidingCheckBox.isSelected());

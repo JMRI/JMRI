@@ -20,7 +20,7 @@ import java.io.File;
  * Tests for the Operations Setup GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
@@ -52,7 +52,6 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		OperationsSetupFrame f = new OperationsSetupFrame();
 		f.initComponents();
 		
-		f.setVisible(true);
 		f.railroadNameTextField.setText("Test Railroad Name");
 		f.maxLengthTextField.setText("1234");
 		f.maxEngineSizeTextField.setText("6");
@@ -60,7 +59,6 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.travelTimeTextField.setText("4");
 		f.ownerTextField.setText("Bob J");
 		
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildNormal ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.scaleHO ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.typeDesc ) );
 		
@@ -88,10 +86,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("switch time", "3", f.switchTimeTextField.getText());
 		Assert.assertEquals("travel time", "4", f.travelTimeTextField.getText());
 		Assert.assertEquals("owner", "Bob J", f.ownerTextField.getText());
-		
-		Assert.assertTrue("build normal",f.buildNormal.isSelected());
-		Assert.assertFalse("build aggressive",f.buildAggressive.isSelected());
-		
+				
 		Assert.assertTrue("HO scale", f.scaleHO.isSelected());
 		Assert.assertFalse("N scale", f.scaleN.isSelected());
 		Assert.assertFalse("Z scale", f.scaleZ.isSelected());
@@ -119,7 +114,68 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		f.dispose();
 	}
 
-
+	public void testOptionFrameWrite(){
+		OptionFrame f = new OptionFrame();
+		f.initComponents();
+		
+		// confirm defaults
+		Assert.assertTrue("build normal", f.buildNormal.isSelected());
+		Assert.assertFalse("build aggressive", f.buildAggressive.isSelected());
+		Assert.assertFalse("local", f.localSidingCheckBox.isSelected());
+		Assert.assertFalse("interchange", f.localInterchangeCheckBox.isSelected());
+		Assert.assertFalse("yard", f.localYardCheckBox.isSelected());
+		Assert.assertFalse("rfid", f.rfidCheckBox.isSelected());
+		Assert.assertFalse("car logger", f.carLoggerCheckBox.isSelected());
+		Assert.assertFalse("engine logger", f.engineLoggerCheckBox.isSelected());
+		Assert.assertTrue("router", f.routerCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildAggressive ) );
+		Assert.assertFalse("build normal", f.buildNormal.isSelected());
+		Assert.assertTrue("build aggressive", f.buildAggressive.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.localSidingCheckBox ) );
+		Assert.assertTrue("local", f.localSidingCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.localInterchangeCheckBox ) );
+		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.localYardCheckBox ) );
+		Assert.assertTrue("yard", f.localYardCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.rfidCheckBox ) );
+		Assert.assertTrue("rfid", f.rfidCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.carLoggerCheckBox ) );
+		Assert.assertTrue("car logger", f.carLoggerCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.engineLoggerCheckBox ) );
+		Assert.assertTrue("engine logger", f.engineLoggerCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.routerCheckBox ) );
+		Assert.assertFalse("router", f.routerCheckBox.isSelected());
+		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		//done
+		f.dispose();
+	}
+	
+	public void testOptionFrameRead(){
+		OptionFrame f = new OptionFrame();
+		f.initComponents();
+		
+		Assert.assertFalse("build normal",f.buildNormal.isSelected());
+		Assert.assertTrue("build aggressive",f.buildAggressive.isSelected());
+		Assert.assertTrue("local", f.localSidingCheckBox.isSelected());
+		Assert.assertTrue("interchange", f.localInterchangeCheckBox.isSelected());
+		Assert.assertTrue("yard", f.localYardCheckBox.isSelected());
+		Assert.assertTrue("rfid", f.rfidCheckBox.isSelected());
+		Assert.assertTrue("car logger", f.carLoggerCheckBox.isSelected());
+		Assert.assertTrue("engine logger", f.engineLoggerCheckBox.isSelected());
+		Assert.assertFalse("router", f.routerCheckBox.isSelected());
+		
+		//done
+		f.dispose();
+	}
 
 	
 	// Ensure minimal setup for log4J

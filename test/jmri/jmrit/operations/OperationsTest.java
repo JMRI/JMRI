@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmrit.operations package
  * @author		Bob Coleman
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsTest extends TestCase {
 
@@ -44,6 +44,9 @@ public class OperationsTest extends TestCase {
 		suite.addTest(jmri.jmrit.operations.rollingstock.engines.OperationsEnginesGuiTest.suite());
 		suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesGuiTest.suite());
 		suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsGuiTest.suite());
+		
+		// Last test, deletes log file if one exists
+		suite.addTest(jmri.jmrit.operations.rollingstock.OperationsLoggerTest.suite());
 		
 		return suite;
 	}
