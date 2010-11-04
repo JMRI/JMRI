@@ -11,19 +11,31 @@ import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.BoxLayout;
 import jmri.util.JmriJFrame;
 
 /**
  * A splash screen for showing during JMRI startup
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller Copyright 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SplashWindow extends JmriJFrame {
     Image splashIm;
-
+    
     public SplashWindow() {
         super("JMRI");
+        SplashWindowDisplay(null);
+    }
+    
+    public SplashWindow(JPanel splashMsg) {
+        super("JMRI");
+        SplashWindowDisplay(splashMsg);
+    }
+
+    public void SplashWindowDisplay(JPanel splashMsg) {
+        //super("JMRI");
 
         // get the splash image
        MediaTracker mt = new MediaTracker(this);
@@ -38,7 +50,20 @@ public class SplashWindow extends JmriJFrame {
 
         JLabel l = new JLabel(new ImageIcon(splashIm, "JMRI splash screen"));
         l.setOpaque(true);
-        getContentPane().add(l);
+        
+        if (splashMsg!=null) {
+            JPanel full = new JPanel();
+            full.setLayout(
+             new BoxLayout( full, BoxLayout.Y_AXIS ) );
+            l.setAlignmentX(CENTER_ALIGNMENT);
+            splashMsg.setAlignmentX(CENTER_ALIGNMENT);
+            full.add(l);
+            full.add(splashMsg);
+            getContentPane().add(full);
+        } else {
+            getContentPane().add(l);
+        }
+        
         pack();
 
         /* Center the window and pad the frame size slightly to put some space 
