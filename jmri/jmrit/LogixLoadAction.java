@@ -13,7 +13,7 @@ import javax.swing.*;
  * Provide an action to allow Logixs to be loaded disabled when panel file is loaded
  *
  * @author	Dave Duchamp   Copyright (C) 2007
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class LogixLoadAction extends AbstractAction {
 
@@ -28,11 +28,21 @@ public class LogixLoadAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 		// Set option to force Logixs to be loaded disabled
-		InstanceManager.logixManagerInstance().setLoadDisabled(true);
-		log.error("Requested load Logixs diabled via Debug menu.");
-		javax.swing.JOptionPane.showMessageDialog(_who,
-				rb.getString("LogixDisabledMessage"), rb.getString("DebugOption"),
-						javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+        Object[] options = {"Disable",
+                    "Enable"};
+
+        int retval = JOptionPane.showOptionDialog(_who, rb.getString("LogixDisabledMessage"), rb.getString("DebugOption"),
+                                                  JOptionPane.YES_NO_OPTION,
+                                                  JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+        if (retval != 0) {
+            InstanceManager.logixManagerInstance().setLoadDisabled(false);
+            log.error("Requested load Logixs enabled via Debug menu.");
+        } else {
+            InstanceManager.logixManagerInstance().setLoadDisabled(true);
+            log.error("Requested load Logixs diabled via Debug menu.");
+        }
+
     }
 
     // initialize logging
