@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.13 $
+ * @version 		$Revision: 1.14 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -221,16 +221,9 @@ public class LnOverTcpPacketizer extends LnPacketizer {
               catch (NoSuchElementException e) {
                   // message queue was empty, wait for input
                   if (debug) log.debug("start wait");
-                  try {
-                      synchronized(this) {
-                          // Java 1.4 gets confused by "wait()" in the
-                          // following line
-                          ((Object)this).wait();
-                      }
-                  }
-                  catch (java.lang.InterruptedException ei) {
-                    Thread.currentThread().interrupt(); // retain if needed later
-                  }
+                  
+                  new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
+                  
                   if (debug) log.debug("end wait");
               }
           }

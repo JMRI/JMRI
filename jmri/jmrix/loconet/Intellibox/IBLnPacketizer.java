@@ -30,8 +30,8 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * does not extend to uses in other software products.  If you wish to
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
- * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.10 $
+ * @author			Bob Jacobsen  Copyright (C) 2001, 2010
+ * @version 		$Revision: 1.11 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
@@ -51,11 +51,13 @@ public class IBLnPacketizer extends LnPacketizer {
         * Remember the LnPacketizer object
         */
        LnPacketizer trafficController;
-       public RcvHandler(LnPacketizer lt) {
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+        justification="single threaded during init; will eventually be replaced for multi-connection support")
+    public RcvHandler(LnPacketizer lt) {
            trafficController = lt;
        }
 
-       @SuppressWarnings("null")
 	public void run() {
            boolean debug = log.isDebugEnabled();
 
@@ -223,16 +225,9 @@ public class IBLnPacketizer extends LnPacketizer {
                 catch (NoSuchElementException e) {
                     // message queue was empty, wait for input
                     if (debug) log.debug("start wait");
-                    try {
-                        synchronized(this) {
-                            // Java 1.4 gets confused by "wait()" in the
-                            // following line
-                            ((Object)this).wait();
-                        }
-                    }
-                    catch (java.lang.InterruptedException ei) {
-                        Thread.currentThread().interrupt(); // retain if needed later
-                    }
+
+                    new jmri.util.WaitHandler(this);  // handle synchronization, spurious wake, interruption
+
                     if (debug) log.debug("end wait");
                 }
             }
