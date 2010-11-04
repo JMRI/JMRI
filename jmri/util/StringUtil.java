@@ -17,7 +17,7 @@ import java.util.Iterator;
  * back to an explicit implementation when running on Java 1.1
  *
  * @author Bob Jacobsen  Copyright 2003
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class StringUtil {
@@ -365,31 +365,31 @@ public class StringUtil {
      * and quote \ with \ too.
      */
     static public String parenQuote(String in) {
-        String result = "";
         if (in.equals("")) return "";
+        StringBuilder result = new StringBuilder();
         int level = 0;
         for (int i = 0; i < in.length(); i++) {
             char c = in.charAt(i);
             if (c == '(') level++;
-            else if (c == '\\') result+='\\';
+            else if (c == '\\') result.append('\\');
             else if (c ==')') {
                 level--;
                 if (level < 0) {
                     level = 0;
-                    result+='\\';
+                    result.append('\\');
                 }
             }
-            result += c;
+            result.append(c);
         }
-        return result;
+        return new String(result);
     }
     
     /** 
      * Undo parenQuote
      */
     static String parenUnQuote(String in) {
-        String result = "";
-        if (in.equals("")) return result;
+        if (in.equals("")) return "";
+        StringBuilder result = new StringBuilder();
         for (int i = 0; i < in.length(); i++) {
             char c = in.charAt(i);
             if (c == '\\') {
@@ -400,9 +400,9 @@ public class StringUtil {
                     c+='\\';
                 }
             }
-            result += c;
+            result.append(c);
         }
-        return result;
+        return new String(result);
     }
     
     static public java.util.List<String> splitParens(String in) {

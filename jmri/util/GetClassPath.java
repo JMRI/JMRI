@@ -8,11 +8,12 @@ import java.io.*;
  * Creates a classpath for JMRI from directories
  *
  * @author	Bob Jacobsen, Copyright (C) 2008
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class GetClassPath {
 
     // static provide the class path
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings("SBSC_USE_STRINGBUFFER_CONCATENATION") // not a performance issue
     static public String getClassPath() {
         File programdir = new File(".");
         File libdir = new File("lib");
