@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.122 $
+ * @version     $Revision: 1.123 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -89,12 +89,16 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         
         // find preference file and set location in configuration manager
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
-        File file = new File(configFilename);
+        // Needs to be declared final as we might need to
+        // refer to this on the Swing thread
+        final File file;
         // decide whether name is absolute or relative
-        if (!file.isAbsolute()) {
+        if (!new File(configFilename).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
             file = new File(XmlFile.prefsDir()+configFilename);
+        } else {
+            file = new File(configFilename);
         }
         cm.setPrefsLocation(file);
         
@@ -114,7 +118,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         }
         
 	// populate GUI
-	    log.debug("Start UI");
+        log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         // Create a menu bar
         menuBar = new JMenuBar();
@@ -124,14 +128,23 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // Now load deferred config items
         if (file.exists()) {
-            log.debug("start deferred load from config");
-            try {
-                configDeferredLoadOK = InstanceManager.configureManagerInstance().loadDeferred(file);
-            } catch (JmriException e) {
-                log.error("Unhandled problem loading deferred configuration: "+e);
-                configDeferredLoadOK = false;
+            // To avoid possible locks, deferred load should be
+            // performed on the Swing thread
+            if (SwingUtilities.isEventDispatchThread()) {
+                configDeferredLoadOK = doDeferredLoad(file);
+            } else {
+                try {
+                    // Use invokeAndWait method as we don't want to
+                    // return until deferred load is completed
+                    SwingUtilities.invokeAndWait(new Runnable() {
+                        public void run() {
+                            configDeferredLoadOK = doDeferredLoad(file);
+                        }
+                    });
+                } catch (Exception ex) {
+                    log.error("Exception creating system console frame: "+ex);
+                }
             }
-            log.debug("end deferred load from config file, OK="+configDeferredLoadOK);
         } else {
             configDeferredLoadOK = false;
         }
@@ -149,6 +162,19 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         add(buttonSpace());
         add(_jynstrumentSpace);
         log.debug("End constructor");
+    }
+
+    private boolean doDeferredLoad(File file) {
+        boolean result;
+        log.debug("start deferred load from config");
+        try {
+            result = InstanceManager.configureManagerInstance().loadDeferred(file);
+        } catch (JmriException e) {
+            log.error("Unhandled problem loading deferred configuration: "+e);
+            result = false;
+        }
+        log.debug("end deferred load from config file, OK="+result);
+        return result;
     }
     
     /**
