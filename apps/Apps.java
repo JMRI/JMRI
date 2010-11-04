@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.123 $
+ * @version     $Revision: 1.124 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -47,7 +47,10 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     public Apps(JFrame frame) {
 
         super(true);
+        long start = System.nanoTime();
 
+        splash(false);
+        splash(true, true);
         setButtonSpace();
         setJynstrumentSpace();
         
@@ -125,7 +128,39 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, frame);
-
+        
+        
+        long end = System.nanoTime();
+        
+        long elapsedTime = (end - start)/1000000;
+        /*
+        This ensures that the message is displayed on the screen for a minimum of 2.5seconds, if the time taken
+        to get to this point in the code is longer that 2.5seconds then the wait is not invoked.
+        */
+        if (elapsedTime<=2501){
+            long sleep = 2500-elapsedTime;
+            log.debug("The time that the debug message was displayed was less than 2500ms - " + elapsedTime + 
+                            " going to sleep for " + sleep +" to allow user sufficient time to do something");
+            try{
+                Thread.currentThread().sleep(sleep);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        
+        splash(false);
+        splash(true, false);
+        java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
+        while (debugmsg){
+            /*The user has pressed the interupt key that allows them to disable logixs
+            at start up we do not want to process any more information until the user
+            has answered the question */
+            try{
+                Thread.currentThread().sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
         // Now load deferred config items
         if (file.exists()) {
             // To avoid possible locks, deferred load should be
@@ -588,18 +623,30 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static SplashWindow sp = null;
 	static java.awt.event.AWTEventListener debugListener = null;
 	static boolean debugFired = false;
-    static protected void splash(boolean show) {
+    static boolean debugmsg=false;
+    static protected void splash(boolean show){
+        splash(show, false);
+    }
+    static protected void splash(boolean show, boolean debug) {
         if (!log4JSetUp) initLog4J();
-		if (debugListener == null) {
+        if (debugListener == null && debug) {
 			// set a global listener for debug options
 			debugFired = false;
 			java.awt.Toolkit.getDefaultToolkit().addAWTEventListener(
 				debugListener = new java.awt.event.AWTEventListener() {
 						public void eventDispatched(java.awt.AWTEvent e) {
-							if (!debugFired) {
-								InstanceManager.logixManagerInstance().setLoadDisabled(true);
-								log.info("Requested load Logixs disabled.");
-								debugFired = true;
+                            if (!debugFired) {
+                                /*We set the debugmsg flag on the first instance of the user pressing any button
+                                and the if the debugFired hasn't been set, this allows us to ensure that we don't
+                                miss the user pressing F8, while we are checking*/
+                                debugmsg=true;
+                                if (e.getID()==KeyEvent.KEY_PRESSED){
+                                    java.awt.event.KeyEvent ky = (java.awt.event.KeyEvent) e;
+                                    if (ky.getKeyCode()==119)
+                                        startupDebug();
+                                } else {
+                                    debugmsg=false;
+                                }
 							}
 						}
 					},
@@ -607,13 +654,47 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 				);
 		}
 		// bring up splash window for startup
-        if (sp==null) sp = new SplashWindow();
+        
+        if (sp==null){
+            if (debug){
+                sp = new SplashWindow(splashDebugMsg());
+            } else sp = new SplashWindow();
+        }
         sp.setVisible(show);
         if (!show) {
             sp.dispose();
-			java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);            
+			java.awt.Toolkit.getDefaultToolkit().removeAWTEventListener(debugListener);
+            debugListener=null;
 			sp = null;
         }
+    }
+    
+    static protected JPanel splashDebugMsg(){
+        JLabel panelLabel = new JLabel("Press F8 to disable logixs");
+        panelLabel.setFont(panelLabel.getFont().deriveFont(9f));
+        JPanel panel = new JPanel();
+        panel.add(panelLabel);
+        return panel;
+    }
+    
+    static protected void startupDebug(){
+        debugFired = true;
+        debugmsg=true;
+        
+                Object[] options = {"Disable",
+                    "Enable"};
+
+        int retval = JOptionPane.showOptionDialog(null, "Do you wish to start JMRI with logix disabled?", "Start Up",
+                                                  JOptionPane.YES_NO_OPTION,
+                                                  JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
+
+        if (retval != 0) {
+            debugmsg=false;
+            return;
+        }
+        InstanceManager.logixManagerInstance().setLoadDisabled(true);
+        log.info("Requested load Logixs disabled.");
+        debugmsg=false;
     }
 
     /**
