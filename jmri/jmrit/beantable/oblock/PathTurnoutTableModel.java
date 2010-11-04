@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 
 import java.util.ResourceBundle;
@@ -49,7 +49,8 @@ public class PathTurnoutTableModel extends AbstractTableModel {
     static final String inconsistent = jmri.jmrit.beantable.AbstractTableAction.rbean.getString("BeanStateInconsistent");
     static final String closed = InstanceManager.turnoutManagerInstance().getClosedText();
     static final String thrown = InstanceManager.turnoutManagerInstance().getThrownText();
-    static protected final String[] turnoutStates = {closed, thrown, unknown, inconsistent};
+    
+    static final String[] turnoutStates = {closed, thrown, unknown, inconsistent};
     
 	public static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
     

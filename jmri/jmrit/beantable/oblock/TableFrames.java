@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 import java.awt.BorderLayout;
@@ -70,7 +70,7 @@ import jmri.jmrit.logix.WarrantTableAction;
 
 public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameListener {
 
-    protected static int ROW_HEIGHT;
+    static int ROW_HEIGHT;
     public static final int STRUT_SIZE = 10;
 	public static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
 

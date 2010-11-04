@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 import java.util.List;
@@ -66,7 +66,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
     static public final String gradualText = AbstractTableAction.rb.getString("BlockGradual");
     static public final String tightText = AbstractTableAction.rb.getString("BlockTight");
     static public final String severeText = AbstractTableAction.rb.getString("BlockSevere");
-    static protected final String[] curveOptions = {noneText, gradualText, tightText, severeText};
+    static final String[] curveOptions = {noneText, gradualText, tightText, severeText};
 
 	static final ResourceBundle rbo = ResourceBundle.getBundle("jmri.jmrit.beantable.OBlockTableBundle");
 
