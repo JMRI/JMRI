@@ -22,7 +22,7 @@ import jmri.jmrix.loconet.*;
  *
  * @author Alex Shepherd  Copyright (c) 2002
  * @author Bob Jacobsen
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class LnMessageClient extends LnTrafficRouter {
@@ -140,7 +140,7 @@ public class LnMessageClient extends LnTrafficRouter {
 
         // just run forever in this simple test app
         while (true) 
-            new jmri.util.WaitHandler(new String());  // handle synchronization, spurious wake, interruption
+            new jmri.util.WaitHandler("");  // handle synchronization, spurious wake, interruption
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnMessageClient.class.getName());
