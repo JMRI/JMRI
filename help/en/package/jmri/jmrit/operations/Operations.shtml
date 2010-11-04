@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.83 2010-10-31 18:49:38 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.84 2010-11-04 20:24:08 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -61,9 +61,9 @@ and can be found under the main menu heading "Tools->Operations".</P>
 
 The operations program provides a set of demo files to help introduce
 you to the some of the features and capabilities of this program. To
-load the demo files, first open the Operations Settings panel
+load the demo files, first open the Operations Settings window
 "Tools->Operations->Settings", and in the upper left corner of the
-Setting panel is the Tools menu, select "Load Demo Files". The program
+Setting window is the Tools menu, select "Load Demo Files". The program
 will create a <A HREF="#BackupRestore">backup</A> of your current
 configuration if you have one, and then loads the demo files. Restart
 JMRI to complete the demo load process.
@@ -179,9 +179,9 @@ length.
 <A NAME="Settings"></A>
 <H2>Settings</H2>
 
-The Settings panel contains general parameters for the operations
+The Settings window contains general parameters for the operations
 program. Select from the JMRI main window "Tools->Operations->Settings"
-to open the Settings panel. The Setting panel has fields and buttons to
+to open the Settings window. The Setting window has fields and buttons to
 allow you to enter your railroad name, the directions your train's
 travel, the scale that you are using, printer and icon controls, and the
 ability to create backups and restore files for operations.
@@ -191,7 +191,9 @@ ability to create backups and restore files for operations.
 <H3>Railroad Name</H3>
 
 Enter your railroad name in the field across from "Railroad Name". This
-name will show up on your manifests.
+name will show up on your manifests. You can also have a different
+railroad name for every train in your roster, see 
+<A HREF="#TrainOptions">Train Options</A> for details.
 
 <H3>Train Directions</H3>
 
@@ -229,7 +231,9 @@ your railroad, will estimate the arrival times for your trains based on
 the train's departure time and the switch and travel times. Enter the
 average number of minutes it takes to drop or pickup a car on your
 railroad. Then enter the average amount of time in minutes it takes to
-travel from one location to the another.
+travel from one location to the another.  Later when you create a <A HREF="#EditRoute">route</A>
+you will be able to increase or decrease the train's travel time between
+any two locations.
 
 <H3>Car Types</H3>
 
@@ -238,30 +242,6 @@ provides type names like "Boxcar" and "Tankcar", and AAR provides type
 names like "XM" and "T" for boxcars and tank cars respectively. Select
 the one that you prefer.
 
-<H3>Build Option</H3>
-
-There are two build options, normal and aggressive. It is recommended
-that you select normal when you first begin using the program. Normal
-builds guarantee that when a car is delivered (dropped) that there will
-be track space available for the car. 
-
-<P>
-Aggressive builds makes the car's track space available as soon as a
-car is scheduled for a pickup. Therefore there can be instances where a
-train was to pickup a car to vacate the track, but a "later" scheduled
-train arrives early with a drop to that track and the car hasn't been
-picked up. However, more often than not the same train will perform the
-pickup and drop thus minimizing the number of conflicts. Aggressive also
-performs a two pass determination of car movements. The net effect is
-that more cars are moved within a given train. Aggressive also tends to
-deliver cars to all of the available sidings. The smaller the siding,
-yard, or interchange the more likely that the program will assign cars
-to that track.
-</P>
-<P>
-Note that once you've built a train, the build option can not be changed until
-all trains are terminated or reset. 
-</P>
 <H3>Add Operations Menu to Main Menu</H3>
 
 When selected, add the operations menu to the main menu bar. The
@@ -290,7 +270,7 @@ direction using the pull down menus.</P>
 
 <H3>Save</H3>
 
-When you're finished with the settings panel, press the save button to
+When you're finished with the settings window, press the save button to
 store the setting in a file called "Operations.xml". You can find this
 file in your JMRI directory in a folder called "operations". The program
 will also create a backup file each time you press the save button. 
@@ -326,7 +306,32 @@ selecting Operations->Settings->Tools->Options.
 
 <P><img src="images/SettingsOptions.png"></P>
 
-The first set of options controls local car movements. Normally it is
+<H3>Build Options</H3>
+
+There are two build train options, normal and aggressive. It is
+recommended that you select normal when you first begin using the
+program. Normal builds guarantee that when a car is delivered (dropped)
+by a train that there will be track space available for the car.
+
+<P>
+Aggressive builds makes the car's track space available as soon as a
+car is scheduled for a pickup. Therefore there can be instances where a
+train was to pickup a car to vacate the track, but a "later" scheduled
+train arrives early with a drop to that track and the car hasn't been
+picked up. However, more often than not the same train will perform the
+pickup and drop thus minimizing the number of conflicts. Aggressive also
+performs a two pass determination of car movements. The net effect is
+that more cars are moved within a given train. Aggressive also tends to
+deliver cars to all of the available sidings. The smaller the siding,
+yard, or interchange the more likely that the program will assign cars
+to that track.
+</P>
+<P>
+Note that once you've built a train, the build option can not be changed until
+all trains are terminated or reset. 
+</P>
+
+The next set of options controls local car movements. Normally it is
 better not to allow a car to move from one siding directly to another
 siding in the same location. This type of move can be very unrealistic,
 picture moving a boxcar from a shoe manufacture directly to an auto manufacture.
@@ -336,11 +341,11 @@ these types of moves, select the appropriate checkbox.
 
 <P>The next option is restricting trains to staging tracks that only
 accept the train's rolling stock type and road names. When "Enable Type
-and Road Restrictions into Staging" selected, the program will only
-deliver a train into a staging track has the same rolling stock and road
-name restrictions. This is useful when you want trains be delivered to
+and Road Restrictions into Staging" is selected, the program will only
+deliver a train to a staging track has the same rolling stock and road
+name restrictions. This is useful when you want trains delivered to
 staging tracks based on the train's rolling stock restrictions. However,
-if you want certain car or road names to be transported by the train,
+if you want certain car or road names to be transported by a train,
 but not delivered to staging, deselect this feature.</P>
 
 <P>The next option is Car Routing, and it is recommended that you
@@ -350,7 +355,9 @@ The car routing algorithm will search for the most efficient route for
 the car to travel. The algorithm will attempt to use interchanges and
 then yards to move cars. Routing through staging is disabled by default.
 The algorithm will try and find a route using a maximum of five trains
-to complete the car move.</P>
+to complete the car move.  Note that the program never gives up trying to
+route a car.  If a car has been assigned a "Final Destination" the program
+will try and route the car after every move.</P>
 
 <A NAME="LoggingOptions"></A>
 <H3>Logging Options</H3>
@@ -419,8 +426,11 @@ Select the desired color from the drop down box.
 
 <H3>Add Logo</H3>
 
-If you want a logo in the top right hand corner of your manifests and switch lists, press
-the "Add Logo" button and select a file with the image you want to display.
+If you want a logo in the top right hand corner of your manifests and
+switch lists, press the "Add Logo" button and select a file with the
+image you want to display. You can also have a different logo for every
+train in your roster, see <A HREF="#TrainOptions">Train Options</A> for
+details.
 
 <H3>Misplaced Cars Comment</H3>
 
@@ -461,13 +471,13 @@ railroad.
 </P>
 <P>
 To add a location, press the "Add" button located on the
-bottom of the "Locations" panel. A new panel should appear. 
+bottom of the "Locations" window. A new window should appear. 
 </P>
 <P>
 <img src="images/EditLocation.png">
 </P>
 
-<P>In the "Add Location" panel, enter the name of the location in
+<P>In the "Add Location" window, enter the name of the location in
 box across from "Name". The location name must be unique; the program
 will not allow two locations with identical names. However, if you want
 more than one location to have the same name for your manifests and
@@ -477,7 +487,7 @@ will remove the hyphen and number when printing manifests and switch
 lists.</P>
 
 <P>Now press the "Add Location" button at
-the bottom of the panel. The various fields that were disabled should
+the bottom of the window. The various fields that were disabled should
 now appear.
 </P>
 <P>Each location can have several yard, siding, interchange or
@@ -524,7 +534,7 @@ the yard along with the length of the track in scale feet or in actual
 inches. Append a double quote (") to the length when entering actual
 inches and the program will convert the length into scale feet. Append
 cm if you want to convert from centimeters to meters. Press the "Add
-Yard Track" button at the bottom of the panel and the disabled fields
+Yard Track" button at the bottom of the window and the disabled fields
 should now appear.
 
 <H3>Rolling Stock Serviced</H3>
@@ -534,7 +544,7 @@ that the yard rolling stock is restricted to the ones that the location
 can service. If the rolling stock that you wish doesn't appear for a
 yard, confirm that the location's rolling stock types are properly
 selected. If the rolling stock type you want doesn't exist for a
-location, you will have to create the type using the "Cars" panels, see
+location, you will have to create the type using the "Cars" window, see
 <A HREF="#Cars">Cars</A> below.
 
 <H3>Road Names Serviced</H3>
@@ -558,10 +568,11 @@ containing the last settings for all of your locations.
 <A	NAME="Sidings"></A>
 <H3>Sidings</H3>
 
-To add a siding, press the "Add Siding" button. Sidings are very similar
-to <A HREF="#Yards">Yards</A> , so see above for more information.  You can if
-you wish schedule the order that cars will be delivered to a siding.  See
-<A HREF="#Schedules">Schedules</A> below for more information.  
+A siding is used to service an industry. To add a siding, press the "Add
+Siding" button. Sidings are very similar to <A HREF="#Yards">Yards</A> ,
+so see above for more information. You can if you wish schedule the
+order that cars will be delivered to a siding. See <A HREF="#Schedules">Schedules</A>
+below for more information. 
 
 <A NAME="Schedules"></A>
 <H3>Schedules</H3>
@@ -576,16 +587,16 @@ the road name for the type of car delivered. For example, if you wanted
 two SP boxcars to be delivered followed by a tank car loaded with "Oil",
 you can create a schedule that will do exactly that. To create a
 schedule press the "Edit" button next to "Optional Schedule" pull down 
-menu on the "Edit Siding Track" panel. Pressing the
-"Edit" button should create the "Add Schedule" panel.
+menu on the "Edit Siding Track" window. Pressing the
+"Edit" button should create the "Add Schedule" window.
 <P>
 <img src="images/EditSchedule.png">
 </P>
 <P>Enter a name for your schedule and press the "Add Schedule"
-button on the bottom of the panel. Multiple sidings can use the same
+button on the bottom of the window. Multiple sidings can use the same
 schedule as long as the sidings use the same car types and roads. Now
 add your first delivery for this siding by selecting a car type in the
-menu box found in the lower left corner of the panel and pressing the
+menu box found in the lower left corner of the window and pressing the
 "Add car type" button. A new item should appear in your schedule
 containing the type of car, a pull down menu for road names, and a count
 of 1. You can if you wish specify a particular road for the type of car
@@ -600,7 +611,7 @@ want a car to remain still for several operating sessions.</P>
 
 <P>Repeat selecting the car types and pressing to
 "Add car type" until your have a delivery schedule you like. Press "Save
-Schedule" and close the schedule panel when you are done.
+Schedule" and close the schedule window when you are done.
 Note only car types and roads that are accepted by this siding
 are available. If a car type or road isn't available, check the car
 types and roads for this siding and location.
@@ -686,14 +697,15 @@ various trains.</P>
 A staging track allows you to have all cars and engines in a train
 delivered to one track. When terminating a train into staging, the
 program will search for a completely empty track, one with no engines or
-cars. The staging track must also service all of the train's car and
-engine types and roads. Trains can not share staging tracks; the program will only
-place one train per track. When departing a location with a staging
-track, all cars and engines on one track will be assigned to the train.
-A location can have multiple staging tracks, but can't have any other
-types of tracks, sidings, yards, etc. Staging tracks can be at the start
-of a route, the end of the route, or both. Staging tracks in the middle
-of a route are ignored by the program.
+cars. The staging track by <A HREF="#SettingsOptions">default</A> must
+also service all of the train's car and engine types and roads. Trains
+can not share staging tracks; the program will only place one train per
+track. When departing a location with a staging track, all cars and
+engines on one track will be assigned to the train. A location can have
+multiple staging tracks, but can't have any other types of tracks,
+sidings, yards, etc. Staging tracks can be at the start of a route, the
+end of the route, or both. Staging tracks in the middle of a route are
+ignored by the program.
 
 <p>Note if you are running a train to and from the same staging
 track, you must define two staging tracks for the program, one to depart
@@ -749,7 +761,7 @@ must be directly serviced by the route that departs the staging track.
 <A NAME="Cars"></A>
 <H2>Cars</H2>
 
-The cars panel allows you to edit your car roster. You can enter a car's
+The cars window allows you to edit your car roster. You can enter a car's
 number, road, type, length. The program will automatically calculate the
 car's weight based on length and the scale your modeling. You can
 optionally add the car's color, build date, load and owner. If you want
@@ -811,19 +823,19 @@ the locations and their tracks before importing the cars into the
 operations program.</P>
 
 <P>To improve the speed of the car import, you can close the cars
-panel. It takes significantly more processor cycles to update the cars
-panel than to actually import the cars.</P> 
+window. It takes significantly more processor cycles to update the cars
+window than to actually import the cars.</P> 
 
 <P>After importing your cars, you must save them if you want to keep
 them as part of your roster. Select any car by pressing the edit button
 and then press the "Save" button that can be found at the bottom right
-of the "Edit Car" panel. </P>
+of the "Edit Car" window. </P>
 
 <A NAME="CarsEdit"></A>
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
-the bottom of the "Tools->Operations->Cars" panel. 
+the bottom of the "Tools->Operations->Cars" window. 
 
 <P>
 <img src="images/EditCar.png">
@@ -892,6 +904,7 @@ load or unload cars with loads that you've created. It is also suggested
 that you use a format similar to L(commodity) to describe your loads.
 For example a load of tools could be entered as L(Tools).
 
+<A	NAME="Kernel"></A>
 <H3>Kernel, or Group of Cars</H3>
 
 If wish this car to be part of a kernel which is a group of cars that
@@ -938,11 +951,11 @@ the menu box and press the "Delete" button.
 
 If you need to change a specific car attribute (road, type, color, etc)
 in your entire car roster, you can use the "Replace" button found at the
-bottom right of the edit car attribute panel. For example, if you wish
+bottom right of the edit car attribute window. For example, if you wish
 to change the car road name attribute "UP" to "UPS" for all of your
-cars. Press the "Edit" button for any of your cars in the Cars panel,
+cars. Press the "Edit" button for any of your cars in the Cars window,
 and then press the "Edit" button across from Road in the "Car Edit"
-panel. Enter the new road "UPS" in the text box, select "UP" in the menu
+window. Enter the new road "UPS" in the text box, select "UP" in the menu
 box, and press "Replace". All cars with "UP" as their road will now have
 "UPS" as their road name.
 
@@ -985,9 +998,31 @@ Second, on manifests and switch lists, the program will list all of the
 misplaced cars. Now your operators can help you find cars that have
 been misplaced. And finally, when this checkbox is selected, the other fields in
 the set car location window are disabled.</P>
-<P>
-You can also optionally enter the location and track that you want the car to
-return to when the car's load status becomes empty.</P>
+<P>The "Out of Service" checkbox when selected causes the program to ignore
+the car when building new trains.  Many operators have a RIP (Repair In Place) track
+and use this feature to hold the car there until repairs have been made.</P>
+
+<P>Use to "Location" set of field to place the car on the layout.
+You can also optionally enter the location and track that you want the
+car to return to when the car's load status becomes empty. Use the
+"Auto" checkbox to show valid tracks for a given location</P>
+
+<P>The next three set of fields are normally set by the program when
+building trains. We'll explain how they work in case you're interested
+in how the program works or if you want to manually override the
+program. The first is the "Destination" set of pull down boxes. The
+"Destination" is the next location that the car will be delivered to.
+The destination has be reachable by only one train or the car will not
+be serviced.</P>
+
+<P>The next field is the "Final Destination" set of pull down boxes.
+If a car is delivered to a siding with a schedule, and the schedule has
+a shipping destination that requires more than one train, than this set
+of fields is loaded by the program.  The last field is the train assignment.</P>
+
+<P>When manually setting a destination, you don't have to specify a
+track. And when manually setting a destination that is staging, you
+should never select a destination track, let the program do that for you.</P>
 
 <H3>Tools</H3>
 
@@ -998,14 +1033,14 @@ The "Export to file" function creates a file named
 "ExportOperationsCarRoster.csv" in the JMRI->operations directory. You
 can remove all of the cars in your roster using the "Delete all cars"
 option. You can also preview and print your car roster. The preview and
-print features use the same "Sort by" radio buttons as the cars panel.
+print features use the same "Sort by" radio buttons as the cars window.
 One of the more useful sorts is by "Location", this allows you to
 quickly verify your car locations before or after an operations session.
 
 <A NAME="Engines"></A>
 <H2>Engines</H2>
 
-The engines panel allows you to edit your engine roster. You can enter
+The engines window allows you to edit your engine roster. You can enter
 an engine's number, road, model, type, and length. You can optionally
 add the engine's build date and owner. If you want a group of engines to
 be assigned as a unit, you can create a "consist". The engine type is
@@ -1069,13 +1104,13 @@ exists, it will be skipped by the program.</P>
 <P>After importing your engines, you must save them if you want to
 keep them as part of your roster. Select any engine by pressing the edit
 button and then press the "Save" button that can be found at the bottom
-right of the "Edit Engine" panel.</P>
+right of the "Edit Engine" window.</P>
 
 <A NAME="EnginesAdd"></A>
 <H3>Adding Engines to your Roster</H3>
 
 To manually add an engine to your roster, press the "Add" button located
-at the bottom of the "Engines" panel. Then select the road for the
+at the bottom of the "Engines" window. Then select the road for the
 engine. If the desired road doesn't exist, press the "Edit" button
 across from the road select menu box. This will allow you to add a new
 road or delete any that you don't need. Now enter the engine's number,
@@ -1138,82 +1173,85 @@ point or out and back. To build a route, select
 
 <P><img src="images/EditRoute.png"></P>
 
-<P>Enter the route name. Each route must have unique name. Then
-press the "Add Route" button located at the bottom of the panel. Now
-select the location the train will depart by selecting the location in
-the menu box located at the left bottom side of the panel. Press "Add
-Location". Now build your route by selecting the next location the train
-will visit, select all locations that the train will pass through even
-if the train will not work the location. This way your train's engineer
-will know when reading his manifest the towns he will be traveling
-through. Each time you add a location to the route, the table shows the
-order in which the train will visit. You can move a location up or down
-in the sequence if needed.</P>
+<P>Enter the route name and an optional comment. Each route must
+have unique name. Then press the "Add Route" button located at the
+bottom of the window. Now select the location the train will depart by
+selecting the location in the menu box located at the left bottom side
+of the window. Press "Add Location". Now build your route by selecting
+the next location the train will visit, select all locations that the
+train will pass through even if the train will not work the location.
+This way your train's engineer will know when reading his manifest the
+towns he will be traveling through. Each time you add a location to the
+route, the table shows the order in which the train will visit. You can
+move a location up or down in the sequence if needed.</P>
 
 <A NAME="EditRoute"></A>
 <H3>Edit Route</H3>
 
 Each location has the train's departure direction, number of desired car
 moves, and whether car pickups and or car drops are allowed at that
-location. A car move can be a car pickup or car drop at that
-location. For example, 5 moves can be 5 pickups, or 5 drops, or any
-combination of 5 pickups or drops.
+location. A car move can be a car pickup or car drop at that location.
+For example, 5 moves can be 5 pickups, or 5 drops, or any combination of
+5 pickups or drops. Picking up or dropping off a group of cars or a
+<A	HREF="#Kernel">kernel</A> represents one move.
 
-<P>If you want to delay the departure of the train from a location,
-enter the number of minutes desired in the "Wait" cell. You can also
-adjust the maximum train length that can depart that location.</P>
+<P>If you want to delay the departure of the train from a location
+or increase the train's travel time,
+enter the number of minutes desired in the "Wait" cell.  Another choice
+is to specify the train's departure time from a location.</P>
 
-<P>The grade is used to determine how many engines the train will
-require for that segment. The X and Y are the coordinates on your
-dispatcher's panel for the optional train icon. You can set the
-coordinates here, or use the "SetX&Y" train icon popup menu to teach the
-program where you want the train icon placed when the train is at the
-specified location. Leave the X and Y coordinates at zero if you want to
-manually move the icon or you're not using the icon feature. After
-setting the number of moves, maximum length, or coordinates, click on
-the table to make sure it is recognized by the program, then hit "Save
-Route."</P>
+<P>You can also adjust the maximum train length that can depart each
+location. The grade is used to determine how many engines the train will
+require for that segment.</P>
 
-<p>You can also enter an optional comment for the location that will
-appear on on the train manifests.</p>
+<P>The X and Y are the coordinates on your dispatcher's panel for
+the optional train icon. You can set the coordinates here, use the <A
+	HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A> tool, or
+use the "SetX&Y" train icon popup menu to teach the program where you
+want the train icon placed when the train is at the specified location.
+Leave the X and Y coordinates at zero if you want to manually move the
+icon or you're not using the icon feature.</P>
+
+
+<p>Each location in the route can also have an optional comment that
+will appear on the train manifests.</p>
 
 <H3>Save Route</H3>
 
 Press "Save Route" to save your route. The program will create a file
 (OperationsRouteRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-routes is also created each time the "Save Route" button is pressed. 
-
-<A NAME="CopyRoute"></A>
+routes is also created each time the "Save Route" button is pressed. <A
+	NAME="CopyRoute"></A>
 <H3>Copy Route</H3>
 
-In the Route panel select "Tools->Copy Route" to make a copy of your
+In the Route window select "Tools->Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
-want to copy. If you want the route reversed check the "Invert" box. 
+want to copy. If you want the route reversed check the "Invert" box. <A
+	NAME="SetTrainIconCoordinates"></A>
+<H3>Set Train Icon Coordinates</H3>
 
-<A NAME="Trains"></A>
+Use this tool to set the default X and Y coordinates of your train icons
+for each location. The tool allows you to specify the icon coordinates
+based on the train's direction. You can also update all of your existing
+routes and locations with these new coordinates. As an alternative, you
+can use a route's "Tools->Set Train Icon Coordinates for this Route" to
+create coordinates unique to a specific route. <A NAME="Trains"></A>
 <H2>Trains</H2>
 
 Now that we've created our routes we need trains to move cars! Create a
 train by selecting "Tools->Operations->Trains" from the top level menu.
-<P>
-<img src="images/Trains.png">
-</P>
-<P>
-Press the "Add" button to create a train. 
-</P>
-<P>
-<img src="images/EditTrain.png">
-</P>
-<P>
-Enter the train's name and
-optional description, and then press the "Add Train" button. Both will
-show up on the train's manifest. The train's name will also show up on
-the train icon, so short names work best. Then select the route that
-this train will travel. There's an Edit button to the right of the route
-that allows you to directly edit the selected route. Once a route is
-selected a list of locations that the train will visit should appear.
-You can deselect any location that you don't want the train to work.</P>
+<P><img src="images/Trains.png"></P>
+<P>Press the "Add" button to create a train.</P>
+<P><img src="images/EditTrain.png"></P>
+<P>Enter the train's name and optional description, and then press
+the "Add Train" button. Both will show up on the train's manifest. The
+train's name will also show up on the train icon, so short names work
+best. Then select the route that this train will travel. There's an Edit
+button to the right of the route that allows you to directly edit the
+selected route. Once a route is selected a list of locations that the
+train will visit should appear. You can deselect any location that you
+don't want the train to work.</P>
 
 <H3>Train Departure Time</H3>
 
@@ -1227,9 +1265,7 @@ Selected Trains</A> button.
 You can determine what type of cars and engines the train will service.
 Select the rolling stock the train will carry by clicking on the
 appropriate checkboxes. A checked box means the train will service this
-type of rolling stock.
-
-<A NAME="TrainRequires"></A>
+type of rolling stock. <A NAME="TrainRequires"></A>
 <H3>Train Requires</H3>
 
 You can control the number of engines that will be assigned to this
@@ -1258,30 +1294,27 @@ railroad.
 Press "Save Train" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-trains is also created each time the "Save Train" button is pressed. 
-
-<A NAME="TrainOptions"></A>
+trains is also created each time the "Save Train" button is pressed. <A
+	NAME="TrainOptions"></A>
 <H3>Train Options</H3>
 
-You can optionally have a unique railroad name and logo for each train in
-your roster.  Use the "Edit Train->Tools->Options" to enter your train's
-railroad name and logo.
-
-<A NAME="TrainRoadNames"></A>
+You can optionally have a unique railroad name and logo for each train
+in your roster. Use the "Edit Train->Tools->Options" to enter your
+train's railroad name and logo. <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
 
-You can control the road names that the train will service. Select
-under the "Edit Train->Tools" menu the "Train Build Options". This will
-bring up a new window with several options.
+You can control the road names that the train will service. Select under
+the "Edit Train->Tools" menu the "Train Build Options". This will bring
+up a new window with several options.
 
 <P><img src="images/TrainBuildOptions.png"></P>
 
-<P>If the train will
-service any road name, select the "Accept All" radio button. If you want
-to accept only some road names, select "Accept only" radio button. Then
-use the menu of road names and "Add Road" button to make a list of road
-names that the train will service. To remove a road name from your list,
-select the road name from the menu and use the "Delete Road" button.</P>
+<P>If the train will service any road name, select the "Accept All"
+radio button. If you want to accept only some road names, select "Accept
+only" radio button. Then use the menu of road names and "Add Road"
+button to make a list of road names that the train will service. To
+remove a road name from your list, select the road name from the menu
+and use the "Delete Road" button.</P>
 
 <P>To build a list of road names that the train will not service,
 select the "Exclude" radio button. Use the menu of road names and the
@@ -1293,11 +1326,11 @@ and close the window when your done.</P>
 
 <H3>Train Car Loads</H3>
 
-You can decide which car loads the train will service.  There are two pull
-down menus, the first one is the type of car, and the second the type of load
-serviced by the car type selected.  Use the "Add Load" button to build a list
-of loads that the train will either service or exclude.  The "Delete All"
-button will remove all loads from the list.
+You can decide which car loads the train will service. There are two
+pull down menus, the first one is the type of car, and the second the
+type of load serviced by the car type selected. Use the "Add Load"
+button to build a list of loads that the train will either service or
+exclude. The "Delete All" button will remove all loads from the list.
 
 <H3>Train Owners</H3>
 
@@ -1307,116 +1340,135 @@ see above.
 
 <H3>Train Built Dates</H3>
 
-You can control which rolling stock the train will service by their built
-date. If you want only engines and cars built after a certain year,
-select the "After" radio button and enter a four digit year in the text
-box. If you only want engines and cars built before a certain year,
+You can control which rolling stock the train will service by their
+built date. If you want only engines and cars built after a certain
+year, select the "After" radio button and enter a four digit year in the
+text box. If you only want engines and cars built before a certain year,
 select the "Before" radio button and enter a four digit year in the text
 box. And if you want to specify a period, select the "Range" radio
-button and enter the after and before years you want the train to service.
-
-<A NAME="TrainScripts"></A>
+button and enter the after and before years you want the train to
+service. <A NAME="TrainScripts"></A>
 <H3>Scripts</H3>
 
 If you want to run a script when a train moves or terminates, select
-under the "Edit Train->Tools" menu "Scripts". This will
-bring up a new window with several script options.
-<p>
-Included in the jython directory are several examples of operation oriented scripts.
-</P>
+under the "Edit Train->Tools" menu "Scripts". This will bring up a new
+window with several script options.
+<p>Included in the jython directory are several examples of
+operation oriented scripts.</P>
 
 <A NAME="TrainShowCarTypesServiced"></A>
 <H3>Show Car Types Serviced</H3>
 <P>This diagnostic tool can help you determine why a train will not
-service a particular car type. You can select a car type and see how
-the train will service that car type.  You can also select a specific
-car to see how that car would be serviced.</P>
+service a particular car type. You can select a car type and see how the
+train will service that car type. You can also select a specific car to
+see how that car would be serviced.</P>
 
 <P><img src="images/ShowCarTypesServicedTrain.png"></P>
-<P>The window shows the train's route along with every
-location and track that can be serviced by the train. To the right of each track is the
-current status for the car type currently selected in the drop down
+<P>The window shows the train's route along with every location and
+track that can be serviced by the train. To the right of each track is
+the current status for the car type currently selected in the drop down
 menu. If the track status is "OK" then this train can pickup and drop
-this type of car to that specific track.  If the track status is "Pickup" or
-"Drop" then the train can only pickup or drop off cars to this particular track.
-A status that starts off with an "X" means that the train will not service the
-track.  The following table provides a summary of the various track statuses. </P>
+this type of car to that specific track. If the track status is "Pickup"
+or "Drop" then the train can only pickup or drop off cars to this
+particular track. A status that starts off with an "X" means that the
+train will not service the track. The following table provides a summary
+of the various track statuses.</P>
 
 <table>
-<tr>
-<th>Status</th>
-<th>Description</th>
-</tr>
-<tr>
-<td width="20%">OK</td><td>Selected car type can be picked up and dropped</td>
-</tr>
-<tr>
-<td>Pickup</td><td>Selected car type can only be picked up from this track</td>
-</tr>
-<tr>
-<td>Drop</td><td>Selected car type can only be dropped to this track</td>
-</tr>
-<tr>
-<td>X (Train Built)</td><td>Selected car built date is not serviced by this train</td>
-</tr>
-<tr>
-<td>X (Train Load)</td><td>Selected car load is not serviced by this train</td>
-</tr>
-<tr>
-<td>X (Train Owner)</td><td>Selected car owner is not serviced by this train</td>
-</tr>
-<tr>
-<td>X (Train Road)</td><td>Selected car road is not serviced by this train</td>
-</tr>
-<tr>
-<td>X (Train Type)</td><td>Selected car type is not serviced by this train</td>
-</tr>
-<tr>
-<td>X (Train Skips)</td><td>The train doesn't service this location</td>
-</tr>
-<tr>
-<td>X (Train Pickup)</td><td>The train can't pickup cars from this track</td>
-</tr>
-<tr>
-<td>X (Train Drop)</td><td>The train can't drop cars to this track</td>
-</tr>
-<tr>
-<td>X (Route)</td><td>The route doesn't allow pickups or drops for this location</td>
-</tr>
-<tr>
-<td>X (Route Moves)</td><td>The number of requested car moves for this location is zero</td>
-</tr>
-<tr>
-<td>X (Location Type)</td><td>The location doesn't service the selected car type</td>
-</tr>
-<tr>
-<td>X (Track Road)</td><td>The track doesn't service the selected car road</td>
-</tr>
-<tr>
-<td>X (Track Type)</td><td>The track doesn't service the selected car type</td>
-</tr>
-<tr>
-<td>X (Dir Loc)</td><td>Based on the train's departure direction, the location doesn't allow drops or pickups</td>
-</tr>
-<tr>
-<td>X (Dir Trk)</td><td>Based on the train's departure direction, the track doesn't allow drops or pickups</td>
-</tr>
+	<tr>
+		<th>Status</th>
+		<th>Description</th>
+	</tr>
+	<tr>
+		<td width="20%">OK</td>
+		<td>Selected car type can be picked up and dropped</td>
+	</tr>
+	<tr>
+		<td>Pickup</td>
+		<td>Selected car type can only be picked up from this track</td>
+	</tr>
+	<tr>
+		<td>Drop</td>
+		<td>Selected car type can only be dropped to this track</td>
+	</tr>
+	<tr>
+		<td>X (Train Built)</td>
+		<td>Selected car built date is not serviced by this train</td>
+	</tr>
+	<tr>
+		<td>X (Train Load)</td>
+		<td>Selected car load is not serviced by this train</td>
+	</tr>
+	<tr>
+		<td>X (Train Owner)</td>
+		<td>Selected car owner is not serviced by this train</td>
+	</tr>
+	<tr>
+		<td>X (Train Road)</td>
+		<td>Selected car road is not serviced by this train</td>
+	</tr>
+	<tr>
+		<td>X (Train Type)</td>
+		<td>Selected car type is not serviced by this train</td>
+	</tr>
+	<tr>
+		<td>X (Train Skips)</td>
+		<td>The train doesn't service this location</td>
+	</tr>
+	<tr>
+		<td>X (Train Pickup)</td>
+		<td>The train can't pickup cars from this track</td>
+	</tr>
+	<tr>
+		<td>X (Train Drop)</td>
+		<td>The train can't drop cars to this track</td>
+	</tr>
+	<tr>
+		<td>X (Route)</td>
+		<td>The route doesn't allow pickups or drops for this location</td>
+	</tr>
+	<tr>
+		<td>X (Route Moves)</td>
+		<td>The number of requested car moves for this location is zero</td>
+	</tr>
+	<tr>
+		<td>X (Location Type)</td>
+		<td>The location doesn't service the selected car type</td>
+	</tr>
+	<tr>
+		<td>X (Track Road)</td>
+		<td>The track doesn't service the selected car road</td>
+	</tr>
+	<tr>
+		<td>X (Track Type)</td>
+		<td>The track doesn't service the selected car type</td>
+	</tr>
+	<tr>
+		<td>X (Dir Loc)</td>
+		<td>Based on the train's departure direction, the location
+		doesn't allow drops or pickups</td>
+	</tr>
+	<tr>
+		<td>X (Dir Trk)</td>
+		<td>Based on the train's departure direction, the track doesn't
+		allow drops or pickups</td>
+	</tr>
 </table>
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
 
 To build one train, press the "Build" button in the row for the desired
-train in the <A HREF="#Trains">Trains</A> panel. The button will become "Print" or "Preview"
-after the train is built. If you want to review how the train was built,
-select the "Build Reports" before pressing the "Print" or "Preview"
-button for the desired train. If the "Preview Manifest" checkbox is
-selected, the program will generate the build report and manifest and
-present them in preview windows. If you want to build several trains
-without having to press individual buttons for each train, select the
-trains that you want built and press the "Build" button found at the
-bottom of the trains panel. The program will then build manifests for
-all of the selected trains.
+train in the <A HREF="#Trains">Trains</A> window. The button will become
+"Print" or "Preview" after the train is built. If you want to review how
+the train was built, select the "Build Reports" before pressing the
+"Print" or "Preview" button for the desired train. If the "Preview
+Manifest" checkbox is selected, the program will generate the build
+report and manifest and present them in preview windows. If you want to
+build several trains without having to press individual buttons for each
+train, select the trains that you want built and press the "Build"
+button found at the bottom of the trains window. The program will then
+build manifests for all of the selected trains.
 
 <P>If a train fails to build, the "Move" button will change its text
 to "Report". Pressing "Report" will print or preview the build report
@@ -1427,17 +1479,17 @@ will appear. If you want to disable this feature deselect the checkbox
 <A NAME="Timetable"></A>
 <H3>Timetable</H3>
 
-The Timetable tool allows you to define which trains will run on any given day, and can
-be found under the Trains->Tools.  For each day of the week, select which trains you
-want to build.  Then select which day you want by selecting the appropriate radio button.
-Then press the "Apply" button to update the Trains build checkboxes.  Use the "Save"
-button to store any changes you made to the timetable.
-
-<A	NAME="TroubleShootingBuildingTrains"></A>
+The Timetable tool allows you to define which trains will run on any
+given day, and can be found under the Trains->Tools. For each day of the
+week, select which trains you want to build. Then select which day you
+want by selecting the appropriate radio button. Then press the "Apply"
+button to update the Trains build checkboxes. Use the "Save" button to
+store any changes you made to the timetable. <A
+	NAME="TroubleShootingBuildingTrains"></A>
 <H2>Problems Building Trains</H2>
 
 If you have a problem building a train you can select the "Build
-Reports" checkbox at the bottom of the train panel. When a build fails
+Reports" checkbox at the bottom of the train window. When a build fails
 for any reason and the "Build Reports" checkbox is selected, the program
 will send a report to your printer if the "Preview Manifests" isn't
 selected; or to a preview window if the "Preview Manifest" is selected.
@@ -1446,21 +1498,21 @@ to very detailed. See the Settings section <A HREF="#BuildReportDetails">Build
 Report Details</A> for more information on how to change the build report
 detail level.
 
-<P>
-<img src="images/BuildReport.png">
-</P>
+<P><img src="images/BuildReport.png"></P>
 <H3>Reading the Build Report</H3>
 
-The build report shows the steps the operations program goes through
-while building a train. The first page provides the route the train will
-travel and the number of car moves requested for each location. The
-report then shows the car type and engine types that the train will
-service. By reading the various comments in the report you can get an
-idea of steps the operations program goes through to build a train. When
-there's an issue that the operation's build can't resolve, the build
-will fail. To understand why a build failed, go to the last page of the
-build report and by working backwards from the last line, you should be
-able to understand why a train failed to build.
+The program when building a train creates a build report and saves it to
+disk. The text files can be found in the JMRI->operations->buildstatus
+directory. The build report shows the steps the operations program goes
+through while building a train. The first page provides the route the
+train will travel and the number of car moves requested for each
+location. The report then shows the car type and engine types that the
+train will service. By reading the various comments in the report you
+can get an idea of steps the operations program goes through to build a
+train. When there's an issue that the operation's build can't resolve,
+the build will fail. To understand why a build failed, go to the last
+page of the build report and by working backwards from the last line,
+you should be able to understand why a train failed to build.
 
 <H3>More Build Report Details</H3>
 
@@ -1469,18 +1521,19 @@ the details. If the train requires an engine or several engines, the
 program will look for engines at the start of the route and then
 determines if the termination location will accept them. Note that if
 two or more engines are required for the train that the engines must be
-in a <A HREF="#EnginesAdd">consist</A>. The program assigns to the engines and cars the number of
-moves that they experience during each session. The move count is bumped
-up each time an engine or car is dropped off to a new location's track.
-The program sorts the engines and cars by the move count, and then tries
-to assign engines and cars with the least number of moves to the train.
-When building a train only cars at locations that are part of the train's route
-are used.
+in a <A HREF="#EnginesAdd">consist</A>. The program assigns to the
+engines and cars the number of moves that they experience during each
+session. The move count is bumped up each time an engine or car is
+dropped off to a new location's track. The program sorts the engines and
+cars by the move count, and then tries to assign engines and cars with
+the least number of moves to the train. When building a train only cars
+at locations that are part of the train's route are used.
 <P>The next step is to assign a caboose or car with FRED to the
 train. If the program finds the required caboose or car with FRED at the
 start of the route, the program tries to find a track at the termination
 location that will accept it. If successful, all other cabooses and cars
 with FRED are removed from the available car list.</P>
+
 <P>Next the program will assign cars to the train starting from the
 departure location. Each car goes through the process of finding a track
 along the route that will accept the car. Another count assigned to a
@@ -1494,6 +1547,9 @@ requested for a location is met, the next location in the route is
 processed. This continues until all locations in a train's route have
 been processed.</P>
 
+<P>Sometimes reading the build report can get tedious.  If you want to 
+use a text editor to search the report, the build reports can be found in 
+the directory JMRI->operations->buildstatus.</P>
 
 <H3>Printing Manifests</H3>
 
@@ -1504,7 +1560,7 @@ Pressing the "Print" button will print the manifest for that train.
 Pressing the "Preview" button will produce a window in which you can
 review the manifest. If you want to print manifests for several trains,
 select the trains you want in the build column and then press the
-"Print" or "Preview" button found at the bottom of the trains panel. The
+"Print" or "Preview" button found at the bottom of the trains window. The
 program will then print or preview manifests for all of the selected
 trains.
 
@@ -1523,8 +1579,7 @@ locations to preview or print. Once you've determined which locations
 you want to print or preview, press the "Save" button to keep your
 selections.</P>
 
-<P>
-<img src="images/SwitchList.png"></P>
+<P><img src="images/SwitchList.png"></P>
 
 <A NAME="TrainMove"></A>
 <H3>Moving Trains</H3>
@@ -1558,7 +1613,7 @@ from its current location to its final destination. The cars and engines
 associated with the train will be picked up and delivered to the
 locations shown in the train manifest. To terminate several trains,
 select the trains you wish to terminate in the build column and press
-the "Terminate" button at the bottom of the train panel.
+the "Terminate" button at the bottom of the Trains window.
 
 <H3>Save Builds</H3>
 
@@ -1593,8 +1648,7 @@ then later find out that only nine trains completed their runs. You
 would then terminate nine trains, and leave the other three for next
 time. Or if you wish you could reset any trains that didn't depart from
 their terminal. Reseting trains really isn't necessary, the trains that
-didn't run during this session could run the during the next session.
-</P>
+didn't run during this session could run the during the next session.</P>
 <p>An alternate method is to build, print, and use the "Move" button
 for each train to track the actual movement of the trains during your
 session. As long as the trains on your layout match the locations in the
@@ -1602,26 +1656,25 @@ program you can build a new train.</P>
 
 <H2>Operation Windows</H2>
 
-Some of the operation panels can be resized and placed to your liking.
+Some of the operation windows can be resized and placed to your liking.
 Pressing the save button will store the size and location for the
-following operation panels:
+following operation windows:
 
 <ul>
-<li>Settings</li>
-<li>Edit Location</li>
-<li>Edit Car</li>
-<li>Edit Engine</li>
-<li>Trains</li>
-<li>Edit Train</li>
-<li>Timetable</li>
+	<li>Settings</li>
+	<li>Edit Location</li>
+	<li>Edit Car</li>
+	<li>Edit Engine</li>
+	<li>Trains</li>
+	<li>Edit Train</li>
+	<li>Timetable</li>
 </ul>
 
-<P>The program also allows you to resize the Trains and Timetable table
-column widths. Adjust the column widths to your liking and then press
-"Save Builds" to save your preferences.</P>
+<P>The program also allows you to resize the Trains and Timetable
+table column widths. Adjust the column widths to your liking and then
+press "Save Builds" to save your preferences.</P>
 
 <P>The end of operations help.</P>
-
 </DIV>
 <!-- closes #mainContent--></DIV>
 <!-- closes #mBody-->
