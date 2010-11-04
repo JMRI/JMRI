@@ -31,7 +31,7 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001, 2010
- * @version 		$Revision: 1.11 $
+ * @version 		$Revision: 1.12 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
@@ -95,6 +95,8 @@ public class IBLnPacketizer extends LnPacketizer {
                                                       +" opcode: "+Integer.toHexString(opCode));
                                msg = new LocoNetMessage(byte2);
                                break;
+                            default: // can't happen with this code, but just in case...
+                               throw new LocoNetMessageException("decode failure "+byte2);
                            }
                            // message exists, now fill it
                            msg.setOpCode(opCode);
@@ -119,9 +121,9 @@ public class IBLnPacketizer extends LnPacketizer {
                            }
                        }
                        catch (LocoNetMessageException e) {
-                           // retry by destroying the existing message
+                           // retry by going around again
                            // opCode is set for the newly-started packet
-                           msg = null;
+                           continue;
                        }
                    }
                    // check parity
