@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -188,11 +188,15 @@ public class SystemConsole extends JTextArea {
         }
 
         // Now append to the JTextArea
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                console.append(text);
-            }
-        });
+        if (SwingUtilities.isEventDispatchThread()) {
+            console.append(text);
+        } else {
+            SwingUtilities.invokeLater(new Runnable() {
+                public void run() {
+                    console.append(text);
+                }
+            });
+        }
     }
 
     /**
