@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.124 $
+ * @version     $Revision: 1.125 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -142,7 +142,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             log.debug("The time that the debug message was displayed was less than 2500ms - " + elapsedTime + 
                             " going to sleep for " + sleep +" to allow user sufficient time to do something");
             try{
-                Thread.currentThread().sleep(sleep);
+                Thread.sleep(sleep);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -156,7 +156,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             at start up we do not want to process any more information until the user
             has answered the question */
             try{
-                Thread.currentThread().sleep(1000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
