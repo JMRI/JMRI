@@ -30,7 +30,7 @@ import java.util.List;
  *
  * @author  Bob Jacobsen   Copyright (C) 2001, 2002
  * @author  Howard G. Penny Copyright (C) 2005
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @see     jmri.jmrit.decoderdefn.IdentifyDecoder
  * @see     jmri.jmrit.roster.IdentifyLoco
  */
@@ -112,10 +112,26 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel  {
     }
 
     private void selectDecoder(int mfgID, int modelID, int productID) {
-        String sz_productID = (productID != -1 ? Integer.toString(productID) : null);
-        // locate a decoder like that.
-        JComboBox temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
-        if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.getItemCount()+" matches");
+        JComboBox temp = null;
+
+        // if productID present, try with that
+        if (productID != -1) {
+            String sz_productID = Integer.toString(productID);
+            temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+            if (temp.getItemCount() == 0) {
+                log.debug("selectDecoder found no items with product ID "+productID);
+                temp = null;
+            } else {
+                log.debug("selectDecoder found "+temp.getItemCount()+" matches with productID "+productID);
+            }
+        }
+
+        // try without product ID if needed
+        if (temp == null) {  // i.e. if no match previously
+            temp = DecoderIndexFile.instance().matchingComboBox(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            if (log.isDebugEnabled()) log.debug("selectDecoder without productID found "+temp.getItemCount()+" matches");
+        }
+        
         // install all those in the JComboBox in place of the longer, original list
         if (temp.getItemCount() > 0) {
             decoderBox.setModel(temp.getModel());

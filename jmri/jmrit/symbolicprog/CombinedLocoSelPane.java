@@ -50,7 +50,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.32 $
+ * @version			$Revision: 1.33 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -327,12 +327,28 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * @param productID the decoder's product ID
      */
     protected void selectDecoder(int mfgID, int modelID, int productID) {
-        String sz_productID = (productID != -1 ? Integer.toString(productID) : null);
         // raise the button again
         iddecoder.setSelected(false);
-        // locate a decoder like that.
-        List<DecoderFile> temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
-        if (log.isDebugEnabled()) log.debug("selectDecoder found "+temp.size()+" matches");
+        List<DecoderFile> temp = null;
+        
+        // if productID present, try with that
+        if (productID != -1) {
+            String sz_productID = Integer.toString(productID);
+            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), sz_productID, null);
+            if (temp.size() == 0) {
+                log.debug("selectDecoder found no items with product ID "+productID);
+                temp = null;
+            } else {
+                log.debug("selectDecoder found "+temp.size()+" matches with productID "+productID);
+            }
+        }
+
+        // try without product ID if needed
+        if (temp == null) {  // i.e. if no match previously
+            temp = temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            if (log.isDebugEnabled()) log.debug("selectDecoder without productID found "+temp.size()+" matches");
+        }
+
         // install all those in the JComboBox in place of the longer, original list
         if (temp.size() > 0) {
             updateForDecoderTypeID(temp);
