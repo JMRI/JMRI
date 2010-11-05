@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -346,6 +346,8 @@ public class DefaultLogix extends AbstractNamedBean
                             varListenerType = LISTENER_TYPE_SIGNALHEAD;
                             break;
                         case Conditional.TYPE_SIGNAL_MAST_ASPECT_EQUALS:
+                        case Conditional.TYPE_SIGNAL_MAST_LIT:
+                        case Conditional.TYPE_SIGNAL_MAST_HELD:
                             varListenerType = LISTENER_TYPE_SIGNALMAST;
                             break;
                     }
