@@ -10,10 +10,15 @@ import java.awt.event.FocusListener;
 
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
 import javax.swing.JOptionPane;
 
 import java.awt.Color;
 import java.util.Vector;
+import java.util.Collections;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -23,7 +28,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 
 //
@@ -51,6 +56,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     protected void checkInitDone() {
     	if (log.isDebugEnabled()) log.debug("init called for "+name());
         if (init) return;
+
         baudBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 adapter.configureBaudRate((String)baudBox.getSelectedItem());
@@ -120,6 +126,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         init = true;
     }
     jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    //protected ComboBoxRenderer portBoxRenderer = new ComboBoxRenderer();
     protected JComboBox portBox = new JComboBox();
     protected JLabel portBoxLabel;
     protected JComboBox baudBox = new JComboBox();
@@ -140,53 +147,86 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     }
     
     Vector<String> v;
+    Vector<String> originalList;
+    String invalidPort=null;
+    
     
     public void refreshPortBox() {
-        v = adapter.getPortNames();
+        if (!init){
+            v = adapter.getPortNames();
+            portBox.setRenderer(new ComboBoxRenderer());
+        }
+        else {
+            
+            Vector<String> v2 = adapter.getPortNames();
+            if (v2.equals(originalList)){
+                log.debug("List of valid Ports has not changed, therefore we will not refresh the port list");
+                return;
+            }
+            log.debug("List of valid Ports has been changed, therefore we will refresh the port list");
+            v = new Vector<String>();
+            v.setSize(v2.size());
+            Collections.copy(v, v2); 
+        }
+        /* as we make amendments to the list of port in vector v, we keep a copy of it before
+        modification, this copy is then used to validate against any changes in the port lists.
+        */
+        originalList = new Vector<String>();
+        originalList.setSize(v.size());
+        Collections.copy(originalList, v); 
         if(portBox.getActionListeners().length >0)
         	portBox.removeActionListener(portBox.getActionListeners()[0]);
         portBox.removeAllItems();
+        //v = adapter.getPortNames();
         log.debug("getting fresh list of available Serial Ports");
+        
+        if (v.size()==0)
+        	v.add(0,rb.getString("noPortsFound"));
+        String portName = adapter.getCurrentPortName();
+        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
+            if(!v.contains(portName)){
+                v.add(0,portName);
+                invalidPort=portName;
+                portBox.setForeground(Color.red);
+            } else if (invalidPort!=null && invalidPort.equals(portName)) {
+                invalidPort=null;
+            }
+        } else {
+            if (!v.contains(portName)){
+                v.add(0,rb.getString("noneSelected"));
+            } else if (p.getComboBoxLastSelection(adapter.getClass().getName()+".port")==null){
+                v.add(0,rb.getString("noneSelected"));
+            }
+        }
+
         if(v!=null){
             for (int i=0; i<v.size(); i++) {
                 portBox.addItem(v.elementAt(i));
+                if (v.elementAt(i).equals(portName)){
+                    portBox.setSelectedIndex(i);
+                }
             }
         } else {
             log.error("port name Vector v is null!");
         	return;
         }
-        if (v.size()==0)
-        	portBox.addItem(rb.getString("noPortsFound"));
-            String portName = adapter.getCurrentPortName();
-        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
-            // portBox must contain portName even if it doesn't exist
-            if(!v.contains(portName))
-                portBox.insertItemAt(portName, 0);
-            portBox.setSelectedItem(portName);
-        } else {
-            if (p.getComboBoxLastSelection(adapter.getClass().getName()+".port")!=null){
-                portName = p.getComboBoxLastSelection(adapter.getClass().getName()+".port");
-                if(v.contains(portName)){
-                    portBox.setSelectedItem(portName);
-                    adapter.setPort(portName);
-                }
-                else{
-                    portBox.insertItemAt(rb.getString("noneSelected"),0);
-                    portBox.setSelectedIndex(0);
-                }
-            } else {
-                    portBox.insertItemAt(rb.getString("noneSelected"),0);
-                    portBox.setSelectedIndex(0);                                    
-            }
-        }
+
         portBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+                if (invalidPort!=null && ((String) portBox.getSelectedItem()).equals(invalidPort)){
+                    portBox.setForeground(Color.red);
+                } else {
+                    portBox.setForeground(Color.black);
+                }
                 adapter.setPort((String)portBox.getSelectedItem());
                 p.addComboBoxLastSelection(adapter.getClass().getName()+".port", (String) portBox.getSelectedItem());
                 pref.disallowSave();
             }
         });
     }
+    
+    String value;
+
    
 	public void loadDetails(final JPanel details) {
         _details = details;
@@ -270,28 +310,6 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         portBoxLabel = new JLabel("Serial port: ");
         
-        /*String portName = adapter.getCurrentPortName();
-        if (portName != null && !portName.equals(rb.getString("noneSelected")) && !portName.equals(rb.getString("noPortsFound"))){
-            // portBox must contain portName even if it doesn't exist
-            if(!v.contains(portName))
-                portBox.insertItemAt(portName, 0);
-            portBox.setSelectedItem(portName);
-        } else {
-            if (p.getComboBoxLastSelection(adapter.getClass().getName()+".port")!=null){
-                portName = p.getComboBoxLastSelection(adapter.getClass().getName()+".port");
-                if(v.contains(portName)){
-                    portBox.setSelectedItem(portName);
-                    adapter.setPort(portName);
-                }
-                else{
-                    portBox.insertItemAt(rb.getString("noneSelected"),0);
-                    portBox.setSelectedIndex(0);
-                }
-            } else {
-                    portBox.insertItemAt(rb.getString("noneSelected"),0);
-                    portBox.setSelectedIndex(0);                                    
-            }
-        }*/
         baudBoxLabel = new JLabel("Baud rate:");
         baudBox.setSelectedItem(adapter.getCurrentBaudRate());        
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
@@ -418,6 +436,52 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (adapter!=null){
             adapter.dispose();
             adapter=null;
+        }
+    }
+    
+    class ComboBoxRenderer extends JLabel
+                       implements ListCellRenderer {
+                       
+        public ComboBoxRenderer() {
+            setOpaque(true);
+            setHorizontalAlignment(LEFT);
+            setVerticalAlignment(CENTER);
+        }
+
+        /*
+         * This method finds the image and text corresponding
+         * to the selected value and returns the label, set up
+         * to display the text and image.
+         */
+        public Component getListCellRendererComponent(
+                                           JList list,
+                                           Object value,
+                                           int index,
+                                           boolean isSelected,
+                                           boolean cellHasFocus) {
+            //Get the selected index. (The index param isn't
+            //always valid, so just use the value.)
+            String port = (String) value;
+            if (value ==null)
+                return this;
+
+            if (isSelected) {
+                list.setSelectionForeground(Color.black);
+                setForeground(list.getSelectionForeground());
+            }
+            //portBox.setForeground(Color.black);
+            setForeground(Color.black);
+            if (port.equals(invalidPort)){
+                if (isSelected)
+                    list.setSelectionForeground(Color.red);
+                setForeground(Color.red);
+            }
+
+            //Set the icon and text.  If icon was null, say so.
+            setText(port);
+            //setFont(list.getFont());
+            
+            return this;
         }
     }
 
