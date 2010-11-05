@@ -50,7 +50,7 @@ import java.util.List;
  * for further information.
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.33 $
+ * @version			$Revision: 1.34 $
  */
 public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeListener {
 
@@ -345,7 +345,7 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
 
         // try without product ID if needed
         if (temp == null) {  // i.e. if no match previously
-            temp = temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
+            temp = DecoderIndexFile.instance().matchingDecoderList(null, null, Integer.toString(mfgID), Integer.toString(modelID), null, null);
             if (log.isDebugEnabled()) log.debug("selectDecoder without productID found "+temp.size()+" matches");
         }
 
