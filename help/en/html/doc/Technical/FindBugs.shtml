@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: FindBugs.shtml,v 1.3 2010-10-31 22:20:54 jacobsen Exp $ -->
+<!-- $Id: FindBugs.shtml,v 1.4 2010-11-05 15:14:55 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -57,10 +57,26 @@ recent build online
 If FindBugs is finding a false positive, a bug that's not really a 
 bug, you can turn it off with an annotation such as:
 <pre><code>
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY")
-// OK to compare floats, as even tiny differences should trigger update
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("FE_FLOATING_POINT_EQUALITY","OK to compare floats, as even tiny differences should trigger update")
 </code></pre>
-Please include a comment that explains why what FindBugs flagged really isn't a bug.
+The second "justification" argument is optional, but highly recommended.  
+Explaining why you've added this annotation to suppress a message will help
+whoever comes after you and is trying to understand the code.
+It will also help make sure you properly understand the cause of the underlying
+bug report:  Sometimes what seems a false positive really isn't.
+
+<p>
+If you need to put more than one message type in an annotation, use array syntax:
+<pre><code>
+@edu.umd.cs.findbugs.annotations.SuppressWarnings("{type1},{type2}","why both are needed")
+</code></pre>
+
+<p>
+There are also FindBugs annotations that can help it 
+better understand your code. Sometimes they'll give it enough understanding of
+e.g. when a variable can be null, that it'll no longer make false-positive mistakes.
+For more on this, see the
+<a href="http://findbugs.sourceforge.net/manual/annotations.html">Findbugs annotation page</a>.
 
 <p>
 It can be useful to mark classes with one of the following annotations
@@ -132,13 +148,6 @@ Running this on JMRI 2.5.4 produced the following:
 <tr><td>Dodgy Warnings</td><td>304</td></tr>
 <tr><th>Total</th><th>1322</th></tr>
 </table>
-
-<p>
-Note I've only been able to test this on windows 
-(my Linux box is much slower and I don't have access to a Mac), 
-and the aux classpath I've had to specify for findbugs doesn't include 
-the java jars used my the Mac (they broke findbugs on the PC) 
-so a seperate solution for Macs might be needed.
 
 
 <!--#include virtual="/Footer" -->
