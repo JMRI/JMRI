@@ -17,7 +17,7 @@ import java.util.Calendar;
  * so they don't run during normal production testing.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -179,13 +179,11 @@ public class WaitHandlerTest extends TestCase {
         }
         Assert.assertTrue("started", flag1);
         Assert.assertTrue("still running", !flag2);
-        if (TEST_DELAY < startTime-beginTime) log.error("start delay too long: "+(startTime-beginTime));
-        Assert.assertTrue("start delay short enough", TEST_DELAY >= startTime-beginTime);
 
         // fire intentional wake, which will pass test
         synchronized (t) {
-            Assert.assertTrue("notify early enough", TEST_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime);
             t.notify();
+            Assert.assertTrue("notify early enough", THREAD_DELAY >= Calendar.getInstance().getTimeInMillis() - startTime);
         }
         
         for (int i = 1; i < TEST_DELAY; i++) {
@@ -218,6 +216,16 @@ public class WaitHandlerTest extends TestCase {
 		TestSuite suite = new TestSuite(WaitHandlerTest.class);
 		return suite;
 	}
+
+    // The minimal setup for log4J
+    protected void setUp() throws Exception { 
+        super.setUp();
+        apps.tests.Log4JFixture.setUp();
+    }
+    protected void tearDown() throws Exception { 
+        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
+    }
 
 	 static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WaitHandlerTest.class.getName());
 
