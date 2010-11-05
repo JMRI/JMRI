@@ -21,7 +21,7 @@ import java.io.DataInputStream;
 /**
  * Pane for downloading software updates to PRICOM products
  * @author	    Bob Jacobsen   Copyright (C) 2005
- * @version	    $Revision: 1.19 $
+ * @version	    $Revision: 1.20 $
  */
 public class LoaderPane extends javax.swing.JPanel {
 
@@ -33,6 +33,9 @@ public class LoaderPane extends javax.swing.JPanel {
     Thread      readerThread;
     //private     boolean opened = false;
     DataInputStream serialStream = null;
+    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+        justification="Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
     JComboBox   portBox = new JComboBox();

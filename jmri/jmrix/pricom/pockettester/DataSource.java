@@ -21,7 +21,7 @@ import java.io.DataInputStream;
  * For more info on the product, see http://www.pricom.com
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.26 $
+ * @version			$Revision: 1.27 $
  */
 public class DataSource extends jmri.util.JmriJFrame {
 
@@ -372,6 +372,9 @@ public class DataSource extends jmri.util.JmriJFrame {
     }
 
     DataInputStream serialStream = null;
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+        justification="Class is no longer active, no hardware with which to test fix")
     OutputStream ostream = null;
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DataSource.class.getName());
