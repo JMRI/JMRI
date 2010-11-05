@@ -25,7 +25,7 @@ new WaitHandler(this, 120) {
  * the interrupted flag set.
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class WaitHandler {
@@ -45,10 +45,7 @@ public class WaitHandler {
             long wait = endTime - currentTime;
             try {
                 synchronized(self) {
-                    if (wait > 0)
-                        self.wait(wait);
-                    else
-                        self.wait();
+                    self.wait(wait);
                         
                     if (!wasSpurious()) break;
                 }
@@ -64,17 +61,30 @@ public class WaitHandler {
      * @param self waiting Object
      */
     public WaitHandler(Object self) {
-        this(self, -1);
+        // loop until interrupted, or non-spurious wake
+        while (true){
+            try {
+                synchronized(self) {
+                    self.wait();
+                        
+                    if (!wasSpurious()) break;
+                }
+            } catch (InterruptedException e) { 
+                Thread.currentThread().interrupt(); // retain if needed later
+                break;  // and leave the wait now
+            }    
+        }
     }
     
     /**
      * Method to determine if a wake was
      * spurious or not.  By default, all
-     * wakes are spurious and the full time will
-     * elapse.  Override to provide a test (returning false)
-     * for a non-spurious wake.
+     * wakes are considered not spurious and the full time may not
+     * elapse.  Override to provide a test (returning true)
+     * when there's a way to tell that a wake was spurious and 
+     * the wait() should continue.
      */
-    protected boolean wasSpurious() { return true; }
+    protected boolean wasSpurious() { return false; }
 
 }
 

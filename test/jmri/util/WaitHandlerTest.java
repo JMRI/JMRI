@@ -17,7 +17,7 @@ import java.util.Calendar;
  * so they don't run during normal production testing.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -74,7 +74,7 @@ public class WaitHandlerTest extends TestCase {
         Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-startTime);
     }
 
-    public void xtestInterrupt() {
+    public void testInterrupt() {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread(){
@@ -111,14 +111,17 @@ public class WaitHandlerTest extends TestCase {
         Assert.assertTrue("ended early", THREAD_DELAY >= endTime-startTime);
     }
 
-    public void xtestSpuriousWake() {
+    public void testSpuriousWake() {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread(){
             public void run() {
                 startTime = Calendar.getInstance().getTimeInMillis();
                 flag1 = true;
-                new WaitHandler(this, THREAD_DELAY);
+                new WaitHandler(this, THREAD_DELAY) {
+                    @Override
+                    public boolean wasSpurious() { return true; }
+                };
                 endTime = Calendar.getInstance().getTimeInMillis();
                 flag2 = true;
             }
@@ -152,7 +155,7 @@ public class WaitHandlerTest extends TestCase {
         Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-startTime);
     }
 
-    public void xtestCheckMethod() {
+    public void testCheckMethod() {
         long beginTime = Calendar.getInstance().getTimeInMillis();
         flag1 = false;
         flag2 = false;
