@@ -17,7 +17,7 @@ import java.util.Calendar;
  * so they don't run during normal production testing.
  *
  * @author	Bob Jacobsen  Copyright 2003, 2009, 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class WaitHandlerTest extends TestCase {
     static transient boolean flag1;
@@ -155,8 +155,7 @@ public class WaitHandlerTest extends TestCase {
         Assert.assertTrue("run time long enough", THREAD_DELAY <= endTime-startTime);
     }
 
-    public void testCheckMethod() {
-        long beginTime = Calendar.getInstance().getTimeInMillis();
+    public void xtestCheckMethod() {
         flag1 = false;
         flag2 = false;
         Thread t = new Thread(){
