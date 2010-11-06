@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class CarColors {
 	
@@ -22,6 +22,7 @@ public class CarColors {
 
 	private static final String COLORS = rb.getString("carColors");
 	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";
+	public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName";
 	
     public CarColors() {
     }
@@ -83,7 +84,14 @@ public class CarColors {
     
     public boolean containsName(String color){
     	return list.contains(color);
-     }
+    }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	firePropertyChange (CARCOLORS_NAME_CHANGED_PROPERTY, oldName, newName);
+    	// need to keep old name so location manager can replace properly
+       	deleteName(oldName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

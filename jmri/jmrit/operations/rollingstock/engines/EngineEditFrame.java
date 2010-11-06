@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -54,7 +54,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 	JButton clearRoadNumberButton = new JButton(rb.getString("Clear"));
 	JButton editModelButton = new JButton(rb.getString("Edit"));
 	JButton editTypeButton = new JButton(rb.getString("Edit"));
-	JButton editColorButton = new JButton(rb.getString("Edit"));
 	JButton editLengthButton = new JButton(rb.getString("Edit"));
 	JButton fillWeightButton = new JButton();
 	JButton editConsistButton = new JButton(rb.getString("Edit"));
@@ -234,7 +233,6 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		addEditButtonAction(editModelButton);
 		addEditButtonAction(editTypeButton);
 		addEditButtonAction(editLengthButton);
-		addEditButtonAction(editColorButton);
 		addEditButtonAction(editConsistButton);
 		addEditButtonAction(editOwnerButton);
 
@@ -584,19 +582,17 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		editActive = true;
 
 		if(ae.getSource() == editRoadButton)
-			f.initComponents(ROAD);
+			f.initComponents(ROAD, (String)roadComboBox.getSelectedItem());
 		if(ae.getSource() == editModelButton)
-			f.initComponents(MODEL);
+			f.initComponents(MODEL, (String)modelComboBox.getSelectedItem());
 		if(ae.getSource() == editTypeButton)
-			f.initComponents(TYPE);
-		if(ae.getSource() == editColorButton)
-			f.initComponents(COLOR);
+			f.initComponents(TYPE, (String)typeComboBox.getSelectedItem());
 		if(ae.getSource() == editLengthButton)
-			f.initComponents(LENGTH);
+			f.initComponents(LENGTH, (String)lengthComboBox.getSelectedItem());
 		if(ae.getSource() == editOwnerButton)
-			f.initComponents(OWNER);
+			f.initComponents(OWNER, (String)ownerComboBox.getSelectedItem());
 		if(ae.getSource() == editConsistButton)
-			f.initComponents(CONSIST);
+			f.initComponents(CONSIST, (String)consistComboBox.getSelectedItem());
 	}
 
 	public void dispose(){

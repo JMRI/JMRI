@@ -25,14 +25,14 @@ import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.trains.TrainManager;
 
 
 /**
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -413,19 +413,27 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			// add owner name to list
 			CarOwners.instance().addName(addOwner);
 			// set car types
-			if (typeDesc.isSelected()){
-				if (!Setup.getCarTypes().equals(Setup.DESCRIPTIVE)){
-					CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
-					Setup.setCarTypes(Setup.DESCRIPTIVE);
-					CarManagerXml.instance().writeOperationsFile();
-				}
-			} else {
-				if (!Setup.getCarTypes().equals(Setup.AAR)){
-					CarTypes.instance().changeDefaultNames(Setup.AAR);
-					Setup.setCarTypes(Setup.AAR);
-					CarManagerXml.instance().writeOperationsFile();
-				}
-			}
+			if (typeDesc.isSelected() && !Setup.getCarTypes().equals(Setup.DESCRIPTIVE) ||
+					typeAAR.isSelected() && !Setup.getCarTypes().equals(Setup.AAR)){
+				// backup files before changing car type descriptions
+			   	Backup backup = new Backup();
+		    	String backupName = backup.createBackupDirectoryName();
+		    	// now backup files
+		    	boolean success = backup.backupFiles(backupName);
+		    	if(!success){
+		    		log.error("Could not backup files");
+		    		return;
+		    	}
+		    	if (typeDesc.isSelected()){
+		    		CarTypes.instance().changeDefaultNames(Setup.DESCRIPTIVE);
+		    		Setup.setCarTypes(Setup.DESCRIPTIVE);
+		    	} else {
+		    		CarTypes.instance().changeDefaultNames(Setup.AAR);
+		    		Setup.setCarTypes(Setup.AAR);
+		    	}
+		    	// save all the modified files
+	    		TrainManager.instance().save();
+			}				
 			// main menu enabled?
 			Setup.setMainMenuEnabled(mainMenuCheckBox.isSelected());
 			// RFID enabled?

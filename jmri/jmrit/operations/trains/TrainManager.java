@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.47 $
+ * @version	$Revision: 1.48 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -489,9 +489,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
      * Report that the train, car and engine databases are dirty.
      */
     public void setFilesDirty(){
-    	log.debug("train files dirty");
+    	log.debug("operation files dirty");
     	CarManagerXml.instance().setDirty(true);
     	EngineManagerXml.instance().setDirty(true);
+    	LocationManagerXml.instance().setDirty(true);
     	TrainManagerXml.instance().setDirty(true);
     }
     

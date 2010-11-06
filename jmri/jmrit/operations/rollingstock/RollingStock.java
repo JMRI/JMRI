@@ -6,6 +6,9 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.CarColors;
+import jmri.jmrit.operations.rollingstock.cars.CarOwners;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -16,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -77,6 +80,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		_road = road;
 		_number = number;
 		_id = createId(road, number);
+		addPropertyChangeListeners();
 	}
 
 	public static String createId(String road, String number) {
@@ -697,6 +701,9 @@ public class RollingStock implements java.beans.PropertyChangeListener{
        	setTrain(null);
     	setDestination(null, null);
         setLocation(null, null);
+        CarRoads.instance().removePropertyChangeListener(this);
+        CarOwners.instance().removePropertyChangeListener(this);
+        CarColors.instance().removePropertyChangeListener(this);
 	}
 	
 	/**
@@ -766,6 +773,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			_rfid = a.getValue();
 		if ((a = e.getAttribute("outOfService")) != null)
 			_outOfService = a.getValue().equals("true");
+		addPropertyChangeListeners();
 	}
 
 	boolean verboseStore = false;
@@ -824,6 +832,12 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return e;
 	}
 	
+	private void addPropertyChangeListeners(){
+		CarRoads.instance().addPropertyChangeListener(this);
+		CarOwners.instance().addPropertyChangeListener(this);
+		CarColors.instance().addPropertyChangeListener(this);
+	}
+	
 	// rolling stock listens for changes in a location name or if a location is deleted
     public void propertyChange(PropertyChangeEvent e) {
     	//if (log.isDebugEnabled()) log.debug("Property change for rolling stock: " + toString()+ " property name: " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
@@ -868,6 +882,24 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     		if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") is removed from train ("+_train.getName()+") by reset");
     		setTrain(null);
     		setDestination(null, null);
+    	}
+    	if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getRoad())){
+    			if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") sees road name change from "+e.getOldValue()+" to "+e.getNewValue());
+    			setRoad((String)e.getNewValue());
+    		}
+    	}
+    	if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getOwner())){
+    			if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") sees owner name change from "+e.getOldValue()+" to "+e.getNewValue());
+    			setOwner((String)e.getNewValue());
+    		}
+    	}
+    	if (e.getPropertyName().equals(CarColors.CARCOLORS_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getColor())){
+    			if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") sees color name change from "+e.getOldValue()+" to "+e.getNewValue());
+    			setColor((String)e.getNewValue());
+    		}
     	}
     }
 

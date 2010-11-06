@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class TrainManagerXml extends OperationsXml {
 	
@@ -160,7 +160,7 @@ public class TrainManagerXml extends OperationsXml {
     }
      
     public String defaultBuildReportFilename(String name) { 
-    	return XmlFile.prefsDir()+"operations"+File.separator+"buildstatus"+File.separator+BuildReportFileName+name+fileType;
+    	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"buildstatus"+File.separator+BuildReportFileName+name+fileType;
     }
     public void setBuildReportName(String name) { BuildReportFileName = name; }
     private String BuildReportFileName = "train (";
@@ -179,7 +179,7 @@ public class TrainManagerXml extends OperationsXml {
     }
      
     public String defaultManifestFilename(String name) { 
-    	return XmlFile.prefsDir()+"operations"+File.separator+"manifests"+File.separator+ManifestFileName+name+fileType;
+    	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"manifests"+File.separator+ManifestFileName+name+fileType;
     }
     public void setManifestName(String name) { ManifestFileName = name; }
     private String ManifestFileName = "train (";
@@ -198,7 +198,7 @@ public class TrainManagerXml extends OperationsXml {
     }
      
     public String defaultSwitchListName(String name) { 
-    	return XmlFile.prefsDir()+"operations"+File.separator+"switchLists"+File.separator+SwitchListFileName+name+fileType;
+    	return XmlFile.prefsDir()+OperationsXml.getOperationsDirectoryName()+File.separator+"switchLists"+File.separator+SwitchListFileName+name+fileType;
     }
     public void setTrainSwitchListName(String name) { SwitchListFileName = name; }
     private String SwitchListFileName = "location (";

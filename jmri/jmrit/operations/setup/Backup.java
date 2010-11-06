@@ -8,6 +8,7 @@ import java.io.FileWriter;
 import java.util.Calendar;
 
 import jmri.jmrit.XmlFile;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
@@ -19,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class Backup extends XmlFile {
 
@@ -41,7 +42,7 @@ public class Backup extends XmlFile {
 		try {
 			if (!checkFile(fullBackupFilename(OperationsSetupXml.instance().getOperationsFileName()))) {
 				// The file/directory does not exist, create it before writing
-				File file = new java.io.File(fullBackupFilename(null));
+				File file = new File(fullBackupFilename(null));
 				File parentDir = file.getParentFile();
 				if (!parentDir.exists()) {
 					if (!parentDir.mkdirs()) {
@@ -162,7 +163,7 @@ public class Backup extends XmlFile {
 		return backupDirectory + File.separator + getDirectoryName() + File.separator + name;
 	}
 
-	private String operationsDirectory = XmlFile.prefsDir() + "operations";	
+	private String operationsDirectory = XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName();	
 	private String backupDirectory = operationsDirectory + File.separator + "backups";
 	
 	private String defaultDirectoryName = "";

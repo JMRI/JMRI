@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -504,7 +504,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				lef.dispose();
 			lef = new CarLoadEditFrame();
 			lef.setLocationRelativeTo(this);
-			lef.initComponents((String)typeComboBox.getSelectedItem());
+			lef.initComponents((String)typeComboBox.getSelectedItem(), (String)loadComboBox.getSelectedItem());
 		}
 	}
 	
@@ -668,17 +668,17 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		editActive = true;
 
 		if(ae.getSource() == editRoadButton)
-			f.initComponents(ROAD);
+			f.initComponents(ROAD, (String)roadComboBox.getSelectedItem());
 		if(ae.getSource() == editTypeButton)
-			f.initComponents(TYPE);
+			f.initComponents(TYPE, (String)typeComboBox.getSelectedItem());
 		if(ae.getSource() == editColorButton)
-			f.initComponents(COLOR);
+			f.initComponents(COLOR, (String)colorComboBox.getSelectedItem());
 		if(ae.getSource() == editLengthButton)
-			f.initComponents(LENGTH);
+			f.initComponents(LENGTH, (String)lengthComboBox.getSelectedItem());
 		if(ae.getSource() == editOwnerButton)
-			f.initComponents(OWNER);
+			f.initComponents(OWNER, (String)ownerComboBox.getSelectedItem());
 		if(ae.getSource() == editKernelButton)
-			f.initComponents(KERNEL);
+			f.initComponents(KERNEL, (String)kernelComboBox.getSelectedItem());
 	}
 
 	public void dispose(){

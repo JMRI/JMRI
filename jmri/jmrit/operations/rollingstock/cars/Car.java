@@ -1,5 +1,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
+import java.beans.PropertyChangeEvent;
 import java.util.List;
 
 import jmri.jmrit.operations.locations.Location;
@@ -15,9 +16,9 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.47 $
+ * @version             $Revision: 1.48 $
  */
-public class Car extends RollingStock implements java.beans.PropertyChangeListener{
+public class Car extends RollingStock {
 	
 	CarLoads carLoads = CarLoads.instance();
 	
@@ -50,6 +51,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	public Car(String road, String number) {
 		super(road, number);
 		log.debug("New car " + road + " " + number);
+		addPropertyChangeListeners();
 	}
 
 	public void setHazardous(boolean hazardous){
@@ -97,7 +99,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	}
 	
 	public String getPriority(){
-		return (CarLoads.instance().getPriority(_type, _load));
+		return (carLoads.getPriority(_type, _load));
 	}
 	
 	public void setWait(int count){
@@ -447,6 +449,8 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 	
 	public void dispose(){
 		setKernel(null);
+		CarTypes.instance().removePropertyChangeListener(this);
+		CarLengths.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
 
@@ -504,6 +508,7 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		if (_rweDestination != null && (a = e.getAttribute("rweDestTrackId")) != null){
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
+		addPropertyChangeListeners();
 	}
 	
 	/**
@@ -552,6 +557,27 @@ public class Car extends RollingStock implements java.beans.PropertyChangeListen
 		}
 		return e;
 	}
+	
+	private void addPropertyChangeListeners(){
+		CarTypes.instance().addPropertyChangeListener(this);
+		CarLengths.instance().addPropertyChangeListener(this);
+	}
+	
+    public void propertyChange(PropertyChangeEvent e) {
+    	super.propertyChange(e);
+       	if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getType())){
+    			if (log.isDebugEnabled()) log.debug("Car (" +toString()+") sees type name change old: "+e.getOldValue()+" new: "+e.getNewValue());
+    			setType((String)e.getNewValue());
+    		}
+    	}
+       	if (e.getPropertyName().equals(CarLengths.CARLENGTHS_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getLength())){
+    			if (log.isDebugEnabled()) log.debug("Car (" +toString()+") sees length name change old: "+e.getOldValue()+" new: "+e.getNewValue());
+    			setLength((String)e.getNewValue());
+    		}
+    	}
+    }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(Car.class.getName());

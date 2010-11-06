@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the lengths that engines can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class EngineLengths {
 	
@@ -22,6 +22,7 @@ public class EngineLengths {
 	
 	private static final String LENGTHS = rb.getString("engineDefaultLengths");
 	public static final String ENGINELENGTHS_CHANGED_PROPERTY = "EngineLengths";
+	public static final String ENGINELENGTHS_NAME_CHANGED_PROPERTY = "EngineLengthsName";
 	
     public EngineLengths() {
     }
@@ -84,7 +85,14 @@ public class EngineLengths {
      
     public boolean containsName(String length){
     	return list.contains(length);
-     }
+    }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	firePropertyChange (ENGINELENGTHS_NAME_CHANGED_PROPERTY, oldName, newName);
+    	// need to keep old name so location manager can replace properly
+       	deleteName(oldName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

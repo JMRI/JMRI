@@ -24,7 +24,7 @@ import java.util.List;
  * Tests for the Operations Cars GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
@@ -440,7 +440,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 	
 	public void testCarLoadEditFrame(){
 		CarLoadEditFrame f = new CarLoadEditFrame();
-		f.initComponents("Boxcar");
+		f.initComponents("Boxcar", "");
 		f.addTextBox.setText("New Load");
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
 		// new load should appear at start of list

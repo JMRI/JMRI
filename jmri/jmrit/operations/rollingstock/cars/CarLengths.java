@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
@@ -22,6 +22,7 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 
 	private static final String LENGTHS = rb.getString("carLengths");
 	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";
+	public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName";
 	
     public CarLengths() {
     }
@@ -96,7 +97,14 @@ public class CarLengths implements java.beans.PropertyChangeListener {
      
     public boolean containsName(String length){
     	return list.contains(length);
-     }
+    }
+    
+    public void replaceName(String oldName, String newName){
+    	addName(newName);
+    	firePropertyChange (CARLENGTHS_NAME_CHANGED_PROPERTY, oldName, newName);
+    	// need to keep old name so location manager can replace properly
+       	deleteName(oldName);
+    }
     
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();

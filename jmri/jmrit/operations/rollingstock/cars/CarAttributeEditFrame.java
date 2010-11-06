@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -62,6 +62,10 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
     String _comboboxName;		// track which combo box is being edited
     
     public void initComponents(String comboboxName) {
+    	initComponents(comboboxName, "");
+    }
+    
+    public void initComponents(String comboboxName, String select) {
     	
     	getContentPane().removeAll();
      	
@@ -70,6 +74,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
         // track which combo box is being edited 
         _comboboxName = comboboxName;
         loadCombobox();
+        comboBox.setSelectedItem(select);
         
         // general GUI config
         getContentPane().setLayout(new GridBagLayout());
@@ -293,37 +298,17 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	
 	private void replaceItem (String oldItem, String newItem){
 		List<String> cars = manager.getByNumberList();
-		for (int i=0; i<cars.size(); i++){
-			Car car = manager.getById(cars.get(i));
-
-			if(_comboboxName == CarEditFrame.ROAD){
-				if (car.getRoad().equals(oldItem))
-					car.setRoad(newItem);
-			}
-			if(_comboboxName == CarEditFrame.TYPE){
-				if (car.getType().equals(oldItem))
-					car.setType(newItem);
-			}
-			if(_comboboxName == CarEditFrame.COLOR){
-				if (car.getColor().equals(oldItem))
-					car.setColor(newItem);
-			}
-			if(_comboboxName == CarEditFrame.LENGTH){
-				if (car.getLength().equals(oldItem))
-					car.setLength(newItem);
-			}
-			if(_comboboxName == CarEditFrame.OWNER){
-				if (car.getOwner().equals(oldItem))
-					car.setOwner(newItem);
-			}
-			if(_comboboxName == CarEditFrame.KERNEL){
+		// replace kernel
+		if(_comboboxName == CarEditFrame.KERNEL){
+			for (int i=0; i<cars.size(); i++){
+				Car car = manager.getById(cars.get(i));	
 				if (car.getKernelName().equals(oldItem)){
 					Kernel kernel = manager.newKernel(newItem);
 					car.setKernel(kernel);
 				}
 			}
 		}
-		//	now adjust locations and trains
+		//	now adjust cars, locations and trains
 		if(_comboboxName == CarEditFrame.TYPE){
 			CarTypes.instance().replaceName(oldItem, newItem);
 			CarLoads.instance().replaceType(oldItem, newItem);
@@ -333,6 +318,12 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		}
 		if(_comboboxName == CarEditFrame.OWNER){
 			CarOwners.instance().replaceName(oldItem, newItem);
+		}
+		if(_comboboxName == CarEditFrame.LENGTH){
+			CarLengths.instance().replaceName(oldItem, newItem);
+		}
+		if(_comboboxName == CarEditFrame.COLOR){
+			CarColors.instance().replaceName(oldItem, newItem);
 		}
 	}
 	

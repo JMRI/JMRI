@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations.setup;
 
+import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -20,7 +21,7 @@ import java.io.File;
  * Tests for the Operations Setup GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
@@ -49,6 +50,9 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	}
 	
 	public void testSetupFrameWrite(){
+		// force creation of backup
+		Setup.setCarTypes(Setup.AAR);
+		
 		OperationsSetupFrame f = new OperationsSetupFrame();
 		f.initComponents();
 		
@@ -175,6 +179,31 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		
 		//done
 		f.dispose();
+	}
+	
+	public void testBackupFileCreation(){
+		String dirName = XmlFile.prefsDir()+OperationsSetupXml.getOperationsDirectoryName()+ File.separator + "backups";
+		
+		File dir = new File(dirName);		
+		Assert.assertNotNull("backup directory exists", dir);
+		
+		String[] backupDirectoryNames = dir.list();
+		Assert.assertTrue("There should be at least one directory", backupDirectoryNames.length==1);
+		
+		for (int i = 0; i < backupDirectoryNames.length; i++) {
+			File backDir = new File(dirName + File.separator + backupDirectoryNames[i]);
+			Assert.assertNotNull("backup directory", backDir);
+			// delete file names
+			String[] backupFileNames = backDir.list();
+			Assert.assertEquals("There should be 6 files", 6, backupFileNames.length);
+			for (int j = 0; j < backupFileNames.length; j++) {
+				File file = new File(dirName + File.separator + backupDirectoryNames[i] + File.separator +  backupFileNames[j]);
+				Assert.assertTrue("delete file", file.delete());
+			}
+			// now delete the directory
+			Assert.assertTrue("delete backup directory", backDir.delete());
+		}
+		Assert.assertTrue("delete directory", dir.delete());
 	}
 
 	

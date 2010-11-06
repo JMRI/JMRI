@@ -14,13 +14,13 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 public class CarTypes {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
 	private static final String TYPES = rb.getString("carTypeNames"); 
-		
+	private static final String CONVERTTYPES = rb.getString("carTypeConvert");	// Used to convert from ARR to Descriptive
 	private static final String ARRTYPES = rb.getString("carTypeARR");
 	// for property change
 	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length";
@@ -78,19 +78,29 @@ public class CarTypes {
      */
     public void changeDefaultNames(String type){
     	if (type.equals(Setup.DESCRIPTIVE)){
+    		// first replace the types
+    		String[] convert = CONVERTTYPES.split("%%");
+    		String[] types = TYPES.split("%%");
+    		for (int i=0; i<convert.length; i++){
+    			replaceName(convert[i], types[i]);
+    		}
     		// remove AAR types
-    		String[] types = ARRTYPES.split("%%");
-     		for (int i=0; i<types.length; i++)
-     			list.remove(types[i]);
-     		// add descriptive types
-    		types = TYPES.split("%%");
+    		String[] aarTypes = ARRTYPES.split("%%");
+     		for (int i=0; i<aarTypes.length; i++)
+     			list.remove(aarTypes[i]);
+     		// add descriptive types   		
     		for (int i=0; i<types.length; i++){
     			if (!list.contains(types[i]))
     				list.add(types[i]);
     		}
     	} else {
-    		// remove descriptive types
+       		// first replace the types
+    		String[] convert = CONVERTTYPES.split("%%");
     		String[] types = TYPES.split("%%");
+    		for (int i=0; i<convert.length; i++){
+    			replaceName(types[i], convert[i]);
+    		}
+    		// remove descriptive types
      		for (int i=0; i<types.length; i++)
      			list.remove(types[i]);
      		// add AAR types

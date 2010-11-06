@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class CarLoads {
 	
@@ -62,11 +62,19 @@ public class CarLoads {
     	list.put(type, new ArrayList<CarLoad>());
     }
     
+    /**
+     * Replace a car type.  Transfers load priority, drop and load comments.
+     * @param oldType old car type
+     * @param newType new car type
+     */
     public void replaceType(String oldType, String newType){
     	List<String> names = getNames(oldType);
     	addType(newType);
     	for (int i=0; i<names.size(); i++){
     		addName(newType, names.get(i));
+    		setPriority(newType, names.get(i), getPriority(oldType, names.get(i)));
+    		setDropComment(newType, names.get(i), getDropComment(oldType, names.get(i)));
+    		setPickupComment(newType, names.get(i), getPickupComment(oldType, names.get(i)));
     	}
     	list.remove(oldType);
     }
@@ -111,6 +119,11 @@ public class CarLoads {
     	return box;
     }
     
+    /**
+     * Gets the load names for a given car type
+     * @param type car type
+     * @return list of load names
+     */
     public List<String> getNames(String type){
     	if (type == null){
     		List<String> names = new ArrayList<String>();
@@ -134,6 +147,11 @@ public class CarLoads {
     	return names;
     }
 
+    /**
+     * Add a load name for the car type.
+     * @param type car type.
+     * @param name load name.
+     */
     public void addName(String type, String name){
     	List<CarLoad> loads = list.get(type);
     	if (loads == null){
@@ -163,6 +181,13 @@ public class CarLoads {
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()+1, loads.size());
     }
     
+    /**
+     * Determines if a car type can have a specific load name.
+     * 
+     * @param type car type.
+     * @param name load name.
+     * @return true if car can have this load name.
+     */
     public boolean containsName(String type, String name){
        	List<CarLoad> loads = list.get(type);
     	if (loads == null){
@@ -212,6 +237,12 @@ public class CarLoads {
     	firePropertyChange (LOAD_NAME_CHANGED_PROPERTY, old, name);
     }
     
+    /**
+     * Sets a loads priority.
+     * @param type car type.
+     * @param name load name.
+     * @param priority load priority, PRIORITY_LOW or PRIORITY_HIGH.
+     */
     public void setPriority(String type, String name, String priority){
     	List<CarLoad> loads = list.get(type);
        	for (int i=0; i<loads.size(); i++){
@@ -221,6 +252,12 @@ public class CarLoads {
        	}
     }
     
+    /**
+     * Get's a load's priority.
+     * @param type car type.
+     * @param name load name.
+     * @return load priority, PRIORITY_LOW or PRIORITY_HIGH.
+     */
     public String getPriority(String type, String name){
        	if (!containsName(type, name))
     		return CarLoad.PRIORITY_LOW;

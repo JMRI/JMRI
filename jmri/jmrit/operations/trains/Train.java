@@ -48,7 +48,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.91 $
+ * @version $Revision: 1.92 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -538,7 +538,7 @@ public class Train implements java.beans.PropertyChangeListener {
     	if (_typeList.contains(type))
     		return;
     	_typeList.add(0,type);
-    	log.debug("train add car type "+type);
+    	log.debug("train "+getName()+" add car type "+type);
     	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()-1, _typeList.size());
     }
     
@@ -546,7 +546,7 @@ public class Train implements java.beans.PropertyChangeListener {
        	if (!_typeList.contains(type))
     		return;
     	_typeList.remove(type);
-    	log.debug("train delete car type "+type);
+    	log.debug("train "+getName()+" delete car type "+type);
      	firePropertyChange (TYPES_CHANGED_PROPERTY, _typeList.size()+1, _typeList.size());
      }
     
@@ -1198,6 +1198,10 @@ public class Train implements java.beans.PropertyChangeListener {
 
 	public void printBuildReport(){
 		File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
+		if (!buildFile.exists()){
+			log.warn("Build file missing for train "+getName());
+			return;
+		}
 		boolean isPreview = TrainManager.instance().getPrintPreview();
 		printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
 	}
@@ -1241,8 +1245,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public boolean printManifest(boolean isPreview){
 		File file = TrainManagerXml.instance().getTrainManifestFile(getName());
-		if (!file.exists())
+		if (!file.exists()){
+			log.warn("Manifest file missing for train "+getName());
 			return false;
+		}
 		String logoURL = "";
 		if (!getManifestLogoURL().equals(""))
 			logoURL = getManifestLogoURL();
@@ -1626,6 +1632,7 @@ public class Train implements java.beans.PropertyChangeListener {
     	CarRoads.instance().removePropertyChangeListener(this);
 		CarTypes.instance().removePropertyChangeListener(this);
 		EngineTypes.instance().removePropertyChangeListener(this);
+		CarOwners.instance().removePropertyChangeListener(this);
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
   

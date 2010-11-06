@@ -30,8 +30,8 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 /**
  * Frame for adding and editing the car roster for operations.
  *
- * @author Daniel Boudreau Copyright (C) 2009
- * @version             $Revision: 1.12 $
+ * @author Daniel Boudreau Copyright (C) 2009, 2010
+ * @version             $Revision: 1.13 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -63,7 +63,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
     String _type;
     boolean menuActive = false;
     
-    public void initComponents(String type) {
+    public void initComponents(String type, String select) {
     	
     	getContentPane().removeAll();
      	
@@ -72,6 +72,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
         // track which combo box is being edited 
         _type = type;
         loadComboboxes();
+        comboBox.setSelectedItem(select);
+        updatePriority();
         
         // general GUI config    
         quanity.setVisible(showQuanity);

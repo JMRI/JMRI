@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.26 $
+ * @version             $Revision: 1.27 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -52,6 +52,10 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
     boolean menuActive = false;
     
     public void initComponents(String comboboxName) {
+    	initComponents(comboboxName, "");
+    }
+    
+    public void initComponents(String comboboxName, String select) {
     	
     	getContentPane().removeAll();
      	
@@ -60,6 +64,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
         // track which combo box is being edited 
         _comboboxName = comboboxName;
         loadCombobox();
+        comboBox.setSelectedItem(select);
         
         // general GUI config
         getContentPane().setLayout(new GridBagLayout());
@@ -237,11 +242,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		List<String> engines = manager.getByIdList();
 		for (int i=0; i<engines.size(); i++){
 			Engine engine = manager.getById(engines.get(i));
-
-			if(_comboboxName == EngineEditFrame.ROAD){
-				if (engine.getRoad().equals(oldItem))
-					engine.setRoad(newItem);
-			}
 			if(_comboboxName == EngineEditFrame.MODEL){
 				if (engine.getModel().equals(oldItem)){
 					// Has this model been configured?
@@ -260,18 +260,6 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 					}
 				}
 			}
-			if(_comboboxName == EngineEditFrame.TYPE){
-				if (engine.getType().equals(oldItem))
-					engine.setType(newItem);
-			}
-			if(_comboboxName == EngineEditFrame.LENGTH){
-				if (engine.getLength().equals(oldItem))
-					engine.setLength(newItem);
-			}
-			if(_comboboxName == EngineEditFrame.OWNER){
-				if (engine.getOwner().equals(oldItem))
-					engine.setOwner(newItem);
-			}
 			if(_comboboxName == EngineEditFrame.CONSIST){
 				if (engine.getConsist() != null && engine.getConsistName().equals(oldItem)){
 					Consist consist = manager.newConsist(newItem);
@@ -288,6 +276,9 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		}
 		if(_comboboxName == EngineEditFrame.OWNER){
 			CarOwners.instance().replaceName(oldItem, newItem);
+		}
+		if(_comboboxName == EngineEditFrame.LENGTH){
+			EngineLengths.instance().replaceName(oldItem, newItem);
 		}
 	}
 	

@@ -1,5 +1,7 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
+import java.beans.PropertyChangeEvent;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -8,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class Engine extends RollingStock {
 	
@@ -20,6 +22,7 @@ public class Engine extends RollingStock {
 	public Engine(String road, String number) {
 		super(road, number);
 		log.debug("New engine " + road + " " + number);
+		addPropertyChangeListeners();
 	}
 	
 	/**
@@ -175,6 +178,8 @@ public class Engine extends RollingStock {
 	
 	public void dispose(){
 		setConsist(null);
+		EngineTypes.instance().removePropertyChangeListener(this);
+		EngineLengths.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
 	
@@ -213,6 +218,7 @@ public class Engine extends RollingStock {
 			}
 		}
 		super.rollingStock(e); 
+		addPropertyChangeListeners();
 	}
 	
 	boolean verboseStore = false;
@@ -238,6 +244,27 @@ public class Engine extends RollingStock {
 		}
 		return e;
 	}
+	
+	private void addPropertyChangeListeners(){
+		EngineTypes.instance().addPropertyChangeListener(this);
+		EngineLengths.instance().addPropertyChangeListener(this);
+	}
+	
+    public void propertyChange(PropertyChangeEvent e) {
+    	super.propertyChange(e);
+       	if (e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getType())){
+    			if (log.isDebugEnabled()) log.debug("Engine (" +toString()+") sees type name change old: "+e.getOldValue()+" new: "+e.getNewValue());
+    			setType((String)e.getNewValue());
+    		}
+    	}
+       	if (e.getPropertyName().equals(EngineLengths.ENGINELENGTHS_NAME_CHANGED_PROPERTY)){
+    		if (e.getOldValue().equals(getLength())){
+    			if (log.isDebugEnabled()) log.debug("Engine (" +toString()+") sees length name change old: "+e.getOldValue()+" new: "+e.getNewValue());
+    			setLength((String)e.getNewValue());
+    		}
+    	}
+    }
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(Engine.class.getName());
