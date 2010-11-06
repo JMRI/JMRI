@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Enumeration;
 import java.util.ResourceBundle;
 
@@ -27,7 +29,8 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	private static final ResourceBundle throttleBundle = ThrottleBundle.bundle();
 
 	private DefaultListModel throttleFramesLM;
-	
+	private JList throttleFrames;
+
 	public ThrottlesListPanel() {
 		super();
 		throttleFramesLM = new DefaultListModel();
@@ -35,15 +38,18 @@ public class ThrottlesListPanel extends JPanel implements AddressListener {
 	}
 	
 	private void initGUI() {
-		JList throttleFrames;
 		throttleFrames = new JList(throttleFramesLM);
-		throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		throttleFrames.setSelectionMode(ListSelectionModel.SINGLE_SELECTION );
 		throttleFrames.setCellRenderer(new ThrottlesListCellRenderer());
-		throttleFrames.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent evt) {
-				if ( ((JList)evt.getSource()).getSelectedValue() != null )
-					((ThrottleFrame)((JList)evt.getSource()).getSelectedValue()).toFront();
-			}			
+		throttleFrames.addMouseListener( new MouseListener() {
+		    public void mouseClicked(MouseEvent e) {
+		    	throttleFrames.setSelectedIndex(throttleFrames.locationToIndex(e.getPoint()));
+		    	((ThrottleFrame)throttleFrames.getSelectedValue()).toFront();
+		    }
+			public void mouseEntered(MouseEvent arg0) {}
+			public void mouseExited(MouseEvent arg0) {}
+			public void mousePressed(MouseEvent arg0) {}
+			public void mouseReleased(MouseEvent arg0) {}
 		});
 
 	    JScrollPane scrollPane1 = new JScrollPane(throttleFrames);

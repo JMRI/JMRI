@@ -87,6 +87,28 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
              self.getContext().nextThrottleFrame()
         if ( evt.wasReleased(WRButtonEvent.LEFT) ):  # PREVIOUS
             self.getContext().previousThrottleFrame()
+        if ( evt.wasReleased(WRButtonEvent.UP) ): # NEXT RUNNING
+             self.getContext().nextRunningThrottleFrame()
+        if ( evt.wasReleased(WRButtonEvent.DOWN) ):  # PREVIOUS RUNNING
+            self.getContext().previousRunningThrottleFrame()  
+        # No throttle assigned to current frame, browse through roster      
+        if (self.throttle == None):
+            if ( evt.wasReleased(WRButtonEvent.HOME) ):  # Assign selected roster entry
+                self.addressPanel.selectRosterEntry()
+                return
+            if ( evt.wasReleased(WRButtonEvent.PLUS) ):  # Next roster entry
+                selectedIndex = self.addressPanel.getRosterSelectedIndex()
+                self.addressPanel.setIcon(False)
+                self.addressPanel.setVisible(True)
+                self.addressPanel.setRosterSelectedIndex(selectedIndex + 1)
+                return
+            if ( evt.wasReleased(WRButtonEvent.MINUS) ):  # Previous roster entry
+                selectedIndex = self.addressPanel.getRosterSelectedIndex()
+                self.addressPanel.setIcon(False)
+                self.addressPanel.setVisible(True)
+                self.addressPanel.setRosterSelectedIndex(selectedIndex - 1)
+                return
+        # Throttle assigned to current frame, control it  
         if (self.throttle != None):
             if ( evt.wasReleased(WRButtonEvent.HOME) ):  # LIGHTS
                 self.throttle.setF0( not self.throttle.getF0() )
@@ -159,9 +181,10 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.speedTimer.stop()                     
         if (event.propertyName == "ThrottleFrame") :  # Curent throttle frame changed
             event.oldValue.getAddressPanel().removeAddressListener(self)
-            self.throttle = event.newValue.getAddressPanel().getThrottle()
+            self.addressPanel = event.newValue.getAddressPanel()
+            self.throttle = self.addressPanel.getThrottle()
             self.speedAction.setThrottle( self.throttle )
-            event.newValue.getAddressPanel().addAddressListener(self)
+            self.addressPanel.addAddressListener(self)
 
 #Jynstrument main and mandatory methods
     def getExpectedContextClassName(self):
@@ -169,7 +192,8 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
     
     def init(self):
         self.getContext().addPropertyChangeListener(self) #ThrottleFrame change
-        self.getContext().getCurentThrottleFrame().getAddressPanel().addAddressListener(self) # change of throttle in curent frame
+        self.addressPanel=self.getContext().getCurentThrottleFrame().getAddressPanel();
+        self.addressPanel.addAddressListener(self) # change of throttle in curent frame
         self.throttle = self.getContext().getCurentThrottleFrame().getAddressPanel().getThrottle() # the throttle
         self.speedAction =  SpeedAction()  #Speed increase thread
         self.speedAction.setThrottle( self.throttle )
@@ -198,7 +222,8 @@ class WiimoteThrottle(Jynstrument, PropertyChangeListener, AddressListener, WiiD
         self.speedTimer = None
         self.throttle = None
         self.getContext().removePropertyChangeListener(self)
-        self.getContext().getCurentThrottleFrame().getAddressPanel().removeAddressListener(self)
+        self.addressPanel.removeAddressListener(self)
+        self.addressPanel = None
 
 #AddressListener part: to listen for address changes in address panel (release, acquired)
     def notifyAddressChosen(self, address, isLong):
