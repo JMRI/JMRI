@@ -52,7 +52,7 @@ import java.awt.Desktop;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.93 $
+ * @version $Revision: 1.94 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1359,6 +1359,11 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public void editReport(File file){
+		log.error("Desktop requires java 1.6");
+	}
+	
+	/*
+	public void editReport(File file){
 		if (!Desktop.isDesktopSupported()) {
 			log.warn("desktop not supported");
 			return;
@@ -1413,6 +1418,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			e.printStackTrace();
 		}
 	}
+	*/
 	
 	/* Removes the print levels from the build report
 	 * 
