@@ -31,8 +31,8 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 /**
  * Frame for user edit of car
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.17 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -66,6 +66,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	// check boxes
 	JCheckBox autoCheckBox = new JCheckBox(rb.getString("Auto"));
+	JCheckBox autoTrackCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox cabooseCheckBox = new JCheckBox(rb.getString("Caboose"));
 	JCheckBox fredCheckBox = new JCheckBox(rb.getString("Fred"));
 	JCheckBox hazardousCheckBox = new JCheckBox(rb.getString("Hazardous"));
@@ -181,6 +182,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
 		addItem(pLocation, locationBox, 1, 0);
 		addItem(pLocation, trackLocationBox, 2, 0);
+		addItem(pLocation, autoTrackCheckBox, 3, 0);
 		pPanel.add(pLocation);
 
 		// optional panel
@@ -280,6 +282,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		// setup checkbox
 		addCheckBoxAction(cabooseCheckBox);
 		addCheckBoxAction(fredCheckBox);
+		addCheckBoxAction(autoTrackCheckBox);
+		autoTrackCheckBox.setEnabled(false);
 		
 		// build menu
 //		JMenuBar menuBar = new JMenuBar();
@@ -363,13 +367,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		hazardousCheckBox.setSelected(car.isHazardous());
 
 		locationBox.setSelectedItem(car.getLocation());
-		Location l = locationManager.getLocationById(car.getLocationId());
-		if (l != null){
-			l.updateComboBox(trackLocationBox);
-			trackLocationBox.setSelectedItem(car.getTrack());
-		} else {
-			trackLocationBox.removeAllItems();
-		}
+		updateTrackLocationBox();
 
 		builtTextField.setText(car.getBuilt());
 
@@ -400,6 +398,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 		commentTextField.setText(car.getComment());
 		rfidTextField.setText(car.getRfid());
+		autoTrackCheckBox.setEnabled(true);
 	}
 
 	// combo boxes
@@ -407,21 +406,31 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (ae.getSource()== typeComboBox && typeComboBox.getSelectedItem() != null){
 			log.debug("Type comboBox sees change, update car loads");
 			CarLoads.instance().updateComboBox((String)typeComboBox.getSelectedItem(), loadComboBox);
+			// turnout off auto for location tracks
+			autoTrackCheckBox.setSelected(false);
+			autoTrackCheckBox.setEnabled(false);
+			updateTrackLocationBox();
 		}
 		if (ae.getSource()== locationBox){
-			if (locationBox.getSelectedItem() != null){
-				if (locationBox.getSelectedItem().equals("")){
-					trackLocationBox.removeAllItems();
-				}else{
-					log.debug("CarsSetFrame sees location: "+ locationBox.getSelectedItem());
-					Location l = ((Location)locationBox.getSelectedItem());
-					l.updateComboBox(trackLocationBox);
-				}
-			}
+			updateTrackLocationBox();
 		}
 		if (ae.getSource() == lengthComboBox && autoCheckBox.isSelected()){
 			calculateWeight();
 		}
+	}
+	
+	private void updateTrackLocationBox(){
+		if (locationBox.getSelectedItem() != null){
+			if (locationBox.getSelectedItem().equals("")){
+				trackLocationBox.removeAllItems();
+			}else{
+				log.debug("CarsSetFrame sees location: "+ locationBox.getSelectedItem());
+				Location l = ((Location)locationBox.getSelectedItem());
+				l.updateComboBox(trackLocationBox, _car, autoTrackCheckBox.isSelected(), false);
+				if (_car != null && _car.getLocation() == l)
+					trackLocationBox.setSelectedItem(_car.getTrack());
+			}
+		}	
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -433,6 +442,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		if (ae.getSource() == fredCheckBox && fredCheckBox.isSelected()){
 			cabooseCheckBox.setSelected(false);
 		}
+		if (ae.getSource() == autoTrackCheckBox){
+			updateTrackLocationBox();
+		}		
 	}
 
 	// Save, Delete, Add, Clear, Calculate, Edit Load buttons
@@ -616,6 +628,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				else
 					_car.setKernel(manager.getKernelByName((String)kernelComboBox.getSelectedItem()));
 			}
+			_car.setComment(commentTextField.getText());
+			_car.setRfid(rfidTextField.getText());
+			autoTrackCheckBox.setEnabled(true);
 			if (locationBox.getSelectedItem() != null){
 				if (locationBox.getSelectedItem().equals("")) {
 					_car.setLocation(null, null);
@@ -638,9 +653,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 						}
 					}
 				}
-			}
-			_car.setComment(commentTextField.getText());
-			_car.setRfid(rfidTextField.getText());
+			}	
 			return _car;
 		}
 		return null;

@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -558,19 +558,46 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
       
     /**
-     * returns a JComboBox with all of the track locations for
+     * Updates a JComboBox with all of the track locations for
      * this location.
-     * @param box
+     * @param box JComboBox to be updated.
      */
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
     	box.addItem("");
     	List<String> tracks = getTracksByNameList(null);
 		for (int i = 0; i < tracks.size(); i++){
-			String Id = tracks.get(i);
-			Track track = getTrackById(Id);
-			box.addItem(track);
+			box.addItem(getTrackById(tracks.get(i)));
 		}
+    }
+    
+    /**
+     * Updates a JComboBox with tracks that can service the rolling stock.
+     * @param box JComboBox to be updated.
+     * @param rs Rolling Stock to be serviced
+     * @param filter When true, remove tracks not able to service rs.
+     * @param destination When true, the tracks are destinations for the rs.
+     */
+    public void updateComboBox(JComboBox box, RollingStock rs, boolean filter, boolean destination){
+    	updateComboBox(box);
+    	if (!filter || rs == null)
+    		return;
+       	List<String> tracks = getTracksByNameList(null);
+		for (int i = 0; i < tracks.size(); i++){
+			Track track = getTrackById(tracks.get(i));
+			String status = "";
+			if (destination){
+				status = rs.testDestination(this, track);
+			} else {
+				status = rs.testLocation(this, track);
+			}
+			if (status.equals(RollingStock.OKAY) && (!destination || !track.getLocType().equals(Track.STAGING))){
+				box.setSelectedItem(track);
+				log.debug("Available track: "+track.getName()+" for location: "+getName());
+			} else {
+				box.removeItem(track);
+			}
+		}   	
     }
   	    
     public void dispose(){

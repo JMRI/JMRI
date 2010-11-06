@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -157,8 +157,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			}else{
 				log.debug("CarSetFrame sees return when empty: "+ destReturnWhenEmptyBox.getSelectedItem());
 				Location l = (Location)destReturnWhenEmptyBox.getSelectedItem();
-				l.updateComboBox(trackReturnWhenEmptyBox);
-				findAvailableTracks(l, trackReturnWhenEmptyBox, autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
+				l.updateComboBox(trackReturnWhenEmptyBox, _car, autoReturnWhenEmptyTrackCheckBox.isSelected(), true);
 				if (_car.getReturnWhenEmptyDestination() != null && _car.getReturnWhenEmptyDestination().equals(l) && _car.getReturnWhenEmptyDestTrack() != null)
 					trackReturnWhenEmptyBox.setSelectedItem(_car.getReturnWhenEmptyDestTrack());
 				packFrame();
@@ -173,8 +172,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			}else{
 				log.debug("CarSetFrame sees destination: "+ finalDestinationBox.getSelectedItem());
 				Location l = (Location)finalDestinationBox.getSelectedItem();
-				l.updateComboBox(finalDestTrackBox);
-				findAvailableTracks(l, finalDestTrackBox, autoFinalDestTrackCheckBox.isSelected(), true);
+				l.updateComboBox(finalDestTrackBox, _car, autoFinalDestTrackCheckBox.isSelected(), true);
 				if (_car.getNextDestination() != null && _car.getNextDestination().equals(l) && _car.getNextDestTrack() != null)
 					finalDestTrackBox.setSelectedItem(_car.getNextDestTrack());
 				packFrame();

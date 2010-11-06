@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -498,7 +498,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
-		log.debug("checkbox action " +ae.getSource().toString());
+		log.debug("checkbox action ");
 		if (ae.getSource() == locationUnknownCheckBox){
 			outOfServiceCheckBox.setSelected(locationUnknownCheckBox.isSelected());
 			enableComponents(!locationUnknownCheckBox.isSelected());
@@ -535,39 +535,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}else{
 				log.debug("CarSetFrame sees location: "+ locationBox.getSelectedItem());
 				Location l = (Location)locationBox.getSelectedItem();
-				l.updateComboBox(trackLocationBox);
-				findAvailableTracks(l, trackLocationBox, autoTrackCheckBox.isSelected(), false);
+				l.updateComboBox(trackLocationBox, _rs, autoTrackCheckBox.isSelected(), false);
 				if (_rs.getLocation() != null && _rs.getLocation().equals(l) && _rs.getTrack() != null)
 					trackLocationBox.setSelectedItem(_rs.getTrack());
 				packFrame();
-			}
-		}
-	}
-	
-	/**
-	 * Find the available tracks that will accept this rolling stock
-	 * @param l location
-	 * @param box JComboBox to be modified
-	 * @param filter if true remove tracks from JComboBox that aren't valid
-	 * @param destTrack if true JComboBox contains destination tracks
-	 */
-	protected void findAvailableTracks(Location l, JComboBox box, boolean filter, boolean destTrack){
-		if(filter && l != null){
-			List<String> tracks = l.getTracksByNameList(null);
-			for (int i=0; i<tracks.size(); i++){
-				Track track = l.getTrackById(tracks.get(i));
-				String status = "";
-				if (destTrack){
-					status = _rs.testDestination(l, track);
-				} else {
-					status = _rs.testLocation(l, track);
-				}
-				if (status.equals(RollingStock.OKAY) && (!destTrack || !track.getLocType().equals(Track.STAGING))){
-					box.setSelectedItem(track);
-					log.debug("Available track: "+track.getName()+" for location: "+l.getName());
-				} else {
-					box.removeItem(track);
-				}
 			}
 		}
 	}
@@ -579,8 +550,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			}else{
 				log.debug("CarSetFrame sees destination: "+ destinationBox.getSelectedItem());
 				Location l = (Location)destinationBox.getSelectedItem();
-				l.updateComboBox(trackDestinationBox);
-				findAvailableTracks(l, trackDestinationBox, autoDestinationTrackCheckBox.isSelected(), true);
+				l.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
 				if (_rs.getDestination() != null && _rs.getDestination().equals(l) && _rs.getDestinationTrack() != null)
 					trackDestinationBox.setSelectedItem(_rs.getDestinationTrack());
 				packFrame();
