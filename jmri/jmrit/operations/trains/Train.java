@@ -5,10 +5,13 @@ package jmri.jmrit.operations.trains;
 import java.awt.Frame;
 import java.awt.Color;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,13 +45,14 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Editor;
+import java.awt.Desktop;
 
 
 /**
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.92 $
+ * @version $Revision: 1.93 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1203,7 +1207,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			return;
 		}
 		boolean isPreview = TrainManager.instance().getPrintPreview();
-		printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
+		if (isPreview && Setup.isBuildReportEditorEnabled())
+			editReport(buildFile);
+		else
+			printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
 	}
 	
 	public void setBuildFailed(boolean status) {
@@ -1309,59 +1316,9 @@ public class Train implements java.beans.PropertyChangeListener {
 				break;
 			// check for build report print level
 			if (isBuildReport) {
-				String[] inputLine = line.split("\\s+");
-				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
-						|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-						|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
-						|| inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
-		
-					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)){
-						if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") 
-								|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-								|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
-							continue;	// don't print this line
-						}
-					}
-					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)){
-						if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
-								|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
-							continue;	// don't print this line
-						}
-					}
-					if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)){
-						if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
-							continue;	// don't print this line
-						}
-					}
-					// do not indent if false
-					int start = 0;
-					if (false){
-						// indent lines based on level
-						if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
-							inputLine[0] = "   ";
-						}
-						else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")){
-							inputLine[0] = "  ";
-						}
-						else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")){
-							inputLine[0] = " ";
-						}
-						else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")){
-							inputLine[0] = "";
-						}
-					} else {
-						start = 1;
-					}
-					// rebuild line
-					StringBuffer buf = new StringBuffer();
-					for (int i = start; i < inputLine.length; i++) {
-						buf.append(inputLine[i] + " ");
-					}
-					line = buf.toString();
-				} else {
-					log.debug("ERROR first characters of build report not valid ("
-									+ line + ")");
-				}
+				line = filterBuildReport(line, false);	// no indent
+				if (line.equals(""))
+					continue;
 			// printing the train manifest
 			}else{
 				Color c = null;
@@ -1399,6 +1356,122 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.debug("Print close failed");
 		}
         writer.close();
+	}
+	
+	public void editReport(File file){
+		if (!Desktop.isDesktopSupported()) {
+			log.warn("desktop not supported");
+			return;
+		}
+		Desktop desktop = Desktop.getDesktop();
+		if (!desktop.isSupported(Desktop.Action.EDIT)) {
+			log.warn("desktop edit not supported");
+			return;
+		}
+		// make a new file with the build report levels removed
+		BufferedReader in;
+		try {
+			in = new BufferedReader(new FileReader(file));
+		} catch (FileNotFoundException e) {
+			log.debug("Build report file doesn't exist");
+			return;
+		}
+		PrintWriter out;
+		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(rb.getString("Report")+" "+getName());
+		try {
+			out = new PrintWriter(new BufferedWriter(new FileWriter(buildReport)),
+					true);
+		} catch (IOException e) {
+			log.error("Can not create build report file");
+			return;
+		}
+		String line = " ";
+		while (true) {
+			try {
+				line = in.readLine();
+				if (line == null)
+					break;
+				line = filterBuildReport(line, true);
+				if (line.equals(""))
+					continue;
+				out.println(line); // indent lines for each level
+			} catch (IOException e) {
+				log.debug("Print read failed");
+				break;
+			}
+		}
+        // and force completion of the printing
+		try {
+			in.close();
+		} catch (IOException e) {
+			log.debug("Close failed");
+		}
+		out.close();
+		try {
+			desktop.edit(buildReport);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	/* Removes the print levels from the build report
+	 * 
+	 */	
+	private static String filterBuildReport(String line, boolean indent){
+		String[] inputLine = line.split("\\s+");
+		if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")
+				|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+				|| inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")
+				|| inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")) {
+			
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_MINIMAL)){
+				if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-") 
+						|| inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+						|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")) {
+					return "";	// don't print this line
+				}
+			}
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)){
+				if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")
+						|| inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+					return "";	// don't print this line
+				}
+			}
+			if (Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED)){
+				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+					return "";	// don't print this line
+				}
+			}
+			// do not indent if false
+			int start = 0;
+			if (indent){
+				// indent lines based on level
+				if (inputLine[0].equals(Setup.BUILD_REPORT_VERY_DETAILED + "-")){
+					inputLine[0] = "   ";
+				}
+				else if (inputLine[0].equals(Setup.BUILD_REPORT_DETAILED + "-")){
+					inputLine[0] = "  ";
+				}
+				else if (inputLine[0].equals(Setup.BUILD_REPORT_NORMAL + "-")){
+					inputLine[0] = " ";
+				}
+				else if (inputLine[0].equals(Setup.BUILD_REPORT_MINIMAL + "-")){
+					inputLine[0] = "";
+				}
+			} else {
+				start = 1;
+			}
+			// rebuild line
+			StringBuffer buf = new StringBuffer();
+			for (int i = start; i < inputLine.length; i++) {
+				buf.append(inputLine[i] + " ");
+			}
+			return buf.toString();
+		} else {
+			log.debug("ERROR first characters of build report not valid ("
+					+ line + ")");
+			return "ERROR";
+		}
 	}
 		
 	protected RouteLocation _trainIconRl = null; // saves the icon current route location

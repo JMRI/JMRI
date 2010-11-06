@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -131,6 +131,7 @@ public class Setup {
 	private static String logoURL ="";
 	private static String panelName ="Panel";
 	private static String buildReportLevel = BUILD_REPORT_NORMAL;
+	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
 	private static String iconNorthColor ="";
@@ -379,6 +380,14 @@ public class Setup {
 	
 	public static String getBuildReportLevel(){
 		return buildReportLevel;
+	}
+	
+	public static void setBuildReportEditorEnabled(boolean enable){
+		buildReportEditorEnabled = enable;
+	}
+	
+	public static boolean isBuildReportEditorEnabled(){
+		return buildReportEditorEnabled;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -760,6 +769,7 @@ public class Setup {
     	
     	e.addContent(values = new Element("buildReport"));
     	values.setAttribute("level", getBuildReportLevel());
+    	values.setAttribute("useEditor", isBuildReportEditorEnabled()?"true":"false");
     	
        	e.addContent(values = new Element("owner"));
     	values.setAttribute("name", getOwnerName());
@@ -973,11 +983,17 @@ public class Setup {
         		Setup.setTrainIntoStagingCheckEnabled(enable.equals("true"));
         	}
         }
-        if ((operations.getChild("buildReport") != null)
-				&& (a = operations.getChild("buildReport").getAttribute("level")) != null) {
-        	String level = a.getValue();
-           	if (log.isDebugEnabled()) log.debug("buildReport: "+level);
-           	Setup.setBuildReportLevel(level);
+        if (operations.getChild("buildReport") != null){
+        	if ((a = operations.getChild("buildReport").getAttribute("level")) != null) {
+        		String level = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("buildReport: "+level);
+        		Setup.setBuildReportLevel(level);
+        	}
+        	if ((a = operations.getChild("buildReport").getAttribute("useEditor")) != null) {
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("useEditor: "+enable);
+        		Setup.setBuildReportEditorEnabled(enable.equals("true"));
+        	}
         }
         if ((operations.getChild("owner") != null) 
         		&& (a = operations.getChild("owner").getAttribute("name"))!= null){

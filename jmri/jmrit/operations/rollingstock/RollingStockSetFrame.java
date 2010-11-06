@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -88,10 +88,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	protected JPanel pFinalDestination = new JPanel();
 	
 	// Auto checkbox states
-	protected static boolean autoTrackCheckBoxSelected = false;
-	protected static boolean autoDestinationTrackCheckBoxSelected = false;
-	protected static boolean autoFinalDestTrackCheckBoxSelected = false;
-	protected static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
+	private static boolean autoTrackCheckBoxSelected = false;
+	private static boolean autoDestinationTrackCheckBoxSelected = false;
+	private static boolean autoFinalDestTrackCheckBoxSelected = false;
+	private static boolean autoReturnWhenEmptyTrackCheckBoxSelected = false;
 		
 	public RollingStockSetFrame() {
 		super();

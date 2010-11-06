@@ -27,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -65,6 +65,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("Color"));
 	JCheckBox showDestinationCheckBox = new JCheckBox(rb.getString("Destination"));
 	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("Comment"));
+	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	
 	// text field
 	
@@ -147,6 +148,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItemLeft (pReport, buildReportNor, 2, 16);
 		addItemLeft (pReport, buildReportMax, 3, 16);
 		addItemLeft (pReport, buildReportVD, 4, 16);
+		addItemWidth (pReport, buildReportCheckBox, 3, 1, 17);
 		
 		// manifest options
 		JPanel pComment = new JPanel();
@@ -159,6 +161,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
+		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 
 		// row 11
 		JPanel pControl = new JPanel();
@@ -223,6 +226,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 		}
 	}
