@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -154,8 +154,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected boolean timerRunning = false;
 
-    protected dccSpeedProfile spFwd;
-    protected dccSpeedProfile spRev;
+    protected DccSpeedProfile spFwd;
+    protected DccSpeedProfile spRev;
     protected enum ProfileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
     protected ProfileState state = ProfileState.IDLE;
     protected enum ProfileDirection {FORWARD, REVERSE}
@@ -390,8 +390,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         profilePane.add(profileAddressPane, BorderLayout.NORTH);
         
         // pane to hold the graph
-        spFwd = new dccSpeedProfile(29);       // 28 step plus step 0
-        spRev = new dccSpeedProfile(29);       // 28 step plus step 0
+        spFwd = new DccSpeedProfile(29);       // 28 step plus step 0
+        spRev = new DccSpeedProfile(29);       // 28 step plus step 0
         profileGraphPane = new GraphPane(spFwd, spRev);
         profileGraphPane.setPreferredSize(new Dimension(600, 300));
         profileGraphPane.setXLabel(rb.getString("SpeedStep"));
@@ -438,12 +438,12 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         exportProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 if (dirFwdButton.isSelected() && dirRevButton.isSelected()) {
-                    dccSpeedProfile[] sp = {spFwd, spRev};
-                    dccSpeedProfile.export(sp);
+                    DccSpeedProfile[] sp = {spFwd, spRev};
+                    DccSpeedProfile.export(sp);
                 } else if (dirFwdButton.isSelected()) {
-                    dccSpeedProfile.export(spFwd);
+                    DccSpeedProfile.export(spFwd);
                 }else if (dirRevButton.isSelected()) {
-                    dccSpeedProfile.export(spRev);
+                    DccSpeedProfile.export(spRev);
                 }
             }
         });
