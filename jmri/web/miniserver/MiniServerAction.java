@@ -4,19 +4,21 @@ package jmri.web.miniserver;
 
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 import java.io.*;
 
 import java.util.ResourceBundle;
 
+import jmri.util.BareBonesBrowserLaunch;
 import jmri.util.zeroconf.ZeroConfUtil;
 
 /**
  * Action to start a miniserver
  *
  * @author	    Bob Jacobsen    Copyright (C) 2004
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class MiniServerAction extends AbstractAction {
 
@@ -89,20 +91,23 @@ public class MiniServerAction extends AbstractAction {
                     // switch to Swing and notify
                     javax.swing.SwingUtilities.invokeLater(new Runnable(){
                         public void run() {
-                            // Want non-modal dialog, 
-                            // so can't use JOptionPane completely
-                            JOptionPane optionPane = new JOptionPane();
-                            optionPane.setMessage(msg);
-                            optionPane.setMessageType(JOptionPane.INFORMATION_MESSAGE);
-                            optionPane.setOptions(new Object[] {"Close"});
-                            JDialog dialog = optionPane.createDialog(null, "Web Server Started");
-                            dialog.setModal(false);
-                            dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-                            dialog.setVisible(true);
-                        }
-                        String msg = "Web server started at http://"
-                                +getLocalAddress()
+                        	JFrame frame = new JFrame();
+                            JPanel panel = new JPanel();
+                            final String url = "http://" + getLocalAddress()
                                 +":"+getPort()+"/index.html";
+                            JButton webButton = new JButton("View in Browser");
+                            webButton.addActionListener(new ActionListener() {
+                               public void actionPerformed(ActionEvent e) {
+                                  BareBonesBrowserLaunch.openURL(url); }
+                               } );
+                            frame.setTitle("JMRI Mini Web Server Started");
+                            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                            panel.add(new JLabel("Web server started at " + url + "\n"));
+                            panel.add(webButton);
+                            frame.getContentPane().add(panel);
+                            frame.pack();
+                            frame.setVisible(true);
+                        }
                     });
                 }
             };
