@@ -2,7 +2,7 @@ package jmri.layout;
 
 /**
  * @author Alex Shepherd  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode implements LayoutEventInterface
@@ -66,7 +66,7 @@ public class LayoutElement extends javax.swing.tree.DefaultMutableTreeNode imple
             mListeners.removeEventListener( pListener );
     }
 
-    protected void message( LayoutEventData pLayoutEvent )
+    protected synchronized void message( LayoutEventData pLayoutEvent )
     {
         if( mListeners != null )
             mListeners.message( pLayoutEvent );
