@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: index.shtml,v 1.13 2010-05-06 15:29:06 pbender Exp $ -->
+<!-- $Id: index.shtml,v 1.14 2010-11-07 05:56:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
 <TITLE>
@@ -207,23 +207,40 @@ this page
     XnTcp adapter is version 2.1.5</b>
 
     <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genli">GenLi</a>.           is a do-it-yourself XPressNet interfaces that emulate an LI100.  There 
+    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genli">GenLi</a>
+    is a do-it-yourself XPressNet interfaces that emulate an LI100.  There 
     is also a USB version of this device.  To configure these devices in JMRI,
     please see the instructions for configuring the Lenz LI100.
 
     <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a>    has the same functionality as a GenLI, plus adds an S88 feedback module. It     can be used to add feedback to an existing XPressNet equipped layout. To 
-    configure this devices in JMRI, please see the instructions for configuring     the Lenz LI100.
+    <a href="http://www.tinet.org/~fmco/lokmaus_en.html#genlis88">Gen-LI-S88</a>
+    has the same functionality as a GenLI, plus adds an S88 feedback module. 
+    It can be used to add feedback to an existing XPressNet equipped layout. To 
+    configure this devices in JMRI, please see the instructions for configuring
+    the Lenz LI100.
 
     <li> Paco Canada's 
-    <a href="http://www.tinet.org/~fmco/rs_en.html#RS2PC">RS2PC</a> Interface 
+    <a href="http://www.tinet.org/~fmco/rs_en.html#RS2PC">RS2PC</a> 
+    Interface 
     allows adding Lenz (and compatible) RS Feedback Bus modules to a system 
     that does not support the RS Feedback Bus. To configure this devices in 
     JMRI, please see the instructions for configuring the Lenz LI100.
 
+    <li>Like Paco Canada's GenLi project, there is an interface called 
+    <a href="http://www.sleutelspoor.nl/technieken/S88XPressNetLI-V0.2.pdf">S88XpressNetLi</a>, 
+    which is designed and built by Karst Drenth and <a href="http://people.zeelandnet.nl/rosoft/">Wim Ros</a>, 
+    and consists of a small print (available as kit or built module) with 2 XPressNet connectors, a
+    serial interface (9600baud at the moment), and a S88 connection (both traditional and S88-N connectors).
+    
 
-    <li> The OpenDCC project has two potential interfaces for use with JMRI.  The OpenDCC <a href="http://www.opendcc.org/elektronik/opendcc/opendcc_hw_sch_e.html">Command Station</a> and the <a href="http://www.opendcc.org/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  These interfaces are untested, but should be supported by JMRI.
+    <li> The OpenDCC project has two potential interfaces for use with JMRI.  
+    The OpenDCC <a href="http://www.opendcc.org/elektronik/opendcc/opendcc_hw_sch_e.html">Command Station</a> and 
+    the <a href="http://www.opendcc.org/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  
+    These interfaces are untested, but should be supported by JMRI.
+
+
     </ul>
+    
 
     <P>
     
