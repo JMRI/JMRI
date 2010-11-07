@@ -118,7 +118,7 @@ public class TrainPrintUtilities {
         writer.close();
 	}
 
-	public static void editReport(File file){
+	public static void editReport(File file, String name){
 		log.error("Desktop requires java 1.6");
 	}
 	

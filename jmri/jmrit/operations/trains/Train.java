@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.96 $
+ * @version $Revision: 1.97 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1195,7 +1195,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 		boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
 		if (isPreview && Setup.isBuildReportEditorEnabled())
-			TrainPrintUtilities.editReport(buildFile);
+			TrainPrintUtilities.editReport(buildFile, getName());
 		else
 			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
 	}
