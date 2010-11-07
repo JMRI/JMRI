@@ -5,7 +5,7 @@ package jmri.jmrix.qsi;
 /**
  * Carries the reply to an QsiMessage
  * @author			Bob Jacobsen  Copyright (C) 2007
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class QsiReply extends jmri.jmrix.AbstractMessage {
     static final int MAXREPLYLENGTH = 200;
@@ -89,17 +89,20 @@ public class QsiReply extends jmri.jmrix.AbstractMessage {
     
     // display format
     public String toString() {
-        String s = "";
+        StringBuilder s = new StringBuilder();
         if (!QsiTrafficController.instance().isSIIBootMode()) {
             for (int i=0; i<_nDataChars; i++) {
-                s+=jmri.util.StringUtil.twoHexFromInt(_dataChars[i])+" ";
+                s.append(jmri.util.StringUtil.twoHexFromInt(_dataChars[i]));
+                s.append(" ");
             }
         } else {
             for (int i=0; i<_nDataChars; i++) {
-                s+="<"+_dataChars[i]+">";
+                s.append("<");
+                s.append(_dataChars[i]);
+                s.append(">");
             }
         }
-        return s;
+        return new String(s);
     }
     
     /**

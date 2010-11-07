@@ -10,7 +10,7 @@ import jmri.jmrix.maple.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -35,6 +35,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
         addHelpMenu("package.jmri.jmrix.maple.serialmon.SerialMonFrame", true);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION", justification="string concatenation, efficiency not as important as clarity here")
     public synchronized void message(SerialMessage l) {  // receive a message and log it
         // check for valid length
         if (l.getNumDataElements() < 2) {

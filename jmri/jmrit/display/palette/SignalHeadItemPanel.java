@@ -74,6 +74,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         addIconsToPanel(iconMap);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
     Hashtable<String, NamedIcon> filterIconMap(SignalHead sh, Hashtable<String, NamedIcon> allIconsMap) {
         String[] states = sh.getValidStateNames();
         if (states.length == 0) {

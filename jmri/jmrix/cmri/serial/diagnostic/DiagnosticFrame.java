@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.13 $
+ * @version	 $Revision: 1.14 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -630,16 +630,18 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                         // update Status area
                         short[] outBitPattern = {0x01,0x02,0x04,0x08,0x10,0x20,0x40,0x80};
                         String[] portID = {"A","B","C","D"};
-                        String st = "Port: "+portID[curOutByte-begOutByte]+",  Pattern: ";
+                        StringBuilder st = new StringBuilder("Port: ");
+                        st.append(portID[curOutByte-begOutByte]);
+                        st.append(",  Pattern: ");
                         for (int j = 0;j < 8;j++) {
                             if ( (curOutValue&outBitPattern[j]) != 0 ) {
-                                st = st + "X ";
+                                st.append("X ");
                             }
                             else {
-                                st = st + "O ";
+                                st.append("O ");
                             }
                         }    
-                        statusText2.setText(st);
+                        statusText2.setText(new String(st));
                         statusText2.setVisible(true);
 
                         // set up for testing input returned

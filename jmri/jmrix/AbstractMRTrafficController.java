@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.90 $
+ * @version         $Revision: 1.91 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -523,10 +523,12 @@ abstract public class AbstractMRTrafficController {
         try {
             if (ostream != null) {
                 if (log.isDebugEnabled()) {
-                    String f = "formatted message: ";
-                    for (int i = 0; i<msg.length; i++) 
-                        f=f+Integer.toHexString(0xFF&msg[i])+" ";
-                    log.debug(f);
+                    StringBuilder f = new StringBuilder("formatted message: ");
+                    for (int i = 0; i<msg.length; i++) {
+                        f.append(Integer.toHexString(0xFF&msg[i]));
+                        f.append(" ");
+                    }
+                    log.debug(new String(f));
                 }
                 while(m.getRetries()>=0) {
                     if(portReadyToSend(controller)) {

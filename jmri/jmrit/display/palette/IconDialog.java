@@ -268,6 +268,7 @@ public class IconDialog extends ItemDialog {
         return panel;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
     protected JPanel makeIconPanel(Hashtable<String, NamedIcon> iconMap) {
        JPanel iconPanel = new JPanel();
        GridBagLayout gridbag = new GridBagLayout();

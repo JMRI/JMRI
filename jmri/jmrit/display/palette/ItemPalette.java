@@ -57,6 +57,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
     static HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>> _iconMaps;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
     public static void storeIcons() {
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         // unfiltered, xml-stored, item palate icon tree
@@ -360,6 +361,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return cloneMap(iconMap);
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
     static protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
         Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
         if (map!=null) {
