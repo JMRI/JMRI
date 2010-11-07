@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -416,7 +416,7 @@ public class SprogIIUpdateFrame
     }
   }
 
-  public void setSprogModeButtonActionPerformed(java.awt.event.
+  synchronized public void setSprogModeButtonActionPerformed(java.awt.event.
                                                 ActionEvent e) {
     if (log.isDebugEnabled()) {
       log.debug("Set SPROG mode");
