@@ -22,9 +22,14 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
  
+@net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(
+    value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+    justification="Class is single-threaded, and uses statics extensively")
+
 public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     private boolean allowSave = true;
