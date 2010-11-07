@@ -5,13 +5,10 @@ package jmri.jmrit.operations.trains;
 import java.awt.Frame;
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -45,14 +42,13 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.util.davidflanagan.HardcopyWriter;
 import jmri.jmrit.display.PanelMenu;
 import jmri.jmrit.display.Editor;
-import java.awt.Desktop;
 
 
 /**
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.94 $
+ * @version $Revision: 1.95 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1362,14 +1358,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		log.error("Desktop requires java 1.6");
 	}
 	
+	/**
+	 * This method uses Desktop which is supported in java 1.6. Since we're
+	 * limiting the code to java 1.5, this method must be commented out.
+	 */
 	/*
 	public void editReport(File file){
-		if (!Desktop.isDesktopSupported()) {
+		if (!java.awt.Desktop.isDesktopSupported()) {
 			log.warn("desktop not supported");
 			return;
 		}
-		Desktop desktop = Desktop.getDesktop();
-		if (!desktop.isSupported(Desktop.Action.EDIT)) {
+		java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+		if (!desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
 			log.warn("desktop edit not supported");
 			return;
 		}
@@ -1381,10 +1381,10 @@ public class Train implements java.beans.PropertyChangeListener {
 			log.debug("Build report file doesn't exist");
 			return;
 		}
-		PrintWriter out;
+		java.io.PrintWriter out;
 		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(rb.getString("Report")+" "+getName());
 		try {
-			out = new PrintWriter(new BufferedWriter(new FileWriter(buildReport)),
+			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(buildReport)),
 					true);
 		} catch (IOException e) {
 			log.error("Can not create build report file");
