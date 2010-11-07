@@ -5,8 +5,12 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
+
+import javax.accessibility.AccessibleContext;
 import javax.imageio.*;
 import javax.swing.*;
+
+import java.util.Calendar;
 import java.util.StringTokenizer;
 import jmri.util.JmriJFrame;
 
@@ -35,7 +39,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class JmriJFrameServlet implements Servlet {
@@ -135,7 +139,7 @@ public class JmriJFrameServlet implements Servlet {
                 Component c = frame.getContentPane().findComponentAt(x,y);
                 // ((javax.swing.JButton) frame.getContentPane().findComponentAt(x,y) ).doClick();
                 click = true;
-                clickDammit(frameName, c, x, y);
+                sendClick(frameName, c, x, y, frame.getContentPane());
             } catch (Exception ec) {
                 log.error("Exception in click code: "+ec);
             }
@@ -169,19 +173,26 @@ public class JmriJFrameServlet implements Servlet {
         out.println(java.text.MessageFormat.format(rb.getString("StandardBack"), args));
     }
     
-    void clickDammit(String name, Component c, int xg, int yg) {  // global positions
+    void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
         int x = xg-c.getLocation().x;
         int y = yg-c.getLocation().y;
-        
         // log.debug("component is "+c);
         if (log.isDebugEnabled()) log.debug("Local click at "+x+","+y);
         
-        if (c.getClass().equals(JButton.class)) {
-            ((JButton)c).doClick();
+        if (c.getClass().equals(JButton.class)) {            ((JButton)c).doClick();
             return;
-        } else if (c instanceof MouseListener) {
+        }
+        else if( c.getClass().equals(JCheckBox.class)) {
+        	((JCheckBox)c).doClick();
+        	return;
+        }
+        else if(c.getClass().equals(JRadioButton.class)) {
+        	((JRadioButton)c).doClick();
+        	return;
+        }
+        else if (c instanceof MouseListener) {
             if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
-            sendClick((MouseListener)c, c, x, y);
+            sendClickSequence((MouseListener)c, c, x, y);
             return;
         } else if (c instanceof jmri.jmrit.display.Positionable) {
             if (log.isDebugEnabled()) log.debug("Invoke directly on MouseListener");
@@ -208,42 +219,80 @@ public class JmriJFrameServlet implements Servlet {
             MouseListener[] la = c.getMouseListeners();
             if (log.isDebugEnabled()) log.debug("Invoke "+la.length+" contained mouse listeners");
             log.debug("component is "+c);
+            /*  Using c.getLocation() above we adjusted the click position for the offset of the control relative to the frame.
+             *  That works fine in the cases above.  
+             *  In this case getLocation only provides the offset of the control relative to the Component.  
+             *  So we also need to adjust the click position for the offset of the Component relative to the frame.
+             */
+            Point pc = c.getLocationOnScreen();
+            Point pf = FrameContentPane.getLocationOnScreen();
+           	x -= (int)(pc.getX() - pf.getX());
+           	y -= (int)(pc.getY() - pf.getY());
+           	
             for (int i = 0; i<la.length; i++) {
-                sendClick(la[i], c, x, y);
+                sendClickSequence(la[i], c, x, y);
             }
-            return;
+           return;
         }
     }
     
-    private void sendClick(MouseListener m, Component c, int x, int y) {
-        MouseEvent e = new MouseEvent(c,
-                                      MouseEvent.MOUSE_PRESSED,
-                                      0,      // time
-                                      0,      // modifiers
-                                      x,y,    // x, y not in this component?
-                                      1,      // one click
-                                      false   // not a popup
-                                      );
-        m.mousePressed(e);
+    private void sendClickSequence(MouseListener m, Component c, int x, int y) {
+    	/*
+    	 * create the sequence of mouse events needed to click on a control:
+    	 *  MOUSE_ENTERED
+    	 *  MOUSE_PRESSED
+    	 *  MOUSE_RELEASED
+    	 *  MOUSE_CLICKED
+    	 */
+    	MouseEvent e = new MouseEvent(c,
+    			MouseEvent.MOUSE_ENTERED,
+    			0,      // time
+    			0,      // modifiers
+    			x,y,    // x, y not in this component?
+    			1,      // one click
+    			false   // not a popup
+    	);
+    	m.mouseEntered(e);
+    	e = new MouseEvent(c,
+    			MouseEvent.MOUSE_PRESSED,
+    			0,      // time
+    			0,      // modifiers
+    			x,y,    // x, y not in this component?
+    			1,      // one click
+    			false,   // not a popup
+    			MouseEvent.BUTTON1
+    	);
+    	m.mousePressed(e);
         e = new MouseEvent(c,
-                                      MouseEvent.MOUSE_RELEASED,
-                                      0,      // time
-                                      0,      // modifiers
-                                      x,y,    // x, y not in this component?
-                                      1,      // one click
-                                      false   // not a popup
-                                      );
-        m.mouseReleased(e);
-        e = new MouseEvent(c,
+		 		MouseEvent.MOUSE_RELEASED,
+		 		0,      // time
+		 		0,      // modifiers
+		 		x,y,    // x, y not in this component?
+		 		1,      // one click
+		 		false,   // not a popup
+		 		MouseEvent.BUTTON1
+ 		);
+ 		m.mouseReleased(e);
+ 		e = new MouseEvent(c,
                                       MouseEvent.MOUSE_CLICKED,
                                       0,      // time
                                       0,      // modifiers
                                       x,y,    // x, y not in this component?
                                       1,      // one click
-                                      false   // not a popup
+                                      false,   // not a popup
+                                      MouseEvent.BUTTON1
                                       );
         m.mouseClicked(e);
-    
+        e = new MouseEvent(c,
+                MouseEvent.MOUSE_EXITED,
+                0,      // time
+                0,      // modifiers
+                x,y,    // x, y not in this component?
+                1,      // one click
+                false,   // not a popup
+                MouseEvent.BUTTON1
+                );
+        m.mouseExited(e);
     }
     /**
      * Handle an error by returning an error message
