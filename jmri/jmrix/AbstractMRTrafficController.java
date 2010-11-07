@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.89 $
+ * @version         $Revision: 1.90 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -535,7 +535,13 @@ abstract public class AbstractMRTrafficController {
                         log.debug("written, msg timeout: "+m.getTimeout()+" mSec");
                         break;
                     } else if(m.getRetries()>=0) {
-                        if (log.isDebugEnabled()) log.debug("Retry message: "+m.toString() +" attempts remaining: " + m.getRetries());
+                        if (log.isDebugEnabled()) {
+                            StringBuilder b = new StringBuilder("Retry message: ");
+                            b.append(m.toString());
+                            b.append(" attempts remaining: ");
+                            b.append(m.getRetries());
+                            log.debug(new String(b));
+                        }
                         m.setRetries(m.getRetries() - 1);
                         try {
                             synchronized(xmtRunnable) {

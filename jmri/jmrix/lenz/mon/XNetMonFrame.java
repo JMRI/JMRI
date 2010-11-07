@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.34 $
+ * @version         $Revision: 2.35 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -51,11 +51,12 @@ import jmri.jmrix.lenz.XNetConstants;
 
 	public synchronized void message(XNetReply l) {  // receive a XpressNet message and log it
 		// display the raw data if requested
-		String raw = "";
+		StringBuilder raw = new StringBuilder();
 		if ( rawCheckBox.isSelected() ) {
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)
-				raw += Integer.toHexString(l.getElement(i))+" ";
+				raw.append(Integer.toHexString(l.getElement(i)));
+				raw.append(" ");
 		}
 
 		// display the decoded data
@@ -447,7 +448,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		     text = l.toString();
 		}
 		// we use Llnmon to format, expect it to provide consistent \n after each line
-		nextLine(text+"\n", raw);
+		nextLine(text+"\n", new String(raw));
 
 	}
 
@@ -455,11 +456,12 @@ import jmri.jmrix.lenz.XNetConstants;
     	@SuppressWarnings("fallthrough")
 		public synchronized void message(XNetMessage l) {
 		// display the raw data if requested
-		String raw = "packet: ";
+		StringBuilder raw = new StringBuilder("packet: ");
 		if ( rawCheckBox.isSelected() ) {
 			int len = l.getNumDataElements();
 			for (int i=0; i<len; i++)
-				raw += Integer.toHexString(l.getElement(i))+" ";
+				raw.append(Integer.toHexString(l.getElement(i)));
+				raw.append(" ");
 		}
 
 		// display the decoded data
@@ -977,7 +979,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		     text = l.toString();
 		}
 		// we use Llnmon to format, expect it to provide consistent \n after each line
-		nextLine(text+"\n", raw);
+		nextLine(text+"\n", new String(raw));
 
     	}
 

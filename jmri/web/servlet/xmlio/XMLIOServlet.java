@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -207,13 +207,13 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
             }
             i++;  // i is not index of 1st data
             
-            String request = "";
+            StringBuilder request = new StringBuilder();
             while (i<len) {
-                request += input[i];
+                request.append(input[i]);
                 i++;
             }
             
-            return request;
+            return new String(request);
         } else {
             log.error("Unexpected request format: "+input[0]);
             return null;

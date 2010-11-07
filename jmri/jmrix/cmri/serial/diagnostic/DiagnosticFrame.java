@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.12 $
+ * @version	 $Revision: 1.13 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -466,17 +466,17 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                             Integer.toString(curOutBit)+
                                     " is on - Compare LED's with the pattern below");
                     statusText1.setVisible(true);
-                    String st = "";
+                    StringBuilder st = new StringBuilder();
                     for (int i = begOutByte;i<=endOutByte;i++) {
-                        st = st + "  ";
+                        st.append("  ");
                         for (int j = 0;j<8;j++) {
                             if ( (i==curOutByte) && (j==curOutBit) )
-                                st = st + "X ";
+                                st.append("X ");
                             else
-                                st = st + "O ";
+                                st.append("O ");
                         }
                     }                        
-                    statusText2.setText(st);
+                    statusText2.setText(new String(st));
                     statusText2.setVisible(true);                        
                     // update bit pattern for next entry
                     curOutBit ++;
@@ -593,15 +593,17 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
                                 statusText1.setText
                                     ("Test Suspended for Error - Stop or Continue?");
                                 statusText1.setVisible(true);
-                                String st = "Compare Error - Out Bytes (hex):";
+                                StringBuilder st = new StringBuilder("Compare Error - Out Bytes (hex):");
                                 for (int i = begOutByte;i<=endOutByte;i++) {
-                                    st += " " + Integer.toHexString((outBytes[i])&0x000000ff);
+                                    st.append(" ");
+                                    st.append(Integer.toHexString((outBytes[i])&0x000000ff));
                                 }
-                                st += "    In Bytes (hex):";
+                                st.append("    In Bytes (hex):");
                                 for (int i = begInByte;i<=endInByte;i++) {
-                                    st += " " + Integer.toHexString((inBytes[i])&0x000000ff);
+                                    st.append(" ");
+                                    st.append(Integer.toHexString((inBytes[i])&0x000000ff));
                                 }
-                                statusText2.setText(st);
+                                statusText2.setText(new String(st));
                                 statusText2.setVisible(true);
                                 numErrors ++;
                                 testSuspended = true;
