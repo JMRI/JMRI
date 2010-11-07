@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.9 2010-11-03 05:43:55 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.10 2010-11-07 01:11:49 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -175,6 +175,8 @@ Dan Boudreau:
 <li>New operations feature, allow user to move train anywhere in the route via the train icon.
 <li>Fix two minor bugs.  Lead car in kernel wasn't always set correctly.  Cars in a kernel didn't always have a proper destination and track.
 <li>Remember the state of auto checkboxes for car and engine set frames.
+<li>Improve the way operations handles switching from descriptive to AAR car types.
+<li>Optionally use a text editor to preview a train's build report.
 </ul>
 
 <p>
@@ -191,6 +193,37 @@ The numerical values of "ON" and "OFF" for Lights have changed, along with
 some of the other constants in the class.  This will have no impact on 
 people just using the program.  If you're using scripts with numerical values
 in them, please recode them to use the symbolic values.
+
+<p>
+More work on compatibility with the Intellibox native serial port
+
+<p>
+When identifying a decoder type, DecoderPro is now smarter about displaying a partial match.
+
+<p>
+Matt Harris fixed some problems with custom programming scripts
+
+<p>
+Kevin Dickerson improved the methods for disabling Logix when debugging.
+The selection in the Debug menu now shows the status, and the 
+startup splash screen gives you more information when you disable at startup.
+
+<p>
+Kevin Dickerson improved handling of missing ports.
+Comm ports that are configured against a device but are not found while loading (eg usb adapter not connected) are now shown in red, while valid comm ports are left in black.  
+
+<p>
+Lionel Jeanson added buttons in throttle window (next and previous running locomotives) and
+fixed a selection bug in throttles list window.
+
+<p>
+Lionel Jeanson improved the Wiimote driver:
+
+<ul>
+<li>next and previous running locomotives on up and down
+<li>roster browse with + and - when current throttle frame empty (home button to acquire throttle)
+</ul>
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
