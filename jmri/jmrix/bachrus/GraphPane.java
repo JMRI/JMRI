@@ -13,7 +13,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class GraphPane extends JPanel implements Printable {
     final int PAD = 40;
@@ -21,7 +21,7 @@ public class GraphPane extends JPanel implements Printable {
     protected String xLabel;
     protected String yLabel;
     // array to hold the speed curves
-    protected dccSpeedProfile [] _sp;
+    protected DccSpeedProfile [] _sp;
     protected String annotate;
     protected Color [] colors = { Color.RED, Color.BLUE };
 
@@ -30,19 +30,19 @@ public class GraphPane extends JPanel implements Printable {
     // Use a default 28 step profile
     public GraphPane() {
         super();
-        _sp = new dccSpeedProfile[1];
-        _sp[0] = new dccSpeedProfile(28);
+        _sp = new DccSpeedProfile[1];
+        _sp[0] = new DccSpeedProfile(28);
     }
 
-    public GraphPane(dccSpeedProfile sp) {
+    public GraphPane(DccSpeedProfile sp) {
         super();
-        _sp = new dccSpeedProfile[1];
+        _sp = new DccSpeedProfile[1];
         _sp[0] = sp;
     }
 
-    public GraphPane(dccSpeedProfile sp0, dccSpeedProfile sp1) {
+    public GraphPane(DccSpeedProfile sp0, DccSpeedProfile sp1) {
         super();
-        _sp = new dccSpeedProfile[2];
+        _sp = new DccSpeedProfile[2];
         _sp[0] = sp0;
         _sp[1] = sp1;
     }

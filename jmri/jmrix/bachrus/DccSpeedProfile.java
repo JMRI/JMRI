@@ -1,4 +1,4 @@
-// GraphPane.java
+// DccSpeedProfile.java
 
 package jmri.jmrix.bachrus;
 
@@ -9,9 +9,9 @@ import javax.swing.JFileChooser;
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.1 $
  */
-public class dccSpeedProfile {
+public class DccSpeedProfile {
 
     protected int _length;
     protected float[] _dataPoints;
@@ -19,7 +19,7 @@ public class dccSpeedProfile {
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
 
-    public dccSpeedProfile(int len) {
+    public DccSpeedProfile(int len) {
         _length = len;
         _dataPoints = new float[_length];
 
@@ -66,7 +66,7 @@ public class dccSpeedProfile {
 
 
     // Save data as CSV
-    public static void export(dccSpeedProfile sp) {
+    public static void export(DccSpeedProfile sp) {
         openExportFile();
 
         // Save rows
@@ -81,7 +81,7 @@ public class dccSpeedProfile {
         closeExportFile();
     }
 
-    public static void export(dccSpeedProfile [] sp) {
+    public static void export(DccSpeedProfile [] sp) {
         openExportFile();
         // Save rows
         if ((out != null) && (p != null)) {
@@ -138,5 +138,5 @@ public class dccSpeedProfile {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(dccSpeedProfile.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DccSpeedProfile.class.getName());
 }

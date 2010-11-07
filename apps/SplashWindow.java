@@ -19,22 +19,22 @@ import jmri.util.JmriJFrame;
  * A splash screen for showing during JMRI startup
  * @author	Bob Jacobsen   Copyright 2003
  * @author  Dennis Miller Copyright 2007
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SplashWindow extends JmriJFrame {
     Image splashIm;
     
     public SplashWindow() {
         super("JMRI");
-        SplashWindowDisplay(null);
+        splashWindowDisplay(null);
     }
     
     public SplashWindow(JPanel splashMsg) {
         super("JMRI");
-        SplashWindowDisplay(splashMsg);
+        splashWindowDisplay(splashMsg);
     }
 
-    public void SplashWindowDisplay(JPanel splashMsg) {
+    public void splashWindowDisplay(JPanel splashMsg) {
         //super("JMRI");
 
         // get the splash image
