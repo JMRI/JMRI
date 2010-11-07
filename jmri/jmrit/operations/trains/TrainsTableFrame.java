@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.47 $
+ * @version             $Revision: 1.48 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -191,9 +191,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		addRadioButtonAction(moveRB);
 		addRadioButtonAction(terminateRB);	
 		
-		buildMsgBox.setSelected(trainManager.getBuildMessages());
-    	buildReportBox.setSelected(trainManager.getBuildReport());
-    	printPreviewBox.setSelected(trainManager.getPrintPreview()); 	
+		buildMsgBox.setSelected(trainManager.isBuildMessagesEnabled());
+    	buildReportBox.setSelected(trainManager.isBuildReportEnabled());
+    	printPreviewBox.setSelected(trainManager.isPrintPreviewEnabled()); 	
     	addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
@@ -277,7 +277,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if(train.getBuild() && !train.printManifestIfBuilt() && trainManager.getBuildMessages()){
+				if(train.getBuild() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()){
 					String string = "Need to build train (" +train.getName()+ ") before printing manifest";
 					JOptionPane.showMessageDialog(null, string,
 							"Can not print manifest",
@@ -388,13 +388,13 @@ public class TrainsTableFrame extends OperationsFrame {
 		setModifiedFlag(true);
 		trainManagerXml.setDirty(true);
 		if (ae.getSource() == buildMsgBox){
-			trainManager.setBuildMessages(buildMsgBox.isSelected());
+			trainManager.setBuildMessagesEnabled(buildMsgBox.isSelected());
 		}
 		if (ae.getSource() == buildReportBox){
-			trainManager.setBuildReport(buildReportBox.isSelected());
+			trainManager.setBuildReportEnabled(buildReportBox.isSelected());
 		}
 		if (ae.getSource() == printPreviewBox){
-			trainManager.setPrintPreview(printPreviewBox.isSelected());
+			trainManager.setPrintPreviewEnabled(printPreviewBox.isSelected());
 			setPrintButtonText();	// set the button text for Print or Preview
 		}
 	}

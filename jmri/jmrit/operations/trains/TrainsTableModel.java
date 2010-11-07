@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.32 $
+ * @version   $Revision: 1.33 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -42,8 +42,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     private static final int TERMINATESCOLUMN = DEPARTSCOLUMN+1;
     private static final int CURRENTCOLUMN = TERMINATESCOLUMN+1;
     private static final int STATUSCOLUMN = CURRENTCOLUMN+1;
-    private static final int MOVECOLUMN = STATUSCOLUMN+1;
-    private static final int EDITCOLUMN = MOVECOLUMN+1;
+    private static final int ACTIONCOLUMN = STATUSCOLUMN+1;
+    private static final int EDITCOLUMN = ACTIONCOLUMN+1;
     
     private static final int HIGHESTCOLUMN = EDITCOLUMN+1;
 
@@ -109,8 +109,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(MOVECOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(MOVECOLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(ACTIONCOLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(ACTIONCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(BUILDCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(BUILDCOLUMN).setCellEditor(buttonEditor);
 		table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
@@ -143,7 +143,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case CURRENTCOLUMN: return rb.getString("Current");
         case TERMINATESCOLUMN: return rb.getString("Terminates");
         case STATUSCOLUMN: return rb.getString("Status");
-        case MOVECOLUMN: return rb.getString("Action");
+        case ACTIONCOLUMN: return rb.getString("Action");
         case EDITCOLUMN: return "";		//edit column
         default: return "unknown";
         }
@@ -161,7 +161,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case CURRENTCOLUMN: return String.class;
         case TERMINATESCOLUMN: return String.class;
         case STATUSCOLUMN: return String.class;
-        case MOVECOLUMN: return JButton.class;
+        case ACTIONCOLUMN: return JButton.class;
         case EDITCOLUMN: return JButton.class;
         default: return null;
         }
@@ -171,7 +171,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         switch (col) {
         case BUILDCOLUMN: 
         case BUILDBOXCOLUMN:
-        case MOVECOLUMN: 
+        case ACTIONCOLUMN: 
         case EDITCOLUMN: 
         	return true;
         default: 
@@ -212,13 +212,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
         	if (train.getBuilt())
-        		if (manager.getPrintPreview())
+        		if (manager.isPrintPreviewEnabled())
         			return rb.getString("Preview");
         		else
         			return rb.getString("Print");
         	return rb.getString("Build");
         }
-        case MOVECOLUMN: {
+        case ACTIONCOLUMN: {
         	if (train.getBuildFailed())
         		return rb.getString("Report");
         	return manager.getTrainsFrameTrainAction();
@@ -234,7 +234,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         	break;
         case BUILDCOLUMN: buildTrain (row);
     		break;
-        case MOVECOLUMN: moveTrain (row);
+        case ACTIONCOLUMN: actionTrain (row);
 			break;
         case BUILDBOXCOLUMN:{
         	Train train = manager.getTrainById(sysList.get(row));
@@ -263,15 +263,18 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
      	Train train = manager.getTrainById(sysList.get(row));
      	if (!train.getBuilt()){
      		train.build();
+     	// print
      	} else {
-     		if (manager.getBuildReport())
+     		if (manager.isBuildReportEnabled())
      			train.printBuildReport();
      		train.printManifestIfBuilt();
      	}
     }
     
-    private synchronized void moveTrain (int row){
+    // one of three buttons, report, move, terminate
+    private synchronized void actionTrain (int row){
     	Train train = manager.getTrainById(sysList.get(row));
+    	// move button become report if failure
     	if (train.getBuildFailed()){
     		train.printBuildReport();
     	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {

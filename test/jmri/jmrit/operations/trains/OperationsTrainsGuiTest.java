@@ -22,7 +22,7 @@ import java.util.List;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -42,9 +42,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	public void testTrainsTableFrame(){
 		TrainManager tmanager = TrainManager.instance();
 		// turn off build fail messages
-		tmanager.setBuildMessages(true);
+		tmanager.setBuildMessagesEnabled(true);
 		// turn off print preview
-		tmanager.setPrintPreview(false);
+		tmanager.setPrintPreviewEnabled(false);
 
 		TrainsTableFrame f = new TrainsTableFrame();
 		f.setVisible(true);
@@ -58,9 +58,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("sort by name", TrainsTableFrame.NAME, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 1", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("default size", new Dimension(Control.panelWidth,Control.panelHeight), tmanager.getTrainsFrameSize());
-		Assert.assertTrue("Build Messages", tmanager.getBuildMessages());
-		Assert.assertFalse("Build Report", tmanager.getBuildReport());
-		Assert.assertFalse("Print Review", tmanager.getPrintPreview());
+		Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
+		Assert.assertFalse("Build Report", tmanager.isBuildReportEnabled());
+		Assert.assertFalse("Print Review", tmanager.isPrintPreviewEnabled());
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.sortByTime ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
@@ -75,9 +75,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		f.validate();
 		
 		Assert.assertEquals("sort by time", TrainsTableFrame.TIME, tmanager.getTrainsFrameSortBy());
-		Assert.assertFalse("Build Messages 2", tmanager.getBuildMessages());
-		Assert.assertTrue("Build Report 2", tmanager.getBuildReport());
-		Assert.assertFalse("Print Review 2", tmanager.getPrintPreview());
+		Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
+		Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
+		Assert.assertFalse("Print Review 2", tmanager.isPrintPreviewEnabled());
 
 		// frame location shouldn't have moved yet
 		Assert.assertEquals("location check", p, tmanager.getTrainsFramePosition());
@@ -94,9 +94,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("sort by id", TrainsTableFrame.ID, tmanager.getTrainsFrameSortBy());
 		Assert.assertEquals("location 3", p, tmanager.getTrainsFramePosition());
 		Assert.assertEquals("size 3", new Dimension(610,250), tmanager.getTrainsFrameSize());
-		Assert.assertTrue("Build Messages 3", tmanager.getBuildMessages());
-		Assert.assertTrue("Build Report 3", tmanager.getBuildReport());
-		Assert.assertTrue("Print Review 3", tmanager.getPrintPreview());
+		Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
+		Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
+		Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
 		// create the TrainEditFrame
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );		

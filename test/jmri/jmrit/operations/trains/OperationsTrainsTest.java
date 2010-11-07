@@ -64,7 +64,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -75,18 +75,18 @@ public class OperationsTrainsTest extends TestCase {
 		TrainManager manager = TrainManager.instance();
 
 		// test defaults
-		Assert.assertTrue("Build Messages", manager.getBuildMessages());
-		Assert.assertFalse("Build Reports", manager.getBuildReport());
-		Assert.assertFalse("Print Preview", manager.getPrintPreview());
+		Assert.assertTrue("Build Messages", manager.isBuildMessagesEnabled());
+		Assert.assertFalse("Build Reports", manager.isBuildReportEnabled());
+		Assert.assertFalse("Print Preview", manager.isPrintPreviewEnabled());
 		
 		// Swap them
-		manager.setBuildMessages(false);
-		manager.setBuildReport(true);
-		manager.setPrintPreview(true);
+		manager.setBuildMessagesEnabled(false);
+		manager.setBuildReportEnabled(true);
+		manager.setPrintPreviewEnabled(true);
 		
-		Assert.assertFalse("Build Messages", manager.getBuildMessages());
-		Assert.assertTrue("Build Reports", manager.getBuildReport());
-		Assert.assertTrue("Print Preview", manager.getPrintPreview());
+		Assert.assertFalse("Build Messages", manager.isBuildMessagesEnabled());
+		Assert.assertTrue("Build Reports", manager.isBuildReportEnabled());
+		Assert.assertTrue("Print Preview", manager.isPrintPreviewEnabled());
 	
 	}
 
@@ -703,9 +703,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train 2 Route Name", "Southbound Main Route", train2.getRoute().getName());
 
 		// disable build messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		// disable build reports
-		tmanager.setBuildReport(false);
+		tmanager.setBuildReportEnabled(false);
 		
 		// Try building without engines
 		train1.build();
@@ -1695,7 +1695,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Bob Test Train train2 Terminates Name", "Westend", train2.getTrainTerminatesName());
 
 		// disable build messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		// Build trains
 		train1.build();
 		train2.build();
@@ -3303,7 +3303,7 @@ public class OperationsTrainsTest extends TestCase {
 		rl5.setTrainIconY(225);
 		
 		// turn off build fail messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		
 		// define the train		
 		Train t1 = tmanager.newTrain("FF");
@@ -3709,7 +3709,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRoute(rte1);
 		
 		// turn off build fail messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
 		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -4033,7 +4033,7 @@ public class OperationsTrainsTest extends TestCase {
 		// Reduce Arlington to only two moves, this should cause train build to fail
 		rl2.setMaxCarMoves(2);
 		// disable build messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 13", false, train1.getBuilt());
 		
@@ -4403,7 +4403,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.addTrainSkipsLocation(rl3.getId());
 				
 		// turn off build fail messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
 		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));
@@ -4781,7 +4781,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRoute(rte1);
 				
 		// turn off build fail messages
-		tmanager.setBuildMessages(false);
+		tmanager.setBuildMessagesEnabled(false);
 		
 		// Place cars
 		Assert.assertEquals("Place c1", Car.OKAY, c1.setLocation(loc1, loc1trk1));

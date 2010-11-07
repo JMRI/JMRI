@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.97 $
+ * @version             $Revision: 1.98 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1648,7 +1648,7 @@ public class TrainBuilder extends TrainCommon{
 		train.setBuildFailed(true);
 		if(log.isDebugEnabled())
 			log.debug(string);
-		if(TrainManager.instance().getBuildMessages()){
+		if(TrainManager.instance().isBuildMessagesEnabled()){
 			JOptionPane.showMessageDialog(null, string,
 					MessageFormat.format(rb.getString("buildErrorMsg"),new Object[]{train.getName(), train.getDescription()}),
 					JOptionPane.ERROR_MESSAGE);
@@ -1659,16 +1659,20 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFailedMsg"),new Object[]{train.getName()}));
 			buildReport.flush();
 			buildReport.close();
+			/*
 			if(TrainManager.instance().getBuildReport()){
 				File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(train.getName());
 				printBuildReport(buildFile, MessageFormat.format(rb.getString("buildFailureReport"),new Object[]{train.getDescription()}), true);
 			}
+			*/
 		}
 	}
 	
+	/*
 	private static void printBuildReport(File file, String name, boolean isPreview){
-		Train.printReport(file, name, isPreview, "", true, "");
+		TrainPrintUtilities.printReport(file, name, isPreview, "", true, "");
  	}
+ 	*/
 	
 	private void makeManifest() {
 		// create manifest file

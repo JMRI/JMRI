@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.48 $
+ * @version	$Revision: 1.49 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -91,38 +91,38 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	 * 
 	 * @return true if build messages are enabled
 	 */
-    public boolean getBuildMessages(){
+    public boolean isBuildMessagesEnabled(){
     	return _buildMessages;
     }
     
-    public void setBuildMessages(boolean messages){
-    	_buildMessages = messages;
+    public void setBuildMessagesEnabled(boolean enable){
+    	_buildMessages = enable;
     }
     
     /**
      * 
      * @return true if build reports are enabled
      */
-    public boolean getBuildReport(){
+    public boolean isBuildReportEnabled(){
     	return _buildReport;
     }
     
-    public void setBuildReport(boolean report){
-    	_buildReport = report;
+    public void setBuildReportEnabled(boolean enable){
+    	_buildReport = enable;
     }
     
     /**
      * 
      * @return true if print preview is enabled
      */
-    public boolean getPrintPreview(){
+    public boolean isPrintPreviewEnabled(){
     	return _printPreview;
     }
     
-    public void setPrintPreview(boolean preview){
+    public void setPrintPreviewEnabled(boolean enable){
     	boolean old = _printPreview;
-    	_printPreview = preview;
-    	firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old?"Preview":"Print", preview?"Preview":"Print");
+    	_printPreview = enable;
+    	firePropertyChange(PRINTPREVIEW_CHANGED_PROPERTY, old?"Preview":"Print", enable?"Preview":"Print");
     }
     
     public void setTrainsFrame(TrainsTableFrame frame){
@@ -618,9 +618,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	Element values = new Element("options");
         Element e = new Element("trainOptions");
         e.setAttribute("sortBy", getTrainsFrameSortBy());
-        e.setAttribute("buildMessages", getBuildMessages()?"true":"false");
-        e.setAttribute("buildReport", getBuildReport()?"true":"false");
-        e.setAttribute("printPreview", getPrintPreview()?"true":"false");
+        e.setAttribute("buildMessages", isBuildMessagesEnabled()?"true":"false");
+        e.setAttribute("buildReport", isBuildReportEnabled()?"true":"false");
+        e.setAttribute("printPreview", isPrintPreviewEnabled()?"true":"false");
         e.setAttribute("trainAction", getTrainsFrameTrainAction());
         // get previous Train frame size and position
         Dimension size = getTrainsFrameSize();
