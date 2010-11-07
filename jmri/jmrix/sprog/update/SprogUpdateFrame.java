@@ -14,7 +14,7 @@ import javax.swing.*;
  * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame {
@@ -33,7 +33,7 @@ public class SprogUpdateFrame
 //  SprogAlertDialog ad;
 
   // File to hold name of hex file
-  SprogHexFile hexFile = null;
+  transient SprogHexFile hexFile = null;
 
   SprogMessage msg;
 
@@ -81,18 +81,6 @@ public class SprogUpdateFrame
     tc = null;
     super.dispose();
   }
-
-  //private void requestBoot() {
-  //}
-
-  //private void sendWrite() {
-  //}
-
-  //private void sendErase() {
-  //}
-
-  //private void doneWriting() {
-  //}
 
     /**
      * Set up the GUI
@@ -205,7 +193,10 @@ public class SprogUpdateFrame
       ActionEvent e) {
   }
 
-  public void openFileChooserButtonActionPerformed(java.awt.event.
+  // Normally this happens well before the transfer thread
+  // is kicked off, but it's synchronized anyway to control
+  // access to shared hexFile variable.
+  synchronized public void openFileChooserButtonActionPerformed(java.awt.event.
       ActionEvent e) {
     // start at current file, show dialog
     int retVal = hexFileChooser.showOpenDialog(this);

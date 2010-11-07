@@ -11,7 +11,7 @@ import javax.swing.*;
 /**
  * Get the firmware version of the attached SPROG
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -23,7 +23,7 @@ public class SprogVersionFrame
     
     String sprogUSB = "";
     
-    public void initComponents() throws Exception {
+    synchronized public void initComponents() throws Exception {
         setTitle(title());
 
         // connect to data source
