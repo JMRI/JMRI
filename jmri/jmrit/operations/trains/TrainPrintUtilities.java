@@ -13,6 +13,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -118,25 +119,13 @@ public class TrainPrintUtilities {
         writer.close();
 	}
 
-	public static void editReport(File file, String name){
-		log.error("Desktop requires java 1.6");
-	}
-	
 	/**
-	 * This method uses Desktop which is supported in java 1.6. Since we're
-	 * limiting the code to java 1.5, this method must be commented out.
+	 * Creates a new build report file with the print detail numbers 
+	 * replaced by indentations. Then calls open desktop editor.
+	 * @param file build file
+	 * @param name train name
 	 */
-	/*
-	public void editReport(File file){
-		if (!java.awt.Desktop.isDesktopSupported()) {
-			log.warn("desktop not supported");
-			return;
-		}
-		java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
-		if (!desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
-			log.warn("desktop edit not supported");
-			return;
-		}
+	public static void editReport(File file, String name){
 		// make a new file with the build report levels removed
 		BufferedReader in;
 		try {
@@ -146,7 +135,7 @@ public class TrainPrintUtilities {
 			return;
 		}
 		java.io.PrintWriter out;
-		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(rb.getString("Report")+" "+getName());
+		File buildReport = TrainManagerXml.instance().createTrainBuildReportFile(rb.getString("Report")+" "+name);
 		try {
 			out = new java.io.PrintWriter(new java.io.BufferedWriter(new java.io.FileWriter(buildReport)),
 					true);
@@ -176,13 +165,9 @@ public class TrainPrintUtilities {
 			log.debug("Close failed");
 		}
 		out.close();
-		try {
-			desktop.edit(buildReport);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// open editor
+		openDesktopEditor(buildReport);
 	}
-	*/
 	
 	/* Removes the print levels from the build report
 	 * 
@@ -242,6 +227,42 @@ public class TrainPrintUtilities {
 					+ line + ")");
 			return "ERROR";
 		}
+	}
+	
+	/**
+	 * This method uses Desktop which is supported in java 1.6. Since we're
+	 * currently limiting the code to java 1.5, this method must be commented out.
+	 */
+	/*
+	public static void openDesktopEditor(File file){
+		if (!java.awt.Desktop.isDesktopSupported()) {
+			log.warn("desktop not supported");
+			return;
+		}
+		java.awt.Desktop desktop = java.awt.Desktop.getDesktop();
+		if (!desktop.isSupported(java.awt.Desktop.Action.EDIT)) {
+			log.warn("desktop edit not supported");
+			return;
+		}
+		try {
+			desktop.edit(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	*/
+	
+	/**
+	 * This method replaces the commented out method above for
+	 * compatibility with java 1.5.
+	 */
+	public static void openDesktopEditor(File file){
+		log.info("Open file using editor not supported yet!  Requires java 1.6");
+		String path = file.getAbsolutePath();
+		JOptionPane.showMessageDialog(null,
+				"Open file using editor not available, file path: "+path, "Build Report File Created",
+				JOptionPane.INFORMATION_MESSAGE);
+		return;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
