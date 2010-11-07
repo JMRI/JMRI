@@ -230,8 +230,8 @@ public class TrainPrintUtilities {
 	}
 	
 	/**
-	 * This method uses Desktop which is supported in java 1.6. Since we're
-	 * currently limiting the code to java 1.5, this method must be commented out.
+	 * This method uses Desktop which is supported in Java 1.6. Since we're
+	 * currently limiting the code to Java 1.5, this method must be commented out.
 	 */
 	/*
 	public static void openDesktopEditor(File file){
@@ -254,10 +254,10 @@ public class TrainPrintUtilities {
 	
 	/**
 	 * This method replaces the commented out method above for
-	 * compatibility with java 1.5.
+	 * compatibility with Java 1.5.
 	 */
 	public static void openDesktopEditor(File file){
-		log.info("Open file using editor not supported yet!  Requires java 1.6");
+		log.info("Open file using editor not supported yet!  Requires Java 1.6");
 		String path = file.getAbsolutePath();
 		JOptionPane.showMessageDialog(null,
 				"Open file using editor not available, file path: "+path, "Build Report File Created",
