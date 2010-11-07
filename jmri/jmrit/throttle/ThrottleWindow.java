@@ -506,7 +506,7 @@ public class ThrottleWindow extends JmriJFrame {
 				log.debug("Closing last created");
 			}
 			throttlesPanel.remove( tf );
-			throttleFrames.remove( tf );
+			throttleFrames.remove( tf.getTitle() );
 			tf.dispose();
 			throttlesLayout.invalidateLayout(throttlesPanel);
 		}
@@ -523,30 +523,31 @@ public class ThrottleWindow extends JmriJFrame {
 		updateGUI();
 	}
 	
-	public void nextRunningThrottleFrame() {
-//TODO
+	public void previousRunningThrottleFrame() {
         if (! throttleFrames.isEmpty() ) {
         	ThrottleFrame cf = this.getCurentThrottleFrame();
         	ThrottleFrame nf = null;
         	boolean passed = false;
         	for (Iterator<ThrottleFrame> tfi = throttleFrames.values().iterator(); tfi.hasNext(); ) {
         		ThrottleFrame tf = tfi.next();
-        		if ((tf.getAddressPanel() != null) && (tf.getAddressPanel().getThrottle() != null) && (tf.getAddressPanel().getThrottle().getSpeedSetting() > 0))
-        			if (passed) {        				
-        				nf = tf;
-        				break;
-        			} else if ((nf == null) && ( nf != cf))
-        				nf = tf;
-        			
-        		if (tf == cf)
-        			passed = true;
+        		if (tf != cf) {
+	        		if ((tf.getAddressPanel() != null) && (tf.getAddressPanel().getThrottle() != null) && (tf.getAddressPanel().getThrottle().getSpeedSetting() > 0))
+	        			if (passed) { // if we found something and passed curent value, then break      				
+	        				nf = tf;
+	        				break;
+	        			} 
+	        			else if (nf == null)
+	        				nf = tf;
+        		}
+	        	else
+	        		passed = true;
         	}
         	if (nf != null) 
         		nf.toFront();
         }
 	}
 	
-	public void previousRunningThrottleFrame() {
+	public void nextRunningThrottleFrame() {
         if (! throttleFrames.isEmpty() ) {
         	ThrottleFrame cf = this.getCurentThrottleFrame();
         	ThrottleFrame nf = null;
