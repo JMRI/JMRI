@@ -12,7 +12,7 @@ import javax.swing.*;
  * Action to print a a train's manifest
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintTrainManifestAction  extends AbstractAction {
 
@@ -34,7 +34,7 @@ public class PrintTrainManifestAction  extends AbstractAction {
     	Train train = f._train;
     	if (train == null)
     		return;
-    	if (!train.getBuilt()){
+    	if (!train.isBuilt()){
     		String string = "Do you want to print the previous manifest for Train (" +train.getName()+ ")";
     		int results = JOptionPane.showConfirmDialog(null, string,
     				"Print previous manifest?",

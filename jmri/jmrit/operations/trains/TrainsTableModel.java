@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.33 $
+ * @version   $Revision: 1.34 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -203,7 +203,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case NAMECOLUMN: return train.getIconName();
         case DESCRIPTIONCOLUMN: return train.getDescription();
         case BUILDBOXCOLUMN: {
-            return Boolean.valueOf(train.getBuild());
+            return Boolean.valueOf(train.isBuildEnabled());
         }
         case ROUTECOLUMN: return train.getTrainRouteName();
         case DEPARTSCOLUMN: return train.getTrainDepartsName();
@@ -211,7 +211,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         case TERMINATESCOLUMN: return train.getTrainTerminatesName();
         case STATUSCOLUMN: return train.getStatus();
         case BUILDCOLUMN: {
-        	if (train.getBuilt())
+        	if (train.isBuilt())
         		if (manager.isPrintPreviewEnabled())
         			return rb.getString("Preview");
         		else
@@ -238,7 +238,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			break;
         case BUILDBOXCOLUMN:{
         	Train train = manager.getTrainById(sysList.get(row));
-        	train.setBuild(((Boolean) value).booleanValue());
+        	train.setBuildEnabled(((Boolean) value).booleanValue());
         	break;
         }
         default:
@@ -261,7 +261,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     
     private synchronized void buildTrain (int row){
      	Train train = manager.getTrainById(sysList.get(row));
-     	if (!train.getBuilt()){
+     	if (!train.isBuilt()){
      		train.build();
      	// print
      	} else {
@@ -280,7 +280,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     	} else if (manager.getTrainsFrameTrainAction().equals(TrainsTableFrame.MOVE)) {
        		if (log.isDebugEnabled()) log.debug("Move train ("+train.getName()+")");
      		train.move();
-    	} else if (train.getBuilt()){
+    	} else if (train.isBuilt()){
        		if (log.isDebugEnabled()) log.debug("Terminate train ("+train.getName()+")");
 			int status = JOptionPane.showConfirmDialog(null,
 					"Terminate Train ("+train.getName()+") "+train.getDescription()+"?",

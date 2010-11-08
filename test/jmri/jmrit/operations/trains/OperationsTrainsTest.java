@@ -48,7 +48,7 @@ import jmri.util.JmriJFrame;
  *  Train: DepartureTime, ArrivalTime
  *  Train: numberCarsWorked
  *  Train: isTraininRoute
- *  Train: getBuild, setBuild, buildIfSelected
+ *  Train: getBuild, setBuildEnabled, buildIfSelected
  *  Train: printBuildReport, printManifest, printReport
  *  Train: getPrint, setPrint, printIfSelected
  *  Train: setTrainIconCoordinates
@@ -64,7 +64,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -167,9 +167,9 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setEngineRoad("TESTENGINEROAD");
 		Assert.assertEquals("Train Engine Road", "TESTENGINEROAD", train1.getEngineRoad());
 		train1.setBuilt(true);
-		Assert.assertTrue("Train Built true", train1.getBuilt());
+		Assert.assertTrue("Train Built true", train1.isBuilt());
 		train1.setBuilt(false);
-		Assert.assertFalse("Train Built false", train1.getBuilt());
+		Assert.assertFalse("Train Built false", train1.isBuilt());
 		train1.setNumberEngines("13");
 		Assert.assertEquals("Train Number Engines", "13", train1.getNumberEngines());
 		train1.setRoadOption("INCLUDEROADS");
@@ -711,8 +711,8 @@ public class OperationsTrainsTest extends TestCase {
 		train1.build();
 		train2.build();
 		//Only train 1 should build
-		Assert.assertEquals("Train 1 After 1st Build without engines", true, train1.getBuilt());
-		Assert.assertEquals("Train 2 After 1st Build exclude Boxcar", false, train2.getBuilt());
+		Assert.assertEquals("Train 1 After 1st Build without engines", true, train1.isBuilt());
+		Assert.assertEquals("Train 2 After 1st Build exclude Boxcar", false, train2.isBuilt());
 		 
 		// now allow train 2 to service Boxcars
 		train2.addTypeName("Boxcar");
@@ -720,11 +720,11 @@ public class OperationsTrainsTest extends TestCase {
 		train2.setRoadOption(Train.EXCLUDEROADS);
 		train2.addRoadName("CP");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build but exclude road CP", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build but exclude road CP", false, train2.isBuilt());
 		train2.setRoadOption(Train.ALLROADS);
 		
 		train2.build();
-		Assert.assertEquals("Train 2 After Build include Boxcar", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build include Boxcar", true, train2.isBuilt());
 		
 		// check train 1
 		Assert.assertEquals("Car c1 After Build without engines should be assigned to Train 1", train1, c1.getTrain());
@@ -752,8 +752,8 @@ public class OperationsTrainsTest extends TestCase {
 
 		train1.build();
 		train2.build();
-		Assert.assertEquals("Train 1 After 2nd Build without engines", false, train1.getBuilt());
-		Assert.assertEquals("Train 2 After 2nd Build without engines", false, train2.getBuilt());
+		Assert.assertEquals("Train 1 After 2nd Build without engines", false, train1.isBuilt());
+		Assert.assertEquals("Train 2 After 2nd Build without engines", false, train2.isBuilt());
 		
 		// Place Engines on Staging tracks
 		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
@@ -774,14 +774,14 @@ public class OperationsTrainsTest extends TestCase {
 		train1.build();
 		train2.build();
 		// Both should build
-		Assert.assertEquals("Train 1 After Build with engines", true, train1.getBuilt());
-		Assert.assertEquals("Train 2 After Build with engines", true, train2.getBuilt());
+		Assert.assertEquals("Train 1 After Build with engines", true, train1.isBuilt());
+		Assert.assertEquals("Train 2 After Build with engines", true, train2.isBuilt());
 
 		// Check train 1
 		Assert.assertEquals("Train 1 After Build Departs Name", "North End", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Build Terminates Name", "South End", train1.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After Build Built Status", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build Built Status", true, train1.isBuilt());
 		
 		// Are the proper engines and cars assigned to train 1?
 		Assert.assertEquals("Engine e1 After Build should be assigned to Train 1", train1, e1.getTrain());
@@ -863,7 +863,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train 1 After Reset Departs Name", "North End", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Reset Terminates Name", "South End", train1.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Reset Next Location Name", "", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After Reset Built Status", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Reset Built Status", false, train1.isBuilt());
 		
 		// Are the engines and cars released from train 1?
 		Assert.assertEquals("Engine e1 After Reset should NOT be assigned to Train 1", null, e1.getTrain());
@@ -897,14 +897,14 @@ public class OperationsTrainsTest extends TestCase {
 		// there are cabooses waiting in staging so build should fail
 		train1.deleteTypeName("Caboose");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build with engines but exclude Caboose", false, train1.isBuilt());
 		train1.addTypeName("Caboose");
 		
 		// Try again, but exclude road name CP
 		train1.setRoadOption(Train.EXCLUDEROADS);
 		train1.addRoadName("CP");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build with engines but exclude road CP", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build with engines but exclude road CP", false, train1.isBuilt());
 		train1.setRoadOption(Train.ALLROADS);
 		
 		// Try again, but only allow rolling stock built before 1985
@@ -912,62 +912,62 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setBuiltEndYear("1985");
 		train1.build();
 		// should fail, required engines have built dates after 1985
-		Assert.assertEquals("Train 1 After Build with rs built before 1985", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build with rs built before 1985", false, train1.isBuilt());
 		// change the engine built date
 		e1.setBuilt("7-84");
 		e2.setBuilt("1984");
 		train1.build();
-		Assert.assertEquals("Train 1 After 2nd Build with rs built before 1985", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 2nd Build with rs built before 1985", true, train1.isBuilt());
 		// change one of the car's built date to after 1985
 		c4.setBuilt("1-85");
 		train1.build();
 		// should fail
-		Assert.assertEquals("Train 1 After 3rd Build with rs built before 1985", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 3rd Build with rs built before 1985", false, train1.isBuilt());
 		train1.setBuiltEndYear("");
 		train1.build();
-		Assert.assertEquals("Train 1 After 4th Build with rs built before 1985", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 4th Build with rs built before 1985", true, train1.isBuilt());
 		
 		// Try again, but now exclude engine type Diesel
 		train1.deleteTypeName("Diesel");
 		train1.build();
-		Assert.assertEquals("Train 1 After 1st Build type Diesel not serviced", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 1st Build type Diesel not serviced", false, train1.isBuilt());
 		train1.addTypeName("Diesel");
 		train1.build();
-		Assert.assertEquals("Train 1 After 2nd Build type Diesel serviced", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 2nd Build type Diesel serviced", true, train1.isBuilt());
 		
 		// Try again, but now restrict owner 
 		train1.addOwnerName("DAB");
 		train1.setOwnerOption(Train.INCLUDEOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After 1st Build owner DAB", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 1st Build owner DAB", false, train1.isBuilt());
 		train1.addOwnerName("AT");
 		train1.build();
-		Assert.assertEquals("Train 1 After 2nd Build owners DAB and AT", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 2nd Build owners DAB and AT", true, train1.isBuilt());
 		train1.setOwnerOption(Train.EXCLUDEOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After 3rd Build exclude owners DAB and AT", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 3rd Build exclude owners DAB and AT", false, train1.isBuilt());
 		train1.deleteOwnerName("AT");
 		train1.build();
-		Assert.assertEquals("Train 1 After 4th Build exclude owner DAB", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 4th Build exclude owner DAB", false, train1.isBuilt());
 		train1.setOwnerOption(Train.ALLOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After 5th Build all owners", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 5th Build all owners", true, train1.isBuilt());
 		
 		// Try again, but now set staging track service direction NORTH, train departs to the south
 		l1s1.setTrainDirections(Location.NORTH);
 		l1s2.setTrainDirections(Location.NORTH);
 		train1.build();
-		Assert.assertEquals("Train 1 After 1st Build staging set to North", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 1st Build staging set to North", false, train1.isBuilt());
 		
 		l1s1.setTrainDirections(Location.SOUTH);
 		l1s2.setTrainDirections(Location.SOUTH);
 		train1.build();
-		Assert.assertEquals("Train 1 After 2nd Build staging set to South", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After 2nd Build staging set to South", true, train1.isBuilt());
 		
 		// Build the trains again!!
 		train1.build();
 		train2.build();
-		Assert.assertEquals("Train 1 After Build with engines include all roads", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build with engines include all roads", true, train1.isBuilt());
 		Assert.assertEquals("Train 1 After Build Departs Name", "North End", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Build Terminates Name", "South End", train1.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1.getNextLocationName());
@@ -1163,38 +1163,38 @@ public class OperationsTrainsTest extends TestCase {
 		// now build train 2 testing failure modes
 		train2.build();
 		// build required 1 engine and there were two
-		Assert.assertEquals("Train 2 After Build require 1 engine", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build require 1 engine", false, train2.isBuilt());
 		// should work for 0
 		train2.setNumberEngines("0");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build require 0 engine", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build require 0 engine", true, train2.isBuilt());
 		train2.setNumberEngines("3");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build require 3 engines", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build require 3 engines", false, train2.isBuilt());
 		train2.setNumberEngines("2");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build require 2 engine", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build require 2 engine", true, train2.isBuilt());
 		// try different road
 		train2.setEngineRoad("CP");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build require road CP", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build require road CP", false, train2.isBuilt());
 		train2.setEngineRoad("PC");
 		// try requiring FRED, should fail
 		train2.setRequirements(Train.FRED);
 		train2.build();
-		Assert.assertEquals("Train 2 After Build requires FRED", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build requires FRED", false, train2.isBuilt());
 		// Add FRED to boxcar
 		c5.setFred(true);
 		train2.build();
-		Assert.assertEquals("Train 2 After Build 2 requires FRED", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build 2 requires FRED", true, train2.isBuilt());
 		// try engine wrong model
 		train2.setEngineModel("DS45");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build 2 requires model DS45", false, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build 2 requires model DS45", false, train2.isBuilt());
 		// try engine correct model
 		train2.setEngineModel("SD45");
 		train2.build();
-		Assert.assertEquals("Train 2 After Build 2 requires model SD45", true, train2.getBuilt());
+		Assert.assertEquals("Train 2 After Build 2 requires model SD45", true, train2.isBuilt());
 	
 		// Are the engines and cars assigned to train 2?
 		Assert.assertEquals("Engine e3 After Build should be assigned to Train 2", train2, e3.getTrain());
@@ -1700,8 +1700,8 @@ public class OperationsTrainsTest extends TestCase {
 		train1.build();
 		train2.build();
 		
-		Assert.assertTrue("Bob test train1 built", train1.getBuilt());
-		Assert.assertTrue("Bob test train2 built", train2.getBuilt());
+		Assert.assertTrue("Bob test train1 built", train1.isBuilt());
+		Assert.assertTrue("Bob test train2 built", train2.isBuilt());
 		
 		// check train icon location and name
 		TrainIcon ti1 = train1.getTrainIcon();
@@ -1917,7 +1917,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Train 1 After Build Departs Name", "Westford", train1.getTrainDepartsName());
 		Assert.assertEquals("Train 1 After Build Terminates Name", "Westford", train1.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Build Next Location Name", "Westford", train1.getNextLocationName());
-		Assert.assertEquals("Train 1 After Build Built Status", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build Built Status", true, train1.isBuilt());
 
 		// are the right cars assigned to the train?
 		// the default moves is 7, therefore only 7 cars should be moved based on their move counts
@@ -2545,7 +2545,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setName("BCW");
 		train1.build();
 		
-		Assert.assertEquals("Train Bedford Chelmsford Westford build status", true, train1.getBuilt());
+		Assert.assertEquals("Train Bedford Chelmsford Westford build status", true, train1.isBuilt());
 		Assert.assertEquals("c1 load from staging", "Metal 3", c1.getLoad());
 		Assert.assertEquals("c2 load from staging", "L", c2.getLoad());
 		Assert.assertEquals("c3 load from staging", "Metal 2", c3.getLoad());
@@ -3310,7 +3310,7 @@ public class OperationsTrainsTest extends TestCase {
 		t1.setRoute(r1);
 		
 		t1.build();	
-		Assert.assertTrue("train built 1", t1.getBuilt());
+		Assert.assertTrue("train built 1", t1.isBuilt());
 		Assert.assertEquals("should be 0 cars", 0, t1.getNumberCarsWorked());
 		
 		// place the cars on the tracks
@@ -3328,7 +3328,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Place e1", Engine.OKAY, e1.setLocation(l1, l1s1));
 		
 		t1.build();	
-		Assert.assertTrue("train built 2", t1.getBuilt());
+		Assert.assertTrue("train built 2", t1.isBuilt());
 		Assert.assertEquals("should be 6 cars", 6, t1.getNumberCarsWorked());
 
 		// check car destinations
@@ -3362,7 +3362,7 @@ public class OperationsTrainsTest extends TestCase {
 		// require a caboose
 		t1.setRequirements(Train.CABOOSE);
 		t1.build();
-		Assert.assertTrue("train built 3", t1.getBuilt());
+		Assert.assertTrue("train built 3", t1.isBuilt());
 
 		// check car destinations
 		Assert.assertEquals("2 Destination  c1", "Foxboro", c1.getDestinationName());
@@ -3413,12 +3413,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// train requires a caboose, should fail	
 		t1.build();
-		Assert.assertFalse("train built 4", t1.getBuilt());
+		Assert.assertFalse("train built 4", t1.isBuilt());
 		
 		// Set caboose destination to be the terminal
 		Assert.assertEquals("set caboose destination", Car.OKAY, c2.setDestination(l1, l1s2));
 		t1.build();
-		Assert.assertTrue("train built 5", t1.getBuilt());
+		Assert.assertTrue("train built 5", t1.isBuilt());
 		Assert.assertTrue("train reset 5", t1.reset());
 		
 		// set the cabooses to train FF
@@ -3427,12 +3427,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// build should fail
 		t1.build();
-		Assert.assertFalse("train built 6", t1.getBuilt());
+		Assert.assertFalse("train built 6", t1.isBuilt());
 		
 		// set caboose to train TT
 		c1.setTrain(t1);
 		t1.build();
-		Assert.assertTrue("train built 7", t1.getBuilt());
+		Assert.assertTrue("train built 7", t1.isBuilt());
 		
 		// check car destinations
 		Assert.assertEquals("4 Destination c1", "Foxboro", c1.getDestinationName());
@@ -3449,7 +3449,7 @@ public class OperationsTrainsTest extends TestCase {
 		// add an engine
 		t1.setNumberEngines("2");
 		t1.build();
-		Assert.assertTrue("train built 8", t1.getBuilt());
+		Assert.assertTrue("train built 8", t1.isBuilt());
 		Assert.assertEquals("5 Destination e1", "Foxboro", e1.getDestinationName());
 		Assert.assertEquals("5 Destination e2", "Foxboro", e2.getDestinationName());
 		
@@ -3458,14 +3458,14 @@ public class OperationsTrainsTest extends TestCase {
 		e1.setTrain(t2);
 		// should fail
 		t1.build();
-		Assert.assertFalse("train built 9", t1.getBuilt());
+		Assert.assertFalse("train built 9", t1.isBuilt());
 		
 		// assign engines to train TT
 		e1.setTrain(t1);
 		e2.setTrain(t2);	// shouldn't pay attention to the other engine
 		// should build
 		t1.build();
-		Assert.assertTrue("train built 10", t1.getBuilt());
+		Assert.assertTrue("train built 10", t1.isBuilt());
 		t1.reset();
 		
 		// both engines should release
@@ -3478,13 +3478,13 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("set destination e1", Engine.OKAY, e1.setDestination(l2, l2s1));
 		// should fail
 		t1.build();
-		Assert.assertFalse("train built 11", t1.getBuilt());
+		Assert.assertFalse("train built 11", t1.isBuilt());
 		
 		e1.setDestination(l1, l1s2);
 		e2.setDestination(l2, l2s1);	// program should ignore
 		// should build
 		t1.build();
-		Assert.assertTrue("train built 12", t1.getBuilt());
+		Assert.assertTrue("train built 12", t1.isBuilt());
 		
 		// move and terminate the train
 		t1.move(); 	// to Acton
@@ -3507,7 +3507,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// should build
 		t1.build();
-		Assert.assertTrue("train built 12", t1.getBuilt());
+		Assert.assertTrue("train built 12", t1.isBuilt());
 		Assert.assertEquals("12 Location c3", "Foxboro", c3.getLocationName());
 		Assert.assertEquals("12 Location c7", "Foxboro", c7.getLocationName());
 		Assert.assertEquals("12 Location c8", "Foxboro", c8.getLocationName());
@@ -3543,14 +3543,14 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// train requires a caboose, there are none, should fail	
 		t1.build();
-		Assert.assertFalse("train built 14", t1.getBuilt());
+		Assert.assertFalse("train built 14", t1.isBuilt());
 		
 		// change requirement to car with FRED
 		t1.setRequirements(Train.FRED);
 		
 		// train requires a car with FRED, should pass	
 		t1.build();
-		Assert.assertTrue("train built 15", t1.getBuilt());
+		Assert.assertTrue("train built 15", t1.isBuilt());
 		Assert.assertTrue("train reset 15", t1.reset()); // release cars
 				
 		// now set FRED destinations that aren't the terminal
@@ -3559,12 +3559,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// train requires a car with FRED, should fail	
 		t1.build();
-		Assert.assertFalse("train built 16", t1.getBuilt());
+		Assert.assertFalse("train built 16", t1.isBuilt());
 		
 		// Set FRED destination to be the terminal
 		Assert.assertEquals("set destination c2", Car.OKAY, c2.setDestination(l1, l1s2));
 		t1.build();
-		Assert.assertTrue("train built 17", t1.getBuilt());
+		Assert.assertTrue("train built 17", t1.isBuilt());
 		Assert.assertTrue("train reset 17", t1.reset());
 			
 		// set the cars with FRED to train FF
@@ -3573,12 +3573,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// build should fail
 		t1.build();
-		Assert.assertFalse("train built 18", t1.getBuilt());
+		Assert.assertFalse("train built 18", t1.isBuilt());
 		
 		// set car with FRED to train TT
 		c2.setTrain(t1);
 		t1.build();
-		Assert.assertTrue("train built 19", t1.getBuilt());
+		Assert.assertTrue("train built 19", t1.isBuilt());
 			
 	}
 	
@@ -3732,7 +3732,7 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// no requirements, so no caboose or FRED or engines
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 1", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 1", "", c1.getDestinationTrackName());
@@ -3757,7 +3757,7 @@ public class OperationsTrainsTest extends TestCase {
 		// don't allow pickups at second location Arlington
 		rl2.setCanPickup(false);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 2", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 2", "", c1.getDestinationTrackName());
@@ -3780,7 +3780,7 @@ public class OperationsTrainsTest extends TestCase {
 		// there's a caboose c1 that matches lead engine
 		train1.setNumberEngines("2");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 3", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 3", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 3", "Boston Yard", c1.getDestinationTrackName());
@@ -3805,7 +3805,7 @@ public class OperationsTrainsTest extends TestCase {
 		// allow pickups at Arlington
 		rl2.setCanPickup(true);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 4", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 4", "", c1.getDestinationTrackName());
@@ -3832,7 +3832,7 @@ public class OperationsTrainsTest extends TestCase {
 		// now require a SP caboose
 		train1.setCabooseRoad("SP");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 5", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 5", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 5", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 5", "Boston Yard", c2.getDestinationTrackName());
@@ -3856,7 +3856,7 @@ public class OperationsTrainsTest extends TestCase {
 		// should take car with FRED and road SP
 		train1.setRequirements(Train.FRED);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 6", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 6", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 6", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 6", "", c2.getDestinationTrackName());
@@ -3878,7 +3878,7 @@ public class OperationsTrainsTest extends TestCase {
 		// should take car with FRED least number of moves
 		train1.setCabooseRoad("");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 7", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 7", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 7", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 7", "", c2.getDestinationTrackName());
@@ -3901,11 +3901,11 @@ public class OperationsTrainsTest extends TestCase {
 		train1.addRoadName("NH");
 		train1.setRoadOption(Train.EXCLUDEROADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 7a", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 7a", false, train1.isBuilt());
 		// now override by setting a road for the engine
 		train1.setEngineRoad("NH");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 8", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 8", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 8", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 8", "", c2.getDestinationTrackName());
@@ -3927,7 +3927,7 @@ public class OperationsTrainsTest extends TestCase {
 		// now only include NH
 		train1.setRoadOption(Train.INCLUDEROADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 9", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 9", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 9", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 9", "", c2.getDestinationTrackName());
@@ -3949,7 +3949,7 @@ public class OperationsTrainsTest extends TestCase {
 		// don't allow boxcar, car with FRED required, build should fail
 		loc3.deleteTypeName("Boxcar");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 9a", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 9a", false, train1.isBuilt());
 		loc3.addTypeName("Boxcar");
 		
 		// add staging
@@ -3978,11 +3978,11 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setNumberEngines("0");
 		train1.build();
 		// train only accepted engine and cars with NH road therefore build should fail
-		Assert.assertEquals("Train 1 After Build from staging", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build from staging", false, train1.isBuilt());
 		// try again but now accept all roads
 		train1.setRoadOption(Train.ALLROADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 10", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 10", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 10", "Boston Yard", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 10", "Boston Yard", c2.getDestinationTrackName());
@@ -4005,13 +4005,13 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRoadOption(Train.EXCLUDEROADS);
 		train1.build();
 		// should fail since there are NH roads in staging
-		Assert.assertEquals("Train 1 After Build 11", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 11", false, train1.isBuilt());
 
 		// reduce Boston moves to 5, to force non caboose and FRED cars to Arlington
 		rl3.setMaxCarMoves(5);
 		train1.setRoadOption(Train.ALLROADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 12", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 12", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 12", "Boston Yard", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 12", "Boston Yard", c2.getDestinationTrackName());
@@ -4035,7 +4035,7 @@ public class OperationsTrainsTest extends TestCase {
 		// disable build messages
 		tmanager.setBuildMessagesEnabled(false);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 13", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 13", false, train1.isBuilt());
 		
 		// restore number of moves
 		rl2.setMaxCarMoves(7);
@@ -4043,7 +4043,7 @@ public class OperationsTrainsTest extends TestCase {
 		// don't allow drops at Boston
 		rl3.setCanDrop(false);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 14", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 14", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 14", "Boston Yard", c1.getDestinationTrackName());
@@ -4066,20 +4066,20 @@ public class OperationsTrainsTest extends TestCase {
 		// Reduce Arlington to only two moves, this should cause train build to fail
 		rl2.setMaxCarMoves(2);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 15", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 15", false, train1.isBuilt());
 		
 		// Don't allow cabooses at Boston, should cause build failure
 		rl2.setMaxCarMoves(7);
 		loc3.deleteTypeName("Caboose");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 16", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 16", false, train1.isBuilt());
 		
 		// Don't allow boxcars, should also cause build failure
 		loc3.addTypeName("Caboose");
 		loc3.deleteTypeName("Boxcar");
 		train1.setRequirements(Train.NONE);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 17", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 17", false, train1.isBuilt());
 		
 		// allow the three road names we're testing
 		loc3.addTypeName("Boxcar");
@@ -4092,53 +4092,53 @@ public class OperationsTrainsTest extends TestCase {
 		loc3trk2.addRoadName("UP");
 		loc3trk2.setRoadOption(Track.INCLUDEROADS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 18", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 18", true, train1.isBuilt());
 		
 		// now remove type Diesel, this should cause a failure
 		loc3trk2.deleteTypeName("Diesel");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 19", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 19", false, train1.isBuilt());
 		
 		// now restore type Diesel
 		loc3trk2.addTypeName("Diesel");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 20", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 20", true, train1.isBuilt());
 		
 		// Set the track length too short missing one set of couplers
 		loc3trk2.setLength(Integer.parseInt(e1.getLength())+ Integer.parseInt(e2.getLength())+Engine.COUPLER);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 20.1", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 20.1", false, train1.isBuilt());
 	
 		// restore track length
 		loc3trk2.setLength(Integer.parseInt(e1.getLength())+Integer.parseInt(e2.getLength())+2*Engine.COUPLER);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 20.2", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 20.2", true, train1.isBuilt());
 
 		// change lead engine road name, should cause build failure since Boston only 
 		// accepts NH, SP, and UP.
 		train1.setEngineRoad("");	// reset engine road requirements, was "NH"
 		e1.setRoad("X");	// was "NH"
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 21", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 21", false, train1.isBuilt());
 		
 		e1.setRoad("UP");
 		loc3trk1.deleteRoadName("NH");	// this test that a caboose fails
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 22", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 22", false, train1.isBuilt());
 		
 		loc3trk1.addRoadName("NH");	
 		c6.setRoad("X");	// this test that a car with FRED fails
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 23", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 23", false, train1.isBuilt());
 		
 		loc3trk1.addRoadName("X");
 		loc2trk1.deleteTypeName("Flat");	// this test that an ordinary car must move
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 24", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 24", false, train1.isBuilt());
 		
 		loc2trk1.addTypeName("Flat");	// restore
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 25", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 25", true, train1.isBuilt());
 
 		// check destinations
 		Assert.assertEquals("c1 destination 25", "Boston Yard", c1.getDestinationTrackName());
@@ -4437,7 +4437,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setNumberEngines("2");
 		train1.setOwnerOption(Train.ALLOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 1", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 1", "", c1.getDestinationTrackName());
@@ -4471,7 +4471,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc1trk2.setTrainDirections(Location.SOUTH);
 		
 		train1.build();
-		Assert.assertEquals("Train 1 After Build test track direction", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build test track direction", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 1a", "Chelmsford Yard", c1.getDestinationTrackName());
@@ -4503,7 +4503,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setOwnerOption(Train.INCLUDEOWNERS);
 		
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 2", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 2", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 2", "", c1.getDestinationTrackName());
@@ -4532,18 +4532,18 @@ public class OperationsTrainsTest extends TestCase {
 		// test that build fails if Diesel type is not allowed
 		train1.deleteTypeName("Diesel");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 3", false, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 3", false, train1.isBuilt());
 		
 		// restore type Diesel and allow all owners
 		train1.addTypeName("Diesel");
 		train1.setOwnerOption(Train.ALLOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 4", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 4", true, train1.isBuilt());
 		
 		// Only allow rolling stock built after 1956
 		train1.setBuiltStartYear("1956");
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 5", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 5", true, train1.isBuilt());
 		// check destinations
 		Assert.assertEquals("c1 destination 5", "", c1.getDestinationTrackName());
 		Assert.assertEquals("c2 destination 5", "Chelmsford Yard", c2.getDestinationTrackName());
@@ -4812,7 +4812,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setNumberEngines("3");
 		train1.setOwnerOption(Train.ALLOWNERS);
 		train1.build();
-		Assert.assertEquals("Train 1 After Build 1", true, train1.getBuilt());
+		Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
 		
 		// check destinations
 		Assert.assertEquals("c1 destination 1", "Westford Yard 2", c1.getDestinationTrackName());
@@ -4893,7 +4893,7 @@ public class OperationsTrainsTest extends TestCase {
 		Engine e3 = emanager.newEngine("UP", "3");
 
 		// save in backup file
-		t3.setBuild(true);
+		t3.setBuildEnabled(true);
 		t3.setBuildFailed(false);
 		t3.setBuilt(true);
 		t3.setBuiltEndYear("1950");
@@ -4930,7 +4930,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertNotNull("train 5",t5);
 		Assert.assertNotNull("train 6",t6);
 		
-		t1.setBuild(true);
+		t1.setBuildEnabled(true);
 		t1.setBuildFailed(true);
 		t1.setBuilt(false);
 		t1.setBuiltEndYear("1956");
@@ -4953,7 +4953,7 @@ public class OperationsTrainsTest extends TestCase {
 		t1.setRoadOption("t1 raod option");	
 		t1.setStatus("t1 status");
 		
-		t3.setBuild(false);
+		t3.setBuildEnabled(false);
 		t3.setBuildFailed(true);
 		t3.setBuilt(false);
 		t3.setBuiltEndYear("1955");
@@ -4976,7 +4976,7 @@ public class OperationsTrainsTest extends TestCase {
 		t3.setRoadOption("t3 raod option");
 		t3.setStatus("t3 status");
 		
-		t5.setBuild(true);
+		t5.setBuildEnabled(true);
 		t5.setBuildFailed(false);
 		t5.setBuilt(true);
 		t5.setBuiltEndYear("1954");
@@ -5034,9 +5034,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertNotNull("train 5",t5);
 		Assert.assertNotNull("train 6",t6);
 		
-		Assert.assertEquals("t1 build", true, t1.getBuild());
+		Assert.assertEquals("t1 build", true, t1.isBuildEnabled());
 		Assert.assertEquals("t1 build failed", true, t1.getBuildFailed());
-		Assert.assertEquals("t1 built", false, t1.getBuilt());
+		Assert.assertEquals("t1 built", false, t1.isBuilt());
 		Assert.assertEquals("t1 built end year", "1956", t1.getBuiltEndYear());
 		Assert.assertEquals("t1 built start year", "1932", t1.getBuiltStartYear());
 		Assert.assertEquals("t1 caboose roadr", "t1 caboose road", t1.getCabooseRoad());
@@ -5057,9 +5057,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t1 route", C, t1.getRoute());
 		Assert.assertEquals("t1 status", "t1 status", t1.getStatus());
 		
-		Assert.assertEquals("t3 build", false, t3.getBuild());
+		Assert.assertEquals("t3 build", false, t3.isBuildEnabled());
 		Assert.assertEquals("t3 build failed", true, t3.getBuildFailed());
-		Assert.assertEquals("t3 built", false, t3.getBuilt());
+		Assert.assertEquals("t3 built", false, t3.isBuilt());
 		Assert.assertEquals("t3 built end year", "1955", t3.getBuiltEndYear());
 		Assert.assertEquals("t3 built start year", "1931", t3.getBuiltStartYear());
 		Assert.assertEquals("t3 caboose roadr", "t3 caboose road", t3.getCabooseRoad());
@@ -5080,9 +5080,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("t3 route", A, t3.getRoute());
 		Assert.assertEquals("t3 status", "t3 status", t3.getStatus());
 		
-		Assert.assertEquals("t5 build", true, t5.getBuild());
+		Assert.assertEquals("t5 build", true, t5.isBuildEnabled());
 		Assert.assertEquals("t5 build failed", false, t5.getBuildFailed());
-		Assert.assertEquals("t5 built", true, t5.getBuilt());
+		Assert.assertEquals("t5 built", true, t5.isBuilt());
 		Assert.assertEquals("t5 built end year", "1954", t5.getBuiltEndYear());
 		Assert.assertEquals("t5 built start year", "1930", t5.getBuiltStartYear());
 		Assert.assertEquals("t5 caboose roadr", "t5 caboose road", t5.getCabooseRoad());
@@ -5137,9 +5137,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertNull("train 5",t5);
 		Assert.assertNull("train 6",t6);
 		
-		Assert.assertEquals("t3 build", true, t3.getBuild());
+		Assert.assertEquals("t3 build", true, t3.isBuildEnabled());
 		Assert.assertEquals("t3 build failed", false, t3.getBuildFailed());
-		Assert.assertEquals("t3 built", true, t3.getBuilt());
+		Assert.assertEquals("t3 built", true, t3.isBuilt());
 		Assert.assertEquals("t3 built end year", "1950", t3.getBuiltEndYear());
 		Assert.assertEquals("t3 built start year", "1925", t3.getBuiltStartYear());
 		Assert.assertEquals("t3 caboose roadr", "t3 X caboose road", t3.getCabooseRoad());

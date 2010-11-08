@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -125,6 +125,7 @@ public class Setup {
 	private static String carTypes = DESCRIPTIVE;
 	private static String ownerName ="";
 	private static String fontName = MONOSPACED;
+	private static int fontSize = 10;
 	private static String pickupColor = BLACK;
 	private static String dropColor = BLACK;
 	private static String miaComment = rb.getString("misplacedCars");
@@ -462,6 +463,14 @@ public class Setup {
 		fontName = name;
 	}
 	
+	public static int getFontSize(){
+		return fontSize;
+	}
+	
+	public static void setFontSize(int size){
+		fontSize = size;
+	}
+	
 	public static boolean isCarLoggerEnabled(){
 		return carLogger;
 	}
@@ -750,6 +759,9 @@ public class Setup {
        	e.addContent(values = new Element("fontName"));
     	values.setAttribute("name", getFontName());
     	
+       	e.addContent(values = new Element("fontSize"));
+    	values.setAttribute("size", Integer.toString(getFontSize()));
+    	
       	e.addContent(values = new Element("manifestColors"));
     	values.setAttribute("dropColor", getDropTextColor());
     	values.setAttribute("pickupColor", getPickupTextColor());
@@ -937,6 +949,12 @@ public class Setup {
         	String font = a.getValue();
            	if (log.isDebugEnabled()) log.debug("fontName: "+font);
            	Setup.setFontName(font);
+        }
+        if ((operations.getChild("fontSize") != null) 
+        		&& (a = operations.getChild("fontSize").getAttribute("size"))!= null){
+        	String size = a.getValue();
+           	if (log.isDebugEnabled()) log.debug("fontName: "+size);
+           	Setup.setFontSize(Integer.parseInt(size));
         }
         if ((operations.getChild("manifestColors") != null)){ 
         	if((a = operations.getChild("manifestColors").getAttribute("dropColor"))!= null){

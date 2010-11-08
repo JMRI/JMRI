@@ -32,7 +32,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.48 $
+ * @version             $Revision: 1.49 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -277,7 +277,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if(train.getBuild() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()){
+				if(train.isBuildEnabled() && !train.printManifestIfBuilt() && trainManager.isBuildMessagesEnabled()){
 					String string = "Need to build train (" +train.getName()+ ") before printing manifest";
 					JOptionPane.showMessageDialog(null, string,
 							"Can not print manifest",
@@ -296,7 +296,7 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if (train.getBuild() && train.getBuilt() && !train.getPrinted()){
+				if (train.isBuildEnabled() && train.isBuilt() && !train.getPrinted()){
 					int status = JOptionPane.showConfirmDialog(null,
 							"Warning, train manifest hasn't been printed!",
 							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);

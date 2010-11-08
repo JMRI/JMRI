@@ -27,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -36,12 +36,14 @@ public class PrintOptionFrame extends OperationsFrame{
 	
 	// labels
 	JLabel textFont = new JLabel(rb.getString("Font"));
+	JLabel textFontSize = new JLabel(rb.getString("FontSize"));
 	JLabel showCar = new JLabel(rb.getString("ShowCar"));
 	JLabel textDropColor = new JLabel(rb.getString("DropColor"));
 	JLabel textPickupColor = new JLabel(rb.getString("PickupColor"));
 	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
 	JLabel textManifest = new JLabel(rb.getString("Manifest"));
 	JLabel textPad = new JLabel("   ");
+	JLabel textPad1 = new JLabel("   ");
 	JLabel textPad2 = new JLabel("   ");
 	JLabel logoURL = new JLabel("");
 
@@ -75,6 +77,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	Dimension minScrollerDim = new Dimension(500,60);
 	
 	// combo boxes
+	JComboBox fontSizeComboBox = new JComboBox();
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
 	JComboBox dropComboBox = Setup.getPrintColorComboBox();
 
@@ -85,13 +88,6 @@ public class PrintOptionFrame extends OperationsFrame{
 	public void initComponents() {
 		
 		// the following code sets the frame's initial state
-
-		// load checkboxes		
-		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
-		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
-		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
-		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());		
-		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 
 		// add tool tips
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
@@ -104,14 +100,6 @@ public class PrintOptionFrame extends OperationsFrame{
 		pManifest.setLayout(new GridBagLayout());
 		JScrollPane pManifestPane = new JScrollPane(pManifest);
 		pManifestPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
-		ButtonGroup printerGroup = new ButtonGroup();
-		printerGroup.add(mono);
-		printerGroup.add(sanSerif);
-		ButtonGroup buildReportGroup = new ButtonGroup();
-		buildReportGroup.add(buildReportMin);
-		buildReportGroup.add(buildReportNor);
-		buildReportGroup.add(buildReportMax);
-		buildReportGroup.add(buildReportVD);
 		
 		// manifest options
 		JPanel pReport = new JPanel();
@@ -122,12 +110,17 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItem (pManifest, textPad, 1, 8);
 		addItemLeft (pManifest, mono, 2, 8);
 		addItemLeft (pManifest, sanSerif, 3, 8);
+		addItem (pManifest, textFontSize, 0, 9);
+		addItem (pManifest, textPad1, 1, 9);
+		addItemLeft (pManifest, fontSizeComboBox, 2, 9);
+		
 		addItem (pManifest, showCar, 0, 12);
 		addItemLeft (pManifest, showLengthCheckBox, 2, 12);
 		addItemLeft (pManifest, showLoadCheckBox, 3, 12);
 		addItemLeft (pManifest, showColorCheckBox, 4, 12);
 		addItemLeft (pManifest, showDestinationCheckBox, 5, 12);
 		addItemLeft (pManifest, appendCommentCheckBox, 6, 12);
+		
 		// drop and pickup color options
 		addItemLeft (pManifest, textDropColor, 0, 14);
 		addItemLeft (pManifest, dropComboBox, 2, 14);
@@ -135,6 +128,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addItemLeft (pManifest, pickupComboBox, 2, 16);
 		dropComboBox.setSelectedItem(Setup.getDropTextColor());
 		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());		
+		
 		// manifest logo
 		addItem (pManifest, textPad, 2, 18);
 		addItemLeft (pManifest, addLogoButton, 2, 20);
@@ -159,9 +153,6 @@ public class PrintOptionFrame extends OperationsFrame{
 		
 		commentTextArea.setText(Setup.getMiaComment());
 		
-		setPrinterFontRadioButton();
-		setBuildReportRadioButton();
-		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 
 		// row 11
 		JPanel pControl = new JPanel();
@@ -172,11 +163,41 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pCommentPane);
 		getContentPane().add(pReportPane);
 		getContentPane().add(pControl);
+		
+		// load checkboxes		
+		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
+		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
+		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
+		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());		
+		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
+		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
+		
+		ButtonGroup printerGroup = new ButtonGroup();
+		printerGroup.add(mono);
+		printerGroup.add(sanSerif);
+		
+		ButtonGroup buildReportGroup = new ButtonGroup();
+		buildReportGroup.add(buildReportMin);
+		buildReportGroup.add(buildReportNor);
+		buildReportGroup.add(buildReportMax);
+		buildReportGroup.add(buildReportVD);
+		
+		// font sizes 7 through 12
+		fontSizeComboBox.addItem(7);
+		fontSizeComboBox.addItem(8);
+		fontSizeComboBox.addItem(9);
+		fontSizeComboBox.addItem(10);
+		fontSizeComboBox.addItem(11);
+		fontSizeComboBox.addItem(12);
+		fontSizeComboBox.setSelectedItem(Setup.getFontSize());
 
 		// setup buttons
 		addButtonAction(addLogoButton);
 		addButtonAction(removeLogoButton);
 		addButtonAction(saveButton);
+		
+		setPrinterFontRadioButton();
+		setBuildReportRadioButton();
 
 		//	build menu		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
@@ -205,6 +226,8 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setFontName(Setup.MONOSPACED);
 			else
 				Setup.setFontName(Setup.SANSERIF);
+			// font size
+			Setup.setFontSize((Integer)fontSizeComboBox.getSelectedItem());
 			// drop and pickup color option
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());

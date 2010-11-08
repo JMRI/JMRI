@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.97 $
+ * @version $Revision: 1.98 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1145,14 +1145,14 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * Used to determine if this train has been built.
 	 * @return true if the train was successfully built.
 	 */
-	public boolean getBuilt() {
+	public boolean isBuilt() {
 		return _built;
 	}
 	/**
 	 * Control flag used to decide if this train is to be built.
 	 * @param build When true, build this train.
 	 */
-	public void setBuild(boolean build) {
+	public void setBuildEnabled(boolean build) {
 		boolean old = _build;
 		_build = build;
 		if (old != build){
@@ -1160,7 +1160,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
-	public boolean getBuild() {
+	public boolean isBuildEnabled() {
 		return _build;
 	}
 	
@@ -1353,7 +1353,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	
 	public String getIconName(){
 		String name = getName();
-		if (getBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled())
+		if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled())
 			name += " "+ getLeadEngine().getNumber();
 		return name;
 	}
@@ -1664,8 +1664,8 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute("engineModel", getEngineModel());
         e.setAttribute("requires", Integer.toString(getRequirements()));
         e.setAttribute("cabooseRoad", getCabooseRoad());
-        e.setAttribute("built", getBuilt()?"true":"false");
-        e.setAttribute("build", getBuild()?"true":"false");
+        e.setAttribute("built", isBuilt()?"true":"false");
+        e.setAttribute("build", isBuildEnabled()?"true":"false");
         e.setAttribute("buildFailed", getBuildFailed()?"true":"false");
         e.setAttribute("printed", getPrinted()?"true":"false");
         if(getLeadEngine()!= null)

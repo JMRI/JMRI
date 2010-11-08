@@ -41,7 +41,7 @@ public class TrainPrintUtilities {
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
         try {
-            writer = new HardcopyWriter(mFrame, name, 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

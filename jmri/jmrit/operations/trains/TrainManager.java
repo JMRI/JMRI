@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.49 $
+ * @version	$Revision: 1.50 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -313,7 +313,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 		List<String> trains = getTrainsByIdList();
 		for (int i=0; i<trains.size(); i++){
 			Train train = getTrainById(trains.get(i));
-			if (train.getBuilt())
+			if (train.isBuilt())
 				return true;
 		}
 		return false;

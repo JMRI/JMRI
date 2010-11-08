@@ -61,7 +61,7 @@ public class TrainSwitchLists extends TrainCommon {
 			int dropCars = 0;
 			int stops = 1;
 			Train train = manager.getTrainById(trains.get(i));
-			if (!train.getBuilt())
+			if (!train.isBuilt())
 				continue;	// train wasn't built so skip
 			List<String> carList = carManager.getByTrainDestinationList(train);
 			List<String> enginesList = engineManager.getByTrainList(train);

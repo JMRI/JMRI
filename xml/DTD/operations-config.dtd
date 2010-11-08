@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.24 2010-11-06 23:08:34 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.25 2010-11-08 03:30:33 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -14,12 +14,14 @@
 <!-- for more details.                                                      -->
 
 <!ELEMENT operations-config (operations)*>
-<!ELEMENT operations (railRoad | settings | panel | fontName | manifestColors | manifestLogo | buildOptions | buildReport | owner | iconColor | options | comments)*>
+<!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
+ | manifestLogo | buildOptions | buildReport | owner | iconColor | options | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
 <!ELEMENT panel EMPTY>
 <!ELEMENT fontName EMPTY>
+<!ELEMENT fontSize EMPTY>
 <!ELEMENT manifestColors EMPTY>
 <!ELEMENT manifestLogo EMPTY>
 <!ELEMENT buildOptions EMPTY>
@@ -52,7 +54,8 @@
 <!ATTLIST panel name				CDATA #IMPLIED>
 <!ATTLIST panel trainIconXY			(true | false ) "true"> 
 <!ATTLIST panel trainIconAppend		(true | false ) "false"> 
-<!ATTLIST fontName name				CDATA #IMPLIED>   
+<!ATTLIST fontName name				CDATA #IMPLIED> 
+<!ATTLIST fontSize size				CDATA #IMPLIED>  
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  

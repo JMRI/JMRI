@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame {
 	
@@ -205,7 +205,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 				for (int j=0; j<trains.size(); j++){
 					log.debug("train id: "+trains.get(j));
 					Train train = trainManager.getTrainById(trains.get(j));
-					train.setBuild(ts.containsTrainId(trains.get(j)));
+					train.setBuildEnabled(ts.containsTrainId(trains.get(j)));
 				}
 			}
 		}
