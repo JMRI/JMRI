@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.10 2010-11-07 01:11:49 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.11 2010-11-08 15:40:34 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -114,8 +114,8 @@ Ken Cameron worked on X10 and Insteon light support.
 Paul Bender updated EasyDCC consist support.
 
 <p>
-Dan Boudreau fixed a problem that prevented NCE communications on certain
-computer types.
+Jeff Rowe and Dan Boudreau fixed a problem with timeouts on the serial interface.  Problem
+was found using a Mac Intel Mini connected to a NCE system.
 
 <p>
 Pete Cressman change the editor's drag behavior from auto expand left &amp; 
@@ -125,33 +125,12 @@ top border to stop move at left &amp; top border
 Matt Harris fixed a problem during startup when certain options are used
 
 <p>
-Dan Boudreau added a new operations feature: "Timetable".  
-Allows user to determine which trains run on any given day of the week.
-
-<p>
 Paul Bender made some internal improvements to the XPressNet support.
 If you've written scripts that directly use the XPressNet communications,
 you may have to revisit them.
 
 <p>
-Dan Boudreau added a new operations feature: User can now specify additional wait time in a route.  
-This allows the user to adjust a train's manifest arrival times to their liking.
-
-<p>
-Dan Boudreau added a new operations feature:  
-User can now add an optional comment to each stop in a route
-
-<p>
 Simon Ginsburg updated the German translation
-
-<p>
-Dan Boudreau added a new operations feature to
-allow local moves between sidings, yards, and interchanges.  
-Users can control each of these build options in Settings->Options.
-
-<p>
-Dan Boudreau added a new operations tool, 
-the ability update train icon coordinates for a location in all routes.
 
 <p>
 Ken Cameron changes the X10 support for 
@@ -166,17 +145,22 @@ Kevin Dickerson: Re-creates the serial port drop down list box each time it beco
 Signal Masts now have Lit and Held properties
 
 <p>
-Dan Boudreau:
+Dan Boudreau fixed several problems and added some new features to operations:
 <ul>
-<li>Fix build bug when staging track doesn't have an engine, and staging track name is the same as another in a different location.
-<li>New operations tool, visually update train icon coordinates for a route.
-<li>New operations feature.  Allow users to set a departure time anywhere in a route.  Nice feature for passenger trains.
-<li> User can now configure if staging tracks are restrictive.  Option is under Settings->Tools->Options.
-<li>New operations feature, allow user to move train anywhere in the route via the train icon.
-<li>Fix two minor bugs.  Lead car in kernel wasn't always set correctly.  Cars in a kernel didn't always have a proper destination and track.
-<li>Remember the state of auto checkboxes for car and engine set frames.
-<li>Improve the way operations handles switching from descriptive to AAR car types.
-<li>Optionally use a text editor to preview a train's build report.
+<li>Fixed a build problem when a staging track didn't have an engine, and the staging track name was the same as another in a different location.
+<li>Fixed two minor bugs, lead car in kernel wasn't always saved correctly, cars in a kernel didn't always have a proper destination and track.
+<li>New feature, "Timetable" under Trains->Tools.  Allows you to quickly set which trains will run on any given day of the week.
+<li>New tool "Routes->Tools->Set Train Icons Coordinates", you can now visually update train icon coordinates for all locations.
+<li>New tool "Route->Tools->Set Train Icons Coordinates for this Route", you can now visually update train icon coordinates for a route.
+<li>New route feature. User can now specify additional wait time in a route.  This allows you to adjust a train's manifest arrival times to your liking.
+<li>New route feature. You can now set a departure time anywhere in a route.  Nice feature for passenger trains!
+<li>New route feature. You can now add an optional comment to each stop in a route.  Comments will show up in your manifests.
+<li>New build configurations, "Settings->Tools->Options".  You can now allow local moves between sidings, yards, and interchanges.
+<li>You can now configure if staging tracks are restrictive.  Default is restrictive.  Option is under Settings->Tools->Options.
+<li>New operations panel feature, you can now move train anywhere in the route via the train icon popup menu. Select Route in the popup menu, then the next location desired.
+<li>When using the car and engine set windows, the selection of auto checkboxes is now remembered for the session.
+<li>Improved the way the code handles switching from descriptive to AAR car types.
+<li>You can now use a text editor to preview a train's build report.  Unfortunately, this feature requires java 1.6. and is currently disabled for general release.
 </ul>
 
 <p>
