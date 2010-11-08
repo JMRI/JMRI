@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -38,8 +38,8 @@ public class HardcopyWriter extends Writer {
     protected String line;
     protected int fontsize;
     protected String time;
-    protected Dimension pagesize;
-    protected int pagedpi;
+    protected Dimension pagesize = new Dimension(612,792);
+    protected int pagedpi = 72;
     protected Font font, headerfont;
     protected String fontName = "Monospaced";
     protected int fontStyle = Font.PLAIN;
@@ -90,15 +90,17 @@ public class HardcopyWriter extends Writer {
     	isPreview = preview;
     	this.frame = frame;
     	
-        Toolkit toolkit = frame.getToolkit();
-        synchronized(printprops) {
-            job = toolkit.getPrintJob(frame, jobname, printprops);
-        }
-        if (job==null)
-            throw new PrintCanceledException("User cancelled print request");
-
-        pagesize = job.getPageDimension();
-        pagedpi = job.getPageResolution();
+    	// skip printer selection if preview
+    	if (!isPreview){
+    		Toolkit toolkit = frame.getToolkit();
+    		synchronized(printprops) {
+    			job = toolkit.getPrintJob(frame, jobname, printprops);
+    		}
+    		if (job==null)
+    			throw new PrintCanceledException("User cancelled print request");
+    		pagesize = job.getPageDimension();
+    		pagedpi = job.getPageResolution();
+    	}
 
         // Bug workaround
         if (System.getProperty("os.name").regionMatches(true, 0, "windows", 0, 7)) {
@@ -149,7 +151,7 @@ public class HardcopyWriter extends Writer {
             // use a scroll pane to handle print images bigger than the window
             previewFrame.getContentPane().add(new JScrollPane(previewPanel),
                     BorderLayout.CENTER);
-            previewFrame.setSize(650, 425);
+            previewFrame.setSize(660, Toolkit.getDefaultToolkit().getScreenSize().height);
             previewFrame.setVisible(true);         
         }
 
@@ -308,15 +310,17 @@ public class HardcopyWriter extends Writer {
                 displayPage();
             }
             if (page!=null) page.dispose();
-            job.end();
+            if (job != null)
+            	job.end();
         }
     }
-    /** Dispose added so that a preview can be cancelled */
+    /** Dispose added so that a preview can be canceled */
     public void dispose(){
         synchronized(this.lock) {
             if (page!=null) page.dispose();
             previewFrame.dispose();
-            job.end();
+            if (job != null)
+            	job.end();
         }
     }
 
