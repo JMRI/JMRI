@@ -198,15 +198,18 @@ public class IconDialog extends ItemDialog {
                                 ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                         return;
                     }
-                    Iterator <String> it = ItemPalette.getFamilyMaps(_type).keySet().iterator();
-                    while (it.hasNext()) {
-                       if (family.equals(it.next())) {
-                           JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
-                                java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
-							    new Object[] { family, getType() }), 
-                                ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                           return;
-                       }
+                    Hashtable<String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_type);
+                    if (families!=null) {
+                        Iterator <String> it = families.keySet().iterator();
+                        while (it.hasNext()) {
+                           if (family.equals(it.next())) {
+                               JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
+                                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
+                                    new Object[] { family, getType() }), 
+                                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                               return;
+                           }
+                        }
                     }
                     addFamily(family, _iconMap);
                     checkIconSizes();
