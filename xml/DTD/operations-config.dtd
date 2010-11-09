@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.25 2010-11-08 03:30:33 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.26 2010-11-09 21:02:07 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -15,13 +15,20 @@
 
 <!ELEMENT operations-config (operations)*>
 <!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
- | manifestLogo | buildOptions | buildReport | owner | iconColor | options | comments)*>
+ | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
+ | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat 
+ | missingCarFormat | comments)*>
 
 <!ELEMENT railRoad EMPTY>
 <!ELEMENT settings EMPTY>
 <!ELEMENT panel EMPTY>
 <!ELEMENT fontName EMPTY>
 <!ELEMENT fontSize EMPTY>
+<!ELEMENT pickupEngFormat EMPTY>
+<!ELEMENT dropEngFormat EMPTY>
+<!ELEMENT pickupCarFormat EMPTY>
+<!ELEMENT dropCarFormat EMPTY>
+<!ELEMENT missingCarFormat EMPTY>
 <!ELEMENT manifestColors EMPTY>
 <!ELEMENT manifestLogo EMPTY>
 <!ELEMENT buildOptions EMPTY>
@@ -56,6 +63,11 @@
 <!ATTLIST panel trainIconAppend		(true | false ) "false"> 
 <!ATTLIST fontName name				CDATA #IMPLIED> 
 <!ATTLIST fontSize size				CDATA #IMPLIED>  
+<!ATTLIST pickupEngFormat setting	CDATA #IMPLIED>
+<!ATTLIST dropEngFormat setting		CDATA #IMPLIED>
+<!ATTLIST pickupCarFormat setting	CDATA #IMPLIED>
+<!ATTLIST dropCarFormat setting		CDATA #IMPLIED>
+<!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
 <!ATTLIST manifestColors pickupColor	CDATA #IMPLIED>  
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
