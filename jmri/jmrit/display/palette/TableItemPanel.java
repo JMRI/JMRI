@@ -5,8 +5,8 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+//import java.awt.GridBagConstraints;
+//import java.awt.GridBagLayout;
 
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
@@ -17,9 +17,9 @@ import javax.swing.TransferHandler;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Iterator;
 
 import javax.swing.*;
+
 import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.*;
@@ -28,9 +28,9 @@ import jmri.jmrit.picker.PickListModel;
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
 */
-public class TableItemPanel extends ItemPanel {
+public class TableItemPanel extends FamilyItemPanel {
 
-    private static int ROW_HEIGHT;
+    int ROW_HEIGHT;
 
     protected JTable        _table;
     protected PickListModel _model;
@@ -40,9 +40,6 @@ public class TableItemPanel extends ItemPanel {
     JTextField  _sysNametext = new JTextField();
     JTextField  _userNametext = new JTextField();
     JButton     _addTableButton;
-    JPanel      _iconFamilyPanel;
-    JPanel      _iconPanel;
-    JButton     _showIconsButton;
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -54,10 +51,20 @@ public class TableItemPanel extends ItemPanel {
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
     }
 
+    /**
+    * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel depending on
+    * whether icon families exist.  They are made first because they are referenced in
+    * initIconFamiliesPanel()
+    */
     public void init() {
+        _bottom1Panel = makeBottom1Panel();
+        _bottom2Panel = makeBottom2Panel();
         initTablePanel(_model, _editor);      // NORTH Panel
         initIconFamiliesPanel();    // CENTER Panel
-        initButtonPanel();          // SOUTH Panel
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(_bottom1Panel);
+        bottomPanel.add(_bottom2Panel);
+        add(bottomPanel);
         if (log.isDebugEnabled()) log.debug("init done for family "+_family);
     }
 
@@ -75,22 +82,31 @@ public class TableItemPanel extends ItemPanel {
         topPanel.add(_scrollPane, BorderLayout.CENTER);
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
 
-        if (!_itemType.equals("SignalHead")) {
-            JPanel panel = new JPanel();
-            _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
-            _addTableButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent a) {
-                        makeAddToTableWindow();
-                    }
-            });
-            _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
-            panel.add(_addTableButton);
-            topPanel.add(panel, BorderLayout.SOUTH);
-        }
+        JPanel panel = new JPanel();
+        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+        _addTableButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    makeAddToTableWindow();
+                }
+        });
+        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+        panel.add(_addTableButton);
+        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        clearSelectionButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    _table.clearSelection();
+                }
+        });
+        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        panel.add(clearSelectionButton);
+        topPanel.add(panel, BorderLayout.SOUTH);
+        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         add(topPanel);
     }
 
-    private void makeAddToTableWindow() {
+    protected void makeAddToTableWindow() {
         _addItemDialog = new JDialog(_paletteFrame, ItemPalette.rbp.getString("AddToTableTitle"), true);
         ActionListener listener = new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -108,12 +124,13 @@ public class TableItemPanel extends ItemPanel {
         _addItemDialog.setVisible(true);
     }
 
-    void addToTable() {
+    protected void addToTable() {
         String name = _sysNametext.getText();
         if (name != null && name.length() > 1) {
             PickListModel model = (PickListModel)_table.getModel();
             jmri.NamedBean bean = model.addBean(name, _userNametext.getText());
             int setRow = model.getIndexOf(bean);
+            if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
             _table.setRowSelectionInterval(setRow, setRow);
             // 2nd element of topPanel
             _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
@@ -141,245 +158,20 @@ public class TableItemPanel extends ItemPanel {
         return null;
     }
 
-    protected void setFamily(String family) {
-        _family = family;
-        if (log.isDebugEnabled()) log.debug("setFamily: for type \""+_itemType+"\", family \""+family+"\"");
-        _iconFamilyPanel.remove(_iconPanel);
-        makeIconPanel();        // need to have family identified  before calling
-        _iconFamilyPanel.add(_iconPanel, 0);
+    /**
+    *  Return from icon dialog
+    */
+    protected void reset() {
         hideIcons();
-    }
-
-    protected void removeIconFamiliesPanel() {
-        remove(_iconFamilyPanel);
-    }
-
-    protected void removeIconMap(String family) {
-        if (log.isDebugEnabled()) log.debug("removeIconMap() before family= \""+family+"\", _family \""+_family+"\"");
-        if (_family.equals(family)) {
-            _family = null;
-        }
-        _paletteFrame.removeIconMap(_itemType, family);
-    }
-
-    /**
-    *  CENTER Panel
-    */
-    protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-
-        Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
-        if (families!=null && families.size()>0) {
-            ButtonGroup group = new ButtonGroup();
-            Iterator <String> it = families.keySet().iterator();
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-            String family = null;
-            JRadioButton button = null;
-            while (it.hasNext()) {
-                family = it.next();
-                button = new JRadioButton(family);
-                button.addActionListener(new ActionListener() {
-                        String family;
-                        public void actionPerformed(ActionEvent e) {
-                            setFamily(family);
-                        }
-                        ActionListener init(String f) {
-                            family = f;
-                            if (log.isDebugEnabled()) log.debug("ActionListener.init : for type \""+_itemType+"\", family \""+family+"\"");
-                            return this;
-                        }
-                    }.init(family));
-                if (family.equals(_family)) {
-                    button.setSelected(true);
-                }
-                buttonPanel.add(button);
-                group.add(button);
-            }
-            if (_family==null) {
-                _family = family;       // let last familiy be the selected one
-                if (button != null) button.setSelected(true);
-            }
-            makeIconPanel();        // need to have family identified  before calling
-            _iconFamilyPanel.add(_iconPanel);
-            _iconPanel.setVisible(false);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
-            panel.add(new JLabel(txt));
-            panel.add(buttonPanel);
-            _iconFamilyPanel.add(panel);
-        } else {
-            //log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+ " families.");
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-        }
-        add(_iconFamilyPanel);
-    }
-
-    protected void makeIconPanel() {
-        _iconPanel = new JPanel();
-        if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
-        if (_family==null) {
-            Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
-            if (families!=null) {
-                Iterator <String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    _family = it.next();
-                }
-            }
-        }
-        Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-        if (iconMap==null) {
-            if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
-            // Thread.dumpStack();
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        } else {
-            addIconsToPanel(iconMap);
-        }
-//        _paletteFrame.pack();
-    }
-
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR") // while loop accesses both key and value, so key interator faster
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
-        GridBagLayout gridbag = new GridBagLayout();
-        _iconPanel.setLayout(gridbag);
-
-        int numCol = 4;
-        GridBagConstraints c = new GridBagConstraints();
-        c.fill = GridBagConstraints.NONE;
-        c.anchor = GridBagConstraints.CENTER;
-        c.weightx = 1.0;
-        c.weighty = 1.0;
-        c.gridwidth = 1;
-        c.gridheight = 1;
-        c.gridx = -1;
-        c.gridy = 0;
-
-        int cnt = iconMap.size();
-        Iterator <String> it = iconMap.keySet().iterator();
-        while (it.hasNext()) {
-           String name = it.next();
-           NamedIcon icon = new NamedIcon(iconMap.get(name));    // make copy for possible reduction
-           icon.reduceTo(100, 100, 0.2);
-           JPanel panel = new JPanel();
-           String borderName = null;
-           try {
-               borderName = ItemPalette.rbean.getString(name);
-           } catch (java.util.MissingResourceException mre) {
-               try {
-                   borderName = ItemPalette.rbp.getString(name);
-               } catch (java.util.MissingResourceException mre2) {
-                   borderName = name;
-               }
-           }
-           panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                            borderName));
-           panel.add(new JLabel(icon));
-           int width = Math.max(100, panel.getPreferredSize().width);
-           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-           c.gridx += 1;
-           if (c.gridx >= numCol) { //start next row
-               c.gridy++;
-               c.gridx = 0;
-               if (cnt < numCol-1) { // last row
-                   JPanel p =  new JPanel();
-                   p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-                   p.add(Box.createHorizontalStrut(100));
-                   gridbag.setConstraints(p, c);
-                   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
-                   _iconPanel.add(p);
-                   c.gridx = 1;
-               }
-           }
-           cnt--;
-           gridbag.setConstraints(panel, c);
-           _iconPanel.add(panel);
-        }
-    }
-/*
-    protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
-        Iterator <String> it = iconMap.keySet().iterator();
-        while (it.hasNext()) {
-           String name = it.next();
-           NamedIcon icon = new NamedIcon(iconMap.get(name));    // make copy for possible reduction
-           icon.reduceTo(100, 100, 0.2);
-           JPanel panel = new JPanel();
-           String borderName = null;
-           try {
-               borderName = ItemPalette.rbean.getString(name);
-           } catch (java.util.MissingResourceException mre) {
-               try {
-                   borderName = ItemPalette.rbp.getString(name);
-               } catch (java.util.MissingResourceException mre2) {
-                   borderName = name;
-               }
-           }
-           panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                            borderName));
-           panel.add(new JLabel(icon));
-           int width = Math.max(100, panel.getPreferredSize().width);
-           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-           _iconPanel.add(panel);
-        }
-    }
-*/
-    /**
-    *  SOUTH Panel
-    */
-    protected void initButtonPanel() {
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-        _showIconsButton = new JButton(ItemPalette.rbp.getString("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (_iconPanel.isVisible()) {
-                        hideIcons();
-                    } else {
-                        _iconPanel.setVisible(true);
-                        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
-                    }
-                    _paletteFrame.pack();
-                }
-        });
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
-        bottomPanel.add(_showIconsButton);
-
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
-        editIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    openEditDialog();
-                }
-        });
-        editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
-        bottomPanel.add(editIconsButton);
-        add(bottomPanel);
+        _table.clearSelection();
     }
     
-    protected void hideIcons() {
-        _iconPanel.setVisible(false);
-        _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
-        _paletteFrame.pack();
-    }
-
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        if (_family!=null) {
-            if (_itemType.equals("MultiSensor")) {
-                new MultiSensorIconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
-            } else {
-                new IconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
-            }
+        if (_itemType.equals("MultiSensor")) {
+            new MultiSensorIconDialog(_itemType, _family, this);
         } else {
-            Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);
-            if (_itemType.equals("MultiSensor")) {
-                new MultiSensorIconDialog(_itemType, map, this);
-            } else {
-                new IconDialog(_itemType, map, this);
-            }
+            new IconDialog(_itemType, _family, this);
         }
     }
 
@@ -400,6 +192,7 @@ public class TableItemPanel extends ItemPanel {
 
 
         public Transferable createTransferable(JComponent c) {
+            if (log.isDebugEnabled()) log.debug("DnDTableItemHandler.createTransferable:");
             if (c instanceof JTable) {
                 return createPositionableDnD((JTable)c);
             }
@@ -409,7 +202,7 @@ public class TableItemPanel extends ItemPanel {
         public Transferable createPositionableDnD(JTable table) {
             int col = table.getSelectedColumn();
             int row = table.getSelectedRow();
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from table \""+_itemType+ "\" at ("
+            if (log.isDebugEnabled()) log.debug("TransferHandler.createPositionableDnD: from table \""+_itemType+ "\" at ("
                                                 +row+", "+col+") for data \""
                                                 +table.getModel().getValueAt(row, col)+"\" in family \""+_family+"\".");
             if (col<0 || row<0) {
@@ -430,7 +223,7 @@ public class TableItemPanel extends ItemPanel {
                 Enumeration <String> e = iconMap.keys();
                 while (e.hasMoreElements()) {
                     String key = e.nextElement();
-                    t.setIcon(ItemPalette.rbean.getString(key), iconMap.get(key));
+                    t.setIcon(key, iconMap.get(key));
                 }
                 t.setDisplayLevel(Editor.TURNOUTS);
                 return new PositionableDnD(t, bean.getDisplayName());

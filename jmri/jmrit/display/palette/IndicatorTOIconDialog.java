@@ -1,4 +1,5 @@
-// IconDialog.java
+
+// IndicatorTOIconDialog.java
 package jmri.jmrit.display.palette;
 
 import java.awt.datatransfer.Transferable; 
@@ -38,39 +39,35 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class IconDialog extends ItemDialog {
+public class IndicatorTOIconDialog extends ItemDialog {
 
     Hashtable <String, NamedIcon>   _iconMap;
     JPanel          _iconPanel;
     CatalogPanel    _catalog;
-    JTextField      _familyName;
+    JTextField      _keyName;
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public IconDialog(String type, String family, ItemPanel parent) {
+    public IndicatorTOIconDialog(String type, String family, IndicatorTOItemPanel parent, String key) {
         super(type, family, 
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
               parent, true);
-        _familyName = new JTextField(family);
+        _keyName = new JTextField(key);
         if (family!=null) {
-            _familyName.setEditable(false);
-            _iconMap = parent.getFilteredIconMap();
+            _keyName.setEditable(false);
+            _iconMap = parent._iconGroupsMap.get(key);
         } else {
-            _familyName.setEditable(true);
-            _iconMap = parent.makeNewIconMap(_type);
-            _familyName.setText("?");
+            log.error("Item type \""+type+"\" has null indicator family for key= "+key);
         }
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
+        panel.add(ItemPalette.makeBannerPanel("IconSetName", _keyName));
         _iconPanel = makeIconPanel(_iconMap); 
         panel.add(_iconPanel);
         if (family!=null) {
             panel.add(makeButtonPanel());
-        } else {
-            panel.add(makeCreateButtonPanel());
         }
         _catalog = CatalogPanel.makeDefaultCatalog();
         panel.add(_catalog);
@@ -94,33 +91,17 @@ public class IconDialog extends ItemDialog {
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        JButton addFamilyButton = new JButton(ItemPalette.rbp.getString("addNewFamily"));
-        addFamilyButton.addActionListener(new ActionListener() {
-                IconDialog dialog;
-                public void actionPerformed(ActionEvent a) {
-                    setVisible(false);
-                    ItemPalette.createNewFamily(_type, _parent);
-                    dialog.dispose();
-                }
-                ActionListener init(IconDialog d) {
-                    dialog = d;
-                    return this;
-                }
-        }.init(this));
-        addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
-        panel1.add(addFamilyButton);
-
         JButton deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
         deleteButton.addActionListener(new ActionListener() {
-                IconDialog dialog;
+                IndicatorTOIconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    ItemPalette.removeIconMap(_type, _familyName.getText());
-                    _parent._family = null;
+                    ItemPalette.removeLevel4IconMap(_type, _family, _keyName.getText());
+                    _family = null;
                     ImageIndexEditor.indexChanged(true);
                     _parent.updateFamiliesPanel();
                     dialog.dispose();
                 }
-                ActionListener init(IconDialog d) {
+                ActionListener init(IndicatorTOIconDialog d) {
                     dialog = d;
                     return this;
                 }
@@ -135,12 +116,17 @@ public class IconDialog extends ItemDialog {
         panel0.setLayout(new FlowLayout());
         JButton doneButton = new JButton(ItemPalette.rbp.getString("doneButton"));
         doneButton.addActionListener(new ActionListener() {
-                IconDialog dialog;
+                IndicatorTOIconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    doDoneAction();
+                    ItemPalette.removeLevel4IconMap(_type, _family, _keyName.getText());
+                    ItemPalette.addLevel4Family(_type, _family, _keyName.getText(),
+                                                _iconMap);
+//                                                ((IndicatorTOItemPanel)_parent)._iconGroupsMap);
+                    _parent.updateFamiliesPanel();
+                    ImageIndexEditor.indexChanged(true);
                     dialog.dispose();
                 }
-                ActionListener init(IconDialog d) {
+                ActionListener init(IndicatorTOIconDialog d) {
                     dialog = d;
                     return this;
                 }
@@ -149,88 +135,18 @@ public class IconDialog extends ItemDialog {
 
         JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
         cancelButton.addActionListener(new ActionListener() {
-                IconDialog dialog;
+                IndicatorTOIconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
                     _parent.updateFamiliesPanel();
                     dialog.dispose();
                 }
-                ActionListener init(IconDialog d) {
+                ActionListener init(IndicatorTOIconDialog d) {
                     dialog = d;
                     return this;
                 }
         }.init(this));
         panel0.add(cancelButton);
         buttonPanel.add(panel0);
-    }
-
-    /**
-    * Action item for makeDoneButtonPanel
-    */
-    protected void doDoneAction() {
-        ItemPalette.removeIconMap(_type, _family);
-        addFamily(_family, _iconMap);
-        _parent.updateFamiliesPanel();
-        ImageIndexEditor.indexChanged(true);
-    }
-
-/*
-    static public void printKeys(Hashtable <String, NamedIcon>  map) {
-        Iterator <String> it = map.keySet().iterator();
-        System.out.print("Keys= ");
-        while (it.hasNext()) {
-            System.out.print(it.next()+", ");
-        }
-        System.out.println();
-    }
-*/
-    protected JPanel makeCreateButtonPanel() {
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JButton newFamilyButton = new JButton(ItemPalette.rbp.getString("createNewFamily"));
-        newFamilyButton.addActionListener(new ActionListener() {
-                //IconDialog dialog; never used?
-                public void actionPerformed(ActionEvent a) {
-                    //check text
-                    String family = _familyName.getText();
-                    if (family==null || family.length()==0) {
-                        JOptionPane.showMessageDialog(_parent.getPaletteFrame(), 
-                                ItemPalette.rbp.getString("EnterFamilyName"), 
-                                ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                        return;
-                    }
-                    Iterator <String> it = ItemPalette.getFamilyMaps(_type).keySet().iterator();
-                    while (it.hasNext()) {
-                       if (family.equals(it.next())) {
-                           JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
-                                java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
-							    new Object[] { family, getType() }), 
-                                ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                           return;
-                       }
-                    }
-                    addFamily(family, _iconMap);
-                    checkIconSizes();
-                    ImageIndexEditor.indexChanged(true);
-                    _parent.updateFamiliesPanel();
-                    _parent.setFamily(family);
-                    dispose();
-                }
-                ActionListener init(IconDialog d) {
-                    //dialog = d;
-                    return this;
-                }
-        }.init(this));
-        newFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
-        panel.add(newFamilyButton);
-
-        JButton cancelButton = new JButton(ItemPalette.rbp.getString("cancelButton"));
-        cancelButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    dispose();
-                }
-        });
-        panel.add(cancelButton);
-        return panel;
     }
 
     protected JPanel makeIconPanel(Hashtable<String, NamedIcon> iconMap) {
@@ -393,5 +309,5 @@ public class IconDialog extends ItemDialog {
         }
     }    
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IconDialog.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTOIconDialog.class.getName());
 }

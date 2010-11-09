@@ -21,6 +21,7 @@ import javax.swing.event.ChangeEvent;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -33,8 +34,10 @@ import javax.swing.JPanel;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.PositionableLabel;
 
+import jmri.jmrit.catalog.DragJLabel;
 import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.CatalogTreeLeaf;
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.CatalogTreeNode;
 import jmri.jmrit.catalog.NamedIcon;
 
@@ -62,40 +65,34 @@ public class BackgroundItemPanel extends IconItemPanel {
     * Override for plain icon & background and put all icons here
     */
     protected void initIconPanel() {
-        Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
+        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
             if (families.size()!=1) {
                 log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");
             }
             // only one family
-            Iterator <String> it = families.keySet().iterator();
-            while (it.hasNext()) {
-                _family = it.next();
+            Iterator <String> iter = families.keySet().iterator();
+            while (iter.hasNext()) {
+                _family = iter.next();
             }
             _iconPanel = new JPanel();
             _iconMap = families.get(_family);
-            it = _iconMap.keySet().iterator();
+            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
             while (it.hasNext()) {
-               String name = it.next();
-               NamedIcon icon = new NamedIcon(_iconMap.get(name));    // make copy for possible reduction
+                Entry<String, NamedIcon> entry = it.next();
+                NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
                icon.reduceTo(50, 80, 0.15);
                JPanel panel = new JPanel();
-               String borderName = null;
-               try {
-                   borderName = ItemPalette.rbean.getString(name);
-               } catch (java.util.MissingResourceException mre) {
-                   try {
-                       borderName = ItemPalette.rbp.getString(name);
-                   } catch (java.util.MissingResourceException mre2) {
-                       borderName = name;
-                   }
-               }
+               String borderName = ItemPalette.convertText(entry.getKey());
                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                 borderName));
-               JLabel label = new DragJLabel(icon);
-               label.setName(borderName);
-               panel.add(label);
-
+               try {
+                   JLabel label = new BkdDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+                   label.setName(borderName);
+                   panel.add(label);
+               } catch (java.lang.ClassNotFoundException cnfe) {
+                   cnfe.printStackTrace();
+               }
                _iconPanel.add(panel);
             }
 
@@ -148,6 +145,25 @@ public class BackgroundItemPanel extends IconItemPanel {
         _catalog.setSize(_paletteFrame.getSize().width, _catalog.getPreferredSize().height);
         _catalog.setVisible(false);
         add(_catalog);
+    }
+
+    class BkdDragJLabel extends DragJLabel {
+        public BkdDragJLabel(DataFlavor flavor) {
+            super(flavor);
+        }
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
+            if (!isDataFlavorSupported(flavor)) {
+                return null;
+            }
+            String url = ((NamedIcon)getIcon()).getURL();
+            if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
+            PositionableLabel b = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
+            b.setPopupUtility(null);        // no text
+            b.setPositionable(false);
+            b.setShowTooltip(false);
+            b.setDisplayLevel(Editor.BKG);
+            return b;
+        }
     }
 
     class BackgroudCatalogPanel extends CatalogPanel {
@@ -219,7 +235,12 @@ public class BackgroundItemPanel extends IconItemPanel {
                 }
                 JLabel image = null;
                 c.insets = new Insets(5, 5, 0, 0);
-                image = new DragJLabel();
+                try {
+                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+                } catch (java.lang.ClassNotFoundException cnfe) {
+                    cnfe.printStackTrace();
+                    image = new JLabel();
+                }
                 image.setOpaque(true);
                 image.setName(leaf.getName());
                 image.setBackground(_currentBackground);
@@ -257,62 +278,6 @@ public class BackgroundItemPanel extends IconItemPanel {
             packParentFrame(this);
             return java.text.MessageFormat.format(ItemPalette.rb.getString("numImagesInNode"),
                                   new Object[] {node.getUserObject(),Integer.valueOf(leaves.size())});
-        }
-
-        public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
-
-            DataFlavor dataFlavor;
-            public DragJLabel() {
-
-                DragSource dragSource = DragSource.getDefaultDragSource();
-                dragSource.createDefaultDragGestureRecognizer(this,
-                            DnDConstants.ACTION_COPY_OR_MOVE, this);
-                try {
-                    dataFlavor = new DataFlavor(Editor.POSITIONABLE_FLAVOR);
-                } catch (ClassNotFoundException cnfe) {
-                    cnfe.printStackTrace();
-                }
-                //if (log.isDebugEnabled()) log.debug("DragJLabel ctor");
-            }
-            /**************** DragGestureListener ***************/
-            public void dragGestureRecognized(DragGestureEvent e) {
-                if (log.isDebugEnabled()) log.debug("DragJLabel.dragGestureRecognized ");
-                //Transferable t = getTransferable(this);
-                e.startDrag(DragSource.DefaultCopyDrop, this, this); 
-            }
-            /**************** DragSourceListener ************/
-            public void dragDropEnd(DragSourceDropEvent e) {
-                }
-            public void dragEnter(DragSourceDragEvent e) {
-                }
-            public void dragExit(DragSourceEvent e) {
-                }
-            public void dragOver(DragSourceDragEvent e) {
-                }
-            public void dropActionChanged(DragSourceDragEvent e) {
-                }
-            /*************** Transferable *********************/
-            public DataFlavor[] getTransferDataFlavors() {
-                //if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferDataFlavors ");
-                return new DataFlavor[] { dataFlavor };
-            }
-            public boolean isDataFlavorSupported(DataFlavor flavor) {
-                //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
-                return dataFlavor.equals(flavor);
-            }
-            public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
-                if (!isDataFlavorSupported(flavor)) {
-                    return null;
-                }
-                String url = ((NamedIcon)getIcon()).getURL();
-                if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
-                PositionableLabel b = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
-                b.setPopupUtility(null);        // no text
-                b.setPositionable(false);
-                b.setShowTooltip(false);
-                b.setDisplayLevel(Editor.BKG);
-                return b;
-            }
         }
     }
 

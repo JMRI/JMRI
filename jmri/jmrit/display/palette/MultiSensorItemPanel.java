@@ -1,5 +1,6 @@
 package jmri.jmrit.display.palette;
 
+import java.awt.BorderLayout;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.datatransfer.Transferable; 
@@ -7,17 +8,8 @@ import java.awt.datatransfer.Transferable;
 import java.util.ArrayList;
 import java.util.Hashtable;
 
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-import javax.swing.ListSelectionModel;
-import javax.swing.DefaultListSelectionModel;
+import javax.swing.*;
 
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
@@ -38,8 +30,9 @@ public class MultiSensorItemPanel extends TableItemPanel {
     }
 
     protected void initTablePanel(PickListModel model, Editor editor) {
-        super.initTablePanel(model, editor);
-
+        _table = model.makePickTable();
+        _table.setTransferHandler(new DnDTableItemHandler(editor));
+        ROW_HEIGHT = _table.getRowHeight();
         TableColumn column = new TableColumn(PickListModel.POSITION_COL);
         column.setHeaderValue("Position");
         _table.addColumn(column);
@@ -47,36 +40,60 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _table.setSelectionModel(_selectionModel);
         _table.getSelectionModel().setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         _table.setTransferHandler(new MultiSensorDnD(editor));
-    }
 
-    protected void initIconFamiliesPanel() {
-        super.initIconFamiliesPanel();
-        makeMultiSensorPanel(_family);
-        _iconFamilyPanel.add(_multiSensorPanel);
-    }
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
+        _scrollPane = new JScrollPane(_table);
+        topPanel.add(_scrollPane, BorderLayout.CENTER);
+        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
 
-    private void makeMultiSensorPanel(String family) {
-        _multiSensorPanel = new JPanel();
-        _multiSensorPanel.setLayout(new BoxLayout(_multiSensorPanel, BoxLayout.Y_AXIS));
-        if (family==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+        JPanel panel = new JPanel();
+        _addTableButton = new JButton(ItemPalette.rbp.getString("CreateNewItem"));
+        _addTableButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    makeAddToTableWindow();
+                }
+        });
+        _addTableButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddToTable"));
+        panel.add(_addTableButton);
+
+        int size = 6;
+        if (_family!=null) {
+            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+            size = map.size();
         }
-        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, family);
-        JPanel panel1 = new JPanel();
-        _selectionModel.setPositionRange(map.size()-3);
-        panel1.setToolTipText(ItemPalette.rbp.getString("ToolTipSetIconSensor"));
+        _selectionModel.setPositionRange(size-3);
         JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
         clearSelectionButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     _selectionModel.clearSelection();
-                    _selectionModel.setPositionRange(ItemPalette.getIconMap(_itemType, _family).size()-3);
+                    int size = 6;
+                    if (_family!=null) {
+                        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+                        size = map.size();
+                    }
+                    _selectionModel.setPositionRange(size-3);
                 }
         });
         clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
-        panel1.add(clearSelectionButton);
-        _multiSensorPanel.add(panel1);
+        panel.add(clearSelectionButton);
+        topPanel.add(panel, BorderLayout.SOUTH);
+        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        add(topPanel);
+    }
+
+    protected void initIconFamiliesPanel() {
+        super.initIconFamiliesPanel();
+        makeMultiSensorPanel();
+        _iconFamilyPanel.add(_multiSensorPanel);
+    }
+
+    private void makeMultiSensorPanel() {
+        _multiSensorPanel = new JPanel();
+        _multiSensorPanel.setLayout(new BoxLayout(_multiSensorPanel, BoxLayout.Y_AXIS));
         JPanel panel2 = new JPanel();
         ButtonGroup group2 = new ButtonGroup();
         JRadioButton button = new JRadioButton(ItemPalette.rbp.getString("LeftRight"));
@@ -105,10 +122,10 @@ public class MultiSensorItemPanel extends TableItemPanel {
         if (_multiSensorPanel!=null) {
             _iconFamilyPanel.remove(_multiSensorPanel);
         }
-        makeMultiSensorPanel(family);
+        makeMultiSensorPanel();
         _iconFamilyPanel.add(_multiSensorPanel);
         _iconFamilyPanel.repaint();
-        _paletteFrame.updateFamiliesPanel(_itemType);
+        updateFamiliesPanel();
     }
 
     static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",

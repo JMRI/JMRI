@@ -3,11 +3,20 @@ package jmri.jmrit.display.palette;
 import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.Iterator;
+import java.util.Map.Entry;
 
 import java.awt.datatransfer.Transferable; 
+import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
@@ -29,9 +38,29 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     }
 
     protected void initTablePanel(PickListModel model, Editor editor) {
-        super.initTablePanel(model, editor);
+        _table = model.makePickTable();
         _table.setTransferHandler(new SignalHeadDnD(editor));
+        ROW_HEIGHT = _table.getRowHeight();
+        JPanel topPanel = new JPanel();
+        topPanel.setLayout(new BorderLayout());
+        topPanel.add(new JLabel(model.getName(), SwingConstants.CENTER), BorderLayout.NORTH);
+        _scrollPane = new JScrollPane(_table);
+        topPanel.add(_scrollPane, BorderLayout.CENTER);
         _table.getSelectionModel().addListSelectionListener(this);
+        _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
+        JPanel panel = new JPanel();
+        JButton clearSelectionButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        clearSelectionButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent a) {
+                    _table.clearSelection();
+                }
+        });
+        clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
+        panel.add(clearSelectionButton);
+        topPanel.add(panel, BorderLayout.SOUTH);
+        add(topPanel);
     }
 
     public void valueChanged(ListSelectionEvent e) {
@@ -51,7 +80,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         _iconPanel = new JPanel();
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
         if (_family==null) {
-            Hashtable <String, Hashtable<String, NamedIcon>> families = _paletteFrame.getFamilyMaps(_itemType);
+            Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
             if (families!=null) {
                 Iterator <String> it = families.keySet().iterator();
                 while (it.hasNext()) {
@@ -59,71 +88,60 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
                 }
             }
         }
+
+        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap();
+        addIconsToPanel(iconMap);
+    }
+
+    private NamedBean getSelectedBean() {
+        int row = _table.getSelectedRow();
+        if (row >= 0) {
+            PickListModel model = (PickListModel)_table.getModel();
+            NamedBean b = model.getBeanAt(row);
+            if (log.isDebugEnabled()) log.debug("getSelectedBean: row= "+row+", bean= "+b.getDisplayName());
+            return b;
+        } else if (log.isDebugEnabled()) log.debug("getSelectedBean: row=0");
+        return null;
+    }
+
+    protected Hashtable<String, NamedIcon> getFilteredIconMap() {
         Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
+            return null;
         }
-        Hashtable<String, NamedIcon> iconMap = null; 
-        if (_selectedRow > 0) {
-            iconMap = filterIconMap((SignalHead)_model.getBeanAt(_selectedRow), allIconsMap);
-        } else {
-           iconMap = allIconsMap;
-        }
-        addIconsToPanel(iconMap);
-    }
-
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="iterator really short, efficiency not as important as clarity here")
-    Hashtable<String, NamedIcon> filterIconMap(SignalHead sh, Hashtable<String, NamedIcon> allIconsMap) {
-        String[] states = sh.getValidStateNames();
-        if (states.length == 0) {
-            return ItemPalette.cloneMap(allIconsMap);
-        }
-        Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>(); 
-        
-        Iterator <String> it = allIconsMap.keySet().iterator();
-        while (it.hasNext()) {
-            String name = it.next();
-            String borderName = null;
-            try {
-                borderName = ItemPalette.rbean.getString(name);
-            } catch (java.util.MissingResourceException mre) {
-                try {
-                    borderName = ItemPalette.rbp.getString(name);
-                } catch (java.util.MissingResourceException mre2) {
-                    borderName = name;
+        SignalHead sh = (SignalHead)getSelectedBean();
+        if (sh!=null) {
+            String[] states = sh.getValidStateNames();
+            if (states.length == 0) {
+                return allIconsMap;
+            }
+            Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>(); 
+            Iterator<Entry<String, NamedIcon>> it = allIconsMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                String name = entry.getKey();
+                String borderName = ItemPalette.convertText(name);
+                for (int j=0; j<states.length; j++) {
+                    if (borderName.equals(states[j]) ||
+                            name.equals("SignalHeadStateDark") ||
+                            name.equals("SignalHeadStateHeld")) {
+                        iconMap.put(name, entry.getValue());
+                        break;
+                    }
                 }
             }
-            for (int j=0; j<states.length; j++) {
-                if (borderName.equals(states[j]) ||
-                        name.equals("SignalHeadStateDark") ||
-                        name.equals("SignalHeadStateHeld")) {
-                    iconMap.put(name, allIconsMap.get(name));
-                    break;
-                }
-            }
+            if (log.isDebugEnabled()) log.debug("filteredMap size= "+iconMap.size());
+            return iconMap;
         }
-        if (log.isDebugEnabled()) log.debug("filterIconMap: iconMap.size()= "+iconMap.size());
-        return iconMap;
+        if (log.isDebugEnabled()) log.debug("Map NOT filtered, size= "+allIconsMap.size());
+        return allIconsMap;
     }
 
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        if (_family!=null) {
-            Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-            Hashtable<String, NamedIcon> iconMap = new Hashtable<String, NamedIcon>();
-            SignalHead sh = (SignalHead)getTableSelection();
-            if (sh!=null) {
-                iconMap = filterIconMap(sh, map);
-            } else {
-                iconMap = map;
-            }
-            new IconDialog(_itemType, _family, iconMap, this);
-        } else {
-            Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);
-            new IconDialog(_itemType, map, this);
-        }
+        new IconDialog(_itemType, _family, this);
     }
 
     /**

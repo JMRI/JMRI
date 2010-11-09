@@ -42,7 +42,6 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
     protected void initTextPanel() {
         _text = new JTextField();
         _text.addActionListener(this);
-        _text.setToolTipText(ItemPalette.rbp.getString("ToolTipDragText"));
         _text.setDragEnabled(true);
         _text.setTransferHandler(new DnDTextItemHandler());
         JPanel panel = new JPanel();
@@ -53,12 +52,16 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.CENTER;
-        panel.add(new JLabel(ItemPalette.rbp.getString("textLabel")), c);
+        JLabel label = new JLabel(ItemPalette.rbp.getString("textLabel"));
+        panel.add(label, c);
         c.gridy = 1;
         c.anchor = java.awt.GridBagConstraints.CENTER;
         c.weightx = 1.0;
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         panel.add(_text, c);
+        label.setToolTipText(ItemPalette.rbp.getString("ToolTipEnterText"));
+        _text.setToolTipText(ItemPalette.rbp.getString("ToolTipEnterText"));
+        panel.setToolTipText(ItemPalette.rbp.getString("ToolTipEnterText"));
         add(panel);
     }
 

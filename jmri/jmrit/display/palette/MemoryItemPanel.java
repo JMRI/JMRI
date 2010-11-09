@@ -68,7 +68,6 @@ public class MemoryItemPanel extends TableItemPanel {
                     _memType = Type.READONLY;
                 }
             });
-        c.gridy = 0;
         c.gridy = 1;
         panel.add(button, c);
         group.add(button);
@@ -111,7 +110,7 @@ public class MemoryItemPanel extends TableItemPanel {
         panel.add(button, c);
         group.add(button);
 
-        add(panel);
+        add(panel, 1);
     }
 
     /**

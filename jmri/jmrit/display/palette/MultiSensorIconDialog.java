@@ -24,32 +24,25 @@ public class MultiSensorIconDialog extends IconDialog {
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public MultiSensorIconDialog(String type, String family, Hashtable <String, NamedIcon> iconMap, ItemPanel parent) {
-        super(type, family, iconMap, parent); 
-    }
-
-    /**
-    * Constructor for creating a new family
-    */
-    public MultiSensorIconDialog(String type, Hashtable <String, NamedIcon> newMap, ItemPanel parent) {
-        super(type, newMap, parent); 
+    public MultiSensorIconDialog(String type, String family, ItemPanel parent) {
+        super(type, family, parent); 
     }
 
     protected JPanel makeButtonPanel() {
-        _buttonPanel = new JPanel();
-        _buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.Y_AXIS));
-        makeAddIconButtonPanel(_buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
-        makeAddSetButtonPanel(_buttonPanel);
-        makeDoneButtonPanel(_buttonPanel);
-        return _buttonPanel;
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        makeAddIconButtonPanel(buttonPanel, "ToolTipAddPosition", "ToolTipDeletePosition");
+        makeAddSetButtonPanel(buttonPanel);
+        makeDoneButtonPanel(buttonPanel);
+        return buttonPanel;
     }
 
     protected String getIconName() {
         return MultiSensorItemPanel.POSITION[_iconMap.size()-3];
     }
+
     /**
-    * add/delete icon. For Multisensor, it adds another sensor position.  For plain icons, it
-    * adds another plain icon.
+    * add/delete icon. For Multisensor, it adds another sensor position.
     */
     protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
         JPanel panel2 = new JPanel();
@@ -69,7 +62,7 @@ public class MultiSensorIconDialog extends IconDialog {
         addSensor.setToolTipText(ItemPalette.rbp.getString(addTip));
         panel2.add(addSensor);
 
-        JButton deleteSensor = new JButton(ItemPalette.rbp.getString("deleteDelete"));
+        JButton deleteSensor = new JButton(ItemPalette.rbp.getString("deleteIcon"));
         deleteSensor.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {

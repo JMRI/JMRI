@@ -6,6 +6,7 @@ import java.util.Hashtable;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
+import javax.swing.JOptionPane;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
@@ -33,8 +34,9 @@ public abstract class ItemPanel extends JPanel {
 
     abstract public void init();
 
-    /* Methods to customize panel for TableItemPanel item types.  */    
-
+    /* Methods used upon return from Icon dialogs
+    * to update the panel for TableItemPanel item types.
+    */    
     protected void initIconFamiliesPanel() {
     }
     protected void setFamily(String family) {
@@ -43,28 +45,41 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void removeIconMap(String family) {
     }
-    protected void hideIcons() {
+    protected void reset() {
     }
 
+    protected void updateFamiliesPanel() {
+        if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
+        removeIconFamiliesPanel();
+        initIconFamiliesPanel();
+        reset();
+        validate();
+        repaint();
+        _paletteFrame.pack();
+    }
+
+    /**
+    * SignalHeadItemPanel overrides for valid states when SignalHead is known
+    */
+    protected Hashtable<String, NamedIcon> getFilteredIconMap() {
+        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
+        if (map==null) {
+            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        return map;
+    }
 
     /**
     * TableItemPanel.java overrides for its itemTypes.  This is for the remainder
     */
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        if (_family!=null) {
-            if (_itemType.equals("RPSReporter")) {
-                new IconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
-            } else {
-                new SingleIconDialog(_itemType, _family, ItemPalette.getIconMap(_itemType, _family), this);
-            }
+        if (_itemType.equals("RPSReporter")) {
+            new IconDialog(_itemType, _family, this);
         } else {
-            Hashtable<String, NamedIcon> map = makeNewIconMap(_itemType);
-            if (_itemType.equals("RPSReporter")) {
-                new IconDialog(_itemType, map, this);
-            } else {
-                new SingleIconDialog(_itemType, map, this);
-            }
+            new SingleIconDialog(_itemType, _family, this);
         }
     }
 
@@ -90,7 +105,8 @@ public abstract class ItemPanel extends JPanel {
     static final String[] RPSREPORTER = {"active", "error"};
     static final String[] ICON = {"Icon"};
     static final String[] BACKGROUND = {"Background"};
-
+    static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
+                                                "PositionTrack", "DontUseTrack", "ErrorTrack"};
 
     protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
         Hashtable <String, NamedIcon> newMap = new Hashtable <String, NamedIcon>();
@@ -111,6 +127,10 @@ public abstract class ItemPanel extends JPanel {
             names = BACKGROUND;
         } else if (type.equals("RPSReporter")) {
             names = RPSREPORTER;
+        } else if (type.equals("IndicatorTrack")) {
+            names = INDICATOR_TRACK;
+        } else if (type.equals("IndicatorTO")) {
+            names = INDICATOR_TRACK;
         } else {
             log.error("Item type \""+type+"\" cannot create icon sets!");
             return null;

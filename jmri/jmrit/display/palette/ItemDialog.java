@@ -27,33 +27,16 @@ public class ItemDialog extends JDialog {
     }
 
     protected void init() {
-        pack();
         setSize(_parent.getSize().width, this.getPreferredSize().height);
         setLocationRelativeTo(_parent);
         setVisible(true);
+        pack();
     }
     
-    protected void createNewFamily(Hashtable<String, NamedIcon> newMap) {
-        if (_type.equals("MultiSensor")) {
-            new MultiSensorIconDialog(_type, newMap, _parent);
-        } else if (_type.equals("Icon") || _type.equals("Background")) {
-            new SingleIconDialog(_type, newMap, _parent);
-        } else {
-            new IconDialog(_type, newMap, _parent);
-        }
-    }
-
-    protected void updateFamiliesPanel() {
-        _parent.hideIcons();
-        _parent.getPaletteFrame().updateFamiliesPanel(_type);
-    }
-
     protected void addFamily(String family, Hashtable<String, NamedIcon> iconMap) {
-        _parent.getPaletteFrame().addFamily(_type, family, iconMap);
-    }
-
-    protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps() {
-       return _parent.getPaletteFrame().getFamilyMaps(_type);
+        ItemPalette.addFamily(_type, family, iconMap);
+        _parent._family = family;
+        _parent.reset();
     }
 
     protected String getType() {

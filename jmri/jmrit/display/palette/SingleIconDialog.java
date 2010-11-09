@@ -1,12 +1,18 @@
 // SingleIconDialog.java
 package jmri.jmrit.display.palette;
 
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Hashtable;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
+import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
@@ -15,46 +21,94 @@ import jmri.jmrit.catalog.NamedIcon;
  * @author Pete Cressman  Copyright (c) 2010
  */
 
-public class SingleIconDialog extends MultiSensorIconDialog {
+public class SingleIconDialog extends IconDialog {
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
     */
-    public SingleIconDialog(String type, String family, Hashtable <String, NamedIcon> iconMap, ItemPanel parent) {
-        super(type, family, iconMap, parent); 
+    public SingleIconDialog(String type, String family, ItemPanel parent) {
+        super(type, family, parent);
     }
 
     /**
-    * Constructor for creating a new family
+    * _familyName is used for icon name.
     */
-    public SingleIconDialog(String type, Hashtable <String, NamedIcon> newMap, ItemPanel parent) {
-        super(type, newMap, parent); 
+    protected void init() {
+        _familyName.setEditable(true);
+        _familyName.setText("");
+        super.init();
     }
 
     protected JPanel makeButtonPanel() {
-        _buttonPanel = new JPanel();
-        _buttonPanel.setLayout(new BoxLayout(_buttonPanel, BoxLayout.Y_AXIS));
-        makeAddIconButtonPanel(_buttonPanel, "ToolTipAddIcon", "ToolTipDeleteIcon");
-        makeDoneButtonPanel(_buttonPanel);
-        return _buttonPanel;
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        makeAddIconButtonPanel(buttonPanel, "ToolTipAddIcon", "ToolTipDeleteIcon");
+        makeDoneButtonPanel(buttonPanel);
+        return buttonPanel;
     }
 
     /**
-    * Top panel of both the edit dialog and the create dialog.  Has a text field for a name.
-    * @param editable - can text field be edited.
-    * Override to change caption
+    * add/delete icon. For Multisensor, it adds another sensor position.
     */
-    protected JPanel makeBannerPanel(boolean editable, String caption) {
-        JPanel panel = super.makeBannerPanel(true, "IconName");
-        _familyName.setText("?");
-        return panel;
+    protected void makeAddIconButtonPanel(JPanel buttonPanel, String addTip, String deleteTip) {
+        JPanel panel2 = new JPanel();
+        panel2.setLayout(new FlowLayout());
+        JButton addIcon = new JButton(ItemPalette.rbp.getString("addIcon"));
+        addIcon.addActionListener(new ActionListener() {
+                IconDialog dialog;
+                public void actionPerformed(ActionEvent a) {
+                    if (addNewIcon(_familyName.getText())) {
+                        doDoneAction();
+                        dialog.dispose();
+                    }
+                }
+                ActionListener init(IconDialog d) {
+                    dialog = d;
+                    return this;
+                }
+        }.init(this));
+        addIcon.setToolTipText(ItemPalette.rbp.getString(addTip));
+        panel2.add(addIcon);
+
+        JButton deleteIcon = new JButton(ItemPalette.rbp.getString("deleteIcon"));
+        deleteIcon.addActionListener(new ActionListener() {
+                IconDialog dialog;
+                public void actionPerformed(ActionEvent a) {
+                    if (deleteIcon()) {
+                        doDoneAction();
+                        dialog.dispose();
+                    }
+                }
+                ActionListener init(IconDialog d) {
+                    dialog = d;
+                    return this;
+                }
+        }.init(this));
+        deleteIcon.setToolTipText(ItemPalette.rbp.getString(deleteTip));
+        panel2.add(deleteIcon);
+        buttonPanel.add(panel2);
     }
 
     /**
-    * Action item for makeAddIconButtonPanel needs a name for icon
+    * Action item for makeAddIconButtonPanel
     */
-    protected String getIconName() {
-        return _familyName.getText();
+    protected boolean addNewIcon(String name) {
+        if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
+        if (name==null || name.length()==0) {
+            JOptionPane.showMessageDialog(_parent.getPaletteFrame(), ItemPalette.rbp.getString("NoIconName"),
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        } else if (_iconMap.get(name)!=null) {
+            JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        String fileName = "resources/icons/misc/X-red.gif";
+        NamedIcon icon = new jmri.jmrit.catalog.NamedIcon(fileName, fileName);
+//        Hashtable<String, Hashtable<String, NamedIcon>> i = getFamilyMaps(_type);
+        _iconMap.put(name, icon);
+        return true;
     }
 
     /**
@@ -69,11 +123,21 @@ public class SingleIconDialog extends MultiSensorIconDialog {
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         }
-//        getContentPane().remove(_iconPanel);
-//        updateFamiliesPanel();
         return true;
     }
         
+    /**
+    * Action item for makeDoneButtonPanel
+    */
+    protected void doDoneAction() {
+        addFamily(_family, _iconMap);
+        ImageIndexEditor.indexChanged(true);
+        _parent.removeAll();
+        _parent.init();
+//        _parent.updateFamiliesPanel();
+//        _parent.setFamily(_family);
+    }
+
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleIconDialog.class.getName());
 }
 

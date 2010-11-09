@@ -313,7 +313,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
             } catch (ClassNotFoundException cnfe) {
                 cnfe.printStackTrace();
             }
-            //if (log.isDebugEnabled()) log.debug("DragJLabel ctor");
+            //if (log.isDebugEnabled()) log.debug("DragDecoratorLabel ctor");
         }
         /**************** DragGestureListener ***************/
         public void dragGestureRecognized(DragGestureEvent e) {
