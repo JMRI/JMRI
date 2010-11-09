@@ -16,6 +16,8 @@ import javax.swing.JRadioButtonMenuItem;
 
 import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 import jmri.util.NamedBeanHandle;
 
 /**
@@ -27,7 +29,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -327,9 +329,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     public void displayState(int state) {
         updateSize();
         if (getSignalHead() == null) {
-            log.debug("Display state "+state+", disconnected");
+            if (log.isDebugEnabled())log.debug("Display state "+state+", disconnected");
         } else {
-            log.debug("Display state "+state+" for "+getNameString());
+            if (log.isDebugEnabled()) log.debug("Display state "+state+" for "+getNameString());
             if (getSignalHead().getHeld()) {
                 if (isText()) super.setText(rb.getString("Held"));
                 if (isIcon()) super.setIcon(_iconMap.get(rbean.getString("SignalHeadStateHeld")));
@@ -371,8 +373,9 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         int i=0;
         while (e.hasMoreElements()) {
             String key = e.nextElement();
-            _iconEditor.setIcon(i++, key, _iconMap.get(key));
+            _iconEditor.setIcon(i++, key, new NamedIcon(_iconMap.get(key)));
         }
+        _saveMap = _iconMap;
         _iconEditor.makeIconPanel();
 
         ActionListener addIconAction = new ActionListener() {
@@ -383,15 +386,27 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         _iconEditor.complete(addIconAction, true, false, true);
     }
 
+    Hashtable<String, NamedIcon> _saveMap;
+
     void updateSignal() {
         setSignalHead(_iconEditor.getTableSelection().getDisplayName());
-        _iconMap = _iconEditor.getIconMap();
-        if (log.isDebugEnabled()) log.debug("_iconMap.size()= "+_iconMap.size());
-
-        Enumeration<String> e = _iconMap.keys();
-        while (e.hasMoreElements()) {
-            NamedIcon icon = _iconMap.get(e.nextElement());
-            icon.rotate(icon.getDegrees(), this);
+        Hashtable <String, NamedIcon> map = _iconEditor.getIconMap();
+        if (log.isDebugEnabled()) log.debug("updateSignal: newmap size= "+map.size()+
+                                            ", oldmap size= "+_saveMap.size());
+        Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            String name = entry.getKey();
+            NamedIcon icon = entry.getValue();
+            NamedIcon oldIcon = _saveMap.get(name);
+            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey()+", localKey= "+name+
+                                                ", newIcon= "+icon+", oldIcon= "+oldIcon);
+            if (oldIcon!=null) {
+                icon.setRotation(oldIcon.getRotation(), this);
+                icon.rotate(oldIcon.getDegrees(), this);
+                icon.scale(oldIcon.getScale(), this);
+                _iconMap.put(name, icon);
+            }
         }
         displayState(headState());
         _iconEditorFrame.dispose();
