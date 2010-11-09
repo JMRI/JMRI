@@ -26,7 +26,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.102 $
+ * @version $Revision: 1.103 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -219,7 +219,9 @@ public class PositionableLabel extends JLabel implements Positionable {
      * is changed
      */
     public void updateSize() {
-        //if (debug) log.debug("updateSize()");
+        if (debug) {
+            log.debug("updateSize() w= "+maxWidth()+", h= "+maxHeight()+" _namedIcon= "+_namedIcon);
+        }
         setSize(maxWidth(), maxHeight());
         if ( _namedIcon!=null && _text) {
             //we have a combined icon/text therefore the icon is central to the text.

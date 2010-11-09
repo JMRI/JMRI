@@ -96,6 +96,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     final public static int SCROLL_VERTICAL   = 3;
 
     static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     private boolean _debug = false;
 
     boolean showCloseInfoMessage = true;	//display info message when closing panel
@@ -1061,7 +1062,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         l.setVisible(true);
         l.setTooltip(new ToolTip(_defaultToolTip, l));
         addToTarget(l);
-        _contents.add(l);
+        if (!_contents.add(l)) {
+            log.error("Unable to add "+l.getNameString()+" to _contents");
+        }
     }
     
     protected void addToTarget(Positionable l) {
@@ -1248,25 +1251,25 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     protected IconAdder getSignalHeadEditor() {
         IconAdder editor = new IconAdder("SignalHead");
-        editor.setIcon(0, "SignalHeadStateRed",
+        editor.setIcon(0, rbean.getString("SignalHeadStateRed"),
             "resources/icons/smallschematics/searchlights/left-red-marker.gif");
-        editor.setIcon(1, "SignalHeadStateYellow", 
+        editor.setIcon(1, rbean.getString("SignalHeadStateYellow"), 
             "resources/icons/smallschematics/searchlights/left-yellow-marker.gif");
-        editor.setIcon(2, "SignalHeadStateGreen",
+        editor.setIcon(2, rbean.getString("SignalHeadStateGreen"),
             "resources/icons/smallschematics/searchlights/left-green-marker.gif");
-        editor.setIcon(3, "SignalHeadStateDark",
+        editor.setIcon(3, rbean.getString("SignalHeadStateDark"),
             "resources/icons/smallschematics/searchlights/left-dark-marker.gif");
-        editor.setIcon(4, "SignalHeadStateHeld",
+        editor.setIcon(4, rbean.getString("SignalHeadStateHeld"),
             "resources/icons/smallschematics/searchlights/left-held-marker.gif");
-        editor.setIcon(5, "SignalHeadStateLunar",
+        editor.setIcon(5, rbean.getString("SignalHeadStateLunar"),
             "resources/icons/smallschematics/searchlights/left-lunar-marker.gif");
-        editor.setIcon(6, "SignalHeadStateFlashingRed", 
+        editor.setIcon(6, rbean.getString("SignalHeadStateFlashingRed"), 
             "resources/icons/smallschematics/searchlights/left-flashred-marker.gif");
-        editor.setIcon(7, "SignalHeadStateFlashingYellow", 
+        editor.setIcon(7, rbean.getString("SignalHeadStateFlashingYellow"), 
             "resources/icons/smallschematics/searchlights/left-flashyellow-marker.gif");
-        editor.setIcon(8, "SignalHeadStateFlashingGreen",
+        editor.setIcon(8, rbean.getString("SignalHeadStateFlashingGreen"),
             "resources/icons/smallschematics/searchlights/left-flashgreen-marker.gif");
-        editor.setIcon(9, "SignalHeadStateFlashingLunar",
+        editor.setIcon(9, rbean.getString("SignalHeadStateFlashingLunar"),
             "resources/icons/smallschematics/searchlights/left-flashlunar-marker.gif");
         return editor;
     }

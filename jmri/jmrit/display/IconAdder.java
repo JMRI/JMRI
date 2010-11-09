@@ -469,12 +469,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             JToggleButton button = _iconMap.get(key);
             if (log.isDebugEnabled()) log.debug("getIconMap: key= "+key+", button.isSelected()= "+button.isSelected());
             if (!_allowDeletes || !button.isSelected()) {
-                String labelName = key;
-                try {
-                    labelName = rbean.getString(key);
-                } catch (java.util.MissingResourceException mre) {
-                }
-                iconMap.put(labelName, (NamedIcon)button.getIcon());
+                iconMap.put(key, (NamedIcon)button.getIcon());
             }
         }
         return iconMap;
