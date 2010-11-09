@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -97,6 +97,9 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
             iconCache.put(s, n);
             if(_rotate!=0){
                 n.rotate(_rotate, this);
+            }
+            if (_scale!=1.0) {
+                n.scale(_scale, this);
             }
         }
     }
@@ -266,6 +269,7 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
     }
     
     public void setScale(double s) {
+        _scale = s*_scale;
         Set<String> set = iconCache.keySet();
         Iterator<String> itr = set.iterator();
         while (itr.hasNext()) {
@@ -274,6 +278,11 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
           n.scale(s, this);
         }
         displayState(mastState());
+    }
+
+    double _scale = 1.0;
+    public double getScale(){
+        return _scale;
     }
 
     int _rotate = 0;
