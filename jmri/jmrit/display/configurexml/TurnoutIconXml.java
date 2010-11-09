@@ -12,19 +12,18 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
-    static final java.util.ResourceBundle rbean = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle");
     static final HashMap<String,String> _nameMap = new HashMap<String,String>();
 
     public TurnoutIconXml() {
         // map previous store names to actual localized names
-        _nameMap.put("closed", rbean.getString("TurnoutStateClosed"));
-        _nameMap.put("thrown", rbean.getString("TurnoutStateThrown"));
-        _nameMap.put("unknown", rbean.getString("BeanStateUnknown"));
-        _nameMap.put("inconsistent", rbean.getString("BeanStateInconsistent"));
+        _nameMap.put("closed", "TurnoutStateClosed");
+        _nameMap.put("thrown", "TurnoutStateThrown");
+        _nameMap.put("unknown", "BeanStateUnknown");
+        _nameMap.put("inconsistent", "BeanStateInconsistent");
     }
 
     /**
@@ -52,10 +51,10 @@ public class TurnoutIconXml extends PositionableLabelXml {
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
         // new style
-        element.addContent(storeIcon("closed", p.getIcon(rbean.getString("TurnoutStateClosed"))));
-        element.addContent(storeIcon("thrown", p.getIcon(rbean.getString("TurnoutStateThrown"))));
-        element.addContent(storeIcon("unknown", p.getIcon(rbean.getString("BeanStateUnknown"))));
-        element.addContent(storeIcon("inconsistent", p.getIcon(rbean.getString("BeanStateInconsistent"))));
+        element.addContent(storeIcon("closed", p.getIcon("TurnoutStateClosed")));
+        element.addContent(storeIcon("thrown", p.getIcon("TurnoutStateThrown")));
+        element.addContent(storeIcon("unknown", p.getIcon("BeanStateUnknown")));
+        element.addContent(storeIcon("inconsistent", p.getIcon("BeanStateInconsistent")));
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
