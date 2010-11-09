@@ -530,6 +530,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
                     image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                 } catch (java.lang.ClassNotFoundException cnfe) {
                     cnfe.printStackTrace();
+                    continue;
                 }
             }
             image.setOpaque(true);

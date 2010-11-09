@@ -136,7 +136,6 @@ public abstract class FamilyItemPanel extends ItemPanel {
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
            Entry<String, NamedIcon> entry = it.next();
-           String name = entry.getKey();
            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
            icon.reduceTo(100, 100, 0.2);
            JPanel panel = new JPanel();

@@ -199,14 +199,16 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _iconPanel = new JPanel();
         Hashtable <String, Hashtable<String, Hashtable<String, NamedIcon>>> families = 
                             ItemPalette.getLevel4FamilyMaps(_itemType);
+        if (families==null) {
+            if (log.isDebugEnabled()) log.debug("makeIconPanel: no families for type "+_itemType);
+            return;
+        }
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+
                                             "\" families size= "+families.size());
         if (_family==null) {
-            if (families!=null) {
-                Iterator <String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    _family = it.next();
-                }
+            Iterator <String> it = families.keySet().iterator();
+            while (it.hasNext()) {
+                _family = it.next();
             }
         }
         _iconGroupsMap = families.get(_family);
@@ -257,9 +259,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 panel = new JPanel();
                 panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                  borderName));
-                if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon= "+
-                                                    (icon==null?"null":icon.getName())+" at ("+c.gridx+","+c.gridy+")");
-                if (log.isDebugEnabled()) log.debug("addIcons2Panel: width= "+icon.getIconWidth()+
+                if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
+                                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
                                                     " height= "+icon.getIconHeight());
                 panel.add(new JLabel(icon));
                 int width = Math.max(85, panel.getPreferredSize().width);
