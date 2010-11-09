@@ -18,11 +18,12 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+/*
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-
+*/
 import jmri.InstanceManager;
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
@@ -904,7 +905,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     
     private JPanel makeBlockBox(JTextField blockBox, String tooltip) {
         blockBox.setDragEnabled(true);
-        blockBox.setTransferHandler(new DnDImportHandler());
+        blockBox.setTransferHandler(new jmri.util.DnDStringImportHandler());
         blockBox.setColumns(15);
         blockBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         //blockBox.setMaximumSize(new Dimension(100, blockBox.getPreferredSize().height));
@@ -937,69 +938,6 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
         box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         //box.setMaximumSize(new Dimension(100, box.getPreferredSize().height));
         return p;
-    }
-
-
-    class DnDImportHandler extends TransferHandler{
-
-        DnDImportHandler() {
-        }
-
-        /////////////////////import
-        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
-
-            for (int k=0; k<transferFlavors.length; k++){
-                if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public boolean importData(JComponent comp, Transferable tr) {
-            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
-            DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
-
-            if (!canImport(comp, flavors)) {
-                return false;
-            }
-
-            try {
-                if (tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
-                    String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
-                    JTextField field = (JTextField)comp;
-                    field.setText(data);
-                    actionPerformed(new ActionEvent(field, _thisActionEventId, data));
-                    return true;
-                }
-            } catch (UnsupportedFlavorException ufe) {
-                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
-            } catch (IOException ioe) {
-                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
-            }
-            return false;
-        }
-        /* OB4
-        public boolean importData(TransferHandler.TransferSupport support) {
-            if (!canImport(support)) {
-                return false;
-            }
-            Transferable t = support.getTransferable();
-            String data = null;
-            try {
-                data = (String)tr.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException ufe) {
-                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
-            } catch (IOException ioe) {
-                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
-            }
-            JTextField field = (JTextField)support.getComponent();
-            field.setText(data);
-            actionPerformed(new ActionEvent(field, _thisActionEventId, data));
-            return true;
-        }
-        */
     }
 
     private void makeMenus() {

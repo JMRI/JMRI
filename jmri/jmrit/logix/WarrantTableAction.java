@@ -37,13 +37,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
+/*
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
-
+*/
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Manager;
@@ -506,7 +506,7 @@ public class WarrantTableAction extends AbstractAction {
             }
             table.setRowHeight(box.getPreferredSize().height);
             table.setDragEnabled(true);
-            table.setTransferHandler(new DnDExportHandler());
+            table.setTransferHandler(new jmri.util.DnDTableExportHandler());
             JScrollPane tablePane = new JScrollPane(table);
             Dimension dim = table.getPreferredSize();
             dim.height = table.getRowHeight()*12;
@@ -527,14 +527,14 @@ public class WarrantTableAction extends AbstractAction {
             pp.add(new JLabel("A:"));
             pp.add(_startWarrant);
             _startWarrant.setDragEnabled(true);
-            _startWarrant.setTransferHandler(new DnDImportHandler());
+            _startWarrant.setTransferHandler(new jmri.util.DnDStringImportHandler());
             panel.add(pp);
             pp = new JPanel();
             pp.setLayout(new FlowLayout());
             pp.add(new JLabel("B:"));
             pp.add(_endWarrant);
             _endWarrant.setDragEnabled(true);
-            _endWarrant.setTransferHandler(new DnDImportHandler());
+            _endWarrant.setTransferHandler(new jmri.util.DnDStringImportHandler());
             panel.add(pp);
             JButton concatButton = new JButton(rb.getString("Concatenate"));
             concatButton.addActionListener(new ActionListener() {
@@ -938,102 +938,6 @@ public class WarrantTableAction extends AbstractAction {
                         WarrantTableAction.rb.getString("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             }
             fireTableRowsUpdated(row, row);
-        }
-    }
-    
-    class DnDImportHandler extends TransferHandler{
-        int _type;
-
-        DnDImportHandler() {
-        }
-
-        /////////////////////import
-        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
-            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.canImport ");
-
-            for (int k=0; k<transferFlavors.length; k++){
-                if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public boolean importData(JComponent comp, Transferable tr) {
-            //if (log.isDebugEnabled()) log.debug("DnDImportHandler.importData ");
-            DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
-
-            if (!canImport(comp, flavors)) {
-                return false;
-            }
-
-            try {
-                if (tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
-                    String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
-                    JTextField field = (JTextField)comp;
-                    field.setText(data);
-                    actionPerformed(new ActionEvent(field, 0, data));
-                    return true;
-                }
-            } catch (UnsupportedFlavorException ufe) {
-                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
-            } catch (IOException ioe) {
-                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
-            }
-            return false;
-        }
-        /* OB4
-        public boolean importData(TransferHandler.TransferSupport support) {
-            if (!canImport(support)) {
-                return false;
-            }
-            Transferable t = support.getTransferable();
-            String data = null;
-            try {
-                data = (String)tr.getTransferData(DataFlavor.stringFlavor);
-            } catch (UnsupportedFlavorException ufe) {
-                log.warn("DnDImportHandler.importData: "+ufe.getMessage());
-            } catch (IOException ioe) {
-                log.warn("DnDImportHandler.importData: "+ioe.getMessage());
-            }
-            JTextField field = (JTextField)support.getComponent();
-            field.setText(data);
-            actionPerformed(new ActionEvent(field, _thisActionEventId, data));
-            return true;
-        }
-        */
-    }
-
-    static class DnDExportHandler extends TransferHandler{
-        int _type;
-
-        DnDExportHandler() {
-        }
-
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-
-        public Transferable createTransferable(JComponent c) {
-            JTable table = (JTable)c;
-            int col = table.getSelectedColumn();
-            int row = table.getSelectedRow();
-            if (col<0 || row<0) {
-                return null;
-            }
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from ("
-                                                +row+", "+col+") for \""
-                                                +table.getModel().getValueAt(row, col)+"\"");
-            Object obj = table.getModel().getValueAt(row, col);
-            if (obj instanceof String) {
-                return new StringSelection((String)obj);
-            } else {
-                return new StringSelection(obj.getClass().getName());
-            }
-        }
-
-        public void exportDone(JComponent c, Transferable t, int action) {
-            if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone ");
         }
     }
 

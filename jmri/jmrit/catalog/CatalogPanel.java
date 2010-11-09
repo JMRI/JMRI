@@ -31,11 +31,6 @@ import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Frame;
-//import java.awt.geom.AffineTransform;
-//import java.awt.image.BufferedImage;
-//import java.awt.RenderingHints;
-//import java.awt.Graphics;
-//import java.awt.Graphics2D;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.BorderLayout;
@@ -531,7 +526,11 @@ public class CatalogPanel extends JPanel implements MouseListener {
             if (_noDrag) {
                 image = new JLabel();
             } else {
-                image = new DragJLabel();
+                try {
+                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+                } catch (java.lang.ClassNotFoundException cnfe) {
+                    cnfe.printStackTrace();
+                }
             }
             image.setOpaque(true);
             image.setName(leaf.getName());

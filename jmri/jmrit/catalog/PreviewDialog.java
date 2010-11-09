@@ -12,9 +12,7 @@ import java.awt.Frame;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-//import java.awt.RenderingHints;
-//import java.awt.geom.AffineTransform;
-//import java.awt.image.BufferedImage;
+import java.awt.datatransfer.DataFlavor;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -365,7 +363,13 @@ public class PreviewDialog extends JDialog {
                         if (_mode){
                             image = new JLabel();
                         } else {
-                            image = new DragJLabel();   //modeless is for ImageEditor dragging
+                            //modeless is for ImageEditor dragging
+                            try {
+                                image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+                            } catch (java.lang.ClassNotFoundException cnfe) {
+                                cnfe.printStackTrace();
+                                image = new JLabel();
+                            }
                         }
                         image.setOpaque(true);
                         image.setName(name);

@@ -35,18 +35,14 @@ import java.io.IOException;
  public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
      DataFlavor dataFlavor;
-     public DragJLabel() {
-
+     public DragJLabel(DataFlavor flavor) {
+         super();
          DragSource dragSource = DragSource.getDefaultDragSource();
          dragSource.createDefaultDragGestureRecognizer(this,
-                     DnDConstants.ACTION_COPY_OR_MOVE, this);
-         try {
-             dataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
-         } catch (ClassNotFoundException cnfe) {
-             cnfe.printStackTrace();
-         }
-         //if (log.isDebugEnabled()) log.debug("DragJLabel ctor");
+                     DnDConstants.ACTION_COPY, this);
+         dataFlavor = flavor;
      }
+
      /**************** DragGestureListener ***************/
      public void dragGestureRecognized(DragGestureEvent e) {
          if (log.isDebugEnabled()) log.debug("DragJLabel.dragGestureRecognized ");
