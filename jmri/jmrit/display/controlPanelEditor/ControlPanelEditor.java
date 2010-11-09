@@ -641,7 +641,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         if (event.isPopupTrigger() && !_dragging) {
             if (selection!=null) {
                 _highlightcomponent = null;
-                    showPopUp(selection, event);
+                showPopUp(selection, event);
             } else if (_selectRect!=null) {
                 makeSelectionGroup(event);
             }
@@ -956,7 +956,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 item.setLocation(pt.x, pt.y);
                 putItem(item);
                 item.updateSize();
-                if (log.isDebugEnabled()) log.debug("Drop positionable "+item.getNameString());
+                //if (log.isDebugEnabled()) log.debug("Drop positionable "+item.getNameString()+
+                //                                    " as "+item.getClass().getName()+
+                //                                    ", w= "+item.maxWidth()+", h= "+item.maxHeight());
                 evt.dropComplete(true);
                 return;
             } else if (tr.isDataFlavorSupported(_namedIconDataFlavor)) {
