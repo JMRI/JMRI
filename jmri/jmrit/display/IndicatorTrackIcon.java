@@ -27,7 +27,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -48,6 +48,8 @@ public class IndicatorTrackIcon extends PositionableLabel
                             "resources/icons/smallschematics/tracksegments/block.gif"), editor);
         setPopupUtility(null);
         _status = "DontUseTrack";
+        _text = true;
+        _icon = true;
     }
 
     public Positionable deepClone() {
@@ -305,11 +307,14 @@ public class IndicatorTrackIcon extends PositionableLabel
 	 */
     void displayState(String status) {
         log.debug(getNameString() +" displayStatus "+_status);
-        if (isIcon()) {
-            NamedIcon icon = getIcon(status);
-            if (icon!=null) {
-                super.setIcon(icon);
-            }
+        if ("PositionTrack".equals(_status)) {
+            super.setText(_train);
+        } else {
+            super.setText("");
+        }
+        NamedIcon icon = getIcon(status);
+        if (icon!=null) {
+            super.setIcon(icon);
         }
         updateSize();
     }

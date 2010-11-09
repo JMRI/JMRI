@@ -35,7 +35,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -54,6 +54,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         super(editor);
         log.debug("IndicatorTurnoutIcon ctor: isIcon()= "+isIcon()+", isText()= "+isText());
         _status = "DontUseTrack";
+        _text = true;
+        _icon = true;
+
     }
 
     public Positionable deepClone() {
@@ -307,27 +310,23 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
-            if (_status==null || _iconMaps==null) {
-                super.displayState(state);
-            } else {
+            if (_status!=null && _iconMaps!=null) {
                 log.debug(getNameString()+" displayState "+_state2nameMap.get(state)+", status= "+_status+
                           ", isIcon()= "+isIcon());
-                if (isText()) {
-                    super.setText(_state2nameMap.get(state));
-                }
                 if ("PositionTrack".equals(_status)) {
                     super.setText(_train);
+                } else {
+                    super.setText("");
                 }
-                if (isIcon()) {
-                    NamedIcon icon = getIcon(_status, state);
-                    if (icon!=null) {
-                        super.setIcon(icon);
-                    } else {
-                        super.displayState(state);
-                    }
+                NamedIcon icon = getIcon(_status, state);
+                if (icon!=null) {
+                    super.setIcon(icon);
+                } else {
+                    super.displayState(state);
                 }
             }
         }
+        super.displayState(state);
         updateSize();
     }
 
