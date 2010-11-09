@@ -17,7 +17,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the TurnoutIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
@@ -37,16 +37,16 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
         icon.setDisplayLevel(Editor.TURNOUTS);
 
-        icon.setIcon(rbean.getString("TurnoutStateClosed"), 
+        icon.setIcon("TurnoutStateClosed", 
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
-        icon.setIcon(rbean.getString("TurnoutStateThrown"),
+        icon.setIcon("TurnoutStateThrown",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif", 
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif"));
-        icon.setIcon(rbean.getString("BeanStateInconsistent"),
+        icon.setIcon("BeanStateInconsistent",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif"));
-        icon.setIcon(rbean.getString("BeanStateUnknown"),
+        icon.setIcon("BeanStateUnknown",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
 
@@ -121,16 +121,16 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
         Turnout sn = jmri.InstanceManager.turnoutManagerInstance().provideTurnout("IT1");
         icon.setTurnout("IT1");
         
-        icon.setIcon(rbean.getString("TurnoutStateClosed"), 
+        icon.setIcon("TurnoutStateClosed", 
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif",
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-closed.gif"));
-        icon.setIcon(rbean.getString("TurnoutStateThrown"),
+        icon.setIcon("TurnoutStateThrown",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif", 
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-thrown.gif"));
-        icon.setIcon(rbean.getString("BeanStateInconsistent"),
+        icon.setIcon("BeanStateInconsistent",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif",
                                 "resources/icons/smallschematics/tracksegments/os-lefthand-east-error.gif"));
-        icon.setIcon(rbean.getString("BeanStateUnknown"),
+        icon.setIcon("BeanStateUnknown",
                      new NamedIcon("resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif",
                             "resources/icons/smallschematics/tracksegments/os-lefthand-east-unknown.gif"));
 
