@@ -211,7 +211,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         table.setPreferredScrollableViewportSize(new java.awt.Dimension(250,table.getRowHeight()*7));
         table.setDragEnabled(true);
-        table.setTransferHandler(new DnDExportHandler());
+        table.setTransferHandler(new jmri.util.DnDTableExportHandler());
         TableColumnModel columnModel = table.getColumnModel();
 
         TableColumn sNameColumnT = columnModel.getColumn(SNAME_COLUMN);
@@ -264,33 +264,6 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
     public static PickListModel conditionalPickModelInstance() {
         return new ConditionalPickModel();
-    }
-
-    static class DnDExportHandler extends TransferHandler{
-
-        DnDExportHandler() {
-        }
-
-        public int getSourceActions(JComponent c) {
-            return COPY;
-        }
-
-        public Transferable createTransferable(JComponent c) {
-            JTable table = (JTable)c;
-            int col = table.getSelectedColumn();
-            int row = table.getSelectedRow();
-            if (col<0 || row<0) {
-                return null;
-            }
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from ("
-                                                +row+", "+col+") for \""
-                                                +table.getModel().getValueAt(row, col)+"\"");
-            return new StringSelection((String)table.getModel().getValueAt(row, col));
-        }
-
-        public void exportDone(JComponent c, Transferable t, int action) {
-            if (log.isDebugEnabled()) log.debug("TransferHandler.exportDone ");
-        }
     }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PickListModel.class.getName());
