@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 import java.awt.Point;
@@ -180,7 +180,7 @@ public class DnDJTable extends JTable implements DropTargetListener,
          return new DataFlavor[] { TABLECELL_FLAVOR };
      }
      public boolean isDataFlavorSupported(DataFlavor flavor) {
-         //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
+         //if (log.isDebugEnabled()) log.debug("DnDJTable.isDataFlavorSupported ");
          return TABLECELL_FLAVOR.equals(flavor);
      }
      public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
