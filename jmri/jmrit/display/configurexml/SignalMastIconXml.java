@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle configuration for display.SignalMastIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class SignalMastIconXml extends PositionableLabelXml {
 
@@ -35,7 +35,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
         
         element.setAttribute("signalmast", ""+p.getPName());
         storeCommonAttributes(p, element);
-        element.setAttribute("rotation", ""+p.getDegrees());
+        element.setAttribute("rotation", ""+p.getRotation());
         element.setAttribute("scale", String.valueOf(p.getScale()));
         element.setAttribute("class", "jmri.jmrit.display.configurexml.SignalMastIconXml");
         return element;
