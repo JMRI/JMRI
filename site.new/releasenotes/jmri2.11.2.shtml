@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.11 2010-11-08 15:40:34 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.12 2010-11-09 03:30:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -208,6 +208,23 @@ Lionel Jeanson improved the Wiimote driver:
 <li>roster browse with + and - when current throttle frame empty (home button to acquire throttle)
 </ul>
 
+<p>
+Alain Carasso contributed a definition for the ESU Bachmann 3 function decoder
+and the ESU LokPilot Basic 2.0.
+
+<p>
+Steve Todd added a button to the mini web server startup window that opens your local 
+web browser.
+
+<p>
+Robin Becker fixed the JmriJFrameServlet.sendClick support in the mini web server
+to properly support objects within Components such as Tables and Sliders. 
+Added support for RadioButtons and CheckBoxes. 
+Tested with Turnout Table and Throttle tools on IE8 and Firefox.
+
+
+<p>
+Peter Mansvelder provided info on the S88XpressNetLi XPressNet interface.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
