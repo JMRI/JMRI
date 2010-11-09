@@ -25,7 +25,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -84,15 +84,15 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         if (namedTurnout != null) {
             _iconMap = new Hashtable <Integer, NamedIcon>();
             _name2stateMap = new Hashtable <String, Integer>();
-            _name2stateMap.put(rbean.getString("BeanStateUnknown"), Integer.valueOf(Turnout.UNKNOWN));
-            _name2stateMap.put(rbean.getString("BeanStateInconsistent"), Integer.valueOf(Turnout.INCONSISTENT));
-            _name2stateMap.put(rbean.getString("TurnoutStateClosed"), Integer.valueOf(Turnout.CLOSED));
-            _name2stateMap.put(rbean.getString("TurnoutStateThrown"), Integer.valueOf(Turnout.THROWN));
+            _name2stateMap.put("BeanStateUnknown", Integer.valueOf(Turnout.UNKNOWN));
+            _name2stateMap.put("BeanStateInconsistent", Integer.valueOf(Turnout.INCONSISTENT));
+            _name2stateMap.put("TurnoutStateClosed", Integer.valueOf(Turnout.CLOSED));
+            _name2stateMap.put("TurnoutStateThrown", Integer.valueOf(Turnout.THROWN));
             _state2nameMap = new Hashtable <Integer, String>();
-            _state2nameMap.put(Integer.valueOf(Turnout.UNKNOWN), rbean.getString("BeanStateUnknown"));
-            _state2nameMap.put(Integer.valueOf(Turnout.INCONSISTENT), rbean.getString("BeanStateInconsistent"));
-            _state2nameMap.put(Integer.valueOf(Turnout.CLOSED), rbean.getString("TurnoutStateClosed"));
-            _state2nameMap.put(Integer.valueOf(Turnout.THROWN), rbean.getString("TurnoutStateThrown"));
+            _state2nameMap.put(Integer.valueOf(Turnout.UNKNOWN), "BeanStateUnknown");
+            _state2nameMap.put(Integer.valueOf(Turnout.INCONSISTENT), "BeanStateInconsistent");
+            _state2nameMap.put(Integer.valueOf(Turnout.CLOSED), "TurnoutStateClosed");
+            _state2nameMap.put(Integer.valueOf(Turnout.THROWN), "TurnoutStateThrown");
             displayState(turnoutState());
             getTurnout().addPropertyChangeListener(this);
         } 
@@ -127,19 +127,17 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     public int maxHeight() {
         int max = 0;
-        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<Integer, NamedIcon> entry = it.next();
-            max = Math.max(entry.getValue().getIconHeight(), max);
+        Iterator<NamedIcon> iter = _iconMap.values().iterator();
+        while (iter.hasNext()) {
+            max = Math.max(iter.next().getIconHeight(), max);
         }
         return max;
     }
     public int maxWidth() {
         int max = 0;
-        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<Integer, NamedIcon> entry = it.next();
-            max = Math.max(entry.getValue().getIconWidth(), max);
+        Iterator<NamedIcon> iter = _iconMap.values().iterator();
+        while (iter.hasNext()) {
+            max = Math.max(iter.next().getIconWidth(), max);
         }
         return max;
     }
