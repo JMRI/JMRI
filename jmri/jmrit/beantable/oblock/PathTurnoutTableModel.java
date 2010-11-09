@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 import java.util.ResourceBundle;
@@ -132,7 +132,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
             switch(col) {
                 case TURNOUT_NAME_COL:
                     String name = (String)value;
-                    Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout(name);
+                    Turnout t = InstanceManager.turnoutManagerInstance().getTurnout(name);
                     if (t != null) {
                         int s = Turnout.UNKNOWN;
                         if (tempRow[SETTINGCOLUMN] == null) {
@@ -167,7 +167,7 @@ public class PathTurnoutTableModel extends AbstractTableModel {
 
         switch(col) {
             case TURNOUT_NAME_COL:
-                Turnout t = InstanceManager.turnoutManagerInstance().provideTurnout((String)value);
+                Turnout t = InstanceManager.turnoutManagerInstance().getTurnout((String)value);
                 if (t!=null) {
                      if (!t.equals(bs.getBean())) {
                          _path.removeSetting(bs);

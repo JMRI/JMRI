@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 import java.util.ArrayList;
@@ -243,9 +243,9 @@ public class SignalTableModel extends AbstractTableModel {
                         _saveSignalName = name;
                         // Note: Portal ctor will add this Portal to each of its 'from' & 'to' Block.
                         OBlock fromBlock = InstanceManager.oBlockManagerInstance()
-                                                    .provideOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                                                    .getOBlock(tempRow[FROM_BLOCK_COLUMN]);
                         OBlock toBlock = InstanceManager.oBlockManagerInstance()
-                                                    .provideOBlock(tempRow[TO_BLOCK_COLUMN]);
+                                                    .getOBlock(tempRow[TO_BLOCK_COLUMN]);
                         long time = 0;
                         try {
                             time = Long.parseLong(tempRow[TIME_OFFSET]);
@@ -294,7 +294,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     break;
                 case FROM_BLOCK_COLUMN:
-                    OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                    OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);
@@ -312,7 +312,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     break;
                 case TO_BLOCK_COLUMN:
-                    block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                    block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);
@@ -365,7 +365,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     break;
                 case FROM_BLOCK_COLUMN:
-                    OBlock block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                    OBlock block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);
@@ -438,7 +438,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     break;
                 case TO_BLOCK_COLUMN:
-                    block = InstanceManager.oBlockManagerInstance().provideOBlock((String)value);
+                    block = InstanceManager.oBlockManagerInstance().getOBlock((String)value);
                     if (block==null) {
                         msg = java.text.MessageFormat.format(
                             rbo.getString("NoSuchBlock"), (String)value);

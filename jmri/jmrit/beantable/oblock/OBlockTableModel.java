@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 import java.util.List;
@@ -204,7 +204,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                 if (tempRow[SENSORCOL] != null) {
                     Sensor sensor = null;
                     try {
-                        sensor = InstanceManager.sensorManagerInstance().provideSensor(tempRow[SENSORCOL]);
+                        sensor = InstanceManager.sensorManagerInstance().getSensor(tempRow[SENSORCOL]);
                         if (sensor!=null) {
                             block.setSensor(sensor);
                         }
@@ -268,7 +268,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                         block.setSensor(null);
                         block.setState(OBlock.DARK);
                     } else {
-                        Sensor s = InstanceManager.sensorManagerInstance().provideSensor((String)value);
+                        Sensor s = InstanceManager.sensorManagerInstance().getSensor((String)value);
                         if (s!=null) {
                             block.setSensor(s);
                             fireTableRowsUpdated(row,row);
@@ -276,7 +276,7 @@ public class OBlockTableModel extends jmri.jmrit.picker.PickListModel {
                     }
                     return;
                 } catch (Exception ex) {
-                    log.error("provideSensor("+(String)value+") threw exception: "+ ex);
+                    log.error("getSensor("+(String)value+") threw exception: "+ ex);
                 }
                 JOptionPane.showMessageDialog(null, java.text.MessageFormat.format(
                         rbo.getString("NoSuchSensorErr"), (String)value),
