@@ -5,6 +5,8 @@ package jmri.jmrit.operations.setup;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -27,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -35,16 +37,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle");
 	
 	// labels
-	JLabel textFont = new JLabel(rb.getString("Font"));
-	JLabel textFontSize = new JLabel(rb.getString("FontSize"));
-	JLabel showCar = new JLabel(rb.getString("ShowCar"));
-	JLabel textDropColor = new JLabel(rb.getString("DropColor"));
-	JLabel textPickupColor = new JLabel(rb.getString("PickupColor"));
 	JLabel textBuildReport = new JLabel(rb.getString("BuildReport"));
-	JLabel textManifest = new JLabel(rb.getString("Manifest"));
-	JLabel textPad = new JLabel("   ");
-	JLabel textPad1 = new JLabel("   ");
-	JLabel textPad2 = new JLabel("   ");
 	JLabel logoURL = new JLabel("");
 
 	// major buttons	
@@ -62,31 +55,32 @@ public class PrintOptionFrame extends OperationsFrame{
     JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
-	JCheckBox showLengthCheckBox = new JCheckBox(rb.getString("Length"));
-	JCheckBox showLoadCheckBox = new JCheckBox(rb.getString("Load"));
-	JCheckBox showColorCheckBox = new JCheckBox(rb.getString("Color"));
-	JCheckBox showDestinationCheckBox = new JCheckBox(rb.getString("Destination"));
-	JCheckBox appendCommentCheckBox = new JCheckBox(rb.getString("Comment"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	
 	// text field
 	
 	// text area
-	JTextArea commentTextArea	= new JTextArea(2,60);
+	JTextArea commentTextArea	= new JTextArea(2,90);
 	JScrollPane commentScroller = new JScrollPane(commentTextArea,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-	Dimension minScrollerDim = new Dimension(500,60);
+	Dimension minScrollerDim = new Dimension(700,60);
 	
 	// combo boxes
 	JComboBox fontSizeComboBox = new JComboBox();
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
 	JComboBox dropComboBox = Setup.getPrintColorComboBox();
+	
+	// message formats
+	List<JComboBox> enginePickupMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> engineDropMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> carPickupMessageList = new ArrayList<JComboBox>();
+	List<JComboBox> carDropMessageList = new ArrayList<JComboBox>();
 
 	public PrintOptionFrame() {
 		super(ResourceBundle.getBundle("jmri.jmrit.operations.setup.JmritOperationsSetupBundle").getString("TitlePrintOptions"));
 	}
 
 	public void initComponents() {
-		
+
 		// the following code sets the frame's initial state
 
 		// add tool tips
@@ -95,9 +89,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
 			
 		// Manifest panel
-		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		JPanel pManifest = new JPanel();
-		pManifest.setLayout(new GridBagLayout());
+		pManifest.setLayout(new BoxLayout(pManifest, BoxLayout.Y_AXIS));
 		JScrollPane pManifestPane = new JScrollPane(pManifest);
 		pManifestPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutManifestOptions")));
 		
@@ -106,36 +100,90 @@ public class PrintOptionFrame extends OperationsFrame{
 		pReport.setLayout(new GridBagLayout());
 		JScrollPane pReportPane = new JScrollPane(pReport);
 		pReportPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutReportOptions")));
-		addItem (pManifest, textFont, 0, 8);
-		addItem (pManifest, textPad, 1, 8);
-		addItemLeft (pManifest, mono, 2, 8);
-		addItemLeft (pManifest, sanSerif, 3, 8);
-		addItem (pManifest, textFontSize, 0, 9);
-		addItem (pManifest, textPad1, 1, 9);
-		addItemLeft (pManifest, fontSizeComboBox, 2, 9);
 		
-		addItem (pManifest, showCar, 0, 12);
-		addItemLeft (pManifest, showLengthCheckBox, 2, 12);
-		addItemLeft (pManifest, showLoadCheckBox, 3, 12);
-		addItemLeft (pManifest, showColorCheckBox, 4, 12);
-		addItemLeft (pManifest, showDestinationCheckBox, 5, 12);
-		addItemLeft (pManifest, appendCommentCheckBox, 6, 12);
+		// row 1 font type and size
+		JPanel p1 = new JPanel();
+		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+		JPanel pFont = new JPanel();
+		pFont.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFont")));
+		pFont.add(mono);
+		pFont.add(sanSerif);
+		JPanel pFontSize = new JPanel();
+		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
+		pFontSize.add(fontSizeComboBox);		
+		p1.add(pFont);
+		p1.add(pFontSize);
 		
-		// drop and pickup color options
-		addItemLeft (pManifest, textDropColor, 0, 14);
-		addItemLeft (pManifest, dropComboBox, 2, 14);
-		addItemLeft (pManifest, textPickupColor, 0, 16);		
-		addItemLeft (pManifest, pickupComboBox, 2, 16);
-		dropComboBox.setSelectedItem(Setup.getDropTextColor());
-		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());		
+		// engine message format
+		JPanel pEngPickup = new JPanel();
+		pEngPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupEngine")));
+		String[] format = Setup.getPickupEngineMessageFormat();
+		for (int i=0; i<format.length; i++){
+			JComboBox b = Setup.getEngineMessageComboBox();
+			b.setSelectedItem(format[i]);
+			pEngPickup.add(b);
+			enginePickupMessageList.add(b);
+		}
+		
+		JPanel pEngDrop = new JPanel();
+		pEngDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropEngine")));
+		format = Setup.getDropEngineMessageFormat();
+		for (int i=0; i<format.length; i++){
+			JComboBox b = Setup.getEngineMessageComboBox();
+			b.setSelectedItem(format[i]);
+			pEngDrop.add(b);
+			engineDropMessageList.add(b);
+		}
+		
+		// car pickup message format
+		JPanel pPickup = new JPanel();
+		pPickup.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupCar")));
+		String[] pickFormat = Setup.getPickupCarMessageFormat();
+		for (int i=0; i<pickFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(pickFormat[i]);
+			pPickup.add(b);
+			carPickupMessageList.add(b);
+		}
+			
+		// car drop message format
+		JPanel pDrop = new JPanel();
+		pDrop.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropCar")));
+		String[] dropFormat = Setup.getDropCarMessageFormat();
+		for (int i=0; i<dropFormat.length; i++){
+			JComboBox b = Setup.getCarMessageComboBox();
+			b.setSelectedItem(dropFormat[i]);
+			pDrop.add(b);
+			carDropMessageList.add(b);
+		}
+		
+		// Pickup and Drop colors
+		JPanel pColor = new JPanel();
+		pColor.setLayout(new BoxLayout(pColor, BoxLayout.X_AXIS));
+		JPanel pPickupColor = new JPanel();
+		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
+		pPickupColor.add( pickupComboBox);
+		JPanel pDropColor = new JPanel();
+		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
+		pDropColor.add( dropComboBox);
+		p1.add(pPickupColor);
+		p1.add(pDropColor);
 		
 		// manifest logo
-		addItem (pManifest, textPad, 2, 18);
-		addItemLeft (pManifest, addLogoButton, 2, 20);
-		addItemLeft (pManifest, removeLogoButton, 0, 21);
-		addItemWidth (pManifest, logoURL, 6, 1, 21);
-		updateLogoButtons();
+		JPanel pLogo = new JPanel();
+		pLogo.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutLogo")));
+		pLogo.add(removeLogoButton);
+		pLogo.add(addLogoButton);
+		pLogo.add(logoURL);
 		
+		pManifest.add(p1);
+		pManifest.add(pEngPickup);
+		pManifest.add(pEngDrop);
+		pManifest.add(pPickup);
+		pManifest.add(pDrop);
+		//pManifest.add(pColor);
+		pManifest.add(pLogo);
+			
 		// build report options
 		addItem (pReport, textBuildReport, 0, 16);
 		addItemLeft (pReport, buildReportMin, 1, 16);
@@ -150,27 +198,25 @@ public class PrintOptionFrame extends OperationsFrame{
 		JScrollPane pCommentPane = new JScrollPane(pComment);
 		pCommentPane.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutCommentOptions")));
 		addItem (pComment, commentScroller, 0, 0);
-		
-		commentTextArea.setText(Setup.getMiaComment());
-		
-
+				
 		// row 11
 		JPanel pControl = new JPanel();
+		pControl.setBorder(BorderFactory.createTitledBorder(""));
 		pControl.setLayout(new GridBagLayout());
-		addItem(pControl, saveButton, 3, 9);
+		addItem(pControl, saveButton, 0, 0);
 		
 		getContentPane().add(pManifestPane);	
 		getContentPane().add(pCommentPane);
 		getContentPane().add(pReportPane);
 		getContentPane().add(pControl);
 		
-		// load checkboxes		
-		showLengthCheckBox.setSelected(Setup.isShowCarLengthEnabled());
-		showLoadCheckBox.setSelected(Setup.isShowCarLoadEnabled());
-		showColorCheckBox.setSelected(Setup.isShowCarColorEnabled());
-		showDestinationCheckBox.setSelected(Setup.isShowCarDestinationEnabled());		
-		appendCommentCheckBox.setSelected(Setup.isAppendCarCommentEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
+		
+		updateLogoButtons();
+		dropComboBox.setSelectedItem(Setup.getDropTextColor());
+		pickupComboBox.setSelectedItem(Setup.getPickupTextColor());		
+
+		commentTextArea.setText(Setup.getMiaComment());
 		
 		ButtonGroup printerGroup = new ButtonGroup();
 		printerGroup.add(mono);
@@ -182,7 +228,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		buildReportGroup.add(buildReportMax);
 		buildReportGroup.add(buildReportVD);
 		
-		// font sizes 7 through 12
+		// load font sizes 7 through 12
 		fontSizeComboBox.addItem(7);
 		fontSizeComboBox.addItem(8);
 		fontSizeComboBox.addItem(9);
@@ -203,7 +249,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
 
 		pack();
-		setSize(getWidth(), getHeight()+55);	// pad out a bit
+		//setSize(getWidth(), getHeight()+55);	// pad out a bit
 		setVisible(true);
 	}
 	
@@ -231,13 +277,33 @@ public class PrintOptionFrame extends OperationsFrame{
 			// drop and pickup color option
 			Setup.setDropTextColor((String)dropComboBox.getSelectedItem());
 			Setup.setPickupTextColor((String)pickupComboBox.getSelectedItem());
-			// show car attributes
-			Setup.setShowCarLengthEnabled(showLengthCheckBox.isSelected());
-			Setup.setShowCarLoadEnabled(showLoadCheckBox.isSelected());
-			Setup.setShowCarColorEnabled(showColorCheckBox.isSelected());
-			Setup.setShowCarDestinationEnabled(showDestinationCheckBox.isSelected());
-			// append car comment
-			Setup.setAppendCarCommentEnabled(appendCommentCheckBox.isSelected());
+			// save engine message format
+			String[] format = new String[enginePickupMessageList.size()];
+			for (int i=0; i<enginePickupMessageList.size(); i++){
+				JComboBox b = enginePickupMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setPickupEngineMessageFormat(format);
+			format = new String[engineDropMessageList.size()];
+			for (int i=0; i<engineDropMessageList.size(); i++){
+				JComboBox b = engineDropMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setDropEngineMessageFormat(format);
+			// save car pickup message format
+			format = new String[carPickupMessageList.size()];
+			for (int i=0; i<carPickupMessageList.size(); i++){
+				JComboBox b = carPickupMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setPickupCarMessageFormat(format);
+			// save car drop message format
+			format = new String[carDropMessageList.size()];
+			for (int i=0; i<carDropMessageList.size(); i++){
+				JComboBox b = carDropMessageList.get(i);
+				format[i] = (String)b.getSelectedItem();
+			}
+			Setup.setDropCarMessageFormat(format);
 			// misplaced car comment
 			Setup.setMiaComment(commentTextArea.getText());
 			// build report level
@@ -297,8 +363,6 @@ public class PrintOptionFrame extends OperationsFrame{
 		buildReportMax.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_DETAILED));
 		buildReportVD.setSelected(Setup.getBuildReportLevel().equals(Setup.BUILD_REPORT_VERY_DETAILED));
 	}
-
-
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
 	.getLogger(OperationsSetupFrame.class.getName());

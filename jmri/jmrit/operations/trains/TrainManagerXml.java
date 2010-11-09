@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class TrainManagerXml extends OperationsXml {
 	
@@ -109,7 +109,7 @@ public class TrainManagerXml extends OperationsXml {
     		log.debug(name + " file could not be read");
     		return;
     	}
-    	if (log.isDebugEnabled()) XmlFile.dumpElement(root);
+    	//if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
     	if (root.getChild("options") != null) {
     		Element e = root.getChild("options");

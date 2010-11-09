@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008, 2010
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.58 $
+ * @version	$Revision: 1.59 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -536,7 +536,7 @@ public class Roster extends XmlFile {
             log.error("Roster file exists, but could not be read; roster not available");
             return;
         }
-        if (log.isDebugEnabled()) XmlFile.dumpElement(root);
+        //if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) {

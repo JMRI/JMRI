@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.98 $
+ * @version             $Revision: 1.99 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1659,20 +1659,8 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFailedMsg"),new Object[]{train.getName()}));
 			buildReport.flush();
 			buildReport.close();
-			/*
-			if(TrainManager.instance().getBuildReport()){
-				File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(train.getName());
-				printBuildReport(buildFile, MessageFormat.format(rb.getString("buildFailureReport"),new Object[]{train.getDescription()}), true);
-			}
-			*/
 		}
 	}
-	
-	/*
-	private static void printBuildReport(File file, String name, boolean isPreview){
-		TrainPrintUtilities.printReport(file, name, isPreview, "", true, "");
- 	}
- 	*/
 	
 	private void makeManifest() {
 		// create manifest file
@@ -1701,21 +1689,18 @@ public class TrainBuilder extends TrainCommon{
 		
 		List<String> engineList = engineManager.getByTrainList(train);
 		Engine engine = null;
-		String comment = "";
 		for (int i =0; i < engineList.size(); i++){
-			engine = engineManager.getById(engineList.get(i));
-			comment = (Setup.isAppendCarCommentEnabled() ? " "+engine.getComment() : "");
-			String[] engineNumber = engine.getNumber().split("-"); // ignore any duplicate engine numbers
-			addLine(fileOut, BOX + rb.getString("Engine")+" "+ engine.getRoad() +" "+engineNumber[0]+" (" +engine.getModel()+  ") "
-					+rb.getString("assignedToThisTrain") + comment);
+			engine = engineManager.getById(engineList.get(i));	
+			pickupEngine(fileOut, engine);
 		}
-		
+		/* TODO not sure if I want to reuse the following code
 		if (engine != null){
 			String pickupText = rb.getString("PickupEngineAt");
 			if (engineList.size() > 1)
 				pickupText= rb.getString("PickupEnginesAt");
 			addLine(fileOut, pickupText+" "+splitString(engine.getLocationName())+", "+engine.getTrackName());
 		}
+		*/
 		
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");

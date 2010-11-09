@@ -41,7 +41,7 @@ import org.jdom.ProcessingInstruction;
  * 
  * @author Bob Jacobsen Copyright (C) 2001; Dennis Miller Copyright 2004
  * @author Daniel Boudreau (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  * @see NceConsistRosterEntry
  */
 public class NceConsistRoster extends XmlFile {
@@ -307,7 +307,7 @@ public class NceConsistRoster extends XmlFile {
             log.debug("ConsistRoster file could not be read");
             return;
         }
-        if (log.isDebugEnabled()) XmlFile.dumpElement(root);
+        //if (log.isDebugEnabled()) XmlFile.dumpElement(root);
 
         // decode type, invoke proper processing routine if a decoder file
         if (root.getChild("roster") != null) {
