@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -462,42 +462,52 @@ public class Setup {
 		RollingStockLogger.instance().enableEngineLogging(enable);
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getPickupEngineMessageFormat(){
 		return pickupEngineMessageFormat;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupEngineMessageFormat(String[] format){
 		pickupEngineMessageFormat = format;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getDropEngineMessageFormat(){
 		return dropEngineMessageFormat;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropEngineMessageFormat(String[] format){
 		dropEngineMessageFormat = format;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getPickupCarMessageFormat(){
 		return pickupCarMessageFormat;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupCarMessageFormat(String[] format){
 		pickupCarMessageFormat = format;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getDropCarMessageFormat(){
 		return dropCarMessageFormat;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropCarMessageFormat(String[] format){
 		dropCarMessageFormat = format;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getMissingCarMessageFormat(){
 		return missingCarMessageFormat;
 	}
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setMissingCarMessageFormat(String[] format){
 		missingCarMessageFormat = format;
 	}
