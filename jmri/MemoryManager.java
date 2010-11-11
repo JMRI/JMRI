@@ -39,7 +39,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see             jmri.Memory
  * @see             jmri.managers.AbstractMemoryManager
  * @see             jmri.InstanceManager
@@ -112,6 +112,28 @@ public interface MemoryManager extends Manager {
      */
     public Memory newMemory(String systemName, String userName);
 
+    /**
+     * For use with User GUI, to allow the auto generation of systemNames,
+     * where the user can optionally supply a username.
+     *<P>
+     * This will always return a valid object reference; a new object will be
+     * created if necessary.
+     (
+     * If a null reference is given for user name, no user name will be associated
+     * with the Memory object created 
+     *
+     * Note that it is possible to make an inconsistent request if both
+     * addresses are provided, but the given values are associated with
+     * different objects.  This is a problem, and we don't have a
+     * good solution except to issue warnings.
+     * This will mostly happen if you're creating Memory objects when you should
+     * be looking them up.
+     * @return requested Memory object (never null)
+     * @throws IllegalArgumentException if cannot create the Memory
+     * due to e.g. an illegal name or name that can't be parsed.
+     */
+    public Memory newMemory(String userName);
+    
     /**
      * Get a list of all Memory objects' system names.
      */

@@ -5,11 +5,14 @@ package jmri.managers;
 import jmri.*;
 import jmri.managers.AbstractManager;
 
+import java.text.DecimalFormat;
+
+
 /**
  * Abstract partial implementation of a MemoryManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public abstract class AbstractMemoryManager extends AbstractManager
     implements MemoryManager {
@@ -73,9 +76,34 @@ public abstract class AbstractMemoryManager extends AbstractManager
 
         // save in the maps
         register(s);
-
+        
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IM:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoMemoryRef) {
+                    lastAutoMemoryRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
         return s;
     }
+    
+    public Memory newMemory(String userName) {
+        int nextAutoMemoryRef = lastAutoMemoryRef+1;
+        StringBuilder b = new StringBuilder("IM:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoMemoryRef);
+        b.append(nextNumber);
+        return newMemory(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoMemoryRef = 0;
 
     /**
      * Internal method to invoke the factory, after all the
