@@ -303,7 +303,8 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         itemPanel.init();
         _itemPanelMap.put("Turnout", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Turnout"));
-
+/*
+* Hold until documented.
         itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", editor);
         itemPanel.init();
         _itemPanelMap.put("IndicatorTrack", itemPanel);
@@ -314,7 +315,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         itemPanel.init();
         _itemPanelMap.put("IndicatorTO", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("IndicatorTO"));
-
+*/
         itemPanel = new TableItemPanel(this, "Sensor",
                                        PickListModel.sensorPickModelInstance(), editor);
         itemPanel.init();
