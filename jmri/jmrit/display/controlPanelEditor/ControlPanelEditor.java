@@ -672,6 +672,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         }
         _currentSelection = null;
         _selectRect = null;
+
+        // if not sending MouseClicked, do it here
+        if (!_dragging && jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
+            mouseClicked(event);
+
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
