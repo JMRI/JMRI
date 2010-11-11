@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a car roster -->
-<!-- $Id: operations-cars.dtd,v 1.16 2010-10-03 15:18:16 dan_boudreau Exp $ -->
+<!-- $Id: operations-cars.dtd,v 1.17 2010-11-11 02:38:28 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -57,6 +57,7 @@
 <!ATTLIST car rweDestId				CDATA #IMPLIED> 
 <!ATTLIST car rweDestTrackId		CDATA #IMPLIED> 
 <!ATTLIST car leadKernel			(true | false ) "false"> 
+<!ATTLIST car passenger				(true | false ) "false"> 
 <!ATTLIST car caboose				(true | false ) "false"> 
 <!ATTLIST car fred					(true | false ) "false"> 
 <!ATTLIST car hazardous				(true | false ) "false"> 

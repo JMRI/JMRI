@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -67,6 +67,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	// check boxes
 	JCheckBox autoCheckBox = new JCheckBox(rb.getString("Auto"));
 	JCheckBox autoTrackCheckBox = new JCheckBox(rb.getString("Auto"));
+	JCheckBox passengerCheckBox = new JCheckBox(rb.getString("Passenger"));
 	JCheckBox cabooseCheckBox = new JCheckBox(rb.getString("Caboose"));
 	JCheckBox fredCheckBox = new JCheckBox(rb.getString("Fred"));
 	JCheckBox hazardousCheckBox = new JCheckBox(rb.getString("Hazardous"));
@@ -109,6 +110,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		weightTextField.setToolTipText(rb.getString("TipCarWeightOz"));
 		weightTonsTextField.setToolTipText(rb.getString("TipCarWeightTons"));
 		autoCheckBox.setToolTipText(rb.getString("TipCarAutoCalculate"));
+		passengerCheckBox.setToolTipText(rb.getString("TipCarPassenger"));
 		cabooseCheckBox.setToolTipText(rb.getString("TipCarCaboose"));
 		fredCheckBox.setToolTipText(rb.getString("TipCarFred"));
 		hazardousCheckBox.setToolTipText(rb.getString("TipCarHazardous"));
@@ -118,6 +120,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		
 		// default check box selections
 		autoCheckBox.setSelected(true);
+		passengerCheckBox.setSelected(false);
 		cabooseCheckBox.setSelected(false);
 		fredCheckBox.setSelected(false);	
 		hazardousCheckBox.setSelected(false);
@@ -147,11 +150,12 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		JPanel pType = new JPanel();
 		pType.setLayout(new GridBagLayout());
 		pType.setBorder(BorderFactory.createTitledBorder(rb.getString("Type")));
-		addItem(pType, typeComboBox, 1, 0);
-		addItem(pType, editTypeButton, 2, 0);
+		addItem(pType, typeComboBox, 0, 0);
+		addItem(pType, editTypeButton, 1, 0);
+		addItem(pType, passengerCheckBox, 0, 1);
 		addItem(pType, cabooseCheckBox, 1, 1);
 		addItem(pType, fredCheckBox, 2, 1);
-		addItem(pType, hazardousCheckBox, 3, 1);
+		addItem(pType, hazardousCheckBox, 2, 0);
 		pPanel.add(pType);
 		
 		// row 4
@@ -362,6 +366,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		colorComboBox.setSelectedItem(car.getColor());
 		weightTextField.setText(car.getWeight());
 		weightTonsTextField.setText(car.getWeightTons());
+		passengerCheckBox.setSelected(car.isPassenger());
 		cabooseCheckBox.setSelected(car.isCaboose());
 		fredCheckBox.setSelected(car.hasFred());
 		hazardousCheckBox.setSelected(car.isHazardous());
@@ -579,15 +584,19 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 
 	private void calculateWeight() {
 		if (lengthComboBox.getSelectedItem() != null) {
-			String item = (String) lengthComboBox.getSelectedItem();
+			String length = (String) lengthComboBox.getSelectedItem();
 			try {
-				double carLength = Double.parseDouble(item)*12/Setup.getScaleRatio();
+				double carLength = Double.parseDouble(length)*12/Setup.getScaleRatio();
 				double carWeight = (Setup.getInitalWeight() + carLength
 						* Setup.getAddWeight()) / 1000;
 				NumberFormat nf = NumberFormat.getNumberInstance();
 				nf.setMaximumFractionDigits(1);
-				weightTextField.setText((nf.format(carWeight)));
-				weightTonsTextField.setText(Integer.toString((int)(carWeight*Setup.getScaleTonRatio())));
+				weightTextField.setText((nf.format(carWeight)));	// car weight in ounces.
+				int tons = (int)(carWeight*Setup.getScaleTonRatio());
+				// adjust weight for caboose
+				if (cabooseCheckBox.isSelected() || passengerCheckBox.isSelected())
+					tons = (int)(Double.parseDouble(length) * .9);  //.9 tons/foot
+				weightTonsTextField.setText(Integer.toString(tons));
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this,
 						rb.getString("carLengthMustBe"), rb.getString("carWeigthCanNot"),
@@ -614,6 +623,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 				_car.setColor(colorComboBox.getSelectedItem().toString());
 			_car.setWeight(weightTextField.getText());
 			_car.setWeightTons(weightTonsTextField.getText());
+			_car.setPassenger(passengerCheckBox.isSelected());
 			_car.setCaboose(cabooseCheckBox.isSelected());
 			_car.setFred(fredCheckBox.isSelected());
 			_car.setHazardous(hazardousCheckBox.isSelected());

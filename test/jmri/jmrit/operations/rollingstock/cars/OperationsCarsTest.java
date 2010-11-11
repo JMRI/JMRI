@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -204,27 +204,38 @@ public class OperationsCarsTest extends TestCase {
 		Car c1 = new Car("TESTCARROAD", "TESTCARNUMBER1");
 		c1.setLength("40");
 		c1.setWeight("1000");
+		c1.setWeightTons("10");
+		c1.setLoad("L");
 		Car c2 = new Car("TESTCARROAD", "TESTCARNUMBER2");
 		c2.setLength("60");
 		c2.setWeight("2000");
+		c2.setWeightTons("20");
+		c2.setLoad("L");
 		Car c3 = new Car("TESTCARROAD", "TESTCARNUMBER3");
 		c3.setLength("50");
 		c3.setWeight("1500");
+		c3.setWeightTons("15");
+		c3.setLoad("E");
 
 		Assert.assertEquals("Kernel Initial Length", 0, k1.getLength());
 		Assert.assertEquals("Kernel Initial Weight", 0.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Initial Weight Tons", 0, k1.getAdjustedWeightTons());
 
 		k1.addCar(c1);
-		Assert.assertEquals("Kernel Car 1 Length", 40+4, k1.getLength());
+		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getLength());
 		Assert.assertEquals("Kernel Car 1 Weight", 1000.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
 
 		k1.addCar(c2);
-		Assert.assertEquals("Kernel Car 2 Length", 40+4+60+4, k1.getLength());
+		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getLength());
 		Assert.assertEquals("Kernel Car 2 Weight", 3000.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
 
 		k1.addCar(c3);
-		Assert.assertEquals("Kernel Car 3 Length", 40+4+60+4+50+4, k1.getLength());
+		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getLength());
 		Assert.assertEquals("Kernel Car 3 Weight", 4500.0, k1.getWeight(), 0.0);
+		// car 3 is empty, so only 5 tons, 15/3
+		Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
 
 		k1.setLeadCar(c2);
 		Assert.assertTrue("Kernel Lead Car 1", k1.isLeadCar(c2));
@@ -232,16 +243,19 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Kernel Lead Car 3", k1.isLeadCar(c3));
 
 		k1.deleteCar(c2);
-		Assert.assertEquals("Kernel Car Delete 2 Length", 40+4+50+4, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getLength());
 		Assert.assertEquals("Kernel Car Delete 2 Weight", 2500.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Car Delete 2 Weight Tons", 15, k1.getAdjustedWeightTons());
 
 		k1.deleteCar(c1);
-		Assert.assertEquals("Kernel Car Delete 1 Length", 50+4, k1.getLength());
+		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getLength());
 		Assert.assertEquals("Kernel Car Delete 1 Weight", 1500.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Car Delete 1 Weight Tons", 5, k1.getAdjustedWeightTons());
 
 		k1.deleteCar(c3);
 		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getLength());
 		Assert.assertEquals("Kernel Car Delete 3 Weight", 0.0, k1.getWeight(), 0.0);
+		Assert.assertEquals("Kernel Car Delete 3 Weight Tons", 0, k1.getAdjustedWeightTons());
 
 	}
 

@@ -139,7 +139,7 @@ public class TrainCommon {
 	
 	protected String getCarAttribute(Car car, String attribute, boolean pickup){
 		if (attribute.equals(Setup.LOAD))
-			return !car.isCaboose()? car.getLoad()+" " : "";
+			return (car.isCaboose() || car.isPassenger())? "" : car.getLoad()+" ";
 		else if (attribute.equals(Setup.HAZARDOUS))
 			return (car.isHazardous()? "("+rb.getString("Hazardous")+") " : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))

@@ -21,7 +21,7 @@ import java.io.File;
  * Tests for the Operations Setup GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 	
@@ -188,7 +188,7 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertNotNull("backup directory exists", dir);
 		
 		String[] backupDirectoryNames = dir.list();
-		Assert.assertTrue("There should be at least one directory", backupDirectoryNames.length==1);
+		Assert.assertTrue("There should be at least one directory", backupDirectoryNames.length>0);
 		
 		for (int i = 0; i < backupDirectoryNames.length; i++) {
 			File backDir = new File(dirName + File.separator + backupDirectoryNames[i]);

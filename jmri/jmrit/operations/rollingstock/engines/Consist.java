@@ -7,12 +7,11 @@ import java.util.*;
  * A consist is a group of engines that is managed as one engine
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class Consist {
 	
 	protected String _name ="";
-	protected int _length = 0;
 	protected Engine _leadEngine = null;
 	protected int _consistNumber = 0;
 	
@@ -41,7 +40,6 @@ public class Consist {
 			_leadEngine = engine;
 		}
 		int oldSize = _engines.size();
-		setLength(getLength()+ Integer.parseInt(engine.getLength()) + Engine.COUPLER);
 		_engines.add(engine);
 		firePropertyChange("listLength", Integer.toString(oldSize), Integer.valueOf(_engines.size()));
 	}
@@ -52,7 +50,6 @@ public class Consist {
 			return;
 		}
 		int oldSize = _engines.size();
-		setLength(getLength()- (Integer.parseInt(engine.getLength()) + Engine.COUPLER));
 		_engines.remove(engine);
 		if(isLeadEngine(engine) && _engines.size()>0){
 			// need a new lead engine
@@ -64,16 +61,27 @@ public class Consist {
 	public List<Engine> getEngines(){
 		return _engines;
 	}
-	
-	public void setLength(int length) {
-		int old = _length;
-		_length = length;
-		if (old != length)
-			firePropertyChange("consist length", Integer.toString(old), Integer.toString(length));
-	}
 
 	public int getLength() {
-		return _length;
+		int length = 0;
+		for (int i=0; i<_engines.size(); i++){
+			Engine engine = _engines.get(i);
+			length = length + Integer.parseInt(engine.getLength()) + Engine.COUPLER;
+		}
+		return length;
+	}
+	
+	public int getAdjustedWeightTons() {
+		int weightTons = 0;
+		for (int i=0; i<_engines.size(); i++){
+			Engine engine = _engines.get(i);
+			try {
+				weightTons = weightTons + Integer.parseInt(engine.getWeightTons());
+			} catch (NumberFormatException e){
+				log.warn("engine ("+engine.toString()+") does not have a valid weight");
+			}
+		}
+		return weightTons;
 	}
 	
 	public boolean isLeadEngine(Engine engine){

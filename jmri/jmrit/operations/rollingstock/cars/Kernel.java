@@ -7,14 +7,12 @@ import java.util.*;
  * A Kernel is a group of cars that is managed as one car.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class Kernel {
 	
 	protected String _name ="";
-	protected int _length = 0;
 	protected double _weight = 0;
-	protected int _weightTons = 0;
 	protected Car _leadCar = null;
 	
 	public Kernel(String name){
@@ -42,10 +40,8 @@ public class Kernel {
 			_leadCar = car;
 		}
 		int oldSize = _cars.size();
-		setLength(getLength()+ Integer.parseInt(car.getLength()) + Car.COUPLER);
 		try {
 			setWeight(getWeight()+ Double.parseDouble(car.getWeight()));
-			setWeightTons(getWeightTons()+ Integer.parseInt(car.getWeightTons()));
 		} catch (Exception e){
 			log.debug ("car ("+car.getId()+") weight not set");
 		}
@@ -59,9 +55,7 @@ public class Kernel {
 			return;
 		}
 		int oldSize = _cars.size();
-		setLength(getLength()- (Integer.parseInt(car.getLength()) + Car.COUPLER));
 		setWeight(getWeight()- Double.parseDouble(car.getWeight()));
-		setWeightTons(getWeightTons()- Integer.parseInt(car.getWeightTons()));
 		_cars.remove(car);
 		if(isLeadCar(car) && _cars.size()>0){
 			// need a new lead car
@@ -73,16 +67,14 @@ public class Kernel {
 	public List<Car> getCars(){
 		return _cars;
 	}
-	
-	public void setLength(int length) {
-		int old = _length;
-		_length = length;
-		if (old != length)
-			firePropertyChange("kernel length", Integer.toString(old), Integer.toString(length));
-	}
 
 	public int getLength() {
-		return _length;
+		int length = 0;
+		for (int i=0; i<_cars.size(); i++){
+			Car car = _cars.get(i);
+			length = length + Integer.parseInt(car.getLength()) + Car.COUPLER;
+		}
+		return length;
 	}
 	
 	public void setWeight(double weight){
@@ -93,12 +85,17 @@ public class Kernel {
 		return _weight;
 	}
 	
-	public void setWeightTons(int weight){
-		_weightTons = weight;
-	}
-	
-	public int getWeightTons() {
-		return _weightTons;
+	/**
+	 * Get a kernel's weight adjusted for car loads
+	 * @return kernel's weight
+	 */
+	public int getAdjustedWeightTons() {
+		int weightTons = 0;
+		for (int i=0; i<_cars.size(); i++){
+			Car car = _cars.get(i);
+			weightTons = weightTons + car.getAdjustedWeightTons();
+		}
+		return weightTons;
 	}
 	
 	public boolean isLeadCar(Car car){

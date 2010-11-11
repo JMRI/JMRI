@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.37 $
+ * @version	$Revision: 1.38 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -225,7 +225,8 @@ public class CarManager extends RollingStockManager{
     
     /**
 	 * Get a list of Cars assigned to a train sorted by destination.
-	 * Caboose or car with FRED will be the last car in the list 
+	 * Passenger cars will be placed at the end of the list. 
+	 * Caboose or car with FRED will be the last car(s) in the list
 	 * 
 	 * @param train
 	 * @return Ordered list of Car ids assigned to the train
@@ -237,7 +238,7 @@ public class CarManager extends RollingStockManager{
      	// now sort by track destination
     	List<String> out = new ArrayList<String>();
     	boolean carAdded;
-    	boolean lastCarAdded = false;	// true if caboose or car with FRED added to train 
+    	int lastCarsIndex = 0;	// incremented each time a car is added to the end of the train 
     	for (int i = 0; i < inTrain.size(); i++) {
     		carAdded = false;
     		car = getById(inTrain.get(i));
@@ -245,19 +246,20 @@ public class CarManager extends RollingStockManager{
     		for (int j = 0; j < out.size(); j++) {
     			Car carOut = getById (out.get(j));
     			String carOutDest = carOut.getDestinationTrackName();
-    			if (carDestination.compareToIgnoreCase(carOutDest)<0 && !car.isCaboose() && !car.hasFred()){
+    			if (carDestination.compareToIgnoreCase(carOutDest)<0 && !car.isCaboose() && !car.hasFred() && !car.isPassenger()){
     				out.add(j, inTrain.get(i));
     				carAdded = true;
     				break;
     			}
     		}
     		if (!carAdded){
-    			if (lastCarAdded)
-    				out.add(out.size()-1, inTrain.get(i));
-    			else
-    				out.add(inTrain.get(i));
     			if (car.isCaboose()||car.hasFred()){
-    				lastCarAdded = true;
+    				out.add(inTrain.get(i));	// place at end of list
+    			} else {
+    				out.add(out.size()-lastCarsIndex, inTrain.get(i));
+    			}
+    			if (car.isPassenger()){
+    				lastCarsIndex++;
     			}
     		}
     	}

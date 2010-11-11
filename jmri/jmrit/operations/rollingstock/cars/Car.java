@@ -16,12 +16,13 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.48 $
+ * @version             $Revision: 1.49 $
  */
 public class Car extends RollingStock {
 	
 	CarLoads carLoads = CarLoads.instance();
 	
+	protected boolean _passenger = false;
 	protected boolean _hazardous = false;
 	protected boolean _caboose = false;
 	protected boolean _fred = false;
@@ -65,6 +66,17 @@ public class Car extends RollingStock {
 		return _hazardous;
 	}
 	
+	public void setPassenger(boolean passenger){
+		boolean old = _passenger;
+		_passenger = passenger;
+		if (!old == passenger)
+			firePropertyChange("car passenger", old?"true":"false", passenger?"true":"false");
+	}
+	
+	public boolean isPassenger(){
+		return _passenger;
+	}
+	
 	public void setFred(boolean fred){
 		boolean old = _fred;
 		_fred = fred;
@@ -100,6 +112,20 @@ public class Car extends RollingStock {
 	
 	public String getPriority(){
 		return (carLoads.getPriority(_type, _load));
+	}
+	
+	public int getAdjustedWeightTons(){
+		int weightTons =0;
+		try {
+			// get loaded weight
+			weightTons = Integer.parseInt(getWeightTons());
+			// adjust for empty weight if car is empty, 1/3 of loaded weight
+			if (!isCaboose() && !isPassenger() && getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+				weightTons = weightTons / 3;
+		} catch (Exception e){
+			log.debug ("Car ("+toString()+") weight not set");
+		}
+		return weightTons;
 	}
 	
 	public void setWait(int count){
@@ -463,6 +489,8 @@ public class Car extends RollingStock {
 	public Car(org.jdom.Element e) {
 		super.rollingStock(e);
 		org.jdom.Attribute a;
+		if ((a = e.getAttribute("passenger")) != null)
+			_passenger = a.getValue().equals("true");
 		if ((a = e.getAttribute("hazardous")) != null)
 			_hazardous = a.getValue().equals("true");
 		if ((a = e.getAttribute("caboose")) != null)
@@ -520,6 +548,8 @@ public class Car extends RollingStock {
 	public org.jdom.Element store() {
 		org.jdom.Element e = new org.jdom.Element("car");
 		super.store(e);
+		if (isPassenger())
+			e.setAttribute("passenger", isPassenger()?"true":"false");
 		if (isHazardous())
 			e.setAttribute("hazardous", isHazardous()?"true":"false");
 		if (isCaboose())

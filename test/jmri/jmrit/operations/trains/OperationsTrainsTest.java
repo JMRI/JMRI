@@ -64,7 +64,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.64 $
+ * @version $Revision: 1.65 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3026,10 +3026,12 @@ public class OperationsTrainsTest extends TestCase {
 		
 		// check train length and tonnage
 		Assert.assertEquals("Depart Westford length", 158, r1l1.getTrainLength());
-		Assert.assertEquals("Depart Chelmsford length", 340, r1l2.getTrainLength());
+		Assert.assertEquals("Depart Old Chelmsford length", 340, r1l2.getTrainLength());
 		
-		Assert.assertEquals("Depart Westford tonnage", 50, r1l1.getTrainWeight());
-		Assert.assertEquals("Depart Chelmsford tonnage", 340, r1l2.getTrainWeight());
+		// c2 E and c3 E loaded car weight 20 + 30 = 50 tons, empty weight 20/3 + 30/3 = 16
+		Assert.assertEquals("Depart Westford tonnage", 16, r1l1.getTrainWeight());
+		// In train, c2 E, c4 E, c7 E, c9 L, c12 L = 20/3 + 40/3 + 70/3 + 90 + 120 = 252 
+		Assert.assertEquals("Depart Old Chelmsford tonnage", 252, r1l2.getTrainWeight());
 		
 		// test route pickup and drop controls
 		train3.setRequirements(Train.CABOOSE);

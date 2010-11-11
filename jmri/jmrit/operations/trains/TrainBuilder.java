@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.99 $
+ * @version             $Revision: 1.100 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -535,6 +535,7 @@ public class TrainBuilder extends TrainCommon{
 					List<Engine> cEngines = engine.getConsist().getEngines();
 					if (cEngines.size() == reqNumEngines || leavingStaging){
 						engineLength = engine.getConsist().getLength();
+						engineWeight = engine.getConsist().getAdjustedWeightTons();
 						for (int j=0; j<cEngines.size(); j++){
 							numberEngines++;
 							Engine cEngine = cEngines.get(j);
@@ -543,13 +544,6 @@ public class TrainBuilder extends TrainCommon{
 							cEngine.setRouteLocation(train.getTrainDepartsRouteLocation());
 							cEngine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 							cEngine.setDestination(terminateLocation, terminateTrack, true); // force destination
-							int cWeight = 0;
-							try {
-								cWeight = Integer.parseInt(cEngine.getWeightTons());
-							} catch (NumberFormatException e){
-								log.warn("engine ("+cEngine.toString()+") does not have a valid weight");
-							}
-							engineWeight = engineWeight + cWeight;
 						}
 						break;  // done with loading engines
 						// consist has the wrong number of engines, remove 	
@@ -1389,7 +1383,6 @@ public class TrainBuilder extends TrainCommon{
 			// now adjust train length and weight for each location that car is in the train
 			boolean carInTrain = false;
 			for (int i=0; i<routeList.size(); i++){
-				int weightTons = 0;
 				RouteLocation rlt = train.getRoute().getLocationById(routeList.get(i));
 				if (rl == rlt){
 					carInTrain = true;
@@ -1398,22 +1391,18 @@ public class TrainBuilder extends TrainCommon{
 					carInTrain = false;
 				}
 				if (carInTrain){
-					// car could be part of a kernel
 					int length = Integer.parseInt(car.getLength())+ Car.COUPLER;
-					try {
-						weightTons = weightTons + Integer.parseInt(car.getWeightTons());
-					} catch (Exception e){
-						log.debug ("Car ("+car.toString()+") weight not set");
-					}
+					int weightTons = car.getAdjustedWeightTons();
+					// car could be part of a kernel
 					if (car.getKernel() != null){
 						length = car.getKernel().getLength();
-						weightTons = car.getKernel().getWeightTons();
+						weightTons = car.getKernel().getAdjustedWeightTons();
 					}
-					rlt.setTrainLength(rlt.getTrainLength()+length);
+					rlt.setTrainLength(rlt.getTrainLength()+length);	// couplers are included
 					rlt.setTrainWeight(rlt.getTrainWeight()+weightTons);
 				}
-				if (weightTons > maxWeight){
-					maxWeight = weightTons;		// used for AUTO engines
+				if (rlt.getTrainWeight() > maxWeight){
+					maxWeight = rlt.getTrainWeight();		// used for AUTO engines
 				}
 			}
 			return true;
