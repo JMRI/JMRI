@@ -1,0 +1,93 @@
+/* Please read 'inControl.txt' */
+
+html {
+      height:100%;
+      background-color:Gainsboro;
+}
+
+body {
+      height:100%;
+	  margin:0px auto;
+      background-color:Gainsboro;
+      text-align:center;
+      font-family:Tahoma,Arial,Helvetica,sans-serif;
+      font-size:100%;
+}
+
+.ifrm1 {
+      vertical-align:text-top;
+      border:1px solid black;
+}
+
+.divRect1 {
+      display:block;
+      text-align:center;
+      font-size:100%;
+}
+
+.lblRect1 {
+      display:block;
+      background-color:darkorange;
+      border:1px solid black;
+	  padding:5%;
+      text-align:center;
+      font-size:100%;
+	  font-weight:bold;
+      width:80%;
+	  margin:5px;
+	  cursor:pointer;
+}
+
+.lblRect1UnPressed {
+      display:block;
+      background-color:darkred;
+      border:1px solid black;
+	  padding:5%;
+	  color:white;
+      text-align:center;
+      font-size:100%;
+	  font-weight:bold;
+      width:80%;
+	  margin:5px;
+	  cursor:pointer;
+}
+
+.lblRect1Pressed {
+      display:block;
+      background-color:darkgreen;
+      border:1px solid black;
+	  padding:5%;
+	  color:white;
+      text-align:center;
+      font-size:100%;
+	  font-weight:bold;
+      width:80%;
+	  margin:5px;
+	  cursor:pointer;
+}
+
+.imgRect1 {
+      width:40%;
+	  margin:3px;
+	  cursor:pointer;
+}
+
+.imgRect2 {
+      width:90%;
+	  margin:3px;
+	  cursor:pointer;
+}
+
+.imgRect3 {
+      width:30%;
+	  margin:0px;
+	  cursor:pointer;
+}
+
+.lblRect1:active,.lblRect1Pressed:active,.imgRect1:active,.imgRect2:active,.imgRect3:active {
+	  cursor:wait;
+}
+
+#imgLocoImage, #divPowerLeft , #divPowerRight {
+      display:none;
+}

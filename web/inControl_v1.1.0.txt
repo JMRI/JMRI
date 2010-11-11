@@ -1,0 +1,119 @@
+Title: 'inControl'
+------------------
+Description: A web page to control JMRI
+References: This development is based on the JMRI info, specially on the files distributed in the Mini Web Server directory
+Acknowledgements: Thanks to the JMRI stuff
+Notes:  'inControl' is free.
+Version: 1.1.0
+Date: 2010/11/05
+Author: Oscar Moutinho (from Lisbon, Portugal)
+Author email: oscar.moutinho@gmail.com
+Author hobby site: http://hobby.oscarmoutinho.com
+
+-------------------------------------
+
+Files in root directory:
+	inControl.html (the throttle)
+	inControlMulti.html (a throttle set - several throttles on screen - copy and modify as you wish)
+	inControlTestXMLIO.html (page to test XMLIO messages)
+Files in 'inControl' subdirectory:
+	(default and sample images)
+	inControl.txt (this one - you should read it first)
+	inControl.js (the javascript code)
+	inControl.css (the stylesheet)
+These files/dir must be loaded into one of the Mini Web Server directories (usually c:\Program Files\JMRI\web).
+You should access the HTML pages from a browser (ex.: http://192.168.1.55:12080/web/inControl.html).
+Please check jmri.sourceforge.net and jmriusers Yahoo group on how to use the Mini Web Server.
+
+-------------------------------------
+
+Good behaviour on the following browsers:
+- Google Chrome 7.0.517.41 (on Windows 7)
+- Internet Explorer 8.0.7600 (on Windows 7)
+- Safari 5.0.2 (on Windows 7)
+- Firefox 3.6.12 (on Windows 7)
+- Opera Mini 5.1.21594 (on Qtek 9000)
+
+-------------------------------------
+*** inControl.html *** (the throttle)
+-------------------------------------
+The page is not sent to the server (submited) when you click the buttons.
+It uses AJAX to reduce data flow (+ responsiveness).
+The page is only tranfered from the server when you 'call' it or when you 'refresh' it.
+The page height depends on page width and its content.
+The page content depends on the parameters you fill in when you call the page.
+
+These are the parameters to control the throttle configuration:
+- debug (if this parameter is not empty, the user should receive debug info in dialog boxes)
+- refreshrate (Refresh Rate to retrieve JMRI status (seconds) (0= no refresh / default=5)
+- width (page width in pixels - default:200)
+- power (the layout power control is shown if this parameter is not empty - if 'r' or 'R' it will be displayed in the right column)
+- locoaddress (the address to show in the page title and board - default:3)
+- loconame (the name to show in the page title and board) 
+- locoimage (the image URI to show in the page board)
+- f<n>label (text to show in the function key button - <n> between 0 and 29)
+- f<n>image (URI of image to show in the function key button)
+- f<n>imagepressed (URI of alternate image for function key pressed and locked - works as a flag if 'f<n>image' is empty)
+
+You may use your own images.
+You should store your image files in the JMRI 'prefs' dir (usually C:\Users\<username>\JMRI).
+
+Examples: (You only need to insert this info once for each loco to control and save the URL to the browser favorites)
+http://192.168.1.5:12080/web/inControl.html
+http://trainserver:12080/web/inControl.html?width=500&power=r&locoaddress=17&f1imagepressed=x
+http://192.168.1.5:12080/web/inControl.html?width=300&power=x&loconame=Loco2&locoimage=inControl/Loco2.jpg&f7label=myF7&f8image=inControl/Sound.png&f8imagepressed=inControl/SoundPressed.png&f9label=F9
+: You need to insert a question mark (?) between the page URL and the parameters.
+: Between each parameter you need to insert an ampersand (&).
+: Each parameter is defined this way: <name>=<value>.
+: Avoid to insert special characters in loco name and function labels (if you do, you should 'translate' them: http://www.w3schools.com/TAGS/ref_urlencode.asp).
+: Keep the images small (loco image should be wider than taller).
+
+--------------------------------------------------------------------------------------------------------
+*** inControlMulti.html *** (a throttle set - several throttles on screen - copy and modify as you wish)
+--------------------------------------------------------------------------------------------------------
+If you are going to have several pages like this one, you should change the filename and tittle in order to differentiate them.
+You may change the text between '<title>' and '</tittle>' (the page tittle).
+You may add, modify or remove the lines beginning with '<iframe':
+- modify the 'src' value (...inControl.html...) in order to show the desired throttle configuration
+- modify the 'width' and 'height' in order to acomodate the throttle size
+Examples: (You may save the URL to the browser favorites)
+http://192.168.1.5:12080/web/inControlMulti.html
+http://trainserver:12080/web/inControlMySet1.html
+
++ Known issues ---------------------------------------------------------------
+
+JMRI/XMLIO:
+- throttle status not available (speed, function keys, forward/reverse)
+- power status with random values received when train control network power is off
+
++ Wishes for future developments ---------------------------------------------
+
+Throttle status sync with JMRI status (JMRI/XMLIO response enhancements needed).
+
+Implement web pages for layout panels (turnouts, signals, ...).
+
++ Version History ------------------------------------------------------------
+
+1.1.0
+Power Status feedback
+Retrieve JMRI status periodically (Power only)
+Several improvements
+Test page 'inControlTestXMLIO.html' inserted in the package
+
+1.0.3
+Newer image files
+Added toggle functionality to function keys
+Labels and images for F0, entered as parameters, replace the default
+Improved browser compatibility
+
+1.0.2
+Added 'debug' input parameter.
+Auto resizing in 'inControlMulti.html' removed because it doesn't work as expected in several browsers.
+
+1.0.1
+PowerOff 'alt' value from 'On' to 'Off' (bug correction).
+Power buttons may be displayed in the right column.
+The loco image width is going to be defined with the same width (in pixels) as the main window/table. 
+
+1.0.0
+Initial version.
