@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.12 2010-11-09 03:30:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.13 2010-11-11 13:21:28 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -161,6 +161,9 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>When using the car and engine set windows, the selection of auto checkboxes is now remembered for the session.
 <li>Improved the way the code handles switching from descriptive to AAR car types.
 <li>You can now use a text editor to preview a train's build report.  Unfortunately, this feature requires java 1.6. and is currently disabled for general release.
+<li>User can now customize the order in which engine and car attributes are printed on manifests and switch lists.
+<li>A train's total weight calculation is now based on whether the cars are loaded or empty.  
+<li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
 </ul>
 
 <p>
@@ -222,9 +225,11 @@ to properly support objects within Components such as Tables and Sliders.
 Added support for RadioButtons and CheckBoxes. 
 Tested with Turnout Table and Throttle tools on IE8 and Firefox.
 
-
 <p>
 Peter Mansvelder provided info on the S88XpressNetLi XPressNet interface.
+
+<p>
+Kevin Dickerson improved the script output window.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
