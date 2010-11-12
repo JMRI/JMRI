@@ -4,6 +4,7 @@ package jmri.jmrix.nce.cab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.util.Date;
 
 import javax.swing.JButton;
 
@@ -13,6 +14,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
@@ -119,7 +121,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -147,6 +149,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private static final int FLAGS1_USB = 0x82;		// bit 0=0, bit 1=1, bit 7=1;
 	private static final int FLAGS1_AIU = 0x83;		// bit 0=1, bit 1=1, bit 7=1;
 	private static final int FLAGS1_MASK = 0x83;	// Only bits 0,1, and 7.
+	private static final int FLAGS1_MASK_CABACTIVE = 0x01;	// if cab is active
 	
 	private static final int FUNC_L_F0 = 0x10;		// F0 or headlight
 	private static final int FUNC_L_F1 = 0x01;		// F1
@@ -164,6 +167,14 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private static final int FUNC_H_F12 = 0x80;		// F12
 	
 	Thread NceCabUpdateThread;	
+	private int[] cabFlag1Array = new int[CAB_MAX];
+	private Date[] cabLastChangeArray = new Date[CAB_MAX];
+	private int[] cabSpeedArray = new int[CAB_MAX];
+	private int[] cabFlagsArray = new int[CAB_MAX];
+	private int[] cabLocoArray = new int[CAB_MAX];
+	private int[] cabConsistArray = new int[CAB_MAX];
+	private int[] cabF0Array = new int[CAB_MAX];
+	private int[] cabF5Array = new int[CAB_MAX];
 	
 	// member declarations
 	JLabel textNumer = new JLabel("Number");
@@ -174,13 +185,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     JLabel textFunctions = new JLabel("Functions");
     JLabel textReply = new JLabel("Reply:");
     JLabel textStatus = new JLabel("");
+    JLabel textLastUsed = new JLabel("Last\nUsed");
     
     // major buttons
     JButton refreshButton = new JButton("Refresh");
+    JButton purgeButton = new JButton("Purge Cab");
     
     // check boxes
     JCheckBox checkBoxActive = new JCheckBox ("Active");
     // text field
+    JTextField purgeCabId = new JTextField(3);
     
     // for padding out panel
     JLabel space1 = new JLabel(" ");
@@ -209,9 +223,13 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	refreshButton.setToolTipText("Press to reload table");
     	checkBoxActive.setToolTipText("Show only active cabs when selected");
     	checkBoxActive.setSelected(true);
+    	purgeCabId.setToolTipText("Range 2 - 62");
+    	purgeButton.setToolTipText("Remove Active Status of Cab");
     	addItem(p1, refreshButton, 2, 1);
     	addItem(p1, textStatus, 3, 1);
     	addItem(p1, checkBoxActive, 4, 1);
+    	addItem(p1, purgeCabId, 5, 1);
+    	addItem(p1, purgeButton, 6, 1);
     	
     	// row 2
     	addItem(p1, space1, 2, 2);
@@ -219,14 +237,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         // row 3
     	JPanel p2 = new JPanel();
     	p2.setLayout(new GridBagLayout());
-        addItem(p2, textNumer, 1,3);
-        addItemLeft(p2, textCab, 2,3);
-        addItemLeft(p2, textAddress, 3,3);
-        addItemLeft(p2, textSpeed, 4,3);
-        addItemLeft(p2, textConsist, 5,3);
-        addItemLeft(p2, textFunctions, 6,3);
+        addItem(p2, textNumer, 1, 3);
+        addItemLeft(p2, textCab, 2, 3);
+        addItemLeft(p2, textAddress, 3, 3);
+        addItemLeft(p2, textSpeed, 4, 3);
+        addItemLeft(p2, textConsist, 5, 3);
+        addItemLeft(p2, textFunctions, 6, 3);
+        addItemLeft(p2, textLastUsed, 7, 3);
         
     	addButtonAction(refreshButton);
+    	addButtonAction(purgeButton);
     	
     	getContentPane().add(p1);
     	getContentPane().add(p2);
@@ -242,9 +262,37 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	if (ae.getSource() == refreshButton) {
     		refreshPanel();
+    	} else if (ae.getSource() == purgeButton) {
+    		purgeCab();
     	}
 	}
  
+    private void purgeCab() {
+    	// if id provided
+    	int cab = 0;
+    	try {
+        	cab = Integer.parseInt(purgeCabId.getText().trim());
+    	} catch (NumberFormatException e) {
+            log.error("Invalid value: " + purgeCabId.getText().trim());
+    		return;
+    	}
+    	if (cab < 1 || cab >= CAB_MAX) {
+            log.error("Value out of range: " + purgeCabId.getText().trim());
+    		return;
+    	}
+    	// if id is active
+    	if ((cabFlag1Array[cab] & FLAGS1_MASK_CABACTIVE) != 0) {
+            log.error("Cab not active: " + purgeCabId.getText().trim());
+    		return;
+    	}
+    	// clear bit for active and cab type details
+    	writeCabMemory1(cab, CAB_FLAGS1, 0);
+    	purgeCabId.setText(" ");
+    	// update the display
+    	refreshPanel();
+    	return;
+    }
+    
     private void refreshPanel(){
     	// Set up a separate thread to read CS memory
         if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
@@ -273,12 +321,20 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
            	JLabel speed = new JLabel();
            	JLabel consist = new JLabel();
            	JLabel functions = new JLabel();
+           	JLabel lastUsed = new JLabel();
            	
+           	int foundChange = 0;
            	// create cab type by reading the FLAGS1 byte
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
         	log.debug("Read flag1 character "+recChar);
+        	// save value for purge
+        	if (recChar != cabFlag1Array[i]) {
+        		foundChange++;
+        		log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
+        	}
+        	cabFlag1Array[i] = recChar;
         	int flags1 = recChar & FLAGS1_MASK; // mask off don't care bits
         	if (flags1 == FLAGS1_PROCAB)
         		type.setText("ProCab");
@@ -301,109 +357,161 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
           	addItem(cabsPanel, speed, 4, i);
           	addItem(cabsPanel, consist, 5, i);
           	addItem(cabsPanel, functions, 6, i);
-          	if (flags1 == FLAGS1_AIU)
-          		continue;
-          	// read 16 bytes of memory, we'll use 7 of the 16
-        	readCabMemory16(i, CAB_CURR_SPEED);
-        	if (!waitNce())
-        		return;
-        	// read the Speed byte
-        	int readChar = recChars[0];
-        	log.debug("Read speed character "+Integer.toString(readChar));
-        	String sped = Integer.toString(readChar);
-        	// read the FLAGS byte
-        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
-        	int direction = readChar & 0x04;
-        	if (direction > 0)
-        		sped = sped + " F";
-        	else
-        		sped = sped + " R";
-        	int mode = readChar & 0x02;
-        	// USB doesn't use the 28/128 bit
-        	if (flags1 != FLAGS1_USB){
-        		if (mode > 0)
-        			sped = sped + " / 128";
-        		else
-        			sped = sped + " / 28";
-        	}
-        	speed.setText(sped);
-        	
-        	// create loco address, read the high address byte
-        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
-        	log.debug("Read address high character "+readChar);
-        	int locoAddress = (readChar & 0x3F) *256;
-        	// read the low address byte
-        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
-        	log.debug("Read address low character "+readChar);
-        	locoAddress = locoAddress + (readChar & 0xFF);
-        	address.setText(Integer.toString(locoAddress));
-        	
-        	// create consist address
-        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
-        	if(readChar == 0)
-        		consist.setText(" ");
-        	else
-        		consist.setText(Integer.toString(readChar));
-        	
-        	// create function keys
-        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
-        	log.debug("Function low character "+readChar);
-        	String func = "";
-        	if ((readChar & FUNC_L_F0) > 0)
-        		func = func + "L";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_L_F1) > 0)
-        		func = func + "1";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_L_F2) > 0)
-        		func = func + "2";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_L_F3) > 0)
-        		func = func + "3";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_L_F4) > 0)
-        		func = func + "4";
-        	else
-        		func = func + "-";
-        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
-        	log.debug("Function high character "+readChar);
-           	if ((readChar & FUNC_H_F5) > 0)
-        		func = func + "5";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_H_F6) > 0)
-        		func = func + "6";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_H_F7) > 0)
-        		func = func + "7";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_H_F8) > 0)
-        		func = func + "8";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_H_F9) > 0)
-        		func = func + "9";
-        	else
-        		func = func + "-";
-           	if ((readChar & FUNC_H_F10) > 0)
-        		func = func + "A";
-        	else
-        		func = func + "-";
-          	if ((readChar & FUNC_H_F11) > 0)
-        		func = func + "B";
-        	else
-        		func = func + "-";
-          	if ((readChar & FUNC_H_F12) > 0)
-        		func = func + "C";
-        	else
-        		func = func + "-";
-          	functions.setText(func);
+          	addItem(cabsPanel, lastUsed, 7, i);
+          	if (flags1 != FLAGS1_AIU) {
+	          	// read 16 bytes of memory, we'll use 7 of the 16
+	        	readCabMemory16(i, CAB_CURR_SPEED);
+	        	if (!waitNce())
+	        		return;
+	        	// read the Speed byte
+	        	int readChar = recChars[0];
+	        	if (cabSpeedArray[i] != readChar) {
+	        		foundChange++;
+	        		log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
+	        	}
+	        	cabSpeedArray[i] = readChar;
+	        	log.debug("Read speed character "+Integer.toString(readChar));
+	        	String sped = Integer.toString(readChar);
+	        	// read the FLAGS byte
+	        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
+	        	if (cabFlagsArray[i] != readChar) {
+	        		foundChange++;
+	        		log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
+	        	}
+	        	cabFlagsArray[i] = readChar;
+	        	int direction = readChar & 0x04;
+	        	if (direction > 0)
+	        		sped = sped + " F";
+	        	else
+	        		sped = sped + " R";
+	        	int mode = readChar & 0x02;
+	        	// USB doesn't use the 28/128 bit
+	        	if (flags1 != FLAGS1_USB){
+	        		if (mode > 0)
+	        			sped = sped + " / 128";
+	        		else
+	        			sped = sped + " / 28";
+	        	}
+	        	speed.setText(sped);
+	        	
+	        	// create loco address, read the high address byte
+	        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
+	        	log.debug("Read address high character "+readChar);
+	        	int locoAddress = (readChar & 0x3F) *256;
+	        	// read the low address byte
+	        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
+	        	log.debug("Read address low character "+readChar);
+	        	locoAddress = locoAddress + (readChar & 0xFF);
+	        	if (cabLocoArray[i] != locoAddress) {
+	        		foundChange++;
+	        		log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
+	        	}
+	        	cabLocoArray[i] = locoAddress;
+	        	address.setText(Integer.toString(locoAddress));
+	        	
+	        	// create consist address
+	        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
+	        	if (cabConsistArray[i] != readChar) {
+	        		foundChange++;
+	        		log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
+	        	}
+	        	cabConsistArray[i] = readChar;
+	        	if(readChar == 0)
+	        		consist.setText(" ");
+	        	else
+	        		consist.setText(Integer.toString(readChar));
+	        	
+	        	// create function keys
+	        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
+	        	if (cabF0Array[i] != readChar) {
+	        		foundChange++;
+	        		log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
+	        	}
+	        	cabF0Array[i] = readChar;
+	        	log.debug("Function low character "+readChar);
+	        	String func = "";
+	        	if ((readChar & FUNC_L_F0) > 0)
+	        		func = func + "L";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_L_F1) > 0)
+	        		func = func + "1";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_L_F2) > 0)
+	        		func = func + "2";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_L_F3) > 0)
+	        		func = func + "3";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_L_F4) > 0)
+	        		func = func + "4";
+	        	else
+	        		func = func + "-";
+	        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
+	        	if (cabF5Array[i] != readChar) {
+	        		foundChange++;
+	        		log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
+	        	}
+	        	cabF5Array[i] = readChar;
+	        	log.debug("Function high character "+readChar);
+	           	if ((readChar & FUNC_H_F5) > 0)
+	        		func = func + "5";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_H_F6) > 0)
+	        		func = func + "6";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_H_F7) > 0)
+	        		func = func + "7";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_H_F8) > 0)
+	        		func = func + "8";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_H_F9) > 0)
+	        		func = func + "9";
+	        	else
+	        		func = func + "-";
+	           	if ((readChar & FUNC_H_F10) > 0)
+	        		func = func + "A";
+	        	else
+	        		func = func + "-";
+	          	if ((readChar & FUNC_H_F11) > 0)
+	        		func = func + "B";
+	        	else
+	        		func = func + "-";
+	          	if ((readChar & FUNC_H_F12) > 0)
+	        		func = func + "C";
+	        	else
+	        		func = func + "-";
+	          	functions.setText(func);
+          	}
+          	if (foundChange > 0) {
+            	cabLastChangeArray[i] = (new Date());
+            }
+          	StringBuilder txt = new StringBuilder();
+          	int h = cabLastChangeArray[i].getHours();
+          	int m = cabLastChangeArray[i].getMinutes();
+          	int s = cabLastChangeArray[i].getSeconds();
+          	if (h < 10) {
+          		txt.append("0");
+          	}
+            txt.append(h);
+            txt.append(":");
+            if (m < 10) {
+            	txt.append("0");
+            }
+            txt.append(m);
+            if (s < 10) {
+            	txt.append("0");
+            }
+            txt.append(s);
+            lastUsed.setText(txt.toString());
         }
     	validate();
     	cabsPane.setVisible(true);
@@ -459,6 +567,17 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 		
 	}
 
+    // Write 1 byte of NCE cab memory 
+    private void writeCabMemory1(int cabNum, int offset, int value) {
+       	int nceCabAddr = (cabNum * CAB_SIZE) + CS_CAB_MEM + offset;
+    	replyLen = REPLY_1;			// Expect 1 byte response
+    	waiting++;
+		byte[] bl = NceBinaryCommand.accMemoryWriteN(nceCabAddr, 1);
+		bl[4] = (byte)value;
+		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_1);
+		NceTrafficController.instance().sendNceMessage(m, this);
+    }
+    
     // Reads 1 byte of NCE cab memory 
     private void readCabMemory1(int cabNum, int offset) {
        	int nceCabAddr = (cabNum * CAB_SIZE) + CS_CAB_MEM + offset;

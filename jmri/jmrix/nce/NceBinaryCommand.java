@@ -72,7 +72,7 @@ package jmri.jmrix.nce;
   * Also see NceMessage.java for additional commands
   * 
   * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.23 $
+  * @version     $Revision: 1.24 $
   */
 
 public class NceBinaryCommand {
@@ -236,6 +236,42 @@ public class NceBinaryCommand {
 
 		byte[] retVal = new byte[3+4];
 		retVal[0] = (byte) (WRITE4_CMD);// write 4 bytes command
+		retVal[1] = (byte) (addr_h); 	// high address
+		retVal[2] = (byte) (addr_l); 	// low address
+
+		return retVal;
+	}
+
+    public static byte[] accMemoryWrite2(int address) {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
+
+		int addr_h = address / 256;
+		int addr_l = address & 0xFF;
+
+		byte[] retVal = new byte[3+2];
+		retVal[0] = (byte) (WRITE2_CMD);// write 4 bytes command
+		retVal[1] = (byte) (addr_h); 	// high address
+		retVal[2] = (byte) (addr_l); 	// low address
+
+		return retVal;
+	}
+    
+    public static byte[] accMemoryWrite1(int address) {
+    	// this command isn't supported by the NCE USB
+    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
+    		log.error("attempt to send unsupported binary command to NCE USB");
+			return null;
+    	}
+
+		int addr_h = address / 256;
+		int addr_l = address & 0xFF;
+
+		byte[] retVal = new byte[3+1];
+		retVal[0] = (byte) (WRITE1_CMD);// write 4 bytes command
 		retVal[1] = (byte) (addr_h); 	// high address
 		retVal[2] = (byte) (addr_l); 	// low address
 
