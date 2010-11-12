@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.7 2010-10-31 11:27:38 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.8 2010-11-12 09:15:23 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -135,6 +135,7 @@ JMRI Install Guide: Windows
 
 <p>With Windows XP, your serial port parameters might not be properly set for hardware flow control. To fix this, right-click on My Computer and select Properties. Go to the Hardware tab and click on Device Manager. Open up the section that says Ports (COM &amp; LPT). Right-click on the serial port you have the LocoBuffer hooked to and select Properties. Go to the Port Settings tab and set the options to 19200, 8, None, 1, Hardware. Click OK. Close everything. Restart JMRI and verify your connection settings.</p>
 
+<a id="debugging"/>
 <h2>Debugging</h2>
 <p>Sometimes things go wrong.  The information in this section can help.</p>
 
@@ -158,6 +159,7 @@ JMRI Install Guide: Windows
 <li>In your e-mail client, the Yahoo! "Post Message" pane, Notepad, Wordpad, favorite word processor, etc, position your cursor and left-click on Edit and then Paste, or press the "Ctrl" and "V" keys.
 </ol>
 
+<a id="startupissues"/>
 <h4>Startup issues</h4>
 <p>To assist with resolving JMRI start-up issues, it is possible to modify the start menu shortcut used to launch JMRI.</p>
 
