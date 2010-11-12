@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!-- $Id: WindowsNew.shtml,v 1.8 2010-11-12 09:15:23 matthewharris Exp $ -->
+<!-- $Id: WindowsNew.shtml,v 1.9 2010-11-12 09:52:06 matthewharris Exp $ -->
 <html lang="en">
 <HEAD>
         <META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
@@ -142,6 +142,17 @@ JMRI Install Guide: Windows
 <h4>The Log Screen</h4>
 
 <p>JMRI logs information about errors to a "messages.log" file in the "systemfiles" sub-directory of the JMRI preferences directory, and to a console window. This window is generally white text on a black background, and is labelled either "Java" or "DOS". If something is going wrong, look there for more information.</p>
+
+<ol>
+<li>To view the "systemfiles" sub-directory, follow the "Preferences" link in "JMRI > Tools and Demos" from the Start menu.
+<br /><img src="images/WinDebugLog-01_StartMenuPreferences.png" height="358" width="531" alt="Preferences link in JMRI > Tools and Demos start menu"/>
+
+<li>Once the preferences folder is opened, navigate to the "systemfiles" folder.
+<br /><img src="images/WinDebugLog-02_SystemFiles.png" height="299" width="663" alt="systemfiles folder within JMRI preferences"/>
+
+<li>Finally, within the "systemfiles" folder, is "messages.log".
+<br /><img src="images/WinDebugLog-03_MessagesLog.png" height="299" width="663" alt="messages.log file within systemfiles folder"/>
+</ol>
 
 <p>If asked for a copy of the error messages, you can usually get them from the messages.log file.  If not, to make a copy of the log window:</p>
 
