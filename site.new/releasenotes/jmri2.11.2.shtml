@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.13 2010-11-11 13:21:28 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.14 2010-11-12 19:38:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -230,6 +230,27 @@ Peter Mansvelder provided info on the S88XpressNetLi XPressNet interface.
 
 <p>
 Kevin Dickerson improved the script output window.
+
+<p>
+Oscar Moutinho provided
+<a href="http://jmri.org/web/inControl_v1.1.0.txt">web-based throttles</a> 
+(version 1.1 of his inControl package)
+
+<p>
+Matt Harris provided the ComPortEnumeration.py sample script, for getting
+a list of available ports.
+
+<p>
+Ken Cameron added a way to purge cabs from the NCE active cab list. 
+This also shows the last (real) time the cab was active.
+
+<p>
+Matt Harris improved some documentation.
+
+<p>
+Kevin Dickerson added a new item to the Debug menu, a tool under development that
+gives you tabbed access to the tables.
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
