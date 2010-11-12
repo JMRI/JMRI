@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -864,7 +864,7 @@ public class SectionTableAction extends AbstractTableAction {
     /**
      * Add the Tools menu item
      */
-    public void addToFrame(BeanTableFrame f) {
+    public void setMenuBar(BeanTableFrame f) {
 		frame = f;
         JMenuBar menuBar = f.getJMenuBar();
         JMenu toolsMenu = new JMenu(rbx.getString("Tools"));

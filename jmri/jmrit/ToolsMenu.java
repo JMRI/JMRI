@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.42 $
+ * @version     $Revision: 1.43 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -23,6 +23,12 @@ public class ToolsMenu extends JMenu {
         setText(name);
     }
 
+    Action prefsAction;
+    
+    protected void doPreferences() {
+            prefsAction.actionPerformed(null);
+    }
+    
     public ToolsMenu() {
 
         super();
@@ -42,8 +48,10 @@ public class ToolsMenu extends JMenu {
         if (jmri.InstanceManager.programmerManagerInstance()==null){
         	programmerMenu.setEnabled(false);
         }
-
+        
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
+        
+        tableMenu.add(tableMenu);
         tableMenu.add(new jmri.jmrit.beantable.TurnoutTableAction(rb.getString("MenuItemTurnoutTable")));
         tableMenu.add(new jmri.jmrit.beantable.SensorTableAction(rb.getString("MenuItemSensorTable")));
         tableMenu.add(new jmri.jmrit.beantable.LightTableAction(rb.getString("MenuItemLightTable")));

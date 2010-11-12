@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -121,7 +121,7 @@ public class MemoryTableAction extends AbstractTableAction {
     JCheckBox autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
     jmri.UserPreferencesManager p;
 
-    void addPressed(ActionEvent e) {
+    public void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddMemory"));

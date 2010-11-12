@@ -14,7 +14,7 @@ import javax.swing.JButton;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -60,10 +60,16 @@ abstract public class AbstractTableAction extends AbstractAction {
                 });
             }
         };
+        setMenuBar(f);
         setTitle();
         addToFrame(f);
         f.pack();
         f.setVisible(true);
+    }
+    
+    public BeanTableDataModel getTableDataModel(){
+        createModel();
+        return m;
     }
     
     /**
@@ -71,6 +77,9 @@ abstract public class AbstractTableAction extends AbstractAction {
      * without have to actually suclass the BeanTableDataFrame
      */
     public void addToFrame(BeanTableFrame f) {
+    }
+    
+    public void setMenuBar(BeanTableFrame f){
     }
 
     /**

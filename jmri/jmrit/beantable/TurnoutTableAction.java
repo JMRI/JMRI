@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.85 $
+ * @version     $Revision: 1.86 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -362,6 +362,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel("Hardware Address");
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
     String systemSelectionCombo = this.getClass().getName()+".SystemSelected";
+    String userNameError = this.getClass().getName()+".DuplicateUserName";
     jmri.UserPreferencesManager p;
     
     void addPressed(ActionEvent e) {
@@ -651,7 +652,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Add the check box and Operations menu item
      */
     public void addToFrame(BeanTableFrame f) {
-    	final BeanTableFrame finalF = f;			// needed for anonymous ActionListener class
+    	
         f.addToBottomBox(showFeedbackBox);
         showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
         showFeedbackBox.addActionListener(new ActionListener() {
@@ -673,7 +674,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
         	}
             });
-        // add save menu item
+    }
+    
+    public void setMenuBar(BeanTableFrame f){
+        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
         JMenuBar menuBar = f.getJMenuBar();
         JMenu opsMenu = new JMenu("Automation");
         menuBar.add(opsMenu);
@@ -684,8 +688,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     new TurnoutOperationFrame(finalF);
         	}
             });
-    }
     
+    }
     
     void okPressed(ActionEvent e) {
         // Test if bit already in use as a light
@@ -783,6 +787,9 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if ((x!=0) && user != null && !user.equals(""))
                         user = user+":"+x;
                     if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
+                    else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
+                        p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
+                    }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
                     if(!useLastType){

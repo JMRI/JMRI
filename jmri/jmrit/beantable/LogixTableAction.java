@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -248,6 +248,12 @@ public class LogixTableAction extends AbstractTableAction {
 	void setTitle() {
 		f.setTitle(f.rb.getString("TitleLogixTable"));
 
+        //addToFrame(f);
+        //setMenuBar(f);
+        
+	}
+    
+    public void addToFrame(BeanTableFrame f) {
         // Hack into Logix frame to add my junk. (pwc)
         _devNameField = new JTextField(30);
         JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint");
@@ -275,7 +281,10 @@ public class LogixTableAction extends AbstractTableAction {
             }
         });
         f.addToBottomBox(emptyButton);
-
+    
+    }
+    
+    public void setMenuBar(BeanTableFrame f){
         JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
         menu.setMnemonic(KeyEvent.VK_O);
 
@@ -305,10 +314,10 @@ public class LogixTableAction extends AbstractTableAction {
         });
         enableButtonGroup.add(r);
         menu.add(r);
-
+        
         javax.swing.JMenuBar menuBar = f.getJMenuBar();
         menuBar.add(menu);
-	}
+    }
 
     void OpenPickListTable() {
         if (_pickTables==null) {
