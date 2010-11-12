@@ -5,6 +5,7 @@ package jmri.jmrix.nce.cab;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.Date;
+import java.util.ResourceBundle;
 
 import javax.swing.JButton;
 
@@ -119,12 +120,16 @@ import jmri.jmrix.nce.NceTrafficController;
  * 				;bit5 - 0 = Do not use 
  * 				;bit6 - 0 = Do not use
  * 				;bit7 - 0 = type a or type b cab, 1=type c or d
+ * Writing zero to FLAGS1 will remove the cab from the 'active' list
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.8 $
+ * @author Ken Cameron Copyright (C) 2010
+ * @version $Revision: 1.9 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
+	
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
 	
 	private static final int CS_CAB_MEM = 0x8800;	// start of NCE CS cab context page for cab 0
 													// memory
@@ -177,22 +182,22 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	private int[] cabF5Array = new int[CAB_MAX];
 	
 	// member declarations
-	JLabel textNumer = new JLabel("Number");
-    JLabel textCab = new JLabel("Type");
-    JLabel textAddress = new JLabel("Loco");
-    JLabel textSpeed = new JLabel("Speed");
-    JLabel textConsist = new JLabel("Consist");
-    JLabel textFunctions = new JLabel("Functions");
-    JLabel textReply = new JLabel("Reply:");
+	JLabel textNumer = new JLabel(rb.getString("Number"));
+    JLabel textCab = new JLabel(rb.getString("Type"));
+    JLabel textAddress = new JLabel(rb.getString("Loco"));
+    JLabel textSpeed = new JLabel(rb.getString("Speed"));
+    JLabel textConsist = new JLabel(rb.getString("Consist"));
+    JLabel textFunctions = new JLabel(rb.getString("Functions"));
+    JLabel textReply = new JLabel(rb.getString("Reply"));
     JLabel textStatus = new JLabel("");
-    JLabel textLastUsed = new JLabel("Last\nUsed");
+    JLabel textLastUsed = new JLabel(rb.getString("LastUsed"));
     
     // major buttons
-    JButton refreshButton = new JButton("Refresh");
-    JButton purgeButton = new JButton("Purge Cab");
+    JButton refreshButton = new JButton(rb.getString("Refresh"));
+    JButton purgeButton = new JButton(rb.getString("PurgeCab"));
     
     // check boxes
-    JCheckBox checkBoxActive = new JCheckBox ("Active");
+    JCheckBox checkBoxActive = new JCheckBox(rb.getString("Active"));
     // text field
     JTextField purgeCabId = new JTextField(3);
     
@@ -212,7 +217,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     public void initComponents() throws Exception {
     	// the following code sets the frame's initial state
     	
-    	setTitle("Show NCE Cabs");
+    	setTitle(rb.getString("Title"));
     	getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
     	cabsPane.setVisible(false);
     	//cabsPane.setMinimumSize(new Dimension(300,300));
@@ -220,11 +225,11 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	JPanel p1 = new JPanel();
     	p1.setLayout(new GridBagLayout());
     	// row 1
-    	refreshButton.setToolTipText("Press to reload table");
-    	checkBoxActive.setToolTipText("Show only active cabs when selected");
+    	refreshButton.setToolTipText(rb.getString("RefreshToolTip"));
+    	checkBoxActive.setToolTipText(rb.getString("CheckBoxActiveToolTip"));
     	checkBoxActive.setSelected(true);
-    	purgeCabId.setToolTipText("Range 2 - 62");
-    	purgeButton.setToolTipText("Remove Active Status of Cab");
+    	purgeCabId.setToolTipText(rb.getString("PurgeCabIdToolTip"));
+    	purgeButton.setToolTipText(rb.getString("PurgeButtonToolTip"));
     	addItem(p1, refreshButton, 2, 1);
     	addItem(p1, textStatus, 3, 1);
     	addItem(p1, checkBoxActive, 4, 1);
@@ -273,16 +278,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	try {
         	cab = Integer.parseInt(purgeCabId.getText().trim());
     	} catch (NumberFormatException e) {
-            log.error("Invalid value: " + purgeCabId.getText().trim());
+            log.error(rb.getString("ErrorInvalidValue") + purgeCabId.getText().trim());
     		return;
     	}
     	if (cab < 1 || cab >= CAB_MAX) {
-            log.error("Value out of range: " + purgeCabId.getText().trim());
+            log.error(rb.getString("ErrorValueRange") + purgeCabId.getText().trim());
     		return;
     	}
     	// if id is active
     	if ((cabFlag1Array[cab] & FLAGS1_MASK_CABACTIVE) != 0) {
-            log.error("Cab not active: " + purgeCabId.getText().trim());
+            log.error(rb.getString("ErrorCabNotActive") + purgeCabId.getText().trim());
     		return;
     	}
     	// clear bit for active and cab type details
@@ -297,14 +302,14 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	// Set up a separate thread to read CS memory
         if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive())	
         	return; // thread is already running
-    	textStatus.setText("Reading NCE memory");
+    	textStatus.setText(rb.getString("StatusReadingMemory"));
         waiting = 0;
     	NceCabUpdateThread = new Thread(new Runnable() {
     		public void run() {
     			cabUpdate();
     		}
     	});
-    	NceCabUpdateThread.setName("NCE Cab Update");
+    	NceCabUpdateThread.setName(rb.getString("ThreadTitle"));
     	NceCabUpdateThread.setPriority(Thread.MIN_PRIORITY);
     	NceCabUpdateThread.start();
     }
@@ -328,11 +333,11 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	readCabMemory1(i, CAB_FLAGS1);
            	if (!waitNce())
         		return;
-        	log.debug("Read flag1 character "+recChar);
+           	if (log.isDebugEnabled()) log.debug("Read flag1 character "+recChar);
         	// save value for purge
         	if (recChar != cabFlag1Array[i]) {
         		foundChange++;
-        		log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
+        		if (log.isDebugEnabled()) log.debug(i + ": Flag1 " + recChar + "<->" + cabFlag1Array[i]);
         	}
         	cabFlag1Array[i] = recChar;
         	int flags1 = recChar & FLAGS1_MASK; // mask off don't care bits
@@ -347,7 +352,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             else {
             	if (checkBoxActive.isSelected())
             		continue;
-            	type.setText("unknown");
+            	type.setText(rb.getString("UnknownCabType"));
             }
         	// add items to table
         	addItem(cabsPanel, number, 1, i);
@@ -367,16 +372,16 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	int readChar = recChars[0];
 	        	if (cabSpeedArray[i] != readChar) {
 	        		foundChange++;
-	        		log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": Speed " + readChar + "<->" + cabSpeedArray[i]);
 	        	}
 	        	cabSpeedArray[i] = readChar;
-	        	log.debug("Read speed character "+Integer.toString(readChar));
+	        	if (log.isDebugEnabled()) log.debug("Read speed character "+Integer.toString(readChar));
 	        	String sped = Integer.toString(readChar);
 	        	// read the FLAGS byte
 	        	readChar = recChars[CAB_FLAGS-CAB_CURR_SPEED];
 	        	if (cabFlagsArray[i] != readChar) {
 	        		foundChange++;
-	        		log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": Flags " + readChar + "<->" + cabFlagsArray[i]);
 	        	}
 	        	cabFlagsArray[i] = readChar;
 	        	int direction = readChar & 0x04;
@@ -396,15 +401,15 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	
 	        	// create loco address, read the high address byte
 	        	readChar = recChars[CAB_ADDR_H-CAB_CURR_SPEED];
-	        	log.debug("Read address high character "+readChar);
+	        	if (log.isDebugEnabled()) log.debug("Read address high character "+readChar);
 	        	int locoAddress = (readChar & 0x3F) *256;
 	        	// read the low address byte
 	        	readChar = recChars[CAB_ADDR_L-CAB_CURR_SPEED];
-	        	log.debug("Read address low character "+readChar);
+	        	if (log.isDebugEnabled()) log.debug("Read address low character "+readChar);
 	        	locoAddress = locoAddress + (readChar & 0xFF);
 	        	if (cabLocoArray[i] != locoAddress) {
 	        		foundChange++;
-	        		log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": Loco " + locoAddress + "<->" + cabLocoArray[i]);
 	        	}
 	        	cabLocoArray[i] = locoAddress;
 	        	address.setText(Integer.toString(locoAddress));
@@ -413,7 +418,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	readChar = recChars[CAB_ALIAS-CAB_CURR_SPEED];
 	        	if (cabConsistArray[i] != readChar) {
 	        		foundChange++;
-	        		log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": Consist " + readChar + "<->" + cabConsistArray[i]);
 	        	}
 	        	cabConsistArray[i] = readChar;
 	        	if(readChar == 0)
@@ -425,10 +430,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	readChar = recChars[CAB_FUNC_L-CAB_CURR_SPEED];
 	        	if (cabF0Array[i] != readChar) {
 	        		foundChange++;
-	        		log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": F0 " + readChar + "<->" + cabF0Array[i]);
 	        	}
 	        	cabF0Array[i] = readChar;
-	        	log.debug("Function low character "+readChar);
+	        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
 	        	String func = "";
 	        	if ((readChar & FUNC_L_F0) > 0)
 	        		func = func + "L";
@@ -453,10 +458,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
 	        	if (cabF5Array[i] != readChar) {
 	        		foundChange++;
-	        		log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
+	        		if (log.isDebugEnabled()) log.debug(i + ": F5 " + readChar + "<->" + cabF5Array[i]);
 	        	}
 	        	cabF5Array[i] = readChar;
-	        	log.debug("Function high character "+readChar);
+	        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
 	           	if ((readChar & FUNC_H_F5) > 0)
 	        		func = func + "5";
 	        	else
@@ -542,7 +547,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     int recChar = 0;
     int [] recChars = new int [16];
 	public void reply(NceReply r) {
-		log.debug("Receive character");
+		if (log.isDebugEnabled()) log.debug("Receive character");
 		if (waiting <= 0) {
 			log.error("unexpected response");
 			return;
