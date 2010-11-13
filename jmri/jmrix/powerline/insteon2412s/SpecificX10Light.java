@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -71,7 +71,7 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     	}
                     
         // if we don't know the dim count, force it to a value.
-        initIntensity(intensity);
+//        initIntensity(intensity);
 
         // find the new correct dim count
         int newStep = (int)Math.round(intensity * maxDimStep);  // maxDimStep is full on, 0 is full off, etc
@@ -80,48 +80,24 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
         if ((newStep < 0) || (newStep > maxDimStep))
             log.error("newStep wrong: " + newStep + " intensity: " + intensity);
 
-        // find the number to send
-        int sendSteps = newStep - lastOutputStep; // + for bright, - for dim
-        
-        // figure out the function code
-        int function;
-        if (sendSteps == 0) {
+        if (newStep == lastOutputStep) {
             // nothing to do!
             if (log.isDebugEnabled()) {
             	log.debug("intensity " + intensity + " within current step, return");
             }
             return;
         
-        } else if (sendSteps > 0) {
-            function = X10Sequence.FUNCTION_BRIGHT;
-            if (log.isDebugEnabled()) {
-            	log.debug("function bright");
-            }
-        }
-        else {
-            function = X10Sequence.FUNCTION_DIM;
-            if (log.isDebugEnabled()) {
-            	log.debug("function dim");
-            }
         }
 
-        // check for errors
-        if ((sendSteps <- maxDimStep) || (sendSteps > maxDimStep))
-            log.error("sendSteps wrong: " + sendSteps + " intensity: " + intensity);
-            
-        int deltaDim = Math.abs(sendSteps);
-
-        lastOutputStep = newStep;
-        
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();
-        out.addAddress(housecode, devicecode);
-        out.addFunction(housecode, function, deltaDim);
+        out.addExtData(housecode, devicecode, X10Sequence.EXTCMD_DIM, newStep);
         // send
         SerialTrafficController.instance().sendX10Sequence(out, null);
+        lastOutputStep = newStep;
 
     	if (log.isDebugEnabled()) {
-    	    log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " deltaDim: " + deltaDim + " funct: " + function);
+    	    log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " newStep: " + newStep);
         }
     }
     

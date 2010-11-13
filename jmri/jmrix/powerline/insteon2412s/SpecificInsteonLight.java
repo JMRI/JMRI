@@ -3,6 +3,7 @@
 package jmri.jmrix.powerline.insteon2412s;
 
 import jmri.jmrix.powerline.*;
+import jmri.util.StringUtil;
 
 /**
  * Implementation of the Light Object for Insteon receivers on Insteon 2412S interfaces.
@@ -24,7 +25,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
 
@@ -62,8 +63,6 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     }
 
     /**
-     * Optionally, force control to a known "dim count".
-     * <p>
      * Invoked the first time intensity is set.
      * @param intensity The next intensity value that will be set
      */
@@ -71,9 +70,6 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
     	if (log.isDebugEnabled()) {
             log.debug("initIntensity("+intensity+")");
     	}
-        
-        //maxDimStep = SerialTrafficController.instance().getNumberOfIntensitySteps();
-
     }
     
     /**
@@ -161,7 +157,7 @@ public class SpecificInsteonLight extends jmri.jmrix.powerline.SerialLight {
         SerialTrafficController.instance().sendInsteonSequence(out, null);
 
         if (log.isDebugEnabled()) {
-            log.debug("end sendOnOff(" + newState + ")  insteon " + idhighbyte + idmiddlebyte + idlowbyte + " cmd1: " + command1);
+            log.debug("end sendOnOff(" + newState + ")  insteon " + StringUtil.twoHexFromInt(idhighbyte) + "." + StringUtil.twoHexFromInt(idmiddlebyte) + "." + StringUtil.twoHexFromInt(idlowbyte) + " cmd1: " + command1);
         }
     }
 

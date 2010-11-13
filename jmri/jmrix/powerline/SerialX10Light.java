@@ -21,7 +21,7 @@ package jmri.jmrix.powerline;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
 
@@ -136,33 +136,24 @@ public class SerialX10Light extends jmri.jmrix.powerline.SerialLight {
         if ((newStep < 0) || (newStep > maxDimStep))
             log.error("newStep wrong: " + newStep + " intensity: " + intensity);
 
-        // find the number to send
-        int sendSteps = newStep - lastOutputStep; // + for bright, - for dim
-        
-        // figure out the function code
-        int function;
-        if (sendSteps == 0) {
+        if (newStep == 0) {
             // nothing to do!
             if (log.isDebugEnabled()) {
             	log.debug("intensity " + intensity + " within current step, return");
             }
             return;
         
-        } else {
-            function = X10Sequence.EXTCMD_DIM;
-            if (log.isDebugEnabled()) {
-            	log.debug("Ext Cmd Dim");
-            }
         }
-
+        
         // create output sequence of address, then function
         X10Sequence out = new X10Sequence();
-        out.addExtData(housecode, devicecode, function, newStep);
+        out.addExtData(housecode, devicecode, X10Sequence.EXTCMD_DIM, newStep);
         // send
         SerialTrafficController.instance().sendX10Sequence(out, null);
+        lastOutputStep = newStep;
 
     	if (log.isDebugEnabled()) {
-    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " newStep: " + newStep + " funct: " + function);
+    		log.debug("sendIntensity(" + intensity + ") house " + X10Sequence.houseValueToText(housecode) + " device " + devicecode + " newStep: " + newStep);
         }
     }
 
