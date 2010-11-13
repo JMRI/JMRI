@@ -4,7 +4,7 @@ import java.util.ResourceBundle;
 
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.Track;
+//import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
@@ -37,7 +37,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	protected int _carMoves = 0;			// number of moves at this location 
 	protected int _trainWeight = 0;			// total car weight departing this location
 	protected int _trainLength = 0;			// train length departing this location
-	protected Track _stagingTrack = null;  	// staging track if not null
+	//protected Track _stagingTrack = null;  	// staging track if not null
 	
 	public static final int EAST = 1;		// train direction 
 	public static final int WEST = 2;
@@ -290,6 +290,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	 * Set that this location has a staging track when building a train
 	 * @param track
 	 */
+	/*
 	public void setStagingTrack(Track track){
 		_stagingTrack = track;
 	}
@@ -297,6 +298,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public Track getStagingTrack(){
 		return _stagingTrack;
 	}
+	*/
 	
 	/**
 	 * Set the train icon panel coordinates to the location defaults.  Coordinates

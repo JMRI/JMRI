@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.100 $
+ * @version             $Revision: 1.101 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -165,7 +165,7 @@ public class TrainBuilder extends TrainCommon{
 				// we're going to use this location, so initialize the location
 				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 				rl.setCarMoves(0);					// clear the number of moves
-				rl.setStagingTrack(null);			// used for staging only
+				//rl.setStagingTrack(null);			// used for staging only
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestMoves"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
@@ -481,20 +481,6 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingTrackAssignedStaging"),new Object[]{departStageTrack.getName()}));
 			return false;	// can't use this track		
 		}
-		// test to see if departure track has cars assigned to another train
-		/*
-		 * // TODO Not sure if the following code needs to be executed, checkDepartureStagingTrack() is called before getEngines()
-		if (leavingStaging && engineList.size() == 0 && departStageTrack.getNumberCars()>0){
-						List<String> carList = carManager.getByIdList();
-			for (int i=0; i<carList.size(); i++){
-				Car car = carManager.getById(carList.get(i));
-				if (car.getTrack() == departStageTrack && car.getRouteDestination()!=null){
-					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarsAlreadyAssigned"),new Object[]{departStageTrack.getName()}));
-					return false;	// can't use this track		
-				}
-			}
-		}
-		*/
 		// show how many engines were found
 		if (engineList.size()>0){
 			if (reqNumEngines > 1)
@@ -582,6 +568,7 @@ public class TrainBuilder extends TrainCommon{
 			rl.setTrainLength(engineLength);		// load the engine(s) length
 			rl.setTrainWeight(engineWeight);		// load the engine(s) weight
 		}
+		/*
 		// terminating into staging without engines?
 		if (terminateTrack == null && engineList.size() == 0){
 			// Use previously found staging track if there's one
@@ -590,6 +577,7 @@ public class TrainBuilder extends TrainCommon{
 		if (terminateTrack != null && terminateTrack.getLocType().equals(Track.STAGING)){
 			train.getTrainTerminatesRouteLocation().setStagingTrack(terminateTrack);
 		}
+		*/
 		return true;
 	}
 	
@@ -743,7 +731,7 @@ public class TrainBuilder extends TrainCommon{
 					continue;
 				}
 				// car meets all requirements, now find a destination track to place car
-				if (train.getTrainTerminatesRouteLocation().getStagingTrack() == null){
+				if (terminateStageTrack == null){
 					List<String> sls = terminateLocation.getTracksByMovesList(null);
 					// loop through the destination tracks to find one that accepts caboose or car with FRED
 					for (int s = 0; s < sls.size(); s++){
@@ -769,15 +757,15 @@ public class TrainBuilder extends TrainCommon{
 					}
 				// terminate into staging
 				} else {
-					String status = c.testDestination(terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
+					String status = c.testDestination(terminateLocation, terminateStageTrack);
 					if (status.equals(Car.OKAY)){
-						boolean carAdded = addCarToTrain(c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, train.getTrainTerminatesRouteLocation().getStagingTrack());
+						boolean carAdded = addCarToTrain(c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), terminateLocation, terminateStageTrack);
 						if (carAdded && c.isCaboose())
 							foundCaboose = true;
 						if (carAdded && c.hasFred())
 							foundFred = true;
 					} else {
-						addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +train.getTrainTerminatesRouteLocation().getStagingTrack().getName()+") due to "+status);
+						addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +terminateStageTrack.getName()+") due to "+status);
 					}
 				} 
 				// remove caboose or FRED from list couldn't find a destination track
@@ -1052,9 +1040,9 @@ public class TrainBuilder extends TrainCommon{
 											if (c.getDestinationTrack() == null){
 												addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarDoesNotHaveDest"),new Object[]{c.toString()}));
 												// is there a track assigned for staging cars?
-												if (rld.getStagingTrack() != null){
-													addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedToStaging"),new Object[]{c.toString(), rld.getStagingTrack().getName()}));
-													carAdded = addCarToTrain(c, rl, rld, c.getDestination(), rld.getStagingTrack());
+												if (k == routeList.size()-1 && terminateStageTrack != null){
+													addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedToStaging"),new Object[]{c.toString(), terminateStageTrack.getName()}));
+													carAdded = addCarToTrain(c, rl, rld, c.getDestination(), terminateStageTrack);
 												// no, find a destination track this this car
 												} else {
 													List<String> tracks = c.getDestination().getTracksByMovesList(null);
@@ -1085,7 +1073,7 @@ public class TrainBuilder extends TrainCommon{
 											// car has a destination track
 											} else {
 												// going into the correct staging track?
-												if (rld.getStagingTrack() == null  || rld.getStagingTrack() == c.getDestinationTrack()){
+												if (terminateStageTrack == null  || terminateStageTrack == c.getDestinationTrack()){
 													String status = c.testDestination(c.getDestination(), c.getDestinationTrack());
 													if (status.equals(Car.OKAY) && checkDropTrainDirection(c, rld, c.getDestination(), c.getDestinationTrack()))
 														carAdded = addCarToTrain(c, rl, rld, c.getDestination(), c.getDestinationTrack());
@@ -1155,7 +1143,7 @@ public class TrainBuilder extends TrainCommon{
 									return false;
 								}
 								// is there a track assigned for staging cars?
-								if (rld.getStagingTrack() == null){
+								if (terminateStageTrack == null || k != routeList.size()-1){
 									// no staging track assigned, start search
 									List<String> tracks = testDestination.getTracksByMovesList(null);
 									for (int s = 0; s < tracks.size(); s++){
@@ -1189,7 +1177,7 @@ public class TrainBuilder extends TrainCommon{
 												&& checkDropTrainDirection(c, rld, testDestination, testTrack)){
 											// staging track with zero cars?  TODO (fix testTrack.getDropRS()>0, covers case when caboose or FRED to staging without engines)
 											if (testTrack.getLocType().equals(Track.STAGING) && (testTrack.getNumberRS() == 0 || testTrack.getDropRS()>0)){
-												rld.setStagingTrack(testTrack);	// Use this location for all cars
+												terminateStageTrack = testTrack;	// Use this location for all cars
 												trackTemp = testTrack;
 												destinationTemp = testDestination;
 												break;
@@ -1244,14 +1232,14 @@ public class TrainBuilder extends TrainCommon{
 										}
 									}
 								// all cars in this train go to one staging track
-								} else {
+								} else if (k == routeList.size()-1 && terminateStageTrack != null){
 									// will staging accept this car?
-									String status = c.testDestination(testDestination, rld.getStagingTrack());
+									String status = c.testDestination(testDestination, terminateStageTrack);
 									if (status.equals(Car.OKAY)){
-										trackTemp = rld.getStagingTrack();
+										trackTemp = terminateStageTrack;
 										destinationTemp = testDestination;
 									} else {
-										addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +rld.getStagingTrack().getName()+") due to "+status);
+										addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +terminateStageTrack.getName()+") due to "+status);
 									}
 								}
 								// check to see if train length would be exceeded by this car

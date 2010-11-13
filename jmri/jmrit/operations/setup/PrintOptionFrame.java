@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -46,8 +46,8 @@ public class PrintOptionFrame extends OperationsFrame{
 	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
 
 	// radio buttons		
-    JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
-    JRadioButton sanSerif = new JRadioButton(rb.getString("SansSerif"));
+    //JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
+    //JRadioButton sanSerif = new JRadioButton(rb.getString("SansSerif"));
     
     JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
     JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
@@ -65,6 +65,7 @@ public class PrintOptionFrame extends OperationsFrame{
 	Dimension minScrollerDim = new Dimension(700,60);
 	
 	// combo boxes
+	JComboBox fontComboBox = Setup.getFontComboBox();
 	JComboBox fontSizeComboBox = new JComboBox();
 	JComboBox pickupComboBox = Setup.getPrintColorComboBox();
 	JComboBox dropComboBox = Setup.getPrintColorComboBox();
@@ -106,8 +107,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 		JPanel pFont = new JPanel();
 		pFont.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFont")));
-		pFont.add(mono);
-		pFont.add(sanSerif);
+		pFont.add(fontComboBox);
 		JPanel pFontSize = new JPanel();
 		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
 		pFontSize.add(fontSizeComboBox);		
@@ -218,10 +218,6 @@ public class PrintOptionFrame extends OperationsFrame{
 
 		commentTextArea.setText(Setup.getMiaComment());
 		
-		ButtonGroup printerGroup = new ButtonGroup();
-		printerGroup.add(mono);
-		printerGroup.add(sanSerif);
-		
 		ButtonGroup buildReportGroup = new ButtonGroup();
 		buildReportGroup.add(buildReportMin);
 		buildReportGroup.add(buildReportNor);
@@ -236,13 +232,13 @@ public class PrintOptionFrame extends OperationsFrame{
 		fontSizeComboBox.addItem(11);
 		fontSizeComboBox.addItem(12);
 		fontSizeComboBox.setSelectedItem(Setup.getFontSize());
+		fontComboBox.setSelectedItem(Setup.getFontName());
 
 		// setup buttons
 		addButtonAction(addLogoButton);
 		addButtonAction(removeLogoButton);
 		addButtonAction(saveButton);
 		
-		setPrinterFontRadioButton();
 		setBuildReportRadioButton();
 
 		//	build menu		
@@ -268,10 +264,8 @@ public class PrintOptionFrame extends OperationsFrame{
 			updateLogoButtons();
 		}
 		if (ae.getSource() == saveButton){
-			if (mono.isSelected())
-				Setup.setFontName(Setup.MONOSPACED);
-			else
-				Setup.setFontName(Setup.SANSERIF);
+			// font name
+			Setup.setFontName((String)fontComboBox.getSelectedItem());
 			// font size
 			Setup.setFontSize((Integer)fontSizeComboBox.getSelectedItem());
 			// drop and pickup color option
@@ -350,11 +344,6 @@ public class PrintOptionFrame extends OperationsFrame{
 		removeLogoButton.setVisible(!flag);
 		logoURL.setText(Setup.getManifestLogoURL());
 		pack();
-	}
-
-	private void setPrinterFontRadioButton(){
-		mono.setSelected(Setup.getFontName().equals(Setup.MONOSPACED));
-		sanSerif.setSelected(Setup.getFontName().equals(Setup.SANSERIF));
 	}
 	
 	private void setBuildReportRadioButton(){

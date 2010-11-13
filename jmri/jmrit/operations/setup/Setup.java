@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -33,7 +33,7 @@ public class Setup {
 	private static final int O_RATIO = 48;
 	private static final int G_RATIO = 32;			// NMRA #1
 	
-	// initial weight in milli oz from NMRA
+	// initial weight in milli ounces from NMRA
 	private static final int Z_INITIAL_WEIGHT = 364;		// not specified by NMRA
 	private static final int N_INITIAL_WEIGHT = 500;
 	private static final int TT_INITIAL_WEIGHT = 750;
@@ -46,7 +46,7 @@ public class Setup {
 	private static final int O_INITIAL_WEIGHT = 5000;
 	private static final int G_INITIAL_WEIGHT = 10000;		// not specified by NMRA
 	
-	// additional weight in milli oz from NMRA
+	// additional weight in milli ounces from NMRA
 	private static final int Z_ADD_WEIGHT = 100;			// not specified by NMRA
 	private static final int N_ADD_WEIGHT = 150;
 	private static final int TT_ADD_WEIGHT = 375;
@@ -65,7 +65,7 @@ public class Setup {
 	private static final int TT_RATIO_TONS = 36;
 	private static final int HOn3_RATIO_TONS = 20;
 	private static final int OO_RATIO_TONS = 20;
-	private static final int HO_RATIO_TONS = 20;		// 20 tons per oz
+	private static final int HO_RATIO_TONS = 20;		// 20 tons per ounce
 	private static final int Sn3_RATIO_TONS = 16;
 	private static final int S_RATIO_TONS = 14;
 	private static final int On3_RATIO_TONS = 8;
@@ -97,8 +97,11 @@ public class Setup {
 	public static final String DESCRIPTIVE = "Descriptive"; // Car types
 	public static final String AAR = "ARR Codes"; // Car types
 	
+	public static final String COURIER = "Courier"; // printer fonts
+	public static final String GARAMOND = "Garamond"; // printer fonts
 	public static final String MONOSPACED = "Monospaced"; // printer fonts
 	public static final String SANSERIF = "SansSerif";
+	public static final String SERIF = "Serif";
 	public static final String LENGTHABV =rb.getString("LengthSymbol");
 	
 	public static final String BUILD_REPORT_MINIMAL = "1";
@@ -664,6 +667,20 @@ public class Setup {
 		default:
 			log.error ("Unknown scale");
 		}
+	}
+	
+	public static JComboBox getFontComboBox(){
+		JComboBox box = new JComboBox();
+		//java.awt.Font fonts[] = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+		//for (int i=0; i<fonts.length; i++){
+		//	box.addItem(fonts[i]);
+		//}
+		box.addItem(COURIER);
+		box.addItem(GARAMOND);
+		box.addItem(MONOSPACED);
+		box.addItem(SANSERIF);
+		box.addItem(SERIF);
+		return box;
 	}
 	
 	/**
