@@ -8,6 +8,7 @@ import jmri.TimebaseRateException;
 import jmri.jmrix.nce.NceListener;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceUSB;
 
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -29,7 +30,7 @@ import javax.swing.*;
  * contact NCE Inc for separate permission.
  *
  * @author			Ken Cameron   Copyright (C) 2007
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  *
  * derived from loconet.clockmonframe by Bob Jacobson Copyright (C) 2003
  * 
@@ -76,7 +77,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
     public static final int CMD_CLOCK_SET_REPLY_SIZE = 0x01;
     public static final int CMD_MEM_SET_REPLY_SIZE = 0x01;
     public static final int MAX_ERROR_ARRAY = 4;
-    public static final double MIN_POLLING_INTERVAL = 0.5;
+    public static final double MIN_POLLING_INTERVAL = 1.0;
     public static final double MAX_POLLING_INTERVAL = 120;
     public static final double DEFAULT_POLLING_INTERVAL = 5;
     public static final double TARGET_SYNC_DELAY = 55;
@@ -277,27 +278,27 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         gConstraints.gridx++;
         pane2.add(readButton, gConstraints);
         
-        //ButtonGroup modeGroup = new ButtonGroup();
-        //modeGroup.add(setSyncModeInternalMaster);
-        //modeGroup.add(setSyncModeNceMaster);
-        //modeGroup.add(setSyncModeOff);
+        ButtonGroup modeGroup = new ButtonGroup();
+        modeGroup.add(setSyncModeInternalMaster);
+        modeGroup.add(setSyncModeNceMaster);
+        modeGroup.add(setSyncModeOff);
         
-        //gConstraints.gridx = 0;
-        //gConstraints.gridy++;
-        //gConstraints.gridwidth = 3;
-        //pane2.add(setSyncModeNceMaster, gConstraints);
-        //gConstraints.gridy++;
-        //pane2.add(setSyncModeInternalMaster, gConstraints);
-        //gConstraints.gridy++;
-        //pane2.add(setSyncModeOff, gConstraints);
-        //gConstraints.gridy++;
-        //pane2.add(setSyncButton, gConstraints);
-        //setSyncModeInternalMaster.setEnabled(false);
-        //setSyncModeNceMaster.setEnabled(false);
-//        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {	// needs memory commands to sync
-//            setSyncModeInternalMaster.setEnabled(false);
-//            setSyncModeNceMaster.setEnabled(false);
-//        }
+        gConstraints.gridx = 0;
+        gConstraints.gridy++;
+        gConstraints.gridwidth = 3;
+        pane2.add(setSyncModeNceMaster, gConstraints);
+        gConstraints.gridy++;
+        pane2.add(setSyncModeInternalMaster, gConstraints);
+        gConstraints.gridy++;
+        pane2.add(setSyncModeOff, gConstraints);
+        gConstraints.gridy++;
+        pane2.add(setSyncButton, gConstraints);
+        setSyncModeInternalMaster.setEnabled(true);
+        setSyncModeNceMaster.setEnabled(true);
+        if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {	// needs memory commands to sync
+            setSyncModeInternalMaster.setEnabled(false);
+            setSyncModeNceMaster.setEnabled(false);
+        }
         getContentPane().add(pane2);
         
         // add polling speed
@@ -643,6 +644,13 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
             pollingInterval = DEFAULT_POLLING_INTERVAL;
         }
         // initialize things if not running
+        alarmSetup();
+    	alarmDisplayStates();
+        updateInternalClockDisplay();
+    }
+    
+    private void alarmSetup() {
+        // initialize things if not running
         if (timerDisplayUpdate == null){
             timerDisplayUpdate = new javax.swing.Timer((int)(pollingInterval * 1000.0), new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -654,8 +662,6 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         timerDisplayUpdate.setRepeats(true);     // in case we run by
         timerDisplayUpdate.start();
     	alarmDisplayStateCounter = 1;
-    	alarmDisplayStates();
-        updateInternalClockDisplay();
     }
     
     private void alarmSyncInit(){
@@ -693,7 +699,7 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         int delay = 60 * 1000;
         if (clockMode == SYNCMODE_INTERNAL_MASTER) {
             if (syncInterval - 3 - now.getSeconds() <= 0) {
-                delay = 10;	// basicly trigger right away
+                delay = 10;	// basically trigger right away
             } else {
                 delay = (int)((syncInterval - now.getSeconds()) * 1000 / internalClock.getRate());
             }
@@ -1265,6 +1271,9 @@ public class ClockMonFrame extends jmri.util.JmriJFrame implements NceListener {
         } else {
             pollingInterval = newInterval;
             pollingSpeed.setText("" + pollingInterval);
+            if (timerDisplayUpdate == null) {
+                alarmSetup();
+            }
             timerDisplayUpdate.setDelay((int)(pollingInterval * 1000));
         }
     }
