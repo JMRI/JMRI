@@ -63,6 +63,7 @@ public class PositionablePopupUtil {
     public PositionablePopupUtil clone(Positionable parent) {
         PositionablePopupUtil util = parent.getPopupUtility();
         if (util!=null) {
+            util.setJustification(getJustification());
             util.setHorizontalAlignment(getJustification());
             util.setFixedWidth(getFixedWidth());
             util.setFixedHeight(getFixedHeight());
@@ -498,12 +499,14 @@ public class PositionablePopupUtil {
     private int justification=CENTRE; //Default is always Centre
     
     public void setJustification(int just){
+        log.debug("setJustification: justification="+just);
         justification=just;
         setHorizontalAlignment(justification);
         _parent.updateSize();
     }
         
     public void setJustification(String just){
+        log.debug("setJustification: justification="+just);
         if (just.equals("right"))
             justification=RIGHT;
         else if (just.equals("centre"))
@@ -515,6 +518,7 @@ public class PositionablePopupUtil {
     }
     
     public int getJustification(){
+        log.debug("getJustification: justification="+justification);
         return justification;
     }
     

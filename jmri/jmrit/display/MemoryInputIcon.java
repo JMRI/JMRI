@@ -24,7 +24,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Pete Cressman  Copyright (c) 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  * @since 2.7.2
  */
 
@@ -66,7 +66,7 @@ public class MemoryInputIcon extends PositionableJPanel implements java.beans.Pr
 
     public Positionable finishClone(Positionable p) {
         MemoryInputIcon pos = (MemoryInputIcon)p;
-        pos.setMemory(getNameString());
+        pos.setMemory(getMemory().getName());
         return super.finishClone(pos);
     }
 

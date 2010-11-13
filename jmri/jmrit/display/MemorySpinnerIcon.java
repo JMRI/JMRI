@@ -23,7 +23,7 @@ import jmri.util.NamedBeanHandle;
  * Memory, preserving what it finds.
  *<P>
  * @author Bob Jacobsen  Copyright (c) 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  * @since 2.7.2
  */
 
@@ -56,7 +56,7 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
 
     public Positionable finishClone(Positionable p) {
         MemorySpinnerIcon pos = (MemorySpinnerIcon)p;
-        pos.setMemory(getNameString());
+        pos.setMemory(getMemory().getName());
         return super.finishClone(pos);
     }
 
