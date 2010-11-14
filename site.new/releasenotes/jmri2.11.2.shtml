@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.14 2010-11-12 19:38:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.15 2010-11-14 04:49:59 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -164,6 +164,9 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>User can now customize the order in which engine and car attributes are printed on manifests and switch lists.
 <li>A train's total weight calculation is now based on whether the cars are loaded or empty.  
 <li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
+<li>Add some additional fonts for operations.  
+<li>Fix problem with cabooses going to wrong track in staging when there isn't an engine assigned to the train.
+<li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
 </ul>
 
 <p>
@@ -250,6 +253,22 @@ Matt Harris improved some documentation.
 <p>
 Kevin Dickerson added a new item to the Debug menu, a tool under development that
 gives you tabbed access to the tables.
+
+<p>
+Ken Cameron made a change in the NCE fast clock.
+
+<p>
+Ken Cameron changed the X10 support to use an extended command for dimming. 
+Some very old units don't handle this, so can only do on/off operations via JMRI.
+
+<p>
+Steve Todd updated the xmlio server 
+to add roster list, complete with function labels. 
+Also changed turnout list to always use systemname as name, added username as additional value.
+
+<p>
+Added readback of the speed, direction and functions for a throttle to the xmlio server.
+Also, requests to set the power now get a reply with proper power state.
 
 
 <!--#include virtual="/Footer" -->
