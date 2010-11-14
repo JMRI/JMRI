@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -179,6 +179,8 @@ public class Setup {
 	private static boolean allowLocalYardMoves = false;		// when true local yard to yard moves are allowed
 	private static boolean allowLocalSidingMoves = false;	// when true local siding to siding moves are allowed
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
+	
+	private static boolean printLocationComments = false;	// when true print location comments on the manifest
 
 	
 	// Setup frame attributes
@@ -365,6 +367,14 @@ public class Setup {
 	
 	public static boolean isBuildReportEditorEnabled(){
 		return buildReportEditorEnabled;
+	}
+	
+	public static void setPrintLocationCommentsEnabled(boolean enable){
+		printLocationComments = enable;
+	}
+	
+	public static boolean isPrintLocationCommentsEnabled(){
+		return printLocationComments;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -817,6 +827,7 @@ public class Setup {
     	values.setAttribute("carRoutingViaStaging", isCarRoutingViaStagingEnabled()?"true":"false");
     	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
+       	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
        	
        	e.addContent(values = new Element("pickupEngFormat"));
         StringBuffer buf = new StringBuffer();
@@ -1002,6 +1013,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("engineLogger: "+enable);
         		setEngineLoggerEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("printLocComments"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("printLocComments: "+enable);
+        		setPrintLocationCommentsEnabled(enable.equals("true"));
         	}
         }
         if (operations.getChild("pickupEngFormat") != null){

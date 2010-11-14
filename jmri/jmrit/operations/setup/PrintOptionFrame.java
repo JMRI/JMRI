@@ -28,8 +28,8 @@ import jmri.jmrit.operations.OperationsFrame;
 /**
  * Frame for user edit of print options
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.10 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.11 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -46,8 +46,6 @@ public class PrintOptionFrame extends OperationsFrame{
 	JButton removeLogoButton = new JButton(rb.getString("RemoveLogo"));
 
 	// radio buttons		
-    //JRadioButton mono = new JRadioButton(rb.getString("Monospaced"));
-    //JRadioButton sanSerif = new JRadioButton(rb.getString("SansSerif"));
     
     JRadioButton buildReportMin = new JRadioButton(rb.getString("Minimal"));
     JRadioButton buildReportNor = new JRadioButton(rb.getString("Normal"));
@@ -56,6 +54,7 @@ public class PrintOptionFrame extends OperationsFrame{
     
     // check boxes
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
+	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	
 	// text field
 	
@@ -110,9 +109,19 @@ public class PrintOptionFrame extends OperationsFrame{
 		pFont.add(fontComboBox);
 		JPanel pFontSize = new JPanel();
 		pFontSize.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFontSize")));
-		pFontSize.add(fontSizeComboBox);		
+		pFontSize.add(fontSizeComboBox);
+
+		JPanel pPickupColor = new JPanel();
+		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
+		pPickupColor.add( pickupComboBox);
+		JPanel pDropColor = new JPanel();
+		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
+		pDropColor.add( dropComboBox);
+
 		p1.add(pFont);
 		p1.add(pFontSize);
+		p1.add(pPickupColor);
+		p1.add(pDropColor);
 		
 		// engine message format
 		JPanel pEngPickup = new JPanel();
@@ -157,17 +166,13 @@ public class PrintOptionFrame extends OperationsFrame{
 			carDropMessageList.add(b);
 		}
 		
-		// Pickup and Drop colors
-		JPanel pColor = new JPanel();
-		pColor.setLayout(new BoxLayout(pColor, BoxLayout.X_AXIS));
-		JPanel pPickupColor = new JPanel();
-		pPickupColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutPickupColor")));
-		pPickupColor.add( pickupComboBox);
-		JPanel pDropColor = new JPanel();
-		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
-		pDropColor.add( dropComboBox);
-		p1.add(pPickupColor);
-		p1.add(pDropColor);
+		JPanel p2 = new JPanel();
+		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
+		
+		// Print location comments
+		JPanel pLocComment = new JPanel();
+		pLocComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
+		pLocComment.add(printLocCommentsCheckBox);
 		
 		// manifest logo
 		JPanel pLogo = new JPanel();
@@ -175,14 +180,15 @@ public class PrintOptionFrame extends OperationsFrame{
 		pLogo.add(removeLogoButton);
 		pLogo.add(addLogoButton);
 		pLogo.add(logoURL);
+		p2.add(pLocComment);
+		p2.add(pLogo);
 		
 		pManifest.add(p1);
 		pManifest.add(pEngPickup);
 		pManifest.add(pEngDrop);
 		pManifest.add(pPickup);
 		pManifest.add(pDrop);
-		//pManifest.add(pColor);
-		pManifest.add(pLogo);
+		pManifest.add(p2);
 			
 		// build report options
 		addItem (pReport, textBuildReport, 0, 16);
@@ -210,6 +216,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pReportPane);
 		getContentPane().add(pControl);
 		
+		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		
 		updateLogoButtons();
@@ -309,6 +316,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 		}
