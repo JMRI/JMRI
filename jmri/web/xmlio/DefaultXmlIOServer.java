@@ -29,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -390,6 +390,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             InstanceManager.throttleManagerInstance()
                 .requestThrottle(address,new ThrottleListener() {
                     public void notifyThrottleFound(DccThrottle t) {
+                        log.debug("callback for throttle");
                         // store back into context
                         ThrottleContext tc = new ThrottleContext();
                         tc.throttle = t;
@@ -399,6 +400,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 });
 
         } else {
+            log.debug("process active throttle");
             // set speed, etc, as needed
             DccThrottle t = tc.throttle;
             Element e;
@@ -406,51 +408,126 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if ( (e = item.getChild("speed")) != null) {
                 t.setSpeedSetting(Float.parseFloat(e.getText()));
             }
+            else item.addContent(new Element("speed")
+                                .addContent(
+                                    ""+t.getSpeedSetting()
+                                ));
+            
             
             if ( (e = item.getChild("forward")) != null) {
                 if (e.getText().equals("false")) t.setIsForward(false);
                 else t.setIsForward(true);
             }
+            else item.addContent(new Element("forward")
+                                .addContent(
+                                    t.getIsForward() ? "true" : "false"
+                                ));
+            
 
             if ( (e = item.getChild("F0")) != null)  
                 if (e.getText().equals("false")) t.setF0(false);
                 else t.setF0(true);
+            else item.addContent(new Element("F0")
+                                .addContent(
+                                    t.getF0() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F1")) != null)  
                 if (e.getText().equals("false")) t.setF1(false);
                 else t.setF1(true);
+            else item.addContent(new Element("F1")
+                                .addContent(
+                                    t.getF1() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F2")) != null)  
                 if (e.getText().equals("false")) t.setF2(false);
                 else t.setF2(true);
+            else item.addContent(new Element("F2")
+                                .addContent(
+                                    t.getF2() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F3")) != null)  
                 if (e.getText().equals("false")) t.setF3(false);
                 else t.setF3(true);
+            else item.addContent(new Element("F3")
+                                .addContent(
+                                    t.getF3() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F4")) != null)  
                 if (e.getText().equals("false")) t.setF4(false);
                 else t.setF4(true);
+            else item.addContent(new Element("F4")
+                                .addContent(
+                                    t.getF4() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F5")) != null)  
                 if (e.getText().equals("false")) t.setF5(false);
                 else t.setF5(true);
+            else item.addContent(new Element("F5")
+                                .addContent(
+                                    t.getF5() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F6")) != null)  
                 if (e.getText().equals("false")) t.setF6(false);
                 else t.setF6(true);
+            else item.addContent(new Element("F6")
+                                .addContent(
+                                    t.getF6() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F7")) != null)  
                 if (e.getText().equals("false")) t.setF7(false);
                 else t.setF7(true);
+            else item.addContent(new Element("F7")
+                                .addContent(
+                                    t.getF7() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F8")) != null)  
                 if (e.getText().equals("false")) t.setF8(false);
                 else t.setF8(true);
+            else item.addContent(new Element("F8")
+                                .addContent(
+                                    t.getF8() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F9")) != null)  
                 if (e.getText().equals("false")) t.setF9(false);
                 else t.setF9(true);
+            else item.addContent(new Element("F9")
+                                .addContent(
+                                    t.getF9() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F10")) != null)  
                 if (e.getText().equals("false")) t.setF10(false);
                 else t.setF10(true);
+            else item.addContent(new Element("F10")
+                                .addContent(
+                                    t.getF10() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F11")) != null)  
                 if (e.getText().equals("false")) t.setF11(false);
                 else t.setF11(true);
+            else item.addContent(new Element("F11")
+                                .addContent(
+                                    t.getF11() ? "true" : "false"
+                                ));
+            
             if ( (e = item.getChild("F12")) != null)  
                 if (e.getText().equals("false")) t.setF12(false);
                 else t.setF12(true);
+            else item.addContent(new Element("F12")
+                                .addContent(
+                                    t.getF12() ? "true" : "false"
+                                ));
+            
 
         }
     }

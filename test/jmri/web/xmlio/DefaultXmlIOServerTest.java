@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class DefaultXmlIOServerTest extends TestCase {
 
@@ -41,6 +41,16 @@ public class DefaultXmlIOServerTest extends TestCase {
         e2.addContent(new Element("type").addContent("turnout"));
         e2.addContent(new Element("name").addContent("IT2"));
         e2.addContent(new Element("set").addContent(""+Turnout.THROWN));
+        e1.addContent(e2);
+
+        return e1;
+    }
+    
+    Element getWriteThrottleCommand() {
+        Element e1 = new Element("xmlio");
+        
+        Element e2 = new Element("throttle");
+        e2.addContent(new Element("address").addContent("3"));
         e1.addContent(e2);
 
         return e1;
@@ -90,6 +100,35 @@ public class DefaultXmlIOServerTest extends TestCase {
         Assert.assertEquals(Turnout.THROWN, t2.getCommandedState());
     }
     
+    public void testThrottleElement() throws JmriException {
+    
+        // first request registers
+        Element e = server.immediateRequest(getWriteThrottleCommand());
+        // need second oen for data
+        e = server.immediateRequest(getWriteThrottleCommand());
+
+        e = e.getChild("throttle");
+        
+        Element item;
+        
+        item = (Element) e.getChild("address");
+        Assert.assertTrue("address exists", item != null);
+        Assert.assertEquals("address correct", "3", item.getText());
+
+        item = (Element) e.getChild("speed");
+        Assert.assertTrue("speed exists", item != null);
+        Assert.assertEquals("speed correct", "0.0", item.getText());
+
+        item = (Element) e.getChild("forward");
+        Assert.assertTrue("forward exists", item != null);
+        Assert.assertEquals("forward correct", "true", item.getText());
+
+        item = (Element) e.getChild("F0");
+        Assert.assertTrue("F0 exists", item != null);
+        Assert.assertEquals("F0 correct", "false", item.getText());
+
+    }
+
     // common objects
     DefaultXmlIOServer server;
     Sensor s1;
@@ -121,6 +160,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         JUnitUtil.initInternalTurnoutManager();
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
         
         server = new DefaultXmlIOServer();
         s1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
