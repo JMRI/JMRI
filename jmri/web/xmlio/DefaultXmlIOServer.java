@@ -29,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -56,7 +56,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(new Boolean(t.getInverted()).toString()));
+                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
                     e.addContent(n);
                 }
             } else if (type.equals("sensor")) {
@@ -91,7 +91,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             		n.addContent(new Element("mfg").addContent(entry.getMfg()));
             		n.addContent(new Element("model").addContent(entry.getModel()));
             		n.addContent(new Element("comment").addContent(entry.getComment()));
-            		n.addContent(new Element("maxSpeedPct").addContent(new Integer(entry.getMaxSpeedPCT()).toString()));
+            		n.addContent(new Element("maxSpeedPct").addContent(Integer.valueOf(entry.getMaxSpeedPCT()).toString()));
             		File file = new File(entry.getImagePath());
             		n.addContent(new Element("imageFileName").addContent(file.getName()));
             		file = new File(entry.getIconPath());
@@ -135,7 +135,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
             else if (type.equals("power")) immediateWritePower(name, item);
-            else if (type.equals("roster")) ;  //no write exists for roster
+            else if (type.equals("roster")) immediateWriteRoster(name, item);
             else log.warn("Unexpected type in item: "+type);
         }
         
@@ -344,7 +344,12 @@ public class DefaultXmlIOServer implements XmlIOServer {
         v = item.getChild("value");
         if (v == null) item.addContent(v = new Element("value"));
         // set result
-        v.setText(""+b.getPower());    }
+        v.setText(""+b.getPower());
+    }
+    
+    void immediateWriteRoster(String name, Element item) throws JmriException {
+        log.error("no immediate write for roster element");
+    }
     
     void immediateReadTurnout(String name, Element item) {
         // get turnout
