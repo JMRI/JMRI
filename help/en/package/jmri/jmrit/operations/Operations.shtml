@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.84 2010-11-04 20:24:08 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.85 2010-11-14 05:40:49 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -377,42 +377,8 @@ the print option window.
 <img src="images/PrintOptions.png">
 </P>
 <H3>Manifest Printer Font</H3>
-The program supports two types of fonts for printing. Select the desired
-font using the radio buttons. 
-
-<H3>Show Car Length</H3>
-
-Select the "Show Car Length" checkbox if you want the car's length shown
-in your manifests and switch lists.
-
-<H3>Show Car Load</H3>
-
-You can optionally show whether the car is empty or loaded. When a car
-is delivered to a siding the load state will change. You can also create
-your own loads but there are restrictions. Cars with "loads" other than
-empty or loaded can only be serviced by sidings with a 
-<A	HREF="#Schedules">Schedule</A>. It is strongly recommended that you not
-create your own loads until you become very familiar with how the
-program works. For many operators, showing whether the car is empty or
-loaded adds just enough realism to their operations.
-
-<H3>Show Car Color</H3>
-
-Select the "Show Car Color" checkbox if you want the car's color shown
-in your manifests and switch lists.
-
-<H3>Show Car Destination</H3>
-
-If you want your manifest and switch lists to show the cars destination
-when picking it up, select the "Show Car Destination" checkbox. The
-program always provides the car's destination when dropping a car from
-the train.
-
-<H3>Show Car and Engine Comments</H3>
-
-For each car in your roster, you can have an optional comment. If you
-want the car's comment added to your manifest and switch lists, select
-the checkbox.
+The program supports several types of fonts for printing. Select the desired
+font and size using the pull down menus. 
 
 <H3>Drop Text Color</H3>
 
@@ -423,6 +389,17 @@ Select the desired color from the drop down box.
 
 You can select the text color of your manifest when the operation is to pick up a car.
 Select the desired color from the drop down box.
+
+<H3>Message Formats</H3>
+
+You can customize the pickup and drop messages for your manifests and
+switch lists by selecting the appropriate drop down menus.  To remove an
+attribute select blank.
+
+<H3>Show Comments on Manifests</H3>
+
+Each location can have an optional comment.  You can print these comments on your manifest if
+the "Location" check box is selected.
 
 <H3>Add Logo</H3>
 
@@ -776,6 +753,14 @@ kernel.
 <P>
 <img src="images/Cars.png">
 </P>
+<H3>Add, Save, Find Buttons</H3>
+
+There are three buttons located at the bottom of the Cars window. The
+"Add" button allows you to add a car to your roster. The "Save" button
+stores the cars roster to disk. It also saves the Cars window position
+and size, and any changes you made to the table widths.  The "Find" button
+and the adjacent text window can be used to find a car by its number.
+
 <P>
 <A NAME="ImportingCars"></A>
 </P>
@@ -824,12 +809,12 @@ operations program.</P>
 
 <P>To improve the speed of the car import, you can close the cars
 window. It takes significantly more processor cycles to update the cars
-window than to actually import the cars.</P> 
+window than to actually import the cars.</P>
 
 <P>After importing your cars, you must save them if you want to keep
-them as part of your roster. Select any car by pressing the edit button
-and then press the "Save" button that can be found at the bottom right
-of the "Edit Car" window. </P>
+them as part of your roster. Use the Cars "Save" button or select any
+car by pressing the edit button and then press the "Save" button that
+can be found at the bottom right of the "Edit Car" window.</P>
 
 <A NAME="CarsEdit"></A>
 <H3>Adding Cars to your Roster</H3>
@@ -879,15 +864,18 @@ information to assign and deliver cars to their appropriate trains and
 locations respectively.</P>
 
 <A	NAME="CabooseFredHazardous"></A>
-<H3>Caboose, FRED, Hazardous Checkboxes</H3>
+<H3>Passenger, Caboose, FRED, Hazardous Checkboxes</H3>
 
-If the car is a caboose, has a FRED (Flashing Rear End Device), or is
-hazardous, select the proper checkbox. The program uses the caboose and FRED
-functions to place the car at the end of a train when the train requires
-a caboose or car with FRED. The hazardous checkbox will cause the
-program to add a note to the switch list that the car is transporting
-hazardous materials. Your railroad's policy regarding hazardous
-materials can than be applied to this car!
+If the car is used in passenger service select the passenger checkbox. The
+program will place passenger cars towards the rear of a mixed service
+(combination of passenger and freight cars) train. If the car is a
+caboose, has a FRED (Flashing Rear End Device), or is hazardous, select
+the proper checkbox. The program uses the caboose and FRED functions to
+place the car at the end of a train when the train requires a caboose or
+car with FRED. The hazardous checkbox will cause the program to add a
+note to the switch list that the car is transporting hazardous
+materials. Your railroad's policy regarding hazardous materials can than
+be applied to this car!
 
 <H3>Car Location</H3>
 
@@ -975,8 +963,8 @@ priority is low and you can change the priority to high for a given car
 type and load. High priority car loads are normally serviced before low priority.
 Useful if you need to get your reefer loaded with fruit to the market ASAP! 
 
-<P>You can also provide optional comments for your operators based on
-the type of car and load. The comments can be useful if you have visible
+<P>You can also provide optional messages for your operators based on
+the type of car and load. The messages can be useful if you have visible
 car loads that need to be added or removed by your operators.</P> 
 
 <A NAME="CarsSet"></A>
@@ -991,14 +979,14 @@ force a car to a specific location using a specified train.
 <img src="images/SetCarLocation.png">
 </P>
 
-<P>In the upper right hand corner of the frame is a checkbox labeled
+<P>In the upper right hand corner of the Set Car Location window is a checkbox labeled
 "Location Unknown". Selecting the location unknown checkbox does several
 things. First the program will ignore the car when building new trains.
 Second, on manifests and switch lists, the program will list all of the
 misplaced cars. Now your operators can help you find cars that have
 been misplaced. And finally, when this checkbox is selected, the other fields in
 the set car location window are disabled.</P>
-<P>The "Out of Service" checkbox when selected causes the program to ignore
+<P>The "Out of Service" checkbox when selected instructs the program to ignore
 the car when building new trains.  Many operators have a RIP (Repair In Place) track
 and use this feature to hold the car there until repairs have been made.</P>
 
@@ -1611,9 +1599,12 @@ least number of car operations.</P>
 When you terminate a train, you are asking the program to move the train
 from its current location to its final destination. The cars and engines
 associated with the train will be picked up and delivered to the
-locations shown in the train manifest. To terminate several trains,
-select the trains you wish to terminate in the build column and press
-the "Terminate" button at the bottom of the Trains window.
+locations shown in the train manifest. After terminating a train the
+engines and cars associated with that train become available for other
+trains. Therefore you should terminate a train only after it actually
+arrives at the final destination in the train's route. To terminate several
+trains, select the trains you wish to terminate in the build column and
+press the "Terminate" button at the bottom of the Trains window.
 
 <H3>Save Builds</H3>
 
@@ -1636,7 +1627,7 @@ train. Terminating a train tells the program that the engines and cars
 in that particular train have been delivered to their final locations
 and can be used again when building new trains. So always build all,
 print all, THEN terminate each train after completing its run! It is
-okay to build all trains, print all train, and then use the "Save
+okay to build all trains, print all trains, and then use the "Save
 Builds" button and shut down the program. Later you can restart the
 program and terminate the trains that completed their runs.
 
