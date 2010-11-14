@@ -5,9 +5,10 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 
 import gnu.io
+#import ch.ntb.usb
 
 def portType(type):
     if type == gnu.io.CommPortIdentifier.PORT_PARALLEL:
@@ -23,13 +24,38 @@ def portType(type):
     else:
         return "Unknown type"
 
-portnames = gnu.io.CommPortIdentifier.getPortIdentifiers()
-
+print "---------------------------------"
 print "Enumerating available com ports"
-print "-------------------------------"
+print "---------------------------------"
+
+portnames = gnu.io.CommPortIdentifier.getPortIdentifiers()
 
 for portname in portnames:
     print "Port: ", portname.name, " type: ", portType(portname.getPortType())
 
-print "-------------------------------"
+print "---------------------------------"
+print "Enumerating available USB devices"
+print "(via JInput)"
+print "---------------------------------"
+
+usbmodel = jmri.jmrix.jinput.TreeModel.instance()
+usbdevices = usbmodel.controllers()
+
+for usbdevice in usbdevices:
+    print "Device: ", usbdevice.toString()
+
+#print "---------------------------------"
+#print "Enumerating available USB devices"
+#print "(via Libusb)"
+#print "---------------------------------"
+#
+#ch.ntb.usb.LibusbJava.usb_init()
+#ch.ntb.usb.LibusbJava.usb_find_busses()
+#ch.ntb.usb.LibusbJava.usb_find_devices()
+#
+#usbbus = ch.ntb.usb.LibusbJava.usb_get_busses()
+#
+#ch.ntb.usb.Utils.logBus(usbbus)
+
+print "---------------------------------"
 print "Done"
