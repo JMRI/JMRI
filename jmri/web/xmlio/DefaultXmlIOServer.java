@@ -29,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -337,9 +337,14 @@ public class DefaultXmlIOServer implements XmlIOServer {
         if (v!=null) {
             int state = Integer.parseInt(v.getText());
             b.setPower(state);
+            // remove set element
             item.removeContent(v);
         }
-    }
+
+        v = item.getChild("value");
+        if (v == null) item.addContent(v = new Element("value"));
+        // set result
+        v.setText(""+b.getPower());    }
     
     void immediateReadTurnout(String name, Element item) {
         // get turnout

@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class DefaultXmlIOServerTest extends TestCase {
 
@@ -51,6 +51,18 @@ public class DefaultXmlIOServerTest extends TestCase {
         
         Element e2 = new Element("throttle");
         e2.addContent(new Element("address").addContent("3"));
+        e1.addContent(e2);
+
+        return e1;
+    }
+    
+    Element getWritePowerCommand() {
+        Element e1 = new Element("xmlio");
+        
+        Element e2 = new Element("item");
+        e2.addContent(new Element("type").addContent("power"));
+        e2.addContent(new Element("name").addContent("power"));
+        e2.addContent(new Element("set").addContent("2"));
         e1.addContent(e2);
 
         return e1;
@@ -129,6 +141,28 @@ public class DefaultXmlIOServerTest extends TestCase {
 
     }
 
+    public void testPowerElement() throws JmriException {
+    
+        Element e = server.immediateRequest(getWritePowerCommand());
+
+        e = e.getChild("item");
+        
+        Element item;
+        
+        item = (Element) e.getChild("type");
+        Assert.assertTrue("type exists", item != null);
+        Assert.assertEquals("type correct", "power", item.getText());
+
+        item = (Element) e.getChild("name");
+        Assert.assertTrue("name exists", item != null);
+        Assert.assertEquals("name correct", "power", item.getText());
+
+        item = (Element) e.getChild("value");
+        Assert.assertTrue("value exists", item != null);
+        Assert.assertEquals("value correct", "2", item.getText());
+
+    }
+
     // common objects
     DefaultXmlIOServer server;
     Sensor s1;
@@ -161,6 +195,7 @@ public class DefaultXmlIOServerTest extends TestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initDebugPowerManager();
         
         server = new DefaultXmlIOServer();
         s1 = InstanceManager.sensorManagerInstance().provideSensor("IS1");
