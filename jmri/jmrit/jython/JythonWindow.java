@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
  * @author      Matthew Harris  Copyright (C) 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class JythonWindow extends AbstractAction {
 
@@ -81,9 +81,6 @@ public class JythonWindow extends AbstractAction {
         int size = area.getFont().getSize();
         area.setFont(new Font("Monospaced", Font.PLAIN, size));
         
-        // Disable editing of the text area
-        area.setEditable(false);
-
         // Add document listener to scroll to end when modified
         area.getDocument().addDocumentListener(new DocumentListener() {
 
