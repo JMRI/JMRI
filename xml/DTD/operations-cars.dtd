@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a car roster -->
-<!-- $Id: operations-cars.dtd,v 1.17 2010-11-11 02:38:28 dan_boudreau Exp $ -->
+<!-- $Id: operations-cars.dtd,v 1.18 2010-11-14 05:06:08 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -22,7 +22,8 @@
 <!ELEMENT carOwners (#PCDATA)>
 <!ELEMENT kernels (#PCDATA)>
 
-<!ELEMENT options (carEditOptions)*>
+<!ELEMENT options (carsOptions | carEditOptions)*>
+<!ELEMENT carsOptions EMPTY>
 <!ELEMENT carEditOptions EMPTY>
 
 <!ELEMENT cars (car*)>
@@ -84,6 +85,12 @@
 <!ATTLIST carLoad priority			CDATA #IMPLIED>
 <!ATTLIST carLoad pickupComment		CDATA #IMPLIED>
 <!ATTLIST carLoad dropComment		CDATA #IMPLIED>
+
+<!ATTLIST carsOptions x				CDATA #IMPLIED> 
+<!ATTLIST carsOptions y				CDATA #IMPLIED> 
+<!ATTLIST carsOptions height		CDATA #IMPLIED> 
+<!ATTLIST carsOptions width			CDATA #IMPLIED> 
+<!ATTLIST carsOptions columnWidths	CDATA #IMPLIED>
 
 <!ATTLIST carEditOptions x			CDATA #IMPLIED> 
 <!ATTLIST carEditOptions y			CDATA #IMPLIED> 

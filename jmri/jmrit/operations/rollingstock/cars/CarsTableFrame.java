@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import javax.swing.event.TableModelListener; 
 import javax.swing.event.TableModelEvent;
+import javax.swing.table.TableColumnModel;
 
 import java.text.MessageFormat;
 import java.util.List;
@@ -34,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.20 $
+ * @version             $Revision: 1.21 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -45,6 +46,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	boolean showAllCars;
 	String locationName;
 	String trackName;
+	CarManager carManager = CarManager.instance();
 		
 	// labels
 	JLabel numCars = new JLabel();
@@ -73,6 +75,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 	// major buttons
 	JButton addButton = new JButton(rb.getString("Add"));
 	JButton findButton = new JButton(rb.getString("Find"));
+	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	JTextField findCarTextBox = new JTextField(6);
 
@@ -126,6 +129,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	cp2.add(textCars); 
     	cp2.add(textSep1);
 		cp2.add(addButton);	
+		cp2.add(saveButton);
 		cp2.add(findButton);
 		cp2.add(findCarTextBox);	
 		
@@ -146,6 +150,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		// setup buttons
 		addButtonAction(addButton);
 		addButtonAction(findButton);
+		addButtonAction(saveButton);
 		
     	sortByNumber.setSelected(true);
 		addRadioButtonAction (sortByNumber);
@@ -199,8 +204,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
     	
     	pack();
-    	if ((getWidth()<Control.panelWidth)) 
-    		setSize(Control.panelWidth, getHeight());
+    	setSize(carManager.getCarsFrameSize());
+    	setLocation(carManager.getCarsFramePosition());
 		setVisible(true);
     }
     
@@ -256,7 +261,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     
 	CarEditFrame f = null;
 	
-	// add or find button
+	// add, find or save button
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("car button activated");
 		if (ae.getSource() == findButton){
@@ -277,6 +282,19 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 			f.initComponents();
 			f.setTitle(rb.getString("TitleCarAdd"));
 		}
+		if (ae.getSource() == saveButton){
+			carManager.setCarsFrame(this);
+			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
+			CarManagerXml.instance().writeOperationsFile();
+		}
+	}
+	
+	protected int[] getCurrentTableColumnWidths(){	
+		TableColumnModel tcm = carsTable.getColumnModel();
+		int[] widths = new int[tcm.getColumnCount()];
+		for (int i=0; i<tcm.getColumnCount(); i++)
+			widths[i] = tcm.getColumn(i).getWidth();
+		return widths;
 	}
 
     public void dispose() {

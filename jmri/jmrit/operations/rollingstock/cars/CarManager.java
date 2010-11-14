@@ -26,10 +26,17 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
  */
 public class CarManager extends RollingStockManager{
 
+	// Cars frame attributes
+	private CarsTableFrame _carsFrame = null;
+	private Dimension _carsFrameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
+	private Point _carsFramePosition = new Point();
+	// Cars frame table column widths (12), starts with Number column and ends with Edit
+	private int[] _carsTableColumnWidths = {60, 60, 65, 35, 75, 65, 190, 190, 65, 50, 65, 70};
+	
 	protected Hashtable<String, Kernel> _kernelHashTable = new Hashtable<String, Kernel>(); // stores Kernels by number
 
 	public static final String KERNELLISTLENGTH_CHANGED_PROPERTY = "KernelListLength";
@@ -323,10 +330,63 @@ public class CarManager extends RollingStockManager{
 		}
 		return mias;
 	}
-	public void options (org.jdom.Element values) {
+	
+	public void setCarsFrame(CarsTableFrame frame){
+		_carsFrame = frame;
+	}
+	
+	public Dimension getCarsFrameSize(){
+		return _carsFrameDimension;
+	}
+	
+	public Point getCarsFramePosition(){
+		return _carsFramePosition;
+	}
+
+	/**
+    * 
+    * @return get an array of table column widths for the trains frame
+    */
+   public int[] getCarsFrameTableColumnWidths(){
+   	return _carsTableColumnWidths.clone();
+   }
+   
+   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
+   public void setCarsFrameTableColumnWidths(int[] tableColumnWidths){
+   	_carsTableColumnWidths = tableColumnWidths;
+   }
+   	
+	public void options (Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+		// get Cars Table Frame attributes
+		Element e = values.getChild("carsOptions");
+		if (e != null){
+			try {
+				int x = e.getAttribute("x").getIntValue();
+				int y = e.getAttribute("y").getIntValue();
+				int height = e.getAttribute("height").getIntValue();
+				int width = e.getAttribute("width").getIntValue();
+				_carsFrameDimension = new Dimension(width, height);
+				_carsFramePosition = new Point(x,y);
+			} catch ( org.jdom.DataConversionException ee) {
+				log.debug("Did not find car edit frame attributes");
+			} catch ( NullPointerException ne) {
+				log.debug("Did not find car edit frame attributes");
+			}
+			org.jdom.Attribute a;
+	  		if ((a = e.getAttribute("columnWidths")) != null){
+             	String[] widths = a.getValue().split(" ");
+             	for (int i=0; i<widths.length; i++){
+             		try{
+             			_carsTableColumnWidths[i] = Integer.parseInt(widths[i]);
+             		} catch (NumberFormatException ee){
+             			log.error("Number format exception when reading trains column widths");
+             		}
+             	}
+    		}
+		}
 		// get Car Edit attributes
-		Element e = values.getChild("carEditOptions");
+		e = values.getChild("carEditOptions");
 		if (e != null){
 			try {
 				int x = e.getAttribute("x").getIntValue();
@@ -348,12 +408,35 @@ public class CarManager extends RollingStockManager{
      * detailed DTD in operations-locations.dtd.
      * @return Contents in a JDOM Element
      */
-    public org.jdom.Element store() {
+    public Element store() {
     	Element values = new Element("options");
-        // now save Car Edit frame size and position
-        Element e = new org.jdom.Element("carEditOptions");
-        Dimension size = getEditFrameSize();
-        Point posn = getEditFramePosition();
+        // now save Cars frame size and position
+        Element e = new Element("carsOptions");
+        Dimension size = getCarsFrameSize();
+        Point posn = getCarsFramePosition();
+        if (_carsFrame != null){
+        	size = _carsFrame.getSize();
+        	posn = _carsFrame.getLocation();
+        	_carsFrameDimension = size;
+        	_carsFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        StringBuffer buf = new StringBuffer();
+        for (int i=0; i<_carsTableColumnWidths.length; i++){
+        	buf.append(Integer.toString(_carsTableColumnWidths[i])+" ");
+        }
+        e.setAttribute("columnWidths", buf.toString());
+        values.addContent(e);
+        e = new Element("carEditOptions");
+        size = getEditFrameSize();
+        posn = getEditFramePosition();
         if (_editFrame != null){
         	size = _editFrame.getSize();
         	posn = _editFrame.getLocation();

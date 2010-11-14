@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.32 $
+ * @version   $Revision: 1.33 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -251,18 +251,10 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
 		// set column preferred widths
-		table.getColumnModel().getColumn(NUMCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(COLORCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(KERNELCOLUMN).setPreferredWidth(75);
-		table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(35);
-		table.getColumnModel().getColumn(LOCATIONCOLUMN).setPreferredWidth(190);
-		table.getColumnModel().getColumn(DESTINATIONCOLUMN).setPreferredWidth(190);
-		table.getColumnModel().getColumn(TRAINCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(MOVESCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(SETCOLUMN).setPreferredWidth(65);
-		table.getColumnModel().getColumn(EDITCOLUMN).setPreferredWidth(70);
+		// set column preferred widths
+		int[] tableColumnWidths = manager.getCarsFrameTableColumnWidths();
+		for (int i=0; i<tcm.getColumnCount(); i++)
+			tcm.getColumn(i).setPreferredWidth(tableColumnWidths[i]);		
 		// have to shut off autoResizeMode to get horizontal scroll to work (JavaSwing p 541)
         table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
