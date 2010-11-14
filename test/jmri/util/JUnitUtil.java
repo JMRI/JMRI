@@ -38,7 +38,7 @@ import java.beans.PropertyChangeListener;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  * @since 2.5.3
  */
 
@@ -132,12 +132,10 @@ public class JUnitUtil {
     public static void initDebugPowerManager() {
         jmri.PowerManager manager = new jmri.PowerManager() {
                 int state = PowerManager.UNKNOWN;
-                PropertyChangeListener prop = null;
-
                 public void setPower(int v)     throws JmriException { state = v; }
                 public int      getPower()      throws JmriException { return state;}
                 public void dispose() throws JmriException {}
-                public void addPropertyChangeListener(PropertyChangeListener p) { prop = p; }
+                public void addPropertyChangeListener(PropertyChangeListener p) {}
                 public void removePropertyChangeListener(PropertyChangeListener p) {}
                 public String getUserName() { return "test"; }
             }; // end of anonymous PowerManager class new()
