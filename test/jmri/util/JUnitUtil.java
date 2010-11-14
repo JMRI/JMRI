@@ -11,6 +11,7 @@ import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
 import jmri.managers.AbstractSignalHeadManager;
 import jmri.managers.DefaultMemoryManager;
+import jmri.jmrix.debugthrottle.DebugThrottleManager;
 
 /**
  * Common utility methods for working with JUnit.
@@ -29,6 +30,7 @@ import jmri.managers.DefaultMemoryManager;
     JUnitUtil.initInternalTurnoutManager();
     JUnitUtil.initInternalLightManager();
     JUnitUtil.initInternalSensorManager();
+    JUnitUtil.initDebugThrottleManager();
 </pre></code>
  *<p>
  * Your tearDown() should end with:
@@ -41,7 +43,7 @@ import jmri.managers.DefaultMemoryManager;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  * @since 2.5.3
  */
 
@@ -124,6 +126,12 @@ public class JUnitUtil {
         InstanceManager.setSignalHeadManager(m);
         if (InstanceManager.configureManagerInstance() != null)
             InstanceManager.configureManagerInstance().registerConfig(m);
+    }
+
+    public static void initDebugThrottleManager() {
+        jmri.ThrottleManager m = new DebugThrottleManager();
+        InstanceManager.setThrottleManager(m);
+        return;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JUnitUtil.class.getName());
