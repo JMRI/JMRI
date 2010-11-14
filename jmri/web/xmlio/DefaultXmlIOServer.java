@@ -3,7 +3,12 @@
 package jmri.web.xmlio;
 
 import jmri.*;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom.*;
+
+import java.io.File;
 import java.util.*;
 
 /**
@@ -24,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -43,11 +48,15 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Turnout t = m.getTurnout(name);
-                    if (t.getUserName() != null && !t.getUserName().equals(""))
-                        name = t.getUserName();
+// always use system name for name (added username as separate element)
+//                    if (t.getUserName() != null && !t.getUserName().equals(""))
+//                        name = t.getUserName();
                     Element n = new Element("item");
                     n.addContent(new Element("type").addContent("turnout"));
                     n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
+                    n.addContent(new Element("inverted").addContent(new Boolean(t.getInverted()).toString()));
                     e.addContent(n);
                 }
             } else if (type.equals("sensor")) {
@@ -56,13 +65,49 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 List<String> names = m.getSystemNameList();
                 for (String name : names) {
                     Sensor t = m.getSensor(name);
-                    if (t.getUserName() != null && !t.getUserName().equals(""))
-                        name = t.getUserName();
+// always use system name for name (added username as separate element)
+//                    if (t.getUserName() != null && !t.getUserName().equals(""))
+//                        name = t.getUserName();
                     Element n = new Element("item");
                     n.addContent(new Element("type").addContent("sensor"));
                     n.addContent(new Element("name").addContent(name));
+                    n.addContent(new Element("userName").addContent(t.getUserName()));
+                    n.addContent(new Element("comment").addContent(t.getComment()));
+                    n.addContent(new Element("inverted").addContent(new Boolean(t.getInverted()).toString()));
                     e.addContent(n);
                 }            
+            } else if (type.equals("roster")) {
+            	// add an element for each roster entry
+            	List <RosterEntry> rlist = Roster.instance().matchingList(null, null, null, null, null, null, null);
+            	for (int i = 0; i < rlist.size(); i++) {
+            		RosterEntry entry = rlist.get(i);
+            		Element n = new Element("item");
+            		n.addContent(new Element("type").addContent("roster"));
+            		n.addContent(new Element("name").addContent(entry.getId()));
+            		n.addContent(new Element("dccAddress").addContent(entry.getDccAddress()));
+            		n.addContent(new Element("addressLength").addContent(entry.isLongAddress() ? "L" : "S"));
+            		n.addContent(new Element("roadName").addContent(entry.getRoadName()));
+            		n.addContent(new Element("roadNumber").addContent(entry.getRoadNumber()));
+            		n.addContent(new Element("mfg").addContent(entry.getMfg()));
+            		n.addContent(new Element("model").addContent(entry.getModel()));
+            		n.addContent(new Element("comment").addContent(entry.getComment()));
+            		n.addContent(new Element("maxSpeedPct").addContent(new Integer(entry.getMaxSpeedPCT()).toString()));
+            		File file = new File(entry.getImagePath());
+            		n.addContent(new Element("imageFileName").addContent(file.getName()));
+            		file = new File(entry.getIconPath());
+            		n.addContent(new Element("imageIconName").addContent(file.getName()));
+        			Element f = new Element("functionLabels");
+        			Element g = new Element("functionLockables");
+                	for (int j = 0; j < entry.getMAXFNNUM(); j++) {
+                		if (entry.getFunctionLabel(j) != null) {
+                    		f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
+                    		g.addContent(new Element("F" + j).addContent(new Boolean(entry.getFunctionLockable(j)).toString()));
+                		}
+            		}
+        			n.addContent(f);
+        			n.addContent(g);
+        			e.addContent(n);
+            	}
             } else if (type.equals("power")) {
                 // add a power element
                 Element n = new Element("item");
@@ -86,9 +131,11 @@ public class DefaultXmlIOServer implements XmlIOServer {
             String type = item.getChild("type").getText();
             String name = item.getChild("name").getText();
             
+            //check for "set" values and process them
             if (type.equals("turnout")) immediateWriteTurnout(name, item);
             else if (type.equals("sensor")) immediateWriteSensor(name, item);
             else if (type.equals("power")) immediateWritePower(name, item);
+            else if (type.equals("roster")) ;  //no write exists for roster
             else log.warn("Unexpected type in item: "+type);
         }
         
