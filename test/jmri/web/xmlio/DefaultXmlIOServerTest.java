@@ -13,7 +13,7 @@ import org.jdom.*;
  * Invokes complete set of tests of the jmri.web.xmlio.DefaultXmlIOServerTest class
  *
  * @author	    Bob Jacobsen  Copyright 2008, 2009, 2010
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 public class DefaultXmlIOServerTest extends TestCase {
 
@@ -123,21 +123,21 @@ public class DefaultXmlIOServerTest extends TestCase {
         
         Element item;
         
-        item = (Element) e.getChild("address");
+        item = e.getChild("address");
         Assert.assertTrue("address exists", item != null);
-        Assert.assertEquals("address correct", "3", item.getText());
+        if (item!=null) Assert.assertEquals("address correct", "3", item.getText());
 
-        item = (Element) e.getChild("speed");
+        item = e.getChild("speed");
         Assert.assertTrue("speed exists", item != null);
-        Assert.assertEquals("speed correct", "0.0", item.getText());
+        if (item!=null) Assert.assertEquals("speed correct", "0.0", item.getText());
 
-        item = (Element) e.getChild("forward");
+        item = e.getChild("forward");
         Assert.assertTrue("forward exists", item != null);
-        Assert.assertEquals("forward correct", "true", item.getText());
+        if (item!=null) Assert.assertEquals("forward correct", "true", item.getText());
 
-        item = (Element) e.getChild("F0");
+        item = e.getChild("F0");
         Assert.assertTrue("F0 exists", item != null);
-        Assert.assertEquals("F0 correct", "false", item.getText());
+        if (item!=null) Assert.assertEquals("F0 correct", "false", item.getText());
 
     }
 
@@ -149,17 +149,17 @@ public class DefaultXmlIOServerTest extends TestCase {
         
         Element item;
         
-        item = (Element) e.getChild("type");
+        item = e.getChild("type");
         Assert.assertTrue("type exists", item != null);
-        Assert.assertEquals("type correct", "power", item.getText());
+        if (item!=null) Assert.assertEquals("type correct", "power", item.getText());
 
-        item = (Element) e.getChild("name");
+        item = e.getChild("name");
         Assert.assertTrue("name exists", item != null);
-        Assert.assertEquals("name correct", "power", item.getText());
+        if (item!=null) Assert.assertEquals("name correct", "power", item.getText());
 
-        item = (Element) e.getChild("value");
+        item = e.getChild("value");
         Assert.assertTrue("value exists", item != null);
-        Assert.assertEquals("value correct", "2", item.getText());
+        if (item!=null) Assert.assertEquals("value correct", "2", item.getText());
 
     }
 
