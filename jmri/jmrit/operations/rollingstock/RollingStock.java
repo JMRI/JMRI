@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -196,6 +196,17 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			// log.debug("Weight not set for rolling stock ("+toString()+")");
 		}
 		return Integer.toString((int)(weight*Setup.getScaleTonRatio()));
+	}
+	
+	public int getAdjustedWeightTons(){
+		int weightTons =0;
+		try {
+			// get loaded weight
+			weightTons = Integer.parseInt(getWeightTons());
+		} catch (Exception e){
+			log.debug ("Rolling stock ("+toString()+") weight not set");
+		}
+		return weightTons;
 	}
 
 	public void setBuilt(String built) {

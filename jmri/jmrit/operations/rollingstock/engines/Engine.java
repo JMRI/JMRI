@@ -10,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class Engine extends RollingStock {
 	
@@ -132,12 +132,12 @@ public class Engine extends RollingStock {
 		String old ="";
 		if (_consist != null){
 			old = _consist.getName();
-			_consist.deleteEngine(this);
+			_consist.delete(this);
 		}
 		_consist = consist;
 		String newName ="";
 		if (_consist != null){
-			_consist.addEngine(this);
+			_consist.add(this);
 			newName = _consist.getName();
 		}
 		
@@ -167,7 +167,7 @@ public class Engine extends RollingStock {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(OKAY))
 			return status;
-		// now check to see if car is in a kernel and can fit 
+		// now check to see if engine is in a consist and can fit 
 		if (getConsist() != null && track != null &&
 				track.getUsedLength() + track.getReserved()+ getConsist().getLength() > track.getLength()){
 			log.debug("Can't set engine (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
@@ -208,7 +208,7 @@ public class Engine extends RollingStock {
 			if (c != null){
 				setConsist(c);
 				if ((a = e.getAttribute("leadConsist")) != null && a.getValue().equals("true")){
-					_consist.setLeadEngine(this);
+					_consist.setLead(this);
 				}
 				if ((a = e.getAttribute("consistNum")) != null){
 					_consist.setConsistNumber(Integer.parseInt(a.getValue()));
@@ -236,7 +236,7 @@ public class Engine extends RollingStock {
 		e.setAttribute("hp", getHp());
 		if (getConsist() != null){
 			e.setAttribute("consist", getConsistName());
-			if (getConsist().isLeadEngine(this)){
+			if (getConsist().isLead(this)){
 				e.setAttribute("leadConsist", "true");
 				if (getConsist().getConsistNumber()>0)
 					e.setAttribute("consistNum", Integer.toString(getConsist().getConsistNumber()));

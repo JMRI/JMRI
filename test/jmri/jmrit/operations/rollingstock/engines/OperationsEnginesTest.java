@@ -40,7 +40,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -377,30 +377,30 @@ public class OperationsEnginesTest extends TestCase {
 		e4.setModel("SW1500");  //  e3.setLength("45");
 
 		Assert.assertEquals("Consist Initial Length", 0, c1.getLength());
-		Assert.assertFalse("Consist Lead Engine 0", c1.isLeadEngine(e1));
+		Assert.assertFalse("Consist Lead Engine 0", c1.isLead(e1));
 
-		c1.addEngine(e1);
+		c1.add(e1);
 		Assert.assertEquals("Consist Engine 1 Length", 56+4, c1.getLength());
-		Assert.assertTrue("Consist Lead Engine 1", c1.isLeadEngine(e1));
+		Assert.assertTrue("Consist Lead Engine 1", c1.isLead(e1));
 
-		c1.addEngine(e2);
+		c1.add(e2);
 		Assert.assertEquals("Consist Engine 2 Length", 56+4+59+4, c1.getLength());
-		Assert.assertTrue("Consist Lead Engine 1 after 2", c1.isLeadEngine(e1));
+		Assert.assertTrue("Consist Lead Engine 1 after 2", c1.isLead(e1));
 
-                c1.setLeadEngine(e2);
-		Assert.assertFalse("Consist Lead Engine 1 after 2c", c1.isLeadEngine(e1));
-		Assert.assertTrue("Consist Lead Engine 2 after 2c", c1.isLeadEngine(e2));
+                c1.setLead(e2);
+		Assert.assertFalse("Consist Lead Engine 1 after 2c", c1.isLead(e1));
+		Assert.assertTrue("Consist Lead Engine 2 after 2c", c1.isLead(e2));
                 
-		c1.addEngine(e3);
+		c1.add(e3);
 		Assert.assertEquals("Consist Engine 3 Length", 56+4+59+4+45+4, c1.getLength());
-		Assert.assertTrue("Consist Lead Engine 2 after 3", c1.isLeadEngine(e2));
-		Assert.assertFalse("Consist Lead Engine 1 after 3", c1.isLeadEngine(e1));
-		Assert.assertFalse("Consist Lead Engine 3 after 3", c1.isLeadEngine(e3));
+		Assert.assertTrue("Consist Lead Engine 2 after 3", c1.isLead(e2));
+		Assert.assertFalse("Consist Lead Engine 1 after 3", c1.isLead(e1));
+		Assert.assertFalse("Consist Lead Engine 3 after 3", c1.isLead(e3));
 
                 // Can't set lead engine if not part of consist
-                c1.setLeadEngine(e4);
-		Assert.assertTrue("Consist Lead Engine 2 after 4c", c1.isLeadEngine(e2));
-		Assert.assertFalse("Consist Lead Engine 4 after 4c", c1.isLeadEngine(e4));
+                c1.setLead(e4);
+		Assert.assertTrue("Consist Lead Engine 2 after 4c", c1.isLead(e2));
+		Assert.assertFalse("Consist Lead Engine 4 after 4c", c1.isLead(e4));
               	List<Engine> tempengines = new ArrayList<Engine>();
                 tempengines = c1.getEngines();
 		Assert.assertTrue("Consist Engine 2 after 4c", tempengines.contains(e2));
@@ -408,13 +408,13 @@ public class OperationsEnginesTest extends TestCase {
                 
 
 
-		c1.deleteEngine(e2);
+		c1.delete(e2);
 		Assert.assertEquals("Consist Engine Delete 2 Length", 56+4+45+4, c1.getLength());
 
-		c1.deleteEngine(e1);
+		c1.delete(e1);
 		Assert.assertEquals("Consist Engine Delete 1 Length", 45+4, c1.getLength());
 
-		c1.deleteEngine(e3);
+		c1.delete(e3);
 		Assert.assertEquals("Consist Engine Delete 3 Length", 0, c1.getLength());
 
 	}
@@ -444,12 +444,12 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("Consist Name for engine 3 before", "TESTCONSISTOLD", e3.getConsistName());
 		Assert.assertEquals("Consist old length before", 56+4+59+4+45+4, cold.getLength());
 		Assert.assertEquals("Consist new length before", 0, cnew.getLength());
-		Assert.assertTrue("Consist old Lead is Engine 1 before", cold.isLeadEngine(e1));
-		Assert.assertFalse("Consist old Lead is not Engine 2 before", cold.isLeadEngine(e2));
-		Assert.assertFalse("Consist old Lead is not Engine 3 before", cold.isLeadEngine(e3));
-		Assert.assertFalse("Consist new Lead is not Engine 1 before", cnew.isLeadEngine(e1));
-		Assert.assertFalse("Consist new Lead is not Engine 2 before", cnew.isLeadEngine(e2));
-		Assert.assertFalse("Consist new Lead is not Engine 3 before", cnew.isLeadEngine(e3));
+		Assert.assertTrue("Consist old Lead is Engine 1 before", cold.isLead(e1));
+		Assert.assertFalse("Consist old Lead is not Engine 2 before", cold.isLead(e2));
+		Assert.assertFalse("Consist old Lead is not Engine 3 before", cold.isLead(e3));
+		Assert.assertFalse("Consist new Lead is not Engine 1 before", cnew.isLead(e1));
+		Assert.assertFalse("Consist new Lead is not Engine 2 before", cnew.isLead(e2));
+		Assert.assertFalse("Consist new Lead is not Engine 3 before", cnew.isLead(e3));
 
 		//  Move engine 1 to the new consist where it will be the lead engine.
 		//  Engine 2 should now be the lead engine of the old consist.
@@ -459,12 +459,12 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("Consist Name for engine 3 after", "TESTCONSISTOLD", e3.getConsistName());
 		Assert.assertEquals("Consist old length after", 59+4+45+4, cold.getLength());
 		Assert.assertEquals("Consist new length after", 56+4, cnew.getLength());
-		Assert.assertFalse("Consist old Lead is not Engine 1 after", cold.isLeadEngine(e1));
-		Assert.assertTrue("Consist old Lead is Engine 2 after", cold.isLeadEngine(e2));
-		Assert.assertFalse("Consist old Lead is not Engine 3 after", cold.isLeadEngine(e3));
-		Assert.assertTrue("Consist new Lead is Engine 1 after", cnew.isLeadEngine(e1));
-		Assert.assertFalse("Consist new Lead is not Engine 2 after", cnew.isLeadEngine(e2));
-		Assert.assertFalse("Consist new Lead is not Engine 3 after", cnew.isLeadEngine(e3));
+		Assert.assertFalse("Consist old Lead is not Engine 1 after", cold.isLead(e1));
+		Assert.assertTrue("Consist old Lead is Engine 2 after", cold.isLead(e2));
+		Assert.assertFalse("Consist old Lead is not Engine 3 after", cold.isLead(e3));
+		Assert.assertTrue("Consist new Lead is Engine 1 after", cnew.isLead(e1));
+		Assert.assertFalse("Consist new Lead is not Engine 2 after", cnew.isLead(e2));
+		Assert.assertFalse("Consist new Lead is not Engine 3 after", cnew.isLead(e3));
 
 		//  Move engine 3 to the new consist.
 		e3.setConsist(cnew);
@@ -473,12 +473,12 @@ public class OperationsEnginesTest extends TestCase {
 		Assert.assertEquals("Consist Name for engine 3 after3", "TESTCONSISTNEW", e3.getConsistName());
 		Assert.assertEquals("Consist old length after3", 59+4, cold.getLength());
 		Assert.assertEquals("Consist new length after3", 56+4+45+4, cnew.getLength());
-		Assert.assertFalse("Consist old Lead is not Engine 1 after3", cold.isLeadEngine(e1));
-		Assert.assertTrue("Consist old Lead is Engine 2 after3", cold.isLeadEngine(e2));
-		Assert.assertFalse("Consist old Lead is not Engine 3 after3", cold.isLeadEngine(e3));
-		Assert.assertTrue("Consist new Lead is Engine 1 after3", cnew.isLeadEngine(e1));
-		Assert.assertFalse("Consist new Lead is not Engine 2 after3", cnew.isLeadEngine(e2));
-		Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLeadEngine(e3));
+		Assert.assertFalse("Consist old Lead is not Engine 1 after3", cold.isLead(e1));
+		Assert.assertTrue("Consist old Lead is Engine 2 after3", cold.isLead(e2));
+		Assert.assertFalse("Consist old Lead is not Engine 3 after3", cold.isLead(e3));
+		Assert.assertTrue("Consist new Lead is Engine 1 after3", cnew.isLead(e1));
+		Assert.assertFalse("Consist new Lead is not Engine 2 after3", cnew.isLead(e2));
+		Assert.assertFalse("Consist new Lead is not Engine 3 after3", cnew.isLead(e3));
 	}
 
 	public void testEngineManager(){

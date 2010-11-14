@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -218,43 +218,36 @@ public class OperationsCarsTest extends TestCase {
 		c3.setLoad("E");
 
 		Assert.assertEquals("Kernel Initial Length", 0, k1.getLength());
-		Assert.assertEquals("Kernel Initial Weight", 0.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Initial Weight Tons", 0, k1.getAdjustedWeightTons());
 
-		k1.addCar(c1);
+		k1.add(c1);
 		Assert.assertEquals("Kernel Car 1 Length", 40+Car.COUPLER, k1.getLength());
-		Assert.assertEquals("Kernel Car 1 Weight", 1000.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Car 1 Weight Tons", 10, k1.getAdjustedWeightTons());
 
-		k1.addCar(c2);
+		k1.add(c2);
 		Assert.assertEquals("Kernel Car 2 Length", 40+Car.COUPLER+60+Car.COUPLER, k1.getLength());
-		Assert.assertEquals("Kernel Car 2 Weight", 3000.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Car 2 Weight Tons", 30, k1.getAdjustedWeightTons());
 
-		k1.addCar(c3);
+		k1.add(c3);
 		Assert.assertEquals("Kernel Car 3 Length", 40+Car.COUPLER+60+Car.COUPLER+50+Car.COUPLER, k1.getLength());
-		Assert.assertEquals("Kernel Car 3 Weight", 4500.0, k1.getWeight(), 0.0);
 		// car 3 is empty, so only 5 tons, 15/3
 		Assert.assertEquals("Kernel Car 3 Weight Tons", 35, k1.getAdjustedWeightTons());
 
-		k1.setLeadCar(c2);
-		Assert.assertTrue("Kernel Lead Car 1", k1.isLeadCar(c2));
-		Assert.assertFalse("Kernel Lead Car 2", k1.isLeadCar(c1));
-		Assert.assertFalse("Kernel Lead Car 3", k1.isLeadCar(c3));
+		k1.setLead(c2);
+		Assert.assertTrue("Kernel Lead Car 1", k1.isLead(c2));
+		Assert.assertFalse("Kernel Lead Car 2", k1.isLead(c1));
+		Assert.assertFalse("Kernel Lead Car 3", k1.isLead(c3));
 
-		k1.deleteCar(c2);
+		k1.delete(c2);
 		Assert.assertEquals("Kernel Car Delete 2 Length", 40+Car.COUPLER+50+Car.COUPLER, k1.getLength());
-		Assert.assertEquals("Kernel Car Delete 2 Weight", 2500.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Car Delete 2 Weight Tons", 15, k1.getAdjustedWeightTons());
 
-		k1.deleteCar(c1);
+		k1.delete(c1);
 		Assert.assertEquals("Kernel Car Delete 1 Length", 50+Car.COUPLER, k1.getLength());
-		Assert.assertEquals("Kernel Car Delete 1 Weight", 1500.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Car Delete 1 Weight Tons", 5, k1.getAdjustedWeightTons());
 
-		k1.deleteCar(c3);
+		k1.delete(c3);
 		Assert.assertEquals("Kernel Car Delete 3 Length", 0, k1.getLength());
-		Assert.assertEquals("Kernel Car Delete 3 Weight", 0.0, k1.getWeight(), 0.0);
 		Assert.assertEquals("Kernel Car Delete 3 Weight Tons", 0, k1.getAdjustedWeightTons());
 
 	}
@@ -285,12 +278,12 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 3 before", "TESTKERNELOLD", c3.getKernelName());
 		Assert.assertEquals("Kernel old length before", 40+4+60+4+50+4, kold.getLength());
 		Assert.assertEquals("Kernel new length before", 0, knew.getLength());
-		Assert.assertTrue("Kernel old Lead is Car 1 before", kold.isLeadCar(c1));
-		Assert.assertFalse("Kernel old Lead is not Car 2 before", kold.isLeadCar(c2));
-		Assert.assertFalse("Kernel old Lead is not Car 3 before", kold.isLeadCar(c3));
-		Assert.assertFalse("Kernel new Lead is not Car 1 before", knew.isLeadCar(c1));
-		Assert.assertFalse("Kernel new Lead is not Car 2 before", knew.isLeadCar(c2));
-		Assert.assertFalse("Kernel new Lead is not Car 3 before", knew.isLeadCar(c3));
+		Assert.assertTrue("Kernel old Lead is Car 1 before", kold.isLead(c1));
+		Assert.assertFalse("Kernel old Lead is not Car 2 before", kold.isLead(c2));
+		Assert.assertFalse("Kernel old Lead is not Car 3 before", kold.isLead(c3));
+		Assert.assertFalse("Kernel new Lead is not Car 1 before", knew.isLead(c1));
+		Assert.assertFalse("Kernel new Lead is not Car 2 before", knew.isLead(c2));
+		Assert.assertFalse("Kernel new Lead is not Car 3 before", knew.isLead(c3));
 
 		//  Move car 1 to the new kernel where it will be the lead car.
 		//  Car 2 should now be the lead car of the old kernel.
@@ -300,12 +293,12 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 3 after", "TESTKERNELOLD", c3.getKernelName());
 		Assert.assertEquals("Kernel old length after", 60+4+50+4, kold.getLength());
 		Assert.assertEquals("Kernel new length after", 40+4, knew.getLength());
-		Assert.assertFalse("Kernel old Lead is not Car 1 after", kold.isLeadCar(c1));
-		Assert.assertTrue("Kernel old Lead is Car 2 after", kold.isLeadCar(c2));
-		Assert.assertFalse("Kernel old Lead is not Car 3 after", kold.isLeadCar(c3));
-		Assert.assertTrue("Kernel new Lead is Car 1 after", knew.isLeadCar(c1));
-		Assert.assertFalse("Kernel new Lead is not Car 2 after", knew.isLeadCar(c2));
-		Assert.assertFalse("Kernel new Lead is not Car 3 after", knew.isLeadCar(c3));
+		Assert.assertFalse("Kernel old Lead is not Car 1 after", kold.isLead(c1));
+		Assert.assertTrue("Kernel old Lead is Car 2 after", kold.isLead(c2));
+		Assert.assertFalse("Kernel old Lead is not Car 3 after", kold.isLead(c3));
+		Assert.assertTrue("Kernel new Lead is Car 1 after", knew.isLead(c1));
+		Assert.assertFalse("Kernel new Lead is not Car 2 after", knew.isLead(c2));
+		Assert.assertFalse("Kernel new Lead is not Car 3 after", knew.isLead(c3));
 
 		//  Move car 3 to the new kernel.
 		c3.setKernel(knew);
@@ -314,12 +307,12 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertEquals("Kernel Name for car 3 after3", "TESTKERNELNEW", c3.getKernelName());
 		Assert.assertEquals("Kernel old length after3", 60+4, kold.getLength());
 		Assert.assertEquals("Kernel new length after3", 40+4+50+4, knew.getLength());
-		Assert.assertFalse("Kernel old Lead is not Car 1 after3", kold.isLeadCar(c1));
-		Assert.assertTrue("Kernel old Lead is Car 2 after3", kold.isLeadCar(c2));
-		Assert.assertFalse("Kernel old Lead is not Car 3 after3", kold.isLeadCar(c3));
-		Assert.assertTrue("Kernel new Lead is Car 1 after3", knew.isLeadCar(c1));
-		Assert.assertFalse("Kernel new Lead is not Car 2 after3", knew.isLeadCar(c2));
-		Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLeadCar(c3));
+		Assert.assertFalse("Kernel old Lead is not Car 1 after3", kold.isLead(c1));
+		Assert.assertTrue("Kernel old Lead is Car 2 after3", kold.isLead(c2));
+		Assert.assertFalse("Kernel old Lead is not Car 3 after3", kold.isLead(c3));
+		Assert.assertTrue("Kernel new Lead is Car 1 after3", knew.isLead(c1));
+		Assert.assertFalse("Kernel new Lead is not Car 2 after3", knew.isLead(c2));
+		Assert.assertFalse("Kernel new Lead is not Car 3 after3", knew.isLead(c3));
 	}
 	
 	public void testCarManager(){

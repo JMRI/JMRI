@@ -35,7 +35,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.102 $
+ * @version             $Revision: 1.103 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -165,7 +165,6 @@ public class TrainBuilder extends TrainCommon{
 				// we're going to use this location, so initialize the location
 				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
 				rl.setCarMoves(0);					// clear the number of moves
-				//rl.setStagingTrack(null);			// used for staging only
 				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildLocRequestMoves"),new Object[]{rl.getName(), rl.getMaxCarMoves()}));
 			}
 			rl.setTrainWeight(0);					// clear the total train weight 
@@ -452,7 +451,7 @@ public class TrainBuilder extends TrainCommon{
 			// engine is part of a consist
 			}else{
 				// Keep only lead engines in consist if required number is correct.
-				if (!engine.getConsist().isLeadEngine(engine)){
+				if (!engine.getConsist().isLead(engine)){
 					addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildEnginePartConsist"),new Object[]{engine.toString(), engine.getConsist().getName(), engine.getConsist().getEngines().size()}));
 					// remove non-lead engines
 					engineList.remove(indexEng);
@@ -547,12 +546,7 @@ public class TrainBuilder extends TrainCommon{
 					engine.setRouteDestination(train.getTrainTerminatesRouteLocation());
 					engine.setDestination(terminateLocation, terminateTrack);
 					engineLength = Integer.parseInt(engine.getLength());
-					try {
-						engineWeight = Integer.parseInt(engine.getWeightTons());
-					} catch (NumberFormatException e){
-						log.warn("engine ("+engine.toString()+") does not have a valid weight");
-						engineWeight = 0;
-					}
+					engineWeight = engine.getAdjustedWeightTons();
 					break;  // done with loading engine
 				}
 			}
@@ -565,19 +559,9 @@ public class TrainBuilder extends TrainCommon{
 		// set the engine length and weight for locations
 		for (int i=0; i<routeList.size(); i++){
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(i));
-			rl.setTrainLength(engineLength);		// load the engine(s) length
-			rl.setTrainWeight(engineWeight);		// load the engine(s) weight
+			rl.setTrainLength(rl.getTrainLength()+engineLength);		// load the engine(s) length
+			rl.setTrainWeight(rl.getTrainWeight()+engineWeight);		// load the engine(s) weight
 		}
-		/*
-		// terminating into staging without engines?
-		if (terminateTrack == null && engineList.size() == 0){
-			// Use previously found staging track if there's one
-			terminateTrack = terminateStageTrack;
-		}
-		if (terminateTrack != null && terminateTrack.getLocType().equals(Track.STAGING)){
-			train.getTrainTerminatesRouteLocation().setStagingTrack(terminateTrack);
-		}
-		*/
 		return true;
 	}
 	
@@ -938,7 +922,7 @@ public class TrainBuilder extends TrainCommon{
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName()}));
-				if (!c.getKernel().isLeadCar(c)){
+				if (!c.getKernel().isLead(c)){
 					carList.remove(carList.get(carIndex));		// remove this car from the list
 					carIndex--;
 					continue;

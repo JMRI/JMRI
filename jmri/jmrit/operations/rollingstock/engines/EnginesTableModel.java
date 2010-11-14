@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.24 $
+ * @version   $Revision: 1.25 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -287,7 +287,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
         case TYPECOLUMN: return engine.getType();
         
         case CONSISTCOLUMN: {
-        	if (engine.getConsist() != null && engine.getConsist().isLeadEngine(engine))
+        	if (engine.getConsist() != null && engine.getConsist().isLead(engine))
         		return engine.getConsistName()+"*";
         	return engine.getConsistName();
         }

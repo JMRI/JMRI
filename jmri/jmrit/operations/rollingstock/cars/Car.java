@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.49 $
+ * @version             $Revision: 1.50 $
  */
 public class Car extends RollingStock {
 	
@@ -232,12 +232,12 @@ public class Car extends RollingStock {
 		String old ="";
 		if (_kernel != null){
 			old = _kernel.getName();
-			_kernel.deleteCar(this);
+			_kernel.delete(this);
 		}
 		_kernel = kernel;
 		String newName ="";
 		if (_kernel != null){
-			_kernel.addCar(this);
+			_kernel.add(this);
 			newName = _kernel.getName();
 		}
 		if (!old.equals(newName))
@@ -391,7 +391,7 @@ public class Car extends RollingStock {
 			return;
 		}
 		// is car part of a kernel?
-		if (getKernel()!=null && !getKernel().isLeadCar(this)){
+		if (getKernel()!=null && !getKernel().isLead(this)){
 			log.debug("Car ("+getId()+") is part of kernel "+getKernelName());
 			// not lead car so return
 			return;
@@ -504,7 +504,7 @@ public class Car extends RollingStock {
 			if (k != null){
 				setKernel(k);
 				if ((a = e.getAttribute("leadKernel")) != null && a.getValue().equals("true")){
-					_kernel.setLeadCar(this);
+					_kernel.setLead(this);
 				}
 			} else {
 				log.error("Kernel "+a.getValue()+" does not exist");
@@ -558,7 +558,7 @@ public class Car extends RollingStock {
 			e.setAttribute("fred", hasFred()?"true":"false");
 		if (getKernel() != null){
 			e.setAttribute("kernel", getKernelName());
-			if (getKernel().isLeadCar(this))
+			if (getKernel().isLead(this))
 				e.setAttribute("leadKernel", "true");
 		}
 		if (!getLoad().equals("")){
