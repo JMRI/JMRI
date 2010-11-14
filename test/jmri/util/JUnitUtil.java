@@ -2,16 +2,11 @@ package jmri.util;
 
 import junit.framework.Assert;
 
-import jmri.SignalHeadManager;
-import jmri.MemoryManager;
-
-import jmri.InstanceManager;
-import jmri.managers.InternalLightManager;
-import jmri.managers.InternalSensorManager;
-import jmri.managers.InternalTurnoutManager;
-import jmri.managers.AbstractSignalHeadManager;
-import jmri.managers.DefaultMemoryManager;
+import jmri.*;
+import jmri.managers.*;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
+
+import java.beans.PropertyChangeListener;
 
 /**
  * Common utility methods for working with JUnit.
@@ -43,7 +38,7 @@ import jmri.jmrix.debugthrottle.DebugThrottleManager;
  * internal, and will be reset when you reset the instance manager.
  *
  * @author Bob Jacobsen  Copyright 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  * @since 2.5.3
  */
 
@@ -132,6 +127,22 @@ public class JUnitUtil {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.setThrottleManager(m);
         return;
+    }
+
+    public static void initDebugPowerManager() {
+        jmri.PowerManager manager = new jmri.PowerManager() {
+                int state = PowerManager.UNKNOWN;
+                PropertyChangeListener prop = null;
+
+                public void setPower(int v)     throws JmriException { state = v; }
+                public int      getPower()      throws JmriException { return state;}
+                public void dispose() throws JmriException {}
+                public void addPropertyChangeListener(PropertyChangeListener p) { prop = p; }
+                public void removePropertyChangeListener(PropertyChangeListener p) {}
+                public String getUserName() { return "test"; }
+            }; // end of anonymous PowerManager class new()
+        // store dummy power manager object for retrieval
+        InstanceManager.setPowerManager(manager);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JUnitUtil.class.getName());
