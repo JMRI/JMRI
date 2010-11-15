@@ -24,7 +24,7 @@ import jmri.jmrix.powerline.*;
  * @author      Dave Duchamp Copyright (C) 2004
  * @author      Bob Jacobsen Copyright (C) 2006, 2007, 2008, 2009, 2010
  * @author      Ken Cameron Copyright (C) 2009, 2010
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
 
@@ -50,20 +50,13 @@ public class SpecificX10Light extends jmri.jmrix.powerline.SerialX10Light {
     }
 
     // System-dependent instance variables
-
-    /** 
-     * Current output step 0 to maxDimStep.
-     * <p>
-     *  -1 means unknown
-     */
-    int lastOutputStep = -1;
     
     /**
      * Send a Dim/Bright commands to the X10 hardware 
      * to reach a specific intensity. Acts immediately, and 
      * changes no general state.
      *<p>
-     * This sends "Dim" commands.  
+     * This sends "Extended Cmd Dim" commands.  
      */
     protected void sendIntensity(double intensity) {
     	if (log.isDebugEnabled()) {
