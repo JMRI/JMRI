@@ -10,7 +10,7 @@ import java.util.*;
  * debugging tools.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class DebugMenu extends JMenu {
     public DebugMenu(String name, JPanel panel) {
@@ -46,6 +46,7 @@ public class DebugMenu extends JMenu {
             "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
         add(new jmri.jmrit.beantable.ListedTableAction("Listed Table Access"));
+        add(new jmri.jmrit.beantable.ListedTableAction("Listed Table Access - Direct to Routes", "jmri.jmrit.beantable.RouteTableAction"));
 
     }
 
