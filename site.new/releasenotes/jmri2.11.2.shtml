@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.15 2010-11-14 04:49:59 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.16 2010-11-15 00:00:43 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -149,6 +149,7 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <ul>
 <li>Fixed a build problem when a staging track didn't have an engine, and the staging track name was the same as another in a different location.
 <li>Fixed two minor bugs, lead car in kernel wasn't always saved correctly, cars in a kernel didn't always have a proper destination and track.
+<li>Fixed a problem with cabooses going to wrong track in staging when there wasn't an engine assigned to the train.
 <li>New feature, "Timetable" under Trains->Tools.  Allows you to quickly set which trains will run on any given day of the week.
 <li>New tool "Routes->Tools->Set Train Icons Coordinates", you can now visually update train icon coordinates for all locations.
 <li>New tool "Route->Tools->Set Train Icons Coordinates for this Route", you can now visually update train icon coordinates for a route.
@@ -165,7 +166,6 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>A train's total weight calculation is now based on whether the cars are loaded or empty.  
 <li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
 <li>Add some additional fonts for operations.  
-<li>Fix problem with cabooses going to wrong track in staging when there isn't an engine assigned to the train.
 <li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
 </ul>
 
