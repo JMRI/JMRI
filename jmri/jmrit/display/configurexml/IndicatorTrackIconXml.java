@@ -12,7 +12,6 @@ import java.util.Map.Entry;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
 
-import org.jdom.Attribute;
 import org.jdom.Element;
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -84,7 +83,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      * @param element Top level Element to unpack.
      * @param o  Editor as an Object
      */
-    @SuppressWarnings("null")
 	public void load(Element element, Object o) {
         // create the objects
         Editor p = (Editor)o;

@@ -1,7 +1,6 @@
 
 package jmri.jmrit.display.palette;
 
-import java.awt.BorderLayout;
 import java.util.Hashtable;
 
 import javax.swing.BoxLayout;

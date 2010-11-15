@@ -7,7 +7,6 @@ import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
-import java.util.List;
 import org.jdom.Attribute;
 import org.jdom.Element;
 
@@ -15,7 +14,7 @@ import org.jdom.Element;
  * Handle XML configuration for Grapevine SerialSignalHead objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004, 2007, 2008
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 

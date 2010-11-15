@@ -2,8 +2,6 @@ package jmri.jmrix.jmriclient.configurexml;
 
 import org.jdom.Element;
 
-import jmri.jmrix.jmriclient.JMRIClientLightManager;
-
 /**
  * Provides load and store functionality for
  * configuring JMRIClientLightManagers.
@@ -12,7 +10,7 @@ import jmri.jmrix.jmriclient.JMRIClientLightManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class JMRIClientLightManagerXml extends jmri.managers.configurexml.AbstractLightManagerConfigXML {
 

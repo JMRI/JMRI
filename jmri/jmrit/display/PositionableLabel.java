@@ -2,7 +2,6 @@ package jmri.jmrit.display;
 
 import jmri.jmrit.catalog.NamedIcon;
 
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,11 +10,9 @@ import java.awt.event.MouseEvent;
 import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 
 /**
@@ -26,7 +23,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.103 $
+ * @version $Revision: 1.104 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {

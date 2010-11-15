@@ -8,14 +8,10 @@
 
 package jmri.jmrix.easydcc.easydccmon;
 
-import java.util.*;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.easydcc.*;
 
 public class EasyDccMonActionTest extends TestCase {
 

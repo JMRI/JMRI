@@ -3,10 +3,7 @@
 package jmri.jmrit.display;
 
 import jmri.*;
-import jmri.jmrit.display.*;
 import jmri.jmrit.display.panelEditor.PanelEditor;
-import jmri.util.NamedBeanHandle;
-
 import javax.swing.*;
 
 import java.util.*;
@@ -19,7 +16,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the SensorIcon
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.3 $
+ * @version         $Revision: 1.4 $
  */
 public class IconEditorWindowTest extends jmri.util.SwingTestCase {
 

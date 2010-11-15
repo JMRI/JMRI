@@ -2,7 +2,6 @@
 
 package jmri.jmrix.powerline.insteon2412s;
 
-import jmri.jmrix.powerline.SerialLight;
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
 import jmri.jmrix.powerline.insteon2412s.Constants;
@@ -25,7 +24,7 @@ import jmri.util.StringUtil;
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008, 2009
  * @author	Ken Cameron Copyright (C) 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 public class SpecificMessage extends SerialMessage {

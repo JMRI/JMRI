@@ -6,7 +6,7 @@ import java.util.*;
  * Hashtable that preserves order for later access.
  *
  * @author Bob Jacobsen
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class OrderedHashtable<K, V> extends Hashtable<K, V> {
@@ -31,8 +31,8 @@ public class OrderedHashtable<K, V> extends Hashtable<K, V> {
     @Override
     public boolean equals(Object o) {
         if (! super.equals(o)) return false;
-        if (o instanceof OrderedHashtable)
-            return this.keys.equals( ((OrderedHashtable)o).keys);
+        if (o instanceof OrderedHashtable<?, ?>)
+            return this.keys.equals( ((OrderedHashtable<?, ?>)o).keys);
         else return false;
     }
     

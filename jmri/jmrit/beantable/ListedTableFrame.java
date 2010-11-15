@@ -6,40 +6,30 @@ import jmri.UserPreferencesManager;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.awt.*;
-import java.awt.event.*;
+
 import javax.swing.*;
-import org.jdom.Element;
 
 import jmri.InstanceManager;
-import jmri.UserPreferencesManager;
-import jmri.util.swing.JmriPanel;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.MessageFormat;
 import java.util.ResourceBundle;
-import java.util.List;
-import java.util.ArrayList;
 import java.util.Vector;
-
 
 import jmri.util.com.sun.TableSorter;
 
-import javax.swing.*;
 
 /**
  * Provide access to preferences via a 
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -245,8 +235,8 @@ public class ListedTableFrame extends BeanTableFrame {
         
         tabbedTableItem(String aaClass, String choice){
             try{
-                Class cl = Class.forName(aaClass);
-                java.lang.reflect.Constructor co = cl.getConstructor(new Class[] {String.class});
+                Class<?> cl = Class.forName(aaClass);
+                java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[] {String.class});
                 tableAction = (AbstractTableAction) co.newInstance(choice);
             } catch (ClassNotFoundException e1) {
                 log.error("Not a valid class");

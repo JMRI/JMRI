@@ -18,12 +18,8 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
-import javax.swing.JComponent;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
-import javax.swing.TransferHandler;
-import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.StringSelection;
 
 /**
  * Abstract class to make pick lists for NamedBeans.

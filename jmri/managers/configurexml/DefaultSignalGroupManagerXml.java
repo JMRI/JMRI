@@ -13,7 +13,7 @@ import org.jdom.Element;
  * Handle XML configuration for a DefaultSignalGroupManager objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class DefaultSignalGroupManagerXml 
             extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
@@ -98,7 +98,6 @@ public class DefaultSignalGroupManagerXml
         signalGroup.setAttribute("class",this.getClass().getName());
     }
     
-    @SuppressWarnings("fallthrough")
     private String getSignalColour(int mAppearance){
         switch(mAppearance){
             case SignalHead.RED:

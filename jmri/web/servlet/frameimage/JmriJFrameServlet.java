@@ -6,11 +6,9 @@ import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.*;
 
-import javax.accessibility.AccessibleContext;
 import javax.imageio.*;
 import javax.swing.*;
 
-import java.util.Calendar;
 import java.util.StringTokenizer;
 import jmri.util.JmriJFrame;
 
@@ -39,7 +37,7 @@ import javax.servlet.ServletResponse;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class JmriJFrameServlet implements Servlet {

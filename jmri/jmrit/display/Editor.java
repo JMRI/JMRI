@@ -10,8 +10,6 @@ import java.io.File;
 
 import javax.swing.*;
 import javax.swing.Timer;  // disambiguate java.util.Timer
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
 import javax.swing.event.ListSelectionEvent;
 
 import jmri.CatalogTree;

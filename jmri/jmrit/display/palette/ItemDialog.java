@@ -1,7 +1,6 @@
 // ItemDialog.java
 package jmri.jmrit.display.palette;
 
-import java.util.Iterator;
 import java.util.Hashtable;
 import javax.swing.JDialog;
 

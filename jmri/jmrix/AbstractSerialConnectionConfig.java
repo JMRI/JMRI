@@ -11,7 +11,6 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
 import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
 
 import javax.swing.JOptionPane;
@@ -28,7 +27,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 
 //

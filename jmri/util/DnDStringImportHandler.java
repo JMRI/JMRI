@@ -6,14 +6,13 @@ package jmri.util;
  * <P>
  *
  * @author Pete Cressman  Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.IOException;

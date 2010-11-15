@@ -2,11 +2,7 @@ package jmri.jmrit.beantable;
 
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
-import javax.swing.JComboBox;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
 
     /**
      * Table Action for dealing with all the tables in a single view
@@ -14,7 +10,7 @@ import javax.swing.JLabel;
      * <P>
      * @author	Bob Jacobsen   Copyright (C) 2003
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.1 $
+     * @version	$Revision: 1.2 $
      */
 
 public class ListedTableAction extends AbstractAction {

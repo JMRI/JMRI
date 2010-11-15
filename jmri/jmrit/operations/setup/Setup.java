@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -475,9 +475,8 @@ public class Setup {
 		RollingStockLogger.instance().enableEngineLogging(enable);
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getPickupEngineMessageFormat(){
-		return pickupEngineMessageFormat;
+		return pickupEngineMessageFormat.clone();
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
@@ -485,9 +484,8 @@ public class Setup {
 		pickupEngineMessageFormat = format;
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getDropEngineMessageFormat(){
-		return dropEngineMessageFormat;
+		return dropEngineMessageFormat.clone();
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
@@ -495,9 +493,8 @@ public class Setup {
 		dropEngineMessageFormat = format;
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getPickupCarMessageFormat(){
-		return pickupCarMessageFormat;
+		return pickupCarMessageFormat.clone();
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
@@ -505,9 +502,8 @@ public class Setup {
 		pickupCarMessageFormat = format;
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getDropCarMessageFormat(){
-		return dropCarMessageFormat;
+		return dropCarMessageFormat.clone();
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
@@ -515,9 +511,8 @@ public class Setup {
 		dropCarMessageFormat = format;
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("MS_EXPOSE_REP")
 	public static String[] getMissingCarMessageFormat(){
-		return missingCarMessageFormat;
+		return missingCarMessageFormat.clone();
 	}
 	
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")

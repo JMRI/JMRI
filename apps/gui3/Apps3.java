@@ -10,7 +10,6 @@ import jmri.util.JmriJFrame;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.io.File;
 import javax.swing.*;
 
 /**
@@ -26,7 +25,7 @@ import javax.swing.*;
  * including code from the earlier implementation.
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public abstract class Apps3 extends apps.AppsBase {
 
