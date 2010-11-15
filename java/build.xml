@@ -1,6 +1,6 @@
 <!-- Ant build.xml file for JMRI development -->
 <!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2007, 2008, 2009, 2010 -->
-<!-- Revision $Revision: 1.87 $ -->
+<!-- Revision $Revision: 1.88 $ -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -281,7 +281,7 @@
            memorymaximumsize="256m"
            deprecation="${deprecation}"
            debug="yes" >
-       <!-- <compilerarg value="-Xlint:unchecked"/> -->
+       <compilerarg value="-Xlint:unchecked"/>
        <classpath refid="project.class.path"    />
     </javac>
   </target>
@@ -655,7 +655,7 @@
     </java>
   </target>
 
-  <target name="jar" depends="compile, rmic"  
+  <target name="jar" depends="debug, rmic"  
           description="create working jar file with current contents">
     <jar jarfile="${jartarget}/jmri.jar" 
          basedir="${target}"
@@ -717,7 +717,7 @@
                        <a href="http://sourceforge.net/projects/jmri">
                        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
                 ]]></bottom>
-      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+      <link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
       <link href="http://java.sun.com/products/javacomm/reference/api/" />
       <link href="http://users.frii.com/jarvi/rxtx/doc/" />
       <link href="http://www.jdom.org/docs/apidocs/" />
@@ -725,7 +725,7 @@
       <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
       <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
       <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
-      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://download.oracle.com/javase/6/docs/api/" />
       <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
     </javadoc>
   </target>
@@ -783,7 +783,7 @@
                        <a href="http://sourceforge.net/projects/jmri">
                        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a>
                 ]]></bottom>
-      <link href="http://java.sun.com/j2se/1.5.0/docs/api/" />
+      <link href="http://download.oracle.com/javase/1.5.0/docs/api/" />
       <link href="http://java.sun.com/products/javacomm/reference/api/" />
       <link href="http://users.frii.com/jarvi/rxtx/doc/" />
       <link href="http://www.jdom.org/docs/apidocs/" />
@@ -791,7 +791,7 @@
       <link href="http://logging.apache.org/log4j/1.2/apidocs/" />
       <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/" />
       <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
-      <link href="http://java.sun.com/javase/6/docs/api/" />
+      <link href="http://download.oracle.com/javase/6/docs/api/" />
       <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public" />
     </javadoc>
     <apply executable="dot" dest="${doctarget}" parallel="false">
