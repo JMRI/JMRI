@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 
 //
@@ -167,6 +167,12 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             v.setSize(v2.size());
             Collections.copy(v, v2); 
         }
+
+        if(v==null){
+            log.error("port name Vector v is null!");
+        	return;
+        }
+
         /* as we make amendments to the list of port in vector v, we keep a copy of it before
         modification, this copy is then used to validate against any changes in the port lists.
         */
@@ -198,16 +204,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
             }
         }
 
-        if(v!=null){
-            for (int i=0; i<v.size(); i++) {
-                portBox.addItem(v.elementAt(i));
-                if (v.elementAt(i).equals(portName)){
-                    portBox.setSelectedIndex(i);
-                }
+        for (int i=0; i<v.size(); i++) {
+            portBox.addItem(v.elementAt(i));
+            if (v.elementAt(i).equals(portName)){
+                portBox.setSelectedIndex(i);
             }
-        } else {
-            log.error("port name Vector v is null!");
-        	return;
         }
 
         portBox.addActionListener(new ActionListener() {
