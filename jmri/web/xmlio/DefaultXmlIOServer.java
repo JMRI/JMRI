@@ -29,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -73,7 +73,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                     n.addContent(new Element("name").addContent(name));
                     n.addContent(new Element("userName").addContent(t.getUserName()));
                     n.addContent(new Element("comment").addContent(t.getComment()));
-                    n.addContent(new Element("inverted").addContent(new Boolean(t.getInverted()).toString()));
+                    n.addContent(new Element("inverted").addContent(Boolean.valueOf(t.getInverted()).toString()));
                     e.addContent(n);
                 }            
             } else if (type.equals("roster")) {
@@ -101,7 +101,7 @@ public class DefaultXmlIOServer implements XmlIOServer {
                 	for (int j = 0; j < entry.getMAXFNNUM(); j++) {
                 		if (entry.getFunctionLabel(j) != null) {
                     		f.addContent(new Element("F" + j).addContent(entry.getFunctionLabel(j)));
-                    		g.addContent(new Element("F" + j).addContent(new Boolean(entry.getFunctionLockable(j)).toString()));
+                    		g.addContent(new Element("F" + j).addContent(Boolean.valueOf(entry.getFunctionLockable(j)).toString()));
                 		}
             		}
         			n.addContent(f);
