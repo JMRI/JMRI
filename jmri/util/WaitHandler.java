@@ -25,7 +25,7 @@ new WaitHandler(this, 120) {
  * the interrupted flag set.
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class WaitHandler {
@@ -60,6 +60,7 @@ public class WaitHandler {
      * Wait forever, robustly handling "spurious wake"
      * @param self waiting Object
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UW_UNCOND_WAIT", justification="unguarded wait() used intentionally here as part of utility class")
     public WaitHandler(Object self) {
         // loop until interrupted, or non-spurious wake
         while (true){
