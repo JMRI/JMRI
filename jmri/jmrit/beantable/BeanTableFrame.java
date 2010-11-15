@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.28 $
+ * @version	$Revision: 1.29 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -40,6 +40,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     static final int bottomStrutWidth = 20;
 
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
     
     public BeanTableFrame(){
         super();
@@ -69,13 +70,12 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
         // add save menu item
-        JMenuBar menuBar = new JMenuBar();
-        ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
-        JMenu fileMenu = new JMenu(rb.getString("MenuFile"));
+        JMenuBar menuBar = new JMenuBar();        
+        JMenu fileMenu = new JMenu(rbapps.getString("MenuFile"));
         menuBar.add(fileMenu);
         fileMenu.add(new jmri.configurexml.SaveMenu());
         
-        JMenuItem printItem = new JMenuItem(rb.getString("PrintTable"));
+        JMenuItem printItem = new JMenuItem(rbapps.getString("PrintTable"));
         fileMenu.add(printItem);
         printItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

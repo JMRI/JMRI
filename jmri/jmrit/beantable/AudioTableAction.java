@@ -8,11 +8,18 @@ import jmri.jmrit.audio.swing.AudioBufferFrame;
 import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ResourceBundle;
 
 import java.beans.PropertyChangeListener;
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.MenuElement;
 
 import jmri.Audio;
 import jmri.AudioManager;
@@ -38,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -52,6 +59,9 @@ public class AudioTableAction extends AbstractTableAction {
     AudioListenerFrame listenerFrame;
 
     AudioTableFrame atf;
+    AudioTablePanel atp;
+    
+    static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -75,38 +85,39 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public AudioTableAction() { this(rb.getString("TitleAudioTable"));}
 
+    public void addToFrame(BeanTableFrame f) {
+        JButton addSourceButton = new JButton(rba.getString("ButtonAddSource"));
+        atp.addToBottomBox(addSourceButton);
+        addSourceButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addSourcePressed(e);
+            }
+        });
+        JButton addBufferButton = new JButton(rba.getString("ButtonAddBuffer"));
+        atp.addToBottomBox(addBufferButton);
+        addBufferButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                addBufferPressed(e);
+            }
+        });
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        // ensure that the AudioFactory has been initialised
-        if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
-            InstanceManager.audioManagerInstance().init();
-        }
 
         // create the JTable model, with changes for specific NamedBean
         createModel();
 
         // create the frame
-        atf = new AudioTableFrame(listener, buffers, sources, helpTarget())
+        
+        atf = new AudioTableFrame(atp, helpTarget())
         {
             /**
              * Include "Add Source..." and "Add Buffer..." buttons
              */
             @Override
             void extras() {
-                JButton addSourceButton = new JButton(rba.getString("ButtonAddSource"));
-                addToBottomBox(addSourceButton);
-                addSourceButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addSourcePressed(e);
-                    }
-                });
-                JButton addBufferButton = new JButton(rba.getString("ButtonAddBuffer"));
-                addToBottomBox(addBufferButton);
-                addBufferButton.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        addBufferPressed(e);
-                    }
-                });
+                addToFrame(null);
+
             }
         };
         setTitle();
@@ -119,14 +130,24 @@ public class AudioTableAction extends AbstractTableAction {
      * for the specific case of Audio objects
      */
     void createModel() {
-
+        // ensure that the AudioFactory has been initialised
+        if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
+            InstanceManager.audioManagerInstance().init();
+        }
         listener = new AudioTableDataModel(Audio.LISTENER);
         buffers = new AudioTableDataModel(Audio.BUFFER);
         sources = new AudioTableDataModel(Audio.SOURCE);
+        atp = new AudioTablePanel(listener, buffers, sources, helpTarget());
+    }
+    
+    @Override
+    public JPanel getPanel(){
+        createModel();
+        return atp;
     }
 
     void setTitle() {
-        atf.setTitle(AudioTableFrame.rb.getString("TitleAudioTable"));
+        atf.setTitle(rba.getString("TitleAudioTable"));
     }
 
     @Override
@@ -155,6 +176,36 @@ public class AudioTableAction extends AbstractTableAction {
         bufferFrame.resetFrame();
         bufferFrame.pack();
         bufferFrame.setVisible(true);
+    }
+    
+    public void setMenuBar(BeanTableFrame f){
+        JMenuBar menuBar = f.getJMenuBar();
+        ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
+        MenuElement[] subElements = menuBar.getSubElements();
+        JMenu fileMenu = null;
+        for (int i = 0; i <menuBar.getMenuCount(); i++){
+            if (menuBar.getComponent(i) instanceof JMenu){
+                if (((JMenu)menuBar.getComponent(i)).getText().equals(rbapps.getString("MenuFile"))){
+                    fileMenu = menuBar.getMenu(i);
+                }
+            }
+        }
+        if (fileMenu==null)
+            return;
+        subElements = fileMenu.getSubElements();
+        for (int i = 0; i <subElements.length; i++){
+            MenuElement[] popsubElements = subElements[i].getSubElements();
+            for (int x = 0; x <popsubElements.length; x++){
+                if (popsubElements[x] instanceof JMenuItem){
+                    if (((JMenuItem)popsubElements[x]).getText().equals(rbapps.getString("PrintTable"))){
+                        JMenuItem printMenu = ((JMenuItem)popsubElements[x]);
+                        fileMenu.remove(printMenu);
+                        break;
+                    }
+                }
+            }
+        }
+        fileMenu.add(atp.getPrintItem());
     }
 
     protected void editAudio(Audio a) {

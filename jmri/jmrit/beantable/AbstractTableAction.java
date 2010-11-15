@@ -8,13 +8,14 @@ import java.util.ResourceBundle;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 /**
  * Swing action to create and register a
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -72,14 +73,25 @@ abstract public class AbstractTableAction extends AbstractAction {
         return m;
     }
     
+    public void setFrame(BeanTableFrame frame){
+        f=frame;
+    }
+    
     /**
      * Allow subclasses to add to the frame
-     * without have to actually suclass the BeanTableDataFrame
+     * without have to actually subclass the BeanTableDataFrame
      */
     public void addToFrame(BeanTableFrame f) {
     }
-    
+    /**
+     * Allow subclasses to add alter the frames Menubar
+     * without have to actually subclass the BeanTableDataFrame
+     */
     public void setMenuBar(BeanTableFrame f){
+    }
+
+    public JPanel getPanel(){
+        return null;
     }
 
     /**

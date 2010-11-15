@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -589,11 +589,12 @@ public class LogixTableAction extends AbstractTableAction {
 	 * the user closes the Add Logix window
 	 */
 	void cancelAddPressed(ActionEvent e) {
-		addLogixFrame.setVisible(false);
-		addLogixFrame.dispose();
-		addLogixFrame = null;
-        inCopyMode = false;
-		f.setVisible(true);
+            addLogixFrame.setVisible(false);
+            addLogixFrame.dispose();
+            addLogixFrame = null;
+            inCopyMode = false;
+            if (f!=null)
+                f.setVisible(true);
 	}
 
     void copyPressed(String sName) {
@@ -1143,7 +1144,8 @@ public class LogixTableAction extends AbstractTableAction {
             editLogixFrame = null;
         }
 		// bring Logix Table to front
-		f.setVisible(true);
+        if (f!=null)
+            f.setVisible(true);
     }
 
 	/**

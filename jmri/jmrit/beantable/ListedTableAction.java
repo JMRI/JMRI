@@ -1,6 +1,5 @@
 package jmri.jmrit.beantable;
 
-
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
@@ -10,11 +9,12 @@ import javax.swing.AbstractAction;
      * <P>
      * @author	Bob Jacobsen   Copyright (C) 2003
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.2 $
+     * @version	$Revision: 1.3 $
      */
 
 public class ListedTableAction extends AbstractAction {
 
+    String gotoListItem = null;
     /**
      * Create an action with a specific title.
      * <P>
@@ -23,10 +23,15 @@ public class ListedTableAction extends AbstractAction {
      * @param s
      */
 
+   public ListedTableAction(String s, String selection) {
+        super(s);
+        gotoListItem = selection;
+    }
+    
    public ListedTableAction(String s) {
         super(s);
-        
     }
+    
     public ListedTableAction() { this("Listed Table Access");}
     
     ListedTableFrame f;
@@ -38,11 +43,11 @@ public class ListedTableAction extends AbstractAction {
         };
         setTitle();
         addToFrame(f);
+        f.gotoListItem(gotoListItem);
         f.pack();
         f.setVisible(true);
     }
     
-
     public void actionPerformed(ActionEvent e) {
         actionPerformed();
     }
