@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.85 2010-11-14 05:40:49 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.86 2010-11-15 00:32:29 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -50,7 +50,7 @@ icon can be taught to move in the panel along with the train from
 location to location. </P>
 <P>
 The operations program is included in the JMRI/DecoderPro suite of tools 
-and can be found under the main menu heading "Tools->Operations".</P>
+and can be found under the main menu heading "Tools-&gt;Operations".</P>
 
 <P>
 <img src="images/MainMenuDecoderPro.png">
@@ -62,7 +62,7 @@ and can be found under the main menu heading "Tools->Operations".</P>
 The operations program provides a set of demo files to help introduce
 you to the some of the features and capabilities of this program. To
 load the demo files, first open the Operations Settings window
-"Tools->Operations->Settings", and in the upper left corner of the
+"Tools-&gt;Operations-&gt;Settings", and in the upper left corner of the
 Setting window is the Tools menu, select "Load Demo Files". The program
 will create a <A HREF="#BackupRestore">backup</A> of your current
 configuration if you have one, and then loads the demo files. Restart
@@ -70,13 +70,13 @@ JMRI to complete the demo load process.
 
 <P>The program also supplies a simple panel to show how the train
 icons work. Load the panel before building the trains by selecting in
-the main JMRI menu, "Panels->Load Panels .." a window should appear and
+the main JMRI menu, "Panels-&gt;Load Panels .." a window should appear and
 open the "operations" directory and then open the "Operations Demo
 Panel" xml file.
 </P>
 <H3>Quick Start Help</H3>
 
-In the top level menu for JMRI find the "Tools->Operations" menu. There
+In the top level menu for JMRI find the "Tools-&gt;Operations" menu. There
 are six items in this menu. We recommend that you start with <A
 	HREF="#Settings">Settings</A> and work your way down to <A
 	HREF="#Trains">Trains</A>. We also recommend that when defining your
@@ -170,7 +170,7 @@ operations. Help is also available at the <a
 
 The program supports an alternate set of railway terminology for our
 British modelers. To use British terminologies, go to the JMRI Advanced
-Preferences (Edit->Preferences.. select the Show Advanced Preferences
+Preferences (Edit-&gt;Preferences.. select the Show Advanced Preferences
 checkbox) and select English (United Kingdom) in the "Locale:" menu
 box. The program will also convert from centimeters to meters when
 entering wagon, locomotive, or location lengths, just append "cm" to any
@@ -180,7 +180,7 @@ length.
 <H2>Settings</H2>
 
 The Settings window contains general parameters for the operations
-program. Select from the JMRI main window "Tools->Operations->Settings"
+program. Select from the JMRI main window "Tools-&gt;Operations-&gt;Settings"
 to open the Settings window. The Setting window has fields and buttons to
 allow you to enter your railroad name, the directions your train's
 travel, the scale that you are using, printer and icon controls, and the
@@ -252,10 +252,10 @@ operations menu will appear the next time you restart JMRI.
 If you want the operations program to place an icon representing the
 train on a panel, enter the panel's name (NOT the panel's file path
 name!), otherwise leave the name blank to disable. 
-Load the panel using the main menu "Panel->Load Panels..." or use other
+Load the panel using the main menu "Panel-&gt;Load Panels..." or use other
 load panel options available in JMRI.
 
-<P>The "Enable Train Icon SetX&Y" when selected allows you to teach
+<P>The "Enable Train Icon SetX&amp;Y" when selected allows you to teach
 the operations program where to place the train icon on your panel when
 moving your train from location to location. Deselect this feature after
 your done teaching the program to prevent accidentally changing the
@@ -294,7 +294,7 @@ more than one railroad that you wanted to manage.</P>
 <H3>Reset Databases</H3>
 
 To reset the operation databases to their original defaults, use the
-Operations->Settings->Tools menu and select "Reset Databases". The "Reset Database"
+Operations-&gt;Settings-&gt;Tools menu and select "Reset Databases". The "Reset Database"
 option will make a backup copy of the current operation files before
 deleting them. The results will be that the settings, cars, engines,
 locations, and trains databases will be purged.
@@ -302,7 +302,7 @@ locations, and trains databases will be purged.
 <A NAME="SettingsOptions"></A>
 <H2>Options</H2>
 The operations program has several options that can be modified by
-selecting Operations->Settings->Tools->Options.
+selecting Operations-&gt;Settings-&gt;Tools-&gt;Options.
 
 <P><img src="images/SettingsOptions.png"></P>
 
@@ -371,7 +371,7 @@ the program will create a new file using the day's date.
 <H2>Print Options</H2>
 
 You can modify the how the program prints the train manifests and the amount of detail
-that the build report provides.  From the "Operations->Settings->Tools" menu select "Print Options" to open
+that the build report provides.  From the "Operations-&gt;Settings-&gt;Tools" menu select "Print Options" to open
 the print option window.
 <P>
 <img src="images/PrintOptions.png">
@@ -440,7 +440,7 @@ press "Save" after changing the build report selection.
 Locations are places on your railroad that trains visit to pickup or
 drop off cars and engines. Locations can be cities, towns, or just
 places where trains need to work cars. Select
-"Tools->Operations->Locations" to add or edit the locations on your
+"Tools-&gt;Operations-&gt;Locations" to add or edit the locations on your
 railroad. 
 
 <P>
@@ -800,8 +800,8 @@ delimitated file. The program will include leading and trailing spaces
 if they exist between the commas.</P>
 
 <P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Tools->Operations->Cars menu. Then select
-"Tools->Roster->Import from file". Note that the program will only add
+corner of the Tools-&gt;Operations-&gt;Cars menu. Then select
+"Tools-&gt;Roster-&gt;Import from file". Note that the program will only add
 cars that don't exist in the program's car roster. It the car already
 exists, the import will be skipped by the program. You must also create
 the locations and their tracks before importing the cars into the
@@ -820,7 +820,7 @@ can be found at the bottom right of the "Edit Car" window.</P>
 <H3>Adding Cars to your Roster</H3>
 
 To manually add a car to your roster, press the "Add" button located at
-the bottom of the "Tools->Operations->Cars" window. 
+the bottom of the "Tools-&gt;Operations-&gt;Cars" window. 
 
 <P>
 <img src="images/EditCar.png">
@@ -1018,7 +1018,7 @@ The cars "Tools" menu allows you to perform some useful functions to
 your car roster. In addition to "Import from file" feature described
 earlier, you can also export your cars to a comma separated value file.
 The "Export to file" function creates a file named
-"ExportOperationsCarRoster.csv" in the JMRI->operations directory. You
+"ExportOperationsCarRoster.csv" in the JMRI-&gt;operations directory. You
 can remove all of the cars in your roster using the "Delete all cars"
 option. You can also preview and print your car roster. The preview and
 print features use the same "Sort by" radio buttons as the cars window.
@@ -1045,7 +1045,7 @@ types are electric, diesel, gas turbine, and steam.
 If you already have a list of engines in your JMRI roster or in a
 database, you can import the engines into the program. To get your
 engines from your JMRI roster, select "Import from JMRI roster" from the
-Tools->Operations->Engines->Tools menu. Only engines that don't exist
+Tools-&gt;Operations-&gt;Engines-&gt;Tools menu. Only engines that don't exist
 will be added to the programs engine roster. This way you can use this
 tool any time you add engines to your JMRI engine roster. The JMRI engine
 roster doesn't have the length field, so a default length is entered for
@@ -1084,8 +1084,8 @@ comma deliminters.</P>
 delimitated file. The program will include leading and trailing spaces
 if they exist between the commas.</P>
 <P>To import a file, use the "Tools" menu in the upper left hand
-corner of the Tools->Operations->Engines menu. Select
-"Tools->Roster->Import. Note that the program will only add engines that
+corner of the Tools-&gt;Operations-&gt;Engines menu. Select
+"Tools-&gt;Roster-&gt;Import. Note that the program will only add engines that
 don't exist in the program's engine roster. It the engine already
 exists, it will be skipped by the program.</P>
 
@@ -1153,7 +1153,7 @@ menu.
 A route is a list of locations that a train will visit. Later you can
 decide if the train stops at a location for work. Routes can be point to
 point or out and back. To build a route, select
-"Tools->Operations->Routes".
+"Tools-&gt;Operations-&gt;Routes".
 
 <P><img src="images/Routes.png"></P>
 
@@ -1195,7 +1195,7 @@ require for that segment.</P>
 <P>The X and Y are the coordinates on your dispatcher's panel for
 the optional train icon. You can set the coordinates here, use the <A
 	HREF="#SetTrainIconCoordinates">Set Train Icon Coordinates</A> tool, or
-use the "SetX&Y" train icon popup menu to teach the program where you
+use the "SetX&amp;Y" train icon popup menu to teach the program where you
 want the train icon placed when the train is at the specified location.
 Leave the X and Y coordinates at zero if you want to manually move the
 icon or you're not using the icon feature.</P>
@@ -1213,7 +1213,7 @@ routes is also created each time the "Save Route" button is pressed. <A
 	NAME="CopyRoute"></A>
 <H3>Copy Route</H3>
 
-In the Route window select "Tools->Copy Route" to make a copy of your
+In the Route window select "Tools-&gt;Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
 want to copy. If you want the route reversed check the "Invert" box. <A
 	NAME="SetTrainIconCoordinates"></A>
@@ -1223,12 +1223,12 @@ Use this tool to set the default X and Y coordinates of your train icons
 for each location. The tool allows you to specify the icon coordinates
 based on the train's direction. You can also update all of your existing
 routes and locations with these new coordinates. As an alternative, you
-can use a route's "Tools->Set Train Icon Coordinates for this Route" to
+can use a route's "Tools-&gt;Set Train Icon Coordinates for this Route" to
 create coordinates unique to a specific route. <A NAME="Trains"></A>
 <H2>Trains</H2>
 
 Now that we've created our routes we need trains to move cars! Create a
-train by selecting "Tools->Operations->Trains" from the top level menu.
+train by selecting "Tools-&gt;Operations-&gt;Trains" from the top level menu.
 <P><img src="images/Trains.png"></P>
 <P>Press the "Add" button to create a train.</P>
 <P><img src="images/EditTrain.png"></P>
@@ -1287,12 +1287,12 @@ trains is also created each time the "Save Train" button is pressed. <A
 <H3>Train Options</H3>
 
 You can optionally have a unique railroad name and logo for each train
-in your roster. Use the "Edit Train->Tools->Options" to enter your
+in your roster. Use the "Edit Train-&gt;Tools-&gt;Options" to enter your
 train's railroad name and logo. <A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
 
 You can control the road names that the train will service. Select under
-the "Edit Train->Tools" menu the "Train Build Options". This will bring
+the "Edit Train-&gt;Tools" menu the "Train Build Options". This will bring
 up a new window with several options.
 
 <P><img src="images/TrainBuildOptions.png"></P>
@@ -1339,7 +1339,7 @@ service. <A NAME="TrainScripts"></A>
 <H3>Scripts</H3>
 
 If you want to run a script when a train moves or terminates, select
-under the "Edit Train->Tools" menu "Scripts". This will bring up a new
+under the "Edit Train-&gt;Tools" menu "Scripts". This will bring up a new
 window with several script options.
 <p>Included in the jython directory are several examples of
 operation oriented scripts.</P>
@@ -1468,7 +1468,7 @@ will appear. If you want to disable this feature deselect the checkbox
 <H3>Timetable</H3>
 
 The Timetable tool allows you to define which trains will run on any
-given day, and can be found under the Trains->Tools. For each day of the
+given day, and can be found under the Trains-&gt;Tools. For each day of the
 week, select which trains you want to build. Then select which day you
 want by selecting the appropriate radio button. Then press the "Apply"
 button to update the Trains build checkboxes. Use the "Save" button to
@@ -1490,7 +1490,7 @@ detail level.
 <H3>Reading the Build Report</H3>
 
 The program when building a train creates a build report and saves it to
-disk. The text files can be found in the JMRI->operations->buildstatus
+disk. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
 directory. The build report shows the steps the operations program goes
 through while building a train. The first page provides the route the
 train will travel and the number of car moves requested for each
@@ -1537,7 +1537,7 @@ been processed.</P>
 
 <P>Sometimes reading the build report can get tedious.  If you want to 
 use a text editor to search the report, the build reports can be found in 
-the directory JMRI->operations->buildstatus.</P>
+the directory JMRI-&gt;operations-&gt;buildstatus.</P>
 
 <H3>Printing Manifests</H3>
 
