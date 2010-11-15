@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.16 2010-11-15 00:00:43 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.17 2010-11-15 00:01:39 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -167,6 +167,7 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
 <li>Add some additional fonts for operations.  
 <li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
+<li>User can now set column widths for the Cars table.
 </ul>
 
 <p>
