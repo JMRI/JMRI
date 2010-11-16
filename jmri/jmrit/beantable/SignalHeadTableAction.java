@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.60 $
+ * @version     $Revision: 1.61 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -396,7 +396,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * GUI are displayed when the selected type is
      * changed.
      */
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddSignal"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
@@ -1289,8 +1289,27 @@ public class SignalHeadTableAction extends AbstractTableAction {
     JComboBox emsaBox = new JComboBox(ukSignalAspects);
     
 	
-	void editSignal(int row) {
-		String eSName = (String)m.getValueAt(row,BeanTableDataModel.SYSNAMECOL);
+    void editSignal(int row) {
+		// Logix was found, initialize for edit
+        String eSName = (String)m.getValueAt(row,BeanTableDataModel.SYSNAMECOL);
+		_curSignal = InstanceManager.signalHeadManagerInstance().getBySystemName(eSName);
+		//numConditionals = _curLogix.getNumConditionals();
+		// create the Edit Logix Window
+        // Use separate Thread so window is created on top
+        Thread t = new Thread() {
+                public void run() {
+                    //Thread.yield();
+                    makeEditSignalWindow();
+                    }
+                };
+        if (log.isDebugEnabled()) log.debug("editPressed Thread started for " + eSName);
+        javax.swing.SwingUtilities.invokeLater(t);
+	}
+    
+    SignalHead _curSignal = null;
+    
+	void makeEditSignalWindow() {
+        String eSName = _curSignal.getSystemName();
 		if (editingHead) {
 			if (eSName.equals(editSysName)) {
 				editFrame.setVisible(true);
@@ -1301,7 +1320,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 								.getString("WarningEdit"), new Object[] { editSysName, eSName });
 				JOptionPane.showMessageDialog(editFrame, msg,
 							AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-				editFrame.setVisible(true);
+                editFrame.setVisible(true);
 				return;
 			}
 		}
@@ -1397,7 +1416,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					cancelPressed(null);
 				}
 			});
-			
+            
 		}
 		// default the seven optional items to hidden, and system name to visible
 		eSystemName.setVisible(false);
