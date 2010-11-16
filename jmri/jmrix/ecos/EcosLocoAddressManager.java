@@ -19,9 +19,9 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
-public class EcosLocoAddressManager implements java.beans.PropertyChangeListener, EcosListener{
+public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
     private static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
     private static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
@@ -189,7 +189,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
             ecosLocoShutDownTask = new QuietShutDownTask("Ecos Loco Database Shutdown") {
                 @Override
                 public boolean doAction(){
-                    return dispose();
+                    return shutdownDispose();
                 }
             };
         }
@@ -240,8 +240,7 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         firePropertyChange("length", Integer.valueOf(oldsize), Integer.valueOf(_tdcc.size()));
         // listen for name and state changes to forward
     }
-    
-    
+
     private boolean disposefinal(){
         if (jmri.InstanceManager.configureManagerInstance()!= null)
             jmri.InstanceManager.configureManagerInstance().deregister(this);
@@ -249,8 +248,12 @@ public class EcosLocoAddressManager implements java.beans.PropertyChangeListener
         _tdcc.clear();
         return true;
     }
+
+    /*Dispose is dealt with at shutdown*/
+    public void dispose(){
+    }
     
-    private boolean dispose(){
+    public boolean shutdownDispose(){
         //System.out.println("checkTemporaryEntries()");
         boolean hasTempEntries = false;
         //List<String> list = getEcosObjectList();
