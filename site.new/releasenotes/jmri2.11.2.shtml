@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.17 2010-11-15 00:01:39 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.18 2010-11-16 12:45:33 matthewharris Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -233,7 +233,7 @@ Tested with Turnout Table and Throttle tools on IE8 and Firefox.
 Peter Mansvelder provided info on the S88XpressNetLi XPressNet interface.
 
 <p>
-Kevin Dickerson improved the script output window.
+Matt Harris improved the script output window allowing configurable automatic scrolling.
 
 <p>
 Oscar Moutinho provided
