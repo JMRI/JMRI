@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -174,26 +174,21 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
         if (input[0].toUpperCase().startsWith("GET")) {
             // remove GET and key from front
             if (log.isDebugEnabled()) log.debug("GET request of "+len+" lines: "+input[0]);
-            String part = input[0].substring(5, input[0].length());
-            part = part.substring(part.indexOf('/'), part.length());
+            String part = input[0].substring(5, input[0].length()); //drop the "GET "
+            part = part.substring(part.indexOf('?')+1, part.length());  //get portion after the ?
             
             // remove HTTP from back
-            String rawRequest = part.substring(0, part.lastIndexOf(" HTTP"));
+            String request = part.substring(0, part.lastIndexOf(" HTTP"));
             
-            // decode
-            String request = "<error>";
+            //unencode URL "parms" back to string
             try {
-                URI u = new URI(rawRequest);
-                if (log.isDebugEnabled()) log.debug("URI ["+u+"]");
-                request = u.getSchemeSpecificPart();
-                // drop leading "/"
-                request = request.substring(1, request.length());
-            } catch (java.net.URISyntaxException e4) {
-                log.error("error in URI: "+e4);
-            }
-            if (log.isDebugEnabled()) log.debug("request is ["+request+"]");
+				request = URLDecoder.decode(request, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				request = "<error/>";
+			}
+            if (log.isDebugEnabled()) log.debug("xml request is ["+request+"]");
             
-            return request;
+            return new String(request);
         
         } else if (input[0].toUpperCase().startsWith("POST")) {
             if (log.isDebugEnabled()) log.debug("POST request of "+len+" lines: "+input[0]);
@@ -212,6 +207,8 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
                 request.append(input[i]);
                 i++;
             }
+
+            if (log.isDebugEnabled()) log.debug("xml request is ["+request+"]");
             
             return new String(request);
         } else {

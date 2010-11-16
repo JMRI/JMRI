@@ -29,7 +29,7 @@ import jmri.web.miniserver.servlet.echoservlet.EchoServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class MiniServer extends NetworkServer {
@@ -89,8 +89,11 @@ public class MiniServer extends NetworkServer {
         
         if (line != null) {
             try {
-                // decode the request, and select a servlet
+                // extract the path from the request, and use it to select a servlet
+            	//    drop the GET or POST and the HTTP/1.1 parts
                 String request = line.substring(Math.max(0, line.indexOf(" ")+1), line.lastIndexOf(" ")>0 ? line.lastIndexOf(" ") : line.length());
+                //    then drop anything past the ?
+                request = request.substring(0, request.lastIndexOf("?")>0 ? request.lastIndexOf("?") : request.length());
                 if (log.isDebugEnabled()) log.debug("Request ["+request+"]");
             
                 Servlet s = pickServlet(request);
@@ -117,7 +120,7 @@ public class MiniServer extends NetworkServer {
      * @return new Servlet object matching this request
      */
     public Servlet pickServlet(String name) {
-        // Seach for longest match
+        // Search for longest match
         String serviceClass;
         while (name.length()>0) {
             if (log.isDebugEnabled()) log.debug("Check ["+name+"]");
@@ -140,7 +143,7 @@ public class MiniServer extends NetworkServer {
             } catch (java.util.MissingResourceException e3) {
                 // normal, not a problem
             } 
-            // No luck, try next
+            // No match, drop last part of path and try again
             name = name.substring(0, Math.max(0,name.lastIndexOf("/")));  
         }
         
