@@ -32,15 +32,15 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009-2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
     
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
- 
     public XNetSimulatorAdapter() {
+        setPort("None");
         try {
             PipedOutputStream tempPipeI=new PipedOutputStream();
             pout=new DataOutputStream(tempPipeI);
@@ -57,9 +57,10 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
 
     public String openPort(String portName, String appName)  {
         // open the port in XPressNet mode, check ability to set moderators
+        setPort(portName);
         return null; // normal operation
     }
-    
+   
     /**
      * we need a way to say if the output buffer is empty or full
      * this should only be set to false by external processes
@@ -113,7 +114,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
     public DataInputStream getInputStream() {
         if (pin == null ){ 
             log.error("getInputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(),ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(),ConnectionStatus.CONNECTION_DOWN);
         }
         return pin;
     }
@@ -122,7 +123,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         if (pout==null) 
         { 
            log.error("getOutputStream called before load(), stream not available");
-            ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+            ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
      	return pout;
     }
@@ -166,7 +167,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
          msg= loadChars();
       } catch( java.io.IOException e){
         // should do something meaningful here.
-        ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 
       } 
       setOutputBufferEmpty(true);
@@ -317,7 +318,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         try {
 	   outpipe.writeByte((byte)r.getElement(i));
         } catch  ( java.io.IOException ex){
-        ConnectionStatus.instance().setConnectionState(XNetSimulatorAdapter.instance().getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
         }
     }
 
