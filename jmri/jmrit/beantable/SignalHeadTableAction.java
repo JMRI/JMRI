@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.59 $
+ * @version     $Revision: 1.60 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -75,7 +75,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of SignalHeads
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int LITCOL = NUMCOLUMN;
 		    static public final int HELDCOL = LITCOL+1;
@@ -185,7 +185,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleSignalTable"));
     }
 

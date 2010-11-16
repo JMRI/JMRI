@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -53,11 +53,11 @@ public class SensorTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Sensors
      */
-    void createModel() {
+    protected void createModel() {
         m = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleSensorTable"));
     }
 

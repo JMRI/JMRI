@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -51,7 +51,7 @@ public class ReporterTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Reporters
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
             public String getValue(String name) {
                 return InstanceManager.reporterManagerInstance().getBySystemName(name).getCurrentReport().toString();
@@ -95,7 +95,7 @@ public class ReporterTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleReporterTable"));
     }
 

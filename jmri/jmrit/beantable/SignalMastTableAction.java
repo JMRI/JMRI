@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -40,11 +40,11 @@ public class SignalMastTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Sensors
      */
-    void createModel() {
+    protected void createModel() {
         m = new jmri.jmrit.beantable.signalmast.SignalMastTableDataModel();
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleSignalMastTable"));
     }
 

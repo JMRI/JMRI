@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -95,7 +95,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Variable table in the Edit Conditional window are at the end of this
 	 * module.
 	 */
-	void createModel() {
+	protected void createModel() {
 		m = new BeanTableDataModel() {
 			// overlay the state column with the edit column
 			static public final int ENABLECOL = VALUECOL;
@@ -223,7 +223,7 @@ public class LogixTableAction extends AbstractTableAction {
             /**
             * Replace delete button with comboBox
             */
-            void configDeleteColumn(JTable table) {
+            protected void configDeleteColumn(JTable table) {
                 JComboBox editCombo = new JComboBox();
                 editCombo.addItem(rbx.getString("ButtonSelect"));
                 editCombo.addItem(rbx.getString("ButtonEdit"));
@@ -245,7 +245,7 @@ public class LogixTableAction extends AbstractTableAction {
 	}
 
 	// set title for Logix table
-	void setTitle() {
+	protected void setTitle() {
 		f.setTitle(f.rb.getString("TitleLogixTable"));
 
         //addToFrame(f);

@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -68,7 +68,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of SignalGroups
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
             static public final int COMMENTCOL = 2;
             static public final int DELETECOL = 3;
@@ -165,7 +165,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                   super.configureTable(table);
               }
               
-              void configDeleteColumn(JTable table) {
+              protected void configDeleteColumn(JTable table) {
                 // have the delete column hold a button
                 SignalGroupTableAction.this.setColumnToHoldButton(table, DELETECOL, 
                 new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
@@ -211,7 +211,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         };
     }
     
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle("SignalGroup Table");
     }
 

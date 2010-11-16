@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 
@@ -81,7 +81,7 @@ public class TransitTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Transit objects
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 
 		static public final int EDITCOL = NUMCOLUMN;
@@ -196,7 +196,7 @@ public class TransitTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleTransitTable"));
     }
 

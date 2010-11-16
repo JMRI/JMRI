@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.47 $
+ * @version     $Revision: 1.48 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -65,7 +65,7 @@ public class LightTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Lights
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int ENABLECOL = NUMCOLUMN;
 		    static public final int INTENSITYCOL = ENABLECOL+1;
@@ -214,7 +214,7 @@ public class LightTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleLightTable"));
     }
 

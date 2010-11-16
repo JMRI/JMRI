@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -77,7 +77,7 @@ public class SectionTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Section objects
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 
 			static public final int BEGINBLOCKCOL = NUMCOLUMN;
@@ -200,7 +200,7 @@ public class SectionTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleSectionTable"));
     }
 

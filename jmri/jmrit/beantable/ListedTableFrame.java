@@ -27,7 +27,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -53,7 +53,7 @@ public class ListedTableFrame extends BeanTableFrame {
     JPanel cardHolder;
     JList list;
     JScrollPane listScroller;
-    static JPanel buttonpanel;
+    JPanel buttonpanel;
     static boolean init = false;
     
     public ListedTableFrame() {

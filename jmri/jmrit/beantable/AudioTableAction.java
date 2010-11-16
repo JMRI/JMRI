@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -130,7 +130,7 @@ public class AudioTableAction extends AbstractTableAction {
      * Create the JTable DataModels, along with the changes
      * for the specific case of Audio objects
      */
-    void createModel() {
+    protected void createModel() {
         // ensure that the AudioFactory has been initialised
         if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
             InstanceManager.audioManagerInstance().init();
@@ -147,7 +147,7 @@ public class AudioTableAction extends AbstractTableAction {
         return atp;
     }
 
-    void setTitle() {
+    protected void setTitle() {
         atf.setTitle(rb.getString("TitleAudioTable"));
     }
 

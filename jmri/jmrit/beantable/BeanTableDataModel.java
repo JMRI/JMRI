@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.34 $
+ * @version		$Revision: 1.35 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -217,7 +217,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         }
     }
 
-    void deleteBean(int row, int col) {
+    protected void deleteBean(int row, int col) {
         final NamedBean t = getBySystemName(sysNameList.get(row));
         int count = t.getNumPropertyChangeListeners()-1; // one is this table
         if (log.isDebugEnabled()) log.debug("Delete with "+count);
@@ -295,38 +295,6 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
             dialog.setVisible(true);
         }
 
-
-        //}
-        
-        /*if (!noWarnDelete) {
-        
-            String msg;
-            if (count>0) { // warn of listeners attached before delete
-                msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt")+"\n"
-                        +AbstractTableAction.rb.getString("ReminderInUse"),
-                        new Object[]{t.getSystemName(),""+count});
-            } else {
-                msg = java.text.MessageFormat.format(
-                        AbstractTableAction.rb.getString("DeletePrompt"),
-                        new Object[]{t.getSystemName()});
-            }
-        
-            // verify deletion
-            int val = javax.swing.JOptionPane.showOptionDialog(null, 
-                    msg, AbstractTableAction.rb.getString("WarningTitle"), 
-                    javax.swing.JOptionPane.YES_NO_CANCEL_OPTION, javax.swing.JOptionPane.QUESTION_MESSAGE, null,
-                    new Object[]{AbstractTableAction.rb.getString("ButtonYes"),
-                                 AbstractTableAction.rb.getString("ButtonYesPlus"),
-                                 AbstractTableAction.rb.getString("ButtonNo")},
-                    AbstractTableAction.rb.getString("ButtonNo"));
-            if (val == 2) return;  // return without deleting
-            if (val == 1) { // suppress future warnings
-                noWarnDelete = true;
-            }
-        }
-        // finally OK, do the actual delete
-        doDelete(t);*/
     }
     	
 	boolean noWarnDelete = false;
@@ -379,7 +347,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         return b;
     }
 
-    void configDeleteColumn(JTable table) {
+    protected void configDeleteColumn(JTable table) {
         // have the delete column hold a button
         setColumnToHoldButton(table, DELETECOL, 
                 new JButton(AbstractTableAction.rb.getString("ButtonDelete")));
@@ -392,7 +360,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * @param column
      * @param sample Typical button, used for size
      */
-    void setColumnToHoldButton(JTable table, int column, JButton sample) {
+    protected void setColumnToHoldButton(JTable table, int column, JButton sample) {
         //TableColumnModel tcm = table.getColumnModel();
         // install a button renderer & editor
         ButtonRenderer buttonRenderer = new ButtonRenderer();

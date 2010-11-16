@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.62 $
+ * @version     $Revision: 1.63 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -78,7 +78,7 @@ public class RouteTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Routes
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 		    static public final int ENABLECOL = NUMCOLUMN;
 		    static public final int LOCKCOL = ENABLECOL+1;
@@ -218,7 +218,7 @@ public class RouteTableAction extends AbstractTableAction {
         };
     }
     
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle("Route Table");
     }
 

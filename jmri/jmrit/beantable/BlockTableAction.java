@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -63,7 +63,7 @@ public class BlockTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Block objects
      */
-    void createModel() {
+    protected void createModel() {
         m = new BeanTableDataModel() {
 
         	static public final int DIRECTIONCOL = NUMCOLUMN;
@@ -209,7 +209,7 @@ public class BlockTableAction extends AbstractTableAction {
         };
     }
 
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleBlockTable"));
     }
 	

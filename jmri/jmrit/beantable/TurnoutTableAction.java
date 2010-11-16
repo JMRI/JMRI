@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.86 $
+ * @version     $Revision: 1.87 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -78,7 +78,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Turnouts
      */
-    void createModel() {
+    protected void createModel() {
         // store the terminology
         closedText = InstanceManager.turnoutManagerInstance().getClosedText();
         thrownText = InstanceManager.turnoutManagerInstance().getThrownText();   
@@ -345,7 +345,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             };  // end of custom data model
     }
     
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(f.rb.getString("TitleTurnoutTable"));
     }
     

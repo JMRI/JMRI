@@ -96,7 +96,7 @@ public class LRouteTableAction extends AbstractTableAction {
      * Create the JTable DataModel, along with the changes
      * for the specific case of Road Condtionals
      */
-	void createModel() {
+	protected void createModel() {
 		m = new LBeanTableDataModel();
     }
 
@@ -253,7 +253,7 @@ public class LRouteTableAction extends AbstractTableAction {
         }
 	}
     
-    void setTitle() {
+    protected void setTitle() {
         f.setTitle(rbx.getString("Title"));
     }
 
