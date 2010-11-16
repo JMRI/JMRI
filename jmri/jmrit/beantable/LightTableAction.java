@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.48 $
+ * @version     $Revision: 1.49 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -273,7 +273,7 @@ public class LightTableAction extends AbstractTableAction {
     JLabel labelTransitionTime = new JLabel( rb.getString("LightTransitionTime") + "  " );
     JTextField fieldTransitionTime = new JTextField(5);
         
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
 		if (inEditMode) {
 			// cancel Edit and reactivate the edited light
 			cancelPressed(null);

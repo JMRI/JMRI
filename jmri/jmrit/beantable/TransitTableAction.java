@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 
@@ -246,7 +246,7 @@ public class TransitTableAction extends AbstractTableAction {
      /**
 	 * Responds to the Add... button and the Edit buttons in Transit Table 
 	 */
-	void addPressed(ActionEvent e) {
+	protected void addPressed(ActionEvent e) {
 		editMode = false;
 		duplicateMode = false;
 		if ((sectionManager.getSystemNameList().size()) > 0) {

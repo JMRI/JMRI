@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -488,7 +488,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Add button in Logix table Creates and/or initializes the
 	 * Add Logix window
 	 */
-	void addPressed(ActionEvent e) {
+	protected void addPressed(ActionEvent e) {
 		// possible change
         if (!checkFlags(null)) {
             return;

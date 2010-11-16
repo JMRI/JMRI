@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.64 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -314,7 +314,8 @@ public class RouteTableAction extends AbstractTableAction {
     boolean routeDirty = false;  // true to fire reminder to save work
     boolean editMode = false;
 
-    void addPressed(ActionEvent e) {
+
+    protected void addPressed(ActionEvent e) {
 		if (editMode) {
 			cancelEdit();
 		}
@@ -717,7 +718,6 @@ public class RouteTableAction extends AbstractTableAction {
         //_routeTurnoutModel.fireTableDataChanged();
         //_routeSensorModel.fireTableDataChanged();
     }   // addPressed
-
     /**
      * Initialize list of included turnout positions
      */

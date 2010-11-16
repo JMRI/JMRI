@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -156,7 +156,7 @@ public class AudioTableAction extends AbstractTableAction {
         return "package.jmri.jmrit.beantable.AudioTable";
     }
     
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
     }
 

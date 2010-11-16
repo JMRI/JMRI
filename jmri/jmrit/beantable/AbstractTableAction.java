@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -101,7 +101,7 @@ abstract public class AbstractTableAction extends AbstractAction {
         return "index";  // by default, go to the top
     }
 
-    abstract void addPressed(ActionEvent e);
+    protected abstract void addPressed(ActionEvent e);
 
 }
 /* @(#)AbstractTableAction.java */

@@ -821,7 +821,7 @@ public class LRouteTableAction extends AbstractTableAction {
         }
     }
     
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
 		if (_editMode) {
 			cancelEdit();
 		}

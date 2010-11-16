@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -268,7 +268,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
     boolean SignalGroupDirty = false;  // true to fire reminder to save work
     boolean editMode = false;
 
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
 		/*if (editMode) {
 			cancelEdit();
 		}*/

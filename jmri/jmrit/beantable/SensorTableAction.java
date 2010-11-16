@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -78,7 +78,7 @@ public class SensorTableAction extends AbstractTableAction {
     String userNameError = this.getClass().getName()+".DuplicateUserName";
     jmri.UserPreferencesManager p;
       
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         if (addFrame==null) {

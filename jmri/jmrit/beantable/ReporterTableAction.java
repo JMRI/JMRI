@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.20 $
+ * @version     $Revision: 1.21 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -109,7 +109,7 @@ public class ReporterTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
 
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddReporter"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.ReporterAddEdit", true);

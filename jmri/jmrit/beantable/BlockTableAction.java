@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -255,7 +255,7 @@ public class BlockTableAction extends AbstractTableAction {
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
 
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddBlock"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true);

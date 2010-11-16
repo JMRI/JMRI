@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.87 $
+ * @version     $Revision: 1.88 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -365,7 +365,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     String userNameError = this.getClass().getName()+".DuplicateUserName";
     jmri.UserPreferencesManager p;
     
-    void addPressed(ActionEvent e) {
+    protected void addPressed(ActionEvent e) {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         if (addFrame==null) {
