@@ -20,7 +20,7 @@ package jmri;
  * for more details.
  * <P>
  * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.145 $
+ * @version $Revision: 1.146 $
  */
 
 public class Version {
@@ -40,7 +40,7 @@ public class Version {
     /* Test number changes with individual releases,
      * general fastest for test releases.
      */
-     static final public int test = 1;
+     static final public int test = 2;
      
     /**
      * Modifier is used to denote specific builds.
