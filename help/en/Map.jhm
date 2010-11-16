@@ -452,6 +452,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_SettingsOptions" url="package/jmri/jmrit/operations/Operations.shtml#SettingsOptions"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_SetTrainIconCoordinates" url="package/jmri/jmrit/operations/Operations.shtml#SetTrainIconCoordinates"/>
+
 <mapID target="html.hardware.loconet.LocoBufferII" url="html/hardware/loconet/LocoBufferII.shtml"/>
 
 <mapID target="manual.Dcode_Start" url="manual/Dcode_Start.shtml"/>
@@ -462,9 +464,9 @@
 
 <mapID target="html.apps.PanelPro.Panels" url="html/apps/PanelPro/Panels.shtml"/>
 
-<mapID target="manual.Main_Roster_Create" url="manual/Main_Roster.shtml#Create"/>
-
 <mapID target="package.jmri.jmrix.cmri.serial.assignment.ListFrame" url="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml"/>
+
+<mapID target="manual.Main_Roster_Create" url="manual/Main_Roster.shtml#Create"/>
 
 <mapID target="package.jmri.jmrix.rps.swing.polling.PollTableFrame" url="package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml"/>
 
@@ -582,9 +584,9 @@
 
 <mapID target="html.hardware.can.index" url="html/hardware/can/index.shtml"/>
 
-<mapID target="manual.Ops_Start" url="manual/Ops_Start.shtml"/>
-
 <mapID target="package.jmri.jmrix.can.swing.send.CanSendFrame" url="package/jmri/jmrix/can/swing/send/CanSendFrame.shtml"/>
+
+<mapID target="manual.Ops_Start" url="manual/Ops_Start.shtml"/>
 
 <mapID target="manual.Ops_TrainsPrintOpt" url="manual/Ops_TrainsPrintOpt.shtml"/>
 
@@ -1048,6 +1050,8 @@
 
 <mapID target="package.jmri.jmrit.display.SetSignalsAtLevelXing" url="package/jmri/jmrit/display/SetSignalsAtLevelXing.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Kernel" url="package/jmri/jmrit/operations/Operations.shtml#Kernel"/>
+
 <mapID target="package.jmri.jmrit.beantable.LogixTable" url="package/jmri/jmrit/beantable/LogixTable.shtml"/>
 
 <mapID target="html.hardware.acela.Names" url="html/hardware/acela/Names.shtml"/>
@@ -1360,6 +1364,8 @@
 
 <mapID target="package.apps.Apps" url="package/apps/Apps.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Timetable" url="package/jmri/jmrit/operations/Operations.shtml#Timetable"/>
+
 <mapID target="manual.Main_Roster_Edit" url="manual/Main_Roster.shtml#Edit"/>
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame" url="package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml"/>
@@ -1619,6 +1625,8 @@
 <mapID target="manual.Main_Panels_NewPanel" url="manual/Main_Panels.shtml#NewPanel"/>
 
 <mapID target="html.hardware.PDA" url="html/hardware/PDA.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_EditRoute" url="package/jmri/jmrit/operations/Operations.shtml#EditRoute"/>
 
 <mapID target="package.jmri.jmrit.DebugMenu" url="package/jmri/jmrit/DebugMenu.shtml"/>
 
