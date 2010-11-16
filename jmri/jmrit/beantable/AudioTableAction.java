@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -85,6 +85,7 @@ public class AudioTableAction extends AbstractTableAction {
      */
     public AudioTableAction() { this(rb.getString("TitleAudioTable"));}
 
+    @Override
     public void addToFrame(BeanTableFrame f) {
         JButton addSourceButton = new JButton(rba.getString("ButtonAddSource"));
         atp.addToBottomBox(addSourceButton);
@@ -147,7 +148,7 @@ public class AudioTableAction extends AbstractTableAction {
     }
 
     void setTitle() {
-        atf.setTitle(rba.getString("TitleAudioTable"));
+        atf.setTitle(rb.getString("TitleAudioTable"));
     }
 
     @Override
@@ -178,6 +179,7 @@ public class AudioTableAction extends AbstractTableAction {
         bufferFrame.setVisible(true);
     }
     
+    @Override
     public void setMenuBar(BeanTableFrame f){
         JMenuBar menuBar = f.getJMenuBar();
         ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");

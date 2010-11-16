@@ -25,7 +25,7 @@ import javax.swing.JMenuBar;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class AudioTableFrame extends BeanTableFrame {
 
@@ -74,8 +74,6 @@ public class AudioTableFrame extends BeanTableFrame {
             audioPanel.dispose();
         super.dispose();
     }
-
-    private static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTableFrame.class.getName());
 
 }
 
