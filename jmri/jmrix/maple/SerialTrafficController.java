@@ -29,9 +29,11 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  * @since 2.3.7
  */
+
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="multiple variables accessed outside synchronized core, which is quite suspicious, but code seems to interlock properly")
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
 

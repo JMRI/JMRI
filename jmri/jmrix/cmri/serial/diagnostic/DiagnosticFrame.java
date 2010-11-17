@@ -19,7 +19,7 @@ import java.lang.Integer;
 /**
  * Frame for running CMRI diagnostics
  * @author	 Dave Duchamp   Copyright (C) 2004
- * @version	 $Revision: 1.14 $
+ * @version	 $Revision: 1.15 $
  */
 public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.cmri.serial.SerialListener {
 
@@ -52,12 +52,18 @@ public class DiagnosticFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     protected byte[] wrapBytes = new byte[4];
     protected int nInBytes = 3;    // number of input bytes for all cards of this node
     protected int begInByte = 0;   // numbering from zero, subscript in inBytes
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",justification="unsync access only during initialization")
     protected int endInByte = 2;
+
     protected int numErrors = 0;
     protected int numIterations = 0;    
     protected javax.swing.Timer outTimer;  
     protected javax.swing.Timer wrapTimer;
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",justification="unsync access only during initialization")
     protected boolean waitingOnInput = false;  
+
     protected boolean needInputTest = false;
     protected int count = 20;
     int debugCount = 0;
