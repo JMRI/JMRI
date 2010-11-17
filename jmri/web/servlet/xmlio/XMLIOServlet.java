@@ -23,7 +23,7 @@ import jmri.web.xmlio.*;
  * directory.
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2005, 2006, 2008
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
@@ -188,7 +188,7 @@ public class XMLIOServlet extends AbstractServlet implements XmlIORequestor {
 			}
             if (log.isDebugEnabled()) log.debug("xml request is ["+request+"]");
             
-            return new String(request);
+            return request;
         
         } else if (input[0].toUpperCase().startsWith("POST")) {
             if (log.isDebugEnabled()) log.debug("POST request of "+len+" lines: "+input[0]);
