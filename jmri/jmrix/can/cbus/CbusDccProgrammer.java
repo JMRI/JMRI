@@ -15,7 +15,7 @@ import jmri.jmrix.can.*;
  * Implements the jmri.Programmer interface via commands for the CBUS programmer.
  *
  * @author      Andrew Crosland  Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class CbusDccProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -110,7 +110,7 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = false;
@@ -130,11 +130,11 @@ public class CbusDccProgrammer extends AbstractProgrammer implements CanListener
         }
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;

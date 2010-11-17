@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -124,7 +124,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     int _cv;	// remember the cv being read/written
 
     // programming interface
-    public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = false;
@@ -141,11 +141,11 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         controller().sendSprogMessage(SprogMessage.getProgMode(), this);
     }
 
-    public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(CV, p);
     }
 
-    public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
         useProgrammer(p);
         _progRead = true;
