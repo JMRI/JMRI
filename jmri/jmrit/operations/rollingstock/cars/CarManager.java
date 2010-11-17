@@ -26,7 +26,7 @@ import org.jdom.Element;
  * Manages the cars.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.39 $
+ * @version	$Revision: 1.40 $
  */
 public class CarManager extends RollingStockManager{
 
@@ -262,6 +262,7 @@ public class CarManager extends RollingStockManager{
     		if (!carAdded){
     			if (car.isCaboose()||car.hasFred()){
     				out.add(inTrain.get(i));	// place at end of list
+    				lastCarsIndex++;
     			} else {
     				out.add(out.size()-lastCarsIndex, inTrain.get(i));
     			}
