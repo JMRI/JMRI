@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -844,7 +844,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
 
     }
     
-    public void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
+    synchronized public void statsClearButtonActionPerformed(java.awt.event.ActionEvent e) {
         _sent = 0;
         _rcvd = 0;
         sentCountField.setText("0");
@@ -898,6 +898,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         return new String(linesBuffer[CBUS]);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="separately interlocked")
     PrintStream logStream = null;
     
     // to get a time string
@@ -1029,8 +1030,8 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         }
     }
     
-    private int _sent;
-    private int _rcvd;
+    transient private int _sent;
+    transient private int _rcvd;
     private boolean _decimal;
     private CbusEventFilterFrame _filterFrame;
     

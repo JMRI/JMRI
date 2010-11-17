@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -304,7 +304,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         }
     }
     
-    public void saveButtonActionPerformed(java.awt.event.ActionEvent e) {
+    synchronized public void saveButtonActionPerformed(java.awt.event.ActionEvent e) {
         // Send Current Limit if possible
         state = State.CURRENTSENT;
         if (isCurrentLimitPossible()) {

@@ -25,7 +25,7 @@ import java.beans.PropertyChangeEvent;
  * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -120,7 +120,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 	int _cv;	// remember the cv being read/written
 
 	// programming interface
-	public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
 		if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = false;
@@ -146,7 +146,7 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
 		readCV(CV, p);
 	}
 
-	public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
+	synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
           	if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
 		useProgrammer(p);
 		_progRead = true;

@@ -18,7 +18,7 @@ import jmri.jmrix.can.TrafficController;
  * Implements the jmri.Programmer interface via commands for CBUS.
  *
  * @author			Bob Jacobsen  Copyright (C) 2008
- * @version			$Revision: 1.4 $
+ * @version			$Revision: 1.5 $
  */
 public class CbusProgrammer extends AbstractProgrammer implements CanListener {
 
@@ -93,7 +93,7 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
     int operationVariableNumber; // remember the variable number being read/written
 
     // programming interface
-    public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void writeCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("write "+varnum+" listens "+p);
         useProgrammer(p);
         programmerReadOperation = false;
@@ -112,11 +112,11 @@ public class CbusProgrammer extends AbstractProgrammer implements CanListener {
         notifyProgListenerEnd(operationValue, jmri.ProgListener.OK);
     }
 
-    public void confirmCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void confirmCV(int varnum, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         readCV(varnum, p);
     }
 
-    public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
+    synchronized public void readCV(int varnum, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("readCV "+varnum+" listens "+p);
         useProgrammer(p);
         programmerReadOperation = true;

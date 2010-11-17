@@ -16,7 +16,7 @@ import jmri.jmrix.can.CanReply;
  *
  * @see             jmri.Programmer
  * @author			Andrew Crosland Copyright (C) 2009
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
 
@@ -31,7 +31,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
     /**
      * Forward a write request to an ops-mode write operation
      */
-    public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
         log.debug("ops mode write CV="+CV+" val="+val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
@@ -46,13 +46,13 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer  {
         notifyProgListenerEnd(_val, jmri.ProgListener.OK);
     }
 
-    public void readCV(int CV, ProgListener p) throws ProgrammerException {
+    synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) log.debug("read CV="+CV);
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
-    public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
+    synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
         if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
