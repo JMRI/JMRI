@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.64 $
+ * @version     $Revision: 1.65 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -222,7 +222,7 @@ public class RouteTableAction extends AbstractTableAction {
         f.setTitle("Route Table");
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.RouteTable";
     }
 

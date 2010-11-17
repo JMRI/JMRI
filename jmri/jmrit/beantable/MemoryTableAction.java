@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -106,7 +106,7 @@ public class MemoryTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleMemoryTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.MemoryTable";
     }
 

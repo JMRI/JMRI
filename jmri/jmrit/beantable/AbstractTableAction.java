@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -97,7 +97,7 @@ abstract public class AbstractTableAction extends AbstractAction {
     /**
      * Specify the JavaHelp target for this specific panel
      */
-    String helpTarget() {
+    protected String helpTarget() {
         return "index";  // by default, go to the top
     }
 

@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.88 $
+ * @version     $Revision: 1.89 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -349,7 +349,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleTurnoutTable"));
     }
     
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TurnoutTable";
     }
     

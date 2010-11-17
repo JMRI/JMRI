@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -245,7 +245,7 @@ public class BlockTableAction extends AbstractTableAction {
 		m.fireTableDataChanged();  // update view
 	}
 		
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.BlockTable";
     }
 

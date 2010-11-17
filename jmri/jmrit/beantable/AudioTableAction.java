@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -152,7 +152,7 @@ public class AudioTableAction extends AbstractTableAction {
     }
 
     @Override
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.AudioTable";
     }
     
@@ -282,7 +282,7 @@ public class AudioTableAction extends AbstractTableAction {
         public Audio getByUserName(String name) { return InstanceManager.audioManagerInstance().getByUserName(name); }
 
         @Override
-        synchronized void updateNameList() {
+        protected synchronized void updateNameList() {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
                 for (int i = 0; i< sysNameList.size(); i++) {

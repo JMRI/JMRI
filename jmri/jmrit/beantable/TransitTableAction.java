@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 
@@ -200,7 +200,7 @@ public class TransitTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleTransitTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.TransitTable";
     }
 	

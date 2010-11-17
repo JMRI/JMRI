@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -204,7 +204,7 @@ public class SectionTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleSectionTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SectionTable";
     }
 	

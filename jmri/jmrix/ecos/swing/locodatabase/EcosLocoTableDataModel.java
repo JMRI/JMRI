@@ -2,7 +2,6 @@
 
 package jmri.jmrix.ecos.swing.locodatabase;
 
-import java.beans.PropertyChangeListener;
 import java.util.List;
 
 import javax.swing.DefaultCellEditor;
@@ -11,7 +10,6 @@ import javax.swing.JComboBox;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumn;
 
 import jmri.jmrit.roster.Roster;
@@ -22,7 +20,7 @@ import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * This extends the BeanTableDataModel, but the majority of it is customised.
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.9 $
+ * @version		$Revision: 1.10 $
  */
 abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -39,7 +37,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
 
     //private EcosLocoAddressManager objEcosLocoManager;
     
-    synchronized void updateNameList() {
+    protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
        //objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         if (ecosObjectIdList != null) {

@@ -23,7 +23,7 @@ import jmri.util.JmriJFrame;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -99,7 +99,7 @@ public class ReporterTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleReporterTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.ReporterTable";
     }
 

@@ -110,7 +110,7 @@ public class LRouteTableAction extends AbstractTableAction {
         /**
         *Overide to filter out the LRoutes from the rest of Logix
         */
-        synchronized void updateNameList() {
+        protected synchronized void updateNameList() {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
                 for (int i = 0; i< sysNameList.size(); i++) {
@@ -257,7 +257,7 @@ public class LRouteTableAction extends AbstractTableAction {
         f.setTitle(rbx.getString("Title"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LRouteTable";
     }
 

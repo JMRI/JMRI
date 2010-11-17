@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -215,7 +215,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         f.setTitle("SignalGroup Table");
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalGroupTable";
     }
 

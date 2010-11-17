@@ -1,18 +1,9 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
-
-import jmri.InstanceManager;
-import jmri.Manager;
 import java.awt.event.ActionEvent;
 import jmri.NamedBean;
 import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.EcosLocoAddressManager;
-
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
-import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
-import java.util.List;
-
 
 public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableAction {
 
@@ -112,7 +103,7 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
         f.setTitle("Ecos Loco Table");
     }
     
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrix.ecos.ecosLocoTable";
     }
     

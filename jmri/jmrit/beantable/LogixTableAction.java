@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.80 $
+ * @version $Revision: 1.81 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -336,7 +336,7 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
-	String helpTarget() {
+	protected String helpTarget() {
 		return "package.jmri.jmrit.beantable.LogixTable";
 	}
 

@@ -27,7 +27,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -149,7 +149,7 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         if (itemBeingAdded==null){
             itemBeingAdded = new tabbedTableItem(aaClass, choice, stdModel);
-            itemBeingAdded.getAAClass().addToFrame((BeanTableFrame) this);
+            itemBeingAdded.getAAClass().addToFrame(this);
             tabbedTableArray.add(itemBeingAdded);
         }
         updateJList();

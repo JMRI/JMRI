@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -48,7 +48,7 @@ public class SignalMastTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleSignalMastTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalMastTable";
     }
 

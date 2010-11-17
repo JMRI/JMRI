@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.49 $
+ * @version     $Revision: 1.50 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -218,7 +218,7 @@ public class LightTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleLightTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.LightTable";
     }
 

@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.61 $
+ * @version     $Revision: 1.62 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -189,7 +189,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
         f.setTitle(f.rb.getString("TitleSignalTable"));
     }
 
-    String helpTarget() {
+    protected String helpTarget() {
         return "package.jmri.jmrit.beantable.SignalHeadTable";
     }
 
