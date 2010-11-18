@@ -6,7 +6,7 @@ package jmri.util;
  * <P>
  *
  * @author Pete Cressman  Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 import javax.swing.JComponent;
@@ -35,8 +35,10 @@ public class DnDTableExportHandler extends TransferHandler{
         Object obj = table.getModel().getValueAt(row, col);
         if (obj instanceof String) {
             return new StringSelection((String)obj);
-        } else {
+        } else if (obj!=null) {
             return new StringSelection(obj.getClass().getName());
+        } else {
+            return null;
         }
     }
 
