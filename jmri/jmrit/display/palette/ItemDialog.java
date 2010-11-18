@@ -19,7 +19,7 @@ public class ItemDialog extends JDialog {
     /**
     */
     public ItemDialog(String type, String family, String title, ItemPanel parent, boolean mode) {
-        super(parent.getPaletteFrame(), title, mode);
+        super(parent._paletteFrame, title, mode);
         _type = type;
         _family = family;
         _parent = parent;

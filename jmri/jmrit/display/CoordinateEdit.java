@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * 
  * @author Dan Boudreau Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2010
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 
 public class CoordinateEdit extends JmriJFrame {
@@ -556,7 +556,9 @@ public class CoordinateEdit extends JmriJFrame {
 
 		okButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {
-                pl.setScale(((Number)spinX.getValue()).doubleValue()/100);
+                double s = ((Number)spinX.getValue()).doubleValue()/100;
+                pl.setScale(s);
+                pl.getEditor().setSelectionsScale(s, pl);
                 textX.setText(java.text.MessageFormat.format(rb.getString("Scale"), pl.getScale()*100));
                 dispose();
 			}

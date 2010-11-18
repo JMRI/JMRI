@@ -11,6 +11,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.awt.dnd.*;
 import java.io.IOException;
 
+import jmri.util.JmriJFrame;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -39,7 +40,7 @@ public class IconItemPanel extends ItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public IconItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public IconItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
@@ -92,7 +93,6 @@ public class IconItemPanel extends ItemPanel {
             log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
         }
         add(_iconPanel);
-//        _paletteFrame.pack();
     }
 
     /**
@@ -113,7 +113,6 @@ public class IconItemPanel extends ItemPanel {
                         _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
                     }
                     repaint();
-//                    _paletteFrame.pack();
                 }
         });
         _catalogButton.setToolTipText(ItemPalette.rbp.getString("ToolTipCatalog"));
@@ -150,7 +149,7 @@ public class IconItemPanel extends ItemPanel {
             if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData url= "+url);
             PositionableLabel l = new PositionableLabel(NamedIcon.getIconByName(url), _editor);
             l.setPopupUtility(null);        // no text 
-            l.setDisplayLevel(Editor.ICONS);
+            l.setLevel(Editor.ICONS);
             return l;
         }
     }

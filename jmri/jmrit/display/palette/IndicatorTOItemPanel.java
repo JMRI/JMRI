@@ -17,6 +17,7 @@ import javax.swing.*;
 import jmri.Sensor;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.*;
@@ -29,10 +30,12 @@ import jmri.jmrit.logix.OBlock;
 */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
-    JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
-    JTextField _errSensorName = new JTextField();
-    JFrame _pickFrame;
-    JButton _openPicklistButton;
+    JTextField  _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
+    JTextField  _errSensorName = new JTextField();
+    JFrame      _pickFrame;
+    JButton     _openPicklistButton;
+    JCheckBox   _showTrainName;
+
 
     protected Hashtable<String, Hashtable<String, NamedIcon>> _iconGroupsMap;
     JPanel _sensorPanel;
@@ -41,13 +44,28 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public IndicatorTOItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public IndicatorTOItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame,  itemType, model, editor);
     }
 
+    /**
+    * Init for creation
+    * _bottom1Panel and _bottom2Panel alternate visibility in bottomPanel depending on
+    * whether icon families exist.  They are made first because they are referenced in
+    * initIconFamiliesPanel()
+    */
     public void init() {
         _sensorPanel = initSensorPanel();   // Create panel before calling initIconFamiliesPanel()
         super.init();
+    }
+
+    /**
+    * Init for update of existing indicator turnout
+    * _bottom3Panel has "Update Panel" button put into _bottom1Panel
+    */
+    public void init(ActionListener doneAction) {
+        _sensorPanel = initSensorPanel();   // Create panel before calling initIconFamiliesPanel()
+        super.init(doneAction);
     }
 
     protected void initTablePanel(PickListModel model, Editor editor) {
@@ -76,6 +94,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _openPicklistButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
         JPanel p = new JPanel();
         p.add(_openPicklistButton);
+        panel.add(p);
+        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        p = new JPanel();
+        p.add(_showTrainName);
         panel.add(p);
         return panel;
     }
@@ -178,7 +200,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _bottom2Panel.setVisible(false);
             _sensorPanel.setVisible(true);
         } else {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             _bottom1Panel.setVisible(false);
             _bottom2Panel.setVisible(true);
@@ -206,7 +229,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         }
         _iconGroupsMap = families.get(_family);
         if (_iconGroupsMap==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         } else {
@@ -404,6 +428,93 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         new IndicatorTOIconDialog(_itemType, _family, this, key);
     }
 
+    /****************** getters & setters *********************/
+
+    public boolean getShowTrainName() {
+        return _showTrainName.isSelected();
+    }
+
+    public void setShowTrainName(boolean show) {
+        _showTrainName.setSelected(show);
+    }
+
+    public String getErrSensor() {
+        String name = _errSensorName.getText();
+        if (name!=null && name.trim().length()>0) {
+            Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
+            if (sensor!= null) {
+                return name;                
+            } else {
+                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("InvalidErrSensor"), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            }
+        }
+        return null;
+    }
+
+    public void setErrSensor(String name) {
+        _errSensorName.setText(name);
+    }
+
+    public String getOccSensor() {
+        if (!detectorIsOBlock()) {
+            return _occDetectorName.getText();
+        }
+        return null;
+    }
+
+    public String getOccBlock() {
+        if (detectorIsOBlock()) {
+            return _occDetectorName.getText();
+        }
+        return null;
+    }
+
+    /**
+    * Name of either Sensor or OBlock for detection
+    */
+    public void setOccDetector(String name) {
+        _occDetectorName.setText(name);
+    }
+
+    public void setSelection(NamedBean bean) {
+        int row = _model.getIndexOf(bean);
+        _table.addRowSelectionInterval(row, row);
+        _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+    }
+
+    public Hashtable <String, Hashtable<String, NamedIcon>> getIconMaps() {
+        Hashtable <String, Hashtable <String, NamedIcon>> iconMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
+        if (iconMap==null) {
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        return iconMap;
+    }
+
+    public boolean detectorIsOBlock() {
+        String name = _occDetectorName.getText();
+        if (name!=null && name.trim().length()>0) {
+            OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(name);
+            if (block!=null) {
+                return true;
+            } else {
+                Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
+                if (sensor!= null) {
+                    return false;                
+                } else {
+                    JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("InvalidOccDetector"), 
+                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        }
+        _occDetectorName.setText(null);
+        // allow no detector
+        return true;
+    }
+
     /**
     * Export a Positionable item from PickListTable 
     */
@@ -424,7 +535,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }            
             Hashtable <String, Hashtable <String, NamedIcon>> iconMap = ItemPalette.getLevel4FamilyMaps(_itemType).get(_family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
@@ -432,38 +544,17 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             NamedBean bean = model.getBeanAt(row);
 
             IndicatorTurnoutIcon t = new IndicatorTurnoutIcon(_editor);
-            Sensor sensor = null;
-            OBlock block = null;
-            String name = _occDetectorName.getText();
-            if (name!=null && name.trim().length()>0) {
-                block = InstanceManager.oBlockManagerInstance().getOBlock(name);
-                if (block!=null) {
-                    t.setOccBlock(name);
-                } else {
-                    sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-                    if (sensor!= null) {
-                        t.setOccSensor(name);                
-                    }
-                }
-            }
-            if (block==null && sensor==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("InvalidOccDetector"), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                return null;
-            }
-            name = _errSensorName.getText();
-            if (name!=null && name.trim().length()>0) {
-                sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-                if (sensor!= null) {
-                    t.setErrSensor(name);                
-                } else {
-                    JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("InvalidErrSensor"), 
-                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                    return null;
-                }
-            }
 
-            t.setTurnout(bean.getDisplayName());
+            if (detectorIsOBlock()) {
+                t.setOccBlock(_occDetectorName.getText());
+                t.setOccSensor(null);
+            } else {
+                t.setOccBlock(null);
+                t.setOccSensor(_occDetectorName.getText());
+            }
+            t.setErrSensor(getErrSensor());                
+            t.setShowTrain(_showTrainName.isSelected());
+            t.setTurnout(bean.getSystemName());
 
             Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
@@ -475,7 +566,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                     t.setIcon(status, ent.getKey(), ent.getValue());
                 }
             }
-            t.setDisplayLevel(Editor.TURNOUTS);
+            t.setLevel(Editor.TURNOUTS);
             return new PositionableDnD(t, bean.getDisplayName());
         }
     }

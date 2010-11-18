@@ -2,7 +2,10 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+//import jmri.jmrit.display.palette.TableItemPanel;
+//import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -24,7 +27,7 @@ import java.util.ArrayList;
  * not guaranteed.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2007
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class MultiSensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -33,7 +36,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), editor);
-        setDisplayLevel(Editor.SENSORS);
         _control = true;
         displayState();
         setPopupUtility(null);
@@ -195,7 +197,6 @@ public class MultiSensorIcon extends PositionableLabel implements java.beans.Pro
             });
         return true;
     }
-
     protected void edit() {
         MultiSensorIconAdder iconEditor = new MultiSensorIconAdder("MultiSensor");
         makeIconEditorFrame(this, "MultiSensor", false, iconEditor);

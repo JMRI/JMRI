@@ -15,6 +15,7 @@ import javax.swing.*;
 
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
+import jmri.util.JmriJFrame;
 
 /**
 *  ItemPanel for for plain icons and backgrounds 
@@ -31,7 +32,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
     * Constructor types with multiple families and multiple icon families
     */
-    public FamilyItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public FamilyItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
     }
 
@@ -85,7 +86,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _bottom1Panel.setVisible(true);
             _bottom2Panel.setVisible(false);
         } else {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             _bottom1Panel.setVisible(false);
             _bottom2Panel.setVisible(true);
@@ -109,7 +111,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
         if (iconMap==null) {
             if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
             // Thread.dumpStack();
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         } else {
@@ -227,7 +230,9 @@ public abstract class FamilyItemPanel extends ItemPanel {
     }
 
     protected void hideIcons() {
-        _iconPanel.setVisible(false);
+        if (_iconPanel!=null) {
+            _iconPanel.setVisible(false);
+        }
         _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
         _paletteFrame.pack();
     }

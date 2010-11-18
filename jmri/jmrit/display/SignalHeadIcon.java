@@ -29,7 +29,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -42,7 +42,6 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/smallschematics/searchlights/left-red-short.gif",
                             "resources/icons/smallschematics/searchlights/left-red-short.gif"), editor);
-        setDisplayLevel(Editor.SIGNALS);
         _control = true;
         setPopupUtility(null);
     }
@@ -54,7 +53,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     public Positionable finishClone(Positionable p) {
         SignalHeadIcon pos = (SignalHeadIcon)p;
-        pos.setSignalHead(getNameString());
+        pos.setSignalHead(getNamedSignalHead().getName());
         Enumeration <String> e = _iconMap.keys();
         while (e.hasMoreElements()) {
             String key = e.nextElement();

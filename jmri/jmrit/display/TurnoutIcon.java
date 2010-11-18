@@ -3,6 +3,9 @@ package jmri.jmrit.display;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.TableItemPanel;
+import jmri.jmrit.picker.PickListModel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,7 +28,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -49,7 +52,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     public Positionable finishClone(Positionable p) {
         TurnoutIcon pos = (TurnoutIcon)p;
-        pos.setTurnout(getNameString());
+        pos.setTurnout(getNamedTurnout().getName());
         pos._iconMap = cloneMap(_iconMap, pos);
         pos.setTristate(getTristate());
         return super.finishClone(pos);
@@ -280,6 +283,55 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         updateSize();
     }
 
+    jmri.util.JmriJFrame _paletteFrame;
+    TableItemPanel _itemPanel;
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
+        popup.add(new javax.swing.AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+
+    protected void editItem() {
+        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
+        _itemPanel = new TableItemPanel(_paletteFrame, "Turnout",
+                                       PickListModel.turnoutPickModelInstance(), _editor);
+        _itemPanel.init( new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        });
+        _itemPanel.setSelection(getTurnout());
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, null);
+        setTurnout(_itemPanel.getTableSelection().getSystemName());
+        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+            NamedIcon newIcon = entry.getValue();
+            NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+            newIcon.setRotation(oldIcon.getRotation(), this);
+            setIcon(entry.getKey(), newIcon);
+        }
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel = null;
+        invalidate();
+    }
+
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
@@ -314,7 +366,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setTurnout(_iconEditor.getTableSelection().getDisplayName());
         Hashtable <String, NamedIcon> iconMap = _iconEditor.getIconMap();
-//        if (log.isDebugEnabled()) log.debug("iconMap.size()= "+iconMap.size());
 
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -324,8 +375,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
             newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
             newIcon.setRotation(oldIcon.getRotation(), this);
-//            if (log.isDebugEnabled()) log.debug("oldIcon Rotation= "+oldIcon.getRotation()+
-//            " Degrees= "+oldIcon.getDegrees()+" Scale= "+oldIcon.getScale());
             setIcon(entry.getKey(), newIcon);
         }
         _iconEditorFrame.dispose();
@@ -371,7 +420,9 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
             while (it.hasNext()) {
                 Entry<Integer, NamedIcon> entry = it.next();
                 clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
-                pos.setIcon(_state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                if (pos!=null) {
+                    pos.setIcon(_state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                }
             }
         }
         return clone;

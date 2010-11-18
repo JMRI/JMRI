@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -50,7 +50,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
 
         Element element = new Element("signalheadicon");
         
-        element.setAttribute("signalhead", ""+p.getNameString());
+        element.setAttribute("signalhead", ""+p.getNamedSignalHead().getName());
         storeCommonAttributes(p, element);
         element.setAttribute("clickmode", ""+p.getClickMode());
         element.setAttribute("litmode", ""+p.getLitMode());

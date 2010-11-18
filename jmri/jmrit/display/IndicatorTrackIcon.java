@@ -5,6 +5,11 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
+import jmri.jmrit.display.palette.IndicatorItemPanel;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JPopupMenu;
 import java.util.Hashtable;
 import jmri.util.NamedBeanHandle;
@@ -24,7 +29,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -38,6 +43,7 @@ public class IndicatorTrackIcon extends PositionableLabel
 
     private String _status;     // is a key for _iconMap
     private String _train;
+    private boolean _showTrain; // this track should display _train when occupied
 
     public IndicatorTrackIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -45,8 +51,7 @@ public class IndicatorTrackIcon extends PositionableLabel
                             "resources/icons/smallschematics/tracksegments/block.gif"), editor);
         setPopupUtility(null);
         _status = "DontUseTrack";
-        _text = true;
-        _icon = true;
+        _iconMap = new Hashtable<String, NamedIcon>();
     }
 
     public Positionable deepClone() {
@@ -56,15 +61,10 @@ public class IndicatorTrackIcon extends PositionableLabel
 
     public Positionable finishClone(Positionable p) {
         IndicatorTrackIcon pos = (IndicatorTrackIcon)p;
-        pos.setOccSensor(namedOccSensor);
-        if (namedErrSensor!=null) {
-            pos.setErrSensor(namedErrSensor);
-        }
-        Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            pos.setIcon(entry.getKey(), entry.getValue());
-        }
+        pos.setOccSensorHandle(namedOccSensor);
+        pos.setErrSensorHandle(namedErrSensor);
+        pos.setOccBlockHandle(namedOccBlock);
+        pos._iconMap = cloneMap(_iconMap, pos);
         return super.finishClone(pos);
     }
 
@@ -77,10 +77,14 @@ public class IndicatorTrackIcon extends PositionableLabel
      * @param pName Used as a system/user name to lookup the sensor object
      */
      public void setOccSensor(String pName) {
+         if (pName==null || pName.trim().length()==0) {
+             setOccSensorHandle(null);
+             return;
+         }
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setOccSensor(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setOccSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
              } else {
                  log.error("Occupancy Sensor '"+pName+"' not available, icon won't see changes");
              }
@@ -88,13 +92,15 @@ public class IndicatorTrackIcon extends PositionableLabel
              log.error("No SensorManager for this protocol, block icons won't see changes");
          }
      }
-     public void setOccSensor(NamedBeanHandle<Sensor> sen) {
+     public void setOccSensorHandle(NamedBeanHandle<Sensor> sen) {
          if (namedOccSensor != null) {
              getOccSensor().removePropertyChangeListener(this);
          }
          namedOccSensor = sen;
          if (namedOccSensor != null) {
-             _iconMap = new Hashtable<String, NamedIcon>();
+             if (_iconMap==null) {
+                 _iconMap = new Hashtable<String, NamedIcon>();
+             }
              getOccSensor().addPropertyChangeListener(this);
          } 
      }
@@ -111,24 +117,26 @@ public class IndicatorTrackIcon extends PositionableLabel
      * @param pName Used as a system/user name to lookup the OBlock object
      */
      public void setOccBlock(String pName) {
-         if (InstanceManager.sensorManagerInstance()!=null) {
-             OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
-             if (block != null) {
-                 setOccBlock(new NamedBeanHandle<OBlock>(pName, block));                
-             } else {
-                 log.error("OBlock Sensor '"+pName+"' not available, icon won't see changes");
-             }
+         if (pName==null || pName.trim().length()==0) {
+             setOccBlockHandle(null);
+             return;
+         }
+         OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
+         if (block != null) {
+             setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));                
          } else {
-             log.error("No SensorManager for this protocol, block icons won't see changes");
+             log.error("Detection OBlock '"+pName+"' not available, icon won't see changes");
          }
      }   
-    public void setOccBlock(NamedBeanHandle<OBlock> block) {
+    public void setOccBlockHandle(NamedBeanHandle<OBlock> block) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
         namedOccBlock = block;
         if (namedOccBlock != null) {
-            _iconMap = new Hashtable<String, NamedIcon>();
+            if (_iconMap==null) {
+                _iconMap = new Hashtable<String, NamedIcon>();
+            }
             getOccBlock().addPropertyChangeListener(this);
         } 
     }
@@ -145,10 +153,14 @@ public class IndicatorTrackIcon extends PositionableLabel
      * @param pName Used as a system/user name to lookup the sensor object
      */
      public void setErrSensor(String pName) {
+         if (pName==null || pName.trim().length()==0) {
+             setErrSensorHandle(null);
+             return;
+         }
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setErrSensor(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setErrSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
              } else {
                  log.error("Error Sensor '"+pName+"' not available, icon won't see changes");
              }
@@ -157,12 +169,15 @@ public class IndicatorTrackIcon extends PositionableLabel
          }
      }
 
-    public void setErrSensor(NamedBeanHandle<Sensor> sen) {
+    public void setErrSensorHandle(NamedBeanHandle<Sensor> sen) {
         if (namedErrSensor != null) {
             getErrSensor().removePropertyChangeListener(this);
         }
         namedErrSensor = sen;
         if (namedErrSensor != null) {
+            if (_iconMap==null) {
+                _iconMap = new Hashtable<String, NamedIcon>();
+            }
             getErrSensor().addPropertyChangeListener(this);
         }
     }
@@ -174,6 +189,13 @@ public class IndicatorTrackIcon extends PositionableLabel
         return namedErrSensor.getBean(); 
     }    
     public NamedBeanHandle <Sensor> getNamedErrSensor() { return namedErrSensor; }
+
+    public void setShowTrain(boolean set) {
+        _showTrain = set;
+    }
+    public boolean showTrain() {
+        return _showTrain;
+    }
 
     /**
     * Place icon by its bean state name
@@ -252,9 +274,12 @@ public class IndicatorTrackIcon extends PositionableLabel
                     } else {
                         _status = "ErrorTrack";
                     }
-                } else if (namedErrSensor!=null) {
+                }
+                if (evt.getSource().equals(getErrSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "ErrorTrack";
+                    } else {
+                        _status = "DontUseTrack";
                     }
                 }
         }
@@ -304,7 +329,7 @@ public class IndicatorTrackIcon extends PositionableLabel
 	 */
     void displayState(String status) {
         log.debug(getNameString() +" displayStatus "+_status);
-        if ("PositionTrack".equals(_status)) {
+        if (_showTrain && "PositionTrack".equals(_status)) {
             super.setText(_train);
         } else {
             super.setText("");
@@ -316,55 +341,68 @@ public class IndicatorTrackIcon extends PositionableLabel
         updateSize();
     }
 
-    public boolean setEditIconMenu(JPopupMenu popup) {
-        /*
-        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Track"));
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTrack"));
         popup.add(new javax.swing.AbstractAction(txt) {
                 public void actionPerformed(ActionEvent e) {
-                    edit();
+                    editItem();
                 }
             });
         return true;
-        */
-        return false;
     }
-/*
-    protected void edit() {
-        makeIconEditorFrame(this, "Track", true, null);
-        _iconEditor.setIcon(0, "ClearTrack", _iconMap.get( "ClearTrack"));
-        _iconEditor.setIcon(1, "TrackOccupied", _occupiedIcon);
-        _iconEditor.setIcon(2, "TrackAllocated", _allocIcon);
-        _iconEditor.setIcon(3, "TrackCurrentPosition", _positionIcon);
-        _iconEditor.setIcon(4, "TrackDoNotUse", _notInServiceIcon);
-        _iconEditor.setIcon(5, "TrackError", _errorIcon);
-        _iconEditor.makeIconPanel();
 
-        // set default icons, then override with this turnout's icons
-        ActionListener addIconAction = new ActionListener() {
+    jmri.util.JmriJFrame _paletteFrame;
+    IndicatorItemPanel _trackPanel;
+    protected void editItem() {
+        if (log.isDebugEnabled()) log.debug("edit: ");
+        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
+        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _editor);
+        _trackPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
-                updateTrack();
+                updateItem();
             }
-        };
-        _iconEditor.complete(addIconAction, true, true, true);
+        });
+        if (namedErrSensor!=null) {
+            _trackPanel.setErrSensor(namedErrSensor.getName());
+        }
+        if (namedOccSensor!=null) {
+            _trackPanel.setOccDetector(namedOccSensor.getName());
+        }
+        if (namedOccBlock!=null) {
+            _trackPanel.setOccDetector(namedOccBlock.getName());
+        }
+        _trackPanel.setShowTrainName(_showTrain);
+        _paletteFrame.add(_trackPanel);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
-    void updateTrack() {
-        _clearIcon = _iconEditor.getIcon("ClearTrack");
-        _occupiedIcon = _iconEditor.getIcon("TrackOccupied");
-        _allocIcon = _iconEditor.getIcon("TrackAllocated");
-        _positionIcon = _iconEditor.getIcon("TrackCurrentPosition");
-        _notInServiceIcon = _iconEditor.getIcon("TrackDoNotUse");
-        _errorIcon = _iconEditor.getIcon("TrackError");
-        updateSize();
-        _iconEditorFrame.dispose();
-        _iconEditorFrame = null;
-        _iconEditor = null;
+    void updateItem() {
+        setErrSensor(_trackPanel.getErrSensor());
+        setOccSensor(_trackPanel.getOccSensor());
+        setOccBlock(_trackPanel.getOccBlock());
+        _showTrain = _trackPanel.getShowTrainName();
+        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, null);
+        Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
+
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+            NamedIcon newIcon = entry.getValue();
+            NamedIcon oldIcon = oldMap.get(entry.getKey());
+            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+            newIcon.setRotation(oldIcon.getRotation(), this);
+            setIcon(entry.getKey(), newIcon);
+        }
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _trackPanel = null;
         invalidate();
-
-        setOccSensor(_iconEditor.getTableSelection().getDisplayName());
-        setErrSensor(_iconEditor.getTableSelection().getDisplayName());
     }
-*/
+
     public void dispose() {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
@@ -382,6 +420,22 @@ public class IndicatorTrackIcon extends PositionableLabel
         namedErrSensor = null;
         _iconMap = null;
         super.dispose();
+    }
+
+    protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map,
+                                                     IndicatorTrackIcon pos) {
+        Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
+        if (map!=null) {
+            Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
+                if (pos!=null) {
+                    pos.setIcon(entry.getKey(), _iconMap.get(entry.getKey()));
+                }
+            }
+        }
+        return clone;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTrackIcon.class.getName());

@@ -20,12 +20,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-/*
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ChangeEvent; 
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-*/
 
 import org.jdom.Element;
 import jmri.util.JmriJFrame;
@@ -33,7 +27,6 @@ import jmri.util.JmriJFrame;
 import jmri.CatalogTree;
 import jmri.CatalogTreeManager;
 import jmri.InstanceManager;
-//import jmri.NamedBean;
 
 import jmri.jmrit.catalog.CatalogTreeLeaf;
 import jmri.jmrit.catalog.CatalogTreeNode;
@@ -57,7 +50,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 
     
     JTabbedPane _tabPane;
-    HashMap <String, ItemPanel> _itemPanelMap = new HashMap <String, ItemPanel>();
+//    HashMap <String, ItemPanel> _itemPanelMap = new HashMap <String, ItemPanel>();
 
     static HashMap<String, Hashtable<String, Hashtable<String, NamedIcon>>> _iconMaps;
     // for now, special case 4 level maps since IndicatorTO is the only case.
@@ -118,6 +111,18 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
             if (log.isDebugEnabled()) log.debug("Add familyNode "+familyNode);
         }
         return typeNode;
+    }
+
+    static void loadIcons() {
+        if (_iconMaps==null) {
+            _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>>();
+            _indicatorTOMaps = 
+                new HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>>();
+
+            if (!loadSavedIcons()) {
+                loadDefaultIcons();
+            }
+        }
     }
 
     static boolean loadSavedIcons() {
@@ -272,17 +277,13 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return familyTOMap;
     }
 
+    public ItemPalette() {
+        loadIcons();
+    }
+
     public ItemPalette(String title, Editor editor) {
         setTitle(title);
-        if (_iconMaps==null) {
-            _iconMaps = new HashMap <String, Hashtable<String, Hashtable<String, NamedIcon>>>();
-            _indicatorTOMaps = 
-                new HashMap<String, Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>>>();
-
-            if (!loadSavedIcons()) {
-                loadDefaultIcons();
-            }
-        }
+        loadIcons();
         addWindowListener(new java.awt.event.WindowAdapter() {
                 Editor editor;
                 public void windowClosing(java.awt.event.WindowEvent e) {
@@ -301,88 +302,90 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         ItemPanel itemPanel = new TableItemPanel(this, "Turnout",
                                        PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("Turnout", itemPanel);
+//        _itemPanelMap.put("Turnout", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Turnout"));
-/*
-* Hold until documented.
-        itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", editor);
-        itemPanel.init();
-        _itemPanelMap.put("IndicatorTrack", itemPanel);
-        _tabPane.add(itemPanel, rbp.getString("IndicatorTrack"));
-
-        itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO",
-                                       PickListModel.turnoutPickModelInstance(), editor);
-        itemPanel.init();
-        _itemPanelMap.put("IndicatorTO", itemPanel);
-        _tabPane.add(itemPanel, rbp.getString("IndicatorTO"));
-*/
+        
         itemPanel = new TableItemPanel(this, "Sensor",
                                        PickListModel.sensorPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("Sensor", itemPanel);
+//        _itemPanelMap.put("Sensor", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Sensor"));
 
         itemPanel = new SignalHeadItemPanel(this, "SignalHead",
                                        PickListModel.signalHeadPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("SignalHead", itemPanel);
+//        _itemPanelMap.put("SignalHead", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("SignalHead"));
 
         itemPanel = new SignalMastItemPanel(this, "SignalMast",
                                             PickListModel.signalMastPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("SignalMast", itemPanel);
+//        _itemPanelMap.put("SignalMast", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("SignalMast"));
 
         itemPanel = new MemoryItemPanel(this, "Memory",
                                         PickListModel.memoryPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("Memory", itemPanel);
+//        _itemPanelMap.put("Memory", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Memory"));
 
         itemPanel = new ReporterItemPanel(this, "Reporter",
                                           PickListModel.reporterPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("Reporter", itemPanel);
+//        _itemPanelMap.put("Reporter", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Reporter"));
 
         itemPanel = new TableItemPanel(this, "Light",
                                        PickListModel.lightPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("Light", itemPanel);
+//        _itemPanelMap.put("Light", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Light"));
 
         itemPanel = new MultiSensorItemPanel(this, "MultiSensor",
                                              PickListModel.multiSensorPickModelInstance(), editor);
         itemPanel.init();
-        _itemPanelMap.put("MultiSensor", itemPanel);
+//        _itemPanelMap.put("MultiSensor", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("MultiSensor"));
  
         ItemPanel iconPanel = new IconItemPanel(this, "Icon", editor);
         iconPanel.init();
-        _itemPanelMap.put("Icon", iconPanel);
+//        _itemPanelMap.put("Icon", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Icon"));
  
         iconPanel = new BackgroundItemPanel(this, "Background", editor);
         iconPanel.init();
-        _itemPanelMap.put("Background", iconPanel);
+//        _itemPanelMap.put("Background", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Background")); 
 
         iconPanel = new TextItemPanel(this, "Text", editor);
         iconPanel.init();
-        _itemPanelMap.put("Text", iconPanel);
+//        _itemPanelMap.put("Text", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Text"));     
 
         iconPanel = new RPSItemPanel(this, "RPSReporter", editor);
         iconPanel.init();
-        _itemPanelMap.put("RPSReporter", iconPanel);
+//        _itemPanelMap.put("RPSReporter", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("RPSReporter")); 
 
         iconPanel = new ClockItemPanel(this, "FastClock", editor);
         iconPanel.init();
-        _itemPanelMap.put("FastClock", iconPanel);
+//        _itemPanelMap.put("FastClock", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("FastClock")); 
 
+/*
+* Hold until documented.
+***/
+        itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", editor);
+        itemPanel.init();
+//        _itemPanelMap.put("IndicatorTrack", itemPanel);
+        _tabPane.add(itemPanel, rbp.getString("IndicatorTrack"));
+
+        itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO",
+                                       PickListModel.turnoutPickModelInstance(), editor);
+        itemPanel.init();
+//        _itemPanelMap.put("IndicatorTO", itemPanel);
+        _tabPane.add(itemPanel, rbp.getString("IndicatorTO"));
+/***/
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         setLocation(10,10);               
@@ -416,9 +419,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         findIcon.add(searchItem);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.picker.PickTables", true);
-    }
-
-    public void reset() {
     }
 
     /**

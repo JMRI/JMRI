@@ -14,6 +14,7 @@ import javax.swing.*;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 
+import jmri.util.JmriJFrame;
 import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.MultiSensorIcon;
@@ -24,7 +25,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public MultiSensorItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame, itemType, model, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragSelection"));
     }
@@ -240,7 +241,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
             _selectionModel.getPositions();
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
@@ -254,7 +256,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
             }
             _selectionModel.clearSelection();
             ms.setUpDown(_upDown);
-            ms.setDisplayLevel(Editor.SENSORS);
+            ms.setLevel(Editor.SENSORS);
             return new PositionableDnD(ms, ms.getNameString());
         }
     }

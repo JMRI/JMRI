@@ -163,6 +163,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         setName(name);
         _debug = log.isDebugEnabled();
         _defaultToolTip = new ToolTip(null, 0, 0);
+        new jmri.jmrit.display.palette.ItemPalette();
         setVisible(false);
     }
     
@@ -878,10 +879,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         popup.add(new AbstractAction(rb.getString("Remove")) {
             Positionable comp;
             public void actionPerformed(ActionEvent e) { 
-                if (_selectionGroup!=null && _selectionGroup.contains(comp)) {
+            /*    if (_selectionGroup!=null && _selectionGroup.contains(comp)) {
                     _selectionGroup.remove(comp);
-                }
+                }  */
                 comp.remove();
+                removeSelections(comp);
             }
             AbstractAction init(Positionable pos) {
                 comp = pos;
@@ -2088,6 +2090,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     }
 
     protected boolean setTextAttributes(Positionable p, JPopupMenu popup) {
+        if (p.getPopupUtility()==null) {
+            return false;
+        }
         popup.add(new AbstractAction(rb.getString("TextAttributes")){
             Positionable comp;
             public void actionPerformed(java.awt.event.ActionEvent e) {
@@ -2173,6 +2178,24 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return false; 
         }
     }
+
+    protected void removeSelections(Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).remove();
+            }
+            _selectionGroup = null;
+        }
+    }
+
+    protected void setSelectionsScale(double s, Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).setScale(s);
+            }
+        }
+    }
+        
     protected boolean showAlignPopup(Positionable p) {
         if (_selectionGroup!=null && _selectionGroup.contains(p)) {
             return true;

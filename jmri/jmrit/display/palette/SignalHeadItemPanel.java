@@ -21,6 +21,7 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
+import jmri.util.JmriJFrame;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 
@@ -33,7 +34,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
     int _selectedRow = 0;
 
-    public SignalHeadItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public SignalHeadItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame, itemType, model, editor);
     }
 
@@ -107,7 +108,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     protected Hashtable<String, NamedIcon> getFilteredIconMap() {
         Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
         if (allIconsMap==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
@@ -164,7 +166,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             }            
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
@@ -178,7 +181,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
                 String key = e.nextElement();
                 sh.setIcon(ItemPalette.rbean.getString(key), iconMap.get(key));
             }
-            sh.setDisplayLevel(Editor.SIGNALS);
+            sh.setLevel(Editor.SIGNALS);
             return new PositionableDnD(sh, bean.getDisplayName());
         }
     }

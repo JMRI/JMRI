@@ -137,7 +137,7 @@ public class MemoryItemPanel extends TableItemPanel {
                     MemoryIcon m = new MemoryIcon("", _editor);
                     m.setMemory(bean.getDisplayName());
                     m.setSize(m.getPreferredSize().width, m.getPreferredSize().height);
-                    m.setDisplayLevel(Editor.MEMORIES);
+                    m.setLevel(Editor.MEMORIES);
                     return new PositionableDnD(m, bean.getDisplayName());
                 case READWRITE:
                     int numCols = 5;
@@ -153,13 +153,13 @@ public class MemoryItemPanel extends TableItemPanel {
                     MemoryInputIcon mi = new MemoryInputIcon(numCols, _editor);
                     mi.setMemory(bean.getDisplayName());
                     mi.setSize(mi.getPreferredSize().width, mi.getPreferredSize().height);
-                    mi.setDisplayLevel(Editor.MEMORIES);
+                    mi.setLevel(Editor.MEMORIES);
                     return new PositionableDnD(mi, bean.getDisplayName());
                 case SPINNER:
                     MemorySpinnerIcon ms = new MemorySpinnerIcon(_editor);
                     ms.setMemory(bean.getDisplayName());
                     ms.setSize(ms.getPreferredSize().width, ms.getPreferredSize().height);
-                    ms.setDisplayLevel(Editor.MEMORIES);
+                    ms.setLevel(Editor.MEMORIES);
                     return new PositionableDnD(ms, bean.getDisplayName());
             }
             return null;

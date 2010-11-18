@@ -91,11 +91,11 @@ public class SingleIconDialog extends IconDialog {
     protected boolean addNewIcon(String name) {
         if (log.isDebugEnabled()) log.debug("addNewIcon Action: iconMap.size()= "+_iconMap.size());
         if (name==null || name.length()==0) {
-            JOptionPane.showMessageDialog(_parent.getPaletteFrame(), ItemPalette.rbp.getString("NoIconName"),
+            JOptionPane.showMessageDialog(_parent._paletteFrame, ItemPalette.rbp.getString("NoIconName"),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
         } else if (_iconMap.get(name)!=null) {
-            JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
+            JOptionPane.showMessageDialog(_parent._paletteFrame,
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateIconName"), name),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;
@@ -114,7 +114,7 @@ public class SingleIconDialog extends IconDialog {
         if (log.isDebugEnabled()) log.debug("deleteNewIcon Action: iconMap.size()= "+_iconMap.size());
         String name = _familyName.getText();
         if (_iconMap.remove(name)==null) {
-            JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
+            JOptionPane.showMessageDialog(_parent._paletteFrame,
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("IconNotFound"), name),
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return false;

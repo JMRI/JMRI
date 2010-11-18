@@ -7,11 +7,12 @@ import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 
 import jmri.NamedBean;
+import jmri.util.JmriJFrame;
 import jmri.jmrit.display.ReporterIcon;
 
 public class ReporterItemPanel extends TableItemPanel {
 
-    public ReporterItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public ReporterItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame, itemType, model, editor);
     }
 
@@ -43,7 +44,7 @@ public class ReporterItemPanel extends TableItemPanel {
 
             ReporterIcon r = new ReporterIcon(_editor);
             r.setReporter(bean.getDisplayName());
-            r.setDisplayLevel(Editor.REPORTERS);
+            r.setLevel(Editor.REPORTERS);
             return new PositionableDnD(r, bean.getDisplayName());
         }
     }

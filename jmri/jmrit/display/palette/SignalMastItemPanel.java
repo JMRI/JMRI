@@ -6,12 +6,13 @@ import javax.swing.JTable;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
 
+import jmri.util.JmriJFrame;
 import jmri.NamedBean;
 import jmri.jmrit.display.SignalMastIcon;
 
 public class SignalMastItemPanel extends TableItemPanel {
 
-    public SignalMastItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public SignalMastItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame, itemType, model, editor);
     }
 
@@ -47,7 +48,7 @@ public class SignalMastItemPanel extends TableItemPanel {
 
             SignalMastIcon sm  = new SignalMastIcon(_editor);
             sm.setSignalMast(bean.getDisplayName());
-            sm.setDisplayLevel(Editor.SIGNALS);
+            sm.setLevel(Editor.SIGNALS);
             return new PositionableDnD(sm, bean.getDisplayName());
         }
     }

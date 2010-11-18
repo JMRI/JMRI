@@ -12,6 +12,7 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 //import java.awt.dnd.*;
 import java.io.IOException;
 
+import jmri.util.JmriJFrame;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
@@ -37,7 +38,7 @@ public class ClockItemPanel extends ItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public ClockItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public ClockItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
@@ -122,7 +123,7 @@ public class ClockItemPanel extends ItemPanel {
             AnalogClock2Display c = new AnalogClock2Display(_editor);
             c.setOpaque(false);
             c.update();
-            c.setDisplayLevel(Editor.CLOCK);
+            c.setLevel(Editor.CLOCK);
             return c;
         }
     }

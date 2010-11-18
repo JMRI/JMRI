@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Bob Jacobsen copyright (C) 2009
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class PositionableJPanel extends JPanel implements Positionable, MouseListener, MouseMotionListener {
 
@@ -85,6 +85,12 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         }
     }
 
+    /**
+    * Delayed setDisplayLevel for DnD
+    */
+    public void setLevel(int l) {
+    	_displayLevel = l;
+    }
     public void setDisplayLevel(int l) {
     	int oldDisplayLevel = _displayLevel;
     	_displayLevel = l;
@@ -172,6 +178,9 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
     IconAdder _iconEditor;
     public boolean setEditIconMenu(JPopupMenu popup) {
         return false;
+    }
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        return setEditIconMenu(popup);
     }
 
     /**

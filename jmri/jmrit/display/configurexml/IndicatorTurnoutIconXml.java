@@ -19,7 +19,7 @@ import java.util.List;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -56,6 +56,11 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         if (s!=null) {
             element.addContent(storeBean("errorsensor", s));
         }
+
+        Element el = new Element("showTrainName");
+        String show = "no";
+        if (p.showTrain()) { show = "yes"; }
+        el.addContent(show);
 
         Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = p.getIconMaps();
         Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = iconMaps.entrySet().iterator();
@@ -116,6 +121,12 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         name = element.getChild("errorsensor");
         if (name!=null) {
             l.setErrSensor(name.getText());
+        }
+        
+        l.setShowTrain(false);
+        name = element.getChild("showTrainName");
+        if (name!=null) {
+            if ("yes".equals(name.getText())) l.setShowTrain(true);
         }
         
         Element elem = element.getChild("iconmaps");

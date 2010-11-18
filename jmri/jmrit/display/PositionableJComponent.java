@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -86,6 +86,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
         }
     }
 
+    /**
+    * Delayed setDisplayLevel for DnD
+    */
+    public void setLevel(int l) {
+    	_displayLevel = l;
+    }
     public void setDisplayLevel(int l) {
     	int oldDisplayLevel = _displayLevel;
     	_displayLevel = l;
@@ -163,6 +169,9 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return false;
     }
     public boolean setTextEditMenu(JPopupMenu popup) {
+        return false;
+    }
+    public boolean setEditItemMenu(JPopupMenu popup) {
         return false;
     }
     public boolean showPopUp(JPopupMenu popup) {

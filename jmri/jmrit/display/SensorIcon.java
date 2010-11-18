@@ -2,29 +2,32 @@ package jmri.jmrit.display;
 
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.util.NamedBeanHandle;
+import jmri.jmrit.display.palette.TableItemPanel;
+import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.catalog.NamedIcon;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
+import java.awt.Color;
+
+import java.util.Hashtable;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
 import javax.swing.JCheckBoxMenuItem;
-//From layout editor
-
 import javax.swing.JMenu;
 import javax.swing.ButtonGroup;
 import javax.swing.JRadioButtonMenuItem;
 //import javax.swing.JLabel;
-import java.awt.Color;
-import jmri.util.NamedBeanHandle;
 
 /**
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.73 $
+ * @version $Revision: 1.74 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -74,7 +77,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     public Positionable finishClone(Positionable p) {
         SensorIcon pos = (SensorIcon)p;
-        pos.setSensor(getNameString());
+        pos.setSensor(getNamedSensor().getName());
         pos.setActiveIcon(cloneIcon(getActiveIcon(), pos));
         pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
         pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
@@ -389,6 +392,49 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         updateSize();
     }
 
+    jmri.util.JmriJFrame _paletteFrame;
+    TableItemPanel _itemPanel;
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
+        popup.add(new AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+    
+    protected void editItem() {
+        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
+        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor",
+                                       PickListModel.sensorPickModelInstance(), _editor);
+        _itemPanel.init( new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        });
+        _itemPanel.setSelection(getSensor());
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        setSensor(_itemPanel.getTableSelection().getSystemName());
+        Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
+        setInactiveIcon(iconMap.get("SensorStateInactive"));
+        setActiveIcon(iconMap.get("SensorStateActive"));
+        setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
+        setUnknownIcon(iconMap.get("BeanStateUnknown"));
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel = null;
+        invalidate();
+    }
+
+
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
         popup.add(new AbstractAction(txt) {
@@ -398,7 +444,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             });
         return true;
     }
-
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
@@ -406,7 +451,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditor.setIcon(2, "SensorStateInactive", getInactiveIcon());
         _iconEditor.setIcon(0, "BeanStateInconsistent", getInconsistentIcon());
         _iconEditor.setIcon(1, "BeanStateUnknown", getUnknownIcon());
-//        _iconEditor.setDefaultIcons();
         _iconEditor.makeIconPanel();
 
         ActionListener addIconAction = new ActionListener() {
@@ -428,6 +472,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditor = null;
         invalidate();
     }
+
     // Original text is used when changing between icon and text, this allows for a undo when reverting back. 
     String originalText;
     public void setOriginalText(String s) {

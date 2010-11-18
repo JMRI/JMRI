@@ -23,7 +23,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.104 $
+ * @version $Revision: 1.105 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -109,9 +109,14 @@ public class PositionableLabel extends JLabel implements Positionable {
             setVisible(false);
         }
     }
+    /**
+    * Delayed setDisplayLevel for DnD
+    */
+    public void setLevel(int l) {
+    	_displayLevel = l;
+    }
     public void setDisplayLevel(int l) {
     	int oldDisplayLevel = _displayLevel;
-    	_displayLevel = l;
     	if (oldDisplayLevel!=l){
     		if (debug) log.debug("Changing label display level from "+oldDisplayLevel+" to "+_displayLevel);
     		_editor.displayLevelChange(this);
@@ -329,6 +334,10 @@ public class PositionableLabel extends JLabel implements Positionable {
         setIcon(_namedIcon);
         updateSize();
         repaint();
+    }
+
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        return setEditIconMenu(popup);
     }
 
     JFrame _iconEditorFrame;

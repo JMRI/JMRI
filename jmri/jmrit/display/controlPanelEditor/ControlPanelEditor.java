@@ -161,7 +161,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     if (_itemPalette==null) {
                         _itemPalette = new jmri.jmrit.display.palette.ItemPalette("Item Pallet", editor);
                     } else {
-                        _itemPalette.reset();
                         _itemPalette.setVisible(true);
                     }
                 }
@@ -661,28 +660,29 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 }
             }
             if (_pastePending) {
-                if (_selectionGroup!=null) {
-                    for (int i=0; i<_selectionGroup.size(); i++) {
-                        putItem(_selectionGroup.get(i));
-                        if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
-                    }
-                }
-                _pastePending = false;
+                pasteItems();
             }
         }
         _currentSelection = null;
         _selectRect = null;
 
         // if not sending MouseClicked, do it here
-        if (!_dragging && jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
+        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
             mouseClicked(event);
 
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
 
-
+    long _clickTime;
     public void mouseClicked(MouseEvent event) {
+        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent()) {
+            long time = System.currentTimeMillis();
+            if (time-_clickTime < 20) {
+                return;
+            }
+            _clickTime = time;
+        }
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
@@ -811,12 +811,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     protected void copyItem(Positionable p) {
         if (_debug) log.debug("Enter copyItem: _selectionGroup "+(_selectionGroup!=null ?
                                                   "size= "+_selectionGroup.size() : "null"));
+        if (_pastePending) {
+            pasteItems();
+        }
         if (_selectionGroup!=null && !_selectionGroup.contains(p)) {
             _selectionGroup = null;
         }
         if (_selectionGroup==null) {
             _selectionGroup = new ArrayList <Positionable>();
             _selectionGroup.add(p);
+        } else if (_pastePending) {
+            pasteItems();
         }
         ArrayList <Positionable> selectionGroup = new ArrayList <Positionable>();
         for (int i=0; i<_selectionGroup.size(); i++) {
@@ -827,6 +832,16 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         _selectionGroup = selectionGroup;
         _pastePending = true;
 //        if (_debug) log.debug("Exit copyItem: _selectionGroup.size()= "+_selectionGroup.size());
+    }
+
+    void pasteItems() {
+        if (_selectionGroup!=null) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                putItem(_selectionGroup.get(i));
+                if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
+            }
+        }
+        _pastePending = false;
     }
         
     /**
@@ -883,7 +898,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 popup.addSeparator();
                 popupSet = false;
             }
-            popupSet = p.setEditIconMenu(popup);        
+            popupSet = p.setEditItemMenu(popup);        
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
@@ -959,6 +974,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             if (tr.isDataFlavorSupported(_positionableDataFlavor)) {
                 Positionable item = (Positionable)tr.getTransferData(_positionableDataFlavor);
                 item.setLocation(pt.x, pt.y);
+                // now set display level in the pane.
+                item.setDisplayLevel(item.getDisplayLevel());
                 putItem(item);
                 item.updateSize();
                 //if (log.isDebugEnabled()) log.debug("Drop positionable "+item.getNameString()+

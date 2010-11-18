@@ -192,7 +192,7 @@ public class IconDialog extends ItemDialog {
                     //check text
                     String family = _familyName.getText();
                     if (family==null || family.length()==0) {
-                        JOptionPane.showMessageDialog(_parent.getPaletteFrame(), 
+                        JOptionPane.showMessageDialog(_parent._paletteFrame, 
                                 ItemPalette.rbp.getString("EnterFamilyName"), 
                                 ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                         return;
@@ -202,7 +202,7 @@ public class IconDialog extends ItemDialog {
                         Iterator <String> it = families.keySet().iterator();
                         while (it.hasNext()) {
                            if (family.equals(it.next())) {
-                               JOptionPane.showMessageDialog(_parent.getPaletteFrame(),
+                               JOptionPane.showMessageDialog(_parent._paletteFrame,
                                     java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
                                     new Object[] { family, getType() }), 
                                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
@@ -330,7 +330,7 @@ public class IconDialog extends ItemDialog {
            int nextWidth = icon.getIconWidth();
            int nextHeight = icon.getIconHeight();
            if ((lastWidth>0 && lastWidth != nextWidth) || (lastHeight>0 && lastHeight != nextHeight)) {
-               JOptionPane.showMessageDialog(_parent.getPaletteFrame(), 
+               JOptionPane.showMessageDialog(_parent._paletteFrame, 
                                              ItemPalette.rb.getString("IconSizeDiff"), ItemPalette.rb.getString("warnTitle"),
                                              JOptionPane.WARNING_MESSAGE);
                return;

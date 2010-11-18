@@ -22,6 +22,7 @@ import jmri.NamedBean;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.*;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.JmriJFrame;
 
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
@@ -43,7 +44,7 @@ public class TableItemPanel extends FamilyItemPanel {
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public TableItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
+    public TableItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
         super(parentFrame,  itemType, editor);
         _model = model;
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
@@ -66,6 +67,36 @@ public class TableItemPanel extends FamilyItemPanel {
         if (log.isDebugEnabled()) log.debug("init done for family "+_family);
     }
 
+    /**
+    * Init for update of existing indicator turnout
+    * _bottom3Panel has "Update Panel" button put into _bottom1Panel
+    */
+    public void init(ActionListener doneAction) {
+        _bottom1Panel = makeBottom1Panel();
+        _bottom2Panel = makeBottom2Panel();
+        _bottom1Panel = makeBottom3Panel(doneAction);
+        initTablePanel(_model, _editor);      // NORTH Panel
+        initIconFamiliesPanel();
+        _table.setTransferHandler(null);        // no DnD
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(_bottom1Panel);
+        bottomPanel.add(_bottom2Panel);
+        add(bottomPanel);
+        if (log.isDebugEnabled()) log.debug("init done for update family "+_family);
+    }
+
+    protected JPanel makeBottom3Panel(ActionListener doneAction) {
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(_bottom1Panel);
+        JPanel updatePanel = new JPanel();
+        JButton doneButton = new JButton(ItemPalette.rbp.getString("updateButton"));
+        doneButton.addActionListener(doneAction);
+        updatePanel.add(doneButton);
+        bottomPanel.add(updatePanel);
+        return bottomPanel;
+    }
+    
     /**
     *  NORTH Panel
     */
@@ -156,6 +187,24 @@ public class TableItemPanel extends FamilyItemPanel {
         return null;
     }
 
+    public void setSelection(NamedBean bean) {
+        int row = _model.getIndexOf(bean);
+        _table.addRowSelectionInterval(row, row);
+        _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+    }
+
+    public Hashtable <String, NamedIcon> getIconMap() {
+
+        Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
+        if (iconMap==null) {
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return null;
+        }
+        return iconMap;
+    }
+
     /**
     *  Return from icon dialog
     */
@@ -208,7 +257,8 @@ public class TableItemPanel extends FamilyItemPanel {
             }            
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
@@ -223,7 +273,7 @@ public class TableItemPanel extends FamilyItemPanel {
                     String key = e.nextElement();
                     t.setIcon(key, iconMap.get(key));
                 }
-                t.setDisplayLevel(Editor.TURNOUTS);
+                t.setLevel(Editor.TURNOUTS);
                 return new PositionableDnD(t, bean.getDisplayName());
             } else if (_itemType.equals("Sensor")) {
                 SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
@@ -233,7 +283,7 @@ public class TableItemPanel extends FamilyItemPanel {
                 s.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
                 s.setUnknownIcon(iconMap.get("BeanStateUnknown"));
                 s.setSensor(bean.getDisplayName());
-                s.setDisplayLevel(Editor.SENSORS);
+                s.setLevel(Editor.SENSORS);
                 return new PositionableDnD(s, bean.getDisplayName());
             } else if (_itemType.equals("Light")) {
                 LightIcon l = new LightIcon(_editor);
@@ -242,7 +292,7 @@ public class TableItemPanel extends FamilyItemPanel {
                 l.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
                 l.setUnknownIcon(iconMap.get("BeanStateUnknown"));
                 l.setLight((jmri.Light)bean);
-                l.setDisplayLevel(Editor.LIGHTS);
+                l.setLevel(Editor.LIGHTS);
                 return new PositionableDnD(l, bean.getDisplayName());
            }
             return null;

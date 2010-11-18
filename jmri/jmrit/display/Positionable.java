@@ -30,7 +30,7 @@ import javax.swing.JPopupMenu;
  * @see PositionableLabel
  * @author Bob Jacobsen Copyright (c) 2002
  * @author Pete Cressman Copyright (c) 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public interface Positionable extends Cloneable  {
     public void setPositionable(boolean enabled);
@@ -93,6 +93,7 @@ public interface Positionable extends Cloneable  {
     public boolean setRotateMenu(JPopupMenu popup);
     public boolean setScaleMenu(JPopupMenu popup);
     public boolean setEditIconMenu(JPopupMenu popup);
+    public boolean setEditItemMenu(JPopupMenu popup);
     public boolean setDisableControlMenu(JPopupMenu popup);
     public boolean setTextEditMenu(JPopupMenu popup);
 

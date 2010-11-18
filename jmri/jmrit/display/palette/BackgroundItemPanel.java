@@ -16,6 +16,7 @@ import java.io.IOException;
 import javax.swing.event.ChangeListener; 
 import javax.swing.event.ChangeEvent; 
 
+import jmri.util.JmriJFrame;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,7 @@ public class BackgroundItemPanel extends IconItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public BackgroundItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public BackgroundItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
@@ -159,12 +160,12 @@ public class BackgroundItemPanel extends IconItemPanel {
             b.setPopupUtility(null);        // no text
             b.setPositionable(false);
             b.setShowTooltip(false);
-            b.setDisplayLevel(Editor.BKG);
+            b.setLevel(Editor.BKG);
             return b;
         }
     }
 
-    class BackgroudCatalogPanel extends CatalogPanel {
+    static class BackgroudCatalogPanel extends CatalogPanel {
 
         /**
         *  Display the icons in the preview panel

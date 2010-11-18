@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
+import jmri.util.JmriJFrame;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.RpsPositionIcon;
@@ -35,7 +36,7 @@ public class RPSItemPanel extends FamilyItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public RPSItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public RPSItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
@@ -112,7 +113,7 @@ public class RPSItemPanel extends FamilyItemPanel {
             _bottom2Panel.setVisible(false);
         } else {
             //log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+ " families.");
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             _bottom1Panel.setVisible(false);
             _bottom2Panel.setVisible(true);
@@ -136,7 +137,7 @@ public class RPSItemPanel extends FamilyItemPanel {
         if (iconMap==null) {
             if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
             Thread.dumpStack();
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -156,59 +157,6 @@ public class RPSItemPanel extends FamilyItemPanel {
         }
     }
 
-    /**
-    *  SOUTH Panel
-    *
-    protected void makeBottom1Panel() {
-        _bottomPanel = new JPanel();
-        _bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-        _showIconsButton = new JButton(ItemPalette.rbp.getString("ShowIcons"));
-        _showIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (_iconPanel.isVisible()) {
-                        hideIcons();
-                    } else {
-                        _iconPanel.setVisible(true);
-                        _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
-                    }
-                    _paletteFrame.pack();
-                }
-        });
-        _showIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipShowIcons"));
-        _bottomPanel.add(_showIconsButton);
-
-        JButton editIconsButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
-        editIconsButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    openEditDialog();
-                }
-        });
-        editIconsButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
-        _bottomPanel.add(editIconsButton);
-        add(_bottomPanel);
-    }
-    
-    protected void hideIcons() {
-        _iconPanel.setVisible(false);
-        _showIconsButton.setText(ItemPalette.rbp.getString("ShowIcons"));
-    }
-
-    protected void removeIconFamiliesPanel() {
-        remove(_iconFamilyPanel);
-    }
-
-    protected void setFamily(String family) {
-        _family = family;
-        if (log.isDebugEnabled()) log.debug("setFamily: for type \""+_itemType+"\", family \""+family+"\"");
-        boolean visible = _iconPanel.isVisible();
-        _iconFamilyPanel.remove(_iconPanel);
-        makeIconPanel();        // need to have family identified  before calling
-        _iconPanel.setVisible(visible);
-        _iconFamilyPanel.add(_iconPanel, 0);
-        hideIcons();
-        _paletteFrame.pack();
-    }
-*/
     public class DragJRadioButton extends JRadioButton implements DragGestureListener, DragSourceListener, Transferable {    
 
         DataFlavor dataFlavor;
@@ -261,7 +209,7 @@ public class RPSItemPanel extends FamilyItemPanel {
             }
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
@@ -269,7 +217,7 @@ public class RPSItemPanel extends FamilyItemPanel {
             r.setActiveIcon(iconMap.get("active"));
             r.setErrorIcon(iconMap.get("error"));
             r.setSize(r.getPreferredSize().width, r.getPreferredSize().height);
-            r.setDisplayLevel(Editor.SENSORS);
+            r.setLevel(Editor.SENSORS);
             return r;
         }
     }

@@ -2,6 +2,7 @@
 package jmri.jmrit.display.palette;
 
 import java.util.Hashtable;
+import jmri.util.JmriJFrame;
 
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -15,7 +16,7 @@ import jmri.jmrit.display.Editor;
 */
 public abstract class ItemPanel extends JPanel {
 
-    protected ItemPalette  _paletteFrame;
+    protected JmriJFrame  _paletteFrame;
     protected String    _itemType;
     protected String    _family;
     protected Editor    _editor;
@@ -24,7 +25,7 @@ public abstract class ItemPanel extends JPanel {
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public ItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
+    public ItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         _paletteFrame = parentFrame;
         _itemType = itemType;
         _editor = editor;
@@ -63,7 +64,8 @@ public abstract class ItemPanel extends JPanel {
     protected Hashtable<String, NamedIcon> getFilteredIconMap() {
         Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         if (map==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+            JOptionPane.showMessageDialog(_paletteFrame, 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
@@ -80,10 +82,6 @@ public abstract class ItemPanel extends JPanel {
         } else {
             new SingleIconDialog(_itemType, _family, this);
         }
-    }
-
-    protected ItemPalette getPaletteFrame() {
-       return _paletteFrame;
     }
 
     /******** Default family icon names ********/

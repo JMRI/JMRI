@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -32,7 +32,7 @@ public class SensorIconXml extends PositionableLabelXml {
         if (!p.isActive()) return null;  // if flagged as inactive, don't store
 
         Element element = new Element("sensoricon");
-        element.setAttribute("sensor", p.getNameString());
+        element.setAttribute("sensor", p.getNamedSensor().getName());
         storeCommonAttributes(p, element);
         element.setAttribute("momentary", p.getMomentary()?"true":"false");
         element.setAttribute("icon", p.isIcon()?"yes":"no");

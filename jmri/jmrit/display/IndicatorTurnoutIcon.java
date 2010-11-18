@@ -4,20 +4,21 @@ import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.Turnout;
 
+import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.display.palette.IndicatorTOItemPanel;
+
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import java.util.Hashtable;
 import jmri.util.NamedBeanHandle;
 import java.util.Iterator;
 import java.util.Map.Entry;
-/*
-import jmri.Turnout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+//import javax.swing.JPopupMenu;
 
-import javax.swing.JPopupMenu;
-*/
 /**
  * An icon to display a status and state of a color coded turnout.<P>
  * This responds to only KnownState, leaving CommandedState to some other
@@ -35,7 +36,7 @@ import javax.swing.JPopupMenu;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -49,14 +50,24 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     private String _status;
     private String _train;
+    private boolean _showTrain; // this track should display _train when occupied
 
     public IndicatorTurnoutIcon(Editor editor) {
         super(editor);
         log.debug("IndicatorTurnoutIcon ctor: isIcon()= "+isIcon()+", isText()= "+isText());
         _status = "DontUseTrack";
-        _text = true;
-        _icon = true;
+        initMaps();
 
+    }
+
+    void initMaps() {
+        _iconMaps = new Hashtable<String, Hashtable<Integer, NamedIcon>>();
+        _iconMaps.put("ClearTrack", new Hashtable <Integer, NamedIcon>());
+        _iconMaps.put("OccupiedTrack", new Hashtable <Integer, NamedIcon>());
+        _iconMaps.put("PositionTrack", new Hashtable <Integer, NamedIcon>());
+        _iconMaps.put("AllocatedTrack", new Hashtable <Integer, NamedIcon>());
+        _iconMaps.put("DontUseTrack", new Hashtable <Integer, NamedIcon>());
+        _iconMaps.put("ErrorTrack", new Hashtable <Integer, NamedIcon>());
     }
 
     public Positionable deepClone() {
@@ -66,14 +77,20 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     public Positionable finishClone(Positionable p) {
         IndicatorTurnoutIcon pos = (IndicatorTurnoutIcon)p;
-        pos.setOccSensor(namedOccSensor);
-        if (namedErrSensor!=null) {
-            pos.setErrSensor(namedErrSensor);
-        }
+        pos.setOccBlockHandle(namedOccBlock);
+        pos.setOccSensorHandle(namedOccSensor);
+        pos.setErrSensorHandle(namedErrSensor);
+        pos.initMaps();
         Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
         while (it.hasNext()) {
             Entry<String, Hashtable<Integer, NamedIcon>> entry = it.next();
-            pos._iconMaps.put(entry.getKey(), cloneMap(entry.getValue(), pos));
+            Hashtable <Integer, NamedIcon> clone = pos._iconMaps.get(entry.getKey());
+            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<Integer, NamedIcon> ent = iter.next();
+//                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
+                clone.put(ent.getKey(), cloneIcon(ent.getValue(), pos));
+            }
         }
         return super.finishClone(pos);
     }
@@ -87,31 +104,31 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
      * @param pName Used as a system/user name to lookup the sensor object
      */
      public void setOccSensor(String pName) {
+         if (pName==null || pName.trim().length()==0) {
+             setOccSensorHandle(null);
+             return;
+         }
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setOccSensor(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setOccSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
              } else {
-                 log.error("Block Sensor '"+pName+"' not available, icon won't see changes");
+                 log.error("Occupancy Sensor '"+pName+"' not available, icon won't see changes");
              }
          } else {
              log.error("No SensorManager for this protocol, block icons won't see changes");
          }
      }
 
-    public void setOccSensor(NamedBeanHandle<Sensor> sen) {
+    public void setOccSensorHandle(NamedBeanHandle<Sensor> sen) {
         if (namedOccSensor != null) {
             getOccSensor().removePropertyChangeListener(this);
         }
         namedOccSensor = sen;
         if (namedOccSensor != null) {
-            _iconMaps = new Hashtable<String, Hashtable<Integer, NamedIcon>>();
-            _iconMaps.put("ClearTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("OccupiedTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("PositionTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("AllocatedTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("DontUseTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("ErrorTrack", new Hashtable <Integer, NamedIcon>());
+            if (_iconMaps==null) {
+                initMaps();
+            }
             getOccSensor().addPropertyChangeListener(this);
         } 
     }
@@ -129,30 +146,26 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
      * @param pName Used as a system/user name to lookup the OBlock object
      */
      public void setOccBlock(String pName) {
-         if (InstanceManager.sensorManagerInstance()!=null) {
-             OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
-             if (block != null) {
-                 setOccBlock(new NamedBeanHandle<OBlock>(pName, block));                
-             } else {
-                 log.error("Detection Sensor '"+pName+"' not available, icon won't see changes");
-             }
+         if (pName==null || pName.trim().length()==0) {
+             setOccBlockHandle(null);
+             return;
+         }
+         OBlock block = InstanceManager.oBlockManagerInstance().getOBlock(pName);
+         if (block != null) {
+             setOccBlockHandle(new NamedBeanHandle<OBlock>(pName, block));                
          } else {
-             log.error("No SensorManager for this protocol, block icons won't see changes");
+             log.error("Detection OBlock '"+pName+"' not available, icon won't see changes");
          }
      }   
-    public void setOccBlock(NamedBeanHandle<OBlock> block) {
+    public void setOccBlockHandle(NamedBeanHandle<OBlock> block) {
         if (namedOccBlock != null) {
             getOccBlock().removePropertyChangeListener(this);
         }
         namedOccBlock = block;
         if (namedOccBlock != null) {
-            _iconMaps = new Hashtable<String, Hashtable<Integer, NamedIcon>> ();
-            _iconMaps.put("ClearTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("OccupiedTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("PositionTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("AllocatedTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("DontUseTrack", new Hashtable <Integer, NamedIcon>());
-            _iconMaps.put("ErrorTrack", new Hashtable <Integer, NamedIcon>());
+            if (_iconMaps==null) {
+                initMaps();
+            }
             getOccBlock().addPropertyChangeListener(this);
         } 
     }
@@ -170,10 +183,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
      * @param pName Used as a system/user name to lookup the sensor object
      */
      public void setErrSensor(String pName) {
+         if (pName==null || pName.trim().length()==0) {
+             setErrSensorHandle(null);
+             return;
+         }
          if (InstanceManager.sensorManagerInstance()!=null) {
              Sensor sensor = InstanceManager.sensorManagerInstance().provideSensor(pName);
              if (sensor != null) {
-                 setErrSensor(new NamedBeanHandle<Sensor>(pName, sensor));                
+                 setErrSensorHandle(new NamedBeanHandle<Sensor>(pName, sensor));                
              } else {
                  log.error("Error Sensor '"+pName+"' not available, icon won't see changes");
              }
@@ -182,12 +199,15 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
          }
      }
 
-    public void setErrSensor(NamedBeanHandle<Sensor> sen) {
+    public void setErrSensorHandle(NamedBeanHandle<Sensor> sen) {
         if (namedErrSensor != null) {
             getErrSensor().removePropertyChangeListener(this);
         }
         namedErrSensor = sen;
         if (namedErrSensor != null) {
+            if (_iconMaps==null) {
+                initMaps();
+            }
             getErrSensor().addPropertyChangeListener(this);
         }
     }
@@ -199,6 +219,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         return namedErrSensor.getBean(); 
     }    
     public NamedBeanHandle <Sensor> getNamedErrSensor() { return namedErrSensor; }
+
+    public void setShowTrain(boolean set) {
+        _showTrain = set;
+    }
+    public boolean showTrain() {
+        return _showTrain;
+    }
 
     /**
     * Place icon by its localized bean state name
@@ -313,7 +340,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             if (_status!=null && _iconMaps!=null) {
                 log.debug(getNameString()+" displayState "+_state2nameMap.get(state)+", status= "+_status+
                           ", isIcon()= "+isIcon());
-                if ("PositionTrack".equals(_status)) {
+                if (_showTrain && "PositionTrack".equals(_status)) {
                     super.setText(_train);
                 } else {
                     super.setText("");
@@ -322,7 +349,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 if (icon!=null) {
                     super.setIcon(icon);
                 } else {
-                    super.displayState(state);
+                    log.error("No icon for state "+_state2nameMap.get(state)+", status= "+_status);
                 }
             }
         }
@@ -378,14 +405,77 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                     } else {
                         _status = "ErrorTrack";
                     }
-                } else if (namedErrSensor!=null) {
+                }
+                if (evt.getSource().equals(getErrSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "ErrorTrack";
+                    } else {
+                        _status = "DontUseTrack";
                     }
                 }
         }
         displayState(turnoutState());
 	}
+
+    IndicatorTOItemPanel _TOPanel;
+    protected void editItem() {
+        if (log.isDebugEnabled()) log.debug("edit: ");
+        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
+        _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO",
+                                       PickListModel.turnoutPickModelInstance(), _editor);
+        _TOPanel.init( new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        });
+        _TOPanel.setSelection(getTurnout());
+        if (namedErrSensor!=null) {
+            _TOPanel.setErrSensor(namedErrSensor.getName());
+        }
+        if (namedOccSensor!=null) {
+            _TOPanel.setOccDetector(namedOccSensor.getName());
+        }
+        if (namedOccBlock!=null) {
+            _TOPanel.setOccDetector(namedOccBlock.getName());
+        }
+        _TOPanel.setShowTrainName(_showTrain);
+        _paletteFrame.add(_TOPanel);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
+    }
+
+    void updateItem() {
+        setTurnout(_TOPanel.getTableSelection().getSystemName());
+        setErrSensor(_TOPanel.getErrSensor());
+        setOccSensor(_TOPanel.getOccSensor());
+        setOccBlock(_TOPanel.getOccBlock());
+        _showTrain = _TOPanel.getShowTrainName();
+        Hashtable<String, Hashtable<String, NamedIcon>> iconMap = _TOPanel.getIconMaps();
+
+        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+            String status = entry.getKey();
+//            Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMaps.get(status), null);
+            Hashtable <Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
+            Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<String, NamedIcon> ent = iter.next();
+                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
+                NamedIcon newIcon = ent.getValue();
+                NamedIcon oldIcon = oldMap.get(_name2stateMap.get(ent.getKey()));
+                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                newIcon.setRotation(oldIcon.getRotation(), this);
+                setIcon(status, ent.getKey(), newIcon);
+            }
+        }
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _TOPanel = null;
+        invalidate();
+    }
 
     public void dispose() {
         if (namedOccSensor != null) {

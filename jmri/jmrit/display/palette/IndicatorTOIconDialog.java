@@ -243,7 +243,7 @@ public class IndicatorTOIconDialog extends ItemDialog {
            int nextWidth = icon.getIconWidth();
            int nextHeight = icon.getIconHeight();
            if ((lastWidth>0 && lastWidth != nextWidth) || (lastHeight>0 && lastHeight != nextHeight)) {
-               JOptionPane.showMessageDialog(_parent.getPaletteFrame(), 
+               JOptionPane.showMessageDialog(_parent._paletteFrame, 
                                              ItemPalette.rb.getString("IconSizeDiff"), ItemPalette.rb.getString("warnTitle"),
                                              JOptionPane.WARNING_MESSAGE);
                return;
