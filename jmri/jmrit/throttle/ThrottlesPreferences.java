@@ -50,6 +50,7 @@ public class ThrottlesPreferences {
     
     public void load(org.jdom.Element e)
     {
+    	if (e==null) return;
     	org.jdom.Attribute a;
     	org.jdom.Attribute b;
     	if ((a = e.getAttribute("isUsingExThrottle")) != null )  setUseExThrottle( a.getValue().compareTo("true") == 0 );
