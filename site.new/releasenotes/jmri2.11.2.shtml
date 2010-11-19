@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.18 2010-11-16 12:45:33 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.19 2010-11-19 21:04:02 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -156,6 +156,7 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>New route feature. User can now specify additional wait time in a route.  This allows you to adjust a train's manifest arrival times to your liking.
 <li>New route feature. You can now set a departure time anywhere in a route.  Nice feature for passenger trains!
 <li>New route feature. You can now add an optional comment to each stop in a route.  Comments will show up in your manifests.
+<li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
 <li>New build configurations, "Settings->Tools->Options".  You can now allow local moves between sidings, yards, and interchanges.
 <li>You can now configure if staging tracks are restrictive.  Default is restrictive.  Option is under Settings->Tools->Options.
 <li>New operations panel feature, you can now move train anywhere in the route via the train icon popup menu. Select Route in the popup menu, then the next location desired.
@@ -166,8 +167,8 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>A train's total weight calculation is now based on whether the cars are loaded or empty.  
 <li>Users can now define a car as being a passenger car.   A passenger car's weight doesn't change with load.  Passenger cars are placed towards the rear of a train.
 <li>Add some additional fonts for operations.  
-<li>User can now decide to print location comments on the train's manifests.  See Trains-&gt;Tools-&gt;Print Options.
 <li>User can now set column widths for the Cars table.
+<li>Scheduling has been improved, now when a track can not accept a car because there's no room, the program will hold the car at its current location until there's space available.
 </ul>
 
 <p>
