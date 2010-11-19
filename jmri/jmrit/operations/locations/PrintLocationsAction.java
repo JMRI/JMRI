@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -366,6 +366,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 			}
 		}
+		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
 		// does this location accept all types?
 		if (typeCount == cTypes.length + eTypes.length )
 			buf = new StringBuffer("\t\t" + rb.getString("LocationAcceptsAllTypes"));
@@ -401,6 +402,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 			}
 		}
+		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
 		// does this track accept all types?
 		if (typeCount == cTypes.length + eTypes.length )
 			buf = new StringBuffer("\t\t" + rb.getString("TrackAcceptsAllTypes"));
@@ -425,6 +427,7 @@ public class PrintLocationsAction  extends AbstractAction {
 				}
 			}
 		}
+		if (buf.length() > 2) buf.setLength(buf.length()-2);	// remove trailing separators
 		buf.append(newLine);
 		return buf.toString();
 	}
