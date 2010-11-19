@@ -17,7 +17,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 
 
 /**
- * Action to print a summary of a train
+ * Action to print a summary of a route.
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintRouteAction  extends AbstractAction {
 	
@@ -70,28 +70,53 @@ public class PrintRouteAction  extends AbstractAction {
         	+ "  " + rb.getString("Pickups")
         	+ "\t" + rb.getString("Drops")
         	+ "\t" + rb.getString("Length")
+        	+ "\t" + rb.getString("Wait")
         	+ "\t" + rb.getString("Grade")
         	+ "\t" + rb.getString("X")
-        	+ "\t" + rb.getString("Y")
+        	+ "    " + rb.getString("Y")
         	+ newLine;
-        	writer.write(s, 0, s.length());
+        	writer.write(s);
     		List<String> locations = route.getLocationsBySequenceList();
     		for (int i=0; i<locations.size(); i++){
     			RouteLocation rl = route.getLocationById(locations.get(i)); 
     			String name = rl.getName();
     			name = truncate(name);
+    			String pad = " ";
+    			if (rl.getTrainIconX() < 10)
+    				pad = "    ";
+    			else if (rl.getTrainIconX() < 100)
+    				pad = "   ";
+    			else if (rl.getTrainIconX() < 1000)
+    				pad = "  ";
     			s = name 
     			+ "\t" + rl.getTrainDirectionString() 
     			+ "\t" + rl.getMaxCarMoves()
     			+ "\t" + (rl.canPickup()?rb.getString("yes"):rb.getString("no"))
     			+ "\t" + (rl.canDrop()?rb.getString("yes"):rb.getString("no"))
     			+ "\t" + rl.getMaxTrainLength()
+    			+ "\t" + rl.getWait()
     			+ "\t" + rl.getGrade()
     			+ "\t" + rl.getTrainIconX()
-    			+ "\t" + rl.getTrainIconY()
+    			+ pad + rl.getTrainIconY()
     			+ newLine;
-    			writer.write(s, 0, s.length());		
+    			writer.write(s);		
     		}
+    		s = newLine + rb.getString("Location") 
+        	+ "\t" + rb.getString("DepartTime") 
+        	+ "\t" + rb.getString("Comment")
+        	+ newLine;
+    		writer.write(s);
+    		for (int i=0; i<locations.size(); i++){
+    			RouteLocation rl = route.getLocationById(locations.get(i)); 
+    			String name = rl.getName();
+    			name = truncate(name);
+    			s = name 
+    			+ "\t" + rl.getDepartureTime()
+    			+ "\t" + rl.getComment()
+    			+ newLine;
+    			writer.write(s);
+    		}
+    		 		
     		// and force completion of the printing
     		writer.close();
     	} catch (IOException we) {
