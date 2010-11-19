@@ -27,6 +27,7 @@ import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.router.Router;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -35,7 +36,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.103 $
+ * @version             $Revision: 1.104 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -996,6 +997,14 @@ public class TrainBuilder extends TrainCommon{
 						// can this car be picked up?
 						if(!checkPickUpTrainDirection(c, rl))
 							continue; // no
+						// does car have a next destination, but no destination
+						if (c.getNextDestination() != null && c.getDestination() == null){
+							addLine(buildReport, FIVE, "Car ("+c.toString()+") has next destination ("+c.getNextDestinationName()+", "+c.getNextDestTrackName()+"), routing begins");
+							if (!Router.instance().setDestination(c)){
+								addLine(buildReport, FIVE, "Not able to set destination for car ("+c.toString()+") due to "+Router.instance().getStatus());
+								continue;	// couldn't set car's destination
+							}
+						}
 						// does car have a destination?
 						if (c.getDestination() != null) {
 							addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasAssignedDest"),new Object[]{c.toString(), (c.getDestinationName()+", "+c.getDestinationTrackName())}));

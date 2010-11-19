@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class Router {
@@ -30,6 +30,8 @@ public class Router {
 	private List<LocationTrackPair> firstLocationTrackPairs = new ArrayList<LocationTrackPair>();
 	private List<LocationTrackPair> lastLocationTrackPairs = new ArrayList<LocationTrackPair>();
 	private List<LocationTrackPair> otherLocationTrackPairs = new ArrayList<LocationTrackPair>();
+	
+	private String _status = "";
 	
 	public boolean enable_staging = false; 	// using staging to route cars can be tricky, not recommended
 	
@@ -46,7 +48,13 @@ public class Router {
 		return _instance;
 	}
 	
-	public boolean setCarNextDestination(Car car){
+	/**
+	 * Attempts to set the car's destination if a next destination exists.
+	 * @param car the car to route
+	 * @return true if successful.
+	 */
+	public boolean setDestination(Car car){
+		_status = Car.OKAY;
 		if (car.getNextDestination() != null){
 			log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") has next destination ("+car.getNextDestinationName()+") car routing begins");
 			// Has the car accidentally arrived at the car's next destination?
@@ -58,6 +66,7 @@ public class Router {
 				return true;
 			}
 			Car ts = clone(car);	// set the clone car's destination and track
+			//Note the following test doesn't check for length which is what we want!
 			String newStatus = ts.testDestination(ts.getDestination(), ts.getDestinationTrack());
 			if (!newStatus.equals(Car.OKAY)){
 				String trk = "null";
@@ -70,9 +79,15 @@ public class Router {
 			if (train != null){
 				log.debug("Car ("+car.toString()+") destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()
 						+") can be serviced by a single train ("+train.getName()+")");
-				car.setNextDestination(null);
-				car.setNextDestTrack(null);
-				car.setDestination(ts.getDestination(), ts.getDestinationTrack());
+				_status = car.setDestination(ts.getDestination(), ts.getDestinationTrack());
+				if (_status.equals(Car.OKAY)){
+					car.setNextDestination(null);
+					car.setNextDestTrack(null);
+				} else {
+					log.info("Can not deliver car ("+car.toString()+") to destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()
+							+") due to "+_status);
+					return false;
+				}
 				return true;
 			} else if (Setup.isCarRoutingEnabled()) {
 				log.debug("Car ("+car.toString()+") next destination ("+car.getNextDestinationName()+") is not served by a single train");
@@ -93,6 +108,7 @@ public class Router {
 					log.debug("Was able to set multiple train route for car ("+car.toString()+")");
 				} else {
 					log.debug("Wasn't able to set route for car ("+car.toString()+")");
+					_status = "Not able to route car";
 					return false;	// maybe next time
 				}
 			} else {
@@ -102,6 +118,10 @@ public class Router {
 			}
 		}
 		return true; // car's destination has been set
+	}
+	
+	public String getStatus(){
+		return _status;
 	}
 
 	/**
