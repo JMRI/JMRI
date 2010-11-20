@@ -4,10 +4,6 @@ package jmri.jmrix.nce.cab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.text.DateFormat;
-import java.text.FieldPosition;
-import java.text.Format;
-import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -128,7 +124,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -527,6 +523,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         }
     	validate();
     	cabsPane.setVisible(true);
+    	cabsPane.repaint();
     	textStatus.setText("");
     }
     
