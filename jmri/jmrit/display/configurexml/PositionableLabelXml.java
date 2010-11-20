@@ -15,7 +15,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.57 $
+ * @version $Revision: 1.58 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -150,10 +150,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (element.getAttribute("icon")!=null) {
         	NamedIcon icon = null;
         	String name = element.getAttribute("icon").getValue();
+//            if (log.isDebugEnabled()) log.debug("icon attribute= "+name);
         	if (name.equals("yes")){
         		icon = getNamedIcon("icon", element);
         	}else{
         		icon = NamedIcon.getIconByName(name);
+//                if (log.isDebugEnabled()) log.debug("icon "+(icon==null?"NOT":"")+" found.");
         	}
             l = new PositionableLabel(icon, editor);
             l.setPopupUtility(null);        // no text 
@@ -165,10 +167,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 }
             } catch (org.jdom.DataConversionException e) {}
 
-            NamedIcon nIcon = loadIcon(l,"icon", element);
-
-            if (nIcon!=null) {
-                l.updateIcon(nIcon);
+            if (icon!=null) {
+                l.updateIcon(icon);
             }
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
