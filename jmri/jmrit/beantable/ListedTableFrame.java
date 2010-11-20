@@ -27,7 +27,7 @@ import javax.swing.*;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -256,8 +256,8 @@ public class ListedTableFrame extends BeanTableFrame {
         
         tabbedTableItem(String aaClass, String choice, boolean stdModel){
             try{
-                Class cl = Class.forName(aaClass);
-                java.lang.reflect.Constructor co = cl.getConstructor(new Class[] {String.class});
+                Class<?> cl = Class.forName(aaClass);
+                java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[] {String.class});
                 tableAction = (AbstractTableAction) co.newInstance(choice);
             } catch (ClassNotFoundException e1) {
                 log.error("Not a valid class");
