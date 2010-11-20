@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.19 2010-11-19 21:04:02 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.20 2010-11-20 18:37:20 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -267,6 +267,7 @@ Some very old units don't handle this, so can only do on/off operations via JMRI
 Steve Todd updated the xmlio server 
 to add roster list, complete with function labels. 
 Also changed turnout list to always use systemname as name, added username as additional value.
+Also fixed GET processing.
 
 <p>
 Added readback of the speed, direction and functions for a throttle to the xmlio server.
