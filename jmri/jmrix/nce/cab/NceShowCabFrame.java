@@ -4,7 +4,11 @@ package jmri.jmrix.nce.cab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.Format;
+import java.text.NumberFormat;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 
 import javax.swing.JButton;
@@ -124,7 +128,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
@@ -173,7 +177,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	
 	Thread NceCabUpdateThread;	
 	private int[] cabFlag1Array = new int[CAB_MAX];
-	private Date[] cabLastChangeArray = new Date[CAB_MAX];
+	private Calendar[] cabLastChangeArray = new Calendar[CAB_MAX];
 	private int[] cabSpeedArray = new int[CAB_MAX];
 	private int[] cabFlagsArray = new int[CAB_MAX];
 	private int[] cabLocoArray = new int[CAB_MAX];
@@ -261,6 +265,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	// set frame size for display
     	pack();
     	setSize(500, 250);
+    	
     }
 
     // refresh button
@@ -434,27 +439,27 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	}
 	        	cabF0Array[i] = readChar;
 	        	if (log.isDebugEnabled()) log.debug("Function low character "+readChar);
-	        	String func = "";
+	        	StringBuilder func = new StringBuilder();
 	        	if ((readChar & FUNC_L_F0) > 0)
-	        		func = func + "L";
+	        		func.append("L");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_L_F1) > 0)
-	        		func = func + "1";
+	           		func.append("1");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_L_F2) > 0)
-	        		func = func + "2";
+	           		func.append("2");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_L_F3) > 0)
-	        		func = func + "3";
+	           		func.append("3");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_L_F4) > 0)
-	        		func = func + "4";
+	           		func.append("4");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	        	readChar = recChars[CAB_FUNC_H-CAB_CURR_SPEED];
 	        	if (cabF5Array[i] != readChar) {
 	        		foundChange++;
@@ -463,46 +468,47 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 	        	cabF5Array[i] = readChar;
 	        	if (log.isDebugEnabled()) log.debug("Function high character "+readChar);
 	           	if ((readChar & FUNC_H_F5) > 0)
-	        		func = func + "5";
+	           		func.append("5");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_H_F6) > 0)
-	        		func = func + "6";
+	           		func.append("6");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_H_F7) > 0)
-	        		func = func + "7";
+	           		func.append("7");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_H_F8) > 0)
-	        		func = func + "8";
+	           		func.append("8");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_H_F9) > 0)
-	        		func = func + "9";
+	           		func.append("9");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	           	if ((readChar & FUNC_H_F10) > 0)
-	        		func = func + "A";
+	           		func.append("A");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	          	if ((readChar & FUNC_H_F11) > 0)
-	        		func = func + "B";
+	          		func.append("B");
 	        	else
-	        		func = func + "-";
+	        		func.append("-");
 	          	if ((readChar & FUNC_H_F12) > 0)
-	        		func = func + "C";
+	          		func.append("C");
 	        	else
-	        		func = func + "-";
-	          	functions.setText(func);
+	        		func.append("-");
+	          	functions.setText(func.toString());
           	}
-          	if (foundChange > 0) {
-            	cabLastChangeArray[i] = (new Date());
+          	if (foundChange > 0 || cabLastChangeArray[i] == null) {
+            	cabLastChangeArray[i] = Calendar.getInstance();
             }
+          	
           	StringBuilder txt = new StringBuilder();
-          	int h = cabLastChangeArray[i].getHours();
-          	int m = cabLastChangeArray[i].getMinutes();
-          	int s = cabLastChangeArray[i].getSeconds();
+          	int h = cabLastChangeArray[i].get(Calendar.HOUR_OF_DAY);
+          	int m = cabLastChangeArray[i].get(Calendar.MINUTE);
+          	int s = cabLastChangeArray[i].get(Calendar.SECOND);
           	if (h < 10) {
           		txt.append("0");
           	}
@@ -512,6 +518,7 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             	txt.append("0");
             }
             txt.append(m);
+            txt.append(":");
             if (s < 10) {
             	txt.append("0");
             }
