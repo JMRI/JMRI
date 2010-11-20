@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.20 2010-11-20 18:37:20 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.21 2010-11-20 20:54:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -169,6 +169,7 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>Add some additional fonts for operations.  
 <li>User can now set column widths for the Cars table.
 <li>Scheduling has been improved, now when a track can not accept a car because there's no room, the program will hold the car at its current location until there's space available.
+<li>New tools to print trains and locations by car types.</li>
 </ul>
 
 <p>
