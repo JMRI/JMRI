@@ -14,7 +14,7 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
- * @version                    $Revision: 1.11 $
+ * @version                    $Revision: 1.12 $
  */
 public class SpeedoDial extends JPanel {
 
@@ -189,7 +189,7 @@ public class SpeedoDial extends JPanel {
         g2.fillPolygon(scaledMinuteHand);
 
         // Draw primary units indicator in slightly smaller font than speed digits
-        int unitsFontSize = (int) (faceSize/10*.75);
+        int unitsFontSize = (int) ((float)faceSize/10*.75);
         if (unitsFontSize < 1) unitsFontSize = 1;
         Font unitsSizedFont = new Font("Serif", Font.PLAIN, unitsFontSize);
         g2.setFont(unitsSizedFont);
