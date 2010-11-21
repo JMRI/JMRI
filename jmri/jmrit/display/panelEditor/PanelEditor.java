@@ -594,35 +594,6 @@ public class PanelEditor extends Editor implements ItemListener {
         popup.show((Component)p, p.getWidth()/2, p.getHeight()/2);
     }
 
-    public void showToolTip(Positionable selection, MouseEvent event) {
-        ToolTip tip = selection.getTooltip();
-        String txt = tip.getText();
-        if (txt==null) {
-            tip.setText(selection.getNameString());
-        }
-        tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
-        setToolTip(tip);
-    }
-/*
-    public void mouseReleased(MouseEvent event) {
-        super.mouseReleased(event);
-
-        
-        // if not sending MouseClicked, do it here
-        if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
-            mouseClicked(event);
-    }
-
-    public void mouseClicked(MouseEvent event) {
-        super.mouseClicked(event);
-
-        if (allPositionable() && _selectRect!=null) {
-            if (_selectionGroup==null && _dragging) {
-                makeSelectionGroup(event);
-            }
-        }
-    }
-*/
    /******************************************************/
 
     boolean delayedPopupTrigger;

@@ -683,6 +683,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             }
             _clickTime = time;
         }
+
         setToolTip(null); // ends tooltip if displayed
         if (_debug) log.debug("mouseClicked at ("+event.getX()+","+event.getY()+")");
 
