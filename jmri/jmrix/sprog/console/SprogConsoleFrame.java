@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -44,7 +44,6 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     protected int currentLimit = SprogConstants.DEFAULT_I;
     
     // members for handling the SPROG interface
-    SprogMessage msg;
     SprogTrafficController tc = null;
     SprogCommandStation sm = null;
     String replyString;
@@ -95,7 +94,10 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         super.dispose();
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // Ignore unsunchronised access to state
     public void initComponents() throws Exception {
+        SprogMessage msg;
         super.initComponents();
 
         // Send a blank message to kick off the state machine to get the
@@ -202,11 +204,11 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 )
                 );
          
-        currentTextField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent e) {
-                validateCurrent();
-            }
-        });
+//        currentTextField.addActionListener(new java.awt.event.ActionListener() {
+//            public void actionPerformed(java.awt.event.ActionEvent e) {
+//                validateCurrent();
+//            }
+//        });
         
         ztcCheckBox.setText("Set ZTC mode");
         ztcCheckBox.setVisible(true);
@@ -280,6 +282,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
         SprogTrafficController.instance().sendSprogMessage(m, this);
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // validateCurrent() is called from synchronised code
     public void validateCurrent() {
         String currentRange = "200 - 996";
         int validLimit = 996;
@@ -305,6 +309,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
     
     synchronized public void saveButtonActionPerformed(java.awt.event.ActionEvent e) {
+        SprogMessage saveMsg;
         // Send Current Limit if possible
         state = State.CURRENTSENT;
         if (isCurrentLimitPossible()) {
@@ -316,17 +321,19 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
                 currentLimit += 256;
             }
             tmpString = String.valueOf(currentLimit);
-            msg = new SprogMessage("I "+tmpString);
+            saveMsg = new SprogMessage("I "+tmpString);
         } else {
             // Else send blank message to kicj things off
-            msg = new SprogMessage(" "+tmpString);
+            saveMsg = new SprogMessage(" "+tmpString);
         }
-        nextLine("cmd: \""+msg.toString()+"\"\n", "");
-        tc.sendSprogMessage(msg, this);
+        nextLine("cmd: \""+saveMsg.toString()+"\"\n", "");
+        tc.sendSprogMessage(saveMsg, this);
        
         // Further messages will be sent from state machine
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // Called from synchronised code
     public boolean isCurrentLimitPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
             || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
@@ -336,6 +343,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             return false;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // Called from synchronised code
     public boolean isBlueLineSupportPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
             || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
@@ -345,6 +354,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
             return false;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC")
+    // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
                           || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))) {
@@ -358,6 +369,7 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     }
     
     public synchronized void notifyReply(SprogReply l) {  // receive a reply message and log it
+        SprogMessage msg;
         replyString = l.toString();
         nextLine("rep: \""+replyString+"\"\n", "");
         
