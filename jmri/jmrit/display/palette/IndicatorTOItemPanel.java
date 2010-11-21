@@ -94,10 +94,13 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _openPicklistButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
         JPanel p = new JPanel();
         p.add(_openPicklistButton);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
         panel.add(p);
         _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
         p = new JPanel();
         p.add(_showTrainName);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
         panel.add(p);
         return panel;
     }

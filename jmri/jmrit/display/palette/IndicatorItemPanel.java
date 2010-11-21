@@ -34,16 +34,18 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     protected JTextField  _errSensorName = new JTextField();
     JFrame      _pickFrame;
     JButton     _openPicklistButton;
+    JButton     _updateButton;
     JCheckBox   _showTrainName;
 
     protected JPanel    _dndIconPanel;
+    boolean _update;
 
     /**
     * Constructor for plain icons and backgrounds
     */
     public IndicatorItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+//        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
 
     /**
@@ -53,6 +55,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * initIconFamiliesPanel()
     */
     public void init() {
+        _update = false;
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
         initSensorPanel();
@@ -69,6 +72,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
     public void init(ActionListener doneAction) {
+        _update = true;
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
         _bottom1Panel = makeBottom3Panel(doneAction);
@@ -86,9 +90,9 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.add(_bottom1Panel);
         JPanel updatePanel = new JPanel();
-        JButton doneButton = new JButton(ItemPalette.rbp.getString("updateButton"));
-        doneButton.addActionListener(doneAction);
-        updatePanel.add(doneButton);
+        _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
+        _updateButton.addActionListener(doneAction);
+        updatePanel.add(_updateButton);
         bottomPanel.add(updatePanel);
         return bottomPanel;
     }
@@ -112,10 +116,13 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         _openPicklistButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
         JPanel p = new JPanel();
         p.add(_openPicklistButton);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipPickLists"));
         panel.add(p);
         _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
         p = new JPanel();
         p.add(_showTrainName);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
         panel.add(p);
         add(panel);
     }
@@ -171,14 +178,18 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         if (_family==null) {
             return;
         }
-        _iconFamilyPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        if (!_update) {
+            _iconFamilyPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        }
         makeDndIconPanel();
         add(_dndIconPanel, 1);
     }
 
     protected void makeDndIconPanel() {
         _dndIconPanel = new JPanel();
-        _dndIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        if (!_update) {
+            _dndIconPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+        }
         Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
         if (iconMap!=null) {
             NamedIcon ic = iconMap.get("ClearTrack");
@@ -188,18 +199,26 @@ public class IndicatorItemPanel extends FamilyItemPanel {
                String borderName = ItemPalette.convertText("ClearTrack");
                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                 borderName));
-               try {
-                   JLabel label = new IndicatorDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                   label.setIcon(icon);
-                   label.setName(borderName);
-                   panel.add(label);
-                   label.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-               } catch (java.lang.ClassNotFoundException cnfe) {
-                   cnfe.printStackTrace();
+               JLabel label;
+               if (_update) {
+                   label = new JLabel();
+               } else {
+                   try {
+                       label = new IndicatorDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
+                       label.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+                   } catch (java.lang.ClassNotFoundException cnfe) {
+                       cnfe.printStackTrace();
+                       label = new JLabel();
+                   }
                }
+               label.setIcon(icon);
+               label.setName(borderName);
+               panel.add(label);
                int width = Math.max(100, panel.getPreferredSize().width);
                panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-               panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+               if (!_update) {
+                   panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
+               }
                _dndIconPanel.add(panel);
                return;
             }

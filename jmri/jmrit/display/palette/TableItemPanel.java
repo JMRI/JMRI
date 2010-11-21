@@ -16,6 +16,8 @@ import javax.swing.TransferHandler;
 import java.util.Enumeration;
 import java.util.Hashtable;
 
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 import javax.swing.*;
 
 import jmri.NamedBean;
@@ -27,7 +29,7 @@ import jmri.util.JmriJFrame;
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.
 */
-public class TableItemPanel extends FamilyItemPanel {
+public class TableItemPanel extends FamilyItemPanel implements ListSelectionListener {
 
     int ROW_HEIGHT;
 
@@ -39,6 +41,7 @@ public class TableItemPanel extends FamilyItemPanel {
     JTextField  _sysNametext = new JTextField();
     JTextField  _userNametext = new JTextField();
     JButton     _addTableButton;
+    JButton     _updateButton;
 
     /**
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
@@ -90,9 +93,9 @@ public class TableItemPanel extends FamilyItemPanel {
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
         bottomPanel.add(_bottom1Panel);
         JPanel updatePanel = new JPanel();
-        JButton doneButton = new JButton(ItemPalette.rbp.getString("updateButton"));
-        doneButton.addActionListener(doneAction);
-        updatePanel.add(doneButton);
+        _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
+        _updateButton.addActionListener(doneAction);
+        updatePanel.add(_updateButton);
         bottomPanel.add(updatePanel);
         return bottomPanel;
     }
@@ -103,6 +106,7 @@ public class TableItemPanel extends FamilyItemPanel {
     protected void initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         _table.setTransferHandler(new DnDTableItemHandler(editor));
+        _table.getSelectionModel().addListSelectionListener(this);
         ROW_HEIGHT = _table.getRowHeight();
         JPanel topPanel = new JPanel();
         topPanel.setLayout(new BorderLayout());
@@ -191,6 +195,25 @@ public class TableItemPanel extends FamilyItemPanel {
         int row = _model.getIndexOf(bean);
         _table.addRowSelectionInterval(row, row);
         _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+    }
+
+    /**
+    *  When a Pick list is installed, table selection controls the Add button
+    */
+    public void valueChanged(ListSelectionEvent e) {
+        if (_table == null || _updateButton==null) {
+            return;
+        }
+        int row = _table.getSelectedRow();
+        if (log.isDebugEnabled()) log.debug("Table valueChanged: row= "+row);
+        if (row >= 0) {
+            _updateButton.setEnabled(true);
+            _updateButton.setToolTipText(null);
+
+        } else {
+            _updateButton.setEnabled(false);
+            _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+        }
     }
 
     public Hashtable <String, NamedIcon> getIconMap() {
