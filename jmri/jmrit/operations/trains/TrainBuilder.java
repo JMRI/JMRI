@@ -36,7 +36,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.104 $
+ * @version             $Revision: 1.105 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1116,7 +1116,7 @@ public class TrainBuilder extends TrainCommon{
 									continue;
 								}							
 								// don't move car to same location unless the route only has one location (local moves)
-								if (rl.getName().equals(rld.getName()) && routeList.size() != 1){
+								if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !c.isPassenger()){
 									addLine(buildReport, SEVEN, "Car ("+c.toString()+") location is equal to destination ("+rld.getName()+"), skiping this destination");
 									continue;
 								}
@@ -1217,7 +1217,10 @@ public class TrainBuilder extends TrainCommon{
 											}
 										}
 										// car's current track is the test track or car can't be dropped
-										if(!status.equals(Car.OKAY)){
+										else if (testTrack == c.getTrack()){
+											addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to same track (" +testTrack.getName()+")");
+										}
+										else if(!status.equals(Car.OKAY)){
 											if (status.contains(Car.SCHEDULE))
 												addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") load ("+c.getLoad()+") to track (" +testTrack.getName()+") due to "+status);
 											else
@@ -1241,9 +1244,9 @@ public class TrainBuilder extends TrainCommon{
 										// train length exceeded
 										destinationTemp = null;
 									}
-								}
-								// check for programming error
+								}							
 								if(destinationTemp != null){
+									// check for programming error
 									if(trackTemp == null){
 										buildFailed("Build Failure, trackTemp is null!");
 										return false;
