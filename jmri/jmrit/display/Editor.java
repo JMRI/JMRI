@@ -1065,6 +1065,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (!_contents.add(l)) {
             log.error("Unable to add "+l.getNameString()+" to _contents");
         }
+        log.debug("putItem "+l.getNameString()+" to _contents. level= "+l.getDisplayLevel());
     }
     
     protected void addToTarget(Positionable l) {
@@ -1934,17 +1935,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         ToolTip tip = selection.getTooltip();
         String txt = tip.getText();
         if (txt==null) {
-            int system = jmri.util.SystemType.getType();
-            if (system==jmri.util.SystemType.MACOSX) {
-                txt = java.text.MessageFormat.format(rb.getString("ToolTipGenericMac"), selection.getNameString());
-            }
-            else if (system==jmri.util.SystemType.WINDOWS) {
-                txt = java.text.MessageFormat.format(rb.getString("ToolTipGenericWin"), selection.getNameString());
-            }
-            else {
-                txt = java.text.MessageFormat.format(rb.getString("ToolTipGeneric"), selection.getNameString());
-            }
-            tip.setText(txt);
+            tip.setText(selection.getNameString());
         }
         tip.setLocation(selection.getX()+selection.getWidth()/2, selection.getY()+selection.getHeight());
         setToolTip(tip);

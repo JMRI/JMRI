@@ -5,6 +5,7 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.Positionable;
 import jmri.jmrit.display.PositionableLabel;
+import jmri.jmrit.display.ToolTip;
 import java.awt.Color;
 
 import org.jdom.Attribute;
@@ -15,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.58 $
+ * @version $Revision: 1.59 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -113,6 +114,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("positionable", p.isPositionable()?"true":"false");
         element.setAttribute("showtooltip", p.showTooltip()?"true":"false");        
         element.setAttribute("editable", p.isEditable()?"true":"false");        
+        ToolTip tip = p.getTooltip();
+        String txt = tip.getText();
+        if (txt!=null) {
+            Element elem = new Element("toolTip").addContent(txt);
+            element.addContent(elem);
+        }
     }
 
     public Element storeIcon(String elemName, NamedIcon icon) {
@@ -167,9 +174,17 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 }
             } catch (org.jdom.DataConversionException e) {}
 
-            if (icon!=null) {
-                l.updateIcon(icon);
+        	if (name.equals("yes")) {
+                NamedIcon nIcon = loadIcon(l,"icon", element); 
+                if (nIcon!=null) {
+                    l.updateIcon(nIcon);
+                }
+            } else {   // for very old files 
+                if (icon!=null) {
+                    l.updateIcon(icon);
+                }
             }
+
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
         } else if (element.getAttribute("text")!=null) {
             l = new PositionableLabel(element.getAttribute("text").getValue(), editor);
@@ -345,7 +360,15 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if ( (a!=null) && a.getValue().equals("true"))
             l.setEditable(true);
         else
-            l.setEditable(false);    
+            l.setEditable(false);
+
+        Element elem = element.getChild("toolTip");
+        if (elem!=null) {
+            ToolTip tip = l.getTooltip();
+            if (tip!=null) {
+                tip.setText(elem.getText());
+            }
+        }
     }
     
 	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {

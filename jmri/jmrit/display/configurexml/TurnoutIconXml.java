@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -51,10 +51,12 @@ public class TurnoutIconXml extends PositionableLabelXml {
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
         // new style
-        element.addContent(storeIcon("closed", p.getIcon("TurnoutStateClosed")));
-        element.addContent(storeIcon("thrown", p.getIcon("TurnoutStateThrown")));
-        element.addContent(storeIcon("unknown", p.getIcon("BeanStateUnknown")));
-        element.addContent(storeIcon("inconsistent", p.getIcon("BeanStateInconsistent")));
+        Element elem = new Element("icons");
+        elem.addContent(storeIcon("closed", p.getIcon("TurnoutStateClosed")));
+        elem.addContent(storeIcon("thrown", p.getIcon("TurnoutStateThrown")));
+        elem.addContent(storeIcon("unknown", p.getIcon("BeanStateUnknown")));
+        elem.addContent(storeIcon("inconsistent", p.getIcon("BeanStateInconsistent")));
+        element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
 
@@ -88,21 +90,34 @@ public class TurnoutIconXml extends PositionableLabelXml {
         }
         l.setTurnout(name);
         
-        @SuppressWarnings("unchecked")
-        List<Element>states = element.getChildren();
-        if (states.size()>0) {
-            for (int i=0; i<states.size(); i++) {
-                String state = states.get(i).getName();
-                NamedIcon icon = loadIcon(l, state, element);
-                l.setIcon(_nameMap.get(state), icon);
-            }
-            log.debug(states.size()+" icons loaded for "+l.getNameString());
-        }
         Attribute a = element.getAttribute("tristate");
         if ( (a==null) || ((a!=null) && a.getValue().equals("true")))
             l.setTristate(true);
         else
             l.setTristate(false);
+
+        @SuppressWarnings("unchecked")
+        List<Element>states = element.getChildren();
+        if (states.size()>0) {
+            if (log.isDebugEnabled()) log.debug("Main element has"+states.size()+" items");
+            Element elem = element;     // the element containing the icons
+            Element icons = element.getChild("icons");
+            if (icons!=null) {
+                @SuppressWarnings("unchecked")
+                List<Element>s = icons.getChildren();
+                states = s;
+                elem = icons;          // the element containing the icons
+                if (log.isDebugEnabled()) log.debug("icons element has"+states.size()+" items");
+            }
+            for (int i=0; i<states.size(); i++) {
+                String state = states.get(i).getName();
+                if (log.isDebugEnabled()) log.debug("setIcon for state \""+state+
+                                                    "\" and "+_nameMap.get(state));
+                NamedIcon icon = loadIcon(l, state, elem);
+                l.setIcon(_nameMap.get(state), icon);
+            }
+            log.debug(states.size()+" icons loaded for "+l.getNameString());
+        }
             
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
