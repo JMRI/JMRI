@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.21 2010-11-20 20:54:27 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.22 2010-11-22 22:56:48 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -170,6 +170,7 @@ Dan Boudreau fixed several problems and added some new features to operations:
 <li>User can now set column widths for the Cars table.
 <li>Scheduling has been improved, now when a track can not accept a car because there's no room, the program will hold the car at its current location until there's space available.
 <li>New tools to print trains and locations by car types.</li>
+<li>Allow passenger cars to return to their starting location.
 </ul>
 
 <p>
@@ -274,6 +275,17 @@ Also fixed GET processing.
 Added readback of the speed, direction and functions for a throttle to the xmlio server.
 Also, requests to set the power now get a reply with proper power state.
 
+<p>
+Ken Cameron added the RobotThrottle3 script
+
+<p>
+Pete Cressman added custom tooltips to the panel editors.
+
+<p>
+Pete Cressman added an update of indicator track icons from the panel.
+
+<p>
+Brett Hoffman updated the WiThrottle protocol to allow F2 to follow "lock" setting in roster entry function labels
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
