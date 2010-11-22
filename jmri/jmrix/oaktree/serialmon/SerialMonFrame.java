@@ -10,7 +10,7 @@ import jmri.jmrix.oaktree.SerialTrafficController;
 /**
  * Frame displaying (and logging) serial command messages
  * @author	    Bob Jacobsen   Copyright (C) 2001, 2006
- * @version         $Revision: 1.5 $
+ * @version         $Revision: 1.6 $
  */
 
 public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements SerialListener {
@@ -49,6 +49,7 @@ public class SerialMonFrame extends jmri.jmrix.AbstractMonFrame implements Seria
             nextLine("Unrecognized cmd: \""+l.toString()+"\"\n", l.toString());
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION", justification="string concatenation, efficiency not as important as clarity here")
     public synchronized void reply(SerialReply l) {  // receive a reply message and log it
         // check for valid length
         if (l.getNumDataElements() == 1) {
