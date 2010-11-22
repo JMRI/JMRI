@@ -20,7 +20,7 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
     }
     public EcosLocoTableAction() { this("Ecos Loco Table");}
     
-    
+    @Override
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
@@ -98,11 +98,11 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
         };
     }
 
-    
     protected void setTitle() {
         f.setTitle("Ecos Loco Table");
     }
-    
+
+    @Override
     protected String helpTarget() {
         return "package.jmri.jmrix.ecos.ecosLocoTable";
     }

@@ -20,7 +20,7 @@ import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * This extends the BeanTableDataModel, but the majority of it is customised.
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
 abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -36,7 +36,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
     }
 
     //private EcosLocoAddressManager objEcosLocoManager;
-    
+    @Override
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
        //objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
@@ -59,6 +59,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
     }
 
     List<String> ecosObjectIdList = null;
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (e.getPropertyName().equals("length")) {
             // a new jmri.jmrix.ecos.EcosLocoAddressManager is available in the manager
@@ -86,10 +87,12 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
         return true;
     }
 
+    @Override
     public int getRowCount() {
         return ecosObjectIdList.size();
     }
-
+    
+    @Override
     public String getColumnName(int col) {
          switch (col) {
         case SYSNAMECOL: return "ECoS Object Id";
@@ -102,6 +105,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
         }
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         switch (col) {
         case SYSNAMECOL:
@@ -118,6 +122,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
         }
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         switch (col) {
         case COMMENTCOL:
@@ -131,7 +136,8 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
             return false;
         }
     }
-    
+
+    @Override
     public Object getValueAt(int row, int col) {
     	// some error checking
     	if (row >= ecosObjectIdList.size()){
@@ -192,6 +198,8 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
         selections.setSelectedIndex(-1);
         fireTableRowsUpdated(0, getRowCount());
     }
+
+    @Override
     public int getPreferredWidth(int col) {
         switch (col) {
         case SYSNAMECOL:
@@ -218,6 +226,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
     abstract jmri.jmrix.ecos.EcosLocoAddress getByDccAddress(int address);
     abstract void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager t);
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
     
         if (col==COMMENTCOL) {
@@ -267,6 +276,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
      * But we put it here to help keep it consistent.
      * @param table
      */
+    @Override
     public void configureTable(JTable table) {
         super.configureTable(table);
 
@@ -274,6 +284,7 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
         configAddToRosterColumn(table);
     }
     
+    @Override
     protected void configValueColumn(JTable table) {
         // We don't have a delete Button!
     }
@@ -283,10 +294,12 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
                 new JButton("Add to Roster"));
     }
     
+    @Override
     protected void configDeleteColumn(JTable table) {
         // We don't have a delete Button!
     }
-    
+
+    @Override
     synchronized public void dispose() {
     //This needs to be sorted later.
         getManager().removePropertyChangeListener(this);
