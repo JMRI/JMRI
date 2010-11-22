@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -117,11 +117,33 @@ public class TurnoutIconXml extends PositionableLabelXml {
                 l.setIcon(_nameMap.get(state), icon);
             }
             log.debug(states.size()+" icons loaded for "+l.getNameString());
+        } else {        // case when everything was attributes
+            int rotation = 0;
+            try {
+                rotation = element.getAttribute("rotate").getIntValue();
+            } catch (org.jdom.DataConversionException e) {
+            } catch ( NullPointerException e) {  // considered normal if the attributes are not present
+            }
+            loadTurnoutIcon("thrown", rotation, l, element, name);
+            loadTurnoutIcon("closed", rotation, l, element, name);
+            loadTurnoutIcon("unknown", rotation, l,element, name);
+            loadTurnoutIcon("inconsistent", rotation, l,element, name);
         }
             
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.TURNOUTS, element);
+    }
+    
+    private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name)
+    {
+        if (element.getAttribute(state) != null) { 
+            String iconName = element.getAttribute(state).getValue();
+            NamedIcon icon = NamedIcon.getIconByName(iconName);
+            icon.setRotation(rotation, l);
+            l.setIcon(_nameMap.get(state), icon);
+        }
+        else log.warn("did not locate " + state + " icon file "+name);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());
