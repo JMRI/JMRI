@@ -2,7 +2,7 @@ package jmri.jmrit.withrottle;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  */
 
 import java.awt.Color;
@@ -31,6 +31,8 @@ public class WiThrottlePrefsPanel extends JPanel{
 
     JCheckBox eStopCB;
     JSpinner delaySpinner;
+    
+    JCheckBox momF2CB;
 
     JCheckBox portCB;
     JTextField port;
@@ -63,6 +65,7 @@ public class WiThrottlePrefsPanel extends JPanel{
         lineBorder = BorderFactory.createLineBorder(Color.black);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         add(eStopDelayPanel());
+        add(functionsPanel());
         add(socketPortPanel());
         add(allowedControllers());
         add(cancelApplySave());
@@ -72,6 +75,8 @@ public class WiThrottlePrefsPanel extends JPanel{
     private void setGUI(){
         eStopCB.setSelected(localPrefs.isUseEStop());
         delaySpinner.setValue(localPrefs.getEStopDelay());
+        
+        momF2CB.setSelected(localPrefs.isUseMomF2());
 
         portCB.setSelected(localPrefs.isUseFixedPort());
         updatePortField();
@@ -98,6 +103,8 @@ public class WiThrottlePrefsPanel extends JPanel{
         boolean didSet = true;
         localPrefs.setUseEStop(eStopCB.isSelected());
         localPrefs.setEStopDelay((Integer)delaySpinner.getValue());
+        
+        localPrefs.setUseMomF2(momF2CB.isSelected());
 
         localPrefs.setUseFixedPort(portCB.isSelected());
         if (portCB.isSelected()){
@@ -172,6 +179,18 @@ public class WiThrottlePrefsPanel extends JPanel{
         panel.add(eStopCB);
         panel.add(delaySpinner);
         panel.add(new JLabel(rb.getString("LabelEStopDelay")));
+        return panel;
+    }
+    
+    private JPanel functionsPanel(){
+        JPanel panel = new JPanel();
+        TitledBorder border = BorderFactory.createTitledBorder(lineBorder,
+                rb.getString("TitleFunctionsPanel"), TitledBorder.CENTER, TitledBorder.TOP);
+
+        panel.setBorder(border);
+        momF2CB = new JCheckBox(rb.getString("LabelMomF2"));
+        momF2CB.setToolTipText(rb.getString("ToolTipMomF2"));
+        panel.add(momF2CB);
         return panel;
     }
 

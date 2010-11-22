@@ -6,7 +6,7 @@ import org.jdom.Element;
 
 /**
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  */
 public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     
@@ -16,6 +16,8 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
 
     private boolean useEStop = true;
     private int eStopDelay = 10;
+    
+    private boolean useMomF2 = true;
     
     private boolean useJmdns = true;
     private boolean useFixedPort = false;
@@ -42,6 +44,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
             }catch (NumberFormatException e){
                 log.debug(e);
             }
+        if ((a = child.getAttribute("isUseMomF2")) != null )  setUseMomF2(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("isUseJmdns")) != null )  setUseJmdns(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("isUseFixedPort")) != null )  setUseFixedPort(a.getValue().equalsIgnoreCase("true"));
     	if ((a = child.getAttribute("getPort")) != null ) setPort(a.getValue());
@@ -61,6 +64,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
 
         if (isUseEStop() != prefs.isUseEStop()) return true;
         if (getEStopDelay() != prefs.getEStopDelay()) return true;
+        if (isUseMomF2() != prefs.isUseMomF2()) return true;
         if (isUseFixedPort() != prefs.isUseFixedPort()) return true;
         if (!(getPort().equals(prefs.getPort()))) return true;
         if (isUseJmdns() != prefs.isUseJmdns()) return true;
@@ -70,6 +74,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     public void apply(WiThrottlePreferences prefs){
         setUseEStop(prefs.isUseEStop());
         setEStopDelay(prefs.getEStopDelay());
+        setUseMomF2(prefs.isUseMomF2());
         setUseJmdns(prefs.isUseJmdns());
         setUseFixedPort(prefs.isUseFixedPort());
         setPort(prefs.getPort());
@@ -83,6 +88,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     	Element element = new Element("WiThrottlePreferences");
         element.setAttribute("isUseEStop", "" + isUseEStop());
         element.setAttribute("getEStopDelay", "" + getEStopDelay());
+        element.setAttribute("isUseMomF2", "" + isUseMomF2());
         element.setAttribute("isUseJmdns", "" + isUseJmdns());
         element.setAttribute("isUseFixedPort", "" + isUseFixedPort());
         element.setAttribute("getPort", "" + getPort());
@@ -114,6 +120,13 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences{
     }
     public void setEStopDelay(int value){
         eStopDelay = value;
+    }
+    
+    public boolean isUseMomF2(){
+        return useMomF2;
+    }
+    public void setUseMomF2(boolean value){
+        useMomF2 = value;
     }
 
     public boolean isUseJmdns(){
