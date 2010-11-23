@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -220,9 +220,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return true;
     }
     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FI_MISSING_SUPER_CALL") // doesn't follow normal finalize
     @Override
-    protected void finalize() {
+    protected void terminate() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established
         EcosPreferences p = EcosPreferences.instance();

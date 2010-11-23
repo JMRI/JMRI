@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.91 $
+ * @version         $Revision: 1.92 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -895,7 +895,14 @@ abstract public class AbstractMRTrafficController {
     }
     
     // Override the finalize method for this class
-    protected void finalize() {
+    // to request termination, which might have happened
+    // before in any case
+    protected final void finalize() throws Throwable {
+        terminate();
+        super.finalize();
+    }
+    
+    protected void terminate() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established
         AbstractMRMessage modeMsg=enterNormalMode();
@@ -975,7 +982,7 @@ abstract public class AbstractMRTrafficController {
             mTC = pTC;
         }
         public void run() {
-        mTC.finalize();
+            mTC.terminate();
         }
     } // end cleanUpHook
 
