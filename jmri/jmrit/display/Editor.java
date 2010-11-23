@@ -2188,6 +2188,18 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             for (int i=0; i<_selectionGroup.size(); i++) {
                 _selectionGroup.get(i).setScale(s);
             }
+        } else {
+            p.setScale(s);
+        }
+    }
+        
+    protected void setSelectionsRotation(int k, Positionable p) { 
+        if (_selectionGroup!=null && _selectionGroup.contains(p)) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).rotate(k);
+            }
+        } else {
+            p.rotate(k);
         }
     }
         

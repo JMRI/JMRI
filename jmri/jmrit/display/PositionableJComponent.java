@@ -14,7 +14,7 @@ import javax.swing.*;
  * <p> </p>
  *
  * @author  Howard G. Penny copyright (C) 2005
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class PositionableJComponent extends JComponent implements Positionable {
 
@@ -120,6 +120,12 @@ public class PositionableJComponent extends JComponent implements Positionable {
     public double getScale() {
         return _scale;
     }
+    // no subclasses support rotations (yet)
+    public void rotate(int deg) {
+    }
+    public int getDegrees() {
+        return 0;
+    }
 
     public String getNameString() {
         return getName();
@@ -130,12 +136,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
     }
     public void setEditor(Editor ed) {
         _editor = ed;
-    }
-    // no subclasses support rotations (yet)
-    public void rotate(int deg) {
-    }
-    public int getDegrees() {
-        return 0;
     }
     
     // overide where used - e.g. momentary
