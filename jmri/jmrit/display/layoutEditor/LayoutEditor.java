@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -219,8 +219,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
 	private Object foundObject = null; // found object, null if nothing found
 	
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SE_TRANSIENT_FIELD_NOT_RESTORED") // no Serializable support at present
 	private transient Point2D foundLocation = new Point2D.Double(0.0,0.0);  // location of found object
+
 	private int foundPointType = 0;   // connection type within the found object
+
 	@SuppressWarnings("unused")
 	private boolean foundNeedsConnect = false; // true if found point needs a connection
 	private Object beginObject = null; // begin track segment connection object, null if none
