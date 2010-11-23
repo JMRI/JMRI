@@ -23,7 +23,7 @@ import javax.swing.JPopupMenu;
  * The 'fixed' parameter is local, set from the popup here.
  *
  * @author Bob Jacobsen Copyright (c) 2002
- * @version $Revision: 1.106 $
+ * @version $Revision: 1.107 $
  */
 
 public class PositionableLabel extends JLabel implements Positionable {
@@ -354,6 +354,17 @@ public class PositionableLabel extends JLabel implements Positionable {
             return true;
         }
         return false;
+    }
+
+    jmri.util.JmriJFrame _paletteFrame;
+
+    protected void makePalettteFrame(String title) {
+        _editor.makePalette();
+
+        _paletteFrame = new jmri.util.JmriJFrame(title);
+        _paletteFrame.setLocationRelativeTo(this);
+        _paletteFrame.toFront();
+        _paletteFrame.setVisible(true);
     }
 
     protected void makeIconEditorFrame(Container pos, String name, boolean table, IconAdder editor) {

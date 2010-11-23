@@ -28,7 +28,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -283,7 +283,6 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         updateSize();
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
     TableItemPanel _itemPanel;
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
@@ -296,7 +295,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     protected void editItem() {
-        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout",
                                        PickListModel.turnoutPickModelInstance(), _editor);
         _itemPanel.init( new ActionListener() {
@@ -306,10 +305,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         });
         _itemPanel.setSelection(getTurnout());
         _paletteFrame.add(_itemPanel);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
         _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {

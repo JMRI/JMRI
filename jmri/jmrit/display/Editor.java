@@ -111,13 +111,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     private boolean _controlLayout = true;
     private boolean _showHidden = true;
     private boolean _showTooltip = true;
-    private boolean _showCoordinates = true;
+//    private boolean _showCoordinates = true;
 
     final public static int OPTION_POSITION = 1;
     final public static int OPTION_CONTROLS = 2;
     final public static int OPTION_HIDDEN = 3;
     final public static int OPTION_TOOLTIP= 4;
-    final public static int OPTION_COORDS = 5;
+//    final public static int OPTION_COORDS = 5;
 
     private boolean _globalSetsLocal = true;    // pre 2.9.6 behavior
     private boolean _useGlobalFlag = false;     // pre 2.9.6 behavior
@@ -163,7 +163,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         setName(name);
         _debug = log.isDebugEnabled();
         _defaultToolTip = new ToolTip(null, 0, 0);
-        new jmri.jmrit.display.palette.ItemPalette();
         setVisible(false);
     }
     
@@ -481,8 +480,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     return _showHidden;
                 case OPTION_TOOLTIP:
                     return _showTooltip;
-                case OPTION_COORDS:
-                    return _showCoordinates;
+//                case OPTION_COORDS:
+//                    return _showCoordinates;
             }
         }
         return localFlag;
@@ -1875,6 +1874,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         frame.pack();
         return frame;
     }
+
+    public void makePalette() {}
 
     /********************* cleanup *************************/
 

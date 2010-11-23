@@ -389,7 +389,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         setLocation(10,10);               
-        setVisible(true);                   
+//        setVisible(true);                   
         pack();
     }
 

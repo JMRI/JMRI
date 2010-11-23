@@ -36,7 +36,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -349,7 +349,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 if (icon!=null) {
                     super.setIcon(icon);
                 } else {
-                    log.error("No icon for state "+_state2nameMap.get(state)+", status= "+_status);
+                    log.warn("No icon for state "+_state2nameMap.get(state)+", status= "+_status);
                 }
             }
         }
@@ -420,7 +420,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     IndicatorTOItemPanel _TOPanel;
     protected void editItem() {
         if (log.isDebugEnabled()) log.debug("edit: ");
-        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO",
                                        PickListModel.turnoutPickModelInstance(), _editor);
         _TOPanel.init( new ActionListener() {
@@ -440,10 +440,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         _TOPanel.setShowTrainName(_showTrain);
         _paletteFrame.add(_TOPanel);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
         _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {

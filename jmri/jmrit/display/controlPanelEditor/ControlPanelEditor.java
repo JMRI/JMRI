@@ -79,7 +79,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     private JCheckBoxMenuItem editableBox = new JCheckBoxMenuItem(rb.getString("CloseEditor"));
     private JCheckBoxMenuItem positionableBox = new JCheckBoxMenuItem(rb.getString("CheckBoxPositionable"));
     private JCheckBoxMenuItem controllingBox = new JCheckBoxMenuItem(rb.getString("CheckBoxControlling"));
-    private JCheckBoxMenuItem showCoordinatesBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowCoordinates"));
+//    private JCheckBoxMenuItem showCoordinatesBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowCoordinates"));
     private JCheckBoxMenuItem showTooltipBox = new JCheckBoxMenuItem(rb.getString("CheckBoxShowTooltips"));
     private JCheckBoxMenuItem hiddenBox = new JCheckBoxMenuItem(rb.getString("CheckBoxHidden"));
     private JRadioButtonMenuItem scrollBoth = new JRadioButtonMenuItem(rb.getString("ScrollBoth"));
@@ -158,11 +158,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         mi.addActionListener(new ActionListener() {
                 Editor editor;
                 public void actionPerformed(ActionEvent e) {
-                    if (_itemPalette==null) {
-                        _itemPalette = new jmri.jmrit.display.palette.ItemPalette("Item Pallet", editor);
-                    } else {
-                        _itemPalette.setVisible(true);
-                    }
+                    makePalette();
+                    _itemPalette.setVisible(true);
                 }
                 ActionListener init(Editor ed) {
                     editor = ed;
@@ -251,7 +248,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             });                    
         hiddenBox.setSelected(showHidden());
 
-        _optionMenu.add(showCoordinatesBox);
+//        _optionMenu.add(showCoordinatesBox);
         /*
         showCoordinatesBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -519,6 +516,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         } else {
             super.setTitle(name);
         }
+    }
+
+    public void makePalette() {
+        if (_itemPalette==null) {
+            _itemPalette = new jmri.jmrit.display.palette.ItemPalette("Item Pallet", this);
+        }
+        _itemPalette.setVisible(false);
     }
 
     // all content loaded from file.  Set putItem override.

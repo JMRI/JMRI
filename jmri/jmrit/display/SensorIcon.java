@@ -27,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -392,7 +392,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         updateSize();
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
     TableItemPanel _itemPanel;
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
@@ -405,7 +404,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
     
     protected void editItem() {
-        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor",
                                        PickListModel.sensorPickModelInstance(), _editor);
         _itemPanel.init( new ActionListener() {
@@ -415,10 +414,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         });
         _itemPanel.setSelection(getSensor());
         _paletteFrame.add(_itemPanel);
-        _paletteFrame.setLocationRelativeTo(this);
-        _paletteFrame.toFront();
         _paletteFrame.pack();
-        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
