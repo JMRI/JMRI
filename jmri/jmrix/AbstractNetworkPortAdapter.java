@@ -13,9 +13,10 @@ import java.net.*;
  *
  *
  * @author      Paul Bender  Copyright (C) 2009
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see         jmri.jmrix.NetworkConfigException
  */
+@Deprecated
 abstract public class AbstractNetworkPortAdapter extends AbstractSerialPortController{
 
         // the host name and port number identify what we are 
