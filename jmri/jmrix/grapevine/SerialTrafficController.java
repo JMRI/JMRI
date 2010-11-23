@@ -27,7 +27,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2006, 2008
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class SerialTrafficController extends AbstractMRNodeTrafficController implements SerialInterface {
 
@@ -180,7 +180,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
         return null;
     }
 
-    protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
+    protected synchronized void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         // inform node, and if it resets then reinitialize 
         if (getNode(curSerialNodeIndex) != null)      
             if (getNode(curSerialNodeIndex).handleTimeout(m,l)) 
@@ -189,7 +189,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
             log.warn("Timeout can't be handled due to missing node index="+curSerialNodeIndex);
     }
     
-    protected void resetTimeout(AbstractMRMessage m) {
+    protected synchronized void resetTimeout(AbstractMRMessage m) {
         // inform node
         getNode(curSerialNodeIndex).resetTimeout(m);
         
@@ -220,6 +220,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     static volatile protected SerialTrafficController self = null;
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+                        justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { return new SerialReply(); }
