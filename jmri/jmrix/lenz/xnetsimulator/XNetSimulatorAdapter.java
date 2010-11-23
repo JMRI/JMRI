@@ -32,7 +32,7 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009-2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
 public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
@@ -364,7 +364,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         }
     }
 
-    static XNetSimulatorAdapter mInstance = null;
+    volatile static XNetSimulatorAdapter mInstance = null;
     private DataOutputStream pout=null; // for output to other classes
     private DataInputStream pin = null; // for input from other classes    
     // internal ends of the pipes
