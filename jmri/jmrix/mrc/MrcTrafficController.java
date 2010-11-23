@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class MrcTrafficController extends AbstractMRTrafficController
 	implements MrcInterface {
@@ -90,6 +90,8 @@ public class MrcTrafficController extends AbstractMRTrafficController
     }
 
     static volatile protected MrcTrafficController self = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
+                        justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { return new MrcReply(); }
