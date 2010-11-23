@@ -15,7 +15,7 @@ import jmri.jmrix.can.TrafficController;
  * System names are "MSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2008, 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public class OlcbSensorManager extends jmri.managers.AbstractSensorManager implements CanListener {
 
@@ -50,6 +50,8 @@ public class OlcbSensorManager extends jmri.managers.AbstractSensorManager imple
     }
 
     // ctor has to register for LocoNet events
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     public OlcbSensorManager() {
         TrafficController.instance().addCanListener(this);
         mInstance = this;

@@ -29,7 +29,7 @@ import java.io.DataInputStream;
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
  * @author Bob Jacobsen, Dave Duchamp, adapt to use for Maple 2008, 2009, 2010
  *
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  * @since 2.3.7
  */
 
@@ -233,6 +233,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
     }
 
     static volatile protected SerialTrafficController self = null;
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { return new SerialReply(); }
