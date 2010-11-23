@@ -252,12 +252,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         hiddenBox.setSelected(showHidden());
 
         _optionMenu.add(showCoordinatesBox);
+        /*
         showCoordinatesBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 setShowCoordinates(showCoordinatesBox.isSelected());
             }
         });
         showCoordinatesBox.setSelected(showCoordinates());
+        */
 
         _optionMenu.add(showTooltipBox);
         showTooltipBox.addActionListener(new ActionListener() {
@@ -530,7 +532,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
-        showCoordinatesBox.setSelected(showCoordinates());
+        //showCoordinatesBox.setSelected(showCoordinates());
         showTooltipBox.setSelected(showTooltip());
         hiddenBox.setSelected(showHidden());
         switch (_scrollState) {

@@ -64,7 +64,7 @@ public class PanelEditor extends Editor implements ItemListener {
     JCheckBox editableBox = new JCheckBox(rb.getString("CheckBoxEditable"));
     JCheckBox positionableBox = new JCheckBox(rb.getString("CheckBoxPositionable"));
     JCheckBox controllingBox = new JCheckBox(rb.getString("CheckBoxControlling"));
-    JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
+    //JCheckBox showCoordinatesBox = new JCheckBox(rb.getString("CheckBoxShowCoordinates"));
     JCheckBox showTooltipBox = new JCheckBox(rb.getString("CheckBoxShowTooltips"));
     JCheckBox hiddenBox = new JCheckBox(rb.getString("CheckBoxHidden"));
     JCheckBox menuBox = new JCheckBox(rb.getString("CheckBoxMenuBar"));
@@ -290,6 +290,7 @@ public class PanelEditor extends Editor implements ItemListener {
             hiddenCheckBoxListener();
             hiddenBox.setSelected(showHidden());
 
+            /*
             contentPane.add(showCoordinatesBox);
             showCoordinatesBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -297,6 +298,7 @@ public class PanelEditor extends Editor implements ItemListener {
                 }
             });
             showCoordinatesBox.setSelected(showCoordinates());
+            */
 
             contentPane.add(showTooltipBox);
             showTooltipBox.addActionListener(new ActionListener() {
@@ -384,7 +386,7 @@ public class PanelEditor extends Editor implements ItemListener {
         editableBox.setSelected(isEditable());
         positionableBox.setSelected(allPositionable());
         controllingBox.setSelected(allControlling());
-        showCoordinatesBox.setSelected(showCoordinates());
+        //showCoordinatesBox.setSelected(showCoordinates());
         showTooltipBox.setSelected(showTooltip());
         hiddenBox.setSelected(showHidden());
         menuBox.setSelected(getTargetFrame().getJMenuBar().isVisible());

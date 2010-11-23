@@ -17,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -45,7 +45,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
         panel.setAttribute("width", ""+size.width);
         panel.setAttribute("editable", ""+(p.isEditable()?"yes":"no"));
         panel.setAttribute("positionable", ""+(p.allPositionable()?"yes":"no"));
-        panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
+        //panel.setAttribute("showcoordinates", ""+(p.showCoordinates()?"yes":"no"));
         panel.setAttribute("showtooltips", ""+(p.showTooltip()?"yes":"no"));
         panel.setAttribute("controlling", ""+(p.allControlling()?"yes":"no"));
         panel.setAttribute("hide", p.isVisible()?"no":"yes");
@@ -134,10 +134,12 @@ public class PanelEditorXml extends AbstractXmlAdapter {
             value = false;
         panel.setAllPositionable(value);
         
+        /*
         value = false;
         if ((a = element.getAttribute("showcoordinates"))!=null && a.getValue().equals("yes"))
             value = true;
         panel.setShowCoordinates(value);
+        */
 
         value = true;
         if ((a = element.getAttribute("showtooltips"))!=null && a.getValue().equals("no"))

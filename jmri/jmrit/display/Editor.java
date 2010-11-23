@@ -566,11 +566,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return _showTooltip;
     }
 
+  
     /**
      *  Control whether target panel items will show their
      *  coordinates in their popup memu. 
      * @param state true for show coodinates.
      */
+    /*
     public void setShowCoordinates(boolean state) {
         _showCoordinates = state;
         for (int i = 0; i<_contents.size(); i++) {
@@ -580,6 +582,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public boolean showCoordinates() {
         return _showCoordinates;
     }
+    */
 
     /**
      *  Control whether target panel shows a menu
@@ -710,7 +713,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             ed.getTargetFrame().setSize(size.width,size.height);
             ed.setAllEditable(isEditable());
             ed.setAllPositionable(allPositionable());
-            ed.setShowCoordinates(showCoordinates());
+            //ed.setShowCoordinates(showCoordinates());
             ed.setAllShowTooltip(showTooltip());
             ed.setAllControlling(allControlling());
             ed.setShowHidden(isVisible());
@@ -767,7 +770,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     * dialog memu item to edit them.
     */
     public boolean setShowCoordinatesMenu(Positionable p, JPopupMenu popup) {
-        if (showCoordinates()) {
+        //if (showCoordinates()) {
             JMenu edit = new JMenu(rb.getString("EditLocation"));
             if ((p instanceof MemoryIcon) && (p.getPopupUtility().getFixedWidth()==0)) {
                 MemoryIcon pm = (MemoryIcon) p;
@@ -781,8 +784,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             }
             popup.add(edit);
            return true;
-        }
-        return false;
+        //}
+        //return false;
     }
 
     /**
