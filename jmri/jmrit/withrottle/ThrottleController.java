@@ -24,7 +24,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.15 $
+ *	@version $Revision: 1.16 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -53,6 +53,8 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
     private ArrayList<ControllerInterface> controllerListeners;
     private boolean useLeadLocoF;
     ConsistFunctionController leadLocoF = null;
+
+    final boolean isMomF2 = WiThrottleManager.withrottlePreferencesInstance().isUseMomF2();
 
 /**
  *  Constructor.
@@ -557,10 +559,8 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             
         }else {	//	Function Button up
 
-            //  F2 is momentary for horn
-            //  Need to figure out what to do, Should this be in prefs?
-
-            if (receivedFunction.equals("2")){
+            //  F2 is momentary for horn, unless prefs are set to follow roster entry
+            if ((isMomF2) && (receivedFunction.equals("2"))){
                 functionThrottle.setF2(false);
                 return;
             }
