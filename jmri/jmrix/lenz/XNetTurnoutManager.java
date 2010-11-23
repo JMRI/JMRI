@@ -11,7 +11,7 @@ import jmri.Turnout;
  *
  * @author			Bob Jacobsen Copyright (C) 2001
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.16 $
+ * @version			$Revision: 2.17 $
  */
 public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager implements XNetListener {
 
@@ -19,6 +19,8 @@ public class XNetTurnoutManager extends jmri.managers.AbstractTurnoutManager imp
 
     protected XNetTrafficController tc = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     // ctor has to register for XNet events
     public XNetTurnoutManager(XNetTrafficController controller, String prefix) {
         super();

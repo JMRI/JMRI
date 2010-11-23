@@ -21,7 +21,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -166,6 +166,8 @@ public class NceTrafficController extends AbstractMRTrafficController implements
     }
 
     protected static NceTrafficController self = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     protected synchronized void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { 

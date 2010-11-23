@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -396,6 +396,8 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
 
     static volatile protected AcelaTrafficController self = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { 

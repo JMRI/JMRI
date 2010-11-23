@@ -20,7 +20,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  * 
  * @author Bob Jacobsen  Copyright (C) 2001
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class SRCPTrafficController extends AbstractMRTrafficController
 	implements SRCPInterface {
@@ -91,6 +91,8 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     }
 
     static volatile protected SRCPTrafficController self = null;
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
 
     protected AbstractMRReply newReply() { return new SRCPReply(); }

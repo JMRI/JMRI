@@ -26,13 +26,15 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
  */
 public class Mx1Packetizer extends Mx1TrafficController {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
 	public Mx1Packetizer(Mx1CommandStation pCommandStation) {
         super(pCommandStation);
         self=this;

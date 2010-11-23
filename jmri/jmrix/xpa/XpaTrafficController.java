@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class XpaTrafficController implements XpaInterface, Runnable {
 
@@ -31,6 +31,8 @@ public class XpaTrafficController implements XpaInterface, Runnable {
 
  	XmtHandler xmtHandler = new XmtHandler();
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
 	public XpaTrafficController() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;

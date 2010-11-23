@@ -23,10 +23,12 @@ import gnu.io.SerialPort;
  * included in the QsiMessage and QsiReply content.
  * 
  * @author			Bob Jacobsen  Copyright (C) 2007, 2008
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class QsiTrafficController implements QsiInterface, Runnable {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                        justification="temporary until mult-system; only set at startup")
 	public QsiTrafficController() {
 		if (log.isDebugEnabled()) log.debug("setting instance: "+this);
 		self=this;
