@@ -27,13 +27,13 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.23 $
+ * @version			$Revision: 1.24 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
 
-    public String openPort(String portName, String appName)  {
+    public synchronized String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -205,7 +205,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     // private control members
     private boolean opened = false;
     DataInputStream serialStream = null;
-    OutputStream ostream = null;
+    volatile OutputStream ostream = null;
     int[] offsetArray = null;
 
     static public SerialAdapter instance() {
