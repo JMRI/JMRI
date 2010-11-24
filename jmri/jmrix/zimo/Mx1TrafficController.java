@@ -11,7 +11,7 @@ import java.util.Vector;
  * method for locating the local implementation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.6 $
+ * @version 		$Revision: 1.7 $
  *
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -27,7 +27,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
 		return self;
 	}
 
-	static protected Mx1TrafficController self = null;
+	static Mx1TrafficController self = null;
 
     /**
      * Must provide a ZimoCommandStation reference at creation time
