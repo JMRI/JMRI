@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.86 2010-11-15 00:32:29 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.87 2010-11-24 05:19:40 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -1654,16 +1654,18 @@ following operation windows:
 <ul>
 	<li>Settings</li>
 	<li>Edit Location</li>
+	<li>Cars</li>
 	<li>Edit Car</li>
+	<li>Engines</li>
 	<li>Edit Engine</li>
 	<li>Trains</li>
 	<li>Edit Train</li>
 	<li>Timetable</li>
 </ul>
 
-<P>The program also allows you to resize the Trains and Timetable
+<P>The program also allows you to resize the Cars, Engines, Trains and Timetable
 table column widths. Adjust the column widths to your liking and then
-press "Save Builds" to save your preferences.</P>
+press the window's "Save" or "Save Builds" to save your preferences.</P>
 
 <P>The end of operations help.</P>
 </DIV>
