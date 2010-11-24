@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.125 $
+ * @version     $Revision: 1.126 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -75,7 +75,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
                     return true;
                 }
             });
-        
+            
         // Install configuration manager and Swing error handler
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
         InstanceManager.setConfigureManager(cm);
@@ -90,6 +90,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // Install a user preferences manager
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         
+        // install preference manager
+        InstanceManager.setTabbedPreferences(new apps.gui3.TabbedPreferences());
         // find preference file and set location in configuration manager
         XmlFile.ensurePrefsPresent(XmlFile.prefsDir());
         // Needs to be declared final as we might need to
@@ -119,7 +121,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             log.info("No saved preferences, will open preferences window");
             configOK = false;
         }
-        
+
 	// populate GUI
         log.debug("Start UI");
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -128,7 +130,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
         // Create menu categories and add to the menu bar, add actions to menus
         createMenus(menuBar, frame);
-        
         
         long end = System.nanoTime();
         
@@ -305,8 +306,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     Action prefsAction;
     
-    protected void doPreferences() {
-            prefsAction.actionPerformed(null);
+    public void doPreferences() {
+        prefsAction.actionPerformed(null);
     }
 
     /**
@@ -320,10 +321,6 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void editMenu(JMenuBar menuBar, JFrame frame) {
-        prefsAction = new jmri.util.swing.JmriNamedPaneAction(
-                        rb.getString("MenuItemPreferences"),
-                        new jmri.util.swing.sdi.JmriJFrameInterface(), 
-                        "apps.gui3.TabbedPreferences");
 
         JMenu editMenu = new JMenu(rb.getString("MenuEdit"));
         menuBar.add(editMenu);
@@ -341,7 +338,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         editMenu.add(a);
 
         // prefs
-        editMenu.add(prefsAction); // Preferences item via action
+        prefsAction = new apps.gui3.TabbedPreferencesAction("Preferences");
+        editMenu.add(prefsAction);
     }
 
     protected void toolsMenu(JMenuBar menuBar, JFrame frame) {
@@ -650,7 +648,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 							}
 						}
 					},
-					java.awt.AWTEvent.KEY_EVENT_MASK
+					java.awt.AWTEvent .KEY_EVENT_MASK
 				);
 		}
 		// bring up splash window for startup

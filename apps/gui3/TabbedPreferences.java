@@ -20,23 +20,24 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import org.jdom.Element;
+import java.util.Vector;
 
 /**
  * Provide access to preferences via a 
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class TabbedPreferences extends AppConfigBase {
-    
+
+    @Override
     public String getHelpTarget() { return "package.apps.TabbedPreferences"; }
+    @Override
     public String getTitle() { return rb.getString("TitlePreferences"); }
+    @Override
     public boolean isMultipleInstances() { return false; }  // only one of these!
     static ArrayList<Element> preferencesElements = new ArrayList<Element>();
-    
-    String choices[] = {rb.getString("MenuConnections"), rb.getString("MenuDefaults"), rb.getString("MenuFileLocation"), rb.getString("MenuStartUp"), rb.getString("MenuDisplay"), rb.getString("MenuMessages"), rb.getString("MenuRoster"), rb.getString("MenuThrottle"), rb.getString("MenuWiThrottle")};
-    String listRefValues[] = { "CONNECTIONS", "DEFAULTS", "FILELOCATIONS", "STARTUP", "DISPLAY", "MESSAGES", "ROSTER", "THROTTLE", "WITHROTTLE"};
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -46,31 +47,54 @@ public class TabbedPreferences extends AppConfigBase {
     final jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
     final jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
     
-    ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
+    static ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
+    static ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
-
-    public TabbedPreferences() {
-        super();
+    JPanel buttonpanel;
+    static JList list;
+    JScrollPane listScroller;
+    
+    public TabbedPreferences(){
         
+        /*Adds the place holders for the menu items so that any items
+        add by third party code is added to the end*/
+        preferencesArray.add(new preferencesCatItems("CONNECTIONS", rb.getString("MenuConnections")));
+        
+        preferencesArray.add(new preferencesCatItems("DEFAULTS", rb.getString("MenuDefaults")));
+        
+        preferencesArray.add(new preferencesCatItems("FILELOCATIONS", rb.getString("MenuFileLocation")));
+        
+        preferencesArray.add(new preferencesCatItems("STARTUP", rb.getString("MenuStartUp")));
+        
+        preferencesArray.add(new preferencesCatItems("DISPLAY", rb.getString("MenuDisplay")));
+        
+        preferencesArray.add(new preferencesCatItems("MESSAGES", rb.getString("MenuMessages")));
+        
+        preferencesArray.add(new preferencesCatItems("ROSTER", rb.getString("MenuRoster")));
+        
+        preferencesArray.add(new preferencesCatItems("THROTTLE", rb.getString("MenuThrottle")));
+        
+        preferencesArray.add(new preferencesCatItems("WITHROTTLE", rb.getString("MenuWiThrottle")));
+
+    }
+    
+    public void init(){
         pref.disallowSave();
-        final JList list = new JList(choices);
-        JScrollPane listScroller = new JScrollPane(list);
+        list = new JList();
+        listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
-        
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-        list.setLayoutOrientation(JList.VERTICAL);
-        
-        list.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent e){
-                selection(listRefValues[list.getSelectedIndex()]);
-            }
-        });
-
-        
-        JPanel buttonpanel = new JPanel();
+    
+        buttonpanel = new JPanel();
         buttonpanel.setLayout(new BoxLayout(buttonpanel,BoxLayout.Y_AXIS));
         buttonpanel.setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 3));
         buttonpanel.add(listScroller);
+        
+        detailpanel = new JPanel();
+        detailpanel.setLayout(new CardLayout());
+        detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
+        
+        GuiLafConfigPane gui = new GuiLafConfigPane();
+        items.add(0, gui);
         
         JButton save = new JButton(rb.getString("ButtonSave"));
         save.addActionListener( new ActionListener() {
@@ -82,9 +106,66 @@ public class TabbedPreferences extends AppConfigBase {
                     pref.allowSave();
                 }
             });
-        buttonpanel.add(save);
         
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+        
+        setUpConnectionPanel();
+        connectionPanel.setSelectedIndex(0);
+        
+        addItem("CONNECTIONS", rb.getString("MenuConnections"), null, null, 
+                connectionPanel, false, null);
+                
+        addItem("DEFAULTS",rb.getString("MenuDefaults"), rb.getString("TabbedLayoutDefaults"), rb.getString("LabelTabbedLayoutDefaults"), 
+            new apps.ManagerDefaultsConfigPane(), true, null);
+        
+        addItem("FILELOCATIONS", rb.getString("MenuFileLocation"), rb.getString("TabbedLayoutFileLocations"),
+                rb.getString("LabelTabbedFileLocations"), new apps.FileLocationPane(), true, null);
+        
+        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupActions"),
+            rb.getString("LabelTabbedLayoutStartupActions"), new apps.PerformActionPanel(), true, null);
+        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutCreateButton"),
+            rb.getString("LabelTabbedLayoutCreateButton"), new apps.CreateButtonPanel(), true, null);
+        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupFiles"),
+                rb.getString("LabelTabbedLayoutStartupFiles"), new apps.PerformFilePanel(), true, null);
+        addItem("STARTUP", rb.getString("MenuStartUp"), rb.getString("TabbedLayoutStartupScripts"),
+                rb.getString("LabelTabbedLayoutStartupScripts"), new apps.PerformScriptPanel(), true, null);
+
+        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutGUI"),
+                rb.getString("LabelTabbedLayoutGUI"), gui, true, null);
+        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutLocale"),
+                rb.getString("LabelTabbedLayoutLocale"), gui.doLocale(), false, null);
+        addItem("DISPLAY", rb.getString("MenuDisplay"), rb.getString("TabbedLayoutConsole"),
+                rb.getString("LabelTabbedLayoutConsole"), new apps.SystemConsoleConfigPanel(), true, null);
+        
+        addItem("MESSAGES", rb.getString("MenuMessages"), null, null, 
+            new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), false, null);
+        
+        addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutProgrammer"), rb.getString("LabelTabbedLayoutProgrammer"), 
+            new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);        
+        addItem("ROSTER", rb.getString("MenuRoster"), rb.getString("TabbedLayoutRoster"),
+            rb.getString("LabelTabbedLayoutRoster"), new jmri.jmrit.roster.RosterConfigPane(), true, null);
+        
+        addItem("THROTTLE", rb.getString("MenuThrottle"), null, null, 
+            throttlePreferences, false, null);
+        
+        addItem("WITHROTTLE", rb.getString("MenuWiThrottle"), null, null, 
+            withrottlePrefsPanel, false, null);
+            
+        for(int x=0; x<preferencesArray.size(); x++){
+            detailpanel.add(preferencesArray.get(x).getPanel(), preferencesArray.get(x).getPrefItem());
+        }
+
+        updateJList();
+        add(buttonpanel);
+        add(new JSeparator(JSeparator.VERTICAL));
+        add(detailpanel);
+        
+        buttonpanel.add(save);
+        list.setSelectedIndex(0);
+        selection(preferencesArray.get(0).getPrefItem());
+    }
+    
+    void setUpConnectionPanel(){
         ArrayList<Object> connList=null;
         int count = 0;
         connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.JmrixConfigPane.class);
@@ -136,68 +217,38 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             } 
         }); 
-        detailpanel.setLayout(new CardLayout());
-        detailpanel.setBorder(BorderFactory.createEmptyBorder(6, 3, 6, 6));
-        detailpanel.add(connectionPanel, "CONNECTIONS");
-        GuiLafConfigPane gui;
-
-        JTabbedPane defaultsPanel = new JTabbedPane();
-        JTabbedPane startupPanel = new JTabbedPane();
-        JTabbedPane displayPanel = new JTabbedPane();
-        JTabbedPane rosterPanel = new JTabbedPane();
-        JTabbedPane filePanel = new JTabbedPane();
-        
-        detailpanel.add(defaultsPanel, "DEFAULTS");
-        detailpanel.add(startupPanel, "STARTUP");
-        detailpanel.add(displayPanel, "DISPLAY");
-        detailpanel.add(filePanel, "FILELOCATIONS");
-        detailpanel.add(throttlePreferences, "THROTTLE");
-        detailpanel.add(withrottlePrefsPanel, "WITHROTTLE");
-        detailpanel.add(rosterPanel, "ROSTER");
-        detailpanel.add(new jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane(), "MESSAGES");
-
-
-        addItem(defaultsPanel, rb.getString("TabbedLayoutDefaults"),
-                    "LabelTabbedLayoutDefaults", new apps.ManagerDefaultsConfigPane(), true, null);
-
-        addItem(rosterPanel, rb.getString("TabbedLayoutProgrammer"),
-                    "LabelTabbedLayoutProgrammer", new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true), true, null);
-
-        addItem(startupPanel, rb.getString("TabbedLayoutStartupActions"),
-                    "LabelTabbedLayoutStartupActions", new apps.PerformActionPanel(), true, null);
-        addItem(startupPanel, rb.getString("TabbedLayoutCreateButton"),
-                    "LabelTabbedLayoutCreateButton", new apps.CreateButtonPanel(), true, null);
-        addItem(startupPanel, rb.getString("TabbedLayoutStartupFiles"),
-                    "LabelTabbedLayoutStartupFiles", new apps.PerformFilePanel(), true, null);
-        addItem(startupPanel, rb.getString("TabbedLayoutStartupScripts"),
-                    "LabelTabbedLayoutStartupScripts", new apps.PerformScriptPanel(), true, null);
-
-        addItem(displayPanel, rb.getString("TabbedLayoutGUI"),
-                    "LabelTabbedLayoutGUI", gui = new GuiLafConfigPane(), true, null);
-        addItem(displayPanel, rb.getString("TabbedLayoutLocale"),
-                    "LabelTabbedLayoutLocale", gui.doLocale(), false, null);
-        addItem(displayPanel, rb.getString("TabbedLayoutConsole"),
-                    "LabelTabbedLayoutConsole", new apps.SystemConsoleConfigPanel(), true, null);
-        addItem(rosterPanel, rb.getString("TabbedLayoutRoster"),
-                    "LabelTabbedLayoutRoster", new jmri.jmrit.roster.RosterConfigPane(), true, null);
-        addItem(filePanel, rb.getString("TabbedLayoutFileLocations"),
-                    "LabelTabbedFileLocations", new apps.FileLocationPane(), true, null);
-
-        // horrible hack to make sure GUI is done first
-        items.remove(gui);
-        items.add(0, gui);
-        
-        // finish layout
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        
-
-        
-        add(buttonpanel);
-        add(new JSeparator(JSeparator.VERTICAL));
-        add(detailpanel);
-        
-        list.setSelectedIndex(0);
-
+    }
+    
+    public static void setUIFontSize(float size){
+        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        Font f;
+        while (keys.hasMoreElements()) {
+          Object key = keys.nextElement();
+          Object value = UIManager.get (key);
+          
+          if (value instanceof javax.swing.plaf.FontUIResource){
+            System.out.println(key);
+            f = UIManager.getFont(key).deriveFont(Font.PLAIN, size);
+            System.out.println(f.getName() + " " + f.getFontName() + " " + f.getFamily());
+            UIManager.put (key, f);
+          }
+        }
+    }
+    
+    public static void setUIFont(javax.swing.plaf.FontUIResource f){
+    //
+    // sets the default font for all Swing components.
+    // ex. 
+    //  setUIFont (new javax.swing.plaf.FontUIResource
+    //   ("Serif",Font.ITALIC,12));
+    //
+    java.util.Enumeration keys = UIManager.getDefaults().keys();
+    while (keys.hasMoreElements()) {
+      Object key = keys.nextElement();
+      Object value = UIManager.get (key);
+      if (value instanceof javax.swing.plaf.FontUIResource)
+        UIManager.put (key, f);
+      }
     }
     
     
@@ -205,35 +256,71 @@ public class TabbedPreferences extends AppConfigBase {
         CardLayout cl = (CardLayout) (detailpanel.getLayout());
         cl.show(detailpanel, View);
     }
-    /**
-     * Create a new tab containing an item
-     *
-     * @param title Title of the tab
-     * @param labelKey Key in the resource bundle for a label, or null
-     * @param item The configuration item to display
-     * @param store Should this item be saved for later storage? false means somebody
-     *        else is handling the storage responsibility.
-     */
-    void addItem(JTabbedPane panel, String title, String labelKey, JComponent item, boolean store, String tooltip) {
-        JComponent p = new JPanel();
-        //JComponent p = new ButtonTabComponent(panel);
-        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-
-        if (labelKey != null) {
-            // insert label at top
-            JTextArea t = new JTextArea(rb.getString(labelKey));
-            t.setEditable(false);
-            t.setAlignmentX(0.5f);
-            t.setPreferredSize(t.getMinimumSize());
-            t.setMaximumSize(t.getMinimumSize());
-            t.setOpaque(false);
-            p.add(t);
+    
+    public void addItem(String prefItem, String itemText, String tabtitle, String labelKey, JComponent item, boolean store, String tooltip){
+        preferencesCatItems itemBeingAdded =null;
+        for(int x=0; x<preferencesArray.size(); x++){
+            if(preferencesArray.get(x).getPrefItem().equals(prefItem)){
+                itemBeingAdded=preferencesArray.get(x);
+                break;
+            }
         }
-        p.add(item);
-        p.add(Box.createVerticalGlue());
+        if (itemBeingAdded==null){
+            itemBeingAdded = new preferencesCatItems(prefItem, itemText);
+            preferencesArray.add(itemBeingAdded);
+            //As this is a new item in the selection list, we need to update the JList.
+            updateJList();
+        }
+        if (tabtitle==null)
+            tabtitle = itemText;
+        itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item, tooltip, store);
+        if (store) items.add(item);
+    }
+    
+    /* Method allows for the preference to goto a specific list item */
+    
+    public void gotoPreferenceItem(String selection){
+        selection(selection);
+        for(int x=0; x<preferencesArray.size(); x++){
+            if(preferencesArray.get(x).getPrefItem().equals(selection)){
+                list.setSelectedIndex(x);
+                return;
+            }
+        }
+    }
+    /*
+    * Returns an arrayList of existing list items.
+    */
+    public ArrayList<String> getPreferenceMenu(){
+        return getChoices();
+    }
+    
+    protected static ArrayList<String> getChoices() {
+        ArrayList<String> choices = new ArrayList<String>();
+        for(int x=0; x<preferencesArray.size(); x++){
+            choices.add(preferencesArray.get(x).getItemString());
+        }
+        return choices;
+    }
+    
+    void updateJList(){
+        buttonpanel.remove(listScroller);
+        if (list.getListSelectionListeners().length>0){
+            list.removeListSelectionListener(list.getListSelectionListeners()[0]);
+        }
+        list = new JList(new Vector<String>(getChoices()));
+        listScroller = new JScrollPane(list);
+        listScroller.setPreferredSize(new Dimension(100, 100));
         
-        panel.addTab(title, null, p, tooltip);
-        if (store) items.add(item);  
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+        list.setLayoutOrientation(JList.VERTICAL);
+        list.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent e){
+                preferencesCatItems item = preferencesArray.get(list.getSelectedIndex());
+                selection(item.getPrefItem());
+            }
+        });
+        buttonpanel.add(listScroller);    
     }
     
     void addConnection(int tabPosition, final int instance){
@@ -242,7 +329,6 @@ public class TabbedPreferences extends AppConfigBase {
         
         p.add(JmrixConfigPane.instance(instance));
         p.add(Box.createVerticalGlue());
-        //p.setToolTipText(JmrixConfigPane.instance(instance).getCurrentProtocolName());
         JPanel b = new JPanel();
         b.setLayout(new FlowLayout(FlowLayout.RIGHT, 0, 0));
         JButton deleteButton = new JButton(rb.getString("ButtonDeleteConnection"));
@@ -305,6 +391,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
         //The following is not supported in 1.5, but is in 1.6 left here for future use.
 //        connectionPanel.setTabComponentAt(tabPosition, new ButtonTabComponent(connectionPanel));
+
         items.add(JmrixConfigPane.instance(instance));
     }
     
@@ -385,6 +472,104 @@ public class TabbedPreferences extends AppConfigBase {
                 } 
             });
         }        
+    }
+    
+    class preferencesCatItems {
+        
+        /* This contains details of all list items to be displayed in the preferences*/
+        
+        String itemText;
+        String prefItem;
+        
+        ArrayList<tabDetails> tabDetailsArray = new ArrayList<tabDetails>();
+        
+        preferencesCatItems(String pref, String title){
+            prefItem=pref;
+            itemText=title;
+        }
+        
+        void addPreferenceItem(String title, String labelkey, JComponent item, String tooltip, boolean store){
+            for(int x=0; x<tabDetailsArray.size(); x++){
+                if(tabDetailsArray.get(x).getTitle().equals(title)){
+                    //If we have a match then we do not need to add it back in.
+                    return;
+                }
+            }
+            tabDetailsArray.add(new tabDetails(labelkey, title,  item, tooltip, store));
+        }
+        
+        String getPrefItem(){
+            return prefItem;
+        }
+        
+        String getItemString(){
+            return itemText;
+        }
+        
+        void addToStore(){
+            for(int x=0; x<tabDetailsArray.size(); x++){
+                tabDetailsArray.get(x).addToStore();
+            }
+        }
+        
+        /*This returns a JPanel if only one item is configured for a menu item
+        or it returns a JTabbedFrame if there are multiple items for the menu */
+        
+        JComponent getPanel() {
+            if(tabDetailsArray.size()==1){
+                return tabDetailsArray.get(0).getPanel();
+            } else {
+                JTabbedPane tabbedPane = new JTabbedPane();
+                for (int i = 0; i<tabDetailsArray.size(); i++){
+                    tabDetails tab = tabDetailsArray.get(i);
+                    tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(), tab.getToolTip());
+                }
+                return tabbedPane;
+            }
+        }
+        
+        class tabDetails{
+        
+        /* This contains all the JPanels that make up a preferences menus*/
+        
+            String tabText;
+            JComponent tabItem;
+            String tabTooltip;
+            String tabTitle;
+            JPanel tabPanel = new JPanel();
+            boolean store;
+            
+            tabDetails(String labelkey, String tabTit, JComponent item, String tooltip, boolean save){
+                tabItem = item;
+                tabTitle = tabTit;
+                tabTooltip = tooltip;
+                store = save;
+
+                JComponent p = new JPanel();
+                p.setLayout(new BorderLayout());
+                if (labelkey != null) {
+                    // insert label at top
+                    JTextArea t = new JTextArea(labelkey);
+                    t.setEditable(false);
+                    t.setAlignmentX(0.5f);
+                    t.setPreferredSize(t.getMinimumSize());
+                    t.setMaximumSize(t.getMinimumSize());
+                    t.setOpaque(false);
+                    p.add(t, BorderLayout.NORTH);
+                }
+                p.add(item, BorderLayout.CENTER);
+                tabPanel.setLayout(new BorderLayout());
+                tabPanel.add(p, BorderLayout.CENTER);
+            }
+            
+            String getToolTip() { return tabTooltip; }
+            
+            String getTitle() { return tabTitle; }
+            
+            JPanel getPanel() { return tabPanel;}
+            
+            void addToStore() { if(store) items.add(tabItem);}
+        }
     }
     /*Unable to do remove tab, via a component in 1.5 but is supported in 1.6
     left here until a move is made to 1.6 or an alternative method is used.*/

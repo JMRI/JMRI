@@ -7,6 +7,7 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.audio.DefaultAudioManager;
+import apps.gui3.TabbedPreferences;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.69 $
+ * @version			$Revision: 1.70 $
  */
 public class InstanceManager {
 
@@ -102,17 +103,22 @@ public class InstanceManager {
      * by type.
      */
     @SuppressWarnings("unchecked")   // checked by construction
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     static public String contentsToString() {
-        String retval = "";
+
+        StringBuffer retval = new StringBuffer();
         for (Class c : managerLists.keySet()) {
-            retval+= "List of "+c+" with "+getList(c).size()+" objects\n";
-            for (Object o : getList(c))
-                retval += "    "+o.getClass().toString()+"\n";
+            retval.append("List of");
+            retval.append(c);
+            retval.append(" with ");
+            retval.append(Integer.toString(getList(c).size()));
+            retval.append(" objects\n");
+            for (Object o : getList(c)){
+                retval.append("    ");
+                retval.append(o.getClass().toString());
+                retval.append("\n");
+            }
         }
-        return retval;
+        return retval.toString();
     }
     
     static InstanceInitializer initializer = new jmri.managers.DefaultInstanceInitializer();
@@ -127,7 +133,7 @@ public class InstanceManager {
     static public ProgrammerManager programmerManagerInstance()  { 
         return getDefault(ProgrammerManager.class);
     }
-
+    
     static public void setProgrammerManager(ProgrammerManager p) {
         store(p, ProgrammerManager.class);
 
@@ -257,7 +263,11 @@ public class InstanceManager {
     static public ShutDownManager shutDownManagerInstance()  {
         return instance().shutDownManager;
     }
-
+    
+    static public TabbedPreferences tabbedPreferencesInstance()  {
+        return instance().tabbedPreferencesManager;
+    }
+    
     static public Timebase timebaseInstance()  {
         if (instance().timebase != null) return instance().timebase;
         instance().timebase = (Timebase)initializer.getDefault(Timebase.class);
@@ -436,6 +446,14 @@ public class InstanceManager {
         shutDownManager = p;
     }
 
+    private TabbedPreferences tabbedPreferencesManager = null;
+    static public void setTabbedPreferences(TabbedPreferences p) {
+        instance().addTabbedPreferences(p);
+    }
+    protected void addTabbedPreferences(TabbedPreferences p) {
+        tabbedPreferencesManager = p;
+    }
+    
     private Timebase timebase = null;
 	
     private ClockControl clockControl = null;
