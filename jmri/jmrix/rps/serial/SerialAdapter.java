@@ -27,7 +27,7 @@ import gnu.io.SerialPort;
  * for each address up to the max receiver, even if some are missing (0 in that case)
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.26 $
  */
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -149,7 +149,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
     }
 
     // base class methods for the PortController interface
-    public DataInputStream getInputStream() {
+    public synchronized DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             return null;
@@ -157,7 +157,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         return new DataInputStream(serialStream);
     }
 
-    public DataOutputStream getOutputStream() {
+    public synchronized DataOutputStream getOutputStream() {
         if (!opened) log.error("getOutputStream called before load(), stream not available");
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
@@ -228,14 +228,14 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         t.stop();
     }
 
-    public void dispose() {
+    public synchronized void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
         if (readerThread!=null) stopThread(readerThread);
 
         // release port
         if (activeSerialPort != null) activeSerialPort.close();
-        serialStream = null;
-        activeSerialPort = null;
+        serialStream = null;    // flags state
+        activeSerialPort = null; // flags state
     }
 
     /**
@@ -275,7 +275,12 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
             // message exists, now fill it
             int i;
             for (i = 0; i < maxMsg; i++) {
-                char char1 = (char) serialStream.readByte();
+                char char1; 
+                
+                synchronized (SerialAdapter.this) {
+                    char1 = (char) serialStream.readByte();
+                }
+                
                 if (char1 == 13) {  // 13 is the CR at the end; done this
                                     // way to be coding-independent
                     break;
