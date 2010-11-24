@@ -14,7 +14,7 @@ import java.util.ResourceBundle;
  * Common implementations for the Programmer interface.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 public abstract class AbstractProgrammer implements Programmer {
 
@@ -78,7 +78,7 @@ public abstract class AbstractProgrammer implements Programmer {
     /**
      * Internal routine to stop timer, as all is well
      */
-    protected void stopTimer() {
+    protected synchronized void stopTimer() {
         if (timer!=null) timer.stop();
     }
 

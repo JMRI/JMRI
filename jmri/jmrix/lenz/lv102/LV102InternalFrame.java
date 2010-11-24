@@ -16,8 +16,12 @@ import jmri.ProgrammerException;
  * This is a configuration utility for the LV102.
  * It allows the user to set the Track Voltage  and E-line status.
  *
+ * <p>
+ * Note that ctor starts a listener thread; if you subclass
+ * this class, be sure that initialization is in the right order.
+ *
  * @author			Paul Bender  Copyright (C) 2005
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class LV102InternalFrame extends javax.swing.JInternalFrame {
 
@@ -29,6 +33,9 @@ public class LV102InternalFrame extends javax.swing.JInternalFrame {
     final static int waitValue = 1000; // number of ms to wait after a 
 				       // programming operation.  This 
 				       // should not be more than 15.
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SC_START_IN_CTOR",
+            justification="with existing code structure, we do not expect this to ever be subclassed.")
 
    public LV102InternalFrame() {
 
