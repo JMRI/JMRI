@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * In particular, note that transmission is not a threaded operation.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class TrafficController implements jmri.CommandStation {
 
@@ -43,7 +43,7 @@ public class TrafficController implements jmri.CommandStation {
         return self;
     }
 
-    static protected TrafficController self = null;
+    static TrafficController self = null;
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                         justification="temporary until mult-system; only set at startup")
     protected void setInstance() { self = this; }
