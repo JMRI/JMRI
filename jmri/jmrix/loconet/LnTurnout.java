@@ -36,7 +36,7 @@ import jmri.implementation.AbstractTurnout;
  * contact Digitrax Inc for separate permission.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.27 $
+ * @version			$Revision: 1.28 $
  */
  
  public class LnTurnout extends AbstractTurnout implements LocoNetListener {
@@ -58,31 +58,38 @@ import jmri.implementation.AbstractTurnout;
         _validFeedbackTypes |= MONITORING|EXACT|INDIRECT;
         _activeFeedbackType = MONITORING;
         
-        // define the static list if needed
+        // if needed, create the list of feedback mode
+        // names with additional LocoNet-specific modes
         if (modeNames == null) {
-            if (_validFeedbackNames.length != _validFeedbackModes.length)
-                log.error("int and string feedback arrays different length");
-            String[] tempModeNames = new String[_validFeedbackNames.length+3];
-            int [] tempModeValues = new int[_validFeedbackNames.length+3];
-            for (int i = 0; i<_validFeedbackNames.length; i++) {
-                tempModeNames[i] = _validFeedbackNames[i];
-                tempModeValues[i] = _validFeedbackModes[i];
-            }
-            tempModeNames[_validFeedbackNames.length] = "MONITORING";
-            tempModeValues[_validFeedbackNames.length] = MONITORING;
-            tempModeNames[_validFeedbackNames.length+1] = "INDIRECT";
-            tempModeValues[_validFeedbackNames.length+1] = INDIRECT;
-            tempModeNames[_validFeedbackNames.length+2] = "EXACT";
-            tempModeValues[_validFeedbackNames.length+2] = EXACT;
-            
-            modeNames = tempModeNames;
-            modeValues = tempModeValues;
+            initFeedbackModes();
         }
         _validFeedbackNames = modeNames;
         _validFeedbackModes = modeValues;
      }
 
      LocoNetInterface controller;
+     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during creation of 1st turnout")
+     private void initFeedbackModes() {
+        if (_validFeedbackNames.length != _validFeedbackModes.length)
+            log.error("int and string feedback arrays different length");
+        String[] tempModeNames = new String[_validFeedbackNames.length+3];
+        int [] tempModeValues = new int[_validFeedbackNames.length+3];
+        for (int i = 0; i<_validFeedbackNames.length; i++) {
+            tempModeNames[i] = _validFeedbackNames[i];
+            tempModeValues[i] = _validFeedbackModes[i];
+        }
+        tempModeNames[_validFeedbackNames.length] = "MONITORING";
+        tempModeValues[_validFeedbackNames.length] = MONITORING;
+        tempModeNames[_validFeedbackNames.length+1] = "INDIRECT";
+        tempModeValues[_validFeedbackNames.length+1] = INDIRECT;
+        tempModeNames[_validFeedbackNames.length+2] = "EXACT";
+        tempModeValues[_validFeedbackNames.length+2] = EXACT;
+        
+        modeNames = tempModeNames;
+        modeValues = tempModeValues;
+     }
      
      static String[] modeNames = null;
      static int[] modeValues = null;

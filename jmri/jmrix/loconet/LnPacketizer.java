@@ -29,7 +29,7 @@ import java.util.NoSuchElementException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.27 $
+ * @version 		$Revision: 1.28 $
  *
  */
 public class LnPacketizer extends LnTrafficController {
@@ -44,6 +44,8 @@ public class LnPacketizer extends LnTrafficController {
   	 */
   	protected boolean echo = false;  // echo messages here, instead of in hardware
   	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
     public LnPacketizer() {
     	self=this;
     	debug = log.isDebugEnabled();

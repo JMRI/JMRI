@@ -36,7 +36,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.68 $
+ * @version			$Revision: 1.69 $
  */
 public class InstanceManager {
 
@@ -310,6 +310,8 @@ public class InstanceManager {
 
     // This is a separate, protected member so it
     // can be overridden in unit tests
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
     protected void init() {
         managerLists = new  HashMap<Class<?>,ArrayList<Object>>();
         turnoutManager = new jmri.managers.ProxyTurnoutManager();

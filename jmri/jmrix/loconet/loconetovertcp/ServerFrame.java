@@ -19,7 +19,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003, 2004
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 
 public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
@@ -92,6 +92,8 @@ public class ServerFrame extends jmri.util.JmriJFrame implements ServerListner {
     pack();
   }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
   public void windowClosing(java.awt.event.WindowEvent e) {
     setVisible(false);
     self = null ;

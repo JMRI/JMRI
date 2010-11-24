@@ -8,7 +8,7 @@ package jmri.jmrix.loconet.pr2;
  * Differs only in handling PR2's non-echo
  *
  * @author			Bob Jacobsen  Copyright (C) 2006
- * @version 		$Revision: 1.1 $
+ * @version 		$Revision: 1.2 $
  *
  */
 public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
@@ -17,6 +17,8 @@ public class LnPr2Packetizer extends jmri.jmrix.loconet.LnPacketizer {
   
   	boolean debug = false;
   	
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
     public LnPr2Packetizer() {
         super();
     	self=this;

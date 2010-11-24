@@ -31,7 +31,7 @@ import java.util.StringTokenizer ;
  * contact Digitrax Inc for separate permission.
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author              Alex Shepherd Copyright (C) 2003, 2006
- * @version 		$Revision: 1.14 $
+ * @version 		$Revision: 1.15 $
  *
  */
 public class LnOverTcpPacketizer extends LnPacketizer {
@@ -39,6 +39,8 @@ public class LnOverTcpPacketizer extends LnPacketizer {
   static final String RECEIVE_PREFIX = "RECEIVE";
   static final String SEND_PREFIX = "SEND";
 
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
   public LnOverTcpPacketizer()
   {
     self=this;

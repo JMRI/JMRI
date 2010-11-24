@@ -13,11 +13,13 @@ package jmri.jmrix.loconet;
  * without traffic over the connection.
  *
  * @author			Bob Jacobsen  Copyright (C) 2002
- * @version 		$Revision: 1.7 $
+ * @version 		$Revision: 1.8 $
  *
  */
 public class LnTrafficRouter extends LnTrafficController implements LocoNetListener {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
 	public LnTrafficRouter() {
         // set the instance to point here
         self=this;

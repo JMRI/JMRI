@@ -31,11 +31,13 @@ import jmri.jmrix.loconet.LocoNetMessageException;
  * use this code, algorithm or these message formats outside of JMRI, please
  * contact Digitrax Inc for separate permission.
  * @author			Bob Jacobsen  Copyright (C) 2001, 2010
- * @version 		$Revision: 1.12 $
+ * @version 		$Revision: 1.13 $
  *
  */
 public class IBLnPacketizer extends LnPacketizer {
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="Only used during system initialization")
     public IBLnPacketizer() {
         echo = true;
         self=this;
