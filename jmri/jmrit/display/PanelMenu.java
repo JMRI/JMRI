@@ -19,13 +19,16 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
  *
  * Also manages the Show Panel menu for all Editor panels.
  *
- * @author	Bob Jacobsen   Copyright 2003, 2004
+ * @author	Bob Jacobsen   Copyright 2003, 2004, 2010
  * @author  Dave Duchamp   Copyright 2007
  * @author  Pete Cressman   Copyright 2010
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 public class PanelMenu extends JMenu {
-    public PanelMenu() {
+    /**
+     * The single PanelMenu must now be accessed via the instance() method
+     */
+    private PanelMenu() {
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
@@ -54,7 +57,6 @@ public class PanelMenu extends JMenu {
         add(new jmri.jmrit.automat.monitor.AutomatTableAction(rb.getString("MenuItemMonitor")));
         add(new jmri.jmrit.jython.JythonWindow(rb.getString("MenuItemScriptLog")));
         add(new jmri.jmrit.jython.InputWindowAction(rb.getString("MenuItemScriptInput")));
-		thisMenu = this;
     }
 	
 	// operational variables
