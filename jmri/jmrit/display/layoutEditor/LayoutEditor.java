@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -4684,12 +4684,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), signalIconEditor.getIcon(9));
         setNextLocation(l);
 		setDirty(true);
-        putItem(l);
-        l.updateSize();
+        putSignal(l);
     }
     public void putSignal(SignalHeadIcon l) {
         putItem(l);
         l.updateSize();
+        l.setDisplayLevel(SIGNALS);
     }
 
     SignalHead getSignalHead(String name) {
