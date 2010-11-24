@@ -26,7 +26,7 @@ import java.io.DataInputStream;
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
  * @author      Bob Jacobsen, Dave Duchamp, multiNode extensions, 2004
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  *
  * @author	Bob Coleman Copyright (C) 2007. 2008
  *              Based on CMRI serial example, modified to establish Acela support. 
@@ -61,10 +61,12 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         this.removeListener(l);
     }
 
-    private int currentOutputAddress = -1;   // Incremented as Acela Nodes are created and registered
+    transient int curAcelaNodeIndex = -1;   // cycles over defined nodes when pollMessage is called
+
+    transient private int currentOutputAddress = -1;   // Incremented as Acela Nodes are created and registered
                                             // Corresponds to next available output address in nodeArray
                                             // Start at -1 to avoid issues with bit address 0
-    private int currentSensorAddress = -1;   // Incremented as Acela Nodes are created and registered
+    transient private int currentSensorAddress = -1;   // Incremented as Acela Nodes are created and registered
                                             // Corresponds to next available sensor address in nodeArray
                                             // Start at -1 to avoid issues with bit address 0
 
@@ -72,7 +74,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
                                                             //  false == Initiallizing Acela Network
                                                             //  true == Polling Sensors
     private boolean reallyReadyToPoll = false;   //  Flag to indicate that we are really ready to poll
-    private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
+    transient private boolean needToPollNodes = true;   //  Flag to indicate that nodes have not yet been created
     private boolean needToInitAcelaNetwork = true;   //  Flag to indicate that Acela network must be initialized
     private int needToCreateNodesState = 0;     //  Need to do a few things:
                                                 //      Reset Acela Network
@@ -107,7 +109,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         acelaTrafficControllerState = newstate;
     }
     
-    public void resetStartingAddresses() {
+    public synchronized void resetStartingAddresses() {
         currentOutputAddress = -1;
         currentSensorAddress = -1;
     }
@@ -124,7 +126,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         return needToPollNodes;
     }
     
-    public void setNeedToPollNodes(boolean newstate) {
+    public synchronized void setNeedToPollNodes(boolean newstate) {
         needToPollNodes = newstate;
     }
     
@@ -243,8 +245,6 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
     }
 
 
-    int curAcelaNodeIndex = -1;   // cycles over defined nodes when pollMessage is called
-
     /**
      *  Handles initialization, output and polling for Acela Nodes
      *      from within the running thread
@@ -353,14 +353,14 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
         }
     }
 
-    protected void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
+    protected synchronized void handleTimeout(AbstractMRMessage m,AbstractMRListener l) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // inform node, and if it resets then reinitialize        
         if (getNode(curAcelaNodeIndex).handleTimeout(m,l)) 
             setMustInit(curAcelaNodeIndex, true);
     }
     
-    protected void resetTimeout(AbstractMRMessage m) {
+    protected synchronized void resetTimeout(AbstractMRMessage m) {
         // don't use super behavior, as timeout to init, transmit message is normal
         // and inform node
         getNode(curAcelaNodeIndex).resetTimeout(m);

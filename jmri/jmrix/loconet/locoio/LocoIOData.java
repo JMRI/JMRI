@@ -499,7 +499,7 @@ public class LocoIOData
      * A valid reply has been received, so the read/write
      * worked, and the state should be advanced.
      */
-    protected void replyReceived() {
+    protected synchronized void replyReceived() {
         timeoutcounter = 0;
         // READ operations state machine
         switch (readState[currentPin]) {
