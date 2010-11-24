@@ -24,7 +24,7 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009-2010
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class LIUSBServerAdapter extends XNetPortController {
@@ -58,17 +58,20 @@ public class LIUSBServerAdapter extends XNetPortController {
         if(log.isDebugEnabled()) log.debug("openPort called");
         // open the port in XPressNet mode
         try {
-	       bcastAdapter=new BroadCastPortAdapter();
-	       commAdapter=new CommunicationPortAdapter();
-               bcastAdapter.openPort(portName,appName);
-               commAdapter.openPort(portName,appName); 
-               pout=commAdapter.getOutputStream();
-               PipedOutputStream tempPipeO=new PipedOutputStream();
-               outpipe = new DataOutputStream(tempPipeO);
-               pin = new DataInputStream(new PipedInputStream(tempPipeO));
+            bcastAdapter=new BroadCastPortAdapter();
+            commAdapter=new CommunicationPortAdapter();
+            bcastAdapter.connect();
+            commAdapter.connect(); 
+            pout=commAdapter.getOutputStream();
+            PipedOutputStream tempPipeO=new PipedOutputStream();
+            outpipe = new DataOutputStream(tempPipeO);
+            pin = new DataInputStream(new PipedInputStream(tempPipeO));
         }
         catch (java.io.IOException e) {
               log.error("init (pipe): Exception: "+e.toString());
+        }
+        catch (Exception ex) {
+            log.error("init (connect): Exception: "+ex.toString());
         }
         keepAliveTimer();
         return null; // normal operation
@@ -222,7 +225,7 @@ public class LIUSBServerAdapter extends XNetPortController {
     }
  
         //Internal class for broadcast port connection
-        private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortAdapter {
+        private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
 		 public BroadCastPortAdapter(){
           		super();
           		setHostName(DEFAULT_IP_ADDRESS);
@@ -236,7 +239,7 @@ public class LIUSBServerAdapter extends XNetPortController {
         }
 
         // Internal class for communication port connection
-        private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortAdapter{
+        private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
 		 public CommunicationPortAdapter(){
           		super();
           		setHostName(DEFAULT_IP_ADDRESS);
