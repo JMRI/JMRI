@@ -23,9 +23,16 @@ import jmri.jmrit.operations.trains.Train;
 /**
  * Manages the engines.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class EngineManager extends RollingStockManager{
+	
+	// Engines frame attributes
+	private EnginesTableFrame _enginesFrame = null;
+	private Dimension _enginesFrameDimension = new Dimension(Control.panelWidth,Control.panelHeight);
+	private Point _enginesFramePosition = new Point();
+	// Engines frame table column widths (12), starts with Number column and ends with Edit
+	private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
 
 	protected Hashtable<String, Consist> _consistHashTable = new Hashtable<String, Consist>();   	// stores Consists by number
 
@@ -217,11 +224,63 @@ public class EngineManager extends RollingStockManager{
     	}
     	return sortList(names);
     }
+    
+	public void setEnginesFrame(EnginesTableFrame frame){
+		_enginesFrame = frame;
+	}
+	
+	public Dimension getEnginesFrameSize(){
+		return _enginesFrameDimension;
+	}
+	
+	public Point getEnginesFramePosition(){
+		return _enginesFramePosition;
+	}
+
+	/**
+    * 
+    * @return get an array of table column widths for the trains frame
+    */
+   public int[] getEnginesFrameTableColumnWidths(){
+   	return _enginesTableColumnWidths.clone();
+   }
+   
+   @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2")
+   public void setEnginesFrameTableColumnWidths(int[] tableColumnWidths){
+   	_enginesTableColumnWidths = tableColumnWidths;
+   }
 
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);
+		// get Engines Table Frame attributes
+		Element e = values.getChild("enginesOptions");
+		if (e != null){
+			try {
+				int x = e.getAttribute("x").getIntValue();
+				int y = e.getAttribute("y").getIntValue();
+				int height = e.getAttribute("height").getIntValue();
+				int width = e.getAttribute("width").getIntValue();
+				_enginesFrameDimension = new Dimension(width, height);
+				_enginesFramePosition = new Point(x,y);
+			} catch ( org.jdom.DataConversionException ee) {
+				log.debug("Did not find engines frame attributes");
+			} catch ( NullPointerException ne) {
+				log.debug("Did not find engines frame attributes");
+			}
+			org.jdom.Attribute a;
+	  		if ((a = e.getAttribute("columnWidths")) != null){
+             	String[] widths = a.getValue().split(" ");
+             	for (int i=0; i<widths.length; i++){
+             		try{
+             			_enginesTableColumnWidths[i] = Integer.parseInt(widths[i]);
+             		} catch (NumberFormatException ee){
+             			log.error("Number format exception when reading trains column widths");
+             		}
+             	}
+    		}
+		}
 		// get Engine Edit attributes
-		Element e = values.getChild("engineEditOptions");
+		e = values.getChild("engineEditOptions");
 		if (e != null){
 			try {
 				int x = e.getAttribute("x").getIntValue();
@@ -245,10 +304,34 @@ public class EngineManager extends RollingStockManager{
      */
     public org.jdom.Element store() {
     	Element values = new Element("options");
+        // now save Engines frame size and position
+        Element e = new Element("enginesOptions");
+        Dimension size = getEnginesFrameSize();
+        Point posn = getEnginesFramePosition();
+        if (_enginesFrame != null){
+        	size = _enginesFrame.getSize();
+        	posn = _enginesFrame.getLocation();
+        	_enginesFrameDimension = size;
+        	_enginesFramePosition = posn;
+        }
+        if (posn != null){
+        	e.setAttribute("x", ""+posn.x);
+        	e.setAttribute("y", ""+posn.y);
+        }
+        if (size != null){
+        	e.setAttribute("height", ""+size.height);
+        	e.setAttribute("width", ""+size.width); 
+        }
+        StringBuffer buf = new StringBuffer();
+        for (int i=0; i<_enginesTableColumnWidths.length; i++){
+        	buf.append(Integer.toString(_enginesTableColumnWidths[i])+" ");
+        }
+        e.setAttribute("columnWidths", buf.toString());
+        values.addContent(e);
         // now save Engine Edit frame size and position
-        Element e = new org.jdom.Element("engineEditOptions");
-        Dimension size = getEditFrameSize();
-        Point posn = getEditFramePosition();
+        e = new org.jdom.Element("engineEditOptions");
+        size = getEditFrameSize();
+        posn = getEditFramePosition();
         if (_editFrame != null){
         	size = _editFrame.getSize();
         	posn = _editFrame.getLocation();

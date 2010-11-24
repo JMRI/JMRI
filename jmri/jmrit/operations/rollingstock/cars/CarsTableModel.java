@@ -22,7 +22,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of cars used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.35 $
+ * @version   $Revision: 1.36 $
  */
 public class CarsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -250,7 +250,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		tcm.getColumn(SETCOLUMN).setCellEditor(buttonEditor);
 		tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
 		tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
-		// set column preferred widths
 		// set column preferred widths
 		int[] tableColumnWidths = manager.getCarsFrameTableColumnWidths();
 		for (int i=0; i<tcm.getColumnCount(); i++)

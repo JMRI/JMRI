@@ -12,6 +12,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JButton;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -19,6 +20,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.setup.Control;
@@ -29,7 +31,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.16 $
+ * @version             $Revision: 1.17 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -38,6 +40,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	EnginesTableModel enginesModel = new EnginesTableModel();
 	javax.swing.JTable enginesTable = new javax.swing.JTable(enginesModel);
 	JScrollPane enginesPane;
+	EngineManager engineManager = EngineManager.instance();
 	
 	// labels
 	javax.swing.JLabel numEngines = new javax.swing.JLabel();
@@ -63,6 +66,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 	// major buttons
 	javax.swing.JButton addButton = new javax.swing.JButton(rb.getString("Add"));
 	javax.swing.JButton findButton = new javax.swing.JButton(rb.getString("Find"));
+	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	javax.swing.JTextField findEngineTextBox = new javax.swing.JTextField(6);
 
@@ -78,8 +82,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
        	enginesModel.initTable(enginesTable);
      	
        	// load the number of engines and listen for changes
-     	numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
-    	EngineManager.instance().addPropertyChangeListener(this);
+     	numEngines.setText(Integer.toString(engineManager.getNumEntries()));
+    	engineManager.addPropertyChangeListener(this);
     	textEngines.setText(rb.getString("engines"));
 
     	// Set up the control panel
@@ -111,6 +115,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	cp2.add(textEngines);
     	cp2.add(textSep1); 	
 		cp2.add (addButton);
+		cp2.add(saveButton);
 		cp2.add (findButton);
 		cp2.add (findEngineTextBox);
 				
@@ -131,6 +136,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 		// setup buttons
 		addButtonAction(addButton);
 		addButtonAction(findButton);
+		addButtonAction(saveButton);
 		
 	   	sortByNumber.setSelected(true);
 		addRadioButtonAction (sortByNumber);
@@ -167,8 +173,8 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
     	
     	pack();
-    	if ((getWidth()<Control.panelWidth)) 
-    		setSize(Control.panelWidth, getHeight());
+       	setSize(engineManager.getEnginesFrameSize());
+    	setLocation(engineManager.getEnginesFramePosition());
     	setVisible(true);
     }
     
@@ -239,10 +245,23 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
 			f.setTitle(rb.getString("TitleEngineAdd"));
 			f.setVisible(true);
 		}
+		if (ae.getSource() == saveButton){
+			engineManager.setEnginesFrame(this);
+			engineManager.setEnginesFrameTableColumnWidths(getCurrentTableColumnWidths());
+			EngineManagerXml.instance().writeOperationsFile();
+		}
+	}
+	
+	protected int[] getCurrentTableColumnWidths(){	
+		TableColumnModel tcm = enginesTable.getColumnModel();
+		int[] widths = new int[tcm.getColumnCount()];
+		for (int i=0; i<tcm.getColumnCount(); i++)
+			widths[i] = tcm.getColumn(i).getWidth();
+		return widths;
 	}
 
     public void dispose() {
-    	EngineManager.instance().removePropertyChangeListener(this);
+    	engineManager.removePropertyChangeListener(this);
     	enginesModel.dispose();
     	if (f != null)
     		f.dispose();
@@ -252,7 +271,7 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
     public void propertyChange(PropertyChangeEvent e) {
     	if(Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	if (e.getPropertyName().equals(EngineManager.LISTLENGTH_CHANGED_PROPERTY)) {
-    		numEngines.setText(Integer.toString(EngineManager.instance().getNumEntries()));
+    		numEngines.setText(Integer.toString(engineManager.getNumEntries()));
     	}
     }
     

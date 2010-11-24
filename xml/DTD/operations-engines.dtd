@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a engine roster -->
-<!-- $Id: operations-engines.dtd,v 1.10 2010-10-01 20:17:52 dan_boudreau Exp $ -->
+<!-- $Id: operations-engines.dtd,v 1.11 2010-11-24 05:01:32 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -20,7 +20,8 @@
 <!ELEMENT engineLengths (#PCDATA)>
 <!ELEMENT consists (#PCDATA)>
 
-<!ELEMENT options (engineEditOptions)*>
+<!ELEMENT options (enginesOptions | engineEditOptions)*>
+<!ELEMENT enginesOptions EMPTY>
 <!ELEMENT engineEditOptions EMPTY>
 
 <!ELEMENT engines (engine*)>
@@ -57,6 +58,12 @@
 <!ATTLIST engine rfid					CDATA #IMPLIED>
 <!ATTLIST engine locUnknown				(true | false ) "false"> 
 <!ATTLIST engine outOfService			(true | false ) "false">
+
+<!ATTLIST enginesOptions x				CDATA #IMPLIED> 
+<!ATTLIST enginesOptions y				CDATA #IMPLIED> 
+<!ATTLIST enginesOptions height			CDATA #IMPLIED> 
+<!ATTLIST enginesOptions width			CDATA #IMPLIED> 
+<!ATTLIST enginesOptions columnWidths	CDATA #IMPLIED> 
 
 <!ATTLIST engineEditOptions x			CDATA #IMPLIED> 
 <!ATTLIST engineEditOptions y			CDATA #IMPLIED> 
