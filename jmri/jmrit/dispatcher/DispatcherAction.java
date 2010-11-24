@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
  * DispatcherFrame
  *
  * @author			Dave Duchamp    Copyright (C) 2008
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 
 public class DispatcherAction extends AbstractAction {
@@ -38,7 +38,7 @@ public class DispatcherAction extends AbstractAction {
 		}
         // create a Dispatcher window or activate the existing one
 		if (f == null) {
-			f = new DispatcherFrame();
+			f = DispatcherFrame.instance();
 		}
         f.setVisible(true);
     }

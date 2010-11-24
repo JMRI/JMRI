@@ -11,7 +11,7 @@ import junit.extensions.jfcunit.*;
 /**
  * Swing jfcUnit tests for dispatcher options
  * @author			Dave Duchamp
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
@@ -20,7 +20,7 @@ public class DispatcherFrameTest extends jmri.util.SwingTestCase {
 
 		OptionsFile.instance().setDefualtFileName("java/test/jmri/jmrit/dispatcher/dispatcheroptions.xml");  // exist?
 		
-        DispatcherFrame d  = new DispatcherFrame();
+        DispatcherFrame d  = DispatcherFrame.instance();
         // Find new table window by name
         JmriJFrame dw = JmriJFrame.getFrame("Dispatcher");
 		// test some options from file

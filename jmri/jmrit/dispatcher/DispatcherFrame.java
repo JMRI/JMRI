@@ -47,12 +47,14 @@ import java.util.ResourceBundle;
  * for more details.
  *
  * @author			Dave Duchamp   Copyright (C) 2008-2010
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class DispatcherFrame extends jmri.util.JmriJFrame {
 
-    public DispatcherFrame () {
-		_instance = this;
+    /**
+     * Get a DispatcherFrame through the instance() method
+     */
+    private DispatcherFrame () {
 		initializeOptions();
 		openDispatcherWindow();
 		autoTurnouts = new AutoTurnouts(this);
