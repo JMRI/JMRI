@@ -34,7 +34,7 @@ import javax.swing.ListCellRenderer;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class SystemConsoleConfigPanel extends JPanel {
 
@@ -64,6 +64,16 @@ public class SystemConsoleConfigPanel extends JPanel {
         rbc.getString("ConsoleFontStyleBold"),
         rbc.getString("ConsoleFontStyleItalic"),
         rbc.getString("ConsoleFontStyleBoldItalic") };
+
+    private static final Integer wrapStyles[] = {
+        SystemConsole.WRAP_STYLE_NONE,
+        SystemConsole.WRAP_STYLE_LINE,
+        SystemConsole.WRAP_STYLE_WORD };
+
+    private static final String wrapStyleNames[] = {
+        rbc.getString("ConsoleWrapStyleNone"),
+        rbc.getString("ConsoleWrapStyleLine"),
+        rbc.getString("ConsoleWrapStyleWord") };
 
     private static final JCheckBox savePosition = new JCheckBox(rbc.getString("ConsoleWindowSavePosition"));
 
@@ -143,9 +153,23 @@ public class SystemConsoleConfigPanel extends JPanel {
                 scheme.repaint();
             }
         });
+        fontStyle.setSelectedIndex(SystemConsole.getFontStyle());
 
         p.add(new JLabel(rbc.getString("ConsoleFontStyle")));
         p.add(fontStyle);
+        add(p);
+
+        p = new JPanel(new FlowLayout());
+        final JComboBox wrapStyle = new JComboBox(wrapStyleNames);
+        wrapStyle.addActionListener(new ActionListener() {
+           public void actionPerformed(ActionEvent e)  {
+               SystemConsole.setWrapStyle(wrapStyles[((JComboBox)e.getSource()).getSelectedIndex()]);
+           }
+        });
+        wrapStyle.setSelectedIndex(SystemConsole.getWrapStyle());
+
+        p.add(new JLabel(rbc.getString("ConsoleWrapStyle")));
+        p.add(wrapStyle);
         add(p);
 
         p = new JPanel();

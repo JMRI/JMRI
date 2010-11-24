@@ -25,7 +25,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -46,6 +46,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         e.setAttribute("scheme", ""+SystemConsole.getScheme());
         e.setAttribute("fontsize", ""+SystemConsole.getFontSize());
         e.setAttribute("fontstyle", ""+SystemConsole.getFontStyle());
+        e.setAttribute("wrapstyle", ""+SystemConsole.getWrapStyle());
 
         if (SystemConsoleConfigPanel.isPositionSaved()) {
             ce = new Element("position");
@@ -85,7 +86,9 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         Element ce;
 
         try {
-            SystemConsole.setScheme(Integer.parseInt(e.getAttributeValue("scheme")));
+            if ((value = e.getAttributeValue("scheme"))!=null) {
+                SystemConsole.setScheme(Integer.parseInt(value));
+            }
 
             if ((value = e.getAttributeValue("fontsize"))!=null) {
                 SystemConsole.setFontSize(Integer.parseInt(value));
@@ -93,6 +96,10 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
 
             if ((value = e.getAttributeValue("fontstyle"))!=null) {
                 SystemConsole.setFontStyle(Integer.parseInt(value));
+            }
+
+            if ((value = e.getAttributeValue("wrapstyle"))!=null) {
+                SystemConsole.setWrapStyle(Integer.parseInt(value));
             }
 
             if ((ce = e.getChild("position"))!=null) {

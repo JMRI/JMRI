@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class SystemConsole extends JTextArea {
 
@@ -65,6 +65,12 @@ public class SystemConsole extends JTextArea {
 
     private static int fontStyle = Font.PLAIN;
 
+    public static final int WRAP_STYLE_NONE = 0x00;
+    public static final int WRAP_STYLE_LINE = 0x01;
+    public static final int WRAP_STYLE_WORD = 0x02;
+
+    private static int wrapStyle = WRAP_STYLE_WORD;
+
     /**
      * Initialise the system console ensuring both System.out and System.err
      * streams are re-directed to the console's JTextArea
@@ -84,11 +90,10 @@ public class SystemConsole extends JTextArea {
             // Setup the console text area
             console.setRows(20);
             console.setColumns(120);
-            console.setLineWrap(true);
-            console.setWrapStyleWord(true);
             console.setFont(new Font("Monospaced", fontStyle, fontSize));
             console.setEditable(false);
             setScheme(scheme);
+            setWrapStyle(wrapStyle);
 
             // Then redirect to it
             redirectSystemStreams();
@@ -126,8 +131,8 @@ public class SystemConsole extends JTextArea {
                 } catch (Exception ex) {
                     log.error("Exception creating system console frame: "+ex);
                 }
-                log.debug("Layout done");
             }
+            log.debug("Layout done");
         }
 
         return frame;
@@ -230,6 +235,34 @@ public class SystemConsole extends JTextArea {
     }
 
     /**
+     * Set the console wrapping style to one of the following:
+     * @param style one of the defined style attributes - one of
+     * <ul>
+     * <li>{@link #WRAP_STYLE_NONE} No wrapping
+     * <li>{@link #WRAP_STYLE_LINE} Wrap at end of line
+     * <li>{@link #WRAP_STYLE_WORD} Wrap by word boundaries
+     * </ul>
+     */
+    public static void setWrapStyle(int style) {
+        wrapStyle = style;
+        console.setLineWrap(style!=WRAP_STYLE_NONE);
+        console.setWrapStyleWord(style==WRAP_STYLE_WORD);
+    }
+
+    /**
+     * Retrieve the current console wrapping style
+     * @return current wrapping style - one of
+     * <ul>
+     * <li>{@link #WRAP_STYLE_NONE} No wrapping
+     * <li>{@link #WRAP_STYLE_LINE} Wrap at end of line
+     * <li>{@link #WRAP_STYLE_WORD} Wrap by word boundaries (default)
+     * </ul>
+     */
+    public static int getWrapStyle() {
+        return wrapStyle;
+    }
+
+    /**
      * Set the console font size
      * @param size point size of font between 6 and 24 point
      */
@@ -273,8 +306,7 @@ public class SystemConsole extends JTextArea {
      * @param size font size
      */
     private static void updateFont(int style, int size) {
-        Font font = console.getFont();
-        console.setFont(new Font(font.getName(), style, size));
+        console.setFont(console.getFont().deriveFont(style, size));
     }
 
     /**
