@@ -24,6 +24,12 @@
         <authorinitials>KD</authorinitials>
         <revremark>Initial Version</revremark>
     </revision>    
+    <revision>
+        <revnumber>1.1</revnumber>
+        <date>2010-11-24</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Use correct name for proceed signal file</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>BR</aspecttable>
@@ -38,7 +44,7 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>green</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantProceed.gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDistantClear.gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed-sema-h-d.gif</imagelink>
     </appearance>
 

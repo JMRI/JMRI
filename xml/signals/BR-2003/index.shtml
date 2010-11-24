@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: kevin-dickerson $) 2009 -->
-<!-- $Id: index.shtml,v 1.3 2010-02-04 18:36:10 kevin-dickerson Exp $ -->
+<!-- $Id: index.shtml,v 1.4 2010-11-24 23:44:27 kevin-dickerson Exp $ -->
 <title>JMRI: BR 2003 Signaling Definition</title>
 
 <!-- Style -->
@@ -68,7 +68,7 @@ Semaphore Signal Mast definitions:
 <li><a href="appearance-2-d-sema.xml">Distant Signal</a>
 <li><a href="appearance-2-h-sema.xml">Home Signal</a>
 <li><a href="appearance-2-h-sema-sub.xml">Home Signal With Subsidiary Signal</a>
-<li><a href="appearance-2-h-sema.xml">Home/Distant Signal</a>
+<li><a href="appearance-2-h-d-sema.xml">Home/Distant Signal</a>
 </ul>
 
     

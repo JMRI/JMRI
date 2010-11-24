@@ -29,7 +29,13 @@
         <date>2010-02-02</date>
         <authorinitials>KD</authorinitials>
         <revremark>Change Call On to Off</revremark>
-    </revision> 
+     </revision> 
+     <revision>
+        <revnumber>1.2</revnumber>
+        <date>2010-11-24</date>
+        <authorinitials>KD</authorinitials>
+        <revremark>Use correct name for proceed signal file</revremark>
+    </revision>
   </revhistory>
   
   <aspecttable>BR</aspecttable>
@@ -44,7 +50,7 @@
       <aspectname>Proceed</aspectname>
       <show>green</show>
       <show>dark</show>
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeProceed(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeClear(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/Proceed.gif</imagelink>
     </appearance>
 
@@ -60,7 +66,7 @@
       <aspectname>Off</aspectname>
       <show>red</show>
       <show>green</show>      
-      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeDangerCallOn(ws).gif</imagelink>
+      <imagelink type="large">../../../resources/icons/BritishRailSignals/Large/semaHomeCallOn(ws).gif</imagelink>
       <imagelink type="aspects">../../../resources/icons/BritishRailSignals/Aspects/DangerCallOn.gif</imagelink>
     </appearance>
 
