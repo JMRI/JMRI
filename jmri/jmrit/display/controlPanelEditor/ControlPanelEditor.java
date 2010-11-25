@@ -156,7 +156,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         _menuBar.add(_iconMenu, 0);
         JMenuItem mi = new JMenuItem("Item Pallette");
         mi.addActionListener(new ActionListener() {
-                Editor editor;
                 public void actionPerformed(ActionEvent e) {
                     makePalette();
                     _itemPalette.setVisible(true);
