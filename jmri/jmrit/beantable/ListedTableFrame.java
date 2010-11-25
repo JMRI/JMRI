@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -418,7 +418,7 @@ public class ListedTableFrame extends BeanTableFrame {
             dataScroll = null;
         }
     }
-    class tabbedTableItemList {
+    static class tabbedTableItemList {
 
         String className;
         String itemText;
