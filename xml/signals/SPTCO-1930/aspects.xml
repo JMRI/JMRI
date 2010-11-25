@@ -71,6 +71,11 @@
       <indication>Proceed through branch route at restricted speed</indication>
     </aspect>
 
+   <aspect>
+      <name>Dark</name>
+      <indication>(used to indicate dark for e.g. approach lighting)</indication>
+    </aspect>
+
  </aspects>
   
   <appearancefiles>
