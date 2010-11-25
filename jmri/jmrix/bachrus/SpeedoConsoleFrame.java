@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -841,6 +841,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         if (Math.abs(targetSpeed - currentSpeed) < Math.abs(incSpeed)) {
             currentSpeed = targetSpeed;
         } else {
+
             currentSpeed += incSpeed;
         }
         if (currentSpeed < 0.01F) {
@@ -862,7 +863,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     /**
      * Time to change to next speed increment
      */
-    protected void profileTimeout() {
+    protected synchronized void profileTimeout() {
         if (state == ProfileState.WAIT_FOR_THROTTLE) {
             tidyUp();
             log.error("Timeout waiting for throttle");
