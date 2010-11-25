@@ -535,7 +535,7 @@ public class LocoIOData
      * Look through the table to find the next thing that
      * needs to be read.
      */
-    protected void issueNextOperation() {
+    protected synchronized void issueNextOperation() {
         // stop the timer while we figure this out
         stopTimer();
         // find the first item that needs to be read
