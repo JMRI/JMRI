@@ -42,7 +42,7 @@ import jmri.util.JmriJFrame;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.89 $
+ * @version     $Revision: 1.90 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -58,7 +58,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         super(actionName);
         
         // disable ourself if there is no primary turnout manager available
-        if (jmri.InstanceManager.turnoutManagerInstance()==null) {
+        if (turnManager==null) {
             setEnabled(false);
         }
         
@@ -74,14 +74,18 @@ public class TurnoutTableAction extends AbstractTableAction {
     String noneText = "None";
     String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
     
+    protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
+    public void setManager(TurnoutManager man) { 
+        turnManager = man;
+    }
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Turnouts
      */
     protected void createModel() {
         // store the terminology
-        closedText = InstanceManager.turnoutManagerInstance().getClosedText();
-        thrownText = InstanceManager.turnoutManagerInstance().getThrownText();   
+        closedText = turnManager.getClosedText();
+        thrownText = turnManager.getThrownText();   
         
         // create the data model object that drives the table;
         // note that this is a class creation, and very long
@@ -156,7 +160,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
     		public boolean isCellEditable(int row, int col) {
                     String name = sysNameList.get(row);
-                    TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+                    TurnoutManager manager = turnManager;
                     Turnout t = manager.getBySystemName(name);
                     if (col==INVERTCOL) return t.canInvert();
                     else if (col == LOCKCOL)return t.canLock(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT);
@@ -178,7 +182,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     				return "error";
     			}
                     String name = sysNameList.get(row);
-                    TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+                    TurnoutManager manager = turnManager;
                     Turnout t = manager.getBySystemName(name);
                     if (t == null){
                     	log.debug("error null turnout!");
@@ -247,7 +251,7 @@ public class TurnoutTableAction extends AbstractTableAction {
 		
     		public void setValueAt(Object value, int row, int col) {
                     String name = sysNameList.get(row);
-                    TurnoutManager manager = InstanceManager.turnoutManagerInstance();
+                    TurnoutManager manager = turnManager;
                     Turnout t = manager.getBySystemName(name);
                     if (col == INVERTCOL) {
                         if (t.canInvert()) {
@@ -298,7 +302,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     		}
                 
                 public String getValue(String name) {
-                    int val = InstanceManager.turnoutManagerInstance().getBySystemName(name).getCommandedState();
+                    int val = turnManager.getBySystemName(name).getCommandedState();
                     switch (val) {
                     case Turnout.CLOSED: return closedText;
                     case Turnout.THROWN: return thrownText;
@@ -307,9 +311,10 @@ public class TurnoutTableAction extends AbstractTableAction {
                     default: return "Unexpected value: "+val;
                     }
                 }
-                public Manager getManager() { return InstanceManager.turnoutManagerInstance(); }
-                public NamedBean getBySystemName(String name) { return InstanceManager.turnoutManagerInstance().getBySystemName(name);}
-                public NamedBean getByUserName(String name) { return InstanceManager.turnoutManagerInstance().getByUserName(name);}
+                public Manager getManager() { return turnManager; }
+
+                public NamedBean getBySystemName(String name) { return turnManager.getBySystemName(name);}
+                public NamedBean getByUserName(String name) { return turnManager.getByUserName(name);}
                 public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnTurnoutInUse(); }
                 public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnTurnoutInUse(boo); }
                 
@@ -384,8 +389,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                         canAddRange(e);
                     }
                 };
-            if (jmri.InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
-                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) jmri.InstanceManager.turnoutManagerInstance();
+            if (turnManager.getClass().getName().contains("ProxyTurnoutManager")){
+                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
                 List<Manager> managerList = proxy.getManagerList();
                 for(int x = 0; x<managerList.size(); x++){
                     String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
@@ -395,7 +400,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
             else {
-                prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.turnoutManagerInstance().getSystemPrefix()));
+                prefixBox.addItem(provideConnectionNameFromPrefix(turnManager.getSystemPrefix()));
             }
             sysName.setName("sysName");
             userName.setName("userName");
@@ -712,11 +717,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
-        String turnoutPrefix = getTurnoutPrefixFromName()+InstanceManager.turnoutManagerInstance().typeLetter();
+        String turnoutPrefix = getTurnoutPrefixFromName()+turnManager.typeLetter();
         //String turnoutPrefix = getTurnoutPrefixFromName()+"T";
         String sName = null;
         String curAddress = sysName.getText();
-        //String[] turnoutList = InstanceManager.turnoutManagerInstance().formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
+        //String[] turnoutList = turnManager.formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
         //if (turnoutList == null)
         //    return;
         int iType = 0;
@@ -724,7 +729,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         boolean useLastBit = false;
         boolean useLastType = false;
         for (int x = 0; x < numberOfTurnouts; x++){
-            curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, getTurnoutPrefixFromName());
+            curAddress = turnManager.getNextValidAddress(curAddress, getTurnoutPrefixFromName());
             if (curAddress==null){
                 //The next address is already in use, therefore we stop.
                 break;
@@ -754,8 +759,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             // Ask about two bit turnout control if appropriate
             
             if(!useLastBit){
-                iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
-                if((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())){
+                iNum = turnManager.askNumControlBits(sName);
+                if((turnManager.isNumControlBitsSupported(sName)) && (range.isSelected())){
                     if(JOptionPane.showConfirmDialog(addFrame,
                                                  "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
                                                  JOptionPane.YES_NO_OPTION)==0)
@@ -775,7 +780,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 // Create the new turnout
                 Turnout t;
                 try {
-                    t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
+                    t = turnManager.provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(sName);
@@ -786,15 +791,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String user = userName.getText();
                     if ((x!=0) && user != null && !user.equals(""))
                         user = user+":"+x;
-                    if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
-                    else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
+                    if (user != null && !user.equals("") && (turnManager.getByUserName(user)==null)) t.setUserName(user);
+                    else if (turnManager.getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
                         p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
                     }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
                     if(!useLastType){
-                        iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
-                        if((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())){
+                        iType = turnManager.askControlType(sName);
+                        if((turnManager.isControlTypeSupported(sName)) && (range.isSelected())){
                             if (JOptionPane.showConfirmDialog(addFrame,
                                                  "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
                                                  JOptionPane.YES_NO_OPTION)==0)// Add a pop up here asking if the user wishes to use the same value for all
@@ -813,8 +818,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     private void canAddRange(ActionEvent e){
         range.setEnabled(false);
         range.setSelected(false);
-        if (jmri.InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
-            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) jmri.InstanceManager.turnoutManagerInstance();
+        if (turnManager.getClass().getName().contains("ProxyTurnoutManager")){
+            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
             List<Manager> managerList = proxy.getManagerList();
             String systemPrefix = getTurnoutPrefixFromName();
             for(int x = 0; x<managerList.size(); x++){
@@ -825,7 +830,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
         }
-        else if (jmri.InstanceManager.turnoutManagerInstance().allowMultipleAdditions(getTurnoutPrefixFromName())){
+        else if (turnManager.allowMultipleAdditions(getTurnoutPrefixFromName())){
             range.setEnabled(true);
         }
     }

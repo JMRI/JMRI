@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -77,7 +77,7 @@ public class ListedTableFrame extends BeanTableFrame {
         if (!init){
             /*Add the default tables to the static list array, this should only be done
             once when first loaded*/
-            addTable("jmri.jmrit.beantable.TurnoutTableAction",  rbs.getString("MenuItemTurnoutTable"), true);
+            addTable("jmri.jmrit.beantable.TurnoutTableTabAction",  rbs.getString("MenuItemTurnoutTable"), false);
             addTable("jmri.jmrit.beantable.SensorTableAction", rbs.getString("MenuItemSensorTable"), true);
             addTable("jmri.jmrit.beantable.LightTableAction", rbs.getString("MenuItemLightTable"), true);
             addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
@@ -325,7 +325,6 @@ public class ListedTableFrame extends BeanTableFrame {
             bottomBox = Box.createHorizontalBox();
             bottomBox.add(Box.createHorizontalGlue());
             bottomBoxIndex = 0;
-            //dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
             dataPanel.setLayout(new BorderLayout());
             if (stdModel)
                 createDataModel();
