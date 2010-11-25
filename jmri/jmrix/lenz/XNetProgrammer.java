@@ -27,7 +27,7 @@ import java.beans.PropertyChangeEvent;
  * @author Bob Jacobsen     Copyright (c) 2002, 2007
  * @author Paul Bender      Copyright (c) 2003-2010
  * @author Giorgio Terdina  Copyright (c) 2007
- * @version $Revision: 2.32 $
+ * @version $Revision: 2.33 $
  */
 public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
 
@@ -71,7 +71,7 @@ public class XNetProgrammer extends AbstractProgrammer implements XNetListener {
      * know that a change happened, and then was undone.
      * @param mode The new mode, use values from the jmri.Programmer interface
      */
-	public void setMode(int mode) {
+	public synchronized void setMode(int mode) {
         int oldMode = _mode;  // preserve this in case we need to go back
 		if (mode != _mode) {
 			notifyPropertyChange("Mode", _mode, mode);
