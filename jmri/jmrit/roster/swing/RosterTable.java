@@ -11,11 +11,12 @@ import jmri.util.com.sun.TableSorter;
  * as a JmriJPanel
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003, 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class RosterTable extends jmri.util.swing.JmriPanel {
 
     RosterTableModel    dataModel;
+    TableSorter         sorter;
     JTable			    dataTable;
     JScrollPane 		dataScroll;
 
@@ -23,7 +24,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
 
         super();
         dataModel = new RosterTableModel();
-        TableSorter sorter = new TableSorter(dataModel);
+        sorter = new TableSorter(dataModel);
     	dataTable = new JTable(sorter);
         sorter.setTableHeader(dataTable.getTableHeader());        
         dataScroll	= new JScrollPane(dataTable);
@@ -74,7 +75,7 @@ public class RosterTable extends jmri.util.swing.JmriPanel {
     }
 	   
 	public JTable getTable() { return dataTable; }
-	public RosterTableModel getModel() { return dataModel; }
+	public TableSorter getModel() { return sorter; }
 	
     public void dispose() {
         if (dataModel != null)
