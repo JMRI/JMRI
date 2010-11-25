@@ -122,23 +122,23 @@ public class LocoIOData
      *<p>
      * 0x7f is reserved
      */
-    public void setUnitAddress(int unit, int unitSub) {
+    public synchronized void setUnitAddress(int unit, int unitSub) {
         setUnitAddress(unit);
         setUnitSubAddress(unitSub);
     }
 
-    public void setUnitAddress(int unit) {
+    public synchronized void setUnitAddress(int unit) {
         dataListeners.firePropertyChange("UnitAddress", Integer.valueOf(unitAddress), Integer.valueOf(0x0100 | (unit&0x07F)));
         unitAddress    = 0x0100 | (unit&0x07F);  // protect against high bits set
     }
-    public void setUnitSubAddress(int unitSub) {
+    public synchronized void setUnitSubAddress(int unitSub) {
         dataListeners.firePropertyChange("UnitSubAddress", Integer.valueOf(unitSubAddress), Integer.valueOf(unitSub & 0x07F));
         unitSubAddress = unitSub & 0x07F;
     }
-    public int getUnitAddress() {
+    public synchronized int getUnitAddress() {
         return unitAddress & 0x07F;
     }
-    public int getUnitSubAddress() {
+    public synchronized int getUnitSubAddress() {
         return unitSubAddress & 0x07F;
     }
 
@@ -367,7 +367,7 @@ public class LocoIOData
      *<P>
      * @param m Incoming message
      */
-    public void message(LocoNetMessage m) {
+    public synchronized void message(LocoNetMessage m) {
         // sort out the opCode
         int opCode = m.getOpCode();
         switch (opCode) {
