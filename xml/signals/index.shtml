@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author: kevin-dickerson $) 2009 -->
-<!-- $Id: index.shtml,v 1.7 2010-01-19 17:59:50 kevin-dickerson Exp $ -->
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml,v 1.8 2010-11-25 04:18:19 jacobsen Exp $ -->
 <title>JMRI: Signal System Definitions</title>
 
 <!-- Style -->
@@ -47,6 +47,9 @@ The available definitions include:
 
 <dt><a href="NYCS-1937/index.shtml">NYCS-1937</a>
     <dd>New York Central System 1937 rule book
+
+<dt><a href="SPTCO-1930/index.shtml">SPTCO-1930</a>
+    <dd>Southern Pacific Railway and Transportation Company 1930 rule book
 
 <dt><a href="SPTCO-1960/index.shtml">SPTCO-1960</a>
     <dd>Southern Pacific Railway and Transportation Company 1960 rule book
