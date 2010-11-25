@@ -36,7 +36,7 @@ import jmri.jmrit.roster.swing.*;
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneSet
  *
  * @author		Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.10 $
+ * @version		$Revision: 1.11 $
  */
  
 public class DecoderPro3Window 
@@ -76,7 +76,12 @@ public class DecoderPro3Window
             new ListSelectionListener() {
                 public void valueChanged(ListSelectionEvent e) {
                     if (! e.getValueIsAdjusting()) {
-                        locoSelected(rtable.getModel().getValueAt(e.getFirstIndex(), RosterTableModel.IDCOL).toString());
+                        for (int i = e.getFirstIndex(); i <= e.getLastIndex(); i++) {
+                            if (rtable.getTable().getSelectionModel().isSelectedIndex(i)) {
+                                locoSelected(rtable.getModel().getValueAt(i, RosterTableModel.IDCOL).toString());
+                                break;
+                            }
+                        }    
                     }
                 }
             }
@@ -144,15 +149,7 @@ public class DecoderPro3Window
         paneSpace.removeAll();
         int count = 0;
         for (PaneProgPane p : list) {
-            
-            System.out.println("start: "+p);
-            System.out.println("name: "+p.toString());
-            System.out.println("n:    "+p.getComponents().length);
-            System.out.println("--> "+p.getComponents()[0]);
-            System.out.println("--> "+p.getComponents()[1]);
-            System.out.println("end --------- ");
-            
-            
+                        
             javax.swing.border.TitledBorder border = new javax.swing.border.TitledBorder(p.getName());
             p.setBorder(border);
             paneSpace.add(p);
