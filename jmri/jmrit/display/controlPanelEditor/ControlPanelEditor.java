@@ -160,11 +160,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     makePalette();
                     _itemPalette.setVisible(true);
                 }
-                ActionListener init(Editor ed) {
-                    editor = ed;
-                    return this;
-                }
-            }.init(this));
+            });
 
         _iconMenu.add(mi);                                                  
     }
