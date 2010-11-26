@@ -27,7 +27,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
 
 //
@@ -153,7 +153,8 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     public void refreshPortBox() {
         if (!init){
             v = adapter.getPortNames();
-            portBox.setRenderer(new ComboBoxRenderer());
+            // commented out daboudreau 11/26/2010 JComboBox looks poor on windows 7
+            //portBox.setRenderer(new ComboBoxRenderer());
         }
         else {
             
