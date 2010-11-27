@@ -27,7 +27,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -220,7 +220,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     public static void setUIFontSize(float size){
-        java.util.Enumeration keys = UIManager.getDefaults().keys();
+        java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         Font f;
         while (keys.hasMoreElements()) {
           Object key = keys.nextElement();
@@ -242,7 +242,7 @@ public class TabbedPreferences extends AppConfigBase {
     //  setUIFont (new javax.swing.plaf.FontUIResource
     //   ("Serif",Font.ITALIC,12));
     //
-    java.util.Enumeration keys = UIManager.getDefaults().keys();
+    java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
     while (keys.hasMoreElements()) {
       Object key = keys.nextElement();
       Object value = UIManager.get (key);
