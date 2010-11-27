@@ -23,7 +23,7 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
     # Build train 
       if (train != None):
         train.build()
-        built = train.getBuilt()
+        built = train.isBuilt()
         train.setBuild(False)	# deselect build option
         if (built == True):
           print "train", trainName, "has been built"

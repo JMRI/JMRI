@@ -30,7 +30,7 @@ class moveTrain(jmri.jmrit.automat.AbstractAutomaton) :
     # get train by id
     train = self.tm.getTrainById(memTrainId.getValue())
     if (train != None):
-      if (train.getBuilt() == True):
+      if (train.isBuilt() == True):
         print "Move train", train.getName(), train.getDescription()
         train.move()
         print "Status:", train.getStatus();

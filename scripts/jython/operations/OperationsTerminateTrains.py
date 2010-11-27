@@ -31,9 +31,9 @@ class terminateTrains(jmri.jmrit.automat.AbstractAutomaton) :
     # now terminate trains that were built by moving them
     for trainId in tList :
       train = self.tm.getTrainById(trainId)
-      if (train.getBuilt() == True):
+      if (train.isBuilt() == True):
          print "train", train.getName(), "was built"
-         while (train.getBuilt() == True):
+         while (train.isBuilt() == True):
             print "move train", train.getName() 
             train.move() 
          print "train", train.getName(), "terminated"

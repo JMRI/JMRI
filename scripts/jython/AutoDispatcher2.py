@@ -9783,7 +9783,7 @@ class ADImportTrainFrame (AdScrollFrame) :
             opTrain = trainManager.getTrainById(trainIds[i])
             self.opTrains.append(opTrain)
             self.detail.add(JLabel(opTrain.getName()))
-            if opTrain.getBuilt() :
+            if opTrain.isBuilt() :
                 self.detail.add(AutoDispatcher.centerLabel("Built"))
                 importButton = JButton("Import")
                 importButton.setActionCommand(str(i))

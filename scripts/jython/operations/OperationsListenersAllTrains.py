@@ -26,7 +26,7 @@ class MyListener(java.beans.PropertyChangeListener):
     trainId = event.source.getId()
     tm = jmri.jmrit.operations.trains.TrainManager.instance()
     train = tm.getTrainById(trainId)
-    if (train.getBuilt() == True):
+    if (train.isBuilt() == True):
     	print "train", train.getName(), "is built"
     else: 
    		print "train", train.getName(), "not built"
