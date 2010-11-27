@@ -36,7 +36,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.106 $
+ * @version             $Revision: 1.107 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1104,8 +1104,9 @@ public class TrainBuilder extends TrainCommon{
 						//log.debug("done with location ("+destinationSave.getName()+")");
 						break;
 					}
-					// build failure if car departing staging without a destination
-					if (c.getLocationName().equals(departLocation.getName()) && departStageTrack != null && (c.getDestination() == null || c.getDestinationTrack() == null)){
+					// build failure if car departing staging without a destination and a train
+					if (c.getLocationName().equals(departLocation.getName()) && departStageTrack != null && 
+							(c.getDestination() == null || c.getDestinationTrack() == null || c.getTrain() == null)){
 						//log.debug("car "+c.toString()+" at location ("+c.getLocationName()+") destination ("+c.getDestinationName()+") dest track ("+c.getDestinationTrackName()+")");
 						buildFailed(MessageFormat.format(rb.getString("buildErrorCarStageDest"),
 								new Object[]{c.toString()}));
@@ -1275,7 +1276,11 @@ public class TrainBuilder extends TrainCommon{
 			serviceTrainDir = serviceTrainDir & track.getTrainDirections(); 
 		if ((rld.getTrainDirection() & serviceTrainDir) >0){
 			return true;
-		} 
+		}
+		if (car == null){
+			addLine(buildReport, FIVE, "Destination ("+destination.getName()+") does not service "+rld.getTrainDirectionString()+"bound trains");
+			return false;
+		}
 		addLine(buildReport, FIVE, "Can't drop car ("+car.toString()+") using "+rld.getTrainDirectionString()+"bound train,");
 		if (track != null)
 			addLine(buildReport, FIVE, " destination track ("+track+") does not service this direction");
@@ -1284,8 +1289,8 @@ public class TrainBuilder extends TrainCommon{
 		return false;
 	}
 	
-	private boolean checkDropTrainDirection (Car car, RouteLocation rld, Location destination){
-		return (checkDropTrainDirection (car, rld, destination, null));
+	private boolean checkDropTrainDirection (RouteLocation rld, Location destination){
+		return (checkDropTrainDirection (null, rld, destination, null));
 	}
 	
 	
@@ -1487,7 +1492,7 @@ public class TrainBuilder extends TrainCommon{
 				return false;
 			}
 			// can this location service this train's direction
-			if (!checkDropTrainDirection(car, rld, testDestination))
+			if (!checkDropTrainDirection(rld, testDestination))
 				continue;
 			// is there a track assigned for staging cars?				
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null){						
@@ -1624,7 +1629,8 @@ public class TrainBuilder extends TrainCommon{
 		if (destinationSave != null){
 			return addCarToTrain(car, rl, rldSave, destinationSave, trackSave); // should always be true
 		} 
-		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
+		if (routeList.size()>1)
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
 		return true;	// no build errors, but car not given destination
 	}
 
