@@ -420,7 +420,6 @@ public class PanelEditor extends Editor implements ItemListener {
             if (frame != null) {
                 frame.getEditor().reset();
                 frame.setVisible(true);
-                _addIconBox.setSelectedIndex(-1);
             } else {
                 if (name.equals("FastClock")) {
                     addClock();
@@ -430,6 +429,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     log.error("Unable to open Icon Editor \""+item.getName()+"\"");
                 }
             }
+            _addIconBox.setSelectedIndex(-1);
         }
     }
 
