@@ -24,7 +24,7 @@ class buildAndTerminate(jmri.jmrit.automat.AbstractAutomaton) :
       if (train != None):
         train.build()
         built = train.isBuilt()
-        train.setBuild(False)	# deselect build option
+        train.setBuildEnabled(False)	# deselect build option
         if (built == True):
           print "train", trainName, "has been built"
           train.terminate()	# now terminate the train
