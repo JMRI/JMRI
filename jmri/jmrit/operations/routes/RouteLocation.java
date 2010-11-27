@@ -13,7 +13,7 @@ import jmri.jmrit.operations.setup.Setup;
  * than once in a route.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class RouteLocation implements java.beans.PropertyChangeListener {
 	
@@ -55,6 +55,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 	public static final String DROP_CHANGED_PROPERTY = "dropChange";
 	public static final String PICKUP_CHANGED_PROPERTY = "pickupChange";
 	public static final String MAXMOVES_CHANGED_PROPERTY = "maxMovesChange";
+	public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trainDirection";
 	
 	public RouteLocation(String id, Location location) {
 		log.debug("New route location (" + location.getName() + ") id: " + id);
@@ -108,7 +109,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 		int old = _trainDir;
 		_trainDir = direction;
 		if (old != direction)
-			firePropertyChange("trainDirection", Integer.toString(old), Integer.toString(direction));
+			firePropertyChange(TRAIN_DIRECTION_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(direction));
 	}
 	
 	/**

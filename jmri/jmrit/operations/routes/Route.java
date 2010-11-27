@@ -16,8 +16,8 @@ import org.jdom.Element;
 /**
  * Represents a route on the layout
  * 
- * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.22 $
+ * @author Daniel Boudreau Copyright (C) 2008, 2010
+ * @version             $Revision: 1.23 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -387,14 +387,14 @@ public class Route implements java.beans.PropertyChangeListener {
     		log.debug("route (" + getName() + ") sees property change: "
     				+ e.getPropertyName() + " from (" +e.getSource()+ ") old: " + e.getOldValue() + " new: "
     				+ e.getNewValue());
-    	// forward drops, pickups, and max moves as a list change
+    	// forward drops, pickups, train direction, and max moves as a list change
     	if (e.getPropertyName().equals(RouteLocation.DROP_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.PICKUP_CHANGED_PROPERTY)
+				|| e.getPropertyName().equals(RouteLocation.TRAIN_DIRECTION_CHANGED_PROPERTY)
 				|| e.getPropertyName().equals(RouteLocation.MAXMOVES_CHANGED_PROPERTY)) {
 			firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, null,
 					"RouteLocation");
-		}
-    	
+		}   	
     }
 
 	java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
