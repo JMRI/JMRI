@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.98 $
+ * @version $Revision: 1.99 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -327,10 +327,18 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Gets the train's route
+	 * @return train's route
+	 */
 	public Route getRoute() {
 		return _route;
 	}
 	
+	/**
+	 * Get's the train's route name.
+	 * @return Train's route name.
+	 */
 	public String getTrainRouteName (){
     	if (_route == null)
     		return "";
@@ -437,6 +445,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return getCurrentLocationName();	// At end of route
 	}
 	
+	/**
+	 * Set's the train's status
+	 * @param status BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
+	 */
 	public void setStatus(String status) {
 		String old = _status;
 		_status = status;
@@ -446,8 +458,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Get train status
-	 * @return Train's status
+	 * Get train's status
+	 * @return Train's status BUILDING PARTIALBUILT BUILT TERMINATED TRAINRESET TRAININROUTE
 	 */
 	public String getStatus() {
 		return _status;
@@ -496,11 +508,21 @@ public class Train implements java.beans.PropertyChangeListener {
 		firePropertyChange (STOPS_CHANGED_PROPERTY, _skipLocationsList.size()+1, _skipLocationsList.size());
 	}
 
+	/**
+	 * Determines if this train skips a location 
+	 * (doesn't service the location).
+	 * @param locationId The route location id.
+	 * @return true if the train will not service the location.
+	 */
 	public boolean skipsLocation(String locationId){
 		return _skipLocationsList.contains(locationId);
 	}
 
     List<String> _typeList = new ArrayList<String>();
+    /**
+     * Get's the type names of rolling stock this train will service
+     * @return The type names for cars and or engines
+     */
     public String[] getTypeNames(){
       	String[] types = new String[_typeList.size()];
      	for (int i=0; i<_typeList.size(); i++)
@@ -511,7 +533,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Set the type of cars or engines this train will service, see types in
      * Cars and Engines.
-     * @param types The type names for cars or engines
+     * @param types The type names for cars and or engines
      */
     public void setTypeNames(String[] types){
     	if (types.length == 0) return;
@@ -557,6 +579,10 @@ public class Train implements java.beans.PropertyChangeListener {
     	}
     }
     
+    /**
+     * Get how this train deals with road names.
+     * @return ALLROADS INCLUDEROADS EXCLUDEROADS
+     */
 	public String getRoadOption (){
     	return _roadOption;
     }
@@ -651,6 +677,10 @@ public class Train implements java.beans.PropertyChangeListener {
     		setCabooseRoad(newRoad);
     }
     
+    /**
+     * Gets the car load option for this train.
+     * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+     */
 	public String getLoadOption (){
     	return _loadOption;
     }
@@ -902,6 +932,11 @@ public class Train implements java.beans.PropertyChangeListener {
     	}  	
     }
     private boolean debugFlag = false;
+    /**
+     * Determines if this train will service this car.
+     * @param car The car to be tested.
+     * @return true if this train can service the car.
+     */
     public boolean servicesCar(Car car){
     	if (acceptsTypeName(car.getType()) && acceptsBuiltDate(car.getBuilt()) 
     			&& acceptsOwnerName(car.getOwner()) && acceptsRoadName(car.getRoad())
@@ -986,7 +1021,9 @@ public class Train implements java.beans.PropertyChangeListener {
     }
     
     /**
-     * 
+     * Gets the number of cars in the train at a certain location
+     * in the train's route.
+     * @param rl The location in the train's route
      * @return The number of cars currently in the train
      */
     public int getNumberCarsInTrain(RouteLocation rl){
@@ -1113,6 +1150,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _terminationScripts;
 	}
 	
+	/**
+	 * Gets the optional railroad name for this train.
+	 * @return Train's railroad name.
+	 */
 	public String getRailroadName(){
 		return _railroadName;
 	}
@@ -1129,6 +1170,10 @@ public class Train implements java.beans.PropertyChangeListener {
 		return _logoURL;
 	}
 	
+	/**
+	 * Overrides the default logo for this train.
+	 * @param pathName file location for the logo.
+	 */
 	public void setManifestLogoURL(String pathName){
 		_logoURL = pathName;
 	}
@@ -1148,6 +1193,17 @@ public class Train implements java.beans.PropertyChangeListener {
 	public boolean isBuilt() {
 		return _built;
 	}
+	
+	/**
+	 * Deprecated, kept for user scripts.  Use isBuilt()
+	 * @return true if the train was successfully built.
+	 * 
+	 */
+	@Deprecated
+	public boolean getBuilt() {
+		return isBuilt();
+	}
+	
 	/**
 	 * Control flag used to decide if this train is to be built.
 	 * @param build When true, build this train.
@@ -1160,8 +1216,30 @@ public class Train implements java.beans.PropertyChangeListener {
 		}
 	}
 	
+	/**
+	 * Used to determine if train is to be built.
+	 * @return true if train is to be built.
+	 */
 	public boolean isBuildEnabled() {
 		return _build;
+	}
+	
+	/**
+	 * Deprecated, use setBuildEnabled(build).
+	 * @param build When true, build this train.
+	 */
+	@Deprecated
+	public void setBuild(boolean build) {
+		setBuildEnabled(build);
+	}
+	
+	/**
+	 * Deprecated, use isBuildEnabled()
+	 * @return true if train is to be built.
+	 */
+	@Deprecated
+	public boolean getBuild(){
+		return isBuildEnabled();
 	}
 	
 	/**
