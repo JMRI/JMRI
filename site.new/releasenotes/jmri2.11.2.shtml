@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.23 2010-11-24 05:05:11 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.24 2010-11-28 06:30:38 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -286,6 +286,13 @@ Pete Cressman added an update of indicator track icons from the panel.
 
 <p>
 Brett Hoffman updated the WiThrottle protocol to allow F2 to follow "lock" setting in roster entry function labels
+
+<p>
+Pete Cressman fixed a problem adding a clock to a panel.
+
+<p>
+Kevin Dickerson updated the British Rail 2003 signal definition.
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
