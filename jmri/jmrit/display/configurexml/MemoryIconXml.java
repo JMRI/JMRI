@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -127,7 +127,7 @@ public class MemoryIconXml extends PositionableLabelXml {
         else l.setSelectable(false);
         
         // get the icon pairs
-        List<Element> items = element.getChildren();
+        List<Element> items = element.getChildren("memorystate");
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
