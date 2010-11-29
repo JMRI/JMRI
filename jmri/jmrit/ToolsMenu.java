@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.43 $
+ * @version     $Revision: 1.44 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -52,22 +52,22 @@ public class ToolsMenu extends JMenu {
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
         
         tableMenu.add(tableMenu);
-        tableMenu.add(new jmri.jmrit.beantable.TurnoutTableAction(rb.getString("MenuItemTurnoutTable")));
-        tableMenu.add(new jmri.jmrit.beantable.SensorTableAction(rb.getString("MenuItemSensorTable")));
-        tableMenu.add(new jmri.jmrit.beantable.LightTableAction(rb.getString("MenuItemLightTable")));
-        tableMenu.add(new jmri.jmrit.beantable.SignalHeadTableAction(rb.getString("MenuItemSignalTable")));
-        tableMenu.add(new jmri.jmrit.beantable.SignalMastTableAction(rb.getString("MenuItemSignalMastTable")));
-        tableMenu.add(new jmri.jmrit.beantable.SignalGroupTableAction(rb.getString("MenuItemSignalGroupTable")));
-        tableMenu.add(new jmri.jmrit.beantable.ReporterTableAction(rb.getString("MenuItemReporterTable")));
-        tableMenu.add(new jmri.jmrit.beantable.MemoryTableAction(rb.getString("MenuItemMemoryTable")));
-        tableMenu.add(new jmri.jmrit.beantable.RouteTableAction(rb.getString("MenuItemRouteTable")));
-        tableMenu.add(new jmri.jmrit.beantable.LRouteTableAction(rb.getString("MenuItemLRouteTable")));
-        tableMenu.add(new jmri.jmrit.beantable.LogixTableAction(rb.getString("MenuItemLogixTable")));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(rb.getString("MenuItemOBlockTable")));
-        tableMenu.add(new jmri.jmrit.beantable.BlockTableAction(rb.getString("MenuItemBlockTable")));
-        tableMenu.add(new jmri.jmrit.beantable.SectionTableAction(rb.getString("MenuItemSectionTable")));
-        tableMenu.add(new jmri.jmrit.beantable.TransitTableAction(rb.getString("MenuItemTransitTable")));
-        tableMenu.add(new jmri.jmrit.beantable.AudioTableAction(rb.getString("MenuItemAudioTable")));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSectionTable"), "jmri.jmrit.beantable.SectionTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
         add(tableMenu);
 
         JMenu throttleMenu = new JMenu(rb.getString("MenuThrottles"));
