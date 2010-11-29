@@ -27,7 +27,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -37,7 +37,7 @@ public class TabbedPreferences extends AppConfigBase {
     public String getTitle() { return rb.getString("TitlePreferences"); }
     @Override
     public boolean isMultipleInstances() { return false; }  // only one of these!
-    static ArrayList<Element> preferencesElements = new ArrayList<Element>();
+    /* static */ ArrayList<Element> preferencesElements = new ArrayList<Element>();
 
     // All the following needs to be in a separate preferences frame
     // class! How about switching AppConfigPanel to tabbed?
@@ -47,11 +47,11 @@ public class TabbedPreferences extends AppConfigBase {
     final jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
     final jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
     
-    static ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
-    static ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
+    /* static */ ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
+    /* static */ ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
     final UserPreferencesManager pref = InstanceManager.getDefault(UserPreferencesManager.class);
     JPanel buttonpanel;
-    static JList list;
+    /* static */ JList list;
     JScrollPane listScroller;
     
     public TabbedPreferences(){
@@ -219,7 +219,7 @@ public class TabbedPreferences extends AppConfigBase {
         }); 
     }
     
-    public static void setUIFontSize(float size){
+    public /* static */ void setUIFontSize(float size){
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         Font f;
         while (keys.hasMoreElements()) {
@@ -235,7 +235,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
     
-    public static void setUIFont(javax.swing.plaf.FontUIResource f){
+    public /* static */ void setUIFont(javax.swing.plaf.FontUIResource f){
     //
     // sets the default font for all Swing components.
     // ex. 
@@ -295,7 +295,7 @@ public class TabbedPreferences extends AppConfigBase {
         return getChoices();
     }
     
-    protected static ArrayList<String> getChoices() {
+    protected /* static */ ArrayList<String> getChoices() {
         ArrayList<String> choices = new ArrayList<String>();
         for(int x=0; x<preferencesArray.size(); x++){
             choices.add(preferencesArray.get(x).getItemString());
@@ -422,7 +422,6 @@ public class TabbedPreferences extends AppConfigBase {
     jmri.jmrix.JmrixConfigPane comm1;
     GuiLafConfigPane guiPrefs;
         
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
     //Unable to do remove tab, via a component in 1.5 but is supported in 1.6
     //left here until a move is made to 1.6 or an alternative method is used.
     private void removeTab(ActionEvent e, JComponent c, int x){
@@ -674,4 +673,7 @@ public class TabbedPreferences extends AppConfigBase {
             }
         };
     }*/
+
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferences.class.getName());
+
 }
