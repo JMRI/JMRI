@@ -28,7 +28,7 @@ import jmri.ProgListener;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                                                         ThrottleListener, 
@@ -698,7 +698,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
     
-    protected void startProfile() {
+    protected synchronized void startProfile() {
         if (profileAddress > 0) {
             if (dirFwdButton.isSelected() || dirRevButton.isSelected()) {
                 if (state == ProfileState.IDLE) {
@@ -732,7 +732,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         }
     }
 
-    protected void stopProfile() {
+    protected synchronized void stopProfile() {
         if (state != ProfileState.IDLE) {
             tidyUp();
             state = ProfileState.IDLE;
