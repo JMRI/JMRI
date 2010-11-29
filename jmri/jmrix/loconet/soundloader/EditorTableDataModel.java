@@ -22,7 +22,7 @@ import javax.swing.table.TableCellEditor;
  * Table data model for display of Digitrax SPJ files
  * @author		Bob Jacobsen   Copyright (C) 2003, 2006
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.16 $
+ * @version		$Revision: 1.17 $
  */
 public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
@@ -37,7 +37,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
 
     static public final int NUMCOLUMN = 8;
 
-    static ResourceBundle res = null;   // defer to first use
+    static transient ResourceBundle res = null;   // defer to first use
 
     SpjFile file;
     
