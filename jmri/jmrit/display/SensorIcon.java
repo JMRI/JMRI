@@ -27,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -181,6 +181,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         if (debug) log.debug("getSensor: namedSensor= "+
                              ((namedSensor==null)?"null": getNameString())+
                              " isIcon= "+isIcon()+", isText= "+isText()+", activeText= "+activeText);
+        if (namedSensor==null) {
+            return null;
+        }
         return namedSensor.getBean();
     }
     
