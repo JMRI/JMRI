@@ -5,6 +5,7 @@ package jmri.managers;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultRoute;
+import java.text.DecimalFormat;
 
 /**
  * Basic Implementation of a RouteManager.
@@ -12,7 +13,7 @@ import jmri.implementation.DefaultRoute;
  * Note that this does not enforce any particular system naming convention
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class DefaultRouteManager extends AbstractManager
     implements RouteManager, java.beans.PropertyChangeListener {
@@ -38,8 +39,33 @@ public class DefaultRouteManager extends AbstractManager
 		r = new DefaultRoute(systemName,userName);
 		// save in the maps
 		register(r);
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IR:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoRouteRef) {
+                    lastAutoRouteRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
 		return r;
     }
+    
+    public Route newRoute(String userName) {
+        int nextAutoRouteRef = lastAutoRouteRef+1;
+        StringBuilder b = new StringBuilder("IR:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoRouteRef);
+        b.append(nextNumber);
+        return provideRoute(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoRouteRef = 0;
 
     /**
      * Remove an existing route. Route must have been deactivated

@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.22 $
+ * @version     $Revision: 1.23 $
  */
 
 
@@ -242,6 +242,9 @@ public class TransitTableAction extends AbstractTableAction {
 	JButton addNextSection = null;
 	JComboBox alternateSectionBox = new JComboBox();
 	JButton addAlternateSection = null;
+    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    jmri.UserPreferencesManager pref;
+    String systemNameAuto = this.getClass().getName()+".AutoSystemName";
 
      /**
 	 * Responds to the Add... button and the Edit buttons in Transit Table 
@@ -280,6 +283,7 @@ public class TransitTableAction extends AbstractTableAction {
 		addEditPressed();
 	}
 	void addEditPressed() {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddTransit"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.TransitAddEdit", true);
@@ -290,10 +294,20 @@ public class TransitTableAction extends AbstractTableAction {
             p.add(sysNameLabel);
 			p.add(sysNameFixed);
             p.add(sysName);
+            p.add(_autoSystemName);
+            _autoSystemName.addActionListener(new ActionListener(){
+                public void actionPerformed(ActionEvent e) {
+                    autoSystemName();
+                }
+            });
+            if(pref.getPreferenceState(systemNameAuto))
+                _autoSystemName.setSelected(true);
 			sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
 			p.add (new JLabel("     "));
             p.add(userNameLabel);
             p.add(userName);
+            
+
 			userName.setToolTipText(rbx.getString("TransitUserNameHint"));
             addFrame.getContentPane().add(p);
 			addFrame.getContentPane().add(new JSeparator());
@@ -398,6 +412,8 @@ public class TransitTableAction extends AbstractTableAction {
         }
 		if (editMode) {
 			// setup for edit window
+            _autoSystemName.setVisible(false);
+            sysNameLabel.setEnabled(true);
 			create.setVisible(false);
 			update.setVisible(true);
 			sysName.setVisible(false);
@@ -406,6 +422,8 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 		else {
 			// setup for create window
+            _autoSystemName.setVisible(true);
+            autoSystemName();
 			create.setVisible(true);
 			update.setVisible(false);
 			sysName.setVisible(true);
@@ -547,9 +565,14 @@ public class TransitTableAction extends AbstractTableAction {
 		}
         String uName = userName.getText();
         if (uName.equals("")) uName=null;
-        String sName = sysName.getText().toUpperCase();
+        
 		// attempt to create the new Transit
-        curTransit = transitManager.createNewTransit(sName, uName);
+        if (_autoSystemName.isSelected()) {
+            curTransit = transitManager.createNewTransit(uName);
+        } else {
+            String sName = sysName.getText().toUpperCase();
+            curTransit = transitManager.createNewTransit(sName, uName);
+        }
 		if (curTransit==null) {
 			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
 					.getString("Message22"), rbx.getString("ErrorTitle"),
@@ -559,6 +582,7 @@ public class TransitTableAction extends AbstractTableAction {
 		sysName.setText(curTransit.getSystemName());
 		setTransitInformation();
 		addFrame.setVisible(false);
+        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
@@ -765,6 +789,22 @@ public class TransitTableAction extends AbstractTableAction {
 		}
 		return true;
 	}
+    
+    private void autoSystemName(){
+        if (_autoSystemName.isSelected()){
+            create.setEnabled(true);
+            sysName.setEnabled(false);
+            sysNameLabel.setEnabled(false);
+        }
+        else {
+            if (sysName.getText().length() > 0)
+                create.setEnabled(true);
+            else
+                create.setEnabled(false);
+            sysName.setEnabled(true);  
+            sysNameLabel.setEnabled(true);            
+        }
+    }
 	
 	// variables for view actions window
 	private int activeRow = 0;

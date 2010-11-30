@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
+import javax.swing.JOptionPane;
 
 import jmri.util.JmriJFrame;
 
@@ -27,7 +28,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -254,12 +255,18 @@ public class BlockTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(5);
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
-
+    
+    JTextField numberToAdd = new JTextField(10);
+    JCheckBox range = new JCheckBox(rb.getString("LabelNumberToAdd"));
+    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    jmri.UserPreferencesManager pref;
+    
     protected void addPressed(ActionEvent e) {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddBlock"));
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.BlockAddEdit", true);
-            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
+            /*addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             JPanel p;
             p = new JPanel(); p.setLayout(new FlowLayout());
             p.add(sysNameLabel);
@@ -272,22 +279,81 @@ public class BlockTableAction extends AbstractTableAction {
             addFrame.getContentPane().add(p);
 
             JButton ok;
-            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
-            ok.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    okPressed(e);
-                }
-            });
+            addFrame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));*/
+            addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
+            ActionListener listener = new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        okPressed(e);
+                    }
+                };
+             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
         }
+        if(pref.getPreferenceState(systemNameAuto))
+            _autoSystemName.setSelected(true);
         addFrame.pack();
         addFrame.setVisible(true);
     }
+    
+    String systemNameAuto = this.getClass().getName()+".AutoSystemName";
 
     void okPressed(ActionEvent e) {
+        int intNumberToAdd = 1;
+        if (range.isSelected()){
+            try {
+                intNumberToAdd = Integer.parseInt(numberToAdd.getText());
+            } catch (NumberFormatException ex) {
+                log.error("Unable to convert " + numberToAdd.getText() + " to a number");
+                jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                                showInfoMessage("Error","Number to blocks items to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                return;
+            }
+        }
+        if (intNumberToAdd>=65){
+            if(JOptionPane.showConfirmDialog(addFrame,
+                                                 "You are about to add " + intNumberToAdd + " Block Objects into the configuration\nAre you sure?","Warning",
+                                                 JOptionPane.YES_NO_OPTION)==1)
+                return;
+        }
         String user = userName.getText();
         if (user.equals("")) user=null;
         String sName = sysName.getText().toUpperCase();
-        InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+        StringBuilder b;
+        for (int x = 0; x< intNumberToAdd; x++){    
+            if (x!=0){
+                if (user!=null){
+                    b = new StringBuilder(userName.getText());
+                    b.append(":");
+                    b.append(Integer.toString(x));
+                    user=b.toString();
+                }
+                if(!_autoSystemName.isSelected()){
+                    b = new StringBuilder(sysName.getText());
+                    b.append(":");
+                    b.append(Integer.toString(x));
+                    sName=b.toString();
+                }
+            }
+            try {
+                if (_autoSystemName.isSelected())
+                    InstanceManager.blockManagerInstance().createNewBlock(user);
+                else
+                    InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+            } catch (IllegalArgumentException ex) {
+                // user input no good
+                handleCreateException(sName);
+                return; // without creating       
+            }
+        }
+        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+       // InstanceManager.blockManagerInstance().createNewBlock(sName, user);
+    }  
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                    rb.getString("ErrorMemoryAddFailed"),  
+                    new Object[] {sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     //private boolean noWarn = false;
 

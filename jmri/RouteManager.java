@@ -25,7 +25,7 @@ import java.util.List;
  * <P>
  *
  * @author      Dave Duchamp Copyright (C) 2004
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public interface RouteManager extends Manager {
 
@@ -38,6 +38,15 @@ public interface RouteManager extends Manager {
      *       already exists, or if there is trouble creating a new Route.
      */
     public Route provideRoute(String systemName, String userName);
+    
+    /**
+     * For use with User GUI, to allow the auto generation of systemNames,
+     * where the user can optionally supply a username.
+     * Method to create a new Route if the route does not exist
+     *   Returns null if a Route with the same userName
+     *       already exists, or if there is trouble creating a new Route.
+     */
+    public Route newRoute(String userName);
         
     /**
      * Locate via user name, then system name if needed.

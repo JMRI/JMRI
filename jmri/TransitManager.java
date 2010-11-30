@@ -3,6 +3,7 @@
 package jmri;
 
 import jmri.managers.AbstractManager;
+import java.text.DecimalFormat;
 
 /**
  * Implementation of a Transit Manager
@@ -29,7 +30,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class TransitManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -70,8 +71,36 @@ public class TransitManager extends AbstractManager
         z = new Transit(sName,userName);
         // save in the maps
         register(z);
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IZ:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoTransitRef) {
+                    lastAutoTransitRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
         return z;
     }
+    /**
+     * For use with User GUI, to allow the auto generation of systemNames,
+     * where the user can optionally supply a username.
+     */
+    public Transit createNewTransit(String userName) {
+        int nextAutoTransitRef = lastAutoTransitRef+1;
+        StringBuilder b = new StringBuilder("IZ:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoTransitRef);
+        b.append(nextNumber);
+        return createNewTransit(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoTransitRef = 0;
 
     /** 
      * Method to get an existing Transit.  First looks up assuming that

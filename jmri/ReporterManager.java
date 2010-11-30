@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @see             jmri.Reporter
  * @see             jmri.InstanceManager
  */
@@ -108,7 +108,7 @@ public interface ReporterManager extends Manager {
      * due to e.g. an illegal name or name that can't be parsed.
      */
     public Reporter newReporter(String systemName, String userName);
-
+    
     /**
      * Get a list of all Reporter's system names.
      */

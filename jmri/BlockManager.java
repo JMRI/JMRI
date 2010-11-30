@@ -3,6 +3,7 @@
 package jmri;
 
 import jmri.managers.AbstractManager;
+import java.text.DecimalFormat;
 
 /**
  * Basic Implementation of a BlockManager.
@@ -27,7 +28,7 @@ import jmri.managers.AbstractManager;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -58,8 +59,33 @@ public class BlockManager extends AbstractManager
         r = new Block(sName,userName);
         // save in the maps
         register(r);
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IB:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoBlockRef) {
+                    lastAutoBlockRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
         return r;
     }
+    
+    public Block createNewBlock(String userName) {
+        int nextAutoBlockRef = lastAutoBlockRef+1;
+        StringBuilder b = new StringBuilder("IB:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoBlockRef);
+        b.append(nextNumber);
+        return createNewBlock(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoBlockRef = 0;
 
     /** 
      * Method to get an existing Block.  First looks up assuming that

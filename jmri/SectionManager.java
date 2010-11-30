@@ -6,6 +6,7 @@ import jmri.jmrit.display.layoutEditor.LayoutEditor;
 
 import java.util.List;
 import java.util.ArrayList;
+import java.text.DecimalFormat;
 
 import jmri.managers.AbstractManager;
 
@@ -35,7 +36,7 @@ import jmri.managers.AbstractManager;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class SectionManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -76,8 +77,33 @@ public class SectionManager extends AbstractManager
         y = new Section(sName,userName);
         // save in the maps
         register(y);
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IY:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoSectionRef) {
+                    lastAutoSectionRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
         return y;
     }
+    
+    public Section createNewSection(String userName) {
+        int nextAutoSectionRef = lastAutoSectionRef+1;
+        StringBuilder b = new StringBuilder("IY:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoSectionRef);
+        b.append(nextNumber);
+        return createNewSection(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoSectionRef = 0;
 
     /**
      * Remove an existing Section 	 

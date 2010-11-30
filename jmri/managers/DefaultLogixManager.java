@@ -5,6 +5,7 @@ package jmri.managers;
 import jmri.*;
 import jmri.managers.AbstractManager;
 import jmri.implementation.DefaultLogix;
+import java.text.DecimalFormat;
 
 /**
  * Basic Implementation of a LogixManager.
@@ -18,7 +19,7 @@ import jmri.implementation.DefaultLogix;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -49,8 +50,34 @@ public class DefaultLogixManager extends AbstractManager
         x = new DefaultLogix(systemName,userName);
         // save in the maps
         register(x);
+                
+        /*The following keeps trace of the last created auto system name.  
+        currently we do not reuse numbers, although there is nothing to stop the 
+        user from manually recreating them*/
+        if (systemName.startsWith("IX:AUTO:")){
+            try {
+                int autoNumber = Integer.parseInt(systemName.substring(8));
+                if (autoNumber > lastAutoLogixRef) {
+                    lastAutoLogixRef = autoNumber;
+                } 
+            } catch (NumberFormatException e){
+                log.warn("Auto generated SystemName "+ systemName + " is not in the correct format");
+            }
+        }
         return x;
     }
+    
+    public Logix createNewLogix(String userName) {
+        int nextAutoLogixRef = lastAutoLogixRef+1;
+        StringBuilder b = new StringBuilder("IX:AUTO:");
+        String nextNumber = paddedNumber.format(nextAutoLogixRef);
+        b.append(nextNumber);
+        return createNewLogix(b.toString(), userName);
+    }
+    
+    DecimalFormat paddedNumber = new DecimalFormat("0000");
+
+    int lastAutoLogixRef = 0;
 
     /**
      * Remove an existing Logix and delete all its conditionals. 
@@ -95,10 +122,13 @@ public class DefaultLogixManager extends AbstractManager
 			}
 			if (loadDisabled) {
 				// user has requested that Logixs be loaded disabled
+                System.out.println("load disabled set - will not activate logic");
 				x.setEnabled(false);
 			}
-            if (x.getEnabled())
+            if (x.getEnabled()){
+                System.out.println("logix set enabled");
                 x.activateLogix();
+            }
 		}
 		// reset the load switch
 		loadDisabled = false;

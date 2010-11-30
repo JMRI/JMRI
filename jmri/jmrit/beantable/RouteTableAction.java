@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.65 $
+ * @version     $Revision: 1.66 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -260,6 +260,9 @@ public class RouteTableAction extends AbstractTableAction {
        
     JTextField _systemName = new JTextField(10);
     JTextField _userName = new JTextField(22);
+    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    String systemNameAuto = this.getClass().getName()+".AutoSystemName";
+    jmri.UserPreferencesManager pref;
 
     JmriJFrame addFrame = null;
     RouteTurnoutModel _routeTurnoutModel;
@@ -316,6 +319,7 @@ public class RouteTableAction extends AbstractTableAction {
 
 
     protected void addPressed(ActionEvent e) {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 		if (editMode) {
 			cancelEdit();
 		}
@@ -352,6 +356,14 @@ public class RouteTableAction extends AbstractTableAction {
             ps.setLayout(new FlowLayout());
             ps.add(nameLabel);
             ps.add(_systemName);
+            ps.add(_autoSystemName);
+            _autoSystemName.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        autoSystemName();
+                    }
+                });
+            if(pref.getPreferenceState(systemNameAuto))
+                _autoSystemName.setSelected(true);
             _systemName.setToolTipText("Enter system name for new Route, e.g. R12.");
             ps.add(fixedSystemName);
             fixedSystemName.setVisible(false);
@@ -715,9 +727,27 @@ public class RouteTableAction extends AbstractTableAction {
             });
         // display the window
         addFrame.setVisible(true);
+        autoSystemName();
         //_routeTurnoutModel.fireTableDataChanged();
         //_routeSensorModel.fireTableDataChanged();
     }   // addPressed
+    
+    void autoSystemName(){
+        if (_autoSystemName.isSelected()){
+            createButton.setEnabled(true);
+            _systemName.setEnabled(false);
+            nameLabel.setEnabled(false);
+        }
+        else {
+            if (_systemName.getText().length() > 0)
+                createButton.setEnabled(true);
+            else
+                createButton.setEnabled(false);
+            _systemName.setEnabled(true);  
+            nameLabel.setEnabled(true);            
+        }
+    }
+    
     /**
      * Initialize list of included turnout positions
      */
@@ -740,11 +770,15 @@ public class RouteTableAction extends AbstractTableAction {
      * Responds to the Add button
      */
     void createPressed(ActionEvent e) {
-        if (!checkNewNamesOK()) {
-            return;
+        
+        if (!_autoSystemName.isSelected()) {
+            if (!checkNewNamesOK()) {
+                return;
+            }
         }
         updatePressed(e, true);
         status2.setText(editInst);
+        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the route
     }
 
@@ -784,11 +818,16 @@ public class RouteTableAction extends AbstractTableAction {
         // Get system name and user name
         String sName = _systemName.getText();
         String uName = _userName.getText();
-        if (sName.length()==0) {
-            status1.setText("Please enter a system name and user name.");
-            return null;
+        Route g;
+        if (_autoSystemName.isSelected()){
+            g = jmri.InstanceManager.routeManagerInstance().newRoute(uName);
+        } else {
+            if (sName.length()==0) {
+                status1.setText("Please enter a system name and user name.");
+                return null;
+            }
+            g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
         }
-        Route g = jmri.InstanceManager.routeManagerInstance().provideRoute(sName, uName);
         if (g==null) {
             // should never get here
             log.error("Unknown failure to create Route with System Name: "+sName);
@@ -982,9 +1021,12 @@ public class RouteTableAction extends AbstractTableAction {
         }
         // Route was found, make its system name not changeable
         curRoute = g;
+        _autoSystemName.setVisible(false);
         fixedSystemName.setText(sName);
         fixedSystemName.setVisible(true);
         _systemName.setVisible(false);
+        nameLabel.setEnabled(true);
+        _autoSystemName.setVisible(false);
         // deactivate this Route
         curRoute.deActivateRoute();
         // get information for this route
@@ -1138,6 +1180,8 @@ public class RouteTableAction extends AbstractTableAction {
         editButton.setVisible(true);
         createButton.setVisible(true);
         fixedSystemName.setVisible(false);
+        _autoSystemName.setVisible(true);
+        autoSystemName();
         clearPage();
         _systemName.setVisible(true);
         // reactivate the Route

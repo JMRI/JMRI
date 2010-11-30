@@ -25,7 +25,7 @@ import java.util.List;
  * for more details.
  * <P>
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public interface LogixManager extends Manager {
 
@@ -38,6 +38,14 @@ public interface LogixManager extends Manager {
      *       already exists, or if there is trouble creating a new Logix.
      */
     public Logix createNewLogix(String systemName, String userName);
+    
+    /**
+     * For use with User GUI, to allow the auto generation of systemNames,
+     * where the user can optionally supply a username.
+     *   Returns null if a Logix with the same userName
+     *       already exists, or if there is trouble creating a new Logix.
+     */
+    public Logix createNewLogix(String userName);
 
     /**
      * Locate via user name, then system name if needed.
@@ -74,6 +82,7 @@ public interface LogixManager extends Manager {
 	 * Support for loading Logixs in a disabled state to debug loops
 	 */
 	public void setLoadDisabled(boolean s);
+    
 }
 
 

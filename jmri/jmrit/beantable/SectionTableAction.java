@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -236,6 +236,8 @@ public class SectionTableAction extends AbstractTableAction {
     JTextField userName = new JTextField(17);
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
     JLabel userNameLabel = new JLabel(rb.getString("LabelUserName"));
+    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    jmri.UserPreferencesManager pref;
 	JButton create = null;
 	JButton update = null;
 	JComboBox blockBox = new JComboBox();
@@ -249,7 +251,7 @@ public class SectionTableAction extends AbstractTableAction {
 	JRadioButton manually = new JRadioButton(rbx.getString("SetManually"),true);
 	JRadioButton automatic = new JRadioButton(rbx.getString("UseConnectivity"),false);
 	ButtonGroup entryPointOptions = null;
-
+    String systemNameAuto = this.getClass().getName()+".AutoSystemName";
     /**
 	 * Responds to the Add... button and the Edit buttons in Section Table 
 	 */
@@ -275,6 +277,7 @@ public class SectionTableAction extends AbstractTableAction {
 		addEditPressed();
 	}
 	void addEditPressed() {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddSection"));   
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SectionAddEdit", true);
@@ -284,6 +287,14 @@ public class SectionTableAction extends AbstractTableAction {
             p.add(sysNameLabel);
 			p.add(sysNameFixed);
             p.add(sysName);
+            p.add(_autoSystemName);
+            _autoSystemName.addActionListener(new ActionListener(){
+                    public void actionPerformed(ActionEvent e) {
+                        autoSystemName();
+                    }
+                });
+            if(pref.getPreferenceState(systemNameAuto))
+                _autoSystemName.setSelected(true);
 			sysName.setToolTipText(rbx.getString("SectionSystemNameHint"));
 			p.add (new JLabel("     "));
             p.add(userNameLabel);
@@ -467,6 +478,8 @@ public class SectionTableAction extends AbstractTableAction {
         }
 		if (editMode) {
 			// setup for edit window
+            _autoSystemName.setVisible(false);
+            sysNameLabel.setEnabled(true);
 			create.setVisible(false);
 			update.setVisible(true);
 			sysName.setVisible(false);
@@ -475,10 +488,12 @@ public class SectionTableAction extends AbstractTableAction {
 		}
 		else {
 			// setup for create window
+            _autoSystemName.setVisible(true);
 			create.setVisible(true);
 			update.setVisible(false);
 			sysName.setVisible(true);
 			sysNameFixed.setVisible(false);
+            autoSystemName();
 			clearForCreate();
 		}
 		// initialize layout editor panels
@@ -541,9 +556,14 @@ public class SectionTableAction extends AbstractTableAction {
 		}
         String uName = userName.getText();
         if (uName.equals("")) uName=null;
-        String sName = sysName.getText().toUpperCase();
+
 		// attempt to create the new Section
-        curSection = sectionManager.createNewSection(sName, uName);
+        if (_autoSystemName.isSelected()) {
+            curSection = sectionManager.createNewSection(uName);
+        } else {
+            String sName = sysName.getText().toUpperCase();
+            curSection = sectionManager.createNewSection(sName, uName);
+        }
 		if (curSection==null) {
 			javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
 					.getString("Message2"), rbx.getString("ErrorTitle"),
@@ -555,6 +575,7 @@ public class SectionTableAction extends AbstractTableAction {
 		addFrame.setVisible(false);
 		addFrame.dispose();
 		addFrame = null;
+        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
@@ -1074,6 +1095,24 @@ public class SectionTableAction extends AbstractTableAction {
 			return;
 		}
 	}
+    
+   
+    private void autoSystemName(){
+        if (_autoSystemName.isSelected()){
+            create.setEnabled(true);
+            sysName.setEnabled(false);
+            sysName.setText("");
+            sysNameLabel.setEnabled(false);
+        }
+        else {
+            if (sysName.getText().length() > 0)
+                create.setEnabled(true);
+            else
+                create.setEnabled(false);
+            sysName.setEnabled(true);  
+            sysNameLabel.setEnabled(true);            
+        }
+    }
 	
 	/**
 	 * Table model for Entry Points in Create/Edit Section window
@@ -1186,6 +1225,7 @@ public class SectionTableAction extends AbstractTableAction {
 			}
 			return;
 		}
+        
 	}
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionTableAction.class.getName());
