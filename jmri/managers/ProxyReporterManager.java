@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations.  
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
 
@@ -65,7 +65,7 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
     /**
      * Return an instance with the specified system and user names.
      * Note that two calls with the same arguments will get the same instance;
-     * there is only one Sensor object representing a given physical Reporter
+     * there is only one Reporter object representing a given physical Reporter
      * and therefore only one with a specific system or user name.
      *<P>
      * This will always return a valid object reference for a valid request;
@@ -86,14 +86,14 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      * addresses are provided, but the given values are associated with
      * different objects.  This is a problem, and we don't have a
      * good solution except to issue warnings.
-     * This will mostly happen if you're creating Sensors when you should
+     * This will mostly happen if you're creating Reporters when you should
      * be looking them up.
-     * @return requested Sensor object (never null)
+     * @return requested Reporter object (never null)
      */
     public Reporter newReporter(String systemName, String userName) {
         return (Reporter) newNamedBean(systemName, userName);
     }
-
+    
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ProxyReporterManager.class.getName());
 }
