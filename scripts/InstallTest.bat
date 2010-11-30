@@ -18,12 +18,14 @@ java -version
 @pause
 @echo Now testing JMRI
 
-java -Xms30m -Xmx200m -noverify -Dsun.java2d.d3d=false -Djava.security.policy=security.policy -Djava.library.path=.;lib -Djava.rmi.server.codebase=file:java/classes/ -Dsun.java2d.noddraw -Djava.class.path=".;classes;jmriplugins.jar;jmriweb.jar;jmriserver.jar;jmri.jar;comm.jar;Serialio.jar;log4j.jar;jhall.jar;crimson.jar;jdom.jar;jython.jar;javacsv.jar;jinput.jar;ch.ntb.usb.jar;MRJAdapter.jar;servlet.jar;vecmath.jar" apps.InstallTest.InstallTest %1 %2 %3 %4 %5 %6 %7 %8 %9
+@LaunchJMRI /debug /noisy apps.InstallTest.InstallTest %1 %2 %3 %4 %5 %6 %7 %8 %9
 
 @IF NOT ERRORLEVEL 1 GOTO skipJMRI
 
 @echo .
 @echo Something is wrong with invoking JMRI. Check JMRI installation.
-@pause
 
 :skipJMRI
+@echo .
+@echo InstallTest completed
+@pause
