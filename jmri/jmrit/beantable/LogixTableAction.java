@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.81 $
+ * @version $Revision: 1.82 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -266,21 +266,21 @@ public class LogixTableAction extends AbstractTableAction {
         });
         panel.add(referenceButton);
         panel.setVisible(true);
-        f.addToBottomBox(panel);
+        f.addToBottomBox(panel, this.getClass().getName());
         JButton orphanButton = new JButton(rbx.getString("OrphanButton"));
         orphanButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 findOrphansPressed(e);
             }
         });
-        f.addToBottomBox(orphanButton);
+        f.addToBottomBox(orphanButton, this.getClass().getName());
         JButton emptyButton = new JButton(rbx.getString("EmptyButton"));
         emptyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 findEmptyPressed(e);
             }
         });
-        f.addToBottomBox(emptyButton);
+        f.addToBottomBox(emptyButton, this.getClass().getName());
     
     }
     
@@ -361,7 +361,13 @@ public class LogixTableAction extends AbstractTableAction {
 	JmriJFrame addLogixFrame = null;
 	JTextField _systemName = new JTextField(10);
 	JTextField _addUserName = new JTextField(10);
+    JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
+    JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
+    JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
     JTextField _devNameField;
+    jmri.UserPreferencesManager pref;
+    String systemNameAuto = this.getClass().getName()+".AutoSystemName";
+    JButton create;
 
 	// Edit Logix Variables
 	JmriJFrame editLogixFrame = null;
@@ -489,6 +495,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Add Logix window
 	 */
 	protected void addPressed(ActionEvent e) {
+        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 		// possible change
         if (!checkFlags(null)) {
             return;
@@ -498,7 +505,7 @@ public class LogixTableAction extends AbstractTableAction {
 		if (addLogixFrame == null) {
             JPanel panel5 = makeAddLogixFrame("TitleAddLogix", "AddLogixMessage");
 			// Create Logix
-            JButton create = new JButton(rbx.getString("CreateLogixButton"));
+            create = new JButton(rbx.getString("CreateLogixButton"));
 			panel5.add(create);
 			create.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -533,9 +540,9 @@ public class LogixTableAction extends AbstractTableAction {
         c.gridx = 0;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.EAST;
-        p.add(new JLabel(rbx.getString("LogixSystemName")), c);
+        p.add(_sysNameLabel, c);
         c.gridy = 1;
-        p.add(new JLabel(rbx.getString("LogixUserName")), c);
+        p.add(_userNameLabel, c);
         c.gridx = 1;
         c.gridy = 0;
         c.anchor = java.awt.GridBagConstraints.WEST;
@@ -544,10 +551,18 @@ public class LogixTableAction extends AbstractTableAction {
         p.add(_systemName,c);
         c.gridy = 1;
         p.add(_addUserName,c);
+        c.gridx = 2;
+        c.gridy = 1;
+        c.anchor = java.awt.GridBagConstraints.WEST;
+        c.weightx = 1.0;
+        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
+        c.gridy = 0;
+        p.add(_autoSystemName,c);
+        if(pref.getPreferenceState(systemNameAuto))
+            _autoSystemName.setSelected(true);
         _addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
         _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
         contentPane.add(p);
-
         // set up message
         JPanel panel3 = new JPanel();
         panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
@@ -581,7 +596,30 @@ public class LogixTableAction extends AbstractTableAction {
             }
         });
         contentPane.add(panel5);
+       
+         _autoSystemName.addItemListener(
+            new ItemListener() {
+                public void itemStateChanged(ItemEvent e){
+                    autoSystemName();
+                }
+        });
         return panel5;
+    }
+    
+    void autoSystemName(){
+        if (_autoSystemName.isSelected()){
+            create.setEnabled(true);
+            _systemName.setEnabled(false);
+            _sysNameLabel.setEnabled(false);
+        }
+        else {
+            if (_systemName.getText().length() > 0)
+               create.setEnabled(true);
+            else
+               create.setEnabled(false);
+            _systemName.setEnabled(true);  
+            _sysNameLabel.setEnabled(true);
+        }
     }
 
 	/**
@@ -803,33 +841,38 @@ public class LogixTableAction extends AbstractTableAction {
         if (uName.length()==0) {
             uName = null;
         }
-        if (!checkLogixSysName()) {
-            return;
+        String sName = _systemName.getText().trim();
+        if(_autoSystemName.isSelected()){
+            _curLogix = _logixManager.createNewLogix(uName);
+        } else {    
+            if (!checkLogixSysName()) {
+                return;
+            }
+            // check if a Logix with this name already exists
+            Logix x = _logixManager.getBySystemName(sName);
+            if (x != null) {
+                // Logix already exists
+                javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
+                        .getString("Error1"), rbx.getString("ErrorTitle"),
+                        javax.swing.JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!checkLogixUserName(uName)) {
+                return;
+            }
+            // Create the new Logix
+            _curLogix = _logixManager.createNewLogix(sName, uName);
+            if (_curLogix == null) {
+                // should never get here unless there is an assignment conflict
+                log.error("Failure to create Logix with System Name: " + sName);
+                return;
+            }
         }
-		String sName = _systemName.getText().trim();
-		// check if a Logix with this name already exists
-		Logix x = _logixManager.getBySystemName(sName);
-		if (x != null) {
-			// Logix already exists
-			javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
-					.getString("Error1"), rbx.getString("ErrorTitle"),
-					javax.swing.JOptionPane.ERROR_MESSAGE);
-			return;
-		}
-        if (!checkLogixUserName(uName)) {
-            return;
-        }
-		// Create the new Logix
-		_curLogix = _logixManager.createNewLogix(sName, uName);
-		if (_curLogix == null) {
-			// should never get here unless there is an assignment conflict
-			log.error("Failure to create Logix with System Name: " + sName);
-			return;
-		}
 		numConditionals = 0;
         cancelAddPressed(null);
 		// create the Edit Logix Window
         makeEditLogixWindow();
+        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
 	}
 
 	// *********** Methods for Edit Logix Window ********************
