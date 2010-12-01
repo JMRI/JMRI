@@ -614,12 +614,17 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     if (isEditable()) {
                         if ( !event.isControlDown() &&
                              (_selectionGroup!=null && !_selectionGroup.contains(_currentSelection)) ) {
-                                _selectionGroup = null;
+                            if (_pastePending) {
+                                abortPasteItems();
+                            }
+                            _selectionGroup = null;
                         }
                     }
                 } else {
                     _highlightcomponent = null;
-                    _currentSelection = null;
+                    if (_pastePending) {
+                        abortPasteItems();
+                    }
                     _selectionGroup = null;
                 }
             }
@@ -660,7 +665,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     makeSelectionGroup(event);
                 }
             }
-            if (_pastePending) {
+            if (_pastePending && _dragging) {
                 pasteItems();
             }
         }
@@ -813,6 +818,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     protected void copyItem(Positionable p) {
         if (_debug) log.debug("Enter copyItem: _selectionGroup "+(_selectionGroup!=null ?
                                                   "size= "+_selectionGroup.size() : "null"));
+        // If popup menu hit again, Paste selections and make another copy
         if (_pastePending) {
             pasteItems();
         }
@@ -822,12 +828,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         if (_selectionGroup==null) {
             _selectionGroup = new ArrayList <Positionable>();
             _selectionGroup.add(p);
-        } else if (_pastePending) {
-            pasteItems();
         }
         ArrayList <Positionable> selectionGroup = new ArrayList <Positionable>();
         for (int i=0; i<_selectionGroup.size(); i++) {
-//            if (_debug) log.debug("copyItem: clone "+_selectionGroup.get(i).getClass().getName());
             Positionable pos = _selectionGroup.get(i).deepClone();
             selectionGroup.add(pos);
         }
@@ -843,6 +846,21 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 if (_debug) log.debug("Add "+_selectionGroup.get(i).getNameString());
             }
         }
+        _pastePending = false;
+    }
+        
+    /**
+    * Showing the popup of a member of _selectionGroup causes an image to be placed
+    * in to the _targetPanel.  If the objects are not put into _contents (putItem(p))
+    * the image will persist.  Thus set these transitory object invisible.
+    */
+    void abortPasteItems() {
+        if (_selectionGroup!=null) {
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                _selectionGroup.get(i).setVisible(false);
+            }
+        }
+        _selectionGroup = null;
         _pastePending = false;
     }
         
