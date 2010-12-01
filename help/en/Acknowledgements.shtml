@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.118 2010-10-15 03:58:04 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.119 2010-12-01 22:09:01 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -236,6 +236,7 @@
 	<LI>Phil Hartung, who provided some CTC graphics
 	<LI>Tim Hatch, who added the support for TCH Technology devices
 	<LI>Ian Havercroft, who provided the correct identification codes for ESU decoders
+    <li>David Heap, who provided a QSI decoder fix
 	<LI>Rob Heikens, who created ESU decoder definitions and programmer pages
 	<LI>Freek Heite, who located some important XpressNet info
     <LI>William Hipple, who registered the JMRI.org and DecoderPro.org domains for us
@@ -409,7 +410,8 @@
 	    updated lots of decoder definitions,
 	    improved many help pages,
 	    and is an active jmriusers moderator.
-	<li>Steve Todd, who updated the EngineDriver throttle for Android and fixed an IPv6 problem.
+	<li>Steve Todd, who updated the EngineDriver throttle for Android, fixed an IPv6 problem,
+	    and worked on the mini web server and examples for it
     <li>Dale Tripp, who co-wrote the 2009 version of the DecoderPro manual
         and provided the decoder definition for the Kato FL12
 <a name="U"></A>

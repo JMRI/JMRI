@@ -3,8 +3,8 @@
 <!DOCTYPE decoderIndex-config SYSTEM "decoderIndex-config.dtd">
 
 <decoderIndex-config>
-  <!--Written by JMRI version 2.11.1 on Sun Oct 03 19:22:34 PDT 2010 $Id: decoderIndex.xml,v 1.165 2010-10-04 02:24:22 jacobsen Exp $-->
-  <decoderIndex version="201">
+  <!--Written by JMRI version 2.11.2 on Wed Dec 01 14:05:48 PST 2010 $Id: decoderIndex.xml,v 1.166 2010-12-01 22:07:29 jacobsen Exp $-->
+  <decoderIndex version="203">
     <mfgList nmraListDate="2009-07-30" updated="2009-10-20" lastadd="54">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -964,6 +964,14 @@
           <size length="25.5" width="15.5" height="4.5" units="mm" />
         </model>
       </family>
+      <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH" type="locomotive" file="ESU_Bachmann_3_function.xml">
+        <model model="EZ 3 function decoder (36-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
+          <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
+          <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
+        </model>
+      </family>
       <family name="ESU LokPilot 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilot2.0.xml">
         <model model="LokPilot 2.0" maxInputVolts="25 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.45 A" numOuts="4" numFns="14" formFactor="HO" connector="NMRAmedium">
           <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
@@ -1044,6 +1052,14 @@
           <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
           <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
           <size length="25.5" width="15.5" height="4.5" units="mm" />
+        </model>
+      </family>
+      <family name="ESU LokPilot Basic 2.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" type="locomotive" file="ESU_LokPilotBasic2.0.xml">
+        <model model="LokPilot Basic 2.0" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <output name="1" label="Front light" maxcurrent="180 mA" connection="wire" />
+          <output name="2" label="Rear light " maxcurrent="180 mA" connection="wire" />
+          <output name="3" label="   AUX1    " maxcurrent="180 mA" connection="wire" />
         </model>
       </family>
       <family name="ESU LokPilot Silent BEMF decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="21" file="ESU_LokPilotDCC.xml">
@@ -1559,6 +1575,190 @@
           <functionlabel num="19" lockable="false">Air</functionlabel>
           <functionlabel num="20" lockable="false">Short Horn</functionlabel>
           <functionlabel num="21" lockable="false">pop Valve</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
+        <model model="LokSound Select Steam 3 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73413">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Steam 4 Driven Axles" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73414">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Steam Geared" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73415">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Steam Articulated" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73416">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <model model="LokSound Select Steam Collection" numOuts="29" numFns="23" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="73417">
+          <output name="1" label="Headlight" maxcurrent="250mA" />
+          <output name="2" label="Rear light" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <output name="5" label="AUX 3" maxcurrent="250mA" />
+          <output name="6" label="AUX 4" maxcurrent="250mA" />
+          <output name="7" label="Acc" />
+          <output name="8" label="Sw" />
+          <output name="9" label="DB" />
+          <output name="10" label="Dim" />
+          <output name="11" label="Cross" />
+          <output name="12" label="Notch" />
+          <output name="13" label="Dop" />
+          <output name="14" label="Shift" />
+          <output name="15" label="Prime" />
+          <output name="16" label="Horn" />
+          <output name="17" label="Bell" />
+          <output name="18" label="Coup" />
+          <output name="19" label="Dyno" />
+          <output name="20" label="Pump" />
+          <output name="21" label="Blow" />
+          <output name="22" label="Inj" />
+          <output name="23" label="Comm" />
+          <output name="24" label="Clak" />
+          <output name="25" label="Brake" />
+          <output name="26" label="Sand" />
+          <output name="27" label="Oil" />
+          <output name="28" label="Coal" />
+          <output name="29" label="S Whsl" />
+          <size length="1.41" width=".51" height=".25" units="inches" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blow Down</functionlabel>
+          <functionlabel num="5" lockable="false">AUX3</functionlabel>
+          <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
+          <functionlabel num="7" lockable="true">Switching</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="10" lockable="false">Oil Burner</functionlabel>
+          <functionlabel num="11" lockable="true">Coal Shovel</functionlabel>
+          <functionlabel num="12" lockable="false">Air Pump</functionlabel>
+          <functionlabel num="13" lockable="false">AUX4</functionlabel>
+          <functionlabel num="14" lockable="false">Injector</functionlabel>
+          <functionlabel num="15" lockable="false">Crossing</functionlabel>
+          <functionlabel num="16" lockable="false">Rail Clack</functionlabel>
+          <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
+          <functionlabel num="18" lockable="false">Cylinder Cocks</functionlabel>
+          <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
         </functionlabels>
       </family>
       <family name="Fleischmann function decoders" mfg="Fleischmann" lowVersionID="10" comment="Fleischmann 686401" file="Fleischmann_Function.xml">
@@ -2325,6 +2525,22 @@
       </family>
       <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="5" highVersionID="255" type="locomotive" file="Mistral_GOLD_V6.xml">
         <model model="GOLD V6" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Engine</functionlabel>
+          <functionlabel num="2" lockable="false">2 tones Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Passengers Light</functionlabel>
+          <functionlabel num="4" lockable="false">Door + Whistle</functionlabel>
+          <functionlabel num="5" lockable="true">Parking lights</functionlabel>
+          <functionlabel num="6" lockable="false">Home horn</functionlabel>
+          <functionlabel num="7" lockable="true">Tail Light</functionlabel>
+          <functionlabel num="8" lockable="false">Short horn</functionlabel>
+          <functionlabel num="9" lockable="false">Air Brakes</functionlabel>
+          <functionlabel num="10" lockable="false">Door</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="MISTRAL GOLD" mfg="Mistral Train Models" lowVersionID="7" highVersionID="255" type="locomotive" file="Mistral_GOLD_V7.xml">
+        <model model="GOLD V7" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Engine</functionlabel>
@@ -3986,13 +4202,13 @@
           <!-- headlight-->
         </model>
       </family>
-      <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1" type="locomotive" file="SoundTraxx_OEM_Bachmann_v3.xml">
-        <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NEM651/NMRA 6 pin" nmraWarrant="no" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no">
-          <size length="13.3" width="10.0" height="3.5" units="millimeters" />
-          <output name="1" label="White" connection="unspecified" />
-          <output name="2" label="Yellow" connection="unspecified" />
-          <output name="LD" label="Light Dimming" connection="unspecified" />
-          <output name="Bk" label="Brake Key" connection="unspecified" />
+      <family name="OEM Bachmann E-Z Command decoders" mfg="Throttle-Up (SoundTraxx)" lowVersionID="1" file="SoundTraxx_OEM_Bachmann_v3.xml">
+        <model model="2 function decoder (36-558)" numOuts="2" numFns="14" maxMotorCurrent=".5A" formFactor="HO, N" connector="NMRAmedium">
+          <output name="1" label="White" />
+          <output name="2" label="Yellow" />
+          <output name="LD" label="Light Dimming" />
+          <output name="Bk" label="Brake Key" />
+          <size length="13.3" width="10.0" height="3.5" units="mm" />
         </model>
       </family>
       <family name="SHS Diesel decoders" mfg="Throttle-Up (SoundTraxx)" file="SoundTraxx_SHS_F3.xml">
@@ -7124,7 +7340,7 @@
         <model model="SIC24" lowVersionID="12" />
       </family>
       <family name="SIC24AD" mfg="Team Digital" type="stationary" comment="The SIC24AD can be programmed in the usual way" file="TD_SIC24AD.xml">
-        <model model="SIC24AD" lowVersionID="10" />
+        <model model="SIC24AD" lowVersionID="10" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
       </family>
       <family name="Stationary Decoder" mfg="Team Digital" type="stationary" file="TD_SMC4.xml">
         <model model="SMC4" lowVersionID="1" comment="SMC4 is a stationary decoder, but it can be programmed in the usual way" />
