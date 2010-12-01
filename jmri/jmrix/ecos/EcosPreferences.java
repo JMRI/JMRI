@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.29 $
+ * @version     $Revision: 1.30 $
  */
 
 public class EcosPreferences {
@@ -38,6 +38,7 @@ public class EcosPreferences {
                 jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
             }
         }
+        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", null, null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(), false, null);
         //self = this;
     }
     

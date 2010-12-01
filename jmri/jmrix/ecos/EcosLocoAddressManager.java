@@ -2,7 +2,6 @@
 package jmri.jmrix.ecos;
 
 import jmri.jmrix.ecos.utilities.*;
-
 import java.util.Enumeration;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -19,7 +18,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
@@ -31,7 +30,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
-
+    
+    @Override
+    public String makeSystemName(String s){ return "";}
+    @Override
+    public String[] getSystemNameArray() { return new String[0]; }
+    @Override
+    public List<String> getSystemNameList() {return new ArrayList<String>(); }
+    
     public void clearLocoToRoster(){
         addLocoToRoster = false;
     }
@@ -61,6 +67,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             _instance = this;
             _instance.loadEcosData();
         }
+        jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableAction", "ECoS Loco Database", true);
     }
     /*
 //        _instance = this;
