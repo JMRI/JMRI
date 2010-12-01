@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.24 2010-11-28 06:30:38 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.25 2010-12-01 22:23:27 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -293,6 +293,32 @@ Pete Cressman fixed a problem adding a clock to a panel.
 <p>
 Kevin Dickerson updated the British Rail 2003 signal definition.
 
+<p>
+Mike Mosher provided a decoder definition for the ESU LS Select steam
+
+<p>
+David Heap updated the QSI Version 7 Steam definition to restore CV 51.5 for Eureka C38 4-6-2
+
+<p>
+Team Digital updated the definition for their SIC24AD decoder.
+
+<p>
+Team Digital updated the BlocD8 definition file to correct input 5 primary address and default output 
+state and added unoccupied delay time CVs
+
+<p>
+Alain Carrasso provided a Version 7 decoder definition for the Mistral Gold decoder:
+some additional CV are made available starting with SW Version 7. 
+Additional or changed comments added. Decoders with SW version 7 or higher are detected as V7, 
+if SW version is 5 or 6, they are detected as V6, using previous version included in JMRI2.11.1.
+
+<p>
+Steve Todd provided several new files which go into the web folder
+to facilitate testing and education about the xmlio server and its features.
+He also added a few links to the generated index.html (delete existing file and restart to see them).
+
+<p>
+Steve Todd fixed the MIME types for image files from the mini web server.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
