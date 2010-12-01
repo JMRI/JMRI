@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.29 $
+ * @version	$Revision: 1.30 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -142,8 +142,11 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     /**
      * Add a component to the bottom box. Takes care of organising glue, struts etc
      * @param comp
+     * @param c
      */
-    protected void addToBottomBox(Component comp) {
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UUF_UNUSED_FIELD", 
+          justification="param c is required in the listedtableframe")
+    protected void addToBottomBox(Component comp, String c) {
     	bottomBox.add(Box.createHorizontalStrut(bottomStrutWidth), bottomBoxIndex);
     	++bottomBoxIndex;
     	bottomBox.add(comp, bottomBoxIndex);

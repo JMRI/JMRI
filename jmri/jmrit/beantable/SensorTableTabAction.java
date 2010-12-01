@@ -14,51 +14,52 @@ import javax.swing.event.ChangeEvent;
 
 import jmri.util.com.sun.TableSorter;
 
-public class TurnoutTableTabAction extends AbstractTableAction {
+public class SensorTableTabAction extends AbstractTableAction {
 
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     
     JPanel dataPanel;
-    JTabbedPane turnoutTabs;
+    JTabbedPane sensorTabs;
     
-    public TurnoutTableTabAction(String s){
+    public SensorTableTabAction(String s){
         super(s);
     }
     
-    public TurnoutTableTabAction(){
+    public SensorTableTabAction(){
         this("Multiple Tabbed");
     }
     
     protected void createModel(){
         dataPanel = new JPanel();
-        turnoutTabs = new JTabbedPane();
+        sensorTabs = new JTabbedPane();
         dataPanel.setLayout(new BorderLayout());
-        if (InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
-            jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
+        if (InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")){
+            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) InstanceManager.sensorManagerInstance();
             List<jmri.Manager> managerList = proxy.getManagerList();
-            tabbedTableArray.add(new tabbedTableItem("All", "All", true, InstanceManager.turnoutManagerInstance()));
+            tabbedTableArray.add(new tabbedTableItem("All", "All", true, InstanceManager.sensorManagerInstance()));
             for(int x = 0; x<managerList.size(); x++){
-                if (managerList.get(x) instanceof TurnoutManager){
+                if (managerList.get(x) instanceof SensorManager){
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                    tabbedTableItem itemModel = new tabbedTableItem(manuName, manuName, true, (TurnoutManager) managerList.get(x));
+                    tabbedTableItem itemModel = new tabbedTableItem(manuName, manuName, true, (SensorManager) managerList.get(x));
                     tabbedTableArray.add(itemModel);
                 }
             }
         } else {
-            String manuName = ConnectionNameFromSystemName.getConnectionName(InstanceManager.turnoutManagerInstance().getSystemPrefix());
-            tabbedTableArray.add(new tabbedTableItem(manuName, manuName, true, (InstanceManager.turnoutManagerInstance())));
+            String manuName = ConnectionNameFromSystemName.getConnectionName(InstanceManager.sensorManagerInstance().getSystemPrefix());
+            tabbedTableArray.add(new tabbedTableItem(manuName, manuName, true, (InstanceManager.sensorManagerInstance())));
         }
+        //tabbedTableArray.get(0).getAAClass().addToFrame(f);
         for(int x = 0; x<tabbedTableArray.size(); x++){
-            TurnoutTableAction table = (TurnoutTableAction) tabbedTableArray.get(x).getAAClass();
+            SensorTableAction table = (SensorTableAction) tabbedTableArray.get(x).getAAClass();
             table.addToPanel(this);
-            turnoutTabs.addTab(tabbedTableArray.get(x).getClassAsString(),null, tabbedTableArray.get(x).getPanel(),null);
+            sensorTabs.addTab(tabbedTableArray.get(x).getClassAsString(),null, tabbedTableArray.get(x).getPanel(),null);
         }
-        turnoutTabs.addChangeListener(new ChangeListener() { 
+        sensorTabs.addChangeListener(new ChangeListener() { 
             public void stateChanged(ChangeEvent evt) { 
                 setMenuBar(f);
-            }
-        }); 
-        dataPanel.add(turnoutTabs, BorderLayout.CENTER);
+        }
+    });
+        dataPanel.add(sensorTabs, BorderLayout.CENTER);
     }
     
     @Override
@@ -83,20 +84,24 @@ public class TurnoutTableTabAction extends AbstractTableAction {
     }
     
     protected void setTitle() {
-        //atf.setTitle("multiple turnouts");
+        //atf.setTitle("multiple sensors");
     }
 
     @Override
     protected String helpTarget() {
-        return "package.jmri.jmrit.beantable.TurnoutTable";
+        return "package.jmri.jmrit.beantable.SensorTable";
     }
     
     protected void addPressed(ActionEvent e) {
         log.warn("This should not have happened");
     }
     
+    public void addToFrame(BeanTableFrame f){
+        tabbedTableArray.get(sensorTabs.getSelectedIndex()).getAAClass().addToFrame(f);
+    }
+    
     public void setMenuBar(BeanTableFrame f){
-        tabbedTableArray.get(turnoutTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
+        tabbedTableArray.get(sensorTabs.getSelectedIndex()).getAAClass().setMenuBar(f);
     }
     
     public void addToBottomBox(JComponent c, String str){
@@ -105,10 +110,10 @@ public class TurnoutTableTabAction extends AbstractTableAction {
                 tabbedTableArray.get(x).addToBottomBox(c);
         }
     }
-    
+
     public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat){
         try {
-            tabbedTableArray.get(turnoutTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
+            tabbedTableArray.get(sensorTabs.getSelectedIndex()).getDataTable().print(mode, headerFormat, footerFormat);
         } catch (java.awt.print.PrinterException e1) {
             log.warn("error printing: "+e1,e1);
         } catch ( NullPointerException ex) {
@@ -118,7 +123,7 @@ public class TurnoutTableTabAction extends AbstractTableAction {
     
     class tabbedTableItem {
         
-        TurnoutTableAction tableAction;
+        SensorTableAction tableAction;
         String className;
         String itemText;
         BeanTableDataModel dataModel;
@@ -126,7 +131,7 @@ public class TurnoutTableTabAction extends AbstractTableAction {
         JScrollPane dataScroll;
         Box bottomBox;
         Boolean AddToFrameRan = false;
-        TurnoutManager turnoutManager;
+        SensorManager sensorManager;
         int bottomBoxIndex;	// index to insert extra stuff
         static final int bottomStrutWidth = 20;
         
@@ -134,11 +139,11 @@ public class TurnoutTableTabAction extends AbstractTableAction {
         
         final JPanel dataPanel = new JPanel();
         
-        tabbedTableItem(String aaClass, String choice, boolean stdModel, TurnoutManager manager){
+        tabbedTableItem(String aaClass, String choice, boolean stdModel, SensorManager manager){
             try{
-                Class<?> cl = Class.forName("jmri.jmrit.beantable.TurnoutTableAction");
+                Class<?> cl = Class.forName("jmri.jmrit.beantable.SensorTableAction");
                 java.lang.reflect.Constructor<?> co = cl.getConstructor(new Class[] {String.class});
-                tableAction = (TurnoutTableAction) co.newInstance(choice);
+                tableAction = (SensorTableAction) co.newInstance(choice);
             } catch (ClassNotFoundException e1) {
                 log.error("Not a valid class");
                 return;
@@ -159,7 +164,7 @@ public class TurnoutTableTabAction extends AbstractTableAction {
             className = aaClass;
             itemText = choice;
             standardModel=stdModel;
-            turnoutManager = manager;
+            sensorManager = manager;
             //If a panel model is used, it should really add to the bottom box
             //but it can be done this way if required.
             bottomBox = Box.createHorizontalBox();
@@ -173,8 +178,8 @@ public class TurnoutTableTabAction extends AbstractTableAction {
         }
         
         void createDataModel(){
-            if (turnoutManager!=null)
-                tableAction.setManager(turnoutManager);
+            if (sensorManager!=null)
+                tableAction.setManager(sensorManager);
             dataModel = tableAction.getTableDataModel();
             TableSorter sorter = new TableSorter(dataModel);
             dataTable = makeJTable(sorter);
@@ -209,7 +214,7 @@ public class TurnoutTableTabAction extends AbstractTableAction {
                 public void actionPerformed(ActionEvent e) {
                     tableAction.addPressed(e);
                 }
-            });
+            });       
         }
         
         void addPanelModel(){
@@ -259,5 +264,5 @@ public class TurnoutTableTabAction extends AbstractTableAction {
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableTabAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableTabAction.class.getName());
 }

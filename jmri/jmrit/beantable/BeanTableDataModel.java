@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.38 $
+ * @version		$Revision: 1.39 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -42,7 +42,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
         getManager().addPropertyChangeListener(this);
         updateNameList();
     }
-
+    
     protected synchronized void updateNameList() {
         // first, remove listeners from the individual objects
         if (sysNameList != null) {

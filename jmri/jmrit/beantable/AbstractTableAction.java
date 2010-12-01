@@ -15,7 +15,7 @@ import javax.swing.JPanel;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -33,11 +33,13 @@ abstract public class AbstractTableAction extends AbstractAction {
      * Create the JTable DataModel, along with the changes
      * for the specific NamedBean type
      */
+
     protected abstract void createModel();
 
     /**
      * Include the correct title
      */
+
     protected abstract void setTitle();
 
     protected BeanTableFrame f;
@@ -53,7 +55,7 @@ abstract public class AbstractTableAction extends AbstractAction {
              */
             void extras() {
                 JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
-                addToBottomBox(addButton);
+                addToBottomBox(addButton, this.getClass().getName());
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         addPressed(e);
@@ -83,6 +85,7 @@ abstract public class AbstractTableAction extends AbstractAction {
      */
     public void addToFrame(BeanTableFrame f) {
     }
+    
     /**
      * Allow subclasses to add alter the frames Menubar
      * without have to actually subclass the BeanTableDataFrame
@@ -100,6 +103,11 @@ abstract public class AbstractTableAction extends AbstractAction {
     protected String helpTarget() {
         return "index";  // by default, go to the top
     }
+    /**
+    * Used with the Tabbed instances of table action, so that the print option 
+    * is handled via that on the appropriate tab.
+    */
+    public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat){ System.out.println("Caught here");}
 
     protected abstract void addPressed(ActionEvent e);
 

@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -71,7 +71,7 @@ public class SignalMastTableAction extends AbstractTableAction {
              */
             void extras() {
                 JButton addButton = new JButton(this.rb.getString("ButtonAdd"));
-                addToBottomBox(addButton);
+                addToBottomBox(addButton, this.getClass().getName());
                 addButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         addPressed(e);

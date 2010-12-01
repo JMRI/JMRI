@@ -3,12 +3,12 @@
 package jmri.jmrit.beantable;
 
 import jmri.util.JmriJFrame;
-
+import jmri.util.ConnectionNameFromSystemName;
 
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
-import jmri.jmrix.DCCManufacturerList;
+import jmri.SensorManager;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +27,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -43,18 +43,26 @@ public class SensorTableAction extends AbstractTableAction {
         super(actionName);
 
         // disable ourself if there is no primary sensor manager available
-        if (jmri.InstanceManager.sensorManagerInstance()==null) {
+        if (senManager==null) {
             setEnabled(false);
         }
     }
     public SensorTableAction() { this("Sensor Table");}
 
+    protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
+    public void setManager(SensorManager man){
+        senManager = man;
+        if (m!=null)
+            m.setManager(senManager);
+    }
+    
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Sensors
      */
     protected void createModel() {
-        m = new jmri.jmrit.beantable.sensor.SensorTableDataModel();
+        m = new jmri.jmrit.beantable.sensor.SensorTableDataModel(senManager);
+        //m.setManager(senManager);
     }
 
     protected void setTitle() {
@@ -82,7 +90,7 @@ public class SensorTableAction extends AbstractTableAction {
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         
         if (addFrame==null) {
-            addFrame = new JmriJFrame(f.rb.getString("TitleAddSensor"));
+            addFrame = new JmriJFrame(rb.getString("TitleAddSensor"));
             //addFrame.addHelpMenu("package.jmri.jmrit.beantable.SensorAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
 
@@ -101,14 +109,14 @@ public class SensorTableAction extends AbstractTableAction {
                 jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
                 List<Manager> managerList = proxy.getManagerList();
                 for(int x = 0; x<managerList.size(); x++){
-                    String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     prefixBox.addItem(manuName);                      
                 }
                 if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
             else {
-                prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
+                prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.sensorManagerInstance().getSystemPrefix()));
             }
             sysName.setName("sysName");
             userName.setName("userName");
@@ -142,22 +150,22 @@ public class SensorTableAction extends AbstractTableAction {
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
-        String sensorPrefix = getSensorPrefixFromName()+InstanceManager.sensorManagerInstance().typeLetter();
+        String sensorPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
 
         String sName = null;
         String curAddress = sysName.getText();
 
         for (int x = 0; x < numberOfSensors; x++){
-            curAddress = InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, getSensorPrefixFromName());
+            curAddress = jmri.InstanceManager.sensorManagerInstance().getNextValidAddress(curAddress, sensorPrefix);
             if (curAddress==null){
                 //The next address is already in use, therefore we stop.
                 break;
             }
             //We have found another turnout with the same address, therefore we need to go onto the next address.
-            sName=sensorPrefix+curAddress;
+            sName=sensorPrefix+jmri.InstanceManager.sensorManagerInstance().typeLetter()+curAddress;
             Sensor s = null;
             try {
-                s = InstanceManager.sensorManagerInstance().provideSensor(sName);
+                s = jmri.InstanceManager.sensorManagerInstance().provideSensor(sName);
             } catch (IllegalArgumentException ex) {
                 // user input no good
                 handleCreateException(sName);
@@ -167,9 +175,9 @@ public class SensorTableAction extends AbstractTableAction {
                 String user = userName.getText();
                 if ((x!=0) && user != null && !user.equals(""))
                     user = userName.getText()+":"+x;
-                if (user!= null && !user.equals("") && (InstanceManager.sensorManagerInstance().getByUserName(user)==null)){
+                if (user!= null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)==null)){
                     s.setUserName(user);
-                } else if (InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)) {
+                } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)) {
                     p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
                 }
             }
@@ -177,26 +185,13 @@ public class SensorTableAction extends AbstractTableAction {
         p.addComboBoxLastSelection(systemSelectionCombo, (String) prefixBox.getSelectedItem());
     }
     
-    private String provideConnectionNameFromPrefix(String prefix){
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix().equals(prefix))
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getUserName();
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
-    }
-    
     private void canAddRange(ActionEvent e){
         range.setEnabled(false);
         range.setSelected(false);
-        if (jmri.InstanceManager.sensorManagerInstance().getClass().getName().contains("ProxySensorManager")){
-            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) jmri.InstanceManager.sensorManagerInstance();
+        if (senManager.getClass().getName().contains("ProxySensorManager")){
+            jmri.managers.ProxySensorManager proxy = (jmri.managers.ProxySensorManager) senManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = getSensorPrefixFromName();
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
             for(int x = 0; x<managerList.size(); x++){
                 jmri.SensorManager mgr = (jmri.SensorManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)){
@@ -205,25 +200,9 @@ public class SensorTableAction extends AbstractTableAction {
                 }
             }
         }
-        else if (jmri.InstanceManager.sensorManagerInstance().allowMultipleAdditions(getSensorPrefixFromName())){
+        else if (senManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))){
             range.setEnabled(true);
         }
-    }
-    
-    String getSensorPrefixFromName(){
-        if (((String) prefixBox.getSelectedItem())==null)
-            return null;
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals(prefixBox.getSelectedItem())){
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
-                }
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getTypeFromDCCSystem((String) prefixBox.getSelectedItem())+"";
     }
     
     void handleCreateException(String sysName) {
@@ -234,6 +213,8 @@ public class SensorTableAction extends AbstractTableAction {
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    
+    public void addToPanel(SensorTableTabAction f) { }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
 }

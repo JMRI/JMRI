@@ -15,7 +15,7 @@ import java.util.*;
  *
  * @author	Bob Jacobsen   Copyright 2003, 2008
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.44 $
+ * @version     $Revision: 1.45 $
  */
 public class ToolsMenu extends JMenu {
     public ToolsMenu(String name) {
@@ -52,8 +52,8 @@ public class ToolsMenu extends JMenu {
         JMenu tableMenu = new JMenu(rb.getString("MenuTables"));
         
         tableMenu.add(tableMenu);
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableAction"));
-        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
         tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(rb.getString("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));

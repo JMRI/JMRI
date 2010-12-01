@@ -12,7 +12,6 @@ import jmri.TurnoutOperation;
 import jmri.Sensor;
 import jmri.jmrit.turnoutoperations.TurnoutOperationFrame;
 import jmri.jmrit.turnoutoperations.TurnoutOperationConfig;
-import jmri.jmrix.DCCManufacturerList;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,13 +35,14 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 
 import jmri.util.JmriJFrame;
+import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * Swing action to create and register a
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.90 $
+ * @version     $Revision: 1.91 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -389,18 +389,20 @@ public class TurnoutTableAction extends AbstractTableAction {
                         canAddRange(e);
                     }
                 };
-            if (turnManager.getClass().getName().contains("ProxyTurnoutManager")){
-                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
+            /* We use the proxy manager in this instance so that we can deal with 
+            duplicate usernames in multiple classes */
+            if (InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
+                jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
                 List<Manager> managerList = proxy.getManagerList();
                 for(int x = 0; x<managerList.size(); x++){
-                    String manuName = provideConnectionNameFromPrefix(managerList.get(x).getSystemPrefix());
+                    String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
                     prefixBox.addItem(manuName);                      
                 }
                 if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
             }
             else {
-                prefixBox.addItem(provideConnectionNameFromPrefix(turnManager.getSystemPrefix()));
+                prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix()));
             }
             sysName.setName("sysName");
             userName.setName("userName");
@@ -410,19 +412,6 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
         addFrame.pack();
         addFrame.setVisible(true);
-    }
-    
-    private String provideConnectionNameFromPrefix(String prefix){
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix().equals(prefix))
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getUserName();
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
     }
     
     boolean showFeedback = false;
@@ -657,22 +646,49 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Add the check box and Operations menu item
      */
     public void addToFrame(BeanTableFrame f) {
-    	
-        f.addToBottomBox(showFeedbackBox);
+        f.addToBottomBox(showFeedbackBox, this.getClass().getName());
         showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
         showFeedbackBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showFeedbackChanged();
                 }
             });
-        f.addToBottomBox(showLockBox);
+        f.addToBottomBox(showLockBox, this.getClass().getName());
         showLockBox.setToolTipText("Show extra columns for configuring turnout lock?");
         showLockBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     showLockChanged();
                 }
             });
-        f.addToBottomBox(doAutomationBox);
+        f.addToBottomBox(doAutomationBox, this.getClass().getName());
+        doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
+        doAutomationBox.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
+        	}
+            });
+    }
+    
+    public void addToPanel(TurnoutTableTabAction f) {
+        String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
+        
+        if (turnManager.getClass().getName().contains("ProxyTurnoutManager"))
+            systemPrefix = "All";
+        f.addToBottomBox(showFeedbackBox, systemPrefix);
+        showFeedbackBox.setToolTipText("Show extra columns for configuring turnout feedback?");
+        showFeedbackBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    showFeedbackChanged();
+                }
+            });
+        f.addToBottomBox(showLockBox, systemPrefix);
+        showLockBox.setToolTipText("Show extra columns for configuring turnout lock?");
+        showLockBox.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    showLockChanged();
+                }
+            });
+        f.addToBottomBox(doAutomationBox, systemPrefix);
         doAutomationBox.setSelected(TurnoutOperationManager.getInstance().getDoOperations());
         doAutomationBox.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
@@ -717,8 +733,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                                                  JOptionPane.YES_NO_OPTION)==1)
                 return;
         }
-        String turnoutPrefix = getTurnoutPrefixFromName()+turnManager.typeLetter();
-        //String turnoutPrefix = getTurnoutPrefixFromName()+"T";
+
         String sName = null;
         String curAddress = sysName.getText();
         //String[] turnoutList = turnManager.formatRangeOfAddresses(sysName.getText(), numberOfTurnouts, getTurnoutPrefixFromName());
@@ -728,15 +743,16 @@ public class TurnoutTableAction extends AbstractTableAction {
         int iNum=1;
         boolean useLastBit = false;
         boolean useLastType = false;
+        String prefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
         for (int x = 0; x < numberOfTurnouts; x++){
-            curAddress = turnManager.getNextValidAddress(curAddress, getTurnoutPrefixFromName());
+            curAddress = InstanceManager.turnoutManagerInstance().getNextValidAddress(curAddress, prefix);
             if (curAddress==null){
                 //The next address is already in use, therefore we stop.
                 break;
             }
             //We have found another turnout with the same address, therefore we need to go onto the next address.
-            sName=turnoutPrefix+curAddress;
-			String testSN = getTurnoutPrefixFromName()+"L"+curAddress;
+            sName=prefix+InstanceManager.turnoutManagerInstance().typeLetter()+curAddress;
+			String testSN = prefix+"L"+curAddress;
 			jmri.Light testLight = InstanceManager.lightManagerInstance().
                     getBySystemName(testSN);
 			if (testLight != null) {
@@ -759,8 +775,8 @@ public class TurnoutTableAction extends AbstractTableAction {
             // Ask about two bit turnout control if appropriate
             
             if(!useLastBit){
-                iNum = turnManager.askNumControlBits(sName);
-                if((turnManager.isNumControlBitsSupported(sName)) && (range.isSelected())){
+                iNum = InstanceManager.turnoutManagerInstance().askNumControlBits(sName);
+                if((InstanceManager.turnoutManagerInstance().isNumControlBitsSupported(sName)) && (range.isSelected())){
                     if(JOptionPane.showConfirmDialog(addFrame,
                                                  "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
                                                  JOptionPane.YES_NO_OPTION)==0)
@@ -780,7 +796,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 // Create the new turnout
                 Turnout t;
                 try {
-                    t = turnManager.provideTurnout(sName);
+                    t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
                     handleCreateException(sName);
@@ -791,15 +807,15 @@ public class TurnoutTableAction extends AbstractTableAction {
                     String user = userName.getText();
                     if ((x!=0) && user != null && !user.equals(""))
                         user = user+":"+x;
-                    if (user != null && !user.equals("") && (turnManager.getByUserName(user)==null)) t.setUserName(user);
-                    else if (turnManager.getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
+                    if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
+                    else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
                         p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
                     }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
                     if(!useLastType){
-                        iType = turnManager.askControlType(sName);
-                        if((turnManager.isControlTypeSupported(sName)) && (range.isSelected())){
+                        iType = InstanceManager.turnoutManagerInstance().askControlType(sName);
+                        if((InstanceManager.turnoutManagerInstance().isControlTypeSupported(sName)) && (range.isSelected())){
                             if (JOptionPane.showConfirmDialog(addFrame,
                                                  "Do you want to use the last setting for all turnouts in this range? ","Use Setting",
                                                  JOptionPane.YES_NO_OPTION)==0)// Add a pop up here asking if the user wishes to use the same value for all
@@ -821,7 +837,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager")){
             jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) turnManager;
             List<Manager> managerList = proxy.getManagerList();
-            String systemPrefix = getTurnoutPrefixFromName();
+            String systemPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem());
             for(int x = 0; x<managerList.size(); x++){
                 jmri.TurnoutManager mgr = (jmri.TurnoutManager) managerList.get(x);
                 if (mgr.getSystemPrefix().equals(systemPrefix) && mgr.allowMultipleAdditions(systemPrefix)){
@@ -830,28 +846,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                 }
             }
         }
-        else if (turnManager.allowMultipleAdditions(getTurnoutPrefixFromName())){
+        else if (turnManager.allowMultipleAdditions(ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem()))){
             range.setEnabled(true);
         }
     }
     
-    String getTurnoutPrefixFromName(){
-        if (((String) prefixBox.getSelectedItem())==null)
-            return null;
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals(prefixBox.getSelectedItem())){
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
-                }
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getTypeFromDCCSystem((String) prefixBox.getSelectedItem())+"";
-    
-    }
-
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(

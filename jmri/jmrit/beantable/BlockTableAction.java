@@ -28,7 +28,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -222,14 +222,14 @@ public class BlockTableAction extends AbstractTableAction {
 	 */
 	public void addToFrame(BeanTableFrame f) {
 		//final BeanTableFrame finalF = f;	// needed for anonymous ActionListener class
-		f.addToBottomBox (inchBox);
+		f.addToBottomBox (inchBox, this.getClass().getName());
 		inchBox.setToolTipText(rb.getString("InchBoxToolTip"));
 		inchBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					inchBoxChanged();
 				}
 			});
-		f.addToBottomBox (centimeterBox);
+		f.addToBottomBox (centimeterBox, this.getClass().getName());
 		centimeterBox.setToolTipText(rb.getString("CentimeterBoxToolTip"));
 		centimeterBox.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

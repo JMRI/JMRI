@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -63,6 +63,8 @@ public class ListedTableFrame extends BeanTableFrame {
     tabbedTableItem itemBeingAdded = null;
     static int lastdivider;
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="We only intend to use/save the last position of the Split frame")
     public ListedTableFrame() {
         super();
         if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
@@ -77,8 +79,10 @@ public class ListedTableFrame extends BeanTableFrame {
         if (!init){
             /*Add the default tables to the static list array, this should only be done
             once when first loaded*/
-            addTable("jmri.jmrit.beantable.TurnoutTableAction",  rbs.getString("MenuItemTurnoutTable"), true);
-            addTable("jmri.jmrit.beantable.SensorTableAction", rbs.getString("MenuItemSensorTable"), true);
+            //addTable("jmri.jmrit.beantable.TurnoutTableAction",  rbs.getString("MenuItemTurnoutTable"), true);
+            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", rbs.getString("MenuItemTurnoutTable"), false);
+            //addTable("jmri.jmrit.beantable.SensorTableAction", rbs.getString("MenuItemSensorTable"), true);
+            addTable("jmri.jmrit.beantable.SensorTableTabAction", rbs.getString("MenuItemSensorTable"), false);
             addTable("jmri.jmrit.beantable.LightTableAction", rbs.getString("MenuItemLightTable"), true);
             addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
             addTable("jmri.jmrit.beantable.SignalMastTableAction", rbs.getString("MenuItemSignalMastTable"), true);
@@ -92,6 +96,7 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.SectionTableAction", rbs.getString("MenuItemSectionTable"), true);
             addTable("jmri.jmrit.beantable.TransitTableAction", rbs.getString("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction",  rbs.getString("MenuItemAudioTable"), false);
+            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", "Test Turnout", false);
             init=true;
         }
         tabbedTableArray = new ArrayList<tabbedTableItem>();
@@ -215,9 +220,14 @@ public class ListedTableFrame extends BeanTableFrame {
                     try {
                         // MessageFormat headerFormat = new MessageFormat(getTitle());  // not used below
                         MessageFormat footerFormat = new MessageFormat(getTitle()+" page {0,number}");
-                        item.getDataTable().print(JTable.PrintMode.FIT_WIDTH , null, footerFormat);
+                        if (item.getStandardTableModel())
+                            item.getDataTable().print(JTable.PrintMode.FIT_WIDTH , null, footerFormat);
+                        else
+                            item.getAAClass().print(JTable.PrintMode.FIT_WIDTH , null, footerFormat);
                     } catch (java.awt.print.PrinterException e1) {
                         log.warn("error printing: "+e1,e1);
+                    } catch ( NullPointerException ex) {
+                        log.error("Trying to print returned a NPE error");
                     }
                 }
         });
@@ -249,14 +259,13 @@ public class ListedTableFrame extends BeanTableFrame {
      * are depreciated then this can be re-written
      */
     //@TODO Sort out the procedure to add to bottom box
-    protected void addToBottomBox(Component comp) {
-        if (lastSelectedItem!=null && itemBeingAdded!=lastSelectedItem){
-            lastSelectedItem.setAddToFrameRan();
+    protected void addToBottomBox(Component comp, String c) {
+        for(int x=0; x<tabbedTableArray.size(); x++){
+            if(tabbedTableArray.get(x).getClassAsString().equals(c)){
+                tabbedTableArray.get(x).addToBottomBox(comp);
+                return;
+            }
         }
-        lastSelectedItem=itemBeingAdded;
-        if (itemBeingAdded.getAdditionsToFrameDone())
-            return;
-        itemBeingAdded.addToBottomBox(comp);
     }
     
     protected static ArrayList<String> getChoices() {
@@ -267,6 +276,8 @@ public class ListedTableFrame extends BeanTableFrame {
         return choices;
     }
     
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="We only intend to use/save the last position of the Split frame")
     public void setDividerLocation(int loc){
         if (loc==0)
             return;
@@ -287,11 +298,10 @@ public class ListedTableFrame extends BeanTableFrame {
         JTable dataTable;
         JScrollPane dataScroll;
         Box bottomBox;
-        Boolean AddToFrameRan = false;
         int bottomBoxIndex;	// index to insert extra stuff
         static final int bottomStrutWidth = 20;
         
-       boolean standardModel = true;
+        boolean standardModel = true;
         
         final JPanel dataPanel = new JPanel();
         
@@ -333,47 +343,54 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         
         void createDataModel(){
-            dataModel = tableAction.getTableDataModel();
-        
-            TableSorter sorter = new TableSorter(dataModel);
-            dataTable = makeJTable(sorter);
-            sorter.setTableHeader(dataTable.getTableHeader());
-            dataScroll	= new JScrollPane(dataTable);
-            
             try {
-                TableSorter tmodel = ((TableSorter)dataTable.getModel());
-                tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
-                tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
-            } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
+                dataModel = tableAction.getTableDataModel();
             
-            dataModel.configureTable(dataTable);
-            
-            java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
-            // width is right, but if table is empty, it's not high
-            // enough to reserve much space.
-            dataTableSize.height = Math.max(dataTableSize.height, 400);
-            dataScroll.getViewport().setPreferredSize(dataTableSize);
-            
-            // set preferred scrolling options
-            dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-            dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-            
-            //dataPanel.setLayout(new BoxLayout(dataPanel, BoxLayout.Y_AXIS));
-            dataPanel.add(dataScroll, BorderLayout.CENTER);
-            
-            dataPanel.add(bottomBox, BorderLayout.SOUTH);
-            JButton addButton = new JButton(rbean.getString("ButtonAdd"));
-            addToBottomBox(addButton);
-            addButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    tableAction.addPressed(e);
-                }
-            });       
+                TableSorter sorter = new TableSorter(dataModel);
+                dataTable = makeJTable(sorter);
+                sorter.setTableHeader(dataTable.getTableHeader());
+                dataScroll	= new JScrollPane(dataTable);
+                
+                try {
+                    TableSorter tmodel = ((TableSorter)dataTable.getModel());
+                    tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
+                    tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
+                } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
+                
+                dataModel.configureTable(dataTable);
+                
+                java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
+                // width is right, but if table is empty, it's not high
+                // enough to reserve much space.
+                dataTableSize.height = Math.max(dataTableSize.height, 400);
+                dataScroll.getViewport().setPreferredSize(dataTableSize);
+                
+                // set preferred scrolling options
+                dataScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+                dataScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+                dataPanel.add(dataScroll, BorderLayout.CENTER);
+                
+                dataPanel.add(bottomBox, BorderLayout.SOUTH);
+                JButton addButton = new JButton(rbean.getString("ButtonAdd"));
+                addToBottomBox(addButton);
+                addButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        tableAction.addPressed(e);
+                    }
+                });   
+            } catch ( NullPointerException e) {
+                log.error("An error occured while trying to create the table for " + itemText);
+            }
         }
         
         void addPanelModel(){
-            dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
-            dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            try {
+                dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
+                dataPanel.add(bottomBox, BorderLayout.SOUTH);
+            } catch ( NullPointerException e) {
+                log.error("An error occured while trying to create the table for " + itemText);
+            }
         }
         
         boolean getStandardTableModel(){ return standardModel; }
@@ -394,10 +411,6 @@ public class ListedTableFrame extends BeanTableFrame {
             return dataPanel;
         }
         
-        boolean getAdditionsToFrameDone() { return AddToFrameRan; }
-        
-        void setAddToFrameRan() { AddToFrameRan=true; }
-        
         JTable getDataTable(){ 
             return dataTable;
         }
@@ -416,6 +429,7 @@ public class ListedTableFrame extends BeanTableFrame {
             dataTable = null;
             dataScroll = null;
         }
+        
     }
     static class tabbedTableItemList {
 
@@ -467,7 +481,6 @@ public class ListedTableFrame extends BeanTableFrame {
 
         int clickDelay=500;
         int currentItemSelected;
-        int lastItemSelected;
 
         public void mousePressed(MouseEvent e){
             if (e.isPopupTrigger()){
