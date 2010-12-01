@@ -2,6 +2,7 @@
 
 package jmri.jmrix.nce.usbdriver;
 
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
@@ -27,7 +28,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -39,6 +40,10 @@ public class UsbDriverAdapter extends NcePortController {
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() { return 
+    adaptermemo; }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators

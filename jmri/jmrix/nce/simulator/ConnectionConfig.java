@@ -2,7 +2,6 @@
 
 package jmri.jmrix.nce.simulator;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 
@@ -11,7 +10,7 @@ import javax.swing.JPanel;
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -35,7 +34,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
     
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
-        details.add(new JLabel("No options"));
     }
     
     protected void setInstance() { 
