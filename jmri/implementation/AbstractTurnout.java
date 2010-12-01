@@ -27,7 +27,7 @@ import jmri.*;
  * <P>
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2009
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public abstract class AbstractTurnout extends AbstractNamedBean implements
 		Turnout, java.io.Serializable, java.beans.PropertyChangeListener {
@@ -180,7 +180,7 @@ public abstract class AbstractTurnout extends AbstractNamedBean implements
 	 * known state, and set state modifies the commanded state.
 	 */
 	public int getState() {
-		return getCommandedState();
+		return getKnownState();
 	}
 
 	protected String[] _validFeedbackNames = { "DIRECT", "ONESENSOR",
