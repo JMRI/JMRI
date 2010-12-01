@@ -3,7 +3,7 @@
 <!DOCTYPE decoder-config SYSTEM "../DTD/decoder-config.dtd">
 
 <!-- Copyright (C) JMRI 2003, 2004 All rights reserved -->
-<!-- $Id: TD_BlocD8.xml,v 1.1 2010-10-04 02:17:49 jacobsen Exp $ -->
+<!-- $Id: TD_BlocD8.xml,v 1.2 2010-12-01 21:39:33 jacobsen Exp $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -16,10 +16,12 @@
 <!-- for more details.                                                      -->
 
 <decoder-config showEmptyPanes="no">
-		<version author="td@teamdigital1.com" version="1.0" lastUpdated="20100104"/>
+		<version author="td@teamdigital1.com" version="1.2" lastUpdated="20101101"/>
 					
 		<!-- Version 1 inital release -->
 		<!-- Version 1.1 release correct input 4 secondary address -->
+		<!-- Version 1.2 release correct input 5 primary address and default output state -->
+				<!-- and added unoccupied delay time CVs -->
 
 <decoder>
 	<family name="BlocD8" mfg="Team Digital" type="stationary">
@@ -368,7 +370,17 @@
 				<enumChoice choice="Send on Both Edges"/>
 				</enumVal>
 			</variable>
-			
+	
+		<!-- Begin Input Unoccupied Delay variable definition -->
+		<variable label="Delay 1" CV="56" mask="VVVVVVVV" item="Delay 1" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 2" CV="57" mask="VVVVVVVV" item="Delay 2" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 3" CV="58" mask="VVVVVVVV" item="Delay 3" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 4" CV="59" mask="VVVVVVVV" item="Delay 4" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 5" CV="60" mask="VVVVVVVV" item="Delay 5" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 6" CV="61" mask="VVVVVVVV" item="Delay 6" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 7" CV="62" mask="VVVVVVVV" item="Delay 7" default="12"> <decVal min ="0" max="255" /> </variable>
+		<variable label="Delay 8" CV="63" mask="VVVVVVVV" item="Delay 8" default="12"> <decVal min ="0" max="255" /> </variable>
+				
 		<!-- Begin Output variable definition -->
 
 		<variable label="Output Address" CV="64" mask="VVVVVVVV" item="Address 1A" default="1">
@@ -378,7 +390,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="65" mask="XVXXXXXX" item="State 1A" default="1">
+		<variable label="State" CV="65" mask="XVXXXXXX" item="State 1A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 
@@ -389,7 +401,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="68" mask="XVXXXXXX" item="State 2A" default="1">
+		<variable label="State" CV="68" mask="XVXXXXXX" item="State 2A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 			
@@ -400,7 +412,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="71" mask="XVXXXXXX" item="State 3A" default="1">
+		<variable label="State" CV="71" mask="XVXXXXXX" item="State 3A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 			
@@ -411,7 +423,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="74" mask="XVXXXXXX" item="State 4A" default="1">
+		<variable label="State" CV="74" mask="XVXXXXXX" item="State 4A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 			
@@ -422,7 +434,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="77" mask="XVXXXXXX" item="State 5A" default="1">
+		<variable label="State" CV="77" mask="XVXXXXXX" item="State 5A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 	
@@ -433,7 +445,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="80" mask="XVXXXXXX" item="State 6A" default="1">
+		<variable label="State" CV="80" mask="XVXXXXXX" item="State 6A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 			
@@ -444,7 +456,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="83" mask="XVXXXXXX" item="State 7A" default="1">
+		<variable label="State" CV="83" mask="XVXXXXXX" item="State 7A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 	
@@ -455,7 +467,7 @@
 			<enumVal> <enumChoice choice="Switch Request"/> <enumChoice choice="Switch Feedback"/>
 				<enumChoice choice="Sensor Message"/> </enumVal>
 			</variable>
-		<variable label="State" CV="86" mask="XVXXXXXX" item="State 8A" default="1">
+		<variable label="State" CV="86" mask="XVXXXXXX" item="State 8A" default="0">
 			<enumVal> <enumChoice choice="Throw"/> <enumChoice choice="Close"/> </enumVal>
 			</variable>
 
@@ -922,6 +934,7 @@
 		<column> <display item="Inv S1" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 1" tooltip="Configures the input for specfic use" />
+		<display item="Delay 1" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
  		<label label=" "/>
  		<label label="------  Input 2  ------ "/>
  		<label label=" "/>
@@ -942,6 +955,7 @@
 		<column> <display item="Inv S2" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 2" tooltip="Configures the input for specfic use" />
+		<display item="Delay 2" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 		<label label="------  Input 3  ------ "/>
 		<label label=" "/>
@@ -961,6 +975,7 @@
 		<column> <display item="Inv S3" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 3" tooltip="Configures the input for specfic use" />
+		<display item="Delay 3" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 		<label label="------  Input 4  ------ "/>
 		<label label=" "/>
@@ -980,6 +995,7 @@
 		<column> <display item="Inv S4" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 4" tooltip="Configures the input for specfic use" />
+		<display item="Delay 4" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 			</column>
 	<column>
@@ -987,7 +1003,7 @@
 		<label label="------  Input 5  ------ "/>
 		<label label=" "/>
 		<row>
-		<column> <display item="Primary Address 1" tooltip="Determines the input addess" /> </column>
+		<column> <display item="Primary Address 5" tooltip="Determines the input addess" /> </column>
 		<column> <label label="                  "/> </column>
 		<column> <label label="         "/> </column>
 			</row>
@@ -1003,6 +1019,7 @@
 		<column> <display item="Inv S5" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 5" tooltip="Configures the input for specfic use" />
+		<display item="Delay 5" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
  		<label label=" "/>
  		<label label="------  Input 6  ------ "/>
  		<label label=" "/>
@@ -1022,6 +1039,7 @@
 		<column> <display item="Inv S6" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 6" tooltip="Configures the input for specfic use" />
+		<display item="Delay 6" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 		<label label="------  Input 7  ------ "/>
 		<label label=" "/>
@@ -1041,6 +1059,7 @@
 		<column> <display item="Inv S7" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 7" tooltip="Configures the input for specfic use" />
+		<display item="Delay 7" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 		<label label="------  Input 8  ------ "/>
 		<label label=" "/>
@@ -1060,6 +1079,7 @@
 		<column> <display item="Inv S8" format="checkbox"  tooltip="Inverts the normal state of True (close or hi) when input goes hi" /> </column>
 			</row>
 		<display item="Secondary Transition 8" tooltip="Configures the input for specfic use" />
+		<display item="Delay 8" tooltip="Value X 256ms = Time between actual unoccupied to indicated unoccupied" />
 		<label label=" "/>
 		
 	</column>
