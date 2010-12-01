@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -33,6 +33,10 @@ public class SprogIIUpdateFrame
     
   public void notifyMessage(SprogMessage m) {}
   
+  @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SWL_SLEEP_WITH_LOCK_HELD")
+  // When we're doing a SPROG firmware update we are not too worried about performance
+  // or other threads waiting to aquire the lock. This annotation should stop the
+  // static analysis warning about the thread.sleep(500).
   synchronized public void notifyReply(SprogReply m) {
     // If SPROG II is in boot mode, check message framing and checksum
     if ( (bootState != RESETSENT) && tc.isSIIBootMode() && !m.strip()) {
