@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  * @see             jmri.Reporter
  * @see             jmri.InstanceManager
  */
@@ -113,6 +113,24 @@ public interface ReporterManager extends Manager {
      * Get a list of all Reporter's system names.
      */
     public List<String> getSystemNameList();
+    
+   /**
+    * A method that determines if it is possible to add a range
+    * of turnouts in numerical order eg 10 to 30 will return true.  
+    * where as if the address format is 1b23 this will return false.
+    **/
+     
+     public boolean allowMultipleAdditions(String systemName);
+     
+   /**
+    * Determine if the address supplied is valid and free, if not then it shall
+    * return the next free valid address up to a maximum of 10 address away from
+    * the initial address.
+    * @param prefix - The System Prefix used to make up the systemName
+    * @param curAddress - The hardware address of the turnout we which to check.
+    */
+     
+    public String getNextValidAddress(String curAddress, String prefix);
 
 }
 

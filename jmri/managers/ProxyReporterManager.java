@@ -13,7 +13,7 @@ import jmri.managers.AbstractManager;
  * for multiple system-specific implementations.  
  *
  * @author	Bob Jacobsen Copyright (C) 2003, 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ProxyReporterManager extends AbstractProxyManager implements ReporterManager {
 
@@ -92,6 +92,24 @@ public class ProxyReporterManager extends AbstractProxyManager implements Report
      */
     public Reporter newReporter(String systemName, String userName) {
         return (Reporter) newNamedBean(systemName, userName);
+    }
+    
+   public boolean allowMultipleAdditions(String systemName) {
+        int i = matchTentative(systemName);
+        if (i >= 0)
+            return ((ReporterManager)getMgr(i)).allowMultipleAdditions(systemName);
+        return ((ReporterManager)getMgr(0)).allowMultipleAdditions(systemName);
+    }
+    
+    public String getNextValidAddress(String curAddress, String prefix){
+        for (int i=0; i<nMgrs(); i++) {
+            if ( prefix.equals( 
+                    ((ReporterManager)getMgr(i)).getSystemPrefix()) ) {
+                //System.out.println((TurnoutManager)getMgr(i))
+                return ((ReporterManager)getMgr(i)).getNextValidAddress(curAddress, prefix);
+            }
+        }
+        return null;
     }
     
     // initialize logging

@@ -8,7 +8,7 @@ import jmri.Reporter;
 /**
  * Implementation of the InternalReporterManager interface.
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  * @since           2.9.4
  */
 public class InternalReporterManager extends AbstractReporterManager {
@@ -25,6 +25,9 @@ public class InternalReporterManager extends AbstractReporterManager {
         };
     }
 	
+    @Override
+    public boolean allowMultipleAdditions(String systemName) { return true;  }
+    
 	public String getSystemPrefix() { return "I"; }
 }
 
