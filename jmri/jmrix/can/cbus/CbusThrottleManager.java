@@ -1,5 +1,8 @@
 package jmri.jmrix.can.cbus;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -19,18 +22,21 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.9 $
+ * @version 		$Revision: 1.10 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
     private int _intAddr;
     private DccLocoAddress _dccAddr;
 
+    private HashMap<Integer, CbusThrottle> softThrottles = new HashMap<Integer, CbusThrottle>(CbusConstants.CBUS_MAX_SLOTS);
+
     /**
      * Constructor. Gets a reference to the Cbus CommandStation.
      */
     public CbusThrottleManager() {
     	super();
+        TrafficController.instance().addCanListener(this);
     }
 
 	/**
@@ -63,6 +69,33 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
 	}
 
     public void message(CanMessage m) {
+        int opc = m.getElement(0);
+        int handle;
+
+        switch (opc) {
+            case CbusConstants.CBUS_RESTP:
+                // Request emergency stop all
+                // Get set of handles for software controlled throttles and
+                // iterate over them setting the speed of each throttle to 0
+                log.debug("Request emergency stop all message");
+                Set handles = softThrottles.keySet();
+                Iterator itr = handles.iterator();
+                while (itr.hasNext()) {
+                    CbusThrottle throttle = softThrottles.get(itr.next());
+                    throttle.setSpeedSetting(0.0F);
+                }
+                break;
+
+            case CbusConstants.CBUS_KLOC:
+                // Kill loco
+                log.debug("Kill loco message");
+                handle = m.getElement(1);
+                softThrottles.remove(handle);
+                break;
+
+            default:
+                break;
+        }
     }
 
     synchronized public void reply(CanReply m) {
@@ -72,14 +105,12 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         DccLocoAddress rcvdDccAddr;
         int handle;
 
-        log.debug("Command station received reply " + m.toString());
-
         switch (opc) {
             case CbusConstants.CBUS_PLOC:
                 rcvdIntAddr = (m.getElement(2) & 0x3f) * 256 + m.getElement(3);
                 rcvdIsLong = (m.getElement(2) & 0xc0) > 0;
                 rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
-                log.debug("Command station received PLOC with session handle " + m.getElement(1) + " for address " + rcvdIntAddr);
+                log.debug("Throttle manager received PLOC with session handle " + m.getElement(1) + " for address " + rcvdIntAddr);
                 if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                     log.debug("PLOC was expected");
                     // We're expecting an engine report and it matches our address
@@ -88,6 +119,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     throttleRequestTimer.stop();
                     throttle = new CbusThrottle(rcvdDccAddr, handle);
                     notifyThrottleKnown(throttle, rcvdDccAddr);
+                    softThrottles.put(handle, throttle);
                     _handleExpected = false;
                 }
                 break;
@@ -96,7 +128,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 rcvdIntAddr = (m.getElement(1) & 0x3f) * 256 + m.getElement(2);
                 rcvdIsLong = (m.getElement(1) & 0xc0) > 0;
                 rcvdDccAddr = new DccLocoAddress(rcvdIntAddr, rcvdIsLong);
-                log.debug("Command station received ERR " + m.getElement(3) + " for address " + rcvdIntAddr);
+                log.debug("Throttle manager received ERR " + m.getElement(3) + " for address " + rcvdIntAddr);
                 if ((_handleExpected) && rcvdDccAddr.equals(_dccAddr)) {
                     // We're expecting an engine report and it matches our address
                     _handleExpected = false;
@@ -112,6 +144,19 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                             break;
                     }
                     failedThrottleRequest(_dccAddr);
+                }
+                break;
+
+            case CbusConstants.CBUS_RESTP:
+                // Request emergency stop all
+                // Get set of handles for software controlled throttles and
+                // iterate over them setting the speed of each throttle to 0
+                log.debug("Request emergency stop all");
+                Set handles = softThrottles.keySet();
+                Iterator itr = handles.iterator();
+                while (itr.hasNext()) {
+                    CbusThrottle throttle = softThrottles.get(itr.next());
+                    throttle.setSpeedSetting(0.0F);
                 }
                 break;
 

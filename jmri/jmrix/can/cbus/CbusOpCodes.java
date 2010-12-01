@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractMessage;
  * Description:		methods to decode CBUS opcodes
  *
  * @author		Andrew Crosland   Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class CbusOpCodes {
     /**
@@ -73,9 +73,11 @@ public class CbusOpCodes {
         result.put(0x03,"Bus ON (BON)");
         result.put(0x04,"Track Off (TOF)");
         result.put(0x05,"Track On (TON)");
+        result.put(0x06,"Track Stopped (ESTOP)");
         result.put(0x07,"System Reset (ARST)");
         result.put(0x08,"Request Track Off (RTOF)");
         result.put(0x09,"Request Track On (RTON)");
+        result.put(0x0A,"Request Emergency Stop All (RESTP)");
 
         result.put(0x10,"Read Node Parameters (RDPAR)");
 
