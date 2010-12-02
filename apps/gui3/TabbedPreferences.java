@@ -18,7 +18,6 @@ import java.text.MessageFormat;
 
 import java.awt.*;
 import java.awt.event.*;
-;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -31,7 +30,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -530,7 +529,7 @@ public class TabbedPreferences extends AppConfigBase {
             return itemText;
         }
         
-        ArrayList getSubCategoriesList(){
+        ArrayList<String> getSubCategoriesList(){
             ArrayList<String> choices = new ArrayList<String>();
             for(int x=0; x<tabDetailsArray.size(); x++){
                 choices.add(tabDetailsArray.get(x).getTitle());
