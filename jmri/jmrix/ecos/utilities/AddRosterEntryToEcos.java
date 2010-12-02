@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 
+import jmri.jmrix.ecos.EcosSystemConnectionMemo;
+
 /**
  * Add a Roster Entry to the Ecos
  *
@@ -30,18 +32,19 @@ import jmri.jmrit.roster.RosterEntry;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public class AddRosterEntryToEcos extends AbstractAction {
 
     /**
      * @param s Name of this action, e.g. in menus
      */
-    public AddRosterEntryToEcos(String s) {
+    public AddRosterEntryToEcos(String s, EcosSystemConnectionMemo memo) {
         super(s);
+        adaptermemo = memo;
     }
 
-
+    EcosSystemConnectionMemo adaptermemo;
     JComboBox rosterEntry = new JComboBox();
     JComboBox selections;
     Roster roster;
@@ -66,7 +69,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
         RosterEntry re = roster.entryFromTitle(selEntry);
         //System.out.println("Add " + re.getId() + " to Ecos");
         RosterToEcos rosterToEcos = new RosterToEcos();
-        rosterToEcos.createEcosLoco(re);
+        rosterToEcos.createEcosLoco(re, adaptermemo.getTrafficController());
         actionPerformed(event);
     }
 

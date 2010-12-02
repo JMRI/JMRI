@@ -13,16 +13,18 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.3 $
+ * @version             $Revision: 1.4 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public EcosSystemConnectionMemo(EcosTrafficController et) {
         super("U", "ECoS");
         this.et = et;
+        et.setAdapterMemo(this);
         register();
-        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
-                jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
+        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
+                jmri.jmrix.swing.ComponentFactory.class);
     }
     
     public EcosSystemConnectionMemo() {
@@ -30,8 +32,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
-        /*InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
-                        jmri.jmrix.swing.ComponentFactory.class);*/
+        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this),
+                        jmri.jmrix.swing.ComponentFactory.class);
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -41,42 +43,49 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * particular connection.
      */
     public EcosTrafficController getTrafficController() { return et; }
-    public void setEcosTrafficController(EcosTrafficController et) { this.et = et; }
+    public void setEcosTrafficController(EcosTrafficController et) { 
+        this.et = et;
+        et.setAdapterMemo(this);
+    }
     private EcosTrafficController et;
     
     /**
-     * Configure the common managers for Internal connections.
      * This puts the common manager config in one
-     * place.  This method is static so that it can be referenced
-     * from classes that don't inherit, including hexfile.HexFileFrame
-     * and locormi.LnMessageClient
+     * place. 
      */
     public void configureManagers() {
       
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.ecos.EcosPowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(jmri.jmrix.ecos.EcosTurnoutManager.instance());
+        jmri.InstanceManager.setPowerManager(new jmri.jmrix.ecos.EcosPowerManager(getTrafficController()));
+        
+        turnoutManager = new jmri.jmrix.ecos.EcosTurnoutManager(getTrafficController(), getSystemPrefix());
+        jmri.InstanceManager.setTurnoutManager(turnoutManager);
 
         jmri.InstanceManager.store(
-                new jmri.jmrix.ecos.EcosLocoAddressManager(),
+                new jmri.jmrix.ecos.EcosLocoAddressManager(getTrafficController()),
                 jmri.jmrix.ecos.EcosLocoAddressManager.class);
+        
+        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.ecos.EcosDccThrottleManager(getTrafficController()));
 
-        //jmri.jmrix.ecos.EcosLocoAddressManager.instance();
-        jmri.jmrix.ecos.EcosPreferences.instance();
-
-        /*jmri.InstanceManager.store(
-                new jmri.jmrix.ecos.EcosPreferences(),
-                jmri.jmrix.ecos.EcosPreferences.class);*/
-
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.ecos.EcosDccThrottleManager());
-
-        jmri.InstanceManager.setSensorManager(new jmri.managers.InternalSensorManager());
-
-        jmri.InstanceManager.setSensorManager(jmri.jmrix.ecos.EcosSensorManager.instance());
+        sensorManager = new jmri.jmrix.ecos.EcosSensorManager(getTrafficController(), getSystemPrefix());
+        jmri.InstanceManager.setSensorManager(sensorManager);
     }
     
+    private EcosSensorManager sensorManager;
+    private EcosTurnoutManager turnoutManager;
+    
+    public EcosTurnoutManager getTurnoutManager() { return turnoutManager; }
+    public EcosSensorManager getSensorManager() { return sensorManager; }
+    
+    @Override
     public void dispose(){
+        if(sensorManager!=null){
+            sensorManager.dispose();
+            sensorManager=null;
+        }
+        if(turnoutManager!=null){
+            turnoutManager.dispose();
+            turnoutManager=null;
+        }
         et = null;
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
         if (cf != null) 

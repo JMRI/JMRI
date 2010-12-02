@@ -5,6 +5,7 @@ package jmri.jmrix.ecos.swing.preferences;
 //import jmri.InstanceManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import jmri.jmrix.ecos.EcosPreferences;
 import java.awt.Component;
 
@@ -14,9 +15,9 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
-public class PreferencesPane extends javax.swing.JPanel {
+public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 
 
     JPanel throttletabpanel = new JPanel();
@@ -44,9 +45,9 @@ public class PreferencesPane extends javax.swing.JPanel {
     JComboBox _defaultProtocol;
     EcosPreferences ep;
     
-    public PreferencesPane() {
+    public PreferencesPane(EcosPreferences epref) {
         super();
-        ep = EcosPreferences.instance();
+        ep=epref;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JPanel buttonPanel = new JPanel();
         JButton updateButton = new JButton("Update");
@@ -66,20 +67,51 @@ public class PreferencesPane extends javax.swing.JPanel {
         
         add(tab);
         add(buttonPanel);
+        
+        ep.addPropertyChangeListener(this);
+        
     }
-
+    
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (e.getPropertyName().equals("update")) {
+            updateValues();
+        }
+    }
+    
+    void updateValues(){
+        setChoiceType(_removeTurnoutsEcos, ep.getRemoveTurnoutsFromEcos());
+        setChoiceType(_addTurnoutsJmri, ep.getAddTurnoutsToJMRI());
+        setChoiceType(_removeTurnoutsJmri, ep.getRemoveTurnoutsFromJMRI());
+        setChoiceType(_addLocoEcos, ep.getAddLocoToEcos());
+        setChoiceType(_removeLocosEcos, ep.getRemoveLocoFromEcos());
+        setChoiceType(_addLocoJmri, ep.getAddLocoToJMRI());
+        setChoiceType(_removeLocosJmri, ep.getRemoveLocoFromJMRI());
+        switch (ep.getAdhocLocoFromEcos()){
+            case 0  :   _adhocLocoEcosAsk.setSelected(true);
+                        break;
+            case 1  :   _adhocLocoEcosLeave.setSelected(true);
+                        break;
+            case 2  :   _adhocLocoEcosRemove.setSelected(true);
+                        break;
+            default :   _adhocLocoEcosAsk.setSelected(true);
+                        break;
+        }
+        
+        switch (ep.getForceControlFromEcos()){
+            case 0x00  :   _forceControlLocoEcosAsk.setSelected(true);
+                        break;
+            case 0x01  :   _forceControlLocoEcosNever.setSelected(true);
+                        break;
+            case 0x02  :   _forceControlLocoEcosAlways.setSelected(true);
+                        break;
+            default :   _forceControlLocoEcosAsk.setSelected(true);
+                        break;
+        }
+        setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
+    }
+    
     private JPanel turnoutTab(){
         turnouttabpanel.setLayout(new BoxLayout(turnouttabpanel, BoxLayout.Y_AXIS));
-        
-        /*JPanel _addTurnoutsEcosPanel = new JPanel();
-        JLabel _addTurnoutsEcosLabel = new JLabel("Add Turnouts to the ECoS");
-        _addTurnoutsEcos = new JComboBox();
-        _addTurnoutsEcosPanel.add(_addTurnoutsEcosLabel);
-        initializeChoiceCombo(_addTurnoutsEcos);
-        if (ep.getAddTurnoutsToEcos()!=0x00)
-            setChoiceType(_addTurnoutsEcos, ep.getAddTurnoutsToEcos());
-        _addTurnoutsEcosPanel.add(_addTurnoutsEcos);
-        turnouttabpanel.add(_addTurnoutsEcosPanel);*/
         
         JPanel _removeTurnoutsEcosPanel = new JPanel();
         JLabel _removeTurnoutsEcosLabel = new JLabel("Remove Turnouts From the ECoS");
@@ -112,11 +144,9 @@ public class PreferencesPane extends javax.swing.JPanel {
         turnouttabpanel.add(_removeTurnoutsJMRIPanel);
         
         return turnouttabpanel;
-    
     }
     
     private JPanel rosterTab(){
-        //rostertabpanel = new JPanel(new BoxLayout());
         
         rostertabpanel.setLayout(new BoxLayout(rostertabpanel, BoxLayout.Y_AXIS));
         
@@ -297,7 +327,7 @@ public class PreferencesPane extends javax.swing.JPanel {
     }
     
     private void updateButtonPressed(){
-        //EcosPreferences ep = EcosPreferences.instance();
+        //EcosPreferences ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
         ep.setRemoveLocoFromJMRI(getChoiceType(_removeLocosJmri));
         ep.setAddLocoToJMRI(getChoiceType(_addLocoJmri));
         ep.setRemoveLocoFromEcos(getChoiceType(_removeLocosEcos));

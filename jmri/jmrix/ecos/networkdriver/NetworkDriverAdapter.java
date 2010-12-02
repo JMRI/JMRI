@@ -15,13 +15,15 @@ import java.util.Vector;*/
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
     public NetworkDriverAdapter() {
         super();
+        allowConnectionRecovery = true;
         adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
+        jmri.InstanceManager.store(new jmri.jmrix.ecos.EcosPreferences(), jmri.jmrix.ecos.EcosPreferences.class);
         //mInstance=this;
     }
     /**
@@ -39,10 +41,8 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     }
 
 
+    @Override
     public boolean status() {return opened;}
-
-    // private control members
-    private boolean opened = false;
     
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) {
@@ -60,10 +60,27 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     //To be completed
+    @Override
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();
         adaptermemo = null;
+    }
+    
+    protected void closeConnection(){
+        try {
+            socketConn.close();
+        } catch (Exception e) { }
+        opened = false;
+    }
+    
+    protected void resetupConnection() {
+        log.info("reconnected to ECOS after lost connection");
+        if(opened){
+            adaptermemo.getTrafficController().connectPort(this);
+            adaptermemo.getTurnoutManager().refreshItems();
+            adaptermemo.getSensorManager().refreshItems();
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NetworkDriverAdapter.class.getName());

@@ -9,7 +9,7 @@ import javax.swing.JButton;
 /**
  * Frame for ECoS preferences
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class PreferencesFrame extends jmri.util.JmriJFrame {
 
@@ -23,7 +23,7 @@ public class PreferencesFrame extends jmri.util.JmriJFrame {
     public void initComponents() throws Exception {
         // the following code sets the frame's initial state
         
-        preferencesPane = new PreferencesPane();
+        preferencesPane = new PreferencesPane(jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class));
         
         setTitle("ECoS User Preferences");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));

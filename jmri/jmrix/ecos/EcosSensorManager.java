@@ -13,22 +13,21 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
 
-    private EcosSensorManager() {
-        //_instance = this;
-        
+    public EcosSensorManager(EcosTrafficController etc, String prefix) {
+        tc = etc;
+        this.prefix = prefix;
         // listen for sensor creation
         // connect to the TrafficManager
-        tc = EcosTrafficController.instance();
         tc.addEcosListener(this);
                 
         // ask to be notified
         //Not sure if we need to worry about newly created sensors on the layout.
-        /*EcosMessage m = new EcosMessage("request(11, view)");
+        /*EcosMessage m = new EcosMessage("request(26, view)");
         tc.sendEcosMessage(m, this);*/
         
         // get initial state
@@ -41,9 +40,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     private static Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
     private static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
     
-    public String getSystemPrefix() { return "U"; }
+    public String getSystemPrefix() { return prefix; }
     
-    final static String prefix = "US";
+    String prefix;
 
     public Sensor createNewSensor(String systemName, String userName) {
         //int ports = Integer.valueOf(systemName.substring(2)).intValue();
@@ -80,8 +79,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                             String sensorSystemName;
                             _sport.put(object, ports);
                             for (int j=1; j<=ports; j++){
-                                StringBuffer sb = new StringBuffer();
+                                StringBuilder sb = new StringBuilder();
                                 sb.append(prefix);
+                                sb.append("S");
                                 sb.append(object);
                                 sb.append(":");
                                 //Little work around to pad single digit address out.
@@ -154,21 +154,15 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     public void message(EcosMessage m) {
         // messages are ignored
     }
-
-    /*static public EcosSensorManager instance() {
-        if (_instance == null) _instance = new EcosSensorManager();
-        return _instance;
-    }
-    static EcosSensorManager _instance = null;*/
     
-    static class EcosSensorManagerHolder {
+    /*static class EcosSensorManagerHolder {
         static EcosSensorManager
             instance = new EcosSensorManager();
     }
 
     public static EcosSensorManager instance() {
         return EcosSensorManagerHolder.instance;
-    }
+    }*/
     
     private void EcosSensorState(int object, int intState){
         EcosSensor es;
@@ -178,8 +172,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         for(int port =1; port<=_sport.get(object); port++){
             result = intState & k;
             //Little work around to pad single digit address out.
-            StringBuffer sb = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             sb.append(prefix);
+            sb.append("S");
             sb.append(object);
             sb.append(":");
             //Little work around to pad single digit address out.
@@ -195,7 +190,13 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
             k=k*2;
         }
     }
-
+    
+    public void refreshItems(){
+            // ask to be notified about newly created turnouts on the layout.
+        EcosMessage m = new EcosMessage("queryObjects(26, ports)");
+        tc.sendEcosMessage(m, this);
+        
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosSensorManager.class.getName());
 }
 

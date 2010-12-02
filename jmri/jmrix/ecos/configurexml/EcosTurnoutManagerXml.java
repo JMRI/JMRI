@@ -11,7 +11,7 @@ import jmri.jmrix.ecos.EcosTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -29,7 +29,7 @@ public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTu
 
     public boolean load(Element turnouts) {
         // create the master object
-        EcosTurnoutManager.instance();
+        //EcosTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(turnouts);
     }

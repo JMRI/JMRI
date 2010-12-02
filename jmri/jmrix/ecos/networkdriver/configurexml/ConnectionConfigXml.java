@@ -22,7 +22,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
@@ -34,7 +34,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void extendElement(Element e){
         Element ecosPrefElem = new Element("commandStationPreferences");
-        EcosPreferences p = EcosPreferences.instance();
+        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
 
         if(p.getAddTurnoutsToEcos()==0x01) ecosPrefElem.setAttribute("addTurnoutToCS", "no");
         else if(p.getAddTurnoutsToEcos()==0x02) ecosPrefElem.setAttribute("addTurnoutToCS", "yes");
@@ -81,7 +81,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void unpackElement(Element e) {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
-        EcosPreferences p = EcosPreferences.instance();
+        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         for (int i=0; i<ecosPref.size();i++){
             if (ecosPref.get(i).getAttribute("addTurnoutToCS") != null){
                 String yesno = ecosPref.get(i).getAttribute("addTurnoutToCS").getValue();
@@ -174,6 +174,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             
             p.resetChangeMade();
          }
+         p.setPreferencesLoaded();
     
     }
 

@@ -9,25 +9,28 @@ import javax.swing.*;
 /**
  * Frame for ECoS status
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class StatusFrame extends jmri.util.JmriJFrame {
 
     public StatusFrame() {
         super();
     }
+    
+    EcosSystemConnectionMemo adaptermemo;
 
     JButton sendButton;
     StatusPane statusPane;
     
-    public void initComponents() throws Exception {
+    public void initComponents(EcosSystemConnectionMemo memo) throws Exception {
+        adaptermemo = memo;
         // the following code sets the frame's initial state
         
         sendButton = new JButton("Update");
         sendButton.setVisible(true);
         sendButton.setToolTipText("Request status update from ECoS");
 
-        statusPane = new StatusPane();
+        statusPane = new StatusPane(adaptermemo.getTrafficController());
         
         setTitle("ECoS Info");
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -54,6 +57,10 @@ public class StatusFrame extends jmri.util.JmriJFrame {
         EcosTrafficController.instance().sendEcosMessage(m, null);
 
 	}
+
+    public void setSystemConnectionMemo(EcosSystemConnectionMemo memo){
+        adaptermemo=memo;
+    }
 
 }
 

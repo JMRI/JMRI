@@ -19,17 +19,18 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
 
-    private EcosTurnoutManager() {
-        //_instance = this;
+    public EcosTurnoutManager(EcosTrafficController etc, String prefix) {
+        
+        this.prefix = prefix;
         
         // listen for turnout creation
         // connect to the TrafficManager
-        tc = EcosTrafficController.instance();
+        tc = etc;
         tc.addEcosListener(this);
                 
         // ask to be notified about newly created turnouts on the layout.
@@ -47,8 +48,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     //The hash table simply holds the object number against the EcosTurnout ref.
     private static Hashtable <Integer, EcosTurnout> _tecos = new Hashtable<Integer, EcosTurnout>();   // stores known Ecos Object ids to DCC
     
-    public String getSystemPrefix() { return "U"; }
-    final String prefix = getSystemPrefix()+typeLetter();
+    String prefix;
+    
+    public String getSystemPrefix() { return prefix; }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
@@ -58,7 +60,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             log.error("failed to convert systemName " + systemName + " to a turnout address");
             return null;
         }
-        Turnout t = new EcosTurnout(addr);
+        Turnout t = new EcosTurnout(addr, getSystemPrefix(), tc, this);
         t.setUserName(userName);
         return t;
     }
@@ -86,9 +88,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                             log.debug("Found turnout object "+object+" addr "+addr);
                             
                             if ( addr > 0 ) {
-                                Turnout t = getTurnout(prefix+addr);
+                                Turnout t = getTurnout(prefix+"T"+addr);
                                 if (t == null) {
-                                    et = (EcosTurnout)provideTurnout(prefix+addr);
+                                    et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
                                     et.setObjectNumber(object);
                                     _tecos.put(object, et);
                                     // listen for changes
@@ -105,9 +107,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                         } else if (( 30000<=object) && (object<40000)){  //This is a ecos route
                             log.debug("Found route object " + object);
 
-                            Turnout t = getTurnout(prefix+object);
+                            Turnout t = getTurnout(prefix+"T"+object);
                             if (t==null) {
-                                    et = (EcosTurnout)provideTurnout(prefix+object);
+                                    et = (EcosTurnout)provideTurnout(prefix+"T"+object);
                                     et.setObjectNumber(object);
                                     _tecos.put(object, et);
 
@@ -244,9 +246,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                 }
                 int addr=Integer.parseInt(straddr[0]);
                 if ( addr > 0 ) {
-                    Turnout t = getTurnout(prefix+addr);
+                    Turnout t = getTurnout(prefix+"T"+addr);
                     if (t == null) {
-                        et = (EcosTurnout)provideTurnout(prefix+addr);
+                        et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
                         et.setObjectNumber(object);
                         _tecos.put(object, et);
                         // listen for changes
@@ -271,9 +273,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                 int addr2=Integer.parseInt(straddr[2]);
                 if ( addr > 0 ) {
                     //addr = straddr[0];
-                    Turnout t = getTurnout(prefix+addr);
+                    Turnout t = getTurnout(prefix+"T"+addr);
                     if (t == null) {
-                        et = (EcosTurnout)provideTurnout(prefix+addr);
+                        et = (EcosTurnout)provideTurnout(prefix+"T"+addr);
                         et.setObjectNumber(object);
                         et.setSlaveAddress(addr2);
                         _tecos.put(object, et);
@@ -292,9 +294,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                 }
                 
                 if (addr2 > 0){
-                    Turnout t = getTurnout(prefix+addr2);
+                    Turnout t = getTurnout(prefix+"T"+addr2);
                     if (t == null) {
-                        et = (EcosTurnout)provideTurnout(prefix+addr2);
+                        et = (EcosTurnout)provideTurnout(prefix+"T"+addr2);
                         et.setMasterObjectNumber(false);
                         et.setObjectNumber(object);
                         et.setComment("Extended address linked with turnout " + getSystemPrefix()+"T"+straddr[0]);
@@ -306,9 +308,9 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
 
             log.debug("Found route object " + object);
 
-            Turnout t = getTurnout(prefix+object);
+            Turnout t = getTurnout(prefix+"T"+object);
             if (t==null) {
-                et = (EcosTurnout)provideTurnout(prefix+object);
+                et = (EcosTurnout)provideTurnout(prefix+"T"+object);
                 et.setObjectNumber(object);
                 _tecos.put(object, et);
 
@@ -335,7 +337,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
      * We should only ever do either a remove or an add in one go.
      */
     void checkTurnoutList(String[] ecoslines){
-        final EcosPreferences p = EcosPreferences.instance();
+        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
         
         String[] jmrilist = getEcosObjectArray();
         boolean nomatch = true;
@@ -464,7 +466,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     public String stripChar(String s) {  
         String allowed =
           ",0123456789";
-        StringBuffer result = new StringBuffer();
+        StringBuilder result = new StringBuilder();
         for ( int i = 0; i < s.length(); i++ ) {
             if ( allowed.indexOf(s.charAt(i)) >= 0 )
                result.append(s.charAt(i));
@@ -478,14 +480,15 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     } 
     
     
+    @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("length")) && (!addingTurnouts)) {
-            final EcosPreferences p = EcosPreferences.instance();
+            final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
             EcosTurnout et;
             String[] ecoslist = this.getEcosObjectArray();
             String[] jmrilist = getSystemNameArray();
             for (int i = 0; i<jmrilist.length; i++){
-                if (jmrilist[i].startsWith(prefix)) {
+                if (jmrilist[i].startsWith(prefix+"T")) {
                     et = (EcosTurnout) getBySystemName(jmrilist[i]);
                     if(et.getObject()==0){
                         //We do not support this yet at there are many parameters
@@ -497,10 +500,10 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
             for(int i = 0; i<ecoslist.length; i++){
                 et = (EcosTurnout) getByEcosObject(Integer.parseInt(ecoslist[i]));
                 int address = et.getNumber();
-                if (getBySystemName(prefix+address)==null) {
+                if (getBySystemName(prefix+"T"+address)==null) {
                     if (p.getRemoveTurnoutsFromEcos()==0x02){
                         RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
-                        removeObjectFromEcos.removeObjectFromEcos(""+et.getObject());
+                        removeObjectFromEcos.removeObjectFromEcos(""+et.getObject(), tc);
                         deleteEcosTurnout(et);
                     } else {
                         final EcosTurnout etd = et;
@@ -542,7 +545,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                     p.setRemoveTurnoutsFromEcos(0x02);
                                 }
                                 RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
-                                removeObjectFromEcos.removeObjectFromEcos(""+etd.getObject());
+                                removeObjectFromEcos.removeObjectFromEcos(""+etd.getObject(), tc);
                                 deleteEcosTurnout(etd);
                                 dialog.dispose();
                             }
@@ -571,6 +574,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         addingTurnouts = false;
     }
 
+    @Override
     public void dispose(){
         Enumeration<Integer> en = _tecos.keys();
         EcosMessage em;
@@ -615,20 +619,21 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
         return _tecos.get(ecosObject);
     }
     
-    static class EcosTurnoutManagerHolder {
+    /*static class EcosTurnoutManagerHolder {
         static EcosTurnoutManager
             instance = new EcosTurnoutManager();
     }
 
     public static EcosTurnoutManager instance() {
         return EcosTurnoutManagerHolder.instance;
-    }
+    }*/
     
-    /*static public EcosTurnoutManager instance() {
-        if (_instance == null) _instance = new EcosTurnoutManager();
-        return _instance;
+    public void refreshItems(){
+            // ask to be notified about newly created turnouts on the layout.
+        EcosMessage m = new EcosMessage("request(11, view)");
+        tc.sendEcosMessage(m, this);
+        
     }
-    static EcosTurnoutManager _instance = null;*/
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosTurnoutManager.class.getName());
 }

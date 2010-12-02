@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -36,6 +36,12 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         this.setAllowUnexpectedReply(true);
     }
 
+    public void setAdapterMemo(EcosSystemConnectionMemo memo){
+        adapterMemo = memo;
+    }
+    
+    EcosSystemConnectionMemo adapterMemo;
+    
     // The methods to implement the EcosInterface
 
     public synchronized void addEcosListener(EcosListener l) {
@@ -46,6 +52,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         this.removeListener(l);
     }
 
+    @Override
 	protected int enterProgModeDelayTime() {
 		// we should to wait at least a second after enabling the programming track
 		return 1000;
@@ -123,6 +130,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         sendMessage(m, reply);
     }
 
+    @Override
     protected void forwardToPort(AbstractMRMessage m, AbstractMRListener reply) {
         super.forwardToPort(m, reply);
     }
@@ -171,6 +179,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
     
     // for now, receive always OK
+    @Override
 	protected boolean canReceive() {
         return true;
   	}
@@ -202,7 +211,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         if(log.isDebugEnabled()) log.debug("Send a message and wait for the response");
         if (ostream == null) return false;
         m.setTimeout(500);
-        m.setRetries(100);
+        m.setRetries(10);
         synchronized(getSelfLock()) {
                 forwardToPort(m, reply);
                 // wait for reply
@@ -224,7 +233,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected void terminate() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established
-        EcosPreferences p = EcosPreferences.instance();
+        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
         if (p.getAdhocLocoFromEcos()==0x01) return; //Just a double check that we can delete locos
         //AbstractMRMessage modeMsg=enterNormalMode();
         AbstractMRMessage modeMsg;
@@ -233,7 +242,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
 
         modeMsg =  new EcosMessage("release(10, view)");
         modeMsg.setTimeout(50);
-        modeMsg.setRetries(100);
+        modeMsg.setRetries(10);
         synchronized(getSelfLock()) {
             forwardToPort(modeMsg, null);
             // wait for reply
@@ -248,13 +257,13 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             }
         }
 
-        EcosTurnoutManager objEcosTurnManager = jmri.jmrix.ecos.EcosTurnoutManager.instance();
+        EcosTurnoutManager objEcosTurnManager = adapterMemo.getTurnoutManager();
         en = objEcosTurnManager.getEcosObjectList();
         for(int i = 0; i<en.size(); i++) {
             ecosObject = en.get(i);
             modeMsg = new EcosMessage("release("+ecosObject+", view)");
             modeMsg.setTimeout(50);
-            modeMsg.setRetries(100);
+            modeMsg.setRetries(10);
             synchronized(getSelfLock()) {
                 forwardToPort(modeMsg, null);
                 // wait for reply
@@ -290,7 +299,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
                                  break;
                     }
                     modeMsg.setTimeout(50);
-                    modeMsg.setRetries(100);
+                    modeMsg.setRetries(10);
                     synchronized(getSelfLock()) {
                         forwardToPort(modeMsg, null);
                         // wait for reply

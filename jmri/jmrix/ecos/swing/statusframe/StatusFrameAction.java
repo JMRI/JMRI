@@ -2,6 +2,7 @@
 
 package jmri.jmrix.ecos.swing.statusframe;
 
+import jmri.jmrix.ecos.*;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
@@ -10,17 +11,22 @@ import java.awt.event.ActionEvent;
  *       			StatusFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2008
- * @version		$Revision: 1.2 $	
+ * @version		$Revision: 1.3 $	
  */
 
 public class StatusFrameAction extends AbstractAction {
 
-	public StatusFrameAction(String s) { super(s);}
+	public StatusFrameAction(String s, EcosSystemConnectionMemo memo ) {
+        super(s);
+        adaptermemo = memo;
+    }
 	
+    EcosSystemConnectionMemo adaptermemo;
+
     public void actionPerformed(ActionEvent e) {
 		StatusFrame f = new StatusFrame();
 		try {
-			f.initComponents();
+			f.initComponents(adaptermemo);
 			}
 		catch (Exception ex) {
 			log.error("Exception: "+ex.toString());

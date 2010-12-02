@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -23,17 +23,17 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
-    final EcosPreferences p = EcosPreferences.instance();
+    final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
     //control of the object
     private boolean _haveControl = false;
     private boolean _hadControl = false;
     
-    public EcosDccThrottle(DccLocoAddress address)
+    public EcosDccThrottle(DccLocoAddress address, EcosTrafficController etc)
     {
         super();
         super.speedStepMode = SpeedStepMode128;
-
+        tc=etc;
         //The script will go through and read the values from the Ecos
 
         this.speedSetting = 0;
@@ -95,8 +95,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     private void getControl(){
-        tc = EcosTrafficController.instance();
-
+ 
         String message = "request("+this.objectNumber+", view, control)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -147,9 +146,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
+    @Override
     protected void sendFunctionGroup1() {
         if(!_haveControl) return;
-        tc = EcosTrafficController.instance();
         int function = 0;
         if (getF0()==true) function = 1;
         String message = "set("+this.objectNumber+", func[0, "+function+"])";
@@ -186,9 +185,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * Send the message to set the state of
      * functions F5, F6, F7, F8.
      */
+    @Override
     protected void sendFunctionGroup2() {
         if(!_haveControl) return;
-        tc = EcosTrafficController.instance();
         int function = 0;
         if (getF5()==true) function = 1;
         String message = "set("+this.objectNumber+", func[5, "+function+"])";
@@ -218,9 +217,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * Send the message to set the state of
      * functions F9, F10, F11, F12.
      */
+    @Override
     protected void sendFunctionGroup3() {
         if(!_haveControl) return;
-        tc = EcosTrafficController.instance();
         int function = 0;
         if (getF9()==true) function = 1;
         String message = "set("+this.objectNumber+", func[9, "+function+"])";
@@ -246,9 +245,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         tc.sendEcosMessage(m, this);    
     }
     
+    @Override
     protected void sendFunctionGroup4() {
         if(!_haveControl) return;
-        tc = EcosTrafficController.instance();
         int function = 0;
         if (getF13()==true) function = 1;
         String message = "set("+this.objectNumber+", func[13, "+function+"])";
@@ -297,9 +296,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         tc.sendEcosMessage(m, this);
     }
     
+    @Override
     protected void sendFunctionGroup5() {
         if(!_haveControl) return;
-        tc = EcosTrafficController.instance();
         int function;
         if (getF21()==true) function = 21;
         else function = 0;
@@ -382,8 +381,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         if (value>128) value = 128;    // max possible speed
         if (value<0) value = 0;        // emergency stop
 
-        tc = EcosTrafficController.instance();
-
         if (value >0) {
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
@@ -407,7 +404,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         //if (forward = true) dir=0;
         //setSpeedSetting(speedSetting);  // send the command
 
-        tc = EcosTrafficController.instance();
         EcosMessage m;
         if (forward==true) dir=0;
 
@@ -428,6 +424,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * but it could set the speed to zero, turn off functions, etc.
      *
      */
+    @Override
     public void release() {
         if (!active) log.warn("release called when not active");
         //Deleting of the loco is now handled when closing jmri.
@@ -440,6 +437,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
      */
+    @Override
     public void dispose() {
         log.debug("dispose");
         release();
@@ -448,8 +446,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     private void ReleaseLoco(){
-    
-        tc = EcosTrafficController.instance();
         EcosMessage m;
         String message = "release("+this.objectNumber+", view, control)";
         m = new EcosMessage(message);
@@ -785,7 +781,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     private void createEcosLoco() {
-        tc = EcosTrafficController.instance();
 
         String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
         EcosMessage m = new EcosMessage(message);
@@ -799,14 +794,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         if (ecosretry <3){
             //It might be worth adding in a sleep/pause of discription between retries.
             ecosretry++;
-            tc = EcosTrafficController.instance();
 
             String message = "request("+this.objectNumber+", control)";
             EcosMessage ms = new EcosMessage(message);
             tc.sendEcosMessage(ms, this);
             log.error("We have no control over the ecos object " + this.objectNumber + " Retrying Attempt " + ecosretry);
-
-
         }
         else if(ecosretry==3){
             ecosretry++;
@@ -819,7 +811,6 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             }
             if (val==0)
             {
-                tc = EcosTrafficController.instance();
                 String message = "request("+this.objectNumber+", control, force)";
                 EcosMessage ms = new EcosMessage(message);
                 tc.sendEcosMessage(ms, this);

@@ -13,18 +13,21 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
     /**
      * Constructor.
      */
-    public EcosDccThrottleManager() {
+    public EcosDccThrottleManager(EcosTrafficController etc) {
         super();
         if (mInstance==null) mInstance = this;
+        tc=etc;
 
     }
+    
+    EcosTrafficController tc;
 
     static private EcosDccThrottleManager mInstance = null;
     static public EcosDccThrottleManager instance() {
@@ -45,10 +48,11 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         The ecos throttle in turn will notify the throttle manager of a successful or
         unsuccessful throttle connection. */
         log.debug("new EcosDccThrottle for "+address);
-        new EcosDccThrottle((DccLocoAddress)address);
+        new EcosDccThrottle((DccLocoAddress)address, tc);
         //notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
     }
     
+    @Override
     public boolean hasDispatchFunction() { return false; }
     
     /**
@@ -70,6 +74,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
      */
     public boolean addressTypeUnique() { return true; }
 
+    @Override
     protected boolean singleUse() { return false; }
 
     /*
@@ -79,6 +84,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         return (num>=100);
     }
     
+    @Override
     public int supportedSpeedModes() {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
         }

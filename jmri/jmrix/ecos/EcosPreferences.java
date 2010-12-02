@@ -10,20 +10,13 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 
-public class EcosPreferences {
+public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
  
-    private EcosPreferences(){
-        //instance();
+    public EcosPreferences(){
         if (log.isDebugEnabled()) log.debug("creating a new EcosPreferences object");
-        if (jmri.InstanceManager.configureManagerInstance()!=null) {
-            jmri.InstanceManager.configureManagerInstance().registerConfig(this);
-        }
-         
-        
-        
         if (ecosPreferencesShutDownTask==null) {
             ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
                 @Override
@@ -38,9 +31,12 @@ public class EcosPreferences {
                 jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
             }
         }
-        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", null, null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(), false, null);
-        //self = this;
+        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", null, null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(this), false, null);
     }
+    
+    boolean preferencesLoaded = false;
+    public boolean getPreferencesLoaded() { return preferencesLoaded; }
+    public void setPreferencesLoaded() { preferencesLoaded=true; }
     
     ShutDownTask ecosPreferencesShutDownTask = null;
 
@@ -69,7 +65,7 @@ public class EcosPreferences {
     
     public void setAddLocoToEcos(int boo){
         _addlocotoecos = boo;
-        _changeMade = true;
+        changeMade();
     }
 
      /**
@@ -86,7 +82,7 @@ public class EcosPreferences {
     
     public void setAddLocoToJMRI(int boo){
         _addlocotojmri = boo;
-        _changeMade = true;
+        changeMade();
     }
     
      /**
@@ -103,7 +99,7 @@ public class EcosPreferences {
     
     public void setEcosLocoDescription(String descript){
         _ecoslocodescription = descript;
-        _changeMade = true;
+        changeMade();
     }
     
      /**
@@ -133,7 +129,7 @@ public class EcosPreferences {
         else if (master.equals("JMRI")) _locomaster = JMRI;
         else if (master.equals("ECOS")) _locomaster = ECOS;
         else _locomaster = NOSYNC;
-        _changeMade = true;
+        changeMade();
     }
     
     public String getLocoMasterAsString(){
@@ -166,7 +162,7 @@ public class EcosPreferences {
     
     public void setAdhocLocoFromEcos(int boo){
         _adhoclocofromecos = boo;
-        _changeMade = true;
+        changeMade();
     }
     
     /**
@@ -185,7 +181,7 @@ public class EcosPreferences {
     
     public void setForceControlFromEcos(int boo){
         _forcecontrolfromecos = boo;
-        _changeMade = true;
+        changeMade();
     }
 
         /**
@@ -202,7 +198,7 @@ public class EcosPreferences {
 
     public void setDefaultEcosProtocol(String boo){
         _defaultecosprotocol = boo;
-        _changeMade = true;
+        changeMade();
     }
 
     /**
@@ -223,7 +219,7 @@ public class EcosPreferences {
     
     public void setRemoveLocoFromEcos(int boo){
         _removelocofromecos = boo;
-        _changeMade = true;
+        changeMade();
     }
     
     /**
@@ -240,7 +236,7 @@ public class EcosPreferences {
     
     public void setRemoveLocoFromJMRI(int boo){
         _removelocofromjmri = boo;
-        _changeMade = true;
+        changeMade();
     }
 
     /**
@@ -256,7 +252,7 @@ public class EcosPreferences {
     
     public void setAddTurnoutsToEcos(int boo){
         _addturnoutstoecos = boo;
-        _changeMade = true;
+        changeMade();
     }
     
     /**
@@ -273,7 +269,7 @@ public class EcosPreferences {
     
     public void setAddTurnoutsToJMRI(int boo){
         _addturnoutstojmri = boo;
-        _changeMade = true;
+        changeMade();
     }
 
     /**
@@ -290,7 +286,7 @@ public class EcosPreferences {
     
     public void setRemoveTurnoutsFromJMRI(int boo){
         _removeturnoutsfromjmri = boo;
-        _changeMade = true;
+        changeMade();
     }
     
     /**
@@ -306,21 +302,26 @@ public class EcosPreferences {
     
     public void setRemoveTurnoutsFromEcos(int boo){
         _removeturnoutsfromecos = boo;
-        _changeMade = true;
+        changeMade();
     }
 
     public String name(){
         return null;
     }
-
-    static class EcosPreferenceHolder {
-        static EcosPreferences
-            instance = new EcosPreferences();
+    
+    void changeMade(){
+        _changeMade = true;
+        firePropertyChange("update", null, null);
     }
-
-    public static EcosPreferences instance() {
-        return EcosPreferenceHolder.instance;
+    
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
     }
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        pcs.removePropertyChangeListener(l);
+    }
+    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
       
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosPreferences.class.getName());
 

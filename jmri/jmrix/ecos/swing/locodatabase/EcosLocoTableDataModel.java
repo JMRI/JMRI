@@ -20,7 +20,7 @@ import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
  * Table data model for display of jmri.jmrix.ecos.EcosLocoAddressManager manager contents
  * This extends the BeanTableDataModel, but the majority of it is customised.
  * @author		Kevin Dickerson   Copyright (C) 2009
- * @version		$Revision: 1.11 $
+ * @version		$Revision: 1.12 $
  */
 abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
@@ -193,6 +193,8 @@ abstract public class EcosLocoTableDataModel extends jmri.jmrit.beantable.BeanTa
     }
 
     public void refreshSelections(){
+        if (selections==null)
+            return;
         Roster.instance().updateComboBoxGlobal(selections);
         selections.insertItemAt(" ",0);
         selections.setSelectedIndex(-1);

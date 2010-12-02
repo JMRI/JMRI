@@ -11,10 +11,11 @@ public class RemoveObjectFromEcos implements EcosListener{
     
     private EcosTrafficController tc;
     //Need to deal with the fact this method has a contructor name.
-    public void removeObjectFromEcos(String ecosObject){
+    public void removeObjectFromEcos(String ecosObject, EcosTrafficController etc){
+        tc = etc;
         _ecosObject = ecosObject;
         log.debug("Call to delete Object " + ecosObject + " from the Ecos");
-        tc = EcosTrafficController.instance();
+        tc = etc;
         String message = "request("+ _ecosObject +", control, view)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
@@ -48,7 +49,6 @@ public class RemoveObjectFromEcos implements EcosListener{
             if (ecosretry <3){
                 //It might be worth adding in a sleep/pause of description between retries.
                 ecosretry++;
-                tc = EcosTrafficController.instance();
 
                 String message = "request("+ _ecosObject +", control)";
                 EcosMessage ms = new EcosMessage(message);
@@ -63,7 +63,6 @@ public class RemoveObjectFromEcos implements EcosListener{
     }
     
     private void deleteObject(){
-        tc = EcosTrafficController.instance();
         EcosMessage m;
         String message = "delete(" +_ecosObject+")";
         m = new EcosMessage(message);

@@ -15,12 +15,12 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
 
-    final String prefix = "UT";
+    String prefix;
 
     int objectNumber = 0;
     boolean masterObjectNumber = true;
@@ -32,9 +32,12 @@ public class EcosTurnout extends AbstractTurnout
      * in the system name.
      * @param number DCC address of the turnout
      */
-    public EcosTurnout(int number) {
-    	super("UT"+number);
+    public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
+    	super(prefix+"T"+number);
     	_number = number;
+        this.prefix = prefix;
+        tc = etc;
+        tm = etm;
         
     	// At construction, register for messages
 
@@ -43,6 +46,9 @@ public class EcosTurnout extends AbstractTurnout
 
     	
     }
+    
+    EcosTrafficController tc;
+    EcosTurnoutManager tm;
      /*Extended is used to indicate that this Ecos accessory has a secondary address assigned to it.
      the value determines the symbol/icon used on the ecos.
      2 - Three Way Point
@@ -63,7 +69,7 @@ public class EcosTurnout extends AbstractTurnout
 
     
     void setSlaveAddress(int o){
-        slaveAddress = prefix+o;
+        slaveAddress = prefix+"T"+o;
     }
     
     void setMasterObjectNumber(boolean o){
@@ -146,6 +152,7 @@ public class EcosTurnout extends AbstractTurnout
     /**
      * ECOS turnouts can be inverted
      */
+    @Override
     public boolean canInvert(){return true;}
         
     
@@ -158,13 +165,13 @@ public class EcosTurnout extends AbstractTurnout
             EcosMessage m;
             // get control
             m = new EcosMessage("request("+objectNumber+", control)");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
+            tc.sendEcosMessage(m, null);
             // set state
             m = new EcosMessage("set("+objectNumber+", state["+(closed?"0":"1")+"])");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
+            tc.sendEcosMessage(m, null);
             // release control
             m = new EcosMessage("release("+objectNumber+", control)");
-            EcosTrafficController.instance().sendEcosMessage(m, null);
+            tc.sendEcosMessage(m, null);
         } else { //we have a 3 way or double slip!
             //Working upon the basis that if the materObjectNumber is false than this is the second
             //decoder address assigned, while if it is true then we are the first decoder address.
@@ -173,7 +180,7 @@ public class EcosTurnout extends AbstractTurnout
             if (!masterObjectNumber){
                 //Here we are dealing with the second address
                 int turnaddr = _number-1;
-                Turnout t = EcosTurnoutManager.instance().getTurnout(prefix+turnaddr);
+                Turnout t = tm.getTurnout(prefix+"T"+turnaddr);
                 secondstate = closed;
                 if(t.getKnownState()==CLOSED)
                     firststate=true;
@@ -181,7 +188,7 @@ public class EcosTurnout extends AbstractTurnout
                     firststate=false;
                 
             } else {
-                Turnout t = EcosTurnoutManager.instance().getTurnout(slaveAddress);
+                Turnout t = tm.getTurnout(slaveAddress);
                 firststate = closed;
 
                 if(t.getKnownState()==CLOSED)
@@ -219,13 +226,13 @@ public class EcosTurnout extends AbstractTurnout
             } else {
             
                 EcosMessage m = new EcosMessage("request("+objectNumber+", control)");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, null);
                 // set state
                 m = new EcosMessage("set("+objectNumber+", state["+setState+"])");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, null);
                 // release control
                 m = new EcosMessage("release("+objectNumber+", control)");
-                EcosTrafficController.instance().sendEcosMessage(m, null);
+                tc.sendEcosMessage(m, null);
             }
         }
         

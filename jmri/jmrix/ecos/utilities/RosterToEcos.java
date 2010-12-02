@@ -18,16 +18,14 @@ public class RosterToEcos implements EcosListener{
     
     public RosterToEcos() { }
 
-    public void createEcosLoco(RosterEntry re) {
+    public void createEcosLoco(RosterEntry re, EcosTrafficController etc) {
         if (createloco==true)
             return;
         createloco = true;
-        tc = EcosTrafficController.instance();
-        ep = EcosPreferences.instance();
+        etc = tc;
+        ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
         _re = re;
 		objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
-    
-        tc = EcosTrafficController.instance();
 
         String message = "create(10, addr[" + _re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ ep.getDefaultEcosProtocol()+"], append)";
 

@@ -9,13 +9,13 @@ import jmri.PowerManager;
  * PowerManager implementation for controlling layout power.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class EcosPowerManager implements PowerManager, EcosListener {
 
-    public EcosPowerManager() {
+    public EcosPowerManager(EcosTrafficController etc) {
         // connect to the TrafficManager
-        tc = EcosTrafficController.instance();
+        tc = etc;
         tc.addEcosListener(this);
         
         // ask to be notified
@@ -27,6 +27,8 @@ public class EcosPowerManager implements PowerManager, EcosListener {
         tc.sendEcosMessage(m, this);
         
     }
+    
+    EcosTrafficController tc;
 
     public String getUserName() { return "Ecos"; }
 
@@ -68,8 +70,6 @@ public class EcosPowerManager implements PowerManager, EcosListener {
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
-
-    EcosTrafficController tc = null;
 
     // to listen for status changes from Ecos system
     public void reply(EcosReply m) {

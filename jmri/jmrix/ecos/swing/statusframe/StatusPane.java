@@ -11,7 +11,7 @@ import javax.swing.*;
  * Pane to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  */
 public class StatusPane extends javax.swing.JPanel implements EcosListener {
 
@@ -22,7 +22,7 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
     JLabel proVersion = new JLabel(proString+"<unknown>");
     JLabel hrdVersion = new JLabel(hrdString+"<unknown>");
     
-    public StatusPane() {
+    public StatusPane(EcosTrafficController etc) {
         super();
         // Create GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -30,8 +30,9 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
         add(proVersion);
         add(hrdVersion);
         
+        tc = etc;
+        
         // connect to the TrafficManager
-        tc = EcosTrafficController.instance();
         tc.addEcosListener(this);
         
         // ask to be notified
