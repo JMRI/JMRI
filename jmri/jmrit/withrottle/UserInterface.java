@@ -1,16 +1,13 @@
 
 package jmri.jmrit.withrottle;
 
-//  JmriPlugin
-//
-//  WiThrottle
 
 /**
  *	UserInterface.java
  *	Create a window for WiThrottle information, advertise service, and create a thread for it to run in.
  *
- *	@author Brett Hoffman   Copyright (C) 2009
- *	@version $Revision: 1.22 $
+ *	@author Brett Hoffman   Copyright (C) 2009, 2010
+ *	@version $Revision: 1.23 $
  */
 
 import java.awt.event.*;
@@ -214,10 +211,9 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
 
         menu.add(new ControllerFilterAction());
 
-        Action prefsAction = new jmri.util.swing.JmriNamedPaneAction(
-                        ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
-                        new jmri.util.swing.sdi.JmriJFrameInterface(),
-                        "apps.gui3.TabbedPreferences");
+        Action prefsAction = new apps.gui3.TabbedPreferencesAction(
+                            ResourceBundle.getBundle("apps.AppsBundle").getString("MenuItemPreferences"),
+                            "WITHROTTLE");
 
         menu.add(prefsAction);
 
@@ -366,6 +362,7 @@ public class UserInterface extends JmriJFrame implements DeviceListener{
     }
 
     private jmri.implementation.AbstractShutDownTask task = null;
+    @Override
     protected void setShutDownTask() {
         if (jmri.InstanceManager.shutDownManagerInstance()!=null) {
             task =
@@ -411,6 +408,7 @@ class ServerThread extends Thread {
         UI = _UI;
     }
 
+    @Override
     public void run() {
         UI.listen();
         log.debug("Leaving serverThread.run()");
