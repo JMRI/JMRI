@@ -7,7 +7,7 @@ package apps.gui3;
  * listed pane.
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
     
@@ -24,8 +24,8 @@ public class TabbedPreferencesFrame extends jmri.util.JmriJFrame {
         add(jmri.InstanceManager.tabbedPreferencesInstance());
     }
     
-    public void gotoPreferenceItem(String item){
-        jmri.InstanceManager.tabbedPreferencesInstance().gotoPreferenceItem(item);
+    public void gotoPreferenceItem(String item, String sub){
+        jmri.InstanceManager.tabbedPreferencesInstance().gotoPreferenceItem(item, sub);
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TabbedPreferencesFrame.class.getName());

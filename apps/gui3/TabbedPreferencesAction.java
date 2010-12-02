@@ -8,23 +8,30 @@ import javax.swing.AbstractAction;
      * with a list option to the left hand side.
      * <P>
      * @author	Kevin Dickerson   Copyright (C) 2009
-     * @version	$Revision: 1.1 $
+     * @version	$Revision: 1.2 $
      */
 
 public class TabbedPreferencesAction extends AbstractAction {
 
-    String gotoListItem = null;
     /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
      * resulting frame.  Perhaps this should be changed?
      * @param s
+     * @param category
+     * @param subCategory
      */
 
-   public TabbedPreferencesAction(String s, String selection) {
+   public TabbedPreferencesAction(String s, String category, String subCategory) {
         super(s);
-        preferencesItem = selection;
+        preferencesItem = category;
+        preferenceSubCat = subCategory;
+    }
+
+    public TabbedPreferencesAction(String s, String category) {
+        super(s);
+        preferencesItem = category;
     }
 
     public TabbedPreferencesAction(String s) {
@@ -34,7 +41,9 @@ public class TabbedPreferencesAction extends AbstractAction {
     public TabbedPreferencesAction() { this("Listed Table Access");}
     
     static TabbedPreferencesFrame f;
-    String preferencesItem;
+    String preferencesItem = null;
+    String preferenceSubCat = null;
+    
 
     public void actionPerformed() {
         // create the JTable model, with changes for specific NamedBean
@@ -45,7 +54,7 @@ public class TabbedPreferencesAction extends AbstractAction {
             };
         }
         
-        f.gotoPreferenceItem(preferencesItem);
+        f.gotoPreferenceItem(preferencesItem, preferenceSubCat);
         f.pack();
         
         f.setVisible(true);

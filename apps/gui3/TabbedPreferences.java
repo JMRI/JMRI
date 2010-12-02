@@ -15,9 +15,13 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
+
 import java.awt.*;
 import java.awt.event.*;
+;
+import java.util.List;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import org.jdom.Element;
 import java.util.Vector;
@@ -27,7 +31,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -53,6 +57,7 @@ public class TabbedPreferences extends AppConfigBase {
     JPanel buttonpanel;
     /* static */ JList list;
     JScrollPane listScroller;
+    boolean inital = false;
     
     public TabbedPreferences(){
         
@@ -165,6 +170,7 @@ public class TabbedPreferences extends AppConfigBase {
         buttonpanel.add(save);
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
+        inital = true;
     }
     
     void setUpConnectionPanel(){
@@ -200,8 +206,8 @@ public class TabbedPreferences extends AppConfigBase {
         
         if (count==0)
             addConnection(0,0);
-        newConnectionTab();
-        connectionPanel.addChangeListener(new ChangeListener() { 
+            newConnectionTab();
+            connectionPanel.addChangeListener(new ChangeListener() { 
             // This method is called whenever the selected tab changes 
             public void stateChanged(ChangeEvent evt) { 
                 JTabbedPane pane = (JTabbedPane)evt.getSource(); 
@@ -219,9 +225,10 @@ public class TabbedPreferences extends AppConfigBase {
                 }
             } 
         }); 
+
     }
     
-    public /* static */ void setUIFontSize(float size){
+    public void setUIFontSize(float size){
         java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
         Font f;
         while (keys.hasMoreElements()) {
@@ -237,13 +244,9 @@ public class TabbedPreferences extends AppConfigBase {
         }
     }
     
-    public /* static */ void setUIFont(javax.swing.plaf.FontUIResource f){
-    //
-    // sets the default font for all Swing components.
-    // ex. 
-    //  setUIFont (new javax.swing.plaf.FontUIResource
-    //   ("Serif",Font.ITALIC,12));
-    //
+
+    public void setUIFont(javax.swing.plaf.FontUIResource f){
+
     java.util.Enumeration<Object> keys = UIManager.getDefaults().keys();
     while (keys.hasMoreElements()) {
       Object key = keys.nextElement();
@@ -252,7 +255,6 @@ public class TabbedPreferences extends AppConfigBase {
         UIManager.put (key, f);
       }
     }
-    
     
     void selection(String View){
         CardLayout cl = (CardLayout) (detailpanel.getLayout());
@@ -271,7 +273,8 @@ public class TabbedPreferences extends AppConfigBase {
             itemBeingAdded = new preferencesCatItems(prefItem, itemText);
             preferencesArray.add(itemBeingAdded);
             //As this is a new item in the selection list, we need to update the JList.
-            updateJList();
+            if (inital)
+                updateJList();
         }
         if (tabtitle==null)
             tabtitle = itemText;
@@ -281,23 +284,43 @@ public class TabbedPreferences extends AppConfigBase {
     
     /* Method allows for the preference to goto a specific list item */
     
-    public void gotoPreferenceItem(String selection){
+    public void gotoPreferenceItem(String selection, String subCategory){
         selection(selection);
-        for(int x=0; x<preferencesArray.size(); x++){
-            if(preferencesArray.get(x).getPrefItem().equals(selection)){
-                list.setSelectedIndex(x);
-                return;
-            }
-        }
+        list.setSelectedIndex(getCategoryIndexFromString(selection));
+        if(subCategory==null || subCategory.equals(""))
+            return;
+        preferencesArray.get(getCategoryIndexFromString(selection)).gotoSubCategory(subCategory);
     }
     /*
-    * Returns an arrayList of existing list items.
+    * Returns a List of existing Preference Categories.
     */
-    public ArrayList<String> getPreferenceMenu(){
-        return getChoices();
+    public List<String> getPreferenceMenuList(){
+        ArrayList<String> choices = new ArrayList<String>();
+        for(int x=0; x<preferencesArray.size(); x++){
+            choices.add(preferencesArray.get(x).getPrefItem());
+        }
+        return choices;
     }
     
-    protected /* static */ ArrayList<String> getChoices() {
+    /*
+     * Returns a list of Sub Category Items for a give category
+     */
+    
+    public List<String> getPreferenceSubCategory(String category){
+        int index = getCategoryIndexFromString(category);
+        return preferencesArray.get(index).getSubCategoriesList();
+    }
+    
+    int getCategoryIndexFromString(String category){
+        for(int x=0; x<preferencesArray.size(); x++){
+            if(preferencesArray.get(x).getPrefItem().equals(category)){
+                return(x);
+            }
+        }
+        return -1;
+    }
+    
+    protected ArrayList<String> getChoices() {
         ArrayList<String> choices = new ArrayList<String>();
         for(int x=0; x<preferencesArray.size(); x++){
             choices.add(preferencesArray.get(x).getItemString());
@@ -341,8 +364,7 @@ public class TabbedPreferences extends AppConfigBase {
         
         });
         b.add(deleteButton);
-
-        //For a future release
+        
         JPanel c = new JPanel();
         c.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
         final JCheckBox disable = new JCheckBox("Disable Connection");
@@ -481,6 +503,7 @@ public class TabbedPreferences extends AppConfigBase {
         
         String itemText;
         String prefItem;
+        JTabbedPane tabbedPane;
         
         ArrayList<tabDetails> tabDetailsArray = new ArrayList<tabDetails>();
         
@@ -507,10 +530,12 @@ public class TabbedPreferences extends AppConfigBase {
             return itemText;
         }
         
-        void addToStore(){
+        ArrayList getSubCategoriesList(){
+            ArrayList<String> choices = new ArrayList<String>();
             for(int x=0; x<tabDetailsArray.size(); x++){
-                tabDetailsArray.get(x).addToStore();
+                choices.add(tabDetailsArray.get(x).getTitle());
             }
+            return choices;
         }
         
         /*This returns a JPanel if only one item is configured for a menu item
@@ -520,12 +545,23 @@ public class TabbedPreferences extends AppConfigBase {
             if(tabDetailsArray.size()==1){
                 return tabDetailsArray.get(0).getPanel();
             } else {
-                JTabbedPane tabbedPane = new JTabbedPane();
+                tabbedPane = new JTabbedPane();
                 for (int i = 0; i<tabDetailsArray.size(); i++){
                     tabDetails tab = tabDetailsArray.get(i);
                     tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(), tab.getToolTip());
                 }
                 return tabbedPane;
+            }
+        }
+        
+        void gotoSubCategory(String sub){
+            if(tabDetailsArray.size()==1)
+                return;
+            for (int i = 0; i<tabDetailsArray.size(); i++){
+                if (tabDetailsArray.get(i).getTitle().equals(sub)){
+                    tabbedPane.setSelectedIndex(i);
+                    return;
+                }
             }
         }
         
