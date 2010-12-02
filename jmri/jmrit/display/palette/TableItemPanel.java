@@ -193,8 +193,13 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
 
     public void setSelection(NamedBean bean) {
         int row = _model.getIndexOf(bean);
-        _table.addRowSelectionInterval(row, row);
-        _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+        if (row>=0) {
+            _table.addRowSelectionInterval(row, row);
+            _scrollPane.getVerticalScrollBar().setValue(row*ROW_HEIGHT);
+        } else {
+            log.debug("setSelection failed: NamedBean= "+bean+", row= "+row);
+            valueChanged(null);
+        }
     }
 
     /**
