@@ -60,6 +60,9 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     * Store palette icons in preferences file catalogTrees.xml 
     */
     public static void storeIcons() {
+        if (_iconMaps==null) {
+            return;     // never loaded
+        }
         CatalogTreeManager manager = InstanceManager.catalogTreeManagerInstance();
         // unfiltered, xml-stored, item palate icon tree
         CatalogTree tree = manager.getBySystemName("NXPI");
