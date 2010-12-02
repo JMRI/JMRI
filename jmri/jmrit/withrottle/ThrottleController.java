@@ -17,14 +17,16 @@ package jmri.jmrit.withrottle;
  *                                              `       F04 indicates function 4 button is released
  *	di'R'ection (0=reverse, 1=forward)
  *	'L'ong address #, 'S'hort address #     e.g. L1234
+ *      'E'ntry from roster, e.g. ESpiffy Loco
  *      'r'elease, 'd'ispatch
  *      'C'consist lead address, e.g. CL1235
- *	'I'dle (defaults to this if it falls through the tree) !! Needs to change to nothing on default
- *          idle needs to be called specifically
+ *      'c'consist lead from roster ID, e.g. cSpiffy Loco
+ *	'I'dle Idle needs to be called specifically
+ *      'Q'uit
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.16 $
+ *	@version $Revision: 1.17 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -44,6 +46,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
     private DccThrottle throttle;
     private DccThrottle functionThrottle;
+    private RosterEntry rosterLoco = null;
     private DccLocoAddress leadAddress;
     private String whichThrottle;
     float speedMultiplier;
@@ -116,6 +119,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         throttle.release();
         throttle.removePropertyChangeListener(this);
         throttle = null;
+        rosterLoco = null;
         sendAddress();
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
@@ -129,6 +133,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         throttle.dispatch();
         throttle.removePropertyChangeListener(this);
         throttle = null;
+        rosterLoco = null;
         sendAddress();
         for (int i = 0; i < listeners.size(); i++) {
             ThrottleControllerListener l = listeners.get(i);
@@ -159,13 +164,17 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             if (log.isDebugEnabled()) log.debug("Notify TCListener address found: " + l.getClass());
         }
 
-        syncThrottleFunctions(throttle);
+        if (rosterLoco == null){
+            rosterLoco = findRosterEntry(throttle);
+        }
+
+        syncThrottleFunctions(throttle, rosterLoco);
 
         sendAddress();
 
-        sendFunctionLabels(throttle);
-
-        sendAllFunctionStates(whichThrottle);
+        sendFunctionLabels(rosterLoco);
+        
+        sendAllFunctionStates(t);
 
     }
 
@@ -211,15 +220,14 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         return re;
     }
 
-    public void syncThrottleFunctions(DccThrottle t){
-        RosterEntry rosterLoco = findRosterEntry(t);
-        if (rosterLoco != null){
+    public void syncThrottleFunctions(DccThrottle t, RosterEntry re){
+        if (re != null){
             for (int funcNum = 0; funcNum < 29; funcNum++) {
                 try {
 
                     Class<?> partypes[] = {Boolean.TYPE};
                     Method setMomentary = t.getClass().getMethod("setF" + funcNum + "Momentary", partypes);
-                    Object data[] = {Boolean.valueOf(!(rosterLoco.getFunctionLockable(funcNum)))};
+                    Object data[] = {Boolean.valueOf(!(re.getFunctionLockable(funcNum)))};
 
                     setMomentary.invoke(t, data);
 
@@ -236,19 +244,10 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
     }
 
-    public void sendFunctionLabels(DccThrottle t){
-        StringBuilder functionString = new StringBuilder();
-        RosterEntry rosterLoco = findRosterEntry(t);
-        if (rosterLoco != null) {
-//        RosterEntry rosterLoco = null;
-//        if (t.getLocoAddress() != null){
-//            List<RosterEntry> l = Roster.instance().matchingList(null, null, ""+((DccLocoAddress)t.getLocoAddress()).getNumber(), null, null, null, null);
-//            if (l.size()>0){
-//                if (log.isDebugEnabled()) log.debug("Roster Loco found: "+ l.get(0).getDccAddress());
-//                rosterLoco = l.get(0);
-//            }else return;
-//        }
-
+    public void sendFunctionLabels(RosterEntry re){
+        
+        if (re != null) {
+            StringBuilder functionString = new StringBuilder();
             if (whichThrottle.equalsIgnoreCase("S")) {
                 functionString.append("RS29}|{");
             } else {
@@ -260,8 +259,8 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
             int i;
             for (i = 0; i < 29; i++) {
                 functionString.append("]\\[");
-                if ((rosterLoco.getFunctionLabel(i) != null)) {
-                    functionString.append(rosterLoco.getFunctionLabel(i));
+                if ((re.getFunctionLabel(i) != null)) {
+                    functionString.append(re.getFunctionLabel(i));
                 }
             }
             for (ControllerInterface listener : controllerListeners) {
@@ -276,7 +275,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
  * Current Format:  RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
  * @param whichThrottle identify first or second throttle
  */
-    public void sendAllFunctionStates(String whichThrottle){
+    public void sendAllFunctionStates(DccThrottle t){
         
         log.debug("Sending state of all functions");
         StringBuilder message = new StringBuilder("RPF}|{");
@@ -284,11 +283,11 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
         try{
             for (int cnt = 0; cnt < 29; cnt++){
-                Method getF = throttle.getClass().getMethod("getF"+cnt,(Class[])null);
+                Method getF = t.getClass().getMethod("getF"+cnt,(Class[])null);
                 message.append("]\\[F");
                 message.append(cnt);
                 message.append("}|{");
-                message.append(getF.invoke(throttle, (Object[])null));
+                message.append(getF.invoke(t, (Object[])null));
             }
 
         }catch (NoSuchMethodException ea){
@@ -366,10 +365,20 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                         addr = Integer.parseInt(inPackage.substring(1));
                         setAddress(addr, false);
                         break;
+
+                case 'E':       //      Address from RosterEntry
+                    addressRelease();
+                    clearLeadLoco();
+                    requestEntryFromID(inPackage.substring(1));
+                    break;
                     
                 case 'C':
                     setLocoForConsistFunctions(inPackage.substring(1));
 
+                    break;
+
+                case 'c':       //      Consist Lead from RosterEntry
+                    setRosterLocoForConsistFunctions(inPackage.substring(1));
                     break;
 
                 case 'I':
@@ -393,9 +402,17 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
                         setAddress(addr, false);
                         break;
 
+                case 'E':       //      Address from RosterEntry
+                    requestEntryFromID(inPackage.substring(1));
+                    break;
+
                 case 'C':
                     setLocoForConsistFunctions(inPackage.substring(1));
 
+                    break;
+
+                case 'c':       //      Consist Lead from RosterEntry
+                    setRosterLocoForConsistFunctions(inPackage.substring(1));
                     break;
 
                 default:
@@ -449,6 +466,28 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         }
     }
 
+    public void setRosterLocoForConsistFunctions(String id){
+        RosterEntry re = null;
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        if (l.size() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("Consist Lead Roster Loco found: " + l.get(0).getDccAddress() + " for ID: " + id);
+            }
+            re = l.get(0);
+            clearLeadLoco();
+            leadLocoF = new ConsistFunctionController(this, re);
+            useLeadLocoF = leadLocoF.requestThrottle(re.getDccLocoAddress());
+
+            if (!useLeadLocoF) {
+                log.warn("Lead loco address not available.");
+                leadLocoF = null;
+            }
+        }else{
+            log.debug("No Roster Loco found for: " + id);
+            return;
+        }
+    }
+
 
 //  Device is quitting or has lost connection
     public void shutdownThrottle(){
@@ -495,6 +534,21 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
         jmri.InstanceManager.throttleManagerInstance().requestThrottle(number, isLong, this);
 
+    }
+
+    public void requestEntryFromID(String id){
+        RosterEntry re = null;
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, null, null, null, null, id);
+        if (l.size() > 0) {
+            if (log.isDebugEnabled()) {
+                log.debug("Roster Loco found: " + l.get(0).getDccAddress() + " for ID: " + id);
+            }
+            re = l.get(0);
+            rosterLoco = re;
+            setAddress(Integer.parseInt(re.getDccAddress()), re.isLongAddress());
+        }else{
+            log.debug("No Roster Loco found for: " + id);
+        }
     }
 
     public DccThrottle getThrottle(){

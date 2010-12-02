@@ -3,28 +3,41 @@ package jmri.jmrit.withrottle;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.ThrottleListener;
+import jmri.jmrit.roster.RosterEntry;
 
 /**
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.5 $
+ *	@version $Revision: 1.6 $
  */
 public class ConsistFunctionController implements ThrottleListener{
 
     private DccThrottle throttle;
+    private RosterEntry rosterLoco = null;
     private ThrottleController throttleController;
 
     public ConsistFunctionController(ThrottleController tc){
         throttleController = tc;
+    }
+
+    public ConsistFunctionController(ThrottleController tc, RosterEntry re){
+        throttleController = tc;
+        rosterLoco = re;
     }
     
     public void notifyThrottleFound(DccThrottle t) {
         if (log.isDebugEnabled()) log.debug("Lead Loco throttle found: " + t +
                                             ", for consist: " + throttleController.getCurrentAddressString());
         throttle = t;
-        throttleController.syncThrottleFunctions(throttle);
+
+        if (rosterLoco == null){
+            rosterLoco = throttleController.findRosterEntry(throttle);
+        }
+
+        throttleController.syncThrottleFunctions(throttle, rosterLoco);
         throttleController.setFunctionThrottle(t);
-        throttleController.sendFunctionLabels(t);
+        throttleController.sendFunctionLabels(rosterLoco);
+        throttleController.sendAllFunctionStates(throttle);
     }
     
     public void dispose(){
