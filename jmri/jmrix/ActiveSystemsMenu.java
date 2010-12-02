@@ -21,7 +21,7 @@ import jmri.jmrix.swing.ComponentFactory;
  * @see SystemsMenu
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 public class ActiveSystemsMenu extends JMenu {
     public ActiveSystemsMenu(String name) {
@@ -127,8 +127,8 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.can.nmranet.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.can.nmranet.NmraNetMenu"));
 
-        if (jmri.jmrix.ecos.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.ecos.Menu"));
+        /*if (jmri.jmrix.ecos.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.ecos.Menu"));*/
 
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
@@ -197,8 +197,8 @@ public class ActiveSystemsMenu extends JMenu {
         if (jmri.jmrix.direct.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.direct.DirectMenu"));
 
-        if (jmri.jmrix.ecos.ActiveFlag.isActive())
-            m.add(getMenu("jmri.jmrix.ecos.Menu"));
+        /*if (jmri.jmrix.ecos.ActiveFlag.isActive())
+            m.add(getMenu("jmri.jmrix.ecos.Menu"));*/
 
         if (jmri.jmrix.maple.ActiveFlag.isActive())
             m.add(getMenu("jmri.jmrix.maple.MapleMenu"));
