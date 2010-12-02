@@ -13,7 +13,7 @@ import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
  * Create a "Systems" menu containing the Jmri LocoNet-specific tools.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class LocoNetMenu extends JMenu {
 
@@ -22,6 +22,7 @@ public class LocoNetMenu extends JMenu {
      * Preloads the TrafficController to certain actions.
      * Actions will open new windows.
      */
+    // Need to Sort out the Loconet server menu items;
     public LocoNetMenu(LocoNetSystemConnectionMemo memo) {
         super();
 
@@ -41,6 +42,9 @@ public class LocoNetMenu extends JMenu {
                 add(new LnNamedPaneAction( rb.getString(item.name), wi, item.load, memo));
             }
         }
+        add(new javax.swing.JSeparator());
+        add(new jmri.jmrix.loconet.locormi.LnMessageServerAction( rb.getString("MenuItemStartLocoNetServer")));
+        add(new jmri.jmrix.loconet.loconetovertcp.ServerAction( rb.getString("MenuItemLocoNetOverTCPServer"))) ;
     }
         
     Item[] panelItems = new Item[] {
@@ -57,8 +61,8 @@ public class LocoNetMenu extends JMenu {
         new Item("MenuItemCmdStnConfig",        "jmri.jmrix.loconet.cmdstnconfig.CmdStnConfigPane"),
         new Item("MenuItemSetID",               "jmri.jmrix.loconet.locoid.LocoIdPanel"),
         null,
-        new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"),
-        new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"),
+        //new Item("MenuItemStartLocoNetServer",  "jmri.jmrix.loconet.locormi.LnMessageServerPanel"),
+        //new Item("MenuItemLocoNetOverTCPServer","jmri.jmrix.loconet.loconetovertcp.ServerPanel"),
         null,
         new Item("MenuItemThrottleMessages",    "jmri.jmrix.loconet.swing.throttlemsg.MessagePanel"),
         new Item("MenuItemSendPacket",          "jmri.jmrix.loconet.locogen.LocoGenPanel"),
