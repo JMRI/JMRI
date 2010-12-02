@@ -27,7 +27,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.40 $
+ * @version $Revision: 1.41 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -44,8 +44,8 @@ public class TabbedPreferences extends AppConfigBase {
 
     JPanel detailpanel = new JPanel();
     final JTabbedPane connectionPanel = new JTabbedPane();
-    final jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
-    final jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
+    jmri.jmrit.throttle.ThrottlesPreferencesPane throttlePreferences;
+    jmri.jmrit.withrottle.WiThrottlePrefsPanel withrottlePrefsPanel;
     
     /* static */ ArrayList<Integer> connectionTabInstance = new ArrayList<Integer>();
     /* static */ ArrayList<preferencesCatItems> preferencesArray = new ArrayList<preferencesCatItems>();
@@ -79,6 +79,8 @@ public class TabbedPreferences extends AppConfigBase {
     }
     
     public void init(){
+        throttlePreferences = new jmri.jmrit.throttle.ThrottlesPreferencesPane();
+        withrottlePrefsPanel = new jmri.jmrit.withrottle.WiThrottlePrefsPanel();
         pref.disallowSave();
         list = new JList();
         listScroller = new JScrollPane(list);
