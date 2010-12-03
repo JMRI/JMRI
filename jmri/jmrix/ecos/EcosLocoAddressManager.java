@@ -18,7 +18,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
@@ -238,7 +238,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             }
         }
         
-        //final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        //final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
 
         if(p.getAdhocLocoFromEcos()==0x01){
             disposefinal();
@@ -626,7 +626,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * to the roster otherwise this causes a problem with the roster list.
      */
     void checkLocoList(String[] ecoslines){
-        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         //System.out.println("Check loco list");
         String loco;
         for(int i=1; i<ecoslines.length-1; i++){
@@ -759,7 +759,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * loco from the ecos into the roster.
      */
     private void checkInRoster(final EcosLocoAddress tmploco){
-        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         if (p.getAddLocoToJMRI()==0x02){
             setLocoToRoster();
             EcosLocoToRoster tmp = new EcosLocoToRoster();

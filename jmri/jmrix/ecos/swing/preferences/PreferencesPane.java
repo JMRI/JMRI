@@ -15,7 +15,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 
@@ -327,7 +327,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     }
     
     private void updateButtonPressed(){
-        //EcosPreferences ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        //EcosPreferences ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         ep.setRemoveLocoFromJMRI(getChoiceType(_removeLocosJmri));
         ep.setAddLocoToJMRI(getChoiceType(_addLocoJmri));
         ep.setRemoveLocoFromEcos(getChoiceType(_removeLocosEcos));

@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * System names are "UTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
                                 implements EcosListener {
@@ -337,7 +337,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
      * We should only ever do either a remove or an add in one go.
      */
     void checkTurnoutList(String[] ecoslines){
-        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         
         String[] jmrilist = getEcosObjectArray();
         boolean nomatch = true;
@@ -483,7 +483,7 @@ public class EcosTurnoutManager extends jmri.managers.AbstractTurnoutManager
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if ((e.getPropertyName().equals("length")) && (!addingTurnouts)) {
-            final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+            final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
             EcosTurnout et;
             String[] ecoslist = this.getEcosObjectArray();
             String[] jmrilist = getSystemNameArray();

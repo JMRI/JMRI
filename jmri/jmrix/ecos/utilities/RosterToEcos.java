@@ -23,7 +23,7 @@ public class RosterToEcos implements EcosListener{
             return;
         createloco = true;
         etc = tc;
-        ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         _re = re;
 		objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
 

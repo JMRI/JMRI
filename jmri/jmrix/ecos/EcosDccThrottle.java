@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -23,7 +23,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
-    final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+    final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
     //control of the object
     private boolean _haveControl = false;

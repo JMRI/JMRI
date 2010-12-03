@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -233,7 +233,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected void terminate() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established
-        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);;
+        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
         if (p.getAdhocLocoFromEcos()==0x01) return; //Just a double check that we can delete locos
         //AbstractMRMessage modeMsg=enterNormalMode();
         AbstractMRMessage modeMsg;
