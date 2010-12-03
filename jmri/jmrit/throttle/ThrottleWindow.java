@@ -465,7 +465,7 @@ public class ThrottleWindow extends JmriJFrame {
 	 */
     public void dispose()
     {
-    	if (! throttleFrames.isEmpty() )
+    	if ((throttleFrames!= null) && (! throttleFrames.isEmpty() ))
     		for (Iterator<ThrottleFrame> tfi = throttleFrames.values().iterator(); tfi.hasNext(); ) {
     			tfi.next().dispose();
     		}
