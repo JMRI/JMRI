@@ -6,7 +6,7 @@ import jmri.jmrit.operations.setup.Control;
  * Represents one schedule item of a schedule
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version             $Revision: 1.10 $
+ * @version             $Revision: 1.11 $
  */
 public class ScheduleItem implements java.beans.PropertyChangeListener {
 
@@ -37,7 +37,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	 * @param type car type to schedule
 	 */
 	public ScheduleItem(String id, String type) {
-		log.debug("New Schedule Item " + type + " " + id);
+		log.debug("New schedule item type (" + type + ") id: " + id);
 		_type = type;
 		_id = id;
 	}

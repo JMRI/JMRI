@@ -7,7 +7,7 @@ import java.util.*;
  * A group of rolling stock that is managed as one unit.
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class RollingStockGroup {
 	
@@ -87,6 +87,10 @@ public class RollingStockGroup {
 		return false;
 	}
 	
+	public int getSize(){
+		return _group.size();
+	}
+	
 	/**
 	 * Sets the lead for this group. RollingStock must be part of the group. The
 	 * rolling stock that make up this group will have the attributes of the
@@ -101,7 +105,6 @@ public class RollingStockGroup {
 		}
 	}
 	
-
 	public void dispose(){
 
 	}

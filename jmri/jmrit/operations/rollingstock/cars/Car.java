@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.52 $
+ * @version             $Revision: 1.53 $
  */
 public class Car extends RollingStock {
 	
@@ -382,20 +382,20 @@ public class Car extends RollingStock {
 	private void scheduleNext(Track track){
 		if (track == null || track.getScheduleName().equals(""))
 			return;
-		log.debug("destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = ScheduleManager.instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
 		if (sch == null){
-			log.warn("can not find schedule ("+track.getScheduleName()+") assigned to track ("+track.getName()+")");
+			log.warn("Can not find schedule ("+track.getScheduleName()+") assigned to track ("+track.getName()+")");
 			return;
 		}
 		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
 		if (currentSi == null){
-			log.warn("can not find schedule item ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
+			log.warn("Can not find schedule item ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
 			// reset schedule
 			track.setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
 			return;
 		}
+		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") id: "+currentSi.getId());
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
 			log.debug("Car ("+getId()+") is part of kernel "+getKernelName());
@@ -410,7 +410,7 @@ public class Car extends RollingStock {
 		// get the wait count
 		setNextWait(currentSi.getWait());
 		
-		log.debug("Car ("+toString()+") next load ("+getNextLoad()+")");
+		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+")");
 		// bump and check count
 		track.setScheduleCount(track.getScheduleCount()+1);
 		if (track.getScheduleCount() < currentSi.getCount())

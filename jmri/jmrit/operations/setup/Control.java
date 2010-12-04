@@ -32,7 +32,7 @@ public class Control {
 	
 	
 	// Train build parameters
-	public static final boolean fullTrainOnly = false;
+	public static boolean fullTrainOnly = false;
 	
 	// Car and Engine attribute maximum string length	
 	public static final int MAX_LEN_STRING_ATTRIBUTE = 12;
