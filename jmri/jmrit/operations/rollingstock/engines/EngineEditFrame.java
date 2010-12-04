@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -150,7 +150,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		// row 6
 		JPanel pLocation = new JPanel();
 		pLocation.setLayout(new GridBagLayout());
-		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("Location")));
+		pLocation.setBorder(BorderFactory.createTitledBorder(rb.getString("LocationAndTrack")));
 		addItem(pLocation, locationBox, 1, 0);
 		addItem(pLocation, trackLocationBox, 2, 0);
 		pPanel.add(pLocation);
