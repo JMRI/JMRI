@@ -13,7 +13,7 @@ import jmri.jmrix.lenz.XNetConstants;
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author          Paul Bender Copyright (C) 2004-2010
  * @author          Giorgio Terdina Copyright (C) 2007
- * @version         $Revision: 2.35 $
+ * @version         $Revision: 2.36 $
  */
  public class XNetMonFrame extends jmri.jmrix.AbstractMonFrame implements XNetListener {
 
@@ -53,10 +53,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		// display the raw data if requested
 		StringBuilder raw = new StringBuilder();
 		if ( rawCheckBox.isSelected() ) {
-			int len = l.getNumDataElements();
-			for (int i=0; i<len; i++)
-				raw.append(Integer.toHexString(l.getElement(i)));
-				raw.append(" ");
+			raw.append(l.toString());
 		}
 
 		// display the decoded data
@@ -458,10 +455,7 @@ import jmri.jmrix.lenz.XNetConstants;
 		// display the raw data if requested
 		StringBuilder raw = new StringBuilder("packet: ");
 		if ( rawCheckBox.isSelected() ) {
-			int len = l.getNumDataElements();
-			for (int i=0; i<len; i++)
-				raw.append(Integer.toHexString(l.getElement(i)));
-				raw.append(" ");
+				raw.append(l.toString());
 		}
 
 		// display the decoded data
