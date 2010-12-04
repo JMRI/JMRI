@@ -32,6 +32,7 @@ public class Control {
 	
 	
 	// Train build parameters
+	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_SHOULD_BE_FINAL") // allow access for testing
 	public static boolean fullTrainOnly = false;
 	
 	// Car and Engine attribute maximum string length	
