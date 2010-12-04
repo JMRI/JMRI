@@ -1,7 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.ecos.EcosTurnoutManager;
 
 /**
  * Provides load and store functionality for
@@ -11,7 +10,7 @@ import jmri.jmrix.ecos.EcosTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class EcosTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 

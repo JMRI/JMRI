@@ -16,7 +16,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 
@@ -30,7 +29,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {

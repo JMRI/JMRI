@@ -5,8 +5,6 @@ package jmri.jmrit.beantable.sensor;
 import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.*;
 import java.util.ResourceBundle;
 
@@ -14,7 +12,7 @@ import java.util.ResourceBundle;
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {

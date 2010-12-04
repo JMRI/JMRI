@@ -1,7 +1,6 @@
 package jmri.jmrix.ecos.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.ecos.EcosSensorManager;
 
 /**
  * Provides load and store functionality for
@@ -11,7 +10,7 @@ import jmri.jmrix.ecos.EcosSensorManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002, 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class EcosSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 

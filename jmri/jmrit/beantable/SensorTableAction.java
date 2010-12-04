@@ -5,7 +5,6 @@ package jmri.jmrit.beantable;
 import jmri.util.JmriJFrame;
 import jmri.util.ConnectionNameFromSystemName;
 
-import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -27,7 +26,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.35 $
+ * @version     $Revision: 1.36 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
