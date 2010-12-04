@@ -26,7 +26,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.17 $
+ *	@version $Revision: 1.18 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -273,7 +273,6 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 /**
  * send all function states, primarily for initial status
  * Current Format:  RPF}|{whichThrottle]\[function}|{state]\[function}|{state...
- * @param whichThrottle identify first or second throttle
  */
     public void sendAllFunctionStates(DccThrottle t){
         
