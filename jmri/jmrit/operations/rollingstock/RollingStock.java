@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -60,6 +60,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	public static final String ROAD = rb.getString("road");
 	public static final String SCHEDULE = rb.getString("schedule");
 	public static final String LOAD = rb.getString("load");
+	public static final String ERROR_TRACK = "ERROR wrong track for location";
 	
 	public static final String LOCATION_CHANGED_PROPERTY = "rolling stock location";  		// property change descriptions
 	public static final String TRACK_CHANGED_PROPERTY = "rolling stock track location";
@@ -378,6 +379,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			log.debug("Can't set (" + toString() + ") at location ("+ location.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH;	
 		}
+		if (location != null && !location.isTrackAtLocation(track))
+			return ERROR_TRACK;
 		return OKAY;
 	}
 	
@@ -497,6 +500,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 			log.debug("Can't set (" + toString() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH+ " ("+getLength()+")";	
 		}
+		if (destination != null && !destination.isTrackAtLocation(track))
+			return ERROR_TRACK;
 		return OKAY;
 	}
 	
@@ -504,6 +509,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return _destination;
 	}
 	
+	/**
+	 * Sets rolling stock destination without reserving destination track space or
+	 * drop count.  Used by car router to test destinations.
+	 * @param destination
+	 */
 	public void setDestination(Location destination){
 		_destination = destination;
 	}
@@ -520,6 +530,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		return "";
 	}
 	
+	/**
+	 * Sets rolling stock destination track without reserving destination track space or
+	 * drop count.  Used by car router to test destinations.
+	 * @param destination
+	 */
 	public void setDestinationTrack(Track track){
 		_trackDestination = track;
 	}

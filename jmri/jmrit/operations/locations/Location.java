@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -371,17 +371,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		return track;
 	}
     
-    /**
-     * Reset the move count for all tracks at this location
-     */
-    public void resetMoves(){
-    	List<String> tracks = getTracksByIdList();
-    	for (int i=0; i<tracks.size(); i++) {
-    		Track track = getTrackById(tracks.get(i));
-    		track.setMoves(0);
-    	}
-    }
-	
+ 
    /**
      * Remember a NamedBean Object created outside the manager.
  	 */
@@ -556,6 +546,24 @@ public class Location implements java.beans.PropertyChangeListener {
 		}
 		return out;
 	}
+    
+    public boolean isTrackAtLocation(Track track){
+    	if (track == null)
+    		return true;
+    	return _trackHashTable.contains(track);  	
+    }
+    
+    /**
+     * Reset the move count for all tracks at this location
+     */
+    public void resetMoves(){
+    	List<String> tracks = getTracksByIdList();
+    	for (int i=0; i<tracks.size(); i++) {
+    		Track track = getTrackById(tracks.get(i));
+    		track.setMoves(0);
+    	}
+    }
+	
       
     /**
      * Updates a JComboBox with all of the track locations for

@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -262,6 +262,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't service cars built before 1985
 		ActonTrain.setBuiltStartYear("1985");
+		ActonTrain.setBuiltEndYear("2010");
 		// and the next destination for the car
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
@@ -455,6 +456,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// don't service cars built before 1985
 		ActonToBedfordTrain.setBuiltStartYear("1985");
+		ActonToBedfordTrain.setBuiltEndYear("2010");
 		// and the next destination for the car
 		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
@@ -745,6 +747,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Track ES2 = Essex.getTrackByName("Essex Siding 2", Track.SIDING);
 		Location Foxboro = lmanager.getLocationByName("Foxboro MA");
 		
+		Location Gulf = lmanager.newLocation("Gulf");
+		
 		// confirm cars are in Acton
 		Assert.assertEquals("car's location Acton","Acton MA", c3.getLocationName());
 		Assert.assertEquals("car's location Acton","Acton Siding 1", c3.getTrackName());
@@ -759,7 +763,8 @@ public class OperationsCarRouterTest extends TestCase {
 		c3.setLoad("L");
 		c3.setReturnWhenEmptyDestination(Foxboro);
 		
-		c4.setNextDestination(null);
+		// next destination Gulf is not reachable
+		c4.setNextDestination(Gulf);
 		c4.setDestination(null, null);	// clear previous destination
 		
 		ActonTrain.build();

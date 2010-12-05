@@ -8,7 +8,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * Provides simple animation for train icons.
  *   
  * @author Daniel Boudreau (C) Copyright 2009, 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class TrainIconAnimation extends Thread{
 	
@@ -30,7 +30,7 @@ public class TrainIconAnimation extends Thread{
 			while (_previous.isAlive())
 				sleep();
 		}
-		log.debug("TrainIconAnimation starts");
+		log.debug("TrainIconAnimation starts for train "+_trainIcon.getTrain().getName());
 		int x = _trainIcon.getX();
 		int y = _trainIcon.getY();
 		int newX = _rl.getTrainIconX();
