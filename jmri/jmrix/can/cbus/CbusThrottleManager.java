@@ -22,7 +22,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.11 $
+ * @version 		$Revision: 1.12 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -68,22 +68,33 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         startThrottleRequestTimer();
 	}
 
+    /**
+     * stopAll()
+     * 
+     * <P>
+     * Called when track stopped message received. Sets all JMRI managed
+     * throttles to speed zero
+     */
+    void stopAll() {
+        // Get set of handles for JMRI managed throttles and
+        // iterate over them setting the speed of each throttle to 0
+        log.debug("stopAll() setting all speeds to emergency stop");
+        Set handles = softThrottles.keySet();
+        Iterator itr = handles.iterator();
+        while (itr.hasNext()) {
+            CbusThrottle throttle = softThrottles.get(itr.next());
+            throttle.setSpeedSetting(0.0F);
+        }
+    }
+
     public void message(CanMessage m) {
         int opc = m.getElement(0);
         int handle;
 
         switch (opc) {
+            case CbusConstants.CBUS_ESTOP:
             case CbusConstants.CBUS_RESTP:
-                // Request emergency stop all
-                // Get set of handles for software controlled throttles and
-                // iterate over them setting the speed of each throttle to 0
-                log.debug("Request emergency stop all message");
-                Set<Integer> handles = softThrottles.keySet();
-                Iterator<Integer> itr = handles.iterator();
-                while (itr.hasNext()) {
-                    CbusThrottle throttle = softThrottles.get(itr.next());
-                    throttle.setSpeedSetting(0.0F);
-                }
+                stopAll();
                 break;
 
             case CbusConstants.CBUS_KLOC:
@@ -147,17 +158,9 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 }
                 break;
 
+            case CbusConstants.CBUS_ESTOP:
             case CbusConstants.CBUS_RESTP:
-                // Request emergency stop all
-                // Get set of handles for software controlled throttles and
-                // iterate over them setting the speed of each throttle to 0
-                log.debug("Request emergency stop all");
-                Set<Integer> handles = softThrottles.keySet();
-                Iterator<Integer> itr = handles.iterator();
-                while (itr.hasNext()) {
-                    CbusThrottle throttle = softThrottles.get(itr.next());
-                    throttle.setSpeedSetting(0.0F);
-                }
+                stopAll();
                 break;
 
             default:

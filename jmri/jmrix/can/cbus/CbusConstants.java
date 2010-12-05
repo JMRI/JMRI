@@ -8,7 +8,7 @@ package jmri.jmrix.can.cbus;
  * Description:		Constants to represent CBUS protocol
  *
  * @author		Andrew Crosland   Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public final class CbusConstants {
     /**
@@ -23,6 +23,9 @@ public final class CbusConstants {
     /**
      * CBUS Opcodes
      */
+    // Opcodes with no data
+    public static final int CBUS_HLT = 0x02;
+    public static final int CBUS_BON = 0x03;
     public static final int CBUS_TOF = 0x04;
     public static final int CBUS_TON = 0x05;
     public static final int CBUS_ESTOP = 0x06;
@@ -31,19 +34,36 @@ public final class CbusConstants {
     public static final int CBUS_RTON = 0x09;
     public static final int CBUS_RESTP = 0x0A;
 
+    public static final int CBUS_RDPAR = 0x10;
+
+    // Opcodes with 1 data
     public static final int CBUS_KLOC = 0x21;
 
+    // Opcodes with 2 data
     public static final int CBUS_RLOC = 0x40;
+    public static final int CBUS_SNN = 0x42;
     public static final int CBUS_STMOD = 0x44;
     public static final int CBUS_PCON = 0x45;
     public static final int CBUS_DSPD = 0x47;
     public static final int CBUS_SSTAT = 0x4C;
 
+    public static final int CBUS_NNACK = 0x50;
+    public static final int CBUS_NNREL = 0x51;
+    public static final int CBUS_NNREF = 0x52;
+    public static final int CBUS_NNLRN = 0x53;
+    public static final int CBUS_NNULN = 0x54;
+    public static final int CBUS_NNCLR = 0x55;
+    public static final int CBUS_NNEVN = 0x56;
     public static final int CBUS_BOOT = 0x5C;
 
+    // Opcodes with 3 data
     public static final int CBUS_DFUN = 0x60;
     public static final int CBUS_ERR = 0x63;
 
+    public static final int CBUS_ENNLF = 0x70;
+    public static final int CBUS_NVRD = 0x71;
+
+    // Opcodes with 4 data
     public static final int CBUS_RDCC3 = 0x80;
     public static final int CBUS_WCVO = 0x82;
     public static final int CBUS_WCVB = 0x83;
@@ -53,17 +73,28 @@ public final class CbusConstants {
     public static final int CBUS_ACON = 0x90;
     public static final int CBUS_ACOF = 0x91;
     public static final int CBUS_AREQ = 0x92;
-    
+
+    public static final int CBUS_EVRD = 0x94;
+    public static final int CBUS_EVULN = 0x95;
+    public static final int CBUS_NVSET = 0x96;
+    public static final int CBUS_NVANS = 0x97;
+
     public static final int CBUS_ASON = 0x98;
     public static final int CBUS_ASOF = 0x99;
-    
+
+    // OPcodes with 5 data
     public static final int CBUS_WCVS = 0xA2;
 
     public static final int CBUS_ACON1 = 0xB0;
     public static final int CBUS_ACOF1 = 0xB1;
 
+    // Opcodes with 6 data
     public static final int CBUS_WCVOA = 0xC1;
-    
+
+    public static final int CBUS_EVLRN = 0xD2;
+    public static final int CBUS_EVANS = 0xD3;
+
+    // Opcodes with 7 data
     public static final int CBUS_PLOC = 0xE1;
 
     /**
