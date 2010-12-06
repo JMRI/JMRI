@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -254,7 +254,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		} else {
 			enableButtons(false);
 		}
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
 		updateRoadNames();
 		updateLoadComboBoxes();
 		updateLoadNames();

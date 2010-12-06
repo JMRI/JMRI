@@ -31,7 +31,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version             $Revision: 1.13 $
+ * @version             $Revision: 1.14 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -143,7 +143,7 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
         // add help menu to window
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarLoads", true);
 		
     	pack();
     	if ((getWidth()<200)) 

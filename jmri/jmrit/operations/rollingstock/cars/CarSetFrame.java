@@ -21,7 +21,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -41,7 +41,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		super.initComponents();
 
 		// build menu
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsSet", true);
 		
 		// Only show returnWhenEmpty and nextDestination if routing enabled
 		pOptionalrwe.setVisible(Setup.isCarRoutingEnabled());

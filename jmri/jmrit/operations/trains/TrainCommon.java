@@ -174,7 +174,7 @@ public class TrainCommon {
 			return rs.getComment() +" ";
 		else if (attribute.equals(Setup.NONE))
 			return "";
-		return "error";		
+		return "error ";		
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

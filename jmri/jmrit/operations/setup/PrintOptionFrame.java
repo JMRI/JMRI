@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -87,7 +87,9 @@ public class PrintOptionFrame extends OperationsFrame{
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
 		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
-			
+		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
+		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));
+		
 		// Manifest panel
 		getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 		JPanel pManifest = new JPanel();
@@ -249,7 +251,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		setBuildReportRadioButton();
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true);
 
 		pack();
 		//setSize(getWidth(), getHeight()+55);	// pad out a bit

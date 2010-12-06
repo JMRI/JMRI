@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -294,7 +294,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 //		JMenu toolMenu = new JMenu("Tools");
 //		menuBar.add(toolMenu);
 //		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_CarsEdit", true);
 
 		//	 get notified if combo box gets modified
 		CarRoads.instance().addPropertyChangeListener(this);

@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -175,7 +175,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new SetTrainIconRouteAction(rb.getString("MenuSetTrainIconRoute"), routeName));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Routes", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_EditRoute", true);
 
 		//	 get notified if combo box gets modified
 		LocationManager.instance().addPropertyChangeListener(this);

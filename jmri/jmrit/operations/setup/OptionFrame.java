@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of setup options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -135,7 +135,7 @@ public class OptionFrame extends OperationsFrame{
 		setBuildOption();
 
 		//	build menu		
-		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true);
+		addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true);
 
 		pack();
 		setSize(getWidth(), getHeight()+25);	// pad out a bit

@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame {
 	
@@ -149,7 +149,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
 		setJMenuBar(menuBar);
     
         // add help menu to window
-    	addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
+    	addHelpMenu("package.jmri.jmrit.operations.Operations_Timetable", true);
     		
     	pack();
     	
