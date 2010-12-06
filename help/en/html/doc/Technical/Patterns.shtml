@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Patterns.shtml,v 1.1 2010-03-11 03:28:39 jacobsen Exp $ -->
+<!-- $Id: Patterns.shtml,v 1.2 2010-12-06 08:19:07 jacobsen Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -41,7 +41,7 @@ structure and patterns by looking at the older code.
 This page attempts to describe the recommended structure and patterns,
 and point to examples of current best practices.
 
-
+<h2>Code Organization</h2>
 <p>
 At the highest level, we separate test code from 
 distributed code by putting them in separate directories
@@ -56,12 +56,28 @@ Within the source code itself, we separate out several types.
 <dt>The jmri package
 <dd>contains the basic interfaces for the system.
     It should contain minimal implementation code, 
-    and no non-JMRI references.
+    and no non-JMRI references, esp. Swing code.
 
 <dt>The jmri.jmrix package
 <dd>contains all the code for connecting to 
     specific layout hardware.
 
+<dt>The jmri.managers and jmri.implementations packages
+<dd>These provide default implementations for managers
+    and other classes.  This moves code out of the primary
+    jmri package.  These should not reply on apps, jmri.jmrix
+    or jmri.jmrit.
+
+<dt>The jmri.util package
+<dd>Other common implementations of general use.
+    Should not depend on jmri.jmrit or jmri.jmrix packages.
+    The jmri.util.swing subpackage provides Swing 
+    utilities.
+
+<dt>Apps package
+<dd>For putting together an application, this can
+    depend on anything.
+    
 <dt>configurexml subdirectories
 <dd>These contain code for the
     <a href="XmlPersistance.shtml">XML configuration system</a>. 
@@ -86,12 +102,22 @@ Within the source code itself, we separate out several types.
     <a href="I8N.shtml">internationalization</a>.
     The are colocated with the code that references them,
     but we are moving to a new naming convention.
+    To reduce loading burden, we are moving to a 
+    pattern where the jmri.foo.FooBundle.properties
+    file is addressed via a static element in the
+    jmri.foo.FooBundle class, separate from the 
+    properties file itself.  This reduces loading
+    time a lot!
+    <p>
     Note that there are also a few 
     resource bundles that are used for other purposes,
     indicated in their header comments.
     
 </dl>
 
+The "checkdepends.csh" development tool script 
+is meant to check some for inadvertant dependencies,
+but we're far from clearing it.
 
 <!--#include virtual="/Footer" -->
 
