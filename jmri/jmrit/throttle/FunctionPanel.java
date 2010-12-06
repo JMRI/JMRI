@@ -406,7 +406,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	 * A KeyAdapter that listens for the keys that work the function buttons
 	 * 
 	 * @author glen
-	 * @version $Revision: 1.65 $
+	 * @version $Revision: 1.66 $
 	 */
 	class FunctionButtonKeyListener extends KeyAdapter {
 		private boolean keyReleased = true;
@@ -436,87 +436,20 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
 	}
 
 	// update the state of this panel if any of the properties change
-	// did not add f13 - f28 dboudreau, maybe I should have? 
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
-		if (e.getPropertyName().equals("F0")) {
+                for(int i=0;i<=28;i++) {
+		  if (e.getPropertyName().equals("F"+i)) {
 			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[0].setState(function);
-		} else if (e.getPropertyName().equals("F1")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[1].setState(function);
-		} else if (e.getPropertyName().equals("F2")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[2].setState(function);
-		} else if (e.getPropertyName().equals("F3")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[3].setState(function);
-		} else if (e.getPropertyName().equals("F4")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[4].setState(function);
-		} else if (e.getPropertyName().equals("F5")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[5].setState(function);
-		} else if (e.getPropertyName().equals("F6")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[6].setState(function);
-		} else if (e.getPropertyName().equals("F7")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[7].setState(function);
-		} else if (e.getPropertyName().equals("F8")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[8].setState(function);
-		} else if (e.getPropertyName().equals("F9")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[9].setState(function);
-		} else if (e.getPropertyName().equals("F10")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[10].setState(function);
-		} else if (e.getPropertyName().equals("F11")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[11].setState(function);
-		} else if (e.getPropertyName().equals("F12")) {
-			boolean function=((Boolean) e.getNewValue()).booleanValue();
-			functionButton[12].setState(function);
-		} else if (e.getPropertyName().equals("F0Momentary")) {
+			functionButton[i].setState(function);
+                        break; // stop the loop, only one function property 
+                               // will be matched.
+		  } else if (e.getPropertyName().equals("F"+i+"Momentary")) {
 			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[0].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F1Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[1].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F2Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[2].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F3Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[3].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F4Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[4].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F5Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[5].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F6Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[6].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F7Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[7].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F8Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[8].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F9Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[9].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F10Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[10].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F11Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[11].setIsLockable(lockable);
-		} else if (e.getPropertyName().equals("F12Momentary")) {
-			boolean lockable=!((Boolean) e.getNewValue()).booleanValue();
-			functionButton[12].setIsLockable(lockable);
-		}
+			functionButton[i].setIsLockable(lockable);
+                        break; // stop the loop, only one function property 
+                               // will be matched.
+		  }
+                }
 	}
 
 	/**
