@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2009 -->
-<!-- $Id: MultiConnectionUpdate.shtml,v 1.1 2010-03-11 05:42:58 jacobsen Exp $ -->
+<!-- $Id: MultiConnectionUpdate.shtml,v 1.2 2010-12-06 08:18:27 jacobsen Exp $ -->
 <title>JMRI: Multi-connection Update</title>
 
 <!-- Style -->
@@ -51,7 +51,7 @@ variables.
 Add all that stuff.
 
 
-<h2>For each connection method (e.g. each subdirectory)</h2>
+<h3>For each connection method (e.g. each subdirectory)</h3>
 
 <p>
 Edit the ConnectionConfig class to take
@@ -90,19 +90,33 @@ serial/network refactoring.
 Also, change this
 <code><pre>
     protected void getInstance() {
-        adapter = new LnHexFilePort();
+        adapter = LnHexFilePort.instance();
     }
 </pre></code>
 to this
 <code><pre>
     protected void getInstance() {
-        adapter = LnHexFilePort.instance();
+        adapter = new LnHexFilePort();
     }
 </pre></code>
 
+<h3>Managers and Beans</h3>
 
+For each manager and bean combination, you have to 
+update them to no longer use an instance() method
+to access the TrafficController.  Passing the 
+SystemConectionMemo in to the Manager at construction
+time is the recommended approach, then if need be 
+passing it through to the newly created Beans.
+That passes the prefix string, user name for tbe connection, etc.
 
-<h2>Menu</h2>
+<p>
+The manager must also use the system prefix instead of a 
+fixed, single system letter.  Using e.g. '.startsWith(getSystemPrefix()+"T")'
+is a good approach.  Don't just check that the name starts with the prefix because
+e.g. "L" and "L2" are not unambiguous then.
+
+<h3>Menu</h3>
 
 Create a swing subdirectory, if it doesn't exist already.
 <p>
@@ -124,6 +138,20 @@ the class; menu creation is automatic from now on.
 you also register the ComponentFactory)
 
 
+<h3>To keep startup actions working</h3>
+(We're going to refactor this code soon)
+
+<p>
+To keep things working, it's best to convert
+to JmriPane subclasses.  Temporarily, the
+system connection is then created
+via the use of internal classes, like
+jmri.jmrix.loconet.locomon.LocoMonPane$Default
+
+<p>
+This does require people to reset their preferences for startup
+actions, buttons, etc. We're not going to migrate those
+for them.
 
 
 
