@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.87 2010-11-24 05:19:40 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.88 2010-12-06 01:25:58 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -955,13 +955,14 @@ To edit a car's load, press the Load "Edit" button in the Edit Car window.
 <P>
 <img src="images/EditCarLoads.png">
 </P>
-
+<P>
 In addition to the Add, Delete, and Replace buttons and fields described above in
 the <A HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit
 car loads window allows you to set the load's priority. The default
 priority is low and you can change the priority to high for a given car
 type and load. High priority car loads are normally serviced before low priority.
 Useful if you need to get your reefer loaded with fruit to the market ASAP! 
+</P>
 
 <P>You can also provide optional messages for your operators based on
 the type of car and load. The messages can be useful if you have visible
@@ -1282,13 +1283,16 @@ railroad.
 Press "Save Train" to save your train. The program will create a file
 (OperationsTrainRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-trains is also created each time the "Save Train" button is pressed. <A
-	NAME="TrainOptions"></A>
+trains is also created each time the "Save Train" button is pressed. 
+
+<A NAME="TrainOptions"></A>
 <H3>Train Options</H3>
 
 You can optionally have a unique railroad name and logo for each train
 in your roster. Use the "Edit Train-&gt;Tools-&gt;Options" to enter your
-train's railroad name and logo. <A NAME="TrainRoadNames"></A>
+train's railroad name and logo. 
+
+<A NAME="TrainRoadNames"></A>
 <H3>Train Road Names</H3>
 
 You can control the road names that the train will service. Select under
@@ -1443,6 +1447,22 @@ of the various track statuses.</P>
 	</tr>
 </table>
 
+<A NAME="ModifyTrainsByCarType"></A>
+<H3>Modify Trains by Car Type</H3>
+
+This tool can be found under Trains->Tools. Use this tool to quickly
+modify the type of cars your trains will service. Very useful when
+adding a new car type to your roster. First select the car type you wish
+to modify. The window will then show which train can service that car
+type by selecting the checkboxes next to the appropriate train. Select
+or deselect the trains you want to service, and press the "Save" button
+to modify your trains. You can also copy how an existing car is serviced
+by your trains and apply those rules to another car. To make a car type
+behave like another, first select the car your would like to copy, then
+select the "copy" checkbox, the car type will now appear to the right of
+the checkbox, then select the type of car you want to modify, and press
+"Save" to have both car types serviced by the same trains. 
+
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
 
@@ -1468,11 +1488,11 @@ will appear. If you want to disable this feature deselect the checkbox
 <H3>Timetable</H3>
 
 The Timetable tool allows you to define which trains will run on any
-given day, and can be found under the Trains-&gt;Tools. For each day of the
-week, select which trains you want to build. Then select which day you
-want by selecting the appropriate radio button. Then press the "Apply"
-button to update the Trains build checkboxes. Use the "Save" button to
-store any changes you made to the timetable. <A
+given day, and can be found under the Trains-&gt;Tools. For each day of
+the week, select which trains you want to build. Then select which day
+you want by selecting the appropriate radio button. Then press the
+"Apply" button to update the Trains build checkboxes. Use the "Save"
+button to store any changes you made to the timetable. <A
 	NAME="TroubleShootingBuildingTrains"></A>
 <H2>Problems Building Trains</H2>
 
@@ -1490,17 +1510,18 @@ detail level.
 <H3>Reading the Build Report</H3>
 
 The program when building a train creates a build report and saves it to
-disk. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
-directory. The build report shows the steps the operations program goes
-through while building a train. The first page provides the route the
-train will travel and the number of car moves requested for each
-location. The report then shows the car type and engine types that the
-train will service. By reading the various comments in the report you
-can get an idea of steps the operations program goes through to build a
-train. When there's an issue that the operation's build can't resolve,
-the build will fail. To understand why a build failed, go to the last
-page of the build report and by working backwards from the last line,
-you should be able to understand why a train failed to build.
+disk. The text files can be found in the
+JMRI-&gt;operations-&gt;buildstatus directory. The build report shows
+the steps the operations program goes through while building a train.
+The first page provides the route the train will travel and the number
+of car moves requested for each location. The report then shows the car
+type and engine types that the train will service. By reading the
+various comments in the report you can get an idea of steps the
+operations program goes through to build a train. When there's an issue
+that the operation's build can't resolve, the build will fail. To
+understand why a build failed, go to the last page of the build report
+and by working backwards from the last line, you should be able to
+understand why a train failed to build.
 
 <H3>More Build Report Details</H3>
 
@@ -1535,9 +1556,9 @@ requested for a location is met, the next location in the route is
 processed. This continues until all locations in a train's route have
 been processed.</P>
 
-<P>Sometimes reading the build report can get tedious.  If you want to 
-use a text editor to search the report, the build reports can be found in 
-the directory JMRI-&gt;operations-&gt;buildstatus.</P>
+<P>Sometimes reading the build report can get tedious. If you want
+to use a text editor to search the report, the build reports can be
+found in the directory JMRI-&gt;operations-&gt;buildstatus.</P>
 
 <H3>Printing Manifests</H3>
 
@@ -1548,8 +1569,8 @@ Pressing the "Print" button will print the manifest for that train.
 Pressing the "Preview" button will produce a window in which you can
 review the manifest. If you want to print manifests for several trains,
 select the trains you want in the build column and then press the
-"Print" or "Preview" button found at the bottom of the trains window. The
-program will then print or preview manifests for all of the selected
+"Print" or "Preview" button found at the bottom of the trains window.
+The program will then print or preview manifests for all of the selected
 trains.
 
 <P><img src="images/Manifest.png"></P>
@@ -1602,9 +1623,10 @@ associated with the train will be picked up and delivered to the
 locations shown in the train manifest. After terminating a train the
 engines and cars associated with that train become available for other
 trains. Therefore you should terminate a train only after it actually
-arrives at the final destination in the train's route. To terminate several
-trains, select the trains you wish to terminate in the build column and
-press the "Terminate" button at the bottom of the Trains window.
+arrives at the final destination in the train's route. To terminate
+several trains, select the trains you wish to terminate in the build
+column and press the "Terminate" button at the bottom of the Trains
+window.
 
 <H3>Save Builds</H3>
 
@@ -1663,12 +1685,12 @@ following operation windows:
 	<li>Timetable</li>
 </ul>
 
-<P>The program also allows you to resize the Cars, Engines, Trains and Timetable
-table column widths. Adjust the column widths to your liking and then
-press the window's "Save" or "Save Builds" to save your preferences.</P>
+<P>The program also allows you to resize the Cars, Engines, Trains
+and Timetable table column widths. Adjust the column widths to your
+liking and then press the window's "Save" or "Save Builds" to save your
+preferences.</P>
 
-<P>The end of operations help.</P>
-</DIV>
+<P>The end of operations help.</P></DIV>
 <!-- closes #mainContent--></DIV>
 <!-- closes #mBody-->
 </BODY>
