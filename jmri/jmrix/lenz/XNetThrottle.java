@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.39 $
+ * @version    $Revision: 2.40 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -503,8 +503,8 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
                    /* handle information response about F13-F28 Momentary 
                       Status*/
                    if(log.isDebugEnabled()) {log.debug("Throttle - message is LOCO_FUNCTION_STATUS_HIGH_MOM"); }
-                   int b3=l.getElement(3);
-                   int b4=l.getElement(4);
+                   int b3=l.getElement(2);
+                   int b4=l.getElement(3);
                    parseFunctionHighMomentaryInformation(b3,b4);
                    //We've processed this request, so set the status to Idle.
                    requestState=THROTTLEIDLE;
