@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster2array.xsl,v 1.1 2010-02-23 09:07:21 hebbos Exp $ -->
+<!-- $Id: roster2array.xsl,v 1.2 2010-12-06 20:51:51 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -37,13 +37,14 @@
 <html>
 	<head>
 		<title>JMRI Roster File</title>
+		<link rel="stylesheet" href="/web/inControl/inControl.css" type="text/css"/>
+		<script type="text/javascript" src="/web/roster.js"> </script>
 	</head>
 	
 	<body>
 		<h2>JMRI Roster File</h2>
 		<table border="1">
-				<th>ID</th>
-				<th>Icon</th>
+				<th>Icon &amp; ID</th>
 				<th>Road Number</th>
 				<th>Road Name</th>
 				<th>Manufacturer</th>
@@ -57,10 +58,13 @@
 			<xsl:apply-templates/>
 		</table>
 	<hr/>
-	This page produced by the 
-	<A HREF="http://jmri.sf.net">JMRI project</A>.
+	This page was produced by 
+	<A href="http://jmri.sf.net">
+		<IMG src="http://jmri.sourceforge.net/images/logo-jmri.gif" height="31" border="0" alt="JMRI project"/>
+	</A>
 	<A href="http://sourceforge.net"> 
-	<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/> </A>
+		<IMG src="http://sourceforge.net/sflogo.php?group_id=26788&amp;type=1" width="88" height="31" border="0" alt="SourceForge Logo"/>
+	</A>
 
 	</body>
 </html>
@@ -70,12 +74,15 @@
 <!-- Display each roster entry -->
 <xsl:template match="roster/locomotive">
 <tr>
-<td><xsl:value-of select="@id"/></td>
 <td>
-<xsl:element name="img">
-  <xsl:attribute name="src">resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
-  <xsl:attribute name="height">20</xsl:attribute>
-  <xsl:attribute name="alt">No icon</xsl:attribute>
+<xsl:element name="button">
+	<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress'/>" , "<xsl:value-of select='@id'/>", "/prefs/resources/"+"<xsl:value-of select='@iconFilePath'/>"); </xsl:attribute>
+	<xsl:element name="img">
+	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
+  		<xsl:attribute name="height">20</xsl:attribute>
+  		<xsl:attribute name="alt"></xsl:attribute>
+	</xsl:element>
+	<xsl:value-of select="@id"/>
 </xsl:element>
 </td>
 <td><xsl:value-of select="@roadNumber"/></td>
