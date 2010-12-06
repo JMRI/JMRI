@@ -43,7 +43,7 @@ import org.jdom.ProcessingInstruction;
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008, 2010
  * @author  Dennis Miller Copyright 2004
- * @version	$Revision: 1.59 $
+ * @version	$Revision: 1.60 $
  * @see         jmri.jmrit.roster.RosterEntry
  */
 public class Roster extends XmlFile {
@@ -372,7 +372,7 @@ public class Roster extends XmlFile {
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
         java.util.Map<String, String> m = new java.util.HashMap<String, String>();
         m.put("type", "text/xsl");
-        m.put("href", xsltLocation+"roster.xsl");
+        m.put("href", xsltLocation+"roster2array.xsl");
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m);
         doc.addContent(0,p);
         
