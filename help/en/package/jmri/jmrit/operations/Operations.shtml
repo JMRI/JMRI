@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.88 2010-12-06 01:25:58 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.89 2010-12-07 03:25:44 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -110,7 +110,7 @@ don't modify the route in any way, just use the "Add Location" button.</P>
 <P>Now you're ready to create your first <A HREF="#Trains">train</A>.
 Be sure to select the route you created for your first train. Leave all
 of the train checkboxes alone which means the train will service all car and
-engine types. Leave the "Train Requires" engines or caboose area alone for
+engine types. Leave the "Option train requirements" for engines and caboose area alone for
 now. Save the train, close the window, and return to the Trains window.
 Press the <A HREF="#BuildingTrains">Build</A> button for the train. It
 should build. Now pressing the "Print" or "Preview" button will produce a
@@ -149,7 +149,7 @@ will fail.</P>
 <P>If you want a caboose or car with FRED for your train, first
 configure some of your cars to be a caboose by selecting the caboose or
 FRED <A HREF="#CabooseFredHazardous">checkbox</A> in the Edit Car
-window. Now change the train requires radio button to Caboose or FRED.
+window. Now change the Optional train requirements radio button to Caboose or FRED.
 Be sure that the last location on your trains route has a track that
 will accept the caboose car or the train will not build properly.</P>
 
@@ -697,8 +697,8 @@ of engines, engine model, or road name; the program will search all
 staging tracks at the departure location for a train meeting those
 requirements. If you set the engine requirements to 0, the program will
 select the next available train from staging; and will ignore the number
-of engines leaving that staging track. See <A HREF="#TrainRequires">Train
-Requires</A> for more info.</P>
+of engines leaving that staging track. See <A HREF="#TrainRequires">Optional Train
+Requirements</A> for more info.</P>
 
 <H3>Looping Trains through Staging</H3>
 
@@ -1255,7 +1255,7 @@ You can determine what type of cars and engines the train will service.
 Select the rolling stock the train will carry by clicking on the
 appropriate checkboxes. A checked box means the train will service this
 type of rolling stock. <A NAME="TrainRequires"></A>
-<H3>Train Requires</H3>
+<H3>Optional Train Requirements</H3>
 
 You can control the number of engines that will be assigned to this
 train, and optionally, the engine's model and road name. If you want two
