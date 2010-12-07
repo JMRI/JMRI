@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 import java.awt.BorderLayout;
@@ -202,6 +202,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     
     protected final PortalTableModel getPortalModel() {
         return _portalModel;
+    }
+    
+    protected final SignalTableModel getSignalModel() {
+        return _signalModel;
     }
     
     protected final BlockPortalTableModel getXRefModel() {

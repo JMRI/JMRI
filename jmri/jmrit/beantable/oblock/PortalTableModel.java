@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 import java.util.ArrayList;
@@ -393,6 +393,7 @@ public void propertyChange(PropertyChangeEvent e) {
             makeList();
             fireTableDataChanged();
         }
+        _parent.getSignalModel().propertyChange(e);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PortalTableModel.class.getName());
