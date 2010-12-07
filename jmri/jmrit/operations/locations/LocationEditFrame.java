@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -559,12 +559,16 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			} else {
 				checkBox.setEnabled(false);
 			}
-			// seven types per row
-			if (x > 6){
+			// default is seven types per row
+			if (x > getNumberOfCheckboxes()){
 				y++;
 				x = 0;
 			}
 		}
+	}
+	
+	private int getNumberOfCheckboxes(){
+		return getNumberOfCheckboxes(manager.getLocationEditFrameSize());
 	}
 	
 	/**

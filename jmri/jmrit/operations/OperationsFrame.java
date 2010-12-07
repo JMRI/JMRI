@@ -2,6 +2,7 @@
 
 package jmri.jmrit.operations;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.util.ResourceBundle;
 
@@ -13,12 +14,14 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
 
+import jmri.jmrit.operations.setup.Control;
+
 
 /**
  * Frame for operations
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class OperationsFrame extends jmri.util.JmriJFrame {
@@ -91,7 +94,25 @@ public class OperationsFrame extends jmri.util.JmriJFrame {
 		gc.anchor = GridBagConstraints.WEST;
 		p.add(c, gc);
 	}
-	
+
+	private final int minCheckboxes = 6;
+	private final int maxCheckboxes = 11;
+	/**
+	 * Gets the number of checkboxes(+1) that can fix in one row
+	 * @param size window size
+	 * @return the number of checkboxes, minimum is 6 (7 checkboxes)
+	 */
+	protected int getNumberOfCheckboxes(Dimension size){
+		if (size== null)
+			return minCheckboxes;	// default is 7 checkboxes per row
+		int number = size.width/(10*Control.MAX_LEN_STRING_ATTRIBUTE);
+		if (number < minCheckboxes)
+			number = minCheckboxes;
+		if (number > maxCheckboxes)
+			number = maxCheckboxes;
+		return number;
+	}
+
 	protected void addButtonAction(JButton b) {
 		b.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent e) {

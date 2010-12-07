@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.27 $
+ * @version             $Revision: 1.28 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -41,7 +41,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 	javax.swing.JComboBox comboBox;
 	
 	// text box
-	javax.swing.JTextField addTextBox = new javax.swing.JTextField(10);
+	javax.swing.JTextField addTextBox = new javax.swing.JTextField(Control.MAX_LEN_STRING_ATTRIBUTE);
 	
 	// property change
 	public static final String DISPOSE = "dispose" ;

@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.30 $
+ * @version             $Revision: 1.31 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -52,7 +52,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	JComboBox comboBox;
 	
 	// text box
-	JTextField addTextBox = new JTextField(10);
+	JTextField addTextBox = new JTextField(Control.MAX_LEN_STRING_ATTRIBUTE);
 	
 	// property change
 	public static final String DISPOSE = "dispose" ;

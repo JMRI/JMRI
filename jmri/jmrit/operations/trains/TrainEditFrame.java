@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -146,9 +146,11 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
     	locationsPane = new JScrollPane(locationPanelCheckBoxes);
     	locationsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	locationsPane.setBorder(BorderFactory.createTitledBorder(rb.getString("Stops")));
+    	/*
       	roadPane = new JScrollPane(panelRoadNames);
     	roadPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     	roadPane.setBorder(BorderFactory.createTitledBorder(rb.getString("RoadsTrain")));
+    	*/
        	typeCarPane = new JScrollPane(typeCarPanelCheckBoxes);
        	typeCarPane.setBorder(BorderFactory.createTitledBorder(rb.getString("TypesCar")));
     	typeCarPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -236,10 +238,12 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 	   	typeCarPanelCheckBoxes.setLayout(new GridBagLayout());
 	   			
 		// row 7
+	   	/*
 		panelRoadNames.setLayout(new GridBagLayout());
 		roadGroup.add(roadNameAll);
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
+		*/
 		
 		// row 8
 		typeEnginePanelCheckBoxes.setLayout(new GridBagLayout());
@@ -791,7 +795,7 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeCarPanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > 6){
+			if (x > getNumberOfCheckboxes()){
 				y++;
 				x = 0;
 			}
@@ -821,11 +825,15 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			addItemLeft(typeEnginePanelCheckBoxes, checkBox, x++, y);
 			if(_train != null && _train.acceptsTypeName(types[i]))
 				checkBox.setSelected(true);
-			if (x > 6){
+			if (x > getNumberOfCheckboxes()){
 				y++;
 				x = 0;
 			}
 		}
+	}
+
+	private int getNumberOfCheckboxes(){
+		return getNumberOfCheckboxes(manager.getTrainEditFrameSize());
 	}
 	
 	// there are three road combo boxes to update
