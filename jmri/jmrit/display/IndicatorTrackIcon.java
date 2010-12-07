@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -351,11 +351,9 @@ public class IndicatorTrackIcon extends PositionableLabel
         return true;
     }
 
-    jmri.util.JmriJFrame _paletteFrame;
     IndicatorItemPanel _trackPanel;
     protected void editItem() {
-        if (log.isDebugEnabled()) log.debug("edit: ");
-        _paletteFrame = new jmri.util.JmriJFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _editor);
         _trackPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {

@@ -36,7 +36,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -419,7 +419,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     IndicatorTOItemPanel _TOPanel;
     protected void editItem() {
-        if (log.isDebugEnabled()) log.debug("edit: ");
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO",
                                        PickListModel.turnoutPickModelInstance(), _editor);
