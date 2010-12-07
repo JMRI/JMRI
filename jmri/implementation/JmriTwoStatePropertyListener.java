@@ -33,8 +33,8 @@ public class JmriTwoStatePropertyListener extends JmriSimplePropertyListener
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
-        log.debug("\""+_varName+"\" sent PropertyChangeEvent "+evt.getPropertyName()+
-            ", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
+        if (log.isDebugEnabled()) log.debug("\""+_varName+"\" sent PropertyChangeEvent \""+evt.getPropertyName()+
+            "\", old value =\""+evt.getOldValue()+"\", new value =\""+evt.getNewValue()+
             ", enabled = "+_enabled);
         if ( getPropertyName().equals(evt.getPropertyName()) ) {
             super.propertyChange(evt);

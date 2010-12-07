@@ -9,7 +9,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -357,27 +357,27 @@ public class DefaultLogix extends AbstractNamedBean
                     if (positionOfListener == -1) {
                         switch (varListenerType) {
                             case LISTENER_TYPE_SENSOR:
-                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_SENSOR, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_TURNOUT:
-                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_TURNOUT, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_CONDITIONAL:
-                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_CONDITIONAL, 
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_LIGHT:
-                                listener = new JmriSimplePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
+                                listener = new JmriTwoStatePropertyListener("KnownState", LISTENER_TYPE_LIGHT,
                                                                     varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_MEMORY:
-                                listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_MEMORY, 
+                                listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY, 
                                                                           varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_WARRANT:
-                                listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_WARRANT, 
+                                listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_WARRANT, 
                                                                           varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_FASTCLOCK:
@@ -388,10 +388,10 @@ public class DefaultLogix extends AbstractNamedBean
                             case LISTENER_TYPE_SIGNALHEAD:
                                 if (signalAspect <0) {
                                     if (varType == Conditional.TYPE_SIGNAL_HEAD_LIT) {
-                                        listener = new JmriSimplePropertyListener("Lit", LISTENER_TYPE_SIGNALHEAD,
+                                        listener = new JmriTwoStatePropertyListener("Lit", LISTENER_TYPE_SIGNALHEAD,
                                                                             varName, varType, conditional);
                                     } else { // varType == Conditional.TYPE_SIGNAL_HEAD_HELD
-                                        listener = new JmriSimplePropertyListener("Held", LISTENER_TYPE_SIGNALHEAD,
+                                        listener = new JmriTwoStatePropertyListener("Held", LISTENER_TYPE_SIGNALHEAD,
                                                                             varName, varType, conditional);
                                     }
                                 } else {
@@ -400,7 +400,7 @@ public class DefaultLogix extends AbstractNamedBean
                                 }
                                 break;
                             case LISTENER_TYPE_SIGNALMAST:
-                                listener = new JmriSimplePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,
+                                listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,
                                                                     varName, varType, conditional);
                                 break;
                             default:
@@ -456,7 +456,7 @@ public class DefaultLogix extends AbstractNamedBean
                         positionOfListener = getPositionOfListener(varListenerType, varType,
                                                                        variable.getDataString());
                         if (positionOfListener == -1) {
-                            listener = new JmriSimplePropertyListener("value", LISTENER_TYPE_MEMORY, 
+                            listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_MEMORY, 
                                                                       variable.getDataString(), varType,
                                                                       conditional);
                             _listeners.add(listener);
