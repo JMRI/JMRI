@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.82 $
+ * @version $Revision: 1.83 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -247,59 +247,22 @@ public class LogixTableAction extends AbstractTableAction {
 	// set title for Logix table
 	protected void setTitle() {
 		f.setTitle(f.rb.getString("TitleLogixTable"));
-
-        //addToFrame(f);
-        //setMenuBar(f);
-        
 	}
-    
+/*    
     public void addToFrame(BeanTableFrame f) {
         // Hack into Logix frame to add my junk. (pwc)
-        _devNameField = new JTextField(30);
-        JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint");
-        JButton referenceButton = new JButton(rbx.getString("ReferenceButton"));
-        panel.add(referenceButton);
-        referenceButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                deviceReportPressed(e);
-            }
-        });
-        panel.add(referenceButton);
-        panel.setVisible(true);
-        f.addToBottomBox(panel, this.getClass().getName());
-        JButton orphanButton = new JButton(rbx.getString("OrphanButton"));
-        orphanButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                findOrphansPressed(e);
-            }
-        });
-        f.addToBottomBox(orphanButton, this.getClass().getName());
-        JButton emptyButton = new JButton(rbx.getString("EmptyButton"));
-        emptyButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                findEmptyPressed(e);
-            }
-        });
-        f.addToBottomBox(emptyButton, this.getClass().getName());
-    
+        f.addToBottomBox(extraPanel, this.getClass().getName());
     }
     
-    public void setMenuBar(BeanTableFrame f){
+*/    public void setMenuBar(BeanTableFrame f){
         JMenu menu = new JMenu(rbx.getString("OptionsMenu"));
         menu.setMnemonic(KeyEvent.VK_O);
-
-        menu.addSeparator();
-        JMenuItem item = new JMenuItem(rbx.getString("OpenPickListTables"));
-        item.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                OpenPickListTable();
-            }
-        });
-        menu.add(item);
+        javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        /*
         if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
             _suppressReminder = InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                                getPreferenceState("beantable.LRouteTableAction.remindRoute");
-
+        */
         ButtonGroup enableButtonGroup = new ButtonGroup();
         JRadioButtonMenuItem r = new JRadioButtonMenuItem(rbx.getString("EnableAll"));
         r.addActionListener(new ActionListener() {
@@ -314,8 +277,48 @@ public class LogixTableAction extends AbstractTableAction {
         });
         enableButtonGroup.add(r);
         menu.add(r);
+        menuBar.add(menu);
         
-        javax.swing.JMenuBar menuBar = f.getJMenuBar();
+        menu = new JMenu(rbx.getString("ToolsMenu"));
+        menu.setMnemonic(KeyEvent.VK_T);
+
+        JMenuItem item = new JMenuItem(rbx.getString("OpenPickListTables"));
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                OpenPickListTable();
+            }
+        });
+        menu.add(item);
+
+        item = new JMenuItem(rbx.getString("FindOrphans"));
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                findOrphansPressed(e);
+            }
+        });
+        menu.add(item);
+
+        item = new JMenuItem(rbx.getString("EmptyConditionals"));
+        item.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                findEmptyPressed(e);
+            }
+        });
+        menu.add(item);
+
+        item = new JMenuItem(rbx.getString("CrossReference"));
+        item.addActionListener(new ActionListener() {
+                BeanTableFrame parent;
+            public void actionPerformed(ActionEvent e) {
+                new RefDialog(parent);
+            }
+
+            ActionListener init(BeanTableFrame f) {
+                parent = f;
+                return this;
+            }
+        }.init(f));
+        menu.add(item);
         menuBar.add(menu);
     }
 
@@ -326,6 +329,46 @@ public class LogixTableAction extends AbstractTableAction {
             _pickTables.setVisible(true);
         }
         _pickTables.toFront();
+    }
+
+    void findEmptyPressed(ActionEvent e) {
+        Maintenance.findEmptyPressed(f);
+    }
+
+    void findOrphansPressed(ActionEvent e) {
+        Maintenance.findOrphansPressed(f);
+    }
+
+    class RefDialog extends JDialog {
+        JTextField _devNameField;
+        java.awt.Frame _parent;
+
+        RefDialog(java.awt.Frame frame) {
+            super(frame, rbx.getString("CrossReference"), true);
+            _parent = frame;
+            JPanel extraPanel = new JPanel();
+            extraPanel.setLayout(new BoxLayout(extraPanel, BoxLayout.Y_AXIS));
+            _devNameField = new JTextField(30);
+            JPanel panel = makeEditPanel(_devNameField, "ElementName", "ElementNameHint");
+            JButton referenceButton = new JButton(rbx.getString("ReferenceButton"));
+            panel.add(referenceButton);
+            referenceButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    deviceReportPressed(e);
+                }
+            });
+            panel.add(referenceButton);
+            extraPanel.add(panel);
+            setContentPane(extraPanel);
+            pack();
+//            setLocationRelativeTo((java.awt.Component)_pos);
+            setVisible(true);
+        }
+
+        void deviceReportPressed(ActionEvent e) {
+            Maintenance.deviceReportPressed(_devNameField.getText(), _parent);
+            dispose();
+        }
     }
 
     void enableAll(boolean enable) {
@@ -364,7 +407,6 @@ public class LogixTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
     JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
-    JTextField _devNameField;
     jmri.UserPreferencesManager pref;
     String systemNameAuto = this.getClass().getName()+".AutoSystemName";
     JButton create;
@@ -475,18 +517,6 @@ public class LogixTableAction extends AbstractTableAction {
     private int _curActionRowNumber;
 
     static final int STRUT = 10;
-
-    void findEmptyPressed(ActionEvent e) {
-        Maintenance.findEmptyPressed(f);
-    }
-
-    void findOrphansPressed(ActionEvent e) {
-        Maintenance.findOrphansPressed(f);
-    }
-
-    void deviceReportPressed(ActionEvent e) {
-        Maintenance.deviceReportPressed(_devNameField.getText(), f);
-    }
 
 	// *********** Methods for Add Logix Window ********************
 
@@ -1388,7 +1418,7 @@ public class LogixTableAction extends AbstractTableAction {
                         javax.swing.JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-        } else return false;
+        } // else return false;
         return true;
     }
     boolean checkConditionalSystemName(String sName) {
@@ -1835,29 +1865,6 @@ public class LogixTableAction extends AbstractTableAction {
 		if (alreadyEditingActionOrVariable()) {
             return;
 		}
-
-        Conditional c = _curConditional;
-        if (_curLogix.getSystemName().equals(SensorGroupFrame.logixSysName)) {
-            javax.swing.JOptionPane.showMessageDialog(
-                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
-                                new Object[] {SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName})+
-                                java.text.MessageFormat.format(rbx.getString("Warn11"),
-                                new Object[] {c.getUserName(), c.getSystemName() }), rbx .getString("WarnTitle"),
-                    javax.swing.JOptionPane.WARNING_MESSAGE);
-            cancelConditionalPressed(null);
-            return;
-        }
-        // Check if the User Name has been changed
-        String uName = conditionalUserName.getText().trim();
-        if (!(uName.equals(c.getUserName()))) {
-            // user name has changed - check if already in use
-            if (!checkConditionalUserName(uName, _curLogix)) {
-                return;
-            }
-            // user name is unique or blank, change it
-            c.setUserName(uName);
-            conditionalTableModel.fireTableDataChanged();
-        }
         // clean up empty variable and actions
         for (int i=0; i<_variableList.size(); i++) {
             if (_variableList.get(i).getType() == Conditional.TYPE_NONE) {
@@ -1871,11 +1878,41 @@ public class LogixTableAction extends AbstractTableAction {
                 _actionTableModel.fireTableRowsDeleted(i, i);
             }
         }
+
+        if (_variableList.size() <= 0 && _actionList.size() <= 0) {
+            deleteConditionalPressed(null);
+            return;
+        }
+      /*  if (_curConditional==null) {
+            return;
+        } */
+        if (_curLogix.getSystemName().equals(SensorGroupFrame.logixSysName)) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Warn8"),
+                        new Object[] {SensorGroupFrame.logixUserName, SensorGroupFrame.logixSysName})+
+                        java.text.MessageFormat.format(rbx.getString("Warn11"),
+                        new Object[] {_curConditional.getUserName(), _curConditional.getSystemName() }), 
+                        rbx .getString("WarnTitle"),
+                    javax.swing.JOptionPane.WARNING_MESSAGE);
+            cancelConditionalPressed(null);
+            return;
+        }
+        // Check if the User Name has been changed
+        String uName = conditionalUserName.getText().trim();
+        if (uName!=null && !(uName.equals(_curConditional.getUserName()))) {
+            // user name has changed - check if already in use
+            if (!checkConditionalUserName(uName, _curLogix)) {
+                return;
+            }
+            // user name is unique or blank, change it
+            _curConditional.setUserName(uName);
+            conditionalTableModel.fireTableDataChanged();
+        }
         if (_variableList.size() <= 0 && !_suppressReminder) {
             javax.swing.JOptionPane.showMessageDialog(editLogixFrame,
                     java.text.MessageFormat.format(rbx.getString("Warn5"),
-                            new Object[] { c.getUserName(), c.getSystemName() }), rbx
-                            .getString("WarnTitle"),
+                            new Object[] {_curConditional.getUserName(), _curConditional.getSystemName() }),
+                             rbx.getString("WarnTitle"),
                     javax.swing.JOptionPane.WARNING_MESSAGE);
         }
 
