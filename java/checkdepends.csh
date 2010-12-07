@@ -7,12 +7,11 @@
 # OK checks
 
 echo '==== The apps package should not be referenced in the main jmri directory ===='
-grep 'apps\.' src/jmri/*
+grep 'apps\.' src/jmri/*.java
 echo
 
-# next should really check for whitespace not just one blank,
 echo '==== The jmri package should not refer to lower jmri.* packages ===='
-grep 'import\[:punct:\]*jmri' src/jmri/*
+grep 'jmri\.[a-z]' src/jmri/*.java
 echo
 
 echo '==== No Swing in base interfaces ===='
