@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.109 $
+ * @version             $Revision: 1.110 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -185,7 +185,7 @@ public class TrainBuilder extends TrainCommon{
 	    		sbuf = sbuf.append(roads[i]+", ");
 	    	}	       	
 	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2);	// remove trailing separators
-	    	addLine(buildReport, FIVE, "Train ("+train.getName()+") "+train.getRoadOption()+" roads: "+sbuf.toString());
+	    	addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainRoads"),new Object[]{train.getName(), train.getRoadOption(), sbuf.toString()}));
 		}
 		// show load names that this train will service
 		if (!train.getLoadOption().equals(Train.ALLLOADS)){
@@ -195,7 +195,7 @@ public class TrainBuilder extends TrainCommon{
 	    		sbuf = sbuf.append(loads[i]+", ");
 	    	}
 	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2); // remove trailing separators
-	    	addLine(buildReport, FIVE, "Train ("+train.getName()+") "+train.getLoadOption()+" loads: "+sbuf.toString());
+	    	addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainLoads"),new Object[]{train.getName(), train.getLoadOption(), sbuf.toString()}));
 		}
 		// show owner names that this train will service
 		if (!train.getOwnerOption().equals(Train.ALLOWNERS)){
@@ -205,13 +205,13 @@ public class TrainBuilder extends TrainCommon{
 	    		sbuf = sbuf.append(owners[i]+", ");
 	    	}
 	        if (sbuf.length() > 2) sbuf.setLength(sbuf.length()-2); // remove trailing separators
-	    	addLine(buildReport, FIVE, "Train ("+train.getName()+") "+train.getOwnerOption()+" owners: "+sbuf.toString());
+	    	addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainOwners"),new Object[]{train.getName(), train.getOwnerOption(), sbuf.toString()}));
 		}
 		// show built date serviced
 		if (!train.getBuiltStartYear().equals(""))
-			addLine(buildReport, FIVE, "Train ("+train.getName()+") will service rolling stock built after "+train.getBuiltStartYear());
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainBuiltAfter"),new Object[]{train.getName(),train.getBuiltStartYear()}));
 		if (!train.getBuiltEndYear().equals(""))
-			addLine(buildReport, FIVE, "Train ("+train.getName()+") will service rolling stock built before "+train.getBuiltEndYear());
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildTrainBuiltBefore"),new Object[]{train.getName(),train.getBuiltEndYear()}));
 		
 		// show engine info
 		if (train.getNumberEngines().equals(Train.AUTO)){
@@ -288,7 +288,7 @@ public class TrainBuilder extends TrainCommon{
 				}	
 				// try each departure track for the required engines
 				if (getEngines()){
-					addLine(buildReport, SEVEN, "Done assigning engines from staging");
+					addLine(buildReport, SEVEN, rb.getString("buildDoneAssignEnginesStaging"));
 					break;	// done!
 				} 
 				departStageTrack = null;
@@ -300,7 +300,7 @@ public class TrainBuilder extends TrainCommon{
 		} else {
 			// load engines for this train
 			if (getEngines()){
-				addLine(buildReport, SEVEN, "Done assigning engines to train ("+train.getName()+")");
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildDoneAssingEnginesTrain"),new Object[]{train.getName()}));
 			} else {
 				buildFailed(MessageFormat.format(rb.getString("buildErrorEngines"),new Object[]{reqNumEngines, train.getTrainDepartsName()}));
 				return; // there was a failure
@@ -366,7 +366,7 @@ public class TrainBuilder extends TrainCommon{
 		// get list of engines for this route		
 		engineList = engineManager.getAvailableTrainList(train);
 		// remove engines that are the wrong type, wrong track, wrong road name, or part of consist (not lead)
-		addLine(buildReport, SEVEN, "Begin search for engines");
+		addLine(buildReport, SEVEN, rb.getString("buildBegineSearchEngines"));
 		for (int indexEng=0; indexEng<engineList.size(); indexEng++){
 			Engine engine = engineManager.getById(engineList.get(indexEng));
 			// remove engines types that train does not service
@@ -468,6 +468,13 @@ public class TrainBuilder extends TrainCommon{
 		}
 		if (engineList.size() == 0 && reqNumEngines > 0)
 			return false;	// build error no engines available
+		// show how many engines were available
+		if (engineList.size()>0){
+			if (reqNumEngines > 1)
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildFoundConsists"),new Object[]{engineList.size()}));
+			else
+				addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildFoundEngines"),new Object[]{engineList.size()}));
+		}
 		return true;
 	}
 	
@@ -481,14 +488,6 @@ public class TrainBuilder extends TrainCommon{
 		// if not departing staging track and engines aren't required done!
 		if (departStageTrack == null && reqNumEngines == 0)
 			return true;
-		
-		// show how many engines were available
-		if (engineList.size()>0){
-			if (reqNumEngines > 1)
-				addLine(buildReport, THREE, "Found "+engineList.size()+" consist(s) for this train");
-			else
-				addLine(buildReport, THREE, "Found "+engineList.size()+" engine(s) for this train");
-		}
 			
 		// if leaving staging, use any number of engines if required number is 0
 		boolean leavingStaging = false;
@@ -511,7 +510,7 @@ public class TrainBuilder extends TrainCommon{
 
 			// now find terminal track for engine(s)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildEngineRoadModelType"),new Object[]{engine.toString(), engine.getRoad(), engine.getModel(), engine.getType()}));
-			addLine(buildReport, SEVEN, " at location ("+engine.getLocationName()+", "+engine.getTrackName()+")");
+			addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildAtLocation"),new Object[]{(engine.getLocationName()+", "+engine.getTrackName())}));
 			// is there a staging track?
 			if (terminateStageTrack != null){
 				String status = engine.testDestination(terminateLocation, terminateStageTrack);
@@ -607,7 +606,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildTrainRequires"),new Object[]{train.getName(), textRequires}));
 		} else {
-			addLine(buildReport, SEVEN, "Train does not require caboose or car with FRED");
+			addLine(buildReport, SEVEN, rb.getString("buildTrainNoCabooseOrFred"));
 		}
 		// now go through the car list and find a caboose or FRED if required
 		// first pass, try and find a caboose that matches the engine's road
@@ -619,7 +618,7 @@ public class TrainBuilder extends TrainCommon{
 					if (car.getDestination() == null || car.getDestination() == terminateLocation){
 						addLine(buildReport, ONE, MessageFormat.format(rb.getString("buildFoundCaboose"),new Object[]{car.toString()}));
 						// found a caboose with road that matches engine, now remove all other cabooses from list
-						addLine(buildReport, SEVEN, "Remove remaining cabooses");
+						addLine(buildReport, SEVEN, rb.getString("buildRemoveRemainingCabooses"));
 						for (int i=0; i<carList.size(); i++){
 							Car testCar = carManager.getById(carList.get(i));
 							if (testCar.isCaboose() && testCar != car){
@@ -702,7 +701,7 @@ public class TrainBuilder extends TrainCommon{
 							foundFred = true;
 						continue;
 					} else {
-						addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +c.getDestinationTrackName()+") due to "+status);
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), c.getDestinationTrackName(), status}));
 						carList.remove(carList.get(carIndex));		// remove this car from the list
 						carIndex--;
 					}
@@ -727,7 +726,7 @@ public class TrainBuilder extends TrainCommon{
 								foundFred = true;
 							break;
 						} 
-						addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +destTrack.getName()+") due to "+status);
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), destTrack.getName(), status}));
 					}
 					if ((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarNoDestination"),new Object[]{c.toString()}));
@@ -747,7 +746,7 @@ public class TrainBuilder extends TrainCommon{
 						if (carAdded && c.hasFred())
 							foundFred = true;
 					} else {
-						addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +terminateStageTrack.getName()+") due to "+status);
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), terminateStageTrack.getName(), status}));
 					}
 				} 
 				// remove caboose or FRED from list couldn't find a destination track
@@ -761,7 +760,7 @@ public class TrainBuilder extends TrainCommon{
 		// did we find a needed caboose or FRED?
 		if (requiresFred && !foundFred || requiresCaboose && !foundCaboose){
 			if (requiresCaboose)
-				addLine(buildReport, SEVEN, "NOTE! To make a car a caboose you must select the caboose check box in Edit Car");
+				addLine(buildReport, SEVEN, rb.getString("buildNoteCaboose"));
 			buildFailed(MessageFormat.format(rb.getString("buildErrorRequirements"),
 					new Object[]{train.getName(), textRequires, train.getTrainDepartsName(), train.getTrainTerminatesName()}));
 			return false;
@@ -784,7 +783,7 @@ public class TrainBuilder extends TrainCommon{
 		}
 
     	// remove cars that don't have a valid track, interchange, road, load, owner, or type for this train
-		addLine(buildReport, SEVEN, "Remove cars not serviced by this train");
+		addLine(buildReport, SEVEN, rb.getString("buildRemoveCars"));
 		for (carIndex=0; carIndex<carList.size(); carIndex++){
     		Car c = carManager.getById(carList.get(carIndex));
     		// remove cars that don't have a valid track
@@ -925,7 +924,7 @@ public class TrainBuilder extends TrainCommon{
 			if (carIndex < 500)
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarAtLocWithMoves"),new Object[]{c.toString(), (c.getLocationName()+ ", " +c.getTrackName()), c.getMoves(), c.getPriority()}));
 			if (carIndex == 500)
-				addLine(buildReport, FIVE, " ************* Only the first 500 cars are shown ************* ");
+				addLine(buildReport, FIVE, rb.getString("buildOnlyFirst500Cars"));
 			// use only the lead car in a kernel for building trains
 			if (c.getKernel() != null){
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarPartOfKernel"),new Object[]{c.toString(), c.getKernelName()}));
@@ -1055,7 +1054,7 @@ public class TrainBuilder extends TrainCommon{
 												addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarAssignedToStaging"),new Object[]{c.toString(), terminateStageTrack.getName()}));
 												carAdded = addCarToTrain(c, rl, rld, terminateStageTrack);
 											} else {
-												addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +terminateStageTrack.getName()+") due to "+status);
+												addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), terminateStageTrack.getName(), status}));
 												continue;
 											}
 											// no, find a destination track this this car
@@ -1066,7 +1065,7 @@ public class TrainBuilder extends TrainCommon{
 												// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 												// dropping to the same track isn't allowed
 												if (testTrack == c.getTrack()){
-													addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to same track (" +testTrack.getName()+")");
+													addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarSameTrack"),new Object[]{c.toString(), testTrack.getName()}));
 													continue;
 												}
 												// is train direction correct?
@@ -1080,7 +1079,7 @@ public class TrainBuilder extends TrainCommon{
 													continue;
 												}
 												if (!status.equals(Car.OKAY)){
-													addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +testTrack.getName()+") due to "+status);
+													addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), testTrack.getName(), status}));
 													continue;
 												}
 												carAdded = addCarToTrain(c, rl, rld, testTrack);
@@ -1095,7 +1094,7 @@ public class TrainBuilder extends TrainCommon{
 											if (status.equals(Car.OKAY) && checkDropTrainDirection(c, rld, c.getDestinationTrack()))
 												carAdded = addCarToTrain(c, rl, rld, c.getDestinationTrack());
 											else if (!status.equals(Car.OKAY))
-												addLine(buildReport, SEVEN, "Can't drop car ("+c.toString()+") to track (" +c.getDestinationTrack().getName()+") due to "+status);
+												addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), c.getDestinationTrack().getName(), status}));
 										}
 									}
 									// done?
@@ -1268,9 +1267,8 @@ public class TrainBuilder extends TrainCommon{
 			return true;
 		
 		// Only track direction can cause the following message.  Location direction has already been checked
-		addLine(buildReport, FIVE, "Can't pick up rolling stock ("+rs.toString()+") using "
-				+rl.getTrainDirectionString()+"bound train, track ("+rs.getTrack().getName()+")");
-		addLine(buildReport, FIVE, "at location (" +rs.getLocation().getName()+ ") does not service this train's direction");
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarCanNotPickupUsingTrain"),new Object[]{rs.toString(), rl.getTrainDirectionString(), rs.getTrack().getName()}));
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarCanNotPickupUsingTrain2"),new Object[]{rs.getLocation().getName()}));
 		return false;
 	}
 	
@@ -1376,7 +1374,13 @@ public class TrainBuilder extends TrainCommon{
 					// does the train accept the engine type from the staging track?
 					if (!train.acceptsTypeName(eng.getType())){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineType"),
-								new Object[]{departStageTrack.getName(), eng.toString()+" "+eng.getNumber(), eng.getType(), train.getName()}));
+								new Object[]{departStageTrack.getName(), eng.toString(), eng.getType(), train.getName()}));
+						return false;
+					}
+					// does the train accept the engine model from the staging track?
+					if (!train.getEngineModel().equals("") && !train.getEngineModel().equals(eng.getModel())){
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingDepartEngineModel"),
+								new Object[]{departStageTrack.getName(), eng.toString(), eng.getModel(), train.getName()}));
 						return false;
 					}
 					// does the train accept the engine road from the staging track?
@@ -1470,17 +1474,17 @@ public class TrainBuilder extends TrainCommon{
 		String[] types = train.getTypeNames();
 		for (int i=0; i<types.length; i++){
 			if (!terminateLocation.acceptsTypeName(types[i])){
-				addLine(buildReport, FIVE, "Destination ("+terminateLocation.getName()+") does not accept type ("+types[i]+")");
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildDestinationType"),new Object[]{terminateLocation.getName(), types[i]}));
 				return false;			
 			}
 			if (!terminateStageTrack.acceptsTypeName(types[i])){
-				addLine(buildReport, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept type ("+types[i]+")");
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackType"),new Object[]{terminateStageTrack.getName(),types[i]}));
 				return false;			
 			}
 		}
 		// check go see if track will accept the train's car and engine roads
 		if (train.getRoadOption().equals(Train.ALLROADS) && !terminateStageTrack.getRoadOption().equals(Track.ALLROADS)){
-			addLine(buildReport, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept all roads");
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackAllRoads"),new Object[]{terminateStageTrack.getName()}));
 			return false;
 
 		}
@@ -1488,7 +1492,7 @@ public class TrainBuilder extends TrainCommon{
 			String[] roads = train.getRoadNames();
 			for (int i=0; i<roads.length; i++){
 				if (!terminateStageTrack.acceptsRoadName(roads[i])){
-					addLine(buildReport, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept road ("+roads[i]+")");
+					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackRoad"),new Object[]{terminateStageTrack.getName(), roads[i]}));
 					return false;
 				}
 			}
@@ -1505,7 +1509,7 @@ public class TrainBuilder extends TrainCommon{
 			}
 			for (int i=0; i<roads.size(); i++){
 				if (!terminateStageTrack.acceptsRoadName(roads.get(i))){
-					addLine(buildReport, FIVE, "Staging track ("+terminateStageTrack.getName()+") does not accept road ("+roads.get(i)+")");
+					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackRoad"),new Object[]{terminateStageTrack.getName(), roads.get(i)}));
 					return false;
 				}
 			}
@@ -1527,19 +1531,19 @@ public class TrainBuilder extends TrainCommon{
 		for (int k = start; k<routeList.size(); k++){
 			rld = train.getRoute().getLocationById(routeList.get(k));
 			if (rld.canDrop()){
-				addLine(buildReport, SEVEN, "Searching location ("+rld.getName()+") for possible destination");
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildSearchingLocation"),new Object[]{rld.getName(),}));
 			} else {
-				addLine(buildReport, FIVE, "Route ("+train.getRoute().getName()+") does not allow drops at location ("+rld.getName()+")");
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
 			}							
 			// don't move car to same location unless the route only has one location (local moves) or is passenger
 			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger()){
-				addLine(buildReport, SEVEN, "Car ("+car.toString()+") location is equal to destination ("+rld.getName()+"), skiping this destination");
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
 				continue;
 			}
 			// any moves left at this location?
 			if (rld.getCarMoves() >= rld.getMaxCarMoves()){
-				addLine(buildReport, FIVE, "No available moves for destination ("+rld.getName()+")");
+				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoAvailableMovesDest"),new Object[]{rld.getName()}));
 				continue;
 			}
 			noMoreMoves = false;
@@ -1564,7 +1568,7 @@ public class TrainBuilder extends TrainCommon{
 					trackTemp = terminateStageTrack;
 					destinationTemp = testDestination;
 				} else {
-					addLine(buildReport, SEVEN, "Can't drop car ("+car.toString()+") to track (" +terminateStageTrack.getName()+") due to "+status);
+					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), terminateStageTrack.getName(), status}));
 					continue;
 				} 
 				// no staging track assigned, start track search
@@ -1575,7 +1579,7 @@ public class TrainBuilder extends TrainCommon{
 					// log.debug("track (" +testTrack.getName()+ ") has "+ testTrack.getMoves() + " moves");
 					// dropping to the same track isn't allowed
 					if (testTrack == car.getTrack()){
-						addLine(buildReport, SEVEN, "Can't drop car ("+car.toString()+") to same track (" +testTrack.getName()+")");
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarSameTrack"),new Object[]{car.toString(), testTrack.getName()}));
 						continue;
 					}
 					// is train direction correct?
@@ -1607,24 +1611,24 @@ public class TrainBuilder extends TrainCommon{
 					// okay to drop car?
 					if(!status.equals(Car.OKAY)){
 						if (status.contains(Car.SCHEDULE))
-							addLine(buildReport, SEVEN, "Can't drop car ("+car.toString()+") load ("+car.getLoad()+") to track (" +testTrack.getName()+") due to "+status);
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarLoad"),new Object[]{car.toString(), car.getLoad(), testTrack.getName(), status}));
 						else
-							addLine(buildReport, SEVEN, "Can't drop car ("+car.toString()+") to track (" +testTrack.getName()+") due to "+status);
+							addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), testTrack.getName(), status}));
 						continue;
 					}		
 					// No local moves from siding to siding
 					if (routeList.size() == 1 && !Setup.isLocalSidingMovesEnabled() && testTrack.getLocType().equals(Track.SIDING) && car.getTrack().getLocType().equals(Track.SIDING)){
-						addLine(buildReport, FIVE, "Local siding to siding move not allowed (" +testTrack.getName()+ ")");
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoSidingToSidingMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
 					// No local moves from yard to yard
 					if (routeList.size() == 1 && !Setup.isLocalYardMovesEnabled() && testTrack.getLocType().equals(Track.YARD) && car.getTrack().getLocType().equals(Track.YARD)){
-						addLine(buildReport, FIVE, "Local yard to yard move not allowed (" +testTrack.getName()+ ")");
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoYardToYardMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
 					// No local moves from interchange to interchange
 					if (routeList.size() == 1 && !Setup.isLocalInterchangeMovesEnabled() && testTrack.getLocType().equals(Track.INTERCHANGE) && car.getTrack().getLocType().equals(Track.INTERCHANGE)){
-						addLine(buildReport, FIVE, "Local interchange to interchange move not allowed (" +testTrack.getName()+ ")");
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoInterchangeToInterchangeMove"),new Object[]{testTrack.getName()}));
 						continue;
 					}
 					// drop to interchange?
