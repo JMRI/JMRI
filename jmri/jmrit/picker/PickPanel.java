@@ -19,7 +19,7 @@ import javax.swing.event.ListSelectionEvent;
 
 public class PickPanel extends JPanel implements ListSelectionListener, ChangeListener {
 
-    static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+//    static final java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     private int ROW_HEIGHT;
 
     JTable[]    _tables;
@@ -60,8 +60,8 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
                     _sysNametext, _userNametext, "addToTable", listener);
         _cantAddPanel = new JPanel();
         _cantAddPanel.setLayout(new BorderLayout(5,5));
-        _cantAddPanel.add(new JLabel("Cannot add to this PickList", SwingConstants.CENTER), BorderLayout.NORTH);
-        _cantAddPanel.add(new JLabel("Open a Tools Table to add an item.", SwingConstants.CENTER), BorderLayout.SOUTH);
+        _cantAddPanel.add(new JLabel("Cannot add new items to this pick panel", SwingConstants.CENTER), BorderLayout.NORTH);
+        _cantAddPanel.add(new JLabel("Open another tool to add an item.", SwingConstants.CENTER), BorderLayout.SOUTH);
         JPanel p = new JPanel();
         p.add(_addPanel);
         p.add(_cantAddPanel);

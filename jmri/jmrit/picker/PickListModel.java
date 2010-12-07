@@ -578,7 +578,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return manager.createNewWarrant(sysName, userName);
         }
         public boolean canAddBean() {
-            return true;
+            return false;
         }
     }
     class ConditionalPickModel extends PickListModel {
@@ -600,7 +600,7 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
             return manager.createNewConditional(sysName, userName);
         }
         public boolean canAddBean() {
-            return true;
+            return false;
         }
 
         public JTable makePickTable() {
