@@ -2,7 +2,6 @@ package jmri.jmrix.can.cbus;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Set;
 import jmri.ThrottleManager;
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
@@ -22,7 +21,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.13 $
+ * @version 		$Revision: 1.14 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
