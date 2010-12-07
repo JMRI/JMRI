@@ -22,7 +22,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.12 $
+ * @version 		$Revision: 1.13 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -79,8 +79,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
         // Get set of handles for JMRI managed throttles and
         // iterate over them setting the speed of each throttle to 0
         log.debug("stopAll() setting all speeds to emergency stop");
-        Set handles = softThrottles.keySet();
-        Iterator itr = handles.iterator();
+        Iterator<Integer> itr = softThrottles.keySet().iterator();
         while (itr.hasNext()) {
             CbusThrottle throttle = softThrottles.get(itr.next());
             throttle.setSpeedSetting(0.0F);
