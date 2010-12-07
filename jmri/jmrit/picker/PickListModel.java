@@ -60,6 +60,17 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     public static final int POSITION_COL = 2;
     public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
 
+    static HashMap<String,Integer> _listMap = new HashMap<String,Integer>();
+
+    static public int getNumInstances(String type) {
+        Integer num = _listMap.get(type.toLowerCase());
+        if (log.isDebugEnabled()) log.debug("getNumInstances of "+type+" num= "+num);
+        if (num!=null) {
+            return num.intValue();
+        }
+        return 0;
+    }
+
     /**
     * Default constructor makes a table sorted by System Name.
     */
@@ -229,36 +240,102 @@ public abstract class PickListModel extends AbstractTableModel implements Proper
     }
 
     public static PickListModel turnoutPickModelInstance() {
+        Integer num = _listMap.get("turnout");
+        if (num!=null) {
+            _listMap.put("turnout", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("turnout", Integer.valueOf(1));
+        }
         return new TurnoutPickModel();
     }
     public static PickListModel sensorPickModelInstance() {
+        Integer num = _listMap.get("sensor");
+        if (num!=null) {
+            _listMap.put("sensor", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("sensor", Integer.valueOf(1));
+        }
         return new SensorPickModel();
     }
     public static PickListModel multiSensorPickModelInstance() {
+        Integer num = _listMap.get("multisensor");
+        if (num!=null) {
+            _listMap.put("multisensor", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("multisensor", Integer.valueOf(1));
+        }
         return new MultiSensorPickModel();
     }
     public static PickListModel signalHeadPickModelInstance() {
+        Integer num = _listMap.get("sensor");
+        if (num!=null) {
+            _listMap.put("signalhead", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("signalhead", Integer.valueOf(1));
+        }
         return new SignalHeadPickModel();
     }
     public static PickListModel signalMastPickModelInstance() {
+        Integer num = _listMap.get("signalmast");
+        if (num!=null) {
+            _listMap.put("signalmast", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("signalmast", Integer.valueOf(1));
+        }
         return new SignalMastPickModel();
     }
     public static PickListModel memoryPickModelInstance() {
+        Integer num = _listMap.get("memory");
+        if (num!=null) {
+            _listMap.put("memory", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("memory", Integer.valueOf(1));
+        }
         return new MemoryPickModel();
     }
     public static PickListModel reporterPickModelInstance() {
+        Integer num = _listMap.get("reporter");
+        if (num!=null) {
+            _listMap.put("reporter", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("reporter", Integer.valueOf(1));
+        }
         return new ReporterPickModel();
     }
     public static PickListModel lightPickModelInstance() {
+        Integer num = _listMap.get("light");
+        if (num!=null) {
+            _listMap.put("light", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("light", Integer.valueOf(1));
+        }
         return new LightPickModel();
     }
     public static PickListModel oBlockPickModelInstance() {
+        Integer num = _listMap.get("oBlock");
+        if (num!=null) {
+            _listMap.put("oBlock", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("oBlock", Integer.valueOf(1));
+        }
         return new OBlockPickModel();
     }
     public static PickListModel warrantPickModelInstance() {
+        Integer num = _listMap.get("warrant");
+        if (num!=null) {
+            _listMap.put("warrant", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("warrant", Integer.valueOf(1));
+        }
         return new WarrantPickModel();
     }
     public static PickListModel conditionalPickModelInstance() {
+        Integer num = _listMap.get("conditional");
+        if (num!=null) {
+            _listMap.put("conditional", Integer.valueOf(num.intValue()+1));
+        } else {
+            _listMap.put("conditional", Integer.valueOf(1));
+        }
         return new ConditionalPickModel();
     }
 
