@@ -59,9 +59,8 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         // now close window
         TestHelper.disposeWindow(_logixTable.editConditionalFrame,this);
 
+        _logixTable.newConditionalPressed(null);
         _logixTable.conditionalTableModel.setValueAt(null, 0, LogixTableAction.ConditionalTableModel.BUTTON_COLUMN);
-        Thread.sleep(1000);     // let Conditional window open
-
         for (int i=0; i<2; i++){
             _logixTable.addVariablePressed(null);
             _logixTable._variableTypeBox.setSelectedIndex(Conditional.ITEM_TYPE_SENSOR);
@@ -121,7 +120,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         _logixTable._actionOptionBox.setSelectedIndex(1);       // on false
         _logixTable._actionNameField.setText("IT4");
         _logixTable._actionBox.setSelectedIndex(1);             // Turnout.THROWN
-        _logixTable._shortActionString.setText("1");           // delay 10 sec
+        _logixTable._shortActionString.setText("1");           // delay 1 sec
         _logixTable.updateActionPressed();
 */
         _logixTable.addActionPressed(null);
@@ -143,7 +142,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         _logixTable.conditionalUserName.setText("SecondConditional");
         _logixTable.updateConditionalPressed(null);
 
-        Assert.assertEquals("Conditional count", 2, _logixTable._curLogix.getNumConditionals());
+        Assert.assertEquals("Conditional count", 1, _logixTable._curLogix.getNumConditionals());
         //_logixTable.donePressed(null);
 
         // note: _logixTable.m.EDITCOL = BeanTableDataModel.DELETECOL
