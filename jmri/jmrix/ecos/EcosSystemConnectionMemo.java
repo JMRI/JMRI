@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -25,6 +25,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
         InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
                 jmri.jmrix.swing.ComponentFactory.class);
+        prefManager = new jmri.jmrix.ecos.EcosPreferences(this);
     }
     
     public EcosSystemConnectionMemo() {
@@ -34,6 +35,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         //Needs to be implemented
         InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this),
                         jmri.jmrix.swing.ComponentFactory.class);
+        //jmri.InstanceManager.store(new jmri.jmrix.ecos.EcosPreferences(thie), jmri.jmrix.ecos.EcosPreferences.class);
+        prefManager = new jmri.jmrix.ecos.EcosPreferences(this);
     }
     
     jmri.jmrix.swing.ComponentFactory cf = null;
@@ -48,7 +51,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         et.setAdapterMemo(this);
     }
     private EcosTrafficController et;
-    
+
     /**
      * This puts the common manager config in one
      * place. 
@@ -57,24 +60,30 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
       
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.ecos.EcosPowerManager(getTrafficController()));
         
-        turnoutManager = new jmri.jmrix.ecos.EcosTurnoutManager(getTrafficController(), getSystemPrefix());
+        turnoutManager = new jmri.jmrix.ecos.EcosTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
-
-        jmri.InstanceManager.store(
-                new jmri.jmrix.ecos.EcosLocoAddressManager(getTrafficController()),
-                jmri.jmrix.ecos.EcosLocoAddressManager.class);
         
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.ecos.EcosDccThrottleManager(getTrafficController()));
+        locoManager = new jmri.jmrix.ecos.EcosLocoAddressManager(this);
+        
+        throttleManager = new jmri.jmrix.ecos.EcosDccThrottleManager(this);
+        jmri.InstanceManager.setThrottleManager(throttleManager);
 
         sensorManager = new jmri.jmrix.ecos.EcosSensorManager(getTrafficController(), getSystemPrefix());
         jmri.InstanceManager.setSensorManager(sensorManager);
     }
     
+
     private EcosSensorManager sensorManager;
     private EcosTurnoutManager turnoutManager;
+    private EcosLocoAddressManager locoManager;
+    private EcosPreferences prefManager;
+    private EcosDccThrottleManager throttleManager;
     
+    public EcosLocoAddressManager getLocoAddressManager() { return locoManager; }
     public EcosTurnoutManager getTurnoutManager() { return turnoutManager; }
     public EcosSensorManager getSensorManager() { return sensorManager; }
+    public EcosPreferences getPreferenceManager() { return prefManager; }
+    public EcosDccThrottleManager getThrottleManager() { return throttleManager; }
     
     @Override
     public void dispose(){

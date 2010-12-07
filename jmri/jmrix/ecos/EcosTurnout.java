@@ -15,7 +15,7 @@ import jmri.Turnout;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class EcosTurnout extends AbstractTurnout 
                          implements EcosListener {
@@ -38,13 +38,9 @@ public class EcosTurnout extends AbstractTurnout
         this.prefix = prefix;
         tc = etc;
         tm = etm;
-        
-    	// At construction, register for messages
-
-        //If we are to monitor what is going on with the ecos setting turnouts, we need to be able to view control of them.
-        // This is now down at the setObjectNumber
-
-    	
+        /*All messages from the Ecos regarding turnout status updates, 
+        are initally handled by the turnout manager, this then forwards the message
+        on to the correct Turnout*/
     }
     
     EcosTrafficController tc;
@@ -61,10 +57,6 @@ public class EcosTurnout extends AbstractTurnout
     
     void setObjectNumber(int o) { 
         objectNumber = o;
-        /*EcosTrafficController.instance().addEcosListener(this);
-        EcosMessage m;
-        m = new EcosMessage("request("+objectNumber+", view)");
-        EcosTrafficController.instance().sendEcosMessage(m, null);*/
     }
 
     

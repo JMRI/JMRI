@@ -11,20 +11,20 @@ import java.awt.event.ActionEvent;
  *       			StatusFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2008
- * @version		$Revision: 1.3 $	
+ * @version		$Revision: 1.4 $	
  */
-
+@Deprecated
 public class StatusFrameAction extends AbstractAction {
 
 	public StatusFrameAction(String s, EcosSystemConnectionMemo memo ) {
         super(s);
         adaptermemo = memo;
     }
-	
+
     EcosSystemConnectionMemo adaptermemo;
 
     public void actionPerformed(ActionEvent e) {
-		StatusFrame f = new StatusFrame();
+		StatusFrame f = new StatusFrame(adaptermemo);
 		try {
 			f.initComponents(adaptermemo);
 			}

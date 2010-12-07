@@ -15,7 +15,7 @@ import java.util.Vector;*/
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
@@ -23,9 +23,9 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         super();
         allowConnectionRecovery = true;
         adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
-        jmri.InstanceManager.store(new jmri.jmrix.ecos.EcosPreferences(), jmri.jmrix.ecos.EcosPreferences.class);
-        //mInstance=this;
     }
+
+    public EcosSystemConnectionMemo getSystemConnectionMemo() {return adaptermemo; }
     
     boolean allowConnectionRecovery;
     /**
@@ -34,32 +34,17 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
      */
     public void configure() {
         // connect to the traffic controller
-        EcosTrafficController control = EcosTrafficController.instance();
+        EcosTrafficController control = new EcosTrafficController();
         control.connectPort(this);
+        control.setAdapterMemo(adaptermemo);
         adaptermemo.setEcosTrafficController(control);
         adaptermemo.configureManagers();
-        
         jmri.jmrix.ecos.ActiveFlag.setActive();
     }
 
 
     @Override
     public boolean status() {return opened;}
-    
-    static public NetworkDriverAdapter instance() {
-        if (mInstance == null) {
-            NetworkDriverAdapter newadap = new NetworkDriverAdapter();
-            //mInstance = new NetworkDriverAdapter();
-            newadap.setPort(15471);
-            newadap.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
-            mInstance = newadap;
-        }
-        return mInstance;
-    }
-    static NetworkDriverAdapter mInstance = null;
-    
-    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
-    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
     
     //To be completed
     @Override
@@ -82,6 +67,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
             adaptermemo.getTrafficController().connectPort(this);
             adaptermemo.getTurnoutManager().refreshItems();
             adaptermemo.getSensorManager().refreshItems();
+            adaptermemo.getLocoAddressManager().refreshItems();
         }
     }
 

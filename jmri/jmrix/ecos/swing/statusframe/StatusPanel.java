@@ -1,4 +1,4 @@
-// StatusPane.java
+// StatusPanel.java
 
 package jmri.jmrix.ecos.swing.statusframe;
 
@@ -8,14 +8,12 @@ import jmri.jmrix.ecos.*;
 import javax.swing.*;
 
 /**
- * Pane to show ECoS status
+ * Panel to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.5 $
- * @deprecated 2.11.3
+ * @version	$Revision: 1.1 $
  */
-@Deprecated
-public class StatusPane extends javax.swing.JPanel implements EcosListener {
+public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
     String appString = "Application Version: ";
     String proString = "   Protocol Version: ";
@@ -24,15 +22,21 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
     JLabel proVersion = new JLabel(proString+"<unknown>");
     JLabel hrdVersion = new JLabel(hrdString+"<unknown>");
     
-    public StatusPane(EcosTrafficController etc) {
+    JButton sendButton;
+    
+    public StatusPanel() {
         super();
+    }
+    
+    public void initComponents(EcosSystemConnectionMemo memo) {
+        super.initComponents(memo);
+        //memo.getTrafficController().addEcosListener(this);
+        EcosTrafficController tc = memo.getTrafficController();
         // Create GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(appVersion);
         add(proVersion);
         add(hrdVersion);
-        
-        tc = etc;
         
         // connect to the TrafficManager
         tc.addEcosListener(this);
@@ -44,7 +48,20 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
         // get initial state
         m = new EcosMessage("get(1, info)");
         tc.sendEcosMessage(m, this);
-       
+        
+        sendButton = new JButton("Update");
+        sendButton.setVisible(true);
+        sendButton.setToolTipText("Request status update from ECoS");
+        
+        add(sendButton);
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
+    }
+    
+    public void initComponents() throws Exception {
     }
 
     void reset() {
@@ -57,6 +74,13 @@ public class StatusPane extends javax.swing.JPanel implements EcosListener {
         tc.removeEcosListener(this);
         tc = null;
     }
+    
+    public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
+        reset();
+        EcosMessage m = new EcosMessage("get(1, info)");
+        tc.sendEcosMessage(m, null);
+
+	}
 
     @SuppressWarnings("unused")
 	private void checkTC() throws JmriException {

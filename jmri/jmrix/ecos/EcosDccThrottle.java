@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -23,17 +23,21 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     int ecosretry = 0;
     private EcosLocoAddress objEcosLoco;
     private EcosLocoAddressManager objEcosLocoManager;
-    final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+    private EcosSystemConnectionMemo adaptermemo;
+    final EcosPreferences p;
     //This boolean is used to prevent un-necessary commands from being sent to the ECOS if we have already lost
     //control of the object
     private boolean _haveControl = false;
     private boolean _hadControl = false;
     
-    public EcosDccThrottle(DccLocoAddress address, EcosTrafficController etc)
+    public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo)
     {
         super();
         super.speedStepMode = SpeedStepMode128;
-        tc=etc;
+        adaptermemo = memo;
+        p = adaptermemo.getPreferenceManager();
+        tc=adaptermemo.getTrafficController();
+        objEcosLocoManager = adaptermemo.getLocoAddressManager();
         //The script will go through and read the values from the Ecos
 
         this.speedSetting = 0;
@@ -78,10 +82,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         this.isForward    = true;
 
         ecosretry         = 0;
-        //objEcosLocoManager = (EcosLocoAddressManager)jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
         //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
-
-        objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
 
         //We go on a hunt to find an object with the dccaddress sent by our controller.
         objEcosLoco = objEcosLocoManager.provideByDccAddress(address.getNumber());
@@ -739,7 +740,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
                 _haveControl = true;
                 if (!_hadControl){
-                    EcosDccThrottleManager.instance().throttleSetup(this, this.address, true);
+                    adaptermemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
             }
         }
@@ -820,7 +821,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                     notifyPropertyChangeListener("LostControl", 0, 0);
                     _hadControl=false;
                 } else
-                    EcosDccThrottleManager.instance().throttleSetup(this, this.address, false);
+                    adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
                 
                 log.error("We have no control over the ecos object " + this.objectNumber + "Trying a forced control");
         }
@@ -830,7 +831,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             if(_hadControl) {
                 notifyPropertyChangeListener("LostControl", 0, 0);
             } else
-                EcosDccThrottleManager.instance().throttleSetup(this, this.address, false);
+                adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
             release();
         }
     }

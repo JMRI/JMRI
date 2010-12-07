@@ -11,8 +11,10 @@ import javax.swing.*;
  * Frame for user input of Ecos messages
  * @author	Bob Jacobsen   Copyright (C) 2001, 2008
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
+ * @deprecated 2.11.3
  */
+@Deprecated
 public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.ecos.EcosListener {
 
     // member declarations
@@ -24,9 +26,11 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.e
         super();
     }
 
-    public void initComponents() throws Exception {
-        // the following code sets the frame's initial state
+    EcosSystemConnectionMemo adaptermemo;
 
+    public void initComponents(EcosSystemConnectionMemo memo) throws Exception {
+        // the following code sets the frame's initial state
+        adaptermemo = memo;
         jLabel1.setText("Command: ");
         jLabel1.setVisible(true);
         
@@ -64,7 +68,7 @@ public class PacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.e
         for (int i = 0; i < packetTextField.getText().length(); i++)
             m.setElement(i, packetTextField.getText().charAt(i));
 
-        EcosTrafficController.instance().sendEcosMessage(m, this);
+        adaptermemo.getTrafficController().sendEcosMessage(m, this);
 
 	}
 

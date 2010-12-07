@@ -11,7 +11,7 @@ import jmri.jmrix.JmrixConfigPane;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -50,7 +50,10 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     }
 
     protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        if (adapter==null){
+            adapter = new NetworkDriverAdapter();
+            adapter.setPort(15471);
+        }
     }
     
 }

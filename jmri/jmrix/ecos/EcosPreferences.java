@@ -10,12 +10,12 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
  
-    public EcosPreferences(){
+    public EcosPreferences(EcosSystemConnectionMemo memo){
         if (log.isDebugEnabled()) log.debug("creating a new EcosPreferences object");
         if (ecosPreferencesShutDownTask==null) {
             ecosPreferencesShutDownTask = new QuietShutDownTask("Ecos Preferences Shutdown") {
@@ -31,9 +31,12 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
                 jmri.InstanceManager.shutDownManagerInstance().register(ecosPreferencesShutDownTask);
             }
         }
-        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", null, null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(this), false, null);
+        adaptermemo = memo;
+        jmri.InstanceManager.tabbedPreferencesInstance().addItem("ECOS", "ECOS Preferences", adaptermemo.getUserName(), null, new jmri.jmrix.ecos.swing.preferences.PreferencesPane(this), false, null);
     }
     
+    EcosSystemConnectionMemo adaptermemo;
+
     boolean preferencesLoaded = false;
     public boolean getPreferencesLoaded() { return preferencesLoaded; }
     public void setPreferencesLoaded() { preferencesLoaded=true; }
@@ -303,6 +306,32 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
     public void setRemoveTurnoutsFromEcos(int boo){
         _removeturnoutsfromecos = boo;
         changeMade();
+    }
+    
+    private String _rosterAttribute = "EcosObject";
+    
+    public void setRosterAttribute(String att){
+        //If no suffix is passed then we just use the default.
+        if((att == null) || (att.equals("")))
+            _rosterAttribute = "EcosObject";
+        if(att.startsWith("EcosObject"))
+            _rosterAttribute = att;
+        else
+            _rosterAttribute = "EcosObject:"+att;
+        changeMade();
+    }
+    
+    public String getRosterAttribute(){
+        return _rosterAttribute;
+    }
+    
+    public String getRosterAttributeSuffix(){
+        /*This is a simple case, if the string is not 11 characters long, then no
+        prefix has been set, therefore we can just return ""*/
+        try {
+            return _rosterAttribute.substring(11);
+        } catch (java.lang.StringIndexOutOfBoundsException e) { }
+        return null;
     }
 
     public String name(){

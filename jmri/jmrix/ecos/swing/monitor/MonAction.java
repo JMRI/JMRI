@@ -6,6 +6,7 @@
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @version
+ * @deprecated 2.11.3
  */
 
 package jmri.jmrix.ecos.swing.monitor;
@@ -13,7 +14,7 @@ package jmri.jmrix.ecos.swing.monitor;
 import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
 
-
+@Deprecated
 public class MonAction 			extends AbstractAction {
 
     public MonAction(String s) { super(s);}
@@ -21,7 +22,7 @@ public class MonAction 			extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 		// create a NceMonFrame
-		MonFrame f = new MonFrame();
+		MonFrame f = new MonFrame(null);
 		try {
 			f.initComponents();
 			}

@@ -1,7 +1,7 @@
 package jmri.jmrix.ecos.swing;
 
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
-
+import javax.swing.JMenu;
 /**
  * Provide access to Swing components for the Ecos subsystem.
  *
@@ -18,9 +18,14 @@ public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
     /**
      * Provide a menu with all items attached to this system connection
      */
+
+    JMenu currentMenu;
+
     public javax.swing.JMenu getMenu() {
         if (memo.getDisabled()) return null;
-        return new EcosMenu(memo);
+        if (currentMenu==null)
+            currentMenu = new EcosMenu(memo);
+        return currentMenu;
     }
 
 }

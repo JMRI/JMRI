@@ -15,10 +15,9 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
-
 
     JPanel throttletabpanel = new JPanel();
     JPanel rostertabpanel = new JPanel();
@@ -32,6 +31,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     JComboBox _removeLocosEcos;
     JComboBox _addLocoJmri;
     JComboBox _removeLocosJmri;
+    JTextField _ecosAttSufText;
     JTextField _ecosDescription;
     JRadioButton _adhocLocoEcosAsk;
     JRadioButton _adhocLocoEcosLeave;
@@ -44,6 +44,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     JCheckBox _rememberAdhocLocosEcos;
     JComboBox _defaultProtocol;
     EcosPreferences ep;
+    boolean updateButtonPressed=false;
     
     public PreferencesPane(EcosPreferences epref) {
         super();
@@ -73,6 +74,8 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     }
     
     public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if(updateButtonPressed)
+            return;
         if (e.getPropertyName().equals("update")) {
             updateValues();
         }
@@ -96,6 +99,9 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
             default :   _adhocLocoEcosAsk.setSelected(true);
                         break;
         }
+        
+        _ecosAttSufText.setText(ep.getRosterAttributeSuffix());
+        _ecosDescription.setText(ep.getEcosLocoDescription());
         
         switch (ep.getForceControlFromEcos()){
             case 0x00  :   _forceControlLocoEcosAsk.setSelected(true);
@@ -226,6 +232,15 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         _removelocosjmripanel.add(_removeLocosJmri);
         rostertabpanel.add(_removelocosjmripanel);
         
+        JPanel ecosAttributeSuffix = new JPanel();
+        JLabel _ecosAttSufLabel = new JLabel("Ecos Roster Attribute Suffix");
+        ecosAttributeSuffix.add(_ecosAttSufLabel);
+        _ecosAttSufText = new JTextField(10);
+        _ecosAttSufText.setToolTipText("If multiple Ecos Connections are used, then each one must have a unique suffix assigned");
+        _ecosAttSufText.setText(ep.getRosterAttributeSuffix());
+        ecosAttributeSuffix.add(_ecosAttSufText);
+        rostertabpanel.add(ecosAttributeSuffix);
+        
         JPanel ecosDescriptionPanel = new JPanel();
         
         JLabel _ecosDesLabel = new JLabel("Ecos Loco Description Format");
@@ -327,7 +342,9 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     }
     
     private void updateButtonPressed(){
-        //EcosPreferences ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        //Disable any action on the listener.
+        updateButtonPressed=true;
+        //EcosPreferences ep = adaptermemo.getPreferenceManager();
         ep.setRemoveLocoFromJMRI(getChoiceType(_removeLocosJmri));
         ep.setAddLocoToJMRI(getChoiceType(_addLocoJmri));
         ep.setRemoveLocoFromEcos(getChoiceType(_removeLocosEcos));
@@ -339,12 +356,13 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         ep.setLocoMaster(getMasterControlType(_masterControl));
         ep.setDefaultEcosProtocol(getEcosProtocol(_defaultProtocol));
         ep.setEcosLocoDescription(_ecosDescription.getText());
+        ep.setRosterAttribute(_ecosAttSufText.getText());
         if (_adhocLocoEcosAsk.isSelected()) ep.setAdhocLocoFromEcos(0);
         else if (_adhocLocoEcosLeave.isSelected()) ep.setAdhocLocoFromEcos(1);
         else if (_adhocLocoEcosRemove.isSelected()) ep.setAdhocLocoFromEcos(2);
         else ep.setAdhocLocoFromEcos(0);
-        
         jmri.InstanceManager.configureManagerInstance().storePrefs();
+        updateButtonPressed=false;
     }
     
     String[] masterControlTypes = {"NOSYNC","WARNING","JMRI","ECoS"};

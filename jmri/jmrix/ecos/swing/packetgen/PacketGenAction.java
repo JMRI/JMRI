@@ -10,9 +10,10 @@ import java.awt.event.ActionEvent;
  *       			PacketGenFrame object
  *
  * @author	    Bob Jacobsen    Copyright (C) 2001, 2008
- * @version		$Revision: 1.2 $	
+ * @version		$Revision: 1.3 $	
+ * @deprecated 2.11.3
  */
-
+@Deprecated
 public class PacketGenAction extends AbstractAction {
 
 	public PacketGenAction(String s) { super(s);}

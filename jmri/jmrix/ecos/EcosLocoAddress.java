@@ -7,7 +7,7 @@ import java.util.List;
  * Stores all the loco information from the Ecos into JMRI
  *
  * @author Kevin Dickerson
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class EcosLocoAddress {
     private String _ecosObject = null;
@@ -17,6 +17,8 @@ public class EcosLocoAddress {
     private String _protocol = null;
     private String _cv8 = null;
     private String _cv7 = null;
+    boolean direction;
+    int currentSpeed;
     private boolean doNotAddToRoster = false;
     
 
@@ -24,11 +26,11 @@ public class EcosLocoAddress {
         _dccAddress=dCCAddress;
     }
     
-    public EcosLocoAddress(String ecosObject){
+    public EcosLocoAddress(String ecosObject, String rosterAtt){
         _ecosObject=ecosObject;
         //We see if there is a matching roster entry with out object against it
         //if so we add the rosterId to the ecoclocoaddress entry.
-        List<RosterEntry> l = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", ecosObject);
+        List<RosterEntry> l = Roster.instance().getEntriesWithAttributeKeyValue(rosterAtt, ecosObject);
         //It should be unique
         if (l.size()==1){
            _rosterId = l.get(0).getId();
@@ -71,6 +73,29 @@ public class EcosLocoAddress {
     public boolean addToRoster(){
         return !doNotAddToRoster;
     }
+    
+    private void setSpeed(int speed){
+        int oldspeed = currentSpeed;
+        currentSpeed = speed;
+        firePropertyChange("Speed", oldspeed, currentSpeed);
+    }
+    
+    public int getSpeed() { return currentSpeed; }
+    
+    private void setDirection(boolean dir){
+        boolean olddir = direction;
+        direction = dir;
+        firePropertyChange("Direction", olddir, direction);
+    }
+    
+    public boolean getDirection() { return direction; }
+    
+    public String getDirectionAsString() {
+        if(direction)
+            return "Forward";
+        return "Reverse";
+    }
+    
 
     //Should this option be made public? should setting the object only be available when the Loco is created.
     //It needs a bit of a re-think!
@@ -120,6 +145,38 @@ public class EcosLocoAddress {
     
     public boolean getEcosTempEntry(){
         return _tempEntry;
+    }
+    
+    public void reply(EcosReply m) {
+        String msg = m.toString();
+        if (!msg.contains("<END 0 (OK)>")) return; //The result is not valid therefore we can not set it.
+        if (msg.startsWith("<REPLY get("+_ecosObject+",") || msg.startsWith("<EVENT "+_ecosObject+">")) {
+            if (msg.contains("speed")){
+                setSpeed(getSpeed(msg));
+            }
+            if (msg.contains("dir")){
+                setDirection(getDirection(msg));
+            }
+        }
+    }
+
+    int getSpeed(String line){
+        int startval;
+        int endval;
+        startval=line.indexOf("speed[")+6;
+        endval=(line.substring(startval)).indexOf("]")+startval;
+        return Integer.parseInt(line.substring(startval, endval));
+    }
+
+    boolean getDirection(String line){
+        int startval;
+        int endval;
+        boolean newDirection = false;
+        startval=line.indexOf("dir[")+4;
+        endval=(line.substring(startval)).indexOf("]")+startval;
+        String val = line.substring(startval, endval);
+        if (val.equals("0")) newDirection=true;
+        return newDirection;
     }
     
     // implementing classes will typically have a function/listener to get

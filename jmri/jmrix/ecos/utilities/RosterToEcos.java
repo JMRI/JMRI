@@ -13,19 +13,21 @@ public class RosterToEcos implements EcosListener{
     //private String _rosterid;
     EcosTrafficController tc;
     private boolean createloco;
-    
+    EcosSystemConnectionMemo adaptermemo;
+
     DecoderIndexFile decoderind = DecoderIndexFile.instance();
     
     public RosterToEcos() { }
 
-    public void createEcosLoco(RosterEntry re, EcosTrafficController etc) {
+    public void createEcosLoco(RosterEntry re, EcosSystemConnectionMemo memo) {
         if (createloco==true)
             return;
         createloco = true;
-        etc = tc;
-        ep = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        adaptermemo = memo;
+        tc = adaptermemo.getTrafficController();
+        ep = adaptermemo.getPreferenceManager();
         _re = re;
-		objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+		objEcosLocoManager = adaptermemo.getLocoAddressManager();
 
         String message = "create(10, addr[" + _re.getDccAddress() + "], name[\""+ description() +"\"], protocol["+ ep.getDefaultEcosProtocol()+"], append)";
 
@@ -78,7 +80,7 @@ public class RosterToEcos implements EcosListener{
                         String EcosAddr = lines[i].substring(start, end);
                         objEcosLoco = objEcosLocoManager.provideByEcosObject(EcosAddr);
                         objEcosLoco.setEcosTempEntry(false);
-                        _re.putAttribute("EcosObject", EcosAddr);
+                        _re.putAttribute(ep.getRosterAttribute(), EcosAddr);
                         objEcosLoco.setRosterId(_re.getId());
                         objEcosLoco.setEcosDescription(description());
                         objEcosLoco.setEcosLocoAddress(Integer.parseInt(_re.getDccAddress()));

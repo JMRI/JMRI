@@ -24,11 +24,11 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
-	private EcosTrafficController() {
+	public EcosTrafficController() {
         super();
         if (log.isDebugEnabled()) log.debug("creating a new EcosTrafficController object");
         // set as command station too
@@ -37,10 +37,10 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }
 
     public void setAdapterMemo(EcosSystemConnectionMemo memo){
-        adapterMemo = memo;
+        adaptermemo = memo;
     }
     
-    EcosSystemConnectionMemo adapterMemo;
+    EcosSystemConnectionMemo adaptermemo;
     
     // The methods to implement the EcosInterface
 
@@ -63,7 +63,8 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
      */
     public void sendPacket(byte[] packet,int count) {
         EcosMessage m = EcosMessage.sendPacketMessage(packet);
-	    EcosTrafficController.instance().sendEcosMessage(m, null);
+	    //EcosTrafficController.instance().sendEcosMessage(m, null);
+            sendEcosMessage(m, null);
     }
     
     /**
@@ -146,14 +147,31 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         return EcosMessage.getExitProgMode();
     }
 
-    static class EcosTrafficControllerHolder {
+        /**
+     * static function returning the EcosTrafficController instance to use.
+     * @return The registered EcosTrafficController instance for general use,
+     *         if need be creating one.
+     */
+    public EcosTrafficController instance() {
+        return self;
+    }
+
+    //This can be removed once multi-connection is complete
+    public void setInstance(){}
+
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT")
+    // FindBugs wants this package protected, but we're removing it when multi-connection
+    // migration is complete
+    static protected EcosTrafficController self = null;
+
+    /*static class EcosTrafficControllerHolder {
         static EcosTrafficController
             instance = new EcosTrafficController();
     }
 
     public static EcosTrafficController instance() {
         return EcosTrafficControllerHolder.instance;
-    }
+    }*/
     
     ///**
     // * static function returning the EcosTrafficController instance to use.
@@ -171,7 +189,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     }*/
 
     //static private EcosTrafficController self = null;
-    protected void setInstance() { instance(); }
+    //protected void setInstance() { instance(); }
 
     protected AbstractMRReply newReply() { 
         EcosReply reply = new EcosReply();
@@ -233,7 +251,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     protected void terminate() {
         if(log.isDebugEnabled()) log.debug("Cleanup Starts");
         if (ostream == null) return;    // no connection established
-        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        EcosPreferences p = adaptermemo.getPreferenceManager();
         if (p.getAdhocLocoFromEcos()==0x01) return; //Just a double check that we can delete locos
         //AbstractMRMessage modeMsg=enterNormalMode();
         AbstractMRMessage modeMsg;
@@ -257,7 +275,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
             }
         }
 
-        EcosTurnoutManager objEcosTurnManager = adapterMemo.getTurnoutManager();
+        EcosTurnoutManager objEcosTurnManager = adaptermemo.getTurnoutManager();
         en = objEcosTurnManager.getEcosObjectList();
         for(int i = 0; i<en.size(); i++) {
             ecosObject = en.get(i);
@@ -280,7 +298,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
         }
 
         //EcosLocoAddressManager objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
-        EcosLocoAddressManager objEcosLocoManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        EcosLocoAddressManager objEcosLocoManager = adaptermemo.getLocoAddressManager();
         en = objEcosLocoManager.getEcosObjectList();
         for(int i = 0; i<en.size(); i++) {
             ecosObject = en.get(i);

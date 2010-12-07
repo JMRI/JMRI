@@ -18,16 +18,46 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
-    private static Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
-    private static Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
+    private Hashtable <String, EcosLocoAddress> _tecos = new Hashtable<String, EcosLocoAddress>();   // stores known Ecos Object ids to DCC
+    private Hashtable <Integer, EcosLocoAddress> _tdcc = new Hashtable<Integer, EcosLocoAddress>();  // stores known DCC Address to Ecos Object ids
 
-    public String getSystemPrefix() { return "U"; }
+    
+    public EcosLocoAddressManager(EcosSystemConnectionMemo memo){
+        adaptermemo = memo;
+        tc = adaptermemo.getTrafficController();
+        p = adaptermemo.getPreferenceManager();
+        rosterAttribute = p.getRosterAttribute();
+        prefix = adaptermemo.getSystemPrefix();
+        if (p.getPreferencesLoaded()){
+            loadEcosData();
+        } else {
+            /*as the loco address manager is called prior to the remainder of the
+            preferences being loaded, we add a thread which waits for the preferences
+            to be loaded prior to reading the Ecos Loco database.
+            */
+            if(waitPrefLoad!=null) {
+                waitPrefLoad.interrupt();
+                waitPrefLoad=null;
+            }
+            waitPrefLoad = new Thread(new waitPrefLoad());
+            waitPrefLoad.setName("Wait for Preferences to be loaded");
+            waitPrefLoad.start();
+        }
+        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
+            new jmri.jmrit.beantable.ListedTableFrame();
+        }
+        jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction", "ECoS Loco Database", false);
+    }
+    
+    String prefix;
+    public String getSystemPrefix() { return prefix; }
     public char typeLetter() { return 'Z'; }
 
+    String rosterAttribute;
     private RosterEntry _re;
     private boolean addLocoToRoster = false;
     
@@ -49,34 +79,12 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     public boolean getLocoToRoster(){
         return addLocoToRoster;
     }
-    EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+    EcosPreferences p;
     
     ShutDownTask ecosLocoShutDownTask;
     
-    public EcosLocoAddressManager(EcosTrafficController etc){
-        tc = etc;
-        if (p.getPreferencesLoaded()){
-            loadEcosData();
-        } else {
-            /*as the loco address manager is called prior to the remainder of the
-            preferences being loaded, we add a thread which waits for the preferences
-            to be loaded prior to reading the Ecos Loco database.
-            */
-            if(waitPrefLoad!=null) {
-                waitPrefLoad.interrupt();
-                waitPrefLoad=null;
-            }
-            waitPrefLoad = new Thread(new waitPrefLoad());
-            waitPrefLoad.setName("Wait for Preferences to be loaded");
-            waitPrefLoad.start();
-        }
-        if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
-            new jmri.jmrit.beantable.ListedTableFrame();
-        }
-        jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class).addTable("jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableAction", "ECoS Loco Database", true);
-    }
-    
     EcosTrafficController tc;
+    EcosSystemConnectionMemo adaptermemo;
     
     public EcosLocoAddress provideEcosLoco(String EcosObject, int DCCAddress) {
         EcosLocoAddress l = getByEcosObject(EcosObject);
@@ -102,7 +110,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         //Loco doesn't exist, so we shall create it.
         if (l!=null) return l;
         
-        l = new EcosLocoAddress(ecosObject);
+        l = new EcosLocoAddress(ecosObject, p.getRosterAttribute());
         register(l);
         //return (EcosLocoAddress)_tecos.get(ecosObject);
         return _tecos.get(ecosObject);
@@ -143,7 +151,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
     
     private void loadEcosData(){
-    
         tc.addEcosListener(this);
 
         Roster.instance().addPropertyChangeListener(this);
@@ -166,6 +173,28 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             jmri.InstanceManager.shutDownManagerInstance().register(ecosLocoShutDownTask);
         }
     }
+    
+    public void monitorLocos(boolean monitor){
+        monitorState = monitor;
+        String command = "request(";
+        if(!monitor){
+            command = "release(";
+        }
+        List<String> objects = getEcosObjectList();
+        EcosMessage m;
+        for(int x = 0; x < objects.size(); x++){
+            if (monitor){
+                m = new EcosMessage("get("+objects.get(x)+", speed)");
+                tc.sendEcosMessage(m, this);
+                m = new EcosMessage("get("+objects.get(x)+", dir)");
+                tc.sendEcosMessage(m, this);
+            }
+            m = new EcosMessage(command+objects.get(x)+",view)");
+            tc.sendEcosMessage(m, this);
+        }
+    }
+    
+    private boolean monitorState = false;
     
     public void deleteEcosLoco(EcosLocoAddress s){
         deregister(s);
@@ -238,7 +267,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             }
         }
         
-        //final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        //final EcosPreferences p = adaptermemo.getPreferenceManager();
 
         if(p.getAdhocLocoFromEcos()==0x01){
             disposefinal();
@@ -323,7 +352,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      */
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        
         //If we are adding the loco to the roster from the ecos, we don't want to be adding it back to the ecos!
         if(getLocoToRoster()) return;
         if (e.getPropertyName().equals("add")){
@@ -331,7 +359,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
         } else if (e.getPropertyName().equals("saved")) {
             if (_re!=null){
-                if (_re.getAttribute("EcosObject")!=null){
+                if (_re.getAttribute(rosterAttribute)!=null){
                     _re = null;
                     return;
                 }
@@ -346,7 +374,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                     container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-                    JLabel question = new JLabel("Do you also want to add " + _re.getId() + " to the Ecos?");
+                    JLabel question = new JLabel("Do you also want to add " + _re.getId() + " to the " + adaptermemo.getUserName() + "?");
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
@@ -379,7 +407,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 p.setAddLocoToEcos(0x02);
                             }
                             RosterToEcos rosterToEcos = new RosterToEcos();
-                            rosterToEcos.createEcosLoco(_re, tc);
+                            rosterToEcos.createEcosLoco(_re, adaptermemo);
                             _re = null;
                             dialog.dispose();
                         }
@@ -394,17 +422,17 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 }
                 if(p.getAddLocoToEcos()==0x02){
                     RosterToEcos rosterToEcos = new RosterToEcos();
-                    rosterToEcos.createEcosLoco(_re, tc);
+                    rosterToEcos.createEcosLoco(_re, adaptermemo);
                     _re = null;
                 }
             }
         } else if (e.getPropertyName().equals("remove")){
             _re = (RosterEntry) e.getNewValue();
-            if (_re.getAttribute("EcosObject")!=null){
+            if (_re.getAttribute(rosterAttribute)!=null){
                 if (p.getRemoveLocoFromEcos()==0x02){
                     RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
-                    removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute("EcosObject"), tc);
-                    deleteEcosLoco(provideByEcosObject(_re.getAttribute("EcosObject")));
+                    removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute(p.getRosterAttribute()), tc);
+                    deleteEcosLoco(provideByEcosObject(_re.getAttribute(p.getRosterAttribute())));
                 } else {
                     final JDialog dialog = new JDialog();
                     dialog.setTitle("Remove Loco From ECoS?");
@@ -415,7 +443,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
                     container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-                    JLabel question = new JLabel("Do you also want to remove this loco from the Ecos");
+                    JLabel question = new JLabel("Do you also want to remove this loco from the " + adaptermemo.getUserName());
                     question.setAlignmentX(Component.CENTER_ALIGNMENT);
                     container.add(question);
                     final JCheckBox remember = new JCheckBox("Remember this setting for next time?");
@@ -437,7 +465,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                             if(remember.isSelected()){
                                 p.setRemoveLocoFromEcos(0x01);
                             }
-                            provideByEcosObject(_re.getAttribute("EcosObject")).setRosterId(null);
+                            provideByEcosObject(_re.getAttribute(p.getRosterAttribute())).setRosterId(null);
                             dialog.dispose();
                         }
                     });
@@ -448,8 +476,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                                 p.setRemoveLocoFromEcos(0x02);
                             }
                             RemoveObjectFromEcos removeObjectFromEcos = new RemoveObjectFromEcos();
-                            removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute("EcosObject"), tc);
-                            deleteEcosLoco(provideByEcosObject(_re.getAttribute("EcosObject")));
+                            removeObjectFromEcos.removeObjectFromEcos(_re.getAttribute(p.getRosterAttribute()), tc);
+                            deleteEcosLoco(provideByEcosObject(_re.getAttribute(p.getRosterAttribute())));
                             dialog.dispose();
                         }
                     });
@@ -482,7 +510,9 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             if (lines[0].startsWith("<REPLY queryObjects(10)>")){
                 //System.out.println("A return of a simple list of objects");
                 checkLocoList(lines);
-            } else if (lines[0].startsWith("<REPLY queryObjects(10")){
+            } 
+            else if (lines[0].startsWith("<REPLY queryObjects(10")){
+                //System.out.println("Reply " + m + " " + getSystemPrefix() + " " + this);
                 //First line is the response header, the last line is the OK
                 for (int i = 1; i<lines.length-1; i++) {
                     if (lines[i].contains("addr[")) { // skip odd lines
@@ -565,6 +595,16 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     if (lines[i].contains("protocol")){
                         tmploco.setProtocol(getProtocol(lines[i]));
                     }
+                    if (lines[i].contains("dir")){
+                        //System.out.println(lines[i]);
+                        //tmploco.setDirection(getDirection(lines[i]));
+                        tmploco.reply(m);
+                    }
+                    if (lines[i].contains("speed")){
+                        tmploco.reply(m);
+                        //System.out.println(lines[i]);
+                        //tmploco.setSpeed(getSpeed(lines[i]));
+                    }
                     register(tmploco);
                 }
 
@@ -574,7 +614,8 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     //System.out.println("Code here to Add a loco to JMRI");
                     //return;
                 }*/
-            } else if(lines[0].contains("<EVENT 10>")){
+            } 
+            else if(lines[0].contains("<EVENT 10>")){
                 //System.out.println("We have a change in the loco database");
                 log.debug("We have received notification of a change in the Loco list");
                 if (lines.length==2){
@@ -592,6 +633,19 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     tc.sendEcosMessage(mout, this);
                 }
             }
+            else if (lines[0].startsWith("<EVENT")){
+                EcosLocoAddress tmploco;
+                //So long as the event information is for a turnout we will determine
+                //which turnout it is for and let that deal with the message.
+                int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
+                if ((1000<=object) && (object<2000)){
+                    log.debug("Forwarding on State change for " + object);
+                    tmploco = provideByEcosObject(""+object);
+                    if (tmploco!=null){
+                        tmploco.reply(m);
+                    }
+                }
+            } 
         }
     }
     
@@ -626,7 +680,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * to the roster otherwise this causes a problem with the roster list.
      */
     void checkLocoList(String[] ecoslines){
-        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        //final EcosPreferences p = adaptermemo.getPreferenceManager();
         //System.out.println("Check loco list");
         String loco;
         for(int i=1; i<ecoslines.length-1; i++){
@@ -662,7 +716,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     final String rosterid = getByEcosObject(jmrilist[i]).getRosterId();
                     final Roster _roster = Roster.instance();
                     final RosterEntry re = _roster.entryFromTitle(rosterid);
-                    re.deleteAttribute("EcosObject");
+                    re.deleteAttribute(p.getRosterAttribute());
                     re.writeFile(null, null, null);
                     Roster.writeRosterFile();
                     if(p.getRemoveLocoFromJMRI()==0x02){
@@ -759,11 +813,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
      * loco from the ecos into the roster.
      */
     private void checkInRoster(final EcosLocoAddress tmploco){
-        final EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+       // final EcosPreferences p = adaptermemo.getPreferenceManager();
         if (p.getAddLocoToJMRI()==0x02){
             setLocoToRoster();
             EcosLocoToRoster tmp = new EcosLocoToRoster();
-            tmp.ecosLocoToRoster(tmploco.getEcosObject());
+            tmp.ecosLocoToRoster(tmploco.getEcosObject(), adaptermemo);
         } else if(p.getAddLocoToJMRI()==0x00 && tmploco.addToRoster() && (tmploco.getRosterId()==null)){
             final JDialog dialog = new JDialog();
             dialog.setTitle("Add Roster Entry From JMRI?");
@@ -773,7 +827,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             container.setLayout(new BoxLayout(container, BoxLayout.Y_AXIS));
             container.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
 
-            JLabel question = new JLabel("Loco " + tmploco.getEcosDescription() + " has been add to the Ecos");
+            JLabel question = new JLabel("Loco " + tmploco.getEcosDescription() + " has been add to the " + adaptermemo.getUserName());
             question.setAlignmentX(Component.CENTER_ALIGNMENT);
             container.add(question);
             
@@ -810,7 +864,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                         p.setAddLocoToJMRI(0x02);
                     }
                     EcosLocoToRoster tmp = new EcosLocoToRoster();
-                    tmp.ecosLocoToRoster(tmploco.getEcosObject());
+                    tmp.ecosLocoToRoster(tmploco.getEcosObject(), adaptermemo);
                     dialog.dispose();
                 }
             });
@@ -825,7 +879,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
 
         }
         /*if (p.getLocoMaster()!=0x00){
-            List<RosterEntry> re = Roster.instance().getEntriesWithAttributeKeyValue("EcosObject", tmploco.getEcosObject());
+            List<RosterEntry> re = Roster.instance().getEntriesWithAttributeKeyValue(rosterAttribute, tmploco.getEcosObject());
             //It should be unique
             if (re.size()==0){
                 EcosLocoToRoster tmp = new EcosLocoToRoster();
@@ -852,7 +906,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         private void waitForPrefLoad() {
             try {
                     Thread.sleep(1000);
-            } catch (Exception e) {}
+            } catch (Exception e) {System.out.println(e.toString());}
             wait = p.getPreferencesLoaded();
             if (x>=100){
                 wait=true;
@@ -860,6 +914,14 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             }
             x++;
         }
+    }
+    
+    public void refreshItems(){
+            // ask to be notified about newly created turnouts on the layout.
+        EcosMessage m = new EcosMessage("request(10, view)");
+        tc.sendEcosMessage(m, this);
+        monitorLocos(monitorState);
+        
     }
 
     

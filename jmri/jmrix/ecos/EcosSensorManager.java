@@ -13,7 +13,7 @@ import jmri.Sensor;
  * s88 Bus Module and yy is the port on that module.
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class EcosSensorManager extends jmri.managers.AbstractSensorManager
                                 implements EcosListener {
@@ -37,8 +37,8 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
 
     EcosTrafficController tc;
     //The hash table simply holds the object number against the EcosSensor ref.
-    private static Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
-    private static Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
+    private Hashtable <Integer, EcosSensor> _tecos = new Hashtable<Integer, EcosSensor>();   // stores known Ecos Object ids to DCC
+    private Hashtable <Integer, Integer> _sport = new Hashtable<Integer, Integer>();   // stores known Ecos Object ids to DCC
     
     public String getSystemPrefix() { return prefix; }
     
@@ -155,15 +155,6 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
         // messages are ignored
     }
     
-    /*static class EcosSensorManagerHolder {
-        static EcosSensorManager
-            instance = new EcosSensorManager();
-    }
-
-    public static EcosSensorManager instance() {
-        return EcosSensorManagerHolder.instance;
-    }*/
-    
     private void EcosSensorState(int object, int intState){
         EcosSensor es;
         int k = 1;
@@ -192,7 +183,9 @@ public class EcosSensorManager extends jmri.managers.AbstractSensorManager
     }
     
     public void refreshItems(){
-            // ask to be notified about newly created turnouts on the layout.
+        /*ask to be notified about newly created sensors on the layout.
+        Doing the request to view the list, will also kick off a request to 
+        view each individual sensor*/
         EcosMessage m = new EcosMessage("queryObjects(26, ports)");
         tc.sendEcosMessage(m, this);
         

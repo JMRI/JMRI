@@ -1,12 +1,7 @@
 package jmri.jmrix.ecos.utilities;
 
-//import javax.swing.JOptionPane;
-//import javax.swing.JDesktopPane;
-
 import java.util.Enumeration;
 
-//import jmri.jmrix.ecos.EcosLocoAddressManager;
-//import jmri.jmrix.ecos.EcosLocoAddress;
 import jmri.jmrix.ecos.*;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.Roster;
@@ -16,7 +11,6 @@ import jmri.jmrit.symbolicprog.*;
 import jmri.Programmer;
 
 import java.util.List;
-//import javax.swing.JLabel;
 import javax.swing.tree.TreeNode;
 import java.io.File;
 
@@ -28,8 +22,6 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import org.jdom.Element;
 
 import javax.swing.tree.TreePath;
-
-
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
@@ -38,7 +30,6 @@ import javax.swing.event.TreeSelectionListener;
 
 public class EcosLocoToRoster implements EcosListener {
     
-    EcosTrafficController tc;
     EcosLocoAddressManager ecosManager;
     EcosLocoAddress ecosLoco;
     RosterEntry re;
@@ -57,14 +48,16 @@ public class EcosLocoToRoster implements EcosListener {
     protected JComboBox locoBox = null;
     protected JToggleButton iddecoder;
     JFrame frame;
-    
+    EcosSystemConnectionMemo adaptermemo;
+
     public EcosLocoToRoster(){}
     //Same Name as the constructor need to sort it out!
-    public void ecosLocoToRoster(String ecosObject){
+    public void ecosLocoToRoster(String ecosObject, EcosSystemConnectionMemo memo){
         frame = new JFrame();
+        adaptermemo = memo;
         _ecosObject = ecosObject;
         _ecosObjectInt = Integer.parseInt(_ecosObject);
-        ecosManager = jmri.InstanceManager.getDefault(EcosLocoAddressManager.class);
+        ecosManager = adaptermemo.getLocoAddressManager();
         //ecosManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
         ecosLoco = ecosManager.getByEcosObject(ecosObject);
         String rosterId=ecosLoco.getEcosDescription();
@@ -80,7 +73,6 @@ public class EcosLocoToRoster implements EcosListener {
         re.setId(rosterId);
         List<DecoderFile> decoder = decoderind.matchingDecoderList(null, null, ecosLoco.getCV8(), ecosLoco.getCV7(), null, null);
         if (decoder.size()==1){
-            DecoderFile pDecoderFile;
             pDecoderFile=decoder.get(0);
             SelectedDecoder(pDecoderFile);
             
@@ -183,6 +175,7 @@ public class EcosLocoToRoster implements EcosListener {
         frame.setVisible( true );
 
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(WindowEvent winEvt) {
             ecosManager.clearLocoToRoster();
             }
@@ -229,7 +222,7 @@ public class EcosLocoToRoster implements EcosListener {
             re.setOwner(RosterEntry.getDefaultOwner());
         re.setComment("Automatically Imported from the Ecos");
         re.setDecoderComment("");    
-        re.putAttribute("EcosObject", _ecosObject);
+        re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);
         re.ensureFilenameExists();
         
         mProgrammer   = null;
@@ -287,6 +280,7 @@ public class EcosLocoToRoster implements EcosListener {
         dRoot = new DefaultMutableTreeNode("Root");
         dModel = new DefaultTreeModel(dRoot);
         dTree = new JTree(dModel){
+            @Override
             public String getToolTipText(MouseEvent evt) {
                 if (getRowForLocation(evt.getX(), evt.getY()) == -1) return null;
                 TreePath curPath = getPathForLocation(evt.getX(), evt.getY());
@@ -319,12 +313,12 @@ public class EcosLocoToRoster implements EcosListener {
         	String famComment = decoders.get(i).getFamilyComment();
         	String verString = decoders.get(i).getVersionsAsString();
         	String hoverText = "";
-        	if (famComment == "" || famComment == null) {
-        		if (verString != "") {
+        	if (famComment == null ? "" == null : famComment.equals("")) {
+        		if (verString == null ? "" != null : !verString.equals("")) {
             		hoverText = "CV7=" + verString;
         		}
         	} else {
-        		if (verString == "") {
+        		if (verString == null ? "" == null : verString.equals("")) {
             		hoverText = famComment;
         		} else {
             		hoverText = famComment + "  CV7=" + verString;
@@ -395,6 +389,7 @@ public class EcosLocoToRoster implements EcosListener {
         
 //      Mouselistener for doubleclick activation of proprammer   
         dTree.addMouseListener(new MouseAdapter(){
+            @Override
             public void mouseClicked(MouseEvent me){
                  // Clear any status messages and ensure the tree is in single path select mode
                  //if (_statusLabel != null) _statusLabel.setText("StateIdle");
@@ -502,8 +497,10 @@ public class EcosLocoToRoster implements EcosListener {
         // find and select the first item
         if (log.isDebugEnabled()) {
             //String msg = "Identified "+pList.size()+" matches: ";
-            StringBuffer buf = new StringBuffer();
-            buf.append("Identified "+pList.size()+" matches: ");
+            StringBuilder buf = new StringBuilder();
+            buf.append("Identified ");
+            buf.append(pList.size());
+            buf.append(" matches: ");
             for (int i = 0 ; i< pList.size(); i++){
                 buf.append(pList.get(i).getModel());
                 buf.append(":");

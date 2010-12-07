@@ -22,19 +22,23 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     protected void getInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        adapter = new NetworkDriverAdapter();
+    }
+
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
     
     @Override
     protected void extendElement(Element e){
         Element ecosPrefElem = new Element("commandStationPreferences");
-        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo)adapter.getSystemConnectionMemo()).getPreferenceManager();
 
         if(p.getAddTurnoutsToEcos()==0x01) ecosPrefElem.setAttribute("addTurnoutToCS", "no");
         else if(p.getAddTurnoutsToEcos()==0x02) ecosPrefElem.setAttribute("addTurnoutToCS", "yes");
@@ -73,6 +77,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             if(!p.getEcosLocoDescription().equals(""))
                 ecosPrefElem.setAttribute("defaultCSLocoDescription",p.getEcosLocoDescription());
         }
+        ecosPrefElem.setAttribute("ecosRosterAttribute",p.getRosterAttribute());
         e.addContent(ecosPrefElem);
     
     }
@@ -81,7 +86,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     @Override
     protected void unpackElement(Element e) {
         List<Element> ecosPref = e.getChildren("commandStationPreferences");
-        EcosPreferences p = jmri.InstanceManager.getDefault(jmri.jmrix.ecos.EcosPreferences.class);
+        EcosPreferences p = ((jmri.jmrix.ecos.EcosSystemConnectionMemo)adapter.getSystemConnectionMemo()).getPreferenceManager();
         for (int i=0; i<ecosPref.size();i++){
             if (ecosPref.get(i).getAttribute("addTurnoutToCS") != null){
                 String yesno = ecosPref.get(i).getAttribute("addTurnoutToCS").getValue();
@@ -172,6 +177,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
                 p.setEcosLocoDescription(ecosPref.get(i).getAttribute("defaultCSLocoDescription").getValue());
             }
             
+            if (ecosPref.get(i).getAttribute("ecosRosterAttribute") != null){
+                p.setRosterAttribute(ecosPref.get(i).getAttribute("ecosRosterAttribute").getValue());
+            }
             p.resetChangeMade();
          }
          p.setPreferencesLoaded();

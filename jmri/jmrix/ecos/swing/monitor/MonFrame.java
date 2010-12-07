@@ -7,24 +7,28 @@ import jmri.jmrix.ecos.*;
 /** 
  * Frame displaying (and logging) ECOS command messages
  * @author			Bob Jacobsen   Copyright (C) 2001,2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
+  * @deprecated 2.11.3
  */
-
+@Deprecated
 public class MonFrame extends jmri.jmrix.AbstractMonFrame implements EcosListener {
 
-	public MonFrame() {
+	public MonFrame(EcosTrafficController tc) {
 		super();
+                this.tc = tc;
 	}
+
+        EcosTrafficController tc;
 
 	protected String title() { return "ECOS Command Monitor"; }
 	
 	protected void init() {
 		// connect to TrafficController
-		EcosTrafficController.instance().addEcosListener(this);
+		tc.addEcosListener(this);
 	}
   
 	public void dispose() {
-		EcosTrafficController.instance().removeEcosListener(this);
+		tc.removeEcosListener(this);
 		super.dispose();
 	}
 			

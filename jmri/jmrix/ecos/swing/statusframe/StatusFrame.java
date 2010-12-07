@@ -9,12 +9,15 @@ import javax.swing.*;
 /**
  * Frame for ECoS status
  * @author	Bob Jacobsen   Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
+ * @deprecated 2.11.3
  */
+@Deprecated
 public class StatusFrame extends jmri.util.JmriJFrame {
 
-    public StatusFrame() {
+    public StatusFrame(EcosSystemConnectionMemo memo) {
         super();
+        adaptermemo = memo;
     }
     
     EcosSystemConnectionMemo adaptermemo;
@@ -54,7 +57,7 @@ public class StatusFrame extends jmri.util.JmriJFrame {
         statusPane.reset();
         
         EcosMessage m = new EcosMessage("get(1, info)");
-        EcosTrafficController.instance().sendEcosMessage(m, null);
+        adaptermemo.getTrafficController().sendEcosMessage(m, null);
 
 	}
 

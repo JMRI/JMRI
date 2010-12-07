@@ -32,7 +32,7 @@ import jmri.jmrix.ecos.EcosSystemConnectionMemo;
  * for more details.
  * <P>
  * @author	Kevin Dickerson   Copyright (C) 2009
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AddRosterEntryToEcos extends AbstractAction {
 
@@ -69,7 +69,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
         RosterEntry re = roster.entryFromTitle(selEntry);
         //System.out.println("Add " + re.getId() + " to Ecos");
         RosterToEcos rosterToEcos = new RosterToEcos();
-        rosterToEcos.createEcosLoco(re, adaptermemo.getTrafficController());
+        rosterToEcos.createEcosLoco(re, adaptermemo);
         actionPerformed(event);
     }
 
@@ -78,7 +78,7 @@ public class AddRosterEntryToEcos extends AbstractAction {
             rosterEntry.removeAllItems();
         for(int i=0; i<roster.numEntries(); i++){
             RosterEntry r = roster.getEntry(i);
-            if(r.getAttribute("EcosObject")==null)
+            if(r.getAttribute(adaptermemo.getPreferenceManager().getRosterAttribute())==null)
                 rosterEntry.addItem(r.titleString());
         }
     }
