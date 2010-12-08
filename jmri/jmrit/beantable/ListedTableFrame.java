@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -63,8 +63,6 @@ public class ListedTableFrame extends BeanTableFrame {
     tabbedTableItem itemBeingAdded = null;
     static int lastdivider;
     
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-                    justification="We only intend to use/save the last position of the Split frame")
     public ListedTableFrame() {
         super();
         if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
@@ -135,6 +133,8 @@ public class ListedTableFrame extends BeanTableFrame {
             cardHolder.setDividerLocation(listScroller.getPreferredSize().width);
         }
         cardHolder.addPropertyChangeListener(new PropertyChangeListener(){
+                @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                    justification="We only intend to use/save the last position of the Split frame")
             public void propertyChange(PropertyChangeEvent e) {
                 if (e.getPropertyName().equals("dividerLocation")){
                     lastdivider = (Integer) e.getNewValue();
@@ -388,9 +388,9 @@ public class ListedTableFrame extends BeanTableFrame {
             try {
                 dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
-            } catch ( NullPointerException e) {
+           } catch ( NullPointerException e) {
                 log.error("An error occured while trying to create the table for " + itemText);
-            }
+           }
         }
         
         boolean getStandardTableModel(){ return standardModel; }
