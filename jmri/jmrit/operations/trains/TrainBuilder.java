@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.110 $
+ * @version             $Revision: 1.111 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1517,6 +1517,7 @@ public class TrainBuilder extends TrainCommon{
 		return true;	
 	}
 	
+	// return false if build failure
 	private boolean findDestinationAndTrack(Car car, RouteLocation rl, int routeIndex){
 		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildFindDestinationForCar"),new Object[]{car.toString(), (car.getLocationName()+", " +car.getTrackName())}));
 		int start = routeIndex;					// start looking after car's current location
@@ -1560,6 +1561,9 @@ public class TrainBuilder extends TrainCommon{
 			}
 			// can this location service this train's direction
 			if (!checkDropTrainDirection(rld, testDestination))
+				continue;
+			// is the train length okay?
+			if (!checkTrainLength(car, rl, rld))
 				continue;
 			// is there a track assigned for staging cars?				
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null){						
@@ -1605,7 +1609,10 @@ public class TrainBuilder extends TrainCommon{
 							addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 							car.setLoad(si.getLoad());
 							// force car to this destination
-							return addCarToTrain(car, rl, rld, testTrack);	// should always be true
+							boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
+							if (!carAdded)
+								log.debug ("Couldn't add car "+car.toString()+" to train, location "+rl.getName()+ " destination " +rld.getName());
+							return true;
 						}
 					}
 					// okay to drop car?
@@ -1698,7 +1705,10 @@ public class TrainBuilder extends TrainCommon{
 			}
 		} 
 		if (trackSave != null){
-			return addCarToTrain(car, rl, rldSave, trackSave); // should always be true
+			boolean carAdded = addCarToTrain(car, rl, rldSave, trackSave); // should always be true
+			if (!carAdded)
+				log.debug ("Couldn't add car "+car.toString()+" to train");
+			return true;
 		} 
 		if (routeList.size()>1)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
