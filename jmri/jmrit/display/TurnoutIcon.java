@@ -28,7 +28,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -309,7 +309,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     void updateItem() {
-        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, null);
+        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();

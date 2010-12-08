@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -69,7 +69,7 @@ public class IndicatorTrackIcon extends PositionableLabel
     }
 
     public Hashtable<String, NamedIcon> getIconMap() {
-        return _iconMap;
+        return cloneMap(_iconMap, this);
     }
 
     /**
