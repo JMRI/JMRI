@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.25 2010-12-01 22:23:27 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.26 2010-12-08 03:30:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -319,6 +319,26 @@ He also added a few links to the generated index.html (delete existing file and 
 
 <p>
 Steve Todd fixed the MIME types for image files from the mini web server.
+
+<p>
+Kevin Dickerson updated the ECOS support.
+An additional feature for the Ecos Loco Database table is the monitoring of current Speed and 
+Direction of Locos and the ability to Force a stop on a certain loco.
+
+<p>
+Lionel Jeanson improved the Roster XSLT support so that it displays well via the mini web server,
+and shows a button for opening a throttle.
+
+<p>
+Andrew Crosland updated the MERG CBUS support to 
+respond to track off message as well as emergency stop.
+Also made some internal changes.
+
+<p>
+Paul Bender made a fix to the Lenz momentary function support.
+
+<p>
+Pete Cressman made numerous small changes to Logix and panel support.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
