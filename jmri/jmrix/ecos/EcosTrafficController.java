@@ -24,7 +24,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * necessary state in each message.
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class EcosTrafficController extends AbstractMRTrafficController implements EcosInterface, CommandStation {
 
@@ -152,7 +152,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
      * @return The registered EcosTrafficController instance for general use,
      *         if need be creating one.
      */
-    public EcosTrafficController instance() {
+    static public EcosTrafficController instance() {
         return self;
     }
 
@@ -162,7 +162,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT")
     // FindBugs wants this package protected, but we're removing it when multi-connection
     // migration is complete
-    static protected EcosTrafficController self = null;
+    final static protected EcosTrafficController self = null;
 
     /*static class EcosTrafficControllerHolder {
         static EcosTrafficController

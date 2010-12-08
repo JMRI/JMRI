@@ -15,7 +15,7 @@ import java.util.Vector;*/
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
@@ -53,7 +53,8 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
             adaptermemo.dispose();
         adaptermemo = null;
     }
-    
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DE_MIGHT_IGNORE", 
+        justification="We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection(){
         try {
             socketConn.close();

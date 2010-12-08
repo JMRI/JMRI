@@ -14,12 +14,14 @@ public class EcosMenu extends JMenu{
         super();
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ecos.EcosBundle");
-
+        String title;
         if (memo != null)
-            setText(memo.getUserName());
+            title = memo.getUserName();
         else
-            setText(rb.getString("MenuEcos"));
-
+            title = rb.getString("MenuEcos");
+        
+        setText(title);
+        
         jmri.util.swing.WindowInterface wi = new jmri.util.swing.sdi.JmriJFrameInterface();
         
         for (Item item : panelItems) {
@@ -35,7 +37,7 @@ public class EcosMenu extends JMenu{
         }
 
         add(new jmri.jmrit.beantable.ListedTableAction("ECoS Loco Database", "jmri.jmrix.ecos.swing.locodatabase.EcosLocoTableTabAction"));
-        add(new apps.gui3.TabbedPreferencesAction("ECoS Preferences", "ECOS", memo.getUserName()));
+        add(new apps.gui3.TabbedPreferencesAction("ECoS Preferences", "ECOS", title));
         add(new jmri.jmrix.ecos.utilities.AddRosterEntryToEcos("Add Roster Entry to ECoS", memo));
         
 

@@ -10,7 +10,7 @@ import jmri.implementation.QuietShutDownTask;
  * with JMRI.
  *
  * @author	Kevin Dickerson  Copyright (C) 2009
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 
 public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
@@ -314,7 +314,7 @@ public class EcosPreferences /*implements java.beans.PropertyChangeListener*/{
         //If no suffix is passed then we just use the default.
         if((att == null) || (att.equals("")))
             _rosterAttribute = "EcosObject";
-        if(att.startsWith("EcosObject"))
+        else if(att.startsWith("EcosObject"))
             _rosterAttribute = att;
         else
             _rosterAttribute = "EcosObject:"+att;

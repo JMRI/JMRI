@@ -78,14 +78,14 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
 
             static public final int NUMCOLUMN = 8;
             
-            public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}
+            /*public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}*/
 
             //We have to set a manager first off, but this gets replaced.
             protected EcosLocoAddressManager getManager() { return locoManager;}
             protected String getRosterAttribute() { return rosterAttribute; }
 
             
-            public EcosLocoAddress getByDccAddress(int address) {return getManager().getByDccAddress(address);}
+            /*public EcosLocoAddress getByDccAddress(int address) {return getManager().getByDccAddress(address);}*/
             
             public String getValue(String s) {
                 return "Set";
@@ -360,6 +360,8 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
                     return null;
                 }
             }
+
+            
         };
     }
     
@@ -368,7 +370,6 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
         showLocoMonitor = showMonitorLoco.isSelected();
         locoManager.monitorLocos(showLocoMonitor);
         m.fireTableStructureChanged(); // update view
-
     }
     
     JCheckBox showMonitorLoco = new JCheckBox("Monitor Loco Speed");
@@ -385,15 +386,15 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
     void stopLoco(int row, int col){
     
         String objectNumber = ecosObjectIdList.get(row);
-        EcosMessage eM;
+        EcosMessage m;
         //We will repeat this three times to make sure it gets through.
         for (int x = 0 ;x<3 ; x++){
-            eM = new EcosMessage("request("+objectNumber+", control, force)");
-            adaptermemo.getTrafficController().sendEcosMessage(eM, null);
-            eM = new EcosMessage("set("+objectNumber+", stop)");
-            adaptermemo.getTrafficController().sendEcosMessage(eM, null);
-            eM = new EcosMessage("release("+objectNumber+", control)");
-            adaptermemo.getTrafficController().sendEcosMessage(eM, null);
+            m = new EcosMessage("request("+objectNumber+", control, force)");
+            adaptermemo.getTrafficController().sendEcosMessage(m, null);
+            m = new EcosMessage("set("+objectNumber+", stop)");
+            adaptermemo.getTrafficController().sendEcosMessage(m, null);
+            m = new EcosMessage("release("+objectNumber+", control)");
+            adaptermemo.getTrafficController().sendEcosMessage(m, null);
         }
     }
     

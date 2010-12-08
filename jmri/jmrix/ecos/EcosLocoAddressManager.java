@@ -18,7 +18,7 @@ import jmri.implementation.QuietShutDownTask;
 /**
  * Managers the Ecos Loco entries within JMRI.
  * @author Kevin Dickerson
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class EcosLocoAddressManager extends jmri.managers.AbstractManager implements java.beans.PropertyChangeListener, EcosListener, jmri.Manager{
 
@@ -32,21 +32,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         p = adaptermemo.getPreferenceManager();
         rosterAttribute = p.getRosterAttribute();
         prefix = adaptermemo.getSystemPrefix();
-        if (p.getPreferencesLoaded()){
-            loadEcosData();
-        } else {
-            /*as the loco address manager is called prior to the remainder of the
-            preferences being loaded, we add a thread which waits for the preferences
-            to be loaded prior to reading the Ecos Loco database.
-            */
-            if(waitPrefLoad!=null) {
-                waitPrefLoad.interrupt();
-                waitPrefLoad=null;
-            }
-            waitPrefLoad = new Thread(new waitPrefLoad());
-            waitPrefLoad.setName("Wait for Preferences to be loaded");
-            waitPrefLoad.start();
-        }
+        loadEcosData();
         if (jmri.InstanceManager.getDefault(jmri.jmrit.beantable.ListedTableFrame.class)==null){
             new jmri.jmrit.beantable.ListedTableFrame();
         }
@@ -151,6 +137,25 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
     }
     
     private void loadEcosData(){
+        if (p.getPreferencesLoaded()){
+            loadData();
+        } else {
+            /*as the loco address manager is called prior to the remainder of the
+            preferences being loaded, we add a thread which waits for the preferences
+            to be loaded prior to reading the Ecos Loco database.
+            */
+            if(waitPrefLoad!=null) {
+                waitPrefLoad.interrupt();
+                waitPrefLoad=null;
+            }
+            waitPrefLoad = new Thread(new waitPrefLoad());
+            waitPrefLoad.setName("Wait for Preferences to be loaded");
+            waitPrefLoad.start();
+            return;
+        }
+    }
+    
+    private void loadData(){
         tc.addEcosListener(this);
 
         Roster.instance().addPropertyChangeListener(this);
@@ -183,12 +188,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
         List<String> objects = getEcosObjectList();
         EcosMessage m;
         for(int x = 0; x < objects.size(); x++){
-            if (monitor){
-                m = new EcosMessage("get("+objects.get(x)+", speed)");
-                tc.sendEcosMessage(m, this);
-                m = new EcosMessage("get("+objects.get(x)+", dir)");
-                tc.sendEcosMessage(m, this);
-            }
             m = new EcosMessage(command+objects.get(x)+",view)");
             tc.sendEcosMessage(m, this);
         }
@@ -595,16 +594,6 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                     if (lines[i].contains("protocol")){
                         tmploco.setProtocol(getProtocol(lines[i]));
                     }
-                    if (lines[i].contains("dir")){
-                        //System.out.println(lines[i]);
-                        //tmploco.setDirection(getDirection(lines[i]));
-                        tmploco.reply(m);
-                    }
-                    if (lines[i].contains("speed")){
-                        tmploco.reply(m);
-                        //System.out.println(lines[i]);
-                        //tmploco.setSpeed(getSpeed(lines[i]));
-                    }
                     register(tmploco);
                 }
 
@@ -640,9 +629,11 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
                 int object = GetEcosObjectNumber.getEcosObjectNumber(lines[0], " ", ">");
                 if ((1000<=object) && (object<2000)){
                     log.debug("Forwarding on State change for " + object);
-                    tmploco = provideByEcosObject(""+object);
+                    tmploco = _tecos.get(object);
                     if (tmploco!=null){
                         tmploco.reply(m);
+                        //As the event will come from one object, we shall check to see if it is an extended address,
+                        // if it is we also forward the message onto the slaved address.
                     }
                 }
             } 
@@ -897,7 +888,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             while(!wait) {
                 waitForPrefLoad();
             }
-            loadEcosData();
+            loadData();
         }
 
         boolean wait = false;
@@ -910,6 +901,7 @@ public class EcosLocoAddressManager extends jmri.managers.AbstractManager implem
             wait = p.getPreferencesLoaded();
             if (x>=100){
                 wait=true;
+                System.out.println(x);
                 log.error("Timeout occured on waiting for the Ecos preferences to be loaded");
             }
             x++;

@@ -11,7 +11,7 @@ import javax.swing.*;
  * Panel to show ECoS status
  *
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements EcosListener {
 
@@ -31,7 +31,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
     public void initComponents(EcosSystemConnectionMemo memo) {
         super.initComponents(memo);
         //memo.getTrafficController().addEcosListener(this);
-        EcosTrafficController tc = memo.getTrafficController();
+        tc = memo.getTrafficController();
         // Create GUI
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(appVersion);
@@ -87,7 +87,7 @@ public class StatusPanel extends jmri.jmrix.ecos.swing.EcosPanel implements Ecos
         if (tc == null) throw new JmriException("attempt to use EcosPowerManager after dispose");
     }
 
-    EcosTrafficController tc = null;
+    EcosTrafficController tc;
 
     // to listen for status changes from Ecos system
     public void reply(EcosReply m) {
