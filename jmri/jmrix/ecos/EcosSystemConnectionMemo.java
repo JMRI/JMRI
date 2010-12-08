@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -23,7 +23,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         et.setAdapterMemo(this);
         register();
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
-        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this), 
+        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.EcosComponentFactory(this),
                 jmri.jmrix.swing.ComponentFactory.class);
         prefManager = new jmri.jmrix.ecos.EcosPreferences(this);
     }
@@ -33,7 +33,7 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         register(); // registers general type
         InstanceManager.store(this, EcosSystemConnectionMemo.class); // also register as specific type
         //Needs to be implemented
-        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.ComponentFactory(this),
+        InstanceManager.store(cf = new jmri.jmrix.ecos.swing.EcosComponentFactory(this),
                         jmri.jmrix.swing.ComponentFactory.class);
         //jmri.InstanceManager.store(new jmri.jmrix.ecos.EcosPreferences(thie), jmri.jmrix.ecos.EcosPreferences.class);
         prefManager = new jmri.jmrix.ecos.EcosPreferences(this);

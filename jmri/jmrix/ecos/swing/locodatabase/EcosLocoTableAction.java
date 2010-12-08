@@ -76,7 +76,7 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
             static public final int SPEEDDIR = 6;
             static public final int STOP = 7;
 
-            static public final int NUMCOLUMN = 8;
+            //static public final int NUMCOLUMN = 8;
             
             /*public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}*/
 
@@ -282,9 +282,8 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
                 }
             }
     
-            JTable table;
             public void configureTable(JTable table) {
-                this.table = table;
+                //this.table = table;
                 setUpCOMMENTCOL(table.getColumnModel().getColumn(COMMENTCOL));
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
                         new JButton("Add to Roster"));

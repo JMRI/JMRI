@@ -7,9 +7,9 @@ import javax.swing.JMenu;
  *
  * @author Kevin Dickerson 2010
  */
-public class ComponentFactory extends jmri.jmrix.swing.ComponentFactory {
+public class EcosComponentFactory extends jmri.jmrix.swing.ComponentFactory {
 
-    public ComponentFactory(EcosSystemConnectionMemo memo) {
+    public EcosComponentFactory(EcosSystemConnectionMemo memo) {
         this.memo = memo;
     }
 
