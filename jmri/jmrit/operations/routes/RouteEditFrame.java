@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.38 $
+ * @version $Revision: 1.39 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -290,7 +290,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 					JOptionPane.ERROR_MESSAGE);
 			return false;
 		}
-		if (routeNameTextField.getText().length() > 25){
+		if (routeNameTextField.getText().length() > Control.MAX_LEN_STRING_ROUTE_NAME){
 			log.error("Route name must be less than 26 charaters");
 			JOptionPane.showMessageDialog(this,
 					rb.getString("RouteNameLess"), MessageFormat.format(rb.getString("CanNotRoute"), new Object[] {s}),

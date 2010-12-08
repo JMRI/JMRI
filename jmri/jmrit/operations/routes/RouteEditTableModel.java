@@ -8,6 +8,7 @@ import javax.swing.*;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -20,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.3 $
+ * @version   $Revision: 1.4 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -349,7 +350,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
      	}else{
      		log.error("Location moves can not exceed 100");
 			JOptionPane.showMessageDialog(null,
-					"Location moves can not exceed 100", "Can not change number of moves!",
+					rb.getString("MaximumLocationMoves"), rb.getString("CanNotChangeMoves"),
 					JOptionPane.ERROR_MESSAGE);
      	}
     }
@@ -378,7 +379,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	} catch(NumberFormatException e) {
     		log.error("Location wait must be a number");
 			JOptionPane.showMessageDialog(null,
-					"Enter wait time in minutes", "Wait time isn't valid",
+					rb.getString("EnterWaitTimeMinutes"), rb.getString("WaitTimeNotValid"),
 					JOptionPane.ERROR_MESSAGE);
     		return;
     	}
@@ -396,16 +397,21 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	try{
      		length = Integer.parseInt(value.toString());
     	} catch(NumberFormatException e) {
-    		log.error("Location length must be a number");
+    		log.error("Maximum departure length must be a number");
+    		return;
+    	}
+    	if (length < 0){
+    		log.error("Maximum departure length must be a postive number");
     		return;
     	}
      	if (length <= Setup.getTrainLength()){
      		rl.setMaxTrainLength(length);
      		_maxTrainLength = length;
      	}else{
-     		log.error("Location length can not exceed max train length");
+     		log.error("Maximum departure length can not exceed maximum train length");
 			JOptionPane.showMessageDialog(null,
-					"Location length can not exceed max train length", "Can not change max train length!",
+					MessageFormat.format(rb.getString("DepartureLengthNotExceed"),
+							new Object[]{length,Setup.getTrainLength()}), rb.getString("CanNotChangeMaxLength"),
 					JOptionPane.ERROR_MESSAGE);
      	}
     }
@@ -419,12 +425,12 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     		log.error("grade must be a number");
     		return;
     	}
-     	if (grade <= 6){
+     	if (grade <= 6 && grade >= -6){
      		rl.setGrade(grade);
      	}else{
      		log.error("Maximum grade is 6 percent");
 			JOptionPane.showMessageDialog(null,
-					"Maximum grade is 6 percent", "Can not change grade!",
+					rb.getString("MaxGrade"), rb.getString("CanNotChangeGrade"),
 					JOptionPane.ERROR_MESSAGE);
      	}
     }
@@ -457,7 +463,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	log.debug("Set comment for row "+row);
     	RouteLocation rl = _route.getLocationById(list.get(row));
 		Object comment =  JOptionPane.showInputDialog(null,
-				"Comment", "Enter comment for location "+rl.getName(),
+				rb.getString("Comment"), MessageFormat.format(rb.getString("EnterCommentLocation"),
+						new Object[]{rl.getName()}),
 				JOptionPane.PLAIN_MESSAGE, null, null, rl.getComment());
 		if(comment == null)
 			return;
@@ -495,7 +502,8 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     // this table listens for changes to a route and it's locations
     public void propertyChange(PropertyChangeEvent e) {
-    	if (log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
+    	if (log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+
+    			" old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();

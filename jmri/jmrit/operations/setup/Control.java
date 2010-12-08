@@ -58,5 +58,8 @@ public class Control {
 	
 	// Car and Engine built date maximum string length
 	public static final int MAX_LEN_STRING_BUILT_NAME = 4;
+	
+	// Route name maximum string length
+	public static final int MAX_LEN_STRING_ROUTE_NAME = 25;
 }
 
