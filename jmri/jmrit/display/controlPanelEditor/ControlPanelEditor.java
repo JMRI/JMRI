@@ -65,6 +65,7 @@ import jmri.jmrit.catalog.NamedIcon;
 public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     public boolean _debug;
+	private boolean delayedPopupTrigger = false;
     private JMenuBar _menuBar;
     private JMenu _editMenu;
     private JMenu _fileMenu;
@@ -629,6 +630,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 }
             }
         } else {
+            if (event.isMetaDown() || event.isAltDown()) {
+                // if requesting a popup and it might conflict with moving, delay the request to mouseReleased
+                delayedPopupTrigger = true;
+            }
             _selectionGroup = null;
         }
         _targetPanel.repaint(); // needed for ToolTip
@@ -643,7 +648,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         }
         Positionable selection = getCurrentSelection(event);
 
-        if (event.isPopupTrigger() && !_dragging) {
+        if ((event.isPopupTrigger() || delayedPopupTrigger) && !_dragging) {
             if (selection!=null) {
                 _highlightcomponent = null;
                 showPopUp(selection, event);
@@ -676,6 +681,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         if (jmri.util.swing.SwingSettings.getNonStandardMouseEvent())
             mouseClicked(event);
 
+        delayedPopupTrigger = false;
         _dragging = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
@@ -695,7 +701,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
 
         Positionable selection = getCurrentSelection(event);
 
-        if (event.isPopupTrigger()) {
+        if (event.isPopupTrigger() || delayedPopupTrigger) {
             if (selection!=null) {
                 _highlightcomponent = null;
                     showPopUp(selection, event);
@@ -707,6 +713,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 }
             }
         }
+        delayedPopupTrigger = false;
         _targetPanel.repaint(); // needed for ToolTip
     }
 
@@ -714,7 +721,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         //if (_debug) log.debug("mouseDragged at ("+event.getX()+","+event.getY()+")"); 
         setToolTip(null); // ends tooltip if displayed
 
-        if ((!event.isPopupTrigger() && (isEditable()) || _currentSelection instanceof LocoIcon)) {
+        if (!event.isPopupTrigger() && !delayedPopupTrigger && (isEditable() || _currentSelection instanceof LocoIcon)) {
             moveIt:
             if (_currentSelection!=null && getFlag(OPTION_POSITION, _currentSelection.isPositionable())) {
                 int deltaX = event.getX() - _lastX;
@@ -771,7 +778,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
 
     public void mouseMoved(MouseEvent event) {
         //if (_debug) log.debug("mouseMoved at ("+event.getX()+","+event.getY()+")"); 
-        if (_dragging || event.isPopupTrigger()) { return; }
+        if (_dragging || event.isPopupTrigger() || delayedPopupTrigger) { return; }
 
         Positionable selection = getCurrentSelection(event);
         if (selection!=null && selection.getDisplayLevel()>BKG && selection.showTooltip()) {
