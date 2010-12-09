@@ -37,7 +37,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.111 $
+ * @version             $Revision: 1.112 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1563,10 +1563,12 @@ public class TrainBuilder extends TrainCommon{
 			if (!checkDropTrainDirection(rld, testDestination))
 				continue;
 			// is the train length okay?
-			if (!checkTrainLength(car, rl, rld))
-				continue;
+			if (!checkTrainLength(car, rl, rld)){
+				break;	// done with this route
+			}
 			// is there a track assigned for staging cars?				
 			if (rld == train.getTrainTerminatesRouteLocation() && terminateStageTrack != null){						
+				// no need to check train and track direction into staging, already done
 				String status = car.testDestination(testDestination, terminateStageTrack); 	// will staging accept this car?
 				if (status.equals(Car.OKAY)){
 					trackTemp = terminateStageTrack;
@@ -1575,7 +1577,7 @@ public class TrainBuilder extends TrainCommon{
 					addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{car.toString(), terminateStageTrack.getName(), status}));
 					continue;
 				} 
-				// no staging track assigned, start track search
+			// no staging track assigned, start track search
 			} else {								
 				List<String> tracks = testDestination.getTracksByMovesList(null);
 				for (int s = 0; s < tracks.size(); s++){
@@ -1586,17 +1588,9 @@ public class TrainBuilder extends TrainCommon{
 						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarSameTrack"),new Object[]{car.toString(), testTrack.getName()}));
 						continue;
 					}
-					// is train direction correct?
+					// Can the train service this track?
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
-					// train length okay?
-					if (!checkTrainLength(car, rl, rld)){
-						if (trackSave == null){
-							addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
-							return true;	// No available destination for this car
-						}
-						break;	//done with this location
-					}
 					String status = car.testDestination(testDestination, testTrack);
 					// is the testTrack a siding with a Schedule?
 					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
@@ -1612,7 +1606,7 @@ public class TrainBuilder extends TrainCommon{
 							boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
 							if (!carAdded)
 								log.debug ("Couldn't add car "+car.toString()+" to train, location "+rl.getName()+ " destination " +rld.getName());
-							return true;
+							return true;	// done, no build errors
 						}
 					}
 					// okay to drop car?
@@ -1665,7 +1659,7 @@ public class TrainBuilder extends TrainCommon{
 					}			
 				}
 			}
-			// did we find a destination?
+			// did we find a new destination?
 			if(destinationTemp != null){
 				// check for programming error
 				if(trackTemp == null){
@@ -1703,7 +1697,8 @@ public class TrainBuilder extends TrainCommon{
 			} else {
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCouldNotFindDestForCar"),new Object[]{car.toString(), rld.getName()}));
 			}
-		} 
+		}
+		// did we find a destination?
 		if (trackSave != null){
 			boolean carAdded = addCarToTrain(car, rl, rldSave, trackSave); // should always be true
 			if (!carAdded)
