@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class ConnectivityUtil 
@@ -558,8 +558,8 @@ public class ConnectivityUtil
 					}
 					else {
 						// turnout is inside current block, add it to the list 
-						list.add((LayoutTurnout)cObject);
-						companion.add(getTurnoutSetting(lt, cType));
+                        list.add((LayoutTurnout)cObject);
+                        companion.add(getTurnoutSetting(lt, cType));
 					}
 				}
 			}
@@ -1541,26 +1541,26 @@ public class ConnectivityUtil
 		int setting = Turnout.THROWN;
 		switch (cType) {
 			case LayoutEditor.TURNOUT_A:
-				// entering at throat, determine exit by checking block of connected track segment				
-				if (nlb==((TrackSegment)lt.getConnectB()).getLayoutBlock()) {
+				// entering at throat, determine exit by checking block of connected track segment
+				if ((lt.getConnectB()!=null) && (nlb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
 					// exiting block at continuing track
 					prevConnectType = LayoutEditor.TURNOUT_B;
 					setting = Turnout.CLOSED;
 					tr = (TrackSegment)lt.getConnectB();
 				}
-				else if (nlb==((TrackSegment)lt.getConnectC()).getLayoutBlock()) {
+				else if ((lt.getConnectC()!=null) && (nlb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
 					// exiting block at diverging track
 					prevConnectType = LayoutEditor.TURNOUT_C;
 					tr = (TrackSegment)lt.getConnectC();
 				}
 				// must stay in block after turnout
-				else if (lb==((TrackSegment)lt.getConnectB()).getLayoutBlock()) {
+				else if ((lt.getConnectB()!=null) && (lb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
 					// continuing in block on continuing track
 					prevConnectType = LayoutEditor.TURNOUT_B;
 					setting = Turnout.CLOSED;
 					tr = (TrackSegment)lt.getConnectB();
 				}
-				else if (lb==((TrackSegment)lt.getConnectC()).getLayoutBlock()) {
+				else if ((lt.getConnectC()!=null) && (lb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
 					// continuing in block on diverging track
 					prevConnectType = LayoutEditor.TURNOUT_C;
 					tr = (TrackSegment)lt.getConnectC();
