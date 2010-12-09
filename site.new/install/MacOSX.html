@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: MacOSX.html,v 1.40 2010-08-03 01:18:07 zoo Exp $ -->
+<!-- $Id: MacOSX.html,v 1.41 2010-12-09 07:12:16 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -231,6 +231,31 @@
        write down the list of available devices, close JMRI, reconnect
        the interface, start JMRI again, and look to see which extra
        name has appeared.  That's the name one you want.</p>
+
+
+<h2>Problem Solving</h2>
+
+JMRI supports many different Mac computers, 
+with several different kinds of processors,
+multiple Mac OS X versions,
+and various layout hardware.  
+Some combinations can cause trouble. 
+This section gives some debugging hints.
+
+<h4>Communications and Mac OS X 10.4</h4>
+
+Mac OS X 10.4 was a transitional version, with lots of 
+different structures in it depending on the subversion (10.4.1 vs 10.4.2 vs 10.4.3).
+Certain combinations of subversion and processor cause aren't properly 
+handled by the standard libraries distributed with JMRI.
+<p>
+We handle this by making available some alternative libraries, at least
+one of which is going to make JMRI work.
+<p>
+If you've got Mac OS X 10.4 and are having a problem either getting JMRI
+to start, or seeing the attached layout hardware from within the program, 
+please see this 
+<a href="http://groups.yahoo.com/group/jmriusers/message/61242">description of how to debug this</a>.
 
 
 <h2>Customizing Your JMRI Installation</h2>
