@@ -65,7 +65,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.67 $
+ * @version $Revision: 1.68 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2157,7 +2157,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertFalse("Train 2 built", train2.isBuilt());
 		l3s3.setLength(200);	// restore
 		
-		// Send boxcar X10001 to staging
+		// Car X10001 is a location North Industries, NI Yard, send boxcar X10001 to staging
 		Assert.assertEquals("set destination", Car.OKAY, c3.setDestination(l3, null));
 		train2.build();
 		// Should build
@@ -2165,7 +2165,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car X10001 to staging track", l3s3, c3.getDestinationTrack());
 		Assert.assertEquals("Car X10001 assigned to train 2", train2, c3.getTrain());
 
-		// Send car X10001 to staging and wrong track
+		// Send car X10001 to staging and track that isn't being used
 		train2.reset();
 		Assert.assertEquals("set destination", Car.OKAY, c3.setDestination(l3, l3s2));
 		train2.build();
@@ -2173,7 +2173,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertTrue("Train 2 built", train2.isBuilt());
 		Assert.assertEquals("Car X10001 not assigned to train 2", null, c3.getTrain());
 		
-		// Send car X10001 to staging and correct track
+		// Send car X10001 to staging and the only track available
 		train2.reset();
 		c3.setDestination(l3, l3s3);	// this removes track, it is now reserved
 		train2.build();
@@ -4229,8 +4229,6 @@ public class OperationsTrainsTest extends TestCase {
 
 	}
 	
-
-	
 	public void testCaboose() {
 		TrainManager tmanager = TrainManager.instance();
 		RouteManager rmanager = RouteManager.instance();
@@ -4804,6 +4802,18 @@ public class OperationsTrainsTest extends TestCase {
 		
 		Assert.assertEquals("e1 destination 25", "Boston Engine Yard", e1.getDestinationTrackName());
 		Assert.assertEquals("e2 destination 25", "Boston Engine Yard", e2.getDestinationTrackName());
+		
+		train1.reset();
+		// send caboose SP 2 from staging to track that will not service it
+		loc3trk2.addTypeName("Caboose");
+		loc3trk2.setLength(200);
+		c2.setDestination(loc3, loc3trk2);
+		loc3trk2.deleteTypeName("Caboose");
+		train1.build();
+		
+		Assert.assertEquals("Train 1 After Build with caboose bad destination", false, train1.isBuilt());
+		c2.setDestination(null, null);
+		train1.build();
 
 		train1.move();
 		train1.move();
