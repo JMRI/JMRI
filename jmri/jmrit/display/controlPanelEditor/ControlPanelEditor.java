@@ -925,7 +925,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 popup.addSeparator();
                 popupSet = false;
             }
-            popupSet = p.setEditItemMenu(popup);        
+            if (event.isControlDown()) {
+                popupSet = p.setEditIconMenu(popup);    // old IconEditor        
+            } else {
+                popupSet = p.setEditItemMenu(popup);    // ItemPalette Editor        
+            }
             if (popupSet) { 
                 popup.addSeparator();
                 popupSet = false;
