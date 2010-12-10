@@ -5,6 +5,8 @@ package jmri.jmrit.display;
 import jmri.SignalHead;
 import jmri.InstanceManager;
 import jmri.jmrit.catalog.NamedIcon;
+import jmri.jmrit.display.palette.SignalHeadItemPanel;
+import jmri.jmrit.picker.PickListModel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -29,7 +31,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -354,6 +356,51 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         return;
     }
 
+    SignalHeadItemPanel _itemPanel;
+
+    public boolean setEditItemMenu(JPopupMenu popup) {
+        String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead"));
+        popup.add(new AbstractAction(txt) {
+                public void actionPerformed(ActionEvent e) {
+                    editItem();
+                }
+            });
+        return true;
+    }
+    
+    protected void editItem() {
+        makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead")));
+        _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead",
+                                       PickListModel.signalHeadPickModelInstance(), _editor);
+        _itemPanel.init( new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateItem();
+            }
+        });
+        _saveMap = _iconMap;        // setting signalHead creates new map
+        _itemPanel.setSelection(getSignalHead());
+        _paletteFrame.add(_itemPanel);
+        _paletteFrame.pack();
+    }
+
+    void updateItem() {
+        setSignalHead(_itemPanel.getTableSelection().getSystemName());
+        Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
+        // map1 keyed with NamedBean names.  Convert to local name keys
+        Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            map2.put(rbean.getString(entry.getKey()), entry.getValue());
+        }
+        setIcons(map2);
+        displayState(getSignalHead().getAppearance());
+        _paletteFrame.dispose();
+        _paletteFrame = null;
+        _itemPanel = null;
+        invalidate();
+    }
+
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead"));
         popup.add(new AbstractAction(txt) {
@@ -387,10 +434,8 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     Hashtable<String, NamedIcon> _saveMap;
 
-    void updateSignal() {
-        setSignalHead(_iconEditor.getTableSelection().getDisplayName());
-        Hashtable <String, NamedIcon> map = _iconEditor.getIconMap();
-        if (log.isDebugEnabled()) log.debug("updateSignal: newmap size= "+map.size()+
+    private void setIcons(Hashtable<String, NamedIcon> map) {
+        if (log.isDebugEnabled()) log.debug("setIcons: newmap size= "+map.size()+
                                             ", oldmap size= "+_saveMap.size());
         Iterator<Entry<String, NamedIcon>> it = map.entrySet().iterator();
         while (it.hasNext()) {
@@ -407,6 +452,11 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
                 _iconMap.put(name, icon);
             }
         }
+    }
+
+    void updateSignal() {
+        setSignalHead(_iconEditor.getTableSelection().getDisplayName());
+        setIcons(_iconEditor.getIconMap());
         displayState(headState());
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
