@@ -26,7 +26,7 @@ import jmri.util.JmriJFrame;
 /**
  * Abstact base class for Frames displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public abstract class AbstractMonFrame extends JmriJFrame  {
 
@@ -334,7 +334,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         return linesBuffer.toString();
     }
 
-    transient PrintStream logStream = null;
+    volatile PrintStream logStream = null;
 
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");

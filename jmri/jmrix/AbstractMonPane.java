@@ -15,7 +15,7 @@ import jmri.util.swing.*;
 /**
  * Abstact base class for JPanels displaying communications monitor information
  * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2010
- * @version	$Revision: 1.4 $
+ * @version	$Revision: 1.5 $
  */
 public abstract class AbstractMonPane extends JmriPanel  {
 
@@ -319,7 +319,7 @@ public abstract class AbstractMonPane extends JmriPanel  {
         return linesBuffer.toString();
     }
 
-    transient PrintStream logStream = null;
+    volatile PrintStream logStream = null;
 
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
