@@ -18,7 +18,7 @@ package jmri.jmrit.beantable.oblock;
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 import java.util.ArrayList;
@@ -149,7 +149,6 @@ public class SignalTableModel extends AbstractTableModel {
         for (int j=0; j<tempList.size(); j++) {
             SignalRow sr = tempList.get(j);
             NamedBean srSignal = sr.getSignal();
-            Portal srPortal = sr.getPortal();
             if (srSignal==null) {
                 continue;
             }
