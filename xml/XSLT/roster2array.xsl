@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster2array.xsl,v 1.2 2010-12-06 20:51:51 hebbos Exp $ -->
+<!-- $Id: roster2array.xsl,v 1.3 2010-12-11 13:59:55 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -37,14 +37,13 @@
 <html>
 	<head>
 		<title>JMRI Roster File</title>
-		<link rel="stylesheet" href="/web/inControl/inControl.css" type="text/css"/>
-		<script type="text/javascript" src="/web/roster.js"> </script>
 	</head>
 	
 	<body>
 		<h2>JMRI Roster File</h2>
 		<table border="1">
-				<th>Icon &amp; ID</th>
+				<th>Icon</th>
+				<th>ID</th>
 				<th>Road Number</th>
 				<th>Road Name</th>
 				<th>Manufacturer</th>
@@ -75,16 +74,13 @@
 <xsl:template match="roster/locomotive">
 <tr>
 <td>
-<xsl:element name="button">
-	<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress'/>" , "<xsl:value-of select='@id'/>", "/prefs/resources/"+"<xsl:value-of select='@iconFilePath'/>"); </xsl:attribute>
 	<xsl:element name="img">
 	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
-  		<xsl:attribute name="height">20</xsl:attribute>
-  		<xsl:attribute name="alt"></xsl:attribute>
+  		<xsl:attribute name="height">30</xsl:attribute>
+  		<xsl:attribute name="alt">No icon.</xsl:attribute>
 	</xsl:element>
-	<xsl:value-of select="@id"/>
-</xsl:element>
 </td>
+<td><xsl:value-of select="@id"/></td>
 <td><xsl:value-of select="@roadNumber"/></td>
 <td><xsl:value-of select="@roadName"/></td>
 <td><xsl:value-of select="@mfg"/></td>

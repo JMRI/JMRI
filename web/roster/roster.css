@@ -1,0 +1,29 @@
+
+html {
+      width:100%;
+      background-color:Gainsboro;
+}
+
+body {
+      width:100%;
+	  margin:0px auto;
+      background-color:Gainsboro;
+      text-align:center;
+      font-family:Tahoma,Arial,Helvetica,sans-serif;
+      font-size:100%;
+}
+
+.rosterTable {
+	width:100%;
+}		
+
+.rosterTD {
+	border-width:2px;
+	border-style:solid; 
+	border-color:black;
+}		
+
+.ifrm1 {
+      vertical-align:text-top;
+      border:1px solid black;
+}
