@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -382,7 +382,7 @@ public class IndicatorTrackIcon extends PositionableLabel
         setOccSensor(_trackPanel.getOccSensor());
         setOccBlock(_trackPanel.getOccBlock());
         _showTrain = _trackPanel.getShowTrainName();
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, null);
+        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
 
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
