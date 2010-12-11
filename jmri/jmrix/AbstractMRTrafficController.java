@@ -28,7 +28,7 @@ import java.util.LinkedList;
  *
  * @author          Bob Jacobsen  Copyright (C) 2003
  * @author          Paul Bender Copyright (C) 2004-2010
- * @version         $Revision: 1.92 $
+ * @version         $Revision: 1.93 $
  */
 abstract public class AbstractMRTrafficController {
     
@@ -433,11 +433,11 @@ abstract public class AbstractMRTrafficController {
     }
     
     // used to determine if interface is down
-    public static boolean hasTimeouts(){
+    public boolean hasTimeouts(){
         return timeoutFlag;
     }
     
-    private static boolean timeoutFlag = false;
+    private boolean timeoutFlag = false;
     private int timeouts = 0;
     protected boolean flushReceiveChars = false;
     protected void handleTimeout(AbstractMRMessage msg,AbstractMRListener l) {
