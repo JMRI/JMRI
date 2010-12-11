@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: roster2array.xsl,v 1.3 2010-12-11 13:59:55 hebbos Exp $ -->
+<!-- $Id: roster2array.xsl,v 1.4 2010-12-11 14:59:20 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -42,8 +42,9 @@
 	<body>
 		<h2>JMRI Roster File</h2>
 		<table border="1">
-				<th>Icon</th>
 				<th>ID</th>
+				<th>Icon</th>
+				<th>Image</th>
 				<th>Road Number</th>
 				<th>Road Name</th>
 				<th>Manufacturer</th>
@@ -73,6 +74,7 @@
 <!-- Display each roster entry -->
 <xsl:template match="roster/locomotive">
 <tr>
+<td><xsl:value-of select="@id"/></td>
 <td>
 	<xsl:element name="img">
 	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@iconFilePath"/></xsl:attribute>
@@ -80,7 +82,13 @@
   		<xsl:attribute name="alt">No icon.</xsl:attribute>
 	</xsl:element>
 </td>
-<td><xsl:value-of select="@id"/></td>
+<td>
+	<xsl:element name="img">
+	    <xsl:attribute name="src">/prefs/resources/<xsl:value-of select="@imageFilePath"/></xsl:attribute>
+  		<xsl:attribute name="height">30</xsl:attribute>
+  		<xsl:attribute name="alt">No image.</xsl:attribute>
+	</xsl:element>
+</td>
 <td><xsl:value-of select="@roadNumber"/></td>
 <td><xsl:value-of select="@roadName"/></td>
 <td><xsl:value-of select="@mfg"/></td>
