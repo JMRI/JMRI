@@ -3,7 +3,7 @@
 <head>
 <title>inControl</title>
 <!-- Please read 'inControl.txt' in 'inControl' directory -->
-<meta name="viewport" content="height=device-height" />
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=0" />
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
 <link rel="stylesheet" type="text/css" href="inControl/inControl.css" />
 <script language="JavaScript" src="inControl/inControl.js"></script>
@@ -12,7 +12,7 @@
 </head>
 <body onload="inControl()">
 <table id="tblBoard" align="center" border="0" width="200px">
-<tr><td id="tdBoard" colspan="2" nowrap="nowrap" width="200px">
+<tr><td id="tdBoard" colspan="2" align="center" nowrap="nowrap" width="200px">
 <div id="divLocoNameAddress" class="divRect1"><label id="lblLocoName"></label> (<label id="lblLocoAddress" title="Loco address" ></label>)</div>
 <img id="imgLocoImage" alt="loco image" src="" width="200px" />
 </td></tr><tr><td id="tdLeft" valign="top" width="110px">
@@ -32,12 +32,11 @@
 </td></tr></table>
 <div id="divPowerLeft">
 <table frame="void" align="center" border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td nowrap="nowrap">
-<hr />
 <img id="imgPowerLeftOn" src="inControl/PowerGreen24.png" alt="On" title="Power On" class="imgRect1" onClick="PowerOn()" />
 <img id="imgPowerLeftOff" src="inControl/PowerRed24.png" alt="Off" title="Power Off" class="imgRect1" onClick="PowerOff()" />
 </td></tr></table>
 </div>
-</td><td id="tdRight" valign="top" width="90px">
+</td><td id="tdRight" align="left" valign="top" width="90px">
 <div id="divFunctions"></div>
 </td></tr>
 </table>

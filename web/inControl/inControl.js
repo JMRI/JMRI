@@ -27,12 +27,14 @@ var vRequestArray=[]; //array to store objects (max=10) to call XMLIO asynchrono
 var vDebug; //to retrieve Debug behaviour from query string
 var vWaitforResp; //to call XMLIO synchronously
 var vRefreshRate; //to retrieve Refresh Rate (seconds) from query string (0= no refresh / default=5)
-var vWidth; //to retrieve board Width from query string
+var vWidth; //to retrieve board Width from query string (default=200px)
 var vPower; //to retrieve Power Buttons display behaviour from query string
-var vLocoAddress; //to retrieve Loco Address from query string
+var vLocoAddress; //to retrieve Loco Address from query string (default=3)
 var vLocoName; //to retrieve Loco Name from query string
 var vLocoImage; //to retrieve Loco Image from query string
-var vForward; // to store the Forward status
+var vForward; //to store the Forward status
+var vFunctionColumns; //to retrieve the number of columns (default=1)
+var vColumnWidth; //to store calculated column width
 var vFnLabel=new Array(); //to retrieve Function Keys from query string
 var vFnImage=new Array(); //to retrieve Function Keys from query string
 var vFnImagePressed=new Array(); //to retrieve Function Keys from query string
@@ -54,19 +56,25 @@ function GetJmriStatusLoop() { // get JMRI status
 
 // run after page loading (inControl.html)
 function inControl() {
- var arr;
  vDebug=gup("debug");
  vWaitforResp=gup("waitforresp");
  vRefreshRate=gup("refreshrate");
  if (vRefreshRate=="") vRefreshRate="5";
  vRefreshRate=(+vRefreshRate);
  vWidth=gup("width");
+ if (vWidth=="") vWidth="200";
+ vWidth=(+vWidth);
  vPower=gup("power");
  vLocoAddress=gup("locoaddress");
  if (vLocoAddress=="") vLocoAddress="3";
  vLocoName=unescape(gup("loconame"));
  vLocoImage=gup("locoimage");
  vForward=true;
+ vFunctionColumns=gup("functioncolumns");
+ if (vFunctionColumns=="") vFunctionColumns="1";
+ vFunctionColumns=(+vFunctionColumns);
+ if (vFunctionColumns<1) vFunctionColumns=1;
+ vColumnWidth=Math.round(vWidth/(vFunctionColumns+1));
  for (var i=0;i<13;i++) {
   vFnLabel[i]=unescape(gup("f"+i+"label"));
   vFnImage[i]=gup("f"+i+"image");
@@ -76,13 +84,11 @@ function inControl() {
  if (vFnLabel[0]=="") vFnLabel[0]=cF0Label;
  if (vFnImage[0]=="") vFnImage[0]=cF0Image;
  if (vFnImagePressed[0]=="") vFnImagePressed[0]=cF0ImagePressed;
- if (vWidth!="") {
-  document.getElementById("tblBoard").style.width=vWidth+"px";
-  document.getElementById("tdBoard").style.width=vWidth+"px";
-  document.getElementById("tdLeft").style.width=Math.round(vWidth*0.55)+"px";
-  document.getElementById("tdRight").style.width=Math.round(vWidth*0.45)+"px";
-  document.getElementById("imgLocoImage").style.width=vWidth+"px";
- }
+ document.getElementById("tblBoard").style.width=vWidth+"px";
+ document.getElementById("tdBoard").style.width=vWidth+"px";
+ document.getElementById("tdLeft").style.width=vColumnWidth+"px";
+ document.getElementById("tdRight").style.width=(vColumnWidth*vFunctionColumns)+"px";
+ document.getElementById("imgLocoImage").style.width=(vColumnWidth*2)+"px";
  document.getElementById("lblLocoName").innerHTML=vLocoName;
  document.title+=" - "+vLocoName+" ("+vLocoAddress+")";
  document.getElementById("lblLocoAddress").innerHTML=vLocoAddress;
@@ -90,7 +96,7 @@ function inControl() {
   document.getElementById("divLocoNameAddress").onclick=ShowDebugInfo;
   document.getElementById("divLocoNameAddress").title="Click for Debug info";
  }
-if (vLocoImage!="") {
+ if (vLocoImage!="") {
   document.getElementById("imgLocoImage").style.display="block";
   document.getElementById("imgLocoImage").src=vLocoImage;
   if (vDebug!="") {
@@ -99,28 +105,24 @@ if (vLocoImage!="") {
   }
  }
  document.getElementById("lblSpeed").innerHTML=0;
- document.getElementById("divFunctions").innerHTML+='<table frame="void" align="center" border="0" cellspacing="0" cellpadding="0" width="100%"><tr>';
- document.getElementById("divFunctions").innerHTML+='<td>';
+ document.getElementById("divFunctions").innerHTML='<table frame="void" align="left" border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td>';
  for (var i=0;i<13;i++) {
   if (vFnImage[i]=="") { // Label
    if (vFnLabel[i]=="" && vFnImagePressed[i]!="") vFnLabel[i]="F"+i;
-   if (vFnLabel[i]!="") document.getElementById("divFunctions").innerHTML+='<label id="lblF'+i+'" class="lblRect1" onClick="Fn('+i+')">'+vFnLabel[i]+'</label>';
+   if (vFnLabel[i]!="") document.getElementById("divFunctions").innerHTML+='<label id="lblF'+i+'" class="lblRect1" onClick="Fn('+i+')" style="width:'+Math.round(vColumnWidth*0.7)+'px">'+vFnLabel[i]+'</label>';
   } else { // Image
-   document.getElementById("divFunctions").innerHTML+='<img id="imgF'+i+'" src="'+vFnImage[i]+'" alt="'+((vFnLabel[i]!='')?vFnLabel[i]:'F'+i)+'" title="'+((vFnLabel[i]!='')?vFnLabel[i]:'F'+i)+'" class="imgRect2" onClick="Fn('+i+')" /><br />';
+   document.getElementById("divFunctions").innerHTML+='<img id="imgF'+i+'" width="'+Math.round(vColumnWidth*0.9)+'px" src="'+vFnImage[i]+'" alt="'+((vFnLabel[i]!='')?vFnLabel[i]:'F'+i)+'" title="'+((vFnLabel[i]!='')?vFnLabel[i]:'F'+i)+'" class="imgRect1a" onClick="Fn('+i+')" />';
   }
-// vFunctionColumns: (calcular se F<i> existente) document.getElementById("divFunctions").innerHTML+='</td><td>';
  }
- if (vPower=="r" || vPower=="R") { // at bottom of the last column
+ if (vPower=="r" || vPower=="R") {
   document.getElementById("divFunctions").innerHTML+='<div id="divPowerRight">';
-  document.getElementById("divFunctions").innerHTML+='<table frame="void" align="center" border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td nowrap="nowrap">';
-  document.getElementById("divFunctions").innerHTML+='<hr />';
-  document.getElementById("divFunctions").innerHTML+='<img id="imgPowerRightOn" src="inControl/PowerGreen24.png" alt="On" title="Power On" class="imgRect1" onClick="PowerOn()" />';
-  document.getElementById("divFunctions").innerHTML+='<img id="imgPowerRightOff" src="inControl/PowerRed24.png" alt="Off" title="Power Off" class="imgRect1" onClick="PowerOff()" />';
+  document.getElementById("divFunctions").innerHTML+='<table frame="void" align="center" border="0" cellspacing="0" cellpadding="0" width="'+vColumnWidth+'px"><tr><td nowrap="nowrap">';
+  document.getElementById("divFunctions").innerHTML+='<img id="imgPowerRightOn" width="'+Math.round(vColumnWidth*0.4)+'px" src="inControl/PowerGreen24.png" alt="On" title="Power On" class="imgRect1a" onClick="PowerOn()" />';
+  document.getElementById("divFunctions").innerHTML+='<img id="imgPowerRightOff" width="'+Math.round(vColumnWidth*0.4)+'px" src="inControl/PowerRed24.png" alt="Off" title="Power Off" class="imgRect1a" onClick="PowerOff()" />';
   document.getElementById("divFunctions").innerHTML+='</td></tr></table>';
   document.getElementById("divFunctions").innerHTML+='</div>';
  }
- document.getElementById("divFunctions").innerHTML+='</td>';
- document.getElementById("divFunctions").innerHTML+='</tr></table>';
+ document.getElementById("divFunctions").innerHTML+='</td></tr></table>';
  if (vPower!="" && vPower!="r" && vPower!="R") document.getElementById("divPowerLeft").style.display="block";
  ShowDebugInfo();
  PowerStatus();
@@ -141,6 +143,7 @@ function ShowDebugInfo() {
   s+="locoaddress: "+vLocoAddress+"\n";
   s+="loconame: "+vLocoName+"\n";
   s+="locoimage: "+vLocoImage+"\n";
+  s+="functioncolumns: "+vFunctionColumns+"\n";
   for (var i=0;i<13;i++) {
    if (vFnLabel[i]!="") s+="f"+i+"label: "+vFnLabel[i]+"\n";
    if (vFnImage[i]!="") s+="f"+i+"image: "+vFnImage[i]+"\n";

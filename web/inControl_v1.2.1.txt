@@ -4,8 +4,8 @@ Description: A web page to control JMRI
 References: This development is based on the JMRI info, specially on the files distributed in the Mini Web Server directory
 Acknowledgements: Thanks to Bob Jacobsen and Steve Todd for their contribution
 Notes:  'inControl' is free.
-Version: 1.2.0 (look for updates in http://groups.yahoo.com/group/jmriusers/files/WEB_control)
-Date: 2010/11/17
+Version: 1.2.1 (look for updates in http://groups.yahoo.com/group/jmriusers/files/WEB_control)
+Date: 2010/12/12
 Author: Oscar Moutinho (Lisbon, Portugal)
 Author email: oscar.moutinho@gmail.com
 Author hobby site: http://hobby.oscarmoutinho.com
@@ -26,14 +26,9 @@ Please check jmri.sourceforge.net and jmriusers Yahoo group on how to use the Mi
 
 -------------------------------------
 
-Needs JMRI 2.11.2 or newer version
+Works better on JMRI 2.11.2 or newer version
 
-Good behaviour on the following browsers:
-- Google Chrome 7.0.517.41 (on Windows 7)
-- Internet Explorer 8.0.7600 (on Windows 7)
-- Safari 5.0.2 (on Windows 7)
-- Firefox 3.6.12 (on Windows 7)
-- Opera Mini 5.1.21594 (on Qtek 9000)
+Tested with good results on several browsers (on PC, Android, ...).
 
 -------------------------------------
 *** inControl.html *** (the throttle/panel)
@@ -47,10 +42,11 @@ The page content depends on the parameters you fill in when you call the page.
 These are the parameters to control the throttle/panel configuration:
 - debug (if this parameter is not empty, the user should receive debug info in dialog boxes)
 - waitforresp (if this parameter is not empty, all the calls to XMLIO are synchronous - default: asynchronous)
-- refreshrate (Refresh Rate to retrieve JMRI power status (seconds) (0= no refresh / default=5)
-- width (page width in pixels - default:200)
-- power (the layout power control is shown if this parameter is not empty - if 'r' or 'R' it will be displayed in the rightest column)
-- locoaddress (the address to show in the page title and board - default:3)
+- refreshrate (Refresh Rate to retrieve JMRI power status (seconds) (0= no refresh / default=5))
+- functioncolumns (number of function key columns (default=1))
+- width (page width in pixels - default=200)
+- power (the layout power control is shown if this parameter is not empty - if 'r' or 'R' it will be displayed in the second column)
+- locoaddress (the address to show in the page title and board - default=3)
 - loconame (the name to show in the page title and board) 
 - locoimage (the image URI to show in the page board)
 - f<n>label (text to show in the function key button - <n> between 0 and 12)
@@ -60,7 +56,7 @@ These are the parameters to control the throttle/panel configuration:
 You may use your own images.
 You should store your image files in the JMRI 'prefs' dir (usually C:\Users\<username>\JMRI).
 
-Examples: (You only need to insert this info once for each loco to control and save the URL to the browser favorites)
+Examples: (You only need to insert this info once for each loco and save the URL to the browser favorites)
 http://192.168.1.5:12080/web/inControl.html
 http://trainserver:12080/web/inControl.html?width=500&power=r&locoaddress=17&f1imagepressed=x
 http://192.168.1.5:12080/web/inControl.html?width=300&power=x&loconame=Loco2&locoimage=inControl/Loco2.jpg&f7label=myF7&f8image=inControl/Sound.png&f8imagepressed=inControl/SoundPressed.png&f9label=F9
@@ -69,6 +65,7 @@ http://192.168.1.5:12080/web/inControl.html?width=300&power=x&loconame=Loco2&loc
 : Each parameter is defined this way: <name>=<value>.
 : Avoid to insert special characters in loco name and function labels (if you do, you should 'translate' them: http://www.w3schools.com/TAGS/ref_urlencode.asp).
 : Keep the images small (loco image should be wider than taller).
+: Because each device/browser has different sizes, you should try several 'width' and 'functioncolumns' to achive the best image.
 
 --------------------------------------------------------------------------------------------------------
 *** inControlMulti.html *** (a throttle/panel set - several throttles/panels on screen - copy and modify as you wish)
@@ -88,31 +85,35 @@ None.
 
 + Wishes for future developments ---------------------------------------------
 
-User may choose to have more than one column for Function Keys.
 Get info from roasters.
 Implement web pages for layout panels (turnouts, signals, ...).
 
 + Version History ------------------------------------------------------------
 
+1.2.1
+Improved mobile browsers support.
+Added 'functioncolumns' input parameter.
+Several improvements.
+
 1.2.0
-Test page 'inControlTestXMLIO.html' removed from the package
-Throttle Status feedback
-Fix async communication
-Some new image buttons
-Function Keys between 0 and 12
-Several improvements
+Test page 'inControlTestXMLIO.html' removed from the package.
+Throttle Status feedback.
+Fix async communication.
+Some new image buttons.
+Function Keys between 0 and 12.
+Several improvements.
 
 1.1.0
-Power Status feedback
-Retrieve JMRI status periodically (Power only)
-Several improvements
-Test page 'inControlTestXMLIO.html' inserted in the package
+Power Status feedback.
+Retrieve JMRI status periodically (Power only).
+Several improvements.
+Test page 'inControlTestXMLIO.html' inserted in the package.
 
 1.0.3
-Newer image files
-Added toggle functionality to function keys
-Labels and images for F0, entered as parameters, replace the default
-Improved browser compatibility
+Newer image files.
+Added toggle functionality to function keys.
+Labels and images for F0, entered as parameters, replace the default.
+Improved browser compatibility.
 
 1.0.2
 Added 'debug' input parameter.
