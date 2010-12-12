@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.27 2010-11-14 01:13:30 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.28 2010-12-12 20:51:01 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -59,6 +59,7 @@
 <!ATTLIST settings printLocComments	(true | false ) "false">  
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
+<!ATTLIST settings yearModeled		CDATA #IMPLIED> 
 <!ATTLIST panel name				CDATA #IMPLIED>
 <!ATTLIST panel trainIconXY			(true | false ) "true"> 
 <!ATTLIST panel trainIconAppend		(true | false ) "false"> 
