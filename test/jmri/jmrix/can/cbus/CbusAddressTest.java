@@ -13,9 +13,13 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 public class CbusAddressTest extends TestCase {
+
+    public void testCanCreate() {
+        assertTrue(null != new CbusAddress("X0A;+N15E6"));
+    }
 
     public void testCbusAddressOK() {
         // +/- form
@@ -39,8 +43,7 @@ public class CbusAddressTest extends TestCase {
         assertTrue(new CbusAddress("n01e002").check());
         assertTrue(new CbusAddress("1e2").check());
         assertTrue(new CbusAddress("+n12e34").check());
-        assertTrue(new CbusAddress("+n12e35").check());
-        
+        assertTrue(new CbusAddress("+n12e35").check());        
     }
 
     public void testCbusAddressNotOK() {
@@ -166,6 +169,7 @@ public class CbusAddressTest extends TestCase {
         assertTrue(new CbusAddress("+1;n12e34").checkSplit());
         assertTrue(new CbusAddress("+1;+n12e34").checkSplit());
         assertTrue(new CbusAddress("+n12e34;+n12e35").checkSplit());
+        assertTrue(new CbusAddress("x0A;+n15E6").checkSplit());
     }
         
     public void testSplitCheckNotOK() {

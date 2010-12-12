@@ -10,11 +10,13 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensorManager class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class CbusSensorManagerTest extends TestCase {
 
-    public void testDummy() {
+    public void testCreate() {
+        CbusSensorManager m = new CbusSensorManager();
+        m.provideSensor("MSx0A;+n15E6");
     }
         
     // from here down is testing infrastructure

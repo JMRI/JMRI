@@ -16,7 +16,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.CbusSensor class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CbusSensorTest extends TestCase {
 
@@ -59,6 +59,10 @@ public class CbusSensorTest extends TestCase {
         s.setKnownState(Sensor.INACTIVE);
         Assert.assertTrue(s.getKnownState()==Sensor.INACTIVE);
         Assert.assertTrue(new CbusAddress("-1").match(t.rcvMessage));
+    }
+    
+    public void testNameCreation() {
+        Assert.assertTrue("create MSX0A;+N15E6", null!= new CbusSensor("MSX0A;+N15E6"));
     }
     
     // from here down is testing infrastructure
