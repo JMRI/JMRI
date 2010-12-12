@@ -10,7 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -104,7 +104,7 @@ public class RosterRecorder extends Thread {
             
             // write final result
             log.debug("writeRosterFile start");
-            roster.writeRosterFile();
+            Roster.writeRosterFile();
             log.debug("writeRosterFile end");
         }
     }
