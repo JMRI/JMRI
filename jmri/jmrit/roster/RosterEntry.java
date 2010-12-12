@@ -41,10 +41,12 @@ import org.jdom.Element;
  * Each entry can have one or more "Attributes" associated with it.
  * These are (key, value) pairs.  The key has to be unique, and currently
  * both objects have to be Strings.
+ *<p>
+ * All properties, including the "Attributes", are bound.
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.52 $
+ * @version   $Revision: 1.53 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -91,12 +93,18 @@ public class RosterEntry {
     public void setId(String s) {
         String oldID = _id;
         _id = s;
-        if (! oldID.equals(s))
+        if (! oldID.equals(s)) {
             Roster.instance().entryIdChanged(this);
+            firePropertyChange("id", oldID, s);
+        }
     }
     public String getId() { return _id; }
 
-    public void   setFileName(String s) { _fileName = s; }
+    public void   setFileName(String s) { 
+        String oldName = _fileName;
+        _fileName = s;
+        firePropertyChange("filename", oldName, s);
+    }
     public String getFileName() { return _fileName; }
     
     public String getPathName() { 
@@ -134,37 +142,81 @@ public class RosterEntry {
         }
     }
 
-    public void   setRoadName(String s) { _roadName = s; }
+    public void   setRoadName(String s) { 
+        String old = _roadName;
+        _roadName = s;
+        firePropertyChange("roadname", old, s);
+    }
     public String getRoadName() { return _roadName; }
 
-    public void   setRoadNumber(String s) { _roadNumber = s; }
+    public void   setRoadNumber(String s) {
+        String old = _roadNumber;
+        _roadNumber = s;
+        firePropertyChange("roadname", old, s);
+    }
     public String getRoadNumber() { return _roadNumber; }
 
-    public void   setMfg(String s) { _mfg = s; }
+    public void   setMfg(String s) {
+        String old = _mfg;
+        _mfg = s;
+        firePropertyChange("mfg", old, s);
+    }
     public String getMfg() { return _mfg; }
 
-    public void   setModel(String s) { _model = s; }
+    public void   setModel(String s) {
+        String old = _model;
+        _model = s;
+        firePropertyChange("model", old, s);
+    }
     public String getModel() { return _model; }
 
-    public void   setOwner(String s) { _owner = s; }
+    public void   setOwner(String s) {
+        String old = _owner;
+        _owner = s;
+        firePropertyChange("owner", old, s);
+    }
     public String getOwner() { return _owner; }
 
-    public void   setDccAddress(String s) { _dccAddress = s; }
+    public void   setDccAddress(String s) {
+        String old = _dccAddress;
+        _dccAddress = s;
+        firePropertyChange("dccaddress", old, s);
+    }
     public String getDccAddress() { return _dccAddress; }
 
-    public void   setLongAddress(boolean b) { _isLongAddress = b; }
+    public void   setLongAddress(boolean b) {
+        Boolean old = Boolean.valueOf(_isLongAddress);
+        _isLongAddress = b;
+        firePropertyChange("longaddress", old, Boolean.valueOf(b));
+    }
     public boolean isLongAddress() { return _isLongAddress; }
 
-    public void   setComment(String s) { _comment = s; }
+    public void   setComment(String s) {
+        String old = _comment;
+        _comment = s;
+        firePropertyChange("comment", old, s);
+    }
     public String getComment() { return _comment; }
 
-    public void   setDecoderModel(String s) { _decoderModel = s; }
+    public void   setDecoderModel(String s) {
+        String old = _decoderModel;
+        _decoderModel = s;
+        firePropertyChange("decodermodel", old, s);
+    }
     public String getDecoderModel() { return _decoderModel; }
 
-    public void   setDecoderFamily(String s) { _decoderFamily = s; }
+    public void   setDecoderFamily(String s) {
+        String old = _decoderFamily;
+        _decoderFamily = s;
+        firePropertyChange("decoderfamily", old, s);
+    }
     public String getDecoderFamily() { return _decoderFamily; }
 
-    public void   setDecoderComment(String s) { _decoderComment = s; }
+    public void   setDecoderComment(String s) {
+        String old = _decoderComment;
+        _decoderComment = s;
+        firePropertyChange("decodercomment", old, s);
+    }
     public String getDecoderComment() { return _decoderComment; }
 
     public DccLocoAddress getDccLocoAddress() {
@@ -172,16 +224,32 @@ public class RosterEntry {
         return new DccLocoAddress(n,isLongAddress());
     }
 
-    public void setImagePath(String s) { _imageFilePath = s; }
+    public void setImagePath(String s) {
+        String old = _imageFilePath;
+        _imageFilePath = s;
+        firePropertyChange("imagefilepath", old, s);
+    }
     public String getImagePath() { return _imageFilePath; }
 
-    public void setIconPath(String s) { _iconFilePath = s; }
+    public void setIconPath(String s) {
+        String old = _iconFilePath;
+        _iconFilePath = s;
+        firePropertyChange("iconfilepath", old, s);
+    }
     public String getIconPath() { return _iconFilePath; }
 
-    public void setURL(String s) { _URL = s; }
+    public void setURL(String s) {
+        String old = _URL;
+        _URL = s;
+        firePropertyChange("url", old, s);
+    }
     public String getURL() { return _URL; }
 
-    public void setDateUpdated(String s) { _dateUpdated = s; }
+    public void setDateUpdated(String s) {
+        String old = _dateUpdated;
+        _dateUpdated = s;
+        firePropertyChange("dateupdated", old, s);
+    }
     public String getDateUpdated() { return _dateUpdated; }
 
     /**
@@ -564,7 +632,7 @@ public class RosterEntry {
     /**
      * Mark the date updated, e.g. from storing this roster entry
      */
-    void changeDateUpdated() {
+    public void changeDateUpdated() {
         java.text.DateFormat df = java.text.DateFormat.getDateTimeInstance();
         setDateUpdated(df.format(new java.util.Date()));
     }
@@ -903,6 +971,23 @@ public class RosterEntry {
     protected String _imageFilePath = _resourcesBasePath + "__noImage.jpg" ; // at DndImagePanel init will
     protected String _iconFilePath = _resourcesBasePath + "__noIcon.jpg" ;   // force image copy to correct folder
     protected String _URL = "";
+
+    java.beans.PropertyChangeSupport pcs;
+
+    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (pcs == null) pcs = new java.beans.PropertyChangeSupport(this);
+        pcs.addPropertyChangeListener(l);
+    }
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        if (pcs == null) pcs = new java.beans.PropertyChangeSupport(this);
+        pcs.firePropertyChange(p,old,n);
+    }
+
+    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+        if (pcs == null) pcs = new java.beans.PropertyChangeSupport(this);
+        pcs.removePropertyChangeListener(l);
+    }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RosterEntry.class.getName());

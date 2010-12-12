@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.8 $
+ * @version             $Revision: 1.9 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {
@@ -32,12 +32,25 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
 
     static final int NUMCOL = 8+1;
     
+    boolean editable = false;
+    
+    public RosterTableModel() {
+        this(false);
+    }
+    
+    public RosterTableModel(boolean editable) {
+        this.editable = editable;
+    }
+    
+    @Override
     public int getRowCount() {
         return Roster.instance().numEntries();
     }
+    @Override
     public int getColumnCount( ){
         return NUMCOL;
     }
+    @Override
     public String getColumnName(int col) {
         switch (col) {
         case IDCOL:         return "ID";
@@ -53,6 +66,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
     
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == ADDRESSCOL) return Integer.class;
         if (col == ICONCOL) return ImageIcon.class;
@@ -60,10 +74,15 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
     }
     
     /**
-     * This implementation can't edit the values yet
+     * Editable state must be set in ctor.
      */
+    @Override
     public boolean isCellEditable(int row, int col) {
-        return false;
+        if (col == ADDRESSCOL) return false;
+        if (col == DECODERCOL) return false;
+        if (col == ICONCOL) return false;
+        if (col == DATEUPDATECOL) return false;
+        return editable;
     }
     
     jmri.jmrit.roster.RosterIconFactory iconFactory = null;
@@ -78,6 +97,7 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
     /**
      * Provides the empty String if attribute doesn't exist.
      */
+    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
@@ -99,7 +119,24 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         }
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
+        // get roster entry for row
+        RosterEntry re = Roster.instance().getEntry(row);
+        if (re == null){
+        	log.warn("roster entry is null!");
+        	return;
+        }    
+        switch (col) {
+        case IDCOL:         re.setId((String)value); break;
+        case ROADNAMECOL:   re.setRoadName((String)value); break;
+        case ROADNUMBERCOL: re.setRoadNumber((String)value); break;
+        case MFGCOL:        re.setMfg((String)value); break;
+        case OWNERCOL:      re.setOwner((String)value); break;
+        default:            log.error("invalid setValueAt column: "+col); return;
+        }
+        // need to mark as updated
+        re.changeDateUpdated();
     }
 
     public int getPreferredWidth(int column) {

@@ -30,7 +30,7 @@ import jmri.jmrit.symbolicprog.*;
  * @see apps.gui3.dp3.DecoderPro3Window
  *
  * @author    Bob Jacobsen Copyright (C) 2010
- * @version		$Revision: 1.2 $
+ * @version		$Revision: 1.3 $
  */
 public class PaneSet {
 
@@ -181,6 +181,18 @@ public class PaneSet {
         paneList.add(p);
     }
     public List<PaneProgPane> getList() { return paneList; }
+    
+    /**
+     * Store current content to file
+     */
+    public void storeFile(RosterEntry re) {
+        // set up file write
+        re.ensureFilenameExists();
+        String filename = re.getFileName();
+
+        // write the RosterEntry to its file
+        re.writeFile(cvModel, iCvModel, variableModel );
+    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PaneSet.class.getName());
 }
