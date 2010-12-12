@@ -8,7 +8,7 @@ import java.io.DataOutputStream;
 /**
  * Base for classes representing a LocoNet communications port
  * @author		Bob Jacobsen    Copyright (C) 2001, 2002
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
@@ -49,6 +49,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
                                     "DCS100 (Chief)", 
                                     "DCS200",
                                     "DCS50 (Zephyr)",
+                                    "DCS51 (Zephyr Xtra)",
                                     "DB150 (Empire Builder)",
                                     "Intellibox",
                                     "LocoBuffer (PS)"};
