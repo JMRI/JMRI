@@ -2,7 +2,6 @@
 
 package jmri.jmrix.nce.serialdriver;
 
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
@@ -26,7 +25,7 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.48 $
+ * @version			$Revision: 1.49 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
@@ -37,10 +36,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() { return 
-    adaptermemo; }
 
     public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators

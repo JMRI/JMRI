@@ -2,10 +2,12 @@
 
 package jmri.jmrix.nce;
 
+import jmri.jmrix.SystemConnectionMemo;
+
 /*
  * Identifying class representing a NCE communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortController {
@@ -17,6 +19,13 @@ public abstract class NcePortController extends jmri.jmrix.AbstractSerialPortCon
         mDisabled = disabled;
         if(adaptermemo!=null)
             adaptermemo.setDisabled(disabled);
+    }
+    
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() { 
+    	if (adaptermemo == null)
+    		adaptermemo= new NceSystemConnectionMemo();
+    	return adaptermemo; 
     }
 }
 

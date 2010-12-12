@@ -2,7 +2,6 @@
 
 package jmri.jmrix.nce.networkdriver;
 
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceNetworkPortController;
 import jmri.jmrix.nce.NceTrafficController;
@@ -15,7 +14,7 @@ import jmri.jmrix.nce.NceSystemConnectionMemo;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.19 $
+ * @version	$Revision: 1.20 $
  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
 
@@ -24,10 +23,6 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
         adaptermemo = new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() { return 
-    adaptermemo; }
 
     /**
      * set up all of the other objects to operate with an NCE command

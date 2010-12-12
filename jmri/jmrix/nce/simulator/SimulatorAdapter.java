@@ -3,7 +3,6 @@
 package jmri.jmrix.nce.simulator;
 
 import jmri.jmrix.JmrixConfigPane;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceReply;
 import jmri.jmrix.nce.NceMessage;
@@ -122,7 +121,7 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -152,10 +151,6 @@ public class SimulatorAdapter extends NcePortController implements
         adaptermemo= new NceSystemConnectionMemo();
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() { return 
-    adaptermemo; }
 
 	static SimulatorAdapter mInstance = null;
 	static public SimulatorAdapter instance() {
