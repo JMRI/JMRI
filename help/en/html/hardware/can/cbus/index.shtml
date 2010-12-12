@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.8 2010-07-03 01:31:05 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.9 2010-12-12 01:21:36 jacobsen Exp $ -->
 <title>JMRI: CBUS Support</title>
 
 <!-- Style -->
@@ -99,14 +99,14 @@ You can specify the node number either
 by using a full 5 decimal digits for the event number itself,
 preceeded by the node number:
 <br><code>MS200018</code><br>
-or by using the letters "n" and "e" to specify the separate parts:
-<br><code>MSn2e18</code><br>
+or by using the letters "N" and "E" to specify the separate parts:
+<br><code>MSN2E18</code><br>
 
 <p>
 Finally, it's possible to connect a Sensor to 
 arbitrary can frames by specifying their data content
-as a hex string:
-<br><code>MSx9100000000000012;x9100000000000019</code><br>
+as a hex string, indicated by "X":
+<br><code>MSX9100000000000012;X9100000000000019</code><br>
 
 This allows the Sensor to disregard any intrinsic meaning to "ON" and "OFF"
 events, and allows it to respond to any frame on the layout.
