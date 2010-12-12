@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+//import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.114 $
+ * @version             $Revision: 1.115 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1753,11 +1753,27 @@ public class TrainBuilder extends TrainCommon{
 			year = Integer.toString(calendar.get(Calendar.YEAR));
 		year = year.trim();
 		
-		String date = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
-				+ " "
+		int hour = calendar.get(Calendar.HOUR);
+		if (hour == 0)
+			hour = 12;
+		String h  = Integer.toString(hour);
+		if (hour <10)
+			h = "0"+ Integer.toString(hour);
+		
+		int minute = calendar.get(Calendar.MINUTE);
+		String m = Integer.toString(minute);
+		if (minute <10)
+			m = "0"+ Integer.toString(minute);
+					
+		String AM_PM = (calendar.get(Calendar.AM_PM)== Calendar.AM)? "AM":"PM";
+		
+		// Java 1.6 methods calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()
+		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())
+		String date = calendar.get(Calendar.MONTH)+1
+				+ "/"
 				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
-				+ calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + " " 
-				+ calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+				+ h + ":" + m + " " 
+				+ AM_PM;
 		
 		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{date}));
 		if (!train.getComment().equals("")){
