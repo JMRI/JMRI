@@ -34,7 +34,7 @@ import javax.vecmath.Vector3f;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
 
@@ -98,7 +98,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         return true;
     }
 
-    public boolean bindAudioBuffer(AudioBuffer audioBuffer) {
+    boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {
             return false;

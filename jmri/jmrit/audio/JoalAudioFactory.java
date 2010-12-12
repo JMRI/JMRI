@@ -10,6 +10,7 @@ import jmri.InstanceManager;
 
 import net.java.games.joal.AL;
 import net.java.games.joal.ALC;
+//import net.java.games.joal.ALCcontext;
 import net.java.games.joal.ALCdevice;
 import net.java.games.joal.ALConstants;
 import net.java.games.joal.ALException;
@@ -79,7 +80,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class JoalAudioFactory extends AbstractAudioFactory {
 
@@ -88,6 +89,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
     private static ALC alc;
 
     private static ALCdevice alcDevice;
+
+    //private static ALCcontext alcContext;
 
     private static boolean _initialised = false;
 
@@ -209,6 +212,11 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
         // Initialise OpenAL and clear the error bit
         try {
+//            // Open default 'preferred' device
+//            alcDevice = alc.alcOpenDevice(null);
+//            alcContext = alc.alcCreateContext(alcDevice, null);
+//            alc.alcMakeContextCurrent(alcContext);
+//
             ALut.alutInit();
             al = ALFactory.getAL();
             al.alGetError();
@@ -279,33 +287,37 @@ public class JoalAudioFactory extends AbstractAudioFactory {
         // Check context
         alc = ALFactory.getALC();
         alcDevice = alc.alcGetContextsDevice(alc.alcGetCurrentContext());
-        int[] size = new int[1];
-        alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length , size, 0);
-        log.debug("Size of ALC_ATTRIBUTES: " + size[0]);
-        int[] attributes = new int[size[0]];
-        alc.alcGetIntegerv(alcDevice, ALC.ALC_ALL_ATTRIBUTES, attributes.length, attributes, 0);
-        for (int i=0;i<attributes.length;i++) {
-            if (i % 2 != 0) {
-                continue;
-            }
-            switch (attributes[i]) {
-                case ALC.ALC_INVALID:
-                    log.debug("Invalid");
-                    break;
-                case ALC.ALC_MONO_SOURCES:
-                    log.debug("Number of mono sources: " + attributes[i+1]);
-                    break;
-                case ALC.ALC_STEREO_SOURCES:
-                    log.debug("Number of stereo sources: " + attributes[i+1]);
-                    break;
-                case ALC.ALC_FREQUENCY:
-                    log.debug("Frequency: " + attributes[i+1]);
-                    break;
-                case ALC.ALC_REFRESH:
-                    log.debug("Refresh: " + attributes[i+1]);
-                    break;
-                default:
-                log.debug("Attribute " + i + ": " + attributes[i]);
+        if (!checkALCError(alcDevice)) {
+            int[] size = new int[1];
+            alc.alcGetIntegerv(alcDevice, ALC.ALC_ATTRIBUTES_SIZE, size.length , size, 0);
+            log.debug("Size of ALC_ATTRIBUTES: " + size[0]);
+            if (!checkALCError(alcDevice) && size[0]>0) {
+                int[] attributes = new int[size[0]];
+                alc.alcGetIntegerv(alcDevice, ALC.ALC_ALL_ATTRIBUTES, attributes.length, attributes, 0);
+                for (int i=0;i<attributes.length;i++) {
+                    if (i % 2 != 0) {
+                        continue;
+                    }
+                    switch (attributes[i]) {
+                        case ALC.ALC_INVALID:
+                            log.debug("Invalid");
+                            break;
+                        case ALC.ALC_MONO_SOURCES:
+                            log.debug("Number of mono sources: " + attributes[i+1]);
+                            break;
+                        case ALC.ALC_STEREO_SOURCES:
+                            log.debug("Number of stereo sources: " + attributes[i+1]);
+                            break;
+                        case ALC.ALC_FREQUENCY:
+                            log.debug("Frequency: " + attributes[i+1]);
+                            break;
+                        case ALC.ALC_REFRESH:
+                            log.debug("Refresh: " + attributes[i+1]);
+                            break;
+                        default:
+                        log.debug("Attribute " + i + ": " + attributes[i]);
+                    }
+                }
             }
         }
 
@@ -414,8 +426,8 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      *
      * @return True if an error has occurred
      */
-    public static boolean checkALEError() {
-        return checkALEError("");
+    public static boolean checkALError() {
+        return checkALError("");
     }
 
     /**
@@ -425,9 +437,11 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * defined message pre-pended and return True.
      * <p>
      * If no error has occurred, return False.
-     * 
+     *
+     * @param msg additional message prepended to the log
+     * @return True if an error has occured
      */
-    public static boolean checkALEError(String msg) {
+    public static boolean checkALError(String msg) {
         // Trim any whitespace then append a space if required
         msg = msg.trim();
         if (msg.length()>0) {
@@ -452,6 +466,66 @@ public class JoalAudioFactory extends AbstractAudioFactory {
                 log.warn(msg + "Requested operation is not valid");
                 return true;
             case AL.AL_OUT_OF_MEMORY:
+                log.warn(msg + "Out of memory");
+                return true;
+            default:
+                log.warn(msg + "Unrecognised error occurred");
+                return true;
+        }
+    }
+
+    /**
+     * Method to check if any error has occurred in the OpenAL sub-system.
+     * <p>
+     * If an error has occurred, log the error as a warning message and
+     * return True.
+     * <p>
+     * If no error has occurred, return False.
+     *
+     * @param alcDevice OpenAL context device to check
+     * @return True if an error has occured
+     */
+    public static boolean checkALCError(ALCdevice alcDevice) {
+        return checkALCError(alcDevice,"");
+    }
+
+    /**
+     * Method to check if any error has occurred in the OpenAL context
+     * sub-system.
+     * <p>
+     * If an error has occurred, log the error as a warning message with the
+     * defined message pre-pended and return True.
+     * <p>
+     * If no error has occurred, return False.
+     *
+     * @param alcDevice OpenAL context device to check
+     * @param msg additional message prepended to the log
+     * @return True if an error has occured
+     */
+    public static boolean checkALCError(ALCdevice alcDevice, String msg) {
+        // Trim any whitespace then append a space if required
+        msg = msg.trim();
+        if (msg.length()>0) {
+            msg = msg + " ";
+        }
+
+        // Check for error
+        switch (alc.alcGetError(alcDevice)) {
+            case ALC.ALC_NO_ERROR:
+                return false;
+            case ALC.ALC_INVALID_DEVICE:
+                log.warn(msg + "Invalid device");
+                return true;
+            case ALC.ALC_INVALID_CONTEXT:
+                log.warn(msg + "Invalid context");
+                return true;
+            case ALC.ALC_INVALID_ENUM:
+                log.warn(msg + "Invalid enumerated parameter value");
+                return true;
+            case ALC.ALC_INVALID_VALUE:
+                log.warn(msg + "Invalid parameter value");
+                return true;
+            case ALC.ALC_OUT_OF_MEMORY:
                 log.warn(msg + "Out of memory");
                 return true;
             default:

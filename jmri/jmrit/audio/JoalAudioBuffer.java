@@ -65,7 +65,7 @@ import net.java.games.joal.util.ALut;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JoalAudioBuffer extends AbstractAudioBuffer {
 
@@ -112,7 +112,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     private boolean init() {
         // Try to create an empty buffer that will hold the actual sound data
         al.alGenBuffers(1, _dataStorageBuffer, 0);
-        if (JoalAudioFactory.checkALEError()) {
+        if (JoalAudioFactory.checkALError()) {
             log.warn("Error creating JoalAudioBuffer (" + this.getSystemName() + ")");
             return false;
         }

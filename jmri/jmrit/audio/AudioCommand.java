@@ -23,7 +23,7 @@ import jmri.Audio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class AudioCommand {
 
@@ -74,7 +74,8 @@ public class AudioCommand {
     /**
      * Returns a string representation of the assigned command
      * @return a string representation
-     */private String commandString() {
+     */
+    private String commandString() {
         switch (this.command) {
             case Audio.CMD_INIT_FACTORY:
                 return "Initialise Factory (0x" + Integer.toHexString(this.command) + ")";

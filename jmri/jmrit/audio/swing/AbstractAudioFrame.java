@@ -41,7 +41,7 @@ import jmri.util.JmriJFrame;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
@@ -125,7 +125,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      * A convenience class to create a JPanel to edit a Vector3f object using
      * 3 seperate JSpinner Swing objects
      */
-    static class JPanelVector3f extends JPanel {
+    protected static class JPanelVector3f extends JPanel {
 
         JLabel xLabel = new JLabel(rba.getString("LabelX"));
         JSpinner xValue = new JSpinner();
@@ -211,7 +211,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      * A convenience class to create a JPanel for editing a float value
      * using combined JSlider and JSPinner Swing objects
      */
-    protected class JPanelSliderf extends JPanel {
+    protected static class JPanelSliderf extends JPanel {
 
         JSlider slider = new JSlider();
 

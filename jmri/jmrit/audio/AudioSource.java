@@ -38,7 +38,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author  Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public interface AudioSource extends Audio {
 
@@ -226,17 +226,18 @@ public interface AudioSource extends Audio {
      */
     public void setAssignedBuffer(String sysName);
 
-    /**
-     * Binds this AudioSource with the specified AudioBuffer
-     * <p>
-     * Applies only to sub-types:
-     * <ul>
-     * <li>Source
-     * </ul>
-     * @param audioBuffer the AudioBuffer to bind to this AudioSource
-     * @return true if successful
-     */
-    public boolean bindAudioBuffer(AudioBuffer audioBuffer);
+//    /**
+//     * Binds this AudioSource with the specified AudioBuffer
+//     * <p>
+//     * Applies only to sub-types:
+//     * <ul>
+//     * <li>Source
+//     * </ul>
+//     * @param audioBuffer the AudioBuffer to bind to this AudioSource
+//     * @return true if successful
+//     */
+//    @Deprecated
+//    public boolean bindAudioBuffer(AudioBuffer audioBuffer);
 
     /**
      * Method to return if this AudioSource has been bound to an AudioBuffer

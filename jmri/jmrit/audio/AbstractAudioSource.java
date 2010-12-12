@@ -30,7 +30,7 @@ import jmri.implementation.AbstractAudio;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public abstract class AbstractAudioSource extends AbstractAudio implements AudioSource {
 
@@ -452,6 +452,18 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
                 break;
         }
     }
+
+    /**
+     * Binds this AudioSource with the specified AudioBuffer
+     * <p>
+     * Applies only to sub-types:
+     * <ul>
+     * <li>Source
+     * </ul>
+     * @param audioBuffer the AudioBuffer to bind to this AudioSource
+     * @return true if successful
+     */
+    abstract boolean bindAudioBuffer(AudioBuffer buffer);
 
     /**
      * Method to define if this AudioSource has been bound to an AudioBuffer

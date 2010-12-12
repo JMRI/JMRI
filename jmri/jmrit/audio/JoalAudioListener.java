@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class JoalAudioListener extends AbstractAudioListener {
 
@@ -101,7 +101,7 @@ public class JoalAudioListener extends AbstractAudioListener {
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alListener3f(AL.AL_POSITION, pos.x, pos.y, pos.z);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating position of JoalAudioListener (" + this.getSystemName() + ")");
             }
         }
@@ -112,7 +112,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         super.setVelocity(vel);
         if (_initialised) {
             al.alListener3f(AL.AL_VELOCITY, vel.x, vel.y, vel.z);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating velocity setting of JoalAudioListener (" + this.getSystemName() + ")");
             }
         }
@@ -126,7 +126,7 @@ public class JoalAudioListener extends AbstractAudioListener {
                     new float[] { at.x, at.y, at.z,
                                   up.x, up.y, up.z},
                     0);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating orientation of JoalAudioListener (" + this.getSystemName() + ")");
             }
         }
@@ -137,7 +137,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         super.setGain(gain);
         if (_initialised) {
             al.alListenerf(AL.AL_GAIN, gain);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating gain setting of JoalAudioListener (" + this.getSystemName() + ")");
             }
         }
@@ -148,7 +148,7 @@ public class JoalAudioListener extends AbstractAudioListener {
         super.setMetersPerUnit(metersPerUnit);
         if (_initialised) {
             al.alListenerf(AL.AL_METERS_PER_UNIT, metersPerUnit);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating meters per unit setting of JoalAudioListener (" + this.getSystemName() + ")");
             }
         }
@@ -165,7 +165,7 @@ public class JoalAudioListener extends AbstractAudioListener {
                     new float[] { this.getOrientation(AT).x, this.getOrientation(AT).y, this.getOrientation(AT).z,
                                   this.getOrientation(UP).x, this.getOrientation(UP).y, this.getOrientation(UP).z},
                     0);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating JoalAudioListener (" + this.getSystemName() + ")");
             }
         }

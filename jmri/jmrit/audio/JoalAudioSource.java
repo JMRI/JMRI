@@ -62,7 +62,7 @@ import net.java.games.joal.AL;
  * <p>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class JoalAudioSource extends AbstractAudioSource {
 
@@ -105,7 +105,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      private boolean init() {
         // Generate the AudioSource
         al.alGenSources(1, _source, 0);
-        if (JoalAudioFactory.checkALEError()) {
+        if (JoalAudioFactory.checkALError()) {
             log.warn("Error creating JoalSource (" + this.getSystemName() + ")");
             _source = null;
             return false;
@@ -114,7 +114,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         return true;
     }
 
-    public boolean bindAudioBuffer(AudioBuffer audioBuffer) {
+    boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // First check we've been initialised
         if (!_initialised) {
             return false;
@@ -122,7 +122,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         
         // Bind this AudioSource to the specified AudioBuffer
         al.alSourcei(_source[0], AL.AL_BUFFER, ((JoalAudioBuffer)audioBuffer).getDataStorageBuffer()[0]);
-        if (JoalAudioFactory.checkALEError()) {
+        if (JoalAudioFactory.checkALError()) {
             log.warn("Error binding JoalSource (" + this.getSystemName() + ") to AudioBuffer (" + this.getAssignedBufferName() +")");
             return false;
         }
@@ -135,7 +135,7 @@ public class JoalAudioSource extends AbstractAudioSource {
     protected void changePosition(Vector3f pos) {
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_POSITION, pos.x, pos.y, pos.z);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating position of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -146,7 +146,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setPositionRelative(relative);
         if (_initialised) {
             al.alSourcei(_source[0], AL.AL_SOURCE_RELATIVE, relative?AL.AL_TRUE:AL.AL_FALSE);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating relative position property of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -157,7 +157,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setVelocity(vel);
         if (_initialised) {
             al.alSource3f(_source[0], AL.AL_VELOCITY, vel.x, vel.y, vel.z);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating velocity of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -176,7 +176,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setPitch(pitch);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_PITCH, pitch);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating pitch of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -187,7 +187,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setReferenceDistance(referenceDistance);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_REFERENCE_DISTANCE, referenceDistance);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating reference distance of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -198,7 +198,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setMaximumDistance(maximumDistance);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_MAX_DISTANCE, maximumDistance);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating maximum distance of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -209,7 +209,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         super.setRollOffFactor(rollOffFactor);
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_ROLLOFF_FACTOR, rollOffFactor);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating roll-off factor of JoalAudioSource (" + this.getSystemName() + ")");
             }
         }
@@ -246,7 +246,7 @@ public class JoalAudioSource extends AbstractAudioSource {
             al.alSource3f(_source[0], AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
             al.alSource3f(_source[0], AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
             al.alSourcei(_source[0], AL.AL_LOOPING, this.isLooped() ? AL.AL_TRUE : AL.AL_FALSE);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating JoalAudioSource (" + this.getSystemName() + ")");
             }
         } else {
@@ -267,6 +267,17 @@ public class JoalAudioSource extends AbstractAudioSource {
         if (_initialised && isBound()) {
             al.alSourceStop(_source[0]);
             doRewind();
+        }
+        int[] myState = new int[1];
+        al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
+        boolean stopped = myState[0] != AL.AL_STOPPED;
+        while (!stopped) {
+            try {
+                Thread.sleep(5);
+            } catch (InterruptedException ex) {
+                al.alGetSourcei(_source[0], AL.AL_SOURCE_STATE, myState, 0);
+                stopped = myState[0] != AL.AL_STOPPED;
+            }
         }
         this.setState(STATE_STOPPED);
     }
@@ -340,7 +351,7 @@ public class JoalAudioSource extends AbstractAudioSource {
         // If playing, update the gain
         if (_initialised) {
             al.alSourcef(_source[0], AL.AL_GAIN, currentGain);
-            if (JoalAudioFactory.checkALEError()) {
+            if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating gain setting of JoalAudioSource (" + this.getSystemName() + ")");
             }
             if (log.isDebugEnabled())

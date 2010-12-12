@@ -25,7 +25,7 @@ import javax.vecmath.Vector3f;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NullAudioSource extends AbstractAudioSource {
 
@@ -57,7 +57,7 @@ public class NullAudioSource extends AbstractAudioSource {
         _initialised = init();
     }
 
-    public boolean bindAudioBuffer(AudioBuffer audioBuffer) {
+    boolean bindAudioBuffer(AudioBuffer audioBuffer) {
         // Don't actually need to do anything specific here
         if (log.isDebugEnabled()) log.debug("Bind NullAudioSource (" + this.getSystemName() +
                                             ") to NullAudioBuffer (" + audioBuffer.getSystemName() + ")");
