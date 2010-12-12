@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -533,7 +533,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	/**
 	 * Sets rolling stock destination track without reserving destination track space or
 	 * drop count.  Used by car router to test destinations.
-	 * @param destination
+	 * @param track
 	 */
 	public void setDestinationTrack(Track track){
 		_trackDestination = track;
