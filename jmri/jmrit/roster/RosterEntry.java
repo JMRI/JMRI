@@ -46,7 +46,7 @@ import org.jdom.Element;
  *
  * @author    Bob Jacobsen   Copyright (C) 2001, 2002, 2004, 2005, 2009
  * @author    Dennis Miller Copyright 2004
- * @version   $Revision: 1.53 $
+ * @version   $Revision: 1.54 $
  * @see       jmri.jmrit.roster.LocoFile
  *
  */
@@ -979,7 +979,7 @@ public class RosterEntry {
         pcs.addPropertyChangeListener(l);
     }
 
-    protected void firePropertyChange(String p, Object old, Object n) {
+    protected synchronized void firePropertyChange(String p, Object old, Object n) {
         if (pcs == null) pcs = new java.beans.PropertyChangeSupport(this);
         pcs.firePropertyChange(p,old,n);
     }
