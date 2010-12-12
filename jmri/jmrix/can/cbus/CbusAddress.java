@@ -16,14 +16,14 @@ import jmri.jmrix.can.CanMessage;
  * <p>
  * Forms:
  * <dl>
- * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits:  0123, not 123
+ * <dt>Full hex string preceeded by "X"<dd>Needs to be pairs of digits:  0123, not 123
  * <dt>+/-ddd<dd>ddd is node*100,000 (a.k.a NODEFACTOR) + event
  * <dt>+/-nNNNeEEE<dd>where NNN is a node number and EEE is an event number
  * </dl>
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class CbusAddress {
 
@@ -36,7 +36,7 @@ public class CbusAddress {
     // 7: optional "N"
     // 8: node number
     // 9: event number
-    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
+    static final String singleAddressPattern = "((\\+|-)?\\d++)|([Xx](\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
 
