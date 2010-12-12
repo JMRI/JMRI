@@ -88,6 +88,6 @@ body {
 	  cursor:wait;
 }
 
-#imgLocoImage, #divPowerLeft , #divPowerRight {
+#imgLocoImage, #divPowerLeft {
       display:none;
 }
