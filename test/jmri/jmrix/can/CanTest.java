@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public class CanTest extends TestCase {
 
@@ -39,8 +39,9 @@ public class CanTest extends TestCase {
 
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(jmri.jmrix.can.swing.monitor.MonitorTest.suite());
-            suite.addTest(jmri.jmrix.can.cbus.CbusTest.suite());
         }
+        
+        suite.addTest(jmri.jmrix.can.cbus.CbusTest.suite());
         
         return suite;
     }

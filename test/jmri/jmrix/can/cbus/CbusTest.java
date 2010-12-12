@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.can.cbus package.
  * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public class CbusTest extends TestCase {
 
@@ -37,7 +37,11 @@ public class CbusTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.CbusProgrammerManagerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
-        suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+            suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
+        }
+
         return suite;
     }
 
