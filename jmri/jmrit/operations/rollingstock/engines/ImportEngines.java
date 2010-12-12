@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ImportEngines extends Thread {
 	
@@ -145,28 +145,28 @@ public class ImportEngines extends Thread {
 				log.debug("Checking engine number ("+engineNumber+") road ("+engineRoad+ ") model ("+engineModel+ ") length ("+engineLength+")");
 				if (engineNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
 					JOptionPane.showMessageDialog(null, 
-							"Engine ("+engineRoad+" "+engineNumber+") road number ("+engineNumber+") too long!",
+							MessageFormat.format(rb.getString("EngineRoadNumberTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineNumber}),
 							rb.getString("engineRoadNum"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Engine ("+engineRoad+" "+engineNumber+") road name ("+engineRoad+") too long!",
+							MessageFormat.format(rb.getString("EngineRoadNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineRoad}),
 							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (engineModel.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Engine ("+engineRoad+" "+engineNumber+") model ("+engineModel+") too long!",
+							MessageFormat.format(rb.getString("EngineModelNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineModel}),
 							MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (!EngineModels.instance().containsName(engineModel)){
 					int results = JOptionPane.showConfirmDialog(null,
-							"Engine ("+engineRoad+" "+engineNumber+") \n"+MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engineModel}),
+							rb.getString("Engine")+" ("+engineRoad+" "+engineNumber+") \n"+MessageFormat.format(rb.getString("modelNameNotExist"),new Object[]{engineModel}),
 							rb.getString("engineAddModel"),
 							JOptionPane.YES_NO_CANCEL_OPTION);
 					if (results == JOptionPane.YES_OPTION)
@@ -176,7 +176,7 @@ public class ImportEngines extends Thread {
 				}
 				if (engineLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
-							"Engine ("+engineRoad+" "+engineNumber+") length ("+engineLength+") too long!",
+							MessageFormat.format(rb.getString("EngineLengthNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineLength}),
 							rb.getString("engineAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
@@ -190,8 +190,8 @@ public class ImportEngines extends Thread {
 						engineOwner = inputLine[base+5];
 						if (engineOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 							JOptionPane.showMessageDialog(null, 
-									"Engine ("+engineRoad+" "+engineNumber+") owner ("+engineOwner+") too long!",
-									rb.getString("engineAttribute"),
+									MessageFormat.format(rb.getString("EngineOwnerNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineOwner}),
+									MessageFormat.format(rb.getString("engineAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -200,7 +200,7 @@ public class ImportEngines extends Thread {
 						engineBuilt = inputLine[base+6];
 						if (engineBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
 							JOptionPane.showMessageDialog(null, 
-									"Engine ("+engineRoad+" "+engineNumber+") built ("+engineBuilt+") too long!",
+									MessageFormat.format(rb.getString("EngineBuiltDateTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineBuilt}),
 									rb.getString("engineAttribute5"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
@@ -235,14 +235,14 @@ public class ImportEngines extends Thread {
 
 					if (engineLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
 						JOptionPane.showMessageDialog(null, 
-								"Engine ("+engineRoad+" "+engineNumber+") location ("+engineLocation+") too long!",
+								MessageFormat.format(rb.getString("EngineLocationNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineLocation}),
 								rb.getString("engineAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
 					if (engineTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
 						JOptionPane.showMessageDialog(null, 
-								"Engine ("+engineRoad+" "+engineNumber+") track ("+engineTrack+") too long!",
+								MessageFormat.format(rb.getString("EngineTrackNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineTrack}),
 								rb.getString("engineAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
@@ -250,18 +250,35 @@ public class ImportEngines extends Thread {
 					Location l = LocationManager.instance().getLocationByName(engineLocation);
 					Track sl = null;
 					if (l == null && !engineLocation.equals("")){
-						JOptionPane.showMessageDialog(null, "Engine ("+engineRoad+" "+engineNumber+") location ("+engineLocation+") does not exist",
+						JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("EngineLocationDoesNotExist"),new Object[]{(engineRoad+" "+engineNumber),engineLocation}),
 								rb.getString("engineLocation"),
 								JOptionPane.ERROR_MESSAGE);
-						break;
+						int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateLoc"),new Object[]{engineLocation}),
+								rb.getString("engineLocation"),
+								JOptionPane.YES_NO_OPTION);
+						if (results == JOptionPane.YES_OPTION){
+							log.debug("Create location ("+engineLocation+")");
+							l = LocationManager.instance().newLocation(engineLocation);
+						} else {
+							break;
+						}
 					}
 					if (l != null && !engineTrack.equals("")){
 						sl = l.getTrackByName(engineTrack, null);
 						if (sl == null){
-							JOptionPane.showMessageDialog(null, "Engine ("+engineRoad+" "+engineNumber+") track location ("+engineLocation+", "+engineTrack+") does not exist",
+							JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("EngineTrackDoesNotExist"),new Object[]{(engineRoad+" "+engineNumber),engineTrack, engineLocation}),
 									rb.getString("engineTrack"),
 									JOptionPane.ERROR_MESSAGE);
-							break;
+							int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateTrack"),new Object[]{engineTrack, engineLocation}),
+									rb.getString("engineTrack"),
+									JOptionPane.YES_NO_OPTION);
+							if (results == JOptionPane.YES_OPTION){
+								log.debug("Create 1000 foot yard track ("+engineTrack+")");
+								sl = l.addTrack(engineTrack, Track.YARD);
+								sl.setLength(1000);
+							} else {
+								break;
+							}
 						}
 					}
 					log.debug("Add engine ("+engineRoad+" "+engineNumber+") owner ("+engineOwner+") built ("+engineBuilt+") location ("+engineLocation+", "+engineTrack+")");
@@ -283,8 +300,8 @@ public class ImportEngines extends Thread {
 						if (!status.equals(Engine.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
 							JOptionPane.showMessageDialog(null,
-									"Can't set engine ("+engineRoad+" "+engineNumber+") type ("+engineModel+") because of location ("+engineLocation+", "+engineTrack+ ") "+ status,
-									"Can not update engine location",
+									MessageFormat.format(rb.getString("CanNotSetEngineAtLocation"),new Object[]{(engineRoad+" "+engineNumber),engineModel,engineLocation,engineTrack,status}),
+									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -305,12 +322,13 @@ public class ImportEngines extends Thread {
 		fstatus.dispose();
 
 		if (importOkay) {
-			JOptionPane.showMessageDialog(null, enginesAdded+" engines added to roster",
-					"Successful import!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, 
+					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					rb.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					enginesAdded+" engines added to roster",
-					"Import failed", JOptionPane.ERROR_MESSAGE);
+					MessageFormat.format(rb.getString("ImportEnginesAdded"),new Object[]{enginesAdded}),
+					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

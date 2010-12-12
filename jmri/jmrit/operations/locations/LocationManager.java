@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -111,6 +111,8 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     		location = new Location(Integer.toString(_id), name);
     		Integer oldSize = Integer.valueOf(_locationHashTable.size());
     		_locationHashTable.put(location.getId(), location);
+    	   	// set dirty
+        	LocationManagerXml.instance().setDirty(true);
     		firePropertyChange(LISTLENGTH_CHANGED_PROPERTY, oldSize, Integer.valueOf(_locationHashTable.size()));
     	}
     	return location;

@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -35,7 +36,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.21 $
+ * @version             $Revision: 1.22 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -285,6 +286,7 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		if (ae.getSource() == saveButton){
 			carManager.setCarsFrame(this);
 			carManager.setCarsFrameTableColumnWidths(getCurrentTableColumnWidths());
+			LocationManagerXml.instance().writeFileIfDirty();	// could have created locations or tracks during import
 			CarManagerXml.instance().writeOperationsFile();
 		}
 	}

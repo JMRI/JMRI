@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.MessageFormat;
+import java.text.NumberFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -18,6 +19,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.setup.Setup;
 
 /**
  * This routine will import cars into the operation database.
@@ -25,7 +27,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ImportCars extends Thread {
 	
@@ -35,6 +37,9 @@ public class ImportCars extends Thread {
 	
 	javax.swing.JLabel textLine = new javax.swing.JLabel();
 	javax.swing.JLabel lineNumber = new javax.swing.JLabel();
+	
+	private int weightResults = JOptionPane.NO_OPTION;	// Automatically calculate weight for car if weight entry is not found
+	private boolean autoCalculate = true;
 	
 	// we use a thread so the status frame will work!
 	public void run() {
@@ -148,28 +153,28 @@ public class ImportCars extends Thread {
 				log.debug("Checking car number ("+carNumber+") road ("+carRoad+ ") type ("+carType+ ") length ("+carLength+") weight ("+carWeight+") color ("+carColor+")" );
 				if (carNumber.length() > Control.MAX_LEN_STRING_ROAD_NUMBER){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") road number ("+carNumber+") too long!",
+							MessageFormat.format(rb.getString("CarRoadNumberTooLong"),new Object[]{(carRoad+" "+carNumber),carNumber}),
 							rb.getString("carRoadNum"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carRoad.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") road name ("+carRoad+") too long!",
+							MessageFormat.format(rb.getString("CarRoadNameTooLong"),new Object[]{(carRoad+" "+carNumber),carRoad}),
 							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carType.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") type ("+carType+") too long!",
+							MessageFormat.format(rb.getString("CarTypeNameTooLong"),new Object[]{(carRoad+" "+carNumber),carType}),
 							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (!CarTypes.instance().containsName(carType)){
 					int results = JOptionPane.showConfirmDialog(null,
-							"Car ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
+							rb.getString("Car")+" ("+carRoad+" "+carNumber+") \n"+MessageFormat.format(rb.getString("typeNameNotExist"),new Object[]{carType}),
 							rb.getString("carAddType"),
 							JOptionPane.YES_NO_CANCEL_OPTION);
 					if (results == JOptionPane.YES_OPTION)
@@ -180,35 +185,35 @@ public class ImportCars extends Thread {
 				}
 				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") length ("+carLength+") too long!",
+							MessageFormat.format(rb.getString("CarLengthNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLength}),
 							rb.getString("carAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carWeight.length() > Control.MAX_LEN_STRING_WEIGHT_NAME){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") weight ("+carWeight+") too long!",
+							MessageFormat.format(rb.getString("CarWeightNameTooLong"),new Object[]{(carRoad+" "+carNumber),carWeight}),
 							rb.getString("carAttribute5"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				if (carColor.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 					JOptionPane.showMessageDialog(null, 
-							"Car ("+carRoad+" "+carNumber+") color ("+carColor+") too long!",
+							MessageFormat.format(rb.getString("CarColorNameTooLong"),new Object[]{(carRoad+" "+carNumber),carColor}),
 							MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}
 				Car c = manager.getByRoadAndNumber(carRoad, carNumber);
 				if (c != null){
-					log.info("Can not add, car number ("+carNumber+") road ("+carRoad+ ") already exists");
+					log.info("Can not add, car number ("+carNumber+") road ("+carRoad+ ") already exists!");
 				} else {
 
 					if(inputLine.length > base+6){
 						carOwner = inputLine[base+6];
 						if (carOwner.length() > Control.MAX_LEN_STRING_ATTRIBUTE){
 							JOptionPane.showMessageDialog(null, 
-									"Car ("+carRoad+" "+carNumber+") owner ("+carOwner+") too long!",
+									MessageFormat.format(rb.getString("CarOwnerNameTooLong"),new Object[]{(carRoad+" "+carNumber),carOwner}),
 									MessageFormat.format(rb.getString("carAttribute"),new Object[]{Control.MAX_LEN_STRING_ATTRIBUTE}),
 									JOptionPane.ERROR_MESSAGE);
 							break;
@@ -218,7 +223,7 @@ public class ImportCars extends Thread {
 						carBuilt = inputLine[base+7];
 						if (carBuilt.length() > Control.MAX_LEN_STRING_BUILT_NAME){
 							JOptionPane.showMessageDialog(null, 
-									"Car ("+carRoad+" "+carNumber+") built ("+carBuilt+") too long!",
+									MessageFormat.format(rb.getString("CarBuiltNameTooLong"),new Object[]{(carRoad+" "+carNumber),carBuilt}),
 									rb.getString("carAttribute5"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
@@ -254,14 +259,14 @@ public class ImportCars extends Thread {
 
 					if (carLocation.length() > Control.MAX_LEN_STRING_LOCATION_NAME){
 						JOptionPane.showMessageDialog(null, 
-								"Car ("+carRoad+" "+carNumber+") location ("+carLocation+") too long!",
+								MessageFormat.format(rb.getString("CarLocationNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLocation}),
 								rb.getString("carAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
 					}
 					if (carTrack.length() > Control.MAX_LEN_STRING_TRACK_NAME){
 						JOptionPane.showMessageDialog(null, 
-								"Car ("+carRoad+" "+carNumber+") track ("+carTrack+") too long!",
+								MessageFormat.format(rb.getString("CarTrackNameTooLong"),new Object[]{(carRoad+" "+carNumber),carTrack}),
 								rb.getString("carAttribute25"),
 								JOptionPane.ERROR_MESSAGE);
 						break;
@@ -269,20 +274,38 @@ public class ImportCars extends Thread {
 					Location l = LocationManager.instance().getLocationByName(carLocation);
 					Track sl = null;
 					if (l == null && !carLocation.equals("")){
-						JOptionPane.showMessageDialog(null, "Car ("+carRoad+" "+carNumber+") location ("+carLocation+") does not exist",
+						JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarLocationDoesNotExist"),new Object[]{(carRoad+" "+carNumber),carLocation}),
 								rb.getString("carLocation"),
 								JOptionPane.ERROR_MESSAGE);
-						break;
+						int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateLoc"),new Object[]{carLocation}),
+								rb.getString("carLocation"),
+								JOptionPane.YES_NO_OPTION);
+						if (results == JOptionPane.YES_OPTION){
+							log.debug("Create location ("+carLocation+")");
+							l = LocationManager.instance().newLocation(carLocation);
+						} else {
+							break;
+						}
 					}
 					if (l != null && !carTrack.equals("")){
 						sl = l.getTrackByName(carTrack, null);
 						if (sl == null){
-							JOptionPane.showMessageDialog(null, "Car ("+carRoad+" "+carNumber+") track location ("+carLocation+", "+carTrack+") does not exist",
+							JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarTrackDoesNotExist"),new Object[]{(carRoad+" "+carNumber), carTrack, carLocation}),
 									rb.getString("carTrack"),
 									JOptionPane.ERROR_MESSAGE);
-							break;
+							int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToCreateTrack"),new Object[]{carTrack, carLocation}),
+									rb.getString("carTrack"),
+									JOptionPane.YES_NO_OPTION);
+							if (results == JOptionPane.YES_OPTION){
+								log.debug("Create 1000 foot yard track ("+carTrack+")");
+								sl = l.addTrack(carTrack, Track.YARD);
+								sl.setLength(1000);
+							} else {
+								break;
+							}
 						}
 					}
+
 					log.debug("Add car ("+carRoad+" "+carNumber+") owner ("+carOwner+") built ("+carBuilt+") location ("+carLocation+", "+carTrack+")");
 					Car car = manager.newCar(carRoad, carNumber);
 					car.setType(carType);
@@ -294,14 +317,46 @@ public class ImportCars extends Thread {
 					carsAdded++;
 					
 					car.setCaboose(carType.equals("Caboose"));
+					
+					if (car.getWeight().equals("")){
+						log.debug("Car ("+carRoad+" "+carNumber+") weight not specified");
+						if (weightResults != JOptionPane.CANCEL_OPTION){
+							weightResults = JOptionPane.showOptionDialog(null, 
+									MessageFormat.format(rb.getString("CarWeightNotFound"),new Object[]{(carRoad+" "+carNumber)}),
+									rb.getString("CarWeightMissing"),
+									JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new Object[]{rb.getString("ButtonYes"), rb.getString("ButtonNo"), rb.getString("ButtonDontShow")}, autoCalculate?"Yes":"No");
+						}
+						if (weightResults == JOptionPane.NO_OPTION)
+							autoCalculate = false;
+						if (weightResults == JOptionPane.YES_OPTION || autoCalculate == true && weightResults == JOptionPane.CANCEL_OPTION){
+							autoCalculate = true;
+							try {
+								double carLen = Double.parseDouble(car.getLength())*12/Setup.getScaleRatio();
+								double carWght = (Setup.getInitalWeight() + carLen
+										* Setup.getAddWeight()) / 1000;
+								NumberFormat nf = NumberFormat.getNumberInstance();
+								nf.setMaximumFractionDigits(1);
+								car.setWeight(nf.format(carWght));	// car weight in ounces.
+								int tons = (int)(carWght*Setup.getScaleTonRatio());
+								// adjust weight for caboose
+								if (car.isCaboose())
+									tons = (int)(Double.parseDouble(car.getLength()) * .9);  //.9 tons/foot
+								car.setWeightTons(Integer.toString(tons));
+							} catch (NumberFormatException e) {
+								JOptionPane.showMessageDialog(null,
+										rb.getString("carLengthMustBe"), rb.getString("carWeigthCanNot"),
+										JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
 
 					if (l != null){
 						String status = car.setLocation(l,sl);
 						if (!status.equals(Car.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
 							JOptionPane.showMessageDialog(null,
-									"Can't set car ("+carRoad+" "+carNumber+") type ("+carType+") because of location ("+carLocation+", "+carTrack+ ") "+ status,
-									"Can not update car location",
+									MessageFormat.format(rb.getString("CanNotSetCarAtLocation"),new Object[]{(carRoad+" "+carNumber),carType,carLocation,carTrack,status}),
+									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
 							break;
 						}
@@ -322,12 +377,13 @@ public class ImportCars extends Thread {
 		fstatus.dispose();
 
 		if (importOkay) {
-			JOptionPane.showMessageDialog(null, carsAdded+" cars added to roster",
-					"Successful import!", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null,
+					MessageFormat.format(rb.getString("ImportCarsAdded"),new Object[]{carsAdded}),
+					rb.getString("SuccessfulImport"), JOptionPane.INFORMATION_MESSAGE);
 		} else {
 			JOptionPane.showMessageDialog(null,
-					carsAdded+" cars added to roster",
-					"Import failed", JOptionPane.ERROR_MESSAGE);
+					MessageFormat.format(rb.getString("ImportCarsAdded"),new Object[]{carsAdded}),
+					rb.getString("ImportFailed"), JOptionPane.ERROR_MESSAGE);
 		}
 	}
 

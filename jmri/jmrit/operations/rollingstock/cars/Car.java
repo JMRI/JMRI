@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.53 $
+ * @version             $Revision: 1.54 $
  */
 public class Car extends RollingStock {
 	
@@ -293,6 +293,9 @@ public class Car extends RollingStock {
 			else
 				return "Car has a " +SCHEDULE+ " " +LOAD+ " ("+getLoad()+")";
 		}
+		// only sidings can have a schedule
+		if (!track.getLocType().equals(Track.SIDING))
+			return OKAY;
 		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = ScheduleManager.instance();
 		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());

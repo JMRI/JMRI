@@ -23,8 +23,8 @@ import java.util.ResourceBundle;
 /**
  * Frame for user edit of tracks
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.41 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010
+ * @version $Revision: 1.42 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -37,6 +37,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	Location _location = null;
 	Track _track = null;
 	String _type = "";
+	JMenu _toolMenu = null;
+	
 	List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
@@ -205,9 +207,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
-		JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
-		menuBar.add(toolMenu);
+		_toolMenu = new JMenu(rb.getString("Tools"));
+		_toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
+		menuBar.add(_toolMenu);
 		setJMenuBar(menuBar);
 		
 		// load

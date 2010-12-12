@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -304,10 +304,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.INTERCHANGELISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.SIDINGLISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.STAGINGLISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.YARDLISTLENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.NAME_CHANGED_PROPERTY))
 			updateLocations();

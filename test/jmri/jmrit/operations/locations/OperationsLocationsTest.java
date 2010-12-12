@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -68,10 +68,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Constant NORTH", 4, Location.NORTH);
 		Assert.assertEquals("Location Constant SOUTH", 8, Location.SOUTH);
 
-		Assert.assertEquals("Location Constant YARDLISTLENGTH_CHANGED_PROPERTY", "yardListLength", Location.YARDLISTLENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant SIDINGLISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.SIDINGLISTLENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant INTERCHANGELISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.INTERCHANGELISTLENGTH_CHANGED_PROPERTY);
-		Assert.assertEquals("Location Constant STAGINGLISTLENGTH_CHANGED_PROPERTY", "sidingListLength", Location.STAGINGLISTLENGTH_CHANGED_PROPERTY);
+		Assert.assertEquals("Location Constant YARDLISTLENGTH_CHANGED_PROPERTY", "trackListLength", Location.TRACK_LISTLENGTH_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant TYPES_CHANGED_PROPERTY", "types", Location.TYPES_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant TRAINDIRECTION_CHANGED_PROPERTY", "trainDirection", Location.TRAINDIRECTION_CHANGED_PROPERTY);
 		Assert.assertEquals("Location Constant LENGTH_CHANGED_PROPERTY", "length", Location.LENGTH_CHANGED_PROPERTY);

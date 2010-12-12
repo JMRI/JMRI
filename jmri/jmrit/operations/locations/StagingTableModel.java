@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class StagingTableModel extends TrackTableModel {
 
@@ -46,7 +46,7 @@ public class StagingTableModel extends TrackTableModel {
     public void propertyChange(PropertyChangeEvent e) {
     	if (Control.showProperty && log.isDebugEnabled()) 
     		log.debug("Property change " +e.getPropertyName()+ " old: "+e.getOldValue()+ " new: "+e.getNewValue());
-    	if (e.getPropertyName().equals(Location.STAGINGLISTLENGTH_CHANGED_PROPERTY)) {
+    	if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
     		updateList();
     		fireTableDataChanged();
     	}

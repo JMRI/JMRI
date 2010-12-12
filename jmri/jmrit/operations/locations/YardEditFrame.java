@@ -9,7 +9,7 @@ import javax.swing.BorderFactory;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class YardEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -24,6 +24,7 @@ public class YardEditFrame extends TrackEditFrame implements java.beans.Property
 		_type = Track.YARD;
 		super.initComponents(location, track);
 		
+		_toolMenu.add(new ChangeTrackTypeAction (this));
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Yards", true);
 		
 		// override text strings for tracks
