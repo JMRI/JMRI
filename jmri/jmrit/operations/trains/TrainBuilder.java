@@ -7,8 +7,10 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import javax.swing.JOptionPane;
@@ -37,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.113 $
+ * @version             $Revision: 1.114 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1743,7 +1745,21 @@ public class TrainBuilder extends TrainCommon{
 			addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
-		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{new Date()}));
+		
+		Calendar calendar = Calendar.getInstance();
+		
+		String year = Setup.getYearModeled();
+		if (year.equals(""))
+			year = Integer.toString(calendar.get(Calendar.YEAR));
+		year = year.trim();
+		
+		String date = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault())
+				+ " "
+				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
+				+ calendar.get(Calendar.HOUR) + ":" + calendar.get(Calendar.MINUTE) + " " 
+				+ calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault());
+		
+		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{date}));
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}

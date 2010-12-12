@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -87,6 +87,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 	JTextField switchTimeTextField = new JTextField(3);
 	JTextField travelTimeTextField = new JTextField(3);
 	JTextField commentTextField = new JTextField(35);
+	JTextField yearTextField = new JTextField(4);
 	
 	// combo boxes
 	JComboBox northComboBox = new JComboBox();
@@ -115,6 +116,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		travelTimeTextField.setText(Integer.toString(Setup.getTravelTime()));
 		panelTextField.setText(Setup.getPanelName());
 		ownerTextField.setText(Setup.getOwnerName());
+		yearTextField.setText(Setup.getYearModeled());
 
 		// load checkboxes
 		mainMenuCheckBox.setSelected(Setup.isMainMenuEnabled());
@@ -125,9 +127,9 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		// add tool tips
 		backupButton.setToolTipText(rb.getString("BackupToolTip"));
 		restoreButton.setToolTipText(rb.getString("RestoreToolTip"));
-		saveButton.setToolTipText(rb.getString("SaveToolTip"));
-		
+		saveButton.setToolTipText(rb.getString("SaveToolTip"));		
 		panelTextField.setToolTipText(rb.getString("EnterPanelName"));
+		yearTextField.setToolTipText(rb.getString("EnterYearModeled"));
 
 		// Layout the panel by rows
 		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
@@ -171,7 +173,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (pMaxEngine, maxEngineSizeTextField, 0, 0);
 		p3.add(pMaxEngine);
 		
-		// row 5a
+		// row 3c
 	   	JPanel p5 = new JPanel();
     	p5.setLayout(new BoxLayout(p5,BoxLayout.X_AXIS));
 
@@ -180,7 +182,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		addItem (pSwitchTime, switchTimeTextField, 0, 0);
 		p3.add(pSwitchTime);
 		
-		// row 5b
+		// row 3d
 		JPanel pTravelTime = new JPanel();
 		pTravelTime.setBorder(BorderFactory.createTitledBorder(rb.getString("TravelTime")));		
 		addItem (pTravelTime, travelTimeTextField, 0, 0);
@@ -216,7 +218,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		pScale.add(scaleG);
 		setScale();
 		
-		// row 9a
+		// row 4a
 	   	JPanel p9 = new JPanel();
     	p9.setLayout(new BoxLayout(p9,BoxLayout.X_AXIS));
 
@@ -232,12 +234,12 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		
 		setCarTypes();
 		
-		// row 9b
-		JPanel pOwnerName = new JPanel();
-		pOwnerName.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutOwnerName")));
-		pOwnerName.add(ownerTextField);
+		// row 4b
+		JPanel pYearModeled = new JPanel();
+		pYearModeled.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutYearModeled")));
+		pYearModeled.add(yearTextField);
 
-		//p9.add(pOwnerName);
+		p9.add(pYearModeled);
 		
 		// Option panel
 		JPanel options = new JPanel();
@@ -489,6 +491,7 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 			if (scaleG.isSelected())
 				Setup.setScale(Setup.G_SCALE);
 			Setup.setRailroadName(railroadNameTextField.getText());
+			Setup.setYearModeled(yearTextField.getText());
 			// save panel size and position
 			Setup.setOperationsSetupFrame(this);
 			OperationsSetupXml.instance().writeOperationsFile();

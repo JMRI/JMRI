@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -157,6 +157,7 @@ public class Setup {
 	private static boolean buildReportEditorEnabled = false;	// when true use text editor to view build report
 	private static int carSwitchTime = 3;		// how long it take to move a car
 	private static int travelTime = 4;// how long it take a train to move one location
+	private static String yearModeled = ""; 	// year being modeled
 	private static String iconNorthColor ="";
 	private static String iconSouthColor ="";
 	private static String iconEastColor ="";
@@ -327,6 +328,14 @@ public class Setup {
 	
 	public static void setPanelName(String name){
 		panelName = name;
+	}
+	
+	public static String getYearModeled(){
+		return yearModeled;
+	}
+	
+	public static void setYearModeled(String year){
+		yearModeled = year;
 	}
 	
 	public static String getCarTypes(){
@@ -823,6 +832,7 @@ public class Setup {
     	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
+       	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
         StringBuffer buf = new StringBuffer();
@@ -1013,6 +1023,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printLocComments: "+enable);
         		setPrintLocationCommentsEnabled(enable.equals("true"));
+        	}
+         	if ((a = operations.getChild("settings").getAttribute("yearModeled"))!= null){
+        		String year = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("yearModeled: "+year);
+        		setYearModeled(year);
         	}
         }
         if (operations.getChild("pickupEngFormat") != null){
