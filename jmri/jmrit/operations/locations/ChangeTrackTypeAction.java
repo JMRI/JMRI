@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Action to change the type of track.  Track types are Sidings, Yards, Interchanges and
  * Staging.
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class ChangeTrackTypeAction extends AbstractAction {
 		
@@ -110,6 +110,7 @@ class ChangeTrackFrame extends OperationsFrame{
 	private void changeTrack(String type){
 		log.debug("change track to "+type);
 		_tef._track.setLocType(type);
+		LocationManagerXml.instance().writeOperationsFile();
 		_tef.dispose();
 		dispose();
 	}
