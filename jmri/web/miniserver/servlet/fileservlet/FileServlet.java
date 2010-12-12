@@ -1,6 +1,7 @@
 package jmri.web.miniserver.servlet.fileservlet;
 
 import java.io.*;
+import java.net.URLDecoder;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -19,7 +20,7 @@ import jmri.web.miniserver.AbstractServlet;
  *  may be freely used or adapted. 
  *
  * @author  Modifications by Bob Jacobsen  Copyright 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class FileServlet extends AbstractServlet {
@@ -38,7 +39,8 @@ public class FileServlet extends AbstractServlet {
         
         // get input        
         getInputLines(in);
-        String filename = getFilename(getRequest().substring(1)); // drop leading /
+        if (log.isDebugEnabled()) log.debug("request is : "+getRequest());
+        String filename = getFilename(URLDecoder.decode(getRequest().substring(1),  java.nio.charset.Charset.defaultCharset().toString())); // drop leading /
         if (log.isDebugEnabled()) log.debug("resolve to filename: "+filename);
         
         // silently drop requests that don't satisfy security check
@@ -215,7 +217,7 @@ public class FileServlet extends AbstractServlet {
         InputStream in = null;
         try {
             // get file contents
-            in = new BufferedInputStream(new FileInputStream(filename));
+        	in = new BufferedInputStream(new FileInputStream(filename));
                 
             // write out
             int imageByte;
