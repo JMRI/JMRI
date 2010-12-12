@@ -10,7 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -82,9 +82,8 @@ public class RosterRecorder extends Thread {
     public void run() {
         while (true) {  // loop until daemon thread ends
             // wait roster to write
-            Roster roster;
             try {
-                roster = queue.take();
+                queue.take();  // just take, don't actually use result
             } catch (InterruptedException e) {
                 log.debug("ending due to interrupt in main wait");
                 return;
@@ -95,7 +94,7 @@ public class RosterRecorder extends Thread {
             while (queue.peek() != null) {
                 log.debug("  skip one");
                 try {
-                    roster = queue.take();
+                    queue.take();  // just take, don't actually use result
                 } catch (InterruptedException e) {
                     log.debug("ending due to interrupt in purge take");
                     return;
