@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.can.cbus.SensorAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  */
 public class CbusAddressTest extends TestCase {
 
@@ -27,23 +27,23 @@ public class CbusAddressTest extends TestCase {
         assertTrue(new CbusAddress("-001").check());
         
         // hex form
-        assertTrue(new CbusAddress("x0ABC").check());
-        assertTrue(new CbusAddress("x0abc").check());
-        assertTrue(new CbusAddress("xa1b2c3").check());
-        assertTrue(new CbusAddress("x123456789ABCDEF0").check());
+        assertTrue(new CbusAddress("X0ABC").check());
+        assertTrue(new CbusAddress("X0abc").check());
+        assertTrue(new CbusAddress("Xa1b2c3").check());
+        assertTrue(new CbusAddress("X123456789ABCDEF0").check());
         
         // n0e0 form
-        assertTrue(new CbusAddress("+n1e2").check());
-        assertTrue(new CbusAddress("+n01e002").check());
-        assertTrue(new CbusAddress("+1e2").check());
-        assertTrue(new CbusAddress("-n1e2").check());
-        assertTrue(new CbusAddress("-n01e002").check());
+        assertTrue(new CbusAddress("+N1E2").check());
+        assertTrue(new CbusAddress("+N01e002").check());
+        assertTrue(new CbusAddress("+1E2").check());
+        assertTrue(new CbusAddress("-N1E2").check());
+        assertTrue(new CbusAddress("-N01e002").check());
         assertTrue(new CbusAddress("-1e2").check());
-        assertTrue(new CbusAddress("n1e2").check());
-        assertTrue(new CbusAddress("n01e002").check());
+        assertTrue(new CbusAddress("N1e2").check());
+        assertTrue(new CbusAddress("N01e002").check());
         assertTrue(new CbusAddress("1e2").check());
-        assertTrue(new CbusAddress("+n12e34").check());
-        assertTrue(new CbusAddress("+n12e35").check());        
+        assertTrue(new CbusAddress("+N12e34").check());
+        assertTrue(new CbusAddress("+N12e35").check());        
     }
 
     public void testCbusAddressNotOK() {
@@ -51,13 +51,13 @@ public class CbusAddressTest extends TestCase {
         assertTrue(!new CbusAddress("- 001").check());
         assertTrue(!new CbusAddress("ABC").check());
 
-        assertTrue(!new CbusAddress("xABC").check());    // odd number of digits     
-        assertTrue(!new CbusAddress("xprs0").check());
+        assertTrue(!new CbusAddress("XABC").check());    // odd number of digits     
+        assertTrue(!new CbusAddress("Xprs0").check());
 
-        assertTrue(!new CbusAddress("+n1e").check());
-        assertTrue(!new CbusAddress("+ne1").check());
-        assertTrue(!new CbusAddress("+e1").check());
-        assertTrue(!new CbusAddress("+n1").check());
+        assertTrue(!new CbusAddress("+N1E").check());
+        assertTrue(!new CbusAddress("+NE1").check());
+        assertTrue(!new CbusAddress("+E1").check());
+        assertTrue(!new CbusAddress("+N1").check());
 
         // multiple address not OK
         assertTrue(!new CbusAddress("+1;+1;+1").check());
@@ -72,7 +72,7 @@ public class CbusAddressTest extends TestCase {
                 new CanReply(
                     new int[]{CbusConstants.CBUS_ACOF,0x00,0x00,0x00,12}
         )));
-        assertTrue(new CbusAddress("x123456789ABCDEF0").match(
+        assertTrue(new CbusAddress("X123456789ABCDEF0").match(
                 new CanReply(
                     new int[]{0x12,0x34,0x56,0x78,
                               0x9A,0xBC,0xDE,0xF0}
@@ -88,7 +88,7 @@ public class CbusAddressTest extends TestCase {
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACOF,0x00,0x00,0x00,12}
         )));
-        assertTrue(new CbusAddress("x123456789ABCDEF0").match(
+        assertTrue(new CbusAddress("X123456789ABCDEF0").match(
                 new CanMessage(
                     new int[]{0x12,0x34,0x56,0x78,
                               0x9A,0xBC,0xDE,0xF0}
@@ -96,27 +96,27 @@ public class CbusAddressTest extends TestCase {
     }
     
     public void testNEformMatch() {
-        assertTrue(new CbusAddress("+n12e34").match(
+        assertTrue(new CbusAddress("+N12E34").match(
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACON,0x00,12,0x00,34}
         )));
 
-        assertTrue(new CbusAddress("+12e34").match(
+        assertTrue(new CbusAddress("+12E34").match(
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACON,0x00,12,0x00,34}
         )));
 
-        assertTrue(new CbusAddress("12e34").match(
+        assertTrue(new CbusAddress("12E34").match(
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACON,0x00,12,0x00,34}
         )));
 
-        assertTrue(new CbusAddress("n12e34").match(
+        assertTrue(new CbusAddress("N12E34").match(
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACON,0x00,12,0x00,34}
         )));
 
-        assertTrue(new CbusAddress("-n12e34").match(
+        assertTrue(new CbusAddress("-N12E34").match(
                 new CanMessage(
                     new int[]{CbusConstants.CBUS_ACOF,0x00,12,0x00,34}
         )));
@@ -148,51 +148,51 @@ public class CbusAddressTest extends TestCase {
     public void testSplitCheckOK() {
         assertTrue(new CbusAddress("+001").checkSplit());
         assertTrue(new CbusAddress("-001").checkSplit());
-        assertTrue(new CbusAddress("x0ABC").checkSplit());        
-        assertTrue(new CbusAddress("x0abc").checkSplit());        
-        assertTrue(new CbusAddress("xa1b2c3").checkSplit());        
-        assertTrue(new CbusAddress("x123456789ABCDEF0").checkSplit());        
+        assertTrue(new CbusAddress("X0ABC").checkSplit());        
+        assertTrue(new CbusAddress("X0abc").checkSplit());        
+        assertTrue(new CbusAddress("Xa1b2c3").checkSplit());        
+        assertTrue(new CbusAddress("X123456789ABCDEF0").checkSplit());        
 
         assertTrue(new CbusAddress("+001;+001").checkSplit());
         assertTrue(new CbusAddress("-001;+001").checkSplit());
-        assertTrue(new CbusAddress("x0ABC;+001").checkSplit());        
-        assertTrue(new CbusAddress("x0abc;+001").checkSplit());        
-        assertTrue(new CbusAddress("xa1b2c3;+001").checkSplit());        
-        assertTrue(new CbusAddress("x123456789ABCDEF0;+001").checkSplit());        
+        assertTrue(new CbusAddress("X0ABC;+001").checkSplit());        
+        assertTrue(new CbusAddress("X0abc;+001").checkSplit());        
+        assertTrue(new CbusAddress("Xa1b2c3;+001").checkSplit());        
+        assertTrue(new CbusAddress("X123456789ABCDEF0;+001").checkSplit());        
     }
     
     public void testMultiTermSplitCheckOK() {
         assertTrue(new CbusAddress("+1;+1;+1").checkSplit());
         assertTrue(new CbusAddress("+1;+1").checkSplit());
-        assertTrue(new CbusAddress("+n12e34;+1").checkSplit());
-        assertTrue(new CbusAddress("+1;x1234").checkSplit());
-        assertTrue(new CbusAddress("+1;n12e34").checkSplit());
-        assertTrue(new CbusAddress("+1;+n12e34").checkSplit());
-        assertTrue(new CbusAddress("+n12e34;+n12e35").checkSplit());
-        assertTrue(new CbusAddress("x0A;+n15E6").checkSplit());
+        assertTrue(new CbusAddress("+N12e34;+1").checkSplit());
+        assertTrue(new CbusAddress("+1;X1234").checkSplit());
+        assertTrue(new CbusAddress("+1;N12e34").checkSplit());
+        assertTrue(new CbusAddress("+1;+N12e34").checkSplit());
+        assertTrue(new CbusAddress("+N12e34;+N12e35").checkSplit());
+        assertTrue(new CbusAddress("X0A;+N15E6").checkSplit());
     }
         
     public void testSplitCheckNotOK() {
         assertTrue(!new CbusAddress("+0A1").check());
         assertTrue(!new CbusAddress("- 001").check());
         assertTrue(!new CbusAddress("ABC").check());        
-        assertTrue(!new CbusAddress("xprs0").check());        
+        assertTrue(!new CbusAddress("Xprs0").check());        
 
         assertTrue(!new CbusAddress("+1;;+1").checkSplit());
         assertTrue(!new CbusAddress("+001;").checkSplit());
         assertTrue(!new CbusAddress("-001;").checkSplit());
         assertTrue(!new CbusAddress("-001;;").checkSplit());
-        assertTrue(!new CbusAddress("xABC;").checkSplit());
-        assertTrue(!new CbusAddress("xabc;").checkSplit());
-        assertTrue(!new CbusAddress("xa1b2c3;").checkSplit());
-        assertTrue(!new CbusAddress("x123456789ABCDEF0;").checkSplit());   
+        assertTrue(!new CbusAddress("XABC;").checkSplit());
+        assertTrue(!new CbusAddress("Xabc;").checkSplit());
+        assertTrue(!new CbusAddress("Xa1b2c3;").checkSplit());
+        assertTrue(!new CbusAddress("X123456789ABCDEF0;").checkSplit());   
 
-        assertTrue(!new CbusAddress("+001;xprs0").checkSplit());
-        assertTrue(!new CbusAddress("-001;xprs0").checkSplit());
-        assertTrue(!new CbusAddress("xABC;xprs0").checkSplit());
-        assertTrue(!new CbusAddress("xabc;xprs0").checkSplit());
-        assertTrue(!new CbusAddress("xa1b2c3;xprs0").checkSplit());
-        assertTrue(!new CbusAddress("x123456789ABCDEF0;xprs0").checkSplit());
+        assertTrue(!new CbusAddress("+001;Xprs0").checkSplit());
+        assertTrue(!new CbusAddress("-001;Xprs0").checkSplit());
+        assertTrue(!new CbusAddress("XABC;Xprs0").checkSplit());
+        assertTrue(!new CbusAddress("Xabc;Xprs0").checkSplit());
+        assertTrue(!new CbusAddress("Xa1b2c3;Xprs0").checkSplit());
+        assertTrue(!new CbusAddress("X123456789ABCDEF0;Xprs0").checkSplit());
     }
 
     public void testSplit() {
