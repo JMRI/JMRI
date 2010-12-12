@@ -10,7 +10,7 @@ import java.util.concurrent.ArrayBlockingQueue;
  * <P>
  *
  * @author	Bob Jacobsen   Copyright (C) 2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
  */
@@ -74,8 +74,11 @@ public class RosterRecorder extends Thread {
      * Trigger the next roster write
      */
     void forceWrite() {
-        log.debug("forceWrite");
-        queue.offer(Roster.instance());
+        if (queue.offer(Roster.instance())) {
+            log.debug("forceWrite queued OK");
+        } else {
+            log.error("forceWrite failed to queue roster write");
+        }
     }
     
     // the actual thread code starts here
