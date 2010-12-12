@@ -45,7 +45,7 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
@@ -135,9 +135,9 @@ public class AudioTableAction extends AbstractTableAction {
         if(InstanceManager.audioManagerInstance().getActiveAudioFactory()==null) {
             InstanceManager.audioManagerInstance().init();
         }
-        listener = new AudioTableDataModel(Audio.LISTENER);
-        buffers = new AudioTableDataModel(Audio.BUFFER);
-        sources = new AudioTableDataModel(Audio.SOURCE);
+        listener = new AudioListenerTableDataModel();
+        buffers = new AudioBufferTableDataModel();
+        sources = new AudioSourceTableDataModel();
         atp = new AudioTablePanel(listener, buffers, sources, helpTarget());
     }
     
@@ -261,7 +261,10 @@ public class AudioTableAction extends AbstractTableAction {
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AudioTableAction.class.getName());
 
-    public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
+    /**
+     * Define abstract AudioTableDataModel
+     */
+    abstract public class AudioTableDataModel extends BeanTableDataModel implements PropertyChangeListener {
 
         char subType;
 
@@ -281,8 +284,11 @@ public class AudioTableAction extends AbstractTableAction {
 
         public Audio getByUserName(String name) { return InstanceManager.audioManagerInstance().getByUserName(name); }
 
-        @Override
-        protected synchronized void updateNameList() {
+        /**
+         * Update the NamedBean list for the specific sub-type
+         * @param subType Audio sub-type to update
+         */
+        protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
                 for (int i = 0; i< sysNameList.size(); i++) {
@@ -412,6 +418,51 @@ public class AudioTableAction extends AbstractTableAction {
             // have the edit column hold a button
             setColumnToHoldButton(table, EDITCOL,
                     new JButton(AbstractTableAction.rb.getString("ButtonEdit")));
+        }
+    }
+
+    /**
+     * Specific AudioTableDataModel for Audio Listener sub-type
+     */
+    public class AudioListenerTableDataModel extends AudioTableDataModel {
+
+        AudioListenerTableDataModel() {
+            super(Audio.LISTENER);
+        }
+
+        @Override
+        protected synchronized void updateNameList() {
+            updateSpecificNameList(Audio.LISTENER);
+        }
+    }
+
+    /**
+     * Specific AudioTableDataModel for Audio Buffer sub-type
+     */
+    public class AudioBufferTableDataModel extends AudioTableDataModel {
+
+        AudioBufferTableDataModel() {
+            super(Audio.BUFFER);
+        }
+
+        @Override
+        protected synchronized void updateNameList() {
+            updateSpecificNameList(Audio.BUFFER);
+        }
+    }
+
+    /**
+     * Specific AudioTableDataModel for Audio Source sub-type
+     */
+    public class AudioSourceTableDataModel extends AudioTableDataModel {
+
+        AudioSourceTableDataModel() {
+            super(Audio.SOURCE);
+        }
+
+        @Override
+        protected synchronized void updateNameList() {
+            updateSpecificNameList(Audio.SOURCE);
         }
     }
 }
