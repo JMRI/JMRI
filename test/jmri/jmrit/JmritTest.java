@@ -8,7 +8,7 @@ import junit.framework.*;
  * Invokes complete set of tests in the jmri.jmrit tree
  *
  * @author	    Bob Jacobsen  Copyright 2001, 2003
- * @version         $Revision: 1.31 $
+ * @version         $Revision: 1.32 $
  */
 public class JmritTest extends TestCase {
 
@@ -49,7 +49,11 @@ public class JmritTest extends TestCase {
             suite.addTest(jmri.jmrit.catalog.CatalogTest.suite());
             suite.addTest(jmri.jmrit.dispatcher.DispatcherTest.suite());
             suite.addTest(jmri.jmrit.jython.JythonTest.suite());
-            suite.addTest(jmri.jmrit.operations.OperationsTest.suite());
+        }
+        
+        suite.addTest(jmri.jmrit.operations.OperationsTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             //suite.addTest(jmri.jmrit.mastbuilder.MastBuilderTest.suite());
             suite.addTest(jmri.jmrit.powerpanel.PowerPanelTest.suite());
             suite.addTest(jmri.jmrit.progsupport.ProgServiceModePaneTest.suite());
