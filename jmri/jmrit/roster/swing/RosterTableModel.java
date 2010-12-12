@@ -15,7 +15,7 @@ import javax.swing.ImageIcon;
  * and only shows some of the fields.  But it's a start....
  *
  * @author              Bob Jacobsen   Copyright (C) 2009, 2010
- * @version             $Revision: 1.9 $
+ * @version             $Revision: 1.10 $
  * @since 2.7.5
  */
 public class RosterTableModel extends javax.swing.table.AbstractTableModel {
@@ -42,11 +42,10 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
         this.editable = editable;
     }
     
-    @Override
     public int getRowCount() {
         return Roster.instance().numEntries();
     }
-    @Override
+
     public int getColumnCount( ){
         return NUMCOL;
     }
@@ -97,7 +96,6 @@ public class RosterTableModel extends javax.swing.table.AbstractTableModel {
     /**
      * Provides the empty String if attribute doesn't exist.
      */
-    @Override
     public Object getValueAt(int row, int col) {
         // get roster entry for row
         RosterEntry re = Roster.instance().getEntry(row);
