@@ -11,7 +11,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.loconet.locomon.Llnmon class.
  * @author	    Bob Jacobsen Copyright (C) 2002, 2007
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class LlnmonTest extends TestCase {
 
@@ -61,6 +61,13 @@ public class LlnmonTest extends TestCase {
         assertEquals("Lissy message 2", "Lissy 1: Loco 8501 moving north", f.displayMessage(l));
     }
 
+    public void testLACK() {
+        Llnmon f = new Llnmon();
+        
+        LocoNetMessage l = new LocoNetMessage(new int[]{0xB4,0x6F, 0x23, 0x07});
+        assertEquals("LACK 23", "LONG_ACK: DCS51 programming reply, thought to mean OK\n", f.displayMessage(l));
+    }
+    
     // from here down is testing infrastructure
 
     public LlnmonTest(String s) {
