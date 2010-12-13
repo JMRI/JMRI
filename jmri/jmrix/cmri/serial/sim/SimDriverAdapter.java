@@ -14,7 +14,7 @@ import java.io.InputStream;
  * act as simulated connection.
  *
  * @author			Bob Jacobsen   Copyright (C) 2002, 2008
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
 public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.SerialDriverAdapter {
 
@@ -40,6 +40,8 @@ public class SimDriverAdapter extends jmri.jmrix.cmri.serial.serialdriver.Serial
      * set up all of the other objects to operate
      * connected to this port
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                            justification="only until multi-connect update done")
     public void configure() {
         // install a traffic controller that doesn't time out
         new SerialTrafficController(){
