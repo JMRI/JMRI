@@ -30,7 +30,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -568,7 +568,6 @@ public class TabbedPreferences extends AppConfigBase {
         
         /* This contains all the JPanels that make up a preferences menus*/
         
-            String tabText;
             JComponent tabItem;
             String tabTooltip;
             String tabTitle;
