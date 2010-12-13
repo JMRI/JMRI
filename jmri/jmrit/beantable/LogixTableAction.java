@@ -53,7 +53,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.83 $
+ * @version $Revision: 1.84 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1967,11 +1967,12 @@ public class LogixTableAction extends AbstractTableAction {
     /**
      * Responds to the Delete Conditional Button in the Edit Conditional window
      */
-
     void deleteConditionalPressed(String sName) {
+        if (_curConditional==null) {
+            return;
+        }
         // delete this Conditional - this is done by the parent Logix
-        if (sName == null)
-        {
+        if (sName == null) {
             sName = _curConditional.getSystemName();
         }
         if (sName == null) {
