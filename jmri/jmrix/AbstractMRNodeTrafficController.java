@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.4 $
+ * @version   $Revision: 1.5 $
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     
@@ -84,7 +84,7 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
      *          When index exceeds the number of defined nodes,
      *              this routine returns 'null'.
      */
-    public AbstractNode getNode(int index) {
+    public synchronized AbstractNode getNode(int index) {
         if (index >= numNodes) {
             return null;
         }
