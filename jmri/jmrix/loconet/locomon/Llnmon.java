@@ -35,7 +35,7 @@ import jmri.util.StringUtil;
  * used with permission.
  *
  * @author			Bob Jacobsen  Copyright 2001, 2002, 2003
- * @version			$Revision: 1.46 $
+ * @version			$Revision: 1.47 $
  */
 public class Llnmon {
 
@@ -362,6 +362,8 @@ public class Llnmon {
                     return "LONG_ACK: The Slot Write command was rejected\n";
                 } else if (ack1 == 0x01) {
                     return "LONG_ACK: The Slot Write command was accepted\n";
+                } else if (ack1 == 0x23) {
+                    return "LONG_ACK: DCS51 programming reply, thought to mean OK\n";
                 } else if (ack1 == 0x40) {
                     return "LONG_ACK: The Slot Write command was accepted blind (no response will be sent)\n";
                 } else if (ack1 == 0x7f) {

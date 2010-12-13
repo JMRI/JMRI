@@ -44,7 +44,7 @@ import java.util.Vector;
  * code definitely can't.
  * <P>
  * @author	Bob Jacobsen  Copyright (C) 2001, 2003
- * @version     $Revision: 1.53 $
+ * @version     $Revision: 1.54 $
  */
 public class SlotManager extends AbstractProgrammer implements LocoNetListener, CommandStation {
 
@@ -385,6 +385,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
                 // in programming state
                 // check status byte
                 if ((m.getElement(2) == 1) // task accepted
+                    || (m.getElement(2) == 0x23)
                     || (m.getElement(2) == 0x7F)) {
                     // 'not implemented' (op on main)
                     // but BDL16 and other devices can eventually reply, so
