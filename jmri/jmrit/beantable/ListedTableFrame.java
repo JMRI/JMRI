@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -94,7 +94,6 @@ public class ListedTableFrame extends BeanTableFrame {
             addTable("jmri.jmrit.beantable.SectionTableAction", rbs.getString("MenuItemSectionTable"), true);
             addTable("jmri.jmrit.beantable.TransitTableAction", rbs.getString("MenuItemTransitTable"), true);
             addTable("jmri.jmrit.beantable.AudioTableAction",  rbs.getString("MenuItemAudioTable"), false);
-            addTable("jmri.jmrit.beantable.TurnoutTableTabAction", "Test Turnout", false);
             init=true;
         }
         tabbedTableArray = new ArrayList<tabbedTableItem>();

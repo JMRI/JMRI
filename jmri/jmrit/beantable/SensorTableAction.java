@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.36 $
+ * @version     $Revision: 1.37 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -109,7 +109,15 @@ public class SensorTableAction extends AbstractTableAction {
                 List<Manager> managerList = proxy.getManagerList();
                 for(int x = 0; x<managerList.size(); x++){
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                    prefixBox.addItem(manuName);                      
+                    Boolean addToPrefix = true;
+                    //Simple test not to add a system with a duplicate System prefix
+                    for (int i = 0; i<prefixBox.getItemCount(); i++){
+                        if(((String)prefixBox.getItemAt(i)).equals(manuName))
+                            addToPrefix=false;
+                    }
+                    if (addToPrefix)
+                        prefixBox.addItem(manuName);
+
                 }
                 if(p.getComboBoxLastSelection(systemSelectionCombo)!=null)
                     prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));

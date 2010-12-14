@@ -40,8 +40,15 @@ public class SensorTableTabAction extends AbstractTableAction {
             for(int x = 0; x<managerList.size(); x++){
                 if (managerList.get(x) instanceof SensorManager){
                     String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                    tabbedTableItem itemModel = new tabbedTableItem(manuName, manuName, true, (SensorManager) managerList.get(x));
-                    tabbedTableArray.add(itemModel);
+                    boolean addToList = true;
+                    for(int i = 0; i<tabbedTableArray.size(); i++){
+                        if(tabbedTableArray.get(i).getClassAsString().equals(manuName))
+                            addToList = false;
+                    }
+                    if(addToList){
+                        tabbedTableItem itemModel = new tabbedTableItem(manuName, manuName, true, (SensorManager) managerList.get(x));
+                        tabbedTableArray.add(itemModel);
+                    }
                 }
             }
         } else {
