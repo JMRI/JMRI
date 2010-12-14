@@ -2,7 +2,6 @@
 
 package jmri.jmrix;
 
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
@@ -27,7 +26,7 @@ import javax.swing.JPanel;
  * Abstract base class for common implementation of the ConnectionConfig
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 
 //
@@ -229,7 +228,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
     String value;
 
    
-	public void loadDetails(final JPanel details) {
+    public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
 
@@ -424,7 +423,11 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         if (adapter==null) return true;
         return adapter.getDisabled();
     }
-    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
+    
+    public void setDisabled(boolean disabled) {
+        if(adapter!=null)
+            adapter.setDisabled(disabled);
+    }
     
 
     public String getConnectionName() { 
