@@ -65,7 +65,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -2675,7 +2675,13 @@ public class OperationsTrainsTest extends TestCase {
 		// icon uses TrainIconAnimation 2 pixels every 3 mSec
 		// X=0 to X=150 175/2 * 3 = 225 mSec
 		// Y=0 to Y=25 25/2 * 3 = 38 mSec		
-		sleep(400);
+		
+		// need to wait for icon to finish moving
+		for (int i=0; i<200; i++){
+			if (ti1.getX() == 175 && ti1.getY() == 25)
+				break;
+			sleep(10);	// need to wait on slow machines
+		}
 		
 		Assert.assertEquals("Train 1 icon X", 175, ti1.getX());
 		Assert.assertEquals("Train 1 icon Y", 25, ti1.getY());
@@ -2687,7 +2693,13 @@ public class OperationsTrainsTest extends TestCase {
 		train2.move();
 			
 		// icon uses TrainIconAnimation 2 pixels every 3 mSec	
-		sleep(350);
+		
+		// need to wait for icon to finish moving
+		for (int i=0; i<200; i++){
+			if (ti1.getX() == 25 && ti1.getY() == 50)
+				break;
+			sleep(10);	// need to wait on slow machines
+		}
 		
 		Assert.assertEquals("Train 1 icon X", 25, ti1.getX());
 		Assert.assertEquals("Train 1 icon Y", 50, ti1.getY());
