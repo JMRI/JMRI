@@ -46,7 +46,9 @@ public abstract class AbstractTurnoutMgrTest extends TestCase {
 	}
 
 	public void testDispose(){
-		l.dispose();  // all we're really doing here is making sure the method exists
+		if (l != null) {
+			l.dispose();  // all we're really doing here is making sure the method exists
+		}
 	}
 
 	public void testTurnoutPutGet() {
