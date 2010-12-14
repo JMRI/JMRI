@@ -9,7 +9,7 @@ package jmri.jmrix;
  * Provides node management services, but no additional protocol.
  *
  * @author jake  Copyright 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficController {
     
@@ -35,8 +35,8 @@ public abstract class AbstractMRNodeTrafficController extends AbstractMRTrafficC
     protected int minNode = -1;
     protected int maxNode = -1;
 
-    private transient int numNodes = 0;       // Incremented as Serial Nodes are created and registered
-                                    // Corresponds to next available address in nodeArray
+    private volatile int numNodes = 0;  // Incremented as Serial Nodes are created and registered
+                                        // Corresponds to next available address in nodeArray
     private AbstractNode[] nodeArray;
     private boolean[] mustInit;
     
