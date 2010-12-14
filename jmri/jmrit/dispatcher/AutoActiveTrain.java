@@ -41,7 +41,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	
@@ -99,7 +99,7 @@ public class AutoActiveTrain implements ThrottleListener {
 	private boolean _resistanceWheels = true;  // true if all train cars show occupancy
 	private boolean _runInReverse = false;  // true if the locomotive should run through Transit in reverse
 	private boolean _soundDecoder = false;  // true if locomotive has a sound decoder
-	private float _maxTrainLength = 200.0f;  // default train length (scale feet/meters)
+	private volatile float _maxTrainLength = 200.0f;  // default train length (scale feet/meters)
 	
 	// accessor functions
 	public ActiveTrain getActiveTrain() {return _activeTrain;}
@@ -188,19 +188,19 @@ public class AutoActiveTrain implements ThrottleListener {
 	private AllocatedSection _lastAllocatedSection = null;
 	private boolean _initialized = false;
 	private Section _nextSection = null;	                     // train has not reached this Section yet
-	private AllocatedSection _currentAllocatedSection = null;    // head of the train is in this Section
-	private AllocatedSection _previousAllocatedSection = null;   // previous Section - part of train could still be in this section
+	private volatile AllocatedSection _currentAllocatedSection = null;    // head of the train is in this Section
+	private volatile AllocatedSection _previousAllocatedSection = null;   // previous Section - part of train could still be in this section
 	private SignalHead _controllingSignal = null;
 	private PropertyChangeListener _conSignalListener = null;
 	private Block _conSignalProtectedBlock = null;
-	private Block _currentBlock = null;
+	private volatile Block _currentBlock = null;
 	private Block _nextBlock = null;
-	private Block _previousBlock = null;
+	private volatile Block _previousBlock = null;
 	private boolean _stoppingBySensor = false;
 	private Sensor _stopSensor = null;
 	private PropertyChangeListener _stopSensorListener = null;
 	private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
-	private Block _stoppingBlock = null;
+	private volatile Block _stoppingBlock = null;
 	private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
 	private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
 
@@ -838,7 +838,7 @@ public class AutoActiveTrain implements ThrottleListener {
 		// operational instance variables and flags
         private float   _minSpeedStep = 1.0f;
         private boolean _abort = false;
-        private boolean _halt = false;  // halt/resume from user's control
+        private volatile boolean _halt = false;  // halt/resume from user's control
 		private boolean _halted = false; // true if previously halted
 		private boolean _ramping = false;  // true if ramping speed to _targetSpeed;
 		private float   _currentSpeed = 0.0f;
