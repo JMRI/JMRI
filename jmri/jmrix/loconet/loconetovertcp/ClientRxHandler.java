@@ -14,10 +14,10 @@ import java.util.StringTokenizer;
  * Implementation of the LocoNetOverTcp LbServer Server Protocol
  *
  * @author      Alex Shepherd Copyright (C) 2006
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 
-public class ClientRxHandler extends Thread implements LocoNetListener{
+public final class ClientRxHandler extends Thread implements LocoNetListener{
   Socket          clientSocket ;
   BufferedReader  inStream ;
   OutputStream    outStream ;

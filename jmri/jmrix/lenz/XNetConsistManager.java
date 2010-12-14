@@ -10,10 +10,10 @@ import jmri.DccLocoAddress;
  * XNetConsist class for the consists it builds
  *
  * @author                Paul Bender Copyright (C) 2004-2010
- * @version               $Revision: 2.15 $
+ * @version               $Revision: 2.16 $
  */
 
-public class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
+public final class XNetConsistManager extends jmri.jmrix.AbstractConsistManager implements jmri.ConsistManager {
 
         private Thread initThread = null;
 
