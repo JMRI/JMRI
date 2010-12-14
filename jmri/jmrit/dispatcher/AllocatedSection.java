@@ -33,7 +33,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp  Copyright (C) 2008-2010
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class AllocatedSection {
 
@@ -154,7 +154,7 @@ public class AllocatedSection {
 		}
 		DispatcherFrame.instance().sectionOccupancyChanged();
 	}
-	public void initializeMonitorBlockOccupancy() {
+	public synchronized void initializeMonitorBlockOccupancy() {
 		if (mBlockList != null) return;
 		mBlockList = mSection.getBlockList();
 		for (int i = 0; i<mBlockList.size(); i++) {
