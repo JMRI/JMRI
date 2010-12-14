@@ -21,7 +21,7 @@ import java.util.Vector;*/
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003, 2008
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter{
 
@@ -69,8 +69,12 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
 
     static public NetworkDriverAdapter instance() {
         if (mInstance == null){
-            mInstance = new NetworkDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+            // create a new one
+            NetworkDriverAdapter m = new NetworkDriverAdapter();
+            m.setManufacturer(jmri.jmrix.DCCManufacturerList.ESU);
+            
+            // and make instance
+            mInstance = m;
         }
         return mInstance;
     }

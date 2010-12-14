@@ -15,7 +15,7 @@ import java.util.Vector;
  * Normally controlled by the NetworkDriverFrame class.
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
@@ -46,8 +46,10 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     static public NetworkDriverAdapter instance() {
         if (mInstance == null) {
-            mInstance = new NetworkDriverAdapter();
-            mInstance.setPort(0);           
+            // initialize object, then make instance
+            NetworkDriverAdapter m = new NetworkDriverAdapter();
+            m.setPort(0);           
+            mInstance = m;
         }
         return mInstance;
     }

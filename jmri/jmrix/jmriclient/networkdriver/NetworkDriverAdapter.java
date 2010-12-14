@@ -11,7 +11,7 @@ import jmri.jmrix.jmriclient.JMRIClientTrafficController;
  * a JMRI server (daemon) via a telnet connection.
  *
  * @author	Paul Bender Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class NetworkDriverAdapter extends JMRIClientPortController {
 
@@ -53,8 +53,12 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         log.error("Instance Called");
         new java.lang.Exception().printStackTrace(); 
         if (mInstance == null){
-            mInstance = new NetworkDriverAdapter();
-            mInstance.setManufacturer(jmri.jmrix.DCCManufacturerList.JMRI);
+            // create a new one and initialize
+            NetworkDriverAdapter m = new NetworkDriverAdapter();
+            m.setManufacturer(jmri.jmrix.DCCManufacturerList.JMRI);
+            
+            // and set as instance
+            mInstance = m;
         }
         return mInstance;
     }
