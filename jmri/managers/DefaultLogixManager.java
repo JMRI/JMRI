@@ -19,7 +19,7 @@ import java.text.DecimalFormat;
  * Logix's system name, then there is a capital C and a number.  
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class DefaultLogixManager extends AbstractManager
     implements LogixManager, java.beans.PropertyChangeListener {
@@ -122,11 +122,11 @@ public class DefaultLogixManager extends AbstractManager
 			}
 			if (loadDisabled) {
 				// user has requested that Logixs be loaded disabled
-                System.out.println("load disabled set - will not activate logic");
+				log.warn("load disabled set - will not activate logic for: " + x.getDisplayName());
 				x.setEnabled(false);
 			}
             if (x.getEnabled()){
-                System.out.println("logix set enabled");
+                //System.out.println("logix set enabled");
                 x.activateLogix();
             }
 		}
