@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -78,6 +78,32 @@ public class SprogThrottle extends AbstractThrottle
 
         byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address>=128),
                                          getF9(), getF10(), getF11(), getF12());
+
+        station.sendPacket(result, 1);
+    }
+    
+    /**
+     * Send the message to set the state of
+     * functions F13 F14, F15, F16.
+     */
+    protected void sendFunctionGroup4() {
+
+        byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address>=128),
+                                         getF13(), getF14(), getF15(), getF16(),
+                                         getF17(), getF18(), getF19(), getF20());
+
+        station.sendPacket(result, 1);
+    }
+    
+        /**
+     * Send the message to set the state of
+     * functions F17 F18, F19, F20.
+     */
+    protected void sendFunctionGroup5() {
+
+        byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address>=128),
+                                        getF21(), getF22(), getF23(), getF24(),
+                                        getF25(), getF26(), getF27(), getF28());
 
         station.sendPacket(result, 1);
     }
