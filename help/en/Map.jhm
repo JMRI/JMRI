@@ -606,6 +606,8 @@
 
 <mapID target="manual.Ops_AddSiding_Top" url="manual/Ops_AddSiding.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ModifyTrainsByCarType" url="package/jmri/jmrit/operations/Operations.shtml#ModifyTrainsByCarType"/>
+
 <mapID target="html.hardware.openlcb.Details" url="html/hardware/openlcb/Details.shtml"/>
 
 <mapID target="manual.Ops_AddTrain_Top" url="manual/Ops_AddTrain.shtml#Top"/>
