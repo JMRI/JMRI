@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.40 $
+ * @version    $Revision: 2.41 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -264,7 +264,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
 	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
 					  " Current step mode is: " + this.speedStepMode );
 
-        this.speedSetting = speed;
+        if(this.speedSetting != speed)
+                notifyPropertyChangeListener("SpeedSetting",
+                                             new Float(this.speedSetting),
+                                             new Float(this.speedSetting =
+                                                       speed));
         if(tc.getCommandStation().getCommandStationType()==0x10) {
             // MultiMaus doesn't support emergency off.  When -1 is
             // sent, set the speed to 0 instead.
@@ -312,7 +316,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        zero as well */
     public void setIsForward(boolean forward)
     {
-        isForward = forward;
+        if(forward!=this.isForward)
+           notifyPropertyChangeListener("IsForward",
+                                 Boolean.valueOf(this.isForward),
+                                 Boolean.valueOf(this.isForward=forward));
+        else this.isForward=forward;
 	setSpeedSetting(this.speedSetting);
     }
     
