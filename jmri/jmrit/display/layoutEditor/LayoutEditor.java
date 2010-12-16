@@ -50,7 +50,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.41 $
+ * @version $Revision: 1.42 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -62,7 +62,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
    // size of point boxes
 	private static final double SIZE = 3.0;
-	private static final double SIZE2 = 6.0;  // must be twice SIZE
+	private static final double SIZE2 = SIZE*2.;  // must be twice SIZE
+	
 	// connection types
 	final public static  int NONE = 0;
 	final public static  int POS_POINT = 1;
@@ -264,8 +265,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	private int panelHeight = 0;
 	private int upperLeftX = 0;
 	private int upperLeftY = 0;
-    private static float mainlineTrackWidth = 4.0F;
-    private static float sideTrackWidth = 2.0F;
+    private float mainlineTrackWidth = 4.0F;
+    private float sideTrackWidth = 2.0F;
 	private Color defaultTrackColor = Color.black;
     private Color defaultBackgroundColor = Color.lightGray;
     private Color defaultTextColor = Color.black;
