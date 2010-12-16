@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.41 $
+ * @version    $Revision: 2.42 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -323,6 +323,22 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         else this.isForward=forward;
 	setSpeedSetting(this.speedSetting);
     }
+
+    /*
+     * setSpeedStepMode - set the speed step value and the related
+     *                    speedIncrement value.
+     * <P>
+     * @param Mode - the current speed step mode - default should be 128
+     *              speed step mode in most cases
+     */
+     @Override
+      public void setSpeedStepMode(int Mode) {
+	super.setSpeedStepMode(Mode);
+        // On a lenz system, we need to send the speed to make sure the 
+	// command station knows about the change.
+        setSpeedSetting(this.speedSetting);
+    }
+
     
     /**
      * Dispose when finished with this object.  After this, further usage of
