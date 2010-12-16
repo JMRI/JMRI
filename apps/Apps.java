@@ -38,12 +38,14 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.126 $
+ * @version     $Revision: 1.127 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
     boolean onMac = (System.getProperty("mrj.version") != null);
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                    justification="only one application at a time")
     public Apps(JFrame frame) {
 
         super(true);
@@ -220,6 +222,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
      * later.  The default implementation here just creates an
      * empty space for these to be added to.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                    justification="only one application at a time")
     protected void setButtonSpace() {
         _buttonSpace = new JPanel();
         _buttonSpace.setLayout(new FlowLayout());
@@ -227,6 +231,8 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
 
     static JComponent _jynstrumentSpace = null;
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+                                                    justification="only one application at a time")
     protected void setJynstrumentSpace() {
         _jynstrumentSpace = new JPanel();
         _jynstrumentSpace.setLayout(new FlowLayout());
