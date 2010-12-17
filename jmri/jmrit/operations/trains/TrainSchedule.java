@@ -11,9 +11,11 @@ import org.jdom.Element;
  * Represents a schedule for trains
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class TrainSchedule {
+	
+	public static final String NAME_CHANGED_PROPERTY = "trainScheduleName";
 
 	protected String _id = "";
 	protected String _name = "";
@@ -34,7 +36,7 @@ public class TrainSchedule {
 		String old = _name;
 		_name = name;
 		if (!old.equals(name)){
-			firePropertyChange("name", old, name);
+			firePropertyChange(NAME_CHANGED_PROPERTY, old, name);
 		}
 	}
 

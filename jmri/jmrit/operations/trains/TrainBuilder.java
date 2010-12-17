@@ -39,7 +39,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.115 $
+ * @version             $Revision: 1.116 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1798,26 +1798,30 @@ public class TrainBuilder extends TrainCommon{
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
 		int cars = 0;
+		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int r = 0; r < routeList.size(); r++) {
 			RouteLocation rl = train.getRoute().getLocationById(routeList.get(r));
 			newLine(fileOut);
 			String routeLocationName = splitString(rl.getName());
-			if (r == 0){
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-						+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
-			} else if (!rl.getDepartureTime().equals("")){
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-						+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
-			} else {
-				addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
-						+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
-			}
-			// add location comment
-			if (Setup.isPrintLocationCommentsEnabled()){
-				Location l = locationManager.getLocationByName(rl.getName());
-				if (!l.getComment().equals(""))
-					addLine(fileOut, l.getComment());				
+			// print info only if new location
+			if (!routeLocationName.equals(previousRouteLocationName)){
+				if (r == 0){
+					addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
+							+", "+rb.getString("departureTime")+" "+train.getDepartureTime());
+				} else if (!rl.getDepartureTime().equals("")){
+					addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
+							+", "+rb.getString("departureTime")+" "+rl.getDepartureTime());
+				} else {
+					addLine(fileOut, rb.getString("ScheduledWorkIn")+" " + routeLocationName 
+							+", "+rb.getString("estimatedArrival")+" "+train.getExpectedArrivalTime(rl));
+				}
+				// add location comment
+				if (Setup.isPrintLocationCommentsEnabled()){
+					Location l = locationManager.getLocationByName(rl.getName());
+					if (!l.getComment().equals(""))
+						addLine(fileOut, l.getComment());				
+				}
 			}
 			// add route comment
 			if (!rl.getComment().equals(""))
@@ -1842,9 +1846,13 @@ public class TrainBuilder extends TrainCommon{
 				}
 			}
 			if (r != routeList.size() - 1) {
-				addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-						+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
-						+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+				// Is the next location the same as the previous?
+				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
+				String nextRouteLocationName = splitString(rlNext.getName());
+				if (!routeLocationName.equals(nextRouteLocationName))
+					addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+							+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
+							+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
 			} else {
 				if(engine != null){
 					String dropText = rb.getString("DropEngineTo");
@@ -1854,6 +1862,7 @@ public class TrainBuilder extends TrainCommon{
 				}
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
+			previousRouteLocationName = routeLocationName;
 		}
 		// Are there any cars that need to be found?
 		getCarsLocationUnknown(fileOut);

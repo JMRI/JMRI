@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * Table Model for edit of train schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version   $Revision: 1.1 $
+ * @version   $Revision: 1.2 $
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -37,7 +37,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public TrainsScheduleTableModel() {
         super();
         trainManager.addPropertyChangeListener(this);
+        scheduleManager.addPropertyChangeListener(this);
         updateList();
+        addPropertyChangeTrainSchedules();
     }
     
     public final int SORTBYNAME = 1;
@@ -199,6 +201,12 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     			e.getPropertyName().equals(TrainManager.TRAIN_ACTION_CHANGED_PROPERTY)){
     		updateList();
     		fireTableDataChanged();
+    	} else if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)){
+    		// update property change
+    		removePropertyChangeTrainSchedules();
+    		addPropertyChangeTrainSchedules();
+    		fireTableStructureChanged();
     	} else synchronized(this) {
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);
@@ -216,6 +224,24 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
         }else{
         	return null;
         }
+    }
+    
+    private void removePropertyChangeTrainSchedules(){
+    	List<String> l = scheduleManager.getSchedulesByIdList();
+    	for (int i = 0; i < l.size(); i++){
+    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+    		if (ts != null)
+    			ts.removePropertyChangeListener(this);
+    	}
+    }
+    
+    private void addPropertyChangeTrainSchedules(){
+    	List<String> l = scheduleManager.getSchedulesByIdList();
+    	for (int i = 0; i < l.size(); i++){
+    		TrainSchedule ts = scheduleManager.getScheduleById(l.get(i));
+    		if (ts != null)
+    			ts.addPropertyChangeListener(this);
+    	}
     }
     
     private synchronized void removePropertyChangeTrains() {
@@ -244,7 +270,9 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     public void dispose() {
         if (log.isDebugEnabled()) log.debug("dispose");
         trainManager.removePropertyChangeListener(this);
+        scheduleManager.removePropertyChangeListener(this);
         removePropertyChangeTrains();
+        removePropertyChangeTrainSchedules();
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrainsScheduleTableModel.class.getName());

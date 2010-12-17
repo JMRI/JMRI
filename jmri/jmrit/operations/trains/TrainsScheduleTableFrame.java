@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractButton;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -29,7 +30,7 @@ import jmri.jmrit.operations.OperationsFrame;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.5 $
+ * @version             $Revision: 1.6 $
  */
 public class TrainsScheduleTableFrame extends OperationsFrame {
 	
@@ -144,8 +145,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame {
     	
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
-		//JMenu toolMenu = new JMenu(rb.getString("Tools"));
-		//menuBar.add(toolMenu);
+		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new TrainsScheduleEditAction());
+		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     
         // add help menu to window

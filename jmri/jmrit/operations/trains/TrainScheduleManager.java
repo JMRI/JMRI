@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Control;
  * Manages train schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
- * @version	$Revision: 1.1 $
+ * @version	$Revision: 1.2 $
  */
 public class TrainScheduleManager implements java.beans.PropertyChangeListener {
 	
@@ -217,7 +217,6 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      */
     public JComboBox getComboBox (){
     	JComboBox box = new JComboBox();
-    	box.addItem("");
 		List<String> schs = getSchedulesByNameList();
 		for (int i = 0; i < schs.size(); i++){
 			String id = schs.get(i);
@@ -232,7 +231,6 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
      */
     public void updateComboBox(JComboBox box) {
     	box.removeAllItems();
-    	box.addItem("");
 		List<String> schs = getSchedulesByNameList();
 		for (int i = 0; i < schs.size(); i++){
 			String id = schs.get(i);
