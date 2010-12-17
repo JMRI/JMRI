@@ -100,7 +100,7 @@ public class CatalogPanel extends JPanel implements MouseListener {
 
     public CatalogPanel() {
         _model =new DefaultTreeModel(new CatalogTreeNode("mainRoot"));
-        }
+    }
 
     public CatalogPanel(String label1, String label2) {
         super(true);
@@ -117,6 +117,16 @@ public class CatalogPanel extends JPanel implements MouseListener {
         p.add(p2);
         p.setMaximumSize(p.getPreferredSize());
         this.add(p);
+    }
+
+    public void setToolTipText(String tip) {
+        if (_dTree!=null) {
+            _dTree.setToolTipText(tip);
+        }
+        if (_treePane!=null) {
+            _treePane.setToolTipText(tip);
+        }
+        super.setToolTipText(tip);
     }
 
     public void init(boolean treeDnD) {
@@ -521,28 +531,36 @@ public class CatalogPanel extends JPanel implements MouseListener {
                 c.gridx = 0;
                 newCol = false;
             }
-            JLabel image = null;
             c.insets = new Insets(5, 5, 0, 0);
+
+//            JLabel image = null;
+            JLabel nameLabel = null;
             if (_noDrag) {
-                image = new JLabel();
+//                image = new JLabel();
+                nameLabel = new JLabel(leaf.getName());
             } else {
                 try {
-                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+//                    image = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
+                    nameLabel = new DragJLabel(new DataFlavor(ImageIndexEditor.IconDataFlavorMime));
                 } catch (java.lang.ClassNotFoundException cnfe) {
                     cnfe.printStackTrace();
                     continue;
                 }
             }
-            image.setOpaque(true);
-            image.setName(leaf.getName());
-            image.setBackground(_currentBackground);
-            image.setIcon(icon);
+//            image.setOpaque(true);
+//            image.setName(leaf.getName());
+//            image.setBackground(_currentBackground);
+//            image.setIcon(icon);
+            nameLabel.setText(leaf.getName());
+            nameLabel.setName(leaf.getName());
+            nameLabel.setBackground(_currentBackground);
+            nameLabel.setIcon(icon);
+
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
-            JPanel iPanel = new JPanel();
-            iPanel.add(image);
-            p.add(iPanel);
-            JLabel nameLabel = new JLabel(leaf.getName());
+//            JPanel iPanel = new JPanel();
+//            iPanel.add(image);
+//            p.add(iPanel);
             p.add(nameLabel);
             JLabel label = new JLabel(java.text.MessageFormat.format(rb.getString("scale"),
                                 new Object[] {printDbl(scale,2)}));

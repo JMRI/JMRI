@@ -170,6 +170,13 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         _openPicklistButton.setText(ItemPalette.rbp.getString("OpenPicklist"));
     }
 
+    protected void dispose() {
+        if (_pickFrame!=null) {
+            _pickFrame.dispose();
+            _pickFrame = null;
+        }
+    }
+
     protected void initIconFamiliesPanel() {
         super.initIconFamiliesPanel();
         if (_dndIconPanel!=null) {
@@ -225,12 +232,12 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         }
         log.error("Item type \""+_itemType+"\", family \""+_family+"\"");
     }
-
+/*
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
         new IconDialog(_itemType, _family, this);
     }
-
+*/
     protected void setFamily(String family) {
         super.setFamily(family);
         remove(_dndIconPanel);

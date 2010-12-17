@@ -25,7 +25,7 @@ public class ItemDialog extends JDialog {
         _parent = parent;
     }
 
-    protected void init() {
+    protected void sizeLocate() {
         setSize(_parent.getSize().width, this.getPreferredSize().height);
         setLocationRelativeTo(_parent);
         setVisible(true);

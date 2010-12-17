@@ -47,6 +47,8 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void reset() {
     }
+    protected void dispose() {
+    }
 
     protected void updateFamiliesPanel() {
         if (log.isDebugEnabled()) log.debug("updateFamiliesPanel for "+_itemType);
@@ -77,11 +79,16 @@ public abstract class ItemPanel extends JPanel {
     */
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        if (_itemType.equals("RPSReporter")) {
-            new IconDialog(_itemType, _family, this);
+        IconDialog dialog;
+        if (_itemType.equals("MultiSensor")) {
+            dialog = new MultiSensorIconDialog(_itemType, _family, this);
+        } else if (_itemType.equals("Icon") || _itemType.equals("Background")) {
+            dialog = new SingleIconDialog(_itemType, _family, this);
         } else {
-            new SingleIconDialog(_itemType, _family, this);
+            dialog = new IconDialog(_itemType, _family, this);
         }
+        // call super ItemDialog to size and locate dialog
+        dialog.sizeLocate();
     }
 
     /******** Default family icon names ********/
@@ -105,7 +112,7 @@ public abstract class ItemPanel extends JPanel {
     static final String[] INDICATOR_TRACK = {"ClearTrack", "OccupiedTrack", "AllocatedTrack",
                                                 "PositionTrack", "DontUseTrack", "ErrorTrack"};
 
-    protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
+    static protected Hashtable<String, NamedIcon> makeNewIconMap(String type) {
         Hashtable <String, NamedIcon> newMap = new Hashtable <String, NamedIcon>();
         String[] names = null;
         if (type.equals("Turnout")) {

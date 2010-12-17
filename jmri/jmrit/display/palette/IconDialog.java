@@ -39,10 +39,12 @@ import jmri.jmrit.catalog.NamedIcon;
 
 public class IconDialog extends ItemDialog {
 
-    Hashtable <String, NamedIcon>   _iconMap;
-    JPanel          _iconPanel;
-    CatalogPanel    _catalog;
-    JTextField      _familyName;
+    protected Hashtable <String, NamedIcon>   _iconMap;
+    protected JPanel        _iconPanel;
+    protected CatalogPanel  _catalog;
+    protected JTextField    _familyName;
+    protected JButton       _addFamilyButton;
+    protected JButton       _deleteButton;
 
     /**
     * Constructor for existing family to change icons, add/delete icons, or to delete the family
@@ -52,31 +54,36 @@ public class IconDialog extends ItemDialog {
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
               parent, true);
         _familyName = new JTextField(family);
-        if (family!=null) {
-            _familyName.setEditable(false);
-            _iconMap = parent.getFilteredIconMap();
-        } else {
-            _familyName.setEditable(true);
-            _iconMap = parent.makeNewIconMap(_type);
-            _familyName.setText("?");
-        }
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(ItemPalette.makeBannerPanel("IconSetName", _familyName));
-        _iconPanel = makeIconPanel(_iconMap); 
+
+        _iconPanel = initMap(type, family);
         panel.add(_iconPanel);
+
         if (family!=null) {
             panel.add(makeButtonPanel());
         } else {
             panel.add(makeCreateButtonPanel());
         }
         _catalog = CatalogPanel.makeDefaultCatalog();
+        _catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
         panel.add(_catalog);
 
         setContentPane(panel);
-        // call super ItemDialog.init() to size and locate dialog
-        init();
+    }
+
+    protected JPanel initMap(String type, String family) {
+        if (family!=null) {
+            _familyName.setEditable(true);
+            _iconMap = _parent.getFilteredIconMap();
+        } else {
+            _familyName.setEditable(true);
+            _iconMap = _parent.makeNewIconMap(type);
+            _familyName.setText("?");
+        }
+        return makeIconPanel(_iconMap);
     }
 
     protected JPanel makeButtonPanel() {
@@ -93,12 +100,11 @@ public class IconDialog extends ItemDialog {
     protected void makeAddSetButtonPanel(JPanel buttonPanel) {
         JPanel panel1 = new JPanel();
         panel1.setLayout(new FlowLayout());
-        JButton addFamilyButton = new JButton(ItemPalette.rbp.getString("addNewFamily"));
-        addFamilyButton.addActionListener(new ActionListener() {
+        _addFamilyButton = new JButton(ItemPalette.rbp.getString("addNewFamily"));
+        _addFamilyButton.addActionListener(new ActionListener() {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    setVisible(false);
-                    ItemPalette.createNewFamily(_type, _parent);
+                    addFamilySet();
                     dialog.dispose();
                 }
                 ActionListener init(IconDialog d) {
@@ -106,17 +112,14 @@ public class IconDialog extends ItemDialog {
                     return this;
                 }
         }.init(this));
-        addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
-        panel1.add(addFamilyButton);
+        _addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
+        panel1.add(_addFamilyButton);
 
-        JButton deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
-        deleteButton.addActionListener(new ActionListener() {
+        _deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
+        _deleteButton.addActionListener(new ActionListener() {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    ItemPalette.removeIconMap(_type, _familyName.getText());
-                    _parent._family = null;
-                    ImageIndexEditor.indexChanged(true);
-                    _parent.updateFamiliesPanel();
+                    deleteFamilySet();
                     dialog.dispose();
                 }
                 ActionListener init(IconDialog d) {
@@ -124,9 +127,27 @@ public class IconDialog extends ItemDialog {
                     return this;
                 }
         }.init(this));
-        deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteFamily"));
-        panel1.add(deleteButton);
+        _deleteButton.setToolTipText(ItemPalette.rbp.getString("ToolTipDeleteFamily"));
+        panel1.add(_deleteButton);
         buttonPanel.add(panel1);
+    }
+
+    /**
+    * Action item for add new family
+    */
+    protected void addFamilySet() {
+        setVisible(false);
+        ItemPalette.createNewFamily(_type, _parent);
+    }
+
+    /**
+    * Action item for add delete family
+    */
+    protected void deleteFamilySet() {
+        ItemPalette.removeIconMap(_type, _familyName.getText());
+        _parent._family = null;
+        ImageIndexEditor.indexChanged(true);
+        _parent.updateFamiliesPanel();
     }
 
     protected void makeDoneButtonPanel(JPanel buttonPanel) {
@@ -271,6 +292,10 @@ public class IconDialog extends ItemDialog {
           panel.add(Box.createHorizontalStrut(100));
           JLabel image = new DropJLabel(icon);
           image.setName(entry.getKey());
+          if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+              image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+              image.setForeground(Color.lightGray);
+          }
           JPanel iPanel = new JPanel();
           iPanel.add(image);
 
@@ -370,17 +395,12 @@ public class IconDialog extends ItemDialog {
                 Transferable tr = e.getTransferable();
                 if(e.isDataFlavorSupported(dataFlavor)) {
                     NamedIcon newIcon = new NamedIcon((NamedIcon)tr.getTransferData(dataFlavor));
-                    e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
-                    DropTarget target = (DropTarget)e.getSource();
-                    DropJLabel label = (DropJLabel)target.getComponent();
-                    newIcon.reduceTo(100, 100, 0.2);
-                    label.setIcon(newIcon);
-                    _catalog.setBackground(label);
-                    _iconMap.put(label.getName(), newIcon);
-                    e.dropComplete(true);
-                    ImageIndexEditor.indexChanged(true);
-                    if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
-                                                         ", "+newIcon.getURL());
+                    accept(e, newIcon);
+                } else if(e.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                    String text = (String)tr.getTransferData(DataFlavor.stringFlavor);
+                    if (log.isDebugEnabled()) log.debug("drop for stringFlavor "+text);
+                    NamedIcon newIcon = new NamedIcon(text, text);
+                    accept(e, newIcon);
                 } else {
                     if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
                     e.rejectDrop();
@@ -392,6 +412,27 @@ public class IconDialog extends ItemDialog {
                 if (log.isDebugEnabled()) log.debug("DropJLabel.drop REJECTED!");
                 e.rejectDrop();
             }
+        }
+        private void accept(DropTargetDropEvent e, NamedIcon newIcon) {
+            e.acceptDrop(DnDConstants.ACTION_COPY_OR_MOVE);
+            DropTarget target = (DropTarget)e.getSource();
+            DropJLabel label = (DropJLabel)target.getComponent();
+            if (log.isDebugEnabled()) log.debug("accept drop for "+label.getName()+
+                                                 ", "+newIcon.getURL());
+            newIcon.reduceTo(100, 100, 0.2);
+            label.setIcon(newIcon);
+            if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
+                label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                label.setForeground(Color.lightGray);
+            } else {
+                label.setText(null);
+            }
+            _catalog.setBackground(label);
+            _iconMap.put(label.getName(), newIcon);
+            e.dropComplete(true);
+            ImageIndexEditor.indexChanged(true);
+            if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
+                                                 ", "+newIcon.getURL());
         }
     }    
     

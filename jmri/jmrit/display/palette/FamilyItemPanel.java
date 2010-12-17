@@ -145,7 +145,12 @@ public abstract class FamilyItemPanel extends ItemPanel {
            String borderName = ItemPalette.convertText(entry.getKey());
            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                             borderName));
-           panel.add(new JLabel(icon));
+           JLabel image = new JLabel(icon);
+           if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+               image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+               image.setForeground(Color.lightGray);
+           }
+           panel.add(image);
            int width = Math.max(100, panel.getPreferredSize().width);
            panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
            c.gridx += 1;

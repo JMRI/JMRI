@@ -51,6 +51,7 @@ public class IconItemPanel extends ItemPanel {
         _catalog = CatalogPanel.makeDefaultCatalog();
         add(_catalog);
         _catalog.setVisible(false);
+        _catalog.setToolTipText(ItemPalette.rbp.getString("ToolTipDragCatalog"));
     }
 
     /**
@@ -81,6 +82,10 @@ public class IconItemPanel extends ItemPanel {
                try {
                    JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                    label.setIcon(icon);
+                   if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                       label.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                       label.setForeground(Color.lightGray);
+                   }
                    label.setName(borderName);
                    panel.add(label);
                } catch (java.lang.ClassNotFoundException cnfe) {
@@ -106,8 +111,7 @@ public class IconItemPanel extends ItemPanel {
         _catalogButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     if (_catalog.isVisible()) {
-                        _catalog.setVisible(false);
-                        _catalogButton.setText(ItemPalette.rbp.getString("ShowCatalog"));
+                        hideCatalog();
                     } else {
                         _catalog.setVisible(true);
                         _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
@@ -128,6 +132,11 @@ public class IconItemPanel extends ItemPanel {
         bottomPanel.add(editIconsButton);
 
         add(bottomPanel);
+    }
+
+    void hideCatalog() {
+        _catalog.setVisible(false);
+        _catalogButton.setText(ItemPalette.rbp.getString("ShowCatalog"));
     }
 
     protected void setFamily(String family) {

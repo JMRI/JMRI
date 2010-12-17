@@ -33,16 +33,17 @@ public class MemoryItemPanel extends TableItemPanel {
     }
 
     public void init() {
-        initTablePanel(_model, _editor);        // NORTH Panel
+        add(initTablePanel(_model, _editor));        // NORTH Panel
         initIconFamiliesPanel();                // CENTER Panel
     }
 
     /**
     *  NORTH Panel
     */
-    protected void initTablePanel(PickListModel model, Editor editor) {
-        super.initTablePanel(model, editor);
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+        JPanel panel = super.initTablePanel(model, editor);
         _table.setTransferHandler(new MemoryDnD(editor));
+        return panel;
     }
 
     /**

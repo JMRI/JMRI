@@ -2,7 +2,6 @@ package jmri.jmrit.display.palette;
 
 import java.awt.BorderLayout;
 import java.awt.Component;
-//import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Enumeration;
@@ -143,9 +142,9 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                 if (typeName.equals("IndicatorTO")) {
                     Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> familyTOMap =
                                                 loadIndicatorFamilyMap(node);
-                    _indicatorTOMaps.put(typeName, familyTOMap); 
                     if (log.isDebugEnabled()) log.debug("Add "+familyTOMap.size()+
                                     " indicatorTO families to item type "+typeName+" to _indicatorTOMaps.");
+                    _indicatorTOMaps.put(typeName, familyTOMap); 
                 } else {
                     Hashtable<String, Hashtable<String, NamedIcon>> familyMap = 
                                                 loadFamilyMap(node);
@@ -290,8 +289,10 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         addWindowListener(new java.awt.event.WindowAdapter() {
                 Editor editor;
                 public void windowClosing(java.awt.event.WindowEvent e) {
-                    ImageIndexEditor.checkImageIndex(editor);
-                    storeIcons();
+                    closePanels(e);
+                    if (ImageIndexEditor.checkImageIndex(editor)) {
+                        storeIcons();   // write maps to tree
+                    }
                 }
                 java.awt.event.WindowAdapter init(Editor ed) {
                     editor = ed;
@@ -392,17 +393,15 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         setLayout(new BorderLayout(5,5));
         add(_tabPane, BorderLayout.CENTER);
         setLocation(10,10);               
-//        setVisible(true);                   
         pack();
     }
 
     private void makeMenus(Editor editor) {
-        java.util.ResourceBundle rbd = java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
         JMenuBar menuBar = new JMenuBar();
-        JMenu findIcon = new JMenu(rbd.getString("findIconMenu"));
+        JMenu findIcon = new JMenu(rb.getString("findIconMenu"));
         menuBar.add(findIcon);
 
-        JMenuItem editItem = new JMenuItem(rbd.getString("editIndexMenu"));
+        JMenuItem editItem = new JMenuItem(rb.getString("editIndexMenu"));
         editItem.addActionListener(new ActionListener() {
                 Editor editor;
                 public void actionPerformed(ActionEvent e) {
@@ -418,10 +417,22 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         findIcon.add(editItem);
         findIcon.addSeparator();
 
-        JMenuItem searchItem = new JMenuItem(rbd.getString("searchFSMenu"));
+        JMenuItem searchItem = new JMenuItem(rb.getString("searchFSMenu"));
         findIcon.add(searchItem);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.picker.PickTables", true);
+    }
+
+    public void closePanels(java.awt.event.WindowEvent e) {
+        java.awt.Component[] comps = _tabPane.getComponents();
+        if (log.isDebugEnabled()) log.debug("closePanels: tab count= "+_tabPane.getTabCount());
+        for (int i=0; i<comps.length; i++) {
+            if (comps[i] instanceof ItemPanel) {
+                //log.debug("windowClosing "+i+"th panel= "+comps[i].getClass().getName());
+                ((ItemPanel)comps[i]).dispose();
+            }
+        }
+        super.windowClosing(e);
     }
 
     /**
@@ -430,13 +441,16 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     * rejected (dismiss or clisk cancel button) 
     */
     static protected void createNewFamily(String type, ItemPanel parent) {
+        IconDialog dialog;
         if (type.equals("MultiSensor")) {
-            new MultiSensorIconDialog(type, null, parent);
+            dialog = new MultiSensorIconDialog(type, null, parent);
         } else if (type.equals("Icon") || type.equals("Background")) {
-            new SingleIconDialog(type, null, parent);
+            dialog =new SingleIconDialog(type, null, parent);
         } else {
-            new IconDialog(type, null, parent);
+            dialog =new IconDialog(type, null, parent);
         }
+        // call super ItemDialog to size and locate dialog
+        dialog.sizeLocate();
     }
 
     /**
@@ -445,7 +459,9 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     static protected void addFamily(String type, String family, Hashtable<String, NamedIcon> iconMap) {
         getFamilyMaps(type).put(family, iconMap);
     }
-    // Currently only needed for IndicatorTO type
+
+    /************** Currently only needed for IndicatorTO type ***************/
+
     static protected void addLevel4Family(String type, String family, String key,
                                    Hashtable<String, NamedIcon> iconMap) {
         getLevel4FamilyMaps(type).get(family).put(key, iconMap);
@@ -454,16 +470,23 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                                    Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {
         getLevel4FamilyMaps(type).put(family, iconMap);
     }
+    /**************************************************************************/
 
     /**
     * Getting all the Families of icons for a given device type
     */
     static protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps(String type) {
-       return _iconMaps.get(type);
+        return _iconMaps.get(type);
     }
+
     // Currently only needed for IndicatorTO type
     static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> getLevel4FamilyMaps(String type) {
-       return _indicatorTOMaps.get(type);
+        return _indicatorTOMaps.get(type);
+    }
+    // Currently only needed for IndicatorTO type
+    static protected Hashtable<String, Hashtable<String, NamedIcon>> getLevel4Family(String type, String family) {
+        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
+        return map.get(family);
     }
 
     /**

@@ -17,7 +17,7 @@ public class ReporterItemPanel extends TableItemPanel {
     }
 
     public void init() {
-        initTablePanel(_model, _editor);        // NORTH Panel
+        add(initTablePanel(_model, _editor));        // NORTH Panel
         _table.setTransferHandler(new ReporterDnD(_editor));
     }
 

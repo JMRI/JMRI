@@ -30,11 +30,15 @@ import jmri.jmrit.logix.OBlock;
 */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
+    static public String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack", 
+                            "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
+
     JTextField  _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
     JTextField  _errSensorName = new JTextField();
     JFrame      _pickFrame;
     JButton     _openPicklistButton;
     JCheckBox   _showTrainName;
+    JPanel      _tablePanel;
 
 
     protected Hashtable<String, Hashtable<String, NamedIcon>> _iconGroupsMap;
@@ -68,9 +72,10 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         super.init(doneAction);
     }
 
-    protected void initTablePanel(PickListModel model, Editor editor) {
-        super.initTablePanel(model, editor);
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+        _tablePanel = super.initTablePanel(model, editor);
         _table.setTransferHandler(new DnDIndicatorTOHandler(editor));
+        return _tablePanel;
     }
     /**
     * 
@@ -148,6 +153,13 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         _openPicklistButton.setText(ItemPalette.rbp.getString("OpenPicklist"));
     }
 
+    protected void dispose() {
+        if (_pickFrame!=null) {
+            _pickFrame.dispose();
+            _pickFrame = null;
+        }
+    }
+
     /**
     *  CENTER Panel
     */
@@ -174,7 +186,6 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                         }
                         ActionListener init(String f) {
                             family = f;
-                            if (log.isDebugEnabled()) log.debug("ActionListener.init : for type \""+_itemType+"\", family \""+family+"\"");
                             return this;
                         }
                     }.init(family));
@@ -202,6 +213,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _bottom1Panel.setVisible(true);
             _bottom2Panel.setVisible(false);
             _sensorPanel.setVisible(true);
+            _tablePanel.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
@@ -209,9 +221,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _bottom1Panel.setVisible(false);
             _bottom2Panel.setVisible(true);
             _sensorPanel.setVisible(false);
+            _tablePanel.setVisible(false);
             createNewFamily();
         }
         add(_iconFamilyPanel, 1);
+        if (log.isDebugEnabled()) log.debug("initIconFamiliesPanel done");
     }
 
     protected void makeIconPanel() {
@@ -279,10 +293,15 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 panel = new JPanel();
                 panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                  borderName));
-                if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
-                                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
-                                                    " height= "+icon.getIconHeight());
-                panel.add(new JLabel(icon));
+                //if (log.isDebugEnabled()) log.debug("addIcons2Panel: "+borderName+" icon at ("
+                //                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
+                //                                    " height= "+icon.getIconHeight());
+                JLabel image = new JLabel(icon);
+                if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                    image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+                    image.setForeground(Color.lightGray);
+                }
+                panel.add(image);
                 int width = Math.max(85, panel.getPreferredSize().width);
                 panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
                 gridbag.setConstraints(panel, c);
@@ -305,7 +324,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             panel.add(button);
             gridbag.setConstraints(panel, c);
             _iconPanel.add(panel);
-            if (log.isDebugEnabled()) log.debug("addIcons2Panel: row "+c.gridy+" has "+iconMap.size()+" icons");
+            //if (log.isDebugEnabled()) log.debug("addIcons2Panel: row "+c.gridy+" has "+iconMap.size()+" icons");
         }
     }
 
@@ -369,7 +388,17 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             });
         addFamilyButton.setToolTipText(ItemPalette.rbp.getString("ToolTipAddFamily"));
         panel1.add(addFamilyButton);
-
+        /*
+        JButton editButton = new JButton(ItemPalette.rbp.getString("EditIcons"));
+        editButton.addActionListener(new ActionListener() {
+                String key;
+                public void actionPerformed(ActionEvent a) {
+                    openEditDialog(null);
+                }
+        });
+        editButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditIcons"));
+        panel1.add(editButton);
+        */
         JButton deleteButton = new JButton(ItemPalette.rbp.getString("deleteFamily"));
         deleteButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -387,8 +416,12 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 public void actionPerformed(ActionEvent a) {
                     if (_iconPanel.isVisible()) {
                         hideIcons();
+                        _tablePanel.setVisible(true);
+                        _sensorPanel.setVisible(true);
                     } else {
                         _iconPanel.setVisible(true);
+                        _sensorPanel.setVisible(false);
+                        _tablePanel.setVisible(false);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
                     _paletteFrame.pack();
@@ -400,16 +433,18 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         return buttonPanel;
     }
 
+    protected void hideIcons() {
+        _sensorPanel.setVisible(true);
+        _tablePanel.setVisible(true);
+        super.hideIcons();
+    }
+
     void createNewFamily() {
         removeIconFamiliesPanel();
         _iconGroupsMap = new Hashtable<String, Hashtable<String, NamedIcon>>();
-        _iconGroupsMap.put("ClearTrack", makeNewIconMap("Turnout"));
-        _iconGroupsMap.put("OccupiedTrack", makeNewIconMap("Turnout"));
-        _iconGroupsMap.put("PositionTrack", makeNewIconMap("Turnout"));
-        _iconGroupsMap.put("AllocatedTrack", makeNewIconMap("Turnout"));
-        _iconGroupsMap.put("DontUseTrack", makeNewIconMap("Turnout"));
-        _iconGroupsMap.put("ErrorTrack", makeNewIconMap("Turnout"));
-
+        for (int i=0; i<STATUS_KEYS.length; i++) {
+            _iconGroupsMap.put(STATUS_KEYS[i], makeNewIconMap("Turnout"));
+        }
         _iconFamilyPanel = new JPanel();
         _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
         _iconPanel = new JPanel();
@@ -427,7 +462,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     protected void openEditDialog(String key) {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\" for \""+key+"\"");
+        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\" and \""+key+"\"");
         new IndicatorTOIconDialog(_itemType, _family, this, key);
     }
 

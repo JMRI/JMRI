@@ -1,6 +1,7 @@
 package jmri.jmrit.display.palette;
 
 import java.awt.datatransfer.Transferable; 
+import javax.swing.JPanel;
 import javax.swing.JTable;
 
 import jmri.jmrit.display.Editor;
@@ -17,12 +18,13 @@ public class SignalMastItemPanel extends TableItemPanel {
     }
 
     public void init() {
-        initTablePanel(_model, _editor);        // NORTH Panel
+        add(initTablePanel(_model, _editor));        // NORTH Panel
     }
 
-    protected void initTablePanel(PickListModel model, Editor editor) {
-        super.initTablePanel(model, editor);
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
+        JPanel panel = super.initTablePanel(model, editor);
         _table.setTransferHandler(new SignalMastDnD(editor));
+        return panel;
     }
 
     /**

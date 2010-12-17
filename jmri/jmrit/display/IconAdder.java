@@ -29,6 +29,7 @@ import java.util.Hashtable;
 import java.util.ResourceBundle;
 import java.io.IOException;
 
+import java.awt.Color;
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -203,6 +204,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
         JToggleButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
+        if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+            button.setText(rb.getString("invisibleIcon"));
+            button.setForeground(Color.lightGray);
+        }
 
         if (_allowDeletes) {
             String fileName = "resources/icons/misc/X-red.gif";
@@ -560,6 +565,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (changeIcon) {
             _catalog = CatalogPanel.makeDefaultCatalog();
             _catalog.setVisible(false);
+            _catalog.setToolTipText(rb.getString("ToolTipDragIcon"));
             this.add(_catalog);
         }
         if (_type != null && _defaultIcons == null) {
@@ -600,6 +606,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         // add the catalog, so icons can be selected
         if (_catalog == null)  {
             _catalog = CatalogPanel.makeDefaultCatalog();
+            _catalog.setToolTipText(rb.getString("ToolTipDragIcon"));
         }
         _catalog.setVisible(true);
         /*
@@ -703,6 +710,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         JToggleButton button = _iconMap.get(key);
                         NamedIcon oldIcon = (NamedIcon)button.getIcon();
                         button.setIcon(newIcon);
+                        if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
+                            button.setText(rb.getString("invisibleIcon"));
+                            button.setForeground(Color.lightGray);
+                        } else {
+                            button.setText(null);
+                        }
                         _iconMap.put(key, button);
                         _defaultIcons.deleteLeaf(key, oldIcon.getURL());
                         _defaultIcons.addLeaf(key, newIcon.getURL());

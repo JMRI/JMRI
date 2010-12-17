@@ -30,7 +30,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragSelection"));
     }
 
-    protected void initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         _table.setTransferHandler(new DnDTableItemHandler(editor));
         ROW_HEIGHT = _table.getRowHeight();
@@ -83,7 +83,7 @@ public class MultiSensorItemPanel extends TableItemPanel {
         _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        add(topPanel);
+        return topPanel;
     }
 
     protected void initIconFamiliesPanel() {

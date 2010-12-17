@@ -61,7 +61,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     public void init() {
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
-        initTablePanel(_model, _editor);      // NORTH Panel
+        add(initTablePanel(_model, _editor));      // NORTH Panel
         initIconFamiliesPanel();    // CENTER Panel
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(_bottom1Panel);
@@ -78,7 +78,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
         _bottom1Panel = makeBottom3Panel(doneAction);
-        initTablePanel(_model, _editor);      // NORTH Panel
+        add(initTablePanel(_model, _editor));      // NORTH Panel
         initIconFamiliesPanel();
         _table.setTransferHandler(null);        // no DnD
         JPanel bottomPanel = new JPanel();
@@ -103,7 +103,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     /**
     *  NORTH Panel
     */
-    protected void initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         _table.setTransferHandler(new DnDTableItemHandler(editor));
         _table.getSelectionModel().addListSelectionListener(this);
@@ -136,7 +136,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _table.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         _scrollPane.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
         topPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
-        add(topPanel);
+        return topPanel;
     }
 
     protected void makeAddToTableWindow() {
@@ -158,15 +158,20 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     }
 
     protected void addToTable() {
-        String name = _sysNametext.getText();
-        if (name != null && name.length() > 1) {
+        String sysname = _sysNametext.getText();
+        if (sysname != null && sysname.length() > 1) {
             PickListModel model = (PickListModel)_table.getModel();
-            jmri.NamedBean bean = model.addBean(name, _userNametext.getText());
-            int setRow = model.getIndexOf(bean);
-            if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
-            _table.setRowSelectionInterval(setRow, setRow);
-            // 2nd element of topPanel
-            _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+            String uname = _userNametext.getText();
+            if (uname!=null && uname.trim().length()==0) {
+                uname = null;
+            }
+            jmri.NamedBean bean = model.addBean(sysname, uname);
+            if (bean!=null) {
+                int setRow = model.getIndexOf(bean);
+                if (log.isDebugEnabled()) log.debug("addToTable: row= "+setRow+", bean= "+bean.getDisplayName());
+                _table.setRowSelectionInterval(setRow, setRow);
+                _scrollPane.getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+            }
         }
         _sysNametext.setText("");
         _userNametext.setText("");
@@ -241,15 +246,6 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         _table.clearSelection();
     }
     
-    protected void openEditDialog() {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        if (_itemType.equals("MultiSensor")) {
-            new MultiSensorIconDialog(_itemType, _family, this);
-        } else {
-            new IconDialog(_itemType, _family, this);
-        }
-    }
-
     /**
     * Export a Positionable item from PickListTable 
     */

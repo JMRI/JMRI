@@ -38,7 +38,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         super(parentFrame, itemType, model, editor);
     }
 
-    protected void initTablePanel(PickListModel model, Editor editor) {
+    protected JPanel initTablePanel(PickListModel model, Editor editor) {
         _table = model.makePickTable();
         _table.setTransferHandler(new SignalHeadDnD(editor));
         ROW_HEIGHT = _table.getRowHeight();
@@ -61,7 +61,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         clearSelectionButton.setToolTipText(ItemPalette.rbp.getString("ToolTipClearSelection"));
         panel.add(clearSelectionButton);
         topPanel.add(panel, BorderLayout.SOUTH);
-        add(topPanel);
+        return topPanel;
     }
 
     public void valueChanged(ListSelectionEvent e) {
@@ -139,11 +139,6 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         }
         if (log.isDebugEnabled()) log.debug("Map NOT filtered, size= "+allIconsMap.size());
         return allIconsMap;
-    }
-
-    protected void openEditDialog() {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        new IconDialog(_itemType, _family, this);
     }
 
     /**

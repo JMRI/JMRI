@@ -50,63 +50,15 @@ public class BackgroundItemPanel extends IconItemPanel {
     */
     public BackgroundItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
         super(parentFrame,  itemType, editor);
-        setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
 
     public void init() {
-        initIconPanel();
-        initButtonPanel();
-        initBottomPanel();
+        super.init();
+        add(initBottomPanel(), 2);
     }
 
-    /**
-    * Plain icons have only one family, usually named "set"
-    * Override for plain icon & background and put all icons here
-    */
-    protected void initIconPanel() {
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        if (families!=null && families.size()>0) {
-            if (families.size()!=1) {
-                log.warn("ItemType \""+_itemType+"\" has "+families.size()+" families.");
-            }
-            // only one family
-            Iterator <String> iter = families.keySet().iterator();
-            while (iter.hasNext()) {
-                _family = iter.next();
-            }
-            _iconPanel = new JPanel();
-            _iconMap = families.get(_family);
-            Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
-            while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
-               icon.reduceTo(50, 80, 0.15);
-               JPanel panel = new JPanel();
-               String borderName = ItemPalette.convertText(entry.getKey());
-               panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                                borderName));
-               try {
-                   JLabel label = new BkdDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                   label.setName(borderName);
-                   panel.add(label);
-               } catch (java.lang.ClassNotFoundException cnfe) {
-                   cnfe.printStackTrace();
-               }
-               _iconPanel.add(panel);
-            }
-
-        } else {
-            log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+" families.");
-        }
-        add(_iconPanel);
-    }
-
-    /**
-    */
-    public void initButtonPanel() {
+    private JPanel initBottomPanel() {
         JPanel bottomPanel = new JPanel();
-        bottomPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-
         JButton backgroundButton = new JButton(ItemPalette.rbp.getString("BackgroundColor"));
         backgroundButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
@@ -116,34 +68,7 @@ public class BackgroundItemPanel extends IconItemPanel {
         });
         backgroundButton.setToolTipText(ItemPalette.rbp.getString("ToolTipEditColor"));
         bottomPanel.add(backgroundButton);
-
-        _catalogButton = new JButton(ItemPalette.rbp.getString("ShowCatalog"));
-        _catalogButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (_catalog.isVisible()) {
-                        hideCatalog();
-                    } else {
-                        _catalog.setVisible(true);
-                        _catalogButton.setText(ItemPalette.rbp.getString("HideCatalog"));
-                    }
-                }
-        });
-        _catalogButton.setToolTipText(ItemPalette.rbp.getString("ToolTipCatalog"));
-        bottomPanel.add(_catalogButton);
-
-        add(bottomPanel);
-    }
-
-    void hideCatalog() {
-        _catalog.setVisible(false);
-        _catalogButton.setText(ItemPalette.rbp.getString("ShowCatalog"));
-    }
-
-    void initBottomPanel() {
-        _catalog = BackgroudCatalogPanel.makeDefaultCatalog();
-        _catalog.setSize(_paletteFrame.getSize().width, _catalog.getPreferredSize().height);
-        _catalog.setVisible(false);
-        add(_catalog);
+        return bottomPanel;
     }
 
     class BkdDragJLabel extends DragJLabel {

@@ -32,7 +32,7 @@ public class SingleIconDialog extends IconDialog {
     protected void init() {
         _familyName.setEditable(true);
         _familyName.setText("");
-        super.init();
+        super.sizeLocate();
     }
 
     protected JPanel makeButtonPanel() {
