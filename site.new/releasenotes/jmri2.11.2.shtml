@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.29 2010-12-12 22:32:51 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.30 2010-12-17 16:39:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -29,12 +29,10 @@
       Release Notes for JMRI 2.11.2 release
       </h2>
 
-	<p>Date: MMM DD, 2010</p>
+	<p>Date: December 16, 2010</p>
 	<p>From: Bob Jacobsen</p>
 	<p>Subject: Test version 2.11.2 of JMRI/DecoderPro is available for download.
  
-<br><b>This is a draft release note only; the download links do not yet work</b>
-
 <h3>Notes:</h3>
 
 <p>This is a test release.  Please post a note if you encounter any new or old bugs!  
@@ -49,7 +47,10 @@ It contains
 many new features, including:
 
 <ul>
-<li>
+<li>Many improvements to the operations features
+<li>iPhone, Android, web browser and Wii throttles improved in important ways
+<li>Change to table windows to make them easier to use
+<li>Significant internal updates
 </ul>
 along with other changes.  See the complete list below.
 
@@ -65,7 +66,10 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None for this version)
+The numerical values of "ON" and "OFF" for Lights have changed, along with
+some of the other constants in the class.  This will have no impact on 
+people just using the program.  If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
 
 <h3>Older warnings</h3>
 
@@ -366,6 +370,10 @@ Ken Cameron added initial support for the Digitrax DCS51 command station.
 
 <p>
 Matt Harris improved the audio implementation, particularly for Mac OS X.
+
+<p>
+Kevin Dickerson added F12-28 to the SPROG throttle.
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
