@@ -13,6 +13,7 @@ import jmri.jmrit.logix.OBlock;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import jmri.util.NamedBeanHandle;
 import java.util.Iterator;
@@ -36,12 +37,13 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     Hashtable<String, Hashtable<Integer, NamedIcon>> _iconMaps;
+    ArrayList <String> _paths;      // list of paths that include this icon 
 
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
@@ -335,7 +337,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 	 * Drive the current state of the display from the state of the turnout and status of track.
 	 */
     void displayState(int state) {
-//        updateSize();
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
@@ -375,7 +376,12 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             super.propertyChange(evt);
             return;
         }
-        if (namedOccBlock!=null && evt.getSource() instanceof OBlock) {
+        if (getErrSensor()!=null && getErrSensor().getKnownState()==Sensor.ACTIVE) {
+            _status = "ErrorTrack";
+            displayState(turnoutState());
+            return;
+        }
+        if (namedOccBlock!=null && source instanceof OBlock) {
             if ("state".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
@@ -385,9 +391,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 }
                 if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
-                        _status = "PositionTrack";
-                        OBlock block = (OBlock)evt.getSource();
-                        _train = (String)block.getValue();
+                        String pathName = getOccBlock().getWarrant().getCurrentBlockOrder(). getPathName();
+                        if (_paths==null || _paths.contains(pathName)) {
+                            _status = "PositionTrack";
+                            OBlock block = (OBlock)evt.getSource();
+                            _train = (String)block.getValue();
+                        } else {
+                            _status = "ClearTrack";
+                        }
                     } else {
                         _status = "OccupiedTrack";
                     }
@@ -395,9 +406,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                     _status = "AllocatedTrack";
                 }
             }
-        } else if (evt.getPropertyName().equals("KnownState") && evt.getSource() instanceof Sensor) {
+        } else if (evt.getPropertyName().equals("KnownState") && source instanceof Sensor) {
                 int now = ((Integer)evt.getNewValue()).intValue();
-                if (namedOccSensor!=null) {
+                if (source.equals(getOccSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "OccupiedTrack";
                     } else if (now==Sensor.INACTIVE) {
@@ -408,7 +419,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                         _status = "ErrorTrack";
                     }
                 }
-                if (evt.getSource().equals(getErrSensor())) {
+                if (source.equals(getErrSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "ErrorTrack";
                     } else {

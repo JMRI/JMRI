@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JPopupMenu;
+
+import java.util.ArrayList;
 import java.util.Hashtable;
 import jmri.util.NamedBeanHandle;
 import java.util.Iterator;
@@ -29,13 +31,14 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
                         implements java.beans.PropertyChangeListener {
 
     Hashtable<String, NamedIcon> _iconMap;
+    ArrayList <String> _paths;      // list of paths that include this icon 
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
@@ -242,7 +245,13 @@ public class IndicatorTrackIcon extends PositionableLabel
 			log.debug("property change: " + getNameString() + " property " + evt.getPropertyName() + " is now "
 					+ evt.getNewValue()+" from "+evt.getSource().getClass().getName());
 
-        if (namedOccBlock!=null && evt.getSource() instanceof OBlock) {
+        if (getErrSensor()!=null && getErrSensor().getKnownState()==Sensor.ACTIVE) {
+            _status = "ErrorTrack";
+            displayState(_status);
+            return;
+        }
+        Object source = evt.getSource();
+        if (namedOccBlock!=null && source instanceof OBlock) {
             if ("state".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
@@ -252,9 +261,14 @@ public class IndicatorTrackIcon extends PositionableLabel
                 }
                 if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
-                        _status = "PositionTrack";
-                        OBlock block = (OBlock)evt.getSource();
-                        _train = (String)block.getValue();
+                        String pathName = getOccBlock().getWarrant().getCurrentBlockOrder(). getPathName();
+                        if (_paths==null || _paths.contains(pathName)) {
+                            _status = "PositionTrack";
+                            OBlock block = (OBlock)evt.getSource();
+                            _train = (String)block.getValue();
+                        } else {
+                            _status = "ClearTrack";
+                        }
                     } else {
                         _status = "OccupiedTrack";
                     }
@@ -262,9 +276,9 @@ public class IndicatorTrackIcon extends PositionableLabel
                     _status = "AllocatedTrack";
                 }
             }
-        } else if (evt.getPropertyName().equals("KnownState") && evt.getSource() instanceof Sensor) {
+        } else if (evt.getPropertyName().equals("KnownState") && source instanceof Sensor) {
                 int now = ((Integer)evt.getNewValue()).intValue();
-                if (namedOccSensor!=null) {
+                if (source.equals(getOccSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "OccupiedTrack";
                     } else if (now==Sensor.INACTIVE) {
@@ -275,7 +289,7 @@ public class IndicatorTrackIcon extends PositionableLabel
                         _status = "ErrorTrack";
                     }
                 }
-                if (evt.getSource().equals(getErrSensor())) {
+                if (source.equals(getErrSensor())) {
                     if (now==Sensor.ACTIVE) {
                         _status = "ErrorTrack";
                     } else {
