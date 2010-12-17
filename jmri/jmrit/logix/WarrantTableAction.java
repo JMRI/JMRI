@@ -34,6 +34,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+
+import javax.swing.table.AbstractTableModel;
+import java.beans.PropertyChangeListener;
+import java.util.Iterator;
 /*
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
@@ -140,10 +145,6 @@ public class WarrantTableAction extends AbstractAction {
          
         for (int i = 0; i < sysNames.length; i++) {
             Warrant warrant = manager.getBySystemName(sysNames[i]);
-            //JMenuItem mi = new JMenuItem(warrant.getDisplayName());
-            //mi.setActionCommand(sysNames[i]);
-            //mi.addActionListener(openWarrantAction);
-            //openWarrantMenu.add(mi);
             JMenuItem mi = new JMenuItem(warrant.getDisplayName());
             mi.setActionCommand(warrant.getDisplayName());
             mi.addActionListener(editWarrantAction);
@@ -611,7 +612,7 @@ public class WarrantTableAction extends AbstractAction {
                                          boolean isSelected, int row, int column) 
         {
             WarrantTableModel model = (WarrantTableModel)table.getModel();
-            Warrant warrant = (Warrant)model.getBeanAt(row);
+            Warrant warrant = model.getWarrantAt(row);
             JComboBox comboBox = (JComboBox)getComponent();
             comboBox.removeAllItems();
             List <BlockOrder> orders = warrant.getOrders();
@@ -624,7 +625,7 @@ public class WarrantTableAction extends AbstractAction {
     
     /************************* WarrantTableModel Table ******************************/
 
-    class WarrantTableModel  extends PickListModel 
+    class WarrantTableModel extends AbstractTableModel implements PropertyChangeListener 
     {
         public static final int WARRANT_COLUMN = 0;
         public static final int ROUTE_COLUMN =1;
@@ -639,27 +640,41 @@ public class WarrantTableAction extends AbstractAction {
         public static final int DELETE_COLUMN = 10;
         public static final int NUMCOLS = 11;
 
-        WarrantManager manager;
+        WarrantManager _manager;
+        protected ArrayList <Warrant>       _warList;
 
         public WarrantTableModel() {
             super();
-            manager = InstanceManager.warrantManagerInstance();
+            _manager = InstanceManager.warrantManagerInstance();
+            _manager.addPropertyChangeListener(this);   // for adds and deletes
         }
 
-        public Manager getManager() {
-            return manager;
+        public void init() {
+            if (_warList != null) {
+                for (int i=0; i<_warList.size(); i++) {
+                    _warList.get(i).removePropertyChangeListener(this);
+                }
+            }
+            List <String> systemNameList = _manager.getSystemNameList();
+            _warList = new ArrayList <Warrant> (systemNameList.size());
+
+            Iterator <String> iter = systemNameList.iterator();
+            while (iter.hasNext()) {
+                _warList.add(_manager.getBySystemName(iter.next()));
+            }
+            // add name change listeners
+            for (int i=0; i<_warList.size(); i++) {
+                _warList.get(i).addPropertyChangeListener(this);
+            }
+            if (log.isDebugEnabled()) log.debug("_warList has "+_warList.size()+" warrants");
         }
-        public NamedBean getBySystemName(String name) {
-            return manager.getBySystemName(name);
+        
+        public Warrant getWarrantAt(int index) {
+            return _warList.get(index);
         }
-        public NamedBean addBean(String name) {
-            return manager.provideWarrant(name);
-        }
-        public NamedBean addBean(String sysName, String userName) {
-            return manager.createNewWarrant(sysName, userName);
-        }
-        public boolean canAddBean() {
-            return true;
+
+        public int getRowCount () {
+            return _warList.size();
         }
 
         public int getColumnCount () {
@@ -685,9 +700,9 @@ public class WarrantTableAction extends AbstractAction {
         public boolean isCellEditable(int row, int col) {
             switch (col) {
                 case WARRANT_COLUMN:
+                    return false;
                 case TRAIN_ID_COLUMN:
                 case ADDRESS_COLUMN:
-                    return false;
                 case ROUTE_COLUMN:
                 case ALLOCATE_COLUMN:
                 case DEALLOC_COLUMN:
@@ -742,7 +757,7 @@ public class WarrantTableAction extends AbstractAction {
 
         public Object getValueAt(int row, int col) {
             //if (log.isDebugEnabled()) log.debug("getValueAt: row= "+row+", column= "+col);
-            Warrant w = (Warrant)getBeanAt(row);
+            Warrant w = getWarrantAt(row);
             // some error checking
             if (w == null){
             	log.debug("Warrant is null!");
@@ -833,14 +848,34 @@ public class WarrantTableAction extends AbstractAction {
 
         public void setValueAt(Object value, int row, int col) {
             if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
-            Warrant w = (Warrant)getBeanAt(row);
+            Warrant w = getWarrantAt(row);
             String msg = null;
             switch (col) {
                 case WARRANT_COLUMN:
                 case ROUTE_COLUMN:
-                case TRAIN_ID_COLUMN:
-                case ADDRESS_COLUMN:
                     return;
+                case TRAIN_ID_COLUMN:
+                    w.setTrainId((String)value);
+                    break;
+                case ADDRESS_COLUMN:
+                    String addr = (String)value;
+                    if (addr!= null && addr.length() != 0) {
+                        try {
+                            char ch = Character.toUpperCase(addr.charAt(addr.length()-1));
+                            boolean isLong = true;
+                            int n = 0;
+                            if (Character.isDigit(ch)){
+                                n = Integer.parseInt(addr);
+                            } else {
+                                isLong = (ch == 'L');
+                                n = Integer.parseInt(addr.substring(0, addr.length()-1));
+                            }
+                            w.setDccAddress( new DccLocoAddress(n, isLong));
+                        } catch (NumberFormatException nfe) {
+                            msg = java.text.MessageFormat.format(rb.getString("BadDccAddress"), addr);
+                        }
+                    }
+                    break;
                 case ALLOCATE_COLUMN:
                     msg = w.allocateRoute();
                     break;
@@ -924,7 +959,7 @@ public class WarrantTableAction extends AbstractAction {
                     break;
                 case DELETE_COLUMN:
                     if (w.getRunMode() == Warrant.MODE_NONE) {
-                        getManager().deregister(w);
+                        _manager.deregister(w);
                         w.dispose();
                     } else {
                     }
@@ -936,6 +971,25 @@ public class WarrantTableAction extends AbstractAction {
             }
             fireTableRowsUpdated(row, row);
         }
+
+        public void propertyChange(java.beans.PropertyChangeEvent e) {
+            if (e.getPropertyName().equals("length")) {
+                // a NamedBean added or deleted
+                init();
+                fireTableDataChanged();
+            } else {
+                // a value changed.  Find it, to avoid complete redraw
+                NamedBean bean = (NamedBean)e.getSource();
+                for (int i=0; i<_warList.size(); i++) {
+                    if (bean.equals(_warList.get(i)))  {
+                        fireTableRowsUpdated(i, i);
+                    }
+                }
+            }
+            if (log.isDebugEnabled()) log.debug("propertyChange of \""+e.getPropertyName()+
+                                                "\" for "+e.getSource().toString());
+        }
+
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(WarrantTableAction.class.getName());

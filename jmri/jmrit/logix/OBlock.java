@@ -32,7 +32,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -67,7 +67,7 @@ public class OBlock extends jmri.Block {
         }
     }
 
-    protected Warrant getWarrant() { return _warrant; }
+    public Warrant getWarrant() { return _warrant; }
 
     public float getLengthScaleFeet() {
         return getLengthIn()/12*_scaleRatio;

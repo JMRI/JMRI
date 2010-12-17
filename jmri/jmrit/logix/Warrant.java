@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -229,7 +229,17 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     public DccLocoAddress getDccAddress() { return _dccAddress;  }
-    public void setDccAddress(DccLocoAddress address) { _dccAddress = address;  }
+    public void setDccAddress(DccLocoAddress address) { 
+        _dccAddress = address;
+        String id = null;
+        if (address!=null) {
+            id = address.toString();
+            if (_trainId!=null) {
+                id = _trainId;
+            }
+        }
+        firePropertyChange("trainId", "", id);
+    }
 
     public boolean getRunBlind() {return _runBlind; }
     public void setRunBlind(boolean runBlind) { _runBlind = runBlind; }
@@ -394,6 +404,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 msg = java.text.MessageFormat.format(rb.getString("badStart"),getDisplayName());
                 log.error(msg);
                 return msg;
+            } else {
+                // set block state to show our train occupies the block
+                OBlock b = getBlockAt(0);
+                b.setValue(_trainId);
+                b.setState(b.getState() | OBlock.RUNNING);
             }
             if (mode == MODE_LEARN) {
                 if (student == null) {
@@ -656,6 +671,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 // we assume it is our train entering the block - cannot guarantee it, but what else?
                 _idxCurrentOrder = activeIdx;
                 // set block state to show our train occupies the block
+                block.setValue(_trainId);
                 block.setState(block.getState() | OBlock.RUNNING);
             }
         } else if (activeIdx > _idxCurrentOrder+1) {
@@ -722,6 +738,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // block is behind train.  Assume we are leaving.
 //            _idxTrailingOrder = idx;
             if (this.equals(block.getWarrant())) {
+                block.setValue(null);
                 block.deAllocate(this);
             }
         } else if (_runMode==MODE_RUN ) {

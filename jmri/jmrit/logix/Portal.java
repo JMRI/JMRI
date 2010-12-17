@@ -201,6 +201,7 @@ public class Portal  {
         }
         return true;
     }
+
     public boolean setApproachSignal(NamedBean signal, long time, OBlock approachBlock) {
         if (approachBlock==null) return false;
         if (_fromBlock.equals(approachBlock)) {
