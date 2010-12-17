@@ -66,21 +66,29 @@ public class PickPanel extends JPanel implements ListSelectionListener, ChangeLi
         p.add(_addPanel);
         p.add(_cantAddPanel);
         stateChanged(null);
+        int width = Math.max(100, this.getPreferredSize().width);
+        _sysNametext.setPreferredSize(new java.awt.Dimension(width, _sysNametext.getPreferredSize().height));
         return p;
     }
 
     void addToTable() {
-        String name = _sysNametext.getText();
-        if (name != null && name.length() > 0) {
+        String sysname = _sysNametext.getText();
+        if (sysname != null && sysname.length() > 1) {
             JTable table = _tables[_tabPane.getSelectedIndex()];
             PickListModel model = (PickListModel)table.getModel();
-            jmri.NamedBean bean = model.addBean(name, _userNametext.getText());
-            int setRow = model.getIndexOf(bean);
-            table.setRowSelectionInterval(setRow, setRow);
-            JPanel p = (JPanel)_tabPane.getSelectedComponent();
-            ((JScrollPane)p.getComponent(1)).getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+            String uname = _userNametext.getText();
+            if (uname!=null && uname.trim().length()==0) {
+                uname = null;
+            }
+            jmri.NamedBean bean = model.addBean(sysname, uname);
+            if (bean!=null) {
+                int setRow = model.getIndexOf(bean);
+                table.setRowSelectionInterval(setRow, setRow);
+                JPanel p = (JPanel)_tabPane.getSelectedComponent();
+                ((JScrollPane)p.getComponent(1)).getVerticalScrollBar().setValue(setRow*ROW_HEIGHT);
+                _sysNametext.setText("");
+            }
         }
-        _sysNametext.setText("");
     }
 
     public void stateChanged(ChangeEvent e) {
