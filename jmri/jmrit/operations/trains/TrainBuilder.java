@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 //import java.util.Locale;
@@ -39,12 +38,18 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.116 $
+ * @version             $Revision: 1.117 $
  */
 public class TrainBuilder extends TrainCommon{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	private static final String BOX = " [ ] ";
+	
+	// report levels
+	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
+	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;
+	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
+	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
 	
 	// build status
 	private static final String BUILDFAILED = rb.getString("BuildFailed");
@@ -1746,36 +1751,7 @@ public class TrainBuilder extends TrainCommon{
 		newLine(fileOut);
 		addLine(fileOut, rb.getString("ManifestForTrain")+" (" + train.getName() + ") "+ train.getDescription());
 		
-		Calendar calendar = Calendar.getInstance();
-		
-		String year = Setup.getYearModeled();
-		if (year.equals(""))
-			year = Integer.toString(calendar.get(Calendar.YEAR));
-		year = year.trim();
-		
-		int hour = calendar.get(Calendar.HOUR);
-		if (hour == 0)
-			hour = 12;
-		String h  = Integer.toString(hour);
-		if (hour <10)
-			h = "0"+ Integer.toString(hour);
-		
-		int minute = calendar.get(Calendar.MINUTE);
-		String m = Integer.toString(minute);
-		if (minute <10)
-			m = "0"+ Integer.toString(minute);
-					
-		String AM_PM = (calendar.get(Calendar.AM_PM)== Calendar.AM)? "AM":"PM";
-		
-		// Java 1.6 methods calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()
-		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())
-		String date = calendar.get(Calendar.MONTH)+1
-				+ "/"
-				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
-				+ h + ":" + m + " " 
-				+ AM_PM;
-		
-		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{date}));
+		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()}));
 		if (!train.getComment().equals("")){
 			addLine(fileOut, train.getComment());
 		}

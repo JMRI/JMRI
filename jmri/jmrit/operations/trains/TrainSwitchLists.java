@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -50,7 +49,7 @@ public class TrainSwitchLists extends TrainCommon {
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
 		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{location.getName()}));
-		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{new Date()}));
+		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()}));
 		
 		// get a list of trains
 		List<String> trains = manager.getTrainsByTimeList();
@@ -74,8 +73,12 @@ public class TrainSwitchLists extends TrainCommon {
 				RouteLocation rl = route.getLocationById(routeList.get(r));
 				if (rl.getName().equals(location.getName())){
 					if (stops > 1){
-						newLine(fileOut);
-						addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops}));
+						// Print visit number only if previous location wasn't the same
+						RouteLocation rlPrevious = route.getLocationById(routeList.get(r-1));
+						if (!rl.getName().equals(rlPrevious.getName())){
+							newLine(fileOut);
+							addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops}));
+						}
 					} else {
 						newLine(fileOut);
 						addLine(fileOut, MessageFormat.format(rb.getString("ScheduledWork"), new Object[]{train.getName(), train.getDescription()}));

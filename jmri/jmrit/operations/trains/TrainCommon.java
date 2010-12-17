@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.PrintWriter;
+import java.util.Calendar;
 import java.util.ResourceBundle;
 import java.util.List;
 
@@ -24,11 +25,6 @@ public class TrainCommon {
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String BOX = " [ ] ";
 	
-	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
-	protected static final String THREE = Setup.BUILD_REPORT_NORMAL;
-	protected static final String FIVE = Setup.BUILD_REPORT_DETAILED;
-	protected static final String SEVEN = Setup.BUILD_REPORT_VERY_DETAILED;
-
 	protected void pickupEngine(PrintWriter file, Engine engine){
 		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup")+ " ");
 		String[] format = Setup.getPickupEngineMessageFormat();
@@ -175,6 +171,40 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.NONE))
 			return "";
 		return "error ";		
+	}
+	
+	protected String getDate(){
+		Calendar calendar = Calendar.getInstance();
+		
+		String year = Setup.getYearModeled();
+		if (year.equals(""))
+			year = Integer.toString(calendar.get(Calendar.YEAR));
+		year = year.trim();
+		
+		// Use 24 hour clock
+		int hour = calendar.get(Calendar.HOUR_OF_DAY);
+
+		String h  = Integer.toString(hour);
+		if (hour <10)
+			h = "0"+ Integer.toString(hour);
+		
+		int minute = calendar.get(Calendar.MINUTE);
+		String m = Integer.toString(minute);
+		if (minute <10)
+			m = "0"+ Integer.toString(minute);
+					
+		//remove AM_PM field
+		//String AM_PM = (calendar.get(Calendar.AM_PM)== Calendar.AM)? "AM":"PM";
+		String AM_PM = "";
+		
+		// Java 1.6 methods calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.getDefault()
+		// Java 1.6 methods calendar.getDisplayName(Calendar.AM_PM, Calendar.LONG, Locale.getDefault())
+		String date = calendar.get(Calendar.MONTH)+1
+				+ "/"
+				+ calendar.get(Calendar.DAY_OF_MONTH) + ", " + year + " "
+				+ h + ":" + m + " " 
+				+ AM_PM;
+		return date;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger
