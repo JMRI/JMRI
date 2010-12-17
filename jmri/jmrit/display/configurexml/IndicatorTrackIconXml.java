@@ -19,7 +19,7 @@ import java.util.List;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -53,14 +53,15 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             element.addContent(storeBean("errorsensor", s));
         }
 
-        Element el = new Element("showTrainName");
+        Element elem = new Element("showTrainName");
         String show = "no";
         if (p.showTrain()) { show = "yes"; }
-        el.addContent(show);
+        elem.addContent(show);
+        element.addContent(elem);
 
         Hashtable<String, NamedIcon> iconMap = p.getIconMap();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        Element elem = new Element("iconmap");
+        elem = new Element("iconmap");
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             elem.addContent(storeIcon(entry.getKey(), entry.getValue()));

@@ -19,7 +19,7 @@ import java.util.List;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -57,25 +57,26 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
             element.addContent(storeBean("errorsensor", s));
         }
 
-        Element el = new Element("showTrainName");
+        Element elem = new Element("showTrainName");
         String show = "no";
         if (p.showTrain()) { show = "yes"; }
-        el.addContent(show);
+        elem.addContent(show);
+        element.addContent(elem);
 
         Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = p.getIconMaps();
         Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = iconMaps.entrySet().iterator();
-        Element e = new Element("iconmaps");
+        Element el = new Element("iconmaps");
         while (it.hasNext()) {
             Entry<String, Hashtable<Integer, NamedIcon>> ent = it.next();
-            Element elem = new Element(ent.getKey());
+            elem = new Element(ent.getKey());
             Iterator<Entry<Integer, NamedIcon>> iter = ent.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<Integer, NamedIcon> entry = iter.next();
                 elem.addContent(storeIcon(p.getStateName(entry.getKey()), entry.getValue()));
             }
-            e.addContent(elem);
+            el.addContent(elem);
         }
-        element.addContent(e);
+        element.addContent(el);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml");
 
