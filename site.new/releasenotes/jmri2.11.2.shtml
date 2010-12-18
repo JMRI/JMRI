@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.2.shtml,v 1.30 2010-12-17 16:39:17 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.2.shtml,v 1.31 2010-12-18 14:34:23 millerdl Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -246,7 +246,7 @@ Matt Harris improved the script output window allowing configurable automatic sc
 
 <p>
 Oscar Moutinho provided
-<a href="http://jmri.org/web/inControl_v1.1.0.txt">web-based throttles</a> 
+<a href="http://jmri.org/web/inControl/inControl.txt">web-based throttles</a> 
 (version 1.1 of his inControl package)
 
 <p>
