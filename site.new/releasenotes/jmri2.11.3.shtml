@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.1 2010-11-14 04:51:34 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.2 2010-12-18 02:12:35 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -69,7 +69,11 @@ see our
 
 <h3>Older warnings</h3>
 
-(None for this version)
+The numerical values of "ON" and "OFF" for Lights changed in JMRI 2.11.2, 
+along with some of the other constants in the class.  
+This will have no impact on people just using the program.  
+If you're using scripts with numerical values
+in them, please recode them to use the symbolic values.
 
 <h3>Known problems with this release</h3>
 
@@ -90,8 +94,23 @@ None at the time of this release.
 
 <h3>Changes since production version 2.11.2</h3>
 
+Paul Bender provided a new ThrottleBridge.py script.
+It is a proof of concept script showing how to bridge a throttle 
+from one system to another.
 
+<p>
+Paul Bender fixed a bug in Lenz XPressNet throttle implementation.
 
+<p>
+New operations features:
+<ul>
+<li>Users can now modify the train timetable.
+<li>Change switch list valid date to 24 hour clock
+<li>
+</ul>
+
+<p>
+Pete Cressman added support for invisible icons on panels
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
