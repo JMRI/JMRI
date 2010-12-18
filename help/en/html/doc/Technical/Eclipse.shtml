@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Eclipse.shtml,v 1.12 2010-09-04 20:35:46 zoo Exp $ -->
+<!-- $Id: Eclipse.shtml,v 1.13 2010-12-18 16:47:15 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -120,14 +120,23 @@
         enter "java" (lower case important) for "Project:" and
         "apps.DecoderPro.DecoderPro" for "Main class:".
     
-    <LI>Select the "Arguments" tab, and under VM argments enter
+    <LI>Select the "Arguments" tab, and under VM argments enter (You should probably cut and paste):
     <BR>
 <PRE>
--Djava.security.policy=lib/security.policy -Dapple.laf.useScreenMenuBar=true -Xms10m
+-Xms10m
+-Xmx300m
+-Djava.security.policy=lib/security.policy 
+-Dapple.laf.useScreenMenuBar=true
 </PRE>
-    <BR>
-        (You should probably cut and paste that).  Under working directory,
-        select "Other:" and enter "${workspace_loc}"
+If you're using a 32 bit windows system add the library path:
+<PRE>
+-Djava.library.path=.;lib;lib/windows/x86 
+</PRE>
+Note if you're using a 64 bit windows system change the library path to:
+<PRE>
+-Djava.library.path=.;lib;lib/windows/x64
+</PRE>
+    <LI>Under working directory, select "Other:" and enter "${workspace_loc}"
         
     <LI>Select the "Common" tab, the section on "Display in favorites menu",
         check the boxes next to "Run" and "Debug"
