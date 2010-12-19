@@ -23,7 +23,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -51,6 +51,10 @@ public class AppConfigBase extends JmriPanel {
     
     public static String getPort(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
+    }
+
+    public static String getConnectionName(int index) {
+        return JmrixConfigPane.instance(index).getConnectionName();
     }
 
     public static boolean getDisabled(int index) {

@@ -13,11 +13,14 @@ import javax.swing.*;
 
 /**
  * Basic configuration GUI infrastructure.
+ * Replaced by the new Tabbed Preferences {@link apps.gui3.TabbedPreferences}
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.38 $
+ * @version	$Revision: 1.39 $
+ * @deprecated  2.10.3
  */
+@Deprecated
 public class AppConfigPanel extends AppConfigBase {
 
     /**
@@ -26,6 +29,7 @@ public class AppConfigPanel extends AppConfigBase {
      * @param nConnections number of connections configured, e.g. the number of connection
      *      sub-panels included
      */
+    @Deprecated
     public AppConfigPanel(int nConnections) {
         super();  // by default number of connection slots
         log.debug("start app");
@@ -176,6 +180,7 @@ public class AppConfigPanel extends AppConfigBase {
     JPanel localeSpace = null;
     boolean localeAdded = false;
 
+    @Deprecated
     public Component addAndRemember(Component c) {
         items.add(c);
         super.add(c);

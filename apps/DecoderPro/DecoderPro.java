@@ -40,7 +40,7 @@ import jmri.util.JmriJFrame;
  * for more details.
  *
  * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @version     $Revision: 1.61 $
+ * @version     $Revision: 1.62 $
  */
 public class DecoderPro extends Apps {
 
@@ -48,6 +48,7 @@ public class DecoderPro extends Apps {
         super(p);
     }
 
+    @Deprecated
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(1);
     }

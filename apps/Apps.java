@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.127 $
+ * @version     $Revision: 1.128 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -190,7 +190,7 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
         // if the configuration didn't complete OK, pop the prefs frame and help
         log.debug("Config go OK? "+(configOK||configDeferredLoadOK));
         if (!configOK||!configDeferredLoadOK) {
-            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
+            jmri.util.HelpUtil.displayHelpRef("package.apps.AppConfigBaseErrorPage");
             doPreferences();
         }
         log.debug("Done with doPreferences, start statusPanel");
@@ -484,26 +484,26 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     }
     
     protected void buildLine(int number, JLabel cs, JPanel pane){
-    	if (AppConfigPanel.getConnection(number).equals(JmrixConfigPane.NONE)){
+    	if (AppConfigBase.getConnection(number).equals(JmrixConfigPane.NONE)){
     		cs.setText(" ");
     		return;
     	}
-        ConnectionStatus.instance().addConnection(AppConfigPanel.getConnection(number), AppConfigPanel.getPort(number));
+        ConnectionStatus.instance().addConnection(AppConfigBase.getConnection(number), AppConfigBase.getPort(number));
         cs.setFont(pane.getFont());
         updateLine(number, cs);
         pane.add(cs);
     }
     
     protected void updateLine(int number, JLabel cs) {
-        if (AppConfigPanel.getDisabled(number))
+        if (AppConfigBase.getDisabled(number))
             return;
-    	if (ConnectionStatus.instance().isConnectionOk(AppConfigPanel.getPort(number))){
+    	if (ConnectionStatus.instance().isConnectionOk(AppConfigBase.getPort(number))){
     		cs.setForeground(Color.black);
-			cs.setText(AppConfigPanel.getManufacturerName(number)+" "+ AppConfigPanel.getConnection(number));
+			cs.setText(AppConfigBase.getManufacturerName(number)+" "+ AppConfigBase.getConnection(number));
 		} else {
 			cs.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] {AppConfigPanel.getManufacturerName(number), AppConfigPanel.getConnection(number), AppConfigPanel.getPort(number)});
+					new Object[] {AppConfigBase.getManufacturerName(number), AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
 			cf = cf.toUpperCase();
 			cs.setText(cf);
 		}
@@ -604,24 +604,24 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
     static final protected ResourceBundle rb = ResourceBundle.getBundle("apps.AppsBundle");
 
 
-    static AppConfigPanel prefs;
-    static public AppConfigPanel getPrefs() { return prefs; }
+    static AppConfigBase prefs;
+    static public AppConfigBase getPrefs() { return prefs; }
     
     static public String getConnection1() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigPanel.getConnection(0), AppConfigPanel.getPort(0)});
+                                new Object[]{AppConfigBase.getConnection(0), AppConfigBase.getPort(0)});
     }
     static public String getConnection2() {
             return MessageFormat.format(rb.getString("ConnectionCredit"),
-                                new Object[]{AppConfigPanel.getConnection(1), AppConfigPanel.getPort(1)});
+                                new Object[]{AppConfigBase.getConnection(1), AppConfigBase.getPort(1)});
     }
     static public String getConnection3() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigPanel.getConnection(2), AppConfigPanel.getPort(2)});
+                            new Object[]{AppConfigBase.getConnection(2), AppConfigBase.getPort(2)});
     }
     static public String getConnection4() {
         return MessageFormat.format(rb.getString("ConnectionCredit"),
-                            new Object[]{AppConfigPanel.getConnection(3), AppConfigPanel.getPort(3)});
+                            new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3)});
     }
     
     static SplashWindow sp = null;

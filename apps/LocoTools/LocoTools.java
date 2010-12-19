@@ -32,14 +32,14 @@ import javax.swing.JMenuBar;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 public class LocoTools extends Apps {
 
     LocoTools(JFrame p) {
         super(p);
     }
-
+    @Deprecated
     protected AppConfigPanel newPrefs() {
         return new AppConfigPanel(1);
     }
