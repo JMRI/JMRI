@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.117 $
+ * @version             $Revision: 1.118 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -524,6 +524,8 @@ public class TrainBuilder extends TrainCommon{
 				List<String> destTracks = terminateLocation.getTracksByMovesList(null);
 				for (int s = 0; s < destTracks.size(); s++){
 					Track track = terminateLocation.getTrackById(destTracks.get(s));
+					if (!checkDropTrainDirection(engine, train.getTrainTerminatesRouteLocation(), track))
+						continue;
 					String status = engine.testDestination(terminateLocation, track);
 					if(status.equals(Engine.OKAY)){
 						if (addEngineToTrain(engine, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), track))				
@@ -716,17 +718,19 @@ public class TrainBuilder extends TrainCommon{
 					List<String> sls = terminateLocation.getTracksByMovesList(null);
 					// loop through the destination tracks to find one that accepts caboose or car with FRED
 					for (int s = 0; s < sls.size(); s++){
-						Track destTrack = terminateLocation.getTrackById(sls.get(s));
-						String status = c.testDestination(terminateLocation, destTrack);
+						Track track = terminateLocation.getTrackById(sls.get(s));
+						if (!checkDropTrainDirection(c, train.getTrainTerminatesRouteLocation(), track))
+							continue;
+						String status = c.testDestination(terminateLocation, track);
 						if (status.equals(Car.OKAY)){
-							boolean carAdded = addCarToTrain(c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), destTrack);
+							boolean carAdded = addCarToTrain(c, train.getTrainDepartsRouteLocation(), train.getTrainTerminatesRouteLocation(), track);
 							if (carAdded && c.isCaboose())
 								foundCaboose = true;
 							if (carAdded && c.hasFred())
 								foundFred = true;
 							break;
 						} 
-						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), destTrack.getName(), status}));
+						addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), track.getName(), status}));
 					}
 					if ((c.isCaboose() && !foundCaboose) || (c.hasFred() && !foundFred)){
 						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarNoDestination"),new Object[]{c.toString()}));
@@ -1305,7 +1309,7 @@ public class TrainBuilder extends TrainCommon{
 	}
 	
 	private final boolean ignoreTrainDirectionIfLastLoc = false;
-	private boolean checkDropTrainDirection (Car car, RouteLocation rld, Track track){
+	private boolean checkDropTrainDirection (RollingStock rs, RouteLocation rld, Track track){
 		// local?
 		if (routeList.size()==1)
 			return true;
@@ -1320,15 +1324,15 @@ public class TrainBuilder extends TrainCommon{
 		if ((rld.getTrainDirection() & serviceTrainDir) >0){
 			return true;
 		}
-		if (car == null){
+		if (rs == null){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildDestinationDoesNotService"),new Object[]{destination.getName(), rld.getTrainDirectionString()}));
 			return false;
 		}
-		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropCarUsingTrain"),new Object[]{car.toString(), rld.getTrainDirectionString()}));
+		addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain"),new Object[]{rs.toString(), rld.getTrainDirectionString()}));
 		if (track != null)
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropCarUsingTrain2"),new Object[]{track.getName()}));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain2"),new Object[]{track.getName()}));
 		else 
-			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropCarUsingTrain3"),new Object[]{destination.getName()}));
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCanNotDropRsUsingTrain3"),new Object[]{destination.getName()}));
 		return false;
 	}
 	
