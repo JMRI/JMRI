@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SimpleRoster4web.xsl,v 1.1 2010-12-11 13:59:55 hebbos Exp $ -->
+<!-- $Id: SimpleRoster4web.xsl,v 1.2 2010-12-19 13:57:41 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -38,22 +38,28 @@
 	<!-- Display each roster entry -->
 	<xsl:template match="roster/locomotive">
 		<tr>
-			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />" , "<xsl:value-of select='@id' />", "/prefs/resources/"+"<xsl:value-of select='@iconFilePath' />"); 
+			<xsl:attribute name="onclick">openThrottle( "<xsl:value-of select='@dccAddress' />", "<xsl:value-of select='@id' />", "/prefs/resources/<xsl:value-of select='@iconFilePath' />", "<xsl:apply-templates select='functionlabels' />"); 
 			</xsl:attribute>
 			<td class="rosterTD">
+				<xsl:if test="@iconFilePath != '__noIcon.jpg'">
 					<xsl:element name="img">
 						<xsl:attribute name="src">/prefs/resources/<xsl:value-of
 							select="@iconFilePath" /></xsl:attribute>
 						<xsl:attribute name="height">40</xsl:attribute>
 						<xsl:attribute name="alt">No icon</xsl:attribute>
 						<xsl:attribute name="title">Click to open throttle</xsl:attribute>
-					</xsl:element> 
-					<xsl:text>          </xsl:text>
-					<xsl:value-of select="@id" />
+					</xsl:element>
+				</xsl:if>
+				<xsl:text>          </xsl:text>
+				<xsl:value-of select="@id" />
 			</td>
 		</tr>
 	</xsl:template>
 
+	<!-- TODO: <xsl:value-of select="@lockable"/> not used here yet, nothing for functions images as well -->
+	<xsl:template match="roster/locomotive/functionlabels">
+		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;</xsl:for-each>
+	</xsl:template>
 </xsl:stylesheet>
 
 

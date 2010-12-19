@@ -1,9 +1,17 @@
-function openThrottle(address, id, imageURL) {
-    winref = window.open("/web/inControl.html?locoaddress="+address+"&loconame="+id+"&locoimage="+imageURL, address);
-    winref.focus();
+function openThrottle(address, id, imageURL, fnlabels) {
+	var inParameters="locoaddress="+address;
+	if (id)
+		inParameters=inParameters+"&loconame="+escape(id);
+	if (imageURL && (imageURL!="/prefs/resources/__noIcon.jpg"))
+		inParameters=inParameters+"&locoimage="+escape(imageURL);
+	if (fnlabels)
+		inParameters=inParameters+"&"+fnlabels;
+	var winref = window.open("/web/inControl.html?"+inParameters, address);    
+	winref.focus();
 }
 
 function loadXMLDoc(dname) {
+	var xhttp;
 	if (window.XMLHttpRequest) {
 		xhttp = new XMLHttpRequest();
 	} else {
@@ -15,19 +23,18 @@ function loadXMLDoc(dname) {
 }
 
 function displayRosterUsing(xsltfile, inElement) {
-	xml = loadXMLDoc("/prefs/roster.xml");
-	xsl = loadXMLDoc(xsltfile);
+	var xml = loadXMLDoc("/prefs/roster.xml");
+	var xsl = loadXMLDoc(xsltfile);
 	// code for IE
 	if (window.ActiveXObject) {
-		ex = xml.transformNode(xsl);
+		var ex = xml.transformNode(xsl);
 		inElement.innerHTML = ex;
 	}
 	// code for Mozilla, Firefox, Opera, etc.
-	else if (document.implementation
-			&& document.implementation.createDocument) {
-		xsltProcessor = new XSLTProcessor();
+	else if (document.implementation && document.implementation.createDocument) {
+		var xsltProcessor = new XSLTProcessor();
 		xsltProcessor.importStylesheet(xsl);
-		resultDocument = xsltProcessor.transformToFragment(xml, document);
+		var resultDocument = xsltProcessor.transformToFragment(xml, document);
 		inElement.appendChild(resultDocument);
 	}
 }
