@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Action to edit timetable
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 		
@@ -94,7 +94,7 @@ class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.Prop
 		
 		// check for valid name
 		String s = addTextBox.getText();
-		s.trim();
+		s = s.trim();
 		if (s.equals(""))
 			return;	// done
 		
