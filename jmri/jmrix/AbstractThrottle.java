@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
 	public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;
@@ -61,11 +61,38 @@ abstract public class AbstractThrottle implements DccThrottle {
         return speedSetting;
     }
 
+    /*
+     * setSpeedSetting - Implementing functions should override this 
+     * function, but should either make a call to super.setSpeedSetting()
+     * to notify the listeners, or should notify the listeners themselves.
+     */
+    public void setSpeedSetting(float speed)
+    {
+        if(Math.abs(this.speedSetting - speed)>0.0001 )
+                notifyPropertyChangeListener("SpeedSetting",
+                                             new Float(this.speedSetting),
+                                             new Float(this.speedSetting =
+                                                       speed));
+   }
+
     /** direction
      * This is an bound parameter.
      */
     public boolean getIsForward() {
         return isForward;
+    }
+
+    /*
+     * setIsForward - Implementing functions should override this 
+     * function, but should either make a call to super.setIsForward()
+     * to notify the listeners, or should notify the listeners themselves.
+     */
+    public void setIsForward(boolean forward)
+    {
+        if(forward!=this.isForward)
+           notifyPropertyChangeListener("IsForward",
+                                 Boolean.valueOf(this.isForward),
+                                 Boolean.valueOf(this.isForward=forward));
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;

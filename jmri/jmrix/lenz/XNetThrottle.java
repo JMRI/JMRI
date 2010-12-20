@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.42 $
+ * @version    $Revision: 2.43 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -251,24 +251,15 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
        queueMessage(msg,THROTTLEFUNCSENT);
     }
     
-    /** speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
-     * This is an bound parameter.
+    /* 
+     * setSpeedSetting - notify listeners and send the new speed to the
+     * command station.
      */
-    synchronized public float getSpeedSetting()
-    {
-        return speedSetting;
-    }
-    
     synchronized public void setSpeedSetting(float speed)
     {
 	if(log.isDebugEnabled()) log.debug("set Speed to: " + speed +
 					  " Current step mode is: " + this.speedStepMode );
-
-        if(this.speedSetting != speed)
-                notifyPropertyChangeListener("SpeedSetting",
-                                             new Float(this.speedSetting),
-                                             new Float(this.speedSetting =
-                                                       speed));
+	super.setSpeedSetting(speed);
         if(tc.getCommandStation().getCommandStationType()==0x10) {
             // MultiMaus doesn't support emergency off.  When -1 is
             // sent, set the speed to 0 instead.
@@ -304,23 +295,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
         queueMessage(msg,THROTTLESPEEDSENT);
     }
 
-    /** direction
-     * This is an bound parameter.
-     */
-    public boolean getIsForward()
-    {
-        return isForward;
-    }
-    
     /* When we set the direction, we're going to set the speed to
        zero as well */
     public void setIsForward(boolean forward)
     {
-        if(forward!=this.isForward)
-           notifyPropertyChangeListener("IsForward",
-                                 Boolean.valueOf(this.isForward),
-                                 Boolean.valueOf(this.isForward=forward));
-        else this.isForward=forward;
+	super.setIsForward(forward);
 	setSpeedSetting(this.speedSetting);
     }
 

@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -360,6 +360,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     //The values here might need a bit of re-working
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
+        super.setSpeedSetting(speed);
         if(!_haveControl) return;
         int value;
         
@@ -399,6 +400,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     EcosTrafficController tc;
 
     public void setIsForward(boolean forward) {
+        super.setIsForward(forward);
         if(!_haveControl) return;
         //isForward = forward;
         int dir=1;

@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author  Paul Bender  Copyright (C) 2004
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class XpaThrottle extends AbstractThrottle {
 
@@ -50,6 +50,7 @@ public class XpaThrottle extends AbstractThrottle {
      * @param speed Number from 0 to 1; less than zero is emergency stop
      */
     public void setSpeedSetting(float speed) {
+        super.setSpeedSetting(speed);
 	int value = (int)((127)*speed);
         if (value>127) value = 127;    // max possible speed
 	if(this.speedvalue!=value) {
@@ -79,18 +80,13 @@ public class XpaThrottle extends AbstractThrottle {
 
     // Direction
     public void setIsForward(boolean forward) {
+	super.setIsForward(forward);
 	XpaMessage m;
 	if(forward)
 	{
 	  m=XpaMessage.getDirForwardMsg(address);
 	} else {
 	  m=XpaMessage.getDirReverseMsg(address);
-	}
-        isForward=forward;
-	if(this.speedSetting!=0) {
-        notifyPropertyChangeListener("SpeedSetting",
-                                      new Float(this.speedSetting),
-                                      new Float(this.speedSetting = 0));
 	}
 	XpaTrafficController.instance().sendXpaMessage(m,null);
     }
