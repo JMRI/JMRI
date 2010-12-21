@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -53,9 +53,21 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 	
 	// combo boxes
 	JComboBox typeComboBox = CarTypes.instance().getComboBox();
+	
+	// selected location
+	Location location;
 
 	public LocationsByCarTypeFrame() {
 		super();
+	}
+	
+	public void initComponents(){
+		initComponents("");
+	}
+	
+	public void initComponents(Location location){
+		this.location = location;
+		initComponents("");
 	}
 
 	public void initComponents(String carType) {
@@ -121,7 +133,10 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 
 		pack();
 		setSize(getWidth()+30, getHeight());
-		setTitle(rb.getString("TitleModifyLocations"));
+		if (location != null)
+			setTitle(rb.getString("TitleModifyLocation"));
+		else
+			setTitle(rb.getString("TitleModifyLocations"));
 		setVisible(true);
 	}
 		
@@ -187,6 +202,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 		List<String> locations = manager.getLocationsByNameList();
 		for (int i=0; i<locations.size(); i++){
 			Location loc = manager.getLocationById(locations.get(i));
+			// show only one location?
+			if (location != null && location != loc)
+				continue;
 			loc.addPropertyChangeListener(this);
 			JCheckBox cb = new JCheckBox(loc.getName());
 			cb.setName(loc.getId());

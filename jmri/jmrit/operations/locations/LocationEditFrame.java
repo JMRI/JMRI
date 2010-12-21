@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -259,6 +259,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
+		toolMenu.add(new ModifyLocationsAction(rb.getString("TitleModifyLocation"), location));
 		toolMenu.add(new ShowCarsByLocationAction(false, locationName, null));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
