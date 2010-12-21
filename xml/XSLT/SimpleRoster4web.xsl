@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: SimpleRoster4web.xsl,v 1.3 2010-12-20 08:55:00 hebbos Exp $ -->
+<!-- $Id: SimpleRoster4web.xsl,v 1.4 2010-12-21 10:44:33 hebbos Exp $ -->
 
 <!-- Stylesheet to convert a JMRI roster XML file into displayable HTML -->
 
@@ -56,7 +56,8 @@
 		</tr>
 	</xsl:template>
 
-	<!-- TODO: <xsl:value-of select="@lockable"/> not used here yet, nothing for functions images as well -->
+	<!-- Generates URL parameters for inControl function buttons (function image and pressed image not used as not defined in roster file)-->
+	<!-- Escaping of function labels to be done -->
 	<xsl:template match="roster/locomotive/functionlabels">
 		<xsl:for-each select="functionlabel">f<xsl:value-of select="@num" />label=<xsl:value-of select="." />&amp;<xsl:if test="@lockable = 'true'">f<xsl:value-of select="@num" />imagepressed=x&amp;</xsl:if></xsl:for-each>
 	</xsl:template>

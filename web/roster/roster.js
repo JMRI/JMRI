@@ -1,3 +1,9 @@
+//
+// Part of JMRI - 2010 
+// Lionel Jeanson
+// Uses inControl web throttles to create web throttles
+
+// Open a inControl throttle for DCC address
 function openThrottle(address, id, imageURL, fnlabels) {
 	var inParameters="locoaddress="+address;
 	if (id)
@@ -5,16 +11,17 @@ function openThrottle(address, id, imageURL, fnlabels) {
 	if (imageURL && (imageURL!="/prefs/resources/__noIcon.jpg"))
 		inParameters=inParameters+"&locoimage="+escape(imageURL);
 	if (fnlabels)
-		inParameters=inParameters+"&"+fnlabels;
-	var winref = window.open("/web/inControl.html?"+inParameters, address);    
+		inParameters=inParameters+"&"+fnlabels; // Need escaping for function buttons (to be done in xslt file)
+	var winref = window.open("/web/inControl.html?"+inParameters, address); // We use address as a window id so that we won't open other ones on that client for that address   
 	winref.focus();
 }
 
+// Load an xml file and returns its root node
 function loadXMLDoc(dname) {
 	var xhttp;
-	if (window.XMLHttpRequest) {
+	if (window.XMLHttpRequest) { // Microsoft IE
 		xhttp = new XMLHttpRequest();
-	} else {
+	} else { // other browsers
 		xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 	}
 	xhttp.open("GET", dname, false);
@@ -22,16 +29,15 @@ function loadXMLDoc(dname) {
 	return xhttp.responseXML;
 }
 
+// Render the roster.xml file using the given in xslt into html element inElement
 function displayRosterUsing(xsltfile, inElement) {
 	var xml = loadXMLDoc("/prefs/roster.xml");
 	var xsl = loadXMLDoc(xsltfile);
-	// code for IE
-	if (window.ActiveXObject) {
+	if (window.ActiveXObject) {  // Microsoft IE
 		var ex = xml.transformNode(xsl);
 		inElement.innerHTML = ex;
 	}
-	// code for Mozilla, Firefox, Opera, etc.
-	else if (document.implementation && document.implementation.createDocument) {
+	else if (document.implementation && document.implementation.createDocument) { // other browsers
 		var xsltProcessor = new XSLTProcessor();
 		xsltProcessor.importStylesheet(xsl);
 		var resultDocument = xsltProcessor.transformToFragment(xml, document);
