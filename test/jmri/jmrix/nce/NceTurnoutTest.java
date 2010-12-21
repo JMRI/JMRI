@@ -3,7 +3,7 @@
  *
  * Description:	    tests for the jmri.jmrix.nce.NceTurnout class
  * @author			Bob Jacobsen
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 
 package jmri.jmrix.nce;
@@ -21,7 +21,7 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
 		// prepare an interface
 		tcis = new NceTrafficControlScaffold();
 
-		t = new NceTurnout(4);
+		t = new NceTurnout(tcis, "NT", 4);
 	}
 
 	public int numListeners() { return tcis.numListeners(); }

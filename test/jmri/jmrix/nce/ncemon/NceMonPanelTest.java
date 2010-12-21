@@ -1,5 +1,5 @@
 /**
- * NceMonFrameTest.java
+ * NceMonPanelTest.java
  *
  * Description:	    JUnit tests for the NceProgrammer class
  * @author			Bob Jacobsen
@@ -15,14 +15,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import jmri.jmrix.nce.ncemon.NceMonFrame;
+import jmri.jmrix.nce.ncemon.NceMonPanel;
+import jmri.jmrix.nce.NceTrafficController;
 
 import jmri.jmrix.nce.*;
 
-public class NceMonFrameTest extends TestCase {
-    
+public class NceMonPanelTest extends TestCase {
+
+	NceInterfaceScaffold controller;  // holds dummy NceTrafficController for testing
+
     public void testCreate() {
-        NceMonFrame f = new NceMonFrame();
+        controller = new NceInterfaceScaffold();
+        NceMonPanel f = new NceMonPanel();
         Assert.assertNotNull("exists", f );
     }
     
@@ -35,12 +39,12 @@ public class NceMonFrameTest extends TestCase {
 /*         m.setElement(1, '0'); */
 /*         m.setElement(2, 'A'); */
 /*          */
-/*         NceMonFrame f = new NceMonFrame(); */
+/*         NceMonPanel f = new NceMonPanel(); */
 /*          */
 /*         f.message(m); */
 /*          */
-/*         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getFrameText().length()); */
-/*         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getFrameText()); */
+/*         Assert.assertEquals("length ", "cmd: \"L0A\"\n".length(), f.getPanelText().length()); */
+/*         Assert.assertEquals("display", "cmd: \"L0A\"\n", f.getPanelText()); */
 /*     } */
 /*      */
 /*     public void testReply() { */
@@ -50,12 +54,12 @@ public class NceMonFrameTest extends TestCase {
 /*         m.setElement(1, 'o'); */
 /*         m.setElement(2, ':'); */
 /*          */
-/*         NceMonFrame f = new NceMonFrame(); */
+/*         NceMonPanel f = new NceMonPanel(); */
 /*          */
 /*         f.reply(m); */
 /*          */
-/*         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getFrameText()); */
-/*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getFrameText().length()); */
+/*         Assert.assertEquals("display", "rep: \"Co:\"\n", f.getPanelText()); */
+/*         Assert.assertEquals("length ", "rep: \"Co:\"\n".length(), f.getPanelText().length()); */
 /*     } */
     
     public void testWrite(){
@@ -114,22 +118,22 @@ public class NceMonFrameTest extends TestCase {
     
     // from here down is testing infrastructure
     
-    public NceMonFrameTest(String s) {
+    public NceMonPanelTest(String s) {
         super(s);
     }
     
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NceMonFrameTest.class.getName()};
+        String[] testCaseName = {NceMonPanelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
     
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(NceMonFrameTest.class);
+        TestSuite suite = new TestSuite(NceMonPanelTest.class);
         return suite;
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceMonPanelTest.class.getName());
     
 }

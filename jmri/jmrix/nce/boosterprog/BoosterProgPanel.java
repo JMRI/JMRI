@@ -1,4 +1,4 @@
-// BoosterProgFrame.java
+// BoosterProgPanel.java
 
  package jmri.jmrix.nce.boosterprog;
 
@@ -7,25 +7,58 @@ import java.util.ResourceBundle;
 import javax.swing.*;
 
 import jmri.*;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
- * Frame for configuring a NCE booster
+ * Panel for configuring a NCE booster
  *
+ * @author	ken cameron Copyright (C) 2010
+ * Derived from BoosterProgFrame by
  * @author		Bob Jacobsen   Copyright (C) 2004
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.2 $
  */
-public class BoosterProgFrame extends jmri.util.JmriJFrame {
+public class BoosterProgPanel extends jmri.jmrix.nce.swing.NcePanel {
+	
     JTextField start = new JTextField(6);
     JTextField length = new JTextField(12);
 
     JLabel status = new JLabel();
     
-    static ResourceBundle res = ResourceBundle.getBundle("jmri.jmrix.nce.boosterprog.BoosterProgBundle");
+    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.boosterprog.BoosterProgBundle");
+    
+    public BoosterProgPanel() {
+    	super();
+    }
+    
+    public void initContext(Object context) throws Exception {
+        if (context instanceof NceSystemConnectionMemo ) {
+            try {
+				initComponents((NceSystemConnectionMemo) context);
+			} catch (Exception e) {
+				//log.error("BoosterProg initContext failed");
+			}
+        }
+    }
 
-    public BoosterProgFrame() {
-        super(ResourceBundle.getBundle("jmri.jmrix.nce.boosterprog.BoosterProgBundle").getString("TitleBoosterProg"));
+    public String getHelpTarget() { return "package.jmri.jmrix.nce.boosterprog.BoosterProgPanel"; }
+    
+    public String getTitle() { 
+    	StringBuilder x = new StringBuilder();
+    	if (memo != null) {
+    		x.append(memo.getUserName());
+    	} else {
+    		x.append("NCE_");
+    	}
+		x.append(": ");
+    	x.append(rb.getString("TitleBoosterProg"));
+        return x.toString(); 
+    }
+    
+    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    	this.memo = m;
+        
         // general GUI config
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         // install items in GUI, one line at a time
         
@@ -34,13 +67,13 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
         JPanel box = new JPanel();
         box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
         
-        getContentPane().add(new JLabel(res.getString("Warn1")));
-        getContentPane().add(new JLabel(res.getString("Warn2")));
+        add(new JLabel(rb.getString("Warn1")));
+        add(new JLabel(rb.getString("Warn2")));
         
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        JButton b = new JButton(res.getString("ButtonSet"));
-        p.add(new JLabel(res.getString("LabelStart")));
+        JButton b = new JButton(rb.getString("ButtonSet"));
+        p.add(new JLabel(rb.getString("LabelStart")));
         start.setText("30");
         p.add(start);
         p.add(b);
@@ -53,8 +86,8 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
         
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        b = new JButton(res.getString("ButtonSet"));
-        p.add(new JLabel(res.getString("LabelDuration")));
+        b = new JButton(rb.getString("ButtonSet"));
+        p.add(new JLabel(rb.getString("LabelDuration")));
         length.setText("420");
         p.add(length);
         p.add(b);
@@ -65,45 +98,41 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
         });
         box.add(p);
         
-        getContentPane().add(box);
+        add(box);
         
-        getContentPane().add(status);
-        status.setText(res.getString("StatusOK"));
-        
-        pack();
+        add(status);
+        status.setText(rb.getString("StatusOK"));
     }
 
-    static Programmer p = null;
+    private Programmer p = null;
     
-    static void getProgrammer() {
-        p = InstanceManager.programmerManagerInstance().
-                            getAddressedProgrammer(true, 0);
+    private void getProgrammer() {
+        p = memo.getProgrammerManager().getAddressedProgrammer(true, 0);
     }
     
-    static void releaseProgrammer() {
-        if (p!=null)
-            InstanceManager.programmerManagerInstance().
-                            releaseAddressedProgrammer(p);
+    private void releaseProgrammer() {
+        if (p != null)
+        	memo.getProgrammerManager().releaseAddressedProgrammer(p);
         p = null;
     }
     
     void setStartPushed() {
         getProgrammer();
-        status.setText(res.getString("StatusProgramming"));
+        status.setText(rb.getString("StatusProgramming"));
         int val = Integer.parseInt(start.getText());
         
         try {
            p.writeCV(255, val, new ProgListener() {
                 public void programmingOpReply(int value, int retval) {
-                    status.setText(res.getString("StatusOK"));
+                    status.setText(rb.getString("StatusOK"));
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(res.getString("StatusError")+e);
+            status.setText(rb.getString("StatusError")+e);
         } finally { releaseProgrammer(); }
     }
     
-    static public void setStart(int val) {
+     void setStart(int val) {
         getProgrammer();
         
         try {
@@ -115,7 +144,7 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
         } finally { releaseProgrammer(); }
     }
     
-    static public void setDuration(final int val) {
+    void setDuration(final int val) {
         getProgrammer();
         
         try {
@@ -143,7 +172,7 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
     
     void setDurationPushed() {
         getProgrammer();
-        status.setText(res.getString("StatusProgramming"));
+        status.setText(rb.getString("StatusProgramming"));
         int val = Integer.parseInt(length.getText())/256;
         
         try {
@@ -158,23 +187,26 @@ public class BoosterProgFrame extends jmri.util.JmriJFrame {
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(res.getString("StatusError")+e);
+            status.setText(rb.getString("StatusError")+e);
             releaseProgrammer();
         } 
     }
     
     void durationPart2() {
-        status.setText(res.getString("StatusProgramming"));
+        status.setText(rb.getString("StatusProgramming"));
         int val = Integer.parseInt(length.getText()) % 256;
         
         try {
            p.writeCV(254, val, new ProgListener() {
                 public void programmingOpReply(int value, int retval) {
-                    status.setText(res.getString("StatusOK"));
+                    status.setText(rb.getString("StatusOK"));
                 }
             });
         } catch (ProgrammerException e) {
-            status.setText(res.getString("StatusError")+e);
+            status.setText(rb.getString("StatusError")+e);
         } finally { releaseProgrammer(); }
     }
+    
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger
+	.getLogger(BoosterProgPanel.class.getName());
 }

@@ -71,8 +71,8 @@ package jmri.jmrix.nce;
   * 
   * Also see NceMessage.java for additional commands
   * 
-  * @author Daniel Boudreau (C) 2007
-  * @version     $Revision: 1.24 $
+  * @author Daniel Boudreau (C) 2007, 2010
+  * @version     $Revision: 1.25 $
   */
 
 public class NceBinaryCommand {
@@ -118,6 +118,7 @@ public class NceBinaryCommand {
             return null;
         }
         
+        /* Moved to NceMessageCheck
         // USB connected to PowerCab or SB3 can only access addresses up to 250
 		if (number > 250
 				&& ((NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB) || 
@@ -125,6 +126,7 @@ public class NceBinaryCommand {
 			log.error("invalid NCE accessory address for USB " + number);
 			return null;
 		}
+		*/
         
         byte op_1;
         if (closed) op_1 = 0x03; else op_1 = 0x04;
@@ -143,11 +145,14 @@ public class NceBinaryCommand {
     }
     
     public static byte[] accMemoryRead(int address){
-       	// this command isn't supported by the NCE USB
+ 
+        /* Moved to NceMessageCheck
+        // this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
         
         int addr_h = address/256;
         int addr_l = address & 0xFF;
@@ -167,11 +172,13 @@ public class NceBinaryCommand {
      * @return binary command to read one byte
      */
     public static byte[] accMemoryRead1(int address) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE) {
     		log.error("attempt to send unsupported binary command to NCE USB");
     		return null;
     	}
+    	*/
 
     	int addr_h = address/256;
     	int addr_l = address & 0xFF;
@@ -186,11 +193,13 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWriteN(int address, int num) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
     		return null;
     	}
+    	*/
 
     	int addr_h = address / 256;
     	int addr_l = address & 0xFF;
@@ -206,11 +215,13 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWrite8(int address) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
     		return null;
     	}
+    	*/
 
     	int addr_h = address / 256;
     	int addr_l = address & 0xFF;
@@ -225,11 +236,13 @@ public class NceBinaryCommand {
     }
 
     public static byte[] accMemoryWrite4(int address) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -243,11 +256,13 @@ public class NceBinaryCommand {
 	}
 
     public static byte[] accMemoryWrite2(int address) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -261,11 +276,13 @@ public class NceBinaryCommand {
 	}
     
     public static byte[] accMemoryWrite1(int address) {
+    	/* Moved to NceMessageCheck
     	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		int addr_h = address / 256;
 		int addr_l = address & 0xFF;
@@ -279,11 +296,13 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accStopClock() {
+		/* Moved to NceMessageCheck
 	   	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (STOP_CLOCK_CMD);// stop clock command
@@ -292,11 +311,13 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accStartClock() {
+		/* Moved to NceMessageCheck
 	   	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		byte[] retVal = new byte[1];
 		retVal[0] = (byte) (START_CLOCK_CMD);// start clock command
@@ -305,11 +326,13 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock(int hours, int minutes) {
+		/* Moved to NceMessageCheck
 	   	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		byte[] retVal = new byte[3];
 		retVal[0] = (byte) (SET_CLOCK_CMD);// set clock command
@@ -320,11 +343,13 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClock1224(boolean flag) {
+		/* Moved to NceMessageCheck
 	   	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		int bit = 0;
 		if (flag) {
@@ -340,11 +365,13 @@ public class NceBinaryCommand {
 	}
 
 	public static byte[] accSetClockRatio(int ratio) {
+		/* Moved to NceMessageCheck
 	   	// this command isn't supported by the NCE USB
     	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE){
     		log.error("attempt to send unsupported binary command to NCE USB");
 			return null;
     	}
+    	*/
 
 		byte[] retVal = new byte[2];
 		retVal[0] = (byte) (CLOCK_RATIO_CMD);// set clock command
@@ -366,7 +393,6 @@ public class NceBinaryCommand {
 	public static final byte LOCO_CMD_FG3 = 0x09;					//function group 3
 	public static final byte LOCO_CMD_FG4 = 0x15;					//function group 4
 	public static final byte LOCO_CMD_FG5 = 0x16;					//function group 5
-
 	
 	// OxA2 sub commands consist
 	public static final byte LOCO_CMD_REV_CONSIST_LEAD = 0x0A;		//reverse consist address for lead loco
@@ -415,10 +441,12 @@ public class NceBinaryCommand {
 	 * @param cvData
 	 * @return byte[] containing message
 	 */
-	public static byte[] usbOpsModeLoco(int locoAddr, int cvAddr, int cvData) {
+	public static byte[] usbOpsModeLoco(NceTrafficController tc, int locoAddr, int cvAddr, int cvData) {
+		/* Moved to NceMessageCheck
 		// ONLY USB connected to PowerCab or SB3 can send this message
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
+		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {
+				*/
 
 			byte[] retVal = new byte[6];
 			int locoAddr_h = locoAddr / 256;
@@ -434,11 +462,12 @@ public class NceBinaryCommand {
 			retVal[5] = (byte) (cvData); // CV data
 
 			return retVal;
-
+			/* Moved to NceMessageCheck
 		} else {
 			log.error("attempt to send unsupported binary command");
 			return null;
 		}
+		*/
 	}
 
 	/**
@@ -450,9 +479,11 @@ public class NceBinaryCommand {
 	 * @return byte[] containing message
 	 */
 	public static byte[] usbOpsModeAccy(int accyAddr, int cvAddr, int cvData) {
+		/* Moved to NceMessageCheck
 		// ONLY USB connected to PowerCab or SB3 can send this message
 		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
 				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
+				*/
 
 			byte[] retVal = new byte[6];
 			int accyAddr_h = accyAddr / 256;
@@ -468,11 +499,12 @@ public class NceBinaryCommand {
 			retVal[5] = (byte) (cvData); // CV data
 
 			return retVal;
-
+			/* Moved to NceMessageCheck
 		} else {
 			log.error("attempt to send unsupported binary command");
 			return null;
 		}
+		*/
 	}
 	
 	

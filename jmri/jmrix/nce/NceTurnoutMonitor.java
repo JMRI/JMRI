@@ -2,7 +2,6 @@
 
 package jmri.jmrix.nce;
 
-import jmri.InstanceManager;
 import jmri.Turnout;
 
 /**
@@ -28,7 +27,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -63,12 +62,18 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     
     // debug final
     static final boolean debugTurnoutMonitor = false;	// Control verbose debug
+    private NceTrafficController tc = null;
         
-    public NceMessage pollMessage() {
+    public NceTurnoutMonitor(NceTrafficController t) {
+		super();
+		this.tc = t;
+	}
+
+	public NceMessage pollMessage() {
     	
-    	if (NceMessage.getCommandOptions() < NceMessage.OPTION_2006 )return null;	//Only 2007 CS EPROMs support polling
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)return null;								//Can't poll USB!
-    	if (NceTurnout.getNumNtTurnouts() == 0)return null;							//No work!
+    	if (tc.getCommandOptions() < NceTrafficController.OPTION_2006 ) return null;	//Only 2007 CS EPROMs support polling
+    	if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) return null;		//Can't poll USB!
+    	if (NceTurnout.getNumNtTurnouts() == 0) return null;							//No work!
     	
     	// User can change a turnout's feedback to MONITORING, therefore we need to rescan
     	// also see if the number of turnouts now differs from the last scan
@@ -84,7 +89,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 
             		for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
             			int NTnum = 1 + i + (block*128);
-            			Turnout mControlTurnout = InstanceManager.turnoutManagerInstance().getBySystemName("NT"+ NTnum);
+            			Turnout mControlTurnout = tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
             			if (mControlTurnout != null){
            					// remove listener in case we're already listening
         					mControlTurnout.removePropertyChangeListener(this);
@@ -139,7 +144,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 				// Read NCE CS memory
 				int nceAccAddress = CS_ACCY_MEMORY + currentBlock * BLOCK_LEN;
 				byte[] bl = NceBinaryCommand.accMemoryRead(nceAccAddress);
-				NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
+				NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
 				return m;
 			}
 		}
@@ -281,10 +286,11 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     // update turnout's CommandedState if necessary
     private void monitorActionCommanded(int NTnum, int recMemByte, int bit) {
 
-		NceTurnout rControlTurnout = (NceTurnout) InstanceManager
-				.turnoutManagerInstance().getBySystemName("NT" + NTnum);
-		if (rControlTurnout == null)
+		NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
+		if (rControlTurnout == null){
+			log.debug("Null nce turnout number: "+NTnum+" system prefix: "+tc.getAdapterMemo().getSystemPrefix() );
 			return;
+		}
 		
 		int tCommandedState = rControlTurnout.getCommandedState();
 		
@@ -335,8 +341,8 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     // update turnout's KnownState if necessary
     private void monitorActionKnown(int NTnum, int recMemByte, int bit) {
 
-		NceTurnout rControlTurnout = (NceTurnout) InstanceManager
-				.turnoutManagerInstance().getBySystemName("NT" + NTnum);
+    	NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
+
 		if (rControlTurnout == null)
 			return;
 

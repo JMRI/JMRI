@@ -38,7 +38,7 @@ import net.roydesign.mac.MRJAdapter;
  * @author	Bob Jacobsen   Copyright 2003, 2007, 2008, 2010
  * @author  Dennis Miller  Copyright 2005
  * @author Giorgio Terdina Copyright 2008
- * @version     $Revision: 1.128 $
+ * @version     $Revision: 1.129 $
  */
 public class Apps extends JPanel implements PropertyChangeListener, java.awt.event.WindowListener {
 
@@ -499,14 +499,18 @@ public class Apps extends JPanel implements PropertyChangeListener, java.awt.eve
             return;
     	if (ConnectionStatus.instance().isConnectionOk(AppConfigBase.getPort(number))){
     		cs.setForeground(Color.black);
-			cs.setText(AppConfigBase.getManufacturerName(number)+" "+ AppConfigBase.getConnection(number));
+    		String cf = MessageFormat.format(rb.getString("ConnectionSucceeded"),
+					new Object[] {AppConfigBase.getConnectionName(number), AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
+			cs.setText(cf);
 		} else {
 			cs.setForeground(Color.red);
 			String cf = MessageFormat.format(rb.getString("ConnectionFailed"),
-					new Object[] {AppConfigBase.getManufacturerName(number), AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
+					new Object[] {AppConfigBase.getConnectionName(number), AppConfigBase.getConnection(number), AppConfigBase.getPort(number)});
 			cf = cf.toUpperCase();
 			cs.setText(cf);
 		}
+
+		
 		this.revalidate();
 	}
  

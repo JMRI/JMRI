@@ -1,4 +1,4 @@
-// NcePacketGenFrameTest.java
+// NcePacketGenPanelTest.java
 
 package jmri.jmrix.nce.packetgen;
 
@@ -7,24 +7,24 @@ import jmri.jmrix.nce.*;
 import junit.framework.*;
 
 /**
- * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenFrame class
+ * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
  * @author	Bob Jacobsen
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.2 $
  */
-public class NcePacketGenFrameTest extends TestCase {
+public class NcePacketGenPanelTest extends TestCase {
 
-    public void testFrameCreate() {
-        new NcePacketGenFrame();
+    public void testPanelCreate() {
+        new NcePacketGenPanel();
     }
 
     public void testPacketNull() {
-        NcePacketGenFrame t = new NcePacketGenFrame();
+        NcePacketGenPanel t = new NcePacketGenPanel();
         NceMessage m = t.createPacket("");
         Assert.assertEquals("null pointer",null,m);
     }
 
     public void testPacketCreate() {
-        NcePacketGenFrame t = new NcePacketGenFrame();
+        NcePacketGenPanel t = new NcePacketGenPanel();
         NceMessage m = t.createPacket("12 34 AB 3 19 6 B B1");
         Assert.assertEquals("length",8,m.getNumDataElements());
         Assert.assertEquals("0th byte",0x12,m.getElement(0)&0xFF);
@@ -39,22 +39,22 @@ public class NcePacketGenFrameTest extends TestCase {
 
     // from here down is testing infrastructure
 
-    public NcePacketGenFrameTest(String s) {
+    public NcePacketGenPanelTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NcePacketGenFrameTest.class.getName()};
+        String[] testCaseName = {NcePacketGenPanelTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(NcePacketGenFrameTest.class);
+        TestSuite suite = new TestSuite(NcePacketGenPanelTest.class);
         return suite;
     }
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenFrameTest.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenPanelTest.class.getName());
 
 }

@@ -9,19 +9,24 @@ package jmri.jmrix.nce;
  *
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2007
- * @version             $Revision: 1.15 $
+ * @version             $Revision: 1.16 $
  */
 public class NceReply extends jmri.jmrix.AbstractMRReply {
-
+	
+	NceTrafficController tc;
+	
     // create a new one
-    public  NceReply() {
+    public  NceReply(NceTrafficController tc) {
         super();
+        this.tc = tc;
     }
-    public NceReply(String s) {
+    public NceReply(NceTrafficController tc, String s) {
         super(s);
+        this.tc = tc;
     }
-    public NceReply(NceReply l) {
+    public NceReply(NceTrafficController tc, NceReply l) {
         super(l);
+        this.tc = tc;
     }
 
     protected int skipPrefix(int index) {
@@ -77,7 +82,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
     
     public boolean isUnsolicited() {
 // Boudreau: check for unsolicited AIU messages in pre 2006 EPROMs    	
-    	if (NceMessage.getCommandOptions()>= NceMessage.OPTION_2006)
+    	if (tc.getCommandOptions()>= NceTrafficController.OPTION_2006)
     		return false;
     	if (isSensorMessage()) {
     		setUnsolicited();

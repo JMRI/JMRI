@@ -3,6 +3,7 @@
 package jmri.jmrix.nce;
 
 import jmri.Turnout;
+import jmri.jmrix.nce.NceListener;
 
 /**
  * Implement turnout manager for NCE systems.
@@ -10,29 +11,37 @@ import jmri.Turnout;
  * System names are "NTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
-public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager {
+public class NceTurnoutManager extends jmri.managers.AbstractTurnoutManager implements NceListener {
 
-    public NceTurnoutManager() {
+    public NceTurnoutManager(NceTrafficController tc, String prefix) {
+    	super();
+    	this.prefix = prefix;
+    	this.tc = tc;
     }
 
-    public String getSystemPrefix() { return "N"; }
+    String prefix = "";
+    NceTrafficController tc = null;
+    
+    public String getSystemPrefix() { return prefix; }
 
     public Turnout createNewTurnout(String systemName, String userName) {
-        int addr = Integer.valueOf(systemName.substring(2)).intValue();
-        Turnout t = new NceTurnout(addr);
+        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
+        Turnout t = new NceTurnout(tc, getSystemPrefix(), addr);
         t.setUserName(userName);
 
         return t;
     }
-
-    static public NceTurnoutManager instance() {
-        if (_instance == null) _instance = new NceTurnoutManager();
-        return _instance;
+    
+    public void reply(NceReply r) {
+    	
     }
-    static NceTurnoutManager _instance = null;
-
+    
+    public void message(NceMessage m) {
+    	
+    }
+    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceTurnoutManager.class.getName());
 }
 

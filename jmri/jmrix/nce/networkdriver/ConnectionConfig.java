@@ -7,7 +7,7 @@ package jmri.jmrix.nce.networkdriver;
  * via a NetworkDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
 
@@ -27,13 +27,14 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
     }
    
     public String name() { return NAME; }
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
+   // String manufacturerName = jmri.jmrix.DCCManufacturerList.NCE;
     
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
+   // public String getManufacturer() { return manufacturerName; }
+   // public void setManufacturer(String manu) { manufacturerName=manu; }
 
     protected void setInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        if (adapter == null)
+            adapter = new NetworkDriverAdapter();
     }
 }
 

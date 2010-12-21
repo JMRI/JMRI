@@ -13,7 +13,7 @@ import jmri.NmraPacket;
  *  Based in part on SerialLight.java
  *
  * @author      Dave Duchamp Copyright (C) 2010
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class NceLight extends AbstractLight {
 
@@ -62,7 +62,7 @@ public class NceLight extends AbstractLight {
 	protected void doNewState(int oldState, int newState) {
 		boolean state = true;
 		if (newState==OFF) state = false;
-		if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+		if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
     		
     		byte [] bl = NceBinaryCommand.accDecoder(mBit, state);
     		
@@ -73,9 +73,9 @@ public class NceLight extends AbstractLight {
                     						+" "+Integer.toHexString(0xFF & bl[3])
                     						+" "+Integer.toHexString(0xFF & bl[4]));
     		
-    		NceMessage m = NceMessage.createBinaryMessage(bl);
+    		NceMessage m = NceMessage.createBinaryMessage(tc, bl);
 
-    		NceTrafficController.instance().sendNceMessage(m, null);
+    		tc.sendNceMessage(m, null);
 
     	
     	} else {
@@ -87,9 +87,9 @@ public class NceLight extends AbstractLight {
                                             +" "+Integer.toHexString(0xFF & bl[1])
                                             +" "+Integer.toHexString(0xFF & bl[2]));
     	
-    		NceMessage m = NceMessage.sendPacketMessage(bl);
+    		NceMessage m = NceMessage.sendPacketMessage(tc, bl);
 
-    		NceTrafficController.instance().sendNceMessage(m, null);
+    		tc.sendNceMessage(m, null);
     	}
 
     }

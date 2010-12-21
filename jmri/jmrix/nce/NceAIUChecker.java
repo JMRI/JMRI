@@ -13,7 +13,7 @@ import jmri.jmrix.ConnectionStatus;
  * AIU broadcasts, 0 = disabled, 1 = enabled.
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.7 $
+ * @version     $Revision: 1.8 $
  * 
  */
 
@@ -23,19 +23,26 @@ public class NceAIUChecker implements NceListener {
 	private static final int REPLY_LEN = 1; 	// number of bytes read
 	private boolean EXPECT_REPLY = false; 		// flag 
 
+	private NceTrafficController tc = null;
+	
+	public NceAIUChecker(NceTrafficController t) {
+		super();
+		this.tc = t;
+	}
+	
 	public NceMessage nceAiuPoll() {
 
-		if (NceMessage.getCommandOptions() <= NceMessage.OPTION_1999)
+		if (tc.getCommandOptions() <= NceTrafficController.OPTION_1999)
 			return null;
 		
 		// If USB, just return
-		if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
+		if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
 			return null;
 		
 		// read one byte from NCE memory to determine if AIU broadcasts are enabled
 
 		byte[] bl = NceBinaryCommand.accMemoryRead1(MEM_AIU);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_LEN);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_LEN);
 		EXPECT_REPLY = true;
 		return m;
 
@@ -64,7 +71,7 @@ public class NceAIUChecker implements NceListener {
 			if (AIUstatus == 1) {
 				log.warn("AIU broadcasts are enabled");
 				ConnectionStatus.instance().setConnectionState(
-						NceTrafficController.instance().getPortName(),
+						tc.getPortName(),
 						ConnectionStatus.CONNECTION_DOWN);
 				JOptionPane.showMessageDialog(null,
 								"JMRI has detected that AIU broadcasts are enabled. \n"

@@ -15,42 +15,44 @@ import jmri.jmrix.AbstractMRReply;
  * see nextAiuPoll()
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003
- * @version			$Revision: 1.29 $
+ * @version			$Revision: 1.30 $
  */
 public class NceSensorManager extends jmri.managers.AbstractSensorManager
                             implements NceListener {
 
-    public NceSensorManager() {
+    public NceSensorManager(NceTrafficController tc, String prefix) {
         super();
+        this.tc = tc;
+        this.prefix = prefix;
         for (int i=MINAIU; i<=MAXAIU; i++)
             aiuArray[i] = null;
         listener = new NceListener() {
         	public void message(NceMessage m) { }
         	public void reply(NceReply r) {
-        		if (r.isSensorMessage()) { mInstance.handleSensorMessage(r); }
+        		if (r.isSensorMessage()) {
+        			mInstance.handleSensorMessage(r); 
+        		}
         	}
         };
-        NceTrafficController.instance().addNceListener(listener);
+        tc.addNceListener(listener);
     }
+    
+    NceTrafficController tc = null;
+    String prefix = "N";
 
-   public static synchronized NceSensorManager instance() {
-        if (mInstance == null) 
-        	mInstance = new NceSensorManager();
-        return mInstance;
-    }
-    static private NceSensorManager mInstance = null;
+    private NceSensorManager mInstance = null;
 
-    public String getSystemPrefix() { return "N"; }
+    public String getSystemPrefix() { return prefix; }
 
     // to free resources when no longer used
     public void dispose() {
     	stopPolling = true;		// tell polling thread to go away
-        NceTrafficController.instance().removeNceListener(listener);
+        tc.removeNceListener(listener);
         super.dispose();
     }
 
     public Sensor createNewSensor(String systemName, String userName) {
-        int number = Integer.parseInt(systemName.substring(2));
+        int number = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
 
         Sensor s = new NceSensor(systemName);
         s.setUserName(userName);
@@ -180,7 +182,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     					if (log.isDebugEnabled()) {
     						log.debug("queueing poll request for AIU "+aiuNo);
     					}
-    					NceTrafficController.instance().sendNceMessage(m, this);
+    					tc.sendNceMessage(m, this);
     					awaitingReply = true;
     					try {
     						wait(pollTimeout);
@@ -212,6 +214,7 @@ public class NceSensorManager extends jmri.managers.AbstractSensorManager
     		++aiuCycleCount;
     	}
     }
+    
     public void message(NceMessage r) {
         log.warn("unexpected message");
     }

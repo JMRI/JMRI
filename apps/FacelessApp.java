@@ -21,7 +21,7 @@ import jmri.InstanceManager;
  * for more details.
  * <P>
  * @author	Bob Jacobsen   Copyright 2003, 2005, 2007, 2010
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 public class FacelessApp {
 	static String name = "Faceless App";
@@ -92,8 +92,8 @@ public class FacelessApp {
 
 
 	protected void codeConfig(String[] args) {
-		//jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.lenz.li100.LI100Adapter.instance();
-		jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.nce.serialdriver.SerialDriverAdapter.instance();
+		jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.lenz.li100.LI100Adapter.instance();
+		//jmri.jmrix.SerialPortAdapter adapter =  jmri.jmrix.nce.serialdriver.SerialDriverAdapter.instance();
 
 		String portName = "/dev/cu.Bluetooth-PDA-Sync";
 		String baudRate = "9600";

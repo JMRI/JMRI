@@ -58,7 +58,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same macro data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 
@@ -77,6 +77,13 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	
 	javax.swing.JLabel textMacro = new javax.swing.JLabel();
 	javax.swing.JLabel macroNumber = new javax.swing.JLabel();
+	
+	private NceTrafficController tc = null;
+	
+	public NceMacroBackup(NceTrafficController t) {
+		super();
+		this.tc = t;
+	}
 	
 	public void run() {
 
@@ -198,13 +205,13 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 	private void getNceMacro(int mN) {
 
 		NceMessage m = readMacroMemory(mN, false);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		tc.sendNceMessage(m, this);
 		// wait for read to complete, flag determines if 1st or 2nd read
 		if (!readWait())
 			return;
 
 		NceMessage m2 = readMacroMemory(mN, true);
-		NceTrafficController.instance().sendNceMessage(m2, this);
+		tc.sendNceMessage(m2, this);
 		readWait();
 	}
 	
@@ -238,7 +245,7 @@ public class NceMacroBackup extends Thread implements jmri.jmrix.nce.NceListener
 		replyLen = REPLY_16; 			// Expect 16 byte response
 		waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceMacroAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
 		return m;
 	}
 

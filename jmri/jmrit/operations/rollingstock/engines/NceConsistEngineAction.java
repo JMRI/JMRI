@@ -3,34 +3,50 @@
 package jmri.jmrit.operations.rollingstock.engines;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
+import java.util.List;
 
 import javax.swing.AbstractAction;
 
+import jmri.InstanceManager;
 import jmri.jmrix.nce.ActiveFlag;
-import jmri.jmrix.nce.NceUSB;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
 
 
 /**
  * Starts the NceConsistEngine thread
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 
 public class NceConsistEngineAction extends AbstractAction {
 	
-    public NceConsistEngineAction(String actionName, Component frame) {
+	NceTrafficController tc;
+    
+	public NceConsistEngineAction(String actionName, Component frame) {
         super(actionName);
         // only enable if connected to an NCE system
         setEnabled(false);
         // disable if NCE USB selected
-        if(ActiveFlag.isActive() && NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_NONE)
+		// get NceTrafficContoller if there's one
+		List<Object> memos = InstanceManager.getList(NceSystemConnectionMemo.class);
+		if (memos != null){
+			// find NceConnection that is serial
+			for (int i=0; i<memos.size(); i++){
+				NceSystemConnectionMemo memo = (NceSystemConnectionMemo)memos.get(i);
+				if (memo.getNceUSB() == NceTrafficController.USB_SYSTEM_NONE){
+					tc = memo.getNceTrafficController();
+				}
+			}
+		}
+        if(ActiveFlag.isActive() && tc != null)
 			setEnabled(true);
     }
 	
 	public void actionPerformed(ActionEvent ae) {
-		Thread mb = new NceConsistEngines();
+		Thread mb = new NceConsistEngines(tc);
 		mb.setName("NceConsistSyncEngines");
 		mb.start();
 	}

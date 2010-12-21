@@ -12,13 +12,17 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
     int mAddress;
     boolean mLongAddr;
-    public NceOpsModeProgrammer(int pAddress, boolean pLongAddr) {
+    NceTrafficController tc;
+    
+    public NceOpsModeProgrammer(NceTrafficController tc, int pAddress, boolean pLongAddr) {
+    	super(tc);
+    	this.tc = tc;
         log.debug("NCE ops mode programmer "+pAddress+" "+pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -31,19 +35,19 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         if (log.isDebugEnabled()) log.debug("write CV="+CV+" val="+val);
         NceMessage msg;
         // USB can't send a NMRA packet, must use new ops mode command
-        if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_POWERCAB
-				|| NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3) {
+        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB
+				|| tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3) {
         	int locoAddr = mAddress;
         	if (mLongAddr)
         		locoAddr += 0xC000;
-        	byte[] bl = NceBinaryCommand.usbOpsModeLoco(locoAddr, CV, val);
-        	msg = NceMessage.createBinaryMessage(bl);
+        	byte[] bl = NceBinaryCommand.usbOpsModeLoco(tc, locoAddr, CV, val);
+        	msg = NceMessage.createBinaryMessage(tc, bl);
 
 		} else {
 			// create the message and fill it,
 			byte[] contents = NmraPacket.opsCvWriteByte(mAddress, mLongAddr,
 					CV, val);
-			msg = NceMessage.sendPacketMessage(contents, 5);	// retry 5 times
+			msg = NceMessage.sendPacketMessage(tc, contents, 5);	// retry 5 times
 		}
         // record state. COMMANDSENT is just waiting for a reply...
         useProgrammer(p);

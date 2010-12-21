@@ -2,14 +2,13 @@
 
 package jmri.jmrix.nce.usbdriver;
 
-
 /**
  * Definition of objects to handle configuring an LocoBuffer layout connection
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author 		Daniel Boudreau Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -34,7 +33,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public boolean isOptList1Advanced() { return false; }
 
     protected void setInstance() { 
-    	adapter = UsbDriverAdapter.instance();        
+        if (adapter == null)
+            adapter = new UsbDriverAdapter();      
     }
 }
 

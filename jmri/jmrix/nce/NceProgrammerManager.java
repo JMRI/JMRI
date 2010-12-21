@@ -10,12 +10,15 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
+	
+	NceTrafficController tc;
 
-    public NceProgrammerManager(Programmer serviceModeProgrammer) {
+    public NceProgrammerManager(NceTrafficController tc, Programmer serviceModeProgrammer) {
         super(serviceModeProgrammer);
+    	this.tc = tc;
     }
 
     /**
@@ -31,7 +34,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	 * @return true if not USB connect to SB3
 	 */
     public boolean isGlobalProgrammerAvailable() {
-		if (NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_SB3)
+		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3)
 			return false;
 		else
 			return true;
@@ -39,7 +42,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 
 
     public Programmer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new NceOpsModeProgrammer(pAddress, pLongAddress);
+        return new NceOpsModeProgrammer(tc, pAddress, pLongAddress);
     }
 
     public Programmer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {

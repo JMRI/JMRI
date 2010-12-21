@@ -1,7 +1,6 @@
 package jmri.jmrix.nce.configurexml;
 
 import org.jdom.Element;
-import jmri.jmrix.nce.NceTurnoutManager;
 
 /**
  * Provides load and store functionality for
@@ -11,7 +10,7 @@ import jmri.jmrix.nce.NceTurnoutManager;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTurnoutManagerConfigXML {
 
@@ -28,8 +27,6 @@ public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
     }
 
     public boolean load(Element turnouts) {
-        // create the master object
-        NceTurnoutManager.instance();
         // load individual turnouts
         return loadTurnouts(turnouts);
     }

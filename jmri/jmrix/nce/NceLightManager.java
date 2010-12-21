@@ -13,17 +13,18 @@ import jmri.Light;
  * Based in part on SerialLightManager.java
  *
  * @author	Dave Duchamp Copyright (C) 2010
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  */
 public class NceLightManager extends AbstractLightManager {
 
-    public NceLightManager(NceTrafficController tc,String prefix) {
+    public NceLightManager(NceTrafficController tc, String prefix) {
+    	super();
         _trafficController = tc;
         this.prefix = prefix;
     }
 
-    NceTrafficController _trafficController;
-    String prefix;
+    NceTrafficController _trafficController = null;
+    String prefix = "N";
     
     /**
      *  Returns the system prefix for this NCE

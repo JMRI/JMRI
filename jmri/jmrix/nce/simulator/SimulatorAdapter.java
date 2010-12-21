@@ -10,8 +10,8 @@ import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
 import jmri.jmrix.nce.NceTurnoutMonitor;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.consist.NceConsistEditFrame;
-import jmri.jmrix.nce.macro.NceMacroEditFrame;
+import jmri.jmrix.nce.consist.NceConsistEditPanel;
+import jmri.jmrix.nce.macro.NceMacroEditPanel;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -121,7 +121,13 @@ import java.io.IOException;
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
  * @author			Paul Bender, Copyright (C) 2009
  * @author 			Daniel Boudreau Copyright (C) 2010
- * @version			$Revision: 1.12 $
+<<<<<<< SimulatorAdapter.java
+ * converting to multiple connection
+ * @author kcameron Copyright (C) 2010
+ * @version			$Revision: 1.13 $
+=======
+ * @version			$Revision: 1.13 $
+>>>>>>> 1.12
  */
 public class SimulatorAdapter extends NcePortController implements
 		jmri.jmrix.SerialPortAdapter, Runnable {
@@ -148,18 +154,22 @@ public class SimulatorAdapter extends NcePortController implements
     
     public SimulatorAdapter (){
         super();
-        adaptermemo= new NceSystemConnectionMemo();
-        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+        adaptermemo = new NceSystemConnectionMemo();
     }
 
-	static SimulatorAdapter mInstance = null;
-	static public SimulatorAdapter instance() {
-		if (mInstance == null) {
-			mInstance = new SimulatorAdapter();
-        }
-		return mInstance;
+    @Override
+    public NceSystemConnectionMemo getSystemConnectionMemo() {
+    	return adaptermemo;
 	}
-    
+
+//	static SimulatorAdapter mInstance = null;
+//	static public SimulatorAdapter instance() {
+//		if (mInstance == null) {
+//			mInstance = new SimulatorAdapter();
+//        }
+//		return mInstance;
+//	}
+//    
     public void dispose(){
         if (adaptermemo!=null)
             adaptermemo.dispose();
@@ -186,17 +196,19 @@ public class SimulatorAdapter extends NcePortController implements
 	 * station.
 	 */
 	public void configure() {
-		// setting binary mode
-        adaptermemo.configureCommandStation(NceMessage.OPTION_2006);
-        
-        NceTrafficController tc = NceTrafficController.instance(); 
-        tc.connectPort(this);
-        
+        NceTrafficController tc = new NceTrafficController();
         adaptermemo.setNceTrafficController(tc);
+        tc.setAdapterMemo(adaptermemo);
+        tc.connectPort(this);     
+		
+		// setting binary mode
+        adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+                
         adaptermemo.configureManagers();
         
 		jmri.jmrix.nce.ActiveFlag.setActive();
 
+		// start the simulator
 		sourceThread = new Thread(this);
 		sourceThread.setName("Nce Simulator");
 		sourceThread.setPriority(Thread.MIN_PRIORITY);
@@ -259,14 +271,16 @@ public class SimulatorAdapter extends NcePortController implements
 					buf.append(Integer.toHexString(0xFF & m.getElement(i)) + " ");
 				log.debug(buf.toString());
 			}
-			NceReply r = generateReply(m);
-			writeReply(r);
-			if (log.isDebugEnabled() && r != null) {
-				StringBuffer buf = new StringBuffer();
-				buf.append("Nce Simulator Thread sent reply: ");
-				for (int i = 0; i < r.getNumDataElements(); i++)
-					buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
-				log.debug(buf.toString());
+			if (m != null) {
+				NceReply r = generateReply(m);
+				writeReply(r);
+				if (log.isDebugEnabled() && r != null) {
+					StringBuffer buf = new StringBuffer();
+					buf.append("Nce Simulator Thread sent reply: ");
+					for (int i = 0; i < r.getNumDataElements(); i++)
+						buf.append(Integer.toHexString(0xFF & r.getElement(i)) + " ");
+					log.debug(buf.toString());
+				}
 			}
 		}
 	}
@@ -305,7 +319,7 @@ public class SimulatorAdapter extends NcePortController implements
 	// generateReply is the heart of the simulation.  It translates an 
 	// incoming NceMessage into an outgoing NceReply.
 	private NceReply generateReply(NceMessage m) {
-		NceReply reply = new NceReply();
+		NceReply reply = new NceReply(adaptermemo.getNceTrafficController());
 		int command = m.getElement(0);
 		if (command < 0x80) 					// NOTE: NCE command station does not respond to
 			return null;						// command less than 0x80 (times out)
@@ -399,8 +413,8 @@ public class SimulatorAdapter extends NcePortController implements
 	 * command station memory.  There are three memory blocks that are
 	 * supported, turnout status, macros, and consists.  The turnout status
 	 * memory is 256 bytes and starts at memory address 0xEC00. The macro memory
-	 * is 256*20 or 5120 bytes and starts at memory addres 0xC800. The consist
-	 * memory is 256*6 or 1536 bytes and starts at memroy address 0xF500.
+	 * is 256*20 or 5120 bytes and starts at memory address 0xC800. The consist
+	 * memory is 256*6 or 1536 bytes and starts at memory address 0xF500.
 	 * 
 	 */
 	private NceReply readMemory (NceMessage m, NceReply reply, int num){
@@ -416,16 +430,16 @@ public class SimulatorAdapter extends NcePortController implements
 				reply.setElement(i, turnoutMemory[offset+i]);
 			return reply;
 		}
-		if (nceMemoryAddress >= NceConsistEditFrame.CS_CONSIST_MEM && nceMemoryAddress < NceConsistEditFrame.CS_CONSIST_MEM+256*6){
+		if (nceMemoryAddress >= NceConsistEditPanel.CS_CONSIST_MEM && nceMemoryAddress < NceConsistEditPanel.CS_CONSIST_MEM+256*6){
 			log.debug("Reading consist memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceConsistEditFrame.CS_CONSIST_MEM;
+			int offset = nceMemoryAddress-NceConsistEditPanel.CS_CONSIST_MEM;
 			for (int i=0; i<num; i++)
 				reply.setElement(i, consistMemory[offset+i]);
 			return reply;
 		}
-		if (nceMemoryAddress >= NceMacroEditFrame.CS_MACRO_MEM && nceMemoryAddress < NceMacroEditFrame.CS_MACRO_MEM+256*20){
+		if (nceMemoryAddress >= NceMacroEditPanel.CS_MACRO_MEM && nceMemoryAddress < NceMacroEditPanel.CS_MACRO_MEM+256*20){
 			log.debug("Reading macro memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceMacroEditFrame.CS_MACRO_MEM;
+			int offset = nceMemoryAddress-NceMacroEditPanel.CS_MACRO_MEM;
 			log.debug("offset:"+offset);
 			for (int i=0; i<num; i++)
 				reply.setElement(i, macroMemory[offset+i]);
@@ -451,15 +465,15 @@ public class SimulatorAdapter extends NcePortController implements
 			for (int i=0; i<num; i++)
 				turnoutMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
 		}
-		if (nceMemoryAddress >= NceConsistEditFrame.CS_CONSIST_MEM && nceMemoryAddress < NceConsistEditFrame.CS_CONSIST_MEM+256*6){
+		if (nceMemoryAddress >= NceConsistEditPanel.CS_CONSIST_MEM && nceMemoryAddress < NceConsistEditPanel.CS_CONSIST_MEM+256*6){
 			log.debug("Writing consist memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceConsistEditFrame.CS_CONSIST_MEM;
+			int offset = nceMemoryAddress-NceConsistEditPanel.CS_CONSIST_MEM;
 			for (int i=0; i<num; i++)
 				consistMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);
 		}
-		if (nceMemoryAddress >= NceMacroEditFrame.CS_MACRO_MEM && nceMemoryAddress < NceMacroEditFrame.CS_MACRO_MEM+256*20){
+		if (nceMemoryAddress >= NceMacroEditPanel.CS_MACRO_MEM && nceMemoryAddress < NceMacroEditPanel.CS_MACRO_MEM+256*20){
 			log.debug("Writing macro memory: "+Integer.toHexString(nceMemoryAddress));
-			int offset = nceMemoryAddress-NceMacroEditFrame.CS_MACRO_MEM;
+			int offset = nceMemoryAddress-NceMacroEditPanel.CS_MACRO_MEM;
 			log.debug("offset:"+offset);
 			for (int i=0; i<num; i++)
 				macroMemory[offset+i] = (byte)m.getElement(i+byteDataBegins);

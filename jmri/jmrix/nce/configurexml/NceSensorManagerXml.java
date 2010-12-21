@@ -1,7 +1,5 @@
 package jmri.jmrix.nce.configurexml;
 
-import jmri.jmrix.nce.NceSensorManager;
-
 import org.jdom.Element;
 
 /**
@@ -12,7 +10,7 @@ import org.jdom.Element;
  * provides a load method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
@@ -29,8 +27,6 @@ public class NceSensorManagerXml extends jmri.managers.configurexml.AbstractSens
     }
 
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
-        // create the master object
-        NceSensorManager.instance();
         // load individual sensors
         return loadSensors(sensors);
     }

@@ -16,19 +16,20 @@ import jmri.PushbuttonPacket;
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau (C) 2007
- * @version	$Revision: 1.35 $
+ * @version	$Revision: 1.36 $
  */
 public class NceTurnout extends AbstractTurnout {
-
-    final String prefix = "NT";
-
+    
+	NceTrafficController tc = null;
+	String prefix = "";
     /**
      * NCE turnouts use the NMRA number (0-2044) as their numerical identification.
      */
-
-    public NceTurnout(int number) {
-    	super("NT"+number);
-    	_number = number;
+    public NceTurnout(NceTrafficController tc, String p, int i) {
+    	super(p + "T" + i);
+    	this.tc = tc;
+    	this.prefix = p;
+    	_number = i;
     	// At construction, register for messages
     	initialize();
     }
@@ -36,7 +37,7 @@ public class NceTurnout extends AbstractTurnout {
     private synchronized void initialize(){  
     	numNtTurnouts++;	// increment the total number of NCE turnouts
     	// update feedback modes, MONITORING requires PowerHouse system with new EPROM   	
-    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006 && NceUSB.getUsbSystem() == NceUSB.USB_SYSTEM_NONE) {
+    	if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006 && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_NONE) {
     		if (modeNames == null) {
     			if (_validFeedbackNames.length != _validFeedbackModes.length)
     				log.error("int and string feedback arrays different length");
@@ -102,8 +103,8 @@ public class NceTurnout extends AbstractTurnout {
 					+ " Pushbutton NT" + _number);
 		
 		byte[] bl = PushbuttonPacket.pushbuttonPkt(prefix, _number, pushButtonLockout);
-		NceMessage m = NceMessage.sendPacketMessage(bl);
-		NceTrafficController.instance().sendNceMessage(m, null);
+		NceMessage m = NceMessage.sendPacketMessage(tc, bl);
+		tc.sendNceMessage(m, null);
 	}
 
     // data members
@@ -154,7 +155,7 @@ public class NceTurnout extends AbstractTurnout {
      */
     public boolean canLock(int turnoutLockout) {
     	// can not lock if using a USB
-    	if (NceUSB.getUsbSystem() != NceUSB.USB_SYSTEM_NONE)
+    	if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
     		return false;
     	// check to see if push button lock is enabled and valid decoder
 		if ((turnoutLockout & PUSHBUTTONLOCKOUT) > 0 && _enablePushButtonLockout    
@@ -202,7 +203,7 @@ public class NceTurnout extends AbstractTurnout {
         // get the packet
     	// dBoudreau  Added support for new accessory binary command
  
-    	if (NceMessage.getCommandOptions() >= NceMessage.OPTION_2006) {
+    	if (tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
     		
     		byte [] bl = NceBinaryCommand.accDecoder(_number, closed);
     		
@@ -213,9 +214,9 @@ public class NceTurnout extends AbstractTurnout {
                     						+" "+Integer.toHexString(0xFF & bl[3])
                     						+" "+Integer.toHexString(0xFF & bl[4]));
     		
-    		NceMessage m = NceMessage.createBinaryMessage(bl);
+    		NceMessage m = NceMessage.createBinaryMessage(tc, bl);
 
-    		NceTrafficController.instance().sendNceMessage(m, null);
+    		tc.sendNceMessage(m, null);
 
     	
     	} else {
@@ -227,9 +228,9 @@ public class NceTurnout extends AbstractTurnout {
                                             +" "+Integer.toHexString(0xFF & bl[1])
                                             +" "+Integer.toHexString(0xFF & bl[2]));
     	
-    		NceMessage m = NceMessage.sendPacketMessage(bl);
+    		NceMessage m = NceMessage.sendPacketMessage(tc, bl);
 
-    		NceTrafficController.instance().sendNceMessage(m, null);
+    		tc.sendNceMessage(m, null);
     	}
     }
  

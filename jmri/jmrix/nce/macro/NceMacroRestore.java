@@ -57,7 +57,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * The restore routine checks that each line of the file begins with the appropriate macro address.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 
@@ -72,6 +72,13 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 	
 	javax.swing.JLabel textMacro = new javax.swing.JLabel();
 	javax.swing.JLabel macroNumber = new javax.swing.JLabel();
+	
+    private NceTrafficController tc = null;
+    
+    public NceMacroRestore(NceTrafficController t) {
+    	super();
+    	this.tc = t;
+    }
 	
 	public void run() {
 
@@ -170,9 +177,9 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 			}
 
 			NceMessage m = writeNceMacroMemory(curMacro, macroAccy, false);
-			NceTrafficController.instance().sendNceMessage(m, this);
+			tc.sendNceMessage(m, this);
 			m = writeNceMacroMemory(curMacro, macroAccy, true);
-			NceTrafficController.instance().sendNceMessage(m, this);
+			tc.sendNceMessage(m, this);
 
 			curMacro += MACRO_LNTH;
 
@@ -234,7 +241,7 @@ public class NceMacroRestore extends Thread implements jmri.jmrix.nce.NceListene
 			for (int i = 0; i < 16; i++, j++)
 				bl[j] = b[i];
 		}
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_1);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
 		return m;
 	}
 

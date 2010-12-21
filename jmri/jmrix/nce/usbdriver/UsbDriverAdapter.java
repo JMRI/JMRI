@@ -2,10 +2,8 @@
 
 package jmri.jmrix.nce.usbdriver;
 
-import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NcePortController;
 import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceUSB;
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 import java.io.DataInputStream;
@@ -27,7 +25,7 @@ import gnu.io.SerialPort;
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class UsbDriverAdapter extends NcePortController {
 
@@ -37,7 +35,11 @@ public class UsbDriverAdapter extends NcePortController {
     public UsbDriverAdapter() {
         super();
         adaptermemo = new NceSystemConnectionMemo();
-        setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
+    }
+
+    @Override
+    public NceSystemConnectionMemo getSystemConnectionMemo() {
+    	return adaptermemo; 
     }
 
     public String openPort(String portName, String appName)  {
@@ -111,23 +113,24 @@ public class UsbDriverAdapter extends NcePortController {
      * station connected to this port
      */
     public void configure() {  	
-        // set binary mode
+        NceTrafficController tc = new NceTrafficController();
+        adaptermemo.setNceTrafficController(tc);
+        tc.setAdapterMemo(adaptermemo);    
         
-        adaptermemo.configureCommandStation(NceMessage.OPTION_2006);
-        // connect to the traffic controller
-        NceTrafficController tc = NceTrafficController.instance(); 
-        tc.connectPort(this);
+        // set binary mode
+        adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
         
         //set the system the USB is connected to
         if (getCurrentOption1Setting().equals(validOption1()[0])) {
-                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_POWERCAB);
+                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERCAB);
         } else if (getCurrentOption1Setting().equals(validOption1()[1])) {
-                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_SB3);
+                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_SB3);
         } else{
-                adaptermemo.setNceUSB(NceUSB.USB_SYSTEM_POWERHOUSE);
+                adaptermemo.setNceUSB(NceTrafficController.USB_SYSTEM_POWERHOUSE);
         }
         
-        adaptermemo.setNceTrafficController(tc);
+        tc.connectPort(this); 
+        
         adaptermemo.configureManagers();
 
         jmri.jmrix.nce.ActiveFlag.setActive();
@@ -191,13 +194,13 @@ public class UsbDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
 
-    static public UsbDriverAdapter instance() {
-        if (mInstance == null){
-            mInstance = new UsbDriverAdapter();
-        }
-        return mInstance;
-    }
-    static UsbDriverAdapter mInstance = null;
+//    static public UsbDriverAdapter instance() {
+//        if (mInstance == null){
+//            mInstance = new UsbDriverAdapter();
+//        }
+//        return mInstance;
+//    }
+//    static UsbDriverAdapter mInstance = null;
     
     public void dispose(){
         if (adaptermemo!=null)

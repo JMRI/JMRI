@@ -2,9 +2,7 @@
 
 package jmri.jmrix.nce;
 
-import java.util.ResourceBundle;
-
-import javax.swing.JMenu;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
  * Create a "Systems" menu containing the Jmri NCE-specific tools.
@@ -13,33 +11,14 @@ import javax.swing.JMenu;
  * support in {@link jmri.jmrix.wangrow}.
  *
  * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision: 1.8 $
+ * moved to swing class
+ * @author kcameron 2010
+ * @version     $Revision: 1.9 $
  */
-public class NceMenu extends JMenu {
-    public NceMenu(String name) {
-        this();
-        setText(name);
+@Deprecated
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+public class NceMenu extends jmri.jmrix.nce.swing.NceMenu {
+    public NceMenu(NceSystemConnectionMemo memo) {
+        super(memo);
     }
-
-    public NceMenu() {
-
-        super();
-
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixSystemsBundle");
-
-        setText(rb.getString("MenuItemNCE"));
-
-        
-        add(new jmri.jmrix.nce.ncemon.NceMonAction(rb.getString("MenuItemCommandMonitor")));
-        add(new jmri.jmrix.nce.packetgen.NcePacketGenAction(rb.getString("MenuItemSendCommand")));
-        add(new jmri.jmrix.nce.macro.NceMacroGenAction(rb.getString("MenuItemMacroCommand")));
-        add(new jmri.jmrix.nce.macro.NceMacroEditAction(rb.getString("MenuItemMacroEdit")));
-        add(new jmri.jmrix.nce.consist.NceConsistEditAction(rb.getString("MenuItemConsistEdit")));
-        add(new jmri.jmrix.ncemonitor.NcePacketMonitorAction(rb.getString("MenuItemTrackPacketMonitor")));
-        add(new jmri.jmrix.nce.clockmon.ClockMonAction(rb.getString("MenuItemClockMon")));
-        add(new jmri.jmrix.nce.cab.NceShowCabAction(rb.getString("MenuItemShowCabs")));
-
-        add(new jmri.jmrix.nce.boosterprog.BoosterProgAction());
-    }
-
 }

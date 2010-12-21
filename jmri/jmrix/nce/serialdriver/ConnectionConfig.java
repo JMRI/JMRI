@@ -2,13 +2,14 @@
 
 package jmri.jmrix.nce.serialdriver;
 
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @author kcameron Copyright (C) 2010
+ * 	added multiple connections
+ * @version	$Revision: 1.9 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
 
@@ -31,7 +32,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     public String name() { return NAME; }
     
     protected void setInstance() {
-    	adapter = SerialDriverAdapter.instance();
+        if (adapter == null)
+            adapter = new SerialDriverAdapter();
     }
 
 }

@@ -1,20 +1,27 @@
-// NcePacketGenFrame.java
+// NcePacketGenPanel.java
 
 package jmri.jmrix.nce.packetgen;
 
 import jmri.util.*;
 import jmri.jmrix.nce.*;
+
 import java.awt.*;
+import java.util.ResourceBundle;
+
 import javax.swing.*;
 
 
 /**
  * Frame for user input of Nce messages
+ * @author	Ken Cameron		Copyright (C) 2010
+ * derived from:
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.2 $
  */
-public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
+public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
+	
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.packetgen.NcePacketGenBundle");
 
     // member declarations
     javax.swing.JLabel jLabel1 = new javax.swing.JLabel();
@@ -22,12 +29,41 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
     javax.swing.JTextField packetTextField = new javax.swing.JTextField(20);
     javax.swing.JCheckBox checkBoxBinCmd = new javax.swing.JCheckBox ();
     javax.swing.JTextField replyLenTextField = new javax.swing.JTextField(2);
+    
+    private NceTrafficController tc = null;
 
-    public NcePacketGenFrame() {
+    public NcePacketGenPanel() {
         super();
     }
+    
+    public void initContext(Object context) throws Exception {
+        if (context instanceof NceSystemConnectionMemo ) {
+            try {
+				initComponents((NceSystemConnectionMemo) context);
+			} catch (Exception e) {
+				//log.error("BoosterProg initContext failed");
+			}
+        }
+    }
 
-    public void initComponents() throws Exception {
+    public String getHelpTarget() { return "package.jmri.jmrix.nce.packetgen.NcePacketGenFrame"; }
+    
+    public String getTitle() { 
+    	StringBuilder x = new StringBuilder();
+    	if (memo != null) {
+    		x.append(memo.getUserName());
+    	} else {
+    		x.append("NCE_");
+    	}
+		x.append(": ");
+    	x.append(rb.getString("Title"));
+        return x.toString(); 
+    }
+
+    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    	this.memo = m;
+    	this.tc = m.getNceTrafficController();
+    	
         // the following code sets the frame's initial state
 
         jLabel1.setText("Command: ");
@@ -51,14 +87,13 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
         replyLenTextField.setMaximumSize(new Dimension(50,replyLenTextField.getPreferredSize().height));
         replyLenTextField.setToolTipText("Enter number of expected bytes, will override internal defaults");
         
-        setTitle("Send NCE command");
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        getContentPane().add(jLabel1);
-        getContentPane().add(packetTextField);
-        getContentPane().add(sendButton);
-        getContentPane().add(checkBoxBinCmd);
-        getContentPane().add(replyLenTextField);
+        add(jLabel1);
+        add(packetTextField);
+        add(sendButton);
+        add(checkBoxBinCmd);
+        add(replyLenTextField);
 
 
         sendButton.addActionListener(new java.awt.event.ActionListener() {
@@ -67,8 +102,6 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
                 }
             });
 
-        // pack for display
-        pack();
     }
 
     public void sendButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -77,7 +110,7 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
 
 			NceMessage m = createPacket(packetTextField.getText());
 			if (m == null) {
-				JOptionPane.showMessageDialog(NcePacketGenFrame.this,
+				JOptionPane.showMessageDialog(NcePacketGenPanel.this,
 						"Enter hexadecimal numbers only", "NCE Binary Command",
 						JOptionPane.ERROR_MESSAGE);
 				return;
@@ -88,7 +121,7 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
 				m.setReplyLen(replyLen);
 			else
 				m.setReplyLen(getMessageLength(m.getOpCode()));
-			NceTrafficController.instance().sendNceMessage(m, this);
+			tc.sendNceMessage(m, this);
 		} else {
 			// ASCII Mode selected
 
@@ -96,7 +129,7 @@ public class NcePacketGenFrame extends jmri.util.JmriJFrame implements jmri.jmri
 			for (int i = 0; i < packetTextField.getText().length(); i++)
 				m.setElement(i, packetTextField.getText().charAt(i));
 
-			NceTrafficController.instance().sendNceMessage(m, this);
+			tc.sendNceMessage(m, this);
 
 		}
 	}

@@ -227,66 +227,10 @@ package jmri.jmrix.nce;
  * <P>
  * 
  * @author Daniel Boudreau Copyright (C) 2007
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
+@Deprecated
 public class NceUSB  {
-	
-	/**
-	 * Default when a NCE USB isn't selected in user system preferences
-	 */
-	static public final int USB_SYSTEM_NONE = 0;
-	
-	/**
-	 * Create commands compatible with a NCE USB connected to a PowerCab
-	 */
-	static public final int USB_SYSTEM_POWERCAB = 1;
-	
-	/**
-	 * Create commands compatible with a NCE USB connected to a Smart Booster
-	 */
-	static public final int USB_SYSTEM_SB3 = 2;
-	
-	/**
-	 * Create commands compatible with a NCE USB connected to a PowerHouse
-	 */
-	static public final int USB_SYSTEM_POWERHOUSE = 4;
-	
-	static int usbSystem = USB_SYSTEM_NONE;
-	static boolean usbSystemSet = false;
-	
-    /**
-     * Set the type of system the NCE USB is connected to
-     * <UL>
-     * <LI>{@link #USB_SYSTEM_NONE}
-     * <LI>{@link #USB_SYSTEM_POWERCAB}
-     * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
-     * </UL>
-     * 
-     * @param val
-     */
-	static public void setUsbSystem(int val) {
-    	usbSystem = val;
-        if (usbSystemSet) {
-            log.error("setUsbSystem called more than once");
-            new Exception().printStackTrace();
-        }
-        usbSystemSet = true;
-    }
-	
-	/**
-     * Get the type of system the NCE USB is connected to
-     * <UL>
-     * <LI>{@link #USB_SYSTEM_NONE}
-     * <LI>{@link #USB_SYSTEM_POWERCAB}
-     * <LI>{@link #USB_SYSTEM_SB3}
-     * <LI>{@link #USB_SYSTEM_POWERHOUSE}
-     * </UL>
-     * 
-     */
-	static public int getUsbSystem() {return usbSystem;}
-	
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceUSB.class.getName());
 
 }
 

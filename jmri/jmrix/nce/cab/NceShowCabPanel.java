@@ -1,9 +1,10 @@
-// NceShowCabFrame.java
+// NceShowCabPanel.java
 
 package jmri.jmrix.nce.cab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.text.MessageFormat;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -20,6 +21,7 @@ import javax.swing.JTextField;
 import jmri.jmrix.nce.NceBinaryCommand;
 import jmri.jmrix.nce.NceMessage;
 import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
 
@@ -124,10 +126,10 @@ import jmri.jmrix.nce.NceTrafficController;
  * 
  * @author Dan Boudreau Copyright (C) 2009, 2010
  * @author Ken Cameron Copyright (C) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.2 $
  */
 
-public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.nce.NceListener {
+public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
     ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.nce.cab.NceShowCabBundle");
 	
@@ -202,23 +204,57 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     JTextField purgeCabId = new JTextField(3);
     
     // for padding out panel
-    JLabel space1 = new JLabel(" ");
+    JLabel space1a = new JLabel("    ");
+    JLabel space1b = new JLabel("    ");
+    JLabel space1c = new JLabel("    ");
+    JLabel space1d = new JLabel("    ");
     JLabel space2 = new JLabel(" ");
+    JLabel space3 = new JLabel(" ");
+    JLabel space4 = new JLabel(" ");
+    JLabel space5 = new JLabel(" ");
     
     JPanel cabsPanel = new JPanel();
     JScrollPane cabsPane;
+
+    private NceTrafficController tc = null;
+
+    public NceShowCabPanel() {
+    	super();
+    }
     
-    public NceShowCabFrame() {
-        super();
-        cabsPane = new JScrollPane(cabsPanel);
-    	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    public void initContext(Object context) throws Exception {
+        if (context instanceof NceSystemConnectionMemo ) {
+            try {
+				initComponents((NceSystemConnectionMemo) context);
+			} catch (Exception e) {
+				
+			}
+        }
     }
 
-    public void initComponents() throws Exception {
+    public String getHelpTarget() { return "package.jmri.jmrix.nce.cab.NceShowCabFrame"; }
+
+    public String getTitle() { 
+    	StringBuilder x = new StringBuilder();
+    	if (memo != null) {
+    		x.append(memo.getUserName());
+    	} else {
+    		x.append("NCE_");
+    	}
+		x.append(": ");
+    	x.append(rb.getString("Title"));
+        return x.toString(); 
+    }
+    
+    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    	this.memo = m;
+        this.tc = m.getNceTrafficController();
+        cabsPane = new JScrollPane(cabsPanel);
+    	cabsPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+    	
     	// the following code sets the frame's initial state
     	
-    	setTitle(rb.getString("Title"));
-    	getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
+    	setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     	cabsPane.setVisible(false);
     	//cabsPane.setMinimumSize(new Dimension(300,300));
     	
@@ -231,13 +267,17 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	purgeCabId.setToolTipText(rb.getString("PurgeCabIdToolTip"));
     	purgeButton.setToolTipText(rb.getString("PurgeButtonToolTip"));
     	addItem(p1, refreshButton, 2, 1);
-    	addItem(p1, textStatus, 3, 1);
-    	addItem(p1, checkBoxActive, 4, 1);
-    	addItem(p1, purgeCabId, 5, 1);
-    	addItem(p1, purgeButton, 6, 1);
+    	addItem(p1, space1a, 3, 1);
+    	addItem(p1, textStatus, 4, 1);
+    	addItem(p1, space1b, 5, 1);
+    	addItem(p1, checkBoxActive, 6, 1);
+    	addItem(p1, space1c, 7, 1);
+    	addItem(p1, purgeCabId, 8, 1);
+    	addItem(p1, space1d, 9, 1);
+    	addItem(p1, purgeButton, 10, 1);
     	
     	// row 2
-    	addItem(p1, space1, 2, 2);
+    	addItem(p1, space2, 4, 2);
     	
         // row 3
     	JPanel p2 = new JPanel();
@@ -253,15 +293,18 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	addButtonAction(refreshButton);
     	addButtonAction(purgeButton);
     	
-    	getContentPane().add(p1);
-    	getContentPane().add(p2);
-    	getContentPane().add(cabsPane);
-    	refreshPanel();
-
-    	// set frame size for display
-    	pack();
-    	setSize(500, 250);
+    	add(p1);
+    	add(p2);
+    	add(cabsPane);
     	
+    	// pad out panel
+    	cabsPanel.setLayout(new GridBagLayout());
+    	cabsPanel.setVisible(true);
+    	addItem(cabsPanel, space3, 0, 0);
+    	addItem(cabsPanel, space4, 0, 1);
+    	addItem(cabsPanel, space5, 0, 2);
+    	cabsPane.setVisible(true);
+    	refreshPanel();
     }
 
     // refresh button
@@ -315,10 +358,19 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	NceCabUpdateThread.start();
     }
     
+    private boolean firstTime = true; // wait for panel to display
     // Thread to update cab info, allows the use of sleep or wait
-    private void cabUpdate() {	
+    private void cabUpdate() {
+    	if (firstTime){
+    		try {
+    			Thread.sleep(1000);	// wait for panel to display 
+    		} catch (InterruptedException e) {
+    			e.printStackTrace();
+    		}
+    	}
+    	firstTime = false;
     	cabsPanel.removeAll();
-    	cabsPanel.setLayout(new GridBagLayout());
+    	int numberOfCabs = 0;
         // build table of cabs
         for (int i=1; i<CAB_MAX; i++){
         	JLabel number = new JLabel();
@@ -342,14 +394,20 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
         	}
         	cabFlag1Array[i] = recChar;
         	int flags1 = recChar & FLAGS1_MASK; // mask off don't care bits
-        	if (flags1 == FLAGS1_PROCAB)
+        	if (flags1 == FLAGS1_PROCAB){
         		type.setText("ProCab");
-        	else if (flags1 == FLAGS1_CAB04) 
+        		numberOfCabs++;
+        	}
+        	else if (flags1 == FLAGS1_CAB04){ 
         		type.setText("Cab04/06");	// Cab04 or Cab06
-           	else if (flags1 == FLAGS1_USB)
+        		numberOfCabs++;
+        	}
+           	else if (flags1 == FLAGS1_USB){
         		type.setText("USB/M-P");	// USB or Mini-Panel
-            else if (flags1 == FLAGS1_AIU)
+           	}
+            else if (flags1 == FLAGS1_AIU){
         		type.setText("AIU");
+            }
             else {
             	if (checkBoxActive.isSelected())
             		continue;
@@ -521,10 +579,10 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
             txt.append(s);
             lastUsed.setText(txt.toString());
         }
-    	validate();
+ 
     	cabsPane.setVisible(true);
     	cabsPane.repaint();
-    	textStatus.setText("");
+    	textStatus.setText(MessageFormat.format(rb.getString("FoundCabs"), new Object[]{numberOfCabs}));
     }
     
     // puts the thread to sleep while we wait for the read CS memory to complete
@@ -583,8 +641,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryWriteN(nceCabAddr, 1);
 		bl[4] = (byte)value;
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_1);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
+		tc.sendNceMessage(m, this);
     }
     
     // Reads 1 byte of NCE cab memory 
@@ -593,8 +651,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	replyLen = REPLY_1;			// Expect 1 byte response
     	waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead1(nceCabAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_1);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
+		tc.sendNceMessage(m, this);
     }
     
     // Reads 16 bytes of NCE cab memory 
@@ -603,8 +661,8 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
     	replyLen = REPLY_16;			// Expect 16 byte response
     	waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
+		tc.sendNceMessage(m, this);
     }
     
 	protected void addItem(JPanel p, JComponent c, int x, int y) {
@@ -634,6 +692,6 @@ public class NceShowCabFrame extends jmri.util.JmriJFrame implements jmri.jmrix.
 		});
 	}
    
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabFrame.class.getName());	
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceShowCabPanel.class.getName());	
 }
 

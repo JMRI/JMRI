@@ -10,20 +10,21 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.9 $
+ * @version			$Revision: 1.10 $
  */
 
 public class NceMessageTest extends TestCase {
 
     // ensure that the static useBinary value is left OK
     int saveCommandOptions;
+    NceTrafficController tc = new NceTrafficController();
     
     public void setUp() {
-        saveCommandOptions = NceMessage.commandOptions;
+        saveCommandOptions = tc.getCommandOptions();
     }
     
     public void tearDown() {
-        NceMessage.commandOptions = saveCommandOptions;
+        tc.setCommandOptions(saveCommandOptions);
     }
     
 	public void testCreate() {
@@ -53,82 +54,82 @@ public class NceMessageTest extends TestCase {
 	}
 
 	public void testGetEnableAscii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_FORCE_ASCII;
-		NceMessage m = NceMessage.getEnableMain();
+	    tc.setCommandOptions(NceTrafficController.OPTION_FORCE_ASCII);
+		NceMessage m = NceMessage.getEnableMain(tc);
 		Assert.assertEquals("length", 1, m.getNumDataElements());
 		Assert.assertEquals("opCode", 'E', m.getOpCode());
 	}
 
 	public void testGetEnableBinary() {
-	    NceMessage.commandOptions = NceMessage.OPTION_1999;
-		NceMessage m = NceMessage.getEnableMain();
+		tc.setCommandOptions(NceTrafficController.OPTION_1999);
+		NceMessage m = NceMessage.getEnableMain(tc);
 		Assert.assertEquals("length", 1, m.getNumDataElements());
 		Assert.assertEquals("opCode", 0x89, m.getOpCode());
 	}
 	
 	public void testRecognizeEnable() {
-		NceMessage m = NceMessage.getEnableMain();
+		NceMessage m = NceMessage.getEnableMain(tc);
 		Assert.assertEquals("isEnableMain", true, m.isEnableMain());
 		Assert.assertEquals("isKillMain", false, m.isKillMain());
 	}
 
 	public void testReadPagedCVAscii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2004;
-		NceMessage m = NceMessage.getReadPagedCV(12);
+		tc.setCommandOptions(NceTrafficController.OPTION_2004);
+		NceMessage m = NceMessage.getReadPagedCV(tc, 12);
 		Assert.assertEquals("string compare ", "R012", m.toString());
 	}
 
 	public void testReadPagedCVBin() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2006;
-		NceMessage m = NceMessage.getReadPagedCV(12);
+		tc.setCommandOptions(NceTrafficController.OPTION_2006);
+		NceMessage m = NceMessage.getReadPagedCV(tc, 12);
 		Assert.assertEquals("string compare ", "A1 00 0C", m.toString());
 	}
 
 	public void testWritePagedCVAscii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2004;
-		NceMessage m = NceMessage.getWritePagedCV(12, 251);
+		tc.setCommandOptions(NceTrafficController.OPTION_2004);
+		NceMessage m = NceMessage.getWritePagedCV(tc, 12, 251);
 		Assert.assertEquals("string compare ", "P012 251", m.toString());
 	}
 
 	public void testWritePagedCVBin() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2006;
-		NceMessage m = NceMessage.getWritePagedCV(12, 251);
+		tc.setCommandOptions(NceTrafficController.OPTION_2006);
+		NceMessage m = NceMessage.getWritePagedCV(tc, 12, 251);
 		Assert.assertEquals("string compare ", "A0 00 0C FB", m.toString());
 	}
 
 	public void testReadRegisterAscii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2004;
-		NceMessage m = NceMessage.getReadRegister(2);
+		tc.setCommandOptions(NceTrafficController.OPTION_2004);
+		NceMessage m = NceMessage.getReadRegister(tc, 2);
 		Assert.assertEquals("string compare ", "V2", m.toString());
 	}
 
 	public void testReadRegisterBin() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2006;
-		NceMessage m = NceMessage.getReadRegister(2);
+		tc.setCommandOptions(NceTrafficController.OPTION_2006);
+		NceMessage m = NceMessage.getReadRegister(tc, 2);
 		Assert.assertEquals("string compare ", "A7 02", m.toString());
 	}
 
 	public void testWriteRegisterAscii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2004;
-		NceMessage m = NceMessage.getWriteRegister(2, 251);
+		tc.setCommandOptions(NceTrafficController.OPTION_2004);
+		NceMessage m = NceMessage.getWriteRegister(tc, 2, 251);
 		Assert.assertEquals("string compare ", "S2 251", m.toString());
 	}
 
 	public void testWriteRegisterBin() {
-	    NceMessage.commandOptions = NceMessage.OPTION_2006;
-		NceMessage m = NceMessage.getWriteRegister(2, 251);
+		tc.setCommandOptions(NceTrafficController.OPTION_2006);
+		NceMessage m = NceMessage.getWriteRegister(tc, 2, 251);
 		Assert.assertEquals("string compare ", "A6 02 FB", m.toString());
 	}
 
 	public void testCheckPacketMessage1Ascii() {
-	    NceMessage.commandOptions = NceMessage.OPTION_FORCE_ASCII;
-		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
+		tc.setCommandOptions(NceTrafficController.OPTION_FORCE_ASCII);
+		NceMessage m = NceMessage.sendPacketMessage(tc, new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
 		Assert.assertEquals("content", "S C02 81 FF 7E", m.toString());
 	}
 
 	public void testCheckPacketMessage1Bin() {
-	    NceMessage.commandOptions = NceMessage.OPTION_1999;
-		NceMessage m = NceMessage.sendPacketMessage(new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
+		tc.setCommandOptions(NceTrafficController.OPTION_1999);
+		NceMessage m = NceMessage.sendPacketMessage(tc, new byte[]{(byte)0x81,(byte)0xff,(byte)0x7e});
 		Assert.assertEquals("content", "93 02 81 FF 7E", m.toString());
 	}
 

@@ -2,11 +2,9 @@
 
 package jmri.jmrix.wangrow.serialdriver;
 
-import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceProgrammer;
-import jmri.jmrix.nce.NceProgrammerManager;
-import jmri.jmrix.nce.NceSensorManager;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
 import jmri.jmrix.nce.NceTrafficController;
 
 import jmri.jmrix.wangrow.ActiveFlag;
@@ -33,13 +31,23 @@ import gnu.io.SerialPort;
  *
  *
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
 
-    public String openPort(String portName, String appName)  {
+    public SerialDriverAdapter() {
+		super();
+        adaptermemo = new NceSystemConnectionMemo();
+	}
+
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+    	return adaptermemo;
+	}
+    
+	public String openPort(String portName, String appName)  {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -50,7 +58,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
                 return handlePortBusy(p, portName, log);
             }
 
-            // try to set it for comunication via SerialDriver
+            // try to set it for communication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
@@ -112,26 +120,17 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      * station connected to this port
      */
     public void configure() {
+        NceTrafficController tc = new NceTrafficController();
+        adaptermemo.setNceTrafficController(tc);
+        tc.setAdapterMemo(adaptermemo);
+        
     	// set the command option
-        NceMessage.setCommandOptions(NceMessage.OPTION_1999);
+        tc.setCommandOptions(NceTrafficController.OPTION_1999);
         
-        // connect to the traffic controller
-        NceTrafficController.instance().connectPort(this);
+        tc.connectPort(this);
         
-        jmri.InstanceManager.setProgrammerManager(
-                new NceProgrammerManager(
-                    new NceProgrammer()));
-
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.nce.NcePowerManager());
-
-        jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.nce.NceTurnoutManager());
-
-        NceSensorManager s;
-        jmri.InstanceManager.setSensorManager(s = new jmri.jmrix.nce.NceSensorManager());
-        NceTrafficController.instance().setSensorManager(s);
-
-        jmri.InstanceManager.setThrottleManager(new jmri.jmrix.nce.NceThrottleManager());
-
+        adaptermemo.configureManagers();
+                     
         ActiveFlag.setActive();
 
     }

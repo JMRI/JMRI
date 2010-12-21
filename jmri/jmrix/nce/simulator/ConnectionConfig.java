@@ -4,13 +4,14 @@ package jmri.jmrix.nce.simulator;
 
 import javax.swing.JPanel;
 
-
 /**
  * Definition of objects to handle configuring a layout connection
  * via an NCE SerialDriverAdapter object.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.5 $
+ * Convert to multiple connection
+ * @author kcameron Copyright (C) 2010
+ * @version	$Revision: 1.6 $
  */
 public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionConfig {
 
@@ -37,7 +38,8 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSimulatorConnectionCon
     }
     
     protected void setInstance() { 
-    	adapter = SimulatorAdapter.instance();
+        if (adapter == null)
+            adapter = new SimulatorAdapter();
     }
     
     public void dispose() {

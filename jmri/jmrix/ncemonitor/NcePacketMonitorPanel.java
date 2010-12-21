@@ -8,10 +8,14 @@ import gnu.io.SerialPort;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Enumeration;
+import java.util.ResourceBundle;
 import java.util.Vector;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.DataInputStream;
+
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.swing.NcePanelInterface;
 
 /**
  * Simple GUI for access to an NCE monitor card
@@ -19,17 +23,59 @@ import java.io.DataInputStream;
  * When opened, the user must first select a serial port and click "Start".
  * The rest of the GUI then appears.
  *
+ * @author			Ken Cameron Copyright (C) 2010
+ * derived from - 
  * @author			Bob Jacobsen   Copyright (C) 2001, 2002
- * @version			$Revision: 1.25 $
+ * @version			$Revision: 1.2 $
  */
 @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC", justification="serialStream is access from separate thread, and this class isn't used much")
-public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
+public class NcePacketMonitorPanel extends jmri.jmrix.AbstractMonPane implements NcePanelInterface {
+	
+    ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.ncemonitor.NcePacketMonitorBundle");
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
+    NceSystemConnectionMemo memo = null;
+    
+    JButton checkButton = new JButton("Init");
+    JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
+    JCheckBox truncateCheckBox = new JCheckBox("+ on");
 
-    // populate the GUI, invoked as part of startup
-    protected void init() {
+    public NcePacketMonitorPanel() {
+    	super();
+    }
+
+    public void init() {}
+    
+    public void initContext(Object context) throws Exception {
+        if (context instanceof NceSystemConnectionMemo ) {
+            try {
+				initComponents((NceSystemConnectionMemo) context);
+			} catch (Exception e) {
+				//log.error("BoosterProg initContext failed");
+			}
+        }
+    }
+
+    public String getHelpTarget() { return "package.jmri.jmrix.nce.analyzer.NcePacketMonitorFrame"; }
+    
+    public String getTitle() { 
+    	StringBuilder x = new StringBuilder();
+    	if (memo != null) {
+    		x.append(memo.getUserName());
+    	} else {
+    		x.append("NCE_");
+    	}
+		x.append(": ");
+    	x.append(rb.getString("Title"));
+        return x.toString(); 
+    }
+    
+    public void initComponents(NceSystemConnectionMemo m) throws Exception {
+    	this.memo = m;
+        
+        // populate the GUI, invoked as part of startup
+    	
         // load the port selection part
         portBox.setToolTipText("Select the port to use");
         portBox.setAlignmentX(JLabel.LEFT_ALIGNMENT);
@@ -50,16 +96,16 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
                     }
                 }
             });
-        getContentPane().add(new JSeparator());
+        add(new JSeparator());
         JPanel p1 = new JPanel();
         p1.setLayout(new FlowLayout());
         p1.add(new JLabel("Serial port: "));
         p1.add(portBox);
         p1.add(openPortButton);
-        getContentPane().add(p1);
+        add(p1);
 
         // add user part of GUI
-        getContentPane().add(new JSeparator());
+        add(new JSeparator());
         JPanel p2 = new JPanel();
         {
         JPanel p = new JPanel();
@@ -282,15 +328,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
         }  // end acc single/double
 
 
-        getContentPane().add(p2);
-    }
-
-    JButton checkButton = new JButton("Init");
-    JRadioButton locoSpeedButton = new JRadioButton("Hide loco packets");
-    JCheckBox truncateCheckBox = new JCheckBox("+ on");
-
-    protected String title() {
-        return "DCC Packet Analyzer";
+        add(p2);
     }
 
     /**
@@ -462,7 +500,7 @@ public class NcePacketMonitorFrame extends jmri.jmrix.AbstractMonFrame {
     DataInputStream serialStream = null;
     OutputStream ostream = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketMonitorFrame.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketMonitorPanel.class.getName());
 
     /**
      * Internal class to handle the separate character-receive thread

@@ -39,7 +39,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * This backup routine uses the same consist data format as NCE.
  * 
  * @author Dan Boudreau Copyright (C) 2007
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 
@@ -58,6 +58,12 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	
 	JLabel textConsist = new JLabel();
 	JLabel consistNumber = new JLabel();
+	
+	private NceTrafficController tc = null ;
+	
+	public NceConsistBackup(NceTrafficController t) {
+		tc = t;
+	}
 	
 	public void run() {
 
@@ -181,7 +187,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 	private void getNceConsist(int cN) {
 
 		NceMessage m = readConsistMemory(cN);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		tc.sendNceMessage(m, this);
 		// wait for read to complete 
 		readWait();
 	}
@@ -213,7 +219,7 @@ public class NceConsistBackup extends Thread implements jmri.jmrix.nce.NceListen
 		replyLen = REPLY_16; 			// Expect 16 byte response
 		waiting++;
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
 		return m;
 	}
 

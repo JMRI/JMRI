@@ -40,12 +40,11 @@ import jmri.jmrix.nce.NceTrafficController;
  * 127 mid loco4) :0000
  * 
  * @author Dan Boudreau Copyright (C)2008
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 
-public class NceConsistEngines extends Thread implements
-jmri.jmrix.nce.NceListener {
+public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListener {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.engines.JmritOperationsEnginesBundle");
 	
@@ -72,9 +71,21 @@ jmri.jmrix.nce.NceListener {
 	
 	private static byte[] nceConsistData = new byte [CONSIST_LNTH];
 	
+	NceTrafficController tc;
+	
+	public NceConsistEngines(NceTrafficController tc){
+		super();
+		this.tc = tc;
+	}
+	
 
 	// we use a thread so the status frame will work!
 	public void run() {
+		if (tc == null){
+			JOptionPane.showMessageDialog(null, "Synchronization failed! No connection!", "NCE Consist",
+					JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		if (JOptionPane.showConfirmDialog(null,
 				"Synchronize with NCE command station consists?", "NCE Consist",
 				JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
@@ -204,7 +215,7 @@ jmri.jmrix.nce.NceListener {
 	private void getNceConsist(int cR) {
 
 		NceMessage m = readConsistMemory(cR);
-		NceTrafficController.instance().sendNceMessage(m, this);
+		tc.sendNceMessage(m, this);
 		// wait for read to complete 
 		readWait();
 	}
@@ -235,8 +246,9 @@ jmri.jmrix.nce.NceListener {
 		int nceConsistAddr = (num * REPLY_16) + CS_CONSIST_MEM;
 		replyLen = REPLY_16; 			// Expect 16 byte response
 		waiting++;
+
 		byte[] bl = NceBinaryCommand.accMemoryRead(nceConsistAddr);
-		NceMessage m = NceMessage.createBinaryMessage(bl, REPLY_16);
+		NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_16);
 		return m;
 	}
 	

@@ -6,7 +6,7 @@ import jmri.jmrix.nce.networkdriver.ConnectionConfig;
 import jmri.jmrix.nce.networkdriver.NetworkDriverAdapter;
 
 /**
- * Handle XML persistance of layout connections by persistening
+ * Handle XML persistence of layout connections by persisting
  * the NetworkDriverAdapter (and connections).
  * <P>
  * Note this is
@@ -18,12 +18,21 @@ import jmri.jmrix.nce.networkdriver.NetworkDriverAdapter;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.9 $
+ * @author kcameron Copyright (C) 2010
+ * 	added multiple connections
+ * @version $Revision: 1.10 $
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
+    public ConnectionConfigXml() {
+        super();
+    }
+
     protected void getInstance() {
-        adapter = NetworkDriverAdapter.instance();
+        adapter = new NetworkDriverAdapter();
+    }
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig)object).getAdapter();
     }
 
     protected void register() {
