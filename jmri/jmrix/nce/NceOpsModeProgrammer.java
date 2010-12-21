@@ -12,17 +12,15 @@ import jmri.*;
  *
  * @see             jmri.Programmer
  * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public class NceOpsModeProgrammer extends NceProgrammer  {
 
     int mAddress;
     boolean mLongAddr;
-    NceTrafficController tc;
     
     public NceOpsModeProgrammer(NceTrafficController tc, int pAddress, boolean pLongAddr) {
     	super(tc);
-    	this.tc = tc;
         log.debug("NCE ops mode programmer "+pAddress+" "+pLongAddr);
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -60,8 +58,8 @@ public class NceOpsModeProgrammer extends NceProgrammer  {
         startShortTimer();
 
         // send it twice (2x5) so NCE CS will send at least two consecutive commands to decoder
-        controller().sendNceMessage(msg, this);
-        controller().sendNceMessage(msg, this);
+        tc.sendNceMessage(msg, this);
+        tc.sendNceMessage(msg, this);
     }
 
     public synchronized void readCV(int CV, ProgListener p) throws ProgrammerException {

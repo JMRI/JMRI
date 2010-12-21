@@ -13,7 +13,7 @@ import jmri.jmrix.nce.NceTrafficController;
  * @author	Bob Jacobsen   Copyright 2003, 2010
  * converted to multiple connection
  * @author	kcameron	Copyright 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 
 public class NceMenu extends JMenu {
@@ -56,8 +56,8 @@ public class NceMenu extends JMenu {
     }
     
     // Enable or disable menu items based on system connection
-    private final String ALL = "All NCE connections";
-    private final String PH = "NCE Power House Only";
+    private static final String ALL = "All NCE connections";
+    private static final String PH = "NCE Power House Only";
         
     private Item[] panelItems = new Item[] {
         new Item("MenuItemCommandMonitor", "jmri.jmrix.nce.ncemon.NceMonPanel", ALL),

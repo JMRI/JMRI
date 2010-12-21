@@ -10,7 +10,7 @@ import jmri.Programmer;
  *
  * @see         jmri.ProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2002
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 public class NceProgrammerManager  extends DefaultProgrammerManager {
 	
@@ -34,7 +34,7 @@ public class NceProgrammerManager  extends DefaultProgrammerManager {
 	 * @return true if not USB connect to SB3
 	 */
     public boolean isGlobalProgrammerAvailable() {
-		if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3)
+		if (tc != null && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3)
 			return false;
 		else
 			return true;

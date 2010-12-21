@@ -15,16 +15,16 @@ import java.util.Vector;
  * This has two states:  NOTPROGRAMMING, and COMMANDSENT.  The transitions
  * to and from programming mode are now handled in the TrafficController code.
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 public class NceProgrammer extends AbstractProgrammer implements NceListener {
 	
-    protected NceTrafficController tc = null;
+    protected NceTrafficController tc;
 
     public NceProgrammer(NceTrafficController tc) {
     	this.tc = tc;
         super.SHORT_TIMEOUT = 4000;
-        if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3){
+        if (tc != null && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3){
         	_mode = Programmer.OPSBYTEMODE;
         }
     }
@@ -59,7 +59,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
      * @return True if paged or register mode
      */
     public boolean hasMode(int mode) {
-    	if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3){
+    	if (tc != null && tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_SB3){
     		log.debug("NCE USB-SB3 hasMode returns false on mode "+mode);
     		return false;
     	}
@@ -68,10 +68,10 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             log.debug("hasMode request on mode "+mode+" returns true (1)");
             return true;
         }
-        if ( mode == Programmer.DIRECTBYTEMODE && 
-             tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-            log.debug("hasMode request on mode "+mode+" returns true (2)");
-            return true;
+        if ( mode == Programmer.DIRECTBYTEMODE && tc != null &&
+        		tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
+        	log.debug("hasMode request on mode "+mode+" returns true (2)");
+        	return true;
         }
         log.debug("hasMode returns false on mode "+mode);
         return false;
@@ -128,7 +128,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             startLongTimer();
 
             // format and send the write message
-            controller().sendNceMessage(progTaskStart(getMode(), _val, _cv), this);
+            tc.sendNceMessage(progTaskStart(getMode(), _val, _cv), this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -153,7 +153,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             startLongTimer();
 
             // format and send the write message
-            controller().sendNceMessage(progTaskStart(getMode(), -1, _cv), this);
+            tc.sendNceMessage(progTaskStart(getMode(), -1, _cv), this);
         } catch (jmri.ProgrammerException e) {
             progState = NOTPROGRAMMING;
             throw e;
@@ -264,16 +264,6 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         jmri.ProgListener temp = _usingProgrammer;
         _usingProgrammer = null;
         temp.programmingOpReply(value, status);
-    }
-
-    NceTrafficController _controller = null;
-
-    protected NceTrafficController controller() {
-        // connect the first time
-        if (_controller == null) {
-            _controller = tc;
-        }
-        return _controller;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceProgrammer.class.getName());
