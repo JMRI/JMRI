@@ -159,13 +159,13 @@ public class TrainCommon {
 		else if (attribute.equals(Setup.COLOR))
 			return rs.getColor() +" ";
 		else if (attribute.equals(Setup.LOCATION) && pickup)
-			return rb.getString("from")+ " "+splitString(rs.getTrackName() + " ");
+			return rb.getString("from")+ " "+splitString(rs.getTrackName()) + " ";
 		else if (attribute.equals(Setup.LOCATION) && !pickup)
-			return rb.getString("from")+ " "+splitString(rs.getLocationName() + " ");
+			return rb.getString("from")+ " "+splitString(rs.getLocationName()) + " ";
 		else if (attribute.equals(Setup.DESTINATION) && pickup)
-			return rb.getString("destination")+ " "+splitString(rs.getDestinationName() + " ");
+			return rb.getString("destination")+ " "+splitString(rs.getDestinationName()) + " ";
 		else if (attribute.equals(Setup.DESTINATION) && !pickup)
-			return rb.getString("to")+ " "+splitString(rs.getDestinationTrackName() + " ");
+			return rb.getString("to")+ " "+splitString(rs.getDestinationTrackName()) + " ";
 		else if (attribute.equals(Setup.COMMENT))
 			return rs.getComment() +" ";
 		else if (attribute.equals(Setup.NONE))
