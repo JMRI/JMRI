@@ -22,7 +22,7 @@ import jmri.jmrix.AbstractMRTrafficController;
  * message.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class NceTrafficController extends AbstractMRTrafficController implements NceInterface, CommandStation {
 
@@ -201,10 +201,18 @@ public class NceTrafficController extends AbstractMRTrafficController implements
 	
 	private boolean nceProgMode = false;					// Do not use exit program mode unless active
 	
+	/**
+	 * Gets the state of the command station
+	 * @return true if in programming mode
+	 */
 	public boolean getNceProgMode(){
 		return nceProgMode;
 	}
 	
+	/**
+	 * Sets the state of the command station
+	 * @param b when true, set programming mode
+	 */
 	public void setNceProgMode(boolean b){
 		nceProgMode = b;
 	}
