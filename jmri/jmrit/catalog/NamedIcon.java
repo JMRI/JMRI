@@ -6,6 +6,7 @@ import java.awt.MediaTracker;
 import java.awt.image.ColorModel;
 import java.awt.image.MemoryImageSource;
 import java.awt.image.PixelGrabber;
+import java.io.File;
 import java.net.URL;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -26,7 +27,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -66,6 +67,10 @@ public class NamedIcon extends ImageIcon {
      */
     public NamedIcon(String pUrl, String pName) {
         super(jmri.util.FileUtil.getExternalFilename(pUrl));
+    	File fp = new File(pUrl);
+    	if (!fp.exists()){
+    		log.warn("Could not load image from "+pUrl);
+    	}
         mDefaultImage = getImage();
         if (mDefaultImage == null) log.warn("Could not load image from "+pUrl);
         mName = pName;
@@ -147,7 +152,7 @@ public class NamedIcon extends ImageIcon {
      * Valid values are <UL>
      * <LI>0 - no rotation
      * <LI>1 - 90 degrees counter-clockwise
-     * <LI>2 - 180 degress counter-clockwise
+     * <LI>2 - 180 degrees counter-clockwise
      * <LI>3 - 270 degrees counter-clockwise
      * </UL>
      */
