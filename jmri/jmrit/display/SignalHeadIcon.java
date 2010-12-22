@@ -31,13 +31,14 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.77 $
+ * @version $Revision: 1.78 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
 
     Hashtable <String, NamedIcon> _iconMap;
+    String  _iconFamily;
     String[] _validKey;
 
     public SignalHeadIcon(Editor editor){
@@ -152,7 +153,13 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     */
     public NamedIcon getIcon(String state) {
         return _iconMap.get(state);
-//        return _iconMap.get(rbean.getString(state));
+    }
+
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
     }
 
     public Enumeration<String> getIconStateNames() {
@@ -370,7 +377,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead")));
-        _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead",
+        _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", _iconFamily,
                                        PickListModel.signalHeadPickModelInstance(), _editor);
         _itemPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -385,6 +392,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
 
     void updateItem() {
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
+        _iconFamily = _itemPanel.getFamilyName();
         Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
         // map1 keyed with NamedBean names.  Convert to local name keys
         Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
@@ -397,6 +405,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         displayState(getSignalHead().getAppearance());
         _paletteFrame.dispose();
         _paletteFrame = null;
+        _itemPanel.dispose();
         _itemPanel = null;
         invalidate();
     }

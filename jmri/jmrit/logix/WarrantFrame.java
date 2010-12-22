@@ -1523,7 +1523,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
             if (msg!=null) {
                 BlockOrder bo = _warrant.getfirstOrder();
                 OBlock block = bo.getBlock();
-                if (block.allocate(_warrant) == null) {
+                String msg2 = block.allocate(_warrant);
+                if (msg2 == null) {
                     if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
@@ -1534,8 +1535,8 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                     block.setPath(bo.getPathName(), 0);
                     msg = null;
                 } else {
-                    msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                            block.getDisplayName());
+                    msg = java.text.MessageFormat.format(
+                                    WarrantTableAction.rb.getString("OriginBlockNotSet"), msg2);
                 } 
             }
         }

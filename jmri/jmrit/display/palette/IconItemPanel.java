@@ -40,8 +40,8 @@ public class IconItemPanel extends ItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public IconItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
-        super(parentFrame,  itemType, editor);
+    public IconItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+        super(parentFrame,  type, family, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
 

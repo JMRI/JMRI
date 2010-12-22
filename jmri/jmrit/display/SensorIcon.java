@@ -27,7 +27,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -40,7 +40,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     static final public int INACTIVE_BACKGROUND_COLOR =  0x08;
     static final public int INCONSISTENT_FONT_COLOR =        0x0A;
     static final public int INCONSISTENT_BACKGROUND_COLOR =  0x0B;
-    private boolean debug = false; 
+    private boolean debug = false;
+
+    String  _iconFamily;
 
     public SensorIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -228,6 +230,13 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         displayState(sensorState());
     }
 
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
+    }
+
     /**
      * Get current state of attached sensor
      * @return A state variable from a Sensor, e.g. Sensor.ACTIVE
@@ -408,7 +417,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor",
+        _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                                        PickListModel.sensorPickModelInstance(), _editor);
         _itemPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -422,6 +431,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
 
     void updateItem() {
         setSensor(_itemPanel.getTableSelection().getSystemName());
+        _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         setInactiveIcon(iconMap.get("SensorStateInactive"));
         setActiveIcon(iconMap.get("SensorStateActive"));
@@ -429,6 +439,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         setUnknownIcon(iconMap.get("BeanStateUnknown"));
         _paletteFrame.dispose();
         _paletteFrame = null;
+        _itemPanel.dispose();
         _itemPanel = null;
         invalidate();
     }
@@ -540,7 +551,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public void dispose() {
-        getSensor().removePropertyChangeListener(this);
+        if (namedSensor != null) {
+            getSensor().removePropertyChangeListener(this);
+        }
         namedSensor = null;
 
         active = null;

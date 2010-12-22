@@ -12,8 +12,8 @@ import jmri.jmrit.display.ReporterIcon;
 
 public class ReporterItemPanel extends TableItemPanel {
 
-    public ReporterItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame, itemType, model, editor);
+    public ReporterItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
+        super(parentFrame, type, family, model, editor);
     }
 
     public void init() {

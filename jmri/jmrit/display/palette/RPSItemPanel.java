@@ -36,8 +36,8 @@ public class RPSItemPanel extends FamilyItemPanel {
     /**
     * Constructor for plain icons and backgrounds
     */
-    public RPSItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
-        super(parentFrame,  itemType, editor);
+    public RPSItemPanel(JmriJFrame parentFrame, String  type, String family, Editor editor) {
+        super(parentFrame,  type, family, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
     }
 
@@ -55,106 +55,6 @@ public class RPSItemPanel extends FamilyItemPanel {
         bottomPanel.add(_bottom2Panel);
         add(bottomPanel);
         if (log.isDebugEnabled()) log.debug("init done for family "+_family);
-    }
-
-    /**
-    *  CENTER Panel
-    */
-    protected void initIconFamiliesPanel() {
-        _iconFamilyPanel = new JPanel();
-        _iconFamilyPanel.setLayout(new BoxLayout(_iconFamilyPanel, BoxLayout.Y_AXIS));
-        _iconFamilyPanel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-
-        Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-        if (families!=null && families.size()>0) {
-            ButtonGroup group = new ButtonGroup();
-            Iterator <String> it = families.keySet().iterator();
-            JPanel buttonPanel = new JPanel();
-            buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
-            String family = null;
-            JRadioButton button = null;
-            while (it.hasNext()) {
-                family = it.next();
-                button = new DragJRadioButton(family);
-                button.addActionListener(new ActionListener() {
-                        String family;
-                        public void actionPerformed(ActionEvent e) {
-                            setFamily(family);
-                        }
-                        ActionListener init(String f) {
-                            family = f;
-                            if (log.isDebugEnabled()) log.debug("ActionListener.init : for type \""+_itemType+"\", family \""+family+"\"");
-                            return this;
-                        }
-                    }.init(family));
-                if (family.equals(_family)) {
-                    button.setSelected(true);
-                }
-                buttonPanel.add(button);
-                group.add(button);
-            }
-            if (_family==null) {
-                _family = family;       // let last family be the selected one
-                if (button != null) button.setSelected(true);
-            }
-            makeIconPanel();        // need to have family identified  before calling
-            _iconFamilyPanel.add(_iconPanel);
-            _iconPanel.setVisible(false);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
-            JLabel label = new JLabel(txt);
-            panel.add(label);
-            panel.add(buttonPanel);
-            _iconFamilyPanel.add(panel);
-            label.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-            panel.setToolTipText(ItemPalette.rbp.getString("ToolTipDragIcon"));
-            _bottom1Panel.setVisible(true);
-            _bottom2Panel.setVisible(false);
-        } else {
-            //log.error("Item type \""+_itemType+"\" has "+(families==null ? "null" : families.size())+ " families.");
-            JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            _bottom1Panel.setVisible(false);
-            _bottom2Panel.setVisible(true);
-        }
-        add(_iconFamilyPanel, 0);
-    }
-
-    protected void makeIconPanel() {
-        _iconPanel = new JPanel();
-        if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
-        if (_family==null) {
-            Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
-            if (families!=null) {
-                Iterator <String> it = families.keySet().iterator();
-                while (it.hasNext()) {
-                    _family = it.next();
-                }
-            }
-        }
-        Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-        if (iconMap==null) {
-            if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
-            Thread.dumpStack();
-            JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
-           icon.reduceTo(100, 100, 0.2);
-           JPanel panel = new JPanel();
-           String borderName = ItemPalette.convertText(entry.getKey());
-           panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                            borderName));
-           panel.add(new JLabel(icon));
-           int width = Math.max(100, panel.getPreferredSize().width);
-           panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
-           _iconPanel.add(panel);
-        }
     }
 
     public class DragJRadioButton extends JRadioButton implements DragGestureListener, DragSourceListener, Transferable {    
@@ -209,7 +109,9 @@ public class RPSItemPanel extends FamilyItemPanel {
             }
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                                              java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                                             ItemPalette.rbp.getString(_itemType), _family),
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }

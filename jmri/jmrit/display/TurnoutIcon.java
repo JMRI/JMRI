@@ -28,7 +28,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -36,6 +36,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     protected Hashtable <Integer, NamedIcon> _iconMap;        // state int to icon
     protected Hashtable <String, Integer> _name2stateMap;           // name to state
     protected Hashtable <Integer, String> _state2nameMap;           // state to name
+    String  _iconFamily;
 
     public TurnoutIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
@@ -126,6 +127,13 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
     public NamedIcon getIcon(int state) {
         return _iconMap.get(Integer.valueOf(state));
+    }
+
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
     }
 
     public int maxHeight() {
@@ -296,7 +304,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
-        _itemPanel = new TableItemPanel(_paletteFrame, "Turnout",
+        _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
                                        PickListModel.turnoutPickModelInstance(), _editor);
         _itemPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -311,6 +319,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     void updateItem() {
         Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setTurnout(_itemPanel.getTableSelection().getSystemName());
+        _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         while (it.hasNext()) {
@@ -324,6 +333,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         }
         _paletteFrame.dispose();
         _paletteFrame = null;
+        _itemPanel.dispose();
         _itemPanel = null;
         invalidate();
     }

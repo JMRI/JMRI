@@ -4,6 +4,8 @@ package jmri.jmrit.display.palette;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -126,12 +128,18 @@ public class SingleIconDialog extends IconDialog {
     * Action item for makeDoneButtonPanel
     */
     protected void doDoneAction() {
-        addFamily(_family, _iconMap);
+        //check text
+        String family = _familyName.getText();
+        if (_family!=null && !_family.equals(family)) {
+            Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
+            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
+                return;
+            }
+        }
+        addFamily(family, _iconMap);
         ImageIndexEditor.indexChanged(true);
         _parent.removeAll();
         _parent.init();
-//        _parent.updateFamiliesPanel();
-//        _parent.setFamily(_family);
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleIconDialog.class.getName());

@@ -34,8 +34,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
     int _selectedRow = 0;
 
-    public SignalHeadItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame, itemType, model, editor);
+    public SignalHeadItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
+        super(parentFrame, type, family, model, editor);
     }
 
     protected JPanel initTablePanel(PickListModel model, Editor editor) {
@@ -80,6 +80,21 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
     protected void makeIconPanel() {
         _iconPanel = new JPanel();
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
+        /*
+        Hashtable<String, NamedIcon> iconMap = null;
+        if (_family!=null) {
+            iconMap = ItemPalette.getIconMap(_itemType, _family);
+            if (iconMap==null) {
+                if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
+                // Thread.dumpStack();
+                JOptionPane.showMessageDialog(_paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"),
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                _family = null;
+            }
+        }
+        */
         if (_family==null) {
             Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
             if (families!=null) {
@@ -91,7 +106,15 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         }
 
         Hashtable<String, NamedIcon> iconMap = getFilteredIconMap();
-        addIconsToPanel(iconMap);
+        if (iconMap==null) {
+            iconMap = iconMap = ItemPalette.getIconMap(_itemType, _family);
+            if (iconMap==null) {
+                _updateButton.setEnabled(false);
+                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            }
+        } else {
+            addIconsToPanel(iconMap);
+        }
     }
 
     private NamedBean getSelectedBean() {
@@ -109,7 +132,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                   ItemPalette.rbp.getString(_itemType), _family), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
@@ -162,7 +186,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }

@@ -47,8 +47,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public TableItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame,  itemType, editor);
+    public TableItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
+        super(parentFrame,  type, family, editor);
         _model = model;
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragTableRow"));
     }
@@ -226,12 +226,14 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
     }
 
+    // return icon set to panel icon
     public Hashtable <String, NamedIcon> getIconMap() {
 
         Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
         if (iconMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                   ItemPalette.rbp.getString(_itemType), _family), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }
@@ -282,7 +284,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }

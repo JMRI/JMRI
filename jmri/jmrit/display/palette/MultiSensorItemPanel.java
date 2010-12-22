@@ -25,8 +25,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
     MultiSensorSelectionModel _selectionModel;
     boolean _upDown = false;
 
-    public MultiSensorItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame, itemType, model, editor);
+    public MultiSensorItemPanel(JmriJFrame parentFrame, String type, String family, PickListModel model, Editor editor) {
+        super(parentFrame, type, family, model, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragSelection"));
     }
 
@@ -242,7 +242,8 @@ public class MultiSensorItemPanel extends TableItemPanel {
             Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }

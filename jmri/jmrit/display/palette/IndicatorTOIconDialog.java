@@ -52,7 +52,7 @@ public class IndicatorTOIconDialog extends IconDialog {
         log.debug("ctor type= \""+type+"\", family= \""+
                   family+"\", key= \""+key+"\"");
         _key = key;
-        if (family!=null) {
+        if (_family!=null) {
             _familyName.setEditable(false);
             _iconMap = parent._iconGroupsMap.get(key);
         } else {
@@ -127,8 +127,16 @@ public class IndicatorTOIconDialog extends IconDialog {
     * Action item for makeDoneButtonPanel
     */
     protected void doDoneAction() {
+        //check text
+        String family = _familyName.getText();  // actually the key to status icon
+        if (_family!=null && !_family.equals(family)) {
+            Iterator <String> iter = ItemPalette.getLevel4FamilyMaps(_type).keySet().iterator();
+            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
+                return;
+            }
+        }
         ItemPalette.removeLevel4IconMap(_type, _parent._family, _familyName.getText());
-        addFamily(_family, _iconMap);
+        addFamily(_parent._family, _iconMap);
         _parent.updateFamiliesPanel();
     }
 

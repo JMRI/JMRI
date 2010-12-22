@@ -1,5 +1,6 @@
 package jmri.jmrit.logix;
 
+import java.util.ResourceBundle;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -32,12 +33,12 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
 
-    ArrayList <Portal> _portals = new ArrayList <Portal>();     // portals to this block
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
 
     /*
     * Block state. Add the following to the 4 sensor states.
@@ -49,7 +50,10 @@ public class OBlock extends jmri.Block {
     static final public int DARK = 0x08;        // Block has no Sensor - same as INCONSISTENT
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
+    ArrayList <Portal> _portals = new ArrayList <Portal>();     // portals to this block
+
     private Warrant _warrant;       // when not null, block is allocateds to this warrant
+    private String  _pathName;      // when not null, this is the allocated path
     private float _scaleRatio   = 87.1f;
     private boolean _metric     = false; // desired display mode
     
@@ -68,6 +72,8 @@ public class OBlock extends jmri.Block {
     }
 
     public Warrant getWarrant() { return _warrant; }
+
+    public String getAllocatedPathName() { return _pathName; }
 
     public float getLengthScaleFeet() {
         return getLengthIn()/12*_scaleRatio;
@@ -106,14 +112,50 @@ public class OBlock extends jmri.Block {
     */
     public String allocate(Warrant warrant) {
         if (warrant==null) {
-            log.error("allocate called with null warrant!");
-            return null;
-        } else if (_warrant!=null && !_warrant.equals(warrant)) {
-            // allocated to another warrant
-            return _warrant.getDisplayName();
+            return "ERROR! Allocate called with null warrant in block \""+getDisplayName()+"\"!";
+        }
+        if (_warrant!=null) {
+            if (_warrant.equals(warrant)) {
+                return null;
+            } else {
+                // allocated to another warrant
+                return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
+                                                      _warrant.getDisplayName(), getDisplayName()); 
+            }
+        }
+        String path = warrant.getAllocatedPathInBlock(this);
+        if (_pathName!=null && !_pathName.equals(path)) {
+            return java.text.MessageFormat.format(rb.getString("AllocatedByDispatch"),
+                                          _pathName, getDisplayName()); 
         }
         setState(getState() | ALLOCATED);
         _warrant = warrant;
+        _pathName = path;
+        // firePropertyChange signaled in super.setState()
+        return null;
+    }
+
+    /**
+    * Allocate (reserves) the block for the Warrant that is the 'value' object
+    * Note the block may be OCCUPIED by a non-warranted train, but the allocation is permitted.
+    * @param warrant
+    * @return name of block if block is already allocated to another warrant
+    */
+    public String allocate(String pathName) {
+        if (pathName==null) {
+            log.error("allocate called with null pathName in block \""+getDisplayName()+"\"!");
+            return null;
+        } else if (_warrant!=null) {
+            // allocated to another warrant
+            return java.text.MessageFormat.format(rb.getString("AllocatedToWarrant"),
+                                                  _warrant.getDisplayName(), getDisplayName()); 
+        }
+        if (_pathName!=null && !_pathName.equals(pathName)) {
+            return java.text.MessageFormat.format(rb.getString("AllocatedByDispatch"),
+                                          _pathName, getDisplayName()); 
+        }
+        setState(getState() | ALLOCATED);
+        _pathName = pathName;
         // firePropertyChange signaled in super.setState()
         return null;
     }
@@ -130,12 +172,24 @@ public class OBlock extends jmri.Block {
             }
             if (warrant.equals(_warrant)) {  // allocated to caller, so deallocate
                 _warrant = null;
+                _pathName = null;
                 firePropertyChange("deallocate", warrant, _warrant);
                 if (sensor != null)  {
                     setState(sensor.getState() & ~ALLOCATED);  // unset allocated bit
                 }
             }
         }
+    }
+
+    /*
+     * Deallocation from a non-warrant user (e.g. Logix)
+     */
+    public void deAllocate() {
+        if (_warrant!=null) {
+            log.error("deAllocate called without warrant in block \""+getDisplayName()+"\"!");
+            return;
+        }
+        _pathName = null;
     }
 
     /**

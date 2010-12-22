@@ -25,9 +25,14 @@ public abstract class ItemPanel extends JPanel {
     * Constructor for all table types.  When item is a bean, the itemType is the name key 
     * for the item in jmri.NamedBeanBundle.properties
     */
-    public ItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
+    public ItemPanel(JmriJFrame parentFrame, String  type, String family, Editor editor) {
         _paletteFrame = parentFrame;
-        _itemType = itemType;
+        _itemType = type;
+        if (family!=null && family.trim().length()>0) {
+            _family = family;
+        } else {
+            _family = null;
+        }
         _editor = editor;
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
     }
@@ -47,7 +52,11 @@ public abstract class ItemPanel extends JPanel {
     }
     protected void reset() {
     }
-    protected void dispose() {
+    public void dispose() {
+    }
+
+    public String getFamilyName() {
+        return _family;
     }
 
     protected void updateFamiliesPanel() {
@@ -67,7 +76,8 @@ public abstract class ItemPanel extends JPanel {
         Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
         if (map==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                   ItemPalette.rbp.getString(_itemType), _family), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             return null;
         }

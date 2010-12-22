@@ -24,8 +24,8 @@ public class TextItemPanel extends ItemPanel implements ActionListener {
     JTextField _text;
     DecoratorPanel _decorator;
 
-    public TextItemPanel(ItemPalette parentFrame, String  itemType, Editor editor) {
-        super(parentFrame,  itemType, editor);
+    public TextItemPanel(ItemPalette parentFrame, String  type, String family, Editor editor) {
+        super(parentFrame,  type, family, editor);
         setToolTipText(ItemPalette.rbp.getString("ToolTipDragText"));
     }
 

@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
@@ -303,75 +304,75 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         makeMenus(editor);
 
         _tabPane = new JTabbedPane();
-        ItemPanel itemPanel = new TableItemPanel(this, "Turnout",
+        ItemPanel itemPanel = new TableItemPanel(this, "Turnout", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("Turnout", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Turnout"));
         
-        itemPanel = new TableItemPanel(this, "Sensor",
+        itemPanel = new TableItemPanel(this, "Sensor", null,
                                        PickListModel.sensorPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("Sensor", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Sensor"));
 
-        itemPanel = new SignalHeadItemPanel(this, "SignalHead",
+        itemPanel = new SignalHeadItemPanel(this, "SignalHead", null,
                                        PickListModel.signalHeadPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("SignalHead", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("SignalHead"));
 
-        itemPanel = new SignalMastItemPanel(this, "SignalMast",
+        itemPanel = new SignalMastItemPanel(this, "SignalMast", null,
                                             PickListModel.signalMastPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("SignalMast", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("SignalMast"));
 
-        itemPanel = new MemoryItemPanel(this, "Memory",
+        itemPanel = new MemoryItemPanel(this, "Memory", null,
                                         PickListModel.memoryPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("Memory", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Memory"));
 
-        itemPanel = new ReporterItemPanel(this, "Reporter",
+        itemPanel = new ReporterItemPanel(this, "Reporter", null,
                                           PickListModel.reporterPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("Reporter", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Reporter"));
 
-        itemPanel = new TableItemPanel(this, "Light",
+        itemPanel = new TableItemPanel(this, "Light", null,
                                        PickListModel.lightPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("Light", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("Light"));
 
-        itemPanel = new MultiSensorItemPanel(this, "MultiSensor",
+        itemPanel = new MultiSensorItemPanel(this, "MultiSensor", null,
                                              PickListModel.multiSensorPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("MultiSensor", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("MultiSensor"));
  
-        ItemPanel iconPanel = new IconItemPanel(this, "Icon", editor);
+        ItemPanel iconPanel = new IconItemPanel(this, "Icon", null, editor);
         iconPanel.init();
 //        _itemPanelMap.put("Icon", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Icon"));
  
-        iconPanel = new BackgroundItemPanel(this, "Background", editor);
+        iconPanel = new BackgroundItemPanel(this, "Background", null, editor);
         iconPanel.init();
 //        _itemPanelMap.put("Background", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Background")); 
 
-        iconPanel = new TextItemPanel(this, "Text", editor);
+        iconPanel = new TextItemPanel(this, "Text", null, editor);
         iconPanel.init();
 //        _itemPanelMap.put("Text", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("Text"));     
 
-        iconPanel = new RPSItemPanel(this, "RPSReporter", editor);
+        iconPanel = new RPSItemPanel(this, "RPSReporter", null, editor);
         iconPanel.init();
 //        _itemPanelMap.put("RPSReporter", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("RPSReporter")); 
 
-        iconPanel = new ClockItemPanel(this, "FastClock", editor);
+        iconPanel = new ClockItemPanel(this, "FastClock", null, editor);
         iconPanel.init();
 //        _itemPanelMap.put("FastClock", iconPanel);
         _tabPane.add(iconPanel, rbp.getString("FastClock")); 
@@ -379,12 +380,12 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
 /*
 * Hold until documented.
 ***/
-        itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", editor);
+        itemPanel = new IndicatorItemPanel(this, "IndicatorTrack", null, editor);
         itemPanel.init();
 //        _itemPanelMap.put("IndicatorTrack", itemPanel);
         _tabPane.add(itemPanel, rbp.getString("IndicatorTrack"));
 
-        itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO",
+        itemPanel = new IndicatorTOItemPanel(this, "IndicatorTO", null,
                                        PickListModel.turnoutPickModelInstance(), editor);
         itemPanel.init();
 //        _itemPanelMap.put("IndicatorTO", itemPanel);
@@ -454,6 +455,28 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     }
 
     /**
+    * Look for duplicate name of family in the iterated set
+    */
+    static boolean familyNameOK(JmriJFrame frame, String type, String family, Iterator <String> it) {
+        if (family==null || family.length()==0) {
+            JOptionPane.showMessageDialog(frame, 
+                    ItemPalette.rbp.getString("EnterFamilyName"), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        while (it.hasNext()) {
+           if (family.equals(it.next())) {
+               JOptionPane.showMessageDialog(frame,
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
+                    new Object[] { family, type }), 
+                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+               return false;
+           }
+        }
+        return true;
+    }
+
+    /**
     * Adding a new Family of icons to the device type
     */
     static protected void addFamily(String type, String family, Hashtable<String, NamedIcon> iconMap) {
@@ -470,6 +493,18 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                                    Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {
         getLevel4FamilyMaps(type).put(family, iconMap);
     }
+
+    // Currently only needed for IndicatorTO type
+    static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> 
+                                getLevel4FamilyMaps(String type) {
+        return _indicatorTOMaps.get(type);
+    }
+    // Currently only needed for IndicatorTO type
+    static protected Hashtable<String, Hashtable<String, NamedIcon>> 
+                                getLevel4Family(String type, String family) {
+        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
+        return map.get(family);
+    }
     /**************************************************************************/
 
     /**
@@ -477,16 +512,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     */
     static protected Hashtable<String, Hashtable<String, NamedIcon>> getFamilyMaps(String type) {
         return _iconMaps.get(type);
-    }
-
-    // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> getLevel4FamilyMaps(String type) {
-        return _indicatorTOMaps.get(type);
-    }
-    // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, NamedIcon>> getLevel4Family(String type, String family) {
-        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
-        return map.get(family);
     }
 
     /**

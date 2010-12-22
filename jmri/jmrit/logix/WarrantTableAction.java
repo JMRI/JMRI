@@ -912,7 +912,8 @@ public class WarrantTableAction extends AbstractAction {
                         if (msg!=null) {
                             BlockOrder bo = w.getfirstOrder();
                             OBlock block = bo.getBlock();
-                            if (block.allocate(w) == null) {
+                            String msg2 = block.allocate(w);
+                            if (msg2 == null) {
                                 if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(null,
                                             java.text.MessageFormat.format(WarrantTableAction.rb.getString("OkToRun"),
                                             msg), WarrantTableAction.rb.getString("WarningTitle"), 
@@ -923,9 +924,9 @@ public class WarrantTableAction extends AbstractAction {
                                 block.setPath(bo.getPathName(), 0);
                                 msg = null;
                             } else {
-                                if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+block.allocate(w));
+                                if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);
                                 msg = java.text.MessageFormat.format(WarrantTableAction.rb.getString("OriginBlockNotSet"), 
-                                        block.getDisplayName());
+                                        msg2);
                                 break;
                             } 
                         }

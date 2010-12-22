@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.30 $
+ * @version $Revision: 1.31 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -146,6 +146,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     public void setAvoidOrder(BlockOrder order) { _avoidOrder = order; }
 
+    public String getAllocatedPathInBlock(OBlock block) {
+        for (int i=0; i<_savedOrders.size(); i++){
+            if (_savedOrders.get(i).getBlock().equals(block)) {
+                return _savedOrders.get(i).getPathName();
+            }
+        }
+        return null;
+    }
+
+    /**
+    * Call is only valid when in MODE_LEARN and MODE_RUN
+    */
     public BlockOrder getCurrentBlockOrder() {
         return getBlockOrderAt(_idxCurrentOrder);
     }
@@ -153,7 +165,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public int getCurrentOrderIndex() {
         return _idxCurrentOrder;
     }
-
 
     /**
     * Call is only valid when in MODE_LEARN and MODE_RUN
@@ -507,11 +518,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         for (int i=0; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
-            String name = block.allocate(this);
-            if (name != null) {
+            msg = block.allocate(this);
+            if (msg != null) {
                 allocated = false;
-                msg = java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
-                                name, getBlockOrderAt(i).getBlock().getDisplayName());
                 deAllocate();
                 break;
             }
@@ -560,11 +569,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         BlockOrder bo = _orders.get(0);
         OBlock block = bo.getBlock();
-        String name = block.allocate(this);
-        if (name != null) {
+        msg = block.allocate(this);
+        if (msg != null) {
             routeSet = false;
-            msg = java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
-                            name, block.getDisplayName());
             allocated = false;
         } else {
             if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+", for "+bo.toString());
@@ -574,8 +581,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             for (int i=1; i<_orders.size(); i++) {
                 bo = _orders.get(i);
                 block = bo.getBlock();
-                name = block.allocate(this); 
-                if (name==null) {
+                msg = block.allocate(this); 
+                if (msg==null) {
                     if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+
                                                         ", for "+bo.toString());
                     if ((block.getState() & OBlock.OCCUPIED) != 0) {
@@ -596,8 +603,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         bo.setPath();
                     }
                 } else {
-                    msg = java.text.MessageFormat.format(rb.getString("BlockNotAllocated"), 
-                                                        name, block.getDisplayName());
                     allocated = false;
                     routeSet = false;
                     break;

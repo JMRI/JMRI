@@ -28,8 +28,8 @@ public class MemoryItemPanel extends TableItemPanel {
     Type _memType;
     JSpinner _spinner;
 
-    public MemoryItemPanel(ItemPalette parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame, itemType, model, editor);
+    public MemoryItemPanel(ItemPalette parentFrame, String type, String family, PickListModel model, Editor editor) {
+        super(parentFrame, type, family, model, editor);
     }
 
     public void init() {

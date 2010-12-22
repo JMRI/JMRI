@@ -37,13 +37,14 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
 
     Hashtable<String, Hashtable<Integer, NamedIcon>> _iconMaps;
-    ArrayList <String> _paths;      // list of paths that include this icon 
+    ArrayList <String> _paths;      // list of paths that include this icon
+    String  _iconFamily;        // icon family
 
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
@@ -231,6 +232,23 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         return _showTrain;
     }
 
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
+    }
+
+    public Iterator<String> getPaths() {
+        if (_paths==null) {
+            return null;
+        }
+        return _paths.iterator();
+    }
+    public void setPaths(ArrayList<String>paths) {
+        _paths = paths;
+    }
+
     /**
     * Place icon by its localized bean state name
     * @param status - the track condition of the icon
@@ -381,7 +399,10 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             displayState(turnoutState());
             return;
         }
-        if (namedOccBlock!=null && source instanceof OBlock) {
+
+        if (source instanceof OBlock) {
+            OBlock block = (OBlock)source;
+            String pathName = block.getAllocatedPathName();
             if ("state".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
@@ -391,10 +412,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 }
                 if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
-                        String pathName = getOccBlock().getWarrant().getCurrentBlockOrder(). getPathName();
                         if (_paths==null || _paths.contains(pathName)) {
                             _status = "PositionTrack";
-                            OBlock block = (OBlock)evt.getSource();
                             _train = (String)block.getValue();
                         } else {
                             _status = "ClearTrack";
@@ -403,10 +422,15 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                         _status = "OccupiedTrack";
                     }
                 } else if ((now & OBlock.ALLOCATED)!=0) {
-                    _status = "AllocatedTrack";
+                    if (_paths!=null && !_paths.contains(pathName)) {
+                        _status = "ClearTrack";
+                    } else {
+                        _status = "AllocatedTrack";
+                    }
                 }
             }
-        } else if (evt.getPropertyName().equals("KnownState") && source instanceof Sensor) {
+        } else if (source instanceof Sensor) {
+            if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
                     if (now==Sensor.ACTIVE) {
@@ -426,6 +450,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                         _status = "DontUseTrack";
                     }
                 }
+            }
         }
         displayState(turnoutState());
 	}
@@ -433,7 +458,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     IndicatorTOItemPanel _TOPanel;
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
-        _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO",
+        _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                                        PickListModel.turnoutPickModelInstance(), _editor);
         _TOPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -451,6 +476,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             _TOPanel.setOccDetector(namedOccBlock.getName());
         }
         _TOPanel.setShowTrainName(_showTrain);
+        _TOPanel.setPaths(_paths);
         _paletteFrame.add(_TOPanel);
         _paletteFrame.pack();
     }
@@ -461,6 +487,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         setOccSensor(_TOPanel.getOccSensor());
         setOccBlock(_TOPanel.getOccBlock());
         _showTrain = _TOPanel.getShowTrainName();
+        _iconFamily = _TOPanel.getFamilyName();
+        _paths = _TOPanel.getPaths();
         Hashtable<String, Hashtable<String, NamedIcon>> iconMap = _TOPanel.getIconMaps();
 
         Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
@@ -482,6 +510,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         }
         _paletteFrame.dispose();
         _paletteFrame = null;
+        _TOPanel.dispose();
         _TOPanel = null;
         invalidate();
     }

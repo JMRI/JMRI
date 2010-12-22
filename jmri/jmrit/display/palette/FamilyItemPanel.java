@@ -32,8 +32,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
     /**
     * Constructor types with multiple families and multiple icon families
     */
-    public FamilyItemPanel(JmriJFrame parentFrame, String  itemType, Editor editor) {
-        super(parentFrame,  itemType, editor);
+    public FamilyItemPanel(JmriJFrame parentFrame, String type, String family, Editor editor) {
+        super(parentFrame,  type, family, editor);
     }
 
     protected void initIconFamiliesPanel() {
@@ -42,6 +42,18 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
+            if (_family!=null) {
+                Hashtable<String, NamedIcon> iconMap = families.get(_family);
+                if (iconMap==null) {
+                    if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
+                    // Thread.dumpStack();
+                    JOptionPane.showMessageDialog(_paletteFrame, 
+                            java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"),
+                                                           ItemPalette.rbp.getString(_itemType), _family), 
+                            ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    _family = null;
+                }
+            }
             ButtonGroup group = new ButtonGroup();
             Iterator <String> it = families.keySet().iterator();
             JPanel buttonPanel = new JPanel();
@@ -77,7 +89,8 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _iconPanel.setVisible(false);
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamilies"), _itemType);
+            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamiliesLabel"),
+                                                        ItemPalette.rbp.getString(_itemType));
             JPanel p = new JPanel();
             p.add(new JLabel(txt));
             panel.add(p);
@@ -87,17 +100,19 @@ public abstract class FamilyItemPanel extends ItemPanel {
             _bottom2Panel.setVisible(false);
         } else {
             JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
+                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), 
+                                                   ItemPalette.rbp.getString(_itemType)), 
                     ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             _bottom1Panel.setVisible(false);
             _bottom2Panel.setVisible(true);
         }
-        add(_iconFamilyPanel, 1);
+        add(_iconFamilyPanel);
+//        add(_iconFamilyPanel, 1);
     }
 
     protected void makeIconPanel() {
+        if (log.isDebugEnabled()) log.debug("makeIconPanel() type= "+_itemType+" family= \""+_family+"\"");
         _iconPanel = new JPanel();
-        if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
         if (_family==null) {
             Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
             if (families!=null) {
@@ -107,20 +122,17 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 }
             }
         }
-        Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-        if (iconMap==null) {
-            if (log.isDebugEnabled()) log.debug("makeIconPanel() iconMap==null for type \""+_itemType+"\", family \""+_family+"\"");
-            // Thread.dumpStack();
-            JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), _itemType), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return;
-        } else {
+        if (_family!=null) {
+            Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
             addIconsToPanel(iconMap);
         }
     }
 
     protected void addIconsToPanel(Hashtable<String, NamedIcon> iconMap) {
+        if (iconMap==null) {
+            log.error("iconMap is null for type "+_itemType+" family "+_family);
+            return;
+        }
         GridBagLayout gridbag = new GridBagLayout();
         _iconPanel.setLayout(gridbag);
 

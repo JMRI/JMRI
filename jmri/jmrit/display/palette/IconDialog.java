@@ -62,7 +62,7 @@ public class IconDialog extends ItemDialog {
         _iconPanel = initMap(type, family);
         panel.add(_iconPanel);
 
-        if (family!=null) {
+        if (_family!=null) {
             panel.add(makeButtonPanel());
         } else {
             panel.add(makeCreateButtonPanel());
@@ -75,14 +75,17 @@ public class IconDialog extends ItemDialog {
     }
 
     protected JPanel initMap(String type, String family) {
+        _familyName.setEditable(true);
         if (family!=null) {
             _familyName.setEditable(true);
             _iconMap = _parent.getFilteredIconMap();
-        } else {
-            _familyName.setEditable(true);
-            _iconMap = _parent.makeNewIconMap(type);
-            _familyName.setText("?");
+            if (_iconMap!=null) {
+                return makeIconPanel(_iconMap);
+            }
+            _family = null;
         }
+        _iconMap = _parent.makeNewIconMap(type);
+        _familyName.setText("???");
         return makeIconPanel(_iconMap);
     }
 
@@ -187,8 +190,16 @@ public class IconDialog extends ItemDialog {
     * Action item for makeDoneButtonPanel
     */
     protected void doDoneAction() {
+        //check text
+        String family = _familyName.getText();
+        if (_family!=null && !_family.equals(family)) {
+            Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
+            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
+                return;
+            }
+        }
         ItemPalette.removeIconMap(_type, _family);
-        addFamily(_family, _iconMap);
+        addFamily(family, _iconMap);
         _parent.updateFamiliesPanel();
         ImageIndexEditor.indexChanged(true);
     }
@@ -212,24 +223,9 @@ public class IconDialog extends ItemDialog {
                 public void actionPerformed(ActionEvent a) {
                     //check text
                     String family = _familyName.getText();
-                    if (family==null || family.length()==0) {
-                        JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                                ItemPalette.rbp.getString("EnterFamilyName"), 
-                                ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+                    Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
+                    if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
                         return;
-                    }
-                    Hashtable<String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_type);
-                    if (families!=null) {
-                        Iterator <String> it = families.keySet().iterator();
-                        while (it.hasNext()) {
-                           if (family.equals(it.next())) {
-                               JOptionPane.showMessageDialog(_parent._paletteFrame,
-                                    java.text.MessageFormat.format(ItemPalette.rbp.getString("DuplicateFamilyName"), 
-                                    new Object[] { family, getType() }), 
-                                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-                               return;
-                           }
-                        }
                     }
                     addFamily(family, _iconMap);
                     checkIconSizes();
@@ -257,7 +253,11 @@ public class IconDialog extends ItemDialog {
     }
 
     protected JPanel makeIconPanel(Hashtable<String, NamedIcon> iconMap) {
-       JPanel iconPanel = new JPanel();
+        JPanel iconPanel = new JPanel();
+        if (iconMap==null) {
+            log.error("iconMap is null for type "+_type+" family "+_family);
+            return iconPanel;
+        }
        GridBagLayout gridbag = new GridBagLayout();
        iconPanel.setLayout(gridbag);
 
@@ -277,7 +277,7 @@ public class IconDialog extends ItemDialog {
        c.gridx = -gridwidth;
        c.gridy = 0;
 
-       if (log.isDebugEnabled()) log.debug("makeIconPanel: for "+iconMap.size()+" icons. gridwidth= "+gridwidth);
+//       if (log.isDebugEnabled()) log.debug("makeIconPanel: for "+iconMap.size()+" icons. gridwidth= "+gridwidth);
        int panelWidth = 0;
        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
        while (it.hasNext()) {

@@ -31,14 +31,15 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
                         implements java.beans.PropertyChangeListener {
 
     Hashtable<String, NamedIcon> _iconMap;
-    ArrayList <String> _paths;      // list of paths that include this icon 
+    ArrayList <String> _paths;      // list of paths that include this icon
+    String  _iconFamily;
 
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
@@ -200,6 +201,23 @@ public class IndicatorTrackIcon extends PositionableLabel
         return _showTrain;
     }
 
+    public String getFamily() {
+        return _iconFamily;
+    }
+    public void setFamily(String family) {
+        _iconFamily = family;
+    }
+
+    public Iterator<String> getPaths() {
+        if (_paths==null) {
+            return null;
+        }
+        return _paths.iterator();
+    }
+    public void setPaths(ArrayList<String>paths) {
+        _paths = paths;
+    }
+
     /**
     * Place icon by its bean state name
     */
@@ -251,7 +269,9 @@ public class IndicatorTrackIcon extends PositionableLabel
             return;
         }
         Object source = evt.getSource();
-        if (namedOccBlock!=null && source instanceof OBlock) {
+        if (source instanceof OBlock) {
+            OBlock block = (OBlock)source;
+            String pathName = block.getAllocatedPathName();
             if ("state".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
@@ -261,10 +281,8 @@ public class IndicatorTrackIcon extends PositionableLabel
                 }
                 if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
-                        String pathName = getOccBlock().getWarrant().getCurrentBlockOrder(). getPathName();
                         if (_paths==null || _paths.contains(pathName)) {
                             _status = "PositionTrack";
-                            OBlock block = (OBlock)evt.getSource();
                             _train = (String)block.getValue();
                         } else {
                             _status = "ClearTrack";
@@ -273,10 +291,15 @@ public class IndicatorTrackIcon extends PositionableLabel
                         _status = "OccupiedTrack";
                     }
                 } else if ((now & OBlock.ALLOCATED)!=0) {
-                    _status = "AllocatedTrack";
+                    if (_paths!=null && !_paths.contains(pathName)) {
+                        _status = "ClearTrack";
+                    } else {
+                        _status = "AllocatedTrack";
+                    }
                 }
             }
-        } else if (evt.getPropertyName().equals("KnownState") && source instanceof Sensor) {
+        } else if (source instanceof Sensor) {
+            if (evt.getPropertyName().equals("KnownState")) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if (source.equals(getOccSensor())) {
                     if (now==Sensor.ACTIVE) {
@@ -296,6 +319,7 @@ public class IndicatorTrackIcon extends PositionableLabel
                         _status = "DontUseTrack";
                     }
                 }
+            }
         }
         displayState(_status);
 	}
@@ -368,7 +392,7 @@ public class IndicatorTrackIcon extends PositionableLabel
     IndicatorItemPanel _trackPanel;
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
-        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _editor);
+        _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
         _trackPanel.init( new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
@@ -384,6 +408,7 @@ public class IndicatorTrackIcon extends PositionableLabel
             _trackPanel.setOccDetector(namedOccBlock.getName());
         }
         _trackPanel.setShowTrainName(_showTrain);
+        _trackPanel.setPaths(_paths);
         _paletteFrame.add(_trackPanel);
         _paletteFrame.setLocationRelativeTo(this);
         _paletteFrame.toFront();
@@ -396,6 +421,8 @@ public class IndicatorTrackIcon extends PositionableLabel
         setOccSensor(_trackPanel.getOccSensor());
         setOccBlock(_trackPanel.getOccBlock());
         _showTrain = _trackPanel.getShowTrainName();
+        _iconFamily = _trackPanel.getFamilyName();
+        _paths = _trackPanel.getPaths();
         Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
 
@@ -411,6 +438,7 @@ public class IndicatorTrackIcon extends PositionableLabel
         }
         _paletteFrame.dispose();
         _paletteFrame = null;
+        _trackPanel.dispose();
         _trackPanel = null;
         invalidate();
     }

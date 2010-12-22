@@ -13,8 +13,8 @@ import jmri.jmrit.display.SignalMastIcon;
 
 public class SignalMastItemPanel extends TableItemPanel {
 
-    public SignalMastItemPanel(JmriJFrame parentFrame, String  itemType, PickListModel model, Editor editor) {
-        super(parentFrame, itemType, model, editor);
+    public SignalMastItemPanel(JmriJFrame parentFrame, String  type, String family, PickListModel model, Editor editor) {
+        super(parentFrame, type, family, model, editor);
     }
 
     public void init() {
