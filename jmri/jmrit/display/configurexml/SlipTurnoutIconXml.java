@@ -11,7 +11,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -207,6 +207,8 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             else if (state.equals("upperWestToUpperEast")) l.setUpperWestToUpperEastIcon(icon);
             else if (state.equals("unknown")) l.setUnknownIcon(icon);
             else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
+        } else {
+            return;
         }
         Element elem = element.getChild(state);
         if (elem!=null){

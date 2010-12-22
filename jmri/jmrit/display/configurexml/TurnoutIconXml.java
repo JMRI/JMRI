@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -41,21 +41,19 @@ public class TurnoutIconXml extends PositionableLabelXml {
         element.setAttribute("turnout", p.getNamedTurnout().getName());
         storeCommonAttributes(p, element);
 
-        // old style 
-        //element.setAttribute("closed", p.getClosedIcon().getURL());
-        //element.setAttribute("thrown", p.getThrownIcon().getURL());
-        //element.setAttribute("unknown", p.getUnknownIcon().getURL());
-        //element.setAttribute("inconsistent", p.getInconsistentIcon().getURL());
-        // element.setAttribute("rotate", String.valueOf(p.getClosedIcon().getRotation()));
-        // include contents
         element.setAttribute("tristate", p.getTristate()?"true":"false");
         
-        // new style
         Element elem = new Element("icons");
         elem.addContent(storeIcon("closed", p.getIcon("TurnoutStateClosed")));
         elem.addContent(storeIcon("thrown", p.getIcon("TurnoutStateThrown")));
         elem.addContent(storeIcon("unknown", p.getIcon("BeanStateUnknown")));
         elem.addContent(storeIcon("inconsistent", p.getIcon("BeanStateInconsistent")));
+        element.addContent(elem);
+        elem = new Element("iconmaps");
+        String family = p.getFamily();
+        if (family!=null) {
+            elem.setAttribute("family", family);
+        }
         element.addContent(elem);
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.TurnoutIconXml");
@@ -114,6 +112,9 @@ public class TurnoutIconXml extends PositionableLabelXml {
                 if (log.isDebugEnabled()) log.debug("setIcon for state \""+state+
                                                     "\" and "+_nameMap.get(state));
                 NamedIcon icon = loadIcon(l, state, elem);
+                if (icon==null) {
+                    return;
+                }
                 l.setIcon(_nameMap.get(state), icon);
             }
             log.debug(states.size()+" icons loaded for "+l.getNameString());
@@ -128,6 +129,13 @@ public class TurnoutIconXml extends PositionableLabelXml {
             loadTurnoutIcon("closed", rotation, l, element, name);
             loadTurnoutIcon("unknown", rotation, l,element, name);
             loadTurnoutIcon("inconsistent", rotation, l,element, name);
+        }
+        Element elem = element.getChild("iconmaps");
+        if (elem!=null) {
+            Attribute attr = elem.getAttribute("family");
+            if (attr!=null) {
+                l.setFamily(attr.getValue());
+            }
         }
             
         p.putItem(l);

@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -123,8 +123,10 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         
         NamedIcon icon = loadIcon( l,"active", element);
         if (icon!=null) { l.setActiveIcon(icon); }
+        else { return; }
         icon = loadIcon( l,"error", element);
         if (icon!=null) { l.setErrorIcon(icon); }
+        else { return; }
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);

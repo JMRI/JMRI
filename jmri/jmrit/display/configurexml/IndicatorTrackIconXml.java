@@ -6,20 +6,23 @@ import jmri.Sensor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map.Entry;
+
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.display.IndicatorTrackIcon;
 
+import org.jdom.Attribute;
 import org.jdom.Element;
-import java.util.List;
 
 /**
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -62,11 +65,26 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         Hashtable<String, NamedIcon> iconMap = p.getIconMap();
         Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
         elem = new Element("iconmap");
+        String family = p.getFamily();
+        if (family!=null) {
+            elem.setAttribute("family", family);
+        }
         while (it.hasNext()) {
             Entry<String, NamedIcon> entry = it.next();
             elem.addContent(storeIcon(entry.getKey(), entry.getValue()));
         }
         element.addContent(elem);
+
+        elem = new Element("paths");
+        Iterator<String> iter = p.getPaths();
+        if (iter!=null) {
+            while (iter.hasNext()) {
+                Element e = new Element("path");
+                e.addContent(iter.next());
+                elem.addContent(e);
+            }
+            element.addContent(elem);
+        }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.IndicatorTrackIconXml");
 
@@ -115,13 +133,32 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         }
         
         Element elem = element.getChild("iconmap");
-        @SuppressWarnings("unchecked")
-        List<Element>status = elem.getChildren();
-        if (status.size()>0) {
-            for (int i=0; i<status.size(); i++) {
-                NamedIcon icon = loadIcon(l, status.get(i).getName(), elem);
-                l.setIcon(status.get(i).getName(), icon);
+        if (elem!=null) {
+            @SuppressWarnings("unchecked")
+            List<Element>status = elem.getChildren();
+            if (status.size()>0) {
+                for (int i=0; i<status.size(); i++) {
+                    NamedIcon icon = loadIcon(l, status.get(i).getName(), elem);
+                    if (icon==null) {
+                        return;
+                    }
+                    l.setIcon(status.get(i).getName(), icon);
+                }
             }
+            Attribute attr = elem.getAttribute("family");
+            if (attr!=null) {
+                l.setFamily(attr.getValue());
+            }
+        }
+        elem = element.getChild("paths");
+        if (elem!=null) {
+            ArrayList<String> paths = new ArrayList<String>();
+            @SuppressWarnings("unchecked")
+            List<Element>pth = elem.getChildren();
+            for (int i=0; i<pth.size(); i++) {
+                paths.add(pth.get(i).getText());
+            }
+            l.setPaths(paths);
         }
             
         l.updateSize();

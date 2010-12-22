@@ -3,23 +3,25 @@ package jmri.jmrit.display.configurexml;
 import jmri.NamedBean;
 import jmri.Sensor;
 import jmri.Turnout;
-
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.IndicatorTurnoutIcon;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.logix.OBlock;
 
+import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Map.Entry;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.IndicatorTurnoutIcon;
-import org.jdom.Element;
 import java.util.List;
+
+import org.jdom.Attribute;
+import org.jdom.Element;
 
 /**
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -66,6 +68,10 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = p.getIconMaps();
         Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = iconMaps.entrySet().iterator();
         Element el = new Element("iconmaps");
+        String family = p.getFamily();
+        if (family!=null) {
+            el.setAttribute("family", family);
+        }
         while (it.hasNext()) {
             Entry<String, Hashtable<Integer, NamedIcon>> ent = it.next();
             elem = new Element(ent.getKey());
@@ -77,6 +83,17 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
             el.addContent(elem);
         }
         element.addContent(el);
+
+        elem = new Element("paths");
+        Iterator<String> iter = p.getPaths();
+        if (iter!=null) {
+            while (iter.hasNext()) {
+                Element e = new Element("path");
+                e.addContent(iter.next());
+                elem.addContent(e);
+            }
+            element.addContent(elem);
+        }
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.IndicatorTurnoutIconXml");
 
@@ -131,18 +148,37 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         }
         
         Element elem = element.getChild("iconmaps");
-        @SuppressWarnings("unchecked")
-        List<Element>maps = elem.getChildren();
-        if (maps.size()>0) {
-            for (int i=0; i<maps.size(); i++) {
-                String status = maps.get(i).getName();
-                @SuppressWarnings("unchecked")
-                List<Element>states = maps.get(i).getChildren();
-                for (int k=0; k<states.size(); k++) {
-                    NamedIcon icon = loadIcon(l, states.get(k).getName(), maps.get(i));
-                    l.setIcon(status, states.get(k).getName(), icon);
+        if (elem!=null) {
+            @SuppressWarnings("unchecked")
+            List<Element>maps = elem.getChildren();
+            if (maps.size()>0) {
+                for (int i=0; i<maps.size(); i++) {
+                    String status = maps.get(i).getName();
+                    @SuppressWarnings("unchecked")
+                    List<Element>states = maps.get(i).getChildren();
+                    for (int k=0; k<states.size(); k++) {
+                        NamedIcon icon = loadIcon(l, states.get(k).getName(), maps.get(i));
+                        if (icon==null) {
+                            return;
+                        }
+                        l.setIcon(status, states.get(k).getName(), icon);
+                    }
                 }
             }
+            Attribute attr = elem.getAttribute("family");
+            if (attr!=null) {
+                l.setFamily(attr.getValue());
+            }
+        }
+        elem = element.getChild("paths");
+        if (elem!=null) {
+            ArrayList<String> paths = new ArrayList<String>();
+            @SuppressWarnings("unchecked")
+            List<Element>pth = elem.getChildren();
+            for (int i=0; i<pth.size(); i++) {
+                paths.add(pth.get(i).getText());
+            }
+            l.setPaths(paths);
         }
             
         l.updateSize();

@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.59 $
+ * @version $Revision: 1.60 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -162,8 +162,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         		icon = getNamedIcon("icon", element);
         	}else{
         		icon = NamedIcon.getIconByName(name);
-//                if (log.isDebugEnabled()) log.debug("icon "+(icon==null?"NOT":"")+" found.");
+                if (icon==null) {
+                    log.error("getIconByName: icon not found for url= "+name);
+                }
         	}
+            if (icon==null) {
+                return;
+            }
             l = new PositionableLabel(icon, editor);
             l.setPopupUtility(null);        // no text 
             try {
@@ -178,6 +183,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 NamedIcon nIcon = loadIcon(l,"icon", element); 
                 if (nIcon!=null) {
                     l.updateIcon(nIcon);
+                } else {
+                    return;
                 }
             } else {   // for very old files 
                 if (icon!=null) {
@@ -417,8 +424,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         if (elem != null) {
             String name = elem.getAttribute("url").getValue();
             icon = NamedIcon.getIconByName(name);
+            if (icon==null) {
+                log.error("getNamedIcon: \""+attrName+"\" not found for url= "+name);
+            }
         } else {
-            log.debug("getNamedIcon: \""+attrName+"\" not found");
+            log.error("getNamedIcon: \""+attrName+"\" not found in element "+element.getName());
         }
         return icon;
     }
