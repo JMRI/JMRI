@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.2 2010-12-18 02:12:35 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.3 2010-12-22 06:07:54 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -106,11 +106,41 @@ New operations features:
 <ul>
 <li>Users can now modify the train timetable.
 <li>Change switch list valid date to 24 hour clock
-<li>
+<li>Code now checks the train's direction when determining a track for engines and cabooses.
+<li>Added "Modify Location by Car Type" tool to the location window.
+<li>Fixed operations bug introduced in 2.11.2.  When parsing a location or track name, if a name ends with "-x" the -x should be dropped if x is a number. 
+
 </ul>
 
 <p>
 Pete Cressman added support for invisible icons on panels
+
+<p>
+Lionel Jeanson updated the JMRI mini web server
+index.html with entries to prefs/roster.xml and web/roster.html
+ALso, added automatic creation of function buttons from the JMRI roster 
+to the web throttles application, including lockable buttons.
+
+<p>
+Dan Boudreau and Ken Cameron updated the NCE support to
+allow more than one NCE connection.
+
+<p>
+Dan Boudreau fixed a bug with configuring multiple port options.
+
+<p>
+Paul Bender updated how the throttles handle notifications internally.
+
+<p>
+Ken Cameron updated the main window to 
+show connection name for each line. 
+Nice confirmation for multiple connections.
+
+<p>
+Dan Boudreau added a warning when trying to load an icon with a bad url
+
+
+
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
