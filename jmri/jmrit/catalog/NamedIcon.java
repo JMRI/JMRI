@@ -27,7 +27,7 @@ import javax.swing.ImageIcon;
  * @see jmri.jmrit.display.configurexml.PositionableLabelXml
  * @author Bob Jacobsen  Copyright 2002, 2008
  * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class NamedIcon extends ImageIcon {
@@ -67,7 +67,7 @@ public class NamedIcon extends ImageIcon {
      */
     public NamedIcon(String pUrl, String pName) {
         super(jmri.util.FileUtil.getExternalFilename(pUrl));
-    	File fp = new File(pUrl);
+    	File fp = new File(jmri.util.FileUtil.getExternalFilename(pUrl));
     	if (!fp.exists()){
     		log.warn("Could not load image from "+pUrl);
     	}
