@@ -96,6 +96,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     private boolean _debug = false;
+    private boolean _loadFailed = false;
 
     boolean showCloseInfoMessage = true;	//display info message when closing panel
     
@@ -164,6 +165,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _debug = log.isDebugEnabled();
         _defaultToolTip = new ToolTip(null, 0, 0);
         setVisible(false);
+    }
+
+    public void loadFailed() {
+        _loadFailed = true;
+    }
+    public boolean loadOK() {
+        return !_loadFailed;
     }
     
     public List <Positionable> getContents() {
