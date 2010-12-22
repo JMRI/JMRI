@@ -296,7 +296,7 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
             _pathList.removeListSelectionListener(this);
         }
         _block = block;
-        _pathList = new JList(new PathListModel(block.getPaths()));
+        _pathList = new JList(new PathListModel());
         _pathList.addListSelectionListener(this);
         _pathList.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _pathList.setToolTipText(ItemPalette.rbp.getString("ToolTipSelectPathIcons"));
@@ -305,10 +305,12 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         _blockPathPanel.validate();
     }
 
+    //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SIC_INNER_SHOULD_BE_STATIC")
+    // passing just the path list instead of using _block saves a call 
     class PathListModel extends DefaultListModel {
         List _paths;
-        PathListModel(List paths) {
-            _paths = paths;
+        PathListModel() {
+            _paths = _block.getPaths();
         }
         public int getSize() {
 //            if (log.isDebugEnabled()) log.debug("PathListModel getSize()="+_paths.size());

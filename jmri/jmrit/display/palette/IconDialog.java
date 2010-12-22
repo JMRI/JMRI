@@ -419,14 +419,14 @@ public class IconDialog extends ItemDialog {
             DropJLabel label = (DropJLabel)target.getComponent();
             if (log.isDebugEnabled()) log.debug("accept drop for "+label.getName()+
                                                  ", "+newIcon.getURL());
-            newIcon.reduceTo(100, 100, 0.2);
-            label.setIcon(newIcon);
             if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
                 label.setText(ItemPalette.rbp.getString("invisibleIcon"));
                 label.setForeground(Color.lightGray);
             } else {
                 label.setText(null);
             }
+            newIcon.reduceTo(100, 100, 0.2);
+            label.setIcon(newIcon);
             _catalog.setBackground(label);
             _iconMap.put(label.getName(), newIcon);
             e.dropComplete(true);

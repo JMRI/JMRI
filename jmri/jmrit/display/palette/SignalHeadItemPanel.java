@@ -107,7 +107,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
 
         Hashtable<String, NamedIcon> iconMap = getFilteredIconMap();
         if (iconMap==null) {
-            iconMap = iconMap = ItemPalette.getIconMap(_itemType, _family);
+            iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
                 _updateButton.setEnabled(false);
                 _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
