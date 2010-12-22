@@ -12,7 +12,7 @@ import org.jdom.Attribute;
  * Handle configuration for display.MemorySpinnerIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class MemoryInputIconXml extends PositionableLabelXml {
 
@@ -71,6 +71,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         Attribute attr = element.getAttribute("memory"); 
         if (attr == null) {
             log.error("incorrect information for a memory location; must use memory name");
+            p.loadFailed();
             return;
         } else {
             name = attr.getValue();
@@ -82,6 +83,7 @@ public class MemoryInputIconXml extends PositionableLabelXml {
             l.setMemory(new NamedBeanHandle<Memory>(name, m));
         } else {
             log.error("Memory named '"+attr.getValue()+"' not found.");
+            p.loadFailed();
             return;
         }
         

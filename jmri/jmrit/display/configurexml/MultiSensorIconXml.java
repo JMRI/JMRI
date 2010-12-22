@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -92,6 +92,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     String name = item.getAttribute("url").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (icon==null) {
+                        pe.loadFailed();
                         return;
                     }
                     try {
@@ -119,6 +120,7 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     String name = item.getAttribute("icon").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (icon==null) {
+                        pe.loadFailed();
                         return;
                     }
                     if (rotation!=0) icon.setRotation(rotation, l);

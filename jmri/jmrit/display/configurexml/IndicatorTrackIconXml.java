@@ -22,7 +22,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTrackIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class IndicatorTrackIconXml extends PositionableLabelXml {
 
@@ -140,6 +140,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
                 for (int i=0; i<status.size(); i++) {
                     NamedIcon icon = loadIcon(l, status.get(i).getName(), elem);
                     if (icon==null) {
+                        p.loadFailed();
                         return;
                     }
                     l.setIcon(status.get(i).getName(), icon);

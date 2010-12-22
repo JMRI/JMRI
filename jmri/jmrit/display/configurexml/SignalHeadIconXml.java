@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -127,6 +127,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         Attribute attr = element.getAttribute("signalhead"); 
         if (attr == null) {
             log.error("incorrect information for signal head; must use signalhead name");
+            ed.loadFailed();
             return;
         } else {
             name = attr.getValue();
@@ -138,6 +139,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
+            ed.loadFailed();
             return;
         }
         int rotation = 0;
@@ -163,6 +165,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
                 String aspect = aspects.get(i).getName();
                 NamedIcon icon = loadIcon(l, aspect, elem);
                 if (icon==null) {
+                    ed.loadFailed();
                     return;
                 }
                 l.setIcon(_nameMap.get(aspect), icon);
@@ -174,42 +177,49 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateRed"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("yellow", rotation, l, element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateYellow"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("green", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateGreen"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("lunar", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateLunar"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("held", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateHeld"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("dark", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateDark"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("flashred", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("flashyellow", rotation,l,element);
@@ -217,18 +227,21 @@ public class SignalHeadIconXml extends PositionableLabelXml {
                 l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), icon);
 
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("flashgreen", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
             icon = loadSignalIcon("flashlunar", rotation,l,element);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), icon);
             } else {
+                ed.loadFailed();
                 return;
             }
         }      

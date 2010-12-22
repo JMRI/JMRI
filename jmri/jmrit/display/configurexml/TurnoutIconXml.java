@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -84,6 +84,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
             name=element.getAttribute("turnout").getValue();
         } catch ( NullPointerException e) { 
             log.error("incorrect information for turnout; must use turnout name");
+            p.loadFailed();
             return;
         }
         l.setTurnout(name);
@@ -113,6 +114,7 @@ public class TurnoutIconXml extends PositionableLabelXml {
                                                     "\" and "+_nameMap.get(state));
                 NamedIcon icon = loadIcon(l, state, elem);
                 if (icon==null) {
+                    p.loadFailed();
                     return;
                 }
                 l.setIcon(_nameMap.get(state), icon);

@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -86,15 +86,6 @@ public class MemoryIconXml extends PositionableLabelXml {
     @SuppressWarnings("unchecked")
 	public void load(Element element, Object o) {
 
-        String name;
-        Attribute attr = element.getAttribute("memory"); 
-        if (attr == null) {
-            log.error("incorrect information for a memory location; must use memory name");
-            return;
-        } else {
-            name = attr.getValue();
-        }
-
 		Editor ed = null;
         MemoryIcon l;
 		if (o instanceof LayoutEditor) {
@@ -108,14 +99,26 @@ public class MemoryIconXml extends PositionableLabelXml {
         }
         else {
 			log.error("Unrecognizable class - "+o.getClass().getName());
+            ed.loadFailed();
             return;
 		}
+
+        String name;
+        Attribute attr = element.getAttribute("memory"); 
+        if (attr == null) {
+            log.error("incorrect information for a memory location; must use memory name");
+            ed.loadFailed();
+            return;
+        } else {
+            name = attr.getValue();
+        }
 
         Memory m = jmri.InstanceManager.memoryManagerInstance().getMemory(name);
         if (m!=null) {
             l.setMemory(new NamedBeanHandle<Memory>(name, m));
         } else {
             log.error("Memory named '"+attr.getValue()+"' not found.");
+            ed.loadFailed();
             return;
         }
         

@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -167,6 +167,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 }
         	}
             if (icon==null) {
+                editor.loadFailed();
                 return;
             }
             l = new PositionableLabel(icon, editor);
@@ -184,6 +185,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 if (nIcon!=null) {
                     l.updateIcon(nIcon);
                 } else {
+                    editor.loadFailed();
                     return;
                 }
             } else {   // for very old files 
@@ -213,6 +215,7 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     log.debug("\t\t"+e.getName()+" = \""+e.getValue()+"\"");
                 }
             }
+            editor.loadFailed();
         	return;
         }
         editor.putItem(l);

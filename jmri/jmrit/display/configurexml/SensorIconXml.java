@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.51 $
+ * @version $Revision: 1.52 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -149,6 +149,7 @@ public class SensorIconXml extends PositionableLabelXml {
         Attribute attr = element.getAttribute("sensor"); 
         if (attr == null) {
             log.error("incorrect information for sensor; must use sensor name");
+            ed.loadFailed();
             return;
         } else {
             name = attr.getValue();
@@ -180,24 +181,28 @@ public class SensorIconXml extends PositionableLabelXml {
         if (icon!=null) {
             l.setActiveIcon(icon);
         } else {
+            ed.loadFailed();
             return;
         }
         icon = loadSensorIcon("inactive", rotation, l, element, name);
         if (icon!=null) {
             l.setInactiveIcon(icon);
         } else {
+            ed.loadFailed();
             return;
         }
         icon = loadSensorIcon("unknown", rotation, l,element, name);
         if (icon!=null) {
             l.setUnknownIcon(icon);
         } else {
+            ed.loadFailed();
             return;
         }
         icon = loadSensorIcon("inconsistent", rotation, l,element, name);
         if (icon!=null) {
             l.setActiveIcon(icon);
         } else {
+            ed.loadFailed();
             return;
         }
         Element elem = element.getChild("iconmaps");
