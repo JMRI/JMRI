@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -385,50 +385,50 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                 int deg = 0;
                 double scale = 1.0;
             	Element elem = element.getChild(attrName);
-                Attribute a = elem.getAttribute("degrees");
-                if (a!=null) {
-                    deg = a.getIntValue();
-                }
-                a =  elem.getAttribute("scale");
-                if (a!=null) {
-                    scale = elem.getAttribute("scale").getDoubleValue();
-                }
-                icon.setLoad(deg, scale, l);
-                if ( deg==0) {
-                    // "rotate" attribute is JMRI 2.9.3 and before
-                    a = elem.getAttribute("rotate");
+                if (elem!=null) {
+                    Attribute a = elem.getAttribute("degrees");
                     if (a!=null) {
-                        int rotation = a.getIntValue();
-                        // 2.9.3 and before, only unscaled icons rotate
-                        if (scale == 1.0) icon.setRotation(rotation, l);
+                        deg = a.getIntValue();
                     }
-                    // "rotation" element is JMRI 2.9.4 and after
-                    Element e = elem.getChild("rotation");
-                    if (e!=null) {
-                        // ver 2.9.4 allows orthogonal rotations of scaled icons
-                        int rotation = Integer.parseInt(e.getText());
-                        icon.setRotation(rotation, l);
+                    a =  elem.getAttribute("scale");
+                    if (a!=null) {
+                        scale = elem.getAttribute("scale").getDoubleValue();
+                    }
+                    icon.setLoad(deg, scale, l);
+                    if ( deg==0) {
+                        // "rotate" attribute is JMRI 2.9.3 and before
+                        a = elem.getAttribute("rotate");
+                        if (a!=null) {
+                            int rotation = a.getIntValue();
+                            // 2.9.3 and before, only unscaled icons rotate
+                            if (scale == 1.0) icon.setRotation(rotation, l);
+                        }
+                        // "rotation" element is JMRI 2.9.4 and after
+                        Element e = elem.getChild("rotation");
+                        if (e!=null) {
+                            // ver 2.9.4 allows orthogonal rotations of scaled icons
+                            int rotation = Integer.parseInt(e.getText());
+                            icon.setRotation(rotation, l);
+                        }
                     }
                 }
             } catch (org.jdom.DataConversionException dce) {}
-        } else {
-            log.debug("icon \""+attrName+"\" for \""+l.getName()+"\" not found.");
         }
         return icon;
     }
     
     
-    protected NamedIcon getNamedIcon(String attrName, Element element){
+    protected NamedIcon getNamedIcon(String childName, Element element){
         NamedIcon icon = null;
-        Element elem = element.getChild(attrName);
+        Element elem = element.getChild(childName);
         if (elem != null) {
             String name = elem.getAttribute("url").getValue();
             icon = NamedIcon.getIconByName(name);
             if (icon==null) {
-                log.error("getNamedIcon: \""+attrName+"\" not found for url= "+name);
+                log.error("getNamedIcon: element \""+childName+"\" icon not found for Attribute \"url\"= "+name);
             }
         } else {
-            log.error("getNamedIcon: \""+attrName+"\" not found in element "+element.getName());
+            log.debug("getNamedIcon: child element \""+childName+"\" not found in element "+element.getName());
         }
         return icon;
     }
