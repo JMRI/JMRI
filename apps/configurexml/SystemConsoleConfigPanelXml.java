@@ -25,7 +25,7 @@ import org.jdom.Element;
  * <P>
  *
  * @author Matthew Harris  copyright (c) 2010
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  * @see apps.SystemConsoleConfigPanel
  */
 public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAdapter {
@@ -82,6 +82,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      * @return true if successful
       */
     public boolean load(Element e) {
+        boolean result = true;
         String value;
         Element ce;
 
@@ -132,11 +133,17 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
                         Integer.parseInt(ce.getAttributeValue("height")));
             }
 
-            return true;
+            result = true;
         } catch (Exception ex) {
             log.error("Exception while setting System Console parameters: "+ex);
-            return false;
+            result = false;
         }
+
+        // As we've had a load request, register the system console with the
+        // preference manager
+        jmri.InstanceManager.configureManagerInstance().registerPref(new SystemConsoleConfigPanel());
+
+        return result;
     }
 
     /**
