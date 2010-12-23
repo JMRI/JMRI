@@ -8,6 +8,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import java.awt.Font;
 import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import jmri.util.PythonInterp;
 
 /**
@@ -15,7 +16,7 @@ import jmri.util.PythonInterp;
  * global jython interpreter
  *
  * @author	Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class InputWindow extends JPanel {
 
@@ -24,18 +25,19 @@ public class InputWindow extends JPanel {
 
     public InputWindow() {
         java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
-        setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
         
         area = new JTextArea(12, 50);
         JScrollPane js = new JScrollPane(area);
         js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        add(js);
+        add(js, BorderLayout.CENTER);
         
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(button = new JButton(rb.getString("ButtonExecute")));
-        add(p);
+        add(p, BorderLayout.SOUTH);
         
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
