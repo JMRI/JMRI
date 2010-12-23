@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * JUnit tests for the NceMessage class
  * @author			Bob Jacobsen Copyright 2002-2004
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 
 public class NceMessageTest extends TestCase {
@@ -24,7 +24,10 @@ public class NceMessageTest extends TestCase {
     }
     
     public void tearDown() {
+    	tc.commandOptionSet = false;	// kill warning message
         tc.setCommandOptions(saveCommandOptions);
+        Assert.assertTrue("Command has been set", tc.commandOptionSet);
+        tc.commandOptionSet = false;	// kill warning message
     }
     
 	public void testCreate() {
