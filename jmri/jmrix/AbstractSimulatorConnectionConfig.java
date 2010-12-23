@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
 
 //
@@ -134,7 +134,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         if(adapter.getSystemConnectionMemo()!=null){
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
-            NUMOPTIONS=NUMOPTIONS+2;
         }
     	
         opt1List = adapter.validOption1();
@@ -151,7 +150,6 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         for (int i=0; i<opt2List.length; i++) opt2Box.addItem(opt2List[i]);
 
         if (opt1List.length>1) {
-            NUMOPTIONS++;
             opt1Box.setToolTipText("The first option is strongly recommended. See README for more info.");
             opt1Box.setEnabled(true);
             opt1Box.setSelectedItem(adapter.getCurrentOption1Setting());
@@ -160,10 +158,9 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             opt1Box.setEnabled(false);
         }
         if (opt2List.length>1) {
-            NUMOPTIONS++;
             opt2Box.setToolTipText("");
             opt2Box.setEnabled(true);
-            opt2Box.setSelectedItem(adapter.getCurrentOption1Setting());
+            opt2Box.setSelectedItem(adapter.getCurrentOption2Setting());
         } else {
             opt2Box.setToolTipText("There are no options for this protocol");
             opt2Box.setEnabled(false);
@@ -184,22 +181,14 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     
     protected void showAdvancedItems(){
         _details.removeAll();
-        int stdrows = 0;
-        boolean incAdvancedOptions=true;
-        if ((!isOptList1Advanced())&&(opt1List.length>1)) stdrows++;
-        if ((!isOptList2Advanced())&&(opt2List.length>1)) stdrows++;
-        if(adapter.getSystemConnectionMemo()!=null) stdrows=stdrows+2;
-        if (stdrows == NUMOPTIONS){
-            incAdvancedOptions=false;
-        } else{
-            stdrows++;
-        }
+        _details.setLayout(new GridLayout(0,2));	// 0 = any number of rows
+        boolean incAdvancedOptions=false;
+        if ((!isOptList1Advanced())&&(opt1List.length>1)) incAdvancedOptions=true;
+        if ((!isOptList2Advanced())&&(opt2List.length>1)) incAdvancedOptions=true;
+
+        addStandardDetails(incAdvancedOptions);
+        
         if (showAdvanced.isSelected()) {
-            int advrows = stdrows;
-            if ((isOptList1Advanced())&&(opt1List.length>1)) advrows++;
-            if ((isOptList2Advanced())&&(opt2List.length>1)) advrows++;
-            _details.setLayout(new GridLayout(advrows,2));
-            addStandardDetails(incAdvancedOptions);
             if ((isOptList1Advanced())&&(opt1List.length>1)) {
                 _details.add(opt1BoxLabel = new JLabel(adapter.option1Name()));
                 _details.add(opt1Box);
@@ -207,10 +196,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             if ((isOptList2Advanced())&&(opt2List.length>1)) {
                 _details.add(opt2BoxLabel = new JLabel(adapter.option2Name()));
                 _details.add(opt2Box);
-            }
-        } else {
-            _details.setLayout(new GridLayout(stdrows,2));
-            addStandardDetails(incAdvancedOptions);
+            }           
         }
         _details.validate();
         if (_details.getTopLevelAncestor()!=null)
