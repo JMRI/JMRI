@@ -28,7 +28,7 @@ import java.text.DecimalFormat;
  * <P>
  *
  * @author      Bob Jacobsen Copyright (C) 2006
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class BlockManager extends AbstractManager
     implements java.beans.PropertyChangeListener {
@@ -39,6 +39,12 @@ public class BlockManager extends AbstractManager
 
     public String getSystemPrefix() { return "I"; }
     public char typeLetter() { return 'B'; }
+    
+    private boolean saveBlockPath = true;
+    
+    public boolean savePathInfo() { return saveBlockPath; }
+    
+    public void savePathInfo(boolean save) { saveBlockPath=save; }
     
     /**
      * Method to create a new Block if it does not exist

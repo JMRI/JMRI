@@ -18,6 +18,9 @@ import javax.swing.JTextField;
 import javax.swing.JComboBox;
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import jmri.util.JmriJFrame;
 
@@ -26,7 +29,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -235,6 +238,22 @@ public class BlockTableAction extends AbstractTableAction {
 				}
 			});
 	}
+    
+    public void setMenuBar(BeanTableFrame f){
+        final jmri.util.JmriJFrame finalF = f;			// needed for anonymous ActionListener class
+        JMenuBar menuBar = f.getJMenuBar();
+        JMenu pathMenu = new JMenu("Paths");
+        menuBar.add(pathMenu);
+        JMenuItem item = new JMenuItem("Delete Paths...");
+        pathMenu.add(item);
+        item.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+                    deletePaths(finalF);
+        	}
+            });
+    
+    }
+    
 	private void inchBoxChanged() {
 		centimeterBox.setSelected(!inchBox.isSelected());
 		m.fireTableDataChanged();  // update view
@@ -355,6 +374,25 @@ public class BlockTableAction extends AbstractTableAction {
     }
     //private boolean noWarn = false;
 
+    
+    void deletePaths(jmri.util.JmriJFrame f) {
+		// Set option to prevent the path information from being saved.
+        
+        Object[] options = {"Remove",
+                    "Keep"};
+
+        int retval = JOptionPane.showOptionDialog(f, rb.getString("BlockPathMessage"), rb.getString("BlockPathSaveTitle"),
+                                                  JOptionPane.YES_NO_OPTION,
+                                                  JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+        if (retval != 0) {
+            InstanceManager.blockManagerInstance().savePathInfo(true);
+            log.info("Requested to save path information via Block Menu.");
+        } else {
+            InstanceManager.blockManagerInstance().savePathInfo(false);
+            log.info("Requested not to save path information via Block Menu.");
+        }
+
+    }
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
 }
 

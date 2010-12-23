@@ -25,7 +25,7 @@ import org.jdom.Element;
  * in the path elements.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  * @since 2.1.2
  *
  */
@@ -102,11 +102,13 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
                     elem.addContent(se);
                 }
                 
-                // then the paths
-                List<Path> paths = b.getPaths();
-                for (int i=0; i<paths.size(); i++)
-                    addPath(elem, paths.get(i));
-                // and put this element out
+                if(tm.savePathInfo()){
+                    // then the paths
+                    List<Path> paths = b.getPaths();
+                    for (int i=0; i<paths.size(); i++)
+                        addPath(elem, paths.get(i));
+                    // and put this element out
+                }
                 blocks.addContent(elem);
             }
         }
