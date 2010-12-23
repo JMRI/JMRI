@@ -23,7 +23,7 @@ import javax.swing.JPanel;
  * in due course.
  *
  * @author      Kevin Dickerson   Copyright (C) 2001, 2003
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  */
 
 //
@@ -116,8 +116,12 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
      */
     abstract protected void setInstance();
 
+    /**
+     * Returns the port the simulator is connected to
+     * which is "none";
+     */
     public String getInfo() {
-        return "Simulator";
+        return rb.getString("none");
     }
 
     static java.util.ResourceBundle rb = 
