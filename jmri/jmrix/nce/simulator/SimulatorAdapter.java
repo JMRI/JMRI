@@ -123,9 +123,9 @@ import java.io.IOException;
 <<<<<<< SimulatorAdapter.java
  * converting to multiple connection
  * @author kcameron Copyright (C) 2010
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
 =======
- * @version			$Revision: 1.14 $
+ * @version			$Revision: 1.15 $
 >>>>>>> 1.12
  */
 public class SimulatorAdapter extends NcePortController implements
@@ -231,6 +231,10 @@ public class SimulatorAdapter extends NcePortController implements
 	public String[] validBaudRates() {
 		log.debug("validBaudRates should not have been invoked");
 		return null;
+	}
+
+	public String getCurrentBaudRate() {
+		return "";
 	}
 
 	public void run() { // start a new thread
