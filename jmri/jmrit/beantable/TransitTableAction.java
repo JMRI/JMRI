@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 
 
@@ -137,9 +137,18 @@ public class TransitTableAction extends AbstractTableAction {
 
     		public void setValueAt(Object value, int row, int col) {
  				if (col == EDITCOL) {
-					// set up to edit
-					String sName = (String) getValueAt(row, SYSNAMECOL);
-					editPressed(sName);
+                     class WindowMaker implements Runnable {
+                        int row;
+                        WindowMaker(int r){
+                            row = r;
+                        }
+                        public void run() {
+                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            editPressed(sName);
+                        }
+                    }
+                    WindowMaker t = new WindowMaker(row);
+					javax.swing.SwingUtilities.invokeLater(t);
 				} 
  				else if (col == DUPLICATECOL) {
 					// set up to duplicate

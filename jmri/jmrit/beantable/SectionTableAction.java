@@ -44,7 +44,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -147,9 +147,18 @@ public class SectionTableAction extends AbstractTableAction {
 					return;
 				}
 				else if (col == EDITCOL) {
-					// set up to edit
-					String sName = (String) getValueAt(row, SYSNAMECOL);
-					editPressed(sName);
+                    class WindowMaker implements Runnable {
+                        int row;
+                        WindowMaker(int r){
+                            row = r;
+                        }
+                        public void run() {
+                            String sName = (String) getValueAt(row, SYSNAMECOL);
+                            editPressed(sName);
+                        }
+                    }
+                    WindowMaker t = new WindowMaker(row);
+					javax.swing.SwingUtilities.invokeLater(t);
 				} 
 				else super.setValueAt(value, row, col);
     		}
