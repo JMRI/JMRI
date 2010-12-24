@@ -316,6 +316,7 @@ public class ThrottleWindow extends JmriJFrame {
      */
     private void initializeMenu() {       
 		JMenu fileMenu = new JMenu(throttleBundle.getString("ThrottleFileMenu"));
+        
 		JMenuItem fileMenuLoad = new JMenuItem(throttleBundle.getString("ThrottleFileMenuLoadThrottle"));
 		fileMenuLoad.addActionListener(new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -334,7 +335,7 @@ public class ThrottleWindow extends JmriJFrame {
 				getCurentThrottleFrame().saveThrottleAs();
 			}
 		});
-
+        fileMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(throttleBundle.getString("MenuItemNewThrottle" )));
 		fileMenu.add(fileMenuLoad);
 		fileMenu.add(fileMenuSave);
 		fileMenu.add(fileMenuSaveAs);
