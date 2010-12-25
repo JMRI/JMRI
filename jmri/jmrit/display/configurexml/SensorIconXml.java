@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.52 $
+ * @version $Revision: 1.53 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -200,7 +200,7 @@ public class SensorIconXml extends PositionableLabelXml {
         }
         icon = loadSensorIcon("inconsistent", rotation, l,element, name);
         if (icon!=null) {
-            l.setActiveIcon(icon);
+            l.setInconsistentIcon(icon);
         } else {
             ed.loadFailed();
             return;
