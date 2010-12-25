@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.63 $
+ * @version $Revision: 1.64 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -173,6 +173,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             // allow null icons for now
             l = new PositionableLabel(icon, editor);
             l.setPopupUtility(null);        // no text
+            try {
+                Attribute a = element.getAttribute("rotate");
+                if (a!=null && icon!=null) {
+                    int rotation = element.getAttribute("rotate").getIntValue();
+                    icon.setRotation(rotation, l);
+                }
+            } catch (org.jdom.DataConversionException e) {}
 
             if (name.equals("yes")) {
                 NamedIcon nIcon = loadIcon(l,"icon", element, "PositionableLabel ", editor); 
@@ -182,19 +189,13 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
                     log.info("PositionableLabel icon removed for url= "+name);
                     return;
                 }
-            }
-            if (icon==null) {
-                log.info("PositionableLabel icon removed for url= "+name);
-                return;
             } else {
-                try {
-                    Attribute a = element.getAttribute("rotate");
-                    if (a!=null) {
-                        int rotation = element.getAttribute("rotate").getIntValue();
-                        icon.setRotation(rotation, l);
-                    }
-                } catch (org.jdom.DataConversionException e) {}
-                l.updateIcon(icon);
+                if (icon==null) {
+                    log.info("PositionableLabel icon removed for url= "+name);
+                    return;
+                } else {
+                    l.updateIcon(icon);
+                }
             }
 
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);

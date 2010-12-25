@@ -21,7 +21,7 @@ import org.jdom.Element;
  * Handle configuration for display.IndicatorTurnoutIconXml objects.
  *
  * @author Pete Cressman Copyright: Copyright (c) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class IndicatorTurnoutIconXml extends PositionableLabelXml {
 
@@ -157,12 +157,13 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
                     @SuppressWarnings("unchecked")
                     List<Element>states = maps.get(i).getChildren();
                     for (int k=0; k<states.size(); k++) {
+                        String msg = "IndicatorTurnout \""+l.getNameString()+"\" icon \""+states.get(k).getName()+"\" ";
                         NamedIcon icon = loadIcon(l, states.get(k).getName(), maps.get(i),
-                                                  "IndicatorTurnout \""+name+"\" ", p);
+                                                  msg, p);
                         if (icon!=null) {
                             l.setIcon(status, states.get(k).getName(), icon);
                         } else {
-                            log.info("IndicatorTurnout \""+name+"\" icon removed for url= "+name);
+                            log.info(msg+" removed for url= "+name);
                             return;
                         }
                     }

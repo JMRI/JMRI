@@ -13,7 +13,7 @@ import java.util.List;
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.54 $
+ * @version $Revision: 1.55 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
@@ -233,15 +233,14 @@ public class SensorIconXml extends PositionableLabelXml {
                     if (icon==null) {
                         log.info(msg+" removed for url= "+iconName);
                     }
-                }
-                if (icon!=null) {
+                } else {
                     icon.setRotation(rotation, l);
                 }
             }
             else log.warn("did not locate " + state + " icon file for "+name);
         }
         if (icon==null) {
-            log.info("Sensor Icon \""+name+"\": icon \""+state+"\" removed");
+            log.info(msg+" removed");
         }
         return icon;
     }

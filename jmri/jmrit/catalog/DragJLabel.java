@@ -34,13 +34,13 @@ import java.io.IOException;
  */
  public class DragJLabel extends JLabel implements DragGestureListener, DragSourceListener, Transferable {    
 
-     DataFlavor dataFlavor;
+     DataFlavor _dataFlavor;
      public DragJLabel(DataFlavor flavor) {
          super();
          DragSource dragSource = DragSource.getDefaultDragSource();
          dragSource.createDefaultDragGestureRecognizer(this,
                      DnDConstants.ACTION_COPY, this);
-         dataFlavor = flavor;
+         _dataFlavor = flavor;
      }
 
      /**************** DragGestureListener ***************/
@@ -68,16 +68,23 @@ import java.io.IOException;
      /*************** Transferable *********************/
      public DataFlavor[] getTransferDataFlavors() {
          //if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferDataFlavors ");
-         return new DataFlavor[] { dataFlavor };
+         return new DataFlavor[] { _dataFlavor, DataFlavor.stringFlavor };
      }
      public boolean isDataFlavorSupported(DataFlavor flavor) {
          //if (log.isDebugEnabled()) log.debug("DragJLabel.isDataFlavorSupported ");
-         return dataFlavor.equals(flavor);
+         if (DataFlavor.stringFlavor.equals(flavor)) {
+             return true;
+         }
+         return _dataFlavor.equals(flavor);
      }
      public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
          if (log.isDebugEnabled()) log.debug("DragJLabel.getTransferData ");
-         if (isDataFlavorSupported(flavor)) {
+         if (_dataFlavor.equals(flavor)) {
              return getIcon();
+         }
+         if (DataFlavor.stringFlavor.equals(flavor)) {
+             NamedIcon icon = (NamedIcon)getIcon();
+             return icon.getURL();
          }
          return null;
      }

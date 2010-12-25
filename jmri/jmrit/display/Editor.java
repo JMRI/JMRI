@@ -184,7 +184,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             return new NamedIcon(url, url);
         }
         _newIcon = null;
-        boolean _delete = false;
+        _delete = false;
         new UrlErrorDialog(msg, url);
 
         if (_delete) {
@@ -219,7 +219,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _urlField.setToolTipText(rb.getString("TooltipFixUrl"));
             panel.setToolTipText(rb.getString("TooltipFixUrl"));
             _catalog = CatalogPanel.makeDefaultCatalog();
-            //_catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
+            _catalog.setToolTipText(rb.getString("ToolTipDragIconToText"));
             panel.add(_catalog);
             setContentPane(panel);
             setLocation(200, 100);

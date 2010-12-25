@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -161,15 +161,14 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     if (icon==null) {
                         log.info(msg+" removed for url= "+iconName);
                     }
-                }
-                if (icon!=null) {
+                } else {
                     icon.setRotation(rotation, l);
                 }
             }
             else log.warn("did not locate " + state + " for Multisensor icon file");
         }
         if (icon==null) {
-            log.info("MultiSensor Icon \""+state+"\" removed");
+            log.info("MultiSensor Icon \""+l.getNameString()+"\": icon \""+state+"\" removed");
         }
         return icon;
     }
