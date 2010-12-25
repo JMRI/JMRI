@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -138,7 +138,6 @@ public class OBlock extends jmri.Block {
     /**
     * Allocate (reserves) the block for the Warrant that is the 'value' object
     * Note the block may be OCCUPIED by a non-warranted train, but the allocation is permitted.
-    * @param warrant
     * @return name of block if block is already allocated to another warrant
     */
     public String allocate(String pathName) {
