@@ -16,7 +16,7 @@ import org.jdom.Element;
  * Handle configuration for display.PositionableLabel objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.62 $
+ * @version $Revision: 1.63 $
  */
 public class PositionableLabelXml extends AbstractXmlAdapter {
 
@@ -159,39 +159,42 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         	String name = element.getAttribute("icon").getValue();
 //            if (log.isDebugEnabled()) log.debug("icon attribute= "+name);
         	if (name.equals("yes")){
-        		icon = getNamedIcon("icon", element);
+        		icon = getNamedIcon("icon", element, "PositionableLabel ", editor);
         	}else{
         		icon = NamedIcon.getIconByName(name);
                 if (icon==null) {
-                    log.error("getIconByName: icon not found for url= "+name);
+                    icon = editor.loadFailed("PositionableLabel", name);
+                    if (icon==null) {
+                        log.info("PositionableLabel icon removed for url= "+name);
+                        return;
+                    }
                 }
         	}
-            if (icon==null) {
-                editor.loadFailed();
-                return;
-            }
+            // allow null icons for now
             l = new PositionableLabel(icon, editor);
-            l.setPopupUtility(null);        // no text 
-            try {
-                Attribute a = element.getAttribute("rotate");
-                if (a!=null) {
-                    int rotation = element.getAttribute("rotate").getIntValue();
-                    icon.setRotation(rotation, l);
-                }
-            } catch (org.jdom.DataConversionException e) {}
+            l.setPopupUtility(null);        // no text
 
-        	if (name.equals("yes")) {
-                NamedIcon nIcon = loadIcon(l,"icon", element); 
+            if (name.equals("yes")) {
+                NamedIcon nIcon = loadIcon(l,"icon", element, "PositionableLabel ", editor); 
                 if (nIcon!=null) {
                     l.updateIcon(nIcon);
                 } else {
-                    editor.loadFailed();
+                    log.info("PositionableLabel icon removed for url= "+name);
                     return;
                 }
-            } else {   // for very old files 
-                if (icon!=null) {
-                    l.updateIcon(icon);
-                }
+            }
+            if (icon==null) {
+                log.info("PositionableLabel icon removed for url= "+name);
+                return;
+            } else {
+                try {
+                    Attribute a = element.getAttribute("rotate");
+                    if (a!=null) {
+                        int rotation = element.getAttribute("rotate").getIntValue();
+                        icon.setRotation(rotation, l);
+                    }
+                } catch (org.jdom.DataConversionException e) {}
+                l.updateIcon(icon);
             }
 
             //l.setSize(l.getPreferredSize().width, l.getPreferredSize().height);
@@ -381,8 +384,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         }
     }
     
-	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element) {
-        NamedIcon icon = getNamedIcon(attrName, element);
+	public NamedIcon loadIcon(PositionableLabel l, String attrName, Element element, 
+                                        String name, Editor ed) {
+        NamedIcon icon = getNamedIcon(attrName, element, name, ed);
         if (icon != null) {
             try {
                 int deg = 0;
@@ -421,14 +425,18 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
     }
     
     
-    protected NamedIcon getNamedIcon(String childName, Element element){
+    protected NamedIcon getNamedIcon(String childName, Element element, 
+                                            String name, Editor ed){
         NamedIcon icon = null;
         Element elem = element.getChild(childName);
         if (elem != null) {
-            String name = elem.getAttribute("url").getValue();
-            icon = NamedIcon.getIconByName(name);
+            String iconName = elem.getAttribute("url").getValue();
+            icon = NamedIcon.getIconByName(iconName);
             if (icon==null) {
-                log.error("getNamedIcon: element \""+childName+"\" icon not found for Attribute \"url\"= "+name);
+                icon = ed.loadFailed(name, iconName);
+                if (icon==null) {
+                    log.info(name+" removed for url= "+iconName);
+                }
             }
         } else {
             log.debug("getNamedIcon: child element \""+childName+"\" not found in element "+element.getName());

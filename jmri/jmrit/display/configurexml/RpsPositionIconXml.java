@@ -10,7 +10,7 @@ import org.jdom.Element;
  * Handle configuration for rps.RpsPositionIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2006
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class RpsPositionIconXml extends PositionableLabelXml {
 
@@ -69,22 +69,34 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         RpsPositionIcon l = new RpsPositionIcon(ed);
 
         // create the objects
-        String name;
+        String name = element.getAttribute("active").getValue();
+        NamedIcon active = NamedIcon.getIconByName(name);
+        if (active==null) {
+            active = ed.loadFailed("RpsPositionIcon: icon \"active\" ", name);
+            if (active==null) {
+                log.info("RpsPositionIcon: icon \"active\" removed for url= "+name);
+                return;
+            }
+        }
+        l.setActiveIcon(active);
 
-        NamedIcon active;
-        name = element.getAttribute("active").getValue();
-        l.setActiveIcon(active = NamedIcon.getIconByName(name));
-
-        NamedIcon unknown;
         name = element.getAttribute("error").getValue();
-        l.setErrorIcon(unknown = NamedIcon.getIconByName(name));
+        NamedIcon error = NamedIcon.getIconByName(name);
+        if (error==null) {
+            error = ed.loadFailed("RpsPositionIcon: icon \"error\" ", name);
+            if (error==null) {
+                log.info("RpsPositionIcon: \"error\" removed for url= "+name);
+                return;
+            }
+        }
+        l.setErrorIcon(error);
 
         try {
             Attribute a = element.getAttribute("rotate");
             if (a!=null) {
                 int rotation = element.getAttribute("rotate").getIntValue();
                 active.setRotation(rotation, l);
-                unknown.setRotation(rotation, l);
+                error.setRotation(rotation, l);
             }
         } catch (org.jdom.DataConversionException e) {}
 
@@ -121,18 +133,10 @@ public class RpsPositionIconXml extends PositionableLabelXml {
         }
         l.setTransform(sxScale, syScale, sxOrigin, syOrigin);
         
-        NamedIcon icon = loadIcon( l,"active", element);
+        NamedIcon icon = loadIcon( l,"active", element, "RpsPositionIcon ", ed);
         if (icon!=null) { l.setActiveIcon(icon); }
-        else {
-            ed.loadFailed();
-            return;
-        }
-        icon = loadIcon( l,"error", element);
+        icon = loadIcon( l,"error", element, "RpsPositionIcon ", ed);
         if (icon!=null) { l.setErrorIcon(icon); }
-        else {
-            ed.loadFailed();
-            return;
-        }
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(l, Editor.SENSORS, element);

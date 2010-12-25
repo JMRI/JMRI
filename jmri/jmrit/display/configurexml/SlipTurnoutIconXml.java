@@ -11,7 +11,7 @@ import org.jdom.Element;
  *
  * Based upon the TurnoutIconXml by Bob Jacobsen
  * @author Kevin Dickerson Copyright: Copyright (c) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 public class SlipTurnoutIconXml extends PositionableLabelXml {
 
@@ -155,20 +155,20 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             
             }
         }
-        loadTurnoutIcon("lowerWestToUpperEast", rotation, l, element);
-        loadTurnoutIcon("upperWestToLowerEast", rotation, l, element);
+        loadTurnoutIcon("lowerWestToUpperEast", rotation, l, element, p);
+        loadTurnoutIcon("upperWestToLowerEast", rotation, l, element, p);
         switch(l.getTurnoutType()){
             case SlipTurnoutIcon.DOUBLESLIP : 
-                loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
-                loadTurnoutIcon("upperWestToUpperEast", rotation, l, element);
+                loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element, p);
+                loadTurnoutIcon("upperWestToUpperEast", rotation, l, element, p);
                 break;
             default :
-                loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element);
+                loadTurnoutIcon("lowerWestToLowerEast", rotation, l, element, p);
                 break;                
         }
 
-        loadTurnoutIcon("unknown", rotation, l, element);
-        loadTurnoutIcon("inconsistent", rotation, l, element);
+        loadTurnoutIcon("unknown", rotation, l, element, p);
+        loadTurnoutIcon("inconsistent", rotation, l, element, p);
         
         a = element.getAttribute("tristate");
         if ( (a==null) || ((a!=null) && a.getValue().equals("true")))
@@ -189,15 +189,14 @@ public class SlipTurnoutIconXml extends PositionableLabelXml {
             Element e = element.getChild(turn);
             if (e!=null)
                 return e.getText();
-            else
-                return null;
         }
         return null;
     }
     
     @SuppressWarnings("unchecked")
-    private void loadTurnoutIcon(String state, int rotation, SlipTurnoutIcon l, Element element){
-        NamedIcon icon = loadIcon(l, state, element);
+    private void loadTurnoutIcon(String state, int rotation, SlipTurnoutIcon l, 
+                                 Element element, Editor ed){
+        NamedIcon icon = loadIcon(l, state, element, "SlipTurnout \""+l.getNameString()+"\" icon \""+state+"\" ", ed);
         String textValue = null;
 
         if (icon!=null){

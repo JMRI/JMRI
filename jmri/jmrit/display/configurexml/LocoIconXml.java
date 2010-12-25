@@ -11,7 +11,7 @@ import org.jdom.Element;
  * Handle configuration for display.LocoIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class LocoIconXml extends PositionableLabelXml {
 
@@ -74,14 +74,17 @@ public class LocoIconXml extends PositionableLabelXml {
 			log.error("failed to get icon attribute ex= "+e);
 		}
     	if (name.equals("yes")){
-    		icon = loadIcon(l, "icon", element);
+    		icon = loadIcon(l, "icon", element, "LocoIcon", ed);
     	}else{
     		icon = NamedIcon.getIconByName(name);
+            if (icon==null) {
+                icon = ed.loadFailed("LocoIcon", name);
+                if (icon==null) {
+                    log.info("LocoIcon icon removed for url= "+name);
+                    return;
+                }
+            }
     	}
-        if (icon==null) {
-            ed.loadFailed();
-            return;
-        }
     	l.updateIcon(icon);
     	
         String rosterId = null;

@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Handle configuration for display.SignalHeadIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 public class SignalHeadIconXml extends PositionableLabelXml {
 
@@ -139,7 +139,7 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             l.setSignalHead(new NamedBeanHandle<SignalHead>(name, sh));
         } else {
             log.error("SignalHead named '"+attr.getValue()+"' not found.");
-            ed.loadFailed();
+        //    ed.loadFailed();
             return;
         }
         int rotation = 0;
@@ -163,87 +163,56 @@ public class SignalHeadIconXml extends PositionableLabelXml {
             }
             for (int i=0; i<aspects.size(); i++) {
                 String aspect = aspects.get(i).getName();
-                NamedIcon icon = loadIcon(l, aspect, elem);
-                if (icon==null) {
-                    ed.loadFailed();
-                    return;
+                NamedIcon icon = loadIcon(l, aspect, elem, "SignalHead \""+name+"\": icon \""+aspect+"\" ", ed);
+                if (icon!=null) {
+                    l.setIcon(_nameMap.get(aspect), icon);
+                } else {
+                    log.info("SignalHead \""+name+"\": icon \""+aspect+"\" removed");
                 }
-                l.setIcon(_nameMap.get(aspect), icon);
             }
             log.debug(aspects.size()+" icons loaded for "+l.getNameString());
         } else {
             // old style as attributes - somewhere around pre 2.5.4
-            NamedIcon icon = loadSignalIcon("red", rotation, l, element);
+            NamedIcon icon = loadSignalIcon("red", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateRed"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("yellow", rotation, l, element);
+            } else { return; }
+            icon = loadSignalIcon("yellow", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateYellow"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("green", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("green", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateGreen"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("lunar", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("lunar", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateLunar"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("held", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("held", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateHeld"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("dark", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("dark", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateDark"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("flashred", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("flashred", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingRed"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("flashyellow", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("flashyellow", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingYellow"), icon);
-
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("flashgreen", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("flashgreen", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingGreen"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
-            icon = loadSignalIcon("flashlunar", rotation,l,element);
+            } else { return; }
+            icon = loadSignalIcon("flashlunar", rotation, l, element, name, ed);
             if (icon!=null){
                 l.setIcon(rbean.getString("SignalHeadStateFlashingLunar"), icon);
-            } else {
-                ed.loadFailed();
-                return;
-            }
+            } else { return; }
         }      
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
@@ -275,18 +244,28 @@ public class SignalHeadIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.SIGNALS, element);
     }
     
-    private NamedIcon loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, Element element){
-        NamedIcon icon = loadIcon(l, aspect, element);
+    private NamedIcon loadSignalIcon(String aspect, int rotation, SignalHeadIcon l, 
+                                            Element element, String name, Editor ed) {
+        String msg = "SignalHead \""+name+"\": icon \""+aspect+"\" ";
+        NamedIcon icon = loadIcon(l, aspect, element, msg, ed);
         if (icon==null) {
             if (element.getAttribute(aspect) != null) {
-            String iconName;
-                iconName = element.getAttribute(aspect).getValue();
+                String iconName = element.getAttribute(aspect).getValue();
                 icon = NamedIcon.getIconByName(iconName);
+                if (icon==null) {
+                    icon = ed.loadFailed(msg, iconName);
+                    if (icon==null) {
+                        log.info(msg+" removed for url= "+iconName);
+                    }
+                }
                 if (icon!=null) {
                     icon.setRotation(rotation, l);
                 }
-                else log.info("did not load file "+iconName+" for aspect "+aspect+" in SignalHead");
             }
+            else log.info("did not load file aspect "+aspect+" for SignalHead "+name);
+        }
+        if (icon==null) {
+            log.info("SignalHead Icon \""+name+"\": icon \""+aspect+"\" removed");
         }
         return icon;
     }

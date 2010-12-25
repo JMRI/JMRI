@@ -15,7 +15,7 @@ import java.util.List;
  * Handle configuration for display.MemoryIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2004
- * @version $Revision: 1.36 $
+ * @version $Revision: 1.37 $
  */
 public class MemoryIconXml extends PositionableLabelXml {
 
@@ -99,7 +99,6 @@ public class MemoryIconXml extends PositionableLabelXml {
         }
         else {
 			log.error("Unrecognizable class - "+o.getClass().getName());
-            ed.loadFailed();
             return;
 		}
 
@@ -119,10 +118,8 @@ public class MemoryIconXml extends PositionableLabelXml {
         } else {
             log.error("Memory named '"+attr.getValue()+"' not found.");
             ed.loadFailed();
-            return;
         }
         
-
         loadTextInfo(l, element);
         
         Attribute a = element.getAttribute("selectable");
@@ -134,9 +131,18 @@ public class MemoryIconXml extends PositionableLabelXml {
         for (int i = 0; i<items.size(); i++) {
             // get the class, hence the adapter object to do loading
             Element item = items.get(i);
-            String icon = item.getAttribute("icon").getValue();
-            String keyValue = item.getAttribute("value").getValue();
-        	l.addKeyAndIcon(NamedIcon.getIconByName(icon), keyValue);
+            String iconName = item.getAttribute("icon").getValue();
+    		NamedIcon icon = NamedIcon.getIconByName(iconName);
+            if (icon==null) {
+                icon = ed.loadFailed("Memory "+name, iconName);
+                if (icon==null) {
+                    log.info("Memory \""+name+"\" icon removed for url= "+iconName);
+                }
+            }
+            if (icon!=null) {
+                String keyValue = item.getAttribute("value").getValue();
+                l.addKeyAndIcon(icon, keyValue);
+            }
 		}
         ed.putItem(l);
         // load individual item's option settings after editor has set its global settings

@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.37 $
+ * @version $Revision: 1.38 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -112,12 +112,13 @@ public class TurnoutIconXml extends PositionableLabelXml {
                 String state = states.get(i).getName();
                 if (log.isDebugEnabled()) log.debug("setIcon for state \""+state+
                                                     "\" and "+_nameMap.get(state));
-                NamedIcon icon = loadIcon(l, state, elem);
-                if (icon==null) {
-                    p.loadFailed();
+                NamedIcon icon = loadIcon(l, state, elem, "TurnoutIcon \""+name+"\": icon \""+state+"\" ", p);
+                if (icon!=null) {
+                    l.setIcon(_nameMap.get(state), icon);
+                } else {
+                    log.info("TurnoutIcon \""+name+"\": icon \""+state+"\" removed");
                     return;
                 }
-                l.setIcon(_nameMap.get(state), icon);
             }
             log.debug(states.size()+" icons loaded for "+l.getNameString());
         } else {        // case when everything was attributes
@@ -127,10 +128,22 @@ public class TurnoutIconXml extends PositionableLabelXml {
             } catch (org.jdom.DataConversionException e) {
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
-            loadTurnoutIcon("thrown", rotation, l, element, name);
-            loadTurnoutIcon("closed", rotation, l, element, name);
-            loadTurnoutIcon("unknown", rotation, l,element, name);
-            loadTurnoutIcon("inconsistent", rotation, l,element, name);
+            NamedIcon icon = loadTurnoutIcon("thrown", rotation, l, element, name, p);
+            if (icon!=null) {
+                l.setIcon(_nameMap.get("thrown"), icon);
+            } else { return; }
+            icon = loadTurnoutIcon("closed", rotation, l, element, name, p);
+            if (icon!=null) {
+                l.setIcon(_nameMap.get("closed"), icon);
+            } else { return; }
+            icon = loadTurnoutIcon("unknown", rotation, l,element, name, p);
+            if (icon!=null) {
+                l.setIcon(_nameMap.get("unknown"), icon);
+            } else { return; }
+            icon = loadTurnoutIcon("inconsistent", rotation, l,element, name, p);
+            if (icon!=null) {
+                l.setIcon(_nameMap.get("inconsistent"), icon);
+            } else { return; }
         }
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
@@ -145,15 +158,28 @@ public class TurnoutIconXml extends PositionableLabelXml {
         loadCommonAttributes(l, Editor.TURNOUTS, element);
     }
     
-    private void loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, String name)
+    private NamedIcon loadTurnoutIcon(String state, int rotation, TurnoutIcon l, Element element, 
+                                      String name, Editor ed)
     {
+        NamedIcon icon = null;
         if (element.getAttribute(state) != null) { 
             String iconName = element.getAttribute(state).getValue();
-            NamedIcon icon = NamedIcon.getIconByName(iconName);
-            icon.setRotation(rotation, l);
-            l.setIcon(_nameMap.get(state), icon);
+            icon = NamedIcon.getIconByName(iconName);
+            if (icon==null) {
+                icon = ed.loadFailed("Turnout \""+name+"\" icon \""+state+"\" ", iconName);
+                if (icon==null) {
+                    log.info("Turnout \""+name+"\" icon \""+state+"\" removed for url= "+iconName);
+                }
+            }
+            if (icon!=null) {
+                icon.setRotation(rotation, l);
+            }
         }
-        else log.warn("did not locate " + state + " icon file "+name);
+        else log.warn("did not locate " + state + " icon file for Turnout "+name);
+        if (icon==null) {
+            log.info("Turnout Icon \""+name+"\": icon \""+state+"\" removed");
+        }
+        return icon;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutIconXml.class.getName());

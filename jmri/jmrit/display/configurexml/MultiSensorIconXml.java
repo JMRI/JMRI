@@ -12,7 +12,7 @@ import java.util.List;
  * Handle configuration for display.MultiSensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class MultiSensorIconXml extends PositionableLabelXml {
 
@@ -71,9 +71,19 @@ public class MultiSensorIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
         
-        loadSensorIcon("inactive", rotation, l, element);
-        loadSensorIcon("unknown", rotation, l,element);
-        loadSensorIcon("inconsistent", rotation, l,element);
+        NamedIcon icon = loadSensorIcon("inactive", rotation, l, element, pe);
+        if (icon!=null) {
+            l.setInactiveIcon(icon);
+        } else { return; }
+        icon = loadSensorIcon("unknown", rotation, l,element, pe);
+        if (icon!=null) {
+            l.setUnknownIcon(icon);
+        } else { return; }
+        icon = loadSensorIcon("inconsistent", rotation, l,element, pe);
+        if (icon!=null) {
+            l.setInconsistentIcon(icon);
+        } else { return; }
+
         Attribute a = element.getAttribute("updown");
         if ( (a!=null) && a.getValue().equals("true"))
             l.setUpDown(true);
@@ -87,13 +97,15 @@ public class MultiSensorIconXml extends PositionableLabelXml {
             Element item = items.get(i);
             if (item.getAttribute("sensor")!=null) {
                 String sensor = item.getAttribute("sensor").getValue();
-                NamedIcon icon;
                 if (item.getAttribute("url")!=null) {
                     String name = item.getAttribute("url").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (icon==null) {
-                        pe.loadFailed();
-                        return;
+                        icon = pe.loadFailed("MultiSensor \""+l.getNameString()+"\" ", name);
+                        if (icon==null) {
+                            log.error("MultiSensor \""+l.getNameString()+"\" removed for url= "+name);
+                            return;
+                        }
                     }
                     try {
                         int deg = 0;
@@ -120,8 +132,11 @@ public class MultiSensorIconXml extends PositionableLabelXml {
                     String name = item.getAttribute("icon").getValue();
                     icon = NamedIcon.getIconByName(name);
                     if (icon==null) {
-                        pe.loadFailed();
-                        return;
+                        icon = pe.loadFailed("MultiSensor \""+l.getNameString(), name);
+                        if (icon==null) {
+                            log.info("MultiSensor \""+l.getNameString()+" removed for url= "+name);
+                            return;
+                        }
                     }
                     if (rotation!=0) icon.setRotation(rotation, l);
                 }
@@ -134,25 +149,29 @@ public class MultiSensorIconXml extends PositionableLabelXml {
 		loadCommonAttributes(l, Editor.SENSORS, element);
     }
     
-    private void loadSensorIcon(String state, int rotation, MultiSensorIcon l, Element element){
-        NamedIcon icon = loadIcon(l,state, element);
+    private NamedIcon loadSensorIcon(String state, int rotation, MultiSensorIcon l, Element element, Editor ed){
+        String msg = "MultiSensor \""+l.getNameString()+"\": icon \""+state+"\" ";
+        NamedIcon icon = loadIcon(l,state, element, msg, ed);
         if (icon==null){
             if (element.getAttribute(state) != null) {
-                String name;
-                name = element.getAttribute(state).getValue();
-                icon = NamedIcon.getIconByName(name);
+                String iconName = element.getAttribute(state).getValue();
+                icon = NamedIcon.getIconByName(iconName);
                 if (icon==null) {
-                    return;
+                    icon = ed.loadFailed(msg, iconName);
+                    if (icon==null) {
+                        log.info(msg+" removed for url= "+iconName);
+                    }
                 }
-                icon.setRotation(rotation, l);
+                if (icon!=null) {
+                    icon.setRotation(rotation, l);
+                }
             }
             else log.warn("did not locate " + state + " for Multisensor icon file");
         }
-        if (icon!=null) {
-            if (state.equals("inactive")) l.setInactiveIcon(icon);
-            else if (state.equals("unknown")) l.setUnknownIcon(icon);
-            else if (state.equals("inconsistent")) l.setInconsistentIcon(icon);
+        if (icon==null) {
+            log.info("MultiSensor Icon \""+state+"\" removed");
         }
+        return icon;
     }
     
 

@@ -18,6 +18,7 @@ import jmri.Light;
 import jmri.Reporter;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.catalog.CatalogPanel;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.operations.trains.TrainIcon;
@@ -170,6 +171,97 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void loadFailed() {
         _loadFailed = true;
     }
+    /**
+    *
+    */
+    NamedIcon _newIcon;
+    boolean _ignore = false;
+    boolean _delete;
+    public NamedIcon loadFailed(String msg, String url) {
+        if (_debug) log.debug("loadFailed _ignore= "+_ignore);
+        if (_ignore) {
+            _loadFailed = true;
+            return new NamedIcon(url, url);
+        }
+        _newIcon = null;
+        boolean _delete = false;
+        new UrlErrorDialog(msg, url);
+
+        if (_delete) {
+            if (_debug) log.debug("loadFailed _delete= "+_delete);
+            return null;
+        }
+        if (_newIcon==null) {
+            _loadFailed = true;
+            _newIcon =new NamedIcon(url, url);
+        }
+        if (_debug) log.debug("loadFailed icon null= "+(_newIcon==null));
+        return _newIcon;
+    }
+    class UrlErrorDialog extends JDialog {
+        JTextField _urlField;
+        CatalogPanel  _catalog;
+        UrlErrorDialog(String msg, String url) {
+            super(_targetFrame, rb.getString("BadIcon"), true);
+            JPanel panel = new JPanel();
+            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.add(new JLabel(java.text.MessageFormat.format(rb.getString("IconUrlError"), msg)));
+            panel.add(new JLabel(rb.getString("UrlErrorPrompt1")));
+            panel.add(javax.swing.Box.createVerticalStrut(10));
+            panel.add(new JLabel(rb.getString("UrlErrorPrompt2")));
+            panel.add(new JLabel(rb.getString("UrlErrorPrompt3")));
+            panel.add(new JLabel(rb.getString("UrlErrorPrompt4")));
+            _urlField = new JTextField(url);
+            _urlField.setDragEnabled(true);
+            _urlField.setTransferHandler(new jmri.util.DnDStringImportHandler());
+            panel.add(_urlField);
+            panel.add(makeDoneButtonPanel());
+            _urlField.setToolTipText(rb.getString("TooltipFixUrl"));
+            panel.setToolTipText(rb.getString("TooltipFixUrl"));
+            _catalog = CatalogPanel.makeDefaultCatalog();
+            //_catalog.setToolTipText(ItemPalette.rb.getString("ToolTipDragIcon"));
+            panel.add(_catalog);
+            setContentPane(panel);
+            setLocation(200, 100);
+            pack();
+            setVisible(true);
+        }
+        protected JPanel makeDoneButtonPanel() {
+            JPanel panel0 = new JPanel();
+            panel0.setLayout(new FlowLayout());
+            JButton doneButton = new JButton(rb.getString("ButtonContinue"));
+            doneButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        _newIcon = NamedIcon.getIconByName(_urlField.getText());
+                        dispose();
+                    }
+            });
+            doneButton.setToolTipText(rb.getString("TooltipContinue"));
+            panel0.add(doneButton);
+
+            JButton deleteButton = new JButton(rb.getString("ButtonDeleteIcon"));
+            deleteButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        _delete = true;
+                        dispose();
+                    }
+            });
+            panel0.add(deleteButton);
+            deleteButton.setToolTipText(rb.getString("TooltipDelete"));
+
+            JButton cancelButton = new JButton(rb.getString("ButtonIgnore"));
+            cancelButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent a) {
+                        _ignore = true;
+                        dispose();
+                    }
+            });
+            panel0.add(cancelButton);
+            cancelButton.setToolTipText(rb.getString("TooltipIgnore"));
+            return panel0;
+        }
+    }
+    
     public boolean loadOK() {
         return !_loadFailed;
     }
@@ -1124,7 +1216,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             } else if ("Icon".equals(name)) {
                 addIconEditor();
             } else {
-                log.error("No such Icon Editor \""+name+"\"");
+//                log.error("No such Icon Editor \""+name+"\"");
                 return null;
             }
             // frame added in the above switch 
