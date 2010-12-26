@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.3 2010-12-22 06:07:54 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.4 2010-12-26 07:07:22 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -138,6 +138,27 @@ Nice confirmation for multiple connections.
 
 <p>
 Dan Boudreau added a warning when trying to load an icon with a bad url
+
+<p>
+Kevin Dickerson improved the script input window.
+
+<p>
+Kevin Dickerson improved how Blocks are saved and loaded
+
+<p>
+Matt Harris fixed a problem with the System Console configuration
+
+<p>
+Kevin Dickerson added a "New Throttle Window" to the File menu
+
+<p>
+Pete Cressman fixed a problem loading certain sensor icons
+
+<p>
+Pete Cressman added a dialog to correct broken icon paths
+
+<p>
+Dennis Miller fixed some help page links
 
 
 
