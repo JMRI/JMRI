@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of route
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 
 public class RouteEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -138,7 +138,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
     	addItem(pWait, showDepartTime, 1, 1);
     	groupTime.add(showWait);
     	groupTime.add(showDepartTime);
-    	showWait.setSelected(true);
 
     	p2.add(pLoc);
     	p2.add(pWait);
@@ -165,6 +164,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 		// setup radio buttons
 		addRadioButtonAction(showWait);
 		addRadioButtonAction(showDepartTime);
+		setTimeWaitRadioButtons();
 
 		//	build menu
 		JMenuBar menuBar = new JMenuBar();
@@ -326,6 +326,17 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	private void updateComboBoxes(){
 		locationManager.updateComboBox(locationBox);
+	}
+	
+	// if the route has a departure time in the first location set the showDepartTime radio button
+	private void setTimeWaitRadioButtons(){
+	   	showWait.setSelected(true);
+		if (_route != null){		
+			RouteLocation rl = _route.getDepartsRouteLocation();
+			if (rl != null && !rl.getDepartureTime().equals(""))
+				showDepartTime.setSelected(true);
+			routeModel.setWait(showWait.isSelected());
+		}
 	}
 	
  	public void propertyChange(java.beans.PropertyChangeEvent e) {

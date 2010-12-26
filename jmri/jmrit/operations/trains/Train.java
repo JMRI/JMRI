@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.99 $
+ * @version $Revision: 1.100 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -165,6 +165,14 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return train's departure time in the String format hh:mm
 	 */
 	public String getDepartureTime(){
+		// check to see if the route has a departure time
+		RouteLocation rl = getTrainDepartsRouteLocation();
+		if (rl != null && !rl.getDepartureTime().equals("")){
+			// need to forward any changes to departure time
+			rl.removePropertyChangeListener(this);
+			rl.addPropertyChangeListener(this);
+			return rl.getDepartureTime();
+		}			
 		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
 		int minute = _departureTime.get(Calendar.MINUTE);
 		String h = Integer.toString(hour);
@@ -180,8 +188,8 @@ public class Train implements java.beans.PropertyChangeListener {
 	 * @return int hh*60+mm
 	 */
 	public int getDepartTimeMinutes(){
-		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
-		int minute = _departureTime.get(Calendar.MINUTE);
+		int hour = Integer.parseInt(getDepartureTimeHour());
+		int minute = Integer.parseInt(getDepartureTimeMinute());
 		return (hour*60)+minute;
 	}
 	
@@ -198,17 +206,13 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	public String getDepartureTimeHour(){
-		int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
-		if (hour<10)
-			return "0"+Integer.toString(hour);
-		return Integer.toString(hour);
+		String[] time = getDepartureTime().split(":");
+		return time[0];	
 	}
 	
 	public String getDepartureTimeMinute(){
-		int minute = _departureTime.get(Calendar.MINUTE);
-		if (minute<10)
-			return "0"+Integer.toString(minute);
-		return Integer.toString(minute);
+		String[] time = getDepartureTime().split(":");
+		return time[1];	
 	}
 	
 	/**
@@ -357,15 +361,9 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 	
 	protected RouteLocation getTrainDepartsRouteLocation(){
-		if (_route == null){
+		if (_route == null)
 			return null;
-		}
-		List<String> list = _route.getLocationsBySequenceList();
-		if (list.size()>0){
-			RouteLocation rl = _route.getLocationById(list.get(0));
-			return rl;
-		}
-		return null;
+		return _route.getDepartsRouteLocation();
 	}
 
 	/**
@@ -1837,6 +1835,10 @@ public class Train implements java.beans.PropertyChangeListener {
        	if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)){
     		replaceOwner((String)e.getOldValue(), (String)e.getNewValue());
     	}
+       	// forward route departure time property changes
+       	if (e.getPropertyName().equals(RouteLocation.DEPARTURE_TIME_CHANGED_PROPERTY)){
+       		firePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, e.getOldValue(), e.getNewValue());
+       	}
     	// forward any property changes in this train's route
        	if (e.getSource().getClass().equals(Route.class))
        		firePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());

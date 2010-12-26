@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.68 $
+ * @version $Revision: 1.69 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -335,14 +335,13 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		if (_train != null){
 			trainNameTextField.setText(_train.getName());
 			trainDescriptionTextField.setText(_train.getDescription());
-			hourBox.setSelectedItem(_train.getDepartureTimeHour());
-			minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
 			routeBox.setSelectedItem(_train.getRoute());
 			numEnginesBox.setSelectedItem(_train.getNumberEngines());
 			modelEngineBox.setSelectedItem(_train.getEngineModel());
 			commentTextArea.setText(_train.getComment());
 			cabooseRadioButton.setSelected((_train.getRequirements()& Train.CABOOSE)>0);
 			fredRadioButton.setSelected((_train.getRequirements()& Train.FRED)>0);
+			updateDepartureTime();
 			enableButtons(true);
 			// listen for train changes
 			_train.addPropertyChangeListener(this);
@@ -960,6 +959,21 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		}
     }
     
+    private void updateDepartureTime(){
+		hourBox.setSelectedItem(_train.getDepartureTimeHour());
+		minuteBox.setSelectedItem(_train.getDepartureTimeMinute());
+		// check to see if route has a departure time from the 1st location
+		RouteLocation rl = _train.getTrainDepartsRouteLocation();
+		if (rl != null && !rl.getDepartureTime().equals("")){
+			hourBox.setEnabled(false);
+			minuteBox.setEnabled(false);
+		}
+		else {
+			hourBox.setEnabled(true);
+			minuteBox.setEnabled(true);
+		}
+    }
+    
     private void packFrame(){
     	setVisible(false);
  		pack();
@@ -1033,6 +1047,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 			modelEngineBox.setSelectedIndex(0);
 			if (_train != null)
 				modelEngineBox.setSelectedItem(_train.getEngineModel());
+		}
+		if (e.getPropertyName().equals(Train.DEPARTURETIME_CHANGED_PROPERTY)){
+			updateDepartureTime();
 		}
 	}
  	

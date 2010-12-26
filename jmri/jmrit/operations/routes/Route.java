@@ -17,7 +17,7 @@ import org.jdom.Element;
  * Represents a route on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class Route implements java.beans.PropertyChangeListener {
 	
@@ -173,6 +173,19 @@ public class Route implements java.beans.PropertyChangeListener {
     		rl.setSequenceId(i+1);	// start sequence numbers at 1
     	}
     	_sequenceNum = i;
+    }
+    
+    /**
+     * Get the first location in a route
+     * @return the first route location
+     */
+    public RouteLocation getDepartsRouteLocation(){
+    	List<String> list = getLocationsBySequenceList();
+    	if (list.size()>0){
+    		RouteLocation rl = getLocationById(list.get(0));
+    		return rl;
+    	}
+    	return null;
     }
     
 	/**
