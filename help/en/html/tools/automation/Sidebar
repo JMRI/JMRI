@@ -8,15 +8,15 @@
 		<dt><h3><a href="index.html">Scripting</a></h3></dt>
 		<dd>Information on writing scripts to control JMRI in more detail:
 		    <UL>
-		    <LI><dfn><a href="Start.shtml">Introduction</a></dfn>
-		    <LI><dfn><A HREF="Python.shtml">The Language</a></dfn>
-		    <LI><dfn><a href="Examples.shtml">Examples</a></dfn>
-		    <LI><dfn><a href="FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
-		    <LI><dfn><a href="ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
+		    <LI><dfn><a href="../scripting/Start.shtml">Introduction</a></dfn>
+		    <LI><dfn><A HREF="../scripting/Python.shtml">The Language</a></dfn>
+		    <LI><dfn><a href="../scripting/Examples.shtml">Examples</a></dfn>
+		    <LI><dfn><a href="../scripting/FAQ.shtml">Frequently Asked Questions (FAQs)</a></dfn>
+		    <LI><dfn><a href="../scripting/ex_set_turnouts.shtml">Example: Setting Turnouts</a></dfn>
 		    </UL>
 		</dd>
 
-		<dt><h3><a href="index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="../index.shtml">General Tools</a></h3></dt>
 		<dd>The general objects available to control your layout.
 		    <UL>
 		    <LI><dfn><a href="../Sensors.shtml">Sensors</a></dfn>
