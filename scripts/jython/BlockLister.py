@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.1 $
+# $Revision: 1.2 $
 #
 #
 
@@ -169,14 +169,15 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 self.currentBlock = c
                 self.askFinishLookupButton = True
-        self.msgText("whenLookupButtonClicked, done\n")     # add text
+        #self.msgText("whenLookupButtonClicked, done\n")     # add text
         return
         
     # split out so it can happen from the handle() routine
     def doFinishLookupButton(self) :
         self.displayBlockData(self.currentBlock)
         self.displayPathData(self.currentBlock)
-        #self.displaySegmentData(self.currentBlock)
+        self.displaySegmentData(self.currentBlock)
+        self.msgText("\n")
         return
             
     def displayBlockData(self, b) :
@@ -212,10 +213,19 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         return
         
     def displaySegmentData(self, b) :
-        for s in jmri.jmrit.display.layoutEditor.layoutEditor.trackList.toArray() :
-            self.msgText("Segment: " + s.getBlockName() + "\n")
-            #if (s.getBlock() == b.getSystemName()) :
-            #
+        PanelMenu = jmri.jmrit.display.PanelMenu.instance()
+        layout = PanelMenu.getLayoutEditorPanelList()
+        for s in layout[0].trackList.toArray() :
+            #self.msgText("Segment: " + s.getID() + " block: " + s.getBlockName() + "\n")
+            if ((s.getBlockName() == b.getSystemName()) or (s.getBlockName() == b.getUserName())) :
+                if (s.getLayoutBlock() != None) :
+                    self.msgText("Segment: " + s.getID() + " LayoutBlock: " + s.getLayoutBlock().getID() + "\n")
+                if (s.getHidden()) :
+                    self.msgText("Segment: " + s.getID() + " is hidden.\n")
+                if (s.getMainline()) :
+                    self.msgText("Segment: " + s.getID() + " is Mainline.\n")
+                if (s.getDashed()) :
+                    self.msgText("Segment: " + s.getID() + " is dashed.\n")
         return
         
     # WindowListener is a interface class and therefore all of it's
