@@ -31,7 +31,7 @@ import jmri.jmrit.picker.PickPanel;
 */
 public class IndicatorTOItemPanel extends TableItemPanel {
 
-    public final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack", 
+    final static String[] STATUS_KEYS = {"ClearTrack", "OccupiedTrack", "PositionTrack", 
                             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
 
     private DetectionPanel  _detectPanel;
