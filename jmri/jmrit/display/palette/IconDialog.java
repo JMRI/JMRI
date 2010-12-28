@@ -84,7 +84,7 @@ public class IconDialog extends ItemDialog {
             }
             _family = null;
         }
-        _iconMap = _parent.makeNewIconMap(type);
+        _iconMap = ItemPanel.makeNewIconMap(type);
         _familyName.setText("???");
         return makeIconPanel(_iconMap);
     }
