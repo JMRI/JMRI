@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class ConnectivityUtil 
@@ -56,7 +56,15 @@ public class ConnectivityUtil
 		leTools = layoutEditor.getLETools();
 		layoutBlockManager = InstanceManager.layoutBlockManagerInstance();
 	}
-	
+
+        private ArrayList<Integer> companion = null;
+	private TrackSegment tr = null;
+	private int prevConnectType = 0;
+	private	Object prevConnectObject = null;
+	LayoutBlock lb = null;
+	LayoutBlock nlb = null;
+	LayoutBlock plb = null;
+
 	/** 
 	 * Provides a list of LayoutTurnouts in a specified Block (block), in order, beginning at the connection 
 	 *   to the specified previous Block (prevBlock) and continuing to the specfied next Block 
@@ -70,14 +78,8 @@ public class ConnectivityUtil
 	 *   and other settings set to CLOSED.
 	 * Returns an empty list if a connectivity anamoly is discovered--specified blocks are not connected.
 	 */
-	private ArrayList<Integer> companion = null;
-	private TrackSegment tr = null;
-	private int prevConnectType = 0;
-	private	Object prevConnectObject = null;
-	LayoutBlock lb = null;
-	LayoutBlock nlb = null;
-	LayoutBlock plb = null;
-	public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
+        public ArrayList<LayoutTurnout> getTurnoutList(Block block, Block prevBlock, Block nextBlock) {
+                turnoutConnectivity = true;
 		ArrayList<LayoutTurnout> list = new ArrayList<LayoutTurnout>();
 		companion = new ArrayList<Integer>();
 		// initialize
@@ -1584,6 +1586,7 @@ public class ConnectivityUtil
 		}
 		else if (tr==null) {
 			log.error("Connectivity not complete at turnout "+lt.getTurnoutName());
+                        turnoutConnectivity = false;
 		}
 		if (lt.getContinuingSense() != Turnout.CLOSED) {
 			if (setting == Turnout.THROWN) setting = Turnout.CLOSED;
@@ -1591,6 +1594,17 @@ public class ConnectivityUtil
 		}
 		return (Integer.valueOf(setting));
 	}
+
+        private boolean turnoutConnectivity = true;
+        /**
+	 * This flag can be checked after performing a getTurnoutList() to check
+         * if the connectivity of the turnouts has been completed in the block
+         * when the getTurnoutList() was called.
+	 * Returns 'false' if a turnout conectivity is not complete.
+	 * Returns 'true' if the turnout conectivity is complete.
+	 */
+        public boolean isTurnoutConnectivityComplete() { return turnoutConnectivity; }
+
 	private void setupOpposingTrackSegment(LevelXing x, int cType) {
 		switch (cType) {
 			case LayoutEditor.LEVEL_XING_A:
