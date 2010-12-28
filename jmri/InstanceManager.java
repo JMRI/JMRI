@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.70 $
+ * @version			$Revision: 1.71 $
  */
 public class InstanceManager {
 
@@ -335,6 +335,9 @@ public class InstanceManager {
      * requests for other instances. Protected access to allow
      * changes during JUnit testing.
      */
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(
+        value="MS_PKGPROTECT",
+        justification="Protected access to allow changes during JUnit testing.")
     static protected InstanceManager root;
 
     private SensorManager sensorManager = null;
