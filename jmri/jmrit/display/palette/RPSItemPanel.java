@@ -1,10 +1,5 @@
 package jmri.jmrit.display.palette;
 
-import java.awt.Color;
-import java.awt.FlowLayout;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
 import java.awt.datatransfer.Transferable; 
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -12,13 +7,6 @@ import java.awt.dnd.*;
 import java.io.IOException;
 
 import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
-import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;

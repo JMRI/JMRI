@@ -24,7 +24,6 @@ import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.*;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.picker.PickPanel;
 
 /**
 *  JPanels for the various item types that come from tool Tables - e.g. Sensors, Turnouts, etc.

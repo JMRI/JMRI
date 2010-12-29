@@ -17,11 +17,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent; 
 
 import jmri.util.JmriJFrame;
-import java.util.Hashtable;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map.Entry;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;

@@ -5,7 +5,6 @@ import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.Warrant;
-import jmri.jmrit.logix.OBlock;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.Timer;
@@ -21,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 

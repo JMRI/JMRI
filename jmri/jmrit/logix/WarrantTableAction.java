@@ -48,10 +48,8 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 */
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
-import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Path;
-import jmri.jmrit.picker.PickListModel;
 import jmri.util.HelpUtil;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
