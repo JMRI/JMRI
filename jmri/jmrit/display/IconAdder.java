@@ -203,7 +203,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (log.isDebugEnabled()) log.debug("setIcon: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
         JToggleButton button = new IconButton(label, icon);
         button.setToolTipText(icon.getName());
-        if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+        if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
             button.setText(rb.getString("invisibleIcon"));
             button.setForeground(Color.lightGray);
         }
@@ -710,7 +710,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
                         JToggleButton button = _iconMap.get(key);
                         NamedIcon oldIcon = (NamedIcon)button.getIcon();
                         button.setIcon(newIcon);
-                        if (newIcon==null || newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
+                        if (newIcon.getIconWidth()<1 || newIcon.getIconHeight()<1) {
                             button.setText(rb.getString("invisibleIcon"));
                             button.setForeground(Color.lightGray);
                         } else {

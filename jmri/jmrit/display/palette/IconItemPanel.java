@@ -82,7 +82,7 @@ public class IconItemPanel extends ItemPanel {
                try {
                    JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
                    label.setIcon(icon);
-                   if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                   if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                        label.setText(ItemPalette.rbp.getString("invisibleIcon"));
                        label.setForeground(Color.lightGray);
                    }

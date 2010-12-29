@@ -224,7 +224,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 //                                    +c.gridx+","+c.gridy+") width= "+icon.getIconWidth()+
                 //                                    " height= "+icon.getIconHeight());
                 JLabel image = new JLabel(icon);
-                if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                     image.setText(ItemPalette.rbp.getString("invisibleIcon"));
                     image.setForeground(Color.lightGray);
                 }

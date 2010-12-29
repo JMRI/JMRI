@@ -281,67 +281,67 @@ public class IconDialog extends ItemDialog {
        int panelWidth = 0;
        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
        while (it.hasNext()) {
-           Entry<String, NamedIcon> entry = it.next();
-           NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
-          double scale = icon.reduceTo(100, 100, 0.2);
-          JPanel panel = new JPanel();
-          panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-          String borderName = ItemPalette.convertText(entry.getKey());
-          panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
-                                                           borderName));
-          panel.add(Box.createHorizontalStrut(100));
-          JLabel image = new DropJLabel(icon);
-          image.setName(entry.getKey());
-          if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
-              image.setText(ItemPalette.rbp.getString("invisibleIcon"));
-              image.setForeground(Color.lightGray);
-          }
-          JPanel iPanel = new JPanel();
-          iPanel.add(image);
+    	   Entry<String, NamedIcon> entry = it.next();
+    	   NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
+    	   double scale = icon.reduceTo(100, 100, 0.2);
+    	   JPanel panel = new JPanel();
+    	   panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+    	   String borderName = ItemPalette.convertText(entry.getKey());
+    	   panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
+    			   borderName));
+    	   panel.add(Box.createHorizontalStrut(100));
+    	   JLabel image = new DropJLabel(icon);
+    	   image.setName(entry.getKey());
+    	   if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+    		   image.setText(ItemPalette.rbp.getString("invisibleIcon"));
+    		   image.setForeground(Color.lightGray);
+    	   }
+    	   JPanel iPanel = new JPanel();
+    	   iPanel.add(image);
 
-          c.gridx += gridwidth;
-          if (c.gridx >= numCol*gridwidth) { //start next row
-              c.gridy++;
-              if (cnt < numCol) { // last row
-                  JPanel p =  new JPanel();
-                  p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-                  panelWidth = panel.getPreferredSize().width;
-                  p.add(Box.createHorizontalStrut(panelWidth));
-                  c.gridx = 0;
-                  c.gridwidth = 1;
-                  gridbag.setConstraints(p, c);
-                  //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
-                  iconPanel.add(p);
-                  c.gridx = numCol-cnt;
-                  c.gridwidth = gridwidth;
-                  //c.fill = GridBagConstraints.NONE;
-              } else {
-                  c.gridx = 0;
-              }
-          }
-          cnt--;
+    	   c.gridx += gridwidth;
+    	   if (c.gridx >= numCol*gridwidth) { //start next row
+    		   c.gridy++;
+    		   if (cnt < numCol) { // last row
+    			   JPanel p =  new JPanel();
+    			   p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+    			   panelWidth = panel.getPreferredSize().width;
+    			   p.add(Box.createHorizontalStrut(panelWidth));
+    			   c.gridx = 0;
+    			   c.gridwidth = 1;
+    			   gridbag.setConstraints(p, c);
+    			   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
+    			   iconPanel.add(p);
+    			   c.gridx = numCol-cnt;
+    			   c.gridwidth = gridwidth;
+    			   //c.fill = GridBagConstraints.NONE;
+    		   } else {
+    			   c.gridx = 0;
+    		   }
+    	   }
+    	   cnt--;
 
-          //if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
-          //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
-          panel.add(iPanel);
-          JLabel label = new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("scale"),
-                              new Object[] {CatalogPanel.printDbl(scale,2)}));
-          JPanel sPanel = new JPanel();
-          sPanel.add(label);
-          panel.add(sPanel);
-          panel.add(Box.createHorizontalStrut(20));
-          gridbag.setConstraints(panel, c);
-          iconPanel.add(panel);
+    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
+    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
+    	   panel.add(iPanel);
+    	   JLabel label = new JLabel(java.text.MessageFormat.format(ItemPalette.rbp.getString("scale"),
+    			   new Object[] {CatalogPanel.printDbl(scale,2)}));
+    	   JPanel sPanel = new JPanel();
+    	   sPanel.add(label);
+    	   panel.add(sPanel);
+    	   panel.add(Box.createHorizontalStrut(20));
+    	   gridbag.setConstraints(panel, c);
+    	   iconPanel.add(panel);
        }
        if (panelWidth > 0) {
-           JPanel p =  new JPanel();
-           p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-           p.add(Box.createHorizontalStrut(panelWidth));
-           c.gridx = numCol*gridwidth-1;
-           c.gridwidth = 1;
-           gridbag.setConstraints(p, c);
-           //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
-           iconPanel.add(p);
+    	   JPanel p =  new JPanel();
+    	   p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+    	   p.add(Box.createHorizontalStrut(panelWidth));
+    	   c.gridx = numCol*gridwidth-1;
+    	   c.gridwidth = 1;
+    	   gridbag.setConstraints(p, c);
+    	   //if (log.isDebugEnabled()) log.debug("makeIconPanel: gridx= "+c.gridx+" gridy= "+c.gridy);
+    	   iconPanel.add(p);
        }
        return iconPanel;
     }

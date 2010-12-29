@@ -158,7 +158,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
            panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                             borderName));
            JLabel image = new JLabel(icon);
-           if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+           if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                image.setText(ItemPalette.rbp.getString("invisibleIcon"));
                image.setForeground(Color.lightGray);
            }
