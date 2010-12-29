@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.100 $
+ * @version $Revision: 1.101 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1262,18 +1262,24 @@ public class Train implements java.beans.PropertyChangeListener {
 		tb.build(this);
 		setPrinted(false);
 	}
-
+	
 	public void printBuildReport(){
+		boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
+		printBuildReport(isPreview);
+	}
+
+	public boolean printBuildReport(boolean isPreview){
 		File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
 		if (!buildFile.exists()){
 			log.warn("Build file missing for train "+getName());
-			return;
+			return false;
 		}
-		boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
+		
 		if (isPreview && Setup.isBuildReportEditorEnabled())
 			TrainPrintUtilities.editReport(buildFile, getName());
 		else
 			TrainPrintUtilities.printReport(buildFile, MessageFormat.format(rb.getString("buildReport"),new Object[]{getDescription()}), isPreview, "", true, "");
+		return true;
 	}
 	
 	public void setBuildFailed(boolean status) {

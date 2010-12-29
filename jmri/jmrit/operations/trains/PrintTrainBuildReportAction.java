@@ -1,4 +1,4 @@
-// PrintTrainManifestAction.java
+// PrintTrainBuildReportAction.java
 
 package jmri.jmrit.operations.trains;
 
@@ -11,16 +11,16 @@ import javax.swing.*;
 
 
 /**
- * Action to print a train's manifest
+ * Action to print a train's build report
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.1 $
  */
-public class PrintTrainManifestAction  extends AbstractAction {
+public class PrintTrainBuildReportAction  extends AbstractAction {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public PrintTrainManifestAction(String actionName, boolean preview, Frame frame) {
+    public PrintTrainBuildReportAction(String actionName, boolean preview, Frame frame) {
         super(actionName);
         isPreview = preview;
         this.frame = frame;
@@ -42,21 +42,21 @@ public class PrintTrainManifestAction  extends AbstractAction {
     		String printOrPreview = rb.getString("print");
     		if (isPreview)
     			printOrPreview = rb.getString("preview");
-    		String string = MessageFormat.format(rb.getString("DoYouWantToPrintPreviousManifest"), new Object[]{printOrPreview, train.getName()});
+    		String string = MessageFormat.format(rb.getString("DoYouWantToPrintPreviousBuildReport"), new Object[]{printOrPreview, train.getName()});
     		int results = JOptionPane.showConfirmDialog(null, string,
-    				MessageFormat.format(rb.getString("PrintPreviousManifest"), new Object[]{printOrPreview}),
+    				MessageFormat.format(rb.getString("PrintPreviousBuildReport"), new Object[]{printOrPreview}),
     				JOptionPane.YES_NO_OPTION);
     		if (results != JOptionPane.YES_OPTION)
     			return;
     	}    	
-    	if (!train.printManifest(isPreview)){
+    	if (!train.printBuildReport(isPreview)){
     		String string = MessageFormat.format(rb.getString("NeedToBuildTrainBeforePrinting"), new Object[]{train.getName()});
     		JOptionPane.showMessageDialog(null, string,
-    				rb.getString("CanNotPrintManifest"),
+    				rb.getString("CanNotPrintBuildReport"),
     				JOptionPane.ERROR_MESSAGE);
     		return;
     	}
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainManifestAction.class.getName());
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(PrintTrainBuildReportAction.class.getName());
 }

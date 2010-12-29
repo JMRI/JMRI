@@ -50,7 +50,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Frame for user edit of a train
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 
 public class TrainEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -368,6 +368,9 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
 		toolMenu.add(new PrintTrainAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new PrintTrainManifestAction(rb.getString("MenuItemPrintManifest"), false, this));
 		toolMenu.add(new PrintTrainManifestAction(rb.getString("MenuItemPreviewManifest"), true, this));
+		toolMenu.add(new PrintTrainBuildReportAction(rb.getString("MenuItemPrintBuildReport"), false, this));
+		toolMenu.add(new PrintTrainBuildReportAction(rb.getString("MenuItemPreviewBuildReport"), true, this));
+			
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
