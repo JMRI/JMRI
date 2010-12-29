@@ -34,7 +34,7 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -155,7 +155,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			Location l = manager.getLocationById(locations.get(i));
 			JComboBox comboBox = locationComboBoxes.get(i);
 			String printerName = (String)comboBox.getSelectedItem();
-			if (!printerName.equals(TrainPrintUtilities.getDefaultPrinterName())){
+			if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())){
+				l.setDefaultPrinterName("");
+			} else {
 				log.debug("Location "+l.getName()+" has selected printer "+printerName);
 				l.setDefaultPrinterName(printerName);
 			}
