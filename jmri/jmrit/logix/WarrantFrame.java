@@ -1532,7 +1532,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
                         _warrant.deAllocate();
                         return;
                     }
-                    block.setPath(bo.getPathName(), 0);
+                    block.setPath(bo.getPathName(), _warrant);
                     msg = null;
                 } else {
                     msg = java.text.MessageFormat.format(

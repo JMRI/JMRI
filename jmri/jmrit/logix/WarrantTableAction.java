@@ -921,7 +921,7 @@ public class WarrantTableAction extends AbstractAction {
                                     w.deAllocate();
                                     return;
                                 }
-                                block.setPath(bo.getPathName(), 0);
+                                block.setPath(bo.getPathName(), w);
                                 msg = null;
                             } else {
                                 if (log.isDebugEnabled()) log.debug("block.allocate(w)= "+msg2);

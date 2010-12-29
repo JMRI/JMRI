@@ -1,6 +1,7 @@
 package jmri.implementation;
 
 import jmri.*;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -9,7 +10,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -350,6 +351,9 @@ public class DefaultLogix extends AbstractNamedBean
                         case Conditional.TYPE_SIGNAL_MAST_HELD:
                             varListenerType = LISTENER_TYPE_SIGNALMAST;
                             break;
+                        case Conditional.TYPE_BLOCK_STATUS_EQUALS:
+                            varListenerType = LISTENER_TYPE_OBLOCK;
+                            break;
                     }
                     int positionOfListener = getPositionOfListener(varListenerType, varType, varName);
                     // add to list if new
@@ -403,6 +407,10 @@ public class DefaultLogix extends AbstractNamedBean
                                 listener = new JmriTwoStatePropertyListener("Aspect", LISTENER_TYPE_SIGNALMAST,
                                                                     varName, varType, conditional);
                                 break;
+                            case LISTENER_TYPE_OBLOCK:
+                                listener = new JmriTwoStatePropertyListener("state", LISTENER_TYPE_OBLOCK,
+                                                                    varName, varType, conditional);
+                                break;
                             default:
                                 log.error("Unknown (new) Variable Listener type= "+varListenerType+", for varName= "
                                           +varName+", varType= "+varType+" in Conditional, "+
@@ -420,6 +428,8 @@ public class DefaultLogix extends AbstractNamedBean
                             case LISTENER_TYPE_LIGHT:
                             case LISTENER_TYPE_MEMORY:
                             case LISTENER_TYPE_WARRANT:
+                            case LISTENER_TYPE_SIGNALMAST:
+                            case LISTENER_TYPE_OBLOCK:
                                 listener = _listeners.get(positionOfListener);
                                 listener.addConditional(conditional);
                                 break;
@@ -439,10 +449,6 @@ public class DefaultLogix extends AbstractNamedBean
                                     mpl.addConditional(conditional);
                                     mpl.setState(signalAspect);
                                 }
-                                break;
-                            case LISTENER_TYPE_SIGNALMAST:
-                                listener = _listeners.get(positionOfListener);
-                                listener.addConditional(conditional);
                                 break;
                             default:
                                 log.error("Unknown (old) Variable Listener type= "+varListenerType+", for varName= "
@@ -751,6 +757,15 @@ public class DefaultLogix extends AbstractNamedBean
                 Timebase tb = InstanceManager.timebaseInstance();
 				tb.addMinuteChangeListener (listener);
 				return;
+            case LISTENER_TYPE_OBLOCK:
+				OBlock b = InstanceManager.oBlockManagerInstance().
+										provideOBlock(listener.getDevName());
+				if (b==null) {
+					msg= "oblock";
+					break;
+				}
+				b.addPropertyChangeListener (listener);
+                return;
 		}
         log.error("Bad name for " +msg+" \""+listener.getDevName()+
                         "\" when setting up Logix listener");
@@ -846,6 +861,16 @@ public class DefaultLogix extends AbstractNamedBean
                 case LISTENER_TYPE_FASTCLOCK:
                     Timebase tb = InstanceManager.timebaseInstance();
                     tb.removeMinuteChangeListener (listener);
+                    return;
+                case LISTENER_TYPE_OBLOCK:
+                    OBlock b = InstanceManager.oBlockManagerInstance().
+                                            provideOBlock(listener.getDevName());
+                    if (b==null) {
+                        msg= "oblock";
+                        break;
+                    }
+                    // remove listener for this Memory
+                    b.removePropertyChangeListener(listener);
                     return;
             }
         } catch (Throwable t) {

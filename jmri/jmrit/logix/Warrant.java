@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -146,7 +146,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     public void setAvoidOrder(BlockOrder order) { _avoidOrder = order; }
 
-    public String getAllocatedPathInBlock(OBlock block) {
+    protected String getRoutePathInBlock(OBlock block) {
         for (int i=0; i<_savedOrders.size(); i++){
             if (_savedOrders.get(i).getBlock().equals(block)) {
                 return _savedOrders.get(i).getPathName();
@@ -310,6 +310,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * @return returns an error message (or null on success)
     */
     public String runAutoTrain(boolean run) {
+        String msg = getBlockAt(0).allocate(this);
+        if (msg!=null) {
+            return msg;
+        }
         return setRunMode(run?MODE_RUN:MODE_NONE, _dccAddress, null, _throttleCommands, _runBlind);
     }
 
@@ -443,6 +447,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             _runMode = mode;
             _tempRunBlind = runBlind;
+            if (InstanceManager.throttleManagerInstance()==null) {
+                log.info("InstanceManager.throttleManagerInstance()==null");
+            }
             if (!InstanceManager.throttleManagerInstance().
                 requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
                 msg = java.text.MessageFormat.format(rb.getString("trainInUse"), address.getNumber());
@@ -577,7 +584,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+", for "+bo.toString());
             // allocated to this, We assume the train of this warrant occupies the first block 
             // exit speed is determined by getPermissibleEntranceSpeed() into next block.
-            bo.setPath();
+            bo.setPath(this);
             for (int i=1; i<_orders.size(); i++) {
                 bo = _orders.get(i);
                 block = bo.getBlock();
@@ -600,7 +607,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                         block.getDisplayName());
                         routeSet = false;
                     } else if (routeSet) {
-                        bo.setPath();
+                        bo.setPath(this);
                     }
                 } else {
                     allocated = false;
@@ -615,7 +622,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _routeSet = routeSet;
         firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
         return msg;
-    }
+    }   // setRoute
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if (!(evt.getSource() instanceof NamedBean)) {
@@ -715,7 +722,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_idxCurrentOrder == _orders.size()-1) {
             // must be in destination block, let script finish according to recorded speeds
         } else {
-            // attempt to allocatable remaining blocks in the route
+            // attempt to allocate remaining blocks in the route
             for (int i=_idxCurrentOrder+2; i<_orders.size(); i++) {
                 getBlockAt(i).allocate(this);
             }
@@ -769,7 +776,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     private String getCurrentSpeedAt(int index) {
         BlockOrder bo = getBlockOrderAt(index);
-        bo.setPath();
+        bo.setPath(this);
         return bo.getPermissibleEntranceSpeed();
     }
 
@@ -790,7 +797,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         String nextSpeed = "Normal";
         BlockOrder nextBO = getBlockOrderAt(_idxCurrentOrder+1);
         if (nextBO!=null && allocateNextBlock(nextBO.getBlock())) {
-            nextBO.setPath();
+            nextBO.setPath(this);
             nextSpeed = nextBO.getPermissibleEntranceSpeed();
             if (nextSpeed.equals("Stop")) {
                 _stoppingSignal = nextBO.getSignal();

@@ -65,13 +65,13 @@ public class OPath extends jmri.Path  {
         super.setBlock(block);
     }
 
-    public boolean isPortal(String name) {
+    protected boolean isPortal(String name) {
         if (_fromPortalName != null && _fromPortalName.equals(name)) { return true; }
         if (_toPortalName != null && _toPortalName.equals(name)) { return true; }
         return false;
     }
 
-    public String getOppositePortalName(String name) {
+    protected String getOppositePortalName(String name) {
         if (_fromPortalName!=null && _fromPortalName.equals(name)) {
             return _toPortalName;
         }
@@ -81,7 +81,7 @@ public class OPath extends jmri.Path  {
         return null;
     }
 
-    public boolean validatePortals() {
+    protected boolean validatePortals() {
         if (!portalOK(_fromPortalName)) {
             return false;
         }
@@ -108,7 +108,7 @@ public class OPath extends jmri.Path  {
     }
     public String getToPortalName() { return _toPortalName; }
 
-    public void setTurnouts(int delay) {
+    protected void setTurnouts(int delay) {
         if(delay>0) {
             if (!_timerActive) {
                 // Create a timer if one does not exist

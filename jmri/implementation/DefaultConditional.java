@@ -11,6 +11,7 @@ import javax.swing.Timer;
 import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.OBlock;
 import jmri.util.PythonInterp;
 
  /**
@@ -31,7 +32,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1034,20 +1035,9 @@ public class DefaultConditional extends AbstractNamedBean
 							log.error(getDisplayName()+" invalid Warrant name in action - "+action.getDeviceName());
 						}
 						else {
-                            String msg = w.setRoute(0, null);
-                            if (msg!=null) {
-                                jmri.jmrit.logix.BlockOrder bo = w.getfirstOrder();
-                                jmri.jmrit.logix.OBlock block = bo.getBlock();
-                                if (block.allocate(w) == null) {
-                                    log.warn(msg+" - "+action.getDeviceName());
-                                    block.setPath(bo.getPathName(), 0);
-                                    msg = w.runAutoTrain(true);
-                                } else {
-                                    msg = "Unable to allocate origin block "+block.getDisplayName();
-                                } 
-                            }
-                            if (msg != null){
-                                log.error(getDisplayName()+" Warrant "+msg+" - "+action.getDeviceName());
+                            String err = w.runAutoTrain(true);
+                            if (err!=null) {
+                                log.error(getDisplayName()+" runAutoTrain error - "+err);
                             }
                             actionCount++;
 						}
@@ -1116,6 +1106,88 @@ public class DefaultConditional extends AbstractNamedBean
 						}
 						else {
 							f.setLit(true);
+                            actionCount++;
+						}
+						break;
+                    case ACTION_ALLOCATE_BLOCK_PATH:
+                        OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            String err = b.allocate(action.getActionString());
+							if (err!=null) {
+                                log.error(getDisplayName()+" allocate error - "+err);
+                            }
+                            actionCount++;
+						}
+						break;
+                    case ACTION_SET_BLOCK_PATH_TURNOUTS:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            String err = b.setPath(action.getActionString(), null);
+                            if (err!=null) {
+                                log.error(getDisplayName()+" setPath error - "+err);
+                            }
+                            actionCount++;
+						}
+						break;
+                    case ACTION_SET_BLOCK_PATH_OCCUPIED:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            String err = b.setPathOccupied(action.getActionString(), true);
+							if (err!=null) {
+                                log.error(getDisplayName()+" setPathOccupied error - "+err);
+                            }
+                            actionCount++;
+						}
+						break;
+                    case ACTION_SET_BLOCK_PATH_UNOCCUPIED:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            String err = b.setPathOccupied(action.getActionString(), false);
+							if (err!=null) {
+                                log.error(getDisplayName()+" setPathOccupied error - "+err);
+                            }
+                            actionCount++;
+						}
+						break;
+                    case ACTION_DEALLOCATE_BLOCK:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            b.deAllocate();
+                            actionCount++;
+						}
+						break;
+                    case ACTION_SET_BLOCK_OUT_OF_SERVICE:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            b.setOutOfService(true);
+                            actionCount++;
+						}
+						break;
+                    case ACTION_SET_BLOCK_IN_SERVICE:
+                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
+						if (b == null) {
+							log.error(getDisplayName()+" invalid block name in action - "+action.getDeviceName());
+						}
+						else {
+                            b.setOutOfService(false);
                             actionCount++;
 						}
 						break;

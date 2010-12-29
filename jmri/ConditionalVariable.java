@@ -1,6 +1,7 @@
 package jmri;
 
 import jmri.jmrit.beantable.LogixTableAction;
+import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -217,6 +218,7 @@ public class ConditionalVariable {
 		boolean result = true;
 		// evaluate according to state variable type
         int itemType = Conditional.TEST_TO_ITEM[_type];
+        if (log.isDebugEnabled()) log.debug("evaluate: \""+_name+"\" type= "+_type+" itemType= "+itemType);
 		switch (itemType) {
             case Conditional.ITEM_TYPE_SENSOR:
 				Sensor sn = InstanceManager.sensorManagerInstance().provideSensor(_name);
@@ -379,7 +381,7 @@ public class ConditionalVariable {
                 }
 				break;
             case Conditional.ITEM_TYPE_WARRANT:
-				Warrant w = InstanceManager.warrantManagerInstance().provideWarrant(_name);
+				Warrant w = InstanceManager.warrantManagerInstance().getWarrant(_name);
 				if (w == null) {
 					log.error("invalid Warrant name= \""+_name+"\" in state variable");
 					return (false);
@@ -424,6 +426,14 @@ public class ConditionalVariable {
 					else result = false;
 				}
 				break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(_name);
+				if (b == null) {
+					log.error("invalid OBlock name= \""+_name+"\" in state variable");
+					return (false);
+				}
+                result = b.statusIs(_dataString); 
+                break;
 		}
 		// apply NOT if specified
 		if ( _not ) {
@@ -539,6 +549,8 @@ public class ConditionalVariable {
                 return (rbx.getString("Warrant"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (rbx.getString("FastClock"));
+            case Conditional.ITEM_TYPE_OBLOCK:
+                return (rbx.getString("OBlock"));
         }
         return "";
     }
@@ -825,6 +837,9 @@ public class ConditionalVariable {
                              new Object[] {rbx.getString("FastClock"), 
                           LogixTableAction.formatTime(_num1 / 60, _num1 - ((_num1 / 60) * 60)),
                           LogixTableAction.formatTime(_num2 / 60, _num2 - ((_num2 / 60) * 60)) });
+            case Conditional.ITEM_TYPE_OBLOCK:
+                return java.text.MessageFormat.format(rbx.getString("VarStateDescrpt"),
+                             new Object[] {rbx.getString("OBlockStatus"), _name, _dataString} );
             case Conditional.TYPE_NONE:
                 return type;
         }

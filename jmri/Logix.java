@@ -45,7 +45,8 @@ public interface Logix extends NamedBean {
 	public static final int LISTENER_TYPE_MEMORY = 6;	
 	public static final int LISTENER_TYPE_FASTCLOCK = 7;	
 	public static final int LISTENER_TYPE_WARRANT = 8;	
-	public static final int LISTENER_TYPE_SIGNALMAST = 9;	
+	public static final int LISTENER_TYPE_SIGNALMAST = 9;
+    public static final int LISTENER_TYPE_OBLOCK = 10;
 
     /**
      * Set enabled status.  Enabled is a bound property

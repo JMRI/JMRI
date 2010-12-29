@@ -4,6 +4,8 @@ package jmri.jmrit.beantable;
 
 import jmri.*;
 import jmri.implementation.*;
+import jmri.jmrit.logix.OBlock;
+import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Warrant;
 import jmri.jmrit.sensorgroup.SensorGroupFrame;
 
@@ -53,7 +55,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.84 $
+ * @version $Revision: 1.85 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -407,7 +409,7 @@ public class LogixTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
     JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
-    jmri.UserPreferencesManager pref;
+    jmri.UserPreferencesManager prefMgr;
     String systemNameAuto = this.getClass().getName()+".AutoSystemName";
     JButton create;
 
@@ -525,7 +527,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Add Logix window
 	 */
 	protected void addPressed(ActionEvent e) {
-        pref = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
 		// possible change
         if (!checkFlags(null)) {
             return;
@@ -553,6 +555,7 @@ public class LogixTableAction extends AbstractTableAction {
     * Returns the button panel
     */
     JPanel makeAddLogixFrame(String titleId, String messageId) {
+        prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         addLogixFrame = new JmriJFrame(rbx.getString(titleId));
         addLogixFrame.addHelpMenu(
                 "package.jmri.jmrit.beantable.LogixAddEdit", true);
@@ -588,7 +591,7 @@ public class LogixTableAction extends AbstractTableAction {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName,c);
-        if(pref.getPreferenceState(systemNameAuto))
+        if(prefMgr.getPreferenceState(systemNameAuto))
             _autoSystemName.setSelected(true);
         _addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
         _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
@@ -902,7 +905,7 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
 		// create the Edit Logix Window
         makeEditLogixWindow();
-        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        prefMgr.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
 	}
 
 	// *********** Methods for Edit Logix Window ********************
@@ -2714,6 +2717,16 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableData2Field.setText(formatTime(time / 60, time - ((time / 60) * 60)));
                 _variableNameField.setText("");
                 break;
+
+            case Conditional.ITEM_TYPE_OBLOCK:
+                _variableNameField.setText(_curVariable.getName());
+                _variableStateBox.removeAllItems();
+                for (int i=0; i< OBlock.BLOCK_STATUS.length; i++) {
+                    _variableStateBox.addItem(OBlock.BLOCK_STATUS[i]);
+                }
+                _variableStateBox.setSelectedItem(_curVariable.getDataString());
+                _variableStateBox.setVisible(true);
+               break;
         }
         _editVariableFrame.pack();
         _editVariableFrame.transferFocusBackward();
@@ -2855,6 +2868,10 @@ public class LogixTableAction extends AbstractTableAction {
                                 actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                     _shortActionString.setText(_curAction.getActionString());
                 }
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
+                                Conditional.ITEM_TO_OBLOCK_ACTION, actionType)+1);
                 break;
             case Conditional.ITEM_TYPE_AUDIO:
                 _actionTypeBox.setSelectedIndex(DefaultConditional.getIndexInTable(
@@ -3004,6 +3021,8 @@ public class LogixTableAction extends AbstractTableAction {
         _actionTypeBox.addItem("");
         _actionNameField.removeActionListener(actionSignalHeadNameListener);
         _actionNameField.removeActionListener(actionSignalMastNameListener);
+        _actionNameField.removeActionListener(actionOBlockPathListener);
+        
         switch (itemType)  {
             case Conditional.ITEM_TYPE_TURNOUT:
                 for(int i=0; i<Conditional.ITEM_TO_TURNOUT_ACTION.length; i++) {
@@ -3203,6 +3222,32 @@ public class LogixTableAction extends AbstractTableAction {
                     _shortTextPanel.setVisible(true);
                 }
                 break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                _actionNameField.addActionListener(actionOBlockPathListener);
+
+                for(int i=0; i<Conditional.ITEM_TO_OBLOCK_ACTION.length; i++) {
+                    _actionTypeBox.addItem(
+                        DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_OBLOCK_ACTION[i]));
+                }
+                _namePanel.setToolTipText(rbx.getString("NameHintOBlock"));
+                _namePanel.setVisible(true);
+
+                if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH || 
+                        actionType==Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED ||
+                        actionType==Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED ||
+                        actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
+                    p = (JPanel)_actionPanel.getComponent(0);
+                    l = (JLabel)p.getComponent(0);
+                    l.setText(rbx.getString("LabelBlockPaths"));
+
+                    loadJComboBoxWithBlockPaths(_actionBox,_actionNameField.getText().trim());
+
+                    _actionPanel.setToolTipText(rbx.getString("BlockPathsSetHint"));
+                    _actionPanel.setVisible(true);
+                } else {
+                }
+
+                break;
             case Conditional.ITEM_TYPE_AUDIO:
                 for(int i=0; i<Conditional.ITEM_TO_AUDIO_ACTION.length; i++) {
                     _actionTypeBox.addItem(
@@ -3374,6 +3419,29 @@ public class LogixTableAction extends AbstractTableAction {
         }
     }
 
+    transient ActionListener actionOBlockPathListener = new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+            // fired when oblock name changes
+            log.debug("actionOBlockPathListener fires; _actionNameField : "+_actionNameField.getText().trim());
+            loadJComboBoxWithBlockPaths(_actionBox,_actionNameField.getText().trim());
+        }
+    };
+    
+    void loadJComboBoxWithBlockPaths(JComboBox box, String blockName) {
+        box.removeAllItems();
+        log.debug("loadJComboBoxWithBlockPaths called with name: "+blockName);
+        OBlock b = InstanceManager.oBlockManagerInstance().getOBlock(blockName);
+        if (b == null) {
+            box.addItem(rbx.getString("PromptLoadOBlockName"));
+        } else {
+            java.util.List l = (java.util.List)b.getPaths();
+            for (int i = 0; i<l.size(); i++) {
+                box.addItem(((OPath)l.get(i)).getName());
+            }
+            box.setSelectedItem(b.getAllocatedPathName());
+        }
+    }
+
 	/**
 	 * Responds to change in variable type in State Variable Table in the Edit
 	 * Conditional window Also used to set up for Edit of a Conditional with
@@ -3501,6 +3569,15 @@ public class LogixTableAction extends AbstractTableAction {
                 _variableData1Panel.setVisible(true);
                 _variableData2Panel.setVisible(true);
                 break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                _variableNamePanel.setToolTipText(rbx.getString("NameHintOBlock"));
+                _variableNamePanel.setVisible(true);
+                _variableStateBox.removeAllItems();
+                for (int i=0; i< OBlock.BLOCK_STATUS.length; i++) {
+                    _variableStateBox.addItem(OBlock.BLOCK_STATUS[i]);
+                }
+                _variableStatePanel.setVisible(true);
+                break;
         }
         _variableStateBox.setMaximumSize(_variableStateBox.getPreferredSize());
     } /* variableTypeChanged */
@@ -3551,6 +3628,9 @@ public class LogixTableAction extends AbstractTableAction {
                 break;
             case Conditional.ITEM_TYPE_CLOCK:
                 testType =Conditional.TYPE_FAST_CLOCK_RANGE;
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                testType =Conditional.TYPE_BLOCK_STATUS_EQUALS;
                 break;
         }
         _curVariable.setType(testType);
@@ -3644,6 +3724,16 @@ public class LogixTableAction extends AbstractTableAction {
                 if (name == null) {
                     return false;
                 }
+                break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                name = validateOBlockReference(name);
+                if (name == null) {
+                    return false;
+                }
+                _curVariable.setDataString((String)_variableStateBox.getSelectedItem());
+                if (log.isDebugEnabled()) log.debug("OBlock \""+name+"\"of type '"+testType+
+                                                    "' _variableStateBox.getSelectedItem()= "+
+                                                    _variableStateBox.getSelectedItem()); 
                 break;
 		}
         _curVariable.setName(name);
@@ -3904,6 +3994,23 @@ public class LogixTableAction extends AbstractTableAction {
                     _curAction.setActionString(actionString);
                 }
                 break;
+            case Conditional.ITEM_TYPE_OBLOCK:
+                if (!referenceByMemory){
+                    name = validateOBlockReference(name);
+                    if (name == null) {
+                        return false;
+                    }
+                }
+                actionType = Conditional.ITEM_TO_OBLOCK_ACTION[selection-1];
+                _actionNameField.setText(name);
+                _curAction.setDeviceName(name);
+                if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH ||
+                            actionType==Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED ||
+                            actionType==Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED ||
+                            actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
+                    _curAction.setActionString((String)_actionBox.getSelectedItem());
+                }
+                break;
             case Conditional.ITEM_TYPE_CLOCK:
                 actionType = Conditional.ITEM_TO_CLOCK_ACTION[selection-1];
                 if (actionType==Conditional.ACTION_SET_FAST_CLOCK_TIME) {
@@ -4014,6 +4121,8 @@ public class LogixTableAction extends AbstractTableAction {
                 return Conditional.ITEM_TO_LOGIX_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_WARRANT:
                 return Conditional.ITEM_TO_WARRANT_ACTION[actionTypeSelection];
+            case Conditional.ITEM_TYPE_OBLOCK:
+                return Conditional.ITEM_TO_OBLOCK_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_CLOCK:
                 return Conditional.ITEM_TO_CLOCK_ACTION[actionTypeSelection];
             case Conditional.ITEM_TYPE_AUDIO:
@@ -4231,6 +4340,23 @@ public class LogixTableAction extends AbstractTableAction {
         }
         if (w == null) {
             messageInvalidActionItemName(name, "Warrant");
+            return null;
+        }
+        return name;
+    }
+    String validateOBlockReference(String name) {
+        OBlock b = null;
+        name = name.trim();
+        if ((name != null) && (!name.equals(""))) {
+            b = InstanceManager.oBlockManagerInstance().getByUserName(name);
+            if (b != null) {
+                //return h.getSystemName();
+                return name;
+            }
+            b = InstanceManager.oBlockManagerInstance().getBySystemName(name);
+        }
+        if (b == null) {
+            messageInvalidActionItemName(name, "OBlock");
             return null;
         }
         return name;

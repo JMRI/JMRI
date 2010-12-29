@@ -5,6 +5,7 @@ import jmri.ConditionalAction;
 import jmri.jmrit.Sound;
 import jmri.jmrit.beantable.LogixTableAction;
 import jmri.jmrit.logix.Warrant;
+import jmri.jmrit.logix.OBlock;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
 import javax.swing.Timer;
@@ -20,7 +21,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 
@@ -235,6 +236,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                 return (rbx.getString("Logix"));
             case Conditional.ITEM_TYPE_WARRANT:
                 return (rbx.getString("Warrant"));
+            case Conditional.ITEM_TYPE_OBLOCK:
+                return (rbx.getString("OBlock"));
             case Conditional.ITEM_TYPE_CLOCK:
                 return (rbx.getString("FastClock"));
             case Conditional.ITEM_TYPE_AUDIO:
@@ -337,6 +340,20 @@ public class DefaultConditionalAction implements ConditionalAction {
                return (rbx.getString("ActionSetSignalMastDark"));                
             case Conditional.ACTION_SET_SIGNALMAST_LIT:
                return (rbx.getString("ActionClearSignalMastDark"));                
+            case Conditional.ACTION_ALLOCATE_BLOCK_PATH:
+               return (rbx.getString("ActionAllocateBlockPath"));                
+            case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
+               return (rbx.getString("ActionSetBlockPathTurnouts"));
+            case Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED:
+               return (rbx.getString("ActionSetBlockPathOccupied"));               
+            case Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED:
+               return (rbx.getString("ActionSetBlockPathUnoccupied"));               
+            case Conditional.ACTION_DEALLOCATE_BLOCK:
+               return (rbx.getString("ActionDeallocateBlock"));                
+            case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
+               return (rbx.getString("ActionSetBlockOutOfService"));                
+            case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
+                return (rbx.getString("ActionBlockInService"));                
 		}
         log.warn("Unexpected parameter to getActionTypeString("+t+")");
 		return ("");
@@ -591,6 +608,9 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_CLEAR_SIGNALMAST_HELD:
                 case Conditional.ACTION_SET_SIGNALMAST_DARK:
                 case Conditional.ACTION_SET_SIGNALMAST_LIT:
+                case Conditional.ACTION_DEALLOCATE_BLOCK:
+                case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
+                case Conditional.ACTION_SET_BLOCK_IN_SERVICE:
                     str = str + ", \""+ _deviceName+"\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:
@@ -617,6 +637,14 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_CONTROL_TRAIN:
                     str = str +" "+rbx.getString("onWarrant")+" \""+ _deviceName +"\" "
                           +rbx.getString("to")+ " " + getActionDataString();
+                    break;
+                case Conditional.ACTION_ALLOCATE_BLOCK_PATH:
+                case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
+                case Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED:
+                case Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED:
+                    str = str +getActionDataString()+" "+rbx.getString("onPath")+ " \""+
+                            _actionString+"\" "+
+                            rbx.getString("onBlock")+" \""+ _deviceName +"\".";
                     break;
             }
         }

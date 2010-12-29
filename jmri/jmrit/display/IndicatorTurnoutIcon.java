@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -406,17 +406,20 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             if ("state".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
-                    _status = "DontUseTrack";
-                } else if ((now & OBlock.UNOCCUPIED)!=0) {
-                    _status = "ClearTrack";
-                }
-                if ((now & OBlock.OCCUPIED)!=0) {
+                    if ((now & OBlock.OCCUPIED)!=0) {
+                        _status = "OccupiedTrack";
+                    } else {
+                        _status = "DontUseTrack";
+                    }
+           //     } else if ((now & OBlock.UNOCCUPIED)!=0) {
+           //         _status = "ClearTrack";
+                } else if ((now & OBlock.OCCUPIED)!=0) {
                     if ((now & OBlock.RUNNING)!=0) {
-                        if (_paths==null || _paths.contains(pathName)) {
+                        if (_paths!=null && _paths.contains(pathName)) {
                             _status = "PositionTrack";
                             _train = (String)block.getValue();
                         } else {
-                            _status = "ClearTrack";
+                            _status = "ClearTrack";     // icon not on path
                         }
                     } else {
                         _status = "OccupiedTrack";
@@ -427,6 +430,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                     } else {
                         _status = "AllocatedTrack";
                     }
+                } else {
+                    _status = "ClearTrack";
                 }
             }
         } else if (source instanceof Sensor) {

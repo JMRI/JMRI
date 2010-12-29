@@ -47,11 +47,11 @@ public class BlockOrder  {
         //if (log.isDebugEnabled()) log.debug("ctor2: "+this.toString());
     }
 
-    public void setEntryName(String name) { _entryName = name; }
+    protected void setEntryName(String name) { _entryName = name; }
     public String getEntryName() { return _entryName; }
 
 
-    public void setExitName(String name) { _exitName = name; }
+    protected void setExitName(String name) { _exitName = name; }
     public String getExitName() { return _exitName; }
 
     static String getOppositePortalName(OPath path, String portalName) {
@@ -72,7 +72,7 @@ public class BlockOrder  {
         return null;
     }
 
-    public boolean validateOrder() {
+    protected boolean validateOrder() {
         return true;
     }
 
@@ -80,27 +80,27 @@ public class BlockOrder  {
     * Set Path. Note that the Path's 'fromPortal' and 'toPortal' have no bearing on 
     * the BlockOrder's entryPortal and exitPortal.
     */
-    public void setPathName(String path) {
+    protected void setPathName(String path) {
         _pathName = path;
     }
     public String getPathName() { return _pathName; }
 
-    public OPath getPath() { return _block.getPathByName(_pathName); }
+    protected OPath getPath() { return _block.getPathByName(_pathName); }
 
-    public void setPath() {
-        _block.setPath(getPathName(), 0);
+    protected String setPath(Warrant warrant) {
+        return _block.setPath(getPathName(), warrant);
     }
 
-    public void setBlock(OBlock block) { _block = block; }
+    protected void setBlock(OBlock block) { _block = block; }
 
     public OBlock getBlock() { return _block; }
 
-    public Portal getEntryPortal() {
+    protected Portal getEntryPortal() {
         if (_entryName==null) { return null; }
         return _block.getPortalByName(_entryName);
     }
 
-    public Portal getExitPortal() {
+    protected Portal getExitPortal() {
         if (_exitName==null) { return null; }
         return _block.getPortalByName(_exitName);
     }
@@ -109,7 +109,7 @@ public class BlockOrder  {
     *  Check signals for entrance into next block.
     * @return speed
     */
-    public String getPermissibleEntranceSpeed() {
+    protected String getPermissibleEntranceSpeed() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal!=null) {
             String speed = portal.getPermissibleSpeedForBlock(_block);
@@ -123,7 +123,7 @@ public class BlockOrder  {
         return "Normal";
     }
 
-    public long getEntranceSpeedChangeWait() {
+    protected long getEntranceSpeedChangeWait() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal!=null) {
             return portal.getEntranceSpeedChangeWaitForBlock(_block);
@@ -131,11 +131,11 @@ public class BlockOrder  {
         return 0;
     }
 
-    public jmri.NamedBean getSignal() {
+    protected jmri.NamedBean getSignal() {
         return _block.getPortalByName(getEntryName()).getSignalProtectingBlock(_block);
     }
 
-    public String hash() {
+    protected String hash() {
         return _block.getDisplayName()+_pathName+_entryName+_exitName;
     }
 
