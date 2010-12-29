@@ -55,7 +55,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.85 $
+ * @version $Revision: 1.86 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3434,7 +3434,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (b == null) {
             box.addItem(rbx.getString("PromptLoadOBlockName"));
         } else {
-            java.util.List l = (java.util.List)b.getPaths();
+            List<Path> l = b.getPaths();
             for (int i = 0; i<l.size(); i++) {
                 box.addItem(((OPath)l.get(i)).getName());
             }

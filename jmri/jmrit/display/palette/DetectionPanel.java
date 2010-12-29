@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jmri.InstanceManager;
+import jmri.Path;
 import jmri.Sensor;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.picker.PickPanel;
@@ -244,12 +245,12 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         if (iconPath==null || _block==null) {
             return;
         }
-        List paths = _block.getPaths();
+        List<Path> paths = _block.getPaths();
         int[] indices = new int[iconPath.size()];
         int lastIdx = 0;
         for (int k=0; k<iconPath.size(); k++) {
             for (int i=0; i<paths.size(); i++) {
-                OPath p = (OPath)paths.get(i);
+                OPath p = (OPath) paths.get(i);
                 if (iconPath.get(k).equals(p.getName()) ) {
                     indices[lastIdx++] = i;
                     if (log.isDebugEnabled()) log.debug("setPaths index="+i);
@@ -308,7 +309,7 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     //@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SIC_INNER_SHOULD_BE_STATIC")
     // passing just the path list instead of using _block saves a call 
     class PathListModel extends DefaultListModel {
-        List _paths;
+        List<Path> _paths;
         PathListModel() {
             _paths = _block.getPaths();
         }
