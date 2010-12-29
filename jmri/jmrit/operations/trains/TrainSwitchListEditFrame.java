@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -33,7 +34,7 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -45,6 +46,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	// load managers
 	LocationManager manager = LocationManager.instance(); 
 	List<JCheckBox> locationCheckBoxes = new ArrayList<JCheckBox>();
+	List<JComboBox> locationComboBoxes = new ArrayList<JComboBox>();
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// labels
@@ -140,9 +142,24 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			buildSwitchList(false);
 		}
 		if (ae.getSource() == saveButton){
+			save();
 			// save location file
 			LocationManagerXml.instance().writeOperationsFile();
 		}
+	}
+	
+	// save printer selection
+	private void save(){
+		List<String> locations = manager.getLocationsByNameList();	
+		for (int i =0; i<locations.size(); i++){
+			Location l = manager.getLocationById(locations.get(i));
+			JComboBox comboBox = locationComboBoxes.get(i);
+			String printerName = (String)comboBox.getSelectedItem();
+			if (!printerName.equals(TrainPrintUtilities.getDefaultPrinterName())){
+				log.debug("Location "+l.getName()+" has selected printer "+printerName);
+				l.setDefaultPrinterName(printerName);
+			}
+		}		
 	}
 	
 	private void buildSwitchList(boolean isPreview){
@@ -176,7 +193,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}
 		
 		locationCheckBoxes.clear();
+		locationComboBoxes.clear();		// remove printer selection
 		locationPanelCheckBoxes.removeAll();
+		
 		int y = 0;		// vertical position in panel
 
 		for (int i =0; i<locations.size(); i++){
@@ -186,8 +205,15 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			checkBox.setSelected(l.getSwitchList());
 			checkBox.setText(l.getName());
 			addLocationCheckBoxAction(checkBox);
-			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y++);
+			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
+			
+			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
+			locationComboBoxes.add(comboBox);
+			comboBox.setSelectedItem(l.getDefaultPrinterName());
+			addItem(locationPanelCheckBoxes, comboBox, 1, y++);
+			
 			l.addPropertyChangeListener(this);
+					
 		}
 
 

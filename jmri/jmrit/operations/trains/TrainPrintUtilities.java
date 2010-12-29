@@ -11,7 +11,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
+import javax.print.PrintService;
+import javax.print.PrintServiceLookup;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -37,11 +40,25 @@ public class TrainPrintUtilities {
 	 * @param logoURL optional pathname for logo
 	 */
 	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL){
+		printReport (file,name, isPreview, fontName, isBuildReport, logoURL, "");
+	}
+	
+	/**
+	 * Print or preview a train manifest, build report, or switch list.
+	 * @param file File to be printed or previewed
+	 * @param name Title of document
+	 * @param isPreview true if preview
+	 * @param fontName optional font to use when printing document
+	 * @param isBuildReport true if build report
+	 * @param logoURL optional pathname for logo
+	 * @param printerName optional default printer name
+	 */
+	public static void printReport (File file, String name, boolean isPreview, String fontName, boolean isBuildReport, String logoURL, String printerName){
 	    // obtain a HardcopyWriter to do this
 		HardcopyWriter writer = null;
 		Frame mFrame = new Frame();
         try {
-            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, name, Setup.getFontSize(), .5, .5, .5, .5, isPreview, printerName);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
@@ -263,6 +280,24 @@ public class TrainPrintUtilities {
 				"Open file using editor not available, file path: "+path, "Build Report File Created",
 				JOptionPane.INFORMATION_MESSAGE);
 		return;
+	}
+	
+	public static JComboBox getPrinterJComboBox(){
+		JComboBox box = new JComboBox();
+		PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
+		for (int i = 0; i < services.length; i++) {
+			box.addItem(services[i].getName());
+			//log.debug(services[i].getName());
+		}
+		
+		// Set to default printer
+		box.setSelectedItem(getDefaultPrinterName());
+		
+		return box;
+	}
+	
+	public static String getDefaultPrinterName(){
+		return PrintServiceLookup.lookupDefaultPrintService().getName();
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

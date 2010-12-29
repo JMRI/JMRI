@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -35,7 +35,8 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected int _length = 0;				//length of all tracks at this location
 	protected int _usedLength = 0;			//length of track filled by cars and engines 
 	protected String _comment = "";
-	protected boolean _switchList = true;	//when true print switchlist for this location 
+	protected boolean _switchList = true;	//when true print switchlist for this location
+	protected String _defaultPrinter = "";	//the default printer name when printing a switchlist
 	protected Point _trainIconEast = new Point();	//coordinates of east bound train icons
 	protected Point _trainIconWest = new Point();
 	protected Point _trainIconNorth = new Point();
@@ -183,6 +184,17 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	public boolean getSwitchList() {
 		return _switchList;
+	}
+	
+	public void setDefaultPrinterName(String name){
+		String old = _defaultPrinter;
+		_defaultPrinter = name;
+		if (!old.equals(name))
+			firePropertyChange("defaultPrinter", old, name);
+	}
+	
+	public String getDefaultPrinterName(){
+		return _defaultPrinter;
 	}
 	
 	public void setTrainIconEast(Point point){
@@ -608,6 +620,7 @@ public class Location implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute("ops")) != null )  _locationOps = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("dir")) != null )  _trainDir = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("switchList")) != null )  _switchList = (a.getValue().equals("true"));
+        if ((a = e.getAttribute("printerName")) != null )  _defaultPrinter = a.getValue();
         // load train icon coordinates
         Attribute x;
         Attribute y;
@@ -661,6 +674,9 @@ public class Location implements java.beans.PropertyChangeListener {
         e.setAttribute("ops", Integer.toString(getLocationOps()));
         e.setAttribute("dir", Integer.toString(getTrainDirections()));
         e.setAttribute("switchList", getSwitchList()?"true":"false");
+        if (!getDefaultPrinterName().equals("")){
+        	e.setAttribute("printerName", getDefaultPrinterName());
+        }
         if (!getTrainIconEast().equals(new Point())){
         	e.setAttribute("eastTrainIconX", Integer.toString(getTrainIconEast().x));
         	e.setAttribute("eastTrainIconY", Integer.toString(getTrainIconEast().y));

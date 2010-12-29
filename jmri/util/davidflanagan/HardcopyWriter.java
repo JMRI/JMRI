@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.io.Writer;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.Properties;
+//import java.util.Properties;
 import java.util.TimeZone;
 import java.util.Vector;
 
@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -79,23 +79,52 @@ public class HardcopyWriter extends Writer {
     private boolean last_char_was_return = false;
 
     // A static variable to hold prefs between print jobs
-    private static Properties printprops = new Properties();
+    //private static Properties printprops = new Properties();
+    
+    // Job and Page attributes
+   	JobAttributes jobAttributes = new JobAttributes();
+	PageAttributes pageAttributes = new PageAttributes();
 
-    // constructor modified to add print preview parameter
-    public HardcopyWriter(Frame frame, String jobname, int fontsize,
-                        double leftmargin, double rightmargin,
-                        double topmargin, double bottommargin, boolean preview)
-                    throws HardcopyWriter.PrintCanceledException {
-        
+	// constructor modified to add print preview parameter
+	public HardcopyWriter(Frame frame, String jobname, int fontsize,
+			double leftmargin, double rightmargin, double topmargin,
+			double bottommargin, boolean preview)
+			throws HardcopyWriter.PrintCanceledException {
+		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin,
+				topmargin, bottommargin, preview);
+	}
+	
+	// constructor modified to add default printer name
+	public HardcopyWriter(Frame frame, String jobname, int fontsize,
+			double leftmargin, double rightmargin, double topmargin,
+			double bottommargin, boolean preview, String printerName)
+			throws HardcopyWriter.PrintCanceledException {
+		
+		// set default print name
+		jobAttributes.setPrinter(printerName);
+		
+		hardcopyWriter(frame, jobname, fontsize, leftmargin, rightmargin,
+				topmargin, bottommargin, preview);
+	}
+
+	private void hardcopyWriter(Frame frame, String jobname, int fontsize,
+			double leftmargin, double rightmargin, double topmargin,
+			double bottommargin, boolean preview)
+			throws HardcopyWriter.PrintCanceledException {
+
     	isPreview = preview;
     	this.frame = frame;
+    	
+    	// set default to color
+    	pageAttributes.setColor(PageAttributes.ColorType.COLOR);
+    	
     	
     	// skip printer selection if preview
     	if (!isPreview){
     		Toolkit toolkit = frame.getToolkit();
-    		synchronized(printprops) {
-    			job = toolkit.getPrintJob(frame, jobname, printprops);
-    		}
+
+    		job = toolkit.getPrintJob(frame, jobname, jobAttributes, pageAttributes);
+
     		if (job==null)
     			throw new PrintCanceledException("User cancelled print request");
     		pagesize = job.getPageDimension();
