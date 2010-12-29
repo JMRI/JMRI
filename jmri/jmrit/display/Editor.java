@@ -177,8 +177,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     NamedIcon _newIcon;
     boolean _ignore = false;
     boolean _delete;
+    HashMap<String, String> _urlMap = new HashMap<String, String>(); 
     public NamedIcon loadFailed(String msg, String url) {
         if (_debug) log.debug("loadFailed _ignore= "+_ignore);
+        String goodUrl = _urlMap.get(url);
+        if (goodUrl!=null) {
+            return NamedIcon.getIconByName(goodUrl);
+        }
         if (_ignore) {
             _loadFailed = true;
             return new NamedIcon(url, url);
@@ -201,8 +206,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     class UrlErrorDialog extends JDialog {
         JTextField _urlField;
         CatalogPanel  _catalog;
+        String _badUrl;
         UrlErrorDialog(String msg, String url) {
             super(_targetFrame, rb.getString("BadIcon"), true);
+            _badUrl = url;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
             panel.add(new JLabel(java.text.MessageFormat.format(rb.getString("IconUrlError"), msg)));
@@ -233,6 +240,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             doneButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
                         _newIcon = NamedIcon.getIconByName(_urlField.getText());
+                        if (_newIcon!=null) {
+                            _urlMap.put(_badUrl, _urlField.getText());
+                        }
                         dispose();
                     }
             });
@@ -260,6 +270,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             cancelButton.setToolTipText(rb.getString("TooltipIgnore"));
             return panel0;
         }
+    }
+
+    public void disposeLoadData() {
+        _urlMap = null;
     }
     
     public boolean loadOK() {

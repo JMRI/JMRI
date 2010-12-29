@@ -17,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link ControlPanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ControlPanelEditorXml extends AbstractXmlAdapter {
 
@@ -195,6 +195,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
                 e.printStackTrace();
             }
         }
+        panel.disposeLoadData();     // dispose of url correction data
 
         // display the results, with the editor in back
         panel.pack();

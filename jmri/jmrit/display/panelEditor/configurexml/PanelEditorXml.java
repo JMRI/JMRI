@@ -17,7 +17,7 @@ import org.jdom.*;
  * Handle configuration for {@link PanelEditor} panes.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 public class PanelEditorXml extends AbstractXmlAdapter {
 
@@ -199,6 +199,7 @@ public class PanelEditorXml extends AbstractXmlAdapter {
                 e.printStackTrace();
             }
         }
+        panel.disposeLoadData();     // dispose of url correction data
 
         // display the results, with the editor in back
         panel.pack();

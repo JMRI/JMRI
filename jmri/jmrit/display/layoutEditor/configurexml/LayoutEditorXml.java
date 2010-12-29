@@ -16,7 +16,7 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
@@ -428,6 +428,7 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
                 e.printStackTrace();
             }
         }
+        panel.disposeLoadData();     // dispose of url correction data
 
 		// final initialization of objects
 		panel.setConnections();
