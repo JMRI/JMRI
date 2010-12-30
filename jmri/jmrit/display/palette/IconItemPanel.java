@@ -72,20 +72,21 @@ public class IconItemPanel extends ItemPanel {
             _iconMap = families.get(_family);
             Iterator<Entry<String, NamedIcon>> it = _iconMap.entrySet().iterator();
             while (it.hasNext()) {
-                Entry<String, NamedIcon> entry = it.next();
-                NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
-               icon.reduceTo(50, 80, 0.2);
+               Entry<String, NamedIcon> entry = it.next();
+               NamedIcon icon = new NamedIcon(entry.getValue());    // make copy for possible reduction
                JPanel panel = new JPanel();
                String borderName = ItemPalette.convertText(entry.getKey());
                panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), 
                                                                 borderName));
                try {
                    JLabel label = new IconDragJLabel(new DataFlavor(Editor.POSITIONABLE_FLAVOR));
-                   label.setIcon(icon);
-                   if (icon.getIconWidth()<1 || icon.getIconHeight()<1) {
+                   if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
                        label.setText(ItemPalette.rbp.getString("invisibleIcon"));
                        label.setForeground(Color.lightGray);
+                   } else {
+                       icon.reduceTo(50, 80, 0.2);
                    }
+                   label.setIcon(icon);
                    label.setName(borderName);
                    panel.add(label);
                } catch (java.lang.ClassNotFoundException cnfe) {
