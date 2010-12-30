@@ -314,7 +314,6 @@ public interface Conditional extends NamedBean {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") // with existing code structure, 
                                                                                 // just have to accept these exposed
                                                                                 // arrays. Someday...
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public static final int[] ACTION_TO_ITEM = {TYPE_NONE,
                                         TYPE_NONE,              // ACTION_NONE              1
                                         ITEM_TYPE_TURNOUT,      // ACTION_SET_TURNOUT       2

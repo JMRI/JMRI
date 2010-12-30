@@ -33,12 +33,13 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle");
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public static final String[] BLOCK_STATUS = { rb.getString("unoccupied"), rb.getString("occupied"),
                             rb.getString("allocated"), rb.getString("running"), rb.getString("outOfService"),
                             rb.getString("dark"), rb.getString("powerError") };
@@ -55,7 +56,7 @@ public class OBlock extends jmri.Block {
     static final public int DARK = 0x01;        // Block has no Sensor, same as UNKNOWN
     static final public int TRACK_ERROR = 0x80; // Block has Error
 
-    public static final int[] BLOCK_STATE = {Sensor.INACTIVE, Sensor.ACTIVE, ALLOCATED, RUNNING,
+    static final int[] BLOCK_STATE = {Sensor.INACTIVE, Sensor.ACTIVE, ALLOCATED, RUNNING,
                             OUT_OF_SERVICE, DARK, TRACK_ERROR };
 
     ArrayList <Portal> _portals = new ArrayList <Portal>();     // portals to this block
