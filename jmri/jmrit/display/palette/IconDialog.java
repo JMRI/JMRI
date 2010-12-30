@@ -423,9 +423,9 @@ public class IconDialog extends ItemDialog {
                 label.setText(ItemPalette.rbp.getString("invisibleIcon"));
                 label.setForeground(Color.lightGray);
             } else {
+                newIcon.reduceTo(100, 100, 0.2);
                 label.setText(null);
             }
-            newIcon.reduceTo(100, 100, 0.2);
             label.setIcon(newIcon);
             _catalog.setBackground(label);
             _iconMap.put(label.getName(), newIcon);
