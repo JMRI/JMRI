@@ -50,6 +50,7 @@
 # 2.31 beta - Unified versions for JMRI 2.8 and 2.9.x and initialized block tracking at startup
 # 2.32 beta - Implementd "train start actions" and "AutoStart trains" option.
 # 2.33 beta - Enabled pause/resume buttons while script being stopped
+# 2.34 beta - Updated blinkSignals as previous methods were deprecated (Greg)
 
 # JAVA imports
 
@@ -141,7 +142,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
 
 # CONSTANTS ==========================
 
-    version = "2.33 Beta"
+    version = "2.34"
     
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
@@ -1250,21 +1251,45 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
     def blinkSignals(self) :
         # Separate thread to blink flashing signals on LayoutEditor panel
         # (does not affect blinking of model signals on layout)
+        # Quit if there are no Signal Heads on the panel
+        if len(self.layoutEditor.signalHeadImage) == 0 :
+            return
+        
         # Retrieve signalHeads
         signals = []
-        # Is Lunar aspect (introduced since JMRI 2.7.8) supported?
-        hasLunar = False
-        if len(self.layoutEditor.signalHeadImage) > 0 :
+        aspectNames = ["SignalHeadStateRed", "SignalHeadStateGreen",
+            "SignalHeadStateYellow", "SignalHeadStateLunar", 
+            "SignalHeadStateFlashingRed", "SignalHeadStateFlashingGreen",
+            "SignalHeadStateFlashingYellow", "SignalHeadStateFlashingLunar",
+            "SignalHeadStateDark"]
+        hasLunar = True
+       # Are we running a JMRI version released after 24/9/2010?
+        newIcons = not callable(getattr(self.layoutEditor.signalHeadImage[0],
+              "getRedIcon", None))
+        if newIcons :
+            # New JMRI version (use getIcon, setIcon)
+            # Get aspect names
+            rbean = java.util.ResourceBundle.getBundle("jmri.NamedBeanBundle")
+            for i in range(len(aspectNames)) :
+                aspectNames[i] = rbean.getString(aspectNames[i])
+            for s in self.layoutEditor.signalHeadImage :
+                a = []
+                for i in range(7) :
+                    a.append(s.getIcon(aspectNames[i]))
+                signals.append([s, s.getIcon(aspectNames[8]), a])
+        else:
+            # Old JMRI version (use getRedIcon... setRedIcon...)
+            # Is Lunar aspect (introduced since JMRI 2.7.8) supported?
             hasLunar = callable(getattr(self.layoutEditor.signalHeadImage[0],
               "getFlashLunarIcon", None))
-        for s in self.layoutEditor.signalHeadImage :
-            a = []
-            a.append([s.getRedIcon(), s.getFlashRedIcon()])
-            a.append([s.getGreenIcon(), s.getFlashGreenIcon()])
-            a.append([s.getYellowIcon(), s.getFlashYellowIcon()])
-            if hasLunar :
-                a.append([s.getLunarIcon(), s.getFlashLunarIcon()])
-            signals.append([s, s.getDarkIcon(), a])
+            for s in self.layoutEditor.signalHeadImage :
+                a = []
+                a.append([s.getRedIcon(), s.getFlashRedIcon()])
+                a.append([s.getGreenIcon(), s.getFlashGreenIcon()])
+                a.append([s.getYellowIcon(), s.getFlashYellowIcon()])
+                if hasLunar :
+                    a.append([s.getLunarIcon(), s.getFlashLunarIcon()])
+                signals.append([s, s.getDarkIcon(), a])
         on = True
         cycling = False
         # Loop until handle exits
@@ -1277,18 +1302,28 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                     # Light-on half cycle?
                     if on :
                         # Yes - switch on signal head
-                        s[0].setFlashRedIcon(a[0][0])
-                        s[0].setFlashGreenIcon(a[1][0])
-                        s[0].setFlashYellowIcon(a[2][0])
-                        if hasLunar :
-                            s[0].setFlashLunarIcon(a[3][0])
+                        if newIcons :
+                            for i in range(3) :
+                                if a[i+4] != None :
+                                    s[0].setIcon(aspectNames[i+4], a[i])  
+                        else :
+                            s[0].setFlashRedIcon(a[0][0])
+                            s[0].setFlashGreenIcon(a[1][0])
+                            s[0].setFlashYellowIcon(a[2][0])
+                            if hasLunar :
+                                s[0].setFlashLunarIcon(a[3][0])
                     else :
                         # No - set signal head to dark aspect
-                        s[0].setFlashRedIcon(s[1])
-                        s[0].setFlashGreenIcon(s[1])
-                        s[0].setFlashYellowIcon(s[1])
-                        if hasLunar :
-                            s[0].setFlashLunarIcon(s[1])
+                        if newIcons :
+                             for i in range(3) :
+                                 if a[i+4] != None :
+                                    s[0].setIcon(aspectNames[i+4], s[1])  
+                        else:
+                            s[0].setFlashRedIcon(s[1])
+                            s[0].setFlashGreenIcon(s[1])
+                            s[0].setFlashYellowIcon(s[1])
+                            if hasLunar :
+                                s[0].setFlashLunarIcon(s[1])
                 # Force panel redrawing
                 AutoDispatcher.repaint = True
                 # Invert cycle
@@ -1304,11 +1339,16 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
                 # restore flashing icon in signal heads
                 for s in signals :
                     a = s[2]
-                    s[0].setFlashRedIcon(a[0][1])
-                    s[0].setFlashGreenIcon(a[1][1])
-                    s[0].setFlashYellowIcon(a[2][1])
-                    if hasLunar :
-                        s[0].setFlashLunarIcon(a[3][1])
+                    if newIcons :
+                        for i in range(3) :
+                            if a[i+4] != None :
+                                s[0].setIcon(aspectNames[i+4], a[i+4]) 
+                    else:
+                        s[0].setFlashRedIcon(a[0][1])
+                        s[0].setFlashGreenIcon(a[1][1])
+                        s[0].setFlashYellowIcon(a[2][1])
+                        if hasLunar :
+                            s[0].setFlashLunarIcon(a[3][1])
                 # Force panel redrawing
                 AutoDispatcher.repaint = True
             # Wait a second
@@ -1317,11 +1357,16 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton) :
         # Restore original aspects
         for s in signals :
             a = s[2]
-            s[0].setFlashRedIcon(a[0][1])
-            s[0].setFlashGreenIcon(a[1][1])
-            s[0].setFlashYellowIcon(a[2][1])
-            if hasLunar :
-                s[0].setFlashLunarIcon(a[3][1])
+            if newIcons :
+                for i in range(3) :
+                    if a[i+4] != None :
+                        s[0].setIcon(aspectNames[i+4], a[i+4]) 
+            else:
+                s[0].setFlashRedIcon(a[0][1])
+                s[0].setFlashGreenIcon(a[1][1])
+                s[0].setFlashYellowIcon(a[2][1])
+                if hasLunar :
+                    s[0].setFlashLunarIcon(a[3][1])
         # Force panel redrawing
         AutoDispatcher.repaint = True
 
@@ -9783,7 +9828,7 @@ class ADImportTrainFrame (AdScrollFrame) :
             opTrain = trainManager.getTrainById(trainIds[i])
             self.opTrains.append(opTrain)
             self.detail.add(JLabel(opTrain.getName()))
-            if opTrain.isBuilt() :
+            if opTrain.getBuilt() :
                 self.detail.add(AutoDispatcher.centerLabel("Built"))
                 importButton = JButton("Import")
                 importButton.setActionCommand(str(i))
