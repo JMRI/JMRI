@@ -25,7 +25,7 @@ import javax.swing.*;
  * </dl>
  * <P>
  * @author	Bob Jacobsen   Copyright 2009, 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public abstract class AppsBase {
 
@@ -42,7 +42,10 @@ public abstract class AppsBase {
 
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_PKGPROTECT",
+                                    justification="not a library pattern")                                    
     protected static String nameString = "JMRI Base";
+
     protected static final String configFilename = XmlFile.prefsDir()+"/JmriConfig3.xml";
     boolean configOK;
     
