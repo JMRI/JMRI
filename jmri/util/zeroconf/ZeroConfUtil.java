@@ -10,7 +10,7 @@ import java.io.*;
  *
  *	@author Brett Hoffman   Copyright (C) 2009
  *	@author Bob Jacobsen    Copyright (C) 2009
- *	@version $Revision: 1.2 $
+ *	@version $Revision: 1.3 $
  */
 
 public class ZeroConfUtil {
@@ -54,7 +54,7 @@ public class ZeroConfUtil {
             try{
                 jmdns = JmDNS.create();
             } catch (IOException e){
-                log.error("JmDNS creation failed.");
+                log.error("JmDNS creation failed : "+e.getMessage());
                 return null;
             }
         }
@@ -70,12 +70,14 @@ public class ZeroConfUtil {
      * ZeroConfUtil.advertiseService(ZeroConfUtil.getServerName("WiThrottle"), "_withrottle._tcp.local.", port, ZeroConfUtil.jmdnsInstance());
      */
     static public ServiceInfo advertiseService(String serverName, String service, int port, JmDNS jmdns) throws IOException {
-    
+    		if (jmdns == null) {
+    			log.warn("JmDNS not created.");
+    			return null;
+    		}
             ServiceInfo serviceInfo = ServiceInfo.create(service,
                                             serverName,
                                             port,
                                             "path=index.html");
-
             jmdns.registerService(serviceInfo);
             return serviceInfo;
         }
