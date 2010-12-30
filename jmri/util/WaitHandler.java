@@ -14,18 +14,19 @@ import java.util.Calendar;
  * you need to provide a test that a valid notify
  * had happened due to e.g. a state change, etc.
 <code><pre>
-new WaitHandler(this, 120) {
-    protected boolean wasSpurious() {
-        return !(state == expectedNextState); 
-    }
-};
+  new WaitHandler(this, 120) {
+      protected boolean wasSpurious() {
+          return !(state == expectedNextState); 
+      }
+  };
 </pre></code>
  * 
- * Interrupting the thread leaves the wait early with
- * the interrupted flag set.
+ * By default, interrupting the thread leaves the wait early with
+ * the interrupted flag set. InterruptedException is not thrown.
+ * You can modify this behavior via the handleInterruptedException routine.
  *
  * @author Bob Jacobsen  Copyright 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class WaitHandler {
@@ -71,8 +72,7 @@ public class WaitHandler {
                     if (!wasSpurious()) break;
                 }
             } catch (InterruptedException e) { 
-                Thread.currentThread().interrupt(); // retain if needed later
-                break;  // and leave the wait now
+                if (handleInterruptedException(e)) break;
             }    
         }
     }
@@ -87,5 +87,16 @@ public class WaitHandler {
      */
     protected boolean wasSpurious() { return false; }
 
+
+    /**
+     * Define interrupt processing.
+     * 
+     * By default, just records and leaves the wait early.
+     * @returns true if should break out of wait
+     */
+    boolean handleInterruptedException(InterruptedException e) {
+        Thread.currentThread().interrupt(); // retain if needed later
+        return true;  // and leave the wait now
+    }
 }
 
