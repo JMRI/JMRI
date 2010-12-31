@@ -11,8 +11,11 @@ import javax.swing.*;
 
 /**
  * Frame for SPROG firmware update utility.
+ *
+ * Extended to cover SPROG 3 which uses the same bootloader protocol
+ * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.17 $
+ * @version			$Revision: 1.18 $
  */
 public class SprogIIUpdateFrame
     extends SprogUpdateFrame
@@ -93,26 +96,31 @@ public class SprogIIUpdateFrame
         requestBoot();
       }
       else {
-        sprogVersion = replyString.substring(replyString.indexOf(".") -
+        sprogVersionString = replyString.substring(replyString.indexOf(".") -
             1, replyString.indexOf(".") + 2);
         if (replyString.indexOf("II") >= 0) {
-          sprogType = "SPROG II v" + sprogVersion;
-        }
-        else {
+          sprogTypeString = "SPROG II v" + sprogVersionString;
+          sprogTypeInt = 2;
+          blockLen = 8;
+        } else if (replyString.indexOf("3") >= 0) {
+          sprogTypeString = "SPROG 3 v" + sprogVersionString;
+          sprogTypeInt = 3;
+          blockLen = 16;
+        } else {
           // *** problem
         }
         if (log.isDebugEnabled()) {
-          log.debug("Found " + sprogType);
+          log.debug("Found " + sprogTypeString);
         }
-        statusBar.setText("Found " + sprogType);
+        statusBar.setText("Found " + sprogTypeString);
         // Put SPROG in boot mode
         if (log.isDebugEnabled()) {
           log.debug("Putting SPROG in boot mode");
         }
         msg = new SprogMessage("b 1 1 1");
         tc.sendSprogMessage(msg, this);
-        if (sprogType.indexOf("II") > 0) {
-          // SPROG II will not reply to this so just wait a while
+        if ((sprogTypeInt == 2) || (sprogTypeInt == 3)) {
+          // SPROG II and 3 will not reply to this so just wait a while
           tc.setSprogState(SprogState.SIIBOOTMODE);
           try {
             Thread.sleep(500);
@@ -139,10 +147,15 @@ public class SprogIIUpdateFrame
         statusBar.setText("Connected to bootloader version " + bootVer);
         // Enable the file chooser button
         setSprogModeButton.setEnabled(true);
-//        setCSModeButton.setEnabled(true);
         openFileChooserButton.setEnabled(true);
-        if (sprogType == null) {
-          sprogType = "SPROG II";
+        if (bootVer.indexOf("12") > 0) {
+          sprogTypeString = "SPROG II";
+          sprogTypeInt = 2;
+          blockLen = 8;
+        } else {
+          sprogTypeString = "SPROG 3";
+          sprogTypeInt = 3;
+          blockLen = 16;
         }
         // We remain in this state until program button is pushed
 
@@ -151,7 +164,6 @@ public class SprogIIUpdateFrame
         log.error("Bad reply to RD_VER request");
         bootState = IDLE;
         tc.setSprogState(SprogState.NORMAL);
-//        SprogAlertDialog ad = new SprogAlertDialog(this, "Connect to Bootloader", "Unable to connect to bootloader");
         JOptionPane.showMessageDialog(this, "Unable to connect to bootloader", 
                                         "Connect to Bootloader", JOptionPane.ERROR_MESSAGE);
         return;
@@ -165,7 +177,8 @@ public class SprogIIUpdateFrame
       // Check for correct response to erase that was sent
       if ( (m.getOpCode() == msg.getElement(2)) && (m.getNumDataElements() == 1)) {
         // Don't erase ICD debug executive if in use
-        if (eraseAddress < 0x7c00) {
+        if ((sprogTypeInt == 2) && (eraseAddress < 0x7c00)
+                || (sprogTypeInt == 3) && (eraseAddress < 0x3E00)) {
           // More data to erase
           sendErase();
         }
@@ -204,8 +217,8 @@ public class SprogIIUpdateFrame
         log.debug("reply in WRITESENT state");
       }
       // Check for correct response to type of write that was sent
-      if ( (sprogType.indexOf("II") >= 0) && (m.getOpCode() == msg.getElement(2)) &&
-          (m.getNumDataElements() == 1)
+      if (((sprogTypeInt == 2) || (sprogTypeInt == 3))
+              && (m.getOpCode() == msg.getElement(2)) && (m.getNumDataElements() == 1)
           || (m.getElement(m.getNumDataElements() - 1) == '.')) {
         if (hexFile.read() > 0) {
           // More data to write
@@ -288,6 +301,7 @@ public class SprogIIUpdateFrame
 
   private void sendWrite() {
     if (hexFile.getAddressU() >= 0xF0) {
+      // Write to EEPROM
       if (log.isDebugEnabled()) {
         log.debug("Send write EE " + hexFile.getAddress());
       }
@@ -309,15 +323,21 @@ public class SprogIIUpdateFrame
       }
       msg = null;
     }
-    else if (hexFile.getAddress() >= 0x200) {
-      // Address is above bootloader range
+    else if (((sprogTypeInt == 2) && (hexFile.getAddress() >= 0x200))
+             || ((sprogTypeInt == 3) && ((hexFile.getAddress() >= 0x2000)
+                                                    && (hexFile.getAddress() < 0x3E00)))) {
+      // Program code address is above bootloader range and below debug executive
       if (log.isDebugEnabled()) {
         log.debug("Send write Flash " + hexFile.getAddress());
       }
       msg = SprogMessage.getWriteFlash(hexFile.getAddress(),
-                                             hexFile.getData());
+                                             hexFile.getData(), blockLen);
+
+      if (log.isDebugEnabled()) { log.debug(msg.toString()); }
+      
     }
     else {
+      // Do nothing
       if (log.isDebugEnabled()) {
         log.debug("null write " + hexFile.getAddress());
       }
@@ -367,14 +387,13 @@ public class SprogIIUpdateFrame
     programButton.setEnabled(false);
 
     setSprogModeButton.setEnabled(true);
-//    setCSModeButton.setEnabled(true);
     bootState = IDLE;
   }
 
   public synchronized void connectButtonActionPerformed(java.awt.event.
       ActionEvent e) {
     tc.setSprogState(SprogState.NORMAL);
-    sprogType = null;
+    sprogTypeString = null;
     // At this point we do not know what sort of SPROG is connected
     // nor what state it is in
     // send CR to attempt to wake up SPROG
@@ -395,27 +414,20 @@ public class SprogIIUpdateFrame
       openFileChooserButton.setEnabled(false);
       programButton.setEnabled(false);
       setSprogModeButton.setEnabled(false);
-//      setCSModeButton.setEnabled(false);
-      if ( (sprogType == null) || (sprogType.indexOf("II") > 0)) {
+      if (sprogTypeInt < 3) {
         // SPROG II
         // Erase device above bootloader
         eraseAddress = 0x200;
         sendErase();
       }
+      else if (sprogTypeInt == 3) {
+        // SPROG 3
+        // Erase device above bootloader
+        eraseAddress = 0x2000;
+        sendErase();
+      }
       else {
-        // v4
-        // Read first line from hexfile
-        if (hexFile.read() > 0) {
-          // Program line and wait for reply
-          if (log.isDebugEnabled()) {
-            log.debug("First write " + hexFile.getLen() + " " +
-                      hexFile.getAddress());
-          }
-          sendWrite();
-        }
-        else {
-          doneWriting();
-        }
+        // *** Error
       }
     }
   }
@@ -431,17 +443,6 @@ public class SprogIIUpdateFrame
     startLongTimer();
   }
 
-//  public void setCSModeButtonActionPerformed(java.awt.event.
-//                                             ActionEvent e) {
-//    if (log.isDebugEnabled()) {
-//      log.debug("Set SPROG mode");
-//    }
-//    msg = new SprogMessage(SprogMessage.MAXSIZE).getWriteEE(0xfe, new int[] {0});
-//    bootState = SPROGMODESENT;
-//    tc.sendSprogMessage(msg, this);
-//    startLongTimer();
-//  }
-
   /**
    * Internal routine to handle a timeout
    */
@@ -449,7 +450,7 @@ public class SprogIIUpdateFrame
     if (bootState == CRSENT) {
       if (log.isDebugEnabled()) {
         log.debug("timeout in CRSENT - assuming boot mode");
-        // we were looking for a SPROG II in normal mode but have had no reply
+        // we were looking for a SPROG II or 3 in normal mode but have had no reply
         // so maybe it was already in boot mode.
         // Try looking for bootloader version
       }
@@ -457,7 +458,6 @@ public class SprogIIUpdateFrame
     }
     else if (bootState == VERREQSENT) {
       log.error("timeout in VERREQSENT!");
-//      SprogAlertDialog ad = new SprogAlertDialog(this, "Fatal Error", "Unable to connect to bootloader");
       JOptionPane.showMessageDialog(this, "Unable to connect to bootloader",
                                     "Fatal Error", JOptionPane.ERROR_MESSAGE);
       statusBar.setText("Fatal error - unable to connect");
@@ -467,7 +467,6 @@ public class SprogIIUpdateFrame
     else if (bootState == WRITESENT) {
       log.error("timeout in WRITESENT!");
       // This is fatal!
-//      SprogAlertDialog ad = new SprogAlertDialog(this, "Fatal Error", "Unable to write");
       JOptionPane.showMessageDialog(this, "Timeout during write",
                                     "Fatal Error", JOptionPane.ERROR_MESSAGE);
       statusBar.setText("Fatal error - unable to write");

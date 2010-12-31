@@ -12,7 +12,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogState;
  * class handles the response from the command station.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
 
@@ -373,23 +373,32 @@ public class SprogMessage  extends jmri.jmrix.AbstractMRMessage {
       return m.frame();
     }
 
-    static public SprogMessage getWriteFlash(int addr, int [] data) {
+    static public SprogMessage getWriteFlash(int addr, int [] data, int blockLen) {
       int l = data.length;
-      // Writes are rounded up to multiples of 8 bytes
-      if (l%8 != 0) { l = l + (8 - l%8);}
+      int offset;
+      // Writes are rounded up to multiples of blockLen
+      if (l%blockLen != 0) { l = l + (blockLen - l%blockLen);}
       // and data padded with erased condition
       int padded[] = new int[l];
       for (int i = 0; i < l; i++) {
-        if (i < data.length) {
-          padded[i] = data[i];
-        } else {
-          padded[i] = 0xff;
-        }
+        padded[i] = 0xff;
+      }
+      // Address is masked to start on blockLen boundary
+      if (blockLen == 16) {
+          offset = addr &0xF;
+          addr = addr & 0xFFFFFFF0;
+      } else {
+          offset = addr &0x7;
+          addr = addr & 0xFFFFFFF8;
+      }
+      // Copy data into padded array at address offset
+      for (int i = 0; i < data.length; i++) {
+        padded[i+offset] = data[i];
       }
       SprogMessage m = new SprogMessage(6 + l);
       m.setOpCode(WT_FLASH);
-      // length is number of 8 byte blocks
-      m.setLength(l/8);
+      // length is number of blockLen blocks
+      m.setLength(l/blockLen);
       m.setAddress(addr);
       m.setData(padded);
       m.setChecksum();

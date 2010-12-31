@@ -14,7 +14,7 @@ import javax.swing.*;
  * Andrew Berridge - Feb 2010 - removed implementation of SprogListener - wasn't being used
  * 
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.15 $
+ * @version			$Revision: 1.16 $
  */
 public class SprogUpdateFrame
     extends jmri.util.JmriJFrame {
@@ -24,13 +24,11 @@ public class SprogUpdateFrame
   protected JButton programButton = new JButton();
   protected JButton openFileChooserButton = new JButton();
   protected JButton setSprogModeButton = new JButton();
-//  protected JButton setCSModeButton = new JButton();
 
   // to find and remember the hex file
   final javax.swing.JFileChooser hexFileChooser = new JFileChooser(jmri.jmrit.XmlFile.userFileLocationDefault());
 
   JLabel statusBar = new JLabel();
-//  SprogAlertDialog ad;
 
   // File to hold name of hex file
   transient SprogHexFile hexFile = null;
@@ -38,7 +36,6 @@ public class SprogUpdateFrame
   SprogMessage msg;
 
   // members for handling the bootloader interface
-
   int bootState = 0;
   static final int IDLE = 0;
   static final int CRSENT = 1;         // awaiting reply to " "
@@ -58,8 +55,10 @@ public class SprogUpdateFrame
   static final boolean KNOWN = true;
 
   String replyString;
-  String sprogVersion;
-  String sprogType = null;
+  String sprogVersionString = null;
+  String sprogTypeString = null;
+  int sprogTypeInt = 0;
+  int blockLen = 0;
 
   SprogTrafficController tc = null;
 
@@ -109,11 +108,6 @@ public class SprogUpdateFrame
     setSprogModeButton.setEnabled(false);
     setSprogModeButton.setToolTipText("Click here to set SPROG II in SPROG mode");
 
-//    setCSModeButton.setText("Set Command Station Mode");
-//    setCSModeButton.setVisible(true);
-//    setCSModeButton.setEnabled(false);
-//    setCSModeButton.setToolTipText("Click here to set SPROG II in Command Station mode");
-
     statusBar.setVisible(true);
     statusBar.setText(" ");
     statusBar.setHorizontalTextPosition(SwingConstants.LEFT);
@@ -134,7 +128,6 @@ public class SprogUpdateFrame
     JPanel buttons2 = new JPanel();
     buttons2.setLayout(new BoxLayout(buttons2, BoxLayout.X_AXIS));
     buttons2.add(setSprogModeButton);
-//    buttons2.add(setCSModeButton);
 
     JPanel status = new JPanel();
     status.setLayout(new BoxLayout(status, BoxLayout.X_AXIS));
@@ -172,12 +165,6 @@ public class SprogUpdateFrame
       }
     });
 
-//    setCSModeButton.addActionListener(new java.awt.event.ActionListener() {
-//      public void actionPerformed(java.awt.event.ActionEvent e) {
-//        setCSModeButtonActionPerformed(e);
-//      }
-//    });
-
     // connect to data source
     init();
 
@@ -206,7 +193,6 @@ public class SprogUpdateFrame
       hexFile = new SprogHexFile(hexFileChooser.getSelectedFile().getPath());
       if (log.isDebugEnabled()) log.debug("hex file chosen: " + hexFile.getName());
       if ((hexFile.getName().indexOf("sprog") < 0)) {
-//        SprogAlertDialog ad = new SprogAlertDialog(this, "Hex File Select", "File does not appear to be a valid SPROG II hex file");
         JOptionPane.showMessageDialog(this, "File does not appear to be a valid SPROG II hex file", 
                                         "Hex File Select", JOptionPane.ERROR_MESSAGE);
         hexFile = null;
@@ -224,10 +210,6 @@ public class SprogUpdateFrame
   public void setSprogModeButtonActionPerformed(java.awt.event.
       ActionEvent e) {
   }
-
-//  public void setCSModeButtonActionPerformed(java.awt.event.
-//      ActionEvent e) {
-//  }
 
   /**
    * Internal routine to handle a timeout

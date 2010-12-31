@@ -19,7 +19,7 @@ import jmri.jmrix.sprog.SprogConstants;
  * to send some commands while slot manager is active
  * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements SprogListener {
     
@@ -358,7 +358,8 @@ public class SprogConsoleFrame extends jmri.jmrix.AbstractMonFrame implements Sp
     // Called from synchronised code
     public boolean isFirmwareUnlockPossible() {
         if (isSprogII && ((sprogMajorVersion == 1) && (sprogMinorVersion >= 6))
-                          || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))) {
+                          || ((sprogMajorVersion == 2) && (sprogMinorVersion >= 1))
+                          || isSprog3) {
             return true;
         } else
             return false;

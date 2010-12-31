@@ -9,9 +9,10 @@ import jmri.jmrix.sprog.SprogReply;
 import javax.swing.*;
 
 /**
- * Get the firmware version of the attached SPROG
+ * Get the firmware version of the attached SPROG, SPROG II or SPROG 3
+ * 
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.8 $
+ * @version			$Revision: 1.9 $
  */
 public class SprogVersionFrame
         extends SprogUpdateFrame
@@ -77,17 +78,20 @@ public class SprogVersionFrame
                 setVisible(false);
                 dispose();
             } else {
-                sprogVersion = replyString.substring(replyString.indexOf(".") -
+                sprogVersionString = replyString.substring(replyString.indexOf(".") -
                         1, replyString.indexOf(".") + 2);
-                if (replyString.indexOf("II") >= 0) {
-                    sprogType = "SPROG II ";
+                if (replyString.indexOf("3") >= 0) {
+                    sprogTypeString = "SPROG 3 ";
+                } else if (replyString.indexOf("II") >= 0) {
+                    sprogTypeString = "SPROG II ";
                 } else {
-                    sprogType = "SPROG ";
+                    sprogTypeString = "SPROG ";
                 }
                 if (replyString.indexOf("USB") >= 0) {
                     sprogUSB = "USB ";
                 }
-                JOptionPane.showMessageDialog(null, sprogType + sprogUSB + "v" + sprogVersion,
+                JOptionPane.showMessageDialog(null, sprogTypeString + sprogUSB
+                        + "v" + sprogVersionString,
                         "SPROG Version", JOptionPane.INFORMATION_MESSAGE);
                 setVisible(false);
                 dispose();
@@ -105,42 +109,7 @@ public class SprogVersionFrame
         }
     }
 
-//    protected int SHORT_TIMEOUT=500;
-//    
-//    javax.swing.Timer timer = null;
-//    
-//    /**
-//     * Internal routine to start timer to protect the mode-change.
-//     */
-//    protected void startShortTimer() {
-//        restartTimer(SHORT_TIMEOUT);
-//    }
-//    
-//    /**
-//     * Internal routine to stop timer, as all is well
-//     */
-//    protected void stopTimer() {
-//        if (timer!=null) timer.stop();
-//    }
-//    
-//    /**
-//     * Internal routine to handle timer starts & restarts
-//     */
-//    protected void restartTimer(int delay) {
-//        if (timer==null) {
-//            timer = new javax.swing.Timer(delay, new java.awt.event.ActionListener() {
-//                public void actionPerformed(java.awt.event.ActionEvent e) {
-//                    timeout();
-//                }
-//            });
-//        }
-//        timer.stop();
-//        timer.setInitialDelay(delay);
-//        timer.setRepeats(false);
-//        timer.start();
-//    }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger
     .getLogger(SprogVersionFrame.class.getName());
-    
 }

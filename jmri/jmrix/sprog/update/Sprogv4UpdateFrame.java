@@ -12,7 +12,7 @@ import javax.swing.*;
 /**
  * Frame for SPROG firmware update utility.
  * @author			Andrew Crosland   Copyright (C) 2004
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 public class Sprogv4UpdateFrame
     extends SprogUpdateFrame
@@ -77,13 +77,13 @@ public class Sprogv4UpdateFrame
         requestBoot();
       }
       else {
-        sprogVersion = replyString.substring(replyString.indexOf(".") -
+        sprogVersionString = replyString.substring(replyString.indexOf(".") -
             1, replyString.indexOf(".") + 2);
-        sprogType = "SPROG v" + sprogVersion;
+        sprogTypeString = "SPROG v" + sprogVersionString;
         if (log.isDebugEnabled()) {
-          log.debug("Found " + sprogType);
+          log.debug("Found " + sprogTypeString);
         }
-        statusBar.setText("Found " + sprogType);
+        statusBar.setText("Found " + sprogTypeString);
         // Put SPROG in boot mode
         if (log.isDebugEnabled()) {
           log.debug("Putting SPROG in boot mode");
@@ -128,8 +128,8 @@ public class Sprogv4UpdateFrame
         statusBar.setText("Connected to SPROG v4 bootloader");
         // Enable the file chooser button
         openFileChooserButton.setEnabled(true);
-        if (sprogType == null) {
-          sprogType = "SPROG";
+        if (sprogTypeString == null) {
+          sprogTypeString = "SPROG";
         }
         tc.setSprogState(SprogState.V4BOOTMODE);
 
@@ -289,7 +289,7 @@ public class Sprogv4UpdateFrame
   public synchronized void connectButtonActionPerformed(java.awt.event.
       ActionEvent e) {
     tc.setSprogState(SprogState.NORMAL);
-    sprogType = null;
+    sprogTypeString = null;
     // At this point we do not know what state SPROG is in
     // send CR to attempt to wake it up
     msg = new SprogMessage(1);
