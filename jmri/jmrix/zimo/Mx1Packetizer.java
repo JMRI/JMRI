@@ -26,7 +26,7 @@ import java.util.NoSuchElementException;
  *</UL>
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version 		$Revision: 1.8 $
+ * @version 		$Revision: 1.9 $
  * 
  * Adapted by Sip Bosch for use with zimo Mx-1
  *
@@ -198,7 +198,9 @@ public class Mx1Packetizer extends Mx1TrafficController {
 	/**
 	 * Captive class to handle transmission
 	 */
-	class XmtHandler implements Runnable {
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UW_UNCOND_WAIT",
+                                        justification="while loop controls access")
+    class XmtHandler implements Runnable {
 		public void run() {
 			boolean debug = log.isDebugEnabled();
                         while (true) {   // loop permanently

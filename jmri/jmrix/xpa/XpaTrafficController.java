@@ -17,7 +17,7 @@ import java.util.NoSuchElementException;
  * is handled in an independent thread.
  *
  * @author			Paul Bender  Copyright (C) 2004
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 public final class XpaTrafficController implements XpaInterface, Runnable {
 
@@ -258,6 +258,8 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
          * Captive class to handle transmission
          */
         class XmtHandler implements Runnable {
+                @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UW_UNCOND_WAIT",
+                                        justification="while loop controls access")
                 public void run() {
 		while(true) { //  loop forever
 	                // Check to see if there is anything to send

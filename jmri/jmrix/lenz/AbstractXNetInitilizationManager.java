@@ -9,7 +9,7 @@ package jmri.jmrix.lenz;
  * based on the Command Station Type.
  *
  * @author			Paul Bender  Copyright (C) 2003-2010
- * @version			$Revision: 2.7 $
+ * @version			$Revision: 2.8 $
  */
 abstract public class AbstractXNetInitilizationManager {
 
@@ -25,27 +25,23 @@ abstract public class AbstractXNetInitilizationManager {
     }
     
     public AbstractXNetInitilizationManager(XNetSystemConnectionMemo memo) {
-	/* spawn a thread to request version information and wait for the 
-	   command station to respond */
-	if(log.isDebugEnabled()) log.debug("Starting XPressNet Initilization Process");
-        systemMemo=memo;
-	initThread= new Thread(new XNetInitilizer(this));
-
-	// Since we can't currently reconfigure the user interface after  
-	// initilization, We need to wait for the initilization thread 
-	// to finish before we can continue.  The wait  can be removed IF 
-	// we revisit the GUI initilization process.
-	synchronized(this) {
-           if (log.isDebugEnabled()) log.debug("start wait");
-              try {
-	         this.wait();
-               } catch (java.lang.InterruptedException ei) {
-                Thread.currentThread().interrupt(); // retain if needed later
-               }
-               if (log.isDebugEnabled()) log.debug("end wait");
+        /* spawn a thread to request version information and wait for the 
+           command station to respond */
+        if(log.isDebugEnabled()) log.debug("Starting XPressNet Initilization Process");
+            systemMemo=memo;
+        initThread= new Thread(new XNetInitilizer(this));
+    
+        // Since we can't currently reconfigure the user interface after  
+        // initilization, We need to wait for the initilization thread 
+        // to finish before we can continue.  The wait  can be removed IF 
+        // we revisit the GUI initilization process.
+        synchronized(this) {
+            if (log.isDebugEnabled()) log.debug("start wait");
+            new jmri.util.WaitHandler(this);
+            if (log.isDebugEnabled()) log.debug("end wait");
         }
-
-	init();
+    
+        init();
     }
 
     abstract protected void init();
