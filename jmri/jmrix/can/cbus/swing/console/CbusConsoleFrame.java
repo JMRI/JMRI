@@ -44,7 +44,7 @@ import jmri.jmrix.can.cbus.CbusOpCodes;
  * Frame for Cbus Console
  *
  * @author			Andrew Crosland   Copyright (C) 2008
- * @version			$Revision: 1.30 $
+ * @version			$Revision: 1.31 $
  */
 public class CbusConsoleFrame extends JmriJFrame implements CanListener {
     
@@ -212,11 +212,12 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         showPacketCheckBox.setText("Show Packets");
         showPacketCheckBox.setVisible(true);
         showPacketCheckBox.setToolTipText("Select to show packets");
-        showPacketCheckBox.setSelected(true);
+        showPacketCheckBox.setSelected(false);
         
         showEventCheckBox.setText("Show Events");
         showEventCheckBox.setVisible(true);
         showEventCheckBox.setToolTipText("Select to show events");
+        showEventCheckBox.setSelected(true);
         
         filterButton.setText("Filter...");
         filterButton.setVisible(true);
@@ -238,7 +239,7 @@ public class CbusConsoleFrame extends JmriJFrame implements CanListener {
         decimalCheckBox.setVisible(true);
         decimalCheckBox.setToolTipText("If checked, Data entry/display is decimal."
                 +" If unchecked, hexadecimal");
-        _decimal = false;
+        _decimal = true;
         decimalCheckBox.setSelected(_decimal);
         
         sendButton.setText("Send");
