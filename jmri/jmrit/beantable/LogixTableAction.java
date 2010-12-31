@@ -55,7 +55,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.86 $
+ * @version $Revision: 1.87 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -409,7 +409,7 @@ public class LogixTableAction extends AbstractTableAction {
     JCheckBox _autoSystemName = new JCheckBox(rb.getString("LabelAutoSysName"));
     JLabel _sysNameLabel = new JLabel(rbx.getString("LogixSystemName"));
     JLabel _userNameLabel = new JLabel(rbx.getString("LogixUserName"));
-    jmri.UserPreferencesManager prefMgr;
+    jmri.UserPreferencesManager prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemNameAuto = this.getClass().getName()+".AutoSystemName";
     JButton create;
 
@@ -526,8 +526,7 @@ public class LogixTableAction extends AbstractTableAction {
 	 * Responds to the Add button in Logix table Creates and/or initializes the
 	 * Add Logix window
 	 */
-	protected void addPressed(ActionEvent e) {
-        prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+    protected void addPressed(ActionEvent e) {
 		// possible change
         if (!checkFlags(null)) {
             return;
@@ -548,6 +547,9 @@ public class LogixTableAction extends AbstractTableAction {
         }
 		addLogixFrame.pack();
 		addLogixFrame.setVisible(true);
+                _autoSystemName.setSelected(false);
+                if(prefMgr.getPreferenceState(systemNameAuto))
+                    _autoSystemName.setSelected(true);
 	}
 
     /**
@@ -555,7 +557,6 @@ public class LogixTableAction extends AbstractTableAction {
     * Returns the button panel
     */
     JPanel makeAddLogixFrame(String titleId, String messageId) {
-        prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         addLogixFrame = new JmriJFrame(rbx.getString(titleId));
         addLogixFrame.addHelpMenu(
                 "package.jmri.jmrit.beantable.LogixAddEdit", true);
@@ -591,8 +592,6 @@ public class LogixTableAction extends AbstractTableAction {
         c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
         c.gridy = 0;
         p.add(_autoSystemName,c);
-        if(prefMgr.getPreferenceState(systemNameAuto))
-            _autoSystemName.setSelected(true);
         _addUserName.setToolTipText(rbx.getString("LogixUserNameHint"));
         _systemName.setToolTipText(rbx.getString("LogixSystemNameHint"));
         contentPane.add(p);
@@ -641,15 +640,18 @@ public class LogixTableAction extends AbstractTableAction {
     
     void autoSystemName(){
         if (_autoSystemName.isSelected()){
-            create.setEnabled(true);
+            if (create!=null)
+                create.setEnabled(true);
             _systemName.setEnabled(false);
             _sysNameLabel.setEnabled(false);
         }
         else {
-            if (_systemName.getText().length() > 0)
-               create.setEnabled(true);
-            else
-               create.setEnabled(false);
+            if (create!=null){
+                if (_systemName.getText().length() > 0)
+                   create.setEnabled(true);
+                else
+                   create.setEnabled(false);
+            }
             _systemName.setEnabled(true);  
             _sysNameLabel.setEnabled(true);
         }
@@ -686,6 +688,9 @@ public class LogixTableAction extends AbstractTableAction {
                     });
                     addLogixFrame.pack();
                     addLogixFrame.setVisible(true);
+                    _autoSystemName.setSelected(false);
+                    if(prefMgr.getPreferenceState(systemNameAuto))
+                        _autoSystemName.setSelected(true);
                     }
                 };
         if (log.isDebugEnabled()) log.debug("copyPressed Thread started for " + sName);
@@ -698,48 +703,55 @@ public class LogixTableAction extends AbstractTableAction {
     String _logixSysName;
 
 	void copyLogixPressed(ActionEvent e) {
-		String uName = _addUserName.getText().trim();
+	String uName = _addUserName.getText().trim();
         if (uName.length()==0) {
             uName = null;
         }
-        if (!checkLogixSysName()) {
-            return;
-        }
-		String sName = _systemName.getText().trim();
-		// check if a Logix with this name already exists
-        boolean createLogix = true;
-		Logix targetLogix = _logixManager.getBySystemName(sName);
-        if (targetLogix != null) {
-            int result = JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
-                                                rbx.getString("ConfirmLogixDuplicate"),  
-                                                new Object[] {sName, _logixSysName}),
-                                                rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION,
-                                                JOptionPane.QUESTION_MESSAGE);
-            if (JOptionPane.NO_OPTION == result) {
+        Logix targetLogix;
+        if(_autoSystemName.isSelected()){
+            if (!checkLogixUserName(uName))
                 return;
-            }
-            createLogix = false;
-            String userName = targetLogix.getUserName();
-            if (userName.length() > 0) {
-                _addUserName.setText(userName);
-                uName = userName;
-            }
-        } else if (!checkLogixUserName(uName)) {
-            return;
-        }
-        if (createLogix) {
-            // Create the new Logix
-            targetLogix = _logixManager.createNewLogix(sName, uName);
-            if (targetLogix == null) {
-                // should never get here unless there is an assignment conflict
-                log.error("Failure to create Logix with System Name: " + sName);
-                return;
-            }
-        } else if (targetLogix == null) {
-            log.error("Error targetLogix is null!");
-            return;
+            targetLogix = _logixManager.createNewLogix(uName);
         } else {
-            targetLogix.setUserName(uName);
+            if (!checkLogixSysName()) {
+                return;
+            }
+                    String sName = _systemName.getText().trim();
+                    // check if a Logix with this name already exists
+            boolean createLogix = true;
+                    targetLogix = _logixManager.getBySystemName(sName);
+            if (targetLogix != null) {
+                int result = JOptionPane.showConfirmDialog(f, java.text.MessageFormat.format(
+                                                    rbx.getString("ConfirmLogixDuplicate"),
+                                                    new Object[] {sName, _logixSysName}),
+                                                    rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_OPTION,
+                                                    JOptionPane.QUESTION_MESSAGE);
+                if (JOptionPane.NO_OPTION == result) {
+                    return;
+                }
+                createLogix = false;
+                String userName = targetLogix.getUserName();
+                if (userName.length() > 0) {
+                    _addUserName.setText(userName);
+                    uName = userName;
+                }
+            } else if (!checkLogixUserName(uName)) {
+                return;
+            }
+            if (createLogix) {
+                // Create the new Logix
+                targetLogix = _logixManager.createNewLogix(sName, uName);
+                if (targetLogix == null) {
+                    // should never get here unless there is an assignment conflict
+                    log.error("Failure to create Logix with System Name: " + sName);
+                    return;
+                }
+            } else if (targetLogix == null) {
+                log.error("Error targetLogix is null!");
+                return;
+            } else {
+                targetLogix.setUserName(uName);
+            }
         }
         Logix srcLogic = _logixManager.getBySystemName(_logixSysName);
         for (int i=0; i<srcLogic.getNumConditionals(); i++) {
@@ -877,6 +889,9 @@ public class LogixTableAction extends AbstractTableAction {
         String sName = _systemName.getText().trim();
         if(_autoSystemName.isSelected()){
             _curLogix = _logixManager.createNewLogix(uName);
+            if (!checkLogixUserName(uName)) {
+                return;
+            }
         } else {    
             if (!checkLogixSysName()) {
                 return;
