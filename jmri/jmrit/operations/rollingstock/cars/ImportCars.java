@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ImportCars extends Thread {
 	
@@ -350,7 +350,7 @@ public class ImportCars extends Thread {
 						}
 					}
 
-					if (l != null){
+					if (l != null && sl != null){
 						String status = car.setLocation(l,sl);
 						if (!status.equals(Car.OKAY)){
 							log.debug ("Can't set car's location because of "+ status);
@@ -358,7 +358,28 @@ public class ImportCars extends Thread {
 									MessageFormat.format(rb.getString("CanNotSetCarAtLocation"),new Object[]{(carRoad+" "+carNumber),carType,carLocation,carTrack,status}),
 									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
-							break;
+							if (status.equals(Car.TYPE)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToAllowService"),new Object[]{carLocation, carTrack, (carRoad+" "+carNumber), carType}),
+										rb.getString("ServiceCarType"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									l.addTypeName(carType);
+									sl.addTypeName(carType);
+									status = car.setLocation(l,sl);
+								} else {
+									break;
+								}						
+							}
+							if (!status.equals(Car.OKAY)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(carRoad+" "+carNumber), carLocation, carTrack}),
+										rb.getString("OverRide"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									car.setLocation(l,sl,true);	// force car
+								} else {
+									break;
+								}
+							}
 						}
 					}else{
 //						log.debug("No location for car ("+carRoad+" "+carNumber+")");

@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -25,7 +26,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ImportEngines extends Thread {
 	
@@ -295,7 +296,7 @@ public class ImportEngines extends Thread {
 					engine.setBuilt(engineBuilt);
 					enginesAdded++;
 
-					if (l != null){
+					if (l != null && sl != null){
 						String status = engine.setLocation(l,sl);
 						if (!status.equals(Engine.OKAY)){
 							log.debug ("Can't set engine's location because of "+ status);
@@ -303,7 +304,28 @@ public class ImportEngines extends Thread {
 									MessageFormat.format(rb.getString("CanNotSetEngineAtLocation"),new Object[]{(engineRoad+" "+engineNumber),engineModel,engineLocation,engineTrack,status}),
 									rb.getString("rsCanNotLoc"),
 									JOptionPane.ERROR_MESSAGE);
-							break;
+							if (status.equals(Engine.TYPE)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToAllowService"),new Object[]{engineLocation, engineTrack, (engineRoad+" "+engineNumber), engine.getType()}),
+										rb.getString("ServiceEngineType"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									l.addTypeName(engine.getType());
+									sl.addTypeName(engine.getType());
+									status = engine.setLocation(l,sl);
+								} else {
+									break;
+								}						
+							}
+							if (!status.equals(Car.OKAY)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(engineRoad+" "+engineNumber), engineLocation, engineTrack}),
+										rb.getString("OverRide"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									engine.setLocation(l,sl,true);	// force engine
+								} else {
+									break;
+								}
+							}
 						}
 					}else{
 //						log.debug("No location for engine ("+engineRoad+" "+engineNumber+")");

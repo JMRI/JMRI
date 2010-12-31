@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -301,7 +301,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 	 * @return "okay" if successful, "type" if the rolling stock's type isn't 
 	 * acceptable, or "length" if the rolling stock length didn't fit.
 	 */
-	protected String setLocation(Location location, Track track, boolean force) {
+	public String setLocation(Location location, Track track, boolean force) {
 		// first determine if rolling stock can be move to the new location
 		if (!force){
 			String status = testLocation(location, track);
