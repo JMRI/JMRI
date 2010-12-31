@@ -29,7 +29,7 @@ import java.util.*;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  * @see  jmri.web.xmlio.XmlIOFactory
  */
 public class DefaultXmlIOServer implements XmlIOServer {
@@ -406,6 +406,8 @@ public class DefaultXmlIOServer implements XmlIOServer {
                         tc.throttle = t;
                         Integer address = Integer.valueOf( ((DccLocoAddress)t.getLocoAddress()).getNumber());
                         map.put(address, tc);
+                    }
+                    public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
                     }
                 });
 

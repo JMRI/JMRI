@@ -21,7 +21,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.14 $
+ * @version 		$Revision: 1.15 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -143,16 +143,19 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                     _handleExpected = false;
                     log.debug("PLOC expected but received ERR");
                     throttleRequestTimer.stop();
+                    String message = "";
                     switch (m.getElement(3)) {
                         case CbusConstants.ERR_ADDR_FULL:
-                            JOptionPane.showMessageDialog(null, "Loco stack is full.");
+                            message = "Loco stack is full.";
+                            JOptionPane.showMessageDialog(null, message);
                             break;
 
                         case CbusConstants.ERR_ADDR_TAKEN:
-                            JOptionPane.showMessageDialog(null, "Address in use by another throttle.");
+                            message = "Address in use by another throttle.";
+                            JOptionPane.showMessageDialog(null, message);
                             break;
                     }
-                    failedThrottleRequest(_dccAddr);
+                    failedThrottleRequest(_dccAddr, message);
                 }
                 break;
 
@@ -217,7 +220,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
      */
     synchronized protected void timeout() {
         log.debug("Throttle request (RLOC) timed out");
-        failedThrottleRequest(_dccAddr);
+        failedThrottleRequest(_dccAddr, "Throttle request (RLOC) timed out");
         throttleRequestTimer.stop();
     }
 

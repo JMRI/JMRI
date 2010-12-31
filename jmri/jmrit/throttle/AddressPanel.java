@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.60 $
+ * @version $Revision: 1.61 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -195,6 +195,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		}	
 	}
+
+        public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+            javax.swing.JOptionPane.showMessageDialog(null,reason,rb.getString("FailedSetupRequestTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
+        }
 
 	/**
 	 * Get notification that a consist throttle has been found as we requested.

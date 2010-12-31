@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
@@ -97,7 +97,7 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         }
         else {
             log.debug("Ecos Throttle has NO control over loco "+address);
-            failedThrottleRequest((DccLocoAddress) address);
+            failedThrottleRequest((DccLocoAddress) address, "Ecos Throttle has NO control over loco "+address);
         }
     }
     

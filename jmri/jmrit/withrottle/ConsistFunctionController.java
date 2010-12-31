@@ -8,7 +8,7 @@ import jmri.jmrit.roster.RosterEntry;
 /**
  *
  *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.6 $
+ *	@version $Revision: 1.7 $
  */
 public class ConsistFunctionController implements ThrottleListener{
 
@@ -39,6 +39,10 @@ public class ConsistFunctionController implements ThrottleListener{
         throttleController.sendFunctionLabels(rosterLoco);
         throttleController.sendAllFunctionStates(throttle);
     }
+
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+    }
+
     
     public void dispose(){
         throttle.release();

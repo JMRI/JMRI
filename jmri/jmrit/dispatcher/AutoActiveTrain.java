@@ -41,7 +41,7 @@ import jmri.ThrottleListener;
  * The AutoEngineer sub class is based in part on code by Pete Cressman contained in Warrants.java
  *
  * @author	Dave Duchamp  Copyright (C) 2010
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class AutoActiveTrain implements ThrottleListener {
 	
@@ -181,6 +181,9 @@ public class AutoActiveTrain implements ThrottleListener {
 			setSpeedBySignal();
 		}	
 	}
+
+        public void notifyFailedThrottleRequest(jmri.DccLocoAddress address, String reason){
+        }
 
 	// more operational variables
 	private ArrayList<AllocatedSection> _allocatedSectionList = new ArrayList<AllocatedSection>();

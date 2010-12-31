@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -506,6 +506,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             new Thread(_engineer).start();
             _engineer.rampSpeedTo(getNextSpeed(), getSpeedChangeWait(1));
         }
+    }
+
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
     }
 
     /**

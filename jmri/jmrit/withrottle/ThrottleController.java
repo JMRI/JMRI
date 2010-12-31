@@ -26,7 +26,7 @@ package jmri.jmrit.withrottle;
  *
  *	@author Brett Hoffman   Copyright (C) 2009, 2010
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.18 $
+ *	@version $Revision: 1.19 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -177,6 +177,10 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
         sendAllFunctionStates(t);
 
     }
+
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+    }
+
 
 /*
  * Current Format:  RPF}|{whichThrottle]\[eventName}|{newValue
