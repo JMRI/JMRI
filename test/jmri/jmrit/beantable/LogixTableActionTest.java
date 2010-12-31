@@ -42,6 +42,7 @@ public class LogixTableActionTest extends jmri.util.SwingTestCase
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setPreferenceState("beantable.LogixTableAction.remindLogix", true);
         
         try {
+        _logixTable.prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         _logixTable.actionPerformed(null);
         _logixTable.addPressed(null);
         _logixTable._addUserName.setText("TestLogix");    
