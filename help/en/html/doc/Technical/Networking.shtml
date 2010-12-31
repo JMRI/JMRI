@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Networking.shtml,v 1.5 2010-03-06 02:53:36 jacobsen Exp $ -->
+<!-- $Id: Networking.shtml,v 1.6 2010-12-31 01:36:24 millerdl Exp $ -->
 <html lang="en">
 <head>
     <TITLE>
@@ -117,7 +117,7 @@ In the rest of this page, we provide links to the various examples of those two 
 </ul>
 
 See also the 
-<a href="http://jmri.org/JavaDoc/doc/jmri.util.zeroconf">jmri.util.zeroconf</a> package of Zeroconf/Binjour utilities for use in JMRI.
+<a href="http://jmri.org/JavaDoc/doc/jmri/util/zeroconf/ZeroConfUtil.html">jmri.util.zeroconf</a> package of Zeroconf/Binjour utilities for use in JMRI.
 
 <p>
 See also the 
