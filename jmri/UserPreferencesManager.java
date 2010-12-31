@@ -3,6 +3,7 @@
 package jmri;
 
 import java.awt.Dimension;
+import java.beans.PropertyChangeListener;
 
 /**
  * Interface for the User Preferences Manager.
@@ -13,7 +14,7 @@ import java.awt.Dimension;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  */
  
 public interface UserPreferencesManager {
@@ -197,6 +198,10 @@ public interface UserPreferencesManager {
     
     public void allowSave();
     public void disallowSave();
+
+    public void removePropertyChangeListener(PropertyChangeListener l);
+
+    public void addPropertyChangeListener(PropertyChangeListener l);
 
     //public void displayRememberMsg();
     

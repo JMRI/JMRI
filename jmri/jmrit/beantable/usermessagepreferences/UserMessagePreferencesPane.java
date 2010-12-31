@@ -4,9 +4,9 @@ package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.Component;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import java.awt.Dimension;
 
 import javax.swing.*;
@@ -15,7 +15,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -25,6 +25,13 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         super();
         JComponent component = new JPanel();
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        p.addPropertyChangeListener(new PropertyChangeListener(){
+            public void propertyChange(PropertyChangeEvent e) {
+                if (e.getPropertyName().equals("PreferencesUpdated")){
+                    refreshOptions();
+                }
+            }
+        });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         
         JButton updateButton = new JButton("Apply");
@@ -90,7 +97,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         logixTabPanel.setLayout(new BoxLayout(logixTabPanel, BoxLayout.Y_AXIS));
         
         _logixSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
-        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindRoute"));
+        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindLogix"));
         logixTabPanel.add(_logixSaveMsg);
         
         logixTabPanel.add(addQuestionButton(_warnDeleteLogix = new JComboBox(), "When Deleting a Logix", p.getWarnDeleteLogix()));
@@ -162,10 +169,20 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         return tableDeleteTabPanel;
     }
     
-    
+    boolean updating = false;
     private void updateButtonPressed(){
+        updating=true;
         p.setLoading();
-        
+
+        for (int i = 0; i<data.length; i++){
+            if (((String)data[i][1]).toLowerCase().equals("true")){
+                p.setPreferenceState((String)data[i][0], true);
+                data[i][1]="true";
+            } else {
+                p.setPreferenceState((String)data[i][0], false);
+            }
+        }
+
         //From Route Tab
         p.setPreferenceState("beantable.RouteTableAction.remindRoute", !_routeSaveMsg.isSelected());
         p.setWarnDeleteRoute(getChoiceType(_warnRouteInUse));
@@ -180,7 +197,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         
         //From LRoute Tab
         p.setWarnLRouteInUse(getChoiceType(_warnLRouteInUse));
-        p.setPreferenceState("beantable.LogixTableAction.remindLogix", !_lRouteSaveMsg.isSelected());
+        p.setPreferenceState("beantable.LRouteTableAction.remindRoute", !_lRouteSaveMsg.isSelected());
         
         //From table DeleteTab
         p.setWarnTurnoutInUse(getChoiceType(_warnTurnoutInUse));
@@ -194,18 +211,11 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         p.setWarnSignalMastInUse(getChoiceType(_warnSignalMastInUse));
         p.setWarnSignalHeadInUse(getChoiceType(_warnSignalHeadInUse));
         p.setWarnTransitInUse(getChoiceType(_warnTransitInUse));
-
-        for (int i = 0; i<data.length; i++){
-            if (((String)data[i][1]).toLowerCase().equals("true")){
-                p.setPreferenceState((String)data[i][0], true);
-                data[i][1]="true";
-            } else {
-                p.setPreferenceState((String)data[i][0], false);
-            }
-        }
         
         jmri.InstanceManager.configureManagerInstance().storePrefs();
+        updating=false;
         p.finishLoading();
+        refreshOptions();
     }
     
     private void addQuestionComboBoxToGrid(JPanel p, JComboBox _combo, String label, int value){
@@ -230,6 +240,49 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         
         return _comboPanel;
     
+    }
+
+    private void refreshOptions(){
+
+        if (updating){
+            //If we are updating the preferences then we do not wan to refresh the values.
+            return;
+        }
+
+        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
+        data = new Object[preferenceList.size()][2];
+        for (int i = 0; i < preferenceList.size(); i++) {
+            data[i][0] = preferenceList.get(i);
+            data[i][1] = "true";
+        }
+        setChoiceType(_warnRouteInUse, p.getWarnDeleteRoute());
+
+        _routeSaveMsg.setSelected(!p.getPreferenceState("beantable.RouteTableAction.remindRoute"));
+        _lRouteSaveMsg.setSelected(!p.getPreferenceState("beantable.LRouteTableAction.remindRoute"));
+        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindLogix"));
+
+        //From logix Tab
+        setChoiceType(_warnDeleteLogix, p.getWarnDeleteLogix());
+        setChoiceType(_warnLogixInUse, p.getWarnLogixInUse());
+
+        //From Application Tab
+        setChoiceType(_quitAfterSave, p.getQuitAfterSave());
+
+        //From LRoute Tab
+        setChoiceType(_warnLRouteInUse, p.getWarnLRouteInUse());
+
+        //From table DeleteTab
+        setChoiceType(_warnTurnoutInUse, p.getWarnTurnoutInUse());
+        setChoiceType(_warnAudioInUse, p.getWarnAudioInUse());
+        setChoiceType(_warnBlockInUse, p.getWarnBlockInUse());
+        setChoiceType(_warnLightInUse, p.getWarnLightInUse());
+        setChoiceType(_warnSectionInUse, p.getWarnSectionInUse());
+        setChoiceType(_warnMemoryInUse, p.getWarnMemoryInUse());
+        setChoiceType(_warnReporterInUse, p.getWarnReporterInUse());
+        setChoiceType(_warnSensorInUse, p.getWarnSensorInUse());
+        setChoiceType(_warnSignalMastInUse, p.getWarnSignalMastInUse());
+        setChoiceType(_warnSignalHeadInUse, p.getWarnSignalHeadInUse());
+        setChoiceType(_warnTransitInUse, p.getWarnTransitInUse());
     }
     
     String[] choiceTypes = {"Always Ask","No","Yes"};

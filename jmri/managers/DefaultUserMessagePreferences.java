@@ -14,6 +14,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.UIManager;
 import java.util.ArrayList;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
+
 
 /**
  * Basic Implementation of the User Preferences Manager.
@@ -22,7 +26,7 @@ import java.util.ArrayList;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.20 $
+ * @version	$Revision: 1.21 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -264,10 +268,50 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     private static volatile boolean _changeMade = false;
     
     public synchronized boolean getChangeMade(){ return _changeMade; }
-    public synchronized void setChangeMade() { _changeMade=true; }
+    public synchronized void setChangeMade() {
+        _changeMade=true;
+        notifyPropertyChangeListener("PreferencesUpdated", null, null );
+
+    }
     //The reset is used after the preferences have been loaded for the first time
     public synchronized void resetChangeMade(){ _changeMade = false; }
-    
+
+    public void removePropertyChangeListener(PropertyChangeListener l) {
+        if (listeners.contains(l)) {
+            listeners.removeElement(l);
+        }
+    }
+
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        // add only if not already registered
+        if (!listeners.contains(l)) {
+            listeners.addElement(l);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+        // make a copy of the listener vector to synchronized not needed for transmit
+        Vector<PropertyChangeListener> v;
+        synchronized(this)
+            {
+                v = (Vector<PropertyChangeListener>) listeners.clone();
+            }
+        if (log.isDebugEnabled()) log.debug("notify "+v.size()
+                                            +" listeners about property "
+                                            +property);
+        // forward to all listeners
+        int cnt = v.size();
+        for (int i=0; i < cnt; i++) {
+            PropertyChangeListener client = v.elementAt(i);
+            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        }
+    }
+
+
+    // data members to hold contact with the property listeners
+    final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+
     private static volatile boolean _loading = false;
     public void setLoading() { _loading = true; }
     public void finishLoading() { 
