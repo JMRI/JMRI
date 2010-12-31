@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -360,10 +360,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     //The values here might need a bit of re-working
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setSpeedSetting(float speed) {
-        super.setSpeedSetting(speed);
         if(!_haveControl) return;
         int value;
-        
         if (speed == this.speedSetting) return;
         /*if (super.speedStepMode == SpeedStepMode128) {
             value = (int)((127-1)*speed);     // -1 for rescale to avoid estop
@@ -382,7 +380,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         if (value>0) value = value+1;  // skip estop
         if (value>128) value = 128;    // max possible speed
         if (value<0) value = 0;        // emergency stop
-
+        speedSetting = value;
         if (value >0) {
             String message = "set("+this.objectNumber+", speed["+value+"])";
             EcosMessage m = new EcosMessage(message);
@@ -394,7 +392,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             EcosMessage m = new EcosMessage(message);
             tc.sendEcosMessage(m, this);
         }
-
+        super.setSpeedSetting(speed);
     }
 
     EcosTrafficController tc;
