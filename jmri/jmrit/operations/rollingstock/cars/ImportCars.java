@@ -27,7 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class ImportCars extends Thread {
 	
@@ -297,8 +297,13 @@ public class ImportCars extends Thread {
 									rb.getString("carTrack"),
 									JOptionPane.YES_NO_OPTION);
 							if (results == JOptionPane.YES_OPTION){
-								log.debug("Create 1000 foot yard track ("+carTrack+")");
-								sl = l.addTrack(carTrack, Track.YARD);
+								if (l.getLocationOps() == Location.NORMAL){
+									log.debug("Create 1000 foot yard track ("+carTrack+")");
+									sl = l.addTrack(carTrack, Track.YARD);
+								} else {
+									log.debug("Create 1000 foot staging track ("+carTrack+")");
+									sl = l.addTrack(carTrack, Track.STAGING);	
+								}
 								sl.setLength(1000);
 							} else {
 								break;
@@ -365,6 +370,17 @@ public class ImportCars extends Thread {
 								if (results == JOptionPane.YES_OPTION){
 									l.addTypeName(carType);
 									sl.addTypeName(carType);
+									status = car.setLocation(l,sl);
+								} else {
+									break;
+								}						
+							}
+							if (status.equals(Car.LENGTH)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{carTrack}),
+										rb.getString("TrackLength"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									sl.setLength(sl.getLength()+1000);
 									status = car.setLocation(l,sl);
 								} else {
 									break;

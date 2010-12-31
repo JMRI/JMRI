@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -26,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 public class ImportEngines extends Thread {
 	
@@ -274,8 +273,13 @@ public class ImportEngines extends Thread {
 									rb.getString("engineTrack"),
 									JOptionPane.YES_NO_OPTION);
 							if (results == JOptionPane.YES_OPTION){
-								log.debug("Create 1000 foot yard track ("+engineTrack+")");
-								sl = l.addTrack(engineTrack, Track.YARD);
+								if (l.getLocationOps() == Location.NORMAL){
+									log.debug("Create 1000 foot yard track ("+engineTrack+")");
+									sl = l.addTrack(engineTrack, Track.YARD);
+								} else {
+									log.debug("Create 1000 foot staging track ("+engineTrack+")");
+									sl = l.addTrack(engineTrack, Track.STAGING);	
+								}
 								sl.setLength(1000);
 							} else {
 								break;
@@ -316,7 +320,18 @@ public class ImportEngines extends Thread {
 									break;
 								}						
 							}
-							if (!status.equals(Car.OKAY)){
+							if (status.equals(Engine.LENGTH)){
+								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantIncreaseLength"),new Object[]{engineTrack}),
+										rb.getString("TrackLength"),
+										JOptionPane.YES_NO_OPTION);
+								if (results == JOptionPane.YES_OPTION){
+									sl.setLength(sl.getLength()+1000);
+									status = engine.setLocation(l,sl);
+								} else {
+									break;
+								}						
+							}
+							if (!status.equals(Engine.OKAY)){
 								int results = JOptionPane.showConfirmDialog(null, MessageFormat.format(rb.getString("DoYouWantToForceCar"),new Object[]{(engineRoad+" "+engineNumber), engineLocation, engineTrack}),
 										rb.getString("OverRide"),
 										JOptionPane.YES_NO_OPTION);
