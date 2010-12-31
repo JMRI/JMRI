@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.89 2010-12-07 03:25:44 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.90 2010-12-31 02:15:26 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -169,12 +169,12 @@ operations. Help is also available at the <a
 <H3>British Railways</H3>
 
 The program supports an alternate set of railway terminology for our
-British modelers. To use British terminologies, go to the JMRI Advanced
-Preferences (Edit-&gt;Preferences.. select the Show Advanced Preferences
-checkbox) and select English (United Kingdom) in the "Locale:" menu
-box. The program will also convert from centimeters to meters when
-entering wagon, locomotive, or location lengths, just append "cm" to any
-length. 
+British modelers. To use British terminologies, change the JMRI Display
+Locale to English (United Kingdom). With British terminology, trains
+travel Up/Down and East/West, and some British railway names and wagon
+types are provided to get you started. The program will also convert
+from centimeters to meters when entering wagon, locomotive, or location
+lengths, just append "cm" to any length. 
 
 <A NAME="Settings"></A>
 <H2>Settings</H2>
@@ -733,7 +733,27 @@ with Scheduled loads" box if you want to change your cars with
 your sidings that are requesting a schedule loads. The program will
 create a schedule load for an empty car that is the correct type for the
 siding that is demanding a load. For a load to be created, the siding
-must be directly serviced by the route that departs the staging track. 
+must be directly serviced by the route that departs the staging track. </P>
+
+<A NAME="ModifyLocationsByCarType"></A>
+<H3>Modify Locations by Car Type</H3>
+
+This tool can be found under Locations->Tools. Use this tool to quickly
+modify the type of cars your locations and tracks will service. Very
+useful when adding a new car type to your roster.
+
+<P><img src="images/ModifyLocationsByCarType.png"></P>
+
+<P>First select the car type you wish to modify. The window will
+then show which locations and tracks can service that car type. Select
+or deselect the locations and tracks you want to service, and press the
+"Save" button to modify your locations and tracks. You can also copy how
+an existing car is serviced by your locations and apply those rules to
+another car. To make a car type behave like another, first select the
+car your would like to copy, then select the "copy" checkbox, the car
+type will now appear to the right of the checkbox, then select the type
+of car you want to modify, and press "Save" to have both car types
+serviced by the same locations and tracks.</P>
 </P>
 <A NAME="Cars"></A>
 <H2>Cars</H2>
@@ -1452,16 +1472,19 @@ of the various track statuses.</P>
 
 This tool can be found under Trains->Tools. Use this tool to quickly
 modify the type of cars your trains will service. Very useful when
-adding a new car type to your roster. First select the car type you wish
-to modify. The window will then show which train can service that car
-type by selecting the checkboxes next to the appropriate train. Select
-or deselect the trains you want to service, and press the "Save" button
-to modify your trains. You can also copy how an existing car is serviced
-by your trains and apply those rules to another car. To make a car type
-behave like another, first select the car your would like to copy, then
-select the "copy" checkbox, the car type will now appear to the right of
-the checkbox, then select the type of car you want to modify, and press
-"Save" to have both car types serviced by the same trains. 
+adding a new car type to your roster. 
+
+<P><img src="images/ModifyTrainsByCarType.png"></P>
+
+<P>First select the car type you wish to modify. The window will
+then show which trains can service that car type. Select or deselect the
+trains you want to service, and press the "Save" button to modify your
+trains. You can also copy how an existing car is serviced by your trains
+and apply those rules to another car. To make a car type behave like
+another, first select the car your would like to copy, then select the
+"copy" checkbox, the car type will now appear to the right of the
+checkbox, then select the type of car you want to modify, and press
+"Save" to have both car types serviced by the same trains.</P>
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
