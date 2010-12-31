@@ -65,7 +65,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.69 $
+ * @version $Revision: 1.70 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -1921,8 +1921,8 @@ public class OperationsTrainsTest extends TestCase {
 		// Are the engine and car moves correct
 		Assert.assertEquals("Engine e1 Moves after Terminate should be 136", 136, e1.getMoves());
 		Assert.assertEquals("Engine e2 Moves after Terminate should be 334", 334, e2.getMoves());
-		Assert.assertEquals("Car c1 Moves after Terminate should be 38", 38, c1.getMoves());
-		Assert.assertEquals("Car c4 Moves after Terminate should be 4459", 4459, c4.getMoves());
+		Assert.assertEquals("Car c1 Moves after Terminate should be 38", 36, c1.getMoves());
+		Assert.assertEquals("Car c4 Moves after Terminate should be 4457", 4457, c4.getMoves());
 		Assert.assertEquals("Car c8 Moves after Terminate should be 10", 10, c8.getMoves());
 
 		// Are the location pickup and drop counts correct?

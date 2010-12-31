@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -445,9 +445,10 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				_trackDestination.addPropertyChangeListener(this);
 			} else {
 				// rolling stock has been terminated bump rolling stock moves
-				setMoves(++_moves);
 				if (getTrain() != null && getTrain().getRoute() != null)
-					setSavedRouteId(getTrain().getRoute().getId());
+					setSavedRouteId(getTrain().getRoute().getId());								
+				if (getRouteDestination() != null)
+					setMoves(++_moves);
 				setRouteLocation(null);
 				setRouteDestination(null);
 			}
@@ -710,7 +711,7 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 				log.debug("Rolling stock ("+toString()+") has arrived at destination ("+getDestination()+")");
 				setLocation(getDestination(), getDestinationTrack(), true);	// force RS to destination
 				setDestination(null, null); 	// this also clears the route locations
-				setTrain(null);
+				setTrain(null);					// this must come after setDestination (route id is set)
 			}else{
 				log.debug("Rolling stock ("+toString()+") is in train (" +_train.getName()+") leaves location ("+old.getName()+") destination ("+next.getName()+")");
 				Location nextLocation = locationManager.getLocationByName(next.getName());
@@ -905,7 +906,8 @@ public class RollingStock implements java.beans.PropertyChangeListener{
     	if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY) &&
     			e.getNewValue().equals(Train.TRAINRESET) &&
     			e.getSource() == _train){
-    		if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") is removed from train ("+_train.getName()+") by reset");
+    		if (log.isDebugEnabled()) log.debug("Rolling stock (" +toString()+") is removed from train ("+_train.getName()+") by reset");   		
+    		// the order of the next two instructions is important, otherwise rs will have train's route id
     		setTrain(null);
     		setDestination(null, null);
     	}

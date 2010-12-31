@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -848,13 +848,13 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// confirm cars have moved
 		Assert.assertEquals("car's location Foxboro","Foxboro MA", c3.getLocationName());
-		Assert.assertEquals("car's location Foxboro","Foxboro Siding 2", c3.getTrackName());
+		Assert.assertEquals("car's location Foxboro","Foxboro Siding 1", c3.getTrackName());
 		Assert.assertEquals("car's destination","", c3.getDestinationName());
 		Assert.assertEquals("car's destination track","", c3.getDestinationTrackName());
 		Assert.assertEquals("car's load","L", c3.getLoad());
 		
 		Assert.assertEquals("car's location Foxboro","Foxboro MA", c4.getLocationName());
-		Assert.assertEquals("car's location Foxboro","Foxboro Siding 1", c4.getTrackName());
+		Assert.assertEquals("car's location Foxboro","Foxboro Siding 2", c4.getTrackName());
 		Assert.assertEquals("car's destination","", c4.getDestinationName());
 		Assert.assertEquals("car's destination track","", c4.getDestinationTrackName());
 
