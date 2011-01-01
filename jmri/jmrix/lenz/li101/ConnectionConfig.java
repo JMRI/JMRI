@@ -11,11 +11,11 @@ package jmri.jmrix.lenz.li101;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 2.3 $
+ * @version	$Revision: 2.4 $
  *
  * @see LI101Adapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig{
 
     /**
      * Ctor for an object being created during load process;

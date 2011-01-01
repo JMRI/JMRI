@@ -3,7 +3,7 @@
 package jmri.jmrix.lenz.ztc640;
 
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -25,10 +25,10 @@ import jmri.util.SerialUtil;
  *              class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 
-public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
+public class ZTC640Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
     
@@ -216,7 +216,7 @@ public class ZTC640Adapter extends XNetPortController implements jmri.jmrix.Seri
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
     
-    // base class methods for the XNetPortController interface
+    // base class methods for the XNetSerialPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");

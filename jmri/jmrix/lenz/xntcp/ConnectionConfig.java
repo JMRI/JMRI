@@ -23,13 +23,13 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Giorgio Terdina Copyright (C) 2008, based on LI100 Action by Bob Jacobsen, Copyright (C) 2003
- * @version	$Revision: 1.9 $
+ * @version	$Revision: 1.10 $
  * GT - May 2008 - Added possibility of manually defining the IP address and the TCP port number
  *
  * @see XnTcpAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
-
+public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
+        javax.swing.JComboBox portBox = new javax.swing.JComboBox();
 
 	protected JTextField ipField = new JTextField(XnTcpAdapter.DEFAULT_IP_ADDRESS);
 	protected JTextField portField = new JTextField(String.valueOf(XnTcpAdapter.DEFAULT_TCP_PORT));
@@ -40,7 +40,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         adapter = p;
 		String h = adapter.getCurrentOption1Setting();
 		if(h != null && !h.equals("")) ipField = new JTextField(h);
@@ -116,7 +116,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
         Vector<String> v;
         try {
-            v = adapter.getPortNames();
+            v = ((XnTcpAdapter)adapter).getPortNames();
     	    if (log.isDebugEnabled()) {
     		    log.debug("loadDetails called in class "+this.getClass().getName());
     		    log.debug("adapter class: "+adapter.getClass().getName());
@@ -159,7 +159,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 		manualInput = choice.equals("Manual");
 		ipField.setEnabled(manualInput);
 		portField.setEnabled(manualInput);
-		adapter.setPort(choice);
+		//adapter.setPort(choice);
 		if(manualInput) {
 			adapter.configureOption1(ipField.getText());
 			adapter.configureOption2(portField.getText());

@@ -3,7 +3,7 @@
 package jmri.jmrix.lenz.hornbyelite;
 
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 import java.io.DataInputStream;
@@ -24,10 +24,10 @@ import jmri.util.SerialUtil;
  *	Normally controlled by the lenz.hornbyelite.EliteFrame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003,2008-2010
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 
-public class EliteAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
+public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
     
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
@@ -219,7 +219,7 @@ public class EliteAdapter extends XNetPortController implements jmri.jmrix.Seria
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
     
-    // base class methods for the XNetPortController interface
+    // base class methods for the XNetSerialPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");

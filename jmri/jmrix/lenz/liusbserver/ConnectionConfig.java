@@ -17,29 +17,29 @@ import jmri.jmrix.JmrixConfigPane;
  * connection.
  *
  * @author	Paul Bender Copyright (C) 2009
- * @version	$Revision: 1.8 $
+ * @version	$Revision: 1.9 $
  *
  * @see LIUSBServerAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfig {
+
+    javax.swing.JComboBox portBox = new javax.swing.JComboBox();
 
 
-    protected JTextField ipField = new JTextField(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
-    protected JTextField commPortField = new JTextField(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
-    protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
 
     /**
      * Ctor for an object being created during load process;
      * Swing init is deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p){
         super(p);
+
     }
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
-	super();
+	super(new LIUSBServerAdapter());
     }
 
     public String name() { return "Lenz LIUSB Server"; }
@@ -48,7 +48,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
      * Load the adapter with an appropriate object
      * <i>unless</i> it has already been set.
      */
-    protected void setInstance() { adapter = LIUSBServerAdapter.instance(); }
+    protected void setInstance() { adapter = new LIUSBServerAdapter(); }
 
     public String getInfo() {
         String t = (String)portBox.getSelectedItem();
@@ -57,6 +57,16 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
     }
 
     public void loadDetails(JPanel details) {
-     	details.add(new JLabel("No options"));
+     	super.loadDetails(details);
+        hostNameField.setText(LIUSBServerAdapter.DEFAULT_IP_ADDRESS);
+	hostNameField.setEnabled(false); // we can't change this now.
+	portFieldLabel.setText("Communication Port");
+	portField.setText(String.valueOf(LIUSBServerAdapter.COMMUNICATION_TCP_PORT));
+	portField.setEnabled(false); // we can't change this now.
+	opt1Box.setEnabled(false); // we can't change this now.
+	
     }
+
+        protected JTextField bcastPortField = new JTextField(String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT));
+
 }

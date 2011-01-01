@@ -7,21 +7,23 @@ import javax.swing.JOptionPane;
 /**
  * Frame to control and connect XPressNet via XnTcp interface and comm port
  * @author			Giorgio Terdina Copyright (C) 2008, based on LI100 Frame by Bob Jacobsen, Copyright (C) 2002
- * @version			$Revision: 1.3 $
+ * @version			$Revision: 1.4 $
  */
-public class XnTcpFrame extends jmri.jmrix.SerialPortFrame {
+public class XnTcpFrame extends jmri.jmrix.NetworkPortFrame {
 
+        javax.swing.JComboBox portBox = new javax.swing.JComboBox();
+ 
 	public XnTcpFrame() {
 		super("Open XnTcp");
 		adapter = new XnTcpAdapter();
 	}
 
-	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.SerialConfigException {
+	public void openPortButtonActionPerformed(java.awt.event.ActionEvent e) throws jmri.jmrix.NetworkConfigException {
 		if ((String) portBox.getSelectedItem() != null) {
 			// connect to the port
 			adapter.configureOption1((String)opt1Box.getSelectedItem());
 			adapter.configureOption2((String)opt2Box.getSelectedItem());
-			String errCode = adapter.openPort((String) portBox.getSelectedItem(),"XnTcpFrame");
+			String errCode = ((XnTcpAdapter)adapter).openPort((String) portBox.getSelectedItem(),"XnTcpFrame");
 
 			if (errCode == null)	{
 				adapter.configure();

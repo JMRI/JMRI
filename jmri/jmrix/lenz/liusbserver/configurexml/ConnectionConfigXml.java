@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.liusbserver.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 import jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter;
 
@@ -21,9 +21,9 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author   Paul Bender Copyright (C) 2009	
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

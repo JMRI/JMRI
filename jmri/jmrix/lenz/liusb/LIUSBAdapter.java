@@ -3,7 +3,7 @@
 package jmri.jmrix.lenz.liusb;
 
 import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -23,10 +23,10 @@ import jmri.util.SerialUtil;
  * Provide access to XPressNet via a LIUSB on an FTDI Virtual Comm Port.
  *		Normally controlled by the lenz.liusb.LIUSBFrame class.
  * @author			Paul Bender Copyright (C) 2005-2010
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 
-public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
+public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
     
     SerialPort activeSerialPort = null;
     
@@ -217,7 +217,7 @@ public class LIUSBAdapter extends XNetPortController implements jmri.jmrix.Seria
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
-    // base class methods for the XNetPortController interface
+    // base class methods for the XNetSerialPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");

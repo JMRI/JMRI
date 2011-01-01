@@ -12,11 +12,11 @@ package jmri.jmrix.lenz.hornbyelite;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
  * @author      Paul Bender    Copyright (C) 2008
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  *
  * @see EliteAdapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

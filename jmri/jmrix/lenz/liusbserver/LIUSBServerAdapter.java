@@ -4,7 +4,7 @@ package jmri.jmrix.lenz.liusbserver;
 
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitilizationManager;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
 
 import jmri.jmrix.lenz.XNetReply;
@@ -24,10 +24,10 @@ import java.io.*;
  * into service mode. 
  *
  * @author			Paul Bender (C) 2009-2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 
-public class LIUSBServerAdapter extends XNetPortController {
+public class LIUSBServerAdapter extends XNetNetworkPortController {
 
 	static final int COMMUNICATION_TCP_PORT= 5550;
 	static final int BROADCAST_TCP_PORT = 5551;
@@ -52,6 +52,7 @@ public class LIUSBServerAdapter extends XNetPortController {
         private Thread bcastThread;
 
         public LIUSBServerAdapter(){
+	    super();
         }
 
     synchronized public String openPort(String portName, String appName)  {
@@ -77,8 +78,6 @@ public class LIUSBServerAdapter extends XNetPortController {
         return null; // normal operation
     }
 
-        public void setOutputBufferEmpty(boolean s) {} 
-		
         /**
          * Can the port accept additional characters?
          * return true if the port is opened.
@@ -87,7 +86,7 @@ public class LIUSBServerAdapter extends XNetPortController {
           return status();
         }
 
-	// base class methods for the XNetPortController interface
+	// base class methods for the XNetNetworkPortController interface
         public DataInputStream getInputStream() {
                 if (pin == null )
                     log.error("getInputStream called before load(), stream not available");
@@ -101,13 +100,23 @@ public class LIUSBServerAdapter extends XNetPortController {
    
          public boolean status() {return (pout!=null && pin!=null);}
     
-         /**
-          * Get an array of valid baud rates. This is currently just a message
-          * saying its fixed
-          */
-         public String[] validBaudRates() {
-            return null;
-         }
+
+    /**
+     * Get an array of valid values for "option 1"; used to display valid options.
+     * May not be null, but may have zero entries
+     */
+     @Override
+     public String [] validOption1(){ return new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""};
+        }
+
+    /**
+     * Get a String that says what Option 1 represents
+     * May be an empty string, but will not be null
+     */
+     @Override
+    public String option1Name() { return "Broadcast Port"; }
+
+
 
 	/**
 	 * set up all of the other objects to operate with a LIUSB Server 

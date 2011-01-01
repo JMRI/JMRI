@@ -11,11 +11,11 @@ package jmri.jmrix.lenz.li100f;
  * connection.
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2003
- * @version	$Revision: 1.2 $
+ * @version	$Revision: 1.3 $
  *
  * @see LI100Adapter
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig  extends jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig {
 
     /**
      * Ctor for an object being created during load process;

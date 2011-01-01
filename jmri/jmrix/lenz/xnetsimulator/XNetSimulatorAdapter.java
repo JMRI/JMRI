@@ -4,7 +4,7 @@ package jmri.jmrix.lenz.xnetsimulator;
 
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetSimulatorPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
@@ -32,10 +32,10 @@ import java.io.PipedOutputStream;
  *      support infrastructure.
  * 
  * @author			Paul Bender, Copyright (C) 2009-2010
- * @version			$Revision: 1.12 $
+ * @version			$Revision: 1.13 $
  */
 
-public class XNetSimulatorAdapter extends XNetPortController implements Runnable{
+public class XNetSimulatorAdapter extends XNetSimulatorPortController implements Runnable{
     
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
@@ -110,7 +110,7 @@ public class XNetSimulatorAdapter extends XNetPortController implements Runnable
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
     
-    // base class methods for the XNetPortController interface
+    // base class methods for the XNetSimulatorPortController interface
     public DataInputStream getInputStream() {
         if (pin == null ){ 
             log.error("getInputStream called before load(), stream not available");

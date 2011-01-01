@@ -4,7 +4,7 @@ package jmri.jmrix.lenz.li100f;
 
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetPortController;
+import jmri.jmrix.lenz.XNetSerialPortController;
 import jmri.jmrix.lenz.XNetInitilizationManager;
 import jmri.jmrix.lenz.XNetTrafficController;
 
@@ -25,10 +25,10 @@ import jmri.util.SerialUtil;
  * Normally controlled by the lenz.li100.LI100Frame class.
  * @author			Bob Jacobsen   Copyright (C) 2002
  * @author                      Paul Bender, Copyright (C) 2003-2010
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 
-public class LI100Adapter extends XNetPortController implements jmri.jmrix.SerialPortAdapter {
+public class LI100Adapter extends XNetSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
     
@@ -219,7 +219,7 @@ public class LI100Adapter extends XNetPortController implements jmri.jmrix.Seria
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
     
-    // base class methods for the XNetPortController interface
+    // base class methods for the XNetSerialPortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
