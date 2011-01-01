@@ -27,7 +27,7 @@ import jmri.Turnout;
  * 
  *  
  * @author Daniel Boudreau (C) 2007
- * @version     $Revision: 1.34 $
+ * @version     $Revision: 1.35 $
  */
 
 public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeListener {
@@ -89,7 +89,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
 
             		for (int i = 0; i < 128; i++) { // Check 128 turnouts per block 
             			int NTnum = 1 + i + (block*128);
-            			Turnout mControlTurnout = tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
+            			Turnout mControlTurnout = tc.getAdapterMemo().getTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
             			if (mControlTurnout != null){
            					// remove listener in case we're already listening
         					mControlTurnout.removePropertyChangeListener(this);
@@ -286,7 +286,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     // update turnout's CommandedState if necessary
     private void monitorActionCommanded(int NTnum, int recMemByte, int bit) {
 
-		NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
+		NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
 		if (rControlTurnout == null){
 			log.debug("Null nce turnout number: "+NTnum+" system prefix: "+tc.getAdapterMemo().getSystemPrefix() );
 			return;
@@ -341,7 +341,7 @@ public class NceTurnoutMonitor implements NceListener,java.beans.PropertyChangeL
     // update turnout's KnownState if necessary
     private void monitorActionKnown(int NTnum, int recMemByte, int bit) {
 
-    	NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getNceTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
+    	NceTurnout rControlTurnout = (NceTurnout) tc.getAdapterMemo().getTurnoutManager().getBySystemName(tc.getAdapterMemo().getSystemPrefix() + "T" + NTnum);
 
 		if (rControlTurnout == null)
 			return;

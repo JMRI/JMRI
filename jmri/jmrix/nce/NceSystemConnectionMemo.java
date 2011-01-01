@@ -13,7 +13,7 @@ import jmri.*;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.4 $
+ * @version             $Revision: 1.5 $
  */
 public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     
@@ -64,16 +64,28 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     /** 
-     * Currently provides only Programmer this way
+     * Tells which managers this provides by class
      */
     public boolean provides(Class<?> type) {
         if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+        if (type.equals(jmri.SensorManager.class))
+            return true;
+        if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        if (type.equals(jmri.LightManager.class))
+            return true;
+        if (type.equals(jmri.ClockControl.class))
             return true;
         return false; // nothing, by default
     }
     
     /** 
-     * Currently provides only Programmer this way
+     * Provide manager by class
      */
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
@@ -81,6 +93,18 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             return null;
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
+        if (T.equals(jmri.TurnoutManager.class))
+            return (T)getTurnoutManager();
+        if (T.equals(jmri.LightManager.class))
+            return (T)getLightManager();
+        if (T.equals(jmri.ClockControl.class))
+            return (T)getClockControl();
         return null; // nothing, by default
     }
 
@@ -127,12 +151,12 @@ public class NceSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     }
 
-    public NcePowerManager getNcePowerManager() { return powerManager; }
-    public NceTurnoutManager  getNceTurnoutManager() { return turnoutManager; }
-    public NceLightManager  getNceLightManager() { return lightManager; }
-    public NceSensorManager  getNceSensorManager() { return sensorManager; }
-    public NceThrottleManager  getNceThrottleManager() { return throttleManager; }
-    public NceClockControl  getNceClockControl() { return clockManager; }
+    public NcePowerManager getPowerManager() { return powerManager; }
+    public NceTurnoutManager  getTurnoutManager() { return turnoutManager; }
+    public NceLightManager  getLightManager() { return lightManager; }
+    public NceSensorManager  getSensorManager() { return sensorManager; }
+    public NceThrottleManager  getThrottleManager() { return throttleManager; }
+    public NceClockControl  getClockControl() { return clockManager; }
     
     public void dispose() {
     	nceTrafficController = null;

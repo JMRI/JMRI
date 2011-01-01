@@ -13,7 +13,7 @@ import jmri.PowerManager;
  * Create a menu for selecting the Power Manager to use
  *
  * @author	Bob Jacobsen   Copyright 2010
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  * @since 2.9.5
  */
 abstract public class PowerManagerMenu extends JMenu {
@@ -43,15 +43,17 @@ abstract public class PowerManagerMenu extends JMenu {
         if (managers != null) {
             for (Object obj : managers) {
                 PowerManager mgr = (PowerManager) obj;
-                JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
-                add(item);
-                group.add(item);
-                items.add(item);
-                item.addActionListener(new java.awt.event.ActionListener(){
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        choiceChanged();
-                    }
-                });
+                if (mgr != null) {
+                    JMenuItem item = new JRadioButtonMenuItem(mgr.getUserName());
+                    add(item);
+                    group.add(item);
+                    items.add(item);
+                    item.addActionListener(new java.awt.event.ActionListener(){
+                        public void actionPerformed(java.awt.event.ActionEvent e) {
+                            choiceChanged();
+                        }
+                    });
+                }
             }
         }
         

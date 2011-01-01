@@ -13,7 +13,7 @@ import jmri.managers.ManagerDefaultSelector;
  * <P>
  *
  * @author      Bob Jacobsen   Copyright (C)  2010
- * @version	$Revision: 1.3 $
+ * @version	$Revision: 1.4 $
  * @since 2.9.5
  */
 public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
@@ -65,7 +65,9 @@ public class ManagerDefaultsConfigPane extends jmri.util.swing.JmriPanel {
                     JRadioButton r = new SelectionButton(name, item.managerClass);
                     matrix.add(r);
                     groups[i++].add(r);
-                    if (x == connList.size()-1 && ManagerDefaultSelector.instance.getDefault(item.managerClass)==null) r.setSelected(true);
+                    if (x == connList.size()-1 && ManagerDefaultSelector.instance.getDefault(item.managerClass)==null) {
+                    	r.setSelected(true);
+                    }
                 } else {
                     // leave a blank
                     JRadioButton r = new JRadioButton();

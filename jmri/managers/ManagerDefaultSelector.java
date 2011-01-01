@@ -23,7 +23,7 @@ import jmri.*;
  * for more details.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  * @since           2.9.4
  */
 public class ManagerDefaultSelector {
@@ -84,11 +84,13 @@ public class ManagerDefaultSelector {
     public Hashtable<Class<?>, String> defaults = new Hashtable<Class<?>, String>();
     
     final public Item[] knownManagers = new Item[] {
-                //new Item("Turnouts", TurnoutManager.class, true),
-                //new Item("Sensors", SensorManager.class, true),
-                //new Item("Throttles", ThrottleManager.class, false),
-                //new Item("<html>Power<br>Control</html>", PowerManager.class, false),
-                //new Item("Command Station", CommandStation.class, false)
+//                new Item("Clock", ClockControl.class, true),
+//                new Item("Turnouts", TurnoutManager.class, true),
+//                new Item("Lights", LightManager.class, true),
+//                new Item("Sensors", SensorManager.class, true),
+                new Item("Throttles", ThrottleManager.class, false),
+                new Item("<html>Power<br>Control</html>", PowerManager.class, false),
+                new Item("<html>Command<br>Station</html>", CommandStation.class, false),
                 new Item("Programmer", ProgrammerManager.class, false)
     };
     
