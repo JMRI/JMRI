@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -272,7 +272,7 @@ public class IndicatorTrackIcon extends PositionableLabel
         if (source instanceof OBlock) {
             OBlock block = (OBlock)source;
             String pathName = block.getAllocatedPathName();
-            if ("state".equals(evt.getPropertyName())) {
+            if ("state".equals(evt.getPropertyName()) || "path".equals(evt.getPropertyName())) {
                 int now = ((Integer)evt.getNewValue()).intValue();
                 if ((now & OBlock.OUT_OF_SERVICE)!=0) {
                     if ((now & OBlock.OCCUPIED)!=0) {
