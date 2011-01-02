@@ -43,7 +43,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.31 $
+ * @version     $Revision: 1.32 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1189,12 +1189,8 @@ public class DefaultConditional extends AbstractNamedBean
             for (int i=0; i<errorList.size(); i++) {
                 log.error(getDisplayName()+" - "+errorList.get(i));
             }
-            if (_prefMgr==null) {
-                _prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-            }
             java.awt.Toolkit.getDefaultToolkit().beep();
-            if (!_skipErrorDialog && 
-                    !_prefMgr.getPreferenceState("beantable.LogixTableAction.showErrors")) {
+            if (!_skipErrorDialog) { 
                 new ErrorDialog(errorList, this);
             }
         }
@@ -1206,11 +1202,10 @@ public class DefaultConditional extends AbstractNamedBean
         }
 	}   // takeActionIfNeeded
 
-    static private jmri.UserPreferencesManager _prefMgr;
     static private boolean _skipErrorDialog = false;
+
     class ErrorDialog extends JDialog {
         JCheckBox rememberSession;
-        JCheckBox remember;
         ErrorDialog(List<String> list, Conditional cond) {
             super();
             setTitle("Logix Runtime Errors");
@@ -1232,22 +1227,12 @@ public class DefaultConditional extends AbstractNamedBean
             rememberSession = new JCheckBox("Skip error dialog for this session only?");
             panel.add(rememberSession);
             contentPanel.add(panel);
-
-            panel = new JPanel();
-            remember = new JCheckBox("Skip error dialog in future?");
-            panel.add(remember);
-//            remember.setEnabled(false);
-            contentPanel.add(panel);
-
+            
             panel = new JPanel();
             JButton closeButton = new JButton("Close");
             closeButton.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent a) {
-                        if(remember.isSelected()){
-                            _prefMgr.setPreferenceState("beantable.LogixTableAction.showErrors", true);
-                        }
                         if(rememberSession.isSelected()){
-//                            _prefMgr.setSessionPreferenceState("beantable.LogixTableAction.showErrors", true);
                             _skipErrorDialog = true;
                         }
                         dispose();

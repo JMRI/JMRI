@@ -15,7 +15,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -89,7 +89,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         return lRouteTabPanel;
     }
     
-    JCheckBox _logixErrorMsg;
     JCheckBox _logixSaveMsg;
     JComboBox _warnLogixInUse;
     JComboBox _warnDeleteLogix;
@@ -98,9 +97,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         logixTabPanel.setLayout(new BoxLayout(logixTabPanel, BoxLayout.Y_AXIS));
         
         logixTabPanel.add(javax.swing.Box.createVerticalStrut(10));
-        _logixErrorMsg  = new JCheckBox("Always Display Runtime Logix Errors");
-        _logixErrorMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.showErrors"));
-        logixTabPanel.add(_logixErrorMsg);
         logixTabPanel.add(javax.swing.Box.createVerticalStrut(30));
         
         _logixSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
@@ -195,7 +191,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         p.setWarnDeleteRoute(getChoiceType(_warnRouteInUse));
         
         //From logix Tab
-        p.setPreferenceState("beantable.LogixTableAction.showErrors", _logixErrorMsg.isSelected());
         p.setPreferenceState("beantable.LogixTableAction.remindLogix", !_logixSaveMsg.isSelected());
         p.setWarnDeleteLogix(getChoiceType(_warnDeleteLogix));
         p.setWarnLogixInUse(getChoiceType(_warnLogixInUse));
@@ -267,7 +262,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
         _routeSaveMsg.setSelected(!p.getPreferenceState("beantable.RouteTableAction.remindRoute"));
         _lRouteSaveMsg.setSelected(!p.getPreferenceState("beantable.LRouteTableAction.remindRoute"));
-        _logixErrorMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.showErrors"));
         _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindLogix"));
 
         //From logix Tab
