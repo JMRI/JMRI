@@ -43,7 +43,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.30 $
+ * @version     $Revision: 1.31 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -1147,39 +1147,13 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
 						break;
-                    case ACTION_SET_BLOCK_PATH_OCCUPIED:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
-						if (b == null) {
-							errorList.add("invalid block name in action - "+action.getDeviceName());
-						}
-						else {
-                            String err = b.setPathOccupied(action.getActionString(), true);
-							if (err!=null) {
-                                errorList.add("setPathOccupied error - "+err);
-                            }
-                            actionCount++;
-						}
-						break;
-                    case ACTION_SET_BLOCK_PATH_UNOCCUPIED:
-                        b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
-						if (b == null) {
-							errorList.add("invalid block name in action - "+action.getDeviceName());
-						}
-						else {
-                            String err = b.setPathOccupied(action.getActionString(), false);
-							if (err!=null) {
-                                errorList.add("setPathOccupied error - "+err);
-                            }
-                            actionCount++;
-						}
-						break;
                     case ACTION_DEALLOCATE_BLOCK:
                         b = InstanceManager.oBlockManagerInstance().getOBlock(devName);
 						if (b == null) {
 							errorList.add("invalid block name in action - "+action.getDeviceName());
 						}
 						else {
-                            b.deAllocate();
+                            b.deAllocate(null);
                             actionCount++;
 						}
 						break;
@@ -1219,7 +1193,8 @@ public class DefaultConditional extends AbstractNamedBean
                 _prefMgr = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
             }
             java.awt.Toolkit.getDefaultToolkit().beep();
-            if (!_skipErrorDialog) {
+            if (!_skipErrorDialog && 
+                    !_prefMgr.getPreferenceState("beantable.LogixTableAction.showErrors")) {
                 new ErrorDialog(errorList, this);
             }
         }
@@ -1261,7 +1236,7 @@ public class DefaultConditional extends AbstractNamedBean
             panel = new JPanel();
             remember = new JCheckBox("Skip error dialog in future?");
             panel.add(remember);
-            remember.setEnabled(false);
+//            remember.setEnabled(false);
             contentPanel.add(panel);
 
             panel = new JPanel();

@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -381,7 +381,7 @@ public class DefaultLogix extends AbstractNamedBean
                                                                           varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_WARRANT:
-                                listener = new JmriTwoStatePropertyListener("value", LISTENER_TYPE_WARRANT, 
+                                listener = new JmriSimplePropertyListener(null, LISTENER_TYPE_WARRANT, 
                                                                           varName, varType, conditional);
                                 break;
                             case LISTENER_TYPE_FASTCLOCK:

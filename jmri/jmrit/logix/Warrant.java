@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -448,7 +448,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _runMode = mode;
             _tempRunBlind = runBlind;
             if (InstanceManager.throttleManagerInstance()==null) {
-                log.info("InstanceManager.throttleManagerInstance()==null");
+                msg = rb.getString("noThrottle");
+                log.error(msg);
+                return msg;
             }
             if (!InstanceManager.throttleManagerInstance().
                 requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
@@ -481,6 +483,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 case ABORT:
                     _engineer.abort();
                     _engineer.notifyAll();
+                    deAllocate();
                     break;
             }
         }
@@ -508,7 +511,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
 
-    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
     }
 
     /**
@@ -528,11 +531,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         for (int i=0; i<_orders.size(); i++) {
             BlockOrder bo = _orders.get(i);
             OBlock block = bo.getBlock();
+            if (block.getAllocatedPathName()!=null) {
+                // call to get msg of who owns the block 
+                msg = block.allocate(this);
+                if (msg != null) {
+                    return msg;
+                }
+            }
+        }
+        for (int i=0; i<_orders.size(); i++) {
+            BlockOrder bo = _orders.get(i);
+            OBlock block = bo.getBlock();
             msg = block.allocate(this);
             if (msg != null) {
-                allocated = false;
-                deAllocate();
-                break;
+                log.error("CODE PRBLEM! "+msg);
+                return msg;
             }
         }
         boolean old = _allocated; 
@@ -567,7 +580,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         // we assume our train is occupying the first block
         boolean routeSet = true;
         boolean allocated = true;
-        String msg = null;
         if (orders==null) {
             _orders = _savedOrders;
         } else {
@@ -577,53 +589,41 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_orders.size()==0) {
             return java.text.MessageFormat.format(rb.getString("NoRouteSet"),"here","there");
         }
-        BlockOrder bo = _orders.get(0);
-        OBlock block = bo.getBlock();
-        msg = block.allocate(this);
+        String msg = allocateRoute();
         if (msg != null) {
-            routeSet = false;
-            allocated = false;
-        } else {
-            if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+", for "+bo.toString());
-            // allocated to this, We assume the train of this warrant occupies the first block 
-            // exit speed is determined by getPermissibleEntranceSpeed() into next block.
-            bo.setPath(this);
-            for (int i=1; i<_orders.size(); i++) {
-                bo = _orders.get(i);
-                block = bo.getBlock();
-                msg = block.allocate(this); 
-                if (msg==null) {
-                    if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+
-                                                        ", for "+bo.toString());
-                    if ((block.getState() & OBlock.OCCUPIED) != 0) {
-                        msg = java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), 
-                                                            block.getDisplayName());
-                        routeSet = false;
-                    }
-                    if ((block.getState() & OBlock.DARK) != 0) {
-                        msg = java.text.MessageFormat.format(rb.getString("BlockDark"), 
-                                                            block.getDisplayName());
-                        routeSet = false;
-                    }
-                    if (bo.getPermissibleEntranceSpeed().equals("Stop")) {
-                        msg = java.text.MessageFormat.format(rb.getString("BlockStopAspect"), 
-                                        block.getDisplayName());
-                        routeSet = false;
-                    } else if (routeSet) {
-                        bo.setPath(this);
-                    }
-                } else {
-                    allocated = false;
-                    routeSet = false;
-                    break;
-                }
+            return msg;
+        }
+        BlockOrder bo = _orders.get(0);
+        // allocated to this, We assume the train of this warrant occupies the first block 
+        // exit speed is determined by getPermissibleEntranceSpeed() into next block.
+        bo.setPath(this);
+        for (int i=1; i<_orders.size(); i++) {
+            bo = _orders.get(i);
+            OBlock block = bo.getBlock();
+//            if (log.isDebugEnabled()) log.debug("setRoute: block state= "+block.getState()+", for "+bo.toString());
+            if ((block.getState() & OBlock.OCCUPIED) != 0) {
+                msg = java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), 
+                                                    block.getDisplayName());
+                routeSet = false;
+            }
+            if ((block.getState() & OBlock.DARK) != 0) {
+                msg = java.text.MessageFormat.format(rb.getString("BlockDark"), 
+                                                    block.getDisplayName());
+                routeSet = false;
+            }
+            if (bo.getPermissibleEntranceSpeed().equals("Stop")) {
+                msg = java.text.MessageFormat.format(rb.getString("BlockStopAspect"), 
+                                block.getDisplayName());
+                routeSet = false;
+            } else if (routeSet) {
+                bo.setPath(this);
             }
         }
-
-        _allocated = allocated;
-        boolean old = _routeSet;
-        _routeSet = routeSet;
-        firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
+        if (routeSet) {
+            boolean old = _routeSet;
+            _routeSet = routeSet;
+            firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
+        }
         return msg;
     }   // setRoute
 
@@ -730,12 +730,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 getBlockAt(i).allocate(this);
             }
         }
-        // fire notification last so engineer's state can be documented in whatever GUI is listening.
         if (rougeEntry) {
-            boolean old = _routeSet;
-            _routeSet = false;
-            firePropertyChange("setRoute", Boolean.valueOf(old), Boolean.valueOf(_routeSet));
-        } else {
+            log.warn("Rouge train ahead at block \""+block.getDisplayName()+"\"!");
+        }
+        if (_idxCurrentOrder==activeIdx) {
+            // fire notification last so engineer's state can be documented in whatever GUI is listening.
             firePropertyChange("blockChange", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
         }
     }
@@ -755,6 +754,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (this.equals(block.getWarrant())) {
                 block.setValue(null);
                 block.deAllocate(this);
+                _routeSet = false;
+                _allocated = false;
             }
         } else if (_runMode==MODE_RUN ) {
             // if it is the next block ahead of the train, we can move.

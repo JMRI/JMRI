@@ -20,7 +20,7 @@ import javax.swing.Timer;
  *
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 
@@ -121,6 +121,9 @@ public class DefaultConditionalAction implements ConditionalAction {
 	 * String data for action
 	 */
     public String getActionString() {
+        if (_actionString==null) {
+            _actionString = getTypeString();
+        }
         return _actionString;
     }
 
@@ -343,10 +346,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                return (rbx.getString("ActionAllocateBlockPath"));                
             case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
                return (rbx.getString("ActionSetBlockPathTurnouts"));
-            case Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED:
-               return (rbx.getString("ActionSetBlockPathOccupied"));               
-            case Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED:
-               return (rbx.getString("ActionSetBlockPathUnoccupied"));               
             case Conditional.ACTION_DEALLOCATE_BLOCK:
                return (rbx.getString("ActionDeallocateBlock"));                
             case Conditional.ACTION_SET_BLOCK_OUT_OF_SERVICE:
@@ -639,8 +638,6 @@ public class DefaultConditionalAction implements ConditionalAction {
                     break;
                 case Conditional.ACTION_ALLOCATE_BLOCK_PATH:
                 case Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS:
-                case Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED:
-                case Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED:
                     str = str +getActionDataString()+" "+rbx.getString("onPath")+ " \""+
                             _actionString+"\" "+
                             rbx.getString("onBlock")+" \""+ _deviceName +"\".";

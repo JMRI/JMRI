@@ -176,12 +176,10 @@ public interface Conditional extends NamedBean {
     public static final int ACTION_SET_SIGNALMAST_LIT = 42;
 	public static final int ACTION_ALLOCATE_BLOCK_PATH = 43;
 	public static final int ACTION_SET_BLOCK_PATH_TURNOUTS = 44;
-	public static final int ACTION_SET_BLOCK_PATH_OCCUPIED = 45;
-	public static final int ACTION_DEALLOCATE_BLOCK = 46;
-	public static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 47;
-	public static final int ACTION_SET_BLOCK_IN_SERVICE = 48;
-	public static final int ACTION_SET_BLOCK_PATH_UNOCCUPIED = 49;
-    public static final int NUM_ACTION_TYPES = 49;
+	public static final int ACTION_DEALLOCATE_BLOCK = 45;
+	public static final int ACTION_SET_BLOCK_OUT_OF_SERVICE = 46;
+	public static final int ACTION_SET_BLOCK_IN_SERVICE = 47;
+    public static final int NUM_ACTION_TYPES = 47;
 
 /**************************************************************************************/
 /* New Variable and Action type scheme for Logix UI
@@ -359,11 +357,9 @@ public interface Conditional extends NamedBean {
                                         ITEM_TYPE_SIGNALMAST,   // ACTION_SET_SIGNALMAST_LIT = 42                                        ITEM_TYPE_SIGNALHEAD,
                                         ITEM_TYPE_OBLOCK,       // ACTION_ALLOCATE_BLOCK_PATH = 43;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_PATH_TURNOUTS = 44;
-                                        ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_PATH_OCCUPIED = 45
                                         ITEM_TYPE_OBLOCK,       //  ACTION_DEALLOCATE_BLOCK = 46;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_OUT_OF_SERVICE = 47;
                                         ITEM_TYPE_OBLOCK,       //  ACTION_SET_BLOCK_IN_SERVICE = 48;
-                                        ITEM_TYPE_OBLOCK       //  ACTION_SET_BLOCK_PATH_UNOCCUPIED = 49;
                                  };
 
     // Map Sensor Type comboBox items to Sensor action types
@@ -416,8 +412,7 @@ public interface Conditional extends NamedBean {
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="MS_MUTABLE_ARRAY") 
     public final static int[] ITEM_TO_OBLOCK_ACTION = {ACTION_ALLOCATE_BLOCK_PATH, 
-                ACTION_SET_BLOCK_PATH_TURNOUTS, ACTION_SET_BLOCK_PATH_OCCUPIED, 
-                ACTION_SET_BLOCK_PATH_UNOCCUPIED, ACTION_DEALLOCATE_BLOCK, 
+                ACTION_SET_BLOCK_PATH_TURNOUTS, ACTION_DEALLOCATE_BLOCK, 
 	            ACTION_SET_BLOCK_OUT_OF_SERVICE, ACTION_SET_BLOCK_IN_SERVICE };
 
     // Map Signal Head Type comboBox items to Signal Head action types

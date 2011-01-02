@@ -55,7 +55,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.87 $
+ * @version $Revision: 1.88 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3248,8 +3248,6 @@ public class LogixTableAction extends AbstractTableAction {
                 _namePanel.setVisible(true);
 
                 if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH || 
-                        actionType==Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED ||
-                        actionType==Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED ||
                         actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
                     p = (JPanel)_actionPanel.getComponent(0);
                     l = (JLabel)p.getComponent(0);
@@ -4020,8 +4018,6 @@ public class LogixTableAction extends AbstractTableAction {
                 _actionNameField.setText(name);
                 _curAction.setDeviceName(name);
                 if (actionType==Conditional.ACTION_ALLOCATE_BLOCK_PATH ||
-                            actionType==Conditional.ACTION_SET_BLOCK_PATH_OCCUPIED ||
-                            actionType==Conditional.ACTION_SET_BLOCK_PATH_UNOCCUPIED ||
                             actionType==Conditional.ACTION_SET_BLOCK_PATH_TURNOUTS) {
                     _curAction.setActionString((String)_actionBox.getSelectedItem());
                 }

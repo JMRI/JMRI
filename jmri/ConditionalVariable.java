@@ -690,7 +690,7 @@ public class ConditionalVariable {
             case Conditional.TYPE_ROUTE_FREE:
                 return (rbx.getString("TypeWarrantRouteFree"));
             case Conditional.TYPE_ROUTE_OCCUPIED:
-                return (rbx.getString("TypeWarrantRouteOccuoied"));
+                return (rbx.getString("TypeWarrantRouteOccupied"));
             case Conditional.TYPE_ROUTE_ALLOCATED:
                 return (rbx.getString("TypeWarrantRouteAllocated"));
             case Conditional.TYPE_ROUTE_SET:

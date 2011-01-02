@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -149,8 +149,8 @@ public class OBlock extends jmri.Block {
         }
         String path = warrant.getRoutePathInBlock(this);
         if (_pathName!=null && !_pathName.equals(path)) {
-            return java.text.MessageFormat.format(rb.getString("AllocatedByDispatch"),
-                                          _pathName, getDisplayName()); 
+            return java.text.MessageFormat.format(rb.getString("AllocatedToPath"),
+                                          path, getDisplayName(), _pathName); 
         }
         _warrant = warrant;
         _pathName = path;
@@ -176,8 +176,8 @@ public class OBlock extends jmri.Block {
                                                   _warrant.getDisplayName(), getDisplayName()); 
         }
         if (_pathName!=null && !_pathName.equals(pathName)) {
-            return java.text.MessageFormat.format(rb.getString("AllocatedByDispatch"),
-                                          _pathName, getDisplayName()); 
+            return java.text.MessageFormat.format(rb.getString("AllocatedToPath"),
+                                          pathName, getDisplayName(), _pathName); 
         }
         _pathName = pathName;
         // firePropertyChange signaled in super.setState()
@@ -191,32 +191,30 @@ public class OBlock extends jmri.Block {
     * Remove allocation state
     * Remove listener regardless of ownership
     */
-    protected void deAllocate(Warrant warrant) {
-        if (warrant!=null) {
-            removePropertyChangeListener(warrant);
-            if (warrant.equals(_warrant)) {  // allocated to caller, so deallocate
-                _warrant = null;
-                _pathName = null;
-                setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-                return;
+    public String deAllocate(Warrant warrant) {
+        if (log.isDebugEnabled()) log.debug("deAllocate \""+_pathName+"\" in block \""
+                                            +getSystemName());
+        String msg = null;
+        if (_warrant!=null) {
+            if (!_warrant.equals(warrant)) {
+                msg = "cannot deAllocate. warrant \""+_warrant.getDisplayName()+"\" owns block \""+getDisplayName()+"\"!";
+            } else {
+                removePropertyChangeListener(warrant);
+            }
+        } else if (warrant!=null && _pathName!=null) {
+            msg = "cannot deAllocate. path \""+_pathName+"\" is allocated in block \""+getDisplayName()+"\"!";
+        }
+        if (msg!=null) {
+            log.warn(msg);
+        } else {
+            _warrant = null;
+            _pathName = null;
+            int state = getState();
+            if ((state | ALLOCATED)!=0) {
+                setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
             }
         }
-        if (_warrant!=null) {
-            log.error("cannot deAllocate. warrant \""+_warrant.getDisplayName()+"\" owns block \""+getDisplayName()+"\"!");
-            return;
-        }
-    }
-
-    /*
-     * Deallocation from a non-warrant user (e.g. Logix)
-     */
-    public void deAllocate() {
-        if (_warrant!=null) {
-            log.error("cannot deAllocate. warrant \""+_warrant.getDisplayName()+"\" owns block \""+getDisplayName()+"\"!");
-            return;
-        }
-        _pathName = null;
-        setState(getState() & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
+        return msg;
     }
 
     public void setOutOfService(boolean set) {
@@ -381,39 +379,31 @@ public class OBlock extends jmri.Block {
             log.error(msg);
             return msg; 
         } else {
+            boolean occupied = ((getState() & OCCUPIED) != 0);
             if (_warrant!=null) {
                 if (!pathName.equals(warrant.getRoutePathInBlock(this))) {
                     msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
                     log.error(msg);
                     return msg; 
                 }
-                allocate(warrant);
+                if (occupied && !_warrant.getBlockAt(0).equals(this)) {
+                    msg = java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), pathName, getDisplayName()); 
+                    log.error(msg);
+                    return msg; 
+                }
+                msg = allocate(warrant);
             } else {
-                allocate(pathName);
+                // manual Logix set Block path
+                msg = allocate(pathName);
             }
-            path.setTurnouts(0);
+            if (msg==null) {
+                path.setTurnouts(0);
+            }
         }
-        return null;
-    }
-
-    /**
-    * Method for Non-warranted detection of a manually (i.e. non-auto run) running
-    * train implemented with logix.
-    */ 
-    public String setPathOccupied(String pathName, boolean set) {
-        if (_pathName==null || !_pathName.equals(pathName)) {
-            String msg = java.text.MessageFormat.format(rb.getString("PathNotFound"), pathName, getDisplayName()); 
+        if (msg!=null) {
             log.error(msg);
-            return msg; 
         }
-        if (set) {
-            setState(getState() | RUNNING);
-        } else {
-            setState(getState() & ~RUNNING);
-        }
-        if (log.isDebugEnabled()) log.debug("setPathOccupied: path \""+_pathName+"\" in block \""
-                                            +getSystemName()+"\", state= "+getState());
-        return null;
+        return msg;
     }
 
     /**
@@ -422,7 +412,7 @@ public class OBlock extends jmri.Block {
      */
     public void goingInactive() {
         //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
-        //                                    "\" goes UNOCCUPIED. from state= "+getState());
+        /*                                   "\" goes UNOCCUPIED. from state= "+getState());
         if (_warrant==null && _pathName==null) {
             // this block is not under warrant or manual detection, comply with old Block code.
             super.goingInactive();
@@ -430,6 +420,8 @@ public class OBlock extends jmri.Block {
         }
         // unset occupied and running bits, set unoccupied bit
         setState((getState() & ~(OCCUPIED | RUNNING | DARK)) | UNOCCUPIED);
+        */
+        setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
         if (_warrant!=null) {
@@ -443,17 +435,22 @@ public class OBlock extends jmri.Block {
      */
 	public void goingActive() {
         //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
-        //                                    "\" goes OCCUPIED. from state= "+getState());
+        /*                                    "\" goes OCCUPIED. from state= "+getState());
         if (_warrant==null && _pathName==null) {
             // this block is not under warrant or manual detection, comply with old Block code.
             super.goingActive();
             return;
         }
         setState((getState() & ~(UNOCCUPIED | DARK)) | OCCUPIED);
+        */
+        setState((getState() & ~UNOCCUPIED) | OCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes OCCUPIED. state= "+getState());
         if (_warrant!=null) {
             _warrant.goingActive(this);
+        } else if (_pathName!=null) {
+            // must be a manual path allocation.  unset iccupied bit and set manual path detection
+            setState((getState() & ~UNOCCUPIED) | (OCCUPIED | RUNNING));
         }
     }
    
