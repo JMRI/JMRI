@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -210,9 +210,7 @@ public class OBlock extends jmri.Block {
             _warrant = null;
             _pathName = null;
             int state = getState();
-            if ((state | ALLOCATED)!=0) {
-                setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
-            }
+            setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         }
         return msg;
     }
@@ -392,17 +390,18 @@ public class OBlock extends jmri.Block {
                     return msg; 
                 }
                 msg = allocate(warrant);
-            } else {
-                // manual Logix set Block path
-                msg = allocate(pathName);
             }
             if (msg==null) {
+                _pathName = pathName;
                 path.setTurnouts(0);
+                firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
             }
         }
         if (msg!=null) {
             log.error(msg);
         }
+        if (log.isDebugEnabled()) log.debug("setPath: Block \""+getSystemName()+" path set to \""+
+                                            _pathName+"\"");
         return msg;
     }
 
@@ -411,16 +410,6 @@ public class OBlock extends jmri.Block {
      * Called by handleSensorChange
      */
     public void goingInactive() {
-        //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
-        /*                                   "\" goes UNOCCUPIED. from state= "+getState());
-        if (_warrant==null && _pathName==null) {
-            // this block is not under warrant or manual detection, comply with old Block code.
-            super.goingInactive();
-            return;
-        }
-        // unset occupied and running bits, set unoccupied bit
-        setState((getState() & ~(OCCUPIED | RUNNING | DARK)) | UNOCCUPIED);
-        */
         setState((getState() & ~(OCCUPIED | RUNNING)) | UNOCCUPIED);
         if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
                                             "\" goes UNOCCUPIED. from state= "+getState());
@@ -434,24 +423,17 @@ public class OBlock extends jmri.Block {
      * figure out from who and copy their value. Called by handleSensorChange
      */
 	public void goingActive() {
-        //if (log.isDebugEnabled()) log.debug("OBlock \""+getSystemName()+
-        /*                                    "\" goes OCCUPIED. from state= "+getState());
-        if (_warrant==null && _pathName==null) {
-            // this block is not under warrant or manual detection, comply with old Block code.
-            super.goingActive();
-            return;
-        }
-        setState((getState() & ~(UNOCCUPIED | DARK)) | OCCUPIED);
-        */
         setState((getState() & ~UNOCCUPIED) | OCCUPIED);
-        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
-                                            "\" goes OCCUPIED. state= "+getState());
+//        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
+//                                            "\" goes OCCUPIED. state= "+getState());
         if (_warrant!=null) {
             _warrant.goingActive(this);
         } else if (_pathName!=null) {
             // must be a manual path allocation.  unset iccupied bit and set manual path detection
             setState((getState() & ~UNOCCUPIED) | (OCCUPIED | RUNNING));
         }
+        if (log.isDebugEnabled()) log.debug("Block \""+getSystemName()+" went active, path= "+
+                                            _pathName+", state= "+getState());
     }
    
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(OBlock.class.getName());
