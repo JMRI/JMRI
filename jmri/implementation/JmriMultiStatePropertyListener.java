@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import jmri.*;
 
@@ -29,26 +30,17 @@ import jmri.*;
 
 public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener
 {
-    static int SIZE = 6;
-    int numStates = 0;
-    int[] _states = new int[SIZE];
+    ArrayList<Integer> _states;
 
     JmriMultiStatePropertyListener(String propName, int type, String name, int varType, 
                               Conditional client, int state) {
         super(propName, type, name, varType, client);
-        _states[0] = state;
-        numStates = 1;
+        _states = new ArrayList<Integer>();
+        _states.add(Integer.valueOf(state));
     }
 
     public void setState(int state) {
-        if (numStates >= _states.length)
-        {
-            int[] temp = new int[numStates+SIZE];
-            System.arraycopy(_states, 0, temp, 0, _states.length);
-            _states = temp;
-        }
-        _states[numStates] = state;
-        numStates++;
+        _states.add(Integer.valueOf(state));
     }
 
     public void propertyChange(PropertyChangeEvent evt) {
@@ -59,18 +51,18 @@ public class JmriMultiStatePropertyListener extends JmriSimplePropertyListener
             int newState = ((Number) evt.getNewValue()).intValue();
             int oldState = ((Number) evt.getOldValue()).intValue();
             if (newState != oldState)  {
-                for (int i=0; i<numStates; i++)
+                for (int i=0; i<_states.size(); i++)
                 {
-                    if (oldState == _states[i] || newState == _states[i]) {
+                    int state = _states.get(i).intValue();
+                    if (oldState == state || newState == state) {
                         calculateClient(i, evt);
                     }
                 }
             }
         }
     }
-
-static final org.apache.log4j.Logger
-log = org.apache.log4j.Logger.getLogger(JmriMultiStatePropertyListener.class.getName());
+    static final org.apache.log4j.Logger
+    log = org.apache.log4j.Logger.getLogger(JmriMultiStatePropertyListener.class.getName());
 }
 
 
