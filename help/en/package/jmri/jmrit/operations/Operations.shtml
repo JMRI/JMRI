@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.90 2010-12-31 02:15:26 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.91 2011-01-02 00:06:34 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -614,25 +614,6 @@ a schedule to multiple sidings, the table also provides additional status for ea
 of the sidings that use that particular schedule.  The table also allows you
 the edit a schedule once its been assigned to a siding.
 </P>
-<H3>Local Switcher</H3>
-
-If you want only a local switcher to service a siding, deselect all of
-the direction boxes for that siding. The program will only allow a train
-that has one location in its route (local switcher) to service the
-siding. This would be useful if you wanted your trains to pick up and
-drop cars to a yard, and then have a local switcher move them to the
-town's sidings.
-
-<H3>Local Switcher Restrictions</H3>
-
-The program when generating a manifest for a train with a single
-location (local switcher) will by default never move a car from a siding
-to a siding or yard to a yard, only yard to siding or siding to yard.
-This rule also applies to interchanges. This restriction helps prevent
-unrealistic car movements between sidings (industries). If you want a
-siding to siding local move, use a <A HREF="#Schedules">Schedule</A> to
-force the car move. You can also disable this restriction see <A
-	HREF="#SettingsOptions">Options.</A>
 
 <A	NAME="Interchange"></A>
 <H3>Interchange Tracks</H3>
@@ -1230,14 +1211,65 @@ will appear on the train manifests.</p>
 Press "Save Route" to save your route. The program will create a file
 (OperationsRouteRoster.xml) in your JMRI directory in a folder called
 "operations". A backup file with the last settings for all of your
-routes is also created each time the "Save Route" button is pressed. <A
-	NAME="CopyRoute"></A>
+routes is also created each time the "Save Route" button is pressed. 
+<A	NAME="CopyRoute"></A>
 <H3>Copy Route</H3>
 
 In the Route window select "Tools-&gt;Copy Route" to make a copy of your
 route. Enter the name of the new route and select the route that you
-want to copy. If you want the route reversed check the "Invert" box. <A
-	NAME="SetTrainIconCoordinates"></A>
+want to copy. If you want the route reversed check the "Invert" box. 
+
+<A NAME="RouteFeatures"></A>
+<H3>Route Features</H3>
+
+One very powerful feature of routes is the ability to specify the same
+location more than once. When the same location name is used back to
+back, the train's manifest will print as though the train only arrived
+and departed once. Note that names "Danville", "Danville-1", and
+"Danville-2" are all the same with regards to the manifest and switch
+list printouts, but the program deals with them as though they were
+different locations.
+
+<P>For example, you can control if there are drops or pickups at any
+location in the route. Therefore if you wanted to only drop off 3 cars,
+you could specify only drops and 3 moves. But what if you wanted to
+drop off 3 cars and pick up 7 cars. If you specify 10 moves for a
+location it can be any combination of 10 pickups and drops. Using
+"Danville" as our location, we can in our route specify "Danville"
+twice, back to back. In the first "Danville" we can specify 3 drops
+only. In the second "Danville" we can specify 7 pickups only. Now the
+program will "try" and meet your request by picking up to 7 cars and
+dropping off up to 3 cars.</P>
+
+<P>Another example, the program will not allow you to have staging
+tracks and other types of tracks (sidings, yards, interchanges) at the
+same location. But using the names above, we could assign yard and
+siding tracks to "Danville", and then as long as "Danville-1" was the
+last or first location in a route, assign staging tracks to "Daville-1".
+Now when the train terminates at Danville, the yard and siding tracks are
+serviced, and then the train terminates into staging at "Daville-1".</P>
+
+<P>Another example. Let's say we have a mainline train that will
+service Danville. At Danville we have a yard and several sidings. We
+want the mainline train to service Danville's yard, but not the sidings.
+We don't want to use a switcher to service the sidings at
+Danville. However, we do want locals to service them! We need to tell
+the program which tracks in Danville are service by which trains.  We might
+be able to do this using interchanges, but we're also using schedules on our sidings!  So
+that rules out using interchange tracks.</P>
+<P>Solution, we create a yard in "Danville", and create sidings in
+"Danville-1". The mainline train has "Danville" in it's route. The
+locals will service "Danville" and "Danville-1". Now the dilemma, do the
+locals service "Danville-1" or "Danville" first? Not an issue, we create
+a route for the locals that services "Danville-1", then "Danville", and
+then "Danville-1". At the first "Danville-1" we request only pickups at
+the sidings, at "Danville" we specify both pickups and drops to the
+yard, and at the second "Danville-1" we specify only drops. </P>
+
+<P>Now the mainline train only services Danville yard.  The locals service Danville yard and the
+sidings.</P> 
+
+<A	NAME="SetTrainIconCoordinates"></A>
 <H3>Set Train Icon Coordinates</H3>
 
 Use this tool to set the default X and Y coordinates of your train icons
@@ -1264,10 +1296,12 @@ don't want the train to work.</P>
 
 <H3>Train Departure Time</H3>
 
-Enter the time that this train will depart the first location in its
+Select the time that this train will depart the first location in its
 route. You can use the departure time to sort your trains in the order
 that you want them built when using the <A HREF="#BuildingTrains">Build
-Selected Trains</A> button.
+Selected Trains</A> button.  Note that if the train's route has a departure
+time for the first location, the route's departure time is used and the
+train departure time selection is disabled.
 
 <H3>Train Rolling Stock</H3>
 
@@ -1485,6 +1519,38 @@ another, first select the car your would like to copy, then select the
 "copy" checkbox, the car type will now appear to the right of the
 checkbox, then select the type of car you want to modify, and press
 "Save" to have both car types serviced by the same trains.</P>
+
+<A NAME="SwitcherService"></A>
+<H3>Switcher Service</H3>
+
+Many operators assign an engine to a location to do the local switching.
+Using the location's switchlist allows the person assigned to the
+location to service all trains that stop at that location. However,
+there can be locations that don't get enough work servicing through or
+local trains and it would be nice to create some additional work for the
+operator assigned to that location. To create a "switcher" job, create a
+route with one location, the location that the switcher will service,
+and assign that route to a train. The "train" now becomes a switcher
+that will only service that location. Adjust the "Move" count in the
+route to control how many cars the switcher will service.
+
+<P>Some operators like to produce a train manifest that only shows
+drops or pickups from a yard or interchange, and then have a switchlist
+that shows moves between the yard and sidings. To eliminate tracks from
+showing up on a train's manifest, deselect all of the direction boxes
+for that track. Only a "switcher" will service a track that doesn't have
+any direction boxes selected.</P>
+
+<H3>Switcher Restrictions</H3>
+
+The program when generating a manifest for a switcher (a train with a single
+location in its route) will by default never move a car from a siding
+to a siding or yard to a yard, only yard to siding or siding to yard.
+This rule also applies to interchanges. This restriction helps prevent
+unrealistic car movements between sidings (industries). If you want a
+siding to siding move, use a <A HREF="#Schedules">Schedule</A> to
+force the car move. You can also disable this restriction see 
+<A	HREF="#SettingsOptions">Options.</A>
 
 <A NAME="BuildingTrains"></A>
 <H2>Building Trains</H2>
