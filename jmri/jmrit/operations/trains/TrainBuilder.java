@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.118 $
+ * @version             $Revision: 1.119 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1778,6 +1778,7 @@ public class TrainBuilder extends TrainCommon{
 		List<String> carList = carManager.getByTrainDestinationList(train);
 		log.debug("Train has " + carList.size() + " cars assigned to it");
 		int cars = 0;
+		int emptyCars = 0;
 		String previousRouteLocationName = null;
 		List<String> routeList = train.getRoute().getLocationsBySequenceList();
 		for (int r = 0; r < routeList.size(); r++) {
@@ -1815,6 +1816,8 @@ public class TrainBuilder extends TrainCommon{
 							&& car.getRouteDestination() == rld) {
 						pickupCar(fileOut, car);
 						cars++;
+						if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+							emptyCars++;
 					}
 				}
 			}
@@ -1823,16 +1826,26 @@ public class TrainBuilder extends TrainCommon{
 				if (car.getRouteDestination() == rl) {
 					dropCar(fileOut, car);
 					cars--;
+					if (car.getLoad().equals(CarLoads.instance().getDefaultEmptyName()))
+						emptyCars--;
 				}
 			}
 			if (r != routeList.size() - 1) {
 				// Is the next location the same as the previous?
 				RouteLocation rlNext = train.getRoute().getLocationById(routeList.get(r+1));
 				String nextRouteLocationName = splitString(rlNext.getName());
-				if (!routeLocationName.equals(nextRouteLocationName))
-					addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
-							+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
-							+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+				if (!routeLocationName.equals(nextRouteLocationName)){
+					if (Setup.isPrintLoadsAndEmptiesEnabled()){
+						addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+								+ rb.getString("boundWith") +" " + (cars-emptyCars) + " " +rb.getString("Loads")
+								+", " + emptyCars + " " + rb.getString("Empties")+ ", " +rl.getTrainLength()
+								+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+					} else {
+						addLine(fileOut, rb.getString("TrainDeparts")+ " " + routeLocationName +" "+ rl.getTrainDirectionString()
+								+ rb.getString("boundWith") +" " + cars + " " +rb.getString("cars")+", " +rl.getTrainLength()
+								+" "+rb.getString("feet")+", "+rl.getTrainWeight()+" "+rb.getString("tons"));
+					}
+				}
 			} else {
 				if(engine != null){
 					String dropText = rb.getString("DropEngineTo");

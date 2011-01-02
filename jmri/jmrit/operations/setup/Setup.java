@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -182,6 +182,7 @@ public class Setup {
 	private static boolean trainIntoStagingCheck = true;	// when true staging track must accept train's rolling stock types and roads
 	
 	private static boolean printLocationComments = false;	// when true print location comments on the manifest
+	private static boolean printLoadsAndEmpties	= false;	// when true print Loads and Empties on the manifest
 
 	
 	// Setup frame attributes
@@ -384,6 +385,14 @@ public class Setup {
 	
 	public static boolean isPrintLocationCommentsEnabled(){
 		return printLocationComments;
+	}
+	
+	public static void setPrintLoadsAndEmptiesEnabled(boolean enable){
+		printLoadsAndEmpties = enable;
+	}
+	
+	public static boolean isPrintLoadsAndEmptiesEnabled(){
+		return printLoadsAndEmpties;
 	}
 	
 	public static void setSwitchTime(int minutes){
@@ -832,6 +841,7 @@ public class Setup {
     	values.setAttribute("carLogger", isCarLoggerEnabled()?"true":"false");
        	values.setAttribute("engineLogger", isEngineLoggerEnabled()?"true":"false");
        	values.setAttribute("printLocComments", isPrintLocationCommentsEnabled()?"true":"false");
+       	values.setAttribute("printLoadsEmpties", isPrintLoadsAndEmptiesEnabled()?"true":"false");
        	values.setAttribute("yearModeled", getYearModeled());
        	
        	e.addContent(values = new Element("pickupEngFormat"));
@@ -1023,6 +1033,11 @@ public class Setup {
         		String enable = a.getValue();
         		if (log.isDebugEnabled()) log.debug("printLocComments: "+enable);
         		setPrintLocationCommentsEnabled(enable.equals("true"));
+        	}
+          	if ((a = operations.getChild("settings").getAttribute("printLoadsEmpties"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("printLoadsEmpties: "+enable);
+        		setPrintLoadsAndEmptiesEnabled(enable.equals("true"));
         	}
          	if ((a = operations.getChild("settings").getAttribute("yearModeled"))!= null){
         		String year = a.getValue();

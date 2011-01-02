@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -55,6 +55,7 @@ public class PrintOptionFrame extends OperationsFrame{
     // check boxes
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
+	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
 	
 	// text field
 	
@@ -88,6 +89,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
 		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
 		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
+		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));
 		
 		// Manifest panel
@@ -171,10 +173,11 @@ public class PrintOptionFrame extends OperationsFrame{
 		JPanel p2 = new JPanel();
 		p2.setLayout(new BoxLayout(p2, BoxLayout.X_AXIS));
 		
-		// Print location comments
-		JPanel pLocComment = new JPanel();
-		pLocComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
-		pLocComment.add(printLocCommentsCheckBox);
+		// Manifest comments
+		JPanel pManifestComment = new JPanel();
+		pManifestComment.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutComments")));
+		pManifestComment.add(printLocCommentsCheckBox);
+		pManifestComment.add(printLoadsEmptiesCheckBox);
 		
 		// manifest logo
 		JPanel pLogo = new JPanel();
@@ -182,7 +185,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		pLogo.add(removeLogoButton);
 		pLogo.add(addLogoButton);
 		pLogo.add(logoURL);
-		p2.add(pLocComment);
+		p2.add(pManifestComment);
 		p2.add(pLogo);
 		
 		pManifest.add(p1);
@@ -219,6 +222,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pControl);
 		
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
+		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
 		
 		updateLogoButtons();
@@ -319,6 +323,7 @@ public class PrintOptionFrame extends OperationsFrame{
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
+			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
 			OperationsSetupXml.instance().writeOperationsFile();
 		}

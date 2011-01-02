@@ -1,5 +1,5 @@
 <!-- Defines XML documenting operations configuration -->
-<!-- $Id: operations-config.dtd,v 1.28 2010-12-12 20:51:01 dan_boudreau Exp $ -->
+<!-- $Id: operations-config.dtd,v 1.29 2011-01-02 16:37:26 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -56,7 +56,8 @@
 <!ATTLIST settings carLogger 		(true | false ) "false">  
 <!ATTLIST settings engineLogger 	(true | false ) "false"> 
 <!ATTLIST settings addCarComment	(true | false ) "false">
-<!ATTLIST settings printLocComments	(true | false ) "false">  
+<!ATTLIST settings printLocComments	(true | false ) "false"> 
+<!ATTLIST settings printLoadsEmpties (true | false ) "false"> 
 <!ATTLIST settings scale			CDATA #IMPLIED> 
 <!ATTLIST settings carTypes			CDATA #IMPLIED> 
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 
