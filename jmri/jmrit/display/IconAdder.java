@@ -200,12 +200,12 @@ public class IconAdder extends JPanel implements ListSelectionListener {
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
         if (log.isDebugEnabled()) log.debug("setIcon at order= "+order+", key= "+label);
-        if (log.isDebugEnabled()) log.debug("setIcon: icon width= "+icon.getIconWidth()+" height= "+icon.getIconHeight());
         JToggleButton button = new IconButton(label, icon);
         if (icon==null || icon.getIconWidth()<1 || icon.getIconHeight()<1) {
             button.setText(rb.getString("invisibleIcon"));
             button.setForeground(Color.lightGray);
         } else {
+            icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
             button.setToolTipText(icon.getName());
         }
 
@@ -213,7 +213,9 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             String fileName = "resources/icons/misc/X-red.gif";
             button.setSelectedIcon(new jmri.jmrit.catalog.NamedIcon(fileName, fileName));
         }
-        icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
+        if (icon!=null) {
+            icon.reduceTo(CatalogPanel.ICON_WIDTH, CatalogPanel.ICON_HEIGHT, CatalogPanel.ICON_SCALE);
+        }
 
         _iconMap.put(label, button);
         // calls may not be in ascending order, so pad array
