@@ -104,6 +104,9 @@ public class ToolTip {
     }
 
     public void paint(Graphics2D g2d, double scale) {
+        if (_tip==null || _tip.trim().length()==0) {
+            return;
+        }
         Color color = g2d.getColor();
         Font font = g2d.getFont();
         TextLayout tl = new TextLayout(_tip, _tFont, g2d.getFontRenderContext());
