@@ -15,6 +15,7 @@ import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.Point;
 import java.awt.event.ComponentListener;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -32,7 +33,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.2 $
+ * @version             $Revision: 1.3 $
  */
 public class SetTrainIconPositionFrame extends OperationsFrame {
 	
@@ -56,7 +57,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 
 	// major buttons
 	JButton placeButton = new JButton(rb.getString("PlaceTestIcon"));
-	JButton applyButton = new JButton(rb.getString("Apply"));
+	JButton applyButton = new JButton(rb.getString("UpdateRoutes"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 	
 	
@@ -178,7 +179,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
     	// check to see if a location has been selected 
     	if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")){
-    		JOptionPane.showMessageDialog(null, "Select a location to edit", "No Location Selected!", JOptionPane.ERROR_MESSAGE);
+    		JOptionPane.showMessageDialog(null, rb.getString("SelectLocationToEdit"), rb.getString("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
     		return;
     	}
     	Location l = (Location)locationBox.getSelectedItem();
@@ -188,24 +189,23 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     		placeTestIcons();		
     	}
     	if (ae.getSource() == applyButton){
+    		// update all routes?
     		int value = JOptionPane.showConfirmDialog(null,
-    				"Update train icon coordinates for "+l.getName()+"?",
-					"Do you want to update all routes?", 
+    				MessageFormat.format(rb.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
+    				rb.getString("DoYouWantAllRoutes"), 
 					JOptionPane.YES_NO_OPTION);
-    		if (value == JOptionPane.YES_OPTION)
+    		if (value == JOptionPane.YES_OPTION){
+    			saveSpinnerValues(l);
     			updateTrainIconCoordinates(l);
-    		if (value == JOptionPane.NO_OPTION){
-    	  		value = JOptionPane.showConfirmDialog(null,
-        				"Update train icon coordinates for "+l.getName()+"?",
-    					"Update the defaults for this location?", 
-    					JOptionPane.YES_NO_OPTION);
-    	   		if (value == JOptionPane.YES_OPTION)
-    	   			saveSpinnerValues(l);
-    		}
-    			
+    		}  			
     	}
     	if (ae.getSource() == saveButton){
-    		saveSpinnerValues(l);
+   	  		int value = JOptionPane.showConfirmDialog(null,
+	  				MessageFormat.format(rb.getString("UpdateTrainIcon"),new Object[]{l.getName()}),
+    				rb.getString("UpdateDefaults"), 
+					JOptionPane.YES_NO_OPTION);
+	   		if (value == JOptionPane.YES_OPTION)
+	   			saveSpinnerValues(l);
     		LocationManagerXml.instance().writeOperationsFile();
     		RouteManagerXml.instance().writeOperationsFile();
     	}
@@ -301,7 +301,8 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 			return;
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, "Load panel \""+Setup.getPanelName()+"\"", "Panel not found!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("LoadPanel"), new Object[]{Setup.getPanelName()}),
+					rb.getString("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
         Location l = (Location)locationBox.getSelectedItem();

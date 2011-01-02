@@ -13,6 +13,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.ComponentListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.MessageFormat;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -30,7 +31,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
- * @version             $Revision: 1.1 $
+ * @version             $Revision: 1.2 $
  */
 public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -124,6 +125,9 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 		addButtonAction(applyButton);
 		addButtonAction(saveButton);
 		
+		// start off with save button disabled
+		saveButton.setEnabled(false);
+		
 		updateRoute();
 
 		// setup spinners
@@ -149,11 +153,12 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
     	if (ae.getSource() == applyButton){
     		if (value != JOptionPane.YES_OPTION){
     			value = JOptionPane.showConfirmDialog(null,
-    					"Update train icon coordinates for route "+_route.getName()+"?",
-    					"Do you want to update this route?", 
+    					MessageFormat.format(rb.getString("UpdateTrainIconRoute"), new Object[]{_route.getName()}),
+    					rb.getString("DoYouWantThisRoute"), 
     					JOptionPane.YES_NO_OPTION);
     		}
     		if (value == JOptionPane.YES_OPTION)
+    			saveButton.setEnabled(true);
     			updateTrainIconCoordinates();
     	}
     	if (ae.getSource() == saveButton){
@@ -180,7 +185,8 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	private void placeTestIcons(){
 		Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
 		if (editor == null) {
-			JOptionPane.showMessageDialog(null, "Load panel \""+Setup.getPanelName()+"\"", "Panel not found!", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("LoadPanel"), new Object[]{Setup.getPanelName()}),
+					rb.getString("PanelNotFound"), JOptionPane.ERROR_MESSAGE);
 		} else {
 			if (_tIon != null)
 				_tIon.remove();
@@ -241,8 +247,10 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 	}
 	
 	private void updateTrainIconCoordinates(){
+		_rl.removePropertyChangeListener(this);
 		_rl.setTrainIconX((Integer)spinTrainIconX.getValue());
 		_rl.setTrainIconY((Integer)spinTrainIconY.getValue());
+		_rl.addPropertyChangeListener(this);
 	}
 	
 	private void addIconListener(TrainIcon tI) {
