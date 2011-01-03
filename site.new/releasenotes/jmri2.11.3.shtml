@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.4 2010-12-26 07:07:22 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.5 2011-01-03 16:38:57 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -109,7 +109,11 @@ New operations features:
 <li>Code now checks the train's direction when determining a track for engines and cabooses.
 <li>Added "Modify Location by Car Type" tool to the location window.
 <li>Fixed operations bug introduced in 2.11.2.  When parsing a location or track name, if a name ends with "-x" the -x should be dropped if x is a number. 
-
+<li>Use the route departure time if set.
+<li>Allow user to select default printer for switch lists.
+<li>Add to train tool menu print and preview build report.
+<li>Rolling stock move count improved.
+<li>Allow user to change departure comment to loads and empties.
 </ul>
 
 <p>
@@ -118,7 +122,7 @@ Pete Cressman added support for invisible icons on panels
 <p>
 Lionel Jeanson updated the JMRI mini web server
 index.html with entries to prefs/roster.xml and web/roster.html
-ALso, added automatic creation of function buttons from the JMRI roster 
+Also, added automatic creation of function buttons from the JMRI roster 
 to the web throttles application, including lockable buttons.
 
 <p>
@@ -160,8 +164,45 @@ Pete Cressman added a dialog to correct broken icon paths
 <p>
 Dennis Miller fixed some help page links
 
+<p>
+Giorgio Terdina updated AutoDispatcher2 to version 2.3.4, 
+which copes with some changes in SignalHeadicon and is backwards compatible.
 
+<p>
+Pete Cressman added ability to allocate paths and occupancy detection to Logix. 
 
+<p>
+James LeFevre added more functions to the TMCC throttle.
+
+<p>
+Lionel Jeanson improved the ZeroConf handling.
+
+<p>
+Pete Cressman added a feature to report runtime Logix errors.
+
+<p>
+Andrew Crosland added support for SPROG 3.
+
+<p>
+Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
+
+<p>
+Kevin Dickerson worked on the ECOS throttle
+
+<p>
+Kevin Dickerson greatly improved the internals for throttle handling
+
+<p>
+Paul Bender made changes to the XPressNet code toward multiple connection support
+
+<p>
+Ken Cameron made it possible to select a default power manager when using multiple connections.
+
+<p>
+Pete Cressman improved path detection and display for simultaneous manual and auto train running
+
+<p>
+Pete Cressman fixed an empty tooltip-text bug
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
