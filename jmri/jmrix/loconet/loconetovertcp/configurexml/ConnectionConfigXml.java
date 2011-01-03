@@ -23,7 +23,7 @@ import org.jdom.Element;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
@@ -103,12 +103,19 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
         }
+        register(hostName, portNumber, manufacturer);
         // start the connection
         try {
             client.connect(hostName, Integer.parseInt(portNumber));
         } catch (Exception ex) {
             log.error("Error opening connection to "+hostName+" was: "+ex);
-            result = false;
+            jmri.configurexml.ConfigXmlManager.creationErrorEncountered(
+                                        null, "opening connection",
+                                        org.apache.log4j.Level.ERROR,
+                                        ex.getMessage(),
+                                        null,null,null
+                                    );
+            return false;
         }
 
         // configure the other instance objects
@@ -118,8 +125,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         f.setVisible(false);
         f.dispose();
 
-        // register, so can be picked up
-        register(hostName, portNumber, manufacturer);
         return result;
     }
 
