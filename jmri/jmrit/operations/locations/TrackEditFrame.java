@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -97,8 +97,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	// combo box
 	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
-	JComboBox loadBox = CarLoads.instance().getComboBox(null);
-	JComboBox typeBox = CarTypes.instance().getComboBox();
+	JComboBox comboBoxLoads = CarLoads.instance().getComboBox(null);
+	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
 
 	// optional panel for sidings, staging, and interchanges
 	JPanel panelOpt1 = new JPanel();
@@ -220,7 +220,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(loadNameInclude);
 		addRadioButtonAction(loadNameExclude);
 		
-		addComboBoxAction(typeBox);
+		addComboBoxAction(comboBoxTypes);
 		
 		// track name for tools menu
 		String trackName = null;
@@ -247,6 +247,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// load
 		updateCheckboxes();
 		updateRoadNames();
+		updateTypeComboBoxes();
 		updateLoadComboBoxes();
 		updateLoadNames();
 		updateTrainDir();
@@ -301,17 +302,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			selectNextItemComboBox(comboBoxRoads);
 		}
 		if (ae.getSource() == addLoadButton){
-			if(_track.addLoadName((String) loadBox.getSelectedItem()))
+			if(_track.addLoadName((String) comboBoxLoads.getSelectedItem()))
 				updateLoadNames();
-			selectNextItemComboBox(loadBox);
+			selectNextItemComboBox(comboBoxLoads);
 		}
 		if (ae.getSource() == deleteLoadButton){
-			if(_track.deleteLoadName((String) loadBox.getSelectedItem()))
+			if(_track.deleteLoadName((String) comboBoxLoads.getSelectedItem()))
 				updateLoadNames();
-			selectNextItemComboBox(loadBox);
+			selectNextItemComboBox(comboBoxLoads);
 		}
 		if (ae.getSource() == deleteAllLoadsButton){
-			deleteAllRoads();
+			deleteAllLoads();
 		}
 		if (ae.getSource() == setButton){
 			selectCheckboxes(true);
@@ -549,19 +550,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			checkBox = checkBoxes.get(i);
 			checkBox.setSelected(enable);
 			if(_track != null){
-				_track.removePropertyChangeListener(this);
+				//_track.removePropertyChangeListener(this);
 				if (enable)
 					_track.addTypeName(checkBox.getText());
 				else
 					_track.deleteTypeName(checkBox.getText());
-				_track.addPropertyChangeListener(this);
+				//_track.addPropertyChangeListener(this);
 			}
 		}
 	}
 	
 	private void updateLoadComboBoxes(){
-		String carType = (String)typeBox.getSelectedItem();
-		CarLoads.instance().updateComboBox(carType, loadBox);
+		String carType = (String)comboBoxTypes.getSelectedItem();
+		CarLoads.instance().updateComboBox(carType, comboBoxLoads);
 	}
 	
 	private void updateCheckboxes(){
@@ -597,9 +598,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			}
 		}
 	}
-	
-
-	
+		
 	private void updateRoadNames(){
 		panelRoadNames.removeAll();
 		
@@ -673,8 +672,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			if (!loadNameAll.isSelected()){
 		    	p = new JPanel();
 		    	p.setLayout(new FlowLayout());
-		    	p.add(typeBox);
-		    	p.add(loadBox);
+		    	p.add(comboBoxTypes);
+		    	p.add(comboBoxLoads);
 		    	p.add(addLoadButton);
 		    	p.add(deleteLoadButton);
 		    	p.add(deleteAllLoadsButton);
@@ -700,7 +699,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		packFrame();
 	}
 	
-	private void deleteAllRoads(){
+	private void deleteAllLoads(){
 		if(_track != null){
 			String [] trackLoads = _track.getLoadNames();
 			for (int i=0; i<trackLoads.length; i++){
@@ -740,17 +739,25 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		log.debug("checkbox change "+ b.getText());
 		if (_location == null)
 			return;
-		_track.removePropertyChangeListener(this);
+		//_track.removePropertyChangeListener(this);
 		if (b.isSelected()){
 			_track.addTypeName(b.getText());
 		}else{
 			_track.deleteTypeName(b.getText());
 		}
-		_track.addPropertyChangeListener(this);
+		//_track.addPropertyChangeListener(this);
 	}
 	
 	private void updateTypeComboBoxes(){
-		CarTypes.instance().updateComboBox(typeBox);
+		CarTypes.instance().updateComboBox(comboBoxTypes);
+		// remove car types not serviced by this location and track
+		for (int i=comboBoxTypes.getItemCount()-1; i>=0; i--){
+			String type = (String)comboBoxTypes.getItemAt(i);
+			if (_track != null && (!_track.acceptsTypeName(type) 
+					|| !_location.acceptsTypeName(type))){
+				comboBoxTypes.removeItem(type);
+			}			
+		}
 	}
 	
 	private void updateRoadComboBox(){
@@ -764,6 +771,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
 				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)){
 			updateCheckboxes();
+			updateTypeComboBoxes();
 		}
 		if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)){
 			updateTrainDir();

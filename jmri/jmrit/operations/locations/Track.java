@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.42 $
+ * @version             $Revision: 1.43 $
  */
 public class Track {
 	
@@ -30,13 +30,13 @@ public class Track {
 	protected String _name = "";
 	protected String _locType = "";					// yard, siding, interchange or staging
 	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
-	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this location
+	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this track
 	protected int _numberRS = 0;					// number of cars and engines
 	protected int _numberCars = 0;					// number of cars
 	protected int _numberEngines = 0;				// number of engines
 	protected int _pickupRS = 0;					// number of pickups by trains
 	protected int _dropRS = 0;						// number of drops by trains
-	protected int _length = 0;						// length of tracks at this location
+	protected int _length = 0;						// length of track
 	protected int _reserved = 0;					// length of track reserved by trains
 	protected int _usedLength = 0;					// length of track filled by cars and engines 
 	protected int _moves = 0;						// count of the drops since creation
@@ -760,8 +760,8 @@ public class Track {
 	}
 	
 	/**
-	 * Enable changing the car generic load state when car arrives at the
-	 * location.
+	 * Enable changing the car generic load state when car arrives at this
+	 * track.
 	 * 
 	 * @param enable
 	 *            when true, swap generic car load state

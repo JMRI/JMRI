@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -256,6 +256,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 		addHelpMenu("package.jmri.jmrit.operations.Operations_TrainOptions", true);
 		updateRoadNames();
+		updateTypeComboBoxes();
 		updateLoadComboBoxes();
 		updateLoadNames();
 		updateOwnerNames();
@@ -582,6 +583,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 	
 	private void updateTypeComboBoxes(){
 		CarTypes.instance().updateComboBox(typeBox);
+		// remove types not serviced by this train
+		for (int i = typeBox.getItemCount()-1; i>=0; i--){
+			String type = (String)typeBox.getItemAt(i);
+			if (!_train.acceptsTypeName(type)){
+				typeBox.removeItem(type);
+			}
+		}
 	}
 	
 	private void updateRoadComboBoxes(){
@@ -635,7 +643,8 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			updateOwnerComboBoxes();
 			updateOwnerNames();
 		}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Train.TYPES_CHANGED_PROPERTY)){
 			updateTypeComboBoxes();
 		}
 	}
