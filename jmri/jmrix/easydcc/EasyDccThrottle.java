@@ -15,7 +15,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2004 by Kelly Loyd
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class EasyDccThrottle extends AbstractThrottle
 {
@@ -189,72 +189,12 @@ public class EasyDccThrottle extends AbstractThrottle
 
     private DccLocoAddress address;
     
-    /**
-     * Finished with this throttle.  Right now, this does nothing,
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-        // KSL 20040409
-        // We still need some method to determine when the command station
-        // has processed each command, if we stack commands in code, then
-        // the second one is lost.
-        // accordingly, I have commented out setting the speed to 0 
-        // before releasing the locomotive.
-        // setSpeedSetting(0);
-        int value = 0;
- 
-        byte[] result = jmri.NmraPacket.speedStep128Packet(address.getNumber(), 
-                                         address.isLongAddress(), value, isForward);
-    	// KSL 20040409 - this is messy, as I only wanted 
-    	// the address to be sent. 
-    	EasyDccMessage m = new EasyDccMessage(7);
-        // for EasyDCC, release the loco.
-        // D = Dequeue
-        // Cx xx (address)
-        int i = 0;  // message index counter
-        m.setElement(i++, 'D');
-
-        if (address.isLongAddress()) {
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[0]&0xFF,i);
-            i = i+2;
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[1]&0xFF,i);
-            i = i+2;
-
-        } else { // short address
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(0,i);
-            i = i+2;
-            m.setElement(i++, ' ');
-            m.addIntAsTwoHex(result[0]&0xFF,i);
-            i = i+2;
-        }
-        
-        EasyDccTrafficController.instance().sendEasyDccMessage(m, null);
-        
-        // KSL 20040409 - 'Releasing' the loco address should not
-        // dispose of the throttle, as we might call up another loco
-        // and reuse this throttle.
-        // dispose();
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        log.debug("dispose");
-        // if this object has registered any listeners, remove those.
-        // KSL 20040409 - make sure we release the loco before disposing.
-        release();
-        
-        super.dispose();
-    }
-
     public LocoAddress getLocoAddress() {
         return address;
+    }
+
+    protected void throttleDispose(){
+        active=false;
     }
 
     // initialize logging

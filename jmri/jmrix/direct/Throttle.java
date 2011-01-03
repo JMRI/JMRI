@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  *
  * @author	Bob Jacobsen  Copyright (C) 2004
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 public class Throttle extends AbstractThrottle
 {
@@ -124,25 +124,7 @@ public class Throttle extends AbstractThrottle
         return new DccLocoAddress(address, address>100);   // always short address if <100
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing
-     * except notify the ThrottleManager
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-        ThrottleManager.instance().release(this);
-        dispose();
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        // if this object has registered any listeners, remove those.
-        super.dispose();
-    }
+    protected void throttleDispose(){ }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(Throttle.class.getName());

@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractThrottle;
  * <P>
  * @author  Glen Oberhauser, Bob Jacobsen  Copyright (C) 2003, 2004
  * @author  Stephen Williams  Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
     private LocoNetSlot slot;
@@ -232,36 +232,8 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         	notifyPropertyChangeListener("IsForward", old, this.isForward);
     }
 
-    /**
-     * Release the loco from this throttle, then clean up the
-     * object.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-
-        // set status to common
-        if (slot != null)
-        	LnTrafficController.instance().sendLocoNetMessage(
-        			slot.writeStatus(LnConstants.LOCO_COMMON));
-
-        dispose();
-    }
-
-    /**
-     * Dispatch the loco from this throttle, then clean up the
-     * object.
-     */
-    public void dispatch() {
-        if (!active) log.warn("dispatch called when not active");
-
-        // set status to common
-        LnTrafficController.instance().sendLocoNetMessage(
-                slot.writeStatus(LnConstants.LOCO_COMMON));
-
-        // and dispatch to slot 0
-        LnTrafficController.instance().sendLocoNetMessage(slot.dispatchSlot());
-
-        dispose();
+    public LocoNetSlot getLocoNetSlot(){
+        return slot;
     }
 
     public String toString() {
@@ -272,9 +244,7 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
      */
-    public void dispose() {
-        log.debug("dispose");
-
+    protected void throttleDispose() {
         // stop timeout
         if (mRefreshTimer != null)
         	mRefreshTimer.stop();
@@ -287,7 +257,6 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         slot = null;
         network = null;
 
-        super.dispose();
      }
 
     javax.swing.Timer mRefreshTimer = null;

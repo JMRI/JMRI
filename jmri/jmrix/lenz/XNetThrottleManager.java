@@ -10,7 +10,7 @@ import java.util.HashMap;
 /**
  * XNet implementation of a ThrottleManager based on the AbstractThrottleManager.
  * @author     Paul Bender Copyright (C) 2002-2004
- * @version    $Revision: 2.11 $
+ * @version    $Revision: 2.12 $
  */
 
 public class XNetThrottleManager extends AbstractThrottleManager implements ThrottleManager, XNetListener
@@ -37,7 +37,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
      * Request a new throttle object be creaetd for the address, and let 
      * the throttle listeners know about it.
      **/
-     public void requestThrottleSetup(LocoAddress address) {
+     public void requestThrottleSetup(LocoAddress address, boolean control) {
         XNetThrottle throttle;
 	if(log.isDebugEnabled()) log.debug("Requesting Throttle: " +address);
         if(throttles.containsKey(address))
@@ -122,6 +122,19 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     // Handle a timeout notification
     public void notifyTimeout(XNetMessage msg)
     {
+    }
+
+    public void releaseThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+            XNetThrottle lnt = (XNetThrottle) t;
+            lnt.throttleDispose();
+            return true;
+        }
+        return false;
+        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
      
 

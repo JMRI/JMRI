@@ -1,7 +1,7 @@
 // Thottle.java
 
 package jmri;
-
+import java.util.Vector;
 /**
  * A Throttle object can be manipulated to change the speed, direction
  * and functions of a single locomotive.
@@ -30,7 +30,7 @@ package jmri;
  * <P>
  *
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
- * @version			$Revision: 1.16 $
+ * @version			$Revision: 1.17 $
  */
 public interface Throttle {
 
@@ -237,6 +237,7 @@ public interface Throttle {
     // register for notification if any of the properties change
     public void removePropertyChangeListener(java.beans.PropertyChangeListener p);
     public void addPropertyChangeListener(java.beans.PropertyChangeListener p);
+    public Vector<java.beans.PropertyChangeListener> getListeners();
 
 
     /**
@@ -251,7 +252,10 @@ public interface Throttle {
      * <P>
      * After this, further usage of
      * this Throttle object will result in a JmriException.
+     * @deprecated Calls to dispose of a throttle should now be made via the
+     * throttle manager.
      */
+    @Deprecated
     public void dispose();
 
     /**
@@ -263,7 +267,10 @@ public interface Throttle {
      * Do not call dispose after release.
      * <P>
      * Normally, release ends with a call to dispose.
+     * @deprecated Calls to dispose of a throttle should now be made via the
+     * throttle manager.
      */
+    @Deprecated
     public void release();
 
     /**
@@ -277,9 +284,12 @@ public interface Throttle {
      * this Throttle object will result in a JmriException.
      * <P>
      * Normally, dispatch ends with a call to dispose.
+     * @deprecated Calls to dispose of a throttle should now be made via the
+     * throttle manager.
      */
+    @Deprecated
     public void dispatch();
-
+    
 }
 
 

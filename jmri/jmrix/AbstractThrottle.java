@@ -17,7 +17,7 @@ import java.util.Vector;
  * it has some DCC-specific content.
  *
  * @author  Bob Jacobsen  Copyright (C) 2001, 2005
- * @version $Revision: 1.31 $
+ * @version $Revision: 1.32 $
  */
 abstract public class AbstractThrottle implements DccThrottle {
 	public final static float SPEED_STEP_14_INCREMENT=1.0f/14.0f;
@@ -338,6 +338,12 @@ abstract public class AbstractThrottle implements DccThrottle {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
+        log.debug("listeners size is " + listeners.size());
+
+        if ((listeners.size()==0)){
+            log.debug("Listener Size is 0 so will call the dispose in the InstanceManger");
+            InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
+        }
     }
 
     public void addPropertyChangeListener(PropertyChangeListener l) {
@@ -370,6 +376,9 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    public Vector<PropertyChangeListener> getListeners(){
+        return listeners;
+    }
 
     // data members to hold contact with the property listeners
     final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
@@ -380,21 +389,20 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     public void dispose() {
         if (!active) log.error("Dispose called when not active");
-        // if this object has registered any listeners, remove those.
-
-        // and mark as unusable
-        active = false;
+        InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
     }
 
     public void dispatch() {
         if (!active) log.warn("dispatch called when not active");
-        release();
+        InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
     }
 
     public void release() {
         if (!active) log.warn("release called when not active");
-        dispose();
+        InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
     }
+
+    abstract protected void throttleDispose();
 
     /**
      * to handle quantized speed. Note this can change! Valued returned is
@@ -1041,7 +1049,6 @@ abstract public class AbstractThrottle implements DccThrottle {
      public int getSpeedStepMode() {
 	    return speedStepMode;
      }
-
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractThrottle.class.getName());

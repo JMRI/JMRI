@@ -21,7 +21,7 @@ import jmri.DccThrottle;
  * <P>
  * @author		Bob Jacobsen  Copyright (C) 2001
  * @author				Andrew Crosland  Copyright (C) 2009
- * @version 		$Revision: 1.15 $
+ * @version 		$Revision: 1.16 $
  */
 public class CbusThrottleManager extends AbstractThrottleManager implements ThrottleManager, CanListener{
     private boolean _handleExpected = false;
@@ -46,7 +46,7 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
     /**
      * Request a new throttle object be created for the address
      **/
-	synchronized public void requestThrottleSetup(LocoAddress address) {
+	public void requestThrottleSetup(LocoAddress address, boolean control) {
         _dccAddr = (DccLocoAddress)address;
         _intAddr = _dccAddr.getNumber();
 
@@ -235,7 +235,14 @@ public class CbusThrottleManager extends AbstractThrottleManager implements Thro
                 | DccThrottle.SpeedStepMode14);
     }
     
-
+    public boolean disposeThrottle(DccThrottle t, jmri.ThrottleListener l){
+        if ( super.disposeThrottle(t, l)){
+            CbusThrottle lnt = (CbusThrottle) t;
+            lnt.throttleDispose();
+            return true;
+        }
+        return false;
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CbusThrottleManager.class.getName());
 }

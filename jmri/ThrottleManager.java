@@ -27,7 +27,7 @@ package jmri;
  * <P>
  * @author			Glen Oberhauser
  * @author			Bob Jacobsen Copyright 2006
- * @version			$Revision: 1.20 $
+ * @version			$Revision: 1.21 $
  */
 public interface ThrottleManager {
 
@@ -58,6 +58,20 @@ public interface ThrottleManager {
      */
     public boolean requestThrottle(int address, boolean isLong, ThrottleListener l);
 
+    /**
+     * Request a throttle, given a decoder address. When the decoder address
+     * is located, the ThrottleListener gets a callback via the ThrottleListener.notifyThrottleFound
+     * method.
+     * <P>
+     * This is a convenience version of the call, which uses system-specific
+     * logic to tell whether the address is a short or long form.
+     * @param address The decoder address desired.
+     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @return True if the request will continue, false if the request will not
+     * be made. False may be returned if a the throttle is already in use.
+     */
+    public boolean requestThrottle(DccLocoAddress address, ThrottleListener l);
+    
     /**
      * Cancel a request for a throttle.
      * <P>
@@ -102,4 +116,99 @@ public interface ThrottleManager {
      * interface
      */
     public int supportedSpeedModes();
+
+    /**
+     * Provides a Proxy method to return the SpeedSetting, Direction, Function
+     * Settings, of a throttle, where the requesting code has used the
+     * @link #attachListener() to only be notified of changes in the throttle
+     * and not control it
+     * <P>
+     * Valid values for item are
+     * IsForward
+     * SpeedSetting
+     * SpeedIncrement
+     * SpeedStepMode
+     * F0-F28
+     * <P>
+     * @param la   DccLocoAddress that we wish interrogate
+     * @param item A string of the item we wish to know the value of.
+     * @return the value as an objet, if the loco address has not been assigned
+     * to a throttle or the item value is not valid, null is returned.
+     */
+    public Object getThrottleInfo(DccLocoAddress la, String item);
+
+    public boolean addressStillRequired(DccLocoAddress la);
+
+    /**
+     * The specified Throttle Listener has finished using a given throttle and
+     * no longer requires access to it.
+     * <P>
+     * After releasing the throttle, the manager will perform further checks to
+     * see if it is in use by any other listeners or if there are any
+     * propertychangelisteners attached.
+     * If there are no other uses of the throttle then it is disposed of.
+     * <P>
+     * Normally, release ends with a call to dispose.
+     * @param t Throttle being released
+     * @param l Throttle Listener releasing the throttle
+     */
+    public void releaseThrottle(DccThrottle t, ThrottleListener l);
+
+    /**
+     * Not for general use, see {@link #releaseThrottle()} and {@link #dispatch()}.
+     * <p>
+     * Dispose of object when finished it.  This will free up hardware resource
+     * <P>
+     * Used for handling certain internal error conditions, where
+     * the object still exists but hardware is not associated with it.
+     * <P>
+     * After this, further usage of
+     * this Throttle object will result in a JmriException.
+     * @param t Throttle being released
+     * @param l Throttle Listener releasing the throttle
+     * @return true if the throttle has been disposed of.
+     */
+    public boolean disposeThrottle(DccThrottle t, ThrottleListener l);
+
+    /**
+     * The throttle listener has finished with the specific Throttle and is
+     * is available for reuse/reallocation by somebody else. If possible,
+     * tell the layout that this locomotive has been dispatched to another user.
+     * Not all layouts will implement this, in which case it is synomous with
+     * release();
+     * <P>
+     * Normally, dispatch ends with a call to dispose.
+     * @param t Throttle being released
+     * @param l Throttle Listener releasing the throttle
+     */
+    public void dispatchThrottle(DccThrottle t, ThrottleListener l);
+
+    /**
+     * Attach a PropertyChangeListener to a specific loco address, where the
+     * requesting code does not need or require control over the loco.
+     * If the loco address is not in the active in the list, then a new throttle
+     * will be created by the manager and the listener attached.
+     * <P>
+     * The propertyChangeListener will be notified if it has been attached to a
+     * loco address or not, via a propertyChange notification.
+     * <p>
+     * @param la - DccLocoAddress of the loco we wish to monitor
+     * @param p - PropertyChangeListener to attach to the throttle
+     */
+    public void attachListener(DccLocoAddress la, java.beans.PropertyChangeListener p);
+
+    /**
+     * Remove a PropertyChangeListener to a specific loco address, where the
+     * requesting code has used @link #attachListener() to get notification of
+     * changes in a throttle.
+     * <P>
+     * The propertyChangeListener will be notified if it has been removed
+     * via a propertyChange notification.
+     * <P>
+     * @param la - DccLocoAddress of the loco we wish to monitor
+     * @param p - PropertyChangeListener to attachremove from the throttle
+    */
+    public void removeListener(DccLocoAddress la, java.beans.PropertyChangeListener p);
+    //public void addressNoLongerRequired(DccLocoAddress la);
+    
 }

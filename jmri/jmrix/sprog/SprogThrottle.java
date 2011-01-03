@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SprogThrottle extends AbstractThrottle
 {
@@ -148,29 +148,11 @@ public class SprogThrottle extends AbstractThrottle
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing
-     * except notify the SprogThrottleManager
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-        SprogThrottleManager.instance().release();
-        dispose();
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        // if this object has registered any listeners, remove those.
-        super.dispose();
-    }
-
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, SprogThrottleManager.isLongAddress(address));
     }
+
+    protected void throttleDispose(){ }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogThrottle.class.getName());

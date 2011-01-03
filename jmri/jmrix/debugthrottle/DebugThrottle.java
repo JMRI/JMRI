@@ -8,7 +8,7 @@ import jmri.jmrix.AbstractThrottle;
  * An implementation of DccThrottle for debugging use.
  *
  * @author	Bob Jacobsen  Copyright (C) 2003
- * @version     $Revision: 1.8 $
+ * @version     $Revision: 1.9 $
  */
 public class DebugThrottle extends AbstractThrottle
 {
@@ -94,25 +94,7 @@ public class DebugThrottle extends AbstractThrottle
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing,
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-        dispose();
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        log.debug("dispose");
- 
-        // if this object has registered any listeners, remove those.
-        super.dispose();
-    }
+    protected void throttleDispose(){ }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DebugThrottle.class.getName());

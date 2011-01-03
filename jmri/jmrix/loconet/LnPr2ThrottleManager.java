@@ -2,7 +2,8 @@ package jmri.jmrix.loconet;
 
 import jmri.LocoAddress;
 import jmri.DccLocoAddress;
-
+import jmri.ThrottleListener;
+import jmri.DccThrottle;
 import jmri.jmrix.AbstractThrottleManager;
 
 /**
@@ -15,7 +16,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @see AbstractThrottleManager
  * @author		Bob Jacobsen  Copyright (C) 2001, 2006
- * @version 		$Revision: 1.5 $
+ * @version 		$Revision: 1.6 $
  */
 public class LnPr2ThrottleManager extends AbstractThrottleManager {
 
@@ -38,7 +39,7 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
 	 * This immediately invokes the callback with the
 	 * a new throttle object.
 	 */
-	public void requestThrottleSetup(LocoAddress address) {
+	public void requestThrottleSetup(LocoAddress address, boolean control) {
         // The PR2 has only one slot, hence
         // doesn't require an interaction with the command
         // station to allocate slot, so immediately trigger the callback.
@@ -86,7 +87,40 @@ public class LnPr2ThrottleManager extends AbstractThrottleManager {
     * turn on and off "neutral mode" in the locomotive
     */
     public DccLocoAddress getActiveAddress() { return activeAddress; }
-    
+
+    public boolean disposeThrottle(DccThrottle t, ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+            LocoNetThrottle lnt = (LocoNetThrottle) t;
+            lnt.throttleDispose();
+            return true;
+        }
+        return false;
+        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
+    }
+
+    public void dispatchThrottle(DccThrottle t, ThrottleListener l) {
+                // set status to common
+        LocoNetThrottle lnt = (LocoNetThrottle) t;
+        LocoNetSlot tSlot = lnt.getLocoNetSlot();
+
+        LnTrafficController.instance().sendLocoNetMessage(
+                tSlot.writeStatus(LnConstants.LOCO_COMMON));
+
+        // and dispatch to slot 0
+        LnTrafficController.instance().sendLocoNetMessage(tSlot.dispatchSlot());
+
+        super.dispatchThrottle(t, l);
+    }
+
+    public void releaseThrottle(DccThrottle t, ThrottleListener l){
+        LocoNetThrottle lnt = (LocoNetThrottle) t;
+        LocoNetSlot tSlot = lnt.getLocoNetSlot();
+        if (tSlot != null)
+        	LnTrafficController.instance().sendLocoNetMessage(
+        			tSlot.writeStatus(LnConstants.LOCO_COMMON));
+        super.releaseThrottle(t, l);
+    }
+
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LnPr2ThrottleManager.class.getName());
 }

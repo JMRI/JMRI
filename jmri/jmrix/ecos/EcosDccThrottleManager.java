@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005
  * @author Modified by Kevin Dickerson
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class EcosDccThrottleManager extends AbstractThrottleManager implements EcosListener{
 
@@ -42,15 +42,15 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         // messages are ignored
     }
 
-    public void requestThrottleSetup(LocoAddress address) {
+    public void requestThrottleSetup(LocoAddress address, boolean control) {
         /*Here we do not set notifythrottle, we simply create a new ecos throttle.
         The ecos throttle in turn will notify the throttle manager of a successful or
         unsuccessful throttle connection. */
         log.debug("new EcosDccThrottle for "+address);
-        new EcosDccThrottle((DccLocoAddress)address, adaptermemo);
+        new EcosDccThrottle((DccLocoAddress)address, adaptermemo, true);
         //notifyThrottleKnown(new EcosDccThrottle((DccLocoAddress)address), address);
     }
-    
+
     @Override
     public boolean hasDispatchFunction() { return false; }
     
@@ -97,8 +97,18 @@ public class EcosDccThrottleManager extends AbstractThrottleManager implements E
         }
         else {
             log.debug("Ecos Throttle has NO control over loco "+address);
-            failedThrottleRequest((DccLocoAddress) address, "Ecos Throttle has NO control over loco "+address);
+            failedThrottleRequest((DccLocoAddress) address, "Loco is alredy in use by anoher throttle " + address);
         }
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+            EcosDccThrottle lnt = (EcosDccThrottle) t;
+            lnt.throttleDispose();
+            return true;
+        }
+        return false;
+        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosDccThrottleManager.class.getName());

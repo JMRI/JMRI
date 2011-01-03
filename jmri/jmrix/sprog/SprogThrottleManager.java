@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * SPROG implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.7 $
+ * @version         $Revision: 1.8 $
  */
 public class SprogThrottleManager extends AbstractThrottleManager {
 
@@ -33,7 +33,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         throttleInUse = false;
     }
 
-    public void requestThrottleSetup(LocoAddress address) {
+    public void requestThrottleSetup(LocoAddress address, boolean control) {
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so set the address and immediately trigger the callback
         // if a throttle is not in use.
@@ -80,6 +80,14 @@ public class SprogThrottleManager extends AbstractThrottleManager {
      */
     static boolean isLongAddress(int num) {
         return (num>=127);
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if(super.disposeThrottle(t, l)){
+            throttleInUse = false;
+            return true;
+        }
+        return false;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SprogThrottleManager.class.getName());

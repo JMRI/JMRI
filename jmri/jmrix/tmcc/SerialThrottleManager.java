@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * Implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2006
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SerialThrottleManager extends AbstractThrottleManager {
 
@@ -20,7 +20,7 @@ public class SerialThrottleManager extends AbstractThrottleManager {
         super();
     }
 
-    public void requestThrottleSetup(LocoAddress a) {
+    public void requestThrottleSetup(LocoAddress a, boolean control) {
         // the protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;

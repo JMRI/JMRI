@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -29,8 +29,9 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     //control of the object
     private boolean _haveControl = false;
     private boolean _hadControl = false;
+    private boolean _control = true;
     
-    public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo)
+    public EcosDccThrottle(DccLocoAddress address, EcosSystemConnectionMemo memo, boolean control)
     {
         super();
         super.speedStepMode = SpeedStepMode128;
@@ -80,6 +81,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         
         this.address      = address;
         this.isForward    = true;
+        this._control      = control;
 
         ecosretry         = 0;
         //objEcosLocoManager = jmri.jmrix.ecos.EcosLocoAddressManager.instance();
@@ -96,8 +98,11 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     }
     
     private void getControl(){
- 
-        String message = "request("+this.objectNumber+", view, control)";
+        String message;
+        if(_control)
+            message = "request("+this.objectNumber+", view, control)";
+        else
+            message = "request("+this.objectNumber+", view)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
 
@@ -420,38 +425,13 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         return address;
     }
     
-    /**
-     * Finished with this throttle.  Right now, this does nothing,
-     * but it could set the speed to zero, turn off functions, etc.
-     *
-     */
-    @Override
-    public void release() {
-        if (!active) log.warn("release called when not active");
-        //Deleting of the loco is now handled when closing jmri.
-        else ReleaseLoco();
-        _haveControl = false;
-        _hadControl = false;
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    @Override
-    public void dispose() {
-        log.debug("dispose");
-        release();
-        
-        super.dispose();
-    }
-    
-    private void ReleaseLoco(){
+    protected void throttleDispose(){
         EcosMessage m;
         String message = "release("+this.objectNumber+", view, control)";
         m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);
-    
+        _haveControl = false;
+        _hadControl = false;
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
@@ -738,7 +718,8 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             }
             else if (lines[0].startsWith("<REPLY request("+this.objectNumber)){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
-                _haveControl = true;
+                if(_control)
+                    _haveControl = true;
                 if (!_hadControl){
                     adaptermemo.getThrottleManager().throttleSetup(this, this.address, true);
                 }
@@ -820,6 +801,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                 if(_hadControl) {
                     notifyPropertyChangeListener("LostControl", 0, 0);
                     _hadControl=false;
+                    ecosretry=0;
                 } else
                     adaptermemo.getThrottleManager().throttleSetup(this, this.address, false);
                 

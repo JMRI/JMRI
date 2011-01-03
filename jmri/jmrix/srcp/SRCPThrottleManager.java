@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottleManager;
  *
  * @author	    Bob Jacobsen  Copyright (C) 2001, 2005, 2008
  * @author Modified by Kelly Loyd
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class SRCPThrottleManager extends AbstractThrottleManager {
 
@@ -24,7 +24,7 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
         super();
     }
 
-    public void requestThrottleSetup(LocoAddress address) {
+    public void requestThrottleSetup(LocoAddress address, boolean control) {
         log.debug("new SRCPThrottle for "+address);
         // Notify ready to go (without waiting for OK?)
         notifyThrottleKnown(new SRCPThrottle((DccLocoAddress)address), address);
@@ -61,7 +61,23 @@ public class SRCPThrottleManager extends AbstractThrottleManager {
     
     public int supportedSpeedModes() {
     	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+        // Form a message to release the loco
+            DccLocoAddress la = (DccLocoAddress) t.getLocoAddress();
+            String msg = "TERM 1 GL "
+                +(la.getNumber())
+                +"\n";
+
+        // and send it
+            SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(msg), null);
+            return true;
         }
+        return false;
+        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
+    }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottleManager.class.getName());
 

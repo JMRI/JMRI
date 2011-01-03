@@ -12,7 +12,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  * XpressnetNet connection.
  * @author  Paul Bender (C) 2002-2010
  * @author  Giorgio Terdina (C) 2007
- * @version    $Revision: 2.43 $
+ * @version    $Revision: 2.44 $
  */
 
 public class XNetThrottle extends AbstractThrottle implements XNetListener
@@ -326,17 +326,11 @@ public class XNetThrottle extends AbstractThrottle implements XNetListener
      * This is quite problematic, because a using object doesn't know when
      * it's the last user.
      */
-    public void dispose()
+    protected void throttleDispose()
     {
+        active=false;
 	stopStatusTimer();
-        super.dispose();
     }
-
-    public void release() {
-        //if (!active) log.warn("release called when not active");
-        //dispose();
-    }
-
     
     public int setDccAddress(int newaddress)
     {

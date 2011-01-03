@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * Implementation of a ThrottleManager for debugging.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2003, 2005
- * @version         $Revision: 1.4 $
+ * @version         $Revision: 1.5 $
  */
 public class DebugThrottleManager extends AbstractThrottleManager {
 
@@ -21,7 +21,7 @@ public class DebugThrottleManager extends AbstractThrottleManager {
         super();
     }
 
-    public void requestThrottleSetup(LocoAddress a) {
+    public void requestThrottleSetup(LocoAddress a, boolean control) {
         // Immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;
         log.debug("new debug throttle for "+address);

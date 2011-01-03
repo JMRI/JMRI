@@ -10,7 +10,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * NCE implementation of a ThrottleManager.
  * <P>
  * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 1.8 $
+ * @version         $Revision: 1.9 $
  */
 public class NceThrottleManager extends AbstractThrottleManager {
 
@@ -26,7 +26,7 @@ public class NceThrottleManager extends AbstractThrottleManager {
     NceTrafficController tc = null;
     String prefix = "";
 
-    public void requestThrottleSetup(LocoAddress a) {
+    public void requestThrottleSetup(LocoAddress a, boolean control) {
         // the NCE protocol doesn't require an interaction with the command
         // station for this, so immediately trigger the callback.
         DccLocoAddress address = (DccLocoAddress) a;

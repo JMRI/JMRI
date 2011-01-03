@@ -9,7 +9,7 @@ import jmri.jmrix.AbstractThrottle;
  * An XPA+Modem implementation of the Throttle for XPressNet Systems
  *
  * @author  Paul Bender  Copyright (C) 2004
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class XpaThrottle extends AbstractThrottle {
 
@@ -203,6 +203,8 @@ public class XpaThrottle extends AbstractThrottle {
     public LocoAddress getLocoAddress() {
         return new DccLocoAddress(address, XpaThrottleManager.isLongAddress(address));
     }
+
+    protected void throttleDispose(){ }
     
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XpaThrottle.class.getName());

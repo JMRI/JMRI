@@ -6,7 +6,6 @@ import java.io.DataInputStream;
 import java.io.OutputStream;
 import java.util.Vector;
 
-//import jmri.jmrix.AbstractMessage;
 import jmri.jmrix.AbstractSerialPortController;
 
 import jmri.jmrix.sprog.SprogConstants.SprogState;
@@ -29,7 +28,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -97,6 +96,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
 
     protected void notifyMessage(SprogMessage m, SprogListener originator) {
+        System.out.println("notify");
     	for(SprogListener listener : this.getCopyOfListeners() ) {
 		      try {
 		    	  //don't send it back to the originator!
@@ -116,7 +116,8 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
     }
     
 	protected synchronized void notifyReply(SprogReply r) {
-			for(SprogListener listener : this.getCopyOfListeners() ) {
+//            System.out.println("reply "+ r);
+            for(SprogListener listener : this.getCopyOfListeners() ) {
 		      try {
 		    	  //if is message don't send it back to the originator!
 		    	  // skip forwarding to the last sender for now, we'll get them later
@@ -139,9 +140,12 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	     * @param m
 	     */
 		public void sendSprogMessage(SprogMessage m) {
+//                    System.out.println("send m");
 			// stream to port in single write, as that's needed by serial
 			try {
+//                                System.out.println(ostream);
 				if (ostream != null) {
+//                                    System.out.println("ostream");
 				   ostream.write(m.getFormattedMessage(sprogState));
 				}
 				else {
@@ -160,7 +164,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
          * Notifies listeners
          */
         public synchronized void sendSprogMessage(SprogMessage m, SprogListener replyTo) {
-       
+//            System.out.println("Send and wait " + m + ".");
           if (waitingForReply) {
         	  try {
         		  wait(100);  //Will wait until notify()ed or 100ms timeout
@@ -185,25 +189,119 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * Make connection to existing PortController object.
 	 */
 	public void connectPort(AbstractSerialPortController  p) {
-			istream = p.getInputStream();
-			ostream = p.getOutputStream();
-			if (controller != null)
-				log.warn("connectPort: connect called while connected");
-			controller = p;
-		}
+            reply = new SprogReply();
+            connection=true;
+            lastSender = null;
+            waitingForReply = false;
+            istream = p.getInputStream();
+            ostream = p.getOutputStream();
+            if (controller != null)
+                log.warn("connectPort: connect called while connected");
+            controller = p;
+            setSerialListener();
+        }
+
+   private class ReadThread implements Runnable {
+
+     public void run() {
+         while(connection) {
+             readSerial();
+         }
+     }
+ }
+
+   boolean connection = true;
+
+   private byte[] readBuffer = new byte[400];
+
+
+ private void readSerial() {
+
+     try {
+         int availableBytes = istream.available();
+
+         if (availableBytes > 0) {
+
+             // Read the serial port
+             istream.read(readBuffer, 0, availableBytes);
+	    	  int replyCurrentSize = this.reply.getNumDataElements();
+                  for(int x = 0; x<availableBytes; x++){
+                         this.reply.setElement(replyCurrentSize, readBuffer[x]);
+
+                         if (endReply(this.reply)) {
+                            sendreply();
+                            break;
+                        }
+                        replyCurrentSize++;
+                }
+              } else {
+                    try {
+                    Thread.sleep(60);
+                    } catch (Exception e) {}
+              }
+
+     } catch (java.io.IOException e) {
+        if ((e.getMessage()).equals("No error in nativeavailable")){
+            if (!connection){
+                System.out.println("recovery called a second time");
+                return;
+            } else {
+                System.out.println("recovery called first time");
+            }
+            connection=false;
+            recovery();
+        }
+     }
+
+
+ }
+    
+    Thread readThread;
+
+     public void setSerialListener() {
+         if(readThread!=null) {
+            readThread.interrupt();
+            readThread=null;
+         }
+         readThread = new Thread(new ReadThread());
+         readThread.start();
+     }
+
+
 
 	/**
 	 * Break connection to existing SprogPortController object. Once broken,
 	 * attempts to send via "message" member will fail.
 	 */
 	public void disconnectPort(AbstractSerialPortController p) {
-			istream = null;
-			ostream = null;
-			if (controller != p)
-				log.warn("disconnectPort: disconnect called from non-connected LnPortController");
-			controller = null;
+            connection=false;
+            if(readThread!=null) {
+                readThread.interrupt();
+                readThread=null;
+             }
+            istream = null;
+            ostream = null;
+            if (controller != p)
+                log.warn("disconnectPort: disconnect called from non-connected LnPortController");
+            controller = null;
+
 		}
 
+    void recovery(){
+        System.out.println(this);
+        try{
+            istream.close();
+            ostream.close();
+        } catch (Exception e){ System.out.println(e);}
+        System.out.println(controller);
+        AbstractSerialPortController adapter =  controller;
+        System.out.println(adapter);
+        disconnectPort(controller);
+        System.out.println(adapter);
+        //Some times the controller can be null if it has been
+        if(adapter!=null)
+            adapter.recover();
+    }
 	/**
 	 * static function returning the SprogTrafficController instance to use.
 	 * @return The registered SprogTrafficController instance for general use,
@@ -219,7 +317,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
 	static volatile protected SprogTrafficController self = null;
 
-        // data members to hold the streams
+    // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;
         
@@ -227,8 +325,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
          return msg.endNormalReply() || msg.endBootReply() || 
          	msg.endBootloaderReply(this.getSprogState());
        }
-
-
  
        private boolean unsolicited;
 
@@ -240,6 +336,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * are left here for reference. AJB Jan 2010
 	 */
 	public void serialEvent(SerialPortEvent event) {
+//        System.out.println("a serial event " + event);
 	     switch (event.getEventType()) {
 	      case SerialPortEvent.BI:
 	      case SerialPortEvent.OE:
@@ -259,10 +356,20 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	          for (i = replyCurrentSize; i < SprogReply.maxSize - replyCurrentSize; i++) {
 	        	try{
 	        		if (istream.available()==0) break; //nothing waiting to be read
-	        		byte char1 = istream.readByte();
-	        		this.reply.setElement(i, char1);
+                                System.out.println("pass one");
+                                            byte char1 = istream.readByte();
+                                System.out.println("pass readbyte");
+                                            this.reply.setElement(i, char1);
+                                System.out.println("pass reply");
         		
-	        	} catch (Exception e) {
+	        	} catch (java.io.IOException eio) {
+                            System.out.println("IO Exception " + eio.toString());
+                            if ((eio.getMessage()).equals("No error in nativeavailable")){
+                                System.out.println("Serial Port event recovery");
+                                recovery();
+                            }
+
+                } catch (Exception e) {
                     log.warn("Exception in DATA_AVAILABLE state: "+e);
                 }
 	            if (endReply(this.reply)) {
@@ -270,8 +377,6 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	            	break;
 	            }
 	          }
-	 
-
 	         break;
 	      }
 	}
@@ -279,11 +384,10 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 	 * Send the current reply - built using data from serialEvent
 	 */
 	private void sendreply() {
-        //send the reply
-		synchronized(this) {
-			waitingForReply = false;
-			notify();
-		}
+            synchronized(this) {
+                    waitingForReply = false;
+                    notify();
+            }
         if (log.isDebugEnabled()) log.debug("dispatch reply of length "+this.reply.getNumDataElements());
         {
           final SprogReply thisReply = this.reply;

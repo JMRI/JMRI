@@ -7,7 +7,7 @@ import jmri.jmrix.AbstractThrottleManager;
 /**
  * XPA implementation of a ThrottleManager
  * @author     Paul Bender Copyright (C) 2004
- * @version    $Revision: 1.7 $
+ * @version    $Revision: 1.8 $
  */
 
 public class XpaThrottleManager extends AbstractThrottleManager implements ThrottleManager {
@@ -24,7 +24,7 @@ public class XpaThrottleManager extends AbstractThrottleManager implements Throt
      * Request a new throttle object be creaetd for the address, and let
      * the throttle listeners know about it.
      **/
-     public void requestThrottleSetup(LocoAddress address) {
+     public void requestThrottleSetup(LocoAddress address, boolean control) {
 	XpaThrottle throttle=new XpaThrottle(address);
         notifyThrottleKnown(throttle,address);
      }

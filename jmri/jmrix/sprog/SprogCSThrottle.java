@@ -16,7 +16,7 @@ import jmri.jmrix.sprog.SprogCommandStation;
  * <P>
  *
  * @author	Andrew Crosland  Copyright (C) 2006
- * @version     $Revision: 1.9 $
+ * @version     $Revision: 1.10 $
  */
 public class SprogCSThrottle extends AbstractThrottle
 {
@@ -123,24 +123,9 @@ public class SprogCSThrottle extends AbstractThrottle
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing
-     * except notify the SprogThrottleManager
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
+    protected void throttleDispose(){
+        active=false;
         commandStation.release(address);
-        dispose();
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        // if this object has registered any listeners, remove those.
-        super.dispose();
     }
 
     public LocoAddress getLocoAddress() {

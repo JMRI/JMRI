@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * with values from 0 to 127.
  * <P>
  * @author  Andrew Crosland Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 public class CbusThrottle extends AbstractThrottle {
     private CbusCommandStation cs = null;
@@ -209,32 +209,6 @@ public class CbusThrottle extends AbstractThrottle {
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    /**
-     * Release the loco from this throttle, then clean up the
-     * object.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-
-        cs.releaseSession(_handle);
-        _handle = -1;
-        cs = null;
-        dispose();
-    }
-
-    /**
-     * Dispatch the loco from this throttle, then clean up the
-     * object.
-     */
-    public void dispatch() {
-        if (!active) log.warn("dispatch called when not active");
-
-        cs.releaseSession(_handle);
-        _handle = -1;
-        cs = null;
-        dispose();
-    }
-
     public String toString() {
         return getLocoAddress().toString();
     }
@@ -243,8 +217,12 @@ public class CbusThrottle extends AbstractThrottle {
      * Dispose when finished with this object.  After this, further usage of
      * this Throttle object will result in a JmriException.
      */
-    public void dispose() {
+    public void throttleDispose() {
         log.debug("dispose");
+
+        cs.releaseSession(_handle);
+        _handle = -1;
+        cs = null;
 
         // stop timeout
         mRefreshTimer.stop();
@@ -252,7 +230,6 @@ public class CbusThrottle extends AbstractThrottle {
         mRefreshTimer = null;
 		cs = null;
 
-        super.dispose();
      }
 
     javax.swing.Timer mRefreshTimer = null;

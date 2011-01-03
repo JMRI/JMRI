@@ -16,7 +16,7 @@ import jmri.jmrix.AbstractThrottleManager;
  * sends the first group of function packets.
  *
  * @author	    Bob Jacobsen  Copyright (C) 2004
- * @version         $Revision: 1.2 $
+ * @version         $Revision: 1.3 $
  */
 public class ThrottleManager extends AbstractThrottleManager {
 
@@ -39,9 +39,10 @@ public class ThrottleManager extends AbstractThrottleManager {
 	/**
 	 * Create throttle data structures.
 	 */
-    public void requestThrottleSetup(LocoAddress address) {
+    public void requestThrottleSetup(LocoAddress address, boolean control) {
     	if (currentThrottle != null) {
     		log.error("DCC direct cannot handle more than one throttle now");
+            failedThrottleRequest((DccLocoAddress) address, "DCC direct cannot handle more than one throttle " + address);
     		return;
     	}
     	log.warn("requestThrottleSetup should preserve actual address object, not use ints");
@@ -57,8 +58,12 @@ public class ThrottleManager extends AbstractThrottleManager {
 	 * Invoked when a throttle is released, this updates
 	 * the local data structures
 	 */
-	void release(Throttle t) {
-		currentThrottle = null;
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
+        if (super.disposeThrottle(t, l)){
+            currentThrottle = null;
+            return true;
+        }
+        return false;
 	}
 	
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ThrottleManager.class.getName());

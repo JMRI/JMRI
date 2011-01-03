@@ -14,7 +14,7 @@ import jmri.jmrix.AbstractThrottle;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.23 $
+ * @version     $Revision: 1.24 $
  */
 public class NceThrottle extends AbstractThrottle{
 	
@@ -321,10 +321,10 @@ public class NceThrottle extends AbstractThrottle{
 		}
         if (oldSpeed != this.speedSetting)
             notifyPropertyChangeListener("SpeedSetting", oldSpeed, this.speedSetting );
-    }
+        }
 
     public void setIsForward(boolean forward) {
-        boolean old = isForward; 
+        boolean old = isForward;
         isForward = forward;
         setSpeedSetting(speedSetting);  // send the command
         if (log.isDebugEnabled()) log.debug("setIsForward= "+forward);
@@ -332,30 +332,7 @@ public class NceThrottle extends AbstractThrottle{
             notifyPropertyChangeListener("IsForward", old, isForward );
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing,
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-		// release is called twice when throttle frame closed and throttle
-		// exists, therefore it is not a reportable error
-		if (!active) {
-			if (log.isDebugEnabled())
-				log.warn("release called when not active");
-		} else
-			dispose();
-	}
-
-    /**
-	 * Dispose when finished with this object. After this, further usage of this
-	 * Throttle object will result in a JmriException.
-	 */
-    public void dispose() {
-        log.debug("dispose");
-
-        // if this object has registered any listeners, remove those.
-        super.dispose();
-    }
+    protected void throttleDispose(){ }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NceThrottle.class.getName());

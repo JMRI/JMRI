@@ -13,7 +13,7 @@ import jmri.jmrix.AbstractThrottle;
  * standard, but is used as an expedient here.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001,2008
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class SRCPThrottle extends AbstractThrottle
 {
@@ -152,37 +152,11 @@ public class SRCPThrottle extends AbstractThrottle
         SRCPTrafficController.instance().sendSRCPMessage(m, null);
     }
 
-    /**
-     * Finished with this throttle.  Right now, this does nothing,
-     * but it could set the speed to zero, turn off functions, etc.
-     */
-    public void release() {
-        if (!active) log.warn("release called when not active");
-
-        // Form a message to release the loco
-        String msg = "TERM 1 GL "
-            +(address.getNumber())
-            +"\n";
-
-        // and send it        
-        SRCPTrafficController.instance().sendSRCPMessage(new SRCPMessage(msg), null);
-    }
-
-    /**
-     * Dispose when finished with this object.  After this, further usage of
-     * this Throttle object will result in a JmriException.
-     */
-    public void dispose() {
-        log.debug("dispose");
-
-        release();
-        
-        super.dispose();
-    }
-
     public LocoAddress getLocoAddress() {
         return address;
     }
+
+    protected void throttleDispose(){ }
 
     // initialize logging
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SRCPThrottle.class.getName());
