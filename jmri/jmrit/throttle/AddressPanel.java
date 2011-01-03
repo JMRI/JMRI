@@ -27,7 +27,7 @@ import org.jdom.Element;
  * 
  * @author glen Copyright (C) 2002
  * @author Daniel Boudreau Copyright (C) 2008 (add consist feature)
- * @version $Revision: 1.61 $
+ * @version $Revision: 1.62 $
  */
 public class AddressPanel extends JInternalFrame implements ThrottleListener, PropertyChangeListener {
 
@@ -65,12 +65,12 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			DccLocoAddress l = (DccLocoAddress) throttle.getLocoAddress();
 			throttle.removePropertyChangeListener(this);
 			InstanceManager.throttleManagerInstance().cancelThrottleRequest(l.getNumber(), this);
-			throttle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
 			throttle = null;
 		}
 		if (consistThrottle != null)
 		{
-			consistThrottle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(consistThrottle, this);
 			consistThrottle = null;
 		}
 	}
@@ -195,10 +195,10 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 			}
 		}	
 	}
-
-        public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
-            javax.swing.JOptionPane.showMessageDialog(null,reason,rb.getString("FailedSetupRequestTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
-        }
+    
+    public void notifyFailedThrottleRequest(DccLocoAddress address, String reason){
+        javax.swing.JOptionPane.showMessageDialog(null,reason,rb.getString("FailedSetupRequestTitle"),javax.swing.JOptionPane.WARNING_MESSAGE);
+    }
 
 	/**
 	 * Get notification that a consist throttle has been found as we requested.
@@ -452,9 +452,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 */
 	public void dispatchAddress() {
 		if (throttle != null) {
-			throttle.dispatch();
+            InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
 			if (consistThrottle != null) {
-				consistThrottle.dispatch();
+                InstanceManager.throttleManagerInstance().dispatchThrottle(consistThrottle, this);
 				consistThrottle = null;
 			}
 			notifyThrottleDisposed();
@@ -465,9 +465,9 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
 	 * Release the current address.
 	 */
 	public void releaseAddress() {
-		throttle.release();
+        InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
 		if (consistThrottle != null) {
-			consistThrottle.release();
+            InstanceManager.throttleManagerInstance().releaseThrottle(consistThrottle, this);
 			consistThrottle = null;
 		}
 		notifyThrottleDisposed();
