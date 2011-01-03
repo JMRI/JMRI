@@ -18,7 +18,7 @@ import java.util.Vector;
  *
  * @author      Bob Jacobsen   Copyright (C) 2001, 2002, 2003
  * @author      Alex Shepherd Copyright (C) 2003, 2006
- * @version     $Revision: 1.19 $
+ * @version     $Revision: 1.20 $
  */
 
 public class LnTcpDriverAdapter extends LnPortController {
@@ -78,12 +78,13 @@ public class LnTcpDriverAdapter extends LnPortController {
     private boolean opened = false;
     private Socket socket = null;
 
-    public void connect(String host, int port) {
+    public void connect(String host, int port) throws Exception{
         try {
             socket = new Socket(host, port);
             opened = true;
         } catch (Exception e) {
             log.error("error opening LocoNetOverTcp network connection: "+e);
+            throw e;
         }
     }
 
