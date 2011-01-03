@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.locations;
 
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -24,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -40,11 +41,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JMenu _toolMenu = null;
 	
 	List<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
+	
+	// panels
 	JPanel panelCheckBoxes = new JPanel();
 	JScrollPane paneCheckBoxes = new JScrollPane(panelCheckBoxes);
 	JPanel panelTrainDir = new JPanel();
 	JPanel panelRoadNames = new JPanel();
 	JScrollPane paneRoadNames = new JScrollPane(panelRoadNames);
+	JPanel panelLoadNames = new JPanel();
+	JScrollPane paneLoadNames = new JScrollPane(panelLoadNames);
 	
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -54,6 +59,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JButton addTrackButton = new JButton(rb.getString("AddTrack"));
 	JButton deleteRoadButton = new JButton(rb.getString("DeleteRoad"));
 	JButton addRoadButton = new JButton(rb.getString("AddRoad"));
+	JButton addLoadButton = new JButton(rb.getString("AddLoad"));
+	JButton deleteLoadButton = new JButton(rb.getString("DeleteLoad"));
+	JButton deleteAllLoadsButton = new JButton(rb.getString("DeleteAllLoads"));
 	
 	// check boxes
 	JCheckBox checkBox;
@@ -66,7 +74,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    JRadioButton loadNameAll = new JRadioButton(rb.getString("AcceptAll"));
+    JRadioButton loadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
+    JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    
     ButtonGroup roadGroup = new ButtonGroup();
+    ButtonGroup loadGroup = new ButtonGroup();
     
 	// text field
 	JTextField trackNameTextField = new JTextField(20);
@@ -84,6 +97,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	
 	// combo box
 	JComboBox comboBoxRoads = CarRoads.instance().getComboBox();
+	JComboBox loadBox = CarLoads.instance().getComboBox(null);
+	JComboBox typeBox = CarTypes.instance().getComboBox();
 
 	// optional panel for sidings, staging, and interchanges
 	JPanel panelOpt1 = new JPanel();
@@ -104,6 +119,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_location.addPropertyChangeListener(this);
 		// listen for car road name and type changes
 		CarRoads.instance().addPropertyChangeListener(this);
+		CarLoads.instance().addPropertyChangeListener(this);
 		CarTypes.instance().addPropertyChangeListener(this);
 		
 		// load managers
@@ -147,6 +163,13 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		roadGroup.add(roadNameInclude);
 		roadGroup.add(roadNameExclude);
 		
+		// row 8
+		panelLoadNames.setLayout(new GridBagLayout());
+		paneLoadNames.setBorder(BorderFactory.createTitledBorder(rb.getString("LoadsTrack")));
+		loadGroup.add(loadNameAll);
+		loadGroup.add(loadNameInclude);
+		loadGroup.add(loadNameExclude);
+		
 		// row 11
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
@@ -169,6 +192,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(panelTrainDir);
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(paneRoadNames);
+		getContentPane().add(paneLoadNames);
 		
 		// add optional panels
 		getContentPane().add(panelOpt1);
@@ -185,10 +209,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addButtonAction(saveTrackButton);
 		addButtonAction(deleteRoadButton);
 		addButtonAction(addRoadButton);
+		addButtonAction(deleteLoadButton);
+		addButtonAction(deleteAllLoadsButton);
+		addButtonAction(addLoadButton);
 		
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
+		addRadioButtonAction(loadNameAll);
+		addRadioButtonAction(loadNameInclude);
+		addRadioButtonAction(loadNameExclude);
+		
+		addComboBoxAction(typeBox);
 		
 		// track name for tools menu
 		String trackName = null;
@@ -215,6 +247,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// load
 		updateCheckboxes();
 		updateRoadNames();
+		updateLoadComboBoxes();
+		updateLoadNames();
 		updateTrainDir();
 		
 		// set frame location for display
@@ -265,6 +299,19 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			_track.deleteRoadName((String) comboBoxRoads.getSelectedItem());
 			updateRoadNames();
 			selectNextItemComboBox(comboBoxRoads);
+		}
+		if (ae.getSource() == addLoadButton){
+			if(_track.addLoadName((String) loadBox.getSelectedItem()))
+				updateLoadNames();
+			selectNextItemComboBox(loadBox);
+		}
+		if (ae.getSource() == deleteLoadButton){
+			if(_track.deleteLoadName((String) loadBox.getSelectedItem()))
+				updateLoadNames();
+			selectNextItemComboBox(loadBox);
+		}
+		if (ae.getSource() == deleteAllLoadsButton){
+			deleteAllRoads();
 		}
 		if (ae.getSource() == setButton){
 			selectCheckboxes(true);
@@ -451,6 +498,9 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		roadNameAll.setEnabled(enabled);
 		roadNameInclude.setEnabled(enabled);
 		roadNameExclude.setEnabled(enabled);
+		loadNameAll.setEnabled(enabled);
+		loadNameInclude.setEnabled(enabled);
+		loadNameExclude.setEnabled(enabled);
 		enableCheckboxes(enabled);
 	}
 	
@@ -468,6 +518,23 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			_track.setRoadOption(Track.EXCLUDEROADS);
 			updateRoadNames();
 		}
+		if (ae.getSource() == loadNameAll){
+			_track.setLoadOption(Track.ALLLOADS);
+			updateLoadNames();
+		}
+		if (ae.getSource() == loadNameInclude){
+			_track.setLoadOption(Track.INCLUDELOADS);
+			updateLoadNames();
+		}
+		if (ae.getSource() == loadNameExclude){
+			_track.setLoadOption(Track.EXCLUDELOADS);
+			updateLoadNames();
+		}
+	}
+	
+	// Car type combo box has been changed, show loads associated with this car type
+	public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+		updateLoadComboBoxes();
 	}
 
 	private void enableCheckboxes(boolean enable){
@@ -490,6 +557,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				_track.addPropertyChangeListener(this);
 			}
 		}
+	}
+	
+	private void updateLoadComboBoxes(){
+		String carType = (String)typeBox.getSelectedItem();
+		CarLoads.instance().updateComboBox(carType, loadBox);
 	}
 	
 	private void updateCheckboxes(){
@@ -578,6 +650,66 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		packFrame();
 	}
 	
+	private void updateLoadNames(){
+		panelLoadNames.removeAll();
+		
+    	JPanel p = new JPanel();
+    	p.setLayout(new GridBagLayout());
+    	p.add(loadNameAll, 0);
+    	p.add(loadNameInclude, 1);
+    	p.add(loadNameExclude, 2);
+    	GridBagConstraints gc = new GridBagConstraints();
+    	gc.gridwidth = 6;
+    	panelLoadNames.add(p, gc);
+		
+		int y = 1;		// vertical position in panel
+
+		if(_track != null){
+			// set radio button
+			loadNameAll.setSelected(_track.getLoadOption().equals(Track.ALLLOADS));
+			loadNameInclude.setSelected(_track.getLoadOption().equals(Track.INCLUDEROADS));
+			loadNameExclude.setSelected(_track.getLoadOption().equals(Track.EXCLUDEROADS));
+			
+			if (!loadNameAll.isSelected()){
+		    	p = new JPanel();
+		    	p.setLayout(new FlowLayout());
+		    	p.add(typeBox);
+		    	p.add(loadBox);
+		    	p.add(addLoadButton);
+		    	p.add(deleteLoadButton);
+		    	p.add(deleteAllLoadsButton);
+				gc.gridy = y++;
+		    	panelLoadNames.add(p, gc);
+
+		    	String[]carLoads = _track.getLoadNames();
+		    	int x = 0;
+		    	for (int i =0; i<carLoads.length; i++){
+		    		JLabel load = new JLabel();
+		    		load.setText(carLoads[i]);
+		    		addItem(panelLoadNames, load, x++, y);
+		    		if (x > 5){
+		    			y++;
+		    			x = 0;
+		    		}
+		    	}
+			}
+		} else {
+			loadNameAll.setSelected(true);
+		}
+		panelLoadNames.repaint();
+		packFrame();
+	}
+	
+	private void deleteAllRoads(){
+		if(_track != null){
+			String [] trackLoads = _track.getLoadNames();
+			for (int i=0; i<trackLoads.length; i++){
+				_track.deleteLoadName(trackLoads[i]);
+			}
+		}
+		updateLoadNames();
+	}
+	
 	private void updateTrainDir(){
 		panelTrainDir.removeAll();
 
@@ -617,11 +749,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		_track.addPropertyChangeListener(this);
 	}
 	
+	private void updateTypeComboBoxes(){
+		CarTypes.instance().updateComboBox(typeBox);
+	}
+	
 	private void updateRoadComboBox(){
 		CarRoads.instance().updateComboBox(comboBoxRoads);
-		if (_track !=null){
-			
-		}
 	}
 	
 	public void propertyChange(java.beans.PropertyChangeEvent e) {
@@ -639,6 +772,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			updateRoadComboBox();
 			updateRoadNames();
 		}
+		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY)){
+			updateTypeComboBoxes();
+		}
+		if (e.getPropertyName().equals(CarLoads.LOAD_NAME_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
+			updateLoadComboBoxes();
+			updateLoadNames();
+		}
 	}
 	
     public void dispose() {
@@ -646,6 +787,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     		_track.removePropertyChangeListener(this);
     	_location.removePropertyChangeListener(this);
     	CarRoads.instance().removePropertyChangeListener(this);
+    	CarLoads.instance().removePropertyChangeListener(this);
     	CarTypes.instance().removePropertyChangeListener(this);
     	ScheduleManager.instance().removePropertyChangeListener(this);
         super.dispose();

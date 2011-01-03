@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.54 $
+ * @version             $Revision: 1.55 $
  */
 public class Car extends RollingStock {
 	
@@ -264,6 +264,10 @@ public class Car extends RollingStock {
 		String status = super.testDestination(destination, track);
 		if (!status.equals(OKAY))
 			return status;
+		if (destination != null && track != null && !track.acceptsLoadName(getLoad())){
+			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong load");
+			return LOAD+ " ("+getLoad()+")";
+		}
 		// does car already have this destination?
 		if (destination == getDestination() && track == getDestinationTrack())
 			return OKAY;
@@ -271,7 +275,7 @@ public class Car extends RollingStock {
 		if (track == getTrack())
 			return OKAY;
 		// now check to see if car is in a kernel and can fit 
-		if (getKernel() != null && track != null &&
+		if (getKernel() != null && destination != null && track != null &&
 				track.getUsedLength() + track.getReserved()+ getKernel().getLength() > track.getLength()){
 			log.debug("Can't set car (" + getId() + ") in kernel ("+getKernel().getName()+") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
 			return LENGTH+ " kernel ("+getKernel().getLength()+")";	

@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -277,7 +277,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     
     private JComboBox getLoadComboBox(ScheduleItem si){
     	log.debug("getLoadComboBox for ScheduleItem "+si.getType());
-    	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());  
+    	JComboBox cb = CarLoads.instance().getSelectComboBox(si.getType());
+    	filterLoads(cb);	// remove loads not accepted by this track
     	cb.setSelectedItem(si.getLoad());
     	if (!cb.getSelectedItem().equals(si.getLoad())){
     		notValidRoad = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
@@ -444,18 +445,27 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     // remove tracks that don't service the car's type
     private void filterTracks (Location loc, JComboBox cb, String carType){
     	List<String> tracks = loc.getTracksByNameList(null);
-		for (int i=0; i<tracks.size(); i++){
-			Track track = loc.getTrackById(tracks.get(i));
-			if (!loc.acceptsTypeName(carType) || !track.acceptsTypeName(carType))
-				cb.removeItem(track);
-		}
+    	for (int i=0; i<tracks.size(); i++){
+    		Track track = loc.getTrackById(tracks.get(i));
+    		if (!loc.acceptsTypeName(carType) || !track.acceptsTypeName(carType))
+    			cb.removeItem(track);
+    	}
     }
     
-   private int _trainDirection = Setup.getDirectionInt((String)Setup.getComboBox().getItemAt(0));
-   
-   public int getLastTrainDirection(){
-	   return _trainDirection;
-   }
+    // remove receive loads not serviced by track
+    private void filterLoads (JComboBox cb){
+    	for (int i=cb.getItemCount()-1; i>0; i--){
+    		String loadName = (String)cb.getItemAt(i);
+    		if (!loadName.equals("") && !_track.acceptsLoadName(loadName))
+    			cb.removeItem(loadName);
+    	}
+    }
+
+    private int _trainDirection = Setup.getDirectionInt((String)Setup.getComboBox().getItemAt(0));
+
+    public int getLastTrainDirection(){
+    	return _trainDirection;
+    }
 
     // this table listens for changes to a schedule and it's car types
     public void propertyChange(PropertyChangeEvent e) {
@@ -464,16 +474,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     		updateList();
     		fireTableDataChanged();
     	}
-		if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
-			fireTableDataChanged();
-		}
+    	if (e.getPropertyName().equals(CarTypes.CARTYPES_LENGTH_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(Track.ROADS_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(Track.SCHEDULE_CHANGED_PROPERTY) ||
+    			e.getPropertyName().equals(Location.TYPES_CHANGED_PROPERTY)){
+    		fireTableDataChanged();
+    	}
 
     }
-    
+
     private void removePropertyChangeScheduleItems() {
     	for (int i = 0; i < list.size(); i++) {
     		// if object has been deleted, it's not here; ignore it

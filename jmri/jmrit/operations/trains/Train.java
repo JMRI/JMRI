@@ -39,7 +39,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.101 $
+ * @version $Revision: 1.102 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -70,7 +70,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _leadEngineId ="";		// lead engine for train icon info
 	protected String _builtStartYear = "";	// built start year 
 	protected String _builtEndYear = "";	// built end year
-	protected String _loadOption = ALLOWNERS;// train load restrictions
+	protected String _loadOption = ALLLOADS;// train load restrictions
 	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
 	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved

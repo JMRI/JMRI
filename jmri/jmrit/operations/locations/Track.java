@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.41 $
+ * @version             $Revision: 1.42 $
  */
 public class Track {
 	
@@ -41,6 +41,8 @@ public class Track {
 	protected int _usedLength = 0;					// length of track filled by cars and engines 
 	protected int _moves = 0;						// count of the drops since creation
 	protected String _comment = "";
+	
+	protected String _loadOption = ALLLOADS;		// track load restrictions
 	
 	// schedule options
 	protected String _scheduleName = "";			// Schedule name if there's one
@@ -73,9 +75,14 @@ public class Track {
 	public static final int SOUTH = 8;
 	
 	// how roads are serviced by this track
-	public static final String ALLROADS = "All";			// track accepts all roads
-	public static final String INCLUDEROADS = "Include";	// track accepts only certain roads
-	public static final String EXCLUDEROADS = "Exclude";	// track does not accept certain roads
+	public static final String ALLROADS = rb.getString("All");			// track accepts all roads
+	public static final String INCLUDEROADS = rb.getString("Include");	// track accepts only certain roads
+	public static final String EXCLUDEROADS = rb.getString("Exclude");	// track does not accept certain roads
+	
+	// load options
+	public static final String ALLLOADS = rb.getString("All");			// track services all loads 
+	public static final String INCLUDELOADS = rb.getString("Include");
+	public static final String EXCLUDELOADS = rb.getString("Exclude");
 	
 	//	 For property change
 	public static final String TYPES_CHANGED_PROPERTY = "types";
@@ -88,6 +95,7 @@ public class Track {
 	public static final String DROP_CHANGED_PROPERTY = "drop";
 	public static final String PICKUP_CHANGED_PROPERTY = "pickup";
 	public static final String TRACK_TYPE_CHANGED_PROPERTY = "trackType";
+	public static final String LOADS_CHANGED_PROPERTY = "TrackLoads";
 	
 	public Track(String id, String name, String type) {
 		log.debug("New track " + name + " " + id);
@@ -415,7 +423,96 @@ public class Track {
     
     public boolean containsRoadName(String road){
       		return _roadList.contains(road);
-    }  
+    }
+    
+    /**
+     * Gets the car load option for this track.
+     * @return ALLLOADS INCLUDELOADS EXCLUDELOADS
+     */
+	public String getLoadOption (){
+    	return _loadOption;
+    }
+    
+ 	/**
+ 	 * Set how this track deals with car loads
+ 	 * @param option ALLLOADS INCLUDELOADS EXCLUDELOADS
+ 	 */
+    public void setLoadOption (String option){
+    	String old = _loadOption;
+    	_loadOption = option;
+    	firePropertyChange (LOADS_CHANGED_PROPERTY, old, option);
+    }
+
+    List<String> _loadList = new ArrayList<String>();
+    private void setLoadNames(String[] loads){
+    	if (loads.length == 0) return;
+    	jmri.util.StringUtil.sort(loads);
+ 		for (int i=0; i<loads.length; i++){
+ 			if (!loads[i].equals(""))
+ 				_loadList.add(loads[i]);
+ 		}
+    }
+    
+    /**
+     * Provides a list of loads that the track will
+     * either service or exclude.  See setLoadOption
+     * @return Array of load names as Strings
+     */
+    public String[] getLoadNames(){
+      	String[] loads = new String[_loadList.size()];
+     	for (int i=0; i<_loadList.size(); i++)
+     		loads[i] = _loadList.get(i);
+     	if (_loadList.size() == 0)
+     		return loads;
+     	jmri.util.StringUtil.sort(loads);
+   		return loads;
+    }
+    
+    /**
+     * Add a load that the track will
+     * either service or exclude.  See setLoadOption
+     * @return true if load name was added, false if load name
+     * wasn't in the list.
+     */
+    public boolean addLoadName(String load){
+     	if (_loadList.contains(load))
+    		return false;
+    	_loadList.add(load);
+    	log.debug("track (" +getName()+ ") add car load "+load);
+    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()-1, _loadList.size());
+    	return true;
+    }
+    
+    /**
+     * Delete a load name that the track will
+     * either service or exclude.  See setLoadOption
+     * @return true if load name was removed, false if load name
+     * wasn't in the list.
+     */
+    public boolean deleteLoadName(String load){
+     	if (!_loadList.contains(load))
+    		return false;
+    	_loadList.remove(load);
+    	log.debug("track (" +getName()+ ") delete car load "+load);
+    	firePropertyChange (LOADS_CHANGED_PROPERTY, _loadList.size()+1, _loadList.size());
+       	return true;
+    }
+    
+    /**
+     * Determine if track will service a specific load name.
+     * @param load the load name to check.
+     * @return true if track will service this load.
+     */
+    public boolean acceptsLoadName(String load){
+    	if (_loadOption.equals(ALLLOADS)){
+    		return true;
+    	}
+       	if (_loadOption.equals(INCLUDELOADS)){
+       		return _loadList.contains(load);
+       	}
+       	// exclude!
+       	return !_loadList.contains(load);
+    }
     
     public String getDropOption (){
     	return _dropOption;
@@ -628,8 +725,7 @@ public class Track {
 			return status;
 		List<String> scheduleItems = schedule.getItemsBySequenceList();
 		if (scheduleItems.size() == 0){
-			status = rb.getString("empty");
-			return status;
+			return rb.getString("empty");
 		}
 		for (int i=0; i<scheduleItems.size(); i++){
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
@@ -646,6 +742,10 @@ public class Track {
 				break;
 			}
 			// check loads
+			if (!si.getLoad().equals("") && !acceptsLoadName(si.getLoad())){
+				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
+				break;
+			}
 			List<String> loads = CarLoads.instance().getNames(si.getType());
 			if (!si.getLoad().equals("") && !loads.contains(si.getLoad())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getLoad()});
@@ -737,6 +837,13 @@ public class Track {
         	setTypeNames(types);
         }
         if ((a = e.getAttribute("carRoadOperation")) != null )  _roadOption = a.getValue();
+        if ((a = e.getAttribute("carLoadOption")) != null )  _loadOption = a.getValue();
+    	if ((a = e.getAttribute("carLoads")) != null ) {
+    		String names = a.getValue();
+    		String[] loads = names.split("%%");
+    		if (log.isDebugEnabled()) log.debug("Track (" +getName()+ ") " +getLoadOption()+  " car loads: "+ names);
+    		setLoadNames(loads);
+    	}
         if ((a = e.getAttribute("dropIds")) != null ) {
         	String names = a.getValue();
            	String[] ids = names.split("%%");
@@ -786,6 +893,7 @@ public class Track {
     	}
     	e.setAttribute("carTypes", buf.toString());
      	e.setAttribute("carRoadOperation", getRoadOption());
+     	e.setAttribute("carLoadOption", getLoadOption());	
        	// build list of car roads for this track
     	String[] roads = getRoadNames();
     	buf = new StringBuffer();
@@ -793,6 +901,15 @@ public class Track {
     		buf.append(roads[i]+"%%");
     	}
     	e.setAttribute("carRoads", buf.toString());
+        // save list of car loads for this track
+        if (!getLoadOption().equals(ALLLOADS)){
+        	String[] loads = getLoadNames();
+        	buf = new StringBuffer();
+        	for (int i=0; i<loads.length; i++){
+        		buf.append(loads[i]+"%%");
+        	}
+        	e.setAttribute("carLoads", buf.toString());
+        }
     	e.setAttribute("dropOption", getDropOption());
       	// build list of drop ids for this track
     	String[] dropIds = getDropIds();

@@ -17,6 +17,7 @@ import org.jdom.Element;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
+import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
@@ -26,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -263,7 +264,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			if (loc.acceptsTypeName(oldType)){
 				loc.deleteTypeName(oldType);
 				loc.addTypeName(newType);
-				// now adjust any track locations
+				// now adjust tracks
 				List<String> tracks = loc.getTracksByNameList(null);
 				for (int j=0; j<tracks.size(); j++){
 					Track track = loc.getTrackById(tracks.get(j));
@@ -292,6 +293,26 @@ public class LocationManager implements java.beans.PropertyChangeListener {
 			}
 		}
 	}
+	
+    public void replaceLoad(String oldLoadName, String newLoadName){
+		List<String> locs = getLocationsByIdList();
+		for (int i=0; i<locs.size(); i++){
+			Location loc = getLocationById(locs.get(i));
+			// now adjust tracks
+			List<String> tracks = loc.getTracksByNameList(null);
+			for (int j=0; j<tracks.size(); j++){
+				Track track = loc.getTrackById(tracks.get(j));
+				String[] loadNames = track.getLoadNames();
+				for (int k=0; k<loadNames.length; k++){
+					if (loadNames[k].equals(oldLoadName)){
+						track.deleteLoadName(oldLoadName);
+						if(newLoadName != null)
+							track.addLoadName(newLoadName);
+					}
+				}
+			}
+		}
+    }
 
 	public void options (org.jdom.Element values) {
 		if (log.isDebugEnabled()) log.debug("ctor from element "+values);

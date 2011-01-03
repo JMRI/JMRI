@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.OperationsFrame;
+import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.ScheduleManager;
 
 
@@ -31,7 +32,7 @@ import jmri.jmrit.operations.locations.ScheduleManager;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version             $Revision: 1.14 $
+ * @version             $Revision: 1.15 $
  */
 public class CarLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -273,6 +274,8 @@ public class CarLoadEditFrame extends OperationsFrame implements java.beans.Prop
 		ScheduleManager.instance().replaceLoad(type, oldLoad, newLoad);
 		// now adjust trains
 		TrainManager.instance().replaceLoad(oldLoad, newLoad);
+		// now adjust tracks
+		LocationManager.instance().replaceLoad(oldLoad, newLoad);
 	}
 	
 	private void loadComboboxes(){ 
