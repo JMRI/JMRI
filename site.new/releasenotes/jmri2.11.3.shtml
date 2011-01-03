@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.5 2011-01-03 16:38:57 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.6 2011-01-03 16:39:58 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -65,7 +65,9 @@ see our
 
 <h3>New warnings for this version:</h3>
 
-(None for this version)
+There have been extensive changes to the throttle code.
+If you have written scripts that use throttles, particularly
+multiple throttles, please check to make sure they still work.
 
 <h3>Older warnings</h3>
 
