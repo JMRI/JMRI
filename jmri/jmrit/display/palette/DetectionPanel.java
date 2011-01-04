@@ -44,7 +44,6 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     private JTextField  _errSensorName = new JTextField();
     private JFrame      _pickFrame;
     private JButton     _openPicklistButton;
-    private JCheckBox   _showTrainName;
     private OBlock      _block;
     private JPanel      _blockPathPanel;
     private JList       _pathList;
@@ -99,11 +98,6 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
 
         _blockPathPanel = new JPanel();
         _blockPathPanel.setLayout(new BoxLayout(_blockPathPanel, BoxLayout.Y_AXIS));
-        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
-        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
-        p = new JPanel();
-        p.add(_showTrainName);
-        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
         p = new JPanel();
         p.add(new JLabel(ItemPalette.rbp.getString("SelectPathIcons")));
         _blockPathPanel.add(p);
@@ -111,7 +105,7 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
         _pathList.getSelectionModel().setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         _pathList.addListSelectionListener(this);
         _blockPathPanel.add(new JScrollPane(_pathList));
-        JButton clearButton = new JButton(ItemPalette.rbp.getString("ClearSelection"));
+        JButton clearButton = new JButton(ItemPalette.rbp.getString("ClearPathSelection"));
         clearButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent a) {
                     clearListSelection();
@@ -175,14 +169,6 @@ public class DetectionPanel extends JPanel implements ListSelectionListener {
     }
 
     /****************** Getters & Setters ***************************/
-
-    public boolean getShowTrainName() {
-        return _showTrainName.isSelected();
-    }
-
-    public void setShowTrainName(boolean show) {
-        _showTrainName.setSelected(show);
-    }
 
     public String getErrSensor() {
         String name = _errSensorName.getText();

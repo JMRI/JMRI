@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -95,6 +95,14 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 clone.put(ent.getKey(), cloneIcon(ent.getValue(), pos));
             }
         }
+        if (_paths!=null) {
+            pos._paths = new ArrayList<String>();
+            for (int i=0; i<_paths.size(); i++) {
+                pos._paths.add(_paths.get(i));
+            }
+        }
+        pos._iconFamily = _iconFamily;
+        pos._showTrain = _showTrain;
         return super.finishClone(pos);
     }
     
@@ -351,20 +359,34 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         displayState(turnoutState());
     }
 
+    LocoIcon _loco = null;
+
     /**
 	 * Drive the current state of the display from the state of the turnout and status of track.
 	 */
     void displayState(int state) {
+        if (_loco!=null) {
+            _loco.remove();
+        }
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
             if (_status!=null && _iconMaps!=null) {
-                log.debug(getNameString()+" displayState "+_state2nameMap.get(state)+", status= "+_status+
-                          ", isIcon()= "+isIcon());
-                if (_showTrain && "PositionTrack".equals(_status)) {
-                    super.setText(_train);
-                } else {
-                    super.setText("");
+                //log.debug(getNameString()+" displayState "+_state2nameMap.get(state)+", status= "+_status+
+                //          ", isIcon()= "+isIcon());
+                if (_train!=null) {
+                    if (_showTrain && "PositionTrack".equals(_status)) {
+                        _loco = _editor.selectLoco(_train);
+                        if (_loco==null) {
+                            _loco = _editor.addLocoIcon(_train.trim());
+                        }
+                        if (_loco!=null) {
+                            java.awt.Point pt = getLocation();
+                            pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
+                            pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
+                            _loco.setLocation(pt);
+                        }
+                    }
                 }
                 NamedIcon icon = getIcon(_status, state);
                 if (icon!=null) {

@@ -34,7 +34,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                             "AllocatedTrack", "DontUseTrack", "ErrorTrack"};
 
     private DetectionPanel  _detectPanel;
+    private JPanel          _trainIdPanel;
     private JPanel          _tablePanel;
+    private JCheckBox   _showTrainName;
 
     protected Hashtable<String, Hashtable<String, NamedIcon>> _iconGroupsMap;
     
@@ -78,6 +80,17 @@ public class IndicatorTOItemPanel extends TableItemPanel {
         if (_detectPanel!=null) {
             _detectPanel.dispose();
         }
+    }
+
+    private JPanel makeTrainIdPanel() {
+        JPanel panel = new JPanel();
+        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        JPanel p = new JPanel();
+        p.add(_showTrainName);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        panel.add(p);
+        return panel;
     }
 
     /**
@@ -142,11 +155,16 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             p.add(new JLabel(txt));
             panel.add(p);
             panel.add(buttonPanel);
+
+            _trainIdPanel = makeTrainIdPanel();
+            _iconFamilyPanel.add(_trainIdPanel);
+
             _iconFamilyPanel.add(panel);
             _bottom1Panel.setVisible(true);
             _bottom2Panel.setVisible(false);
             _detectPanel.setVisible(true);
             _tablePanel.setVisible(true);
+            _trainIdPanel.setVisible(true);
         } else {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("AllFamiliesDeleted"), 
@@ -156,6 +174,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             _bottom2Panel.setVisible(true);
             _detectPanel.setVisible(false);
             _tablePanel.setVisible(false);
+            _trainIdPanel.setVisible(false);
             createNewFamily();
         }
         add(_iconFamilyPanel, 1);
@@ -331,12 +350,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
                 public void actionPerformed(ActionEvent a) {
                     if (_iconPanel.isVisible()) {
                         hideIcons();
-                        _tablePanel.setVisible(true);
-                        _detectPanel.setVisible(true);
                     } else {
                         _iconPanel.setVisible(true);
                         _detectPanel.setVisible(false);
                         _tablePanel.setVisible(false);
+                        _trainIdPanel.setVisible(false);
                         _showIconsButton.setText(ItemPalette.rbp.getString("HideIcons"));
                     }
                     _paletteFrame.pack();
@@ -349,8 +367,9 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     }
 
     protected void hideIcons() {
-        _detectPanel.setVisible(true);
         _tablePanel.setVisible(true);
+        _detectPanel.setVisible(true);
+        _trainIdPanel.setVisible(true);
         super.hideIcons();
     }
 
@@ -384,11 +403,11 @@ public class IndicatorTOItemPanel extends TableItemPanel {
     /****************** pseudo inheritance *********************/
 
     public boolean getShowTrainName() {
-        return _detectPanel.getShowTrainName();
+        return _showTrainName.isSelected();
     }
 
     public void setShowTrainName(boolean show) {
-        _detectPanel.setShowTrainName(show);
+        _showTrainName.setSelected(show);
     }
 
     public String getErrSensor() {
@@ -466,7 +485,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             t.setOccBlock(_detectPanel.getOccBlock());
             t.setOccSensor(_detectPanel.getOccSensor());
             t.setErrSensor(_detectPanel.getErrSensor());                
-            t.setShowTrain(_detectPanel.getShowTrainName());
+            t.setShowTrain(_showTrainName.isSelected());
             t.setTurnout(bean.getSystemName());
 
             Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();

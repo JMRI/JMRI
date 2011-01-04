@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -206,9 +206,13 @@ public class OBlock extends jmri.Block {
         }
         if (msg!=null) {
             log.warn(msg);
+            if (warrant==null) {
+                msg = null;
+            }
         } else {
             _warrant = null;
             _pathName = null;
+            setValue(null);
             int state = getState();
             setState(state & ~(ALLOCATED | RUNNING));  // unset allocated and running bits
         }
@@ -384,12 +388,6 @@ public class OBlock extends jmri.Block {
                     log.error(msg);
                     return msg; 
                 }
-                if (occupied && !_warrant.getBlockAt(0).equals(this)) {
-                    msg = java.text.MessageFormat.format(rb.getString("BlockRougeOccupied"), pathName, getDisplayName()); 
-                    log.error(msg);
-                    return msg; 
-                }
-                msg = allocate(warrant);
             }
             if (msg==null) {
                 _pathName = pathName;

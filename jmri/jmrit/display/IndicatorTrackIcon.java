@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -69,6 +69,14 @@ public class IndicatorTrackIcon extends PositionableLabel
         pos.setErrSensorHandle(namedErrSensor);
         pos.setOccBlockHandle(namedOccBlock);
         pos._iconMap = cloneMap(_iconMap, pos);
+        if (_paths!=null) {
+            pos._paths = new ArrayList<String>();
+            for (int i=0; i<_paths.size(); i++) {
+                pos._paths.add(_paths.get(i));
+            }
+        }
+        pos._iconFamily = _iconFamily;
+        pos._showTrain = _showTrain;
         return super.finishClone(pos);
     }
 
@@ -367,15 +375,30 @@ public class IndicatorTrackIcon extends PositionableLabel
         displayState(_status);
     }
 
+    LocoIcon _loco = null;
+
     /**
 	 * Drive the current state of the display from the state of the turnout.
 	 */
     void displayState(String status) {
-        log.debug(getNameString() +" displayStatus "+_status);
-        if (_showTrain && "PositionTrack".equals(_status)) {
-            super.setText(_train);
-        } else {
-            super.setText("");
+        log.debug(getNameString() +" displayStatus "+_status+",  "+_loco);
+        if (_loco!=null) {
+            _loco.remove();
+        }
+        if (_train!=null) {
+            if (_showTrain && "PositionTrack".equals(_status)) {
+                _loco = _editor.selectLoco(_train);
+                if (_loco==null) {
+                    _loco = _editor.addLocoIcon(_train.trim());
+                }
+                if (_loco!=null) {
+                    java.awt.Point pt = getLocation();
+                    pt.x = pt.x + (getWidth() - _loco.getWidth())/2;
+                    pt.y = pt.y + (getHeight() - _loco.getHeight())/2;
+                    _loco.setLocation(pt);
+                    log.debug("Display state "+status+", at ("+pt.x+", "+pt.y+")");
+                }
+            }
         }
         NamedIcon icon = getIcon(status);
         if (icon!=null) {

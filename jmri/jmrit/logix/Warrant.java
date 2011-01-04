@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -419,11 +419,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 msg = java.text.MessageFormat.format(rb.getString("badStart"),getDisplayName());
                 log.error(msg);
                 return msg;
-            } else {
-                // set block state to show our train occupies the block
-                OBlock b = getBlockAt(0);
-                b.setValue(_trainId);
-                b.setState(b.getState() | OBlock.RUNNING);
             }
             if (mode == MODE_LEARN) {
                 if (student == null) {
@@ -458,6 +453,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 log.error(msg);
                 return msg;
             }
+            // set block state to show our train occupies the block
+            OBlock b = getBlockAt(0);
+            b.setValue(_trainId);
+            b.setState(b.getState() | OBlock.RUNNING);
         }
         _runMode = mode;
         firePropertyChange("runMode", Integer.valueOf(oldMode), Integer.valueOf(_runMode));
@@ -642,8 +641,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 // signal blocking warrant has changed. Should (MUST) be the next block.
                 _stoppingSignal.removePropertyChangeListener(this);
                 _stoppingSignal = null;
-                _engineer.rampSpeedTo(getCurrentSpeedAt(_idxCurrentOrder+1),
-                                      getSpeedChangeWait(_idxCurrentOrder+1));
+                if (_engineer!=null) {
+                    _engineer.rampSpeedTo(getCurrentSpeedAt(_idxCurrentOrder+1),
+                                          getSpeedChangeWait(_idxCurrentOrder+1));
+                }
                 return;
             }
         } else if (_stoppingBlock != null && _stoppingBlock==evt.getSource()) {
@@ -652,8 +653,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 //  blocking warrant has changed deallocated or blocks after
                 _stoppingBlock.removePropertyChangeListener(this);
                 _stoppingBlock = null;
-                _engineer.rampSpeedTo(getCurrentSpeedAt(_idxCurrentOrder+1),
-                                      getSpeedChangeWait(_idxCurrentOrder+1));
+                if (_engineer!=null) {
+                    _engineer.rampSpeedTo(getCurrentSpeedAt(_idxCurrentOrder+1),
+                                          getSpeedChangeWait(_idxCurrentOrder+1));
+                }
                 return;
             }
         }
@@ -707,16 +710,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_idxCurrentOrder!=0) {
                 log.error("Block "+block.getDisplayName()+" does not have an entrance portal!");
             }
-        } else {
+        } else if (_engineer!=null) {
             _engineer.rampSpeedTo(currentSpeed, getSpeedChangeWait(_idxCurrentOrder));
         }
 
-        _engineer.synchNotify(block); // notify engineer of control point
+        if (_engineer!=null) {
+            _engineer.synchNotify(block); // notify engineer of control point
+        }
 
         if (_idxCurrentOrder < _orders.size()-1) {
             // No 'next block' for last BlockOrder
             String nextSpeed = getNextSpeed();
-            if (!nextSpeed.equals(currentSpeed)) {
+            if (!nextSpeed.equals(currentSpeed) && _engineer!=null) {
                 // ramp speed from current to speed restriction.
                 // back off call (wait) so that endspeed occurs at exit of block.
                 _engineer.rampSpeedTo(nextSpeed, getSpeedChangeWait(_idxCurrentOrder+1));
@@ -761,7 +766,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // if it is the next block ahead of the train, we can move.
             // Presumeably we have stopped at the exit of the current block.
             if (idx==_idxCurrentOrder+1) {
-                if (allocateNextBlock(block)) {
+                if (allocateNextBlock(block) && _engineer!=null) {
                     _engineer.rampSpeedTo(getCurrentSpeedAt(_idxCurrentOrder+1),
                                           getSpeedChangeWait(_idxCurrentOrder+1));
                 }

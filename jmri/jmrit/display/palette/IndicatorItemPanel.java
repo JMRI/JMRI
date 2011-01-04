@@ -30,6 +30,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     private DetectionPanel  _detectPanel;
     private JPanel          _dndIconPanel;
     private boolean         _update;
+    private JPanel          _trainIdPanel;
+    private JCheckBox   _showTrainName;
 
     /**
     * Constructor for plain icons and backgrounds
@@ -52,6 +54,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         _detectPanel= new DetectionPanel(this);
         add(_detectPanel);
         initIconFamiliesPanel();
+        _trainIdPanel = makeTrainIdPanel();
+        _iconFamilyPanel.add(_trainIdPanel, 0);
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
@@ -71,6 +75,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         _detectPanel= new DetectionPanel(this);
         add(_detectPanel);
         initIconFamiliesPanel();
+        _trainIdPanel = makeTrainIdPanel();
+        _iconFamilyPanel.add(_trainIdPanel, 0);
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(_bottom1Panel);
         bottomPanel.add(_bottom2Panel);
@@ -90,6 +96,17 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         return bottomPanel;
     }
     
+    private JPanel makeTrainIdPanel() {
+        JPanel panel = new JPanel();
+        _showTrainName = new JCheckBox(ItemPalette.rbp.getString("ShowTrainName"));
+        _showTrainName.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        JPanel p = new JPanel();
+        p.add(_showTrainName);
+        p.setToolTipText(ItemPalette.rbp.getString("ToolTipShowTrainName"));
+        panel.add(p);
+        return panel;
+    }
+
     public void dispose() {
         if (_detectPanel!=null) {
             _detectPanel.dispose();
@@ -167,11 +184,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     /*************** pseudo inheritance to DetectionPanel *******************/
 
     public boolean getShowTrainName() {
-        return _detectPanel.getShowTrainName();
+        return _showTrainName.isSelected();
     }
 
     public void setShowTrainName(boolean show) {
-        _detectPanel.setShowTrainName(show);
+        _showTrainName.setSelected(show);
     }
 
     public String getErrSensor() {
@@ -243,7 +260,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             t.setOccBlock(_detectPanel.getOccBlock());
             t.setOccSensor(_detectPanel.getOccSensor());
             t.setErrSensor(_detectPanel.getErrSensor());                
-            t.setShowTrain(_detectPanel.getShowTrainName());
+            t.setShowTrain(_showTrainName.isSelected());
 
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {

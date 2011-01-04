@@ -1035,18 +1035,20 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         locoRosterFrame.pack();
     	locoRosterFrame.setVisible(true);	
     }
-    protected void selectLoco(String rosterEntryTitle){
+    protected LocoIcon selectLoco(String rosterEntryTitle){
 		if (rosterEntryTitle == "")
-			return;
+			return null;
+        LocoIcon l = null;
 		RosterEntry entry = Roster.instance().entryFromTitle(rosterEntryTitle);
 		// try getting road number, else use DCC address
 		String rn = entry.getRoadNumber();
 		if ((rn==null) || rn.equals("")) 
 			rn = entry.getDccAddress();
 		if (rn != null){
-			LocoIcon l = addLocoIcon(rn);
+			l = addLocoIcon(rn);
 			l.setRosterEntry(entry);
 		}
+        return l;
 	}
     
     protected void locoMarkerFromInput() {
