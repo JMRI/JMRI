@@ -10,7 +10,7 @@ import java.util.Iterator;
  * Class providing the basic logic of the Logix interface.
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  * @author Pete Cressman Copyright (C) 2009
  */
 public class DefaultLogix extends AbstractNamedBean
@@ -102,28 +102,16 @@ public class DefaultLogix extends AbstractNamedBean
 
         boolean old = mEnabled;
         mEnabled = state;
-        for (int i=_listeners.size()-1; i>=0; i--)
-        {
-            _listeners.get(i).setEnabled(state);
-        }
         if (old != state) {
-			firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));
-			// set the state of all Conditionals to UNKNOWN
-			if ( _isActivated ) {
-				Conditional c = null;
-				for (int i=0; i<_conditionalSystemNames.size(); i++) {
-					c = InstanceManager.conditionalManagerInstance().
-										getBySystemName(_conditionalSystemNames.get(i));
-					if (c!=null) {
-                        try {
-                            c.setState(Conditional.UNKNOWN);
-                        } catch ( JmriException e) {
-                              // ignore
-                        }
-					}
-				}
-				calculateConditionals();
-			}
+            boolean active = _isActivated;
+            deActivateLogix();
+            activateLogix();
+            _isActivated = active;
+            for (int i=_listeners.size()-1; i>=0; i--)
+            {
+                _listeners.get(i).setEnabled(state);
+            }
+            firePropertyChange("Enabled", Boolean.valueOf(old), Boolean.valueOf(state));
 		}
     }
 
@@ -231,17 +219,7 @@ public class DefaultLogix extends AbstractNamedBean
 		// if the Logix is already busy, simply return
 		if (_isActivated) return;
 		// set the state of all Conditionals to UNKNOWN
-        ConditionalManager cm = InstanceManager.conditionalManagerInstance();
-        for (int i=0; i<_conditionalSystemNames.size(); i++) {
-            Conditional conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
-            if (conditional!=null) {
-                try {
-                    conditional.setState(Conditional.UNKNOWN);
-                } catch ( JmriException e) {
-                      // ignore
-                }
-            }
-        }
+        resetConditionals();
 		// assemble a list of needed listeners
 		assembleListenerList();
 		// create and attach the needed property change listeners
@@ -254,6 +232,20 @@ public class DefaultLogix extends AbstractNamedBean
 		// calculate this Logix to set initial state of Conditionals
 		calculateConditionals();
 	}
+
+    private void resetConditionals() {
+        ConditionalManager cm = InstanceManager.conditionalManagerInstance();
+        for (int i=0; i<_conditionalSystemNames.size(); i++) {
+            Conditional conditional = cm.getBySystemName(_conditionalSystemNames.get(i));
+            if (conditional!=null) {
+                try {
+                    conditional.setState(Conditional.UNKNOWN);
+                } catch ( JmriException e) {
+                      // ignore
+                }
+            }
+        }
+    }
 	
 	/**
 	 * Assembles a list of Listeners needed to activate this Logix
