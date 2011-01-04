@@ -48,7 +48,7 @@ public class TrainSwitchLists extends TrainCommon {
 		// build header
 		addLine(fileOut, Setup.getRailroadName());
 		newLine(fileOut);
-		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{location.getName()}));
+		addLine(fileOut, MessageFormat.format(rb.getString("SwitchListFor"), new Object[]{splitString(location.getName())}));
 		addLine(fileOut, MessageFormat.format(rb.getString("Valid"), new Object[]{getDate()}));
 		
 		// get a list of trains
@@ -71,13 +71,15 @@ public class TrainSwitchLists extends TrainCommon {
 			List<String> routeList = route.getLocationsBySequenceList();
 			for (int r=0; r<routeList.size(); r++){
 				RouteLocation rl = route.getLocationById(routeList.get(r));
-				if (rl.getName().equals(location.getName())){
+				if (splitString(rl.getName()).equals(splitString(location.getName()))){
 					if (stops > 1){
 						// Print visit number only if previous location wasn't the same
 						RouteLocation rlPrevious = route.getLocationById(routeList.get(r-1));
-						if (!rl.getName().equals(rlPrevious.getName())){
+						if (!splitString(rl.getName()).equals(splitString(rlPrevious.getName()))){
 							newLine(fileOut);
 							addLine(fileOut, MessageFormat.format(rb.getString("VisitNumber"), new Object[]{stops}));
+						} else {
+							stops--;	// don't bump stop count, same location
 						}
 					} else {
 						newLine(fileOut);

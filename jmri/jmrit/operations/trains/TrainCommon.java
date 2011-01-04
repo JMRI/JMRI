@@ -87,7 +87,7 @@ public class TrainCommon {
 	 * @param name
 	 * @return First half the string.
 	 */
-	protected String splitString(String name){
+	protected static String splitString(String name){
 		String[] fullname = name.split("-");
 		String parsedName = fullname[0];
 		// is the hyphen followed by a number?
