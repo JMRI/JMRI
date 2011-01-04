@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -40,13 +40,13 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
 	 */
     private HashMap<DccLocoAddress,ArrayList<PropertyChangeListener>> listenerOnly = new HashMap<DccLocoAddress,ArrayList<PropertyChangeListener>>(5);
     
-    //This keeps a map of all the current active DCC loco addresses that are in use.
+    //This keeps a map of all the current active DCC loco Addresses that are in use.
     /**
 	 * addressThrottles is indexed by the address, and
 	 * contains as elements a subclass of the throttle assigned to an address and 
      * the number of requests and active users for this address.
 	 */
-    private Hashtable<DccLocoAddress,addresses> addressThrottles = new Hashtable<DccLocoAddress,addresses>();
+    private Hashtable<DccLocoAddress,Addresses> addressThrottles = new Hashtable<DccLocoAddress,Addresses>();
 
 	/**
 	 * Does this DCC system allow a Throttle (e.g. an address) to be used
@@ -212,7 +212,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
         DccLocoAddress dla = (DccLocoAddress) addr;
         if (!addressThrottles.containsKey(dla)){
             log.debug("Address " + addr + "doesn't already exists so will add");
-            addressThrottles.put(dla, new addresses(throttle));
+            addressThrottles.put(dla, new Addresses(throttle));
         } else {
             addressThrottles.get(dla).setThrottle(throttle);
         }
@@ -423,17 +423,17 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
     /**
      * This subClass, keeps track of which loco address have been requested and
      * by whom, it primarily uses a increment count to keep track of all the the
-     * addresses in use as not all external code will have been refactored over
+     * Addresses in use as not all external code will have been refactored over
      * to use the new disposeThrottle.
      */
 
-    protected class addresses{
+    protected class Addresses{
 
         int useActiveCount = 0;
         DccThrottle throttle = null;
         ArrayList<ThrottleListener> listeners = new ArrayList<ThrottleListener>();
 
-        protected addresses(DccThrottle throttle){
+        protected Addresses(DccThrottle throttle){
             this.throttle = throttle;
         }
     
