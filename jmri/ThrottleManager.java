@@ -27,7 +27,7 @@ package jmri;
  * <P>
  * @author			Glen Oberhauser
  * @author			Bob Jacobsen Copyright 2006
- * @version			$Revision: 1.22 $
+ * @version			$Revision: 1.23 $
  */
 public interface ThrottleManager {
 
@@ -120,7 +120,7 @@ public interface ThrottleManager {
     /**
      * Provides a Proxy method to return the SpeedSetting, Direction, Function
      * Settings, of a throttle, where the requesting code has used the
-     * {@link #attachListener(dccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to only be notified of changes in the throttle and not control it.
      * <P>
      * Valid values for item are
@@ -200,7 +200,7 @@ public interface ThrottleManager {
 
     /**
      * Remove a PropertyChangeListener to a specific loco address, where the
-     * requesting code has used {@link #attachListener(dccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * requesting code has used {@link #attachListener(DccLocoAddress, java.beans.PropertyChangeListener) attachListener}
      * to get notification of changes in a throttle.
      * <P>
      * The propertyChangeListener will be notified if it has been removed
