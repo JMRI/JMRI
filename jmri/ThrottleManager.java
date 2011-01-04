@@ -27,7 +27,7 @@ package jmri;
  * <P>
  * @author			Glen Oberhauser
  * @author			Bob Jacobsen Copyright 2006
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public interface ThrottleManager {
 
@@ -120,8 +120,8 @@ public interface ThrottleManager {
     /**
      * Provides a Proxy method to return the SpeedSetting, Direction, Function
      * Settings, of a throttle, where the requesting code has used the
-     * @link #attachListener() to only be notified of changes in the throttle
-     * and not control it
+     * {@link #attachListener(dccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * to only be notified of changes in the throttle and not control it.
      * <P>
      * Valid values for item are
      * IsForward
@@ -155,7 +155,8 @@ public interface ThrottleManager {
     public void releaseThrottle(DccThrottle t, ThrottleListener l);
 
     /**
-     * Not for general use, see {@link #releaseThrottle()} and {@link #dispatch()}.
+     * Not for general use, see {@link #releaseThrottle(DccThrottle, ThrottleListener) releaseThrottle}
+     * and {@link #dispatchThrottle(DccThrottle, ThrottleListener) dispatchThrottle}.
      * <p>
      * Dispose of object when finished it.  This will free up hardware resource
      * <P>
@@ -199,8 +200,8 @@ public interface ThrottleManager {
 
     /**
      * Remove a PropertyChangeListener to a specific loco address, where the
-     * requesting code has used @link #attachListener() to get notification of
-     * changes in a throttle.
+     * requesting code has used {@link #attachListener(dccLocoAddress, java.beans.PropertyChangeListener) attachListener}
+     * to get notification of changes in a throttle.
      * <P>
      * The propertyChangeListener will be notified if it has been removed
      * via a propertyChange notification.
