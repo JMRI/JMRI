@@ -15,7 +15,7 @@ import javax.swing.*;
  * Pane to show ECoS preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.7 $
+ * @version	$Revision: 1.8 $
  */
 public class PreferencesPane extends javax.swing.JPanel implements PropertyChangeListener {
 
@@ -39,8 +39,11 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
     JRadioButton _forceControlLocoEcosAsk;
     JRadioButton _forceControlLocoEcosNever;
     JRadioButton _forceControlLocoEcosAlways;
+    JRadioButton _locoControlNormal;
+    JRadioButton _locoControlForce;
     ButtonGroup _adhocLocoEcos;
     ButtonGroup _locoEcosControl;
+    ButtonGroup _locoControl;
     JCheckBox _rememberAdhocLocosEcos;
     JComboBox _defaultProtocol;
     EcosPreferences ep;
@@ -102,7 +105,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         
         _ecosAttSufText.setText(ep.getRosterAttributeSuffix());
         _ecosDescription.setText(ep.getEcosLocoDescription());
-        
+
         switch (ep.getForceControlFromEcos()){
             case 0x00  :   _forceControlLocoEcosAsk.setSelected(true);
                         break;
@@ -112,6 +115,12 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
                         break;
             default :   _forceControlLocoEcosAsk.setSelected(true);
                         break;
+        }
+
+        if (ep.getLocoControl()){
+            _locoControlForce.setSelected(true);
+        } else {
+            _locoControlNormal.setSelected(true);
         }
         setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
     }
@@ -300,7 +309,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         /*throttletabpanel.add(_adhocLocoEcosAsk);
         throttletabpanel.add(_adhocLocoEcosLeave);
         throttletabpanel.add(_adhocLocoEcosRemove);*/
-        
+        throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         _throttleLabel = new JLabel("If JMRI can not get control of a loco, this sets how JMRI should react.");
         _throttleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(_throttleLabel);
@@ -318,6 +327,9 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
                         break;
         }
         _locoEcosControl = new ButtonGroup();
+        _locoEcosControl.add(_forceControlLocoEcosAsk);
+        _locoEcosControl.add(_forceControlLocoEcosNever);
+        _locoEcosControl.add(_forceControlLocoEcosAlways);
         JPanel locoEcosControlGroup = new JPanel();
         locoEcosControlGroup.setLayout(new BoxLayout(locoEcosControlGroup, BoxLayout.Y_AXIS));
         locoEcosControlGroup.add(_forceControlLocoEcosAsk);
@@ -325,6 +337,7 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         locoEcosControlGroup.add(_forceControlLocoEcosAlways);
         locoEcosControlGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
         throttletabpanel.add(locoEcosControlGroup);
+        throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
         
         JPanel _defaultprotocolpanel = new JPanel();
 
@@ -336,6 +349,25 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         setEcosProtocolType(_defaultProtocol, ep.getDefaultEcosProtocol());
         _defaultprotocolpanel.add(_defaultProtocol);
         throttletabpanel.add(_defaultprotocolpanel);
+        throttletabpanel.add(new JSeparator(SwingConstants.HORIZONTAL));
+        _locoControl = new ButtonGroup();
+        _locoControlNormal = new JRadioButton("Always gracefully gain control");
+        _locoControlForce = new JRadioButton("Always force loco control");
+        _locoControl.add(_locoControlNormal);
+        _locoControl.add(_locoControlForce);
+        if (ep.getLocoControl()){
+            _locoControlForce.setSelected(true);
+        } else {
+            _locoControlNormal.setSelected(true);
+        }
+        JLabel _locoControlLabel = new JLabel("How should JMRI attempt to take contol of a loco?");
+        JPanel locoControlGroup = new JPanel();
+        locoControlGroup.add(_locoControlLabel);
+        locoControlGroup.setLayout(new BoxLayout(locoControlGroup, BoxLayout.Y_AXIS));
+        locoControlGroup.add(_locoControlNormal);
+        locoControlGroup.add(_locoControlForce);
+        locoControlGroup.setAlignmentX(Component.CENTER_ALIGNMENT);
+        throttletabpanel.add(locoControlGroup);
 
         return throttletabpanel;
     
@@ -357,10 +389,15 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         ep.setDefaultEcosProtocol(getEcosProtocol(_defaultProtocol));
         ep.setEcosLocoDescription(_ecosDescription.getText());
         ep.setRosterAttribute(_ecosAttSufText.getText());
+        
         if (_adhocLocoEcosAsk.isSelected()) ep.setAdhocLocoFromEcos(0);
         else if (_adhocLocoEcosLeave.isSelected()) ep.setAdhocLocoFromEcos(1);
         else if (_adhocLocoEcosRemove.isSelected()) ep.setAdhocLocoFromEcos(2);
         else ep.setAdhocLocoFromEcos(0);
+
+        if(_locoControlForce.isSelected()) ep.setLocoControl(true);
+        else ep.setLocoControl(false);
+
         jmri.InstanceManager.configureManagerInstance().storePrefs();
         updateButtonPressed=false;
     }

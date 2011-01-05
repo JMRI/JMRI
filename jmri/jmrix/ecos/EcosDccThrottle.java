@@ -12,7 +12,7 @@ import javax.swing.*;
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen  Copyright (C) 2001, modified 2009 by Kevin Dickerson
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class EcosDccThrottle extends AbstractThrottle implements EcosListener
 {
@@ -99,8 +99,12 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
     
     private void getControl(){
         String message;
-        if(_control)
-            message = "request("+this.objectNumber+", view, control)";
+        if(_control){
+            if (p.getLocoControl())
+                message = "request("+this.objectNumber+", view, control, force)";
+            else
+                message = "request("+this.objectNumber+", view, control)";
+        }
         else
             message = "request("+this.objectNumber+", view)";
         EcosMessage m = new EcosMessage(message);
@@ -502,10 +506,10 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
                             //We get this lost control error because we have registered as a viewer.
                             if (val.contains("CONTROL_LOST")){
                                 retryControl();
-                                log.debug("We have no control over the ecos object");
-                                _haveControl = false;
+                                log.debug("We have no control over the ecos object, but will retry.");
+                                /*_haveControl = false;
                                 javax.swing.JOptionPane.showMessageDialog(null,"We do not have control of loco " + this.address + "\n" + "Press Release and try again","No Control",javax.swing.JOptionPane.WARNING_MESSAGE);
-                                release();
+                                release();*/
                             }
                         }
                         else if (result.equals("speed")){
@@ -718,6 +722,7 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
             }
             else if (lines[0].startsWith("<REPLY request("+this.objectNumber)){
                 log.debug("We have control over "+this.objectNumber +" from the Ecos");
+                ecosretry=0;
                 if(_control)
                     _haveControl = true;
                 if (!_hadControl){
@@ -761,9 +766,14 @@ public class EcosDccThrottle extends AbstractThrottle implements EcosListener
         //System.out.println("Ecos message - "+ m);
         // messages are ignored
     }
+
+    public void forceControl(){
+        String message = "request("+this.objectNumber+", control, force)";
+        EcosMessage ms = new EcosMessage(message);
+        tc.sendEcosMessage(ms, this);
+    }
     
     private void createEcosLoco() {
-
         String message = "create(10, addr[" + objEcosLoco.getEcosLocoAddress() + "], name[\"Created By JMRI\"], protocol[DCC128], append)";
         EcosMessage m = new EcosMessage(message);
         tc.sendEcosMessage(m, this);

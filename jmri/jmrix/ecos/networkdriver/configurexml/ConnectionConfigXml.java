@@ -22,7 +22,7 @@ import org.jdom.*;
  * here directly via the class attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 208
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
@@ -77,6 +77,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             if(!p.getEcosLocoDescription().equals(""))
                 ecosPrefElem.setAttribute("defaultCSLocoDescription",p.getEcosLocoDescription());
         }
+
+        if(p.getLocoControl()) ecosPrefElem.setAttribute("locoControl", "force");
+
         ecosPrefElem.setAttribute("ecosRosterAttribute",p.getRosterAttribute());
         e.addContent(ecosPrefElem);
     
@@ -180,6 +183,10 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
             if (ecosPref.get(i).getAttribute("ecosRosterAttribute") != null){
                 p.setRosterAttribute(ecosPref.get(i).getAttribute("ecosRosterAttribute").getValue());
             }
+            if (ecosPref.get(i).getAttribute("locoControl") != null){
+                p.setLocoControl(true);
+            }
+
             p.resetChangeMade();
          }
          p.setPreferencesLoaded();
