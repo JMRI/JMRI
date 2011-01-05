@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.7 $
+ * @version         $Revision: 2.8 $
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -53,7 +53,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
 	// Test the XNetTurnout message sequence.
 	public void testXNetTurnoutMsgSequence() {
-                t.setFeedbackMode(jmri.Turnout.EXACT);
+                t.setFeedbackMode(jmri.Turnout.DIRECT);
 		// prepare an interface
 		// set closed
 		try {
@@ -63,7 +63,9 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		Assert.assertTrue(t.getCommandedState() == jmri.Turnout.CLOSED);
 
 		Assert.assertEquals("on message sent","52 05 88 DF",
-                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+                    lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+
+		
  
 		// notify that the command station received the reply
 		XNetReply m = new XNetReply();
@@ -71,27 +73,41 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 		m.setElement(1, 0x05);
 		m.setElement(2, 0x04);     // set CLOSED
 		m.setElement(3, 0x43);
+
+		int n = lnis.outbound.size();
+
                 ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
-		
+		while(n==lnis.outbound.size()); // busy loop.  Wait for 
+                                                // outbound size to change.
                 Assert.assertEquals("off message sent","52 05 80 D7",
-                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+                    lnis.outbound.elementAt(n).toString());
 
                 // the turnout will not set its state until it sees an OK message.
 		m = new XNetReply();
                 m.setElement(0,0x01);
                 m.setElement(1,0x04);
                 m.setElement(2,0x05);
+
+		n = lnis.outbound.size();
+
                 ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
+
+		while(n==lnis.outbound.size()); // busy loop.  Wait for 
+                                                // outbound size to change.
+
+                Assert.assertEquals("off message sent","52 05 80 D7",
+                    lnis.outbound.elementAt(n).toString());
 
 		m = new XNetReply();
                 m.setElement(0,0x01);
                 m.setElement(1,0x04);
                 m.setElement(2,0x05);
+		
                 ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
-                Assert.assertEquals("off message sent","52 05 80 D7",
-                lnis.outbound.elementAt(lnis.outbound.size()-1).toString());
+		// no wait here.  The last reply should cause the turnout to 
+	        // set it's state, but it will not cause another reply.
 
 		Assert.assertTrue(t.getKnownState() == jmri.Turnout.CLOSED);
 	}
