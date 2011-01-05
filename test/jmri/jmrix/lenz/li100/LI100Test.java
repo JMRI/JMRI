@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.li100 package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 public class LI100Test extends TestCase {
 
@@ -29,7 +29,6 @@ public class LI100Test extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.li100.LI100Test");  // no tests in this class itself
-        suite.addTest(new TestSuite(LI100FrameTest.class));
         suite.addTest(new TestSuite(LI100AdapterTest.class));
         suite.addTest(new TestSuite(LI100XNetInitilizationManagerTest.class));
         suite.addTest(new TestSuite(LI100XNetProgrammerTest.class));

@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.ztc640 package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 public class ZTC640Test extends TestCase {
 
@@ -29,7 +29,6 @@ public class ZTC640Test extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.ztc640.ZTC640Test");  // no tests in this class itself
-        suite.addTest(new TestSuite(ZTC640FrameTest.class));
         suite.addTest(new TestSuite(ZTC640AdapterTest.class));
         suite.addTest(new TestSuite(ZTC640XNetPacketizerTest.class));
         return suite;

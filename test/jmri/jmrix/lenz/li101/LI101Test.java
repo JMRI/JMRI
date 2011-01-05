@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.li101 package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.2 $
+ * @version                     $Revision: 1.3 $
  */
 public class LI101Test extends TestCase {
 
@@ -30,7 +30,6 @@ public class LI101Test extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.li101.LI101Test");  // no tests in this class itself
         suite.addTest(new TestSuite(LI101AdapterTest.class));
-        suite.addTest(new TestSuite(LI101PortFrameTest.class));
         return suite;
     }
 

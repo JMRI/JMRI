@@ -8,12 +8,12 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class XnTcpXNetPacketizerTest extends TestCase {
 
         public void testCtor() {
-          XnTcpFrame f = new XnTcpFrame();
+          XnTcpXNetPacketizer f = new XnTcpXNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
           Assert.assertNotNull(f);
         }
 

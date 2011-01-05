@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.xntcp package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 public class XnTcpTest extends TestCase {
 
@@ -29,7 +29,6 @@ public class XnTcpTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.xntcp.XnTcpTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(XnTcpFrameTest.class));
         suite.addTest(new TestSuite(XnTcpAdapterTest.class));
         suite.addTest(new TestSuite(XnTcpXNetPacketizerTest.class));
         return suite;

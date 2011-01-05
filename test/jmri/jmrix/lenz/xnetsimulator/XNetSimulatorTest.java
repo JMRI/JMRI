@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.xnetsimulator package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.1 $
+ * @version                     $Revision: 1.2 $
  */
 public class XNetSimulatorTest extends TestCase {
 
@@ -29,7 +29,6 @@ public class XNetSimulatorTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(XNetSimulatorFrameTest.class));
         suite.addTest(new TestSuite(XNetSimulatorAdapterTest.class));
         return suite;
     }

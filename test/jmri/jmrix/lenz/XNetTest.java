@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz package
  * @author			Bob Jacobsen
- * @version			$Revision: 2.11 $
+ * @version			$Revision: 2.12 $
  */
 public class XNetTest extends TestCase {
 
@@ -48,18 +48,18 @@ public class XNetTest extends TestCase {
         suite.addTest(new TestSuite(XNetProgrammerTest.class));
         suite.addTest(new TestSuite(XNetProgrammerManagerTest.class));
         suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
+        suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
+        suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
+        suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
+        suite.addTest(jmri.jmrix.lenz.liusb.LIUSBTest.suite());
+        suite.addTest(jmri.jmrix.lenz.xntcp.XnTcpTest.suite());
+        suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
+        suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         
         if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
             suite.addTest(new TestSuite(jmri.jmrix.lenz.packetgen.PacketGenFrameTest.class));
-            suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
-            suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
-            suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());
-            suite.addTest(jmri.jmrix.lenz.liusb.LIUSBTest.suite());
             suite.addTest(jmri.jmrix.lenz.lz100.LZ100Test.suite());
             suite.addTest(jmri.jmrix.lenz.lzv100.LZV100Test.suite());
-            suite.addTest(jmri.jmrix.lenz.xntcp.XnTcpTest.suite());
-            suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
-            suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
             suite.addTest(jmri.jmrix.lenz.swing.SwingTest.suite());
         }
         

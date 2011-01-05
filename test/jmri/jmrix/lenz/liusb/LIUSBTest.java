@@ -10,7 +10,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the jmri.jmrix.lenz.liusb package
  * @author                      Paul Bender  
- * @version                     $Revision: 1.2 $
+ * @version                     $Revision: 1.3 $
  */
 public class LIUSBTest extends TestCase {
 
@@ -29,7 +29,6 @@ public class LIUSBTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrix.lenz.liusb.LIUSBTest");  // no tests in this class itself
-        suite.addTest(new TestSuite(LIUSBFrameTest.class));
         suite.addTest(new TestSuite(LIUSBAdapterTest.class));
         suite.addTest(new TestSuite(LIUSBXNetPacketizerTest.class));
         return suite;

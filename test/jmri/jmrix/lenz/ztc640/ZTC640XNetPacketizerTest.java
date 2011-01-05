@@ -8,12 +8,12 @@ import junit.framework.TestCase;
  * <p>Description: </p>
  * <p>Copyright: Copyright (c) 2009</p>
  * @author Paul Bender 
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 public class ZTC640XNetPacketizerTest extends TestCase {
 
         public void testCtor() {
-          ZTC640Frame f = new ZTC640Frame();
+          ZTC640XNetPacketizer f = new ZTC640XNetPacketizer(new jmri.jmrix.lenz.LenzCommandStation());
           Assert.assertNotNull(f);
         }
 
