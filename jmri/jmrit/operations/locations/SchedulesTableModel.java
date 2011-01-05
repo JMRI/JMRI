@@ -21,7 +21,7 @@ import java.util.Hashtable;
  * Table Model for edit of schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.9 $
+ * @version   $Revision: 1.10 $
  */
 public class SchedulesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -228,7 +228,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
        	JComboBox box = manager.getSidingsByScheduleComboBox(sch); 
        	for (int i=0; i<box.getItemCount(); i++){
            	LocationTrackPair ltp = (LocationTrackPair)box.getItemAt(i);
-           	String status = ltp.getTrack().checkScheduleValid(ltp.getLocation());
+           	String status = ltp.getTrack().checkScheduleValid();
            	if (!status.equals(""))
            		return rb.getString("Error");
        	}
@@ -239,7 +239,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
      	LocationTrackPair ltp = getLocationTrackPair(row);
     	if (ltp == null)
     		return "";
-    	String status = ltp.getTrack().checkScheduleValid(ltp.getLocation());
+    	String status = ltp.getTrack().checkScheduleValid();
     	if (!status.equals(""))
     		return status;
     	return rb.getString("Okay");

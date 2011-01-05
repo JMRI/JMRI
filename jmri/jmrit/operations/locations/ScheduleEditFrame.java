@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -249,7 +249,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		typeBox.removeAllItems();
 		String[] types = CarTypes.instance().getNames();
 		for (int i=0; i<types.length; i++){
-			if (_location.acceptsTypeName(types[i]) && _track.acceptsTypeName(types[i]))
+			if (_track.acceptsTypeName(types[i]))
 					typeBox.addItem(types[i]);
 		}
 	}

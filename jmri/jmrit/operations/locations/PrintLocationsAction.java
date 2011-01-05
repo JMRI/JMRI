@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -220,7 +220,7 @@ public class PrintLocationsAction  extends AbstractAction {
         						buf.append(" ");
         					}
         					s = buf.toString() +" "+ location.getName()+ " - " + siding.getName();
-        					String status = siding.checkScheduleValid(location);
+        					String status = siding.checkScheduleValid();
         					if (!status.equals("")){
         						buf = new StringBuffer(s);
         						for (int m=s.length(); m<63; m++){
@@ -380,7 +380,7 @@ public class PrintLocationsAction  extends AbstractAction {
 		int typeCount = 0;
 		String[] cTypes = CarTypes.instance().getNames();	
 		for (int i =0; i<cTypes.length; i++){
-			if(location.acceptsTypeName(cTypes[i]) && track.acceptsTypeName(cTypes[i])){
+			if(track.acceptsTypeName(cTypes[i])){
 				buf.append(cTypes[i] + ", ");
 				typeCount++;
 				charCount += cTypes[i].length() +2;

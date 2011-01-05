@@ -22,7 +22,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of location
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class LocationEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -583,8 +583,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 			List<String> tracks = _location.getTracksByNameList(null);
 			for (int j=0; j<tracks.size(); j++){
 				Track track = _location.getTrackById(tracks.get(j));
-				if (_location.acceptsTypeName(checkBoxes.get(i).getText()) 
-						&& track.acceptsTypeName(checkBoxes.get(i).getText()))
+				if (track.acceptsTypeName(checkBoxes.get(i).getText()))
 					checkBoxes.get(i).setSelected(true);
 			}
 			// this type of car isn't serviced by any of the tracks, so delete

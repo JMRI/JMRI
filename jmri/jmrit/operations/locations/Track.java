@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.43 $
+ * @version             $Revision: 1.44 $
  */
 public class Track {
 	
@@ -29,6 +29,7 @@ public class Track {
 	protected String _id = "";
 	protected String _name = "";
 	protected String _locType = "";					// yard, siding, interchange or staging
+	protected Location _location;					// the location for this track
 	protected String _roadOption = ALLROADS;		// controls which car roads are accepted 
 	protected int _trainDir = EAST+WEST+NORTH+SOUTH; //train direction served by this track
 	protected int _numberRS = 0;					// number of cars and engines
@@ -97,14 +98,15 @@ public class Track {
 	public static final String TRACK_TYPE_CHANGED_PROPERTY = "trackType";
 	public static final String LOADS_CHANGED_PROPERTY = "TrackLoads";
 	
-	public Track(String id, String name, String type) {
+	public Track(String id, String name, String type, Location location){
 		log.debug("New track " + name + " " + id);
+		_location = location;
 		_locType = type;
 		_name = name;
 		_id = id;
 		// a new track accepts all types
 		setTypeNames(CarTypes.instance().getNames());
-		setTypeNames(EngineTypes.instance().getNames());
+		setTypeNames(EngineTypes.instance().getNames());		
 	}
 	
 	// for combo boxes
@@ -115,6 +117,10 @@ public class Track {
 	public String getId() {
 		return _id;
 	}
+	
+	public Location getLocation() {
+		return _location;
+	}	
 
 	public void setName(String name) {
 		String old = _name;
@@ -253,7 +259,7 @@ public class Track {
 
 	/**
 	 * Increments the number of cars and or engines that will be picked up by a train
-	 * at this location.
+	 * from this track.
 	 */
 	public void addPickupRS(RollingStock rs) {
 		int old = _pickupRS;
@@ -274,7 +280,7 @@ public class Track {
 	/**
 	 * 
 	 * @return the number of rolling stock (cars and or engines) that are
-	 *         scheduled for pickup at this location.
+	 *         scheduled for pickup from this track.
 	 */
 	public int getPickupRS() {
 		return _pickupRS;
@@ -343,6 +349,8 @@ public class Track {
     public boolean acceptsTypeName(String type){
        	if (!CarTypes.instance().containsName(type) && !EngineTypes.instance().containsName(type))
     		return false;
+       	if (!_location.acceptsTypeName(type))
+       		return false;
     	return _typeList.contains(type);
     }
     
@@ -718,7 +726,7 @@ public class Track {
      * @param location The location of this track.
      * @return "" if schedule okay, otherwise an error message.
      */
-	public String checkScheduleValid(Location location){
+	public String checkScheduleValid(){
 		String status = "";
 		Schedule schedule = ScheduleManager.instance().getScheduleByName(getScheduleName());
 		if (schedule == null)
@@ -729,7 +737,7 @@ public class Track {
 		}
 		for (int i=0; i<scheduleItems.size(); i++){
 			ScheduleItem si = schedule.getItemById(scheduleItems.get(i));
-			if (!location.acceptsTypeName(si.getType())){
+			if (!_location.acceptsTypeName(si.getType())){
 				status = MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
 				break;
 			}
@@ -819,8 +827,9 @@ public class Track {
      * @param e  Consist XML element
      */
     private boolean debugFlag = false;
-    public Track(org.jdom.Element e) {
+    public Track(org.jdom.Element e, Location location) {
         //if (log.isDebugEnabled()) log.debug("ctor from element "+e);
+    	_location = location;
         org.jdom.Attribute a;
         if ((a = e.getAttribute("id")) != null )  _id = a.getValue();
         else log.warn("no id attribute in track element when reading operations");

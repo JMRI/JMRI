@@ -27,7 +27,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
  * Table Model for edit of a schedule used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2009
- * @version   $Revision: 1.17 $
+ * @version   $Revision: 1.18 $
  */
 public class ScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -246,7 +246,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     }
     
     private String getType(ScheduleItem si){
-    	if (_location.acceptsTypeName(si.getType()) && _track.acceptsTypeName(si.getType()))
+    	if (_track.acceptsTypeName(si.getType()))
     		return si.getType();
     	else
     		return MessageFormat.format(rb.getString("NotValid"),new Object[]{si.getType()});
@@ -447,7 +447,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
     	List<String> tracks = loc.getTracksByNameList(null);
     	for (int i=0; i<tracks.size(); i++){
     		Track track = loc.getTrackById(tracks.get(i));
-    		if (!loc.acceptsTypeName(carType) || !track.acceptsTypeName(carType))
+    		if (!track.acceptsTypeName(carType))
     			cb.removeItem(track);
     	}
     }

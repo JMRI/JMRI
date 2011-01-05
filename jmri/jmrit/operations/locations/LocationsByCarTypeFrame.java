@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which locations service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class LocationsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -223,7 +223,7 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
 				cb.setToolTipText(MessageFormat.format(rb.getString("TipTrackCarType"),new Object[]{carType}));
 				addCheckBoxAction(cb);
 				trackList.add(cb);
-				cb.setSelected(locAcceptsType && track.acceptsTypeName(carType));
+				cb.setSelected(track.acceptsTypeName(carType));
 				addItemLeft(pLocations, cb, 1, x++);
 			}
 		}

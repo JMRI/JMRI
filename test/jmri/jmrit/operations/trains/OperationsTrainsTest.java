@@ -65,7 +65,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.70 $
+ * @version $Revision: 1.71 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -1251,7 +1251,7 @@ public class OperationsTrainsTest extends TestCase {
 		l1.setSwitchList(true);
 		lmanager.register(l1);
 
-		Track l1s1 = new Track("1s1", "North End 1", Track.STAGING);
+		Track l1s1 = new Track("1s1", "North End 1", Track.STAGING, l1);
 		l1s1.setLength(300);
 		Assert.assertEquals("Location 1s1 Id", "1s1", l1s1.getId());
 		Assert.assertEquals("Location 1s1 Name", "North End 1", l1s1.getName());
@@ -1262,7 +1262,7 @@ public class OperationsTrainsTest extends TestCase {
 		l1s1.setDropOption(Track.ANY);
 		l1s1.setPickupOption(Track.ANY);
 
-		Track l1s2 = new Track("1s2", "North End 2", Track.STAGING);
+		Track l1s2 = new Track("1s2", "North End 2", Track.STAGING, l1);
 		l1s2.setLength(400);
 		Assert.assertEquals("Location 1s2 Id", "1s2", l1s2.getId());
 		Assert.assertEquals("Location 1s2 Name", "North End 2", l1s2.getName());
@@ -1298,7 +1298,7 @@ public class OperationsTrainsTest extends TestCase {
 		l2.setSwitchList(true);
 		lmanager.register(l2);
 				
-		Track l2s1 = new Track("2s1", "NI Yard", Track.YARD);
+		Track l2s1 = new Track("2s1", "NI Yard", Track.YARD, l2);
 		l2s1.setLength(432);
 		Assert.assertEquals("Location 2s1 Id", "2s1", l2s1.getId());
 		Assert.assertEquals("Location 2s1 Name", "NI Yard", l2s1.getName());
@@ -1318,7 +1318,7 @@ public class OperationsTrainsTest extends TestCase {
 		l3.setSwitchList(true);
 		lmanager.register(l3);
 
-		Track l3s1 = new Track("3s1", "South End 1", Track.STAGING);
+		Track l3s1 = new Track("3s1", "South End 1", Track.STAGING, l3);
 		l3s1.setLength(300);
 		Assert.assertEquals("Location 3s1 Id", "3s1", l3s1.getId());
 		Assert.assertEquals("Location 3s1 Name", "South End 1", l3s1.getName());
@@ -1329,7 +1329,7 @@ public class OperationsTrainsTest extends TestCase {
 		l3s1.setDropOption(Track.ANY);
 		l3s1.setPickupOption(Track.ANY);
 
-		Track l3s2 = new Track("3s2", "South End 2", Track.STAGING);
+		Track l3s2 = new Track("3s2", "South End 2", Track.STAGING, l3);
 		l3s2.setLength(401);
 		Assert.assertEquals("Location 3s2 Id", "3s2", l3s2.getId());
 		Assert.assertEquals("Location 3s2 Name", "South End 2", l3s2.getName());

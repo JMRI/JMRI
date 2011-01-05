@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -373,7 +373,7 @@ public class Location implements java.beans.PropertyChangeListener {
 			_IdNumber++;
 			String id = _id + "s"+ Integer.toString(_IdNumber);
 			log.debug("adding new "+ type +" to "+getName()+ " id: " + id);
-	   		track = new Track(id, name, type);
+	   		track = new Track(id, name, type, this);
 	   		register(track);
  		}
 		resetMoves();	// give all of the tracks equal weighting
@@ -649,7 +649,7 @@ public class Location implements java.beans.PropertyChangeListener {
             List<Element> l = e.getChildren("secondary");
             if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" secondary locations");
             for (int i=0; i<l.size(); i++) {
-                register(new Track(l.get(i)));
+                register(new Track(l.get(i), this));
             }
         }
         if (e.getChildren("track") != null) {
@@ -657,7 +657,7 @@ public class Location implements java.beans.PropertyChangeListener {
             List<Element> l = e.getChildren("track");
             if (log.isDebugEnabled()) log.debug("location ("+getName()+") has "+l.size()+" tracks");
             for (int i=0; i<l.size(); i++) {
-                register(new Track(l.get(i)));
+                register(new Track(l.get(i), this));
             }
         }
     }

@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -64,7 +64,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		if (_track !=null){
 			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
 			comboBoxSchedules.setSelectedItem(s);
-			textSchError.setText(_track.checkScheduleValid(_location));
+			textSchError.setText(_track.checkScheduleValid());
 		}
 		ScheduleManager.instance().addPropertyChangeListener(this);
 		
@@ -129,7 +129,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 							track.setScheduleCount(0);
 						}
 					}
-					textSchError.setText(track.checkScheduleValid(_location));
+					textSchError.setText(track.checkScheduleValid());
 				} else {
 					// no items in schedule so disable
 					track.setScheduleName("");

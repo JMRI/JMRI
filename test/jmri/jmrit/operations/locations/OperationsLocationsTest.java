@@ -38,7 +38,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -334,7 +334,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track attributes
 	public void testTrackAttributes() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Type", "Test Type", t.getLocType());
@@ -390,7 +391,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track car support
 	public void testTrackCarSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
@@ -483,7 +485,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track pickup support
 	public void testTrackPickUpSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
@@ -507,7 +510,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track drop support
 	public void testTrackDropSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
@@ -538,10 +542,12 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track typename support
 	public void testTrackTypeNameSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location", l, t.getLocation());
 
 		/* Test Type Name */
 		Assert.assertEquals("Location Track Accepts Type Name undefined", false, t.acceptsTypeName("TestTypeName"));
@@ -553,8 +559,12 @@ public class OperationsLocationsTest extends TestCase {
 		CarTypes ct = CarTypes.instance();
 		ct.addName("TestTypeName");
 		t.addTypeName("TestTypeName");
-		Assert.assertEquals("Location Track Accepts Type Name defined after ct", true, t.acceptsTypeName("TestTypeName"));
+		Assert.assertEquals("Location Track Accepts Type Name defined after ct", false, t.acceptsTypeName("TestTypeName"));
 
+		// location must also accept the same type
+		l.addTypeName("TestTypeName");
+		Assert.assertEquals("Location Track Accepts Type Name defined after location", true, t.acceptsTypeName("TestTypeName"));
+		
 		t.deleteTypeName("TestTypeName");
 		Assert.assertEquals("Location Track Accepts Type Name deleted", false, t.acceptsTypeName("TestTypeName"));
 
@@ -562,8 +572,8 @@ public class OperationsLocationsTest extends TestCase {
 		ct.deleteName("TestTypeName");
 
 		ct.addName("Baggager");
-
 		t.addTypeName("Baggager");
+		l.addTypeName("Baggager");
 
 		Assert.assertEquals("Location Track Accepts Type Name Baggager", true, t.acceptsTypeName("Baggager"));
 
@@ -620,10 +630,12 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track schedule support
 	public void testTrackScheduleSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
+		Assert.assertEquals("Location", l, t.getLocation());
 
 		t.setScheduleName("Test Schedule Name");
 		Assert.assertEquals("Location Track set Schedule Name", "Test Schedule Name", t.getScheduleName());
@@ -636,7 +648,8 @@ public class OperationsLocationsTest extends TestCase {
 
 	// test Track load support
 	public void testTrackLoadSupport() {
-		Track t = new Track("Test id", "Test Name", "Test Type");
+		Location l = new Location("Location Test id", "Location Test Name");
+		Track t = new Track("Test id", "Test Name", "Test Type", l);
 		Assert.assertEquals("Location Track Car id", "Test id", t.getId());
 		Assert.assertEquals("Location Track Car Name", "Test Name", t.getName());
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
@@ -1182,6 +1195,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 2").addTypeName("Coal");
 		manager.getLocationByName("Test Location 2").addTypeName("Engine");
 		manager.getLocationByName("Test Location 2").addTypeName("Hopper");
+		manager.getLocationByName("Test Location 2").addTypeName("Track 2 Type");
 		manager.getLocationByName("Test Location 3").setComment("Test Location 3 Comment");
 		manager.getLocationByName("Test Location 3").setLocationOps(Location.STAGING);
 		manager.getLocationByName("Test Location 3").setSwitchList(true);
@@ -1192,6 +1206,7 @@ public class OperationsLocationsTest extends TestCase {
 		manager.getLocationByName("Test Location 3").addTypeName("Coal");
 		manager.getLocationByName("Test Location 3").addTypeName("Engine");
 		manager.getLocationByName("Test Location 3").addTypeName("Hopper");
+		manager.getLocationByName("Test Location 3").addTypeName("Track 4 Type");
 
 		locationList = manager.getLocationsByIdList();
 		Assert.assertEquals("New Number of Locations", 3, locationList.size());

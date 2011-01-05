@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -753,8 +753,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// remove car types not serviced by this location and track
 		for (int i=comboBoxTypes.getItemCount()-1; i>=0; i--){
 			String type = (String)comboBoxTypes.getItemAt(i);
-			if (_track != null && (!_track.acceptsTypeName(type) 
-					|| !_location.acceptsTypeName(type))){
+			if (_track != null && !_track.acceptsTypeName(type)){
 				comboBoxTypes.removeItem(type);
 			}			
 		}
