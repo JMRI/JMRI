@@ -24,9 +24,9 @@ package jmri.jmrit.withrottle;
  *	'I'dle Idle needs to be called specifically
  *      'Q'uit
  *
- *	@author Brett Hoffman   Copyright (C) 2009, 2010
+ *	@author Brett Hoffman   Copyright (C) 2009, 2010, 2011
  *      @author Created by Brett Hoffman on: 8/23/09.
- *	@version $Revision: 1.19 $
+ *	@version $Revision: 1.20 $
  */
 
 import java.beans.PropertyChangeEvent;
@@ -116,7 +116,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
      */
     public void addressRelease(/*int address, boolean isLong*/){
         isAddressSet = false;
-        throttle.release();
+        jmri.InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
         throttle.removePropertyChangeListener(this);
         throttle = null;
         rosterLoco = null;
@@ -130,7 +130,7 @@ public class ThrottleController implements /*AddressListener,*/ ThrottleListener
 
     public void addressDispatch(/*int address, boolean isLong*/){
         isAddressSet = false;
-        throttle.dispatch();
+        jmri.InstanceManager.throttleManagerInstance().dispatchThrottle(throttle, this);
         throttle.removePropertyChangeListener(this);
         throttle = null;
         rosterLoco = null;

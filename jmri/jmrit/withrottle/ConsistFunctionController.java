@@ -7,8 +7,8 @@ import jmri.jmrit.roster.RosterEntry;
 
 /**
  *
- *	@author Brett Hoffman   Copyright (C) 2010
- *	@version $Revision: 1.7 $
+ *	@author Brett Hoffman   Copyright (C) 2010, 2011
+ *	@version $Revision: 1.8 $
  */
 public class ConsistFunctionController implements ThrottleListener{
 
@@ -45,7 +45,7 @@ public class ConsistFunctionController implements ThrottleListener{
 
     
     public void dispose(){
-        throttle.release();
+        jmri.InstanceManager.throttleManagerInstance().releaseThrottle(throttle, this);
     }
 
     public DccThrottle getThrottle(){
