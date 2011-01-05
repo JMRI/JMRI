@@ -10,7 +10,7 @@ import javax.swing.JMenu;
  * Create a menu containing the XPressNet specific tools
  *
  * @author	Paul Bender   Copyright 2003,2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class XNetMenu extends JMenu {
     public XNetMenu(String name,jmri.jmrix.lenz.XNetSystemConnectionMemo memo) {
@@ -34,8 +34,8 @@ public class XNetMenu extends JMenu {
         add(new jmri.jmrix.lenz.packetgen.PacketGenAction(rb.getString("MenuItemSendXNetCommand"),memo));
 	add(new javax.swing.JSeparator());
         add(new jmri.jmrix.lenz.stackmon.StackMonAction(rb.getString("MenuItemCSDatabaseManager"),memo));
-        add(new jmri.jmrix.lenz.li101.LI101Action(rb.getString("MenuItemLI101ConfigurationManager"),memo));
-        add(new jmri.jmrix.lenz.liusb.LIUSBConfigAction(rb.getString("MenuItemLIUSBConfigurationManager"),memo));
+        add(new jmri.jmrix.lenz.swing.li101.LI101Action(rb.getString("MenuItemLI101ConfigurationManager"),memo));
+        add(new jmri.jmrix.lenz.swing.liusb.LIUSBConfigAction(rb.getString("MenuItemLIUSBConfigurationManager"),memo));
         add(new jmri.jmrix.lenz.lz100.LZ100Action(rb.getString("MenuItemLZ100ConfigurationManager"),memo));
         add(new jmri.jmrix.lenz.lzv100.LZV100Action(rb.getString("MenuItemLZV100ConfigurationManager"),memo));
         // The LV102 configuration works with OpsModeProgramming, so does not
