@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.55 $
+ * @version             $Revision: 1.56 $
  */
 public class Car extends RollingStock {
 	
@@ -258,6 +258,17 @@ public class Car extends RollingStock {
 		if (_kernel != null)
 			return _kernel.getName();
 		return "";
+	}
+	
+	public String testLocation(Location location, Track track) {
+		String status = super.testLocation(location, track);
+		if (!status.equals(OKAY))
+			return status;
+		if (location != null && track != null && !track.acceptsLoadName(getLoad())){
+			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong load");
+			return LOAD+ " ("+getLoad()+")";
+		}
+		return OKAY;
 	}
 	
 	public String testDestination(Location destination, Track track) {
