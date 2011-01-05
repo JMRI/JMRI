@@ -33,7 +33,7 @@ import jmri.Sensor;
  * for more details.
  * <P>
  *
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  * @author	Pete Cressman (C) 2009
  */
 public class OBlock extends jmri.Block {
@@ -389,14 +389,9 @@ public class OBlock extends jmri.Block {
                     return msg; 
                 }
             }
-            if (msg==null) {
-                _pathName = pathName;
-                path.setTurnouts(0);
-                firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
-            }
-        }
-        if (msg!=null) {
-            log.error(msg);
+            _pathName = pathName;
+            path.setTurnouts(0);
+            firePropertyChange("path", Integer.valueOf(0), Integer.valueOf(getState()));
         }
         if (log.isDebugEnabled()) log.debug("setPath: Block \""+getSystemName()+" path set to \""+
                                             _pathName+"\"");
