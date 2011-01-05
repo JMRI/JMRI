@@ -56,9 +56,9 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
         f.setVisible(true);
     }
 
-    protected EcosSystemConnectionMemo adaptermemo; /*= /*((jmri.jmrix.ecos.EcosSystemConnectionMemo) jmri.InstanceManager.getDefault(jmri.jmrix.ecos.Ecos.SystemConnectionMemo.class));*/
-    protected EcosLocoAddressManager locoManager;/* = adaptermemo.getLocoAddressManager();*/
-    protected String rosterAttribute;/* = adaptermemo.getPreferenceManager().getRosterAttribute();*/
+    protected EcosSystemConnectionMemo adaptermemo;
+    protected EcosLocoAddressManager locoManager;
+    protected String rosterAttribute;
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {
         adaptermemo = memo;
         locoManager = adaptermemo.getLocoAddressManager();
@@ -75,10 +75,6 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
             static public final int ADDTOROSTERCOL = 5;
             static public final int SPEEDDIR = 6;
             static public final int STOP = 7;
-
-            //static public final int NUMCOLUMN = 8;
-            
-            /*public void clickOn(jmri.jmrix.ecos.EcosLocoAddressManager m) {}*/
 
             //We have to set a manager first off, but this gets replaced.
             protected EcosLocoAddressManager getManager() { return locoManager;}
@@ -102,13 +98,11 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
                     for (int i = 0; i< ecosObjectIdList.size(); i++) {
                         // if object has been deleted, it's not here; ignore it
                         jmri.jmrix.ecos.EcosLocoAddress b = getByEcosObject(ecosObjectIdList.get(i));
-                        //Look at this later.
                         if (b!=null) b.removePropertyChangeListener(this);
                     }
                 }
                 ecosObjectIdList = getManager().getEcosObjectList();
                 // and add them back in
-                // look at later
                 for (int i = 0; i< ecosObjectIdList.size(); i++)
                     getByEcosObject(ecosObjectIdList.get(i)).addPropertyChangeListener(this);
             }
@@ -283,7 +277,6 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
             }
     
             public void configureTable(JTable table) {
-                //this.table = table;
                 setUpCOMMENTCOL(table.getColumnModel().getColumn(COMMENTCOL));
                 setColumnToHoldButton(table, ADDTOROSTERCOL, 
                         new JButton("Add to Roster"));
@@ -295,7 +288,6 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
             public NamedBean getByUserName(String name) { return null;}
             
             synchronized public void dispose() {
-            //This needs to be sorted later.
                 if(showLocoMonitor){
                     locoManager.monitorLocos(false);
                     showLocoMonitor=false;
@@ -410,9 +402,7 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
         if (locoManager.getByEcosObject(ecosObjectIdList.get(row)).getRosterId()==null){
             EcosLocoToRoster addLoco = new EcosLocoToRoster();
             addLoco.ecosLocoToRoster(ecosObjectIdList.get(row), adaptermemo);
-            //updateNameList();
             m.fireTableRowsUpdated(row, row);
-            //m.fireT
         }
     }
 
