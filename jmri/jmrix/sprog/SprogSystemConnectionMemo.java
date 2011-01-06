@@ -3,11 +3,8 @@
 package jmri.jmrix.sprog;
 
 import jmri.InstanceManager;
+import jmri.ProgrammerManager;
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
-//import jmri.jmrix.sprog.SprogTrafficController;
-//import jmri.jmrix.sprog.SprogCommandStation;
-//import jmri.jmrix.sprog.SprogProgrammer;
-//import jmri.jmrix.sprog.SprogProgrammerManager;
 
 /**
  * Lightweight class to denote that a system is active,
@@ -18,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -77,15 +74,28 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                     jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
                     break;
             case SERVICE :
-                    //jmri.InstanceManager.setCommandStation(new jmri.jmrix.sprog.SprogCommandStation());
                     break;
         }
-        //log.debug("start command station queuing thread");
-        //slotThread = new Thread(jmri.jmrix.sprog.SprogCommandStation.instance());
-        //slotThread.start();
-        //jmri.InstanceManager.setCommandStation(SprogCommandStation.instance());
     }
 
+    /**
+     * Currently provides only Programmer this way
+     */
+    public boolean provides(Class<?> type) {
+        if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        return false; // nothing, by default
+    }
+
+    /**
+     * Currently provides only Programmer this way
+     */
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class<?> T) {
+        if (T.equals(jmri.ProgrammerManager.class))
+            return (T)getProgrammerManager();
+        return null; // nothing, by default
+    }
     /**
      * Configure the common managers for Sprog connections.
      * This puts the common manager config in one
@@ -94,8 +104,9 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * and locormi.LnMessageClient
      */
     public void configureManagers() {
-    
-        jmri.InstanceManager.setProgrammerManager(new SprogProgrammerManager(new SprogProgrammer(), sprogMode));
+
+        jmri.InstanceManager.setProgrammerManager(
+            getProgrammerManager());
 
         jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
 
@@ -110,6 +121,17 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         }
 
+    }
+
+    private ProgrammerManager programmerManager;
+
+    public ProgrammerManager getProgrammerManager() {
+        if (programmerManager == null)
+            programmerManager = new SprogProgrammerManager(new SprogProgrammer(), sprogMode);
+        return programmerManager;
+    }
+    public void setProgrammerManager(ProgrammerManager p) {
+        programmerManager = p;
     }
     
     public void dispose(){
