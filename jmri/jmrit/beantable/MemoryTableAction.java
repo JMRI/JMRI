@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -153,7 +153,7 @@ public class MemoryTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to memory items to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Number to memory items to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         

@@ -12,7 +12,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @author			Ken Cameron, (C) 2009, sensors from poll replies
- * @version			$Revision: 1.13 $
+ * @version			$Revision: 1.14 $
  */
 abstract public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -92,7 +92,7 @@ abstract public class SerialSensorManager extends jmri.managers.AbstractSensorMa
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
         

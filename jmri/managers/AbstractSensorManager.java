@@ -8,7 +8,7 @@ import jmri.managers.AbstractManager;
 /**
  * Abstract base implementation of the SensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public abstract class AbstractSensorManager extends AbstractManager implements SensorManager {
 
@@ -138,7 +138,7 @@ public abstract class AbstractSensorManager extends AbstractManager implements S
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
         

@@ -42,7 +42,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.92 $
+ * @version     $Revision: 1.93 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -730,7 +730,7 @@ public class TurnoutTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to turnouts to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Number to turnouts to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         } 
@@ -816,7 +816,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                         user = user+":"+x;
                     if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
                     else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
-                        p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
+                        p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
                     }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate

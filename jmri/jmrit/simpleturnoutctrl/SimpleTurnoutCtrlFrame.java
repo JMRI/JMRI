@@ -15,7 +15,7 @@ import javax.swing.JPanel;
 /**
  * Frame controlling a single turnout
  * @author	Bob Jacobsen   Copyright (C) 2001
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java.beans.PropertyChangeListener {
 	
@@ -390,7 +390,7 @@ public class SimpleTurnoutCtrlFrame extends jmri.util.JmriJFrame implements java
         jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class)
                 .showInfoMessage("Error",
                                  "Unable to convert \"" + name + "\" to a valid hardware address",
-                                 ex.toString(), true, false, 
+                                 ex.toString(), "", true, false,
                                  org.apache.log4j.Level.ERROR);
     }
     

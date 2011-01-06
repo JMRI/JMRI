@@ -9,7 +9,7 @@ import jmri.managers.AbstractManager;
  * Abstract partial implementation of a ReporterManager.
  *
  * @author			Bob Jacobsen Copyright (C) 2004
- * @version			$Revision: 1.7 $
+ * @version			$Revision: 1.8 $
  */
 public abstract class AbstractReporterManager extends AbstractManager
     implements ReporterManager {
@@ -106,7 +106,7 @@ public abstract class AbstractReporterManager extends AbstractManager
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
         

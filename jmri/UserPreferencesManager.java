@@ -14,7 +14,7 @@ import java.beans.PropertyChangeListener;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
  
 public interface UserPreferencesManager {
@@ -90,8 +90,13 @@ public interface UserPreferencesManager {
      * user message.
      * Use a given preference name to determine whether
      * to show it in the future.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
      */
-    public void showInfoMessage(String title, String message, String preference);
+    public void showInfoMessage(String title, String message, String classString, java.lang.String item);
     
     /**
      * Show an info message ("don't forget ...")
@@ -101,8 +106,16 @@ public interface UserPreferencesManager {
      * to show it in the future.
      * added flag to indicate that the message should be suppressed
      * JMRI session only.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be saved
+     * @param level Used to determine the type of messagebox that will be used.
      */
-    public void showInfoMessage(String title, String message, String preference, boolean sessionOnly, boolean alwaysRemember, org.apache.log4j.Level level);
+    public void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember, org.apache.log4j.Level level);
     
      /**
      * Method to determine if the question of reloading JMRI should 

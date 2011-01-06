@@ -9,7 +9,7 @@ import jmri.Sensor;
 /**
  * Implementation of the InternalSensorManager interface.
  * @author			Bob Jacobsen Copyright (C) 2001, 2003, 2006
- * @version			$Revision: 1.6 $
+ * @version			$Revision: 1.7 $
  */
 public class InternalSensorManager extends AbstractSensorManager {
 
@@ -39,7 +39,7 @@ public class InternalSensorManager extends AbstractSensorManager {
         } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
         //Check to determine if the systemName is in use, return null if it is,

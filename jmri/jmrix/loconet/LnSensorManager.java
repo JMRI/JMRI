@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "LSnnn", where nnn is the sensor number without padding.
  *
  * @author			Bob Jacobsen Copyright (C) 2001
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class LnSensorManager extends jmri.managers.AbstractSensorManager implements LocoNetListener {
 
@@ -121,7 +121,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
                 } catch (NumberFormatException ex) { 
                     log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
                     jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                    showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                     return null;
                 }
             }
@@ -130,7 +130,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " into the cab and channel format of nn:xx");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             if (turnout){
@@ -145,7 +145,7 @@ public class LnSensorManager extends jmri.managers.AbstractSensorManager impleme
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
         }

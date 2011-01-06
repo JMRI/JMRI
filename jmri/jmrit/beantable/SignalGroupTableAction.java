@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -522,7 +522,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
                     // remind to save, if SignalGroup was created or edited
                     if (SignalGroupDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder","Remember to save your SignalGroup information.","beantable.SignalGroupTableAction.remindSignalGroup");
+                            showInfoMessage("Reminder","Remember to save your SignalGroup information.","beantable.SignalGroupTableAction", "remindSignalGroup");
                         SignalGroupDirty = false;
                     }
                     // hide addFrame

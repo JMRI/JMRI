@@ -55,7 +55,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.88 $
+ * @version $Revision: 1.89 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -1120,7 +1120,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_showReminder){
             if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction.remindLogix");
+                    showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction", "remindLogix");
         }
 	}
 

@@ -11,7 +11,7 @@ import jmri.Turnout;
  * System names are "CTnnn", where nnn is the turnout number without padding.
  *
  * @author	Bob Jacobsen Copyright (C) 2003
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class SerialTurnoutManager extends AbstractTurnoutManager {
 
@@ -226,7 +226,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             tmpSName = prefix+typeLetter()+curAddress;
@@ -239,7 +239,7 @@ public class SerialTurnoutManager extends AbstractTurnoutManager {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             tmpSName = prefix+"T"+curAddress;

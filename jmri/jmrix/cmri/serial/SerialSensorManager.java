@@ -18,7 +18,7 @@ import jmri.jmrix.AbstractNode;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.21 $
+ * @version			$Revision: 1.22 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -172,7 +172,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             } catch (NumberFormatException ex) {
             log.error("Unable to convert " + curAddress + " Hardware Address to a number");
             jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address format of node:address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address format of node:address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
             return null;
         }
             tmpSName = SerialAddress.makeSystemName("S", nAddress, bitNum);
@@ -186,7 +186,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             tmpSName = prefix+typeLetter()+curAddress;
@@ -199,7 +199,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             tmpSName = prefix+typeLetter()+curAddress;

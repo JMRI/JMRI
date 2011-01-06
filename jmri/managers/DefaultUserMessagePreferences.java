@@ -26,7 +26,7 @@ import java.util.Vector;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -120,12 +120,12 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
     
-    public void showInfoMessage(String title, String message, String preference) {
-        showInfoMessage(title, message, preference, false, true, org.apache.log4j.Level.INFO);
+    public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
+        showInfoMessage(title, message, strClass, item, false, true, org.apache.log4j.Level.INFO);
     }
     
     
-    public void showInfoMessage(String title, String message, final String preference, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
+    public void showInfoMessage(String title, String message, String strClass, String item, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
         final UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         Icon icon= UIManager.getIcon("OptionPane.informationIcon");
@@ -133,7 +133,13 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             icon = UIManager.getIcon("OptionPane.errorIcon");
         } else if (level == org.apache.log4j.Level.WARN) {
             UIManager.getIcon("OptionPane.warningIcon");
-        } 
+        }
+
+        StringBuilder result = new StringBuilder();
+        result.append(strClass);
+        result.append(".");
+        result.append(item);
+        final String preference=result.toString();
 
         if(p.getSessionPreferenceState(preference)){
             return;
@@ -463,7 +469,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
 
     public void displayRememberMsg(){
         if (_loading) return;
-        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Message Options' Menu.", "DefaultUserMessagePreferences.reminder");   
+        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Messages' Menu.", "DefaultUserMessagePreferences", "reminder");
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());

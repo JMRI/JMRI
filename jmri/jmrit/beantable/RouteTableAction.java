@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.66 $
+ * @version     $Revision: 1.67 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -712,7 +712,7 @@ public class RouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder","Remember to save your Route information.","beantable.RouteTableAction.remindRoute");
+                            showInfoMessage("Reminder","Remember to save your Route information.","beantable.RouteTableAction", "remindRoute");
                         routeDirty = false;
                     }
                     // hide addFrame

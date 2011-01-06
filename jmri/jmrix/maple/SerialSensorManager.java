@@ -17,7 +17,7 @@ import jmri.Sensor;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2003, 2007, 2008
  * @author                      Dave Duchamp, multi node extensions, 2004
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SerialSensorManager extends jmri.managers.AbstractSensorManager
                             implements SerialListener {
@@ -152,7 +152,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " into the cab and address format of nn:xx");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             iName = (sysNode*1000)+address;
@@ -163,7 +163,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
         }

@@ -10,7 +10,7 @@ import jmri.Sensor;
  * System names are "XSnnn", where nnn is the sensor number without padding.
  *
  * @author			Paul Bender Copyright (C) 2003-2010
- * @version			$Revision: 2.14 $
+ * @version			$Revision: 2.15 $
  */
 public class XNetSensorManager extends jmri.managers.AbstractSensorManager implements XNetListener {
 
@@ -106,7 +106,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " into the cab and input format of nn:xx");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address of nn:xx",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
             iName = ((encoderAddress-1)*8)+input;
@@ -117,7 +117,7 @@ public class XNetSensorManager extends jmri.managers.AbstractSensorManager imple
             } catch (NumberFormatException ex) { 
                 log.error("Unable to convert " + curAddress + " Hardware Address to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Unable to convert " + curAddress + " to a valid Hardware Address",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return null;
             }
         }

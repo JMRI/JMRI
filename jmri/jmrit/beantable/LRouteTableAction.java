@@ -1134,7 +1134,7 @@ public class LRouteTableAction extends AbstractTableAction {
                         // remind to save, if Route was created or edited
                         if (routeDirty) {
                             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Reminder","Remember to save your Route information.","beantable.LRouteTableAction.remindRoute");
+                                showInfoMessage("Reminder","Remember to save your Route information.","beantable.LRouteTableAction", "remindRoute");
                             routeDirty = false;
                         }
                         _addFrame.setVisible(false);

@@ -128,6 +128,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         p.setWarnSignalMastInUse(loadQuestion(messages, "warnSignalMastInUse"));
         p.setWarnSectionInUse(loadQuestion(messages, "warnSectionInUse"));
         p.setWarnReporterInUse(loadQuestion(messages, "warnReporterInUse"));
+        p.setWarnDeleteRoute(loadQuestion(messages, "warnRouteDelete"));
         p.setWarnMemoryInUse(loadQuestion(messages, "warnMemoryInUse"));
         p.setWarnLogixInUse(loadQuestion(messages, "warnLogixInUse"));
         p.setWarnDeleteLogix(loadQuestion(messages, "warnDeleteLogix"));
@@ -135,7 +136,6 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         p.setWarnLRouteInUse(loadQuestion(messages, "warnLRouteInUse"));
         p.setWarnBlockInUse(loadQuestion(messages, "warnBlockInUse"));
         p.setWarnAudioInUse(loadQuestion(messages, "warnAudioInUse"));
-        p.setWarnDeleteRoute(loadQuestion(messages, "routeSaveMsg"));
         p.finishLoading();
         return true;
     }

@@ -29,7 +29,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -173,7 +173,7 @@ public class ReporterTableAction extends AbstractTableAction {
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Error","Number to Reporters to Add must be a number!",""+ex,true, false, org.apache.log4j.Level.ERROR);
+                                showInfoMessage("Error","Number to Reporters to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return;
             }
         } 
@@ -211,7 +211,7 @@ public class ReporterTableAction extends AbstractTableAction {
                 if (user!= null && !user.equals("") && (reportManager.getByUserName(user)==null)){
                     r.setUserName(user);
                 } else if (reportManager.getByUserName(user)!=null && !pref.getPreferenceState(userNameError)) {
-                    pref.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, false, true, org.apache.log4j.Level.ERROR);
+                    pref.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
                 }
             }
         }
