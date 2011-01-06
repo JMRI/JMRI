@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.119 $
+ * @version             $Revision: 1.120 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -625,7 +625,8 @@ public class TrainBuilder extends TrainCommon{
 							if (testCar.isCaboose() && testCar != car){
 								// need to keep caboose if departing staging
 								if (departStageTrack == null || testCar.getTrack() != departStageTrack){
-									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
+									addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildExcludeCarTypeAtLoc"),
+											new Object[]{testCar.toString(), testCar.getType(), (testCar.getLocationName()+", "+testCar.getTrackName())}));
 									carList.remove(carList.get(i));		// remove this car from the list
 									i--;
 								}
@@ -1006,6 +1007,12 @@ public class TrainBuilder extends TrainCommon{
 					// can this car be picked up?
 					if(!checkPickUpTrainDirection(c, rl))
 						continue; // no
+					// does car have a schedule load without a destination?
+					if (!c.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+							&& !c.getLoad().equals(CarLoads.instance().getDefaultLoadName())
+							&& c.getDestination() == null && c.getNextDestination() == null){
+						findDestinationForCarLoad(c);
+					}
 					// does car have a next destination, but no destination
 					if (c.getNextDestination() != null && c.getDestination() == null){
 						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildCarRoutingBegins"),new Object[]{c.toString(),(c.getNextDestinationName()+", "+c.getNextDestTrackName())}));
@@ -1510,6 +1517,34 @@ public class TrainBuilder extends TrainCommon{
 			}
 		}
 		return true;	
+	}
+	
+	/**
+	 * Find a destination and track for a car with a schedule load.
+	 * @param car the car with the load
+	 */
+	private void findDestinationForCarLoad(Car car){
+		log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
+		// TODO Search for sidings with schedules, and if schedule demands this
+		// car type and load, forward this car to that siding.
+		List<Track> tracks = locationManager.getTracks(Track.SIDING);
+		log.debug("Found "+tracks.size()+" sidings");
+		for (int i=0; i<tracks.size(); i++){
+			Track track = tracks.get(i);
+			if (!track.getScheduleName().equals("")){
+				Schedule sch = ScheduleManager.instance().getScheduleByName(track.getScheduleName());
+				ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+				log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") requesting load ("+si.getLoad()+")");
+				if (car.testDestination(track.getLocation(), track).equals(Car.OKAY) && car.getLoad().equals(si.getLoad())){
+					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSetFinalDestination"),
+							new Object[]{car.toString(), car.getLoad(), track.getLocation().getName(), track.getName()}));
+					// send car to this destination
+					car.setNextDestination(track.getLocation());
+					car.setNextDestTrack(track);
+					break;	//done
+				}
+			}
+		}
 	}
 	
 	/**

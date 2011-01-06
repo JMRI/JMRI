@@ -26,7 +26,7 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
  * Manages locations.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009
- * @version	$Revision: 1.27 $
+ * @version	$Revision: 1.28 $
  */
 public class LocationManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "locationsListLength";
@@ -231,6 +231,46 @@ public class LocationManager implements java.beans.PropertyChangeListener {
         jmri.util.StringUtil.sort(arr);
         for (i=0; i<arr.length; i++) out.add(arr[i]);
         return out;
+    }
+    
+    /**
+     * Returns all tracks of type
+     * @param type Siding, Yard, Interchange, or Staging
+     * @return List of tracks ordered by use
+     */
+    public List<Track> getTracks(String type){
+    	List<String> sortList = getList();
+    	List<Track> trackList = new ArrayList<Track>();
+    	Location l;
+    	for (int i=0; i<sortList.size(); i++){
+    		l = getLocationById (sortList.get(i));
+    		List<String> tracks = l.getTracksByNameList(type);
+    		for (int j=0; j<tracks.size(); j++){
+    			Track track = l.getTrackById(tracks.get(j));
+    			trackList.add(track);
+    		}
+    	}
+		// now re-sort
+		List<Track> moveList = new ArrayList<Track>();
+		boolean locAdded = false;
+		Track track;
+		Track trackOut;
+		for (int i=0; i<trackList.size(); i++){
+			locAdded = false;
+			track = trackList.get(i);
+			for (int j = 0; j < moveList.size(); j++) {
+				trackOut = moveList.get(j);
+				if (track.getMoves() < trackOut.getMoves()){
+					moveList.add(j, track);
+					locAdded = true;
+					break;
+				}
+			}
+			if (!locAdded){
+				moveList.add(track);
+			}		
+		}
+    	return moveList;
     }
     
     public JComboBox getComboBox (){
