@@ -29,7 +29,7 @@ import gnu.io.SerialPortEventListener;
  * Removed Runnable implementation and methods for it
  *
  * @author			Bob Jacobsen  Copyright (C) 2001
- * @version			$Revision: 1.24 $
+ * @version			$Revision: 1.25 $
  */
 public class SprogTrafficController implements SprogInterface, SerialPortEventListener  {
 
@@ -219,6 +219,15 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
 
 	static volatile protected SprogTrafficController self = null;
 
+    public void setAdapterMemo(SprogSystemConnectionMemo adaptermemo) {
+		memo = adaptermemo;
+	}
+
+	public SprogSystemConnectionMemo getAdapterMemo() {
+		return memo;
+	}
+
+	private SprogSystemConnectionMemo memo = null;
         // data members to hold the streams
 	DataInputStream istream = null;
 	OutputStream ostream = null;

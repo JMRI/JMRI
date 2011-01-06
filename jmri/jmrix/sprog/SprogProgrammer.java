@@ -15,7 +15,7 @@ import java.util.Vector;
  * Implements the jmri.Programmer interface via commands for the Sprog programmer.
  *
  * @author      Bob Jacobsen  Copyright (C) 2001
- * @version	$Revision: 1.21 $
+ * @version	$Revision: 1.22 $
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
@@ -243,7 +243,7 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             // SPROG always leaves power off after programming so we inform the
             // power manager of the new state
             //try {
-                ((SprogPowerManager)InstanceManager.powerManagerInstance()).notePowerState(PowerManager.OFF);
+                controller().getAdapterMemo().getPowerManager().notePowerState(PowerManager.OFF);
             //}
             //catch (JmriException e) {
             //    log.error("Exception trying to turn power off " +e);

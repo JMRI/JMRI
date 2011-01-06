@@ -15,7 +15,7 @@ import jmri.jmrix.sprog.SprogConstants.SprogMode;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.7 $
+ * @version             $Revision: 1.8 $
  */
 public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -81,8 +81,11 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Currently provides only Programmer this way
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (type.equals(jmri.ProgrammerManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
             return true;
         return false; // nothing, by default
     }
@@ -90,10 +93,13 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     /**
      * Currently provides only Programmer this way
      */
+    @Override
     @SuppressWarnings("unchecked")
     public <T> T get(Class<?> T) {
         if (T.equals(jmri.ProgrammerManager.class))
             return (T)getProgrammerManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
         return null; // nothing, by default
     }
     /**
@@ -108,7 +114,8 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         jmri.InstanceManager.setProgrammerManager(
             getProgrammerManager());
 
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.sprog.SprogPowerManager());
+        powerManager = new jmri.jmrix.sprog.SprogPowerManager();
+        jmri.InstanceManager.setPowerManager(powerManager);
 
         jmri.InstanceManager.setTurnoutManager(new jmri.jmrix.sprog.SprogTurnoutManager());
         
@@ -124,15 +131,19 @@ public class SprogSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     private ProgrammerManager programmerManager;
+    private SprogPowerManager powerManager;
 
     public ProgrammerManager getProgrammerManager() {
-        if (programmerManager == null)
+        if (programmerManager == null){
             programmerManager = new SprogProgrammerManager(new SprogProgrammer(), sprogMode);
+        }
         return programmerManager;
     }
     public void setProgrammerManager(ProgrammerManager p) {
         programmerManager = p;
     }
+
+    public SprogPowerManager getPowerManager() { return powerManager; }
     
     public void dispose(){
         st = null;

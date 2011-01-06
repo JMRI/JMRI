@@ -29,7 +29,7 @@ import gnu.io.SerialPort;
  * "AJB" indicate changes or observations by me
  *
  * @author	Bob Jacobsen   Copyright (C) 2001, 2002
- * @version	$Revision: 1.34 $
+ * @version	$Revision: 1.35 $
  */
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
@@ -179,6 +179,7 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         // connect to the traffic controller
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
+        control.setAdapterMemo(adaptermemo);
         
         adaptermemo.setSprogMode(SprogMode.SERVICE);
         adaptermemo.setSprogTrafficController(control);
