@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.27 $
+ * @version     $Revision: 1.28 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -272,8 +272,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
             a.add(p);
             //Only request that the throttle is set up if it hasn't already been
             //requested.
-            if ((!throttleListeners.containsKey(la)) && (a.size()>1))
+            if ((!throttleListeners.containsKey(la)) && (a.size()==1)){
                 requestThrottleSetup(la, false);
+            }
         }
     }
 
