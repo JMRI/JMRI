@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.44 $
+ * @version             $Revision: 1.45 $
  */
 public class Track {
 	
@@ -723,7 +723,7 @@ public class Track {
     
     /**
      * Check to see if schedule is valid for the track at this location.
-     * @param location The location of this track.
+     * 
      * @return "" if schedule okay, otherwise an error message.
      */
 	public String checkScheduleValid(){
