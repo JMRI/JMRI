@@ -32,7 +32,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -195,6 +195,89 @@ public class OperationsCarsTest extends TestCase {
 		Assert.assertFalse("Car Types Delete New4", ct1.containsName("Type New4"));
 		ct1.deleteName("Type New1");
 		Assert.assertFalse("Car Types Delete New1", ct1.containsName("Type New1"));
+	}
+	
+	public void testCarLoads(){
+		CarLoads cl = CarLoads.instance();
+		List<String> names = cl.getNames("BoXcaR");
+		
+		Assert.assertEquals("Two default names", 2, names.size());
+		Assert.assertTrue("Default load", cl.containsName("BoXcaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("BoXcaR", "E"));
+		
+		names = cl.getNames("bOxCaR");
+		
+		Assert.assertEquals("Two default names", 2, names.size());
+		Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+		
+		cl.addName("BoXcaR", "New Boxcar Load");
+		cl.addName("bOxCaR", "A boxcar load");
+		cl.addName("bOxCaR", "B boxcar load");
+		names = cl.getNames("BoXcaR");
+		
+		Assert.assertEquals("number of names", 3, names.size());
+		Assert.assertTrue("Default load", cl.containsName("BoXcaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("BoXcaR", "E"));
+		Assert.assertTrue("new load", cl.containsName("BoXcaR", "New Boxcar Load"));
+		
+		names = cl.getNames("bOxCaR");
+		
+		Assert.assertEquals("number of names", 4, names.size());
+		Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "A boxcar load"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
+		
+		cl.replaceName("bOxCaR", "A boxcar load", "C boxcar load");
+		
+		names = cl.getNames("bOxCaR");
+		
+		Assert.assertEquals("number of names", 4, names.size());
+		Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+		Assert.assertFalse("new load", cl.containsName("bOxCaR", "A boxcar load"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "B boxcar load"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
+		
+		cl.deleteName("bOxCaR", "B boxcar load");
+		
+		names = cl.getNames("bOxCaR");
+		
+		Assert.assertEquals("number of names", 3, names.size());
+		Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+		Assert.assertFalse("new load", cl.containsName("bOxCaR", "A boxcar load"));
+		Assert.assertFalse("new load", cl.containsName("bOxCaR", "B boxcar load"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
+		
+		Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
+		Assert.assertEquals("default load", "L", cl.getDefaultLoadName());
+		
+		cl.setDefaultEmptyName("E<mpty>");
+		cl.setDefaultLoadName("L<oad>");
+		
+		Assert.assertEquals("default empty", "E<mpty>", cl.getDefaultEmptyName());
+		Assert.assertEquals("default load", "L<oad>", cl.getDefaultLoadName());
+		
+		names = cl.getNames("BOXCAR");
+		
+		Assert.assertEquals("number of names", 2, names.size());
+		Assert.assertFalse("Default load", cl.containsName("BOXCAR", "L"));
+		Assert.assertFalse("Default empty", cl.containsName("BOXCAR", "E"));
+		Assert.assertTrue("Default load", cl.containsName("BOXCAR", "L<oad>"));
+		Assert.assertTrue("Default empty", cl.containsName("BOXCAR", "E<mpty>"));
+		
+		// bOxCaR was created using old defaults
+		Assert.assertTrue("Default load", cl.containsName("bOxCaR", "L"));
+		Assert.assertTrue("Default empty", cl.containsName("bOxCaR", "E"));
+		Assert.assertTrue("new load", cl.containsName("bOxCaR", "C boxcar load"));
+		
+		cl.setDefaultEmptyName("E");
+		cl.setDefaultLoadName("L");
+		
+		Assert.assertEquals("default empty", "E", cl.getDefaultEmptyName());
+		Assert.assertEquals("default load", "L", cl.getDefaultLoadName());
 	}
 
 	public void testKernel() {
