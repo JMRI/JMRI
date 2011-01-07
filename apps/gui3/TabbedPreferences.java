@@ -18,8 +18,13 @@ import java.text.MessageFormat;
 
 import java.awt.*;
 import java.awt.event.*;
+
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Enumeration;
+
+import java.lang.reflect.Method;
 
 import javax.swing.*;
 import org.jdom.Element;
@@ -30,7 +35,7 @@ import java.util.Vector;
  * tabbed pane
  * <P>
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 public class TabbedPreferences extends AppConfigBase {
 
@@ -105,6 +110,7 @@ public class TabbedPreferences extends AppConfigBase {
         JButton save = new JButton(rb.getString("ButtonSave"));
         save.addActionListener( new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
+                    invokeSaveOptions();
                     throttlePreferences.jbSaveActionPerformed(e);
                     withrottlePrefsPanel.storeValues();
                     apps.FileLocationPane.save();
@@ -170,6 +176,78 @@ public class TabbedPreferences extends AppConfigBase {
         list.setSelectedIndex(0);
         selection(preferencesArray.get(0).getPrefItem());
         inital = true;
+    }
+    
+    Hashtable<Class<?>, Object> saveHook = new Hashtable<Class<?>, Object>();
+    Hashtable<Class<?>, String> saveMethod = new Hashtable<Class<?>, String>();
+    /**
+     *  Provides a method for preferences dynamically added to the preference window
+     *  to have a method ran when the save button is pressed, thus allowing panes 
+     *  to put placed into a state where the information can be saved
+     * @param object The instance of the pane
+     * @param type The class of the object
+     * @param strMethod the method to be invoked at save.
+     */
+    public <T> void addItemToSave(T object, Class<T> type, String strMethod){
+        if (!saveHook.containsKey(type)){
+            saveHook.put(type, object);
+            saveMethod.put(type, strMethod);
+        }
+    }
+    
+    void invokeSaveOptions(){
+        Enumeration keys = saveHook.keys();
+        while ( keys.hasMoreElements() )
+           {
+            
+            Class<?> strClass = (Class<?>)keys.nextElement();
+            String strMethod = saveMethod.get(strClass);
+            boolean booMethod = false;
+            boolean errorInMethod = false;
+            try {
+                Method method;
+                try {
+                    method = strClass.getDeclaredMethod (strMethod);
+                    method.invoke(saveHook.get(strClass));
+                    booMethod = true;
+                } catch (java.lang.reflect.InvocationTargetException et){
+                    errorInMethod=true;
+                    log.error(et.toString());
+                } catch (IllegalAccessException ei){
+                    errorInMethod=true;
+                    log.error(ei.toString());
+                }catch (Exception e){
+                    log.error(e.toString());
+                    booMethod = false;
+                }
+                
+                if ((!booMethod) && (!errorInMethod)){
+                    try {
+                        method = strClass.getMethod (strMethod);
+                        method.invoke(saveHook.get(strClass));
+                        booMethod=true;
+                    } catch (java.lang.reflect.InvocationTargetException et){
+                        errorInMethod=true;
+                        booMethod = false;
+                        log.error(et.toString());
+                    } catch (IllegalAccessException ei){
+                        errorInMethod=true;
+                        booMethod = false;
+                        log.error(ei.toString());
+                    } catch (Exception e){
+                        log.error(e.toString());
+                        booMethod = false;
+                    }
+                }
+                if (!booMethod){
+                    log.error("Unable to save Preferences for " + strClass);
+                }
+            }
+            catch (Exception e) {
+                log.error("unable to get a class name" + e);
+                log.error("Unable to save Preferences for " + strClass);
+            }
+        }
     }
     
     void setUpConnectionPanel(){
