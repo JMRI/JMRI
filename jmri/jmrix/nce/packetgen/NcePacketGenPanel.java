@@ -4,6 +4,7 @@ package jmri.jmrix.nce.packetgen;
 
 import jmri.util.*;
 import jmri.jmrix.nce.*;
+import jmri.jmrix.powerline.swing.serialmon.SerialMonPane;
 
 import java.awt.*;
 import java.util.ResourceBundle;
@@ -17,7 +18,7 @@ import javax.swing.*;
  * derived from:
  * @author	Bob Jacobsen   Copyright (C) 2001
  * @author Dan Boudreau 	Copyright (C) 2007
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements jmri.jmrix.nce.NceListener {
 	
@@ -197,5 +198,7 @@ public class NcePacketGenPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 		}
 		return replyLen;
 	}
+
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(NcePacketGenPanel.class.getName());
 }
 

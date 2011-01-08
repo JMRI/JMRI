@@ -5,9 +5,9 @@
  *       			MonFrame object
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version
- * @author kcameron
- * 	copied from EcosMonPane.java
+ * @version		$Revision: 1.3 $
+ * @author		kcameron Copyright (C) 2011
+ * 	copied from SerialMonPane.java
  */
 
 package jmri.jmrix.nce.ncemon;

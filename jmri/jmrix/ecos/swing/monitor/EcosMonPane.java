@@ -81,7 +81,7 @@ public class EcosMonPane extends jmri.jmrix.AbstractMonPane implements EcosListe
         }
     }
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MonAction.class.getName());
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosMonPane.class.getName());
 
 }
 
