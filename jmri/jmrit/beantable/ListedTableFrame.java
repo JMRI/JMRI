@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -464,17 +464,26 @@ public class ListedTableFrame extends BeanTableFrame {
         JMenuItem menuItem;
 
         protected BeanTableFrame frame;
-            ActionJList(BeanTableFrame f){
-                frame = f;
-                popUp = new JPopupMenu();
-                menuItem = new JMenuItem("Open in New Window");
-                popUp.add(menuItem);
-                menuItem.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        openNewTableWindow(mouseItem);
-                    }
+        ActionJList(BeanTableFrame f){
+            frame = f;
+            popUp = new JPopupMenu();
+            menuItem = new JMenuItem("Open in New Window");
+            popUp.add(menuItem);
+            menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    openNewTableWindow(mouseItem);
+                }
             });
-            clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
+            try {
+                clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt.multiClickInterval")).intValue();
+            } catch(Exception e){
+                try {
+                    clickDelay = ((Integer) Toolkit.getDefaultToolkit().getDesktopProperty("awt_multiclick_time")).intValue();
+                } catch (Exception ex){
+                    clickDelay = 500;
+                    log.error("Unable to get the double click speed, Using JMRI default of half a second" + e.toString());
+                }
+            }
             currentItemSelected=0;
         }
 
