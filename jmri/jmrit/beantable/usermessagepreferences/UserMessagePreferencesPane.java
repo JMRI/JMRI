@@ -2,11 +2,8 @@
 
 package jmri.jmrit.beantable.usermessagepreferences;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.*;
@@ -15,7 +12,7 @@ import javax.swing.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -23,7 +20,6 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
     
     public UserMessagePreferencesPane() {
         super();
-        JComponent component = new JPanel();
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.addPropertyChangeListener(new PropertyChangeListener(){
             public void propertyChange(PropertyChangeEvent e) {
@@ -33,18 +29,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
             }
         });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        
-        JButton updateButton = new JButton("Apply");
-        updateButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        updateButton.addActionListener(new ActionListener(){
-            public void actionPerformed(ActionEvent e) {
-                updateButtonPressed();
-            }
-        });
-        
-        component.add(updateButton);
-        component.setAlignmentX(Component.LEFT_ALIGNMENT);
-        
+              
         //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         JTabbedPane tab = new JTabbedPane();
         tab.add(routeTab(), "Routes");
@@ -54,9 +39,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         tab.add(tableDeleteTab(), "Deleting Table Entries");
         tab.add(lMiscTable(), "Misc Notifications");
         add(tab);
-        add(component);
-        //setAlignmentX(Component.RIGHT_ALIGNMENT);
-        //add(buttonPanel);
+        jmri.InstanceManager.tabbedPreferencesInstance().addItemToSave(this, jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane.class, "updateManager");
     }
 
     JCheckBox _routeSaveMsg;
@@ -173,7 +156,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
     }
     
     boolean updating = false;
-    private void updateButtonPressed(){
+    public void updateManager(){
         updating=true;
         p.setLoading();
 
@@ -215,7 +198,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         p.setWarnSignalHeadInUse(getChoiceType(_warnSignalHeadInUse));
         p.setWarnTransitInUse(getChoiceType(_warnTransitInUse));
         
-        jmri.InstanceManager.configureManagerInstance().storePrefs();
+        //jmri.InstanceManager.configureManagerInstance().storePrefs();
         updating=false;
         p.finishLoading();
         refreshOptions();
