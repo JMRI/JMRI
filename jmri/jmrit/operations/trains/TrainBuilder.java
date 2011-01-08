@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.121 $
+ * @version             $Revision: 1.122 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1037,6 +1037,14 @@ public class TrainBuilder extends TrainCommon{
 							int locCount = 0;
 							for (int k = routeIndex; k<routeList.size(); k++){
 								rld = train.getRoute().getLocationById(routeList.get(k));
+								// if car can be pickup up later at same location, skip
+								if (rl != rld && rld.getName().equals(c.getLocationName())
+										&& !rld.getName().equals(terminateLocation.getName())
+										&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
+										&& rld.canPickup() && checkPickUpTrainDirection(c, rld)){
+									addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{c.toString(), rld.getName()}));
+									break;
+								}
 								if (rld.getName().equals(c.getDestinationName())){
 									locCount++;	// show when this car would be dropped at location
 									// are drops allows at this location?
@@ -1566,6 +1574,7 @@ public class TrainBuilder extends TrainCommon{
 		RouteLocation rldSave = null;			// holds the best route location destination for the car
 		Track trackSave = null;					// holds the best track at destination for the car
 		noMoreMoves = true;  					// false when there are are locations with moves
+		boolean multiplePickup = false;			// true when car can be picked up from two or more locations in the route
 
 		// more than one location in this route?
 		if (routeList.size()>1)
@@ -1577,7 +1586,15 @@ public class TrainBuilder extends TrainCommon{
 			} else {
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildRouteNoDropLocation"),new Object[]{train.getRoute().getName(), rld.getName()}));
 				continue;
-			}							
+			}
+			// if car can be pickup up later at same location, set flag	
+			if (rl != rld && rld.getName().equals(car.getLocationName())
+					&& !rld.getName().equals(terminateLocation.getName())
+					&& (rld.getMaxCarMoves()-rld.getCarMoves()>0) 
+					&& rld.canPickup() && checkPickUpTrainDirection(car, rld)){
+				log.debug("Car ("+car.toString()+") can be picked up later!");
+				multiplePickup = true;
+			}
 			// don't move car to same location unless the route only has one location (local moves) or is passenger
 			if (rl.getName().equals(rld.getName()) && routeList.size() != 1 && !car.isPassenger()){
 				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCarLocEqualDestination"),new Object[]{car.toString(), rld.getName()}));
@@ -1588,6 +1605,7 @@ public class TrainBuilder extends TrainCommon{
 				addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoAvailableMovesDest"),new Object[]{rld.getName()}));
 				continue;
 			}
+
 			noMoreMoves = false;
 			
 			// get a "test" destination and a list of the track locations available			
@@ -1724,10 +1742,20 @@ public class TrainBuilder extends TrainCommon{
 						log.debug("Track ("+trackTemp.getName()+") has schedule ("+trackTemp.getScheduleName()+") adjust nextRatio = "+Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}
+					// try and drop off to the first location if there's more than one
+					// TODO need to improve how the code detects and selects more than one drop location
+					if (rldSave.getName().equals(rld.getName()) && trackTemp.equals(trackSave)){
+						log.debug("Adjusting second location in route ratio to 1.0");
+						nextRatio = 1;
+					}
 					log.debug(rldSave.getName()+" = "+Double.toString(saveRatio)+ " " + rld.getName()+" = "+Double.toString(nextRatio));
 					if (saveRatio < nextRatio){
 						rld = rldSave;					// the saved is better than the last found
 						trackTemp = trackSave;
+					} else if (multiplePickup){
+						addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildCarHasSecond"),new Object[]{car.toString(), rld.getName()}));
+						trackSave = null;
+						break; 	//done
 					}
 				}
 				// every time through, save the best route destination, and track
