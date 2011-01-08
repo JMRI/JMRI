@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Setup;
 /**
  * Represents the types of cars a railroad can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
 public class CarTypes {
 	
@@ -25,6 +25,8 @@ public class CarTypes {
 	// for property change
 	public static final String CARTYPES_LENGTH_CHANGED_PROPERTY = "CarTypes Length";
 	public static final String CARTYPES_NAME_CHANGED_PROPERTY = "CarTypes Name";
+	
+	private static final int MIN_NAME_LENGTH = 4;
     
 	public CarTypes() {
     }
@@ -119,11 +121,13 @@ public class CarTypes {
     	if (list.contains(type))
     		return;
     	list.add(0,type);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String type){
     	list.remove(type);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARTYPES_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
      }
     
@@ -152,7 +156,23 @@ public class CarTypes {
 		for (int i = 0; i < types.length; i++)
 			box.addItem(types[i]);
     }
- 
+    
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		String[] types = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < types.length; i++){
+    			if (types[i].length()>length)
+    				length = types[i].length();
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
+    }
+        
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);

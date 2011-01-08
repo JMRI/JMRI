@@ -9,9 +9,14 @@ import java.util.List;
 
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarColors;
+import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
@@ -22,11 +27,13 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
+	private static final int NEW_LINE_LENGTH = 87;
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String BOX = " [ ] ";
+	protected static final String TAB = "    ";
 	
 	protected void pickupEngine(PrintWriter file, Engine engine){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup")+ " ");
+		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup"));
 		String[] format = Setup.getPickupEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			buf.append(getEngineAttribute(engine, format[i], true));
@@ -35,7 +42,7 @@ public class TrainCommon {
 	}
 	
 	protected void dropEngine(PrintWriter file, Engine engine){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop")+ " ");
+		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop"));
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			buf.append(getEngineAttribute(engine, format[i], false));
@@ -44,19 +51,29 @@ public class TrainCommon {
 	}
 	
 	protected void pickupCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup")+ " ");
+		StringBuffer buf = new StringBuffer(BOX + rb.getString("Pickup"));
 		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getCarAttribute(car, format[i], true));
+			String s = getCarAttribute(car, format[i], true);
+			if (buf.length()+s.length()>calculateNewLine()){
+				addLine(file, buf.toString());
+				buf = new StringBuffer(TAB);
+			}
+			buf.append(s);
 		}
 		addLine(file, buf.toString());
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop")+ " ");
+		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop"));
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i=0; i<format.length; i++){
-			buf.append(getCarAttribute(car, format[i], false));
+			String s = getCarAttribute(car, format[i], false);
+			if (buf.length()+s.length()>calculateNewLine()){
+				addLine(file, buf.toString());
+				buf = new StringBuffer(TAB);
+			}
+			buf.append(s);
 		}
 		addLine(file, buf.toString());
 	}
@@ -89,7 +106,7 @@ public class TrainCommon {
 	 */
 	protected static String splitString(String name){
 		String[] fullname = name.split("-");
-		String parsedName = fullname[0];
+		String parsedName = fullname[0].trim();
 		// is the hyphen followed by a number?
 		if (fullname.length>1){
 			try{
@@ -135,39 +152,40 @@ public class TrainCommon {
 	
 	protected String getCarAttribute(Car car, String attribute, boolean pickup){
 		if (attribute.equals(Setup.LOAD))
-			return (car.isCaboose() || car.isPassenger())? "" : car.getLoad()+" ";
+			return (car.isCaboose() || car.isPassenger())? "" : " "+tabString(car.getLoad(),
+					CarLoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
-			return (car.isHazardous()? "("+rb.getString("Hazardous")+") " : "");
+			return (car.isHazardous()? " ("+rb.getString("Hazardous")+")" : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))
-			return CarLoads.instance().getDropComment(car.getType(), car.getLoad())+" ";
+			return " "+CarLoads.instance().getDropComment(car.getType(), car.getLoad());
 		else if (attribute.equals(Setup.PICKUP_COMMENT))
-			return CarLoads.instance().getPickupComment(car.getType(), car.getLoad())+" ";
+			return " "+CarLoads.instance().getPickupComment(car.getType(), car.getLoad());
 		return getRollingStockAttribute(car, attribute, pickup);
 	}
 
 	protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean pickup){
 		if (attribute.equals(Setup.NUMBER))
-			return splitString(rs.getNumber()) +" ";
+			return " "+tabString(splitString(rs.getNumber()), Control.MAX_LEN_STRING_ROAD_NUMBER);
 		else if (attribute.equals(Setup.ROAD))
-			return rs.getRoad() +" ";
+			return " "+tabString(rs.getRoad(), CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)){
 			String[] type = rs.getType().split("-");	// second half of string can be anything
-			return type[0] +" ";
+			return " "+tabString(type[0], CarTypes.instance().getCurMaxNameLength());
 		}
 		else if (attribute.equals(Setup.LENGTH))
-			return rs.getLength()+ LENGTHABV +" ";
+			return " "+tabString(rs.getLength()+ LENGTHABV, CarLengths.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.COLOR))
-			return rs.getColor() +" ";
+			return " "+tabString(rs.getColor(), CarColors.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.LOCATION) && pickup)
-			return rb.getString("from")+ " "+splitString(rs.getTrackName()) + " ";
+			return " "+rb.getString("from")+ " "+splitString(rs.getTrackName());
 		else if (attribute.equals(Setup.LOCATION) && !pickup)
-			return rb.getString("from")+ " "+splitString(rs.getLocationName()) + " ";
+			return " "+rb.getString("from")+ " "+splitString(rs.getLocationName());
 		else if (attribute.equals(Setup.DESTINATION) && pickup)
-			return rb.getString("destination")+ " "+splitString(rs.getDestinationName()) + " ";
+			return " "+rb.getString("destination")+ " "+splitString(rs.getDestinationName());
 		else if (attribute.equals(Setup.DESTINATION) && !pickup)
-			return rb.getString("to")+ " "+splitString(rs.getDestinationTrackName()) + " ";
+			return " "+rb.getString("to")+ " "+splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.COMMENT))
-			return rs.getComment() +" ";
+			return " "+rs.getComment();
 		else if (attribute.equals(Setup.NONE))
 			return "";
 		return "error ";		
@@ -205,6 +223,22 @@ public class TrainCommon {
 				+ h + ":" + m + " " 
 				+ AM_PM;
 		return date;
+	}
+	
+	public static String tabString(String s, int fieldSize){
+		if (!Setup.isTabEnabled())
+			return s;
+		StringBuffer buf = new StringBuffer(s);
+		while (buf.length() < fieldSize){
+			buf.append(" ");
+		}
+		return buf.toString();
+	}
+	
+	private int calculateNewLine(){
+		int fontSize = Setup.getFontSize();
+		// font size is between 7 and 12
+		return NEW_LINE_LENGTH*10/fontSize;	
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

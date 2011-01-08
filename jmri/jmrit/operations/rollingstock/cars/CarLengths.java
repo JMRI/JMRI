@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the lengths that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.14 $
+ * @version	$Revision: 1.15 $
  */
 public class CarLengths implements java.beans.PropertyChangeListener {
 	
@@ -23,6 +23,8 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 	private static final String LENGTHS = rb.getString("carLengths");
 	public static final String CARLENGTHS_CHANGED_PROPERTY = "CarLengths";
 	public static final String CARLENGTHS_NAME_CHANGED_PROPERTY = "CarLengthsName";
+	
+	private static final int MIN_NAME_LENGTH = 4;
 	
     public CarLengths() {
     }
@@ -87,11 +89,13 @@ public class CarLengths implements java.beans.PropertyChangeListener {
     	if (list.contains(length))
     		return;
     	list.add(0,length);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARLENGTHS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String length){
     	list.remove(length);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARLENGTHS_CHANGED_PROPERTY, list.size()+1, list.size());
     }
      
@@ -119,6 +123,22 @@ public class CarLengths implements java.beans.PropertyChangeListener {
 		String[] lengths = getNames();
 		for (int i = 0; i < lengths.length; i++)
 			box.addItem(lengths[i]);
+    }
+      
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		String[] lengths = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < lengths.length; i++){
+    			if (lengths[i].length()>length)
+    				length = lengths[i].length();
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
     }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -150,6 +150,7 @@ public class Setup {
 	private static String[] pickupCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION, COMMENT, PICKUP_COMMENT};
 	private static String[] dropCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION, COMMENT, DROP_COMMENT};
 	private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};	
+	private static boolean tab = false;
 	private static String miaComment = rb.getString("misplacedCars");
 	private static String logoURL ="";
 	private static String panelName ="Panel";
@@ -473,6 +474,14 @@ public class Setup {
 	
 	public static void setFontSize(int size){
 		fontSize = size;
+	}
+	
+	public static boolean isTabEnabled(){
+		return tab;
+	}
+	
+	public static void setTabEnabled(boolean enable){
+		tab = enable;
 	}
 	
 	public static boolean isCarLoggerEnabled(){
@@ -894,6 +903,9 @@ public class Setup {
     	values.setAttribute("dropColor", getDropTextColor());
     	values.setAttribute("pickupColor", getPickupTextColor());
     	
+    	e.addContent(values = new Element("tab"));
+    	values.setAttribute("enabled", isTabEnabled()?"true":"false");
+    	
         if (getManifestLogoURL() != ""){
         	values = new Element("manifestLogo");
         	values.setAttribute("name", getManifestLogoURL());
@@ -1126,6 +1138,13 @@ public class Setup {
         		setPickupTextColor(pickupColor);
         	}
         }
+        if ((operations.getChild("tab") != null)){ 
+        	if((a = operations.getChild("tab").getAttribute("enabled"))!= null){
+        		String enable = a.getValue();
+        		if (log.isDebugEnabled()) log.debug("tab: "+enable);
+        		setTabEnabled(enable.equals("true"));
+        	}
+        }       
        	// get manifest logo
         if ((operations.getChild("manifestLogo") != null)){ 
         	if((a = operations.getChild("manifestLogo").getAttribute("name"))!= null){

@@ -14,7 +14,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the colors that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class CarColors {
 	
@@ -23,6 +23,8 @@ public class CarColors {
 	private static final String COLORS = rb.getString("carColors");
 	public static final String CARCOLORS_CHANGED_PROPERTY = "CarColors";
 	public static final String CARCOLORS_NAME_CHANGED_PROPERTY = "CarColorsName";
+	
+	private static final int MIN_NAME_LENGTH = 4;
 	
     public CarColors() {
     }
@@ -74,11 +76,13 @@ public class CarColors {
     	if (list.contains(color))
     		return;
     	list.add(0,color);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String color){
     	list.remove(color);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARCOLORS_CHANGED_PROPERTY, list.size()+1, list.size());
     }
     
@@ -106,6 +110,22 @@ public class CarColors {
 		String[] colors = getNames();
 		for (int i = 0; i < colors.length; i++)
 			box.addItem(colors[i]);
+    }
+    
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		String[] colors = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < colors.length; i++){
+    			if (colors[i].length()>length)
+    				length = colors[i].length();
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
     }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

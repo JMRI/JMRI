@@ -14,15 +14,17 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the road names that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class CarRoads {
 	
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.rollingstock.cars.JmritOperationsCarsBundle");
-
+	
 	private static final String ROADS = rb.getString("carRoadNames"); 
 	public static final String CARROADS_LENGTH_CHANGED_PROPERTY = "CarRoads Length";
 	public static final String CARROADS_NAME_CHANGED_PROPERTY = "CarRoads Name";
+	
+	private static final int MIN_NAME_LENGTH = 4;
 
     public CarRoads() {
     }
@@ -73,11 +75,13 @@ public class CarRoads {
     	if (list.contains(road))
     		return;
     	list.add(0,road);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARROADS_LENGTH_CHANGED_PROPERTY, list.size()-1, list.size());
     }
     
     public void deleteName(String road){
     	list.remove(road);
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (CARROADS_LENGTH_CHANGED_PROPERTY, list.size()+1, list.size());
      }
     
@@ -106,6 +110,22 @@ public class CarRoads {
 		String[] roads = getNames();
 		for (int i = 0; i < roads.length; i++)
 			box.addItem(roads[i]);
+    }
+    
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		String[] roads = getNames();
+    		int length = MIN_NAME_LENGTH;
+    		for (int i = 0; i < roads.length; i++){
+    			if (roads[i].length()>length)
+    				length = roads[i].length();
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
     }
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

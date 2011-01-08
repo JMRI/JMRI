@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class CarLoads {
 	
@@ -30,6 +30,8 @@ public class CarLoads {
 	// for property change
 	public static final String LOAD_CHANGED_PROPERTY = "CarLoads Load";
 	public static final String LOAD_NAME_CHANGED_PROPERTY = "CarLoads Name";
+	
+	private static final int MIN_NAME_LENGTH = 4;
     
 	public CarLoads() {
     }
@@ -162,6 +164,7 @@ public class CarLoads {
     	if (containsName(type, name))
     		return;
     	loads.add(0, new CarLoad(name));
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()-1, loads.size());
     }
 
@@ -178,6 +181,7 @@ public class CarLoads {
     			break;
     		}
     	}
+    	maxNameLength = 0;	// reset maximum name length
     	firePropertyChange (LOAD_CHANGED_PROPERTY, loads.size()+1, loads.size());
     }
     
@@ -415,6 +419,28 @@ public class CarLoads {
         	}
         }
 	}
+	
+    private int maxNameLength = 0;
+    
+    public int getCurMaxNameLength(){
+    	if (maxNameLength == 0){
+    		int length = MIN_NAME_LENGTH;
+    		Enumeration<String> en = list.keys();  		
+       		while(en.hasMoreElements()) {
+    			String key = en.nextElement();
+    			List<CarLoad> loads = list.get(key);
+    			for (int j=0; j<loads.size(); j++){
+    				if (loads.get(j).getName().length()> length){
+    					length = loads.get(j).getName().length();
+    				}
+    			}
+    		}
+    		return length;
+    	} else {
+    		return maxNameLength;
+    	}
+    }
+        
         
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {

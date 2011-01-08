@@ -38,12 +38,11 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.120 $
+ * @version             $Revision: 1.121 $
  */
 public class TrainBuilder extends TrainCommon{
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	private static final String BOX = " [ ] ";
 	
 	// report levels
 	protected static final String ONE = Setup.BUILD_REPORT_MINIMAL;
