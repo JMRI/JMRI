@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -482,6 +482,9 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 			} else {
 				rs.setTrain((Train)trainBox.getSelectedItem());
 			}
+			// Location status and out of service
+			rs.setLocationUnknown(locationUnknownCheckBox.isSelected());
+			rs.setOutOfService(outOfServiceCheckBox.isSelected());
 			// remove rolling stock from being picked up and delivered
 			rs.setRouteLocation(null);
 			rs.setRouteDestination(null);

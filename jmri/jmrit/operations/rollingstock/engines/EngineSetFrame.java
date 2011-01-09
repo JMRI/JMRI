@@ -2,7 +2,6 @@
 
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
@@ -15,7 +14,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockSetFrame;
  * Frame for user to place engine on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class EngineSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -64,10 +63,7 @@ public class EngineSetFrame extends RollingStockSetFrame implements java.beans.P
 					rb.getString("enginePartConsist"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
 				// convert cars list to rolling stock list
-				List<Engine> engines = _engine.getConsist().getEngines();
-				List<RollingStock> list = new ArrayList<RollingStock>();
-				for (int i=0; i<engines.size(); i++)
-					list.add(engines.get(i));
+				List<RollingStock> list = _engine.getConsist().getGroup();
 				if (!updateGroup(list))
 					return false;
 			}

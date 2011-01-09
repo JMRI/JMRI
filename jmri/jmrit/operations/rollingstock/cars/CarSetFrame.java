@@ -3,7 +3,6 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -21,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -129,11 +128,7 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 					rb.getString("carInKernel"),
 					rb.getString("carPartKernel"),
 					JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
-				// convert cars list to rolling stock list
-				List<Car> cars = _car.getKernel().getCars();
-				List<RollingStock> list = new ArrayList<RollingStock>();
-				for (int i=0; i<cars.size(); i++)
-					list.add(cars.get(i));
+				List<RollingStock> list = _car.getKernel().getGroup();
 				if (!updateGroup(list))
 					return false;
 			}

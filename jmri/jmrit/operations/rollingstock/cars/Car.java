@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.58 $
+ * @version             $Revision: 1.59 $
  */
 public class Car extends RollingStock {
 	
@@ -420,9 +420,9 @@ public class Car extends RollingStock {
 		
 		// set all cars in kernel to the next load
 		if (getKernel() != null){
-			List<RollingStock> l = getKernel().getGroup();
-			for (int i=0; i<l.size(); i++){
-				Car c = (Car)l.get(i);
+			List<Car> cars = getKernel().getCars();
+			for (int i=0; i<cars.size(); i++){
+				Car c = cars.get(i);
 				if (c.getType().equals(getType()))
 					c.setNextLoad(currentSi.getShip());
 			}

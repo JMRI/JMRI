@@ -5,6 +5,7 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
@@ -32,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -636,13 +637,30 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		_car.setBuilt(builtTextField.getText());
 		if (ownerComboBox.getSelectedItem() != null)
 			_car.setOwner(ownerComboBox.getSelectedItem().toString());
-		if (loadComboBox.getSelectedItem() != null)
-			_car.setLoad(loadComboBox.getSelectedItem().toString());
 		if (kernelComboBox.getSelectedItem() != null){
 			if (kernelComboBox.getSelectedItem().equals(""))
 				_car.setKernel(null);
 			else
 				_car.setKernel(carManager.getKernelByName((String)kernelComboBox.getSelectedItem()));
+		}
+		if (loadComboBox.getSelectedItem() != null){
+			String oldLoad = _car.getLoad();
+			_car.setLoad(loadComboBox.getSelectedItem().toString());
+			// check to see if car is part of kernel, and ask if all the other cars in the kernel should be changed
+			if (_car.getKernel() != null && !oldLoad.equals(loadComboBox.getSelectedItem())){
+				if (JOptionPane.showConfirmDialog(this,
+						rb.getString("carInKernel"),
+						rb.getString("carPartKernel"),
+						JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION){
+					// go through the entire list and change the loads for all cars
+					List<Car> cars = _car.getKernel().getCars();
+					for (int i=0; i<cars.size(); i++){
+						Car c = cars.get(i);
+						if (c.getType().equals(_car.getType()))
+							c.setLoad(_car.getLoad());
+					}
+				}
+			}
 		}
 		_car.setComment(commentTextField.getText());
 		_car.setRfid(rfidTextField.getText());
