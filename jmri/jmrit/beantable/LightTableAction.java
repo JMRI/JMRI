@@ -9,7 +9,6 @@ import jmri.Light;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.LightControl;
-import jmri.jmrix.DCCManufacturerList;
 
 import java.awt.FlowLayout;
 import java.awt.Container;
@@ -22,16 +21,13 @@ import java.util.ArrayList;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
-import javax.swing.BoxLayout;
 import javax.swing.border.Border;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
 
 import javax.swing.*;
 import javax.swing.table.*;
 
 import jmri.util.JmriJFrame;
+import jmri.util.ConnectionNameFromSystemName;
 
 /**
  * Swing action to create and register a
@@ -40,7 +36,7 @@ import jmri.util.JmriJFrame;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.50 $
+ * @version     $Revision: 1.51 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -461,14 +457,14 @@ public class LightTableAction extends AbstractTableAction {
 			jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.lightManagerInstance();
 			List<Manager> managerList = proxy.getManagerList();
 			for (int i = 0; i<managerList.size(); i++) {
-				String manuName = provideConnectionNameFromPrefix(managerList.get(i).getSystemPrefix());
+				String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(i).getSystemPrefix());
 				prefixBox.addItem(manuName);                      
 			}
 			if (p.getComboBoxLastSelection(systemSelectionCombo)!=null)
 				prefixBox.setSelectedItem(p.getComboBoxLastSelection(systemSelectionCombo));
 		}
 		else {
-			prefixBox.addItem(provideConnectionNameFromPrefix(jmri.InstanceManager.lightManagerInstance().getSystemPrefix()));
+			prefixBox.addItem(ConnectionNameFromSystemName.getConnectionName(jmri.InstanceManager.lightManagerInstance().getSystemPrefix()));
 		}
 	}
 	
@@ -506,21 +502,8 @@ public class LightTableAction extends AbstractTableAction {
 		}
 	}
     
-    private String provideConnectionNameFromPrefix(String prefix){
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix().equals(prefix))
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getUserName();
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getDCCSystemFromType(prefix.charAt(0));
-    }
- 
 	private boolean canAddRange(){
-		String testSysName = getLightPrefixFromName()+"L11";
+		String testSysName = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())+"L11";
 		return InstanceManager.lightManagerInstance().allowMultipleAdditions(testSysName);
 		}
 		
@@ -548,7 +531,7 @@ public class LightTableAction extends AbstractTableAction {
 	 * Returns true if system can support variable lights
 	 */
 	boolean supportsVariableLights() {
-		String testSysName = getLightPrefixFromName()+"L11";
+		String testSysName = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())+"L11";
 		return InstanceManager.lightManagerInstance().supportsVariableLights(testSysName);
 	}
     
@@ -556,8 +539,9 @@ public class LightTableAction extends AbstractTableAction {
      * Responds to the Create button
      */
     void createPressed(ActionEvent e) {
-        String lightPrefix = getLightPrefixFromName()+"L";
-		String turnoutPrefix = getLightPrefixFromName()+"T";
+        //ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())
+        String lightPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())+"L";
+		String turnoutPrefix = ConnectionNameFromSystemName.getPrefixFromName((String) prefixBox.getSelectedItem())+"T";
 		String curAddress = fieldHardwareAddress.getText();
 		if (curAddress.length()<1) {
 			log.warn("Hardware Address was not entered");
@@ -764,21 +748,6 @@ public class LightTableAction extends AbstractTableAction {
 		status2.setVisible(false);
 		addFrame.pack();
 		addFrame.setVisible(true);
-    }
-    private String getLightPrefixFromName(){
-        if (((String) prefixBox.getSelectedItem())==null)
-            return null;
-        java.util.List<Object> list 
-            = jmri.InstanceManager.getList(jmri.jmrix.SystemConnectionMemo.class);
-        if (list != null) {
-            for (Object memo : list) {
-                if (((jmri.jmrix.SystemConnectionMemo)memo).getUserName().equals(prefixBox.getSelectedItem())){
-                    return ((jmri.jmrix.SystemConnectionMemo)memo).getSystemPrefix();
-                }
-            }
-        }
-        //Fall through if the system isn't using the new SystemConnectionMemo registration
-        return DCCManufacturerList.getTypeFromDCCSystem((String) prefixBox.getSelectedItem())+"";
     }
 	
     /**
