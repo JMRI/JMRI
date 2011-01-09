@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.57 $
+ * @version             $Revision: 1.58 $
  */
 public class Car extends RollingStock {
 	
@@ -401,24 +401,11 @@ public class Car extends RollingStock {
 	private void scheduleNext(Track track){
 		if (track == null || track.getScheduleName().equals(""))
 			return;
-		ScheduleManager scheduleManager = ScheduleManager.instance();
-		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
-		if (sch == null){
-			log.warn("Can not find schedule ("+track.getScheduleName()+") assigned to track ("+track.getName()+")");
-			return;
-		}
-		ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
-		if (currentSi == null){
-			log.warn("Can not find schedule item ("+track.getScheduleItemId()+") for schedule ("+track.getScheduleName()+")");
-			// reset schedule
-			track.setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
-			return;
-		}
+		ScheduleItem currentSi = track.getCurrentScheduleItem();
 		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") id: "+currentSi.getId());
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
-			log.debug("Car ("+getId()+") is part of kernel ("+getKernelName()+")");
-			// not lead car so return
+			log.debug("Car ("+toString()+") is part of kernel ("+getKernelName()+")");
 			return;
 		}
 		// get the car's next load
@@ -430,25 +417,19 @@ public class Car extends RollingStock {
 		setNextWait(currentSi.getWait());
 		
 		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+")");
-		// bump and check count
-		track.setScheduleCount(track.getScheduleCount()+1);
-		if (track.getScheduleCount() < currentSi.getCount())
-			return;
-		// go to the next item on the schedule
-		track.setScheduleCount(0);
-		List<String> l = sch.getItemsBySequenceList();
-		for (int i=0; i<l.size(); i++){
-			ScheduleItem nextSi = sch.getItemById(l.get(i));
-			if (track.getScheduleItemId().equals(nextSi.getId())){
-				if (++i < l.size()){
-					nextSi = sch.getItemById(l.get(i));
-				}else{
-					nextSi = sch.getItemById(l.get(0));
-				}
-				track.setScheduleItemId(nextSi.getId());
-				break;
+		
+		// set all cars in kernel to the next load
+		if (getKernel() != null){
+			List<RollingStock> l = getKernel().getGroup();
+			for (int i=0; i<l.size(); i++){
+				Car c = (Car)l.get(i);
+				if (c.getType().equals(getType()))
+					c.setNextLoad(currentSi.getShip());
 			}
 		}
+		
+		// bump schedule
+		track.bumpSchedule();
 	}
 	
 	private void loadNext(Track destTrack){

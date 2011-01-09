@@ -65,7 +65,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.72 $
+ * @version $Revision: 1.73 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3459,7 +3459,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c11 destination", "Chelmsford Freight 4", c11.getDestinationTrackName());
 		// C13 is part of kernel, load will flip between E and L
 		Assert.assertEquals("c13 destination", "Chelmsford Freight 2", c13.getDestinationTrackName());
-		Assert.assertEquals("c13 next load", "", c13.getNextLoad());
+		Assert.assertEquals("c13 next load", "Tin", c13.getNextLoad());
 
 		// move and terminate train	
 		train1.move();
@@ -3491,7 +3491,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c12 track", "Westford Yard 1", c12.getTrackName());
 		Assert.assertEquals("c12 load", "E", c12.getLoad());
 		Assert.assertEquals("c13 track", "Chelmsford Freight 2", c13.getTrackName());
-		Assert.assertEquals("c13 load", "E", c13.getLoad());
+		Assert.assertEquals("c13 load", "Tin", c13.getLoad());
 	
 		// create a route to staging to test remove schedule load
 		// Create route with 2 location
@@ -3621,7 +3621,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c12 track from staging terminated", "Westford Yard 1", c12.getTrackName());
 		Assert.assertEquals("c12 load from staging terminated", "E", c12.getLoad());
 		Assert.assertEquals("c13 track from staging terminated", "Chelmsford Freight 2", c13.getTrackName());
-		Assert.assertEquals("c13 load from staging terminated", "L", c13.getLoad());
+		Assert.assertEquals("c13 load from staging terminated", "Tin", c13.getLoad());
 
 	}
 	

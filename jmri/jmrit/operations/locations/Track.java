@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.45 $
+ * @version             $Revision: 1.46 $
  */
 public class Track {
 	
@@ -719,6 +719,48 @@ public class Track {
     	int old = _scheduleCount;
     	_scheduleCount = count;
     	firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, count);
+    }
+    
+    public ScheduleItem getCurrentScheduleItem(){
+		Schedule sch = ScheduleManager.instance().getScheduleByName(getScheduleName());
+		if (sch == null){
+			log.warn("Can not find schedule ("+getScheduleName()+") assigned to track ("+getName()+")");
+			return null;
+		}
+		ScheduleItem currentSi = sch.getItemById(getScheduleItemId());
+		if (currentSi == null){
+			log.warn("Can not find schedule item ("+getScheduleItemId()+") for schedule ("+getScheduleName()+")");
+			// reset schedule
+			setScheduleItemId((sch.getItemById(sch.getItemsBySequenceList().get(0)).getId()));
+			currentSi = sch.getItemById(getScheduleItemId());
+		}
+		return currentSi;
+    }
+    
+    public void bumpSchedule(){
+    	Schedule sch = ScheduleManager.instance().getScheduleByName(getScheduleName());
+    	if (sch == null){
+    		log.warn("Can not find schedule ("+getScheduleName()+") assigned to track ("+getName()+")");
+    		return;
+    	}
+    	setScheduleCount(getScheduleCount()+1);
+    	if (getScheduleCount() < getCurrentScheduleItem().getCount())
+    		return;
+    	// go to the next item on the schedule
+    	setScheduleCount(0);
+    	List<String> l = sch.getItemsBySequenceList();
+    	for (int i=0; i<l.size(); i++){
+    		ScheduleItem nextSi = sch.getItemById(l.get(i));
+    		if (getScheduleItemId().equals(nextSi.getId())){
+    			if (++i < l.size()){
+    				nextSi = sch.getItemById(l.get(i));
+    			}else{
+    				nextSi = sch.getItemById(l.get(0));
+    			}
+    			setScheduleItemId(nextSi.getId());
+    			break;
+    		}
+    	}
     }
     
     /**
