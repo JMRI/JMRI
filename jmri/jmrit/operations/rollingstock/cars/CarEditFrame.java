@@ -31,8 +31,8 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 /**
  * Frame for user edit of car
  * 
- * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.21 $
+ * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
+ * @version $Revision: 1.22 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -458,22 +458,27 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			// log.debug("car save button pressed");
 			if (!checkCar(_car))
 				return;
-			// delete car if edit and road or road number has changed
-			if (_car != null){
-				if (_car.getRoad() != null && !_car.getRoad().equals("")){
-					if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
-							|| !_car.getNumber().equals(roadNumberTextField.getText())) {
-						// transfer car attributes since road name and number have changed
-						Car oldCar = _car;
-						Car newCar = addCar();
-						// set the car's destination and train
-						newCar.setDestination(oldCar.getDestination(), oldCar.getDestinationTrack());
-						newCar.setTrain(oldCar.getTrain());
-						oldCar.removePropertyChangeListener(this);
-						carManager.deregister(oldCar);
-						writeFiles();
-						return;
-					}
+			// delete car and create new car if edit and road or road number has changed
+			// this keeps the car id format correct
+			if (_car != null && _car.getRoad() != null && !_car.getRoad().equals("")){
+				if (!_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
+						|| !_car.getNumber().equals(roadNumberTextField.getText())) {
+					// transfer car attributes since road name and number have changed
+					Car oldCar = _car;
+					Car newCar = addCar();
+					// copy the old car's destination, train, etc.
+					newCar.setDestination(oldCar.getDestination(), oldCar.getDestinationTrack());
+					newCar.setNextDestination(oldCar.getNextDestination());
+					newCar.setNextDestTrack(oldCar.getNextDestTrack());
+					newCar.setReturnWhenEmptyDestination(oldCar.getReturnWhenEmptyDestination());
+					newCar.setReturnWhenEmptyDestTrack(oldCar.getReturnWhenEmptyDestTrack());
+					newCar.setOutOfService(oldCar.isOutOfService());
+					newCar.setLocationUnknown(oldCar.isLocationUnknown());
+					newCar.setTrain(oldCar.getTrain());
+					oldCar.removePropertyChangeListener(this);
+					carManager.deregister(oldCar);
+					writeFiles();
+					return;
 				}
 			}
 			addCar();
@@ -606,67 +611,64 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 	}
 
 	private Car addCar() {
-		if (roadComboBox.getSelectedItem() != null
-				&& !roadComboBox.getSelectedItem().toString().equals("")) {
-			if (_car == null
-					|| !_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
-					|| !_car.getNumber().equals(roadNumberTextField.getText())) {
-				_car = carManager.newCar(roadComboBox.getSelectedItem().toString(),
-						roadNumberTextField.getText());
-				_car.addPropertyChangeListener(this);
-			}
-			if (typeComboBox.getSelectedItem() != null)
-				_car.setType(typeComboBox.getSelectedItem().toString());
-			if (lengthComboBox.getSelectedItem() != null)
-				_car.setLength(lengthComboBox.getSelectedItem().toString());
-			if (colorComboBox.getSelectedItem() != null)
-				_car.setColor(colorComboBox.getSelectedItem().toString());
-			_car.setWeight(weightTextField.getText());
-			_car.setWeightTons(weightTonsTextField.getText());
-			_car.setPassenger(passengerCheckBox.isSelected());
-			_car.setCaboose(cabooseCheckBox.isSelected());
-			_car.setFred(fredCheckBox.isSelected());
-			_car.setHazardous(hazardousCheckBox.isSelected());
-			_car.setBuilt(builtTextField.getText());
-			if (ownerComboBox.getSelectedItem() != null)
-				_car.setOwner(ownerComboBox.getSelectedItem().toString());
-			if (loadComboBox.getSelectedItem() != null)
-				_car.setLoad(loadComboBox.getSelectedItem().toString());
-			if (kernelComboBox.getSelectedItem() != null){
-				if (kernelComboBox.getSelectedItem().equals(""))
-					_car.setKernel(null);
-				else
-					_car.setKernel(carManager.getKernelByName((String)kernelComboBox.getSelectedItem()));
-			}
-			_car.setComment(commentTextField.getText());
-			_car.setRfid(rfidTextField.getText());
-			autoTrackCheckBox.setEnabled(true);
-			if (locationBox.getSelectedItem() != null){
-				if (locationBox.getSelectedItem().equals("")) {
-					_car.setLocation(null, null);
-				} else {
-					if (trackLocationBox.getSelectedItem() == null
-							|| trackLocationBox.getSelectedItem().equals("")) {
-						JOptionPane.showMessageDialog(this,
-								rb.getString("rsFullySelect"), rb.getString("rsCanNotLoc"),
-								JOptionPane.ERROR_MESSAGE);
-
-					} else {
-						String status = _car.setLocation((Location)locationBox.getSelectedItem(),
-								(Track)trackLocationBox.getSelectedItem());
-						if (!status.equals(Car.OKAY)){
-							log.debug ("Can't set car's location because of "+ status);
-							JOptionPane.showMessageDialog(this,
-									rb.getString("rsCanNotLocMsg")+ status,
-									rb.getString("rsCanNotLoc"),
-									JOptionPane.ERROR_MESSAGE);
-						}
-					}
-				}
-			}	
-			return _car;
+		if (roadComboBox.getSelectedItem() == null
+				|| roadComboBox.getSelectedItem().toString().equals(""))
+			return null;
+		if (_car == null
+				|| !_car.getRoad().equals(roadComboBox.getSelectedItem().toString())
+				|| !_car.getNumber().equals(roadNumberTextField.getText())) {
+			_car = carManager.newCar(roadComboBox.getSelectedItem().toString(),
+					roadNumberTextField.getText());
+			_car.addPropertyChangeListener(this);
 		}
-		return null;
+		if (typeComboBox.getSelectedItem() != null)
+			_car.setType(typeComboBox.getSelectedItem().toString());
+		if (lengthComboBox.getSelectedItem() != null)
+			_car.setLength(lengthComboBox.getSelectedItem().toString());
+		if (colorComboBox.getSelectedItem() != null)
+			_car.setColor(colorComboBox.getSelectedItem().toString());
+		_car.setWeight(weightTextField.getText());
+		_car.setWeightTons(weightTonsTextField.getText());
+		_car.setPassenger(passengerCheckBox.isSelected());
+		_car.setCaboose(cabooseCheckBox.isSelected());
+		_car.setFred(fredCheckBox.isSelected());
+		_car.setHazardous(hazardousCheckBox.isSelected());
+		_car.setBuilt(builtTextField.getText());
+		if (ownerComboBox.getSelectedItem() != null)
+			_car.setOwner(ownerComboBox.getSelectedItem().toString());
+		if (loadComboBox.getSelectedItem() != null)
+			_car.setLoad(loadComboBox.getSelectedItem().toString());
+		if (kernelComboBox.getSelectedItem() != null){
+			if (kernelComboBox.getSelectedItem().equals(""))
+				_car.setKernel(null);
+			else
+				_car.setKernel(carManager.getKernelByName((String)kernelComboBox.getSelectedItem()));
+		}
+		_car.setComment(commentTextField.getText());
+		_car.setRfid(rfidTextField.getText());
+		autoTrackCheckBox.setEnabled(true);
+		if (locationBox.getSelectedItem() != null){
+			if (locationBox.getSelectedItem().equals("")) {
+				_car.setLocation(null, null);
+			} else if (trackLocationBox.getSelectedItem() == null
+					|| trackLocationBox.getSelectedItem().equals("")) {
+				JOptionPane.showMessageDialog(this,
+						rb.getString("rsFullySelect"), rb.getString("rsCanNotLoc"),
+						JOptionPane.ERROR_MESSAGE);
+
+			} else {
+				String status = _car.setLocation((Location)locationBox.getSelectedItem(),
+						(Track)trackLocationBox.getSelectedItem());
+				if (!status.equals(Car.OKAY)){
+					log.debug ("Can't set car's location because of "+ status);
+					JOptionPane.showMessageDialog(this,
+							rb.getString("rsCanNotLocMsg")+ status,
+							rb.getString("rsCanNotLoc"),
+							JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		}	
+		return _car;
 	}
 
 	private void addEditButtonAction(JButton b) {

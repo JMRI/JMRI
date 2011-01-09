@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.122 $
+ * @version             $Revision: 1.123 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1025,7 +1025,7 @@ public class TrainBuilder extends TrainCommon{
 						RouteLocation rld = train.getRoute().getLastLocationByName(c.getDestinationName());
 						if (rld == null){
 							// The following code should not be executed, removeCars() is called before placeCars()
-							addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarDestNotPartRouteCar"),new Object[]{c.toString(), c.getDestinationName(), train.getRoute().getName()}));
+							addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildExcludeCarDestNotPartRoute"),new Object[]{c.toString(), c.getDestinationName(), train.getRoute().getName()}));
 						} else {
 							if (c.getRouteLocation() != null){
 								// The following code should not be executed, this should not occur if train was reset before a build!

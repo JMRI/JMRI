@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.56 $
+ * @version             $Revision: 1.57 $
  */
 public class Car extends RollingStock {
 	
@@ -371,18 +371,19 @@ public class Car extends RollingStock {
 	public String setDestination(Location destination, Track track, boolean force) {
 		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
-		Track destTrack = getDestinationTrack();
+		Track oldDestTrack = getDestinationTrack();
 		String status = super.setDestination(destination, track, force);
 		// return if not Okay 
 		if (!status.equals(OKAY))
 			return status;
 		// now check to see if the track has a schedule
-		scheduleNext(track);
+		if (oldDestTrack != track)
+			scheduleNext(track);
 		// update next destination and load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
 		// update load when car reaches a siding
-		loadNext(destTrack);
+		loadNext(oldDestTrack);
 		// set destination and destination track if available
 		if (!Router.instance().setDestination(this))
 			super.setDestination(null, null);	// couldn't route car, maybe next time
@@ -416,7 +417,7 @@ public class Car extends RollingStock {
 		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") id: "+currentSi.getId());
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
-			log.debug("Car ("+getId()+") is part of kernel "+getKernelName());
+			log.debug("Car ("+getId()+") is part of kernel ("+getKernelName()+")");
 			// not lead car so return
 			return;
 		}
