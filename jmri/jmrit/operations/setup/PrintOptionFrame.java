@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -53,6 +53,7 @@ public class PrintOptionFrame extends OperationsFrame{
     JRadioButton buildReportVD = new JRadioButton(rb.getString("VeryDetailed"));
     
     // check boxes
+    JCheckBox tabFormatCheckBox = new JCheckBox(rb.getString("TabFormat"));
 	JCheckBox buildReportCheckBox = new JCheckBox(rb.getString("BuildReportEdit"));
 	JCheckBox printLocCommentsCheckBox = new JCheckBox(rb.getString("PrintLocationComments"));
 	JCheckBox printLoadsEmptiesCheckBox = new JCheckBox(rb.getString("PrintLoadsEmpties"));
@@ -120,12 +121,17 @@ public class PrintOptionFrame extends OperationsFrame{
 		pPickupColor.add( pickupComboBox);
 		JPanel pDropColor = new JPanel();
 		pDropColor.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutDropColor")));
-		pDropColor.add( dropComboBox);
+		pDropColor.add(dropComboBox);
+		
+		JPanel pFormat = new JPanel();
+		pFormat.setBorder(BorderFactory.createTitledBorder(rb.getString("BorderLayoutFormat")));
+		pFormat.add(tabFormatCheckBox);
 
 		p1.add(pFont);
 		p1.add(pFontSize);
 		p1.add(pPickupColor);
 		p1.add(pDropColor);
+		p1.add(pFormat);
 		
 		// engine message format
 		JPanel pEngPickup = new JPanel();
@@ -221,6 +227,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		getContentPane().add(pReportPane);
 		getContentPane().add(pControl);
 		
+		tabFormatCheckBox.setSelected(Setup.isTabEnabled());
 		printLocCommentsCheckBox.setSelected(Setup.isPrintLocationCommentsEnabled());
 		printLoadsEmptiesCheckBox.setSelected(Setup.isPrintLoadsAndEmptiesEnabled());
 		buildReportCheckBox.setSelected(Setup.isBuildReportEditorEnabled());
@@ -322,6 +329,7 @@ public class PrintOptionFrame extends OperationsFrame{
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_DETAILED);
 			else if (buildReportVD.isSelected())
 				Setup.setBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+			Setup.setTabEnabled(tabFormatCheckBox.isSelected());
 			Setup.setPrintLocationCommentsEnabled(printLocCommentsCheckBox.isSelected());
 			Setup.setPrintLoadsAndEmptiesEnabled(printLoadsEmptiesCheckBox.isSelected());
 			Setup.setBuildReportEditorEnabled(buildReportCheckBox.isSelected());
