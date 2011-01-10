@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 
 public class Router {
@@ -65,26 +65,28 @@ public class Router {
 				car.setNextDestTrack(null);
 				return true;
 			}
-			Car ts = clone(car);	// set the clone car's destination and track
+			// note clone has car has next destination as its destination
+			Car clone = clone(car);
 			//Note the following test doesn't check for length which is what we want!
-			String newStatus = ts.testDestination(ts.getDestination(), ts.getDestinationTrack());
+			String newStatus = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
 			if (!newStatus.equals(Car.OKAY)){
 				String trk = "null";
 				if (car.getNextDestTrack() != null)
 					trk = car.getNextDestTrack().getName();
-				log.warn("Next destination ("+car.getNextDestinationName()+", "+trk+") failed for car ("+car.toString()+") due to "+newStatus);
+				log.info("Next destination ("+car.getNextDestinationName()+", "+trk+") failed for car ("+car.toString()+") due to "+newStatus);
+				return false;
 			}
 			// check to see if car will move with new destination and a single train
-			Train train = TrainManager.instance().getTrainForCar(ts);
+			Train train = TrainManager.instance().getTrainForCar(clone);
 			if (train != null){
-				log.debug("Car ("+car.toString()+") destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()
+				log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
 						+") can be serviced by a single train ("+train.getName()+")");
-				_status = car.setDestination(ts.getDestination(), ts.getDestinationTrack());
+				_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
 				if (_status.equals(Car.OKAY)){
 					car.setNextDestination(null);
 					car.setNextDestTrack(null);
 				} else {
-					log.info("Can not deliver car ("+car.toString()+") to destination ("+ts.getDestinationName()+", "+ts.getDestinationTrackName()
+					log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
 							+") due to "+_status);
 					return false;
 				}
@@ -435,19 +437,19 @@ public class Router {
 	
 	// sets clone car destination to next destination and track
 	private Car clone(Car car){
-		Car ts = new Car();
-		ts.setBuilt(car.getBuilt());
-		ts.setLength(car.getLength());
-		ts.setLoad(car.getLoad());
-		ts.setNumber(car.getNumber());
-		ts.setOwner(car.getOwner());
-		ts.setRoad(car.getRoad());
-		ts.setType(car.getType());
-		ts.setLocation(car.getLocation());
-		ts.setTrack(car.getTrack());
-		ts.setDestination(car.getNextDestination());
-		ts.setDestinationTrack(car.getNextDestTrack());
-		return ts;
+		Car clone = new Car();
+		clone.setBuilt(car.getBuilt());
+		clone.setLength(car.getLength());
+		clone.setLoad(car.getLoad());
+		clone.setNumber(car.getNumber());
+		clone.setOwner(car.getOwner());
+		clone.setRoad(car.getRoad());
+		clone.setType(car.getType());
+		clone.setLocation(car.getLocation());
+		clone.setTrack(car.getTrack());
+		clone.setDestination(car.getNextDestination());
+		clone.setDestinationTrack(car.getNextDestTrack());
+		return clone;
 	}
 	
 	
