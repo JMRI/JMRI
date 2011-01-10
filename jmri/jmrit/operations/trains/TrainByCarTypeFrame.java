@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -156,6 +156,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(TrainBuilt)"));
 				else if (car != null && !train.acceptsOwnerName(car.getOwner()))
 					op.setText(rb.getString("X(TrainOwner)"));
+				else if (car != null && !train.acceptsLoadName(car.getLoad()))
+					op.setText(rb.getString("X(TrainLoad)"));
 				else if (train.skipsLocation(rl.getId()))
 					op.setText(rb.getString("X(TrainSkips)"));
 				else if (!rl.canDrop() && !rl.canPickup())
@@ -168,6 +170,8 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(TrackType)"));
 				else if (car != null && !track.acceptsRoadName(car.getRoad()))
 					op.setText(rb.getString("X(TrackRoad)"));
+				else if (car != null && !track.acceptsLoadName(car.getLoad()))
+					op.setText(rb.getString("X(TrackLoad)"));
 				else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0)
 					op.setText(rb.getString("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
@@ -179,9 +183,9 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
-					op.setText(rb.getString("Drop"));
+					op.setText(rb.getString("DropOnly"));
 				else if (rl.canPickup())
-					op.setText(rb.getString("Pickup"));
+					op.setText(rb.getString("PickupOnly"));
 
 				else
 					op.setText("X");	//default shouldn't occur
