@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
 import jmri.NamedBean;
+import jmri.Manager;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JButton;
@@ -58,6 +59,9 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
 
     protected EcosSystemConnectionMemo adaptermemo;
     protected EcosLocoAddressManager locoManager;
+    public void setManager(Manager man) { 
+        locoManager = (EcosLocoAddressManager) man;
+    }
     protected String rosterAttribute;
     public void setAdapterMemo(EcosSystemConnectionMemo memo) {
         adaptermemo = memo;
@@ -416,6 +420,8 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
     }
     
     protected void addPressed(ActionEvent e){ }
+    
+    protected String getClassName() { return EcosLocoTableAction.class.getName(); }
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(EcosLocoTableAction.class.getName());
 }

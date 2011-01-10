@@ -2,6 +2,7 @@
 
 package jmri.jmrit.beantable;
 
+import jmri.Manager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ResourceBundle;
@@ -15,7 +16,7 @@ import javax.swing.JPanel;
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.15 $
+ * @version     $Revision: 1.16 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -87,6 +88,17 @@ abstract public class AbstractTableAction extends AbstractAction {
     }
     
     /**
+     * If the subClass is being included in a greater tabbed frame, then this 
+     * method is used to add the details to the tabbed frame
+     */
+    public void addToPanel(AbstractTableTabAction f) { }
+    
+    /**
+     * If the subClass is being included in a greater tabbed frame, then this 
+     * is used to specify which manager the subclass should be using.
+     */
+    protected void setManager(Manager man) { }
+    /**
      * Allow subclasses to add alter the frames Menubar
      * without have to actually subclass the BeanTableDataFrame
      */
@@ -107,9 +119,10 @@ abstract public class AbstractTableAction extends AbstractAction {
     * Used with the Tabbed instances of table action, so that the print option 
     * is handled via that on the appropriate tab.
     */
-    public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat){ System.out.println("Caught here");}
+    public void print(javax.swing.JTable.PrintMode mode, java.text.MessageFormat headerFormat, java.text.MessageFormat footerFormat){ log.error("Caught here");}
 
     protected abstract void addPressed(ActionEvent e);
 
+    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(AbstractTableAction.class.getName());
 }
 /* @(#)AbstractTableAction.java */

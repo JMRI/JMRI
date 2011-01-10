@@ -14,7 +14,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the sensor table
  * @author			Bob Jacobsen  Copyright 2009, 2010
- * @version         $Revision: 1.6 $
+ * @version         $Revision: 1.7 $
  */
 public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
@@ -29,7 +29,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         JmriJFrame ft = JmriJFrame.getFrame("Sensor Table");
         
         // Find the add button
-        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add" );
+        AbstractButtonFinder abfinder = new AbstractButtonFinder("Add ..." );
         JButton button = ( JButton ) abfinder.find( ft, 0);
         Assert.assertNotNull(button);   
 

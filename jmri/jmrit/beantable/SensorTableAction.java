@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.38 $
+ * @version     $Revision: 1.39 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -49,8 +49,8 @@ public class SensorTableAction extends AbstractTableAction {
     public SensorTableAction() { this("Sensor Table");}
 
     protected SensorManager senManager = jmri.InstanceManager.sensorManagerInstance();
-    public void setManager(SensorManager man){
-        senManager = man;
+    public void setManager(Manager man){
+        senManager = (SensorManager) man;
         if (m!=null)
             m.setManager(senManager);
     }
@@ -221,8 +221,8 @@ public class SensorTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
-    public void addToPanel(SensorTableTabAction f) { }
-
+    protected String getClassName() { return SensorTableAction.class.getName(); }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
 }
 

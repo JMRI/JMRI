@@ -6,6 +6,7 @@ import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
 import jmri.Light;
+import jmri.LightManager;
 import jmri.Sensor;
 import jmri.Turnout;
 import jmri.implementation.LightControl;
@@ -36,7 +37,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.51 $
+ * @version     $Revision: 1.52 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -51,12 +52,16 @@ public class LightTableAction extends AbstractTableAction {
     public LightTableAction(String s) {
         super(s);
         // disable ourself if there is no primary Light manager available
-        if (jmri.InstanceManager.lightManagerInstance()==null) {
+        if (lightManager==null) {
             setEnabled(false);
         }
     }
     public LightTableAction() { this("Light Table");}
 
+    protected LightManager lightManager = InstanceManager.lightManagerInstance();
+    public void setManager(Manager man) { 
+        lightManager = (LightManager) man;
+    }
     /**
      * Create the JTable DataModel, along with the changes
      * for the specific case of Lights
@@ -96,7 +101,7 @@ public class LightTableAction extends AbstractTableAction {
     			else return super.isCellEditable(row,col);
 			}    		
             public String getValue(String name) {
-                int val = InstanceManager.lightManagerInstance().getBySystemName(name).getState();
+                int val = lightManager.getBySystemName(name).getState();
                 switch (val) {
                 case Light.ON: return rbean.getString("LightStateOn");
                 case Light.INTERMEDIATE: return rbean.getString("LightStateIntermediate");
@@ -176,13 +181,13 @@ public class LightTableAction extends AbstractTableAction {
             }
 
             public Manager getManager() { 
-                return InstanceManager.lightManagerInstance(); 
+                return lightManager; 
             }
             public NamedBean getBySystemName(String name) { 
-                return InstanceManager.lightManagerInstance().getBySystemName(name);
+                return lightManager.getBySystemName(name);
             }
             public NamedBean getByUserName(String name) { 
-                return InstanceManager.lightManagerInstance().getByUserName(name);
+                return lightManager.getByUserName(name);
             }
             public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }
@@ -453,7 +458,7 @@ public class LightTableAction extends AbstractTableAction {
 	private void initializePrefixCombo() {
 		prefixBox.removeAllItems();
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-		if (jmri.InstanceManager.lightManagerInstance().getClass().getName().contains("ProxyLightManager")){
+        if (jmri.InstanceManager.lightManagerInstance() instanceof jmri.managers.AbstractProxyManager){
 			jmri.managers.ProxyLightManager proxy = (jmri.managers.ProxyLightManager) jmri.InstanceManager.lightManagerInstance();
 			List<Manager> managerList = proxy.getManagerList();
 			for (int i = 0; i<managerList.size(); i++) {

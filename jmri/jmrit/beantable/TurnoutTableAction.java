@@ -42,7 +42,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.93 $
+ * @version     $Revision: 1.94 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -75,8 +75,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     String[] lockOperations = {bothText, cabOnlyText, pushbutText, noneText};
     
     protected TurnoutManager turnManager = InstanceManager.turnoutManagerInstance();
-    public void setManager(TurnoutManager man) { 
-        turnManager = man;
+    public void setManager(Manager man) { 
+        turnManager = (TurnoutManager) man;
     }
     /**
      * Create the JTable DataModel, along with the changes
@@ -391,7 +391,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                 };
             /* We use the proxy manager in this instance so that we can deal with 
             duplicate usernames in multiple classes */
-            if (InstanceManager.turnoutManagerInstance().getClass().getName().contains("ProxyTurnoutManager")){
+            if (InstanceManager.turnoutManagerInstance() instanceof jmri.managers.AbstractProxyManager){
                 jmri.managers.ProxyTurnoutManager proxy = (jmri.managers.ProxyTurnoutManager) InstanceManager.turnoutManagerInstance();
                 List<Manager> managerList = proxy.getManagerList();
                 for(int x = 0; x<managerList.size(); x++){
@@ -675,8 +675,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         	}
             });
     }
-    
-    public void addToPanel(TurnoutTableTabAction f) {
+    public void addToPanel(AbstractTableTabAction f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
         
         if (turnManager.getClass().getName().contains("ProxyTurnoutManager"))
@@ -868,6 +867,8 @@ public class TurnoutTableAction extends AbstractTableAction {
     }
     
     private boolean noWarn = false;
+	
+    protected String getClassName() { return TurnoutTableAction.class.getName(); }
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableAction.class.getName());
 }

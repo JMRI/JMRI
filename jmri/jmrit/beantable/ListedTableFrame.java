@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -77,11 +77,9 @@ public class ListedTableFrame extends BeanTableFrame {
         if (!init){
             /*Add the default tables to the static list array, this should only be done
             once when first loaded*/
-            //addTable("jmri.jmrit.beantable.TurnoutTableAction",  rbs.getString("MenuItemTurnoutTable"), true);
             addTable("jmri.jmrit.beantable.TurnoutTableTabAction", rbs.getString("MenuItemTurnoutTable"), false);
-            //addTable("jmri.jmrit.beantable.SensorTableAction", rbs.getString("MenuItemSensorTable"), true);
             addTable("jmri.jmrit.beantable.SensorTableTabAction", rbs.getString("MenuItemSensorTable"), false);
-            addTable("jmri.jmrit.beantable.LightTableAction", rbs.getString("MenuItemLightTable"), true);
+            addTable("jmri.jmrit.beantable.LightTableTabAction", rbs.getString("MenuItemLightTable"), false);
             addTable("jmri.jmrit.beantable.SignalHeadTableAction", rbs.getString("MenuItemSignalTable"), true);
             addTable("jmri.jmrit.beantable.SignalMastTableAction", rbs.getString("MenuItemSignalMastTable"), true);
             addTable("jmri.jmrit.beantable.SignalGroupTableAction", rbs.getString("MenuItemSignalGroupTable"), true);
@@ -99,6 +97,7 @@ public class ListedTableFrame extends BeanTableFrame {
         tabbedTableArray = new ArrayList<tabbedTableItem>();
         for(int x=0; x<tabbedTableItemListArray.size(); x++){
             /* Here we add all the tables into the panel*/
+            
             tabbedTableItemList item = tabbedTableItemListArray.get(x);
             tabbedTableItem itemModel = new tabbedTableItem(item.getClassAsString(), item.getItemString(), item.getStandardTableModel());
             itemBeingAdded = itemModel;
@@ -342,9 +341,10 @@ public class ListedTableFrame extends BeanTableFrame {
         }
         
         void createDataModel(){
-            try {
+            //try {
                 dataModel = tableAction.getTableDataModel();
-            
+                /*if (dataModel == null)
+                    return;*/
                 TableSorter sorter = new TableSorter(dataModel);
                 dataTable = makeJTable(sorter);
                 sorter.setTableHeader(dataTable.getTableHeader());
@@ -355,7 +355,6 @@ public class ListedTableFrame extends BeanTableFrame {
                     tmodel.setColumnComparator(String.class, new jmri.util.SystemNameComparator());
                     tmodel.setSortingStatus(BeanTableDataModel.SYSNAMECOL, TableSorter.ASCENDING);
                 } catch (java.lang.ClassCastException e) {}  // happens if not sortable table
-                
                 dataModel.configureTable(dataTable);
                 
                 java.awt.Dimension dataTableSize = dataTable.getPreferredSize();
@@ -378,9 +377,9 @@ public class ListedTableFrame extends BeanTableFrame {
                         tableAction.addPressed(e);
                     }
                 });   
-            } catch ( NullPointerException e) {
+            /*} catch ( NullPointerException e) {
                 log.error("An error occured while trying to create the table for " + itemText);
-            }
+            }*/
         }
         
         void addPanelModel(){
@@ -388,7 +387,7 @@ public class ListedTableFrame extends BeanTableFrame {
                 dataPanel.add(tableAction.getPanel(), BorderLayout.CENTER);
                 dataPanel.add(bottomBox, BorderLayout.SOUTH);
            } catch ( NullPointerException e) {
-                log.error("An error occured while trying to create the table for " + itemText);
+                log.error("An error occured while trying to create the table for " + itemText + " " + e.toString());
            }
         }
         
