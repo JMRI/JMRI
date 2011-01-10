@@ -25,7 +25,7 @@ import jarray
 import jmri
 import gnu.io
 
-class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :    
+class SerialPortRFID(jmri.jmrit.automat.AbstractAutomaton) :    
     # starts up the serial port
 	# no changes to Bob J's code for this section
     def __init__(self, portname) :
@@ -40,6 +40,9 @@ class SerialPortTest(jmri.jmrit.automat.AbstractAutomaton) :
         self.port.setSerialPortParams(baudrate, gnu.io.SerialPort.DATABITS_8, 
                                     gnu.io.SerialPort.STOPBITS_1, gnu.io.SerialPort.PARITY_NONE)
         
+        # the MERG Mk2 RFID concentrator uses RTS/CTS (hardware) flow control
+        self.port.setFlowControlMode(gnu.io.SerialPort.FLOWCONTROL_RTSCTS_IN)
+
         # get I/O connections for later
         self.inputStream = self.port.getInputStream()
         self.outputStream = self.port.getOutputStream()
@@ -126,10 +129,10 @@ mem_h = memories.provideMemory("RFID_H")
 all_mems = [ mem_a, mem_b, mem_c, mem_d, mem_e, mem_f, mem_g, mem_h ]
 
 # create one of these; provide the name of the serial port
-a = SerialPortTest("COM1")
+a = SerialPortRFID("COM1")
 
 # set the thread name, so easy to cancel if needed
-a.setName("SerialPortTest sample script")
+a.setName("SerialPortRFID sample script")
 
 # start running
 a.start();
