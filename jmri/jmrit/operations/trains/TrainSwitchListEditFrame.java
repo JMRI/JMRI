@@ -34,7 +34,7 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -150,9 +150,9 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	
 	// save printer selection
 	private void save(){
-		List<String> locations = manager.getLocationsByNameList();	
-		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById(locations.get(i));
+		for (int i =0; i<locationCheckBoxes.size(); i++){
+			String locationName = locationCheckBoxes.get(i).getName();
+			Location l = manager.getLocationByName(locationName);
 			JComboBox comboBox = locationComboBoxes.get(i);
 			String printerName = (String)comboBox.getSelectedItem();
 			if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())){
@@ -165,10 +165,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void buildSwitchList(boolean isPreview){
-		List<String> locations = manager.getLocationsByNameList();
 		TrainSwitchLists ts = new TrainSwitchLists();
-		for (int i =0; i<locations.size(); i++){
-			Location location = manager.getLocationById(locations.get(i));
+		for (int i =0; i<locationCheckBoxes.size(); i++){
+			String locationName = locationCheckBoxes.get(i).getName();
+			Location location = manager.getLocationByName(locationName);
 			if (location.getSwitchList()){
 				ts.buildSwitchList(location);
 				ts.printSwitchList(location, isPreview);
@@ -177,9 +177,10 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void selectCheckboxes(boolean enable){
-		List<String> locations = manager.getLocationsByNameList();
-		for (int i =0; i<locations.size(); i++){
-			Location l = manager.getLocationById(locations.get(i));
+
+		for (int i =0; i<locationCheckBoxes.size(); i++){
+			String locationName = locationCheckBoxes.get(i).getName();
+			Location l = manager.getLocationByName(locationName);
 			l.setSwitchList(enable);
 		}
 	}
@@ -212,6 +213,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			locationCheckBoxes.add(checkBox);
 			checkBox.setSelected(l.getSwitchList());
 			checkBox.setText(name);
+			checkBox.setName(l.getName());
 			addLocationCheckBoxAction(checkBox);
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
 			

@@ -24,6 +24,7 @@ import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 
 import jmri.jmrit.operations.setup.Setup;
@@ -39,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.102 $
+ * @version $Revision: 1.103 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -1330,7 +1331,9 @@ public class Train implements java.beans.PropertyChangeListener {
 			logoURL = getManifestLogoURL();
 		else 
 			logoURL = Setup.getManifestLogoURL();
-		TrainPrintUtilities.printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false, logoURL);
+		Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
+		String printerName = departs.getDefaultPrinterName();
+		TrainPrintUtilities.printReport(file, "Train Manifest "+getDescription(), isPreview, Setup.getFontName(), false, logoURL, printerName);
 		if (!isPreview)
 			setPrinted(true);
 		return true;

@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.123 $
+ * @version             $Revision: 1.124 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1101,12 +1101,14 @@ public class TrainBuilder extends TrainCommon{
 										// car has a destination track
 									} else {
 										// going into the correct staging track?
-										if (terminateStageTrack == null  || terminateStageTrack == c.getDestinationTrack()){
+										if (!rld.equals(train.getTrainTerminatesRouteLocation()) || terminateStageTrack == null  || terminateStageTrack == c.getDestinationTrack()){
 											String status = c.testDestination(c.getDestination(), c.getDestinationTrack());
 											if (status.equals(Car.OKAY) && checkDropTrainDirection(c, rld, c.getDestinationTrack()))
 												carAdded = addCarToTrain(c, rl, rld, c.getDestinationTrack());
 											else if (!status.equals(Car.OKAY))
-												addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), c.getDestinationTrack().getName(), status}));
+												addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropCarBecause"),new Object[]{c.toString(), c.getDestinationTrackName(), status}));
+										} else {
+											throw new BuildFailedException(MessageFormat.format(rb.getString("buildCarDestinationStaging"),new Object[]{c.toString(), c.getDestinationName(), c.getDestinationTrackName()}));
 										}
 									}
 									// done?
