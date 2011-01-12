@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class Router {
@@ -96,13 +96,13 @@ public class Router {
 				otherLocationTrackPairs.clear();
 				// first try using 2 trains and an interchange track to route the car
 				if (setCarDestinationInterchange(car)){
-					log.debug("Was able to set route via interchange for car ("+car.toString()+")");
+					log.debug("Was able to set route via interchange ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
 				// now try 2 trains and a yard track
 				} else if (setCarDestinationYard(car)){
-					log.debug("Was able to set route via yard for car ("+car.toString()+")");
+					log.debug("Was able to set route via yard ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
 					// now try 2 trains and a yard track
 				} else if (setCarDestinationStaging(car)){
-					log.debug("Was able to set route via staging for car ("+car.toString()+")");
+					log.debug("Was able to set route via staging ("+car.getDestinationName()+", "+car.getDestinationTrackName()+") for car ("+car.toString()+")");
 				// now try 3 or more trains to route car
 				} else if (setCarDestinationMultipleTrains(car)){
 					log.debug("Was able to set multiple train route for car ("+car.toString()+")");

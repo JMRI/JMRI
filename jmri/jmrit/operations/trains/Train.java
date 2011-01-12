@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.103 $
+ * @version $Revision: 1.104 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	
@@ -912,7 +912,7 @@ public class Train implements java.beans.PropertyChangeListener {
     		else
     			return false;
     	} catch (NumberFormatException e1){
-    		log.debug("Built date: "+date+" isn't an integer");
+    		//log.debug("Built date: "+date+" isn't an integer");
     		// maybe the built date is in the format month-year
     		String[] built = date.split("-");
     		if (built.length>1)
