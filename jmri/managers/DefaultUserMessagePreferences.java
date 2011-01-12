@@ -2,7 +2,6 @@
 
 package jmri.managers;
 
-//import javax.swing.ImageIcon;
 import jmri.UserPreferencesManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -17,6 +16,10 @@ import java.util.ArrayList;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.Vector;
+import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Enumeration;
+import java.lang.reflect.Method;
 
 
 /**
@@ -26,7 +29,7 @@ import java.util.Vector;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.22 $
+ * @version	$Revision: 1.23 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -66,6 +69,9 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 log.warn("Won't protect preferences at shutdown without registered ShutDownManager");
             }
         }
+        //setClassDescription(jmri.jmrit.beantable.BlockTableAction.class.getName());
+        preferenceItemDetails(getClassName(), "reminder", "Hide Reminder Location Message");
+        classPreferenceList.get(getClassName()).setDescription("User Preferences");
     }
     
     static class DefaultUserMessagePreferencesHolder {
@@ -77,39 +83,187 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         return DefaultUserMessagePreferencesHolder.instance;
     }
     
-    public synchronized void allowSave() { allowSave = true; }
-    public synchronized void disallowSave() { allowSave = false; }
+    public synchronized void allowSave() { DefaultUserMessagePreferencesHolder.instance.allowSave = true; }
+    public synchronized void disallowSave() { DefaultUserMessagePreferencesHolder.instance.allowSave = false; }
     
     public Dimension getScreen() { 
         return Toolkit.getDefaultToolkit().getScreenSize();
     }
     
-    java.util.ArrayList<String> preferenceList = new java.util.ArrayList<String>();
-    
-    public boolean getPreferenceState(String name) {
-        return preferenceList.contains(name);
-    }
-    
-    public java.util.ArrayList<String> getPreferenceStateList() { return preferenceList; }
-
-    public void setPreferenceState(String name, boolean state) {
+    /**
+     * This is used to remember the last selected state of a checkBox and thus
+     * allow that checkBox to be set to a true state when it is next initialised.
+     * This can also be used anywhere else that a simple yes/no, true/false type
+     * preference needs to be stored.
+     *
+     * It should not be used for remembering if a user wants to suppress a message
+     * as there is no means in the GUI for the user to reset the flag. 
+     * setPreferenceState() should be used in this instance
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     * @param name A unique name to identify the state being stored
+     * @param state simple boolean.
+     */
+    public void setSimplePreferenceState(String name, boolean state) {
         if (state) {
-            if (!preferenceList.contains(name)){
-                preferenceList.add(name);
-                displayRememberMsg();
-                setChangeMade();
+            if (!simplePreferenceList.contains(name)){
+                simplePreferenceList.add(name);
             }
         } else {
-            preferenceList.remove(name);
+            simplePreferenceList.remove(name);
         }
+        setChangeMade();
     }
     
-    //sessionList is used for messages to be suppressed for the current JMRI session only
-    java.util.ArrayList<String> sessionPreferenceList = new java.util.ArrayList<String>();
-    public boolean getSessionPreferenceState(String name) {
-        return sessionPreferenceList.contains(name);
+    ArrayList<String> simplePreferenceList = new ArrayList<String>();
+    
+    /**
+     * Enquire as to the state of a user preference.
+     * <p>
+     * Preferences that have not been set will be 
+     * considered to be false.
+     *<p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    public boolean getSimplePreferenceState(String name) {
+        return simplePreferenceList.contains(name);
     }
     
+    /**
+     *  Returns an ArrayList of the checkbox states set as true.
+     */
+    public ArrayList<String> getSimplePreferenceStateList() { return simplePreferenceList; }
+    
+    /**
+     * Used to save the state of checkboxes which can suppress messages from being
+     * displayed.
+     * This method should be used by the initiating code in conjunction with the 
+     * preferenceItemDetails.  
+     * Here the items are stored against a specific class and access to change 
+     * them is made available via the GUI, in the preference manager.
+     * <p>
+     * The strClass parameter does not have to be the exact class name of the 
+     * initiating code, but can be one where the information is related and therefore
+     * can be grouped together with.
+     * <p>
+     * Both the strClass and item although free form, should make up a unique reference.
+     * @param strClass The class that this preference should be stored or grouped with.
+     * @param item The specific item that is to be stored
+     * @param state Boolean state of the item.
+     */
+    
+    public void setPreferenceState(String strClass, String item, boolean state){
+        if(!classPreferenceList.containsKey(strClass)){
+            classPreferenceList.put(strClass, new ClassPreferences());
+            setClassDescription(strClass);
+        }
+        ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
+        boolean found = false;
+        for(int i = 0; i<a.size(); i++){
+            if (a.get(i).getItem().equals(item)){
+                a.get(i).setState(state);
+                found = true;
+            }
+        }
+        if (!found)
+            a.add(new PreferenceList(item, state));
+        displayRememberMsg();
+        setChangeMade();
+    }
+    
+    /**
+    * Returns the state of a given item registered against a specific class or item.
+    */
+    public boolean getPreferenceState(String strClass, String item){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
+            for(int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(item)){
+                    return a.get(i).getState();
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+    * Register details about a perticular preference, so that it can be displayed
+    * in the GUI and provide a meaning full description when presented to the user.
+    * @param strClass A string form of the class that the preference is stored or grouped with
+    * @param item The specific item that is being stored.
+    * @param description A meaningful decription of the item that the user will understand.
+    */
+    public void preferenceItemDetails(String strClass, String item, String description){
+        if (!classPreferenceList.containsKey(strClass)){
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
+        for(int i = 0; i<a.size(); i++){
+            if (a.get(i).getItem().equals(item)){
+                a.get(i).setDescription(description);
+                return;
+            }
+        }
+        a.add(new PreferenceList(item, description));
+    }
+
+    /**
+     * Returns a list of preferences that are registered against a specific class.
+     */
+    public ArrayList<String> getPreferenceList(String strClass){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
+            ArrayList<String> list = new ArrayList<String>();
+            for (int i = 0; i<a.size(); i++){
+                list.add(a.get(i).getItem());
+            }
+            return list;
+        }
+        //Just return a blank array list will save call code checking for null
+        return new ArrayList<String>();
+    }
+    
+    /**
+     * Returns the itemName of the n preference in the given class
+     */
+    public String getPreferenceItemName(String strClass, int n){
+        if (classPreferenceList.containsKey(strClass)){
+            return classPreferenceList.get(strClass).getPreferenceName(n);
+        }
+        return null;
+    }
+    
+    /**
+     * Returns the description of the given item preference in the given class
+     */
+    public String getPreferenceItemDescription(String strClass, String item){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<PreferenceList> a = classPreferenceList.get(strClass).getPreferenceList();
+            for(int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(item)){
+                    return a.get(i).getDescription();
+                }
+            }
+        }
+        return null;
+    
+    }
+    
+    /**
+    * Used to surpress messages for a perticular session, the information is not
+    * stored, can not be changed via the GUI.
+    * <p>
+    * This can be used to help prevent over loading the user with repetitive error
+    * messages such as turnout not found while loading a panel file due to a connection failing.
+    * The name is free-form, but to avoid ambiguity it should
+    * start with the package name (package.Class) for the
+    * primary using class.
+    * @param name A unique identifer for preference.
+    * @param state
+    */
     public void setSessionPreferenceState(String name, boolean state) {
         if (state) {
             if (!sessionPreferenceList.contains(name)){
@@ -120,12 +274,57 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
     
+    //sessionList is used for messages to be suppressed for the current JMRI session only
+    java.util.ArrayList<String> sessionPreferenceList = new java.util.ArrayList<String>();
+    
+    /**
+     * Enquire as to the state of a user preference for the current session.
+     * <p>
+     * Preferences that have not been set will be 
+     * considered to be false.
+     *<p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class.
+     */
+    public boolean getSessionPreferenceState(String name) {
+        return sessionPreferenceList.contains(name);
+    }
+    
+    /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
+     */
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
         showInfoMessage(title, message, strClass, item, false, true, org.apache.log4j.Level.INFO);
     }
     
-    
-    public void showInfoMessage(String title, String message, String strClass, String item, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
+    /**
+     * Show an info message ("don't forget ...")
+     * with a given dialog title and
+     * user message.
+     * Use a given preference name to determine whether
+     * to show it in the future.
+     * added flag to indicate that the message should be suppressed
+     * JMRI session only.
+     * The classString & item parameters should form a unique value
+     * @param title Message Box title
+     * @param message Message to be displayed
+     * @param classString String value of the calling class
+     * @param item String value of the specific item this is used for
+     * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
+     * @param alwaysRemember Means that the suppression of the message will be saved
+     * @param level Used to determine the type of messagebox that will be used.
+     */
+    public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember, org.apache.log4j.Level level) {
         final UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         Icon icon= UIManager.getIcon("OptionPane.informationIcon");
@@ -144,7 +343,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         if(p.getSessionPreferenceState(preference)){
             return;
         }
-        if (!p.getPreferenceState(preference)){
+        if (!p.getPreferenceState(strClass, item)){
             final JDialog dialog = new JDialog();
             dialog.setTitle(title);
             //dialog.setLocationRelativeTo(null);
@@ -179,7 +378,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             okButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     if(remember.isSelected()){
-                        p.setPreferenceState(preference, true);
+                        p.setPreferenceState(strClass, item, true);
                     }
                     if(rememberSession.isSelected()){
                         p.setSessionPreferenceState(preference, true);
@@ -204,6 +403,13 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
     
+    /**
+     * Adds the last selection of a combo box.
+     * <p>
+     * The name is free-form, but to avoid ambiguity it should
+     * start with the package name (package.Class) for the
+     * primary using class, followed by an identifier for the combobox
+     */
     public void addComboBoxLastSelection(String comboBoxName, String lastValue){
         if (getComboBoxLastSelection(comboBoxName)==null) {
             ComboBoxLastSelection combo = new ComboBoxLastSelection(comboBoxName, lastValue);
@@ -214,6 +420,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         setChangeMade();
     }
     
+    /**
+     * returns the last selected value in a given combobox
+     *
+     */
     public String getComboBoxLastSelection(String comboBoxName){
         for (int i=0; i<_comboBoxLastSelection.size(); i++) {
             if( _comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
@@ -223,6 +433,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         return null;
     }
     
+    /**
+    * sets the last selected value in a given combobox
+    *
+    */
     public void setComboBoxLastSelection(String comboBoxName, String lastValue){
         for (int i=0; i<_comboBoxLastSelection.size(); i++) {
             if( _comboBoxLastSelection.get(i).getComboBoxName().equals(comboBoxName)) {
@@ -232,8 +446,16 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         setChangeMade();
     }
     
+    /**
+    * returns the number of comboBox options saved
+    *
+    */
     public int getComboBoxSelectionSize() { return _comboBoxLastSelection.size(); }
     
+    /**
+    * returns the ComboBox Name at position n
+    *
+    */
     public String getComboBoxName(int n){
         try{
             return _comboBoxLastSelection.get(n).getComboBoxName();
@@ -241,6 +463,11 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             return null;
         }
     }
+    
+    /**
+    * returns the ComboBox Value at position n
+    *
+    */
     public String getComboBoxLastSelection(int n) {
         try{
             return _comboBoxLastSelection.get(n).getLastValue();
@@ -269,7 +496,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     }
 
-    ShutDownTask userPreferencesShutDownTask = null;
+    static ShutDownTask userPreferencesShutDownTask = null;
     
     private static volatile boolean _changeMade = false;
     
@@ -277,9 +504,10 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     public synchronized void setChangeMade() {
         _changeMade=true;
         notifyPropertyChangeListener("PreferencesUpdated", null, null );
-
     }
+
     //The reset is used after the preferences have been loaded for the first time
+
     public synchronized void resetChangeMade(){ _changeMade = false; }
 
     public void removePropertyChangeListener(PropertyChangeListener l) {
@@ -314,7 +542,6 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
 
-
     // data members to hold contact with the property listeners
     final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
 
@@ -324,153 +551,447 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         _loading = false;
         resetChangeMade();
     }
-    
-    private static final int ASK = 0x00; // ie always ask the question
-    @SuppressWarnings("unused")
-    private static final int NO = 0x01; //ie never do the operation if informational
-    @SuppressWarnings("unused")
-    private static final int YES = 0x02; //ie always perform the operation
-    
-    @SuppressWarnings("unused")
-    private static final boolean DISPLAY = true;
-    @SuppressWarnings("unused")
-    private static final boolean NODISPLAY = false;
-    
-    private static volatile int warnDeleteRoute = ASK;
-    public int getWarnDeleteRoute() { return warnDeleteRoute; }
-    public void setWarnDeleteRoute(int boo) { 
-        warnDeleteRoute = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-     /**
-     * Method to determine if the question of reloading JMRI should 
-     * should be presented, and if not the default setting.
-     */
-    private static volatile int quitAfterSave = ASK;
-    public int getQuitAfterSave() { return quitAfterSave; }
-    public void setQuitAfterSave(int boo) { 
-        quitAfterSave = boo; 
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnTurnoutInUse = ASK;
-    public int getWarnTurnoutInUse() { return warnTurnoutInUse; }
-    public void setWarnTurnoutInUse(int boo) { 
-        warnTurnoutInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnSensorInUse = ASK;
-    public int getWarnSensorInUse() { return warnSensorInUse; }
-    public void setWarnSensorInUse(int boo) { 
-        warnSensorInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnSignalHeadInUse = ASK;
-    public int getWarnSignalHeadInUse() { return warnSignalHeadInUse; }
-    public void setWarnSignalHeadInUse(int boo) { 
-        warnSignalHeadInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnTransitInUse = ASK;
-    public int getWarnTransitInUse() { return warnTransitInUse; }
-    public void setWarnTransitInUse(int boo) { 
-        warnTransitInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnSignalMastInUse = ASK;
-    public int getWarnSignalMastInUse() { return warnSignalMastInUse; }
-    public void setWarnSignalMastInUse(int boo) { 
-        warnSignalMastInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    private static volatile int warnSectionInUse = ASK;
-    public int getWarnSectionInUse() { return warnSectionInUse; }
-    public void setWarnSectionInUse(int boo) { 
-        warnSectionInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnReporterInUse = ASK;
-    public int getWarnReporterInUse() { return warnReporterInUse; }
-    public void setWarnReporterInUse(int boo) { 
-        warnReporterInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnMemoryInUse = ASK;
-    public int getWarnMemoryInUse() { return warnMemoryInUse; }
-    public void setWarnMemoryInUse(int boo) { 
-        warnMemoryInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnLogixInUse = ASK;
-    public int getWarnLogixInUse() { return warnLogixInUse; }
-    public void setWarnLogixInUse(int boo) { 
-        warnLogixInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnDeleteLogix = ASK;
-    public int getWarnDeleteLogix() { return warnDeleteLogix; }
-    public void setWarnDeleteLogix(int boo) { 
-        warnDeleteLogix = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnLightInUse = ASK;
-    public int getWarnLightInUse() { return warnLightInUse; }
-    public void setWarnLightInUse(int boo) { 
-        warnLightInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnLRouteInUse = ASK;
-    public int getWarnLRouteInUse() { return warnLRouteInUse; }
-    public void setWarnLRouteInUse(int boo) { 
-        warnLRouteInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnBlockInUse = ASK;
-    public int getWarnBlockInUse() { return warnBlockInUse; }
-    public void setWarnBlockInUse(int boo) { 
-        warnBlockInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
-    
-    private static volatile int warnAudioInUse = ASK;
-    public int getWarnAudioInUse() { return warnAudioInUse; }
-    public void setWarnAudioInUse(int boo) { 
-        warnAudioInUse = boo;
-        setChangeMade();
-        displayRememberMsg();
-    }
 
     public void displayRememberMsg(){
         if (_loading) return;
-        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Messages' Menu.", "DefaultUserMessagePreferences", "reminder");
+        showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Message' Menu.", getClassName(), "reminder");   
     }
     
+    Hashtable<String, ClassPreferences> classPreferenceList = new Hashtable<String, ClassPreferences>();
+    
+    /**
+    * Returns the description of a class/group registered with the preferences.
+    */
+    public String getClassDescription(String strClass){
+        if(classPreferenceList.containsKey(strClass)){
+            return classPreferenceList.get(strClass).getDescription();
+        }
+        return "";
+    }
+    
+    /**
+    * Returns a list of the classes registered with the preference manager.
+    */
+    public ArrayList<String> getPreferencesClasses(){
+        ArrayList<String> list = new ArrayList<String>();
+        Enumeration keys = classPreferenceList.keys();
+        while ( keys.hasMoreElements() )
+           {
+           String key = (String)keys.nextElement();
+           list.add(key);
+           } // end while
+        return list;
+    }
+    
+    /**
+     * Given that we know the class as a string, we will try and attempt to gather
+     * details about the preferences that has been added, so that we can make better
+     * sense of the details in the preferences window.
+     * <p>
+     * This looks for specific methods within the class called "getClassDescription"
+     * and "setMessagePreferenceDetails".  If found it will invoke the methods, 
+     * this will then trigger the class to send details about its preferences back
+     * to this code.
+     */
+    public void setClassDescription(String strClass){
+        try {
+            Class<?> cl = Class.forName(strClass);
+            Object t = cl.newInstance();
+            boolean classDesFound=false;
+            boolean classSetFound=false;
+            String desc = null;
+            Method method;
+            //look through declared methods first, then all methods
+            try {
+                method = cl.getDeclaredMethod ("getClassDescription");
+                desc = (String)method.invoke(t);
+                classDesFound = true;
+            } catch (Exception e){
+                classDesFound = false;
+            }
+            
+            if (!classDesFound){
+                try {
+                    method = cl.getMethod ("getClassDescription");
+                    desc = (String)method.invoke(t);
+                } catch (Exception e){
+                    classDesFound = false;
+                }
+            }
+            if(classDesFound){
+                if(!classPreferenceList.containsKey(strClass))
+                    classPreferenceList.put(strClass, new ClassPreferences(desc));
+                else
+                    classPreferenceList.get(strClass).setDescription(desc);
+            }
+            
+            try {
+                method = cl.getDeclaredMethod ("setMessagePreferencesDetails");
+                method.invoke(t);
+                classSetFound = true;
+            } catch (Exception e){
+                classSetFound = false;
+            }
+            
+            if (!classSetFound){
+                try {
+                    method = cl.getMethod ("setMessagePreferencesDetails");
+                    method.invoke(t);
+                    classSetFound = true;
+                } catch (Exception e){
+                    classSetFound = false;
+                }
+            }
+            
+        }
+        catch (java.lang.ClassNotFoundException ec){
+            log.error("class name "+ strClass + " is in valid " + ec);
+        }
+        catch (java.lang.IllegalAccessException ex){
+            ex.printStackTrace();
+        }
+        catch (Exception e) {
+            log.error("unable to get a class name" + e);
+        }
+    }
+    
+    /**
+    * Add descriptive details about a specific message box, so that if it needs
+    * to be reset in the preferences, then it is easily identifiable.
+    * displayed to the user in the preferences GUI.
+    * @param strClass String value of the calling class/group
+    * @param item String value of the specific item this is used for.
+    * @param description A meaningful description that can be used in a label to describe the item
+    * @param msgOption Description of each option valid option.
+    * @param msgNumber The references number against which the Description is refering too.
+    * @param defaultOption The default option for the given item.
+    */
+    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption){
+        HashMap<Integer, String> options = new HashMap<Integer, String>(msgOption.length);
+        for (int i = 0; i<msgOption.length; i++){
+            options.put(msgNumber[i], msgOption[i]);
+        }
+        messageItemDetails(strClass, description, item, options, defaultOption);
+    }
+    
+    /**
+    * Add descriptive details about a specific message box, so that if it needs
+    * to be reset in the preferences, then it is easily identifiable.
+    * displayed to the user in the preferences GUI.
+    * @param strClass String value of the calling class/group
+    * @param item String value of the specific item this is used for.
+    * @param description A meaningful description that can be used in a label to describe the item
+    * @param options A map of the integer value of the option against a meaningful description.
+    * @param defaultOption The default option for the given item.
+    */
+    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption){
+        if (!classPreferenceList.containsKey(strClass)){
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+        for (int i = 0; i<a.size(); i++){
+            if (a.get(i).getItem().equals(item)){
+                a.get(i).setMessageItems(description, options, defaultOption);
+                return;
+            }
+        }
+        a.add(new MultipleChoice(description, item, options, defaultOption));
+    }
+    
+    /**
+    * Returns a map of the value against description of the different items in a 
+    * given class.  This information can then be used to build a Combo box.
+    * @param strClass Class or group of the given item
+    * @param item the item which we wish to return the details about.
+    */
+    public HashMap<Integer, String> getChoiceOptions(String strClass, String item){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(item))
+                    return a.get(i).getOptions();
+            }
+        }
+        return new HashMap<Integer, String>();
+    }
+    
+    /**
+    * Returns the number of Mulitple Choice items registered with a given class.
+    */
+    public int getMultipleChoiceSize(String strClass){
+        if (classPreferenceList.containsKey(strClass)){
+            return classPreferenceList.get(strClass).getMultipleChoiceListSize();
+        }
+        return 0;
+    }
+    
+    /**
+    * Returns a list of all the multiple choice items registered with a given class.
+    */ 
+    public ArrayList<String> getMultipleChoiceList(String strClass) {
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            ArrayList<String> list = new ArrayList<String>();
+            for (int i = 0; i<a.size(); i++){
+                list.add(a.get(i).getItem());
+            }
+            return list;
+        }
+        return new ArrayList<String>();
+    }
+    
+    /**
+    * Returns the nth item name in a given class
+    */
+    public String getChoiceName(String strClass, int n){
+        if (classPreferenceList.containsKey(strClass)){
+            return classPreferenceList.get(strClass).getChoiceName(n);
+        }
+        return null;
+    }
+    
+    /**
+    * Returns the a meaningful description of a given item in a given class or group.
+    */
+    public String getChoiceDescription(String strClass, String item){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(item))
+                    return a.get(i).getOptionDescription();
+            }
+        }
+        return null;
+    }
+    
+    /**
+    * Returns the current value of a given item in a given class
+    */
+    public int getMultipleChoiceOption (String strClass, String item){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(item))
+                    return a.get(i).getValue();
+            }
+        }
+        return 0x00;
+    }
+    
+    /**
+    * Returns the default value of a given item in a given class
+    */
+    public int getMultipleChoiceDefaultOption (String strClass, String choice){
+        if (classPreferenceList.containsKey(strClass)){
+            ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+            for (int i = 0; i<a.size(); i++){
+                if (a.get(i).getItem().equals(choice))
+                    return a.get(i).getDefaultValue();
+            }
+        }
+        return 0x00;
+    }
+    
+    /**
+    * Sets the value of a given item in a given class, by its string description
+    */
+    public void setMultipleChoiceOption (String strClass, String choice, String value){
+        if (!classPreferenceList.containsKey(strClass)){
+            return;
+        }
+        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+        for (int i = 0; i<a.size(); i++){
+            if (a.get(i).getItem().equals(choice)){
+                a.get(i).setValue(value);
+            }
+        }
+    }
+    
+    /**
+    * Sets the value of a given item in a given class, by its integer value
+    */
+    public void setMultipleChoiceOption (String strClass, String choice, int value){
+        if (!classPreferenceList.containsKey(strClass)){
+            classPreferenceList.put(strClass, new ClassPreferences());
+        }
+        ArrayList<MultipleChoice> a = classPreferenceList.get(strClass).getMultipleChoiceList();
+        boolean set = false;
+        for (int i = 0; i<a.size(); i++){
+            if (a.get(i).getItem().equals(choice)){
+                a.get(i).setValue(value);
+                set = true;
+            }
+        }
+        if(!set) {
+            a.add(new MultipleChoice(choice, value));
+            setClassDescription(strClass);
+        }
+        displayRememberMsg();
+        setChangeMade();
+    }
+
+    public String getClassDescription() { return "Preference Manager"; }
+    
+    protected String getClassName() { return DefaultUserMessagePreferences.class.getName(); }
+    
+    /**
+    * returns the combined size of both types of items registered.
+    */ 
+    public int getPreferencesSize(String strClass){
+        if(classPreferenceList.containsKey(strClass)){
+            return classPreferenceList.get(strClass).getPreferencesSize();
+        }
+        return 0;
+    }
+    
+    /**
+     * Holds details about the speific class.
+     */
+    class ClassPreferences{
+        String classDescription;
+        
+        ArrayList<MultipleChoice> multipleChoiceList = new ArrayList<MultipleChoice>();
+        ArrayList<PreferenceList> preferenceList = new ArrayList<PreferenceList>();
+        
+        ClassPreferences(){
+        }
+        
+        ClassPreferences(String classDescription){
+            this.classDescription = classDescription;
+        }
+        
+        String getDescription (){
+            return classDescription;
+        }
+        
+        void setDescription (String description){
+            classDescription = description;
+        }
+        
+        ArrayList<PreferenceList> getPreferenceList() {
+            return preferenceList;
+        }
+        
+        int getPreferenceListSize() { return preferenceList.size(); }
+        
+        ArrayList<MultipleChoice> getMultipleChoiceList() {
+            return multipleChoiceList;
+        }
+        
+        int getPreferencesSize() {
+            return multipleChoiceList.size()+preferenceList.size();
+        }
+        
+        public String getPreferenceName(int n){
+            try{
+                return preferenceList.get(n).getItem();
+            } catch (IndexOutOfBoundsException ioob) {
+                return null;
+            }
+        }
+        
+        int getMultipleChoiceListSize() { return multipleChoiceList.size(); }
+        
+        public String getChoiceName(int n){
+            try{
+                return multipleChoiceList.get(n).getItem();
+            } catch (IndexOutOfBoundsException ioob) {
+                return null;
+            }
+        }
+    }
+    
+    class MultipleChoice{
+    
+        HashMap<Integer, String> options;
+        String optionDescription;
+        String item;
+        int value = -1;
+        int defaultOption = -1;
+        
+        MultipleChoice(String description, String item, HashMap<Integer, String> options, int defaultOption){
+            this.item = item;
+            setMessageItems(description, options, defaultOption);
+        }
+        
+        MultipleChoice(String item, int value){
+            this.item = item;
+            this.value = value;
+
+        }
+        
+        void setValue(int value){ 
+            this.value = value;
+        }
+        
+        void setValue(String value){
+            for(Object o:options.keySet()){
+                if(options.get(o).equals(value)) {
+                    this.value = (Integer)o;
+                }
+            }
+        }
+        
+        void setMessageItems(String description, HashMap<Integer, String> options, int defaultOption){
+            optionDescription = description;
+            this.options = options;
+            this.defaultOption = defaultOption;
+            if (value==-1)
+                value = defaultOption;
+        }
+        
+        int getValue() { return value; }
+        
+        int getDefaultValue() { return defaultOption; }
+        
+        String getItem(){ return item; }
+        
+        String getOptionDescription() { return optionDescription; }
+        
+        HashMap<Integer, String> getOptions() { return options; }
+        
+    }
+    
+    class PreferenceList{
+        // need to fill this with bits to get a meaning full description.
+        boolean set = false;
+        String item = "";
+        String description = "";
+        
+        PreferenceList(String item){
+            this.item = item;
+        }
+        
+        PreferenceList(String item, boolean state){
+            this.item = item;
+            set=state;
+        }
+        
+        PreferenceList(String item, String description){
+            this.description = description;
+            this.item = item;
+        }
+        
+        void setDescription(String desc){
+            description = desc;
+        }
+        
+        String getDescription() {
+            return description;
+        }
+        
+        boolean getState() {
+            return set;
+        }
+        
+        void setState(boolean state){
+            this.set=state;
+        }
+        
+        String getItem() {
+            return item;
+        }
+    
+    }
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferences.class.getName());
 }

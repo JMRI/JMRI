@@ -24,7 +24,7 @@ import jmri.util.JmriJFrame;
  * MemoryTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.26 $
+ * @version     $Revision: 1.27 $
  */
 
 public class MemoryTableAction extends AbstractTableAction {
@@ -66,8 +66,9 @@ public class MemoryTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.memoryManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.memoryManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.memoryManagerInstance().getByUserName(name);}
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
 
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 
@@ -135,7 +136,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 };
             addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, autoSystemName, "ButtonOK", listener));
         }
-        if(p.getPreferenceState(systemNameAuto))
+        if(p.getSimplePreferenceState(systemNameAuto))
             autoSystemName.setSelected(true);
         addFrame.pack();
         addFrame.setVisible(true);
@@ -152,6 +153,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 numberOfMemory = Integer.parseInt(numberToAdd.getText());
             } catch (NumberFormatException ex) {
                 log.error("Unable to convert " + numberToAdd.getText() + " to a number");
+
                 jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
                                 showInfoMessage("Error","Number to memory items to Add must be a number!",""+ex, "",true, false, org.apache.log4j.Level.ERROR);
                 return;
@@ -196,7 +198,7 @@ public class MemoryTableAction extends AbstractTableAction {
                 return; // without creating       
             }
         }
-        p.setPreferenceState(systemNameAuto, autoSystemName.isSelected());
+        p.setSimplePreferenceState(systemNameAuto, autoSystemName.isSelected());
     }
     //private boolean noWarn = false;
 
@@ -208,6 +210,10 @@ public class MemoryTableAction extends AbstractTableAction {
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
+    
+    public String getClassDescription() { return rb.getString("TitleMemoryTable"); }
+    
+    protected String getClassName() { return MemoryTableAction.class.getName(); }
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(MemoryTableAction.class.getName());
 }

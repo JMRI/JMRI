@@ -26,7 +26,7 @@ import javax.swing.JComboBox;
  * SensorTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.39 $
+ * @version     $Revision: 1.40 $
  */
 
 public class SensorTableAction extends AbstractTableAction {
@@ -184,8 +184,9 @@ public class SensorTableAction extends AbstractTableAction {
                     user = userName.getText()+":"+x;
                 if (user!= null && !user.equals("") && (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)==null)){
                     s.setUserName(user);
-                } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)) {
-                    p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
+                } else if (jmri.InstanceManager.sensorManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(getClassName(), "duplicateUserName")) {
+                    jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
                 }
             }
         }
@@ -221,8 +222,15 @@ public class SensorTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     
+    public void setMessagePreferencesDetails(){
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName",  rb.getString("DuplicateUserNameWarn"));
+        super.setMessagePreferencesDetails();
+    }
+    
     protected String getClassName() { return SensorTableAction.class.getName(); }
     
+    public String getClassDescription() { return rb.getString("TitleSensorTable"); }
+
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableAction.class.getName());
 }
 

@@ -43,7 +43,7 @@ import jmri.util.JmriJFrame;
  * @author Simon Reader Copyright (C) 2008
  * @author Pete Cressman Copyright (C) 2009
  *
- * @version     $Revision: 1.67 $
+ * @version     $Revision: 1.68 $
  */
 
 public class RouteTableAction extends AbstractTableAction {
@@ -72,7 +72,7 @@ public class RouteTableAction extends AbstractTableAction {
             || Route.VETOACTIVE != 2 || Route.VETOINACTIVE !=3 )
             log.error("assumption invalid in RouteTable implementation");
     }
-    public RouteTableAction() { this("Route Table");}
+    public RouteTableAction() { this(rb.getString("TitleRouteTable"));}
 
     /**
      * Create the JTable DataModel, along with the changes
@@ -203,8 +203,10 @@ public class RouteTableAction extends AbstractTableAction {
                 return jmri.InstanceManager.routeManagerInstance().getByUserName(name);
             }    
             
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnDeleteRoute(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteRoute(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
+
             
             public void clickOn(NamedBean t) {
                ((Route)t).setRoute();
@@ -362,7 +364,7 @@ public class RouteTableAction extends AbstractTableAction {
                         autoSystemName();
                     }
                 });
-            if(pref.getPreferenceState(systemNameAuto))
+            if(pref.getSimplePreferenceState(systemNameAuto))
                 _autoSystemName.setSelected(true);
             _systemName.setToolTipText("Enter system name for new Route, e.g. R12.");
             ps.add(fixedSystemName);
@@ -712,7 +714,7 @@ public class RouteTableAction extends AbstractTableAction {
                     // remind to save, if Route was created or edited
                     if (routeDirty) {
                         InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                            showInfoMessage("Reminder","Remember to save your Route information.","beantable.RouteTableAction", "remindRoute");
+                            showInfoMessage("Reminder","Remember to save your Route information.",getClassName(), "remindSaveRoute");
                         routeDirty = false;
                     }
                     // hide addFrame
@@ -778,7 +780,7 @@ public class RouteTableAction extends AbstractTableAction {
         }
         updatePressed(e, true);
         status2.setText(editInst);
-        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
         // activate the route
     }
 
@@ -1981,6 +1983,16 @@ public class RouteTableAction extends AbstractTableAction {
             }
         }
     }
+    
+    public void setMessagePreferencesDetails(){
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", rb.getString("HideSaveReminder"));
+        super.setMessagePreferencesDetails();
+    }
+    
+    protected String getClassName() { return RouteTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleRouteTable"); }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(RouteTableAction.class.getName());
 }
 /* @(#)RouteTableAction.java */

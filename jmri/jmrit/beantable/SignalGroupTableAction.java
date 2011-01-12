@@ -39,7 +39,7 @@ import jmri.util.JmriJFrame;
  *
  * @author	Kevin Dickerson    Copyright (C) 2010
  *
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class SignalGroupTableAction extends AbstractTableAction {
@@ -62,7 +62,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
         
     }
-    public SignalGroupTableAction() { this("SignalGroup Table");}
+    public SignalGroupTableAction() { this(rb.getString("TitleSignalGroupTable"));}
 
     /**
      * Create the JTable DataModel, along with the changes
@@ -198,6 +198,7 @@ public class SignalGroupTableAction extends AbstractTableAction {
             
             public int getDisplayDeleteMsg() { return 0x00;/*return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnDeleteSignalGroup();*/ }
             public void setDisplayDeleteMsg(int boo) { /*InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnDeleteSignalGroup(boo); */}
+            protected String getMasterClassName() { return getClassName(); }
             
             public void clickOn(NamedBean t) {
                //((SignalGroup)t).setSignalGroup();
@@ -1275,6 +1276,10 @@ public class SignalGroupTableAction extends AbstractTableAction {
         }
         
     }
+    
+    protected String getClassName() { return SignalGroupTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleSignalGroupTable"); }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalGroupTableAction.class.getName());
 }

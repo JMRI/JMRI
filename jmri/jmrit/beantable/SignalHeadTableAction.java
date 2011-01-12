@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.62 $
+ * @version     $Revision: 1.63 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -154,8 +154,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.signalHeadManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.signalHeadManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.signalHeadManagerInstance().getByUserName(name);}
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSignalHeadInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSignalHeadInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
+
             
             public void clickOn(NamedBean t) {
                 int oldState = ((SignalHead)t).getAppearance();
@@ -1416,7 +1418,6 @@ public class SignalHeadTableAction extends AbstractTableAction {
 					cancelPressed(null);
 				}
 			});
-            
 		}
 		// default the seven optional items to hidden, and system name to visible
 		eSystemName.setVisible(false);
@@ -1976,7 +1977,10 @@ public class SignalHeadTableAction extends AbstractTableAction {
     
     }
 
-
+    protected String getClassName() { return SignalHeadTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleSignalTable"); }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalHeadTableAction.class.getName());
 }
 /* @(#)SignalHeadTableAction.java */

@@ -11,6 +11,7 @@ import jmri.Block;
 import jmri.BlockManager;
 import jmri.Sensor;
 import jmri.Path;
+import jmri.InstanceManager;
 
 import java.awt.FlowLayout;
 import java.awt.BorderLayout;
@@ -44,7 +45,7 @@ import java.util.ArrayList;
  * <P>
  *
  * @author	Dave Duchamp    Copyright (C) 2008
- * @version     $Revision: 1.18 $
+ * @version     $Revision: 1.19 $
  */
 // GT - 12-Oct-2009 - Added "Entry Block" column in entryPointTable
 
@@ -95,8 +96,9 @@ public class SectionTableAction extends AbstractTableAction {
 				return jmri.InstanceManager.sectionManagerInstance().getByUserName(name);
 			}
             
-            public int getDisplayDeleteMsg() { return jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSectionInUse(); }
-            public void setDisplayDeleteMsg(int boo) { jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSectionInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
 
             public void clickOn(NamedBean t) {
             }
@@ -302,7 +304,7 @@ public class SectionTableAction extends AbstractTableAction {
                         autoSystemName();
                     }
                 });
-            if(pref.getPreferenceState(systemNameAuto))
+            if(pref.getSimplePreferenceState(systemNameAuto))
                 _autoSystemName.setSelected(true);
 			sysName.setToolTipText(rbx.getString("SectionSystemNameHint"));
 			p.add (new JLabel("     "));
@@ -584,7 +586,7 @@ public class SectionTableAction extends AbstractTableAction {
 		addFrame.setVisible(false);
 		addFrame.dispose();
 		addFrame = null;
-        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
@@ -1236,6 +1238,10 @@ public class SectionTableAction extends AbstractTableAction {
 		}
         
 	}
+    
+    protected String getClassName() { return SectionTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleSectionTable"); }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SectionTableAction.class.getName());
 }

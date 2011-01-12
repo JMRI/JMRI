@@ -17,15 +17,15 @@ public class DefaultUserMessagePreferencesTest extends TestCase {
         };
         jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
         
-        Assert.assertTrue(!d.getPreferenceState("one"));
+        Assert.assertTrue(!d.getSimplePreferenceState("one"));
         
-        d.setPreferenceState("one", true);
-        Assert.assertTrue(d.getPreferenceState("one"));
-        Assert.assertTrue(!d.getPreferenceState("two"));
+        d.setSimplePreferenceState("one", true);
+        Assert.assertTrue(d.getSimplePreferenceState("one"));
+        Assert.assertTrue(!d.getSimplePreferenceState("two"));
         
-        d.setPreferenceState("one", false);
-        Assert.assertTrue(!d.getPreferenceState("one"));
-        Assert.assertTrue(!d.getPreferenceState("two"));
+        d.setSimplePreferenceState("one", false);
+        Assert.assertTrue(!d.getSimplePreferenceState("one"));
+        Assert.assertTrue(!d.getSimplePreferenceState("two"));
         
     }
     

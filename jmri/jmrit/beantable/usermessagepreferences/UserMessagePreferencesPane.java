@@ -4,15 +4,18 @@ package jmri.jmrit.beantable.usermessagepreferences;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.awt.Dimension;
-
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
+import java.util.Enumeration;
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.15 $
+ * @version	$Revision: 1.16 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -29,298 +32,294 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
             }
         });
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-              
-        //setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        JTabbedPane tab = new JTabbedPane();
-        tab.add(routeTab(), "Routes");
-        tab.add(logixTab(), "Logixs");
-        tab.add(lRouteTab(), "LRoutes");
-        tab.add(applicationTab(), "Application");
-        tab.add(tableDeleteTab(), "Deleting Table Entries");
-        tab.add(lMiscTable(), "Misc Notifications");
+
+        setMinimumMessagePref();
         add(tab);
         jmri.InstanceManager.tabbedPreferencesInstance().addItemToSave(this, jmri.jmrit.beantable.usermessagepreferences.UserMessagePreferencesPane.class, "updateManager");
     }
-
-    JCheckBox _routeSaveMsg;
-    JComboBox _warnRouteInUse;
-    private JPanel routeTab(){
-        JPanel routeTabPanel = new JPanel();
-        routeTabPanel.setLayout(new BoxLayout(routeTabPanel, BoxLayout.Y_AXIS));
+    
+    
+    void setMinimumMessagePref(){
+    //This ensures that as a minimum that the following items are at least initialised and appear in the preference panel
+        p.setClassDescription(jmri.jmrit.beantable.AudioTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.BlockTableAction.class.getName());
         
-        _routeSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
-        _routeSaveMsg.setSelected(!p.getPreferenceState("beantable.RouteTableAction.remindRoute"));
-        routeTabPanel.add(_routeSaveMsg);
+        p.setClassDescription(jmri.jmrit.beantable.LightTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.LogixTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.LRouteTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.MemoryTableAction.class.getName());
         
-        routeTabPanel.add(addQuestionButton(_warnRouteInUse = new JComboBox(), "When Deleting a Route", p.getWarnDeleteRoute()));
+        p.setClassDescription(jmri.jmrit.beantable.ReporterTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.RouteTableAction.class.getName());
         
-        return routeTabPanel;
+        p.setClassDescription(jmri.jmrit.beantable.SensorTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.SignalGroupTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.SignalHeadTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.SignalMastTableAction.class.getName());
+        
+        p.setClassDescription(jmri.jmrit.beantable.TransitTableAction.class.getName());
+        p.setClassDescription(jmri.jmrit.beantable.TurnoutTableAction.class.getName());
+        
+        p.setClassDescription(apps.AppConfigBase.class.getName());
+        
+        newMessageTab();
     }
     
-    JComboBox _warnLRouteInUse;
-    JCheckBox _lRouteSaveMsg;
-    private JPanel lRouteTab(){
-        JPanel lRouteTabPanel = new JPanel();
-        lRouteTabPanel.setLayout(new BoxLayout(lRouteTabPanel, BoxLayout.Y_AXIS));
+    
+    JTabbedPane tab = new JTabbedPane();
+    
+    private Hashtable<JComboBox, ListItems> _comboBoxes = new Hashtable<JComboBox, ListItems>();
+    private Hashtable<JCheckBox, ListItems> _checkBoxes = new Hashtable<JCheckBox, ListItems>();
+    
+    @SuppressWarnings("unchecked")
+    private void newMessageTab(){
+        remove(tab);
+        tab = new JTabbedPane();
         
-        _lRouteSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
-        _lRouteSaveMsg.setSelected(!p.getPreferenceState("beantable.LRouteTableAction.remindRoute"));
-        lRouteTabPanel.add(_lRouteSaveMsg);
+        //might need to redo this so that it doesn't recreate everything all the time.
+        _comboBoxes = new Hashtable<JComboBox, ListItems>();
+        _checkBoxes = new Hashtable<JCheckBox, ListItems>();
         
-        lRouteTabPanel.add(addQuestionButton(_warnLRouteInUse = new JComboBox(), "When Deleting a LRoute", p.getWarnLRouteInUse()));
+        java.util.ArrayList<String> preferenceClassList = p.getPreferencesClasses();
+        for (int k = 0; k<preferenceClassList.size(); k++){
+            
+            String strClass = preferenceClassList.get(k);
+            JPanel classholder = new JPanel();
+            classholder.setLayout(new BorderLayout());
+            
+            HashMap<Integer,String> options = null;
+            boolean add = false;
+            boolean addtoindependant = false;
+            if (p.getPreferencesSize(strClass)>1){
+                addtoindependant = true;
+            }
+            JPanel classPanel = new JPanel();
+            classPanel.setLayout(new BoxLayout(classPanel, BoxLayout.Y_AXIS));
+            classPanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+            for (int j = 0; j<p.getMultipleChoiceSize(strClass); j++){
+                String itemName = p.getChoiceName(strClass, j);
+                options = p.getChoiceOptions(strClass, itemName);
+                if (options!=null){
+                    JComboBox optionBox = new JComboBox();
+                    ListItems li = new ListItems(strClass, itemName);
+                    _comboBoxes.put(optionBox, li);
+                    li.isIncluded(addtoindependant);
+                    optionBox.removeAllItems();
+                    for (Object value : options.values()) {
+                        optionBox.addItem(value);
+                    }
+                    int current = p.getMultipleChoiceOption(strClass, itemName);
+                    
+                    if (options.containsKey(current)){
+                        optionBox.setSelectedItem(options.get(current));
+                    }
+                    if (addtoindependant){
+                        JPanel optionPanel = new JPanel();
+                        JLabel _comboLabel = new JLabel(p.getChoiceDescription(strClass, itemName), JLabel.LEFT);
+                        _comboLabel.setAlignmentX(0.5f);
+                        optionPanel.add(_comboLabel);
+                        optionPanel.add(optionBox);
+                        add = true;
+                        classPanel.add(optionPanel);
+                    }
+                }
+            }
+            java.util.ArrayList<String> singleList = p.getPreferenceList(strClass);
+            if (singleList.size()!=0){
+                for (int i = 0; i<singleList.size(); i++){
+                    String itemName = p.getPreferenceItemName(strClass, i);
+                    String description = p.getPreferenceItemDescription(strClass, itemName);
+                    if ((description !=null) && (!description.equals(""))){
+                        JCheckBox check  = new JCheckBox(description);
+                        check.setSelected(p.getPreferenceState(strClass, itemName));
+                        ListItems li = new ListItems(strClass, itemName);
+                        _checkBoxes.put(check, li);
+                        li.isIncluded(addtoindependant);
+                        
+                        if (addtoindependant){
+                            classPanel.add(check);
+                            add=true;
+                        }
+                    }
+                }
+            }
+            if (add) {
+                classholder.add(classPanel, BorderLayout.NORTH);
+                if (p.getPreferencesSize(strClass)>1){
+                    JScrollPane scrollPane = new JScrollPane(classholder);
+                    scrollPane.setPreferredSize(new Dimension(300, 300));
+                    tab.add(scrollPane, p.getClassDescription(strClass));
+                }
+            }
+        }
+        Enumeration keys = _comboBoxes.keys();
+        Hashtable<String, ArrayList<ListItems>> countOfItems = new Hashtable<String, ArrayList<ListItems>>();
+        Hashtable<String, ArrayList<JCheckBox>> countOfItemsCheck = new Hashtable<String, ArrayList<JCheckBox>>();
+        Hashtable<String, ArrayList<JComboBox>> countOfItemsCombo = new Hashtable<String, ArrayList<JComboBox>>();
+        while ( keys.hasMoreElements() )
+           {
+                JComboBox key = (JComboBox)keys.nextElement();
+                if (!_comboBoxes.get(key).isIncluded()){
+                    String strItem = _comboBoxes.get(key).getItem();
+                    if (!countOfItems.containsKey(strItem)){
+                        countOfItems.put(strItem, new ArrayList<ListItems>());
+                        countOfItemsCombo.put(strItem, new ArrayList<JComboBox>());
+                    }
+                    
+                    ArrayList a = countOfItems.get(strItem);
+                    a.add(_comboBoxes.get(key));
+                    
+                    a = countOfItemsCombo.get(strItem);
+                    a.add(key);
+                }
+           }
+           
+        keys = _checkBoxes.keys();
+        while ( keys.hasMoreElements() )
+           {
+               JCheckBox key = (JCheckBox)keys.nextElement();
+               if (!_checkBoxes.get(key).isIncluded()){
+                    String strItem = _checkBoxes.get(key).getItem();
+                    
+                    if (!countOfItems.containsKey(strItem)){
+                        countOfItems.put(strItem, new ArrayList<ListItems>());
+                        countOfItemsCheck.put(strItem, new ArrayList<JCheckBox>());
+                    }
+                    ArrayList a = countOfItems.get(strItem);
+                    a.add(_checkBoxes.get(key));  
+                    
+                    a = countOfItemsCheck.get(strItem);
+                    a.add(key);
+               }
+           }
+        keys = countOfItems.keys();
+        JPanel miscPanel = new JPanel();
+        miscPanel.setLayout(new BoxLayout(miscPanel, BoxLayout.Y_AXIS));
         
-        return lRouteTabPanel;
+        JPanel mischolder = new JPanel();
+        mischolder.setLayout(new BorderLayout());
+        mischolder.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        while (keys.hasMoreElements())
+            {
+                String item = (String)keys.nextElement();
+                ArrayList<ListItems> a = countOfItems.get(item);
+                ArrayList<JCheckBox> chb = countOfItemsCheck.get(item);
+                ArrayList<JComboBox> cob = countOfItemsCombo.get(item);
+                if (a.size()>1){
+                    JPanel tableDeleteTabPanel = new JPanel();
+                    tableDeleteTabPanel.setLayout(new BoxLayout(tableDeleteTabPanel, BoxLayout.Y_AXIS));
+                    JLabel tableDeleteInfoLabel = new JLabel(p.getChoiceDescription(a.get(0).getClassName(), a.get(0).getItem()), JLabel.CENTER);
+                    tableDeleteInfoLabel.setAlignmentX(0.5f);
+                    tableDeleteTabPanel.add(tableDeleteInfoLabel);
+                    JPanel inside = new JPanel();
+                    if (cob!=null){
+                        JPanel insideCombo = new JPanel();
+                        int gridsize = (int)(Math.ceil( (cob.size()/2.0)));
+                        insideCombo.setLayout(new jmri.util.javaworld.GridLayout2(gridsize,2*2, 10, 2));
+                        for (int i = 0; i<cob.size(); i++){
+                            JComboBox combo = cob.get(i);
+                            JLabel _comboLabel = new JLabel(p.getClassDescription(_comboBoxes.get(combo).getClassName()), JLabel.RIGHT);
+                            _comboBoxes.get(combo).isIncluded(true);
+                            insideCombo.add(_comboLabel);
+                            insideCombo.add(combo);
+                        }
+                        inside.add(insideCombo);
+                    }
+                    if (chb!=null){
+                        JPanel insideCheck = new JPanel();
+                        insideCheck.setLayout(new jmri.util.javaworld.GridLayout2(chb.size(),1));
+                        for (int i = 0; i<chb.size(); i++){
+                            JCheckBox check = chb.get(i);
+                            JLabel _checkLabel = new JLabel(p.getClassDescription(_checkBoxes.get(check).getClassName()), JLabel.RIGHT);
+                            _checkBoxes.get(check).isIncluded(true);
+                            insideCheck.add(_checkLabel);
+                            insideCheck.add(check);
+                        }
+                        inside.add(insideCheck);
+                    }
+                    tableDeleteTabPanel.add(inside);
+                    JScrollPane scrollPane = new JScrollPane(tableDeleteTabPanel);
+                    scrollPane.setPreferredSize(new Dimension(300, 300));
+                    tab.add(scrollPane, item);
+                } else {
+                    JPanel itemPanel = new JPanel();
+                    JPanel subItem = new JPanel();
+                    subItem.setLayout( new BoxLayout(subItem, BoxLayout.Y_AXIS));
+                    itemPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+                    subItem.add(new JLabel(p.getClassDescription(a.get(0).getClassName()), JLabel.CENTER));
+                    
+                    
+                    if (countOfItemsCheck.containsKey(item)){
+                        subItem.add(countOfItemsCheck.get(item).get(0));
+                        itemPanel.add(subItem);
+                        miscPanel.add(itemPanel);
+                    }
+                }
+            }
+        
+        add(tab);
+        mischolder.add(miscPanel, BorderLayout.NORTH);
+        JScrollPane miscScrollPane = new JScrollPane(mischolder);
+        miscScrollPane.setPreferredSize(new Dimension(300, 300));
+        
+        tab.add(miscScrollPane, "Misc items");
+        revalidate();
     }
     
-    JCheckBox _logixSaveMsg;
-    JComboBox _warnLogixInUse;
-    JComboBox _warnDeleteLogix;
-    private JPanel logixTab(){
-        JPanel logixTabPanel = new JPanel();
-        logixTabPanel.setLayout(new BoxLayout(logixTabPanel, BoxLayout.Y_AXIS));
+    class ListItems{
+        String strClass;
+        String item;
+        boolean included = false;
         
-        logixTabPanel.add(javax.swing.Box.createVerticalStrut(10));
-        logixTabPanel.add(javax.swing.Box.createVerticalStrut(30));
+        ListItems(String strClass, String item){
+            this.strClass = strClass;
+            this.item = item;
+        }
         
-        _logixSaveMsg  = new JCheckBox("Always Display Save Message Reminder");
-        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindLogix"));
-        logixTabPanel.add(_logixSaveMsg);
+        String getClassName() { return strClass; }
         
-        logixTabPanel.add(addQuestionButton(_warnDeleteLogix = new JComboBox(), "When Deleting a Logix", p.getWarnDeleteLogix()));
-        logixTabPanel.add(addQuestionButton(_warnLogixInUse = new JComboBox(), "When Deleting a Logix that is in use", p.getWarnLogixInUse()));
+        String getItem() { return item; }
         
-        return logixTabPanel;
-    }
-    
-    JComboBox _quitAfterSave;
-    
-    private JPanel applicationTab(){
-        //applicationtabpanel = new JPanel(new BoxLayout());
-        JPanel applicationTabPanel = new JPanel();
-        applicationTabPanel.setLayout(new BoxLayout(applicationTabPanel, BoxLayout.Y_AXIS));
+        boolean isIncluded() { return included; }
         
-        applicationTabPanel.add(addQuestionButton(_quitAfterSave = new JComboBox(), "Quit after Saving Preferences", p.getQuitAfterSave()));
-        
-        return applicationTabPanel;
-    }
-    
-    JComboBox _warnTurnoutInUse;
-    JComboBox _warnAudioInUse;
-    JComboBox _warnBlockInUse;
-    JComboBox _warnLightInUse;
-    JComboBox _warnSectionInUse;
-    JComboBox _warnMemoryInUse;
-    JComboBox _warnReporterInUse;
-    JComboBox _warnSensorInUse;
-    JComboBox _warnSignalMastInUse;
-    JComboBox _warnSignalHeadInUse;
-    JComboBox _warnTransitInUse;
-    
-    private JPanel tableDeleteTab(){
-        //applicationtabpanel = new JPanel(new BoxLayout());
-        JPanel tableDeleteTabPanel = new JPanel();
-        tableDeleteTabPanel.setLayout(new BoxLayout(tableDeleteTabPanel, BoxLayout.Y_AXIS));
-
-        JLabel tableDeleteInfoLabel = new JLabel("These options determine whether you are prompted before deleting an item,", JLabel.CENTER);
-        tableDeleteInfoLabel.setAlignmentX(0.5f);
-        tableDeleteTabPanel.add(tableDeleteInfoLabel);
-
-        tableDeleteInfoLabel = new JLabel("or if not, what action should be taken.", JLabel.CENTER);
-        tableDeleteInfoLabel.setAlignmentX(0.5f);
-        tableDeleteTabPanel.add(tableDeleteInfoLabel);
-
-        tableDeleteInfoLabel = new JLabel("Note: if No is selected in any of these items then the item will never be deleted!");
-        tableDeleteInfoLabel.setFont(tableDeleteInfoLabel.getFont().deriveFont(10f));
-        tableDeleteInfoLabel.setAlignmentX(0.5f);
-        tableDeleteTabPanel.add(tableDeleteInfoLabel);
-
-        JPanel inside = new JPanel();
-        inside.setLayout(new jmri.util.javaworld.GridLayout2(6,2*2));
-        
-        addQuestionComboBoxToGrid(inside, _warnAudioInUse = new JComboBox(), "Audio", p.getWarnAudioInUse());
-        addQuestionComboBoxToGrid(inside, _warnBlockInUse = new JComboBox(), "Block", p.getWarnBlockInUse());
-        //addQuestionComboBoxToGrid(inside, _warnLRouteInUse = new JComboBox(), "LRoute", p.getWarnLRouteInUse());
-        addQuestionComboBoxToGrid(inside, _warnLightInUse = new JComboBox(), "Light", p.getWarnLightInUse());    
-        addQuestionComboBoxToGrid(inside, _warnSectionInUse = new JComboBox(), "Section", p.getWarnSectionInUse());
-        addQuestionComboBoxToGrid(inside, _warnMemoryInUse = new JComboBox(), "Memory", p.getWarnMemoryInUse());
-        addQuestionComboBoxToGrid(inside, _warnReporterInUse = new JComboBox(), "Reporter", p.getWarnReporterInUse());
-        addQuestionComboBoxToGrid(inside, _warnSensorInUse = new JComboBox(), "Sensor", p.getWarnSensorInUse());
-        addQuestionComboBoxToGrid(inside, _warnSignalMastInUse = new JComboBox(), "SignalMast", p.getWarnSignalMastInUse());
-        addQuestionComboBoxToGrid(inside, _warnSignalHeadInUse = new JComboBox(), "SignalHead", p.getWarnSignalHeadInUse());
-        addQuestionComboBoxToGrid(inside, _warnTransitInUse = new JComboBox(), "Transit", p.getWarnTransitInUse());
-        addQuestionComboBoxToGrid(inside, _warnTurnoutInUse = new JComboBox(), "Turnout", p.getWarnTurnoutInUse());
-        
-        tableDeleteTabPanel.add(inside);
-        
-        return tableDeleteTabPanel;
+        void isIncluded(boolean boo) { included = boo; }
     }
     
     boolean updating = false;
     public void updateManager(){
         updating=true;
         p.setLoading();
-
-        for (int i = 0; i<data.length; i++){
-            if (((String)data[i][1]).toLowerCase().equals("true")){
-                p.setPreferenceState((String)data[i][0], true);
-                data[i][1]="true";
-            } else {
-                p.setPreferenceState((String)data[i][0], false);
-            }
-        }
-
-        //From Route Tab
-        p.setPreferenceState("beantable.RouteTableAction.remindRoute", !_routeSaveMsg.isSelected());
-        p.setWarnDeleteRoute(getChoiceType(_warnRouteInUse));
         
-        //From logix Tab
-        p.setPreferenceState("beantable.LogixTableAction.remindLogix", !_logixSaveMsg.isSelected());
-        p.setWarnDeleteLogix(getChoiceType(_warnDeleteLogix));
-        p.setWarnLogixInUse(getChoiceType(_warnLogixInUse));
+        Enumeration keys = _comboBoxes.keys();
+        while ( keys.hasMoreElements() )
+           {
+           JComboBox key = (JComboBox)keys.nextElement();
+           String strClass = _comboBoxes.get(key).getClassName();
+           String strItem = _comboBoxes.get(key).getItem();
+           String strSelection = (String)((JComboBox)key).getSelectedItem();
+           p.setMultipleChoiceOption (strClass, strItem, strSelection);
+           }
+           
+        keys = _checkBoxes.keys();
+        while ( keys.hasMoreElements() )
+           {
+           JCheckBox key = (JCheckBox)keys.nextElement();
+           String strClass = _checkBoxes.get(key).getClassName();
+           String strItem = _checkBoxes.get(key).getItem();
+           p.setPreferenceState (strClass, strItem, key.isSelected());
+           }
         
-        //From Application Tab
-        p.setQuitAfterSave(getChoiceType(_quitAfterSave));
-        
-        //From LRoute Tab
-        p.setWarnLRouteInUse(getChoiceType(_warnLRouteInUse));
-        p.setPreferenceState("beantable.LRouteTableAction.remindRoute", !_lRouteSaveMsg.isSelected());
-        
-        //From table DeleteTab
-        p.setWarnTurnoutInUse(getChoiceType(_warnTurnoutInUse));
-        p.setWarnAudioInUse(getChoiceType(_warnAudioInUse));
-        p.setWarnBlockInUse(getChoiceType(_warnBlockInUse));
-        p.setWarnLightInUse(getChoiceType(_warnLightInUse));
-        p.setWarnSectionInUse(getChoiceType(_warnSectionInUse));
-        p.setWarnMemoryInUse(getChoiceType(_warnMemoryInUse));
-        p.setWarnReporterInUse(getChoiceType(_warnReporterInUse));
-        p.setWarnSensorInUse(getChoiceType(_warnSensorInUse));
-        p.setWarnSignalMastInUse(getChoiceType(_warnSignalMastInUse));
-        p.setWarnSignalHeadInUse(getChoiceType(_warnSignalHeadInUse));
-        p.setWarnTransitInUse(getChoiceType(_warnTransitInUse));
-        
-        //jmri.InstanceManager.configureManagerInstance().storePrefs();
         updating=false;
         p.finishLoading();
         refreshOptions();
     }
     
-    private void addQuestionComboBoxToGrid(JPanel p, JComboBox _combo, String label, int value){
-        JLabel _comboLabel = new JLabel(label, JLabel.RIGHT);
-        p.add(_comboLabel);
-        
-        initializeChoiceCombo(_combo);
-        if (value!=0x00)
-            setChoiceType(_combo, value);
-        p.add(_combo);
-    }
-
-    private JPanel addQuestionButton(JComboBox _combo, String label, int value){
-        JPanel _comboPanel = new JPanel();
-        JLabel _comboLabel = new JLabel(label);
-        
-        _comboPanel.add(_comboLabel);
-        _comboPanel.add(_combo);
-        initializeChoiceCombo(_combo);
-        if (value!=0x00)
-            setChoiceType(_combo, value);
-        
-        return _comboPanel;
-    
-    }
-
     private void refreshOptions(){
-
         if (updating){
-            //If we are updating the preferences then we do not wan to refresh the values.
             return;
         }
-
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
-        data = new Object[preferenceList.size()][2];
-        for (int i = 0; i < preferenceList.size(); i++) {
-            data[i][0] = preferenceList.get(i);
-            data[i][1] = "true";
-        }
-        setChoiceType(_warnRouteInUse, p.getWarnDeleteRoute());
-
-        _routeSaveMsg.setSelected(!p.getPreferenceState("beantable.RouteTableAction.remindRoute"));
-        _lRouteSaveMsg.setSelected(!p.getPreferenceState("beantable.LRouteTableAction.remindRoute"));
-        _logixSaveMsg.setSelected(!p.getPreferenceState("beantable.LogixTableAction.remindLogix"));
-
-        //From logix Tab
-        setChoiceType(_warnDeleteLogix, p.getWarnDeleteLogix());
-        setChoiceType(_warnLogixInUse, p.getWarnLogixInUse());
-
-        //From Application Tab
-        setChoiceType(_quitAfterSave, p.getQuitAfterSave());
-
-        //From LRoute Tab
-        setChoiceType(_warnLRouteInUse, p.getWarnLRouteInUse());
-
-        //From table DeleteTab
-        setChoiceType(_warnTurnoutInUse, p.getWarnTurnoutInUse());
-        setChoiceType(_warnAudioInUse, p.getWarnAudioInUse());
-        setChoiceType(_warnBlockInUse, p.getWarnBlockInUse());
-        setChoiceType(_warnLightInUse, p.getWarnLightInUse());
-        setChoiceType(_warnSectionInUse, p.getWarnSectionInUse());
-        setChoiceType(_warnMemoryInUse, p.getWarnMemoryInUse());
-        setChoiceType(_warnReporterInUse, p.getWarnReporterInUse());
-        setChoiceType(_warnSensorInUse, p.getWarnSensorInUse());
-        setChoiceType(_warnSignalMastInUse, p.getWarnSignalMastInUse());
-        setChoiceType(_warnSignalHeadInUse, p.getWarnSignalHeadInUse());
-        setChoiceType(_warnTransitInUse, p.getWarnTransitInUse());
+        newMessageTab();
     }
-    
-    String[] choiceTypes = {"Always Ask","No","Yes"};
-    int[] masterChoiceCode = {0x00,0x01,0x02};
-    int numChoiceTypes = 3;  // number of entries in the above arrays
-    
-    private void initializeChoiceCombo(JComboBox masterCombo) {
-		masterCombo.removeAllItems();
-		for (int i = 0;i<numChoiceTypes;i++) {
-			masterCombo.addItem(choiceTypes[i]);
-		}
-	}
-    private void setChoiceType(JComboBox masterBox, int master){
-        for (int i = 0;i<numChoiceTypes;i++) {
-			if (master==masterChoiceCode[i]) {
-				masterBox.setSelectedIndex(i);
-				return;
-			}
-		}
-    }
-    
-    private int getChoiceType(JComboBox masterBox){
-        return masterChoiceCode[masterBox.getSelectedIndex()];
-    
-    }
-    
-    Object data [][];
-    private JPanel lMiscTable(){
-        JPanel lMiscTableTabPanel = new JPanel();
-        String[] columnNames = {"Option",
-                                "Display"};
-        
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
-        data = new Object[preferenceList.size()][2];
-        
-        for (int i = 0; i < preferenceList.size(); i++) {
-            data[i][0] = preferenceList.get(i);
-            data[i][1] = "true";
-        }
-        
-        JTable table = new JTable(data, columnNames);
-        table.setPreferredScrollableViewportSize(new Dimension(500, 200));
-        table.getColumnModel().getColumn(0).setPreferredWidth(400);
-        //table.setFillsViewportHeight(true);
-        JScrollPane scrollPane = new JScrollPane(table);
-        lMiscTableTabPanel.setLayout(new BoxLayout(lMiscTableTabPanel, BoxLayout.Y_AXIS));
-        lMiscTableTabPanel.add(scrollPane);
-        lMiscTableTabPanel.add(new JLabel("To re-enable a display message blank out the value in the Display column"));
-        return lMiscTableTabPanel;
-    }
-    
 }
-
 
 /* @(#)UserMessagePreferencesPane.java */

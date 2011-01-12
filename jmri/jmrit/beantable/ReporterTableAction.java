@@ -29,7 +29,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * ReporterTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.25 $
+ * @version     $Revision: 1.26 $
  */
 
 public class ReporterTableAction extends AbstractTableAction {
@@ -70,8 +70,11 @@ public class ReporterTableAction extends AbstractTableAction {
             public Manager getManager() { return reportManager; }
             public NamedBean getBySystemName(String name) { return reportManager.getBySystemName(name);}
             public NamedBean getByUserName(String name) { return reportManager.getByUserName(name);}
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnReporterInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnReporterInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            
+            protected String getMasterClassName() { return getClassName(); }
+
             
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 
@@ -210,7 +213,7 @@ public class ReporterTableAction extends AbstractTableAction {
                     user = userName.getText()+":"+x;
                 if (user!= null && !user.equals("") && (reportManager.getByUserName(user)==null)){
                     r.setUserName(user);
-                } else if (reportManager.getByUserName(user)!=null && !pref.getPreferenceState(userNameError)) {
+                } else if (reportManager.getByUserName(user)!=null && !pref.getPreferenceState(getClassName(), userNameError)) {
                     pref.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
                 }
             }
@@ -247,6 +250,10 @@ public class ReporterTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
 
+    protected String getClassName() { return ReporterTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleReporterTable"); }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ReporterTableAction.class.getName());
 }
 

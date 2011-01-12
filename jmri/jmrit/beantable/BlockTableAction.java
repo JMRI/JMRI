@@ -29,7 +29,7 @@ import jmri.util.JmriJFrame;
  * BlockTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2008
- * @version     $Revision: 1.21 $
+ * @version     $Revision: 1.22 $
  */
 
 public class BlockTableAction extends AbstractTableAction {
@@ -91,8 +91,10 @@ public class BlockTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.blockManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.blockManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.blockManagerInstance().getByUserName(name);}
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnBlockInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnBlockInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
+
             public void clickOn(NamedBean t) {
             	// don't do anything on click; not used in this class, because 
             	// we override setValueAt
@@ -305,7 +307,7 @@ public class BlockTableAction extends AbstractTableAction {
                 };
              addFrame.add(new AddNewBeanPanel(sysName, userName, numberToAdd, range, _autoSystemName, "ButtonOK", listener));
         }
-        if(pref.getPreferenceState(systemNameAuto))
+        if(pref.getSimplePreferenceState(systemNameAuto))
             _autoSystemName.setSelected(true);
         addFrame.pack();
         addFrame.setVisible(true);
@@ -361,7 +363,7 @@ public class BlockTableAction extends AbstractTableAction {
                 return; // without creating       
             }
         }
-        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
        // InstanceManager.blockManagerInstance().createNewBlock(sName, user);
     }  
     void handleCreateException(String sysName) {
@@ -373,8 +375,7 @@ public class BlockTableAction extends AbstractTableAction {
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
     //private boolean noWarn = false;
-
-    
+   
     void deletePaths(jmri.util.JmriJFrame f) {
 		// Set option to prevent the path information from being saved.
         
@@ -393,6 +394,11 @@ public class BlockTableAction extends AbstractTableAction {
         }
 
     }
+
+    public String getClassDescription() { return rb.getString("TitleBlockTable"); }
+    
+    protected String getClassName() { return BlockTableAction.class.getName(); }
+    
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BlockTableAction.class.getName());
 }
 

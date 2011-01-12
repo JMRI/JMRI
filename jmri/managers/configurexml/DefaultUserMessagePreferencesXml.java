@@ -21,14 +21,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
 
         Element messages = new Element("UserMessagePreferences");
         setStoreElementClass(messages);     
-      
-        storeQuestion(messages, "warnRouteDelete", p.getWarnDeleteRoute());
         
-        storeQuestion(messages, "quitAfterSave", p.getQuitAfterSave());
-        
-        storeQuestion(messages, "warnTurnoutInUse", p.getWarnTurnoutInUse());
-        
-        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getPreferenceStateList();
+        java.util.ArrayList<String> preferenceList = ((jmri.managers.DefaultUserMessagePreferences)p).getSimplePreferenceStateList();
         for (int i = 0; i < preferenceList.size(); i++) {
             Element pref = new Element("setting");
             pref.addContent(preferenceList.get(i));
@@ -49,36 +43,55 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                 }
             messages.addContent(comboList);
         }
-        
-        storeQuestion(messages, "warnSensorInUse", p.getWarnSensorInUse());
-        storeQuestion(messages, "warnSignalHeadInUse", p.getWarnSignalHeadInUse());
-        storeQuestion(messages, "warnTransitInUse", p.getWarnTransitInUse());
-        storeQuestion(messages, "warnSignalMastInUse", p.getWarnSignalMastInUse());
-        storeQuestion(messages, "warnSectionInUse", p.getWarnSectionInUse());
-        storeQuestion(messages, "warnReporterInUse", p.getWarnReporterInUse());
-        storeQuestion(messages, "warnMemoryInUse", p.getWarnMemoryInUse());
-        storeQuestion(messages, "warnLogixInUse", p.getWarnLogixInUse());
-        storeQuestion(messages, "warnDeleteLogix", p.getWarnDeleteLogix());
-        storeQuestion(messages, "warnLightInUse", p.getWarnLightInUse());
-        storeQuestion(messages, "warnLRouteInUse", p.getWarnLRouteInUse());
-        storeQuestion(messages, "warnBlockInUse", p.getWarnBlockInUse());
-        storeQuestion(messages, "warnAudioInUse", p.getWarnAudioInUse());
-
+        java.util.ArrayList<String> preferenceClassList = p.getPreferencesClasses();
+        for (int k = 0; k<preferenceClassList.size(); k++){
+            String strClass = preferenceClassList.get(k);
+            java.util.ArrayList<String> multipleList = p.getMultipleChoiceList(strClass);
+            Element classElement = new Element("classPreferences");
+            classElement.setAttribute("class", strClass);
+            //This bit deals with the multiple choice
+            boolean store = false;
+            Element multiOption = new Element("multipleChoice");
+            for (int i=0; i<multipleList.size(); i++){
+                String itemName = p.getChoiceName(strClass, i);
+                if (p.getMultipleChoiceDefaultOption(strClass, itemName)!=p.getMultipleChoiceOption(strClass, itemName)){
+                    //Only save if we are not at the default value.
+                    Element multiOptionItem = new Element("option");
+                    store = true;
+                    multiOptionItem.setAttribute("item", itemName);
+                    multiOptionItem.setAttribute("value", Integer.toString(p.getMultipleChoiceOption(strClass, itemName)));
+                    multiOption.addContent(multiOptionItem);
+                }
+            }
+            if (store){
+                classElement.addContent(multiOption);
+                    
+            }
+            
+            boolean listStore=false;
+            java.util.ArrayList<String> singleList = p.getPreferenceList(strClass);
+            if (singleList.size()!=0){
+                Element singleOption = new Element("reminderPrompts");
+                for (int i = 0; i<singleList.size(); i++){
+                    String itemName = p.getPreferenceItemName(strClass, i);
+                    if(p.getPreferenceState(strClass, itemName)){
+                        Element pref = new Element("reminder");
+                        pref.addContent(singleList.get(i));
+                        singleOption.addContent(pref);
+                        listStore = true;
+                    }
+                }
+                if (listStore)
+                    classElement.addContent(singleOption);
+            }
+            
+            //This bit deals with simple hiding of messages
+            if ((store) || (listStore))
+                messages.addContent(classElement);
+        }
         return messages;
     }
-    
-    private void storeQuestion(Element messages, String attr, int value){
-        Element userPref;
-        if (value!=0x00){
-            if (value==0x01)
-                userPref = new Element(attr).setAttribute("action", "no");
-            else
-                userPref = new Element(attr).setAttribute("action", "yes");
-            messages.addContent(userPref);
-        }
-    }
-
-    
+     
     public void setStoreElementClass(Element messages) {
         messages.setAttribute("class","jmri.managers.configurexml.DefaultUserMessagePreferencesXml");
     }
@@ -98,16 +111,13 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         p.setLoading();
                 
-        p.setQuitAfterSave(loadQuestion(messages, "quitAfterSave"));
-        
-        p.setWarnTurnoutInUse(loadQuestion(messages, "warnTurnoutInUse"));
        
         @SuppressWarnings("unchecked")
         List<Element> settingList = messages.getChildren("setting");
         
         for (int i = 0; i < settingList.size(); i++) {
             String name = settingList.get(i).getText();
-            p.setPreferenceState(name, true);
+            p.setSimplePreferenceState(name, true);
         }
         @SuppressWarnings("unchecked")
         List<Element> comboList = messages.getChildren("comboBoxLastValue");
@@ -117,42 +127,46 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             List<Element> comboItem = comboList.get(i).getChildren("comboBox");
             for (int x = 0; x<comboItem.size(); x++){
                 String combo = comboItem.get(x).getAttribute("name").getValue();
-                String setting = comboItem.get(x).getAttribute("lastSelected").getValue();                
+                String setting = comboItem.get(x).getAttribute("lastSelected").getValue();
                 p.addComboBoxLastSelection(combo, setting);
             }
         }
         
-        p.setWarnSensorInUse(loadQuestion(messages, "warnSensorInUse"));
-        p.setWarnSignalHeadInUse(loadQuestion(messages, "warnSignalHeadInUse"));
-        p.setWarnTransitInUse(loadQuestion(messages, "warnTransitInUse"));
-        p.setWarnSignalMastInUse(loadQuestion(messages, "warnSignalMastInUse"));
-        p.setWarnSectionInUse(loadQuestion(messages, "warnSectionInUse"));
-        p.setWarnReporterInUse(loadQuestion(messages, "warnReporterInUse"));
-        p.setWarnDeleteRoute(loadQuestion(messages, "warnRouteDelete"));
-        p.setWarnMemoryInUse(loadQuestion(messages, "warnMemoryInUse"));
-        p.setWarnLogixInUse(loadQuestion(messages, "warnLogixInUse"));
-        p.setWarnDeleteLogix(loadQuestion(messages, "warnDeleteLogix"));
-        p.setWarnLightInUse(loadQuestion(messages, "warnLightInUse"));
-        p.setWarnLRouteInUse(loadQuestion(messages, "warnLRouteInUse"));
-        p.setWarnBlockInUse(loadQuestion(messages, "warnBlockInUse"));
-        p.setWarnAudioInUse(loadQuestion(messages, "warnAudioInUse"));
-        p.finishLoading();
-        return true;
-    }
-    
-    @SuppressWarnings("unchecked")
-    private int loadQuestion(Element messages, String attr){
-        List<Element> messageList = messages.getChildren(attr);
-        for (int i=0; i<messageList.size();i++){
-            if (messageList.get(i).getAttribute("action")!=null) {
-                String yesno = messageList.get(i).getAttribute("action").getValue();
-                if ( (yesno!=null) && (!yesno.equals("")) ) {
-                    if (yesno.equals("yes")) return(0x02);
-                    else if (yesno.equals("no")) return(0x01);
+        @SuppressWarnings("unchecked")
+        List<Element> classList = messages.getChildren("classPreferences");
+        for (int k = 0; k < classList.size(); k++) {
+            @SuppressWarnings("unchecked")
+            List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
+            String strClass = classList.get(k).getAttribute("class").getValue();
+            for (int i = 0; i < multipleList.size(); i++) {
+                @SuppressWarnings("unchecked")
+                List<Element> multiItem = multipleList.get(i).getChildren("option");
+                for (int x = 0; x<multiItem.size(); x++){
+                    String item = multiItem.get(x).getAttribute("item").getValue();
+                    int value = 0x00;
+                     try {
+                        value = multiItem.get(x).getAttribute("value").getIntValue();
+                    } catch ( org.jdom.DataConversionException e) {
+                        log.error("failed to convert positional attribute");
+                    }
+                    p.setMultipleChoiceOption(strClass, item, value);
+                }
+            }
+
+            @SuppressWarnings("unchecked")
+            List<Element> preferenceList = classList.get(k).getChildren("reminderPrompts");
+            for (int i = 0; i<preferenceList.size(); i++){
+                @SuppressWarnings("unchecked")
+                List<Element> reminderBoxes = preferenceList.get(i).getChildren("reminder");
+                for (int j = 0; j < reminderBoxes.size(); j++) {
+                    String name = reminderBoxes.get(j).getText();
+                    p.setPreferenceState(strClass, name, true);
                 }
             }
         }
-        return(0x00);
+        
+        p.finishLoading();
+        return true;
     }
     
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(DefaultUserMessagePreferencesXml.class.getName());

@@ -10,18 +10,23 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import java.util.HashMap;
 
 /**
  * Swing action to create and register a
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.16 $
+ * @version     $Revision: 1.17 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
 
     public AbstractTableAction(String actionName) {
+        super(actionName);
+    }
+    
+    public AbstractTableAction(String actionName, Object option) {
         super(actionName);
     }
 
@@ -42,13 +47,12 @@ abstract public class AbstractTableAction extends AbstractAction {
      */
 
     protected abstract void setTitle();
-
+    
     protected BeanTableFrame f;
 
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-
         // create the frame
         f = new BeanTableFrame(m, helpTarget()){
             /**
@@ -115,6 +119,19 @@ abstract public class AbstractTableAction extends AbstractAction {
     protected String helpTarget() {
         return "index";  // by default, go to the top
     }
+    
+    public String getClassDescription() { return "Abstract Table Action"; }
+    
+    public void setMessagePreferencesDetails(){
+        HashMap< Integer,String> options = new HashMap< Integer,String>(3);
+        options.put(0x00, rb.getString("DeleteAsk"));
+        options.put(0x01, rb.getString("DeleteNever"));
+        options.put(0x02, rb.getString("DeleteAlways"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "deleteInUse", rb.getString("DeleteItemInUse"), options, 0x00);
+    }
+
+    protected abstract String getClassName();
+
     /**
     * Used with the Tabbed instances of table action, so that the print option 
     * is handled via that on the appropriate tab.

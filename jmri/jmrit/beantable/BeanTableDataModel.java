@@ -23,7 +23,7 @@ import java.util.List;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.39 $
+ * @version		$Revision: 1.40 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -180,8 +180,12 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
     abstract protected NamedBean getByUserName(String name);
     abstract protected void clickOn(NamedBean t);
     
-    abstract protected int getDisplayDeleteMsg();
-    abstract protected void setDisplayDeleteMsg(int boo);
+    //abstract protected int getDisplayDeleteMsg();
+    //abstract protected void setDisplayDeleteMsg(int boo);
+
+    public int getDisplayDeleteMsg() { return jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getMasterClassName(),"deleteInUse"); }
+    public void setDisplayDeleteMsg(int boo) { jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getMasterClassName(), "deleteInUse", boo); }
+   abstract protected String getMasterClassName();
 
     public void setValueAt(Object value, int row, int col) {
         if (col==USERNAMECOL) {

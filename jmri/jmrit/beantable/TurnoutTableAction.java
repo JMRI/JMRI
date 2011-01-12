@@ -42,7 +42,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * TurnoutTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2004, 2007
- * @version     $Revision: 1.94 $
+ * @version     $Revision: 1.95 $
  */
 
 public class TurnoutTableAction extends AbstractTableAction {
@@ -315,8 +315,10 @@ public class TurnoutTableAction extends AbstractTableAction {
 
                 public NamedBean getBySystemName(String name) { return turnManager.getBySystemName(name);}
                 public NamedBean getByUserName(String name) { return turnManager.getByUserName(name);}
-                public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnTurnoutInUse(); }
-                public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnTurnoutInUse(boo); }
+                /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
+                public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
+                protected String getMasterClassName() { return getClassName(); }
+
                 
                 public void clickOn(NamedBean t) {
                     int state = ((Turnout)t).getCommandedState();
@@ -675,6 +677,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         	}
             });
     }
+
     public void addToPanel(AbstractTableTabAction f) {
         String systemPrefix = ConnectionNameFromSystemName.getConnectionName(turnManager.getSystemPrefix());
         
@@ -700,7 +703,7 @@ public class TurnoutTableAction extends AbstractTableAction {
         	public void actionPerformed(ActionEvent e) {
                     TurnoutOperationManager.getInstance().setDoOperations(doAutomationBox.isSelected());
         	}
-            });
+        });
     }
     
     public void setMenuBar(BeanTableFrame f){
@@ -814,8 +817,11 @@ public class TurnoutTableAction extends AbstractTableAction {
                     if ((x!=0) && user != null && !user.equals(""))
                         user = user+":"+x;
                     if (user != null && !user.equals("") && (InstanceManager.turnoutManagerInstance().getByUserName(user)==null)) t.setUserName(user);
-                    else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(userNameError)){
-                        p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
+                    
+                    else if (InstanceManager.turnoutManagerInstance().getByUserName(user)!=null && !p.getPreferenceState(getClassName(), "duplicateUserName")){
+                        InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showInfoMessage("Duplicate UserName","The username " + user + " specified is already in use and therefore will not be set", getClassName(), "duplicateUserName", false, true, org.apache.log4j.Level.ERROR);
+                        //p.showInfoMessage("Duplicate UserName", "The username " + user + " specified is already in use and therefore will not be set", userNameError, "", false, true, org.apache.log4j.Level.ERROR);
                     }
                     t.setNumberOutputBits(iNum);
                     // Ask about the type of turnout control if appropriate
@@ -869,6 +875,13 @@ public class TurnoutTableAction extends AbstractTableAction {
     private boolean noWarn = false;
 	
     protected String getClassName() { return TurnoutTableAction.class.getName(); }
+    
+    public void setMessagePreferencesDetails(){
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "duplicateUserName", rb.getString("DuplicateUserNameWarn"));
+        super.setMessagePreferencesDetails();
+    }
+    
+    public String getClassDescription() { return rb.getString("TitleTurnoutTable"); }
     
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TurnoutTableAction.class.getName());
 }

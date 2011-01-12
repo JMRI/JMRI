@@ -234,8 +234,9 @@ public class LRouteTableAction extends AbstractTableAction {
             return _logixManager.getByUserName(name);
         }
         
-        public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLRouteInUse(); }
-        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLRouteInUse(boo); }
+        /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+        protected String getMasterClassName() { return getClassName(); }
 
         public void configureTable(JTable table) {
             table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
@@ -1134,7 +1135,7 @@ public class LRouteTableAction extends AbstractTableAction {
                         // remind to save, if Route was created or edited
                         if (routeDirty) {
                             InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                                showInfoMessage("Reminder","Remember to save your Route information.","beantable.LRouteTableAction", "remindRoute");
+                                showInfoMessage("Reminder","Remember to save your Route information.",getClassName(), "remindSaveRoute");
                             routeDirty = false;
                         }
                         _addFrame.setVisible(false);
@@ -2818,7 +2819,15 @@ public class LRouteTableAction extends AbstractTableAction {
             }
         }
     }
-        
+    
+    public void setMessagePreferencesDetails(){
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveRoute", rb.getString("HideSaveReminder"));
+        super.setMessagePreferencesDetails();
+    }
+    
+    protected String getClassName() { return LRouteTableAction.class.getName(); }
+    public String getClassDescription() { return rbx.getString("Title"); }
+    
 	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(LRouteTableAction.class.getName());
 }

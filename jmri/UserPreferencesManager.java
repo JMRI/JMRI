@@ -4,6 +4,9 @@ package jmri;
 
 import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Hashtable;
 
 /**
  * Interface for the User Preferences Manager.
@@ -14,7 +17,7 @@ import java.beans.PropertyChangeListener;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.11 $
+ * @version	$Revision: 1.12 $
  */
  
 public interface UserPreferencesManager {
@@ -32,19 +35,81 @@ public interface UserPreferencesManager {
      * start with the package name (package.Class) for the
      * primary using class.
      */
-    boolean getPreferenceState(String name);
+    boolean getSimplePreferenceState(String name);
 
     /**
-     * Set the state of a user preference.
-     * <p>
+     * This is used to remember the last selected state of a checkBox and thus
+     * allow that checkBox to be set to a true state when it is next initialised.
+     * This can also be used anywhere else that a simple yes/no, true/false type
+     * preference needs to be stored.
+     *
+     * It should not be used for remembering if a user wants to suppress a message
+     * as there is no means in the GUI for the user to reset the flag. 
+     * setPreferenceState() should be used in this instance
      * The name is free-form, but to avoid ambiguity it should
      * start with the package name (package.Class) for the
      * primary using class.
+     * @param name A unique name to identify the state being stored
+     * @param state simple boolean.
      */
-    void setPreferenceState(String name, boolean state);
+    void setSimplePreferenceState(String name, boolean state);
     
     /**
-     * Enquire as to the state of a user preference.
+     *  Returns an ArrayList of the checkbox states set as true.
+     */
+    public ArrayList<String> getSimplePreferenceStateList();
+    
+    /**
+     * Used to save the state of checkboxes which can suppress messages from being
+     * displayed.
+     * This method should be used by the initiating code in conjunction with the 
+     * preferenceItemDetails.  
+     * Here the items are stored against a specific class and access to change 
+     * them is made available via the GUI, in the preference manager.
+     * <p>
+     * The strClass parameter does not have to be the exact class name of the 
+     * initiating code, but can be one where the information is related and therefore
+     * can be grouped together with.
+     * <p>
+     * Both the strClass and item although free form, should make up a unique reference.
+     * @param strClass The class that this preference should be stored or grouped with.
+     * @param item The specific item that is to be stored
+     * @param state Boolean state of the item.
+     */
+    public void setPreferenceState(String strClass, String item, boolean state);
+   
+    /**
+    * Returns the state of a given item registered against a specific class or item.
+    */
+    public boolean getPreferenceState(String strClass, String item);
+    
+    /**
+    * Register details about a perticular preference, so that it can be displayed
+    * in the GUI and provide a meaning full description when presented to the user.
+    * @param strClass A string form of the class that the preference is stored or grouped with
+    * @param item The specific item that is being stored.
+    * @param description A meaningful decription of the item that the user will understand.
+    */    
+    public void preferenceItemDetails(String strClass, String item, String description);
+    
+    /**
+     * Returns a list of preferences that are registered against a specific class.
+     */
+    public ArrayList<String> getPreferenceList(String strClass);
+    
+    /**
+     * Returns the itemName of the n preference in the given class
+     */
+    public String getPreferenceItemName(String strClass, int n);
+    
+    /**
+     * Returns the description of the given item preference in the given class
+     */
+    public String getPreferenceItemDescription(String strClass, String item);
+    
+    
+    /**
+     * Enquire as to the state of a user preference for the current session.
      * <p>
      * Preferences that have not been set will be 
      * considered to be false.
@@ -56,34 +121,22 @@ public interface UserPreferencesManager {
     public boolean getSessionPreferenceState(String name);
     
     /**
-     * Set the state of a user preference for the current session
-     * only
-     * <p>
-     * The name is free-form, but to avoid ambiguity it should
-     * start with the package name (package.Class) for the
-     * primary using class.
-     */
+    * Used to surpress messages for the current session, the information is not
+    * stored, can not be changed via the GUI.
+    * <p>
+    * This can be used to help prevent over loading the user with repetitive error
+    * messages such as turnout not found while loading a panel file due to a connection failing.
+    * The name is free-form, but to avoid ambiguity it should
+    * start with the package name (package.Class) for the
+    * primary using class.
+    * @param name A unique identifer for preference.
+    * @param state
+    */
     public void setSessionPreferenceState(String name, boolean state);
  
      // The reset is used after the preferences have been loaded for the first time
     public void resetChangeMade();
  
-     /**
-     * The following method determines if we should confirm we the
-     * user the deletion of a Route.
-     */
-    
-    public int getWarnDeleteRoute();
-    public void setWarnDeleteRoute(int boo);
-    
-     /**
-     * The following method determines if we should confirm we the
-     * user the deletion of a LRoute.
-     */
-     
-    public int getWarnLRouteInUse();
-    public void setWarnLRouteInUse(int boo);
-    
     /**
      * Show an info message ("don't forget ...")
      * with a given dialog title and
@@ -97,6 +150,7 @@ public interface UserPreferencesManager {
      * @param item String value of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String classString, java.lang.String item);
+
     
     /**
      * Show an info message ("don't forget ...")
@@ -117,13 +171,6 @@ public interface UserPreferencesManager {
      */
     public void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember, org.apache.log4j.Level level);
     
-     /**
-     * Method to determine if the question of reloading JMRI should 
-     * should be presented, and if not the default setting.
-     */
-    public int getQuitAfterSave();
-    public void setQuitAfterSave(int boo);
-
     /**
      * Adds the last selection of a combo box.
      * <p>
@@ -163,50 +210,6 @@ public interface UserPreferencesManager {
     **/
     public String getComboBoxLastSelection(int n);
     
-     /**
-     * The following method determines if we should confirm we the
-     * user the deletion of a Turnout.
-     */
-    
-    public int getWarnTurnoutInUse();
-    public void setWarnTurnoutInUse(int boo);
-    
-    public int getWarnSensorInUse();
-    public void setWarnSensorInUse(int boo);
-    
-    public int getWarnSignalHeadInUse();
-    public void setWarnSignalHeadInUse(int boo);
-
-    public int getWarnTransitInUse();
-    public void setWarnTransitInUse(int boo);
-
-    public int getWarnSignalMastInUse();
-    public void setWarnSignalMastInUse(int boo);
-
-    public int getWarnSectionInUse();
-    public void setWarnSectionInUse(int boo);
-
-    public int getWarnReporterInUse();
-    public void setWarnReporterInUse(int boo);
-
-    public int getWarnMemoryInUse();
-    public void setWarnMemoryInUse(int boo);
-
-    public int getWarnLogixInUse();
-    public void setWarnLogixInUse(int boo);
-    
-    public int getWarnDeleteLogix();
-    public void setWarnDeleteLogix(int boo);
-
-    public int getWarnLightInUse();
-    public void setWarnLightInUse(int boo);
-
-    public int getWarnBlockInUse();
-    public void setWarnBlockInUse(int boo);
-
-    public int getWarnAudioInUse();
-    public void setWarnAudioInUse(int boo);
-
     public Dimension getScreen();
     
     public void allowSave();
@@ -215,9 +218,106 @@ public interface UserPreferencesManager {
     public void removePropertyChangeListener(PropertyChangeListener l);
 
     public void addPropertyChangeListener(PropertyChangeListener l);
-
-    //public void displayRememberMsg();
     
+    /**
+    * Returns the description of a class/group registered with the preferences.
+    */
+    public String getClassDescription(String strClass);
+    
+    /**
+    * Returns a list of the classes registered with the preference manager.
+    */
+    public ArrayList<String> getPreferencesClasses();
+    
+    /**
+     * Given that we know the class as a string, we will try and attempt to gather
+     * details about the preferences that has been added, so that we can make better
+     * sense of the details in the preferences window.
+     * <p>
+     * This looks for specific methods within the class called "getClassDescription"
+     * and "setMessagePreferenceDetails".  If found it will invoke the methods, 
+     * this will then trigger the class to send details about its preferences back
+     * to this code.
+     */
+    public void setClassDescription(String strClass);
+    
+    /**
+    * Add descriptive details about a specific message box, so that if it needs
+    * to be reset in the preferences, then it is easily identifiable.
+    * displayed to the user in the preferences GUI.
+    * @param strClass String value of the calling class/group
+    * @param item String value of the specific item this is used for.
+    * @param description A meaningful description that can be used in a label to describe the item
+    * @param msgOption Description of each option valid option.
+    * @param msgNumber The references number against which the Description is refering too.
+    * @param defaultOption The default option for the given item.
+    */
+    public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
+    
+    /**
+    * Add descriptive details about a specific message box, so that if it needs
+    * to be reset in the preferences, then it is easily identifiable.
+    * displayed to the user in the preferences GUI.
+    * @param strClass String value of the calling class/group
+    * @param item String value of the specific item this is used for.
+    * @param description A meaningful description that can be used in a label to describe the item
+    * @param options A map of the integer value of the option against a meaningful description.
+    * @param defaultOption The default option for the given item.
+    */
+    public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
+    
+    /**
+    * Returns a map of the value against description of the different items in a 
+    * given class.  This information can then be used to build a Combo box.
+    * @param strClass Class or group of the given item
+    * @param item the item which we wish to return the details about.
+    */
+    public HashMap<Integer, String> getChoiceOptions(String strClass, String item);
+    
+    /**
+    * Returns the number of Mulitple Choice items registered with a given class.
+    */
+    public int getMultipleChoiceSize(String strClass);
+    
+    /**
+    * Returns a list of all the multiple choice items registered with a given class.
+    */ 
+    public ArrayList<String> getMultipleChoiceList(String strClass);    
+    
+    /**
+    * Returns the nth item name in a given class
+    */
+    public String getChoiceName(String strClass, int n);
+    
+    /**
+    * Returns the a meaningful description of a given item in a given class or group.
+    */
+    public String getChoiceDescription(String strClass, String item);
+    
+    /**
+    * Returns the current value of a given item in a given class
+    */
+    public int getMultipleChoiceOption (String strClass, String item);
+    
+    /**
+    * Returns the default value of a given item in a given class
+    */
+    public int getMultipleChoiceDefaultOption (String strClass, String choice);
+    
+    /**
+    * Sets the value of a given item in a given class, by its string description
+    */
+    public void setMultipleChoiceOption (String strClass, String choice, String value);
+    
+    /**
+    * Sets the value of a given item in a given class, by its integer value
+    */
+    public void setMultipleChoiceOption (String strClass, String choice, int value);
+    
+    /**
+    * returns the combined size of both types of items registered.
+    */ 
+    public int getPreferencesSize(String strClass);
     
     /*
         Example informational message dialog box.

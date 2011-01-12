@@ -7,12 +7,13 @@ import jmri.*;
 import jmri.jmrit.beantable.BeanTableDataModel;
 import javax.swing.*;
 import java.util.ResourceBundle;
+import jmri.InstanceManager;
 
 /**
  * Data model for a SensorTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class SensorTableDataModel extends BeanTableDataModel {
@@ -55,8 +56,9 @@ public class SensorTableDataModel extends BeanTableDataModel {
     }
     protected NamedBean getBySystemName(String name) { return senManager.getBySystemName(name);}
     protected NamedBean getByUserName(String name) { return senManager.getByUserName(name);}
-    protected int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSensorInUse(); }
-    protected void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSensorInUse(boo); }
+    /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
+    public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUSe", boo); }*/
+    protected String getMasterClassName() { return getClassName(); }
     protected void clickOn(NamedBean t) {
         try {
             int state = ((Sensor)t).getKnownState();
@@ -111,6 +113,11 @@ public class SensorTableDataModel extends BeanTableDataModel {
         if (e.getPropertyName().indexOf("inverted")>=0) return true;
         else return super.matchPropertyName(e);
     }
+    
+    protected String getClassName() { return jmri.jmrit.beantable.SensorTableAction.class.getName(); }
+    
+    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    public String getClassDescription() { return rb.getString("TitleSensorTable"); }
 
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SensorTableDataModel.class.getName());

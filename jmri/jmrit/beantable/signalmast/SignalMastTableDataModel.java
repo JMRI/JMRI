@@ -5,7 +5,7 @@ package jmri.jmrit.beantable.signalmast;
 import jmri.*;
 
 import jmri.jmrit.beantable.BeanTableDataModel;
-
+import jmri.InstanceManager;
 import javax.swing.*;
 import java.util.*;
 
@@ -13,7 +13,7 @@ import java.util.*;
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.5 $
+ * @version     $Revision: 1.6 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
@@ -52,8 +52,10 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     protected Manager getManager() { return InstanceManager.signalMastManagerInstance(); }
     protected NamedBean getBySystemName(String name) { return InstanceManager.signalMastManagerInstance().getBySystemName(name);}
     protected NamedBean getByUserName(String name) { return InstanceManager.signalMastManagerInstance().getByUserName(name);}
-    public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSignalMastInUse(); }
-    public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSignalMastInUse(boo); }
+    /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+    public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+    protected String getMasterClassName() { return getClassName(); }
+
     
     protected void clickOn(NamedBean t) {
 //         try {
@@ -104,6 +106,11 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
     }
     
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) { return true; }
+    
+    protected String getClassName() { return jmri.jmrit.beantable.SignalMastTableAction.class.getName(); }
+    
+    public static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+    public String getClassDescription() { return rb.getString("TitleSignalMastTable"); }
     
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SignalMastTableDataModel.class.getName());

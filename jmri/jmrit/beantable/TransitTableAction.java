@@ -48,7 +48,7 @@ import java.util.ArrayList;
  * for more details.
  *
  * @author	Dave Duchamp    Copyright (C) 2008, 2010
- * @version     $Revision: 1.24 $
+ * @version     $Revision: 1.25 $
  */
 
 
@@ -102,8 +102,10 @@ public class TransitTableAction extends AbstractTableAction {
             public Manager getManager() { return InstanceManager.transitManagerInstance(); }
             public NamedBean getBySystemName(String name) { return InstanceManager.transitManagerInstance().getBySystemName(name);}
             public NamedBean getByUserName(String name) { return InstanceManager.transitManagerInstance().getByUserName(name);}
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnTransitInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnTransitInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
+
     
             public void clickOn(NamedBean t) {
             }
@@ -309,7 +311,7 @@ public class TransitTableAction extends AbstractTableAction {
                     autoSystemName();
                 }
             });
-            if(pref.getPreferenceState(systemNameAuto))
+            if(pref.getSimplePreferenceState(systemNameAuto))
                 _autoSystemName.setSelected(true);
 			sysName.setToolTipText(rbx.getString("TransitSystemNameHint"));
 			p.add (new JLabel("     "));
@@ -591,7 +593,7 @@ public class TransitTableAction extends AbstractTableAction {
 		sysName.setText(curTransit.getSystemName());
 		setTransitInformation();
 		addFrame.setVisible(false);
-        pref.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 	void cancelPressed(ActionEvent e) {
 		addFrame.setVisible(false);
@@ -1831,6 +1833,10 @@ public class TransitTableAction extends AbstractTableAction {
 			return;
 		}
 	}
+    
+    protected String getClassName() { return TransitTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleTransitTable"); }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TransitTableAction.class.getName());
 }

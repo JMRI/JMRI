@@ -14,6 +14,7 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.swing.*;
 
@@ -23,7 +24,7 @@ import javax.swing.*;
  *
  * @author	Bob Jacobsen   Copyright (C) 2003, 2008, 2010
  * @author      Matthew Harris copyright (c) 2009
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
 public class AppConfigBase extends JmriPanel {
 
@@ -162,7 +163,7 @@ public class AppConfigBase extends JmriPanel {
         final UserPreferencesManager p;
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
-        if (p.getQuitAfterSave() == 0) {
+        if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 0) {
         	final JDialog dialog = new JDialog();
         	dialog.setTitle(rb.getString("MessageShortQuitWarning"));
         	dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -188,7 +189,7 @@ public class AppConfigBase extends JmriPanel {
 
         		public void actionPerformed(ActionEvent e) {
         			if (remember.isSelected()) {
-        				p.setQuitAfterSave(1);
+                        p.setMultipleChoiceOption(getClassName(),"quitAfterSave", 0x01);
         			}
         			dialog.dispose();
         		}
@@ -197,7 +198,7 @@ public class AppConfigBase extends JmriPanel {
 
         		public void actionPerformed(ActionEvent e) {
         			if (remember.isSelected()) {
-        				p.setQuitAfterSave(2);
+        				p.setMultipleChoiceOption(getClassName(),"quitAfterSave", 0x02);
         				saveContents();
         			}
         			dialog.dispose();
@@ -217,7 +218,7 @@ public class AppConfigBase extends JmriPanel {
         	int y = (p.getScreen().height - h) / 2;
         	dialog.setLocation(x, y);
         	dialog.setVisible(true);
-        } else if (p.getQuitAfterSave() == 2) {
+        } else if (p.getMultipleChoiceOption(getClassName(),"quitAfterSave") == 2) {
         	// end the program
         	dispose();
         	// do orderly shutdown.  Note this
@@ -230,4 +231,16 @@ public class AppConfigBase extends JmriPanel {
             ((JFrame) getTopLevelAncestor()).setVisible(false);
         }
     }
+
+    public String getClassDescription() { return rb.getString("Application"); }
+
+    public void setMessagePreferencesDetails(){
+        HashMap<Integer,String> options = new HashMap<Integer,String>(3);
+        options.put(0x00, rb.getString("QuitAsk"));
+        options.put(0x01, rb.getString("QuitNever"));
+        options.put(0x02, rb.getString("QuitAlways"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "quitAfterSave", rb.getString("quitAfterSave"), options, 0x00);
+    }
+
+    public String getClassName() { return AppConfigBase.class.getName(); }
 }

@@ -19,7 +19,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.10 $
+ * @version     $Revision: 1.11 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -179,6 +179,10 @@ public class SignalMastTableAction extends AbstractTableAction {
             super(new JComboBox(items));
         }
     }
+    
+    protected String getClassName() { return SignalMastTableAction.class.getName(); }
+    
+    public String getClassDescription() { return rb.getString("TitleSignalGroupTable"); }
 }
 
 

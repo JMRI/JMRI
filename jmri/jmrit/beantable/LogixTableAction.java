@@ -29,6 +29,7 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.*;
 import java.awt.Component;
+import java.util.HashMap;
 
 import jmri.Audio;
 import jmri.util.JmriJFrame;
@@ -55,7 +56,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.89 $
+ * @version $Revision: 1.90 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -211,9 +212,12 @@ public class LogixTableAction extends AbstractTableAction {
 				return InstanceManager.logixManagerInstance().getByUserName(
 						name);
 			}
-    
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }
+           /* public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"deleteInUse"); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "deleteInUse", boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
+
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLogixInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLogixInUse(boo); }*/
     
             public void configureTable(JTable table) {
                 table.setDefaultRenderer(Boolean.class, new EnablingCheckboxRenderer());
@@ -548,7 +552,7 @@ public class LogixTableAction extends AbstractTableAction {
 		addLogixFrame.pack();
 		addLogixFrame.setVisible(true);
                 _autoSystemName.setSelected(false);
-                if(prefMgr.getPreferenceState(systemNameAuto))
+                if(prefMgr.getSimplePreferenceState(systemNameAuto))
                     _autoSystemName.setSelected(true);
 	}
 
@@ -689,7 +693,7 @@ public class LogixTableAction extends AbstractTableAction {
                     addLogixFrame.pack();
                     addLogixFrame.setVisible(true);
                     _autoSystemName.setSelected(false);
-                    if(prefMgr.getPreferenceState(systemNameAuto))
+                    if(prefMgr.getSimplePreferenceState(systemNameAuto))
                         _autoSystemName.setSelected(true);
                     }
                 };
@@ -920,7 +924,7 @@ public class LogixTableAction extends AbstractTableAction {
         cancelAddPressed(null);
 		// create the Edit Logix Window
         makeEditLogixWindow();
-        prefMgr.setPreferenceState(systemNameAuto, _autoSystemName.isSelected());
+        prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
 	}
 
 	// *********** Methods for Edit Logix Window ********************
@@ -1120,7 +1124,7 @@ public class LogixTableAction extends AbstractTableAction {
         if (_showReminder){
             if (InstanceManager.getDefault(jmri.UserPreferencesManager.class) != null)
                 InstanceManager.getDefault(jmri.UserPreferencesManager.class).
-                    showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),"beantable.LogixTableAction", "remindLogix");
+                    showInfoMessage(rbx.getString("ReminderTitle"),rbx.getString("Reminder1"),getClassName(), "remindSaveLogix");
         }
 	}
 
@@ -1238,6 +1242,16 @@ public class LogixTableAction extends AbstractTableAction {
         if (f!=null)
             f.setVisible(true);
     }
+    
+    public void setMessagePreferencesDetails(){
+        HashMap<Integer,String> options = new HashMap< Integer,String>(3);
+        options.put(0x00, rb.getString("DeleteAsk"));
+        options.put(0x01, rb.getString("DeleteNever"));
+        options.put(0x02, rb.getString("DeleteAlways"));
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "delete", rbx.getString("DeleteLogix"), options, 0x00);
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "remindSaveLogix", rbx.getString("SuppressWithDisable"));
+        super.setMessagePreferencesDetails();
+    }
 
 	/**
 	 * Responds to the Delete combo selection Logix window
@@ -1249,7 +1263,7 @@ public class LogixTableAction extends AbstractTableAction {
         final Logix x = _logixManager.getBySystemName(sName);
         final jmri.UserPreferencesManager p;
         p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (p != null && p.getWarnDeleteLogix()==0x02) {
+        if (p != null && p.getMultipleChoiceOption(getClassName(), "delete")==0x02) {
             if (x != null) {
                 _logixManager.deleteLogix(x);
             }
@@ -1294,7 +1308,7 @@ public class LogixTableAction extends AbstractTableAction {
             yesButton.addActionListener(new ActionListener(){
                 public void actionPerformed(ActionEvent e) {
                     if(p != null && remember.isSelected()) {
-                       p.setWarnDeleteLogix(0x02);
+                       p.setMultipleChoiceOption(getClassName(), "delete", 0x02);
                     }
                     if (x != null) {
                         _logixManager.deleteLogix(x);
@@ -5257,6 +5271,10 @@ public class LogixTableAction extends AbstractTableAction {
             }
         }
     }
+    
+    public String getClassDescription() { return rb.getString("TitleLogixTable"); }
+    
+    protected String getClassName() { return LogixTableAction.class.getName(); }
 
 	static final org.apache.log4j.Logger log = org.apache.log4j.Logger
 			.getLogger(LogixTableAction.class.getName());

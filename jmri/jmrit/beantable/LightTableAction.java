@@ -37,7 +37,7 @@ import jmri.util.ConnectionNameFromSystemName;
  * Based on SignalHeadTableAction.java
  *
  * @author	Dave Duchamp    Copyright (C) 2004
- * @version     $Revision: 1.52 $
+ * @version     $Revision: 1.53 $
  */
 
 public class LightTableAction extends AbstractTableAction {
@@ -189,8 +189,9 @@ public class LightTableAction extends AbstractTableAction {
             public NamedBean getByUserName(String name) { 
                 return lightManager.getByUserName(name);
             }
-            public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }
+            /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnLightInUse(); }
+            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnLightInUse(boo); }*/
+            protected String getMasterClassName() { return getClassName(); }
             
             public void clickOn(NamedBean t) {
                 int oldState = ((Light)t).getState();
@@ -1792,7 +1793,10 @@ public class LightTableAction extends AbstractTableAction {
 			return;
 		}
 	}
+
+    public String getClassDescription() { return rb.getString("TitleLightTable"); }
     
+    protected String getClassName() { return LightTableAction.class.getName(); }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(LightTableAction.class.getName());
 }

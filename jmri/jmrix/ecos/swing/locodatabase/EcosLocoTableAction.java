@@ -90,9 +90,9 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
             public String getValue(String s) {
                 return "Set";
             }
-            
-            public int getDisplayDeleteMsg() { return -1; }
-            public void setDisplayDeleteMsg(int boo) {  }
+            protected String getMasterClassName() { return getClassName(); }
+            /*public int getDisplayDeleteMsg() { return -1; }
+            public void setDisplayDeleteMsg(int boo) {  }*/
             public void clickOn(jmri.NamedBean t) { }
             
             @Override

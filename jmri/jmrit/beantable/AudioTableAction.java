@@ -45,14 +45,14 @@ import jmri.NamedBean;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
  * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 
 public class AudioTableAction extends AbstractTableAction {
 
     AudioTableDataModel listener;
     AudioTableDataModel buffers;
-    AudioTableDataModel sources;
+    AudioTableDataModel sources;    
 
     AudioSourceFrame sourceFrame;
     AudioBufferFrame bufferFrame;
@@ -71,7 +71,7 @@ public class AudioTableAction extends AbstractTableAction {
      * @param actionName
      */
     public AudioTableAction(String actionName) {
-	super(actionName);
+	   super(actionName);
 
         // disable ourself if there is no primary Audio manager available
         if (jmri.InstanceManager.audioManagerInstance()==null) {
@@ -118,7 +118,6 @@ public class AudioTableAction extends AbstractTableAction {
             @Override
             void extras() {
                 addToFrame(null);
-
             }
         };
         setTitle();
@@ -278,8 +277,10 @@ public class AudioTableAction extends AbstractTableAction {
         }
 
         public AudioManager getManager() { return InstanceManager.audioManagerInstance(); }
-        public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnSensorInUse(); }
-        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnSensorInUse(boo); }
+        /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getMultipleChoiceOption(getClassName(),"delete"); }
+        public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setMultipleChoiceOption(getClassName(), "delete", boo); }*/
+        protected String getMasterClassName() { return getClassName(); }
+
         public Audio getBySystemName(String name) { return InstanceManager.audioManagerInstance().getBySystemName(name); }
 
         public Audio getByUserName(String name) { return InstanceManager.audioManagerInstance().getByUserName(name); }
@@ -465,6 +466,10 @@ public class AudioTableAction extends AbstractTableAction {
             updateSpecificNameList(Audio.SOURCE);
         }
     }
+    
+    public String getClassDescription() { return rb.getString("TitleAudioTable"); }
+    
+    protected String getClassName() { return AudioTableAction.class.getName(); }
 }
 
 /* @(#)AudioTableAction.java */
