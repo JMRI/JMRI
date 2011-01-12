@@ -2,6 +2,8 @@
 
 package jmri.jmrit.operations.rollingstock;
 
+import java.util.Locale;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -188,6 +190,9 @@ public class OperationsRollingStockTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
     }
 
 	public OperationsRollingStockTest(String s) {

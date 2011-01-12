@@ -17,12 +17,13 @@ import jmri.util.JmriJFrame;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -412,6 +413,9 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 	protected void setUp() throws Exception {
         super.setUp();
 		apps.tests.Log4JFixture.setUp();
+		
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
 	}
 
 	public OperationsTrainsGuiTest(String s) {

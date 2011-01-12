@@ -28,6 +28,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 
 import org.jdom.JDOMException;
 
@@ -65,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.74 $
+ * @version $Revision: 1.75 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -5849,6 +5850,9 @@ public class OperationsTrainsTest extends TestCase {
 	@Override
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
+		
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
 
 		// Need to clear out TrainManager global variables
 		TrainManager.instance().dispose();

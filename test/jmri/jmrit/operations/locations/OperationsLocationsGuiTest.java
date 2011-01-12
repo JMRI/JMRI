@@ -18,12 +18,13 @@ import junit.extensions.jfcunit.eventdata.*;
 
 import java.io.File;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -525,6 +526,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
     protected void setUp() throws Exception { 
         super.setUp();
 		apps.tests.Log4JFixture.setUp();
+		
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
 		
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");

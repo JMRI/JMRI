@@ -20,6 +20,8 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+
 import javax.swing.JComboBox;
 
 import org.jdom.JDOMException;
@@ -36,7 +38,7 @@ import org.jdom.JDOMException;
  *   RouteLocation: XML read/write
  * 
  * @author	Bob Coleman     Copyright (C) 2008, 2009
- * @version $Revision: 1.19 $
+ * @version $Revision: 1.20 $
  */
 public class OperationsRoutesTest extends TestCase {
 
@@ -731,6 +733,9 @@ public class OperationsRoutesTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
         
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");

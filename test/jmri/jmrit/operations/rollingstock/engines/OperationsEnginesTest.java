@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.jdom.JDOMException;
 
@@ -40,7 +41,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   EngineManager: Consists
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class OperationsEnginesTest extends TestCase {
 
@@ -1139,6 +1140,9 @@ public class OperationsEnginesTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
         
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");

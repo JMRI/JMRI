@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.io.File;
+import java.util.Locale;
 
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
@@ -46,6 +47,9 @@ public class OperationsLoggerTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
         
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
+        
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		String tempstring = OperationsSetupXml.getOperationsDirectoryName();
 		if (!tempstring.contains(File.separator+"JUnitTest")){
@@ -69,7 +73,12 @@ public class OperationsLoggerTest extends TestCase {
 		return suite;
 	}
 
+	Locale defaultLocale = Locale.getDefault();
     // The minimal setup for log4J
     @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() { 
+    	// restore locale
+    	Locale.setDefault(defaultLocale);
+    	apps.tests.Log4JFixture.tearDown(); 
+    }
 }

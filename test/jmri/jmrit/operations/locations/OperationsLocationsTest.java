@@ -7,6 +7,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 
 import java.util.List;
+import java.util.Locale;
 import java.io.File;
 import javax.swing.JComboBox;
 import java.awt.Dimension;
@@ -38,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1441,6 +1442,9 @@ public class OperationsLocationsTest extends TestCase {
 	@Override
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
+		
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
 
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");

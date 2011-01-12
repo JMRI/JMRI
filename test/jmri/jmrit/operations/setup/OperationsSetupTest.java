@@ -16,6 +16,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import java.util.Locale;
+
 /**
  * Tests for the Operations Setup class
  * Last manually cross-checked on 20090131
@@ -24,7 +26,7 @@ import junit.framework.TestSuite;
  *   Backup, Control, Demo
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class OperationsSetupTest extends TestCase {
 
@@ -536,6 +538,9 @@ public class OperationsSetupTest extends TestCase {
 	@Override
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
+		
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
 
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		String tempstring = OperationsSetupXml.getOperationsDirectoryName();
@@ -586,7 +591,12 @@ public class OperationsSetupTest extends TestCase {
 		return suite;
 	}
 
+	Locale defaultLocale = Locale.getDefault();
 	// The minimal setup for log4J
 	@Override
-	protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+	protected void tearDown() {
+		// restore locale
+		Locale.setDefault(defaultLocale);
+		apps.tests.Log4JFixture.tearDown();
+	}
 }

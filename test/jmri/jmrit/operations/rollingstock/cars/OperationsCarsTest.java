@@ -5,6 +5,8 @@ package jmri.jmrit.operations.rollingstock.cars;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
+
 import javax.swing.JComboBox;
 
 import org.jdom.JDOMException;
@@ -32,7 +34,7 @@ import junit.framework.TestSuite;
  *   Everything  
  * 
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 public class OperationsCarsTest extends TestCase {
 
@@ -1145,6 +1147,9 @@ public class OperationsCarsTest extends TestCase {
     @Override
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+		// set the locale to US English
+		Locale.setDefault(Locale.ENGLISH);
         
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
 		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
