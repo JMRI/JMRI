@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.59 $
+ * @version             $Revision: 1.60 $
  */
 public class Car extends RollingStock {
 	
@@ -42,7 +42,8 @@ public class Car extends RollingStock {
 	public static final String LOAD_CHANGED_PROPERTY = "Car load changed";  		// property change descriptions
 	public static final String WAIT_CHANGED_PROPERTY = "Car wait changed";
 	public static final String NEXTWAIT_CHANGED_PROPERTY = "Next wait changed";
-	public static final String NEXTDESTINATION_CHANGED_PROPERTY = "Next destination changed";
+	public static final String NEXT_DESTINATION_CHANGED_PROPERTY = "Next destination changed";
+	public static final String NEXT_DESTINATION_TRACK_CHANGED_PROPERTY = "Next destination track changed";
 	public static final String RETURN_WHEN_EMPTY_CHANGED_PROPERTY = "Return when empty changed";
 	
 	public Car(){
@@ -153,8 +154,9 @@ public class Car extends RollingStock {
 	public void setNextDestination(Location destination){
 		Location old = _nextDestination;
 		_nextDestination = destination;
+		log.debug("Next destination for car ("+toString()+")  old: "+old+" new: "+destination);
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
-			firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
+			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
 	
 	public Location getNextDestination(){
@@ -171,7 +173,7 @@ public class Car extends RollingStock {
 		Track old = _nextDestTrack;
 		_nextDestTrack = track;
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
-			firePropertyChange(NEXTDESTINATION_CHANGED_PROPERTY, null, null);
+			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 	}
 	
 	public Track getNextDestTrack(){
@@ -399,6 +401,11 @@ public class Car extends RollingStock {
 	 * @param track
 	 */
 	private void scheduleNext(Track track){
+		if (getDestination() != null && getDestination().equals(getNextDestination())
+				&& getDestinationTrack() != null && getDestinationTrack().equals(getNextDestTrack())){
+			setNextDestination(null);
+			setNextDestTrack(null);
+		}
 		if (track == null || track.getScheduleName().equals(""))
 			return;
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
@@ -416,7 +423,7 @@ public class Car extends RollingStock {
 		// get the wait count
 		setNextWait(currentSi.getWait());
 		
-		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+")");
+		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
 		
 		// set all cars in kernel to the next load
 		if (getKernel() != null){

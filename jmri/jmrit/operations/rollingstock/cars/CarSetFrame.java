@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.25 $
+ * @version $Revision: 1.26 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -77,6 +77,19 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 	}
 	
 	protected boolean save(){
+		// set final destination fields before destination in case there's a schedule at destination
+		if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals("")) {
+			_car.setNextDestination(null);
+			_car.setNextDestTrack(null);
+		} else {
+			if (finalDestTrackBox.getSelectedItem() != null 
+					&& !finalDestTrackBox.getSelectedItem().equals("")){
+				_car.setNextDestTrack((Track)finalDestTrackBox.getSelectedItem());
+			} else {
+				_car.setNextDestTrack(null);
+			}
+			_car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
+		}
 		if (!super.save())
 			return false;
 		// return when empty fields
@@ -91,19 +104,6 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				_car.setReturnWhenEmptyDestTrack(null);
 			}
 			_car.setReturnWhenEmptyDestination((Location) destReturnWhenEmptyBox.getSelectedItem());
-		}
-		// final destination fields
-		if (finalDestinationBox.getSelectedItem() == null || finalDestinationBox.getSelectedItem().equals("")) {
-			_car.setNextDestination(null);
-			_car.setNextDestTrack(null);
-		} else {
-			if (finalDestTrackBox.getSelectedItem() != null 
-					&& !finalDestTrackBox.getSelectedItem().equals("")){
-				_car.setNextDestTrack((Track)finalDestTrackBox.getSelectedItem());
-			} else {
-				_car.setNextDestTrack(null);
-			}
-			_car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
 		}
 		if (_car.getTrain() != null){
 			Train train = _car.getTrain();
@@ -173,6 +173,19 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 				packFrame();
 			}
 		}
+	}
+	
+	protected void updateFinalDestinationComboBoxes(){
+		log.debug("Updating final destinations for car ("+_car.toString()+")");
+		finalDestinationBox.setSelectedItem(_car.getNextDestination());
+		updateFinalDestination();
+	}
+	
+	public void propertyChange(java.beans.PropertyChangeEvent e) {
+		super.propertyChange(e);
+		if (e.getPropertyName().equals(Car.NEXT_DESTINATION_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Car.NEXT_DESTINATION_TRACK_CHANGED_PROPERTY))
+			updateFinalDestinationComboBoxes();
 	}
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

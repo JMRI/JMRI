@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -297,15 +297,19 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 						JOptionPane.ERROR_MESSAGE);
 				return false;
 			}
-			String status = _rs.setLocation((Location) locationBox.getSelectedItem(),
-					(Track)trackLocationBox.getSelectedItem());
-			if (!status.equals(RollingStock.OKAY)){
-				log.debug ("Can't set rs's location because of "+ status);
-				JOptionPane.showMessageDialog(this,
-						getRb().getString("rsCanNotLocMsg")+ status,
-						getRb().getString("rsCanNotLoc"),
-						JOptionPane.ERROR_MESSAGE);
-				return false;
+			// update location only if it has changed
+			if (_rs.getLocation() == null || !_rs.getLocation().equals(locationBox.getSelectedItem()) 
+					|| _rs.getTrack() == null || !_rs.getTrack().equals(trackLocationBox.getSelectedItem())){
+				String status = _rs.setLocation((Location) locationBox.getSelectedItem(),
+						(Track)trackLocationBox.getSelectedItem());
+				if (!status.equals(RollingStock.OKAY)){
+					log.debug ("Can't set rs's location because of "+ status);
+					JOptionPane.showMessageDialog(this,
+							getRb().getString("rsCanNotLocMsg")+ status,
+							getRb().getString("rsCanNotLoc"),
+							JOptionPane.ERROR_MESSAGE);
+					return false;
+				}
 			}
 		}
 		if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {

@@ -22,7 +22,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Currently the router is limited to five trains.
  * 
  * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 
 public class Router {
@@ -56,7 +56,8 @@ public class Router {
 	public boolean setDestination(Car car){
 		_status = Car.OKAY;
 		if (car.getNextDestination() != null){
-			log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") has next destination ("+car.getNextDestinationName()+") car routing begins");
+			log.debug("Car ("+car.toString()+") at location ("+car.getLocationName()+", "+car.getTrackName()+") " +
+					"has next destination ("+car.getNextDestinationName()+", "+car.getNextDestTrackName()+") car routing begins");
 			// Has the car accidentally arrived at the car's next destination?
 			if (car.getLocation() != null && car.getLocation().equals(car.getNextDestination()) 
 					&& (car.getTrack().equals(car.getNextDestTrack()) || car.getNextDestTrack() == null)){
@@ -68,12 +69,12 @@ public class Router {
 			// note clone has car has next destination as its destination
 			Car clone = clone(car);
 			//Note the following test doesn't check for length which is what we want!
-			String newStatus = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
-			if (!newStatus.equals(Car.OKAY)){
+			_status = clone.testDestination(clone.getDestination(), clone.getDestinationTrack());
+			if (!_status.equals(Car.OKAY)){
 				String trk = "null";
 				if (car.getNextDestTrack() != null)
 					trk = car.getNextDestTrack().getName();
-				log.info("Next destination ("+car.getNextDestinationName()+", "+trk+") failed for car ("+car.toString()+") due to "+newStatus);
+				log.info("Next destination ("+car.getNextDestinationName()+", "+trk+") failed for car ("+car.toString()+") due to "+_status);
 				return false;
 			}
 			// check to see if car will move with new destination and a single train
@@ -82,10 +83,7 @@ public class Router {
 				log.debug("Car ("+car.toString()+") destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
 						+") can be serviced by a single train ("+train.getName()+")");
 				_status = car.setDestination(clone.getDestination(), clone.getDestinationTrack());
-				if (_status.equals(Car.OKAY)){
-					car.setNextDestination(null);
-					car.setNextDestTrack(null);
-				} else {
+				if (!_status.equals(Car.OKAY)){
 					log.info("Can not deliver car ("+car.toString()+") to destination ("+clone.getDestinationName()+", "+clone.getDestinationTrackName()
 							+") due to "+_status);
 					return false;

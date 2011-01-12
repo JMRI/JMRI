@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -656,7 +656,9 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 					List<Car> cars = _car.getKernel().getCars();
 					for (int i=0; i<cars.size(); i++){
 						Car c = cars.get(i);
-						if (c.getType().equals(_car.getType()))
+						if (c.getType().equals(_car.getType()) 
+								|| _car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+								|| _car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
 							c.setLoad(_car.getLoad());
 					}
 				}
@@ -675,14 +677,18 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 						JOptionPane.ERROR_MESSAGE);
 
 			} else {
-				String status = _car.setLocation((Location)locationBox.getSelectedItem(),
-						(Track)trackLocationBox.getSelectedItem());
-				if (!status.equals(Car.OKAY)){
-					log.debug ("Can't set car's location because of "+ status);
-					JOptionPane.showMessageDialog(this,
-							rb.getString("rsCanNotLocMsg")+ status,
-							rb.getString("rsCanNotLoc"),
-							JOptionPane.ERROR_MESSAGE);
+				// update location only if it has changed
+				if (_car.getLocation() == null || !_car.getLocation().equals(locationBox.getSelectedItem()) 
+						|| _car.getTrack() == null || !_car.getTrack().equals(trackLocationBox.getSelectedItem())){
+					String status = _car.setLocation((Location)locationBox.getSelectedItem(),
+							(Track)trackLocationBox.getSelectedItem());
+					if (!status.equals(Car.OKAY)){
+						log.debug ("Can't set car's location because of "+ status);
+						JOptionPane.showMessageDialog(this,
+								rb.getString("rsCanNotLocMsg")+ status,
+								rb.getString("rsCanNotLoc"),
+								JOptionPane.ERROR_MESSAGE);
+					}
 				}
 			}
 		}	

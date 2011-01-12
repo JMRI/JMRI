@@ -26,7 +26,7 @@ import java.util.List;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -220,16 +220,16 @@ public class OperationsCarRouterTest extends TestCase {
 		// don't allow train to service boxcars
 		ActonTrain.deleteTypeName("Boxcar");
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't service Boxcar", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// try the car type Flat
+		c4.setDestination(null, null);	// clear previous destination
 		c4.setNextDestination(Acton);
 		c4.setNextDestTrack(AS2);
-		c4.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with train that service Flat", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 
@@ -242,16 +242,16 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonTrain.addRoadName("BA");
 		ActonTrain.setRoadOption(Train.EXCLUDEROADS);
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't service road name BA", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 	
 		// try the car road name BB
+		c4.setDestination(null, null);	// clear previous destination
 		c4.setNextDestination(Acton);
 		c4.setNextDestTrack(AS2);
-		c4.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with train that services road BB", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 
@@ -264,16 +264,16 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonTrain.setBuiltStartYear("1985");
 		ActonTrain.setBuiltEndYear("2010");
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't service car built before 1985", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// try the car built after 1985
+		c4.setDestination(null, null);	// clear previous destination
 		c4.setNextDestination(Acton);
 		c4.setNextDestTrack(AS2);
-		c4.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with train that services car built after 1985", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 
@@ -288,16 +288,16 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonTrain.setLoadOption(Train.EXCLUDELOADS);
 		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't service load Tools", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 	
 		// try the car load "E"
+		c4.setDestination(null, null);	// clear previous destination
 		c4.setNextDestination(Acton);
 		c4.setNextDestTrack(AS2);
-		c4.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with train that services load E", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Acton MA", c4.getDestinationName());
 		
@@ -308,9 +308,9 @@ public class OperationsCarRouterTest extends TestCase {
 		// now test by modifying the route
 		rlA.setCanPickup(false);		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't pickup cars", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -320,9 +320,9 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		rlA.setCanDrop(false);		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't drop cars", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -332,9 +332,9 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		rlA.setMaxCarMoves(0);		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that doesn't service location", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -348,16 +348,16 @@ public class OperationsCarRouterTest extends TestCase {
 		Acton.setTrainDirections(Track.SOUTH);
 		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with local train that departs north, location south", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
 		Acton.setTrainDirections(Track.NORTH);
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with local train that departs north, location north", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
@@ -365,15 +365,15 @@ public class OperationsCarRouterTest extends TestCase {
 		AS1.setTrainDirections(0);
 		
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with local only", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);
-		c3.setDestination(null, null);	// clear previous destination
 		AS1.setTrainDirections(Track.NORTH);
 		Assert.assertTrue("Try routing with local train that departs north, track north", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
@@ -384,22 +384,24 @@ public class OperationsCarRouterTest extends TestCase {
 		AS2.setTrainDirections(0);
 				
 		// and the next destination for the car
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);	// now specify the actual track
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with local train", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
 		AS2.setTrainDirections(Track.NORTH);
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Acton);
 		c3.setNextDestTrack(AS2);	// now specify the actual track
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertTrue("Try routing with train that departs north, track north", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
 		
 		// Two locations one train testing begins
 		// set next destination Bedford
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Bedford);
+		c3.setNextDestTrack(null);
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setDestination(c3));
 		// create a train with a route from Acton to Bedford
@@ -418,14 +420,15 @@ public class OperationsCarRouterTest extends TestCase {
 		// don't allow train to service boxcars
 		ActonToBedfordTrain.deleteTypeName("Boxcar");
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service Boxcar", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// try the car type Flat
-		c4.setNextDestination(Bedford);
 		c4.setDestination(null, null);	// clear previous destination
+		c4.setNextDestination(Bedford);
+		c4.setNextDestTrack(null);
 		Assert.assertTrue("Try routing with train that service Flat", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 
@@ -438,14 +441,14 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonToBedfordTrain.addRoadName("BA");
 		ActonToBedfordTrain.setRoadOption(Train.EXCLUDEROADS);
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service road name BA", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 	
 		// try the car road name BB
-		c4.setNextDestination(Bedford);
 		c4.setDestination(null, null);	// clear previous destination
+		c4.setNextDestination(Bedford);
 		Assert.assertTrue("Try routing with train that services road BB", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 
@@ -458,14 +461,14 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonToBedfordTrain.setBuiltStartYear("1985");
 		ActonToBedfordTrain.setBuiltEndYear("2010");
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service car built before 1985", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
 		// try the car built after 1985
-		c4.setNextDestination(Bedford);
 		c4.setDestination(null, null);	// clear previous destination
+		c4.setNextDestination(Bedford);
 		Assert.assertTrue("Try routing with train that services car built after 1985", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 
@@ -480,14 +483,14 @@ public class OperationsCarRouterTest extends TestCase {
 		ActonToBedfordTrain.setLoadOption(Train.EXCLUDELOADS);
 		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service load Tools", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 	
 		// try the car load "E"
-		c4.setNextDestination(Bedford);
 		c4.setDestination(null, null);	// clear previous destination
+		c4.setNextDestination(Bedford);
 		Assert.assertTrue("Try routing with train that services load E", router.setDestination(c4));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c4.getDestinationName());
 		
@@ -498,8 +501,8 @@ public class OperationsCarRouterTest extends TestCase {
 		// now test by modifying the route
 		rlActon.setCanPickup(false);		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't pickup cars", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -509,8 +512,8 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		rlBedford.setCanDrop(false);		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't drop cars", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -520,8 +523,8 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		rlBedford.setMaxCarMoves(0);		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service destination", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -531,8 +534,8 @@ public class OperationsCarRouterTest extends TestCase {
 
 		rlActon.setMaxCarMoves(0);		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that doesn't service location", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -546,8 +549,9 @@ public class OperationsCarRouterTest extends TestCase {
 		Acton.setTrainDirections(Track.SOUTH);
 		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
+
 		// remove the Action local by not allowing train to service boxcars
 		ActonTrain.deleteTypeName("Boxcar");
 		Assert.assertFalse("Try routing with train that departs north, location south", router.setDestination(c3));
@@ -561,8 +565,8 @@ public class OperationsCarRouterTest extends TestCase {
 		AS1.setTrainDirections(Track.SOUTH);
 		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that departs north, track south", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -575,8 +579,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Bedford.setTrainDirections(Track.SOUTH);
 		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertFalse("Try routing with train that arrives north, destination south", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -588,14 +592,14 @@ public class OperationsCarRouterTest extends TestCase {
 		BS1.setTrainDirections(Track.SOUTH);
 		
 		// and the next destination for the car
-		c3.setNextDestination(Bedford);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Bedford);
 		Assert.assertTrue("Try routing with train that arrives north, but no next track", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Bedford MA", c3.getDestinationName());
 		
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Bedford); // the next destination for the car
 		c3.setNextDestTrack(BS1);	// now specify the actual track
-		c3.setDestination(null, null);	// clear previous destination
 		Assert.assertFalse("Try routing with train that arrives north, now with track", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "", c3.getDestinationName());
 		
@@ -608,9 +612,9 @@ public class OperationsCarRouterTest extends TestCase {
 		AS1.setTrainDirections(0);
 		ActonTrain.addTypeName("Boxcar");	// restore the local
 				
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Bedford);	// the next destination for the car
 		c3.setNextDestTrack(BS1);	// now specify the actual track
-		c3.setDestination(null, null);	// clear previous destination
 		
 		Assert.assertTrue("Try routing two trains via interchange", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
@@ -619,9 +623,9 @@ public class OperationsCarRouterTest extends TestCase {
 		// don't allow use of interchange track
 		AI.setDropOption(Track.TRAINS);
 		
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Bedford);	// the next destination for the car
 		c3.setNextDestTrack(BS1);	// now specify the actual track
-		c3.setDestination(null, null);	// clear previous destination
 		
 		Assert.assertTrue("Try routing two trains via yard", router.setDestination(c3));
 		Assert.assertEquals("Check car's destination", "Acton MA", c3.getDestinationName());
@@ -634,8 +638,8 @@ public class OperationsCarRouterTest extends TestCase {
 		// now try up to 5 trains to route car
 		
 		// set next destination Clinton
-		c3.setNextDestination(Clinton);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Clinton);
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setDestination(c3));
 
@@ -654,8 +658,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination track", "Acton Interchange", c3.getDestinationTrackName());
 		
 		// set next destination Danbury
-		c3.setNextDestination(Danbury);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Danbury);
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setDestination(c3));
 	
@@ -674,8 +678,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination track", "Acton Interchange", c3.getDestinationTrackName());
 		
 		// set next destination Essex
-		c3.setNextDestination(Essex);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Essex);
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setDestination(c3));
 		
@@ -694,8 +698,8 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Check car's destination track", "Acton Interchange", c3.getDestinationTrackName());
 
 		// set next destination Foxboro
-		c3.setNextDestination(Foxboro);
 		c3.setDestination(null, null);	// clear previous destination
+		c3.setNextDestination(Foxboro);
 		// should fail no train!
 		Assert.assertFalse("Try routing with next destination", router.setDestination(c3));
 		
@@ -757,15 +761,15 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("car's location Acton","Acton Siding 1", c4.getTrackName());
 		
 		// set next destination Essex
+		c3.setDestination(null, null);	// clear previous destination
 		c3.setNextDestination(Essex);
 		c3.setNextDestTrack(ES2);
-		c3.setDestination(null, null);	// clear previous destination
 		c3.setLoad("L");
 		c3.setReturnWhenEmptyDestination(Foxboro);
 		
 		// next destination Gulf is not reachable
-		c4.setNextDestination(Gulf);
 		c4.setDestination(null, null);	// clear previous destination
+		c4.setNextDestination(Gulf);
 		
 		ActonTrain.build();
 		ActonTrain.terminate();
