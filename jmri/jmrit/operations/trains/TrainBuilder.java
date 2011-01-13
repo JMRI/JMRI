@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.125 $
+ * @version             $Revision: 1.126 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1544,7 +1544,8 @@ public class TrainBuilder extends TrainCommon{
 				Schedule sch = ScheduleManager.instance().getScheduleByName(track.getScheduleName());
 				ScheduleItem si = sch.getItemById(track.getScheduleItemId());
 				log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") requesting type ("+si.getType()+") load ("+si.getLoad()+")");
-				if (car.testDestination(track.getLocation(), track).equals(Car.OKAY) && car.getLoad().equals(si.getLoad())){
+				if (car.testDestination(track.getLocation(), track).equals(Car.OKAY) 
+						&& (car.getLoad().equals(si.getLoad()) || si.getLoad().equals(""))){
 					addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSetFinalDestination"),
 							new Object[]{car.toString(), car.getLoad(), track.getLocation().getName(), track.getName()}));
 					// send car to this destination

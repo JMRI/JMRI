@@ -30,7 +30,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.11 $
+ * @version $Revision: 1.12 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -947,6 +947,7 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// bias track
 		ES2.setMoves(0);
+		DS2.setMoves(50);
 		
 		// place cars
 		Assert.assertEquals("Place car", Car.OKAY, c3.setLocation(Acton, AS1));

@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.61 $
+ * @version             $Revision: 1.62 $
  */
 public class Car extends RollingStock {
 	
@@ -154,7 +154,7 @@ public class Car extends RollingStock {
 	public void setNextDestination(Location destination){
 		Location old = _nextDestination;
 		_nextDestination = destination;
-		log.debug("Next destination for car ("+toString()+")  old: "+old+" new: "+destination);
+		log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
 			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
 	}
@@ -415,38 +415,41 @@ public class Car extends RollingStock {
 			log.debug("Car ("+toString()+") is part of kernel ("+getKernelName()+")");
 			return;
 		}
-		// get the car's next load
-		setNextLoad(currentSi.getShip());
-		// get the car's next destination and track
-		setNextDestination(currentSi.getDestination());
-		setNextDestTrack(currentSi.getDestinationTrack());
-		// get the wait count
-		setNextWait(currentSi.getWait());
-		
-		log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
-		
-		// set all cars in kernel to the next load
-		if (getKernel() != null){
-			List<Car> cars = getKernel().getCars();
-			for (int i=0; i<cars.size(); i++){
-				Car c = cars.get(i);
-				if (c.getType().equals(getType()))
-					c.setNextLoad(currentSi.getShip());
-			}
+		if (getType().equals(currentSi.getType())){
+			// set the car's next load
+			setNextLoad(currentSi.getShip());
+			// set the car's next destination and track
+			setNextDestination(currentSi.getDestination());
+			setNextDestTrack(currentSi.getDestinationTrack());
+			// set the wait count
+			setNextWait(currentSi.getWait());
+
+			log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
+
+			// set all cars in kernel to the next load
+			if (getKernel() != null){
+				List<Car> cars = getKernel().getCars();
+				for (int i=0; i<cars.size(); i++){
+					Car c = cars.get(i);
+					if (c.getType().equals(getType()))
+						c.setNextLoad(currentSi.getShip());
+				}
+			}		
+			// bump schedule
+			track.bumpSchedule();
+		} else {
+			log.debug("Car ("+toString()+") type ("+getType()+") arrived out of sequence, current type needed ("+currentSi.getType()+")");
 		}
-		
-		// bump schedule
-		track.bumpSchedule();
 	}
 	
 	private void loadNext(Track destTrack){
 		if (destTrack.getLocType().equals(Track.SIDING)){
+			// update wait count
+			setWait(getNextWait());
+			setNextWait(0);
 			if (!getNextLoad().equals("")){
 				setLoad(getNextLoad());
 				setNextLoad("");
-				// update wait count
-				setWait(getNextWait());
-				setNextWait(0);
 				// is the next load default empty?  Check for car return when empty
 				if (getLoad().equals(carLoads.getDefaultEmptyName()))
 					setLoadEmpty();
