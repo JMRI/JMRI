@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.60 $
+ * @version             $Revision: 1.61 $
  */
 public class Car extends RollingStock {
 	
@@ -406,7 +406,7 @@ public class Car extends RollingStock {
 			setNextDestination(null);
 			setNextDestTrack(null);
 		}
-		if (track == null || track.getScheduleName().equals(""))
+		if (track == null || track.getScheduleName().equals("") || loading)
 			return;
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
 		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") id: "+currentSi.getId());
@@ -492,6 +492,9 @@ public class Car extends RollingStock {
 		CarLengths.instance().removePropertyChangeListener(this);
 		super.dispose();
 	}
+	
+	// used to stop a track's schedule from bumping when loading car database
+	private boolean loading = false;
 
 	/**
 	 * Construct this Entry from XML. This member has to remain synchronized
@@ -500,7 +503,9 @@ public class Car extends RollingStock {
 	 * @param e  Car XML element
 	 */
 	public Car(org.jdom.Element e) {
+		loading = true;	// stop track schedule from bumping
 		super.rollingStock(e);
+		loading = false;
 		org.jdom.Attribute a;
 		if ((a = e.getAttribute("passenger")) != null)
 			_passenger = a.getValue().equals("true");
