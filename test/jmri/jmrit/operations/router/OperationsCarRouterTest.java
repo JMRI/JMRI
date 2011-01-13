@@ -30,7 +30,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.10 $
+ * @version $Revision: 1.11 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -934,6 +934,7 @@ public class OperationsCarRouterTest extends TestCase {
 		ScheduleItem schDItem1 = schD.addItem("Boxcar");
 		schDItem1.setLoad("Screws");
 		schDItem1.setShip("Nails");
+		schDItem1.setWait(1);
 		schDItem1.setDestination(Foxboro);
 		schDItem1.setDestinationTrack(FS1);
 		
@@ -1129,11 +1130,16 @@ public class OperationsCarRouterTest extends TestCase {
 		
 		// check next loads
 		Assert.assertEquals("Car BA 3 load","Nails", c3.getNextLoad());
+		Assert.assertEquals("Car BB 4 load","", c4.getNextLoad());
+		
+		// check next wait
+		Assert.assertEquals("Car BA 3 has wait", 1, c3.getNextWait());
+		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getNextWait());
 		
 		DanburyToEssexTrain.terminate();
 		
 		// Train has arrived at Essex, check destinations
-		// schedule at Essex (schedule D) forwards car BA 3 to Foxboro Siding 1 load Nails
+		// schedule at Essex (schedule D) forwards car BA 3 to Foxboro Siding 1 load Nails, wait = 1
 		Assert.assertEquals("Car BA 3 destination","Foxboro MA", c3.getDestinationName());
 		Assert.assertEquals("Car BA 3 destination track","Foxboro Siding 1", c3.getDestinationTrackName());
 		Assert.assertEquals("Car BA 3 next destination","", c3.getNextDestinationName());
@@ -1152,10 +1158,51 @@ public class OperationsCarRouterTest extends TestCase {
 		Assert.assertEquals("Car BA 3 load","", c3.getNextLoad());
 		Assert.assertEquals("Car BB 4 load","", c4.getNextLoad());
 		
+		// check wait
+		Assert.assertEquals("Car BA 3 has wait", 1, c3.getWait());
+		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getWait());
+		
+		// check next wait
+		Assert.assertEquals("Car BA 3 has wait", 0, c3.getNextWait());
+		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getNextWait());
+		
 		EssexToFoxboroTrain.build();
+		
+		// confirm that only BB 4 is in train, BA 3 has wait = 1
+		Assert.assertEquals("Car BA 3 not in train", null, c3.getTrain());
+		Assert.assertEquals("Car BB 4 in train", EssexToFoxboroTrain, c4.getTrain());		
 		EssexToFoxboroTrain.terminate();
 		
 		// Train has arrived at Foxboro, check destinations
+		Assert.assertEquals("Car BA 3 destination","Foxboro MA", c3.getDestinationName());
+		Assert.assertEquals("Car BA 3 destination track","Foxboro Siding 1", c3.getDestinationTrackName());
+		Assert.assertEquals("Car BA 3 next destination","", c3.getNextDestinationName());
+		Assert.assertEquals("Car BA 3 next destination track","", c3.getNextDestTrackName());
+
+		Assert.assertEquals("Car BB 4 destination","", c4.getDestinationName());
+		Assert.assertEquals("Car BB 4 destination track","", c4.getDestinationTrackName());
+		Assert.assertEquals("Car BB 4 next destination","", c4.getNextDestinationName());
+		Assert.assertEquals("Car BB 4 next destination track","", c4.getNextDestTrackName());
+		
+		// check load
+		Assert.assertEquals("Car BA 3 load","Nails", c3.getLoad());
+		Assert.assertEquals("Car BB 4 load","E", c4.getLoad());
+		
+		// check next loads
+		Assert.assertEquals("Car BA 3 load","", c3.getNextLoad());
+		Assert.assertEquals("Car BB 4 load","", c4.getNextLoad());
+		
+		// check wait
+		Assert.assertEquals("Car BA 3 has no wait", 0, c3.getWait());
+		Assert.assertEquals("Car BB 4 has no wait", 0, c4.getWait());
+	
+		EssexToFoxboroTrain.build();
+		// confirm that only BA 3 is in train
+		Assert.assertEquals("Car BA 3 in train", EssexToFoxboroTrain, c3.getTrain());
+		Assert.assertEquals("Car BB 4 not in train", null, c4.getTrain());		
+		EssexToFoxboroTrain.terminate();
+		
+		// Train has arrived again at Foxboro, check destinations
 		Assert.assertEquals("Car BA 3 destination","", c3.getDestinationName());
 		Assert.assertEquals("Car BA 3 destination track","", c3.getDestinationTrackName());
 		Assert.assertEquals("Car BA 3 next destination","", c3.getNextDestinationName());
