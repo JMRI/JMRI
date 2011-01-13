@@ -13,7 +13,7 @@ import jmri.InstanceManager;
  * particular system.
  *
  * @author		Bob Jacobsen  Copyright (C) 2010
- * @version             $Revision: 1.6 $
+ * @version             $Revision: 1.7 $
  */
 public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
@@ -58,7 +58,8 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public void configureManagers() {
       
-        jmri.InstanceManager.setPowerManager(new jmri.jmrix.ecos.EcosPowerManager(getTrafficController()));
+        powerManager = new jmri.jmrix.ecos.EcosPowerManager(getTrafficController());
+        jmri.InstanceManager.setPowerManager(powerManager);
         
         turnoutManager = new jmri.jmrix.ecos.EcosTurnoutManager(this);
         jmri.InstanceManager.setTurnoutManager(turnoutManager);
@@ -78,12 +79,44 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private EcosLocoAddressManager locoManager;
     private EcosPreferences prefManager;
     private EcosDccThrottleManager throttleManager;
+    private EcosPowerManager powerManager;
     
     public EcosLocoAddressManager getLocoAddressManager() { return locoManager; }
     public EcosTurnoutManager getTurnoutManager() { return turnoutManager; }
     public EcosSensorManager getSensorManager() { return sensorManager; }
     public EcosPreferences getPreferenceManager() { return prefManager; }
     public EcosDccThrottleManager getThrottleManager() { return throttleManager; }
+    public EcosPowerManager getPowerManager() { return powerManager; }
+    
+    /** 
+     * Tells which managers this provides by class
+     */
+    public boolean provides(Class<?> type) {
+        if (type.equals(jmri.ThrottleManager.class))
+            return true;
+        if (type.equals(jmri.PowerManager.class))
+            return true;
+        if (type.equals(jmri.SensorManager.class))
+            return true;
+        if (type.equals(jmri.TurnoutManager.class))
+            return true;
+        return false; // nothing, by default
+    }
+    
+    @SuppressWarnings("unchecked")
+    public <T> T get(Class<?> T) {
+        if (getDisabled())
+            return null;
+        if (T.equals(jmri.ThrottleManager.class))
+            return (T)getThrottleManager();
+        if (T.equals(jmri.PowerManager.class))
+            return (T)getPowerManager();
+        if (T.equals(jmri.SensorManager.class))
+            return (T)getSensorManager();
+        if (T.equals(jmri.TurnoutManager.class))
+            return (T)getTurnoutManager();
+        return null; // nothing, by default
+    }
     
     @Override
     public void dispose(){
@@ -95,6 +128,13 @@ public class EcosSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
             turnoutManager.dispose();
             turnoutManager=null;
         }
+        
+        if (powerManager != null) 
+            InstanceManager.deregister(powerManager, jmri.jmrix.ecos.EcosPowerManager.class);
+
+        if (throttleManager != null) 
+            InstanceManager.deregister(throttleManager, jmri.jmrix.ecos.EcosDccThrottleManager.class);
+            
         et = null;
         InstanceManager.deregister(this, EcosSystemConnectionMemo.class);
         if (cf != null) 
