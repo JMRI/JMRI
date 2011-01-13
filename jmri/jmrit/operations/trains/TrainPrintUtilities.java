@@ -82,7 +82,7 @@ public class TrainPrintUtilities {
 			ImageIcon icon = new ImageIcon(logoURL);
 			writer.write(icon.getImage(), new JLabel(icon));
 		}
-        
+		Color c = null;
 		while (true) {
 			try {
 				line = in.readLine();
@@ -99,16 +99,18 @@ public class TrainPrintUtilities {
 					continue;
 			// printing the train manifest
 			}else{
-				Color c = null;
 				// determine if line is a pickup or drop
 				if(line.startsWith(TrainCommon.BOX + rb.getString("Pickup")) ||
 						line.startsWith(TrainCommon.BOX + rb.getString("Engine"))){
 					//log.debug("found a pickup line");
 					c = Setup.getPickupColor();
 				}
-				if(line.startsWith(TrainCommon.BOX + rb.getString("Drop"))){
+				else if(line.startsWith(TrainCommon.BOX + rb.getString("Drop"))){
 					//log.debug("found a drop line");
 					c = Setup.getDropColor();
+				}
+				else if(!line.startsWith(TrainCommon.TAB)){
+					c = null;
 				}
 				if (c != null){
 					try {
