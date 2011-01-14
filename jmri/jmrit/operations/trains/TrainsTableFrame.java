@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -32,7 +33,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.49 $
+ * @version             $Revision: 1.50 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -84,9 +85,10 @@ public class TrainsTableFrame extends OperationsFrame {
 	JButton saveButton = new JButton(rb.getString("SaveBuilds"));
 	
 	// check boxes
-	javax.swing.JCheckBox buildMsgBox = new javax.swing.JCheckBox(rb.getString("BuildMessages"));
-	javax.swing.JCheckBox buildReportBox = new javax.swing.JCheckBox(rb.getString("BuildReport"));
-	javax.swing.JCheckBox printPreviewBox = new javax.swing.JCheckBox(rb.getString("PrintPreview"));
+	JCheckBox buildMsgBox = new JCheckBox(rb.getString("BuildMessages"));
+	JCheckBox buildReportBox = new JCheckBox(rb.getString("BuildReport"));
+	JCheckBox printPreviewBox = new JCheckBox(rb.getString("PrintPreview"));
+	JCheckBox showAllBox = new JCheckBox(rb.getString("ShowAllTrains"));
 
     public TrainsTableFrame() {
         super(ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle").getString("TitleTrainsTable"));
@@ -116,6 +118,7 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(sortById);
     	cp1.add(textSep1);
     	
+       	cp1.add(showAllBox);
     	cp1.add(buildMsgBox);
     	cp1.add(buildReportBox);
     	cp1.add(printPreviewBox);
@@ -134,17 +137,18 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		buildMsgBox.setToolTipText(rb.getString("BuildMessagesTip"));
 		printPreviewBox.setToolTipText(rb.getString("PreviewTip"));
+		showAllBox.setToolTipText(rb.getString("ShowAllTrainsTip"));
 		
 		moveRB.setToolTipText(rb.getString("MoveTip"));
 		terminateRB.setToolTipText(rb.getString("TerminateTip"));
 		
     	JPanel cp2 = new JPanel();
-		cp2.add (addButton);
-		cp2.add (buildButton);
-		cp2.add (printButton);
-		cp2.add (printSwitchButton);
-		cp2.add (terminateButton);
-		cp2.add (saveButton);
+		cp2.add(addButton);
+		cp2.add(buildButton);
+		cp2.add(printButton);
+		cp2.add(printSwitchButton);
+		cp2.add(terminateButton);
+		cp2.add(saveButton);
 		
 		// place controls in scroll pane
 		JPanel controlPanel = new JPanel();
@@ -193,10 +197,12 @@ public class TrainsTableFrame extends OperationsFrame {
 		
 		buildMsgBox.setSelected(trainManager.isBuildMessagesEnabled());
     	buildReportBox.setSelected(trainManager.isBuildReportEnabled());
-    	printPreviewBox.setSelected(trainManager.isPrintPreviewEnabled()); 	
+    	printPreviewBox.setSelected(trainManager.isPrintPreviewEnabled());
+    	showAllBox.setSelected(trainsModel.isShowAll());
     	addCheckBoxAction(buildMsgBox);
 		addCheckBoxAction(buildReportBox);
 		addCheckBoxAction(printPreviewBox);
+		addCheckBoxAction(showAllBox);
 		
 		// Set the button text to Print or Preview
 		setPrintButtonText();
@@ -396,6 +402,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		if (ae.getSource() == printPreviewBox){
 			trainManager.setPrintPreviewEnabled(printPreviewBox.isSelected());
 			setPrintButtonText();	// set the button text for Print or Preview
+		}
+		if (ae.getSource() == showAllBox){
+			trainsModel.setShowAll(showAllBox.isSelected());			
 		}
 	}
 	

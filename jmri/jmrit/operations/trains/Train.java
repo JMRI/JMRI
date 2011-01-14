@@ -40,14 +40,15 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.104 $
+ * @version $Revision: 1.105 $
  */
 public class Train implements java.beans.PropertyChangeListener {
-	
-	// WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED
-	// IT CAUSES A RECURSIVE LOOP AT LOAD TIME, SEE EXAMPLES BELOW
-	// CarManager carManager = CarManager.instance();
-	// EngineManager engineManager = EngineManager.instance();
+	/*
+	 * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED
+	 * IT CAUSES A RECURSIVE LOOP AT LOAD TIME, SEE EXAMPLES BELOW
+	 * CarManager carManager = CarManager.instance();
+	 * EngineManager engineManager = EngineManager.instance();
+	 */
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
@@ -85,6 +86,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	public static final String STOPS_CHANGED_PROPERTY = "TrainStops";
 	public static final String TYPES_CHANGED_PROPERTY = "TrainTypes";
 	public static final String BUILT_CHANGED_PROPERTY = "TrainBuilt";
+	public static final String BUILD_CHANGED_PROPERTY = "TrainBuild";
 	public static final String ROADS_CHANGED_PROPERTY = "TrainRoads";
 	public static final String LOADS_CHANGED_PROPERTY = "TrainLoads";
 	public static final String OWNERS_CHANGED_PROPERTY = "TrainOwners";
@@ -1211,7 +1213,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		boolean old = _build;
 		_build = build;
 		if (old != build){
-			firePropertyChange("build", old?"true":"false", build?"true":"false");
+			firePropertyChange(BUILD_CHANGED_PROPERTY, old?"true":"false", build?"true":"false");
 		}
 	}
 	
