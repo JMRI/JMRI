@@ -34,7 +34,7 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -177,7 +177,6 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	}
 	
 	private void selectCheckboxes(boolean enable){
-
 		for (int i =0; i<locationCheckBoxes.size(); i++){
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location l = manager.getLocationByName(locationName);
@@ -239,7 +238,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		Location l = (Location)e.getSource();
 		for (int i=0; i<locationCheckBoxes.size(); i++){
 			JCheckBox checkBox = locationCheckBoxes.get(i);
-			if (checkBox.getText().equals(l.getName())){
+			if (checkBox.getName().equals(l.getName())){
 				checkBox.setSelected(l.getSwitchList());
 				break;
 			}
@@ -256,8 +255,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 
 	public void locationCheckBoxActionPerformed(ActionEvent ae) {
 		JCheckBox b =  (JCheckBox)ae.getSource();
-		log.debug("checkbox change "+ b.getText());
-		Location l = manager.getLocationByName(b.getText());
+		log.debug("checkbox change "+ b.getName());
+		Location l = manager.getLocationByName(b.getName());
 		l.setSwitchList(b.isSelected());
 	}
 
