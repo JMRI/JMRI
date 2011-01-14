@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.50 $
+ * @version	$Revision: 1.51 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -375,6 +375,14 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public List<String> getTrainsByRouteList() {
     	return getTrainsByList(getTrainsByNameList(), GET_TRAIN_ROUTE_NAME);
 	}
+    
+    /**
+     * Sort by train route name
+     * @return list of train ids ordered by route name
+     */
+    public List<String> getTrainsByStatusList() {
+    	return getTrainsByList(getTrainsByNameList(), GET_TRAIN_STATUS);
+	}
        
     /**
 	 * Sort by train id
@@ -434,7 +442,8 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     private static final int GET_TRAIN_ROUTE_NAME = 2;
     private static final int GET_TRAIN_TERMINATES_NAME = 3;
     private static final int GET_TRAIN_TIME = 4;
-    private static final int GET_TRAIN_ID = 5;
+    private static final int GET_TRAIN_STATUS = 5;
+    private static final int GET_TRAIN_ID = 6;
       
     private Object getTrainAttribute(Train train, int attribute){
     	switch (attribute){
@@ -443,6 +452,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	case GET_TRAIN_ROUTE_NAME: return train.getTrainRouteName();
     	case GET_TRAIN_TERMINATES_NAME: return train.getTrainTerminatesName(); 
        	case GET_TRAIN_TIME: return train.getDepartTimeMinutes();
+       	case GET_TRAIN_STATUS: return train.getStatus();
     	case GET_TRAIN_ID: return Integer.parseInt(train.getId());
     	default: return "unknown";
     	}

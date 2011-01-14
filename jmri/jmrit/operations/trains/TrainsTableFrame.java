@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.50 $
+ * @version             $Revision: 1.51 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -47,6 +47,7 @@ public class TrainsTableFrame extends OperationsFrame {
 	public static final String DEPARTS = rb.getString("Departs");
 	public static final String TERMINATES = rb.getString("Terminates");
 	public static final String ROUTE = rb.getString("Route");
+	public static final String STATUS = rb.getString("Status");
 	public static final String ID = rb.getString("Id");
 	
 	public static final String MOVE = rb.getString("Move");
@@ -71,6 +72,7 @@ public class TrainsTableFrame extends OperationsFrame {
     JRadioButton sortByDeparts = new JRadioButton(DEPARTS);
     JRadioButton sortByTerminates = new JRadioButton(TERMINATES);
     JRadioButton sortByRoute = new JRadioButton(ROUTE);
+    JRadioButton sortByStatus = new JRadioButton(STATUS);
     JRadioButton sortById = new JRadioButton(ID);
     
     JRadioButton moveRB = new JRadioButton(MOVE);
@@ -115,6 +117,7 @@ public class TrainsTableFrame extends OperationsFrame {
     	cp1.add(sortByRoute);
     	cp1.add(sortByDeparts);
     	cp1.add(sortByTerminates);
+    	cp1.add(sortByStatus);
     	cp1.add(sortById);
     	cp1.add(textSep1);
     	
@@ -178,6 +181,7 @@ public class TrainsTableFrame extends OperationsFrame {
     	sortGroup.add(sortByDeparts);
     	sortGroup.add(sortByTerminates);
     	sortGroup.add(sortByRoute);
+    	sortGroup.add(sortByStatus);
     	sortGroup.add(sortById);
     	sortByName.setSelected(true);
     	
@@ -190,6 +194,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		addRadioButtonAction(sortByDeparts);
 		addRadioButtonAction(sortByTerminates);
 		addRadioButtonAction(sortByRoute);
+		addRadioButtonAction(sortByStatus);
 		addRadioButtonAction(sortById);
 		
 		addRadioButtonAction(moveRB);
@@ -250,6 +255,9 @@ public class TrainsTableFrame extends OperationsFrame {
 		}
 		if (ae.getSource() == sortByRoute){
 			trainsModel.setSort(trainsModel.SORTBYROUTE);
+		}
+		if (ae.getSource() == sortByStatus){
+			trainsModel.setSort(trainsModel.SORTBYSTATUS);
 		}
 		if (ae.getSource() == moveRB){
 			trainManager.setTrainsFrameTrainAction(MOVE);
@@ -351,6 +359,10 @@ public class TrainsTableFrame extends OperationsFrame {
 			sortByRoute.setSelected(true);
 			trainsModel.setSort(trainsModel.SORTBYROUTE);
 		}
+		if(sortBy.equals(STATUS)){
+			sortByStatus.setSelected(true);
+			trainsModel.setSort(trainsModel.SORTBYSTATUS);
+		}
 	}
 	
 	private String getSortBy(){
@@ -365,6 +377,8 @@ public class TrainsTableFrame extends OperationsFrame {
 			sortBy = TERMINATES;
 		else if (sortByRoute.isSelected())
 			sortBy = ROUTE;
+		else if (sortByStatus.isSelected())
+			sortBy = STATUS;
 		return sortBy;
 	}
 

@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.35 $
+ * @version   $Revision: 1.36 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -58,7 +58,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     public final int SORTBYDEPARTS = 3;
     public final int SORTBYTERMINATES = 4;
     public final int SORTBYROUTE = 5;
-    public final int SORTBYID = 6;
+    public final int SORTBYSTATUS = 6;
+    public final int SORTBYID = 7;
     
     private int _sort = SORTBYNAME;
     
@@ -100,6 +101,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 			sysList = manager.getTrainsByTerminatesList();
 		else if (_sort == SORTBYROUTE)
 			sysList = manager.getTrainsByRouteList();
+		else if (_sort == SORTBYSTATUS)
+			sysList = manager.getTrainsByStatusList();
 		
 		if (!_showAll){
 			// filter out trains not checked
