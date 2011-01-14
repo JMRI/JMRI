@@ -880,6 +880,7 @@ public class PanelEditor extends Editor implements ItemListener {
             public void actionPerformed(ActionEvent e) { pasteItem(event); }
         });
         setBackgroundMenu(popup);
+        showAddItemPopUp(event, popup);
         popup.add(edit);
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
@@ -889,6 +890,7 @@ public class PanelEditor extends Editor implements ItemListener {
             return;
         JPopupMenu popup = new JPopupMenu();
         setBackgroundMenu(popup);
+        showAddItemPopUp(event, popup);
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
     
@@ -910,16 +912,66 @@ public class PanelEditor extends Editor implements ItemListener {
             }
         });
         setRemoveMenu(p, popup);
+        showAddItemPopUp(event, popup);
         popup.add(edit);
         popup.show(event.getComponent(), event.getX(), event.getY());
     }
+    
+    protected void showAddItemPopUp(final MouseEvent event, JPopupMenu popup){
+        System.out.println(isEditable());
+        if(!isEditable())
+            return;
+        JMenu _add = new JMenu("Add Item"/*rb.getString("FontBackgroundColor")*/);
+        addItemPopUp(new ComboBoxItem("RightTurnout"),_add);
+        addItemPopUp(new ComboBoxItem("LeftTurnout"),_add);
+        addItemPopUp(new ComboBoxItem("SlipTOEditor"),_add);
+        addItemPopUp(new ComboBoxItem("Sensor"),_add);
+        addItemPopUp(new ComboBoxItem("SignalHead"),_add);
+        addItemPopUp(new ComboBoxItem("SignalMast"),_add);
+        addItemPopUp(new ComboBoxItem("Memory"),_add);
+        addItemPopUp(new ComboBoxItem("Reporter"),_add);
+        addItemPopUp(new ComboBoxItem("Light"),_add);
+        addItemPopUp(new ComboBoxItem("Background"),_add);
+        addItemPopUp(new ComboBoxItem("MultiSensor"),_add);
+        addItemPopUp(new ComboBoxItem("RPSreporter"),_add);
+        addItemPopUp(new ComboBoxItem("FastClock"),_add);
+        addItemPopUp(new ComboBoxItem("Icon"),_add);
+        popup.add(_add);
+    }
+    
+    protected void addItemPopUp(final ComboBoxItem item, JMenu menu){
+        
+        ActionListener a = new ActionListener() {
+            //final String desiredName = name;
+            public void actionPerformed(ActionEvent e) {
+            addItemViaMouseClick = true;
+            getIconFrame(item.getName());
+            }
+            ComboBoxItem selected;
+            ActionListener init (ComboBoxItem i) {
+                selected = i;
+                return this;
+            }
+        }.init(item);
+        JMenuItem addto = new JMenuItem(item.toString());
+        addto.addActionListener(a);
+        menu.add(addto);
+    }
+    
+    protected boolean addItemViaMouseClick = false;
+    
     public void putItem(Positionable l) {
         super.putItem(l);
         /*This allows us to catch any new items that are being pasted into the panel
         and add them to the selection group, so that the user can instantly move them around*/
         //!!!
-        if (pasteItem){
+        if (pasteItemFlag){
             amendSelectionGroup(l);
+            return;
+        }
+        if (addItemViaMouseClick) {
+            addItemViaMouseClick = false;
+            l.setLocation(_lastX, _lastY);
         }
     }
     
@@ -943,10 +995,10 @@ public class PanelEditor extends Editor implements ItemListener {
         _targetPanel.repaint();
     }
     
-    protected boolean pasteItem = false;
+    protected boolean pasteItemFlag = false;
     
     protected void pasteItem(MouseEvent e){
-        pasteItem = true;
+        pasteItemFlag = true;
         XmlAdapter adapter;
         String className;
         int x;
@@ -961,8 +1013,13 @@ public class PanelEditor extends Editor implements ItemListener {
             y = _multiItemCopyGroup.get(0).getY();
             xoffset=e.getX()-x;
             yoffset=e.getY()-y;
-            for(int i = 0; i<_multiItemCopyGroup.size(); i++){
-                copied = (JComponent)_multiItemCopyGroup.get(i);
+            /*We make a copy of the selected items and work off of that copy
+            as amendments are made to the multiItemCopyGroup during this process
+            which can result in a loop*/
+            ArrayList <Positionable> _copyOfMultiItemCopyGroup = new ArrayList<Positionable>(_multiItemCopyGroup);
+            Collections.copy(_copyOfMultiItemCopyGroup, _multiItemCopyGroup);
+            for(int i = 0; i<_copyOfMultiItemCopyGroup.size(); i++){
+                copied = (JComponent)_copyOfMultiItemCopyGroup.get(i);
                 xOrig = copied.getX();
                 yOrig = copied.getY();
                 x = xOrig+xoffset;
@@ -978,11 +1035,14 @@ public class PanelEditor extends Editor implements ItemListener {
                 } catch (Exception ex) {
                     log.debug(ex);
                 }
+                /*We remove the original item from the list, so we end up with
+                just the new items selected and allow the items to be moved around */
+                amendSelectionGroup(_copyOfMultiItemCopyGroup.get(i));
                 copied.setLocation(xOrig, yOrig);
             }
             _selectionGroup=null;
         }
-        pasteItem = false;
+        pasteItemFlag = false;
         _targetPanel.repaint();
     }
 
