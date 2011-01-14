@@ -7,6 +7,7 @@ import jmri.Turnout;
 import jmri.Memory;
 import jmri.Reporter;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.util.JmriJFrame;
 
@@ -50,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.42 $
+ * @version $Revision: 1.43 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -98,6 +99,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
     public ArrayList<PositionableLabel> backgroundImage = new ArrayList<PositionableLabel>();  // background images
     public ArrayList<SensorIcon> sensorImage = new ArrayList<SensorIcon>();  // sensor images
     public ArrayList<SignalHeadIcon> signalHeadImage = new ArrayList<SignalHeadIcon>();  // signal head images
+    public ArrayList<SignalMastIcon> signalMastImage = new ArrayList<SignalMastIcon>();  // signal mast images
 	public ArrayList<LocoIcon> markerImage = new ArrayList<LocoIcon>(); // marker images
 	public ArrayList<PositionableLabel> labelImage = new ArrayList<PositionableLabel>(); // layout positionable label images
 	public ArrayList<AnalogClock2Display> clocks = new ArrayList<AnalogClock2Display>();  // fast clocks
@@ -129,8 +131,8 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 
     private JCheckBox sensorBox = new JCheckBox(rb.getString("SensorIcon"));
     private JTextField nextSensor = new JTextField(5);
-    private MultiIconEditor sensorIconEditor = null;
-    private JFrame sensorFrame;
+    public MultiIconEditor sensorIconEditor = null;
+    public JFrame sensorFrame;
     
     private JCheckBox signalBox = new JCheckBox(rb.getString("SignalIcon"));
     private JTextField nextSignalHead = new JTextField(5);
@@ -257,7 +259,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 	// Lists of items that facilitate tools and drawings
 	public ArrayList<SignalHeadIcon> signalList = new ArrayList<SignalHeadIcon>();  // Signal Head Icons
 	public ArrayList<MemoryIcon> memoryLabelList = new ArrayList<MemoryIcon>(); // Memory Label List
-        
+    public ArrayList<SensorIcon> sensorList = new ArrayList<SensorIcon>();  // Sensor Icons
+    public ArrayList<SignalMastIcon> signalMastList = new ArrayList<SignalMastIcon>();  // Signal Head Icons
+    
     // persistent instance variables - saved to disk with Save Panel
 	private int windowWidth = 0;
 	private int windowHeight = 0;
@@ -487,6 +491,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		signalFrame.getContentPane().add(new JLabel("  "+rb.getString("IconChangeInfo")+"  "),BorderLayout.NORTH);
         signalFrame.getContentPane().add(signalIconEditor);
         signalFrame.pack();
+        
 		// icon label
 		top4.add (new JLabel("    "));
         top4.add (iconLabelBox);
@@ -715,6 +720,30 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 					}
 					// bring up signals at 3-way turnout tool dialog
 					tools.setSignalsAt3WayTurnout(signalIconEditor,signalFrame);
+                }
+            });
+        
+        JMenuItem signalMastBoundaryItem = new JMenuItem(rb.getString("SignalMastsAtBoundary")+"...");
+        toolsMenu.add(signalMastBoundaryItem);
+        signalMastBoundaryItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalMastsAtBlockBoundary();
+                }
+            });
+            
+        JMenuItem sensorBoundaryItem = new JMenuItem(rb.getString("SensorsAtBoundary")+"...");
+        toolsMenu.add(sensorBoundaryItem);
+        sensorBoundaryItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(thisPanel);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSensorsAtBlockBoundary(sensorIconEditor,sensorFrame);
                 }
             });
 	}
@@ -2623,6 +2652,24 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return null;
 	}
+    
+    private SignalMastIcon checkSignalMastIcons(Point2D loc) {
+		// check signal head images, if any
+		for (int i=signalMastImage.size()-1; i>=0; i--) {
+			SignalMastIcon s = signalMastImage.get(i);
+			double x = s.getX();
+			double y = s.getY();
+			double w = s.maxWidth();
+			double h = s.maxHeight();			
+			Rectangle2D r = new Rectangle2D.Double(x ,y ,w ,h);
+			// Test this detection rectangle
+			if (r.contains(loc)) {
+				// mouse was pressed in signal head image
+				return s;
+			}
+		}
+		return null;
+	}
 		
 	private PositionableLabel checkLabelImages(Point2D loc) {
            PositionableLabel l =null;
@@ -4245,6 +4292,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				break;
 			}
 		}
+        for (int i = 0; i<sensorList.size();i++) {
+			if (s == sensorList.get(i)) {
+				sensorList.remove(i);
+				found = true;
+				break;
+			}
+		}
 		for (int i = 0; i<backgroundImage.size();i++) {
 			if (s == backgroundImage.get(i)) {
 				backgroundImage.remove(i);
@@ -4266,6 +4320,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				break;
 			}
 		}
+        for (int i = 0; i<signalMastList.size();i++) {
+			if (s == signalMastList.get(i)) {
+				signalMastList.remove(i);
+				found = true;
+				break;
+			}
+		}
 		for (int i = 0; i<multiSensors.size();i++) {
 			if (s == multiSensors.get(i)) {
 				multiSensors.remove(i);
@@ -4280,9 +4341,23 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 				break;
 			}
 		}
+        for (int i = 0; i<signalMastImage.size();i++) {
+			if (s == signalMastImage.get(i)) {
+				signalMastImage.remove(i);
+				found = true;
+				break;
+			}
+		}
 		for (int i = 0; i<signalHeadImage.size();i++) {
 			if (s == signalHeadImage.get(i)) {
 				signalHeadImage.remove(i);
+				found = true;
+				break;
+			}
+		}
+        for (int i = 0; i<signalMastImage.size();i++) {
+			if (s == signalMastImage.get(i)) {
+				signalMastImage.remove(i);
 				found = true;
 				break;
 			}
@@ -4647,6 +4722,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		setDirty(true);
         putItem(l);
     }
+    
+    public void putSensor(SensorIcon l){
+        putItem(l);
+        l.updateSize();
+        l.setDisplayLevel(SENSORS);
+    }
 
     /**
      * Add a signal head to the Panel
@@ -4699,6 +4780,43 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         if (sh == null) log.warn("did not find a SignalHead named "+name);
         return sh;
     }
+    
+    /*void addSignalMast() {
+		// check for valid signal head entry
+		String tName = nextSignalMast.getText().trim();
+        SignalMast mHead = null;
+		if ( (tName!=null) && (!tName.equals("")) ) {
+			mHead = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
+			nextSignalMast.setText(tName);
+		}
+        if (mHead == null) {
+			// There is no signal head corresponding to this name
+			JOptionPane.showMessageDialog(thisPanel,
+					java.text.MessageFormat.format(rb.getString("Error9"),
+					new Object[]{tName}),
+					rb.getString("Error"),JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		// create and set up signal icon	
+        SignalMastIcon l = new SignalMastIcon(this);
+        l.setSignalMast(tName);
+        setNextLocation(l);
+		setDirty(true);
+        putSignalMast(l);
+    }*/
+    
+    public void putSignalMast(SignalMastIcon l) {
+        putItem(l);
+        l.updateSize();
+        l.setDisplayLevel(SIGNALS);
+    }
+
+    SignalMast getSignalMast(String name) {
+        SignalMast sh = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+        if (sh == null) sh = InstanceManager.signalMastManagerInstance().getByUserName(name);
+        if (sh == null) log.warn("did not find a SignalMast named "+name);
+        return sh;
+    }
 
     /**
      * Add a label to the Draw Panel
@@ -4713,11 +4831,15 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         super.putItem(l);
         if (l instanceof SensorIcon) {
             sensorImage.add((SensorIcon)l);	
+            sensorList.add((SensorIcon)l);
         } else if (l instanceof LocoIcon) {
             markerImage.add((LocoIcon)l);	
         } else if (l instanceof SignalHeadIcon) {
             signalHeadImage.add((SignalHeadIcon)l);
             signalList.add((SignalHeadIcon)l);
+        }  else if (l instanceof SignalMastIcon) {
+            signalMastImage.add((SignalMastIcon)l);
+            signalMastList.add((SignalMastIcon)l);
         } else if (l instanceof MemoryIcon) {
             memoryLabelList.add((MemoryIcon)l);
         } else if (l instanceof AnalogClock2Display) {

@@ -13,7 +13,7 @@ import java.awt.geom.*;
  * This module handles configuration for display.PositionablePoint objects for a LayoutEditor.
  *
  * @author David Duchamp Copyright (c) 2007
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PositionablePointXml extends AbstractXmlAdapter {
 
@@ -49,6 +49,20 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		}
 		if ( (p.getWestBoundSignal()!=null) && (p.getWestBoundSignal().length()>0) ) {
 			element.setAttribute("westboundsignal", p.getWestBoundSignal());
+		}
+        
+        if ( (p.getEastBoundSignalMast()!=null) && (p.getEastBoundSignalMast().length()>0) ) {
+			element.setAttribute("eastboundsignalmast", p.getEastBoundSignalMast());
+		}
+		if ( (p.getWestBoundSignalMast()!=null) && (p.getWestBoundSignalMast().length()>0) ) {
+			element.setAttribute("westboundsignalmast", p.getWestBoundSignalMast());
+		}
+        
+        if ( (p.getEastBoundSensor()!=null) && (p.getEastBoundSensor().length()>0) ) {
+			element.setAttribute("eastboundsensor", p.getEastBoundSensor());
+		}
+		if ( (p.getWestBoundSensor()!=null) && (p.getWestBoundSensor().length()>0) ) {
+			element.setAttribute("westboundsensor", p.getWestBoundSensor());
 		}
 
         element.setAttribute("class", "jmri.jmrit.display.configurexml.PositionablePointXml");
@@ -102,6 +116,22 @@ public class PositionablePointXml extends AbstractXmlAdapter {
 		a = element.getAttribute("westboundsignal");
 		if (a != null) {
 			l.setWestBoundSignal(a.getValue());
+		}
+        a = element.getAttribute("eastboundsignalmast");
+		if (a != null) {
+			l.setEastBoundSignalMast(a.getValue());
+		}
+		a = element.getAttribute("westboundsignalmast");
+		if (a != null) {
+			l.setWestBoundSignalMast(a.getValue());
+		}
+        a = element.getAttribute("eastboundsensor");
+		if (a != null) {
+			l.setEastBoundSensor(a.getValue());
+		}
+		a = element.getAttribute("westboundsensor");
+		if (a != null) {
+			l.setWestBoundSensor(a.getValue());
 		}
 		p.pointList.add(l);
     }

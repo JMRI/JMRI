@@ -27,7 +27,7 @@ import javax.swing.JSeparator;
  * serves as a place to store them.
  *
  * @author Dave Duchamp Copyright (c) 2004-2007
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class PositionablePoint
@@ -52,6 +52,10 @@ public class PositionablePoint
 	private Point2D coords = new Point2D.Double(10.0,10.0);
 	private String eastBoundSignalName = ""; // signal head for east (south) bound trains
 	private String westBoundSignalName = ""; // signal head for west (north) bound trains
+    private String eastBoundSensorName = "";
+    private String westBoundSensorName = "";
+    private String eastBoundSignalMastName = "";
+    private String westBoundSignalMastName = "";
 	
     public PositionablePoint(String id, int t, Point2D p, LayoutEditor myPanel) {
 		instance = this;
@@ -80,7 +84,17 @@ public class PositionablePoint
 	public void setEastBoundSignal(String signalName) {eastBoundSignalName = signalName;}
 	public String getWestBoundSignal() {return westBoundSignalName;}
 	public void setWestBoundSignal(String signalName) {westBoundSignalName = signalName;}
-	
+    
+    public String getEastBoundSensor() {return eastBoundSensorName;}
+	public void setEastBoundSensor(String sensorName) {eastBoundSensorName = sensorName;}
+	public String getWestBoundSensor() {return westBoundSensorName;}
+	public void setWestBoundSensor(String sensorName) {westBoundSensorName = sensorName;}
+    
+	public String getEastBoundSignalMast() {return eastBoundSignalMastName;}
+	public void setEastBoundSignalMast(String signalMastName) {eastBoundSignalMastName = signalMastName;}
+	public String getWestBoundSignalMast() {return westBoundSignalMastName;}
+	public void setWestBoundSignalMast(String signalMastName) {westBoundSignalMastName = signalMastName;}
+    
 	// initialization instance variables (used when loading a LayoutEditor)
 	public String trackSegment1Name = "";
 	public String trackSegment2Name = "";
@@ -220,6 +234,25 @@ public class PositionablePoint
 						layoutEditor.signalIconEditor,layoutEditor.signalFrame);						
 					}
 				});
+            popup.add(new AbstractAction(rb.getString("SetSensors")) {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSensorsAtBlockBoundaryFromMenu(instance,
+                        layoutEditor.sensorIconEditor,layoutEditor.sensorFrame);
+                }
+            });
+            popup.add(new AbstractAction(rb.getString("SetSignalMasts")) {
+                public void actionPerformed(ActionEvent event) {
+					if (tools == null) {
+						tools = new LayoutEditorTools(layoutEditor);
+					}
+					// bring up signals at block boundary tool dialog
+					tools.setSignalMastsAtBlockBoundaryFromMenu(instance);
+                }
+            });
 		}
         layoutEditor.setShowAlignmentMenu(popup);
 		popup.show(e.getComponent(), e.getX(), e.getY());
