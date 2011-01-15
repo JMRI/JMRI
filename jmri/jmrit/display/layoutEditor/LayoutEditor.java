@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.43 $
+ * @version $Revision: 1.44 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -5343,6 +5343,64 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
 		return null;
 	}
+
+    public PositionablePoint findPositionablePointByEastBoundSignal(String signalName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getWestBoundSignal().equals(signalName))
+                return p;
+        }
+        return null;
+    }
+
+    public PositionablePoint findPositionablePointByWestBoundSignal(String signalName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getEastBoundSignal().equals(signalName))
+                return p;
+
+        }
+        return null;
+    }
+
+    public PositionablePoint findPositionablePointByEastBoundSignalMast(String signalMastName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getWestBoundSignalMast().equals(signalMastName))
+                return p;
+        }
+        return null;
+    }
+
+    public PositionablePoint findPositionablePointByWestBoundSignalMast(String signalMastName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getEastBoundSignalMast().equals(signalMastName))
+                return p;
+
+        }
+        return null;
+    }
+
+    public PositionablePoint findPositionablePointByEastBoundSensor(String sensorName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getWestBoundSensor().equals(sensorName))
+                return p;
+        }
+        return null;
+    }
+
+    public PositionablePoint findPositionablePointByWestBoundSensor(String sensorName){
+        for (int i = 0; i<pointList.size(); i++) {
+            PositionablePoint p = pointList.get(i);
+            if (p.getEastBoundSensor().equals(sensorName))
+                return p;
+
+        }
+        return null;
+    }
+
 	public LayoutTurnout findLayoutTurnoutByName(String name) {
 		if (name.length()<=0) return null;
 		for (int i = 0; i<turnoutList.size(); i++) {
