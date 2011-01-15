@@ -5,6 +5,7 @@ import jmri.managers.AbstractManager;
 import jmri.Sensor;
 import jmri.Block;
 import jmri.SignalHead;
+import jmri.SignalMast;
 import jmri.InstanceManager;
 import jmri.Turnout;
 
@@ -23,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.5 $
+ * @version	$Revision: 1.6 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -989,7 +990,166 @@ public class LayoutBlockManager extends AbstractManager {
 		}
 		return null;
 	}
-	
+
+	/**
+	 * Method to return the Signal Mast facing into a specified Block from a specified protected Block.
+     * Signal Masts are only assigned at boundary points between two blocks and
+     * are not located at turnout throats, cross-overs etc.
+	 * <P>
+     * @param facingBlock
+     * @param protectedBlock
+     * @return The assigned signalMast.
+     */
+
+    public SignalMast getFacingSignalMast (Block facingBlock, Block protectedBlock){
+        // check input
+		if ( (facingBlock == null) || (protectedBlock == null) ) {
+			log.error ("null block in call to getFacingSignalMast");
+			return null;
+		}
+        		// non-null - check if input corresponds to Blocks in a Layout Editor panel.
+		LayoutBlock fLayoutBlock = getByUserName(facingBlock.getUserName());
+		LayoutBlock pLayoutBlock = getByUserName(protectedBlock.getUserName());
+		if ( (fLayoutBlock==null) || (pLayoutBlock==null) ) {
+			if (fLayoutBlock==null) log.error("Block "+facingBlock.getSystemName()+"is not on a Layout Editor panel.");
+			if (pLayoutBlock==null) log.error("Block "+protectedBlock.getSystemName()+"is not on a Layout Editor panel.");
+			return null;
+		}
+		// input has corresponding LayoutBlocks - does it correspond to a block boundary?
+		LayoutEditor panel = fLayoutBlock.getMaxConnectedPanel();
+		ArrayList<LayoutConnectivity> c = panel.auxTools.getConnectivityList(fLayoutBlock);
+		LayoutConnectivity lc = null;
+		int i = 0;
+		boolean facingIsBlock1 = true;
+		while ((i<c.size()) && (lc==null)) {
+			LayoutConnectivity tlc = c.get(i);
+			if ( (tlc.getBlock1()==fLayoutBlock) && (tlc.getBlock2()==pLayoutBlock) ) {
+				lc = tlc;
+			}
+			else if ( (tlc.getBlock1()==pLayoutBlock) && (tlc.getBlock2()==fLayoutBlock) ) {
+				lc = tlc;
+				facingIsBlock1 = false;
+			}
+			i ++;
+		}
+		if (lc==null) {
+			log.error("Block "+facingBlock.getSystemName()+"is not connected to Block "+protectedBlock.getSystemName());
+			return null;
+		}
+		Object connected = lc.getConnectedObject();
+		TrackSegment tr = lc.getTrackSegment();
+        int cType = lc.getConnectedType();
+		if (cType==LayoutEditor.TRACK) {
+			// block boundary is at an Anchor Point
+			LayoutEditorTools tools = new LayoutEditorTools(panel);
+			PositionablePoint p = panel.findPositionablePointAtTrackSegments(tr,(TrackSegment)connected);
+			boolean block1IsWestEnd = tools.isAtWestEndOfAnchor(tr,p);
+			if ( (block1IsWestEnd && facingIsBlock1) || (!block1IsWestEnd && !facingIsBlock1) ) {
+				// block1 is on the west (north) end of the block boundary
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getEastBoundSignalMast()));
+			}
+			else {
+				return (InstanceManager.signalMastManagerInstance().getSignalMast(p.getWestBoundSignalMast()));
+			}
+		}
+        return null;
+    }
+
+    /**
+     * Returns in the first instance a Signal Mast or if none exists a Aignal Head
+     * for a given facing block and protected block combination.
+     * see getFacingSignalMast and getFacingSignalHead as to how they deal with
+     * what they each return.
+     * <p>
+     * @param facingBlock
+     * @param protectedBlock
+     * @return either a signalMast or signalHead
+     */
+    public Object getFacingSignalObject(Block facingBlock, Block protectedBlock){
+        Object sig = getFacingSignalMast(facingBlock, protectedBlock);
+        if (sig!=null)
+            return sig;
+        sig = getFacingSignalHead(facingBlock, protectedBlock);
+        return sig;
+    }
+    /**
+     * Method to return the LayoutBlock that a given signal is protecting.
+     */
+    public LayoutBlock getProtectedBlockByMast(String signalMastName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundSignalMast(signalMastName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        //tr = pp.getConnect2();
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }
+
+    /**
+     * Method to return the LayoutBlock that a given signal is facing.
+     */
+    public LayoutBlock getFacingBlockByMast(String signalMastName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignalMast(signalMastName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }
+
+    /**
+     * Method to return the LayoutBlock that a given signal is protecting.
+     */
+    public LayoutBlock getProtectedBlock(String signalName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByEastBoundSignal(signalName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        //tr = pp.getConnect2();
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }
+    
+    /**
+     * Method to return the LayoutBlock that a given signal is facing.
+     */
+    public LayoutBlock getFacingBlock(String signalName, LayoutEditor panel){
+        PositionablePoint pp = panel.findPositionablePointByWestBoundSignal(signalName);
+        TrackSegment tr;
+        if (pp==null) {
+            pp = panel.findPositionablePointByWestBoundSignal(signalName);
+            if (pp==null)
+                return null;
+            tr = pp.getConnect1();
+        } else {
+            tr = pp.getConnect2();
+        }
+        if (tr==null)
+            return null;
+        return tr.getLayoutBlock();
+    }
+
 	private boolean warnConnectivity = true;
 	/**
 	 * Controls switching off incompatible block connectivity messages
