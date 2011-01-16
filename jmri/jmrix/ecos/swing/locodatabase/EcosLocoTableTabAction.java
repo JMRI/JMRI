@@ -1,14 +1,15 @@
 package jmri.jmrix.ecos.swing.locodatabase;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.util.ResourceBundle;
-import java.util.ArrayList;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 import jmri.Manager;
-import jmri.jmrit.beantable.*;
+import jmri.jmrit.beantable.AbstractTableAction;
+import jmri.jmrit.beantable.AbstractTableTabAction;
 import jmri.jmrix.ecos.EcosSystemConnectionMemo;
 
 import jmri.util.com.sun.TableSorter;
@@ -33,7 +34,7 @@ public class EcosLocoTableTabAction extends AbstractTableTabAction {
                 EcosSystemConnectionMemo eMemo = (EcosSystemConnectionMemo) memo;
                 //We only want to add connections that have an active loco address manager
                 if (eMemo.getLocoAddressManager()!=null){
-                    tabbedTableItem itemModel = new tabbedTableItem(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
+                    TabbedTableItem itemModel = new TabbedTableItem(eMemo.getUserName(), true, eMemo.getLocoAddressManager(), getNewTableAction(eMemo.getUserName(), eMemo));
                     tabbedTableArray.add(itemModel);
                 }
             }

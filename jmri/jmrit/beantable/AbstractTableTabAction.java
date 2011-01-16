@@ -34,15 +34,15 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         if (getManager() instanceof jmri.managers.AbstractProxyManager){
             jmri.managers.AbstractProxyManager proxy = (jmri.managers.AbstractProxyManager) getManager();
             List<jmri.Manager> managerList = proxy.getManagerList();
-            tabbedTableArray.add(new tabbedTableItem("All", true, getManager(), getNewTableAction("All")));
+            tabbedTableArray.add(new TabbedTableItem("All", true, getManager(), getNewTableAction("All")));
             for(int x = 0; x<managerList.size(); x++){
                 String manuName = ConnectionNameFromSystemName.getConnectionName(managerList.get(x).getSystemPrefix());
-                tabbedTableItem itemModel = new tabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName));
+                TabbedTableItem itemModel = new TabbedTableItem(manuName, true, managerList.get(x), getNewTableAction(manuName));
                 tabbedTableArray.add(itemModel);
             }
         } else {
             String manuName = ConnectionNameFromSystemName.getConnectionName(getManager().getSystemPrefix());
-            tabbedTableArray.add(new tabbedTableItem(manuName, true, getManager(), getNewTableAction(manuName)));
+            tabbedTableArray.add(new TabbedTableItem(manuName, true, getManager(), getNewTableAction(manuName)));
         }
         for(int x = 0; x<tabbedTableArray.size(); x++){
             AbstractTableAction table = tabbedTableArray.get(x).getAAClass();
@@ -69,7 +69,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         return dataPanel;
     }
 
-    protected ArrayList<tabbedTableItem> tabbedTableArray = new ArrayList<tabbedTableItem>();
+    protected ArrayList<TabbedTableItem> tabbedTableArray = new ArrayList<TabbedTableItem>();
     
     protected JTable makeJTable(TableSorter sorter) {
         return new JTable(sorter)  {
@@ -118,10 +118,9 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         }
     }
    
-    protected class tabbedTableItem {
+    protected class TabbedTableItem {
         
         AbstractTableAction tableAction;
-        String className;
         String itemText;
         BeanTableDataModel dataModel;
         JTable dataTable;
@@ -137,7 +136,7 @@ abstract public class AbstractTableTabAction extends AbstractTableAction {
         
         final JPanel dataPanel = new JPanel();
         
-        public tabbedTableItem(String choice, boolean stdModel, Manager manager, AbstractTableAction tableAction){
+        public TabbedTableItem(String choice, boolean stdModel, Manager manager, AbstractTableAction tableAction){
 
             this.tableAction = tableAction;
             itemText = choice;
