@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.23 $
+ * @version	$Revision: 1.24 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -300,7 +300,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
      * The classString & item parameters should form a unique value
      * @param title Message Box title
      * @param message Message to be displayed
-     * @param classString String value of the calling class
+     * @param strClass String value of the calling class
      * @param item String value of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
@@ -318,7 +318,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
      * The classString & item parameters should form a unique value
      * @param title Message Box title
      * @param message Message to be displayed
-     * @param classString String value of the calling class
+     * @param strClass String value of the calling class
      * @param item String value of the specific item this is used for
      * @param sessionOnly Means this message will be suppressed in this JMRI session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be saved
