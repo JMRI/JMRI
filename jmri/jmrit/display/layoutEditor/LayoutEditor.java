@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.44 $
+ * @version $Revision: 1.45 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -2219,6 +2219,9 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 							selectedObject = checkSignalHeadIcons(dLoc);
 							if (selectedObject==null) {
 								selectedObject = checkLabelImages(dLoc);
+                                if(selectedObject==null) {
+                                    selectedObject = checkSignalMastIcons(dLoc);
+                                }
 							}
 						}
 						if (selectedObject!=null) {
@@ -2979,6 +2982,12 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 										if (b!=null) {
 											showPopUp(b, event);
 										}
+                                        else {
+                                            SignalMastIcon sm = checkSignalMastIcons(dLoc);
+                                            if (sm!=null) {
+                                                showPopUp(sm, event);
+                                            }
+                                        }
 									}
 								}
 							}
@@ -3114,6 +3123,13 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
                                 PositionableLabel b = checkBackgrounds(dLoc);
                                 if (b!=null) {
                                     amendSelectionGroup(b);
+                                }
+                                else {
+                                    PositionableLabel sm = checkSignalMastIcons(dLoc);
+                                    if (sm!=null) {
+                                        amendSelectionGroup(sm);
+                                    }
+
                                 }
                             }
                         }
@@ -4786,7 +4802,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		String tName = nextSignalMast.getText().trim();
         SignalMast mHead = null;
 		if ( (tName!=null) && (!tName.equals("")) ) {
-			mHead = InstanceManager.signalMastManagerInstance().getSignalMast(tName);
+			mHead = InstanceManager.signalMastManagerInstance().getNamedSignalMast(tName);
 			nextSignalMast.setText(tName);
 		}
         if (mHead == null) {
