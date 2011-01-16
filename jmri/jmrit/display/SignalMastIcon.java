@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -106,10 +106,15 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
 
     String pName;
     
-    public NamedBeanHandle<SignalMast> getSignalMast() {
+    public NamedBeanHandle<SignalMast> getNamedSignalMast() {
         return namedMast;
     }
 
+    public SignalMast getSignalMast(){
+        if (namedMast==null)
+            return null;
+        return namedMast.getBean();
+    }
 
     /**
      * Get current appearance of the mast
