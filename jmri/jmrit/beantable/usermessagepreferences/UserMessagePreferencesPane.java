@@ -15,7 +15,7 @@ import java.awt.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.16 $
+ * @version	$Revision: 1.17 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -296,7 +296,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
            JComboBox key = (JComboBox)keys.nextElement();
            String strClass = _comboBoxes.get(key).getClassName();
            String strItem = _comboBoxes.get(key).getItem();
-           String strSelection = (String)((JComboBox)key).getSelectedItem();
+           String strSelection = (String)key.getSelectedItem();
            p.setMultipleChoiceOption (strClass, strItem, strSelection);
            }
            
