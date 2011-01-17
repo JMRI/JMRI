@@ -37,7 +37,7 @@ import java.util.List;
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2001, 2008
  * @author                      Matthew Harris copyright (c) 2009
- * @version			$Revision: 1.71 $
+ * @version			$Revision: 1.72 $
  */
 public class InstanceManager {
 
@@ -53,7 +53,9 @@ public class InstanceManager {
     }
     
     static public <T> List<Object> getList(Class<T> type) {
-        return managerLists.get(type);
+        if (managerLists!=null)
+            return managerLists.get(type);
+        return null;
     }
     
     static public <T> void reset(Class<T> type) {
