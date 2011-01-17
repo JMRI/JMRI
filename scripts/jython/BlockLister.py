@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 #
 #
 
@@ -83,6 +83,15 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             else :
                 return sen.getUserName()
                 
+    # return userName if available, else systemName
+    def giveMastName(self, mast) :
+        if (mast == None) :
+            return 'None'
+        else :
+            if ((mast.getUserName() == None) or (mast.getUserName() == '')) :
+                return mast.getSystemName()
+            else :
+                return mast.getUserName()
          
     # convert signal appearance to text
     def textSignalAspect(self, sigAspect) :
@@ -147,7 +156,22 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             rep = rep + "Dark "
         else :
             rep = rep + "Unknown "
-        #self.msgText("cvtAspectToText: " + self.giveSignalName(sig) + " displaying: " + rep + "\n")
+        #self.msgText("cvtSignalToText: " + self.giveSignalName(sig) + " displaying: " + rep + "\n")
+        return rep
+        
+    # convert mast appearance to english
+    def cvtMastToText(self, mast) :
+        rep =  ""
+        sys = mast.getSignalSystem()
+        aspect = mast.getAspect()
+        ##speed = getAspectSpeed(aspect, sys)
+        if (aspect != None) :
+            rep = rep + aspect + " "
+        if (mast.getHeld()) :
+            rep = rep + "Held "
+        if (mast.getLit()) :
+            rep = rep + "Lit "
+        #self.msgText("cvtMastToText: " + self.giveMastName(mast) + " displaying: " + rep + "\n")
         return rep
         
     # test for block name
@@ -209,7 +233,12 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
             if (sig != None) :
                 self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " signal: " + self.giveSignalName(sig) + " aspect: " + self.cvtSignalToText(sig) + "\n")
             else :
-                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal!\n")
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signa headsl!\n")
+            mast = jmri.InstanceManager.layoutBlockManagerInstance().getFacingSignalMast(block, blockTest)
+            if (mast != None) :
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " mast: " + self.giveMastName(mast) + " aspect: " + self.cvtMastToText(mast) + "\n")
+            else :
+                self.msgText("Path from " + self.giveBlockName(block) + " to " + self.giveBlockName(blockTest) + " has no signal masts!\n")
         return
         
     def displaySegmentData(self, b) :
