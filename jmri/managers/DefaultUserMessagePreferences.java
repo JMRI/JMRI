@@ -29,7 +29,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.24 $
+ * @version	$Revision: 1.25 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -496,7 +496,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     }
 
-    static ShutDownTask userPreferencesShutDownTask = null;
+    ShutDownTask userPreferencesShutDownTask = null;
     
     private static volatile boolean _changeMade = false;
     
@@ -606,16 +606,47 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 method = cl.getDeclaredMethod ("getClassDescription");
                 desc = (String)method.invoke(t);
                 classDesFound = true;
-            } catch (Exception e){
-                classDesFound = false;
+            } catch (IllegalAccessException ex) {
+                log.debug(ex.toString());
+                classDesFound=false;
+            } catch (IllegalArgumentException ea) {
+                log.debug(ea.toString());
+                classDesFound=false;
+            } catch (java.lang.reflect.InvocationTargetException ei) {
+                log.debug(ei.toString());
+                classDesFound=false;
+            } catch (NullPointerException ee) {
+                log.debug(ee.toString());
+                classDesFound=false;
+            } catch (ExceptionInInitializerError eo) {
+                log.debug(eo.toString());
+                classDesFound=false;
+            } catch (NoSuchMethodException en) {
+                log.debug(en.toString());
+                classDesFound=false;
             }
-            
             if (!classDesFound){
                 try {
                     method = cl.getMethod ("getClassDescription");
                     desc = (String)method.invoke(t);
-                } catch (Exception e){
-                    classDesFound = false;
+                } catch (IllegalAccessException ex) {
+                    log.debug(ex.toString());
+                    classDesFound=false;
+                } catch (IllegalArgumentException ea) {
+                    log.debug(ea.toString());
+                    classDesFound=false;
+                } catch (java.lang.reflect.InvocationTargetException ei) {
+                    log.debug(ei.toString());
+                    classDesFound=false;
+                } catch (NullPointerException ee) {
+                    log.debug(ee.toString());
+                    classDesFound=false;
+                } catch (ExceptionInInitializerError eo) {
+                    log.debug(eo.toString());
+                    classDesFound=false;
+                } catch (NoSuchMethodException en) {
+                    log.debug(en.toString());
+                    classDesFound=false;
                 }
             }
             if(classDesFound){
@@ -629,17 +660,48 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 method = cl.getDeclaredMethod ("setMessagePreferencesDetails");
                 method.invoke(t);
                 classSetFound = true;
-            } catch (Exception e){
-                classSetFound = false;
+            } catch (IllegalAccessException ex) {
+                log.debug(ex.toString());
+                classSetFound=false;
+            } catch (IllegalArgumentException ea) {
+                log.debug(ea.toString());
+                classSetFound=false;
+            } catch (java.lang.reflect.InvocationTargetException ei) {
+                log.debug(ei.toString());
+                classSetFound=false;
+            } catch (NullPointerException ee) {
+                log.debug(ee.toString());
+                classSetFound=false;
+            } catch (ExceptionInInitializerError eo) {
+                log.debug(eo.toString());
+                classSetFound=false;
+            } catch (NoSuchMethodException en) {
+                log.debug(en.toString());
+                classSetFound=false;
             }
-            
             if (!classSetFound){
                 try {
                     method = cl.getMethod ("setMessagePreferencesDetails");
                     method.invoke(t);
                     classSetFound = true;
-                } catch (Exception e){
-                    classSetFound = false;
+                } catch (IllegalAccessException ex) {
+                    log.debug(ex.toString());
+                    classSetFound=false;
+                } catch (IllegalArgumentException ea) {
+                    log.debug(ea.toString());
+                    classSetFound=false;
+                } catch (java.lang.reflect.InvocationTargetException ei) {
+                    log.debug(ei.toString());
+                    classSetFound=false;
+                } catch (NullPointerException ee) {
+                    log.debug(ee.toString());
+                    classSetFound=false;
+                } catch (ExceptionInInitializerError eo) {
+                    log.debug(eo.toString());
+                    classSetFound=false;
+                } catch (NoSuchMethodException en) {
+                    log.debug(en.toString());
+                    classSetFound=false;
                 }
             }
             
@@ -651,7 +713,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             ex.printStackTrace();
         }
         catch (Exception e) {
-            log.error("unable to get a class name" + e);
+            log.error("unable to get a class name " + e);
         }
     }
     
@@ -847,7 +909,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     /**
      * Holds details about the speific class.
      */
-    class ClassPreferences{
+    static class ClassPreferences{
         String classDescription;
         
         ArrayList<MultipleChoice> multipleChoiceList = new ArrayList<MultipleChoice>();
@@ -901,7 +963,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         }
     }
     
-    class MultipleChoice{
+    static class MultipleChoice{
     
         HashMap<Integer, String> options;
         String optionDescription;
@@ -952,7 +1014,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         
     }
     
-    class PreferenceList{
+    static class PreferenceList{
         // need to fill this with bits to get a meaning full description.
         boolean set = false;
         String item = "";

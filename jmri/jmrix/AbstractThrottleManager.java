@@ -18,7 +18,7 @@ import java.beans.PropertyChangeListener;
  * Based on Glen Oberhauser's original LnThrottleManager implementation.
  *
  * @author	Bob Jacobsen  Copyright (C) 2001
- * @version     $Revision: 1.28 $
+ * @version     $Revision: 1.29 $
  */
 abstract public class AbstractThrottleManager implements ThrottleManager {
 	
@@ -151,6 +151,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
                             a.remove(i);
             }
         }
+        /*if (addressThrottles.contains(la)){
+            addressThrottles.get(la).decrementUse();
+        }*/
     }
 
     /**
@@ -428,7 +431,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * to use the new disposeThrottle.
      */
 
-    protected class Addresses{
+    protected static class Addresses{
 
         int useActiveCount = 0;
         DccThrottle throttle = null;
