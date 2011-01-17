@@ -7,6 +7,7 @@ import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Hashtable;
+import java.awt.Point;
 
 /**
  * Interface for the User Preferences Manager.
@@ -17,7 +18,7 @@ import java.util.Hashtable;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.12 $
+ * @version	$Revision: 1.13 $
  */
  
 public interface UserPreferencesManager {
@@ -319,6 +320,41 @@ public interface UserPreferencesManager {
     */ 
     public int getPreferencesSize(String strClass);
     
+    /**
+     * Saves the last location of a given component on the screen.
+     * <p>
+     * The jmri.util.JmriJFrame, will automatically use the class name of the frame
+     * if the class name returned is equal to jmri.util.JmriJFrame, the location is not stored
+     * @param strClass This is a unique identifier for window location being saved
+     * @param location The x,y location of the window given in a Point
+     */
+    public void setWindowLocation(String strClass, Point location);
+
+    /**
+     * Saves the last size of a given component on the screen
+     * <p>
+     * The jmri.util.JmriJFrame, will automatically use the class name of the frame
+     * if the class name returned is equal to jmri.util.JmriJFrame, the size is not stored
+     * @param strClass This is a unique identifier for window size being saved
+     * @param location The width, height size of the window given in a Dimension
+     */
+    public void setWindowSize(String strClass, Dimension dim);
+    
+    /**
+    * Returns the x,y location of a given Window
+    */
+    public Point getWindowLocation(String strClass);
+    
+    /**
+    * Returns the width, height size of a given Window
+    */
+    public Dimension getWindowSize(String strClass);
+    
+
+    
+    public ArrayList<String> getWindowList();
+    
+    public boolean isWindowPositionSaved(String strClass);
     /*
         Example informational message dialog box.
         

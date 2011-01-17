@@ -89,6 +89,48 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             if ((store) || (listStore))
                 messages.addContent(classElement);
         }
+        
+        java.util.ArrayList<String> windowList = p.getWindowList();
+        for(int i = 0; i<windowList.size(); i++){
+            String strClass = windowList.get(i);
+            Element windowElement = new Element("windowDetails");
+            windowElement.setAttribute("class", strClass);
+            boolean set = false;
+            try {
+                
+                double x = p.getWindowLocation(strClass).getX();
+                double y = p.getWindowLocation(strClass).getY();
+                //Simple case of not wanting to save if the window hasn't moved.
+                if (!(y==0.0 && x==0.0)){
+                    Element loc = new Element("locX");
+                    loc.addContent(Double.toString(x));
+                    windowElement.addContent(loc);
+                    loc = new Element("locY");
+                    windowElement.addContent(loc);
+                    loc.addContent(Double.toString(y));
+                    set=true;
+                }
+            } catch (NullPointerException ex){
+                //Considered normal if the window hasn't been closed or all of the information hasn°t been set
+            }
+            try {
+                double width=p.getWindowSize(strClass).getWidth();
+                double height=p.getWindowSize(strClass).getHeight();
+                if (!(width==0.0 && height==0.0)){
+                    Element size = new Element("width");
+                    size.addContent(Double.toString(width));
+                    windowElement.addContent(size);
+                    size = new Element("height");
+                    size.addContent(Double.toString(height));
+                    windowElement.addContent(size);
+                    set=true;
+                }
+            } catch (NullPointerException ex){
+                //Considered normal if the window hasn't been closed
+            }
+            if (set)
+                messages.addContent(windowElement);
+        }
         return messages;
     }
      
@@ -106,6 +148,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      * @param messages Top level Element to unpack.
      * @return true if successful
      */
+    @SuppressWarnings("unchecked")
     public boolean load(Element messages) {
         // ensure the master object exists
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
@@ -135,11 +178,9 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
         @SuppressWarnings("unchecked")
         List<Element> classList = messages.getChildren("classPreferences");
         for (int k = 0; k < classList.size(); k++) {
-            @SuppressWarnings("unchecked")
             List<Element> multipleList = classList.get(k).getChildren("multipleChoice");
             String strClass = classList.get(k).getAttribute("class").getValue();
             for (int i = 0; i < multipleList.size(); i++) {
-                @SuppressWarnings("unchecked")
                 List<Element> multiItem = multipleList.get(i).getChildren("option");
                 for (int x = 0; x<multiItem.size(); x++){
                     String item = multiItem.get(x).getAttribute("item").getValue();
@@ -153,10 +194,8 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
                 }
             }
 
-            @SuppressWarnings("unchecked")
             List<Element> preferenceList = classList.get(k).getChildren("reminderPrompts");
             for (int i = 0; i<preferenceList.size(); i++){
-                @SuppressWarnings("unchecked")
                 List<Element> reminderBoxes = preferenceList.get(i).getChildren("reminder");
                 for (int j = 0; j < reminderBoxes.size(); j++) {
                     String name = reminderBoxes.get(j).getText();
@@ -165,6 +204,51 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
             }
         }
         
+        List<Element> windowList = messages.getChildren("windowDetails");
+        for (int k = 0; k < windowList.size(); k++) {
+            String strClass = windowList.get(k).getAttribute("class").getValue();
+            List<Element> locListX = windowList.get(k).getChildren("locX");
+            double x=0.0;
+            for (int i = 0; i < locListX.size(); i++) {
+                try {
+                    x = Double.parseDouble(locListX.get(i).getText());
+                } catch ( NumberFormatException e) {
+                    log.error("failed to convert positional attribute");
+                }
+            }
+            List<Element> locListY = windowList.get(k).getChildren("locY");
+            double y=0.0; 
+            for (int i = 0; i < locListY.size(); i++) {
+                try {
+                    y = Double.parseDouble(locListY.get(i).getText());
+                } catch ( NumberFormatException e) {
+                        log.error("failed to convert positional attribute");
+                }
+            }
+            p.setWindowLocation(strClass, new java.awt.Point((int)x, (int)y));
+
+
+            List<Element> sizeWidth = windowList.get(k).getChildren("width");
+            double width=0.0;
+            for (int i = 0; i < sizeWidth.size(); i++) {
+                try {
+                    width = Double.parseDouble(sizeWidth.get(i).getText());
+                } catch ( NumberFormatException e) {
+                        log.error("failed to convert positional attribute");
+                }
+            }
+            List<Element> heightList = windowList.get(k).getChildren("height");
+            double height=0.0; 
+            for (int i = 0; i < heightList.size(); i++) {
+                try {
+                    height = Double.parseDouble(heightList.get(i).getText());
+                } catch ( NumberFormatException e) {
+                        log.error("failed to convert positional attribute");
+                }
+            }
+            p.setWindowSize(strClass, new java.awt.Dimension((int)width, (int)height));
+        
+        }
         p.finishLoading();
         return true;
     }

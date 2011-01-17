@@ -51,16 +51,17 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.32 $
+ * @version $Revision: 1.33 $
  * GT 28-AUG-2008 Added window menu
  */
 
-public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag {
+public class JmriJFrame extends JFrame implements java.awt.event.WindowListener, jmri.ModifiedFlag, java.awt.event.ComponentListener {
 
     public JmriJFrame() {
 	    super();
 	    self = this;
         addWindowListener(this);
+        addComponentListener(this);
         synchronized (list) {
             list.add(this);
         }
@@ -69,12 +70,52 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         // set the close short cut
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowCloseShortCut();
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        
+        windowFrameRef = this.getClass().getName();
+        if (!windowFrameRef.equals(JmriJFrame.class.getName())){
+            if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
+                Dimension screen = getToolkit().getScreenSize();
+                if (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight()))){
+                    this.setLocation(p.getWindowLocation(windowFrameRef));
+                }
+                /* Simple case that if either height or width are zero, then we should
+                not set them */
+                if (!((p.getWindowSize(windowFrameRef).getWidth()==0.0) || 
+                    (p.getWindowSize(windowFrameRef).getHeight()==0.0))){
+                    this.setPreferredSize(p.getWindowSize(windowFrameRef));
+                }
+            }
+        }
     }
 
     public JmriJFrame(String name) {
         this();
         setTitle(name);
+        if (windowFrameRef.equals(JmriJFrame.class.getName())){
+            if ((this.getTitle()==null) || (this.getTitle().equals("")))
+                return;
+            else
+                windowFrameRef = this.getTitle();
+            jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+            if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
+                Dimension screen = getToolkit().getScreenSize();
+                if (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight()))){
+                    this.setLocation(p.getWindowLocation(windowFrameRef));
+                }
+                /* Simple case that if either height or width are zero, then we should
+                not set them */
+                if (!((p.getWindowSize(windowFrameRef).getWidth()==0.0) || 
+                    (p.getWindowSize(windowFrameRef).getHeight()==0.0))){
+                    this.setPreferredSize(p.getWindowSize(windowFrameRef));
+                }
+            }
+        }
     }
+    
+    String windowFrameRef;
 
     /**
      * By default, Swing components should be 
@@ -316,6 +357,25 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void windowClosing(java.awt.event.WindowEvent e) {
         handleModified();
     }
+    
+    public void componentHidden(java.awt.event.ComponentEvent e) { }
+    
+    public void componentMoved(java.awt.event.ComponentEvent e) {
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (p != null) {
+            p.setWindowLocation(windowFrameRef, this.getLocation());
+        }
+    }
+    
+    public void componentResized(java.awt.event.ComponentEvent e) {
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (p != null) {
+            p.setWindowSize(windowFrameRef, this.getSize());
+        }
+    }
+    
+    public void componentShown(java.awt.event.ComponentEvent e) { }
+    
 
     private jmri.implementation.AbstractShutDownTask task = null;
     protected void setShutDownTask() {
@@ -339,6 +399,11 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * with super.dispose()
      */
     public void dispose() {
+        jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        if (p != null) {
+            p.setWindowLocation(windowFrameRef, this.getLocation());
+            p.setWindowSize(windowFrameRef, this.getSize());
+        }
         log.debug("dispose "+getTitle());
         if (task != null) {
             jmri.InstanceManager.shutDownManagerInstance().deregister(task);

@@ -7,6 +7,7 @@ import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.Point;
 import javax.swing.*;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -22,6 +23,8 @@ import java.util.Enumeration;
 import java.lang.reflect.Method;
 
 
+
+
 /**
  * Basic Implementation of the User Preferences Manager.
  * <P>
@@ -29,7 +32,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.25 $
+ * @version	$Revision: 1.26 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -113,7 +116,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         } else {
             simplePreferenceList.remove(name);
         }
-        setChangeMade();
+        setChangeMade(false);
     }
     
     ArrayList<String> simplePreferenceList = new ArrayList<String>();
@@ -171,7 +174,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         if (!found)
             a.add(new PreferenceList(item, state));
         displayRememberMsg();
-        setChangeMade();
+        setChangeMade(true);
     }
     
     /**
@@ -417,7 +420,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         } else {
             setComboBoxLastSelection(comboBoxName, lastValue);
         }
-        setChangeMade();
+        setChangeMade(false);
     }
     
     /**
@@ -443,7 +446,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
                 _comboBoxLastSelection.get(i).setLastValue(lastValue);
             }
         }
-        setChangeMade();
+        setChangeMade(false);
     }
     
     /**
@@ -496,14 +499,15 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     }
 
-    ShutDownTask userPreferencesShutDownTask = null;
+    static ShutDownTask userPreferencesShutDownTask = null;
     
     private static volatile boolean _changeMade = false;
     
     public synchronized boolean getChangeMade(){ return _changeMade; }
-    public synchronized void setChangeMade() {
+    public synchronized void setChangeMade(boolean fireUpdate) {
         _changeMade=true;
-        notifyPropertyChangeListener("PreferencesUpdated", null, null );
+        if(fireUpdate)
+            notifyPropertyChangeListener("PreferencesUpdated", null, null );
     }
 
     //The reset is used after the preferences have been loaded for the first time
@@ -556,6 +560,58 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         if (_loading) return;
         showInfoMessage("Reminder", "You can re-display this message from 'Edit|Preferences|Message' Menu.", getClassName(), "reminder");   
     }
+    
+    Hashtable<String, WindowLocations> windowDetails = new Hashtable<String, WindowLocations>();
+    
+    public Point getWindowLocation(String strClass){
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getLocation();
+        }
+        return null;
+    }
+    
+    public Dimension getWindowSize(String strClass){
+        if(windowDetails.containsKey(strClass)){
+            return windowDetails.get(strClass).getSize();
+        }
+        return null;
+    }
+    
+    public void setWindowLocation(String strClass, Point location){
+        if(strClass.equals("jmri.util.JmriJFrame"))
+            return;
+        if(!windowDetails.containsKey(strClass)){
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setLocation(location);
+        setChangeMade(false);
+    }
+    
+    public void setWindowSize(String strClass, Dimension dim){
+        if(strClass.equals("jmri.util.JmriJFrame"))
+            return;
+        if(!windowDetails.containsKey(strClass)){
+            windowDetails.put(strClass, new WindowLocations());
+        }
+        windowDetails.get(strClass).setSize(dim);
+        setChangeMade(false);
+    }
+    
+    public ArrayList<String> getWindowList(){
+        ArrayList<String> list = new ArrayList<String>();
+        Enumeration keys = windowDetails.keys();
+        while ( keys.hasMoreElements() )
+           {
+           String key = (String)keys.nextElement();
+           list.add(key);
+           } // end while
+        return list;
+    }
+    
+    public boolean isWindowPositionSaved(String strClass){
+        return windowDetails.containsKey(strClass);
+    }
+    
     
     Hashtable<String, ClassPreferences> classPreferenceList = new Hashtable<String, ClassPreferences>();
     
@@ -889,7 +945,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
             setClassDescription(strClass);
         }
         displayRememberMsg();
-        setChangeMade();
+        setChangeMade(true);
     }
 
     public String getClassDescription() { return "Preference Manager"; }
@@ -1052,6 +1108,28 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
         
         String getItem() {
             return item;
+        }
+    
+    }
+    
+    static class WindowLocations{
+        Point xyLocation = new Point(0,0);
+        Dimension size = new Dimension (0,0);
+        
+        WindowLocations(){
+        }
+        
+        Point getLocation(){ 
+        return xyLocation; }
+        
+        Dimension getSize() { return size; }
+        
+        void setLocation(Point xyLocation) {
+            this.xyLocation = xyLocation;
+        }
+        
+        void setSize(Dimension size) {
+            this.size = size;
         }
     
     }
