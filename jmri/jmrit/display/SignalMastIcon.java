@@ -19,7 +19,7 @@ import javax.swing.*;
  * @see jmri.SignalMastManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class SignalMastIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -149,7 +149,6 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
      * Pop-up just displays the name
      */
     public boolean showPopUp(JPopupMenu popup) {
-
         if (isEditable()) {
             popup.add(new AbstractAction(rb.getString("EditLogic")) {
                 public void actionPerformed(ActionEvent e) {
@@ -164,9 +163,30 @@ public class SignalMastIcon extends PositionableLabel implements java.beans.Prop
                     f.setVisible(true);
                 }
             });
-            return true;
+            JMenu aspect = new JMenu("Set Aspect");
+            final java.util.Vector <String> aspects = mMast.getValidAspects();
+            for (int i=0; i<aspects.size(); i++){
+                final int index = i;
+                aspect.add(new AbstractAction(aspects.elementAt(index)){
+                    public void actionPerformed(ActionEvent e) {
+                        mMast.setAspect(aspects.elementAt(index));
+                    }
+                });
+            }
+            popup.add(aspect);
         }
-        return false;
+        else {
+            final java.util.Vector <String> aspects = mMast.getValidAspects();
+            for (int i=0; i<aspects.size(); i++){
+                final int index = i;
+                popup.add(new AbstractAction(aspects.elementAt(index)){
+                    public void actionPerformed(ActionEvent e) {
+                        mMast.setAspect(aspects.elementAt(index));
+                    }
+                });
+            }
+        }
+        return true;
     }
 
     /**
