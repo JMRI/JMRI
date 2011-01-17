@@ -29,7 +29,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for user edit of print options
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class PrintOptionFrame extends OperationsFrame{
@@ -89,6 +89,7 @@ public class PrintOptionFrame extends OperationsFrame{
 		saveButton.setToolTipText(rb.getString("SaveToolTip"));
 		addLogoButton.setToolTipText(rb.getString("AddLogoToolTip"));
 		removeLogoButton.setToolTipText(rb.getString("RemoveLogoToolTip"));
+		tabFormatCheckBox.setToolTipText(rb.getString("TabComment"));
 		printLocCommentsCheckBox.setToolTipText(rb.getString("AddLocationComments"));
 		printLoadsEmptiesCheckBox.setToolTipText(rb.getString("LoadsEmptiesComment"));
 		buildReportCheckBox.setToolTipText(rb.getString("CreatesTextFile"));

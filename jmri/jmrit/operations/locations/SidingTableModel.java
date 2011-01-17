@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of sidings used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.10 $
+ * @version   $Revision: 1.11 $
  */
 public class SidingTableModel extends TrackTableModel {
 
@@ -51,7 +51,7 @@ public class SidingTableModel extends TrackTableModel {
 			fireTableDataChanged();
 		}
 
-		if (e.getSource() != _location){
+		if (e.getSource().getClass().equals(Track.class)){
 			String type = ((Track) e.getSource()).getLocType();
 			if (type.equals(Track.SIDING)){
 				String sidingId = ((Track) e.getSource()).getId();

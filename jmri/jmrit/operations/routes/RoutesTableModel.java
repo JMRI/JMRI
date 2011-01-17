@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of routes used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.16 $
+ * @version   $Revision: 1.17 $
  */
 public class RoutesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -179,7 +179,7 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
              updateList();
              fireTableDataChanged();
     	 }
-    	 else synchronized(this) {
+    	 else if (e.getSource().getClass().equals(Route.class)) {
     		 String locId = ((Route) e.getSource()).getId();
     		 int row = sysList.indexOf(locId);
     		 if (Control.showProperty && log.isDebugEnabled()) log.debug("Update route table row: "+row + " id: " + locId);

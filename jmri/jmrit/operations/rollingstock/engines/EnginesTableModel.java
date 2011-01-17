@@ -20,7 +20,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of engines used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.26 $
+ * @version   $Revision: 1.27 $
  */
 public class EnginesTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -402,8 +402,8 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     	else if (e.getPropertyName().equals(Engine.LENGTH) || e.getPropertyName().equals(Engine.TYPE)){
     		fireTableDataChanged();
     	}
-    	else {
-    		// must be a engine change
+		// must be a engine change
+    	else if (e.getSource().getClass().equals(Engine.class)){
     		String engineId = ((Engine) e.getSource()).getId();
     		int row = sysList.indexOf(engineId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update engine table row: "+row);

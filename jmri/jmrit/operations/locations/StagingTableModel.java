@@ -10,7 +10,7 @@ import jmri.jmrit.operations.setup.Control;
  * Table Model for edit of staging tracks used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.11 $
+ * @version   $Revision: 1.12 $
  */
 public class StagingTableModel extends TrackTableModel {
 
@@ -51,7 +51,7 @@ public class StagingTableModel extends TrackTableModel {
     		fireTableDataChanged();
     	}
 
-    	if (e.getSource() != _location){
+    	if (e.getSource().getClass().equals(Track.class)){
     		String type = ((Track) e.getSource()).getLocType();
     		if (type.equals(Track.STAGING)){
     			String stagingId = ((Track) e.getSource()).getId();

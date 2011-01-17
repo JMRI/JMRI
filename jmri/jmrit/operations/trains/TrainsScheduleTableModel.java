@@ -18,7 +18,7 @@ import jmri.util.JmriJFrame;
  * Table Model for edit of train schedules used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010
- * @version   $Revision: 1.2 $
+ * @version   $Revision: 1.3 $
  */
 public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -207,7 +207,7 @@ public class TrainsScheduleTableModel extends javax.swing.table.AbstractTableMod
     		removePropertyChangeTrainSchedules();
     		addPropertyChangeTrainSchedules();
     		fireTableStructureChanged();
-    	} else synchronized(this) {
+    	} else if (e.getSource().getClass().equals(Train.class)){
     		String trainId = ((Train) e.getSource()).getId();
     		int row = sysList.indexOf(trainId);
     		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
