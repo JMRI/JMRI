@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.awt.Point;
 
 /**
@@ -18,7 +17,7 @@ import java.awt.Point;
  * @see jmri.managers.DefaultUserMessagePreferences
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.13 $
+ * @version	$Revision: 1.14 $
  */
  
 public interface UserPreferencesManager {
@@ -336,7 +335,7 @@ public interface UserPreferencesManager {
      * The jmri.util.JmriJFrame, will automatically use the class name of the frame
      * if the class name returned is equal to jmri.util.JmriJFrame, the size is not stored
      * @param strClass This is a unique identifier for window size being saved
-     * @param location The width, height size of the window given in a Dimension
+     * @param dim The width, height size of the window given in a Dimension
      */
     public void setWindowSize(String strClass, Dimension dim);
     
@@ -353,7 +352,12 @@ public interface UserPreferencesManager {
 
     
     public ArrayList<String> getWindowList();
-    
+
+    /**
+     * Do we have a saved window position for the class
+     * @param strClass
+     * @return true if the window position details are stored, false if not.
+     */
     public boolean isWindowPositionSaved(String strClass);
     /*
         Example informational message dialog box.
