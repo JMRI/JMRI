@@ -22,7 +22,7 @@ import jmri.BeanSetting;
  *	directly from LayoutEditor or LayoutEditor specific modules.
  * <P>
  * @author Dave Duchamp Copyright (c) 2008
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 
 public class LayoutEditorAuxTools 
@@ -46,7 +46,6 @@ public class LayoutEditorAuxTools
 
 	// register a change in block connectivity that may require an update of connectivity list
 	public void setBlockConnectivityChanged() {blockConnectivityChanged = true;}
-//	public void resetBlockConnectivityChanged() {blockConnectivityChanged = false;}
 	
 	/**
 	 * Get Connectivity involving a specific Layout Block
@@ -611,7 +610,6 @@ public class LayoutEditorAuxTools
 		int typeCurConnection = 0;
 		BeanSetting bs = null;
 		LayoutTurnout lt = null;
-
 		// process object at block boundary
 		if (lc.getBlock1()==layoutBlock) {
 			// block1 is this LayoutBlock
@@ -620,6 +618,54 @@ public class LayoutEditorAuxTools
 				curConnection = lc.getTrackSegment();
 				prevConnection = lc.getConnectedObject();
 				typeCurConnection = LayoutEditor.TRACK;
+				// is this Track Segment connected to a RH, LH, or WYE turnout at the continuing or diverging track
+				if ( ( (lc.getConnectedType()==LayoutEditor.TURNOUT_B) || 
+							(lc.getConnectedType()==LayoutEditor.TURNOUT_C) ) && 
+							( (((LayoutTurnout)prevConnection).getTurnoutType()>=LayoutTurnout.RH_TURNOUT) && 
+							(((LayoutTurnout)prevConnection).getTurnoutType()<=LayoutTurnout.WYE_TURNOUT) ) ) {
+					LayoutTurnout ltx = (LayoutTurnout)prevConnection;
+					if (lc.getConnectedType()==LayoutEditor.TURNOUT_B) {
+						// Track Segment connected to continuing track of turnout
+						if (ltx.getContinuingSense()==Turnout.CLOSED) 
+							bs = new BeanSetting(ltx.getTurnout(),Turnout.CLOSED);
+						else
+							bs = new BeanSetting(ltx.getTurnout(),Turnout.THROWN);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+					}
+					else if (lc.getConnectedType()==LayoutEditor.TURNOUT_C) {
+						// Track Segment connected to diverging track of turnout
+						if (ltx.getContinuingSense()==Turnout.CLOSED) 
+							bs = new BeanSetting(ltx.getTurnout(),Turnout.THROWN);
+						else
+							bs = new BeanSetting(ltx.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+					}
+				}
+				// is this Track Segment connected to the continuing track of a RH_XOVER or LH_XOVER
+				else if ( ( (lc.getConnectedType()>=LayoutEditor.TURNOUT_A) && 
+							(lc.getConnectedType()<=LayoutEditor.TURNOUT_D) ) && 
+							( (((LayoutTurnout)prevConnection).getTurnoutType()==LayoutTurnout.RH_XOVER) || 
+							(((LayoutTurnout)prevConnection).getTurnoutType()==LayoutTurnout.LH_XOVER) ) ) {
+					LayoutTurnout ltz = (LayoutTurnout)prevConnection;
+					if ( ( (ltz.getTurnoutType()==LayoutTurnout.RH_XOVER) && 
+							( (lc.getConnectedType()==LayoutEditor.TURNOUT_B) ||
+							(lc.getConnectedType()==LayoutEditor.TURNOUT_D)	) ) ||	
+							( (ltz.getTurnoutType()==LayoutTurnout.LH_XOVER) && 
+							( (lc.getConnectedType()==LayoutEditor.TURNOUT_A) ||
+							(lc.getConnectedType()==LayoutEditor.TURNOUT_C)	) ) ) {
+						bs = new BeanSetting(ltz.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+					}
+				}		
 			}
 			else {
 				// block boundary is internal to a crossover turnout
@@ -651,44 +697,111 @@ public class LayoutEditorAuxTools
 				}
 			}
 		}
+		else if (lc.getXover()!=null) {
+			// first Block is not in a Track Segment, must be block boundary internal to a crossover turnout
+			lt = lc.getXover();
+			if ( (lt!=null) && (lt.getTurnout()!=null) ) {
+				int type = lc.getXoverBoundaryType();
+				if (type==LayoutConnectivity.XOVER_BOUNDARY_AB) {
+					bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+					curConnection = lt.getConnectB();
+				}
+				else if (type==LayoutConnectivity.XOVER_BOUNDARY_CD) {
+					bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+					curConnection = lt.getConnectD();
+				}
+				else if (type==LayoutConnectivity.XOVER_BOUNDARY_AC) {
+					bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+					curConnection = lt.getConnectC();
+				}
+				else if (type==LayoutConnectivity.XOVER_BOUNDARY_BD) {
+					bs = new BeanSetting(lt.getTurnout(),Turnout.THROWN);
+					curConnection = lt.getConnectD();
+				}
+				typeCurConnection = LayoutEditor.TRACK;
+				if ( (bs != null) && (bs.getBean() != null) ) 
+					p.addSetting(bs);
+				else
+					InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+			}
+		}		
 		else {
-			// block2 is this LayoutBlock
+			// block2 is this LayoutBlock, and block1 is in a track segment
 			if (lc.getConnectedObject()!=null) {
-				// connected object in this block is a RH, LH, or WYE turnout or levelxing
+				// connected object in this block is a turnout or levelxing
 				curConnection = lc.getConnectedObject();
 				prevConnection = lc.getTrackSegment();
 				typeCurConnection = lc.getConnectedType();
-				if (typeCurConnection==LayoutEditor.TURNOUT_A) {
-					// turnout throat, no bean setting needed and cannot follow Path any further
-					curConnection=null;
-				}
-				else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
-					// continuing track of turnout
-					if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
-						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
-					else
-						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
-					if (bs.getBean() != null) 
-						p.addSetting(bs);
-					else
-						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
-					prevConnection = curConnection;
-					curConnection = ((LayoutTurnout)curConnection).getConnectA();
-					typeCurConnection = LayoutEditor.TRACK;
-				}
-				else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
-					// diverging track of turnout
-					if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
-						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
-					else
-						bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
-					if (bs.getBean() != null) 
-						p.addSetting(bs);
-					else
-						InstanceManager.layoutBlockManagerInstance().addBadBeanError();
-					prevConnection = curConnection;
-					curConnection = ((LayoutTurnout)curConnection).getConnectA();
-					typeCurConnection = LayoutEditor.TRACK;
+				if ( (typeCurConnection>=LayoutEditor.TURNOUT_A) && (typeCurConnection<=LayoutEditor.TURNOUT_D) ) {
+					// connected object is a turnout
+					int turnoutType = ((LayoutTurnout)curConnection).getTurnoutType();
+					if (turnoutType>LayoutTurnout.WYE_TURNOUT) {					
+						// have crossover turnout
+						if ( (turnoutType==LayoutTurnout.DOUBLE_XOVER) || ((turnoutType==LayoutTurnout.RH_XOVER) && 
+							( (typeCurConnection==LayoutEditor.TURNOUT_A) || 
+								(typeCurConnection==LayoutEditor.TURNOUT_C) )) ||
+								((turnoutType==LayoutTurnout.LH_XOVER) && 
+									( (typeCurConnection==LayoutEditor.TURNOUT_B) || 
+										(typeCurConnection==LayoutEditor.TURNOUT_D) )) ) {
+							// entering turnout at a throat, cannot follow path any further
+							curConnection=null;
+						}
+						else {
+							// entering turnout at continuing track
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+							if (bs.getBean() != null) 
+								p.addSetting(bs);
+							else
+								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+							prevConnection = curConnection;
+							if (typeCurConnection==LayoutEditor.TURNOUT_A) {
+								curConnection = ((LayoutTurnout)curConnection).getConnectB();
+							}
+							else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
+								curConnection = ((LayoutTurnout)curConnection).getConnectA();
+							}
+							else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
+								curConnection = ((LayoutTurnout)curConnection).getConnectD();
+							}
+							else if (typeCurConnection==LayoutEditor.TURNOUT_D) {
+								curConnection = ((LayoutTurnout)curConnection).getConnectC();
+							}
+							typeCurConnection = LayoutEditor.TRACK;							
+						}
+					}
+					// must be RH, LH, or WYE turnout
+					else if (typeCurConnection==LayoutEditor.TURNOUT_A) {
+						// turnout throat, no bean setting needed and cannot follow Path any further
+						curConnection=null;
+					}
+					else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
+						// continuing track of turnout
+						if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+						else
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						prevConnection = curConnection;
+						curConnection = ((LayoutTurnout)curConnection).getConnectA();
+						typeCurConnection = LayoutEditor.TRACK;
+					}
+					else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
+						// diverging track of turnout
+						if (((LayoutTurnout)curConnection).getContinuingSense()==Turnout.CLOSED) 
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.THROWN);
+						else
+							bs = new BeanSetting(((LayoutTurnout)curConnection).getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
+						prevConnection = curConnection;
+						curConnection = ((LayoutTurnout)curConnection).getConnectA();
+						typeCurConnection = LayoutEditor.TRACK;
+					}
 				}
 				// if level crossing, skip to the connected track segment on opposite side
 				else if (typeCurConnection==LayoutEditor.LEVEL_XING_A) {
@@ -794,8 +907,8 @@ public class LayoutEditorAuxTools
 				// test for crossover turnout
 				if (lt.getTurnoutType() <= LayoutTurnout.WYE_TURNOUT) {
 					// have RH, LH, or WYE turnout
-					if (lt.getLayoutBlock()!=layoutBlock) {
-						// moving to another block
+						
+					if (lt.getLayoutBlock()!=layoutBlock) {						
 						curConnection = null;
 					}
 					else {
@@ -814,9 +927,14 @@ public class LayoutEditorAuxTools
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
-							prevConnection = curConnection;
-							curConnection = lt.getConnectA();
-							typeCurConnection = LayoutEditor.TRACK;
+							if (lt.getLayoutBlock()!=layoutBlock) {						
+								curConnection = null;
+							}
+							else {
+								prevConnection = curConnection;
+								curConnection = lt.getConnectA();
+								typeCurConnection = LayoutEditor.TRACK;
+							}
 						}
 						else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
 							// diverging track of turnout
@@ -828,9 +946,14 @@ public class LayoutEditorAuxTools
 								p.addSetting(bs);
 							else
 								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
-							prevConnection = curConnection;
-							curConnection = lt.getConnectA();
-							typeCurConnection = LayoutEditor.TRACK;
+							if (lt.getLayoutBlock()!=layoutBlock) {						
+								curConnection = null;
+							}
+							else {
+								prevConnection = curConnection;
+								curConnection = lt.getConnectA();
+								typeCurConnection = LayoutEditor.TRACK;
+							}
 						}
 					}
 				}
@@ -847,16 +970,16 @@ public class LayoutEditorAuxTools
 					}
 					else if (typeCurConnection==LayoutEditor.TURNOUT_B) {
 						// entry is at continuing track of turnout 
+						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 						if (lt.getLayoutBlock()!=layoutBlock) {
-							// left current block before reaching turnout
+							// left current block 
 							curConnection = null;
 						}
 						else {
-							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if (bs.getBean() != null) 
-								p.addSetting(bs);
-							else
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectA();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -864,16 +987,16 @@ public class LayoutEditorAuxTools
 					}						
 					else if (typeCurConnection==LayoutEditor.TURNOUT_D) {
 						// entry is at continuing track of turnout 
+						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 						if (lt.getLayoutBlockC()!=layoutBlock) {
-							// left current block before reaching turnout
+							// left current block 
 							curConnection = null;
 						}
 						else {
-							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if (bs.getBean() != null) 
-								p.addSetting(bs);
-							else
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectC();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -889,16 +1012,16 @@ public class LayoutEditorAuxTools
 					}
 					else if (typeCurConnection==LayoutEditor.TURNOUT_A) {
 						// entry is at continuing track of turnout 
+						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 						if (lt.getLayoutBlockB()!=layoutBlock) {
-							// left current block before reaching turnout
+							// left current block 
 							curConnection = null;
 						}
 						else {
-							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if (bs.getBean() != null) 
-								p.addSetting(bs);
-							else
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectB();
 							typeCurConnection = LayoutEditor.TRACK;
@@ -906,16 +1029,16 @@ public class LayoutEditorAuxTools
 					}						
 					else if (typeCurConnection==LayoutEditor.TURNOUT_C) {
 						// entry is at continuing track of turnout 
+						bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
+						if (bs.getBean() != null) 
+							p.addSetting(bs);
+						else
+							InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 						if (lt.getLayoutBlockD()!=layoutBlock) {
 							// left current block
 							curConnection = null;
 						}
 						else {
-							bs = new BeanSetting(lt.getTurnout(),Turnout.CLOSED);
-							if (bs.getBean() != null) 
-								p.addSetting(bs);
-							else
-								InstanceManager.layoutBlockManagerInstance().addBadBeanError();
 							prevConnection = curConnection;
 							curConnection = lt.getConnectD();
 							typeCurConnection = LayoutEditor.TRACK;

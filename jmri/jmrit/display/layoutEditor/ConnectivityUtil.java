@@ -32,7 +32,7 @@ import jmri.jmrit.blockboss.BlockBossLogic;
  *   method. 
  * <P>
  * @author Dave Duchamp Copyright (c) 2009
- * @version $Revision: 1.7 $
+ * @version $Revision: 1.8 $
  */
 
 public class ConnectivityUtil 
@@ -1541,16 +1541,26 @@ public class ConnectivityUtil
 	private Integer getTurnoutSetting(LayoutTurnout lt, int cType) {
 		prevConnectObject = lt;
 		int setting = Turnout.THROWN;
+		int tType = lt.getTurnoutType();
 		switch (cType) {
 			case LayoutEditor.TURNOUT_A:
-				// entering at throat, determine exit by checking block of connected track segment
-				if ((lt.getConnectB()!=null) && (nlb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
+				// check for left-handed crossover
+				if (tType == LayoutTurnout.LH_XOVER) {
+					// entering at a continuing track of a left-handed crossover
+					prevConnectType = LayoutEditor.TURNOUT_B;
+					setting = Turnout.CLOSED;
+					tr = (TrackSegment)lt.getConnectB();					
+				}
+				// entering at a throat, determine exit by checking block of connected track segment
+				else if ( (nlb==lt.getLayoutBlockB()) || ((lt.getConnectB()!=null) && 
+							(nlb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) ) {
 					// exiting block at continuing track
 					prevConnectType = LayoutEditor.TURNOUT_B;
 					setting = Turnout.CLOSED;
 					tr = (TrackSegment)lt.getConnectB();
 				}
-				else if ((lt.getConnectC()!=null) && (nlb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
+				else if ( (nlb==lt.getLayoutBlockC()) || ((lt.getConnectC()!=null) && 
+							(nlb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) ) {
 					// exiting block at diverging track
 					prevConnectType = LayoutEditor.TURNOUT_C;
 					tr = (TrackSegment)lt.getConnectC();
@@ -1569,15 +1579,110 @@ public class ConnectivityUtil
 				}
 				break;
 			case LayoutEditor.TURNOUT_B:
-				// entering at continuing track, must exit at throat
-				prevConnectType = LayoutEditor.TURNOUT_A;				
-				setting = Turnout.CLOSED;
-				tr = (TrackSegment)lt.getConnectA();
+				if ( (tType==LayoutTurnout.LH_XOVER) || (tType==LayoutTurnout.DOUBLE_XOVER) ) {
+					// entering at a throat of a double crossover or a left-handed crossover
+					if ( (nlb==lt.getLayoutBlock()) || ((lt.getConnectA()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectA()).getLayoutBlock())) ) {
+						// exiting block at continuing track
+						prevConnectType = LayoutEditor.TURNOUT_A;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectB();
+					}
+					else if ( (nlb==lt.getLayoutBlockD()) || ((lt.getConnectD()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectD()).getLayoutBlock())) ) {
+						// exiting block at diverging track
+						prevConnectType = LayoutEditor.TURNOUT_D;
+						tr = (TrackSegment)lt.getConnectD();
+					}
+					// must stay in block after turnout
+					else if ((lt.getConnectA()!=null) && (lb==((TrackSegment)lt.getConnectA()).getLayoutBlock())) {
+						// continuing in block on continuing track
+						prevConnectType = LayoutEditor.TURNOUT_A;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectA();
+					}
+					else if ((lt.getConnectD()!=null) && (lb==((TrackSegment)lt.getConnectD()).getLayoutBlock())) {
+						// continuing in block on diverging track
+						prevConnectType = LayoutEditor.TURNOUT_D;
+						tr = (TrackSegment)lt.getConnectD();
+					}
+				}
+				else {
+					// entering at continuing track, must exit at throat
+					prevConnectType = LayoutEditor.TURNOUT_A;
+					setting = Turnout.CLOSED;
+					tr = (TrackSegment)lt.getConnectA();
+				}
 				break;
 			case LayoutEditor.TURNOUT_C:
-				// entering at diverging track, must exit at throat
-				prevConnectType = LayoutEditor.TURNOUT_A;				
-				tr = (TrackSegment)lt.getConnectA();
+				if ( (tType==LayoutTurnout.RH_XOVER) || (tType==LayoutTurnout.DOUBLE_XOVER) ) {
+					// entering at a throat of a double crossover or a right-handed crossover
+					if ( (nlb==lt.getLayoutBlockD()) || ((lt.getConnectD()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectD()).getLayoutBlock())) ) {
+						// exiting block at continuing track
+						prevConnectType = LayoutEditor.TURNOUT_D;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectD();
+					}
+					else if ( (nlb==lt.getLayoutBlock()) || ((lt.getConnectA()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectA()).getLayoutBlock())) ) {
+						// exiting block at diverging track
+						prevConnectType = LayoutEditor.TURNOUT_A;
+						tr = (TrackSegment)lt.getConnectA();
+					}
+					// must stay in block after turnout
+					else if ((lt.getConnectD()!=null) && (lb==((TrackSegment)lt.getConnectD()).getLayoutBlock())) {
+						// continuing in block on continuing track
+						prevConnectType = LayoutEditor.TURNOUT_D;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectD();
+					}
+					else if ((lt.getConnectA()!=null) && (lb==((TrackSegment)lt.getConnectA()).getLayoutBlock())) {
+						// continuing in block on diverging track
+						prevConnectType = LayoutEditor.TURNOUT_A;
+						tr = (TrackSegment)lt.getConnectA();
+					}
+				}
+				else {
+					// entering at diverging track, must exit at throat
+					prevConnectType = LayoutEditor.TURNOUT_A;				
+					tr = (TrackSegment)lt.getConnectA();
+				}
+				break;
+			case LayoutEditor.TURNOUT_D:
+				if ( (tType==LayoutTurnout.LH_XOVER) || (tType==LayoutTurnout.DOUBLE_XOVER) ) {
+					// entering at a throat of a double crossover or a left-handed crossover
+					if ( (nlb==lt.getLayoutBlockC()) || ((lt.getConnectC()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) ) {
+						// exiting block at continuing track
+						prevConnectType = LayoutEditor.TURNOUT_C;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectC();
+					}
+					else if ( (nlb==lt.getLayoutBlockB()) || ((lt.getConnectB()!=null) && 
+								(nlb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) ) {
+						// exiting block at diverging track
+						prevConnectType = LayoutEditor.TURNOUT_B;
+						tr = (TrackSegment)lt.getConnectB();
+					}
+					// must stay in block after turnout
+					else if ((lt.getConnectC()!=null) && (lb==((TrackSegment)lt.getConnectC()).getLayoutBlock())) {
+						// continuing in block on continuing track
+						prevConnectType = LayoutEditor.TURNOUT_C;
+						setting = Turnout.CLOSED;
+						tr = (TrackSegment)lt.getConnectC();
+					}
+					else if ((lt.getConnectB()!=null) && (lb==((TrackSegment)lt.getConnectB()).getLayoutBlock())) {
+						// continuing in block on diverging track
+						prevConnectType = LayoutEditor.TURNOUT_B;
+						tr = (TrackSegment)lt.getConnectB();
+					}
+				}
+				else {
+				// entering at diverging track of a right-handed crossover, must exit at throat
+					prevConnectType = LayoutEditor.TURNOUT_A;				
+					tr = (TrackSegment)lt.getConnectA();
+				}
 				break;
 		}
 		if ( (tr!=null) && (tr.getLayoutBlock() != lb) ) {

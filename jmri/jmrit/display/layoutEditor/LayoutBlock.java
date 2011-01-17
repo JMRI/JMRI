@@ -56,7 +56,7 @@ import jmri.implementation.AbstractNamedBean;
  *		the configuration is saved.
  * <P>
  * @author Dave Duchamp Copyright (c) 2004-2008
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class LayoutBlock extends AbstractNamedBean
@@ -499,7 +499,11 @@ public class LayoutBlock extends AbstractNamedBean
 					p.setToBlockDirection(lc.getReverseDirection());
 					p.setFromBlockDirection(lc.getDirection());
 				}
-				if (c.size()>2) auxTools.addBeanSettings(p,lc,_instance);
+				java.util.List beans = p.getSettings();
+				for (int j=0;j<beans.size();j++) {	
+					p.removeSetting((jmri.BeanSetting)beans.get(j));
+				}
+				auxTools.addBeanSettings(p,lc,_instance);
 			}
 		}	
 		// delete unneeded Paths
@@ -525,7 +529,7 @@ public class LayoutBlock extends AbstractNamedBean
 				//if (newp != null) 
 				block.addPath(newp);				
 				//else log.error("Trouble adding Path to block '"+blockName+"'.");
-				if (c.size()>2) auxTools.addBeanSettings(newp,lc,_instance);
+				auxTools.addBeanSettings(newp,lc,_instance);
 			}				
 		}
 // djd debugging - lists results of automatic initialization of Paths and BeanSettings			
