@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.75 $
+ * @version $Revision: 1.76 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3589,7 +3589,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("c9 next load from staging", "Scrap", c9.getNextLoad());
 		Assert.assertEquals("c10 load from staging", "E", c10.getLoad());
 		Assert.assertEquals("c11 load from staging", "E", c11.getLoad());
-		Assert.assertEquals("c13 load from staging", "E", c13.getLoad());
+		Assert.assertEquals("c13 load from staging", "Metal 3", c13.getLoad());
 		
 		// move and terminate train	
 		train1.move();

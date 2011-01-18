@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.126 $
+ * @version             $Revision: 1.127 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1620,6 +1620,10 @@ public class TrainBuilder extends TrainCommon{
 				throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorRouteLoc"),
 						new Object[]{train.getRoute().getName(), rld.getName()}));
 			}
+			if (!testDestination.acceptsTypeName(car.getType())){
+				addLine(buildReport, SEVEN, MessageFormat.format(rb.getString("buildCanNotDropLocation"),new Object[]{car.toString(), car.getType(), testDestination.getName()}));
+				continue;
+			}
 			// can this location service this train's direction
 			if (!checkDropTrainDirection(rld, testDestination))
 				continue;
@@ -1663,6 +1667,17 @@ public class TrainBuilder extends TrainCommon{
 							ScheduleItem si = sch.getItemById(testTrack.getScheduleItemId());
 							addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 							car.setLoad(si.getLoad());
+							// is car part of kernel?
+							if (car.getKernel()!= null){
+								List<Car> cars = car.getKernel().getCars();
+								for (int i=0; i<cars.size(); i++){
+									Car kc = cars.get(i);
+									if (kc.getType().equals(car.getType()) 
+											|| car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+											|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+										kc.setLoad(car.getLoad());
+								}
+							}					
 							// force car to this destination
 							boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
 							if (!carAdded)
