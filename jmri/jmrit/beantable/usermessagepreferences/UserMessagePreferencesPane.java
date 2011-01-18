@@ -15,7 +15,7 @@ import java.awt.*;
  * Pane to show User Message Preferences
  *
  * @author	Kevin Dickerson Copyright (C) 2009
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
 
@@ -266,7 +266,7 @@ public class UserMessagePreferencesPane extends jmri.util.swing.JmriPanel {
         revalidate();
     }
     
-    class ListItems{
+    static class ListItems{
         String strClass;
         String item;
         boolean included = false;
