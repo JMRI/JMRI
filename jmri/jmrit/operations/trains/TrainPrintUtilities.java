@@ -24,6 +24,7 @@ import jmri.util.davidflanagan.HardcopyWriter;
 /**
  * Train print utilities
  * @author Daniel Boudreau (C) 2010
+ * @version	$Revision: 1.8 $
  *
  */
 public class TrainPrintUtilities {
