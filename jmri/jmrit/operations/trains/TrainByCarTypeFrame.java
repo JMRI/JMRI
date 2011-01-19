@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
  * Frame to display by rolling stock, the locations serviced by this train
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -176,17 +176,25 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 					op.setText(rb.getString("X(DirLoc)"));
 				else if ((rl.getTrainDirection() & track.getTrainDirections()) == 0)
 					op.setText(rb.getString("X(DirTrk)"));
-				else if (!track.acceptsPickupTrain(train))
-					op.setText(rb.getString("X(TrainPickup)"));
+				else if (!track.acceptsPickupTrain(train)){
+					// can the train drop off car?
+					if (rl.canDrop() && track.acceptsDropTrain(train))
+						op.setText(rb.getString("DropOnly"));
+					else
+						op.setText(rb.getString("X(TrainPickup)"));
+				}
 				else if (!track.acceptsDropTrain(train))
-					op.setText(rb.getString("X(TrainDrop)"));
+					// can the train pick up car?
+					if (rl.canPickup() && track.acceptsPickupTrain(train))
+						op.setText(rb.getString("PickupOnly"));
+					else
+						op.setText(rb.getString("X(TrainDrop)"));
 				else if (rl.canDrop() && rl.canPickup())
 					op.setText(rb.getString("OK"));
 				else if (rl.canDrop())
 					op.setText(rb.getString("DropOnly"));
 				else if (rl.canPickup())
 					op.setText(rb.getString("PickupOnly"));
-
 				else
 					op.setText("X");	//default shouldn't occur
 			}
