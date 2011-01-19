@@ -23,7 +23,7 @@ import jmri.util.table.ButtonRenderer;
  * Table Model for edit of trains used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.37 $
+ * @version   $Revision: 1.38 $
  */
 public class TrainsTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -331,11 +331,13 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     		updateList();
     		fireTableDataChanged();
     	} else if (e.getSource().getClass().equals(Train.class)){
-    		String trainId = ((Train) e.getSource()).getId();
-    		int row = sysList.indexOf(trainId);
-    		if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
-    		if (row >= 0)
-    			fireTableRowsUpdated(row, row);
+    		synchronized(this) {
+    			String trainId = ((Train) e.getSource()).getId();
+    			int row = sysList.indexOf(trainId);
+    			if(Control.showProperty && log.isDebugEnabled()) log.debug("Update train table row: "+row + " id: " + trainId);
+    			if (row >= 0)
+    				fireTableRowsUpdated(row, row);
+    		}
     	}
     }
     
