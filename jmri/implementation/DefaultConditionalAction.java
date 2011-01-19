@@ -18,9 +18,9 @@ import javax.swing.Timer;
  * via the times.  Java 1.5 or Java 1.6 might make it possible to
  * break that, which will simplify things.
  *
- * @author Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris copyright (c) 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 
@@ -90,13 +90,6 @@ public class DefaultConditionalAction implements ConditionalAction {
 
     public void setOption(int option) {
         _option = option;
-    }
-
-    /**
-    * Sets option from user's name for it
-    */
-    public void setOption(String option) {
-        _option = stringToActionOption(option);
     }
 
 	/**
@@ -208,8 +201,8 @@ public class DefaultConditionalAction implements ConditionalAction {
 	/**
 	 * return String name of the option for this consequent type
 	 */
-	public String getOptionString() {
-        return getOptionString(_option);
+	public String getOptionString(boolean type) {
+        return getOptionString(_option, type);
     }
 
     public String getActionDataString() {
@@ -324,8 +317,10 @@ public class DefaultConditionalAction implements ConditionalAction {
     			return (rbx.getString("ActionDeallocateWarrant"));
     		case Conditional.ACTION_SET_ROUTE_TURNOUTS:
     			return (rbx.getString("ActionSetWarrantTurnouts"));
-    		case Conditional.ACTION_RUN_WARRANT:
-    			return (rbx.getString("ActionRunWarrant"));
+    		case Conditional.ACTION_AUTO_RUN_WARRANT:
+    			return (rbx.getString("ActionAutoRunWarrant"));
+    		case Conditional.ACTION_MANUAL_RUN_WARRANT:
+    			return (rbx.getString("ActionManualRunWarrant"));
     		case Conditional.ACTION_CONTROL_TRAIN:
     			return (rbx.getString("ActionControlTrain"));
             case Conditional.ACTION_SET_TRAIN_ID:
@@ -360,14 +355,26 @@ public class DefaultConditionalAction implements ConditionalAction {
 	/**
 	 * Convert consequent option to String
 	 */
-	public static String getOptionString(int opt) {
+	public static String getOptionString(int opt, boolean type) {
 		switch (opt) {
             case Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE:
-                return (rbx.getString("OnChangeToTrue"));
+            	if (type){
+            		return (rbx.getString("OnChangeToTrue"));
+            	} else {
+            		return (rbx.getString("OnTriggerToTrue"));
+            	}              
             case Conditional.ACTION_OPTION_ON_CHANGE_TO_FALSE:
-                return (rbx.getString("OnChangeToFalse"));
+            	if (type){
+            		return (rbx.getString("OnChangeToFalse"));
+            	} else {
+            		return (rbx.getString("OnTriggerToFalse"));
+            	}                             
             case Conditional.ACTION_OPTION_ON_CHANGE:
-                return (rbx.getString("OnChange"));
+            	if (type){
+            		return (rbx.getString("OnChange"));
+            	} else {
+            		return (rbx.getString("OnTrigger"));
+            	}              
         }
         log.warn("Unexpected parameter to getOptionString("+opt+")");
         return "";
@@ -388,21 +395,6 @@ public class DefaultConditionalAction implements ConditionalAction {
             }
         }
         log.warn("Unexpected parameter to stringToActionType("+str+")");
-		return 0;
-	}
-	
-	/**
-	 * Identifies action Option from Text String Note: if string does not
-	 * correspond to an action Option as defined in
-	 * ConditionalAction, returns 0.
-	 */
-	public static int stringToActionOption(String str) {
-		for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
-			if (str.equals(getOptionString(i))) {
-				return (i);
-			}
-		}
-        log.warn("Unexpected parameter to stringToActionOption("+str+")");
 		return 0;
 	}
 	
@@ -583,8 +575,8 @@ public class DefaultConditionalAction implements ConditionalAction {
         return "";
     }
 
-    public String toString() {
-        String str = getOptionString()+", "+ getTypeString();
+    public String description(boolean triggerType) {
+        String str = getOptionString(triggerType)+", "+ getTypeString();
         if (_deviceName.length() > 0) {
             switch (_type) {
                 case Conditional.ACTION_CANCEL_TURNOUT_TIMERS:
@@ -612,7 +604,8 @@ public class DefaultConditionalAction implements ConditionalAction {
                     str = str + ", \""+ _deviceName+"\".";
                     break;
                 case Conditional.ACTION_SET_ROUTE_TURNOUTS:
-                case Conditional.ACTION_RUN_WARRANT:
+                case Conditional.ACTION_AUTO_RUN_WARRANT:
+                case Conditional.ACTION_MANUAL_RUN_WARRANT:
                     str = str +" "+rbx.getString("onWarrant")+", \""+ _deviceName+"\".";
                     break;
                 case Conditional.ACTION_SET_SENSOR:

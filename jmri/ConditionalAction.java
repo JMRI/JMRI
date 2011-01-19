@@ -12,7 +12,7 @@ import jmri.jmrit.Sound;
  * <P>
  * 
  * @author Pete Cressman Copyright (C) 2009
- * @version   $Revision: 1.6 $
+ * @version   $Revision: 1.7 $
  */
 public interface ConditionalAction {
     /**
@@ -40,7 +40,7 @@ public interface ConditionalAction {
     /**
      * return String name of the option for this consequent type
      */
-    String getOptionString();
+    String getOptionString(boolean type);
 
     /**
      * The consequent device or element type
@@ -63,11 +63,6 @@ public interface ConditionalAction {
 
     void setDeviceName(String deviceName);
 
-    /**
-     * Sets option from user's name for it
-     */
-    void setOption(String option);
-
     void setOption(int option);
 
     /**
@@ -76,6 +71,8 @@ public interface ConditionalAction {
     void setType(String type);
 
     void setType(int type);
+
+    public String description(boolean triggerType);
     
     /*
     * get timer for delays and other timed events

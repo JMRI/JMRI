@@ -62,7 +62,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class Maintenance
@@ -635,7 +635,7 @@ public class Maintenance
                 for (int k=0; k<actionList.size(); k++) {
                     ConditionalAction a = actionList.get(k);
                     line = MessageFormat.format(rbm.getString("ActionReference"),
-                            new Object[] {"\t\t", a.getTypeString(), a.getOptionString(), a.getActionDataString()});
+                            new Object[] {"\t\t", a.getTypeString(), a.getOptionString(false), a.getActionDataString()});
                     if (testName(a.getDeviceName(), found, names, line1, line2, line, tempText)) {
                         found = true;
                         referenceCount++;
@@ -1204,7 +1204,7 @@ public class Maintenance
             for (int k=0; k<actionList.size(); k++) {
                 ConditionalAction a = actionList.get(k);
                 String line = MessageFormat.format(rbm.getString("ActionReference"),
-                        new Object[] {"\t\t", a.getTypeString(), a.getOptionString(), a.getActionDataString()});
+                        new Object[] {"\t\t", a.getTypeString(), a.getOptionString(false), a.getActionDataString()});
                 if (testName(a.getDeviceName(), found, names, line1, null, line, tempText)) {
                     found = true;
                     //referenceCount++; Don't count, this conditional is orphaned by logix(es)

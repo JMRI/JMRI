@@ -19,7 +19,7 @@ import java.util.concurrent.locks.ReentrantLock;
  * <P>
  * Version 1.11 - remove setting of SignalHeads
  *
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  * @author	Pete Cressman  Copyright (C) 2009, 2010
  */
 public class Warrant extends jmri.implementation.AbstractNamedBean 
@@ -44,7 +44,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private boolean _tempRunBlind;              // run mode flag
 
     private int     _idxCurrentOrder;       // Index of block at head of train (if running)
-//    private int     _idxTrailingOrder;      // index of block train has just left (if running)
     private int     _runMode;
     private Engineer _engineer;         // thread that runs the train
     private boolean _allocated;         // all Blocks of _orders have been allocated
@@ -53,9 +52,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private NamedBean _stoppingSignal;  // Signal stopping train movement
 
     // Throttle modes
-    public static final int MODE_NONE = 0;
-    public static final int MODE_LEARN = 1;
-    public static final int MODE_RUN = 2;
+    public static final int MODE_NONE 	= 0;
+    public static final int MODE_LEARN 	= 1;	// Record command list
+    public static final int MODE_RUN 	= 2;	// Autorun (playback) command list
+    public static final int MODE_MANUAL = 3;	// block detection/reservation for manually run train
 
     // control states
     public static final int HALT = 1;
@@ -310,11 +310,16 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * @return returns an error message (or null on success)
     */
     public String runAutoTrain(boolean run) {
-        String msg = getBlockAt(0).allocate(this);
+    	String msg = null;
+    	if (run) {
+    		msg = getBlockAt(0).allocate(this);
+    	} else {
+    		msg = allocateRoute();
+    	}
         if (msg!=null) {
             return msg;
         }
-        return setRunMode(run?MODE_RUN:MODE_NONE, _dccAddress, null, _throttleCommands, _runBlind);
+        return setRunMode(run?MODE_RUN:MODE_MANUAL, _dccAddress, null, _throttleCommands, _runBlind);
     }
 
     public String getRunningMessage() {
@@ -357,10 +362,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     * <p>
     * Rule for (auto) MODE_RUN:
     * 1. At least the Origin block must be owned (allocated) by this warrant.
-    * (block._warrant == this)  and path setfor Run Mode
+    * (block._warrant == this)  and path set for Run Mode
     * Rule for (auto) LEARN_RUN:
     * 2. Entire Route must be allocated and Route Set for Learn Mode. 
     * i.e. this warrant has listeners on all block sensors in the route.
+    * Rule for MODE_MANUAL
+    * The Origin block must be allocated to this warrant and path set for the route
     */
     protected String setRunMode(int mode, DccLocoAddress address, 
                                  LearnThrottleFrame student, 
@@ -398,13 +405,22 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             _runMode = mode;
             _idxCurrentOrder = 0;
-//            _idxTrailingOrder = -1;
             _orders = _savedOrders;
             _throttleFactor = 1.0f;
-        } else if (_runMode==MODE_LEARN || _runMode==MODE_RUN) {
-            msg = java.text.MessageFormat.format(rb.getString("WarrantInUse"),
-                        (_runMode==Warrant.MODE_RUN ? 
-                                 rb.getString("RunTrain"):rb.getString("LearnMode")));
+        } else if (_runMode!=MODE_NONE) {
+        	String modeDesc = null;
+        	switch (_runMode) {
+        		case MODE_LEARN:
+        			modeDesc = rb.getString("Recording");
+        			break;
+        		case MODE_RUN:
+        			modeDesc = rb.getString("AutoRun");
+        			break;
+        		case MODE_MANUAL:
+        			modeDesc = rb.getString("ManualRun");
+        			break;
+        	}
+            msg = java.text.MessageFormat.format(rb.getString("WarrantInUse"), modeDesc);
             log.error(msg);
             return msg;
         } else {
@@ -435,26 +451,32 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                  }
                  _commands = commands;
              }
-            if (address == null)  {
-                msg = java.text.MessageFormat.format(rb.getString("NoAddress"),getDisplayName());
-                log.error(msg);
-                return msg;
+            if (mode!=MODE_MANUAL) {
+                if (address == null)  {
+                    msg = java.text.MessageFormat.format(rb.getString("NoAddress"),getDisplayName());
+                    log.error(msg);
+                    return msg;
+                }
+                 _tempRunBlind = runBlind;
+                if (InstanceManager.throttleManagerInstance()==null) {
+                    msg = rb.getString("noThrottle");
+                    log.error(msg);
+                    return msg;
+                }
+                // set mode before callback to notifyThrottleFound is called
+                _runMode = mode;
+                if (!InstanceManager.throttleManagerInstance().
+                    requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
+                    msg = java.text.MessageFormat.format(rb.getString("trainInUse"), address.getNumber());
+                    log.error(msg);
+                    return msg;
+                }            	
             }
             _runMode = mode;
-            _tempRunBlind = runBlind;
-            if (InstanceManager.throttleManagerInstance()==null) {
-                msg = rb.getString("noThrottle");
-                log.error(msg);
-                return msg;
-            }
-            if (!InstanceManager.throttleManagerInstance().
-                requestThrottle(address.getNumber(), address.isLongAddress(),this)) {
-                msg = java.text.MessageFormat.format(rb.getString("trainInUse"), address.getNumber());
-                log.error(msg);
-                return msg;
-            }
             // set block state to show our train occupies the block
-            OBlock b = getBlockAt(0);
+            BlockOrder bo = getBlockOrderAt(0);
+            OBlock b = bo.getBlock();
+            bo.setPath(this);
             b.setValue(_trainId);
             b.setState(b.getState() | OBlock.RUNNING);
         }
@@ -729,6 +751,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         if (_idxCurrentOrder == _orders.size()-1) {
             // must be in destination block, let script finish according to recorded speeds
+        	// end of script will deallocate warrant
+        	if (_runMode==MODE_MANUAL) {
+                block.setValue(null);
+                block.deAllocate(this);
+                _routeSet = false;
+                _allocated = false;       		
+        	}
         } else {
             // attempt to allocate remaining blocks in the route
             for (int i=_idxCurrentOrder+2; i<_orders.size(); i++) {
@@ -755,7 +784,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                             idx+", _idxCurrentOrder= "+_idxCurrentOrder);
         if (idx < _idxCurrentOrder) {
             // block is behind train.  Assume we are leaving.
-//            _idxTrailingOrder = idx;
             if (this.equals(block.getWarrant())) {
                 block.setValue(null);
                 block.deAllocate(this);

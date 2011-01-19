@@ -53,10 +53,15 @@ import jmri.util.JmriJFrame;
  * The 'Mixed' type uses a TextField for the user to insert parenthees. 
  * Jan 22, 2009 - Pete Cressman
  * 
+ * Conditionals now have two policies to trigger execution of their action lists.
+ * 1. the previous policy - Trigger on change of state only
+ * 2. the new default - Trigger on any enabled state calculation
+ * Jan 15, 2011 - Pete Cressman
+ * 
  * @author Dave Duchamp Copyright (C) 2007
- * @author Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.90 $
+ * @version $Revision: 1.91 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -431,6 +436,7 @@ public class LogixTableAction extends AbstractTableAction {
 	boolean inEditConditionalMode = false;
 	JmriJFrame editConditionalFrame = null;
 	JTextField conditionalUserName = new JTextField(22);
+	private JRadioButton _triggerOnChangeButton;
    
 	private ActionTableModel _actionTableModel = null;
 	private VariableTableModel _variableTableModel = null;
@@ -1558,7 +1564,6 @@ public class LogixTableAction extends AbstractTableAction {
 			stateColumn.setResizable(true);
 			stateColumn.setMinWidth(50);
 			stateColumn.setMaxWidth(80);
-			//stateColumn.setMaxWidth(new JTextField(7).getPreferredSize().width);
 
 			TableColumn triggerColumn = variableColumnModel.getColumn(VariableTableModel.TRIGGERS_COLUMN);
 			triggerColumn.setResizable(true);
@@ -1634,6 +1639,31 @@ public class LogixTableAction extends AbstractTableAction {
 			contentPane.add(logicPanel);
             // End of Logic Expression Section
 
+			JPanel triggerPanel = new JPanel();
+			triggerPanel.setLayout(new BoxLayout(triggerPanel, BoxLayout.Y_AXIS));
+			ButtonGroup tGroup = new ButtonGroup();
+			_triggerOnChangeButton = new JRadioButton(rbx.getString("triggerOnChange"));
+			_triggerOnChangeButton.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	_actionTableModel.fireTableDataChanged();
+                }
+            });
+			tGroup.add(_triggerOnChangeButton);
+			triggerPanel.add(_triggerOnChangeButton);
+			JRadioButton triggerOnAny = new JRadioButton(rbx.getString("triggerOnAny"));
+			triggerOnAny.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                	_actionTableModel.fireTableDataChanged();
+                }
+            });
+			tGroup.add(triggerOnAny);
+			triggerPanel.add(triggerOnAny);
+			triggerOnAny.setSelected(true);
+			JPanel trigPanel = new JPanel();
+			trigPanel.add(triggerPanel);
+			contentPane.add(trigPanel);
+			_triggerOnChangeButton.setSelected(_curConditional.getTriggerOnChange());
+			
 			// add Action Consequents Section
 			JPanel conseqentPanel = new JPanel();
 			conseqentPanel.setLayout(new BoxLayout(conseqentPanel, BoxLayout.Y_AXIS));
@@ -1955,6 +1985,7 @@ public class LogixTableAction extends AbstractTableAction {
         _curConditional.setStateVariables(_variableList);
         _curConditional.setAction(_actionList);
         _curConditional.setLogicType(_logicType, _antecedent);
+        _curConditional.setTriggerOnChange(_triggerOnChangeButton.isSelected());
         cancelConditionalPressed(null);
     }
 
@@ -2150,8 +2181,8 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return true;
     }
-
-/************************* Methods for Edit Variable Window ********************/
+    
+    /************************* Methods for Edit Variable Window ********************/
 
     boolean alreadyEditingActionOrVariable() {
         OpenPickListTable();
@@ -2174,7 +2205,7 @@ public class LogixTableAction extends AbstractTableAction {
         return false;
     }
 
-	/**
+/**
 	 * Creates and/or initializes the Edit a Variable window Note: you can get
 	 * here via the New Variable button (addVariablePressed) or via an
 	 * Edit button in the Variable table of the EditConditional window.
@@ -2292,6 +2323,29 @@ public class LogixTableAction extends AbstractTableAction {
                 variableTypeChanged(_variableTypeBox.getSelectedIndex());
                 _editVariableFrame.pack();
             }
+
+			/************************* Methods for Edit Variable Window ********************/
+			
+			boolean alreadyEditingActionOrVariable() {
+			    OpenPickListTable();
+			    if (_editActionFrame != null) {
+					// Already editing an Action, ask for completion of that edit
+					javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
+			                rbx.getString("Error48"), rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+			        _editActionFrame.setVisible(true);
+					return true;
+			    }
+			    if (_editVariableFrame != null) {
+					// Already editing a state variable, ask for completion of that edit
+					javax.swing.JOptionPane.showMessageDialog(_editVariableFrame,
+			                rbx.getString("Error47"), rbx.getString("ErrorTitle"),
+							javax.swing.JOptionPane.ERROR_MESSAGE);
+			        _editVariableFrame.setVisible(true);
+					return true;
+			    }
+			    return false;
+			}
         });
         // setup window closing listener
         _editVariableFrame.addWindowListener(
@@ -2365,7 +2419,7 @@ public class LogixTableAction extends AbstractTableAction {
 
         _actionOptionBox = new JComboBox();
         for (int i = 1; i <= Conditional.NUM_ACTION_OPTIONS; i++) {
-            _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i));
+            _actionOptionBox.addItem(DefaultConditionalAction.getOptionString(i,_triggerOnChangeButton.isSelected()));
         }
         _optionPanel = makeEditPanel(_actionOptionBox, "LabelActionOption", "ActionOptionHint");
         _optionPanel.setVisible(false);
@@ -5231,7 +5285,7 @@ public class LogixTableAction extends AbstractTableAction {
 			switch (col) {
                 case DESCRIPTION_COLUMN:
                     ConditionalAction action = _actionList.get(row);
-                    return action.toString();
+                    return action.description(_triggerOnChangeButton.isSelected());
                 case EDIT_COLUMN:
                     return rbx.getString("ButtonEdit");
                 case DELETE_COLUMN:

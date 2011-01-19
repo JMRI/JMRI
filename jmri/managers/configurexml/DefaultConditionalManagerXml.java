@@ -19,7 +19,8 @@ import org.jdom.Element;
  * <P>
  *
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.8 $
+ * @author Pete Cressman Copyright (C) 2009, 2011
+ * @version $Revision: 1.9 $
  */
 public class DefaultConditionalManagerXml extends jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML {
 
@@ -55,7 +56,13 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                 storeCommon(c, elem);
                 elem.setAttribute("antecedent", c.getAntecedentExpression());
                 elem.setAttribute("logicType", Integer.toString(c.getLogicType()));
-
+                
+                if (c.getTriggerOnChange()) {
+                	elem.setAttribute("triggerOnChange", "yes");                	
+                } else {
+                	elem.setAttribute("triggerOnChange", "no"); 
+                }
+                
 				// save child state variables
                 ArrayList <ConditionalVariable> variableList = c.getCopyOfStateVariables();
                 for (int k=0; k < variableList.size(); k++) {
@@ -304,6 +311,30 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
                     actionList.add(action);
                 }
 			    c.setAction(actionList);
+
+			    // 1/16/2011 - trigger for execution of the action list changed to execute each 
+			    // time state is computed.  Formerly execution of the action list was done only
+			    // when state changes.  All conditionals are upgraded to this new policy.
+			    // However, for conditionals with actions that toggle on change of state
+			    // the old policy should be used.
+			    boolean triggerOnChange = false;
+                if (conditionalList.get(i).getAttribute("triggerOnChange") != null) {
+                	if ("yes".equals(conditionalList.get(i).getAttribute("triggerOnChange").getValue())) {
+                		triggerOnChange = true;
+                	}               	
+                } else {
+                	/* Don't upgrade -Let old be as is
+                	for (int k=0; k<actionList.size(); k++){
+                		ConditionalAction action = actionList.get(k);
+                		if (action.getOption()==Conditional.ACTION_OPTION_ON_CHANGE){
+                			triggerOnChange = true;
+                			break;
+                		}
+                	}
+                	*/
+                	triggerOnChange = true;
+                }
+                c.setTriggerOnChange(triggerOnChange);			    
             } else {
                 log.error("createNewConditional failed for " + sysName + ", " +userName);
             }

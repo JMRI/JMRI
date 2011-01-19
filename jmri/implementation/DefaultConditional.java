@@ -41,9 +41,9 @@ import jmri.util.PythonInterp;
  * <P>
  *
  * @author	Dave Duchamp Copyright (C) 2007
- * @author Pete Cressman Copyright (C) 2009
+ * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.32 $
+ * @version     $Revision: 1.33 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -70,6 +70,7 @@ public class DefaultConditional extends AbstractNamedBean
     protected ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
 	private int _currentState = Conditional.UNKNOWN;
+	private boolean _triggerActionsOnChange = false;
 
     /**
     *  Inverse map
@@ -107,7 +108,15 @@ public class DefaultConditional extends AbstractNamedBean
         _antecedent = antecedent;
         setState(Conditional.UNKNOWN);
     }
+    
+    public  boolean getTriggerOnChange() {
+    	return _triggerActionsOnChange;
+    }
 	
+    public  void setTriggerOnChange(boolean trigger) {
+    	_triggerActionsOnChange = trigger;
+    }
+
 	/**
      * Set State Variables for this Conditional. Each state variable will 
 	 * evaluate either True or False when this Conditional is calculated.
@@ -229,18 +238,22 @@ public class DefaultConditional extends AbstractNamedBean
                   result+". current state is "+_currentState+".  enabled= "+enabled);
         }
 		if (result) newState = TRUE;
-        if (newState != _currentState) {
-            setState(newState);
-            if (enabled) {
-                if (evt != null) {
-                    // check if the current listener wants to (NOT) trigger actions
-                    enabled = wantsToTrigger(evt);
-                }
-                if (enabled) {
-                    takeActionIfNeeded();
-                }
+        if (enabled) {
+            if (evt != null) {
+                // check if the current listener wants to (NOT) trigger actions
+                enabled = wantsToTrigger(evt);
             }
-		}
+        }       
+        if (_triggerActionsOnChange) {
+        	// pre 1/15/2011 on change only behavior
+            if (newState == _currentState) {
+            	enabled = false;
+    		}      	
+        }
+        setState(newState);
+        if (enabled) {
+            takeActionIfNeeded();
+        }      
 		return _currentState;
 	}
 
@@ -551,6 +564,7 @@ public class DefaultConditional extends AbstractNamedBean
                     }
                     devName = (String)m.getValue();
                 }
+                if (log.isDebugEnabled()) log.debug("getDeviceName()="+action.getDeviceName()+" devName= "+devName);
 				switch (type) {
 					case Conditional.ACTION_NONE:
 						break;
@@ -1041,7 +1055,7 @@ public class DefaultConditional extends AbstractNamedBean
                             actionCount++;
 						}
                         break;
-                    case Conditional.ACTION_RUN_WARRANT:
+                    case Conditional.ACTION_AUTO_RUN_WARRANT:
                         w = InstanceManager.warrantManagerInstance().getWarrant(devName);
 						if (w == null) {
 							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
@@ -1050,6 +1064,19 @@ public class DefaultConditional extends AbstractNamedBean
                             String err = w.runAutoTrain(true);
                             if (err!=null) {
                                 errorList.add("runAutoTrain error - "+err);
+                            }
+                            actionCount++;
+						}
+                        break;
+                    case Conditional.ACTION_MANUAL_RUN_WARRANT:
+                        w = InstanceManager.warrantManagerInstance().getWarrant(devName);
+						if (w == null) {
+							errorList.add("invalid Warrant name in action - "+action.getDeviceName());
+						}
+						else {
+                            String err = w.runAutoTrain(false);
+                            if (err!=null) {
+                                errorList.add("runManualTrain error - "+err);
                             }
                             actionCount++;
 						}
@@ -1182,7 +1209,7 @@ public class DefaultConditional extends AbstractNamedBean
             if (PARKS_DEBUG) { System.out.println("Global state= "+_currentState+" Local state= "+currentState+
                                                  " - Action "+(actionNeeded>neededAction ? "WAS" : "NOT")+
                                                  " taken for action = "+action.getTypeString()+" "+action.getActionString()+
-                                                 " for device "+action.getDeviceName()+" "+action.getOptionString());
+                                                 " for device "+action.getDeviceName());
             }
 		}
         if (errorList.size() > 0) {

@@ -1054,6 +1054,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     private boolean setPathBox(JComboBox pathBox, JComboBox portalBox, OBlock block) {
+    	if(log.isDebugEnabled()) log.debug("setPathBox: block= "+block.getDisplayName()); 
         pathBox.removeAllItems();
         if (portalBox!=null) {
             portalBox.removeAllItems();
@@ -1075,6 +1076,7 @@ public class WarrantFrame extends jmri.util.JmriJFrame implements ActionListener
     }
 
     private void setPortalBox(JComboBox pathBox, JComboBox portalBox, BlockOrder order) {
+    	if(log.isDebugEnabled()) log.debug("setPortalBox: block= "+order.getBlock().getDisplayName());
         portalBox.removeAllItems();
         String pathName = (String)pathBox.getSelectedItem();
         order.setPathName(pathName);
