@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.26 $
+ * @version $Revision: 1.27 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -82,13 +82,12 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			_car.setNextDestination(null);
 			_car.setNextDestTrack(null);
 		} else {
+			Track finalDestTrack = null;
 			if (finalDestTrackBox.getSelectedItem() != null 
-					&& !finalDestTrackBox.getSelectedItem().equals("")){
-				_car.setNextDestTrack((Track)finalDestTrackBox.getSelectedItem());
-			} else {
-				_car.setNextDestTrack(null);
-			}
+					&& !finalDestTrackBox.getSelectedItem().equals(""))
+				finalDestTrack = (Track)finalDestTrackBox.getSelectedItem();
 			_car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
+			_car.setNextDestTrack(finalDestTrack);
 		}
 		if (!super.save())
 			return false;

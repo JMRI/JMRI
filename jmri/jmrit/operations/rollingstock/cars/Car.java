@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.63 $
+ * @version             $Revision: 1.64 $
  */
 public class Car extends RollingStock {
 	
@@ -153,7 +153,11 @@ public class Car extends RollingStock {
 	
 	public void setNextDestination(Location destination){
 		Location old = _nextDestination;
+		if (old != null)
+			old.removePropertyChangeListener(this);
 		_nextDestination = destination;
+		if (_nextDestination != null)
+			_nextDestination.addPropertyChangeListener(this);
 		log.debug("Next destination for car ("+toString()+") old: "+old+" new: "+destination);
 		if ((old != null && !old.equals(destination)) || (destination != null && !destination.equals(old)))
 			firePropertyChange(NEXT_DESTINATION_CHANGED_PROPERTY, old, destination);
@@ -171,7 +175,11 @@ public class Car extends RollingStock {
 	
 	public void setNextDestTrack(Track track){
 		Track old = _nextDestTrack;
+		if (old != null)
+			old.removePropertyChangeListener(this);
 		_nextDestTrack = track;
+		if (_nextDestTrack != null)
+			_nextDestTrack.addPropertyChangeListener(this);
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
 			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 	}
@@ -493,6 +501,8 @@ public class Car extends RollingStock {
 	
 	public void dispose(){
 		setKernel(null);
+		setNextDestination(null);	// removes property change listener
+		setNextDestTrack(null);		// removes property change listener
 		CarTypes.instance().removePropertyChangeListener(this);
 		CarLengths.instance().removePropertyChangeListener(this);
 		super.dispose();
@@ -548,10 +558,10 @@ public class Car extends RollingStock {
 			_nextWait = Integer.parseInt(a.getValue());
 		}
 		if ((a = e.getAttribute("nextDestId")) != null){
-			_nextDestination = LocationManager.instance().getLocationById(a.getValue());
+			setNextDestination(LocationManager.instance().getLocationById(a.getValue()));
 		}
-		if (_nextDestination != null && (a = e.getAttribute("nextDestTrackId")) != null){
-			_nextDestTrack = _nextDestination.getTrackById(a.getValue());
+		if (getNextDestination() != null && (a = e.getAttribute("nextDestTrackId")) != null){
+			setNextDestTrack(getNextDestination().getTrackById(a.getValue()));
 		}
 		if ((a = e.getAttribute("rweDestId")) != null){
 			_rweDestination = LocationManager.instance().getLocationById(a.getValue());
