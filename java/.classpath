@@ -1,18 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-    <classpathentry kind="src" path="src"/>
-    <classpathentry kind="src" path="test"/>
-    <classpathentry kind="lib" path="lib/collections.jar"/>
-    <classpathentry kind="lib" path="lib/comm.jar"/>
-    <classpathentry kind="lib" path="lib/crimson.jar"/>
-    <classpathentry kind="lib" path="lib/jdom-jdk11.jar"/>
-    <classpathentry kind="lib" path="lib/jh.1.1.2.jar"/>
-    <classpathentry kind="lib" path="lib/jh.jar"/>
-    <classpathentry kind="lib" path="lib/junit.jar"/>
-    <classpathentry kind="lib" path="lib/jython.jar"/>
-    <classpathentry kind="lib" path="lib/log4j.jar"/>
-    <classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
-    <classpathentry kind="lib" path="lib/Serialio.jar"/>
-    <classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-    <classpathentry kind="output" path="classes"/>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" output="classes" path="src"/>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" output="classes" path="tmp"/>
+	<classpathentry excluding="**/.cvsignore|**/COPYING" kind="src" path="test"/>
+	<classpathentry kind="var" path="JRE_LIB" sourcepath="JRE_SRC"/>
+	<classpathentry kind="lib" path="lib/javacsv.jar"/>
+	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
+	<classpathentry kind="lib" path="lib/gluegen-rt.jar"/>
+	<classpathentry kind="lib" path="lib/jdom.jar"/>
+	<classpathentry kind="lib" path="lib/log4j.jar"/>
+	<classpathentry kind="lib" path="lib/jhall.jar"/>
+	<classpathentry kind="lib" path="lib/jmdns.jar"/>
+	<classpathentry kind="lib" path="lib/joal.jar"/>
+	<classpathentry kind="lib" path="lib/openlcb.jar"/>
+	<classpathentry kind="lib" path="lib/junit.jar"/>
+	<classpathentry kind="lib" path="lib/jython.jar"/>
+	<classpathentry kind="lib" path="lib/MRJAdapter.jar"/>
+	<classpathentry kind="lib" path="lib/jinput.jar"/>
+	<classpathentry kind="lib" path="lib/ch.ntb.usb.jar"/>
+	<classpathentry kind="lib" path="lib/Serialio.jar"/>
+	<classpathentry kind="lib" path="lib/vecmath.jar"/>
+	<classpathentry kind="lib" path="lib/servlet.jar"/>
+	<classpathentry kind="lib" path="lib/activation.jar"/>
+	<classpathentry kind="lib" path="lib/mailapi.jar"/>
+	<classpathentry kind="lib" path="lib/smtp.jar"/>
+	<classpathentry kind="lib" path="lib/ExternalLinkContentViewerUI.jar"/>
+	<classpathentry kind="lib" path="lib/jakarta-regexp-1.5.jar"/>
+	<classpathentry kind="lib" path="lib/jfcunit.jar"/>
+	<classpathentry kind="lib" path="lib/annotations.jar"/>
+	<classpathentry kind="lib" path="lib/jsr305.jar"/>
+	<classpathentry kind="output" path="classes"/>
 </classpath>
