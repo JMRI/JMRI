@@ -24,7 +24,7 @@ import javax.swing.JOptionPane;
  *    from the user for the most part.
  *
  * @author      Dave Duchamp Copyright (C) 2007
- * @version	$Revision: 1.6 $
+ * @version	$Revision: 1.7 $
  */
 public class LayoutBlockManager extends AbstractManager {
 
@@ -158,6 +158,7 @@ public class LayoutBlockManager extends AbstractManager {
 			log.debug("LayoutBlock initialization - system name = "+sName);
 			LayoutBlock b = getBySystemName(sName); 
 			b.updatePaths();
+			if (b.getBlock().getValue()!=null) b.getBlock().setValue(null);
 		}
 		if (badBeanErrors>0) {
 			JOptionPane.showMessageDialog(null,""+badBeanErrors+" "+rb.getString("Warn2"),
