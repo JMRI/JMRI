@@ -947,9 +947,9 @@ public class PanelEditor extends Editor implements ItemListener {
             addItemViaMouseClick = true;
             getIconFrame(item.getName());
             }
-            ComboBoxItem selected;
+//            ComboBoxItem selected;
             ActionListener init (ComboBoxItem i) {
-                selected = i;
+//                selected = i;
                 return this;
             }
         }.init(item);

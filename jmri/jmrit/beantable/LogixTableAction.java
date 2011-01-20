@@ -61,7 +61,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.91 $
+ * @version $Revision: 1.92 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -2323,29 +2323,6 @@ public class LogixTableAction extends AbstractTableAction {
                 variableTypeChanged(_variableTypeBox.getSelectedIndex());
                 _editVariableFrame.pack();
             }
-
-			/************************* Methods for Edit Variable Window ********************/
-			
-			boolean alreadyEditingActionOrVariable() {
-			    OpenPickListTable();
-			    if (_editActionFrame != null) {
-					// Already editing an Action, ask for completion of that edit
-					javax.swing.JOptionPane.showMessageDialog(_editActionFrame,
-			                rbx.getString("Error48"), rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-			        _editActionFrame.setVisible(true);
-					return true;
-			    }
-			    if (_editVariableFrame != null) {
-					// Already editing a state variable, ask for completion of that edit
-					javax.swing.JOptionPane.showMessageDialog(_editVariableFrame,
-			                rbx.getString("Error47"), rbx.getString("ErrorTitle"),
-							javax.swing.JOptionPane.ERROR_MESSAGE);
-			        _editVariableFrame.setVisible(true);
-					return true;
-			    }
-			    return false;
-			}
         });
         // setup window closing listener
         _editVariableFrame.addWindowListener(
