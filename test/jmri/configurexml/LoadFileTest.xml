@@ -140,13 +140,13 @@
     </route>
   </routes>
   <conditionals class="jmri.managers.configurexml.DefaultConditionalManagerXml">
-    <conditional systemName="IX1C1" antecedent="R1 and R2" logicType="1">
+    <conditional systemName="IX1C1" antecedent="R1 and R2" logicType="1" triggerOnChange="yes">
       <systemName>IX1C1</systemName>
       <conditionalStateVariable operator="4" negated="no" type="1" systemName="IS1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalStateVariable operator="1" negated="no" type="1" systemName="User 1" dataString="" num1="0" num2="0" triggersCalc="yes" />
       <conditionalAction option="1" type="17" systemName="User 1" data="2" delay="1" string="1" />
     </conditional>
   </conditionals>
-  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.25 2010-07-18 20:05:47 jacobsen Exp $-->
+  <!--Written by JMRI version 2.9.5+dev on Sat May 08 21:45:44 PDT 2010 $Id: LoadFileTest.xml,v 1.26 2011-01-20 01:21:46 pete_cressman Exp $-->
 </layout-config>
 

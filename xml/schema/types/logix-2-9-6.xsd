@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet href="../schema2xhtml.xsl" type="text/xsl"?>
 
-<!-- $Id: logix-2-9-6.xsd,v 1.1 2010-05-02 19:35:19 jacobsen Exp $ -->
+<!-- $Id: logix-2-9-6.xsd,v 1.2 2011-01-20 01:21:13 pete_cressman Exp $ -->
 
 <!-- This schema is part of JMRI. Copyright 2009.                           -->
 <!--                                                                        -->
@@ -142,6 +142,7 @@
             </xs:attribute>
             <xs:attribute name="antecedent" type="xs:string" />
             <xs:attribute name="logicType" type="xs:integer" />
+            <xs:attribute name="triggerOnChange" type="xs:string" />
           </xs:complexType>
         </xs:element>
             
