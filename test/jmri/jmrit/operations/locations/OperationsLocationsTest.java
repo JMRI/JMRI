@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.29 $
+ * @version $Revision: 1.30 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -1152,6 +1152,8 @@ public class OperationsLocationsTest extends TestCase {
 		s1i1.setLoad("Schedule 1 Item 1 Load");
 		s1i1.setShip("Schedule 1 Item 1 Ship");
 		s1i1.setCount(321);
+		s1i1.setDestination(l1);
+		s1i1.setDestinationTrack(t2);
 		s1i1.setComment("Schedule 1 Item 1 Comment");
 		
 		ScheduleItem s1i2 = s1.addItem("boxcar");
@@ -1159,6 +1161,8 @@ public class OperationsLocationsTest extends TestCase {
 		s1i2.setLoad("Schedule 1 Item 2 Load");
 		s1i2.setShip("Schedule 1 Item 2 Ship");
 		s1i2.setCount(222);
+		s1i2.setDestination(l2);
+		s1i2.setDestinationTrack(t3);
 		s1i2.setComment("Schedule 1 Item 2 Comment");
 
 		Schedule s2 = sm.newSchedule("Schedule 2 Name");
@@ -1398,6 +1402,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Item 1 type", "Schedule 1 Item 1 Comment", si1.getComment());
 		Assert.assertEquals("Item 1 road", "Schedule 1 Item 1 Road", si1.getRoad());
 		Assert.assertEquals("Item 1 count", 321, si1.getCount());
+		Assert.assertEquals("Item 1 destination", "Test Location 2", si1.getDestinationName());
+		Assert.assertEquals("Item 1 track", "A Siding", si1.getDestinationTrackName());
+
 		
 		ScheduleItem si2 = s1.getItemById(s1items.get(1));
 		Assert.assertEquals("Item 2 type", "boxcar", si2.getType());
@@ -1406,6 +1413,8 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Item 2 type", "Schedule 1 Item 2 Comment", si2.getComment());
 		Assert.assertEquals("Item 2 road", "Schedule 1 Item 2 Road", si2.getRoad());
 		Assert.assertEquals("Item 2 count", 222, si2.getCount());
+		Assert.assertEquals("Item 2 destination", "Test Location 1", si2.getDestinationName());
+		Assert.assertEquals("Item 2 track", "An Interchange", si2.getDestinationTrackName());
 	
 		List <String> s2items = s2.getItemsBySequenceList(); 
 		Assert.assertEquals("There should be 1 items", 1, s2items.size());
@@ -1416,6 +1425,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Item 3 type", "Schedule 2 Item 1 Comment", si3.getComment());
 		Assert.assertEquals("Item 3 type", "Schedule 2 Item 1 Road", si3.getRoad());
 		Assert.assertEquals("Item 3 count", 123, si3.getCount());
+		Assert.assertEquals("Item 3 destination", "", si3.getDestinationName());
+		Assert.assertEquals("Item 3 track", "", si3.getDestinationTrackName());
+
 		
 		// delete all locations
 		manager.dispose();
