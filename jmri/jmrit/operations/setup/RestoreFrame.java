@@ -19,7 +19,7 @@ import jmri.jmrit.operations.trains.TrainsTableFrame;
  * Frame for restoring operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class RestoreFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -85,7 +85,8 @@ public class RestoreFrame extends OperationsFrame implements java.beans.Property
 
 		// set frame size and location for display
 		pack();
-		setSize(300, getHeight()+50);
+		if (getHeight()<150)
+			setSize(300, getHeight()+50);
 		setVisible(true);
 	}
 		

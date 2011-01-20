@@ -16,7 +16,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Frame for backing up operation files
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.6 $
+ * @version $Revision: 1.7 $
  */
 
 public class BackupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -77,7 +77,8 @@ public class BackupFrame extends OperationsFrame implements java.beans.PropertyC
 
 		// set frame size and location for display
 		pack();
-		setSize(300, getHeight()+50);
+		if (getHeight()<150)
+			setSize(300, getHeight()+50);
 		setVisible(true);
 	}
 		

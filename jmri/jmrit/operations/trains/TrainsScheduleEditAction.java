@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Action to edit timetable
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class TrainsScheduleEditAction extends AbstractAction {
 		
@@ -79,9 +79,7 @@ class TrainsScheduleEditFrame extends OperationsFrame implements java.beans.Prop
 		setTitle(rb.getString("MenuItemEditSchedule"));
 		
 		pack();
-	   	if ((getWidth()<150)) 
-    		setSize(200, getHeight()+10);
-    	else
+	   	if ((getWidth()<225)) 
     		setSize(getWidth()+50, getHeight()+10);
 		setVisible(true);
 

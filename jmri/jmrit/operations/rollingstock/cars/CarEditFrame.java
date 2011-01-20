@@ -33,7 +33,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of car
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -313,8 +313,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 			setSize(carManager.getEditFrameSize());
 		else if (getWidth()<400) 
 			setSize(450, getHeight());
+		/*
 		else
 			setSize (getWidth()+50, getHeight());
+		*/
 		if (carManager.getEditFramePosition()!= null){
 			setLocation(carManager.getEditFramePosition());
 		}

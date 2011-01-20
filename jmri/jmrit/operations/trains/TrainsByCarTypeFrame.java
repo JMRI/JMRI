@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
  * Frame to display which trains service certain car types
  * 
  * @author Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.4 $
+ * @version $Revision: 1.5 $
  */
 
 public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -118,8 +118,10 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
 		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
+		setPreferredSize(null);
 		pack();
-		setSize(getWidth()+30, getHeight());
+		if (getWidth()<300)
+			setSize(getWidth()+50, getHeight());
 		setTitle(rb.getString("TitleModifyTrains"));
 		setVisible(true);
 	}

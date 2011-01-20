@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.46 $
+ * @version             $Revision: 1.47 $
  */
 public class Track {
 	
@@ -46,7 +46,7 @@ public class Track {
 	protected String _loadOption = ALLLOADS;		// track load restrictions
 	
 	// schedule options
-	protected String _scheduleName = "";			// Schedule name if there's one
+	protected String _scheduleId = "";				// Schedule id if there's one
 	protected String _scheduleItemId = "";			// the current scheduled item id
 	protected int _scheduleCount = 0;				// the number of times the item has been delivered
 	
@@ -683,26 +683,37 @@ public class Track {
     }
     
     public String getScheduleName(){
-    	return _scheduleName;
+    	if (getScheduleId().equals(""))
+    		return "";
+    	Schedule schedule = ScheduleManager.instance().getScheduleById(getScheduleId());
+    	if (schedule == null){
+    		log.error("No schedule for id: "+getScheduleId());
+    		return "";
+    	}
+    	return schedule.getName();
     }
     
-    public void setScheduleName(String name){
-    	String old = _scheduleName;
-    	_scheduleName = name;
-    	if(!old.equals(name)){
-    		Schedule schedule = ScheduleManager.instance().getScheduleByName(name);
-    		if (schedule == null)
-    			return;
-    		// set the id to the first item in the list
-    		String id = schedule.getItemsBySequenceList().get(0);
-    		setScheduleItemId(id);
-    		setScheduleCount(0);
-    		firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, name);
-    	}
+    public String getScheduleId(){
+    	return _scheduleId;
     }
     
     public String getScheduleItemId(){
     	return _scheduleItemId;
+    }
+    
+    public void setScheduleId(String id){
+    	String old = _scheduleId;
+    	_scheduleId = id;
+    	if(!old.equals(id)){
+    		Schedule schedule = ScheduleManager.instance().getScheduleById(id);
+    		if (schedule == null)
+    			return;
+    		// set the id to the first item in the list
+    		if (schedule.getItemsBySequenceList().size()>0)
+    			setScheduleItemId(schedule.getItemsBySequenceList().get(0));
+    		setScheduleCount(0);
+    		firePropertyChange (SCHEDULE_CHANGED_PROPERTY, old, id);
+    	}
     }
     
     public void setScheduleItemId(String id){
@@ -722,9 +733,9 @@ public class Track {
     }
     
     public ScheduleItem getCurrentScheduleItem(){
-		Schedule sch = ScheduleManager.instance().getScheduleByName(getScheduleName());
+		Schedule sch = ScheduleManager.instance().getScheduleById(getScheduleId());
 		if (sch == null){
-			log.warn("Can not find schedule ("+getScheduleName()+") assigned to track ("+getName()+")");
+			log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
 			return null;
 		}
 		ScheduleItem currentSi = sch.getItemById(getScheduleItemId());
@@ -738,9 +749,9 @@ public class Track {
     }
     
     public void bumpSchedule(){
-    	Schedule sch = ScheduleManager.instance().getScheduleByName(getScheduleName());
+    	Schedule sch = ScheduleManager.instance().getScheduleById(getScheduleId());
     	if (sch == null){
-    		log.warn("Can not find schedule ("+getScheduleName()+") assigned to track ("+getName()+")");
+    		log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
     		return;
     	}
     	setScheduleCount(getScheduleCount()+1);
@@ -770,9 +781,11 @@ public class Track {
      */
 	public String checkScheduleValid(){
 		String status = "";
-		Schedule schedule = ScheduleManager.instance().getScheduleByName(getScheduleName());
-		if (schedule == null)
+		if (getScheduleId().equals(""))
 			return status;
+		Schedule schedule = ScheduleManager.instance().getScheduleById(getScheduleId());
+		if (schedule == null)
+			return MessageFormat.format(rb.getString("CanNotFindSchedule"),new Object[]{getScheduleId()});
 		List<String> scheduleItems = schedule.getItemsBySequenceList();
 		if (scheduleItems.size() == 0){
 			return rb.getString("empty");
@@ -915,7 +928,14 @@ public class Track {
         	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
-        if ((a = e.getAttribute("schedule")) != null ) _scheduleName = a.getValue();
+        if ((a = e.getAttribute("schedule")) != null ){
+        	Schedule schedule = ScheduleManager.instance().getScheduleByName(a.getValue());
+        	if (schedule != null)
+        		_scheduleId = schedule.getId();
+        	else
+        		log.error("Schedule ("+a.getValue()+") does not exist!");
+        }
+        if ((a = e.getAttribute("scheduleId")) != null ) _scheduleId = a.getValue();
         if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
@@ -944,7 +964,6 @@ public class Track {
     	}
     	e.setAttribute("carTypes", buf.toString());
      	e.setAttribute("carRoadOperation", getRoadOption());
-     	e.setAttribute("carLoadOption", getLoadOption());	
        	// build list of car roads for this track
     	String[] roads = getRoadNames();
     	buf = new StringBuffer();
@@ -952,6 +971,7 @@ public class Track {
     		buf.append(roads[i]+"%%");
     	}
     	e.setAttribute("carRoads", buf.toString());
+     	e.setAttribute("carLoadOption", getLoadOption());	
         // save list of car loads for this track
         if (!getLoadOption().equals(ALLLOADS)){
         	String[] loads = getLoadNames();
@@ -977,8 +997,8 @@ public class Track {
     		buf.append(pickupIds[i]+"%%");
     	}
     	e.setAttribute("pickupIds", buf.toString());
-    	if (!getScheduleName().equals("")){
-    		e.setAttribute("schedule", getScheduleName());
+    	if (!getScheduleId().equals("")){
+    		e.setAttribute("scheduleId", getScheduleId());
     		e.setAttribute("itemId", getScheduleItemId());
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
     	}

@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 public class LocationManagerXml extends OperationsXml {
 	
@@ -123,32 +123,9 @@ public class LocationManagerXml extends OperationsXml {
     		Element e = root.getChild("options");
     		manager.options(e);
     	}
-
-    	// decode type, invoke proper processing routine if a decoder file
-    	if (root.getChild("locations") != null) {
-
-    		List<Element> l = root.getChild("locations").getChildren("location");
-    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
-    		for (int i=0; i<l.size(); i++) {
-    			manager.register(new Location(l.get(i)));
-    		}
-
-    		List<String> locationList = manager.getLocationsByIdList();
-    		//Scan the object to check the Comment and Decoder Comment fields for
-    		//any <?p?> processor directives and change them to back \n characters
-    		for (int i = 0; i < locationList.size(); i++) {
-    			Location loc = manager.getLocationById(locationList.get(i));
-    			loc.setComment(convertFromXmlComment(loc.getComment()));
-    		}
-    	}
-    	else {
-    		log.error("Unrecognized operations location file contents in file: "+name);
-    	}
-
-    	// now load schedules       
+    	
+       	// load schedules       
     	ScheduleManager scheduleManager = ScheduleManager.instance();
-
-    	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("schedules") != null) {
 
     		List<Element> l = root.getChild("schedules").getChildren("schedule");
@@ -165,8 +142,26 @@ public class LocationManagerXml extends OperationsXml {
     			sch.setComment(convertFromXmlComment(sch.getComment()));
     		}
     	}
+
+    	// decode type, invoke proper processing routine if a decoder file
+    	if (root.getChild("locations") != null) {
+
+    		List<Element> l = root.getChild("locations").getChildren("location");
+    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" locations");
+    		for (int i=0; i<l.size(); i++) {
+    			manager.register(new Location(l.get(i)));
+    		}
+
+    		List<String> locationList = manager.getLocationsByIdList();
+    		//Scan the object to check the comments for
+    		//any <?p?> processor directives and change them to back \n characters
+    		for (int i = 0; i < locationList.size(); i++) {
+    			Location loc = manager.getLocationById(locationList.get(i));
+    			loc.setComment(convertFromXmlComment(loc.getComment()));
+    		}
+    	}
     	else {
-    		log.warn("Unrecognized operations location file contents in file: "+name);
+    		log.error("Unrecognized operations location file contents in file: "+name);
     	}
     }
     

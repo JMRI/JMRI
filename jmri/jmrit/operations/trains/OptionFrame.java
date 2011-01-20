@@ -23,7 +23,7 @@ import java.io.File;
  * Frame for user edit of train options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @version $Revision: 1.4 $
  */
 
 public class OptionFrame extends OperationsFrame{
@@ -110,7 +110,8 @@ public class OptionFrame extends OperationsFrame{
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Trains", true);
 
 		pack();
-		setSize(getWidth(), getHeight()+25);	// pad out a bit
+		if (getWidth()<300)
+			setSize(getWidth()+50, getHeight()+25);	// pad out a bit
 		setVisible(true);
 	}
 	

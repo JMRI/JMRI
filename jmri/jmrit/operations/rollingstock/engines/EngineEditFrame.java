@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * Frame for user edit of engine
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 
 public class EngineEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -270,8 +270,10 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 			setSize(manager.getEditFrameSize());
 		else if (getWidth()<400)
 			setSize(450, getHeight());
+		/*
 		else
 			setSize (getWidth()+50, getHeight());
+		*/
 		if (manager.getEditFramePosition()!= null){
 			setLocation(manager.getEditFramePosition());
 		}

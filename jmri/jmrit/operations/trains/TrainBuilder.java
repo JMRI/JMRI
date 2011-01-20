@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.127 $
+ * @version             $Revision: 1.128 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1531,8 +1531,9 @@ public class TrainBuilder extends TrainCommon{
 	/**
 	 * Find a destination and track for a car with a schedule load.
 	 * @param car the car with the load
+	 * @throws BuildFailedException 
 	 */
-	private void findDestinationForCarLoad(Car car){
+	private void findDestinationForCarLoad(Car car) throws BuildFailedException{
 		log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
 		// TODO Search for sidings with schedules, and if schedule demands this
 		// car type and load, forward this car to that siding.
@@ -1540,9 +1541,15 @@ public class TrainBuilder extends TrainCommon{
 		log.debug("Found "+tracks.size()+" sidings");
 		for (int i=0; i<tracks.size(); i++){
 			Track track = tracks.get(i);
-			if (!track.getScheduleName().equals("")){
-				Schedule sch = ScheduleManager.instance().getScheduleByName(track.getScheduleName());
+			if (!track.getScheduleId().equals("")){
+				Schedule sch = ScheduleManager.instance().getScheduleById(track.getScheduleId());
+				if (sch == null)
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoSchedule"),
+							new Object[]{track.getScheduleId(), track.getName(), track.getLocation().getName()}));
 				ScheduleItem si = sch.getItemById(track.getScheduleItemId());
+				if (si == null)
+					throw new BuildFailedException(MessageFormat.format(rb.getString("buildErrorNoScheduleItem"),
+							new Object[]{track.getScheduleItemId(), track.getScheduleName(), track.getName(), track.getLocation().getName()}));
 				log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+") requesting type ("+si.getType()+") load ("+si.getLoad()+")");
 				if (car.testDestination(track.getLocation(), track).equals(Car.OKAY) 
 						&& (car.getLoad().equals(si.getLoad()) || si.getLoad().equals(""))){
@@ -1663,7 +1670,7 @@ public class TrainBuilder extends TrainCommon{
 						log.debug("Siding ("+testTrack.getName()+") status: "+status);
 						// is car departing a staging track that can generate schedule loads?
 						if (car.getTrack().isAddLoadsEnabled() && car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())){
-							Schedule sch = ScheduleManager.instance().getScheduleByName(testTrack.getScheduleName());
+							Schedule sch = ScheduleManager.instance().getScheduleById(testTrack.getScheduleId());
 							ScheduleItem si = sch.getItemById(testTrack.getScheduleItemId());
 							addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 							car.setLoad(si.getLoad());
@@ -1756,7 +1763,7 @@ public class TrainBuilder extends TrainCommon{
 						nextRatio = nextRatio * nextRatio;
 					}
 					// bias cars to a track with a schedule
-					if (!trackTemp.getScheduleName().equals("")){
+					if (!trackTemp.getScheduleId().equals("")){
 						log.debug("Track ("+trackTemp.getName()+") has schedule ("+trackTemp.getScheduleName()+") adjust nextRatio = "+Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}

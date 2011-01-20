@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * Action to change the type of track.  Track types are Sidings, Yards, Interchanges and
  * Staging.
  * @author Daniel Boudreau Copyright (C) 2010
- * @version     $Revision: 1.2 $
+ * @version     $Revision: 1.3 $
  */
 public class ChangeTrackTypeAction extends AbstractAction {
 		
@@ -90,7 +90,8 @@ class ChangeTrackFrame extends OperationsFrame{
     	getContentPane().add(p1);
     	setTitle(rb.getString("MenuItemChangeTrackType"));
     	pack();
-    	setSize(getWidth()+100, getHeight());
+    	if (getWidth() < 250)
+    		setSize(getWidth()+100, getHeight());
     	setVisible(true); 	
 	}
 	

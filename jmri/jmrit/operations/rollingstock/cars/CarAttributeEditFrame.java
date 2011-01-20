@@ -30,7 +30,7 @@ import jmri.jmrit.operations.trains.TrainsByCarTypeFrame;
  * Frame for adding and editing the car roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.31 $
+ * @version             $Revision: 1.32 $
  */
 public class CarAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -122,9 +122,8 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 		addHelpMenu("package.jmri.jmrit.operations.Operations_EditCarAttributes", true);
 		
     	pack();
-    	if ((getWidth()<150)) 
-    		setSize(200, getHeight()+10);
-    	else
+  
+    	if ((getWidth()<200)) 
     		setSize(getWidth()+50, getHeight()+10);
     	setVisible(true);
     }

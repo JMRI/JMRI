@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a train's build options
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -608,9 +608,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     private void packFrame(){
     	setVisible(false);
  		pack();
- 		if(getWidth()<300)
- 			setSize(300, getHeight());
- 		else
+ 		if(getWidth()<325)
  			setSize(getWidth()+50, getHeight());
 		setVisible(true);
     }

@@ -30,7 +30,7 @@ import java.util.Locale;
  * Tests for the Operations Router class
  *  
  * @author	Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class OperationsCarRouterTest extends TestCase {
 	
@@ -939,11 +939,11 @@ public class OperationsCarRouterTest extends TestCase {
 		schDItem1.setDestinationTrack(FS1);
 		
 		// Add schedule to tracks
-		DS1.setScheduleName("Schedule B");
-		DS2.setScheduleName("Schedule C");
-		ES1.setScheduleName("Schedule D");
-		ES2.setScheduleName("Schedule A");
-		CS1.setScheduleName("Schedule A");
+		DS1.setScheduleId(schB.getId());
+		DS2.setScheduleId(schC.getId());
+		ES1.setScheduleId(schD.getId());
+		ES2.setScheduleId(schA.getId());
+		CS1.setScheduleId(schA.getId());
 		
 		// bias track
 		ES2.setMoves(0);

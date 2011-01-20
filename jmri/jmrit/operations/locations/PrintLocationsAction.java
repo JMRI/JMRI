@@ -27,7 +27,7 @@ import java.util.ResourceBundle;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 public class PrintLocationsAction  extends AbstractAction {
 	
@@ -212,7 +212,7 @@ public class PrintLocationsAction  extends AbstractAction {
         			List<String> sidings = location.getTracksByNameList(Track.SIDING);
         			for (int k=0; k<sidings.size(); k++){
         				Track siding = location.getTrackById(sidings.get(k));
-        				if (siding.getScheduleName().equals(schedule.getName())){
+        				if (siding.getScheduleId().equals(schedule.getId())){
         					String name = schedule.getName();
         					// pad out schedule name
         					StringBuffer buf = new StringBuffer(name);

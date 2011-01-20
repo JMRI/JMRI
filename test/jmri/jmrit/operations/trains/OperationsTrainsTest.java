@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  *  TrainSwitchLists: Everything.
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.76 $
+ * @version $Revision: 1.77 $
  */
 public class OperationsTrainsTest extends TestCase {
 
@@ -3276,7 +3276,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk1.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk1.setLength(900);
 		loc2trk1.deleteTypeName("Coil Car");
-		loc2trk1.setScheduleName(sch1.getName());
+		loc2trk1.setScheduleId(sch1.getId());
 		// start the schedule with 2nd item Flat Car
 		loc2trk1.setScheduleItemId(sch1.getItemsBySequenceList().get(1));
 		
@@ -3285,7 +3285,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk2.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk2.setLength(900);
 		loc2trk2.deleteTypeName("Coil Car");
-		loc2trk2.setScheduleName(sch1.getName());
+		loc2trk2.setScheduleId(sch1.getId());
 		// start the schedule with 3rd item Gon
 		loc2trk2.setScheduleItemId(sch1.getItemsBySequenceList().get(2));
 		
@@ -3300,7 +3300,7 @@ public class OperationsTrainsTest extends TestCase {
 		loc2trk4 = loc2.addTrack("Chelmsford Freight 4", Track.SIDING);
 		loc2trk4.setTrainDirections(Track.WEST + Track.EAST);
 		loc2trk4.setLength(900);
-		loc2trk4.setScheduleName(sch2.getName());
+		loc2trk4.setScheduleId(sch2.getId());
 		
 		Track loc3trk1;
 		loc3trk1 = loc3.addTrack("Bedford Yard 1", Track.STAGING);

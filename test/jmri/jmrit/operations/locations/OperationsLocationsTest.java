@@ -39,7 +39,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  *   Location: XML read/write
  *  
  * @author	Bob Coleman Copyright (C) 2008, 2009
- * @version $Revision: 1.28 $
+ * @version $Revision: 1.29 $
  */
 public class OperationsLocationsTest extends TestCase {
 
@@ -220,7 +220,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("First siding name", null, box2.getItemAt(0));
 		
 		// now add a schedule to siding
-		t.setScheduleName("new schedule");
+		t.setScheduleId(sch1.getId());
 		
 		JComboBox box3 = sm.getSidingsByScheduleComboBox(s1);
 		LocationTrackPair ltp = (LocationTrackPair)box3.getItemAt(0);
@@ -638,8 +638,8 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("Location Track Car Type", "Test Type", t.getLocType());
 		Assert.assertEquals("Location", l, t.getLocation());
 
-		t.setScheduleName("Test Schedule Name");
-		Assert.assertEquals("Location Track set Schedule Name", "Test Schedule Name", t.getScheduleName());
+		t.setScheduleId("Test Schedule Id");
+		Assert.assertEquals("Location Track set Schedule Name", "Test Schedule Id", t.getScheduleId());
 		t.setScheduleItemId("Test Schedule Item Id");
 		Assert.assertEquals("Location Track set Schedule Item Id", "Test Schedule Item Id", t.getScheduleItemId());
 		t.setScheduleCount(2);
@@ -1068,8 +1068,8 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("2nd track", t2 ,l.getTrackById(tracks.get(1)));
 		
 		// tracks with schedules get priority
-		
-		t3.setScheduleName("dummy schedule");
+		Schedule sch = ScheduleManager.instance().newSchedule("dummy schedule");
+		t3.setScheduleId(sch.getId());
 		
 		// get all tracks ids
 		tracks = l.getTracksByMovesList(null);
@@ -1084,7 +1084,7 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("7th track", t6 ,l.getTrackById(tracks.get(6)));
 		
 		// t4 has less moves than t3 so it will move up in priority
-		t4.setScheduleName("dummy schedule");
+		t4.setScheduleId(sch.getId());
 		
 		// get all tracks ids
 		tracks = l.getTracksByMovesList(null);
@@ -1097,6 +1097,9 @@ public class OperationsLocationsTest extends TestCase {
 		Assert.assertEquals("5th track", t2 ,l.getTrackById(tracks.get(4)));
 		Assert.assertEquals("6th track", t7 ,l.getTrackById(tracks.get(5)));
 		Assert.assertEquals("7th track", t6 ,l.getTrackById(tracks.get(6)));
+		
+		// remove dummy schedule
+		ScheduleManager.instance().deregister(sch);
 		
 	}
 

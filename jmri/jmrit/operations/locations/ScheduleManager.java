@@ -19,7 +19,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarRoads;
  * Manages schedules.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.10 $
+ * @version	$Revision: 1.11 $
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; 
@@ -311,7 +311,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
 			List<String> sidings = location.getTracksByNameList(Track.SIDING);
 			for (int k=0; k<sidings.size(); k++){
 				Track siding = location.getTrackById(sidings.get(k));
-				if (siding.getScheduleName().equals(schedule.getName())){
+				if (siding.getScheduleId().equals(schedule.getId())){
 					LocationTrackPair ltp = new LocationTrackPair(location, siding);
 					box.addItem(ltp);
 				}

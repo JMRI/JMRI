@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.64 $
+ * @version             $Revision: 1.65 $
  */
 public class Car extends RollingStock {
 	
@@ -308,7 +308,7 @@ public class Car extends RollingStock {
 	private String testSchedule(Track track){
 		if (track == null)
 			return SCHEDULE +" track is null";
-		if (track.getScheduleName().equals("")){
+		if (track.getScheduleId().equals("")){
 			// does car have a scheduled load?
 			if (getLoad().equals(carLoads.getDefaultEmptyName()) || getLoad().equals(carLoads.getDefaultLoadName()))
 				return OKAY; //no
@@ -323,9 +323,9 @@ public class Car extends RollingStock {
 			return OKAY;
 		log.debug("Track ("+track.getName()+") has schedule ("+track.getScheduleName()+")");
 		ScheduleManager scheduleManager = ScheduleManager.instance();
-		Schedule sch = scheduleManager.getScheduleByName(track.getScheduleName());
+		Schedule sch = scheduleManager.getScheduleById(track.getScheduleId());
 		if (sch == null){
-			log.warn("Could not find schedule ("+track.getScheduleName()+") for track ("+track.getName()+")");
+			log.warn("Could not find schedule ("+track.getScheduleId()+") for track ("+track.getName()+")");
 			return OKAY;
 		}
 		ScheduleItem si = sch.getItemById(track.getScheduleItemId());
@@ -414,10 +414,10 @@ public class Car extends RollingStock {
 			setNextDestination(null);
 			setNextDestTrack(null);
 		}
-		if (track == null || track.getScheduleName().equals("") || loading)
+		if (track == null || track.getScheduleId().equals("") || loading)
 			return;
 		ScheduleItem currentSi = track.getCurrentScheduleItem();
-		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") id: "+currentSi.getId());
+		log.debug("Destination track ("+track.getName()+") has schedule ("+track.getScheduleName()+") item id: "+currentSi.getId());
 		// is car part of a kernel?
 		if (getKernel()!=null && !getKernel().isLead(this)){
 			log.debug("Car ("+toString()+") is part of kernel ("+getKernelName()+")");

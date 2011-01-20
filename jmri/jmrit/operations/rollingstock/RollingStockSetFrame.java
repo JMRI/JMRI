@@ -34,7 +34,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user to place RollingStock on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.8 $
+ * @version $Revision: 1.9 $
  */
 
 public class RollingStockSetFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -569,13 +569,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 	
 	
 	protected void packFrame(){
-		pack();
-		/*
-		if ((getWidth()<450)) 
-			setSize(500, getHeight()+50);
-		else
-			setSize (getWidth()+50, getHeight()+50);
-		*/		
+		pack();	
 		setVisible(true);
 	}
 

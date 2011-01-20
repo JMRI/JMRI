@@ -19,7 +19,7 @@ import jmri.jmrit.operations.setup.Control;
  * Frame for user edit of a location sidings
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.20 $
+ * @version $Revision: 1.21 $
  */
 
 public class SidingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -62,7 +62,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		
 		// Select the siding's Schedule
 		if (_track !=null){
-			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
+			Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
 			comboBoxSchedules.setSelectedItem(s);
 			textSchError.setText(_track.checkScheduleValid());
 		}
@@ -84,7 +84,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	
 	ScheduleEditFrame sef = null;
 	private void editAddSchedule(){
-		log.debug("Edit/add route");
+		log.debug("Edit/add schedule");
 		if (sef != null)
 			sef.dispose();
 		sef = new ScheduleEditFrame();			
@@ -109,7 +109,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 		// save the schedule
 		Object selected =  comboBoxSchedules.getSelectedItem();	
 		if (selected == null || selected.equals("")){
-			track.setScheduleName("");
+			track.setScheduleId("");
 			textSchError.setText("");
 		} else {
 			Schedule sch = (Schedule)selected;
@@ -118,9 +118,9 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 				List<String> l = sch.getItemsBySequenceList();	
 				//	must have at least one item in schedule
 				if(l.size()>0){
-					if (track.getScheduleName().equals("") ||
-							!track.getScheduleName().equals(sch.getName())){
-						track.setScheduleName(sch.getName());
+					if (track.getScheduleId().equals("") ||
+							!track.getScheduleId().equals(sch.getId())){
+						track.setScheduleId(sch.getId());
 					} else {
 					// check to see if user deleted the current item for track
 						ScheduleItem currentSi = sch.getItemById(track.getScheduleItemId());
@@ -132,7 +132,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 					textSchError.setText(track.checkScheduleValid());
 				} else {
 					// no items in schedule so disable
-					track.setScheduleName("");
+					track.setScheduleId("");
 					textSchError.setText(rb.getString("empty"));
 				}
 			}
@@ -143,7 +143,7 @@ public class SidingEditFrame extends TrackEditFrame implements java.beans.Proper
 	private void updateScheduleComboBox(){
 		ScheduleManager.instance().updateComboBox(comboBoxSchedules);
 		if (_track != null){
-			Schedule s = ScheduleManager.instance().getScheduleByName(_track.getScheduleName());
+			Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
 			comboBoxSchedules.setSelectedItem(s);
 		}
 	}

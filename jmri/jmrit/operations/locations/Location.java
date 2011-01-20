@@ -20,7 +20,7 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.34 $
+ * @version $Revision: 1.35 $
  */
 public class Location implements java.beans.PropertyChangeListener {
 
@@ -528,7 +528,7 @@ public class Location implements java.beans.PropertyChangeListener {
 		List<String> out = new ArrayList<String>();
 		for (int i=0; i<moveList.size(); i++){
 			track = getTrackById(moveList.get(i));
-			if (!track.getScheduleName().equals("")){
+			if (!track.getScheduleId().equals("")){
 				out.add(moveList.get(i));
 				moveList.remove(i);
 				i--;

@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for adding and editing the engine roster for operations.
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.28 $
+ * @version             $Revision: 1.29 $
  */
 public class EngineAttributeEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener{
 	
@@ -99,9 +99,7 @@ public class EngineAttributeEditFrame extends OperationsFrame implements java.be
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Engines", true);
 		
     	pack();
-    	if ((getWidth()<150)) 
-    		setSize(200, getHeight()+10);
-    	else
+    	if ((getWidth()<200)) 
     		setSize(getWidth()+50, getHeight()+10);
     	setVisible(true);
     }
