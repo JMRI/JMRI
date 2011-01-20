@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.47 $
+ * @version             $Revision: 1.48 $
  */
 public class Track {
 	
@@ -46,6 +46,7 @@ public class Track {
 	protected String _loadOption = ALLLOADS;		// track load restrictions
 	
 	// schedule options
+	protected String _scheduleName = "";			// Schedule name if there's one
 	protected String _scheduleId = "";				// Schedule id if there's one
 	protected String _scheduleItemId = "";			// the current scheduled item id
 	protected int _scheduleCount = 0;				// the number of times the item has been delivered
@@ -682,6 +683,12 @@ public class Track {
     	LocationManagerXml.instance().setDirty(true);
     }
     
+    /**
+     * Returns the name of the schedule.  Note that this returns the schedule
+     * name based on the schedule's id.  A schedule's name can be modified by
+     * the user.
+     * @return Schedule name
+     */
     public String getScheduleName(){
     	if (getScheduleId().equals(""))
     		return "";
@@ -694,6 +701,15 @@ public class Track {
     }
     
     public String getScheduleId(){
+    	// old code only stored schedule name, so create id if needed.
+    	if (_scheduleId.equals("") && !_scheduleName.equals("")){
+    		Schedule schedule = ScheduleManager.instance().getScheduleByName(_scheduleName);
+    	  	if (schedule == null){
+        		log.error("No schedule for name: "+_scheduleName);
+    	  	} else {
+    	  		_scheduleId = schedule.getId();
+    	  	}  
+    	}
     	return _scheduleId;
     }
     
@@ -928,16 +944,11 @@ public class Track {
         	if (log.isDebugEnabled() && debugFlag) log.debug("track (" +getName()+ ") " +getRoadOption()+  " car roads: "+ names);
         	setRoadNames(roads);
         }
-        if ((a = e.getAttribute("schedule")) != null ){
-        	Schedule schedule = ScheduleManager.instance().getScheduleByName(a.getValue());
-        	if (schedule != null)
-        		_scheduleId = schedule.getId();
-        	else
-        		log.error("Schedule ("+a.getValue()+") does not exist!");
-        }
+        if ((a = e.getAttribute("schedule")) != null ) _scheduleName = a.getValue();
         if ((a = e.getAttribute("scheduleId")) != null ) _scheduleId = a.getValue();
         if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
+        
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
     }
 
@@ -998,6 +1009,7 @@ public class Track {
     	}
     	e.setAttribute("pickupIds", buf.toString());
     	if (!getScheduleId().equals("")){
+    		e.setAttribute("schedule", getScheduleName());
     		e.setAttribute("scheduleId", getScheduleId());
     		e.setAttribute("itemId", getScheduleItemId());
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));

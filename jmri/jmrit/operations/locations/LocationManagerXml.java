@@ -17,7 +17,7 @@ import jmri.jmrit.operations.OperationsXml;
  * Load and stores locations and schedules for operations.
  * 
  * @author Daniel Boudreau Copyright (C) 2008 2009 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class LocationManagerXml extends OperationsXml {
 	
@@ -124,25 +124,6 @@ public class LocationManagerXml extends OperationsXml {
     		manager.options(e);
     	}
     	
-       	// load schedules       
-    	ScheduleManager scheduleManager = ScheduleManager.instance();
-    	if (root.getChild("schedules") != null) {
-
-    		List<Element> l = root.getChild("schedules").getChildren("schedule");
-    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
-    		for (int i=0; i<l.size(); i++) {
-    			scheduleManager.register(new Schedule(l.get(i)));
-    		}
-
-    		List<String> scheduleList = scheduleManager.getSchedulesByIdList();
-    		//Scan the object to check the Comment and Decoder Comment fields for
-    		//any <?p?> processor directives and change them to back \n characters
-    		for (int i = 0; i < scheduleList.size(); i++) {
-    			Schedule sch = scheduleManager.getScheduleById(scheduleList.get(i));
-    			sch.setComment(convertFromXmlComment(sch.getComment()));
-    		}
-    	}
-
     	// decode type, invoke proper processing routine if a decoder file
     	if (root.getChild("locations") != null) {
 
@@ -162,6 +143,25 @@ public class LocationManagerXml extends OperationsXml {
     	}
     	else {
     		log.error("Unrecognized operations location file contents in file: "+name);
+    	}
+    	
+       	// load schedules       
+    	ScheduleManager scheduleManager = ScheduleManager.instance();
+    	if (root.getChild("schedules") != null) {
+
+    		List<Element> l = root.getChild("schedules").getChildren("schedule");
+    		if (log.isDebugEnabled()) log.debug("readFile sees "+l.size()+" schedules");
+    		for (int i=0; i<l.size(); i++) {
+    			scheduleManager.register(new Schedule(l.get(i)));
+    		}
+
+    		List<String> scheduleList = scheduleManager.getSchedulesByIdList();
+    		//Scan the object to check the Comment and Decoder Comment fields for
+    		//any <?p?> processor directives and change them to back \n characters
+    		for (int i = 0; i < scheduleList.size(); i++) {
+    			Schedule sch = scheduleManager.getScheduleById(scheduleList.get(i));
+    			sch.setComment(convertFromXmlComment(sch.getComment()));
+    		}
     	}
     }
     
