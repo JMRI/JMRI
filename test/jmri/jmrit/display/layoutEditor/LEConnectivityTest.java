@@ -18,7 +18,7 @@ import junit.extensions.jfcunit.eventdata.*;
 /**
  * Swing jfcUnit tests for the LayoutEditor 
  * @author			Dave Duchamp  Copyright 2011
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class LEConnectivityTest extends jmri.util.SwingTestCase {
 
@@ -50,13 +50,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		ArrayList<Integer> tsList = cu.getTurnoutSettingList();
 		int setting = tsList.get(0).intValue();
 		Assert.assertEquals("6_4_5Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("5");;
+		pBlock = bm.getBlock("5");
 		nBlock = bm.getBlock("6");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("5_4_6Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("5");;
+		pBlock = bm.getBlock("5");
 		nBlock = bm.getBlock("2");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -69,7 +69,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("1_2_3Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("3");;
+		pBlock = bm.getBlock("3");
 		nBlock = bm.getBlock("1");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -90,13 +90,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("13_14_17Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("17");;
+		pBlock = bm.getBlock("17");
 		nBlock = bm.getBlock("13");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("17_14_13Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("17");;
+		pBlock = bm.getBlock("17");
 		nBlock = bm.getBlock("12");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -109,7 +109,7 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("11_12_15Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("15");;
+		pBlock = bm.getBlock("15");
 		nBlock = bm.getBlock("11");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -130,13 +130,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("20_21_22Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("22");;
+		pBlock = bm.getBlock("22");
 		nBlock = bm.getBlock("20");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("22_21_20Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("20");;
+		pBlock = bm.getBlock("20");
 		nBlock = bm.getBlock("26");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -149,13 +149,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("23_22_21Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("21");;
+		pBlock = bm.getBlock("21");
 		nBlock = bm.getBlock("23");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("21_22_23Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("23");;
+		pBlock = bm.getBlock("23");
 		nBlock = bm.getBlock("25");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -168,13 +168,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("27_26_25Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("25");;
+		pBlock = bm.getBlock("25");
 		nBlock = bm.getBlock("27");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("25_26_27Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("27");;
+		pBlock = bm.getBlock("27");
 		nBlock = bm.getBlock("21");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
@@ -187,13 +187,13 @@ public class LEConnectivityTest extends jmri.util.SwingTestCase {
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("24_25_26Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("26");;
+		pBlock = bm.getBlock("26");
 		nBlock = bm.getBlock("24");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
 		setting = tsList.get(0).intValue();
 		Assert.assertEquals("26_25_24Connect",setting,Turnout.CLOSED);
-		pBlock = bm.getBlock("24");;
+		pBlock = bm.getBlock("24");
 		nBlock = bm.getBlock("22");
 		tList = cu.getTurnoutList(cBlock,pBlock,nBlock);
 		tsList = cu.getTurnoutSettingList();
