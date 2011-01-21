@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.128 $
+ * @version             $Revision: 1.129 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1371,6 +1371,11 @@ public class TrainBuilder extends TrainCommon{
 			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNotDirection"),new Object[]{departStageTrack.getName()}));
 			return false;
 		}
+		// does this staging track service this train?
+		if (!departStageTrack.acceptsPickupTrain(train)){
+			addLine(buildReport, THREE, MessageFormat.format(rb.getString("buildStagingNotTrain"),new Object[]{departStageTrack.getName()}));
+			return false;
+		}
 		if (departStageTrack.getNumberEngines()>0){
 			List<String> engs = engineManager.getByIdList();
 			for (int i=0; i<engs.size(); i++){
@@ -1478,6 +1483,12 @@ public class TrainBuilder extends TrainCommon{
 		if (terminateStageTrack.getDropRS() != 0){
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingTrackReserved"),new Object[]{terminateStageTrack.getName(), terminateStageTrack.getDropRS()}));
 			return false;
+		}
+		if (!terminateStageTrack.acceptsDropTrain(train)){
+			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildStagingNotTrain"),new Object[]{terminateStageTrack.getName()}));
+			return false;
+		} else if (!terminateStageTrack.getDropOption ().equals(Track.ANY)){
+			return true;
 		}
 		if (!Setup.isTrainIntoStagingCheckEnabled())
 			return true;

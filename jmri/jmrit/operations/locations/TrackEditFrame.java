@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.45 $
+ * @version $Revision: 1.46 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -103,6 +103,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// optional panel for sidings, staging, and interchanges
 	JPanel panelOpt1 = new JPanel();
 	JPanel panelOpt2 = new JPanel();
+	JPanel panelOpt3 = new JPanel();
 
 	public static final String DISPOSE = "dispose" ;
 	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_TRACK_NAME;
@@ -197,6 +198,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// add optional panels
 		getContentPane().add(panelOpt1);
 		getContentPane().add(panelOpt2);
+		getContentPane().add(panelOpt3);
 		
        	getContentPane().add(panelComment);
        	getContentPane().add(panelButtons);
@@ -253,7 +255,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateTrainDir();
 		
 		// set frame location for display
-		setLocation(Control.panelX, Control.panelY);	
+		// setLocation(Control.panelX, Control.panelY);	
 	}
 	
 	// Save, Delete, Add 
@@ -644,8 +646,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			roadNameAll.setSelected(true);
 		}
-		panelRoadNames.repaint();
-
+		panelRoadNames.revalidate();
 		packFrame();
 	}
 	
@@ -695,7 +696,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			loadNameAll.setSelected(true);
 		}
-		panelLoadNames.repaint();
+		panelLoadNames.revalidate();
 		packFrame();
 	}
 	
@@ -800,15 +801,24 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         super.dispose();
     }
     
+    private boolean packed = false;
     protected void packFrame(){
-    	pack();
-		// make some room so rolling stock type scroll window doesn't always appear
-    	/*
-		if (getWidth()+50 < Control.panelWidth)
-			setSize (getWidth()+50, getHeight());
-		if (getHeight()+50 < Control.panelMaxHeight)
-			setSize (getWidth(), getHeight()+50);
-	   	*/
+    	setPreferredSize(null); 
+		repaint();
+    	if (!packed){
+    		pack();
+    		// make some room so rolling stock type scroll window doesn't always appear
+
+    		if (getWidth()+50 < Control.panelWidth)
+    			setSize (getWidth()+50, getHeight());
+    		if (getHeight()< Control.panelMaxHeight){
+    			int height = getHeight()+200;
+    			if (height>Control.panelMaxHeight)
+    				height = Control.panelMaxHeight;
+    			setSize (getWidth(), height);
+    		}
+    	} 
+    	packed = true;
     }
 
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TrackEditFrame.class.getName());

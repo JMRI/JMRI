@@ -12,11 +12,11 @@ import javax.swing.JPanel;
 /**
  * Frame for user edit of a staging track
  * 
- * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @author Dan Boudreau Copyright (C) 2008, 2011
+ * @version $Revision: 1.17 $
  */
 
-public class StagingEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
+public class StagingEditFrame extends InterchangeEditFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 	
@@ -25,14 +25,13 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 	JCheckBox emptyCheckBox = new JCheckBox(rb.getString("EmptyCarLoads"));
 	JCheckBox loadCheckBox = new JCheckBox(rb.getString("LoadCarLoads"));
 
-	JPanel panelLoad = panelOpt1;
+	JPanel panelLoad = panelOpt3;
 	
 	public StagingEditFrame() {
 		super();
 	}
 
 	public void initComponents(Location location, Track track) {
-		_type = Track.STAGING;
 		
 		// setup the optional panel with staging stuff
 		panelLoad.setLayout(new GridBagLayout());
@@ -42,6 +41,7 @@ public class StagingEditFrame extends TrackEditFrame implements java.beans.Prope
 		addItem(panelLoad, loadCheckBox, 0, 3);
 		
 		super.initComponents(location, track);
+		_type = Track.STAGING;
 		
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Staging", true);
 		
