@@ -22,8 +22,10 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrix.ecos.utilities.EcosLocoToRoster;
 import jmri.jmrit.beantable.BeanTableDataModel;
+import jmri.jmrit.beantable.AbstractTableAction;
+import jmri.util.com.sun.TableSorter;
 
-public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableAction {
+public class EcosLocoTableAction extends AbstractTableAction {
 
     /**
      * Create an action with a specific title.
@@ -46,9 +48,12 @@ public class EcosLocoTableAction extends jmri.jmrit.beantable.AbstractTableActio
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-
+        TableSorter sorter = new TableSorter(m);
+    	JTable dataTable = makeJTable(sorter);
+        sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
-        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget()){
+        f = new jmri.jmrit.beantable.BeanTableFrame(m, helpTarget(), dataTable){
+
         };
         setMenuBar(f);
         setTitle();

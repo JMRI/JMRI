@@ -28,7 +28,7 @@ import jmri.util.com.sun.TableSorter;
  * that can in turn invoke {@link #addToBottomBox} as needed.
  * 
  * @author	Bob Jacobsen   Copyright (C) 2003
- * @version	$Revision: 1.30 $
+ * @version	$Revision: 1.31 $
  */
 public class BeanTableFrame extends jmri.util.JmriJFrame {
 
@@ -46,14 +46,12 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
         super();
     }
     
-    public BeanTableFrame(BeanTableDataModel model, String helpTarget) {
+    public BeanTableFrame(BeanTableDataModel model, String helpTarget, JTable dataTab) {
 
         super();
         dataModel 	= model;
+        this.dataTable = dataTab;
 
-        TableSorter sorter = new TableSorter(dataModel);
-    	dataTable = makeJTable(sorter);
-        sorter.setTableHeader(dataTable.getTableHeader());        
         dataScroll	= new JScrollPane(dataTable);
 
         // give system name column as smarter sorter and use it initially
@@ -125,7 +123,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
     /**
      * Hook to allow sub-typing of JTable created
      */
-	protected JTable makeJTable(TableSorter sorter) {
+/*	protected JTable makeJTable(TableSorter sorter) {
 	    return new JTable(sorter)  {
             public boolean editCellAt(int row, int column, java.util.EventObject e) {
                 boolean res = super.editCellAt(row, column, e);
@@ -136,7 +134,7 @@ public class BeanTableFrame extends jmri.util.JmriJFrame {
                 return res;
             }
         };
-    }
+    }*/
 	    
     protected Box getBottomBox() { return bottomBox; }
     /**

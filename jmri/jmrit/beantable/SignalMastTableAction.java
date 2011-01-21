@@ -2,8 +2,6 @@
 
 package jmri.jmrit.beantable;
 
-import jmri.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -19,7 +17,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.11 $
+ * @version     $Revision: 1.12 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -53,7 +51,7 @@ public class SignalMastTableAction extends AbstractTableAction {
     }
 
     JmriJFrame addFrame = null;
-    
+
     // has to agree with number in SignalMastDataModel
     final static int VALUECOL = BeanTableDataModel.VALUECOL;
     final static int SYSNAMECOL = BeanTableDataModel.SYSNAMECOL;
@@ -61,9 +59,12 @@ public class SignalMastTableAction extends AbstractTableAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
-
+        TableSorter sorter = new TableSorter(m);
+    	JTable dataTable = makeJTable(sorter);
+        sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
-        f = new BeanTableFrame(m, helpTarget()){
+        f = new BeanTableFrame(m, helpTarget(), dataTable){
+
             TableSorter sorter;
     
             /**
@@ -78,65 +79,7 @@ public class SignalMastTableAction extends AbstractTableAction {
                     }
                 });
             }
-            protected JTable makeJTable(TableSorter srtr) {
-                this.sorter = srtr;
-                return new JTable(sorter)  {
-                    public boolean editCellAt(int row, int column, java.util.EventObject e) {
-                        boolean res = super.editCellAt(row, column, e);
-                        java.awt.Component c = this.getEditorComponent();
-                        if (c instanceof javax.swing.JTextField) {
-                            ( (JTextField) c).selectAll();
-                        }            
-                        return res;
-                    }
-                    public TableCellRenderer getCellRenderer(int row, int column) {
-                        if (column == VALUECOL) {
-                            return getRenderer(row);
-                        } else
-                            return super.getCellRenderer(row, column);
-                    }
-                    public TableCellEditor getCellEditor(int row, int column) {
-                        if (column == VALUECOL) {
-                            return getEditor(row);
-                        } else
-                            return super.getCellEditor(row, column);
-                    }
-                    TableCellRenderer getRenderer(int row) {
-                        TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                        if (retval == null) {
-                            // create a new one with right aspects
-                            retval = new MyComboBoxRenderer(getAspectVector(row));
-                            rendererMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                        }
-                        return retval;
-                    }
-                    Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
-                
-                    TableCellEditor getEditor(int row) {
-                        TableCellEditor retval = editorMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                        if (retval == null) {
-                            // create a new one with right aspects
-                            retval = new MyComboBoxEditor(getAspectVector(row));
-                            editorMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                        }
-                        return retval;
-                    }
-                    Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
-                
-                    Vector<String> getAspectVector(int row) {
-                        Vector<String> retval = boxMap.get(sorter.getValueAt(row,SYSNAMECOL));
-                        if (retval == null) {
-                            // create a new one with right aspects
-                            Vector<String> v = InstanceManager.signalMastManagerInstance()
-                                                .getSignalMast((String)sorter.getValueAt(row,SYSNAMECOL)).getValidAspects();
-                            retval = v;
-                            boxMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
-                        }
-                        return retval;
-                    }
-                    Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
-                };
-            }
+
         };
         setTitle();
         addToFrame(f);

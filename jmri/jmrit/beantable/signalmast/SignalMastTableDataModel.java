@@ -8,12 +8,17 @@ import jmri.jmrit.beantable.BeanTableDataModel;
 import jmri.InstanceManager;
 import javax.swing.*;
 import java.util.*;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxEditor;
+import jmri.jmrit.beantable.SignalMastTableAction.MyComboBoxRenderer;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Data model for a SignalMastTable
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009
- * @version     $Revision: 1.6 $
+ * @version     $Revision: 1.7 $
  */
 
 public class SignalMastTableDataModel extends BeanTableDataModel {
@@ -48,6 +53,7 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         else if (col==HELDCOL) return true;
         else return super.isCellEditable(row,col);
     }
+
 
     protected Manager getManager() { return InstanceManager.signalMastManagerInstance(); }
     protected NamedBean getBySystemName(String name) { return InstanceManager.signalMastManagerInstance().getBySystemName(name);}
@@ -104,6 +110,69 @@ public class SignalMastTableDataModel extends BeanTableDataModel {
         }
         else super.setValueAt(value, row, col);
     }
+    
+    TableSorter sorter;
+
+    protected JTable makeJTable(TableSorter srtr) {
+        this.sorter = srtr;
+        return new JTable(sorter)  {
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                java.awt.Component c = this.getEditorComponent();
+                if (c instanceof javax.swing.JTextField) {
+                    ( (JTextField) c).selectAll();
+                }
+                return res;
+            }
+            public TableCellRenderer getCellRenderer(int row, int column) {
+                if (column == VALUECOL) {
+                    return getRenderer(row);
+                } else
+                    return super.getCellRenderer(row, column);
+            }
+            public TableCellEditor getCellEditor(int row, int column) {
+                if (column == VALUECOL) {
+                    return getEditor(row);
+                } else
+                    return super.getCellEditor(row, column);
+            }
+            TableCellRenderer getRenderer(int row) {
+                TableCellRenderer retval = rendererMap.get(sorter.getValueAt(row,SYSNAMECOL));
+                if (retval == null) {
+                    // create a new one with right aspects
+                    retval = new MyComboBoxRenderer(getAspectVector(row));
+                    rendererMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+                }
+                return retval;
+            }
+            Hashtable<Object, TableCellRenderer> rendererMap = new Hashtable<Object, TableCellRenderer>();
+
+            TableCellEditor getEditor(int row) {
+                TableCellEditor retval = editorMap.get(sorter.getValueAt(row,SYSNAMECOL));
+                if (retval == null) {
+                    // create a new one with right aspects
+                    retval = new MyComboBoxEditor(getAspectVector(row));
+                    editorMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+                }
+                return retval;
+            }
+            Hashtable<Object, TableCellEditor> editorMap = new Hashtable<Object, TableCellEditor>();
+
+            Vector<String> getAspectVector(int row) {
+                Vector<String> retval = boxMap.get(sorter.getValueAt(row,SYSNAMECOL));
+                if (retval == null) {
+                    // create a new one with right aspects
+                    Vector<String> v = InstanceManager.signalMastManagerInstance()
+                                        .getSignalMast((String)sorter.getValueAt(row,SYSNAMECOL)).getValidAspects();
+                    retval = v;
+                    boxMap.put(sorter.getValueAt(row,SYSNAMECOL), retval);
+                }
+                return retval;
+            }
+            Hashtable<Object, Vector<String>> boxMap = new Hashtable<Object, Vector<String>>();
+        };
+    }
+
     
     protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) { return true; }
     

@@ -18,12 +18,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import java.util.List;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.40 $
+ * @version		$Revision: 1.41 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -498,6 +499,19 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 lineString = "";
             } catch (IOException e) { log.warn("error during printing: "+e);}
         }
+    }
+
+    protected JTable makeJTable(TableSorter sorter) {
+	    return new JTable(sorter)  {
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                java.awt.Component c = this.getEditorComponent();
+                if (c instanceof javax.swing.JTextField) {
+                    ( (JTextField) c).selectAll();
+                }
+                return res;
+            }
+        };
     }
 
     static final org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BeanTableDataModel.class.getName());

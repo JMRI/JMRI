@@ -11,13 +11,16 @@ import javax.swing.AbstractAction;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import java.util.HashMap;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import jmri.util.com.sun.TableSorter;
 
 /**
  * Swing action to create and register a
  * SignalHeadTable GUI
  *
  * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision: 1.17 $
+ * @version     $Revision: 1.18 $
  */
 
 abstract public class AbstractTableAction extends AbstractAction {
@@ -53,8 +56,11 @@ abstract public class AbstractTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // create the JTable model, with changes for specific NamedBean
         createModel();
+        TableSorter sorter = new TableSorter(m);
+    	JTable dataTable = makeJTable(sorter);
+        sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
-        f = new BeanTableFrame(m, helpTarget()){
+        f = new BeanTableFrame(m, helpTarget(), dataTable){
             /**
              * Include an "add" button
              */
@@ -73,6 +79,19 @@ abstract public class AbstractTableAction extends AbstractAction {
         addToFrame(f);
         f.pack();
         f.setVisible(true);
+    }
+
+    protected JTable makeJTable(TableSorter sorter) {
+	    return new JTable(sorter)  {
+            public boolean editCellAt(int row, int column, java.util.EventObject e) {
+                boolean res = super.editCellAt(row, column, e);
+                java.awt.Component c = this.getEditorComponent();
+                if (c instanceof javax.swing.JTextField) {
+                    ( (JTextField) c).selectAll();
+                }
+                return res;
+            }
+        };
     }
     
     public BeanTableDataModel getTableDataModel(){
