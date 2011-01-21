@@ -9,7 +9,7 @@ import javax.swing.*;
  * hardware device via some bootloading process.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
- * @version			$Revision: 1.11 $
+ * @version			$Revision: 1.12 $
  */
 public class SprogHexFile extends jmri.util.JmriJFrame {
   private File file;
@@ -44,8 +44,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
   }
 
   /**
-   * Get the name of the open file
-   * @return
+   * @return name of the open file
    */
   public String getName() {
     return name;

@@ -512,9 +512,8 @@ public interface Conditional extends NamedBean {
     public int getLogicType();
 
     /**
-     * returns true if action list is executed only when state changes
-     * returns false if action list is executed on every calculation of state
-     * @return
+     * @return true if action list is executed only when state changes, 
+     * false if action list is executed on every calculation of state
      */
     public  boolean getTriggerOnChange();
 
