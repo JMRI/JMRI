@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
  * @author	    Bob Jacobsen
- * @version         $Revision: 2.8 $
+ * @version         $Revision: 2.9 $
  */
 public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
@@ -78,7 +78,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
                 ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
-		while(n==lnis.outbound.size()); // busy loop.  Wait for 
+		while(n==lnis.outbound.size()) {} // busy loop.  Wait for 
                                                 // outbound size to change.
                 Assert.assertEquals("off message sent","52 05 80 D7",
                     lnis.outbound.elementAt(n).toString());
@@ -93,7 +93,7 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
 
                 ((jmri.jmrix.lenz.XNetTurnout) t).message(m);
 
-		while(n==lnis.outbound.size()); // busy loop.  Wait for 
+		while(n==lnis.outbound.size()) {} // busy loop.  Wait for 
                                                 // outbound size to change.
 
                 Assert.assertEquals("off message sent","52 05 80 D7",
