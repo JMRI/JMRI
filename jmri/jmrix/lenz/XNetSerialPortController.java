@@ -11,7 +11,7 @@ import java.io.DataOutputStream;
  *
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @author			Paul Bender    Copyright (C) 2004,2010
- * @version			$Revision: 1.1 $
+ * @version			$Revision: 1.2 $
  */
 public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerialPortController implements XNetPortController {
 
@@ -63,7 +63,7 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){
         if(adaptermemo!=null){
           log.debug("adapter memo not null");
-          return (jmri.jmrix.SystemConnectionMemo)adaptermemo;
+          return adaptermemo;
         }
         else
         {
