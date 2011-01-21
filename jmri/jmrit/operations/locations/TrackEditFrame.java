@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.46 $
+ * @version $Revision: 1.47 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -646,7 +646,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			roadNameAll.setSelected(true);
 		}
-		panelRoadNames.revalidate();
+		panelRoadNames.repaint();
+		panelRoadNames.validate();
 		packFrame();
 	}
 	
@@ -696,7 +697,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		} else {
 			loadNameAll.setSelected(true);
 		}
-		panelLoadNames.revalidate();
+		panelLoadNames.repaint();
+		panelLoadNames.validate();
 		packFrame();
 	}
 	

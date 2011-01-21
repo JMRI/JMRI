@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.129 $
+ * @version             $Revision: 1.130 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1546,8 +1546,9 @@ public class TrainBuilder extends TrainCommon{
 	 */
 	private void findDestinationForCarLoad(Car car) throws BuildFailedException{
 		log.debug("Car ("+car.toString()+ ") has load ("+car.getLoad()+") without a destination");
-		// TODO Search for sidings with schedules, and if schedule demands this
-		// car type and load, forward this car to that siding.
+		// don't find a next destination for cars departing staging
+		if (departStageTrack != null)
+			return;
 		List<Track> tracks = locationManager.getTracks(Track.SIDING);
 		log.debug("Found "+tracks.size()+" sidings");
 		for (int i=0; i<tracks.size(); i++){
