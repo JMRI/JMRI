@@ -31,7 +31,7 @@ import javax.swing.*;
  * <P>
  * @author	Kevin Dickerson   Copyright 2010
  * @author	Bob Jacobsen   Copyright 2010
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class ListedTableFrame extends BeanTableFrame {
     
@@ -287,7 +287,7 @@ public class ListedTableFrame extends BeanTableFrame {
         return lastdivider;
     }
     
-    class tabbedTableItem {
+    static class tabbedTableItem {
         
         AbstractTableAction tableAction;
         String className;
