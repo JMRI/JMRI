@@ -23,7 +23,7 @@ import java.util.Locale;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.21 $
+ * @version $Revision: 1.22 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -159,6 +159,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// test route edit button
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.editButton ) );
 	    // confirm panel creation
+		sleep(1);	// for slow machines
 		JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
         Assert.assertNotNull("route add frame", ref);
 		

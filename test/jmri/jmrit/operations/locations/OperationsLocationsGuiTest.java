@@ -24,7 +24,7 @@ import java.util.Locale;
  * Tests for the Operations Locations GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 	
@@ -316,6 +316,7 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		//f.saveTrackButton.doClick();
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrackButton ) );
 		
+		sleep(1);	// for slow machines
 		Track t = l.getTrackByName("new staging track", null);	
 		Assert.assertNotNull("new staging track", t);
 		Assert.assertEquals("staging track length", 34, t.getLength());
