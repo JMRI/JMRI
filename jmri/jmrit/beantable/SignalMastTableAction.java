@@ -17,7 +17,7 @@ import jmri.util.JmriJFrame;
  * SignalMastTable GUI.
  *
  * @author	Bob Jacobsen    Copyright (C) 2003, 2009, 2010
- * @version     $Revision: 1.12 $
+ * @version     $Revision: 1.13 $
  */
 
 public class SignalMastTableAction extends AbstractTableAction {
@@ -64,8 +64,6 @@ public class SignalMastTableAction extends AbstractTableAction {
         sorter.setTableHeader(dataTable.getTableHeader());
         // create the frame
         f = new BeanTableFrame(m, helpTarget(), dataTable){
-
-            TableSorter sorter;
     
             /**
              * Include an "add" button
