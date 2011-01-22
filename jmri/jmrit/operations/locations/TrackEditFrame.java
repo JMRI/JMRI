@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -806,7 +806,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     private boolean packed = false;
     protected void packFrame(){
     	setPreferredSize(null); 
-		repaint();
+		validate();
     	if (!packed){
     		pack();
     		// make some room so rolling stock type scroll window doesn't always appear
