@@ -4,7 +4,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.3 $
+# $Revision: 1.4 $
 #
 #
 
@@ -164,13 +164,13 @@ class BlockLister(jmri.jmrit.automat.AbstractAutomaton) :
         rep =  ""
         sys = mast.getSignalSystem()
         aspect = mast.getAspect()
-        ##speed = getAspectSpeed(aspect, sys)
-        if (aspect != None) :
-            rep = rep + aspect + " "
+        #speed = Warrent.getAspectSpeed(aspect, sys)
         if (mast.getHeld()) :
             rep = rep + "Held "
         if (mast.getLit()) :
             rep = rep + "Lit "
+        if (aspect != None) :
+            rep = rep + aspect + " "
         #self.msgText("cvtMastToText: " + self.giveMastName(mast) + " displaying: " + rep + "\n")
         return rep
         
