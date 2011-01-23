@@ -21,7 +21,7 @@ import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Common routines for trains
- * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010
+ * @author Daniel Boudreau (C) Copyright 2008, 2009, 2010, 2011
  *
  */
 public class TrainCommon {
@@ -42,7 +42,7 @@ public class TrainCommon {
 	}
 	
 	protected void dropEngine(PrintWriter file, Engine engine){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop"));
+		StringBuffer buf = new StringBuffer(tabString((BOX + rb.getString("Drop")), 11));
 		String[] format = Setup.getDropEngineMessageFormat();
 		for (int i=0; i<format.length; i++){
 			buf.append(getEngineAttribute(engine, format[i], false));
@@ -65,7 +65,7 @@ public class TrainCommon {
 	}
 	
 	protected void dropCar(PrintWriter file, Car car){
-		StringBuffer buf = new StringBuffer(BOX + rb.getString("Drop"));
+		StringBuffer buf = new StringBuffer(tabString((BOX + rb.getString("Drop")), 11));
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], false);
@@ -146,14 +146,14 @@ public class TrainCommon {
 	// @param pickup true when rolling stock is being picked up 	
 	protected String getEngineAttribute(Engine engine, String attribute, boolean pickup){
 		if (attribute.equals(Setup.MODEL))
-			return "("+ engine.getModel() +") ";
+			return " "+ engine.getModel();
 		return getRollingStockAttribute(engine, attribute, pickup);
 	}
 	
 	protected String getCarAttribute(Car car, String attribute, boolean pickup){
 		if (attribute.equals(Setup.LOAD))
-			return (car.isCaboose() || car.isPassenger())? "" : " "+tabString(car.getLoad(),
-					CarLoads.instance().getCurMaxNameLength());
+			return (car.isCaboose() || car.isPassenger())? tabString("", CarLoads.instance().getCurMaxNameLength()+1) 
+					: " "+tabString(car.getLoad(), CarLoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.HAZARDOUS))
 			return (car.isHazardous()? " ("+rb.getString("Hazardous")+")" : "");
 		else if (attribute.equals(Setup.DROP_COMMENT))
@@ -165,7 +165,7 @@ public class TrainCommon {
 
 	protected String getRollingStockAttribute(RollingStock rs, String attribute, boolean pickup){
 		if (attribute.equals(Setup.NUMBER))
-			return " "+tabString(splitString(rs.getNumber()), Control.MAX_LEN_STRING_ROAD_NUMBER);
+			return " "+tabString(splitString(rs.getNumber()), Control.MAX_LEN_STRING_ROAD_NUMBER-4);
 		else if (attribute.equals(Setup.ROAD))
 			return " "+tabString(rs.getRoad(), CarRoads.instance().getCurMaxNameLength());
 		else if (attribute.equals(Setup.TYPE)){
@@ -180,8 +180,12 @@ public class TrainCommon {
 			return " "+rb.getString("from")+ " "+splitString(rs.getTrackName());
 		else if (attribute.equals(Setup.LOCATION) && !pickup)
 			return " "+rb.getString("from")+ " "+splitString(rs.getLocationName());
-		else if (attribute.equals(Setup.DESTINATION) && pickup)
-			return " "+rb.getString("destination")+ " "+splitString(rs.getDestinationName());
+		else if (attribute.equals(Setup.DESTINATION) && pickup){
+			if (Setup.isTabEnabled())
+				return " "+rb.getString("dest")+ " "+splitString(rs.getDestinationName());
+			else
+				return " "+rb.getString("destination")+ " "+splitString(rs.getDestinationName());
+		}
 		else if (attribute.equals(Setup.DESTINATION) && !pickup)
 			return " "+rb.getString("to")+ " "+splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.COMMENT))

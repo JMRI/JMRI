@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.130 $
+ * @version             $Revision: 1.131 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1946,12 +1946,18 @@ public class TrainBuilder extends TrainCommon{
 					}
 				}
 			} else {
+				for (int i=0; i<engineList.size(); i++){
+					Engine eng = engineManager.getById(engineList.get(i));
+					dropEngine(fileOut, eng);
+				}
+				/* old termination comment for engines
 				if(engine != null){
 					String dropText = rb.getString("DropEngineTo");
 					if (engineList.size() > 1)
 						dropText = rb.getString("DropEnginesTo");
 					addLine(fileOut, BOX +dropText+ " "+ splitString(engine.getDestinationTrackName())); 
 				}
+				*/
 				addLine(fileOut, rb.getString("TrainTerminatesIn")+ " " + routeLocationName);
 			}
 			previousRouteLocationName = routeLocationName;
