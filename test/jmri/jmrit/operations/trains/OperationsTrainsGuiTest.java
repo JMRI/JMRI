@@ -23,7 +23,7 @@ import java.util.Locale;
  * Tests for the Operations Trains GUI class
  *  
  * @author	Dan Boudreau Copyright (C) 2009
- * @version $Revision: 1.22 $
+ * @version $Revision: 1.23 $
  */
 public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
@@ -67,6 +67,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildReportBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();		
@@ -88,6 +89,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.buildMsgBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printPreviewBox ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		
 		// frame location can move just a bit on MacOS
 		p = f.getLocation();
@@ -100,13 +102,15 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
 		// create the TrainEditFrame
-		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );		
+		getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
+		sleep(1);	// for slow machines
 	    // confirm panel creation
 		JmriJFrame tef = JmriJFrame.getFrame("Add Train");
         Assert.assertNotNull("train edit frame", tef);
 		
 		// create the TrainSwichListEditFrame
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.printSwitchButton ) );
+		sleep(1);	// for slow machines
 	    // confirm panel creation
 		JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
         Assert.assertNotNull("train switchlist edit frame", tsle);
@@ -131,6 +135,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
 		trainEditFrame.commentTextArea.setText("Test Train Comment");
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.addTrainButton ) );
+		sleep(1);	// for slow machines
 		
 		TrainManager tmanager = TrainManager.instance();
 		Train t = tmanager.getTrainByName("Test Train Name");
@@ -151,6 +156,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// shouldn't change until Save
 		Assert.assertEquals("train comment", "00:00", t.getDepartureTime());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train comment", "15:45", t.getDepartureTime());
 		
 		// test route field
@@ -158,15 +164,17 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
 		// test route edit button
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.editButton ) );
-	    // confirm panel creation
 		sleep(1);	// for slow machines
+	    // confirm panel creation
 		JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
         Assert.assertNotNull("route add frame", ref);
 		
 		// test car types using the clear and set buttons
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.clearButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertFalse("train accepts car type Flat 1", t.acceptsTypeName("Flat"));
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.setButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertTrue("train accepts car type Flat 2", t.acceptsTypeName("Flat"));
 			
 		// test engine fields
@@ -182,6 +190,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("engine model 1", "", t.getEngineModel());
 		Assert.assertEquals("engine road 1", "", t.getEngineRoad());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("number of engines 2", "3", t.getNumberEngines());
 		Assert.assertEquals("engine model 2", "FT", t.getEngineModel());
 		Assert.assertEquals("engine road 2", "UP", t.getEngineRoad());
@@ -189,27 +198,33 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// test caboose and FRED buttons and fields
 		// require a car with FRED
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.fredRadioButton ) );
+		sleep(1);	// for slow machines
 		// shouldn't change until Save
 		Assert.assertEquals("train requirements 1", Train.NONE, t.getRequirements());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train requirements 2", Train.FRED, t.getRequirements());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.cabooseRadioButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
 		Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
 		// shouldn't change until Save
 		trainEditFrame.roadCabooseBox.setSelectedItem("NH");
 		Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("caboose road 3", "NH", t.getCabooseRoad());
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.noneRadioButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train requirements 4", Train.NONE, t.getRequirements());
 
 		// test frame size and location
 		trainEditFrame.setSize(650,600);
 		trainEditFrame.setLocation(25,30);
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.saveTrainButton ) );
+		sleep(1);	// for slow machines
 
 		// frame location can move just a bit on MacOS
 		Point p = trainEditFrame.getLocation();
@@ -242,40 +257,53 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		// test car road options
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameExclude ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car road exclude", Train.EXCLUDEROADS, t.getRoadOption());
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameInclude ) );
-		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());		
+		sleep(1);	// for slow machines
+		Assert.assertEquals("train car road include", Train.INCLUDEROADS, t.getRoadOption());
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.roadNameAll ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car road all", Train.ALLROADS, t.getRoadOption());
 		
 		// test car owner options
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameExclude ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car owner exclude", Train.EXCLUDEOWNERS, t.getOwnerOption());
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameInclude ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car owner include", Train.INCLUDEOWNERS, t.getOwnerOption());		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.ownerNameAll ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car owner all", Train.ALLOWNERS, t.getOwnerOption());
 
 		// test car date options
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateAfter ) );
+		sleep(1);	// for slow machines
 		f.builtAfterTextField.setText("1956");
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car built after", "1956", t.getBuiltStartYear());
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateBefore ) );
+		sleep(1);	// for slow machines
 		f.builtBeforeTextField.setText("2010");
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car built before", "2010", t.getBuiltEndYear());		
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateRange ) );
+		sleep(1);	// for slow machines
 		f.builtAfterTextField.setText("1888");
 		f.builtBeforeTextField.setText("2000");
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car built after range", "1888", t.getBuiltStartYear());
 		Assert.assertEquals("train car built before range", "2000", t.getBuiltEndYear());	
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.builtDateAll ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveTrainButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
 		Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());		
 
@@ -329,11 +357,13 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// remove Boxcar from trains
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
 
 		// now add Boxcar to trains
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 		
 		f.dispose();
@@ -354,6 +384,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// now clear all locations
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.clearButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertFalse("print switchlist 2", l.getSwitchList());
@@ -361,6 +392,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		// now set all locations
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.setButton ) );
 		getHelper().enterClickAndLeave( new MouseEventData( this, f.saveButton ) );
+		sleep(1);	// for slow machines
 		for (int i=0; i<locations.size(); i++){
 			Location l = lmanager.getLocationById(locations.get(i));
 			Assert.assertTrue("print switchlist 3", l.getSwitchList());
@@ -382,13 +414,15 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 		
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.deleteTrainButton ) );
 		// And now press the confirmation button
-		pressDialogButton(trainEditFrame, "Yes");
+		pressDialogButton(trainEditFrame, "Yes");		
+		sleep(1);	// for slow machines
 		
 		t = tmanager.getTrainByName("Test Train Name");
 		Assert.assertNull("train deleted", t);
 		
 		// Now add it back
 		getHelper().enterClickAndLeave( new MouseEventData( this, trainEditFrame.addTrainButton ) );
+		sleep(1);	// for slow machines
 		t = tmanager.getTrainByName("Test Train Name");
 		Assert.assertNotNull("train added", t);
 		
