@@ -32,7 +32,7 @@ import java.lang.reflect.Method;
  * has selected in messages where they have selected "Remember this setting for next time"
  *
  * @author      Kevin Dickerson Copyright (C) 2010
- * @version	$Revision: 1.26 $
+ * @version	$Revision: 1.27 $
  */
  
 @net.jcip.annotations.NotThreadSafe  // intended for access from Swing thread only
@@ -499,7 +499,7 @@ public class DefaultUserMessagePreferences implements UserPreferencesManager {
     
     }
 
-    static ShutDownTask userPreferencesShutDownTask = null;
+    ShutDownTask userPreferencesShutDownTask = null;
     
     private static volatile boolean _changeMade = false;
     
