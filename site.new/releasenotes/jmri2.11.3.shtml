@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.7 2011-01-06 00:11:46 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.8 2011-01-23 15:16:26 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -117,6 +117,23 @@ New operations features:
 <li>Rolling stock move count improved.
 <li>Allow user to change departure comment to loads and empties.
 <li>Users can now control which loads a track can service.
+<li>New tabbed manifest and switch lists.
+<li>Minor enhancement to check the car's load when placing car at a location.
+<li>Improve how operations moves cars when a route services a location more than once.
+<li>Improved car routing when car has a scheduled load.
+<li>All car loads in a kernel are now updated by siding schedules.
+<li>User can now change all of the loads in a kernel when editing a car's load.
+<li>Add GUI for selecting tabbed manifests
+<li>Update "Show Car Types Serviced" Tool for train, now shows load status for train and track.
+<li>Fix bug when car has destination and train terminates into staging.
+<li>Fixed operations problem when two or more consecutive schedules were used to route cars.
+<li>Minor improvement to manifests when using colors.
+<li>Fix minor bug when restarting program: A track with a schedule would move to the next items during load when cars had that destination track.
+<li>Operations enhancement, in the Trains window, user can select "Show All" or "Show only build trains".
+<li>Operations enhancement, now the user can sort trains by status.
+<li>Modify all cars in kernel when creating schedule loads from staging.
+<li>Users can now preview or print out the car loads for the various car types.  This feature can be found in the Edit Car Loads->&gt;Tools
+<li>Users can now control which staging track a train will use.
 </ul>
 
 <p>
@@ -210,6 +227,66 @@ Pete Cressman fixed an empty tooltip-text bug
 <p>
 Kevin Dickerson added an option in the Ecos preferences to select if we always force control of the loco when trying to open a throttle or not.
 
+<p>
+Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
+
+<p>
+Pete Cressman added a loco icon to follow auto run trains
+
+<p>
+Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
+
+<p>
+Kevin Dickerson fixed NPE that can occur with some versions of unix and MAC OS X with getting the multiclick interval time that may not be supported
+
+<p>
+Matthew Harris added an example script to enable persistence of turnout states between sessions
+
+<p>
+Matthew Harris updated SerialPortRFID script - as per patch #3152534 from Nigel Cliffe and MERG member Ian King
+
+<p>
+Kevin Dickerson updated the user preference manager so that items and descriptions
+are now dynamically added via the using code.  The message preferences pane is 
+now dynamically created bases upon this information.  
+See AbstractTableAction and LogixTableAction for examples of its use.
+The old items stored in the xml files is nolonger valid, but shouldn't 
+be a major issue as all these dealt with was the surpression of message boxes.
+
+<p>
+Matthew Harris fixed a GUI anomaly on Tabbed Preferences window
+
+<p>
+Kevin Dickerson added the ability for the user to add icons to the panel editor via the mouse popup menu while in edit mode.   The icon will be placed at the co-ordinates of the mouse.
+Also Signal Masts and sensors can be added to boundary points on the layout editor
+
+<p>
+Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
+Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
+
+<p>
+Kevin Dickerson improved Layout Editor handling of Signal Masts.
+
+<p>
+Kevin Dickerson has done some work on storing frame positions and sizes
+via the user preference manager.
+
+<p>
+Pete Cressman updated Logix Conditionals
+to implement trigger execution of action list on every state 
+calculation in addition to current policy of execute only on change.
+
+<p>
+Lionel Hebbos improved the Jynstrument throttle support:
+<ul>
+<li>Added function control up to 28.
+<li>Removed filter on kind of acceptable devices so that any Jinput device 
+    can be used for throttle control (Keyboard, mouse...).
+<li>Added a sample driver for keyboards.
+Note: once the keyboard driver is running, all keyboard inputs will be considered even if the JMRI window is not on the front
+<li>A "None" device was introduced in the device list accessible on right click, 
+    avoids to have all key inputs redirected to the Throttle.
+</ul>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
