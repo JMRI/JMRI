@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Acknowledgements.shtml,v 1.119 2010-12-01 22:09:01 jacobsen Exp $ -->
+<!-- $Id: Acknowledgements.shtml,v 1.120 2011-01-23 16:42:04 jacobsen Exp $ -->
 
 <!-- This page is created from the content (not formatting) -->
 <!-- of http://jmri.sf.net/community/index.html -->
@@ -387,6 +387,7 @@
 	    make it easier to discuss which specific error is happening
 	<LI>Al Silverstein, who helped figure out the format of some LocoNet messages and provided
 	decoder information on several models
+	<LI>Ed Sisk, who loaned a DCS51 for testing
 	<LI>Don Smith, who ran down some NCE decoder information
 	<LI>Alfredo Sola provides the Spanish translation
 	<LI>The good people at 

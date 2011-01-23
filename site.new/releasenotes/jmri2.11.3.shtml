@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.8 2011-01-23 15:16:26 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.9 2011-01-23 16:41:14 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -235,6 +235,7 @@ Pete Cressman added a loco icon to follow auto run trains
 
 <p>
 Ken Cameron improved handling of the Digitrax DCS51 Super Zephyr.
+Thanks go to Ed Sisk for the loan of a DCS51 to perform the development and testing.
 
 <p>
 Kevin Dickerson fixed NPE that can occur with some versions of unix and MAC OS X with getting the multiclick interval time that may not be supported
