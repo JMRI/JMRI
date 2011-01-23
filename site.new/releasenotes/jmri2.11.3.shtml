@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.9 2011-01-23 16:41:14 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.10 2011-01-23 21:21:25 kevin-dickerson Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -207,7 +207,7 @@ Andrew Crosland added support for SPROG 3.
 Andrew Crosland changed the defaults for the CBUS console to decimal, show events.
 
 <p>
-Kevin Dickerson worked on the ECOS throttle
+Kevin Dickerson added an option in the Ecos preferences to select if we always force control of the loco when trying to open a throttle or not.
 
 <p>
 Kevin Dickerson greatly improved the internals for throttle handling
@@ -223,9 +223,6 @@ Pete Cressman improved path detection and display for simultaneous manual and au
 
 <p>
 Pete Cressman fixed an empty tooltip-text bug
-
-<p>
-Kevin Dickerson added an option in the Ecos preferences to select if we always force control of the loco when trying to open a throttle or not.
 
 <p>
 Kevin Dickerson improved handling of errors when opening LocoNetOverTCP connections.
@@ -264,9 +261,6 @@ Also Signal Masts and sensors can be added to boundary points on the layout edit
 <p>
 Kevin Dickerson added the ability to find an east or west bound positionable point by either a signal head, signal mast or sensor.
 Also added tools to return either a facing or protected blocks by signal heads, masts or sensors.
-
-<p>
-Kevin Dickerson improved Layout Editor handling of Signal Masts.
 
 <p>
 Kevin Dickerson has done some work on storing frame positions and sizes
