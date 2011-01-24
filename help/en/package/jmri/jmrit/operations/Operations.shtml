@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.92 2011-01-22 00:55:14 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.93 2011-01-24 04:41:06 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -857,11 +857,14 @@ if they exist between the commas.</P>
 
 <P>To import a file, use the "Tools" menu in the upper left hand
 corner of the Tools-&gt;Operations-&gt;Cars menu. Then select
-"Tools-&gt;Roster-&gt;Import from file". Note that the program will only add
-cars that don't exist in the program's car roster. It the car already
-exists, the import will be skipped by the program. You must also create
-the locations and their tracks before importing the cars into the
-operations program.</P>
+"Tools-&gt;Roster-&gt;Import from file". Note that the program will only
+add cars that don't exist in the program's car roster. It the car
+already exists, the import will be skipped by the program.</P>
+<P>During the import, if a car's location or track doesn't exist in
+the program's database, the program will prompt you to create them. This
+way not only are you importing your cars, but also the car's locations
+and tracks. The program will set new track to a length of 1000'. After
+the import you can edit the track and set the track's correct length.</P>
 
 <P>To improve the speed of the car import, you can close the cars
 window. It takes significantly more processor cycles to update the cars
@@ -1047,7 +1050,7 @@ the set car location window are disabled.</P>
 the car when building new trains.  Many operators have a RIP (Repair In Place) track
 and use this feature to hold the car there until repairs have been made.</P>
 
-<P>Use to "Location" set of field to place the car on the layout.
+<P>Use the "Location" set of field to place the car on the layout.
 You can also optionally enter the location and track that you want the
 car to return to when the car's load status becomes empty. Use the
 "Auto" checkbox to show valid tracks for a given location</P>
@@ -1057,13 +1060,16 @@ building trains. We'll explain how they work in case you're interested
 in how the program works or if you want to manually override the
 program. The first is the "Destination" set of pull down boxes. The
 "Destination" is the next location that the car will be delivered to.
-The destination has be reachable by only one train or the car will not
+The destination must be reachable by only one train or the car will not
 be serviced.</P>
 
 <P>The next field is the "Final Destination" set of pull down boxes.
-If a car is delivered to a siding with a schedule, and the schedule has
-a shipping destination that requires more than one train, than this set
-of fields is loaded by the program.  The last field is the train assignment.</P>
+You can select any destination or track, the program will figure out the
+best route to ship the car to this destination. The "route" can consist of
+several trains, interchanges, and yards.  When a car is delivered
+to a siding with a schedule, and the schedule has a shipping destination
+that requires more than one train, the program uses this set of fields to
+ship the car. The last field is the train assignment.</P>
 
 <P>When manually setting a destination, you don't have to specify a
 track. And when manually setting a destination that is staging, you
@@ -1147,7 +1153,8 @@ don't exist in the program's engine roster. It the engine already
 exists, it will be skipped by the program.</P>
 
 <P>After importing your engines, you must save them if you want to
-keep them as part of your roster. Select any engine by pressing the edit
+keep them as part of your roster. Press the "Save" button located at the
+bottom of the Engines window, or select any engine by pressing the edit
 button and then press the "Save" button that can be found at the bottom
 right of the "Edit Engine" window.</P>
 
