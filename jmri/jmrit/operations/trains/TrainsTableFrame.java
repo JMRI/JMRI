@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.51 $
+ * @version             $Revision: 1.52 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -220,6 +220,7 @@ public class TrainsTableFrame extends OperationsFrame {
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPrint"), new Frame(), false, this));
 		toolMenu.add(new PrintTrainsAction(rb.getString("MenuItemPreview"), new Frame(), true, this));
 		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
+		toolMenu.add(new TrainsScriptAction(rb.getString("MenuItemScripts"), this));
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
 		toolMenu.add(new TrainsByCarTypeAction(rb.getString("TitleModifyTrains")));
 		toolMenu.add(new TrainsScheduleAction(rb.getString("TitleTimeTableTrains")));
@@ -459,6 +460,7 @@ public class TrainsTableFrame extends OperationsFrame {
     public void dispose() {
     	trainsModel.dispose();
     	trainManager.setTrainsFrame(null);
+    	trainManager.runShutDownScripts();
         super.dispose();
     }
       

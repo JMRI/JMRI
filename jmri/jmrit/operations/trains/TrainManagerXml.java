@@ -18,7 +18,7 @@ import org.jdom.ProcessingInstruction;
  * parameters managed by the TrainManager.
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.24 $
+ * @version $Revision: 1.25 $
  */
 public class TrainManagerXml extends OperationsXml {
 	
@@ -137,6 +137,8 @@ public class TrainManagerXml extends OperationsXml {
     			train.setComment(convertFromXmlComment(train.getComment()));
     			train.loadTrainIcon();
     		}
+    		// loading complete run startup scripts
+    		manager.runStartUpScripts();
     	}
     	else {
     		log.error("Unrecognized operations train file contents in file: "+name);

@@ -25,7 +25,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2009
- * @version     $Revision: 1.4 $
+ * @version     $Revision: 1.5 $
  */
 public class PrintTrainAction  extends AbstractAction {
 	
@@ -89,6 +89,10 @@ public class PrintTrainAction  extends AbstractAction {
         			s = "\t" + rl.getName() + newLine;
         			writer.write(s, 0, s.length());		
         		}
+        	}
+        	if (!train.getComment().equals("")){
+        		s = rb.getString("Comment") + ": " + train.getComment() + newLine;
+        		writer.write(s);
         	}
         	
         	// and force completion of the printing

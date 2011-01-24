@@ -27,7 +27,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2010
- * @version $Revision: 1.5 $
+ * @version $Revision: 1.6 $
  */
 
 public class TrainScriptFrame extends OperationsFrame {
@@ -57,6 +57,9 @@ public class TrainScriptFrame extends OperationsFrame {
 
 	public TrainScriptFrame() {
 		super();
+ 	}
+
+	public void initComponents(TrainEditFrame parent) {
     	// Set up script options in a Scroll Pane..
      	moveScriptPane = new JScrollPane(pMoveScript);
       	moveScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
@@ -65,9 +68,7 @@ public class TrainScriptFrame extends OperationsFrame {
       	terminationScriptPane = new JScrollPane(pTerminationScript);
       	terminationScriptPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
       	terminationScriptPane.setBorder(BorderFactory.createTitledBorder(rb.getString("ScriptsWhenTerminated")));  	
- 	}
 
-	public void initComponents(TrainEditFrame parent) {
 		// remember who called us
 		_trainEditFrame = parent;
 		_trainEditFrame.setChildFrame(this);
@@ -261,10 +262,11 @@ public class TrainScriptFrame extends OperationsFrame {
 	}
 	
     private void packFrame(){
-    	setVisible(false);
  		pack();
- 		if(getWidth()<300)
- 			setSize(getWidth()+50, getHeight()+20);
+ 		if(getWidth()<400)
+ 			setSize(450, getHeight()+50);
+ 		if (getHeight()<275)
+ 			setSize(getWidth(), 325);
 		setVisible(true);
     }
 	

@@ -1,4 +1,4 @@
-// TrainScriptAction.java
+// TrainsScriptAction.java
 
 package jmri.jmrit.operations.trains;
 
@@ -9,31 +9,31 @@ import java.util.ResourceBundle;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create and register a TrainScriptFrame.
+ * Swing action to create and register a TrainsScriptFrame.
  * 
  * @author Bob Jacobsen Copyright (C) 2001
- * @author Daniel Boudreau Copyright (C) 2010
- * @version $Revision: 1.3 $
+ * @author Daniel Boudreau Copyright (C) 2011
+ * @version $Revision: 1.1 $
  */
-public class TrainScriptAction extends AbstractAction {
+public class TrainsScriptAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
-    public TrainScriptAction(String s, TrainEditFrame frame) {
+    public TrainsScriptAction(String s, TrainsTableFrame frame) {
     	super(s);
     	this.frame = frame;
     }
     
-    TrainEditFrame frame;	// the parent frame that is launching the TrainScriptFrame.
+    TrainsTableFrame frame;	// the parent frame that is launching the TrainScriptFrame.
 
-    TrainScriptFrame f = null;
+    TrainsScriptFrame f = null;
     public void actionPerformed(ActionEvent e) {
         // create a train scripts frame
     	if (f != null && f.isVisible()){
     		f.dispose();
     	}
-    	f = new TrainScriptFrame();
+    	f = new TrainsScriptFrame();
     	f.setLocation(frame.getLocation());
-    	f.initComponents(frame);
+    	f.initComponents();
     	f.setExtendedState(Frame.NORMAL);  	
     	f.setTitle(rb.getString("MenuItemScripts"));
     }

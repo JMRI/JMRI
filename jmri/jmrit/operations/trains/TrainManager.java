@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.51 $
+ * @version	$Revision: 1.52 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -58,6 +58,10 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 	private Point _trainScheduleFramePosition = new Point();
 	private int[] _tableScheduleColumnWidths = {50, 70, 120};
 	private String _trainScheduleActiveId = "";
+	
+	// Scripts
+	protected List<String> _startUpScripts = new ArrayList<String>(); // list of script pathnames to run at start up
+	protected List<String> _shutDownScripts = new ArrayList<String>(); // list of script pathnames to run at shut down
 	
 	// property changes
 	public static final String LISTLENGTH_CHANGED_PROPERTY = "TrainsListLength";
@@ -212,6 +216,60 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     	return _trainScheduleActiveId;
     }
     
+	/**
+	 * Add a script to run after trains have been loaded
+	 * @param pathname The script's pathname
+	 */
+	public void addStartUpScript(String pathname){
+		_startUpScripts.add(pathname);
+	}
+	
+	public void deleteStartUpScript(String pathname){
+		_startUpScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames to run after trains have been loaded
+	 * @return A list of pathnames to run after trains have been loaded
+	 */
+	public List<String> getStartUpScripts(){
+		return _startUpScripts;
+	}
+	
+	public void runStartUpScripts(){
+		List<String> scripts = getStartUpScripts();
+		for (int i=0; i<scripts.size(); i++){
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getStartUpScripts().get(i)));
+		}
+	}
+		   
+	/**
+	 * Add a script to run at shutdown
+	 * @param pathname The script's pathname
+	 */
+	public void addShutDownScript(String pathname){
+		_shutDownScripts.add(pathname);
+	}
+	
+	public void deleteShutDownScript(String pathname){
+		_shutDownScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames to run at shutdown
+	 * @return A list of pathnames to run at shutdown
+	 */
+	public List<String> getShutDownScripts(){
+		return _shutDownScripts;
+	}
+	
+	public void runShutDownScripts(){
+		List<String> scripts = getShutDownScripts();
+		for (int i=0; i<scripts.size(); i++){
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getShutDownScripts().get(i)));
+		}
+	}
+	
 	public void dispose() {
         _trainHashTable.clear();
         _id = 0;
@@ -615,7 +673,25 @@ public class TrainManager implements java.beans.PropertyChangeListener {
              	}
     		}
     	}
-
+    	// check for scripts
+    	if (values.getChild("scripts") != null){
+    		@SuppressWarnings("unchecked")
+    		List<Element> lm = values.getChild("scripts").getChildren("startUp");
+    		for (int i=0; i<lm.size(); i++){
+    			Element es = lm.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addStartUpScript(a.getValue());
+    			}
+    		}
+    		@SuppressWarnings("unchecked")
+    		List<Element> lt = values.getChild("scripts").getChildren("shutDown");
+    		for (int i=0; i<lt.size(); i++){
+    			Element es = lt.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addShutDownScript(a.getValue());
+    			}
+    		}
+    	}
     }
 
     
@@ -692,6 +768,22 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
         e.setAttribute("columnWidths", buf.toString());
         values.addContent(e);
+        // save list of move scripts for this train
+        if (getStartUpScripts().size()>0 || getShutDownScripts().size()>0){
+        	Element es = new Element("scripts");
+        	for (int i=0; i<getStartUpScripts().size(); i++){
+        		Element em = new Element("startUp");
+        		em.setAttribute("name", getStartUpScripts().get(i));
+        		es.addContent(em);
+        	}
+        	// save list of termination scripts for this train
+        	for (int i=0; i<getShutDownScripts().size(); i++){
+        		Element et = new Element("shutDown");
+        		et.setAttribute("name", getShutDownScripts().get(i));
+        		es.addContent(et);
+        	}
+        	values.addContent(es);
+        }
         return values;
     }
     
