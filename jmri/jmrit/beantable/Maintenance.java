@@ -62,7 +62,7 @@ import jmri.jmrit.display.Positionable;
  * for more details.
  * <P>
  * @author  Pete Cressman   Copyright 2009
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class Maintenance
@@ -534,7 +534,7 @@ public class Maintenance
         }
         if (found) {
             return (new String[] {"OBlock", userName, sysName, 
-                                  Integer.toString(sec.getNumPropertyChangeListeners())});
+                                  Integer.toString(blk.getNumPropertyChangeListeners())});
         }
         log.warn(" No type found for "+userName+" ("+sysName+").");
 
@@ -1386,12 +1386,20 @@ public class Maintenance
                 if (names[0].length()==0) {
                     names[0] = "Unknown Type?";
                 }
+                /*
                 JOptionPane.showMessageDialog(null, 
                         MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+numListeners+
                             " listeners installed and only "+referenceCount+ 
                             " references found.\n"+names[0]+
                             " Tables are listeneners.  Check that the table is closed.", 
                         rbm.getString("infoTitle"), JOptionPane.INFORMATION_MESSAGE);
+               */         
+                if (text != null) {
+                    text.append(MessageFormat.format(rbm.getString("OrphanName"), (Object[])names)+" has "+numListeners+
+                            " listeners installed and only "+referenceCount+ 
+                            " references found.\n"+names[0]+
+                            " Tables are listeneners.  Check that the table is closed.");
+                }
             }
         }
         return (referenceCount > 0);
