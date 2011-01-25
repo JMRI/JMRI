@@ -43,7 +43,7 @@ import jmri.util.PythonInterp;
  * @author	Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author      Matthew Harris copyright (c) 2009
- * @version     $Revision: 1.33 $
+ * @version     $Revision: 1.34 $
  */
 public class DefaultConditional extends AbstractNamedBean
     implements Conditional, java.io.Serializable {
@@ -70,7 +70,7 @@ public class DefaultConditional extends AbstractNamedBean
     protected ArrayList <ConditionalAction> _actionList = new ArrayList<ConditionalAction>();
 
 	private int _currentState = Conditional.UNKNOWN;
-	private boolean _triggerActionsOnChange = false;
+	private boolean _triggerActionsOnChange = true;
 
     /**
     *  Inverse map
