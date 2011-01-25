@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Logix.shtml,v 1.6 2009-07-07 20:39:15 pete_cressman Exp $ -->
+<!-- $Id: Logix.shtml,v 1.7 2011-01-25 23:13:30 pete_cressman Exp $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -56,6 +56,7 @@
 	<li><a href="#conditional">Conditionals</a>
 	<li><a href="#editconditional">The Edit Conditional Window</a>
 	<li><a href="#logicalexpression">The Logical Expression</a>
+	<li><a href="#thepolicy">Triggering the Actions</a>
 	<li><a href="#theactions">The Actions</a>
 	<li><a href="#start">Getting Started</a>
 	<li><a href="#variable">Available State Variables</a>
@@ -177,14 +178,13 @@
 	is immediately moved to the top of the table. All remaining buttons change
 	to <b>Next</b>. Select remaining Conditionals in desired order, until
 	all buttons change back to <B>Edit</b>.
-	Note that the order that
-	Conditionals are listed in the Logix does not determine the order
-	in which they're evaluated, nor does it force evaluation
-	of one Conditional when an earlier or later one is evaluated.
-	You should think of Conditionals as independent pieces of boolean
-	logic that continually look for some combination of inputs to
-	be true, and when that combination happens, the Conditional
-	will take certain actions.
+        </p><p>
+        The only time when the Conditionals are evaluated in the order listed is
+        when all of their states are UNKNOWN, such as when the Logix is being enabled.
+	Conditionals are evaluated when one of their state variables changes its state.
+        If an entity is used as a state variable in more than one conditional, it is
+        indeterminate which conditional is evaluated first.
+        </p>
 	
 	<p> When <b>Done</b> is clicked at the bottom of the Edit Logix window, any 
 	change in the Logix user name is checked and made. A check is made for
@@ -248,7 +248,8 @@
 	to set up a logical expression to evaluate many situations on  
 	the layout. For example, "if block 10 and block 11 are  
 	occupied and turnout 20 is thrown" would be set up as:</p>
-	<p><ul>Sensor Active LS1020 AND Sensor Active LS1021 AND Turnout Thrown LT20
+	<p><ul>Sensor "LS1020" is Sensor Active AND Sensor "LS1021" is Sensor Active 
+        AND Turnout "LT20" is Turnout Thrown
 	</ul></p>
 	<p>where LS1020 is a sensor that is true when block 10 is  
 	occupied (perhaps from a BDL168), sensor LS1021 is true when  
@@ -267,8 +268,8 @@
 	logical expression changes.  This means a conditional may actually 
         be three statements.
         </p>	
-	<p><ul>if (antecedent is true) then (do "change on true" actions).</p>
-	<p>if (antecedent is false) then (do "change on false" actions).</p>
+	<p><ul>if (antecedent is true) then (do "on change to true" actions).</p>
+	<p>if (antecedent is false) then (do "on change to false" actions).</p>
 	<p>if (antecedent state changes) then (do "on change" actions).</ul></p>
 	</dd>
 	
@@ -358,6 +359,29 @@
 	may be reported unnecessarily.</i></p>
 	</dd>
 	
+	<dt class=left><a name=thepolicy><H3>Triggering the Actions</H3></a>
+	</dt>
+	<dd class=top>	
+        <p>
+        There are two policies that can be taken after a conditional's state is evaluated:
+        <ul>
+        <li> Execute the conditional actions only if the state of the conditional has changed</li>
+        <li> Execute the conditional actions regardless whether the state has changed</li>
+        </ul>
+        Which policy to use is chosen by the radio buttons in the middle of the Edit
+        Conditional window.
+        The <b>Execute actions on change of state only</b> button prevents unwanted behavior
+        from occurring when multiple instances of the "on true" or "on false" actions 
+        are executed.  That is, if sucessive triggers cause the logical expression to be
+        evaluated to the same state, only the first trigger will execute the actions.  
+        Normally, it is best for a conditional to execute its actions
+        only when the state of the conditional changes.  However, if it is important 
+        to maintain the actions associated with
+        a particular state of the Conditional the <b>Execute actions whenever triggered</b>
+        button should be used.  If external events undo some of the actions of 
+        the conditional but do not change the state of the conditional, then this policy
+        will execute the action on any trigger.
+        </p>    
 	<dt class=left><a name=theactions><H3>The Actions</H3></a>
 	</dt>
 	<dd class=top>
@@ -545,31 +569,24 @@
 		minutes, relative to a 24-hour clock.  Calculation is triggered when the 
 		fast clock time enters the range and when the fast clock time exits the 
 		range.
-		<li><b>Signal Red</b>: Evaluates to true if the appearance of the 
-		specified signal head is red. Calculation is 
-		triggered when the appearance change to or from red.
-		<li><b>Signal Yellow</b>: Evaluates to true if the appearance of the 
-		specified signal head is yellow. Calculation is 
-		triggered when the appearance change to or from yellow.
-		<li><b>Signal Green</b>: Evaluates to true if the appearance of the 
-		specified signal head is green. Calculation is 
-		triggered when the appearance change to or from green.
-		<li><b>Signal Dark</b>: Evaluates to true if the appearance of the 
-		specified signal head is dark. Calculation is 
-		triggered when the appearance change to or from dark.
-		<li><b>Signal Flashing Red</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing red. Calculation 
-		is triggered when the appearance change to or from flashing red.
-		<li><b>Signal Flashing Yellow</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing yellow. Calculation 
-		is triggered when the appearance change to or from flashing yellow.
-		<li><b>Signal Flashing Green</b>: Evaluates to true if the appearance of 
-		the specified signal head is flashing green. Calculation 
-		is triggered when the appearance change to or from flashing green.
-		<li><b>Signal Lit</b>: Evaluates to true if the specified signal head is 
+		<li><b>Signal Head Appearance Equals</b>: Evaluates to true if the appearance of the 
+		specified signal head equals the appearance specified in the state variable. 
+                Calculation is 
+		triggered when the appearance of the signal head changes.
+		<li><b>Signal Head Lit</b>: Evaluates to true if the specified signal head is 
 		lit. 
-		<li><b>Signal Held</b>: Evaluates to true if the specified signal head 
+		<li><b>Signal Head Held</b>: Evaluates to true if the specified signal head 
 		is being held. 
+		<li><b>Signal Mast Aspect Equals</b>: Evaluates to true if the aspect of the 
+		specified signal mast equals the aspect specified in the state variable. 
+                Calculation is 
+		triggered when the aspect of the signal mast changes.
+		<li><b>Signal Mast Lit</b>: Evaluates to true if the specified signal mast is 
+		lit. 
+		<li><b>Signal Mast Held</b>: Evaluates to true if the specified signal mast 
+		is being held. 
+		<li><b>OBlock status</b>: Evaluates to true if the specified status 
+		equals the status of the Occupancy Block. 
     	</ul>
 	</dd>    
     
@@ -582,17 +599,17 @@
 		state.  Specify the turnout to set by entering its system name or user
 		name.  Specify the state to set by choosing Closed or Thrown in the 
 		popup menu.		
-		<li><b>Set Signal Appearance</b>: Sets the specified signal head  to 
+		<li><b>Set Signal Head Appearance</b>: Sets the specified signal head  to 
 		the chosen appearance. Specify the signal head to set by entering its 
 		system name or user name.  Specify the appearance to set by choosing 
 		from the popup menu.		
- 		<li><b>Set Signal Held</b>: Sets the specified signal head to hold.
+ 		<li><b>Set Signal Head Held</b>: Sets the specified signal head to hold.
 		Specify the signal head to hold by entering its system name or user name.  
-  		<li><b>Clear Signal Held</b>: Clears the hold on the specified signal 
+  		<li><b>Clear Signal Head Held</b>: Clears the hold on the specified signal 
   		head. Specify the signal head by entering its system name or user name.  
-  		<li><b>Set Signal Dark</b>: Sets the specified signal head to not lit.
+  		<li><b>Set Signal Head Dark</b>: Sets the specified signal head to not lit.
 		Specify the signal head by entering its system name or user name.  
-  		<li><b>Set Signal Lit</b>: Sets the specified signal head to lit.
+  		<li><b>Set Signal Head Lit</b>: Sets the specified signal head to lit.
 		Specify the signal head by entering its system name or user name.  
   		<li><b>Trigger Route</b>: Triggers the specified route.
 		Specify the route by entering its system name or user name.  
@@ -675,10 +692,58 @@
 		clock is already running, this action has no effect.</LI>
 		<LI><B>Stop Fast Clock</B>: Pauses the JMRI fast clock. If the fast 
 		clock is not running, this action has no effect.</LI>
+		<LI><B>Set Memory</B>: Sets the value of a memory variable to 
+		a specified value.
 		<LI><B>Copy Memory To Memory</B>: Copies the value of a memory variable to 
 		another memory variable. Specify the memory to be copied from by entering its 
 		name in the leftmost field. Specify the memory to receive the copied value by 
-		entering its name in the rightmost field.</LI>
+                entering the name of the memory in the rightmost field.
+		<li><b>Set Signal Mast Aspect</b>: Sets the specified signal mast to 
+		the chosen aspect. Specify the signal mast to set by entering its 
+		system name or user name.  Specify the aspect to set by choosing 
+		from the popup menu.		
+ 		<li><b>Set Signal Mast Held</b>: Sets the specified signal mast to hold.
+		Specify the signal mast to hold by entering its system name or user name.  
+  		<li><b>Clear Signal Mast Held</b>: Clears the hold on the specified signal 
+  		mast. Specify the signal mast by entering its system name or user name.  
+  		<li><b>Set Signal Mast Dark</b>: Sets the specified signal mast to not lit.
+		Specify the signal mast by entering its system name or user name.  
+  		<li><b>Clear Signal Mast Dark</b>: Sets the specified signal mast to lit.
+		Specify the signal mast by entering its system name or user name.</LI>
+  		<li><b>Allocate Warrant</b>: Allocates (reserves) the OBlocks comprising 
+                the route of the warrant for use by the warrant.
+		Specify the warrant by entering its system name or user name.</LI>
+  		<li><b>Deallocate Warrant</b>: Deallocates the OBlocks comprising 
+                the route of the warrant so they may be allocated to other warrants.
+		Specify the warrant by entering its system name or user name.</LI>
+  		<li><b>Set Warrant Route Turnouts</b>: Sets all the turnouts comprising 
+                the route of the warrant.
+		Specify the warrant by entering its system name or user name.</LI>
+  		<li><b>Auto Run Train</b>: Starts playback of the recoreded script for 
+                the train specified in the warrant.
+		Specify the warrant by entering its system name or user name.</LI>
+  		<li><b>Manually Run Train</b>: Serves a "clearance" to an operator that
+                a humanly run train has running rights for the extent of the warrant's
+                route.
+		Specify the warrant by entering its system name or user name.</LI>
+  		<li><b>Control Auto Run Train</b>: Issues the specifed command to an 
+                auto run train. The Commands are: HALT, RESUME, ABORT.
+		Specify the warrant of the train by entering its system name or user name.</LI>
+  		<li><b>Set Throttle Factor</b>: Increases or decreases the throttle settings
+                of an auto run train by the specified factor.
+		Specify the warrant of the train by entering its system name or user name.</LI>
+  		<li><b>Allocate OBlock</b>: Allocates (reserves) an Occupancy block.
+		Specify the OBlock entering its system name or user name.</LI>
+  		<li><b>Set Block Path</b>: Set the turnouts for a path in the Occupancy block.
+		Specify the OBlock by entering its system name or user name.</LI>
+  		<li><b>Deallocate OBlock</b>: Deallocates an Occupancy block.
+		Specify the OBlock by entering its system name or user name.</LI>
+  		<li><b>Set Block Out-Of-Service</b>: Sets the status of an Occupancy block
+                to Out-Of-Service.
+		Specify the OBlock by entering its system name or user name.</LI>
+  		<li><b>Clear Block Out-Of-Service</b>: Sets the status of an Occupancy
+                Block to ite current normal status.</LI>
+		Specify the OBlock by entering its system name or user name.</LI>
 		</ul>
 	</dd>    
 	<dt class=left><a name=notes><H3>Additional Notes</H3></a></dt>
@@ -687,20 +752,6 @@
 	needed by Logix users, but in some cases were important or of 
 	interest for previous versions of Logix. 
 	<ul>
-	<p><li><b> How can an inclusive OR be done without the OR operator?</b>
-	<p>To achieve "logical expression A"  OR  "logical expression B" without 
-	needing an OR operator use two Conditionals--Conditional 1 would calculate 
-	logical expression A, triggering the desired action if it calculated true 
-	(or false); the second Conditional would begin with NOT Conditional 1 true
-	(or false) as its  first state variable, then AND logical expression B. In 
-	this way the second Conditional would trigger the desired action if logical  
-	expression B calculated true, provided the action wasn't already  
-	triggered by Conditional 1.  By simple extension of this idea, you can
-	achieve OR of three or more logical expressions.  
-	<p>There are also other ways of accomplishing the OR by use of multiple 
-	Conditionals. The idea is that simple inclusive OR's can be accomplished 
-	without complicating the Logix user interface with additional operators 
-	or grouping of state variables.
 	<p><li><b>Why have a "group" of Conditionals instead of just single 
 	Conditionals?</b>
 	<p> A group of Conditionals was chosen for several reasons, including:
