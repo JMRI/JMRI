@@ -38,7 +38,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Builds a train and creates the train's manifest. 
  * 
  * @author Daniel Boudreau  Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.131 $
+ * @version             $Revision: 1.132 $
  */
 public class TrainBuilder extends TrainCommon{
 	
@@ -1676,6 +1676,18 @@ public class TrainBuilder extends TrainCommon{
 					if (!checkDropTrainDirection(car, rld, testTrack))
 						continue;
 					String status = car.testDestination(testDestination, testTrack);
+					// is the testTack a siding with a schedule demanding this car's load?
+					if (status.equals(Car.OKAY) && !testTrack.getScheduleId().equals("") 
+							&& !car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+							&& !car.getLoad().equals(CarLoads.instance().getDefaultLoadName())){
+						addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildSidingScheduleLoad"),new Object[]{testTrack.getName(), car.getLoad()}));
+						// is car part of kernel?
+						loadKernel(car);
+						boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
+						if (!carAdded)
+							log.error ("Couldn't add car "+car.toString()+" to train ("+train.getName()+"), location ("+rl.getName()+ ") destination (" +rld.getName()+")");
+						return;	// done, no build errors					
+					}					
 					// is the testTrack a siding with a Schedule?
 					if(testTrack.getLocType().equals(Track.SIDING) && status.contains(Car.SCHEDULE) 
 							&& status.contains(Car.LOAD)){
@@ -1687,16 +1699,7 @@ public class TrainBuilder extends TrainCommon{
 							addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildAddingScheduleLoad"),new Object[]{si.getLoad(), car.toString()}));
 							car.setLoad(si.getLoad());
 							// is car part of kernel?
-							if (car.getKernel()!= null){
-								List<Car> cars = car.getKernel().getCars();
-								for (int i=0; i<cars.size(); i++){
-									Car kc = cars.get(i);
-									if (kc.getType().equals(car.getType()) 
-											|| car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
-											|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
-										kc.setLoad(car.getLoad());
-								}
-							}					
+							loadKernel(car);
 							// force car to this destination
 							boolean carAdded = addCarToTrain(car, rl, rld, testTrack);	// should always be true
 							if (!carAdded)
@@ -1812,6 +1815,19 @@ public class TrainBuilder extends TrainCommon{
 		if (routeList.size()>1)
 			addLine(buildReport, FIVE, MessageFormat.format(rb.getString("buildNoDestForCar"),new Object[]{car.toString()}));
 		return;	// no build errors, but car not given destination
+	}
+	
+	private void loadKernel(Car car){
+		if (car.getKernel()!= null){
+			List<Car> cars = car.getKernel().getCars();
+			for (int i=0; i<cars.size(); i++){
+				Car kc = cars.get(i);
+				if (kc.getType().equals(car.getType()) 
+						|| car.getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+						|| car.getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+					kc.setLoad(car.getLoad());
+			}
+		}			
 	}
 
 	private void buildFailed(String string){
