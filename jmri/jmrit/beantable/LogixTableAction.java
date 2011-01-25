@@ -61,7 +61,7 @@ import jmri.util.JmriJFrame;
  * @author Dave Duchamp Copyright (C) 2007
  * @author Pete Cressman Copyright (C) 2009, 2010, 2011
  * @author Matthew Harris  copyright (c) 2009
- * @version $Revision: 1.92 $
+ * @version $Revision: 1.93 $
  */
 
 public class LogixTableAction extends AbstractTableAction {
@@ -3058,7 +3058,9 @@ public class LogixTableAction extends AbstractTableAction {
         _actionTypePanel.setVisible(false);
         _setPanel.setVisible(false);
         _shortTextPanel.setVisible(false);
+        _shortActionString.setText("");
         _textPanel.setVisible(false);
+        _longActionString.setText("");
         _namePanel.setVisible(false);
         _actionPanel.setVisible(false);
         _optionPanel.setVisible(false);
@@ -3264,12 +3266,15 @@ public class LogixTableAction extends AbstractTableAction {
                 _namePanel.setToolTipText(rbx.getString("NameHintWarrant"));
                 _namePanel.setVisible(true);
                 if (actionType==Conditional.ACTION_CONTROL_TRAIN) {
+                    p = (JPanel)_actionPanel.getComponent(0);
+                    l = (JLabel)p.getComponent(0);
                     _actionBox.addItem(rbx.getString("WarrantHalt"));
                     _actionBox.addItem(rbx.getString("WarrantResume"));
                     _actionBox.addItem(rbx.getString("WarrantAbort"));
-                    _actionPanel.setVisible(true);
+                    l.setText(rbx.getString("LabelControlTrain"));
+                   _actionPanel.setVisible(true);
                 } else if (actionType==Conditional.ACTION_SET_TRAIN_ID ||
-                                actionType==Conditional.ACTION_THROTTLE_FACTOR ) {
+                                actionType==Conditional.ACTION_THROTTLE_FACTOR) {
                     p = (JPanel)_shortTextPanel.getComponent(0);
                     l = (JLabel)p.getComponent(0);
                     if (actionType==Conditional.ACTION_SET_TRAIN_ID) {
@@ -3311,14 +3316,16 @@ public class LogixTableAction extends AbstractTableAction {
                     _actionTypeBox.addItem(
                         DefaultConditionalAction.getActionTypeString(Conditional.ITEM_TO_AUDIO_ACTION[i]));
                 }
-                p = (JPanel)_textPanel.getComponent(0);
-                l = (JLabel)p.getComponent(0);
                 if (actionType==Conditional.ACTION_PLAY_SOUND) {
+                    p = (JPanel)_textPanel.getComponent(0);
+                    l = (JLabel)p.getComponent(0);
                     l.setText(rbx.getString("LabelSetFile"));
                     _textPanel.setToolTipText(rbx.getString("SetHintSound"));
                     _textPanel.setVisible(true);
                     _setPanel.setVisible(true);
                 } else if (actionType==Conditional.ACTION_CONTROL_AUDIO) {
+                    p = (JPanel)_actionPanel.getComponent(0);
+                    l = (JLabel)p.getComponent(0);
                     l.setText(rbx.getString("LabelActionAudio"));
                     _actionBox.addItem(rbx.getString("AudioSourcePlay"));
                     _actionBox.addItem(rbx.getString("AudioSourceStop"));
