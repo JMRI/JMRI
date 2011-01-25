@@ -27,7 +27,7 @@ import jmri.jmrit.operations.trains.TrainCommon;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2011
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class PrintCarLoadsAction  extends AbstractAction {
 	
@@ -48,24 +48,11 @@ public class PrintCarLoadsAction  extends AbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    CarPrintOptionFrame cpof = null;
+ 
 
     public void actionPerformed(ActionEvent e) {
-    	if (cpof == null)
-    		cpof = new CarPrintOptionFrame();
-    	else
-    		cpof.setVisible(true);
+    		new CarPrintOptionFrame();
     }
-    
-    JCheckBox printCarsWithLocation = new JCheckBox(rb.getString("PrintCarsWithLocation"));
-    JCheckBox printCarLength = new JCheckBox(rb.getString("PrintCarLength"));
-    JCheckBox printCarWeight = new JCheckBox(rb.getString("PrintCarWeight"));
-    JCheckBox printCarColor = new JCheckBox(rb.getString("PrintCarColor"));
-    JCheckBox printCarOwner = new JCheckBox(rb.getString("PrintCarOwner"));
-    JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
-    JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
-    
-    JButton okayButton = new JButton(rb.getString("ButtonOkay"));
     
     public class CarPrintOptionFrame extends OperationsFrame{
     	

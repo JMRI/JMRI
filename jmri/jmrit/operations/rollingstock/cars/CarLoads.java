@@ -17,7 +17,7 @@ import jmri.jmrit.operations.setup.Control;
 /**
  * Represents the loads that cars can have.
  * @author Daniel Boudreau Copyright (C) 2008
- * @version	$Revision: 1.17 $
+ * @version	$Revision: 1.18 $
  */
 public class CarLoads {
 	
@@ -341,8 +341,9 @@ public class CarLoads {
     	}
     }
         
-    public Hashtable<String, List<CarLoad>> getList(){
-    	return list;
+    @SuppressWarnings("unchecked")
+	public Hashtable<String, List<CarLoad>> getList(){
+    	return (Hashtable<String, List<CarLoad>>) list.clone();
     }
     
 	/**
