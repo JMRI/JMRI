@@ -38,7 +38,7 @@ import jmri.jmrit.display.SignalHeadIcon;
  * The tools in this module are accessed via the Tools menu in Layout Editor.
  * <P>
  * @author Dave Duchamp Copyright (c) 2007
- * @version $Revision: 1.9 $
+ * @version $Revision: 1.10 $
  */
 
 public class LayoutEditorTools 
@@ -7151,10 +7151,14 @@ public class LayoutEditorTools
 					int xLoc, int yLoc) {
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
                                                     "resources/icons/smallschematics/tracksegments/circuit-error.gif"),layoutEditor);
-        l.setActiveIcon(sensorIconEditor.getIcon(0));
-        l.setInactiveIcon(sensorIconEditor.getIcon(1));
-        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
-        l.setUnknownIcon(sensorIconEditor.getIcon(3));
+//        l.setActiveIcon(sensorIconEditor.getIcon(0));
+//        l.setInactiveIcon(sensorIconEditor.getIcon(1));
+//        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
+//        l.setUnknownIcon(sensorIconEditor.getIcon(3));
+        l.setIcon("SensorStateActive", sensorIconEditor.getIcon(0));
+        l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
+        l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
+        l.setIcon("BeanStateUnknown", sensorIconEditor.getIcon(3));
 		l.setSensor(sensorName);
 		l.setLocation(xLoc,yLoc);
 		if (rotation>0) {

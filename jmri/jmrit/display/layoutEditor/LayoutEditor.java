@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.47 $
+ * @version $Revision: 1.48 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -4726,10 +4726,14 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
 		}
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif", 
                                                     "resources/icons/smallschematics/tracksegments/circuit-error.gif"),this);
-        l.setActiveIcon(sensorIconEditor.getIcon(0));
-        l.setInactiveIcon(sensorIconEditor.getIcon(1));
-        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
-        l.setUnknownIcon(sensorIconEditor.getIcon(3));
+//        l.setActiveIcon(sensorIconEditor.getIcon(0));
+//        l.setInactiveIcon(sensorIconEditor.getIcon(1));
+//        l.setInconsistentIcon(sensorIconEditor.getIcon(2));
+//        l.setUnknownIcon(sensorIconEditor.getIcon(3));
+        l.setIcon("SensorStateActive", sensorIconEditor.getIcon(0));
+        l.setIcon("SensorStateInactive", sensorIconEditor.getIcon(1));
+        l.setIcon("BeanStateInconsistent", sensorIconEditor.getIcon(2));
+        l.setIcon("BeanStateUnknown", sensorIconEditor.getIcon(3));
 		l.setSensor(nextSensor.getText().trim());
         l.setDisplayLevel(SENSORS);
 		//Sensor xSensor = l.getSensor();
