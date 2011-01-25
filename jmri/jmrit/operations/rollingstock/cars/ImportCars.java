@@ -26,8 +26,8 @@ import jmri.jmrit.operations.setup.Setup;
  * 
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Weight Color Owner Year Location
- * @author Dan Boudreau Copyright (C) 2008 2010
- * @version $Revision: 1.18 $
+ * @author Dan Boudreau Copyright (C) 2008 2010 2011
+ * @version $Revision: 1.19 $
  */
 public class ImportCars extends Thread {
 	
@@ -187,6 +187,28 @@ public class ImportCars extends Thread {
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("CarLengthNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLength}),
 							rb.getString("carAttribute5"),
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				if (carLength.length() > Control.MAX_LEN_STRING_LENGTH_NAME){
+					JOptionPane.showMessageDialog(null, 
+							MessageFormat.format(rb.getString("CarLengthNameTooLong"),new Object[]{(carRoad+" "+carNumber),carLength}),
+							rb.getString("carAttribute5"),
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				if (carLength.equals("")){
+					log.debug("Car ("+carRoad+" "+carNumber+") length not specified");
+					JOptionPane.showMessageDialog(null, MessageFormat.format(rb.getString("CarLengthNotSpecified"),new Object[]{(carRoad+" "+carNumber)}),
+							rb.getString("CarLengthMissing"),
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				try {
+					Integer.parseInt(carLength);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null,
+							MessageFormat.format(rb.getString("CarLengthNameNotNumber"),new Object[]{(carRoad+" "+carNumber), carLength}), rb.getString("CarLengthMissing"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}

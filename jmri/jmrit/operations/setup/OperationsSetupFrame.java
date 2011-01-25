@@ -32,7 +32,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * Frame for user edit of operation parameters
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 
 public class OperationsSetupFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -338,6 +338,8 @@ public class OperationsSetupFrame extends OperationsFrame implements java.beans.
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new OptionAction(rb.getString("TitleOptions")));
 		toolMenu.add(new PrintOptionAction(rb.getString("TitlePrintOptions")));
+		toolMenu.add(new BackupFilesAction(rb.getString("Backup")));
+		toolMenu.add(new RestoreFilesAction(rb.getString("Restore")));
 		toolMenu.add(new LoadDemoAction(rb.getString("LoadDemo")));
 		toolMenu.add(new ResetAction(rb.getString("ResetOperations")));
 		menuBar.add(toolMenu);

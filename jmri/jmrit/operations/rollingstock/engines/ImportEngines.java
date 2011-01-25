@@ -25,7 +25,7 @@ import jmri.jmrit.operations.setup.Control;
  * Each field is space or comma delimited.  Field order:
  * Number Road Type Length Owner Year Location
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class ImportEngines extends Thread {
 	
@@ -178,6 +178,14 @@ public class ImportEngines extends Thread {
 					JOptionPane.showMessageDialog(null, 
 							MessageFormat.format(rb.getString("EngineLengthNameTooLong"),new Object[]{(engineRoad+" "+engineNumber),engineLength}),
 							rb.getString("engineAttribute5"),
+							JOptionPane.ERROR_MESSAGE);
+					break;
+				}
+				try {
+					Integer.parseInt(engineLength);
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(null,
+							MessageFormat.format(rb.getString("EngineLengthNameNotNumber"),new Object[]{(engineRoad+" "+engineNumber), engineLength}), rb.getString("EngineLengthMissing"),
 							JOptionPane.ERROR_MESSAGE);
 					break;
 				}

@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.15 $
+ * @version $Revision: 1.16 $
  */
 public class Backup extends XmlFile {
 
@@ -35,34 +35,36 @@ public class Backup extends XmlFile {
 	 */
 	public boolean backupFiles(String directoryName){
 		setDirectoryName(directoryName);
-		return backupFiles();
+		File directory = new File(fullBackupDirectoryName());
+		return backupFiles(directory);
 	}
-
-	public boolean backupFiles() {
+	
+	/**
+	 * Creates backup files for the directory specified
+	 * @param directory The directory to use for the backup.
+	 * @return true if successful.
+	 */
+	public boolean backupFiles(File directory) {
 		try {
-			if (!checkFile(fullBackupFilename(OperationsSetupXml.instance().getOperationsFileName()))) {
+			if (!directory.exists()) {
 				// The file/directory does not exist, create it before writing
-				File file = new File(fullBackupFilename(null));
-				File parentDir = file.getParentFile();
-				if (!parentDir.exists()) {
-					if (!parentDir.mkdirs()) {
-						log.error("backup directory not created");
-						return false;
-					}
-				}
+				if (!directory.mkdirs()) {
+					log.error("backup directory not created");
+					return false;
+				}	
 			}
-			OperationsSetupXml.instance().writeFile(
-					fullBackupFilename(OperationsSetupXml.instance().getOperationsFileName()));
-			CarManagerXml.instance().writeFile(
-					fullBackupFilename(CarManagerXml.instance().getOperationsFileName()));
-			EngineManagerXml.instance().writeFile(
-					fullBackupFilename(EngineManagerXml.instance().getOperationsFileName()));
-			TrainManagerXml.instance().writeFile(
-					fullBackupFilename(TrainManagerXml.instance().getOperationsFileName()));
-			LocationManagerXml.instance().writeFile(
-					fullBackupFilename(LocationManagerXml.instance().getOperationsFileName()));
-			RouteManagerXml.instance().writeFile(
-					fullBackupFilename(RouteManagerXml.instance().getOperationsFileName()));
+			OperationsSetupXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					OperationsSetupXml.instance().getOperationsFileName());
+			CarManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					CarManagerXml.instance().getOperationsFileName());
+			EngineManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					EngineManagerXml.instance().getOperationsFileName());
+			TrainManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					TrainManagerXml.instance().getOperationsFileName());
+			LocationManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					LocationManagerXml.instance().getOperationsFileName());
+			RouteManagerXml.instance().writeFile(directory.getAbsolutePath()+File.separator+
+					RouteManagerXml.instance().getOperationsFileName());
 		} catch (Exception e) {
 			log.error("Exception while making backup, may not be complete: "
 					+ e);
@@ -109,21 +111,25 @@ public class Backup extends XmlFile {
 		return restore(backupDirectory, directoryName);
 	}
 	
+	public boolean restore(String directoryPath, String directoryName) {
+		File directory = new File(directoryPath + File.separator + directoryName);
+		return restore(directory);
+	}
+	
 	/**
 	 * Copies operation files from directoryName
 	 * 
-	 * @param directoryName
+	 * @param directory
 	 * @return true if successful, false if not.
 	 */
-	public boolean restore(String directoryPath, String directoryName) {
+	public boolean restore(File directory) {
 		try {
-			File file = new File(directoryPath + File.separator + directoryName);
-			if (!file.exists())
+			if (!directory.exists())
 				return false;
-			String[] operationFileNames = file.list();
+			String[] operationFileNames = directory.list();
 			// check for at least 6 operation files
 			if (operationFileNames.length < 6){
-				log.error("Only "+operationFileNames.length+" files found in directory "+backupDirectory + File.separator + directoryName);
+				log.error("Only "+operationFileNames.length+" files found in directory "+directory.getAbsolutePath());
 				return false;
 			}
 			// TODO check for the correct operation file names
@@ -133,11 +139,10 @@ public class Backup extends XmlFile {
 			         continue;
 			    //
 				log.debug("found file: " + operationFileNames[i]);
-				file = new File(directoryPath + File.separator + directoryName
-						+ File.separator + operationFileNames[i]);
+				File filein = new File(directory.getAbsolutePath() + File.separator + operationFileNames[i]);
 				File fileout = new File(operationsDirectory + File.separator + operationFileNames[i]);
 
-				FileReader in = new FileReader(file);
+				FileReader in = new FileReader(filein);
 				FileWriter out = new FileWriter(fileout);
 				int c;
 
@@ -159,8 +164,8 @@ public class Backup extends XmlFile {
 		return restore(XmlFile.xmlDir(), "demoOperations");
 	}
 
-	private String fullBackupFilename(String name) {
-		return backupDirectory + File.separator + getDirectoryName() + File.separator + name;
+	private String fullBackupDirectoryName() {
+		return backupDirectory + File.separator + getDirectoryName();
 	}
 
 	private String operationsDirectory = XmlFile.prefsDir() + OperationsXml.getOperationsDirectoryName();	
@@ -171,6 +176,14 @@ public class Backup extends XmlFile {
 		if (defaultDirectoryName.equals(""))
 			return getDate();
 		return defaultDirectoryName;
+	}
+	
+	public void setDirectoryName(String name){
+		defaultDirectoryName = name;
+	}
+	
+	public String getBackupDirectoryName(){
+		return backupDirectory;
 	}
 	
 	public String createBackupDirectoryName(){
@@ -205,10 +218,6 @@ public class Backup extends XmlFile {
 			if (!file.delete())
 				log.debug("file not deleted");
 		}
-	}
-	
-	public void setDirectoryName(String name){
-		defaultDirectoryName = name;
 	}
 	
 	private String getDate() {
