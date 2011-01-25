@@ -74,7 +74,10 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
     * Init for update of existing indicator turnout
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void init(ActionListener doneAction) {
+    public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+        if (iconMap!=null) {
+            checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
+        }
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
         _bottom1Panel = makeBottom3Panel(doneAction);
@@ -226,20 +229,6 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         }
     }
 
-    // return icon set to panel icon
-    public Hashtable <String, NamedIcon> getIconMap() {
-
-        Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
-        if (iconMap==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-        return iconMap;
-    }
-
     /**
     *  Return from icon dialog
     */
@@ -272,7 +261,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             return null;
         }
 
-        public Transferable createPositionableDnD(JTable table) {
+        public NamedBean getNamedBean(JTable table) {
             int col = table.getSelectedColumn();
             int row = table.getSelectedRow();
             if (log.isDebugEnabled()) log.debug("TransferHandler.createPositionableDnD: from table \""+_itemType+ "\" at ("
@@ -280,17 +269,36 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                                                 +table.getModel().getValueAt(row, col)+"\" in family \""+_family+"\".");
             if (col<0 || row<0) {
                 return null;
-            }            
-            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
+            }
+            PickListModel model = (PickListModel)table.getModel();
+            return model.getBeanAt(row);
+        }
+
+        public Hashtable <String, NamedIcon> getIconMap() {
+            Hashtable <String, NamedIcon> iconMap = null;
+            if (_updateWithSameMap) {
+                iconMap = _currentIconMap;
+            } else {
+                iconMap = ItemPalette.getIconMap(_itemType, _family);
+            }
             if (iconMap==null) {
                 JOptionPane.showMessageDialog(_paletteFrame, 
                         java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
                                                        ItemPalette.rbp.getString(_itemType), _family), 
                         ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
+            }
+            return iconMap;
+        }
+
+        public Transferable createPositionableDnD(JTable table) {
+            Hashtable <String, NamedIcon> iconMap = getIconMap();
+            if (iconMap==null) {
                 return null;
             }
-            PickListModel model = (PickListModel)table.getModel();
-            NamedBean bean = model.getBeanAt(row);
+            NamedBean bean = getNamedBean(table);
+            if (bean==null) {
+                return null;
+            }
 
             if (_itemType.equals("Turnout")) {
                 TurnoutIcon t = new TurnoutIcon(_editor);
@@ -305,10 +313,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
             } else if (_itemType.equals("Sensor")) {
                 SensorIcon s = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), _editor);
-                s.setInactiveIcon(iconMap.get("SensorStateInactive"));
-                s.setActiveIcon(iconMap.get("SensorStateActive"));
-                s.setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-                s.setUnknownIcon(iconMap.get("BeanStateUnknown"));
+                Enumeration <String> e = iconMap.keys();
+                while (e.hasMoreElements()) {
+                    String key = e.nextElement();
+                    s.setIcon(key, iconMap.get(key));
+                }
                 s.setSensor(bean.getDisplayName());
                 s.setLevel(Editor.SENSORS);
                 return new PositionableDnD(s, bean.getDisplayName());

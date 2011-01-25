@@ -437,27 +437,9 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     }
 
     /**
-    * Creating new Families of icons. Superimposes a new modal JDialog with "default"
-    * icons to be accepted (click done button and new family is added to type) -or
-    * rejected (dismiss or clisk cancel button) 
-    */
-    static protected void createNewFamily(String type, ItemPanel parent) {
-        IconDialog dialog;
-        if (type.equals("MultiSensor")) {
-            dialog = new MultiSensorIconDialog(type, null, parent);
-        } else if (type.equals("Icon") || type.equals("Background")) {
-            dialog =new SingleIconDialog(type, null, parent);
-        } else {
-            dialog =new IconDialog(type, null, parent);
-        }
-        // call super ItemDialog to size and locate dialog
-        dialog.sizeLocate();
-    }
-
-    /**
     * Look for duplicate name of family in the iterated set
     */
-    static boolean familyNameOK(JmriJFrame frame, String type, String family, Iterator <String> it) {
+    static boolean familyNameOK(java.awt.Frame frame, String type, String family, Iterator <String> it) {
         if (family==null || family.length()==0) {
             JOptionPane.showMessageDialog(frame, 
                     ItemPalette.rbp.getString("EnterFamilyName"), 
@@ -479,33 +461,15 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
     /**
     * Adding a new Family of icons to the device type
     */
-    static protected void addFamily(String type, String family, Hashtable<String, NamedIcon> iconMap) {
-        getFamilyMaps(type).put(family, iconMap);
+    static protected boolean addFamily(java.awt.Frame frame, String type, String family, Hashtable<String, NamedIcon> iconMap) {
+        Iterator <String> iter = ItemPalette.getFamilyMaps(type).keySet().iterator();
+        if (familyNameOK(frame, type, family, iter)) {
+            getFamilyMaps(type).put(family, iconMap);
+            ImageIndexEditor.indexChanged(true);
+            return true;
+        }
+        return false;
     }
-
-    /************** Currently only needed for IndicatorTO type ***************/
-
-    static protected void addLevel4Family(String type, String family, String key,
-                                   Hashtable<String, NamedIcon> iconMap) {
-        getLevel4FamilyMaps(type).get(family).put(key, iconMap);
-    }
-    static protected void addLevel4Family(String type, String family,
-                                   Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {
-        getLevel4FamilyMaps(type).put(family, iconMap);
-    }
-
-    // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> 
-                                getLevel4FamilyMaps(String type) {
-        return _indicatorTOMaps.get(type);
-    }
-    // Currently only needed for IndicatorTO type
-    static protected Hashtable<String, Hashtable<String, NamedIcon>> 
-                                getLevel4Family(String type, String family) {
-        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
-        return map.get(family);
-    }
-    /**************************************************************************/
 
     /**
     * Getting all the Families of icons for a given device type
@@ -520,6 +484,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
    static protected void removeIconMap(String type, String family) {
         if (log.isDebugEnabled()) log.debug("removeIconMap for family \""+family+" \" in type \""+type+"\"");
         _iconMaps.get(type).remove(family);
+        ImageIndexEditor.indexChanged(true);
         if (log.isDebugEnabled()) {
             Hashtable <String, Hashtable<String, NamedIcon>> families = getFamilyMaps(type);
             if (families!=null && families.size()>0) {
@@ -528,16 +493,6 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
                     log.debug("removeIconMap remaining Keys: family \""+it.next()+" \" in type \""+type+"\"");
                 }
             }
-        }
-    }
-    // Currently only needed for IndicatorTO type
-    static protected void removeLevel4IconMap(String type, String family, String key) {
-        if (log.isDebugEnabled()) log.debug("removelvl4IconMap for indicator family \""+family+" \" in type \""+type+
-                                            "\" with key = \""+key+"\"");
-        if (key!=null) {
-            _indicatorTOMaps.get(type).get(family).remove(key);
-        } else {
-            _indicatorTOMaps.get(type).remove(family);
         }
     }
 
@@ -558,6 +513,55 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return cloneMap(iconMap);
     }
 
+    /************** Currently only needed for IndicatorTO type ***************/
+
+    // add sub-family of key
+    static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family, String key,
+                                   Hashtable<String, NamedIcon> iconMap) {
+        if (log.isDebugEnabled()) log.debug("addLevel4Family \""+family+" \" in type \""+type+"\" key= "+key);
+        Iterator <String> iter = ItemPalette.getLevel4FamilyMaps(type).keySet().iterator();
+        getLevel4FamilyMaps(type).get(family).put(key, iconMap);
+        ImageIndexEditor.indexChanged(true);
+        return true;
+    }
+    // add entire family
+    static protected boolean addLevel4Family(java.awt.Frame frame, String type, String family,
+                                   Hashtable<String, Hashtable<String, NamedIcon>> iconMap) {
+        Iterator <String> iter = ItemPalette.getLevel4FamilyMaps(type).keySet().iterator();
+        if (familyNameOK(frame, type, family, iter)) {
+            getLevel4FamilyMaps(type).put(family, iconMap);
+            ImageIndexEditor.indexChanged(true);
+            return true;
+        }
+        return false;
+    }
+
+    // Currently only needed for IndicatorTO type
+    static protected Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> 
+                                getLevel4FamilyMaps(String type) {
+        return _indicatorTOMaps.get(type);
+    }
+    // Currently only needed for IndicatorTO type
+    static protected Hashtable<String, Hashtable<String, NamedIcon>> 
+                                getLevel4Family(String type, String family) {
+        Hashtable<String, Hashtable<String, Hashtable<String, NamedIcon>>> map = _indicatorTOMaps.get(type);
+        return map.get(family);
+    }
+
+    // Currently only needed for IndicatorTO type
+    static protected void removeLevel4IconMap(String type, String family, String key) {
+        if (log.isDebugEnabled()) log.debug("removelvl4IconMap for indicator family \""+family+" \" in type \""+type+
+                                            "\" with key = \""+key+"\"");
+        if (key!=null) {
+            _indicatorTOMaps.get(type).get(family).remove(key);
+        } else {
+            _indicatorTOMaps.get(type).remove(family);
+        }
+        ImageIndexEditor.indexChanged(true);
+    }
+    /**************************************************************************/
+
+
     static protected Hashtable<String, NamedIcon> cloneMap(Hashtable<String, NamedIcon> map) {
         Hashtable<String, NamedIcon> clone = new Hashtable<String, NamedIcon>();
         if (map!=null) {
@@ -572,7 +576,7 @@ public class ItemPalette extends JmriJFrame /* implements ListSelectionListener,
         return clone;
     }
 
-    static protected String convertText(String name) {
+    static public String convertText(String name) {
         String cName = null;
         try {
             cName = ItemPalette.rbean.getString(name);

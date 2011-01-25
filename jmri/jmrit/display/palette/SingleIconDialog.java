@@ -56,8 +56,9 @@ public class SingleIconDialog extends IconDialog {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
                     if (addNewIcon(_familyName.getText())) {
-                        doDoneAction();
-                        dialog.dispose();
+                        if (doDoneAction()) {
+                            dialog.dispose();
+                        }
                     }
                 }
                 ActionListener init(IconDialog d) {
@@ -73,8 +74,9 @@ public class SingleIconDialog extends IconDialog {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
                     if (deleteIcon()) {
-                        doDoneAction();
-                        dialog.dispose();
+                        if (doDoneAction()) {
+                            dialog.dispose();
+                        }
                     }
                 }
                 ActionListener init(IconDialog d) {
@@ -127,19 +129,16 @@ public class SingleIconDialog extends IconDialog {
     /**
     * Action item for makeDoneButtonPanel
     */
-    protected void doDoneAction() {
+    protected boolean doDoneAction() {
         //check text
         String family = _familyName.getText();
-        if (_family!=null && !_family.equals(family)) {
-            Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
-            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
-                return;
-            }
+        if (addFamily(family, _iconMap)) {
+            ImageIndexEditor.indexChanged(true);
+            _parent.removeAll();
+            _parent.init();
+            return true;
         }
-        addFamily(family, _iconMap);
-        ImageIndexEditor.indexChanged(true);
-        _parent.removeAll();
-        _parent.init();
+        return false;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SingleIconDialog.class.getName());

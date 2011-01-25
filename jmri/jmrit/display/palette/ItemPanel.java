@@ -70,34 +70,20 @@ public abstract class ItemPanel extends JPanel {
     }
 
     /**
-    * SignalHeadItemPanel overrides for valid states when SignalHead is known
-    */
-    protected Hashtable<String, NamedIcon> getFilteredIconMap() {
-        Hashtable<String, NamedIcon> map = ItemPalette.getIconMap(_itemType, _family);
-        if (map==null) {
-            JOptionPane.showMessageDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                   ItemPalette.rbp.getString(_itemType), _family), 
-                    ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
-            return null;
-        }
-        return map;
-    }
-
-    /**
-    * TableItemPanel.java overrides for its itemTypes.  This is for the remainder
+    * overriden for many itemTypes.  This is for the remainder
     */
     protected void openEditDialog() {
         if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        IconDialog dialog;
-        if (_itemType.equals("MultiSensor")) {
-            dialog = new MultiSensorIconDialog(_itemType, _family, this);
-        } else if (_itemType.equals("Icon") || _itemType.equals("Background")) {
-            dialog = new SingleIconDialog(_itemType, _family, this);
-        } else {
-            dialog = new IconDialog(_itemType, _family, this);
-        }
+        IconDialog dialog = new IconDialog(_itemType, _family, this);
         // call super ItemDialog to size and locate dialog
+        dialog.sizeLocate();
+    }
+
+    /**
+    * overriden for many itemTypes.  This is for the remainder
+    */
+    protected void createNewFamily(String type) {
+        IconDialog dialog =new IconDialog(type, null, this);
         dialog.sizeLocate();
     }
 

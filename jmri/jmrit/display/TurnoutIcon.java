@@ -28,14 +28,15 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.64 $
+ * @author PeteCressman Copyright (C) 2010, 2011
+ * @version $Revision: 1.65 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
 
-    protected Hashtable <Integer, NamedIcon> _iconMap;        // state int to icon
-    protected Hashtable <String, Integer> _name2stateMap;           // name to state
-    protected Hashtable <Integer, String> _state2nameMap;           // state to name
+    protected Hashtable <Integer, NamedIcon> _iconMap;          // state int to icon
+    protected Hashtable <String, Integer> _name2stateMap;       // name to state
+    protected Hashtable <Integer, String> _state2nameMap;       // state to name
     String  _iconFamily;
 
     public TurnoutIcon(Editor editor) {
@@ -273,11 +274,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
 	 * Drive the current state of the display from the state of the turnout.
 	 */
     void displayState(int state) {
-        updateSize();
         if (getNamedTurnout() == null) {
             log.debug("Display state "+state+", disconnected");
         } else {
-            log.debug(getNameString() +" displayState "+_state2nameMap.get(state));
+//            log.debug(getNameString() +" displayState "+_state2nameMap.get(state));
             if (isText()) {
                 super.setText(_state2nameMap.get(state));
             }
@@ -292,6 +292,7 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     }
 
     TableItemPanel _itemPanel;
+
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout"));
         popup.add(new javax.swing.AbstractAction(txt) {
@@ -306,14 +307,23 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Turnout")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Turnout", _iconFamily,
                                        PickListModel.turnoutPickModelInstance(), _editor);
-        _itemPanel.init( new ActionListener() {
+        ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
-        });
+        };
+        // duplicate iconmap with state names rather than int states
+        Hashtable<String, NamedIcon> strMap = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            strMap.put(_state2nameMap.get(entry.getKey()), cloneIcon(entry.getValue(), this));
+        }
+        _itemPanel.init(updateAction, strMap);
         _itemPanel.setSelection(getTurnout());
         _paletteFrame.add(_itemPanel);
         _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
@@ -321,16 +331,21 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
         setTurnout(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
-            NamedIcon newIcon = entry.getValue();
-            NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
-            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-            newIcon.setRotation(oldIcon.getRotation(), this);
-            setIcon(entry.getKey(), newIcon);
-        }
+        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
+        if (iconMap!=null) {
+            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+                NamedIcon newIcon = entry.getValue();
+                NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+                if (scaleRotate) {
+                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                    newIcon.setRotation(oldIcon.getRotation(), this);
+                }
+                setIcon(entry.getKey(), newIcon);
+            }
+        }   // otherwise retain current map
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();

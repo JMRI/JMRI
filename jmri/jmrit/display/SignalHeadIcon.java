@@ -31,7 +31,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -379,29 +379,36 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("SignalHead")));
         _itemPanel = new SignalHeadItemPanel(_paletteFrame, "SignalHead", _iconFamily,
                                        PickListModel.signalHeadPickModelInstance(), _editor);
-        _itemPanel.init( new ActionListener() {
+        ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
-        });
+        };
+        // _iconMap keys with local names - Let SignalHeadItemPanel figure this out
+        _itemPanel.init(updateAction, _iconMap);
         _saveMap = _iconMap;        // setting signalHead creates new map
         _itemPanel.setSelection(getSignalHead());
         _paletteFrame.add(_itemPanel);
         _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
         setSignalHead(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
         Hashtable<String, NamedIcon> map1 = _itemPanel.getIconMap(); 
-        // map1 keyed with NamedBean names.  Convert to local name keys
-        Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
-        Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            map2.put(rbean.getString(entry.getKey()), entry.getValue());
-        }
-        setIcons(map2);
+        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
+        if (map1!=null) {
+            // map1 maye be keyed with NamedBean names.  Convert to local name keys.
+            // However perhaps keys are local - See above
+            Hashtable<String, NamedIcon> map2 = new Hashtable<String, NamedIcon>();
+            Iterator<Entry<String, NamedIcon>> it = map1.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                map2.put(jmri.jmrit.display.palette.ItemPalette.convertText(entry.getKey()), entry.getValue());
+            }
+            setIcons(map2);
+        }   // otherwise retain current map
         displayState(getSignalHead().getAppearance());
         _paletteFrame.dispose();
         _paletteFrame = null;

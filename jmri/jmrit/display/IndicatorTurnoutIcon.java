@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -59,18 +59,35 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         super(editor);
         log.debug("IndicatorTurnoutIcon ctor: isIcon()= "+isIcon()+", isText()= "+isText());
         _status = "DontUseTrack";
-        initMaps();
+        _iconMaps = initMaps();
 
     }
 
-    void initMaps() {
-        _iconMaps = new Hashtable<String, Hashtable<Integer, NamedIcon>>();
-        _iconMaps.put("ClearTrack", new Hashtable <Integer, NamedIcon>());
-        _iconMaps.put("OccupiedTrack", new Hashtable <Integer, NamedIcon>());
-        _iconMaps.put("PositionTrack", new Hashtable <Integer, NamedIcon>());
-        _iconMaps.put("AllocatedTrack", new Hashtable <Integer, NamedIcon>());
-        _iconMaps.put("DontUseTrack", new Hashtable <Integer, NamedIcon>());
-        _iconMaps.put("ErrorTrack", new Hashtable <Integer, NamedIcon>());
+    Hashtable<String, Hashtable<Integer, NamedIcon>> initMaps() {
+        Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = new Hashtable<String, Hashtable<Integer, NamedIcon>>();
+        iconMaps.put("ClearTrack", new Hashtable <Integer, NamedIcon>());
+        iconMaps.put("OccupiedTrack", new Hashtable <Integer, NamedIcon>());
+        iconMaps.put("PositionTrack", new Hashtable <Integer, NamedIcon>());
+        iconMaps.put("AllocatedTrack", new Hashtable <Integer, NamedIcon>());
+        iconMaps.put("DontUseTrack", new Hashtable <Integer, NamedIcon>());
+        iconMaps.put("ErrorTrack", new Hashtable <Integer, NamedIcon>());
+        return iconMaps;
+    }
+
+    Hashtable<String, Hashtable<Integer, NamedIcon>> cloneMaps(IndicatorTurnoutIcon pos) {
+        Hashtable<String, Hashtable<Integer, NamedIcon>> iconMaps = initMaps();
+        Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, Hashtable<Integer, NamedIcon>> entry = it.next();
+            Hashtable <Integer, NamedIcon> clone = iconMaps.get(entry.getKey());
+            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<Integer, NamedIcon> ent = iter.next();
+//                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
+                clone.put(ent.getKey(), cloneIcon(ent.getValue(), pos));
+            }
+        }
+        return iconMaps;
     }
 
     public Positionable deepClone() {
@@ -83,18 +100,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         pos.setOccBlockHandle(namedOccBlock);
         pos.setOccSensorHandle(namedOccSensor);
         pos.setErrSensorHandle(namedErrSensor);
-        pos.initMaps();
-        Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, Hashtable<Integer, NamedIcon>> entry = it.next();
-            Hashtable <Integer, NamedIcon> clone = pos._iconMaps.get(entry.getKey());
-            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<Integer, NamedIcon> ent = iter.next();
-//                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
-                clone.put(ent.getKey(), cloneIcon(ent.getValue(), pos));
-            }
-        }
+        pos._iconMaps = cloneMaps(pos);
         if (_paths!=null) {
             pos._paths = new ArrayList<String>();
             for (int i=0; i<_paths.size(); i++) {
@@ -483,15 +489,36 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
 	}
 
     IndicatorTOItemPanel _TOPanel;
+
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
         _TOPanel = new IndicatorTOItemPanel(_paletteFrame, "IndicatorTO", _iconFamily,
                                        PickListModel.turnoutPickModelInstance(), _editor);
-        _TOPanel.init( new ActionListener() {
+        ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
-        });
+        };
+        // Convert _iconMaps state (ints) to Palette's bean names
+        Hashtable<String, Hashtable<String, NamedIcon>> iconMaps =
+                     new Hashtable<String, Hashtable<String, NamedIcon>>();
+        iconMaps.put("ClearTrack", new Hashtable <String, NamedIcon>());
+        iconMaps.put("OccupiedTrack", new Hashtable <String, NamedIcon>());
+        iconMaps.put("PositionTrack", new Hashtable <String, NamedIcon>());
+        iconMaps.put("AllocatedTrack", new Hashtable <String, NamedIcon>());
+        iconMaps.put("DontUseTrack", new Hashtable <String, NamedIcon>());
+        iconMaps.put("ErrorTrack", new Hashtable <String, NamedIcon>());
+        Iterator<Entry<String, Hashtable<Integer, NamedIcon>>> it = _iconMaps.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, Hashtable<Integer, NamedIcon>> entry = it.next();
+            Hashtable <String, NamedIcon> clone = iconMaps.get(entry.getKey());
+            Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+            while (iter.hasNext()) {
+                Entry<Integer, NamedIcon> ent = iter.next();
+                clone.put(_state2nameMap.get(entry.getKey()), cloneIcon(ent.getValue(), this));
+            }
+        }
+        _TOPanel.initUpdate(updateAction, iconMaps);
         _TOPanel.setSelection(getTurnout());
         if (namedErrSensor!=null) {
             _TOPanel.setErrSensor(namedErrSensor.getName());
@@ -506,6 +533,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         _TOPanel.setPaths(_paths);
         _paletteFrame.add(_TOPanel);
         _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
@@ -517,24 +545,28 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
         _iconFamily = _TOPanel.getFamilyName();
         _paths = _TOPanel.getPaths();
         Hashtable<String, Hashtable<String, NamedIcon>> iconMap = _TOPanel.getIconMaps();
-
-        Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
-            String status = entry.getKey();
-//            Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMaps.get(status), null);
-            Hashtable <Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
-            Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
-            while (iter.hasNext()) {
-                Entry<String, NamedIcon> ent = iter.next();
-                if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
-                NamedIcon newIcon = cloneIcon(ent.getValue(), this);
-                NamedIcon oldIcon = oldMap.get(_name2stateMap.get(ent.getKey()));
-                newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-                newIcon.setRotation(oldIcon.getRotation(), this);
-                setIcon(status, ent.getKey(), newIcon);
+        boolean scaleRotate = !_TOPanel.isUpdateWithSameMap();
+        if (iconMap!=null) {
+            Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, Hashtable<String, NamedIcon>> entry = it.next();
+                String status = entry.getKey();
+    //            Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMaps.get(status), null);
+                Hashtable <Integer, NamedIcon> oldMap = _iconMaps.get(entry.getKey());
+                Iterator<Entry<String, NamedIcon>> iter = entry.getValue().entrySet().iterator();
+                while (iter.hasNext()) {
+                    Entry<String, NamedIcon> ent = iter.next();
+                    if (log.isDebugEnabled()) log.debug("key= "+ent.getKey());
+                    NamedIcon newIcon = cloneIcon(ent.getValue(), this);
+                    NamedIcon oldIcon = oldMap.get(_name2stateMap.get(ent.getKey()));
+                    if (scaleRotate) {
+                        newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                        newIcon.setRotation(oldIcon.getRotation(), this);
+                    }
+                    setIcon(status, ent.getKey(), newIcon);
+                }
             }
-        }
+        }   // otherwise retain current map
         _paletteFrame.dispose();
         _paletteFrame = null;
         _TOPanel.dispose();

@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -418,14 +418,17 @@ public class IndicatorTrackIcon extends PositionableLabel
     }
 
     IndicatorItemPanel _trackPanel;
+
     protected void editItem() {
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("IndicatorTO")));
         _trackPanel = new IndicatorItemPanel(_paletteFrame, "IndicatorTrack", _iconFamily, _editor);
-        _trackPanel.init( new ActionListener() {
+
+        ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
-        });
+        };
+        _trackPanel.init(updateAction, cloneMap(_iconMap, this));
         if (namedErrSensor!=null) {
             _trackPanel.setErrSensor(namedErrSensor.getName());
         }
@@ -451,19 +454,23 @@ public class IndicatorTrackIcon extends PositionableLabel
         _showTrain = _trackPanel.getShowTrainName();
         _iconFamily = _trackPanel.getFamilyName();
         _paths = _trackPanel.getPaths();
-        Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
         Hashtable<String, NamedIcon> iconMap = _trackPanel.getIconMap();
-
-        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
-        while (it.hasNext()) {
-            Entry<String, NamedIcon> entry = it.next();
-            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
-            NamedIcon newIcon = entry.getValue();
-            NamedIcon oldIcon = oldMap.get(entry.getKey());
-            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
-            newIcon.setRotation(oldIcon.getRotation(), this);
-            setIcon(entry.getKey(), newIcon);
-        }
+        boolean scaleRotate = !_trackPanel.isUpdateWithSameMap();
+        if (iconMap!=null) {
+            Hashtable<String, NamedIcon> oldMap = cloneMap(_iconMap, this);
+            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+                NamedIcon newIcon = entry.getValue();
+                NamedIcon oldIcon = oldMap.get(entry.getKey());
+                if (scaleRotate) {
+                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                    newIcon.setRotation(oldIcon.getRotation(), this);
+                }
+                setIcon(entry.getKey(), newIcon);
+            }
+        }   // otherwise retain current map
         _paletteFrame.dispose();
         _paletteFrame = null;
         _trackPanel.dispose();

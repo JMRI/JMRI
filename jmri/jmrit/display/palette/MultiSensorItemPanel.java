@@ -129,6 +129,16 @@ public class MultiSensorItemPanel extends TableItemPanel {
         updateFamiliesPanel();
     }
 
+    protected void openEditDialog() {
+        IconDialog dialog = new MultiSensorIconDialog(_itemType, _family, this);
+        dialog.sizeLocate();
+    }
+
+    protected void createNewFamily(String type) {
+        IconDialog dialog = new MultiSensorIconDialog(_itemType, null, this);
+        dialog.sizeLocate();
+    }
+
     static final String[] POSITION = {"first", "second", "third", "fourth", "fifth",
                                          "sixth", "seventh", "eighth", "nineth", "tenth" };
 

@@ -71,12 +71,30 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         _selectedRow = _table.getSelectedRow();
         boolean visible = _iconPanel.isVisible();
         _iconFamilyPanel.remove(_iconPanel);
-        makeIconPanel();
+        _iconPanel = new JPanel();
+        Hashtable<String, NamedIcon>  iconMap = _currentIconMap;
+        if (_currentIconMap==null) {
+            iconMap = ItemPalette.getIconMap(_itemType, _family);
+        }
+        addIconsToPanel(iconMap);
         _iconPanel.setVisible(visible);
         _iconFamilyPanel.add(_iconPanel, 0);
 //        _paletteFrame.pack();
     }
 
+    protected void addIconsToPanel(Hashtable<String, NamedIcon> allIconsMap) {
+        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
+        if (iconMap==null) {
+            iconMap = ItemPalette.getIconMap(_itemType, _family);
+            if (iconMap==null) {
+                _updateButton.setEnabled(false);
+                _updateButton.setToolTipText(ItemPalette.rbp.getString("ToolTipPickFromTable"));
+            }
+        } else {
+            super.addIconsToPanel(iconMap);
+        }
+    }
+/*
     protected void makeIconPanel() {
         _iconPanel = new JPanel();
         if (log.isDebugEnabled()) log.debug("makeIconPanel() _family= \""+_family+"\"");
@@ -94,7 +112,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
                 _family = null;
             }
         }
-        */
+        *
         if (_family==null) {
             Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
             if (families!=null) {
@@ -105,7 +123,8 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             }
         }
 
-        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap();
+        Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
+        Hashtable<String, NamedIcon> iconMap = getFilteredIconMap(allIconsMap);
         if (iconMap==null) {
             iconMap = ItemPalette.getIconMap(_itemType, _family);
             if (iconMap==null) {
@@ -116,7 +135,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
             addIconsToPanel(iconMap);
         }
     }
-
+*/
     private NamedBean getSelectedBean() {
         int row = _table.getSelectedRow();
         if (row >= 0) {
@@ -128,8 +147,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         return null;
     }
 
-    protected Hashtable<String, NamedIcon> getFilteredIconMap() {
-        Hashtable<String, NamedIcon> allIconsMap = ItemPalette.getIconMap(_itemType, _family);
+    protected Hashtable<String, NamedIcon> getFilteredIconMap(Hashtable<String, NamedIcon> allIconsMap) {
         if (allIconsMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
                     java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
@@ -165,6 +183,16 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         return allIconsMap;
     }
 
+    protected void openEditDialog() {
+        IconDialog dialog = new SignalHeadIconDialog(_itemType, _family, this);
+        dialog.sizeLocate();
+    }
+
+    protected void createNewFamily(String type) {
+        IconDialog dialog = new SignalHeadIconDialog(_itemType, null, this);
+        dialog.sizeLocate();
+    }
+
     /**
     * Extend handler to export from JList and import to PicklistTable
     */
@@ -175,24 +203,14 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
         }
 
         public Transferable createPositionableDnD(JTable table) {
-            int col = table.getSelectedColumn();
-            int row = table.getSelectedRow();
-            if (log.isDebugEnabled()) log.debug("TransferHandler.createTransferable: from table \""+_itemType+ "\" at ("
-                                                +row+", "+col+") for data \""
-                                                +table.getModel().getValueAt(row, col)+"\"");
-            if (col<0 || row<0) {
-                return null;
-            }            
-            Hashtable <String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
+            Hashtable <String, NamedIcon> iconMap = getIconMap();
             if (iconMap==null) {
-                JOptionPane.showMessageDialog(_paletteFrame, 
-                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
-                                                       ItemPalette.rbp.getString(_itemType), _family), 
-                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
                 return null;
             }
-            PickListModel model = (PickListModel)table.getModel();
-            NamedBean bean = model.getBeanAt(row);
+            NamedBean bean = getNamedBean(table);
+            if (bean==null) {
+                return null;
+            }
 
             SignalHeadIcon sh = new SignalHeadIcon(_editor);
             sh.setSignalHead(bean.getDisplayName());

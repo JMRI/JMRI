@@ -1592,10 +1592,16 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         SensorIcon l = new SensorIcon(new NamedIcon("resources/icons/smallschematics/tracksegments/circuit-error.gif",
                             "resources/icons/smallschematics/tracksegments/circuit-error.gif"), this);
         IconAdder editor = getIconEditor("Sensor");
-        l.setActiveIcon(editor.getIcon("SensorStateActive"));
-        l.setInactiveIcon(editor.getIcon("SensorStateInactive"));
-        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
-        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
+        Hashtable <String, NamedIcon> map = editor.getIconMap();
+        Enumeration <String> e = map.keys();
+        while (e.hasMoreElements()) {
+            String key = e.nextElement();
+            l.setIcon(key, map.get(key));
+        }
+//        l.setActiveIcon(editor.getIcon("SensorStateActive"));
+//        l.setInactiveIcon(editor.getIcon("SensorStateInactive"));
+//        l.setInconsistentIcon(editor.getIcon("BeanStateInconsistent"));
+//        l.setUnknownIcon(editor.getIcon("BeanStateUnknown"));
         jmri.NamedBean b = editor.getTableSelection();
         if (b!=null) {
             l.setSensor(b.getDisplayName());

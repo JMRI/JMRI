@@ -34,7 +34,7 @@ import jmri.jmrit.catalog.NamedIcon;
 
 /**
  *
- * @author Pete Cressman  Copyright (c) 2010
+ * @author Pete Cressman  Copyright (c) 2010, 2011
  */
 
 public class IconDialog extends ItemDialog {
@@ -54,6 +54,7 @@ public class IconDialog extends ItemDialog {
               java.text.MessageFormat.format(ItemPalette.rbp.getString("ShowIconsTitle"), type), 
               parent, true);
         _familyName = new JTextField(family);
+//        if (log.isDebugEnabled()) log.debug("ctor IconDialog type= "+type+", family= "+family);
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -77,15 +78,19 @@ public class IconDialog extends ItemDialog {
     protected JPanel initMap(String type, String family) {
         _familyName.setEditable(true);
         if (family!=null) {
-            _familyName.setEditable(true);
-            _iconMap = _parent.getFilteredIconMap();
-            if (_iconMap!=null) {
-                return makeIconPanel(_iconMap);
+            _iconMap = ItemPalette.getIconMap(type, family);
+            if (_iconMap==null) {
+                JOptionPane.showMessageDialog(_parent._paletteFrame, 
+                        java.text.MessageFormat.format(ItemPalette.rbp.getString("FamilyNotFound"), 
+                                                       ItemPalette.rbp.getString(type), family), 
+                        ItemPalette.rb.getString("warnTitle"), JOptionPane.WARNING_MESSAGE);
             }
-            _family = null;
         }
-        _iconMap = ItemPanel.makeNewIconMap(type);
-        _familyName.setText("???");
+        if (_iconMap==null) {
+            _iconMap = ItemPanel.makeNewIconMap(type);
+            _family = null;
+            _familyName.setText("");
+        }
         return makeIconPanel(_iconMap);
     }
 
@@ -140,7 +145,7 @@ public class IconDialog extends ItemDialog {
     */
     protected void addFamilySet() {
         setVisible(false);
-        ItemPalette.createNewFamily(_type, _parent);
+        _parent.createNewFamily(_type);
     }
 
     /**
@@ -149,7 +154,6 @@ public class IconDialog extends ItemDialog {
     protected void deleteFamilySet() {
         ItemPalette.removeIconMap(_type, _familyName.getText());
         _parent._family = null;
-        ImageIndexEditor.indexChanged(true);
         _parent.updateFamiliesPanel();
     }
 
@@ -160,8 +164,9 @@ public class IconDialog extends ItemDialog {
         doneButton.addActionListener(new ActionListener() {
                 IconDialog dialog;
                 public void actionPerformed(ActionEvent a) {
-                    doDoneAction();
-                    dialog.dispose();
+                    if (doDoneAction()) {
+                        dialog.dispose();
+                    }
                 }
                 ActionListener init(IconDialog d) {
                     dialog = d;
@@ -189,19 +194,17 @@ public class IconDialog extends ItemDialog {
     /**
     * Action item for makeDoneButtonPanel
     */
-    protected void doDoneAction() {
+    protected boolean doDoneAction() {
         //check text
         String family = _familyName.getText();
-        if (_family!=null && !_family.equals(family)) {
-            Iterator <String> iter = ItemPalette.getFamilyMaps(_type).keySet().iterator();
-            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
-                return;
-            }
+        if (_family!=null && _family.equals(family)) {
+            ItemPalette.removeIconMap(_type, family);
         }
-        ItemPalette.removeIconMap(_type, _family);
-        addFamily(family, _iconMap);
-        _parent.updateFamiliesPanel();
-        ImageIndexEditor.indexChanged(true);
+        if (addFamily(family, _iconMap)) {
+            _parent.updateFamiliesPanel();
+            return true;
+        }
+        return false;
     }
 
 /*
@@ -227,12 +230,12 @@ public class IconDialog extends ItemDialog {
                     if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
                         return;
                     }
-                    addFamily(family, _iconMap);
-                    checkIconSizes();
-                    ImageIndexEditor.indexChanged(true);
-                    _parent.updateFamiliesPanel();
-                    _parent.setFamily(family);
-                    dispose();
+                    if (addFamily(family, _iconMap)) {
+                        checkIconSizes();
+                        _parent.updateFamiliesPanel();
+                        _parent.setFamily(family);
+                        dispose();
+                    }
                 }
                 ActionListener init(IconDialog d) {
                     //dialog = d;
@@ -430,7 +433,6 @@ public class IconDialog extends ItemDialog {
             _catalog.setBackground(label);
             _iconMap.put(label.getName(), newIcon);
             e.dropComplete(true);
-            ImageIndexEditor.indexChanged(true);
             if (log.isDebugEnabled()) log.debug("DropJLabel.drop COMPLETED for "+label.getName()+
                                                  ", "+newIcon.getURL());
         }

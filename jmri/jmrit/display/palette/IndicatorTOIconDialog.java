@@ -8,7 +8,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 
 /**
@@ -95,35 +94,32 @@ public class IndicatorTOIconDialog extends IconDialog {
     protected void deleteFamilySet() {
         ItemPalette.removeLevel4IconMap(_type, _parent._family, _familyName.getText());
         _family = null;
-        ImageIndexEditor.indexChanged(true);
         _parent.updateFamiliesPanel();
     }
 
     /**
     * Action item for makeDoneButtonPanel
     */
-    protected void doDoneAction() {
+    protected boolean doDoneAction() {
         //check text
-        String family = _familyName.getText();  // actually the key to status icon
-        if (_family!=null && !_family.equals(family)) {
-            Iterator <String> iter = ItemPalette.getLevel4FamilyMaps(_type).keySet().iterator();
-            if (!ItemPalette.familyNameOK(_parent._paletteFrame, _type, family, iter)) {
-                return;
-            }
+        String subFamily = _familyName.getText();  // actually the key to status icon
+        if (_family!=null && _family.equals(subFamily)) {
+            ItemPalette.removeLevel4IconMap(_type, _parent._family, subFamily);
         }
-        ItemPalette.removeLevel4IconMap(_type, _parent._family, _familyName.getText());
-        addFamily(_parent._family, _iconMap);
-        _parent.updateFamiliesPanel();
+        return addFamily(_parent._family, _iconMap, subFamily);
     }
 
 
-    protected void addFamily(String family, Hashtable<String, NamedIcon> iconMap) {
+    protected boolean addFamily(String family, Hashtable<String, NamedIcon> iconMap, String subFamily) {
         log.debug("addFamily _type= \""+_type+"\", family= \""+family+"\""+", key= \""+
                   _familyName.getText()+"\", _iconMap.size= "+_iconMap.size());
-        ItemPalette.addLevel4Family(_type, family, _familyName.getText(), _iconMap);
-        ImageIndexEditor.indexChanged(true);
-        _parent._family = family;
-        _parent.reset();
+        if (ItemPalette.addLevel4Family(_parent._paletteFrame, _type, family, subFamily, _iconMap)) {
+            _parent.updateFamiliesPanel();
+            _parent._family = family;
+            _parent.reset();
+            return true;
+        }
+        return false;
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(IndicatorTOIconDialog.class.getName());

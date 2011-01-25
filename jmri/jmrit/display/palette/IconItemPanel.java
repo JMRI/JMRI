@@ -146,6 +146,16 @@ public class IconItemPanel extends ItemPanel {
         initIconPanel();
     }
 
+    protected void openEditDialog() {
+        IconDialog dialog = new SingleIconDialog(_itemType, _family, this);
+        dialog.sizeLocate();
+    }
+
+    protected void createNewFamily(String type) {
+        IconDialog dialog = new SingleIconDialog(_itemType, null, this);
+        dialog.sizeLocate();
+    }
+
     public class IconDragJLabel extends DragJLabel {
 
         public IconDragJLabel(DataFlavor flavor) {

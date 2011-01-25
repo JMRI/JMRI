@@ -12,7 +12,10 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 
+import java.util.Enumeration;
 import java.util.Hashtable;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.swing.AbstractAction;
 import javax.swing.JPopupMenu;
@@ -26,8 +29,8 @@ import javax.swing.JRadioButtonMenuItem;
  * An icon to display a status of a Sensor.
  *
  * @author Bob Jacobsen Copyright (C) 2001
- * @author PeteCressman Copyright (C) 2010
- * @version $Revision: 1.77 $
+ * @author PeteCressman Copyright (C) 2010, 2011
+ * @version $Revision: 1.78 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -42,6 +45,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     static final public int INCONSISTENT_BACKGROUND_COLOR =  0x0B;
     private boolean debug = false;
 
+    protected Hashtable <Integer, NamedIcon> _iconMap;          // state int to icon
+    protected Hashtable <String, Integer> _name2stateMap;       // name to state
+    protected Hashtable <Integer, String> _state2nameMap;       // state to name
     String  _iconFamily;
 
     public SensorIcon(Editor editor) {
@@ -53,14 +59,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public SensorIcon(NamedIcon s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        active = new NamedIcon(activeName, activeName);
-        inactive = new NamedIcon(inactiveName, inactiveName);
-        inconsistent = new NamedIcon(inconsistentName, inconsistentName);
-        unknown = new NamedIcon(unknownName, unknownName);
         setOpaque(false);
         _control = true;
         debug = log.isDebugEnabled();
-        displayState(sensorState());
         setPopupUtility(new SensorPopupUtil(this, this));
     }
 
@@ -80,10 +81,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public Positionable finishClone(Positionable p) {
         SensorIcon pos = (SensorIcon)p;
         pos.setSensor(getNamedSensor().getName());
-        pos.setActiveIcon(cloneIcon(getActiveIcon(), pos));
-        pos.setInactiveIcon(cloneIcon(getInactiveIcon(), pos));
-        pos.setInconsistentIcon(cloneIcon(getInconsistentIcon(), pos));
-        pos.setUnknownIcon(cloneIcon(getUnknownIcon(), pos));
+        pos._iconMap = cloneMap(_iconMap, pos);
         pos.setMomentary(getMomentary());
         return super.finishClone(pos);
     }
@@ -119,6 +117,9 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         
         namedSensor = s;
         if (namedSensor != null) {
+            if (_iconMap==null) {
+                makeIconMap();
+            }
             displayState(sensorState());
             getSensor().addPropertyChangeListener(this);
             setName(namedSensor.getName());  // Swing name for e.g. tests
@@ -192,42 +193,42 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     public NamedBeanHandle <Sensor> getNamedSensor() {
         return namedSensor;
     }
-    
-    // display icons
-    String activeName = "resources/icons/smallschematics/tracksegments/circuit-occupied.gif";
-    NamedIcon active = new NamedIcon(activeName, activeName);
 
-    String inactiveName = "resources/icons/smallschematics/tracksegments/circuit-empty.gif";
-    NamedIcon inactive = new NamedIcon(inactiveName, inactiveName);
-
-    String inconsistentName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
-    NamedIcon inconsistent = new NamedIcon(inconsistentName, inconsistentName);
-
-    String unknownName = "resources/icons/smallschematics/tracksegments/circuit-error.gif";
-    NamedIcon unknown = new NamedIcon(unknownName, unknownName);
-
-    public NamedIcon getActiveIcon() { return active; }
-    public void setActiveIcon(NamedIcon i) {
-        active = i;
+    void makeIconMap() {
+        _iconMap = new Hashtable <Integer, NamedIcon>();
+        _name2stateMap = new Hashtable <String, Integer>();
+        _name2stateMap.put("BeanStateUnknown", Integer.valueOf(Sensor.UNKNOWN));
+        _name2stateMap.put("BeanStateInconsistent", Integer.valueOf(Sensor.INCONSISTENT));
+        _name2stateMap.put("SensorStateActive", Integer.valueOf(Sensor.ACTIVE));
+        _name2stateMap.put("SensorStateInactive", Integer.valueOf(Sensor.INACTIVE));
+        _state2nameMap = new Hashtable <Integer, String>();
+        _state2nameMap.put(Integer.valueOf(Sensor.UNKNOWN), "BeanStateUnknown");
+        _state2nameMap.put(Integer.valueOf(Sensor.INCONSISTENT), "BeanStateInconsistent");
+        _state2nameMap.put(Integer.valueOf(Sensor.ACTIVE), "SensorStateActive");
+        _state2nameMap.put(Integer.valueOf(Sensor.INACTIVE), "SensorStateInactive");
+    }
+    /**
+    * Place icon by its bean state name key found in jmri.NamedBeanBundle.properties
+    * That is, by its localized bean state name
+    */
+    public void setIcon(String name, NamedIcon icon) {
+        if (log.isDebugEnabled()) log.debug("setIcon for name \""+name+
+                                            "\" state= "+_name2stateMap.get(name));
+        if (_iconMap==null) {
+            makeIconMap();
+        }
+        _iconMap.put(_name2stateMap.get(name), icon);
         displayState(sensorState());
     }
 
-    public NamedIcon getInactiveIcon() { return inactive; }
-    public void setInactiveIcon(NamedIcon i) {
-        inactive = i;
-        displayState(sensorState());
+    /**
+    * Get icon by its localized bean state name
+    */
+    public NamedIcon getIcon(String state) {
+        return _iconMap.get(_name2stateMap.get(state));
     }
-
-    public NamedIcon getInconsistentIcon() { return inconsistent; }
-    public void setInconsistentIcon(NamedIcon i) {
-        inconsistent = i;
-        displayState(sensorState());
-    }
-
-    public NamedIcon getUnknownIcon() { return unknown; }
-    public void setUnknownIcon(NamedIcon i) {
-        unknown = i;
-        displayState(sensorState());
+    public NamedIcon getIcon(int state) {
+        return _iconMap.get(Integer.valueOf(state));
     }
 
     public String getFamily() {
@@ -235,6 +236,29 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
     public void setFamily(String family) {
         _iconFamily = family;
+    }
+
+    public int maxHeight() {
+        //We use the super class method to get the greatest value for the text
+        int max = super.maxHeight();
+        if (_iconMap!=null && _iconMap.size()>0) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconHeight(), max);
+            }
+        }
+        return max;
+    }
+    public int maxWidth() {
+        //We use the super class method to get the greatest value for the text
+        int max = super.maxWidth();
+        if (_iconMap!=null && _iconMap.size()>0) {
+            Iterator<NamedIcon> iter = _iconMap.values().iterator();
+            while (iter.hasNext()) {
+                max = Math.max(iter.next().getIconWidth(), max);
+            }
+        }
+        return max;
     }
 
     /**
@@ -262,6 +286,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         return name;
     }
 
+    JCheckBoxMenuItem  momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
     /**
      * Pop-up just displays the sensor name
      */
@@ -281,7 +306,6 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                 });
             }
 
-            momentaryItem = new JCheckBoxMenuItem(rb.getString("Momentary"));
             popup.add(momentaryItem);
             momentaryItem.setSelected (getMomentary());
             momentaryItem.addActionListener(new ActionListener(){
@@ -333,78 +357,76 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void rotateOrthogonal() {
-        active.setRotation(active.getRotation()+1, this);
-        inactive.setRotation(inactive.getRotation()+1, this);
-        unknown.setRotation(unknown.getRotation()+1, this);
-        inconsistent.setRotation(inconsistent.getRotation()+1, this);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().setRotation(entry.getValue().getRotation()+1, this);
+        }
         displayState(sensorState());
-        //bug fix, must repaint icons that have same width and height
+        // bug fix, must repaint icons that have same width and height
         repaint();
     }
 
     public void setScale(double s) {
-        active.scale(s, this);
-        inactive.scale(s, this);
-        unknown.scale(s, this);
-        inconsistent.scale(s, this);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().scale(s, this);
+        }
         displayState(sensorState());
     }
 
     public void rotate(int deg) {
-        active.rotate(deg, this);
-        inactive.rotate(deg, this);
-        unknown.rotate(deg, this);
-        inconsistent.rotate(deg, this);
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            entry.getValue().rotate(deg, this);
+        }
         displayState(sensorState());
     }
-
-    JCheckBoxMenuItem momentaryItem;
-
+    
     /**
      * Drive the current state of the display from the state of the
      * turnout.
      */
     public void displayState(int state) {
-        switch (state) {
-            case Sensor.UNKNOWN:
-                if (isIcon()) super.setIcon(unknown);
-                else if (isText()) {super.setText(unknownText);
-                            getPopupUtility().setBackgroundColor(backgroundColorUnknown);
-                            getPopupUtility().setForeground(textColorUnknown);
-                            //super.setOpaque(true);
-                            }
-                break;
-            case Sensor.ACTIVE:
-                //if (isIcon()) updateIcon(active);
-                if (isIcon()) super.setIcon(active);
-                else if (isText()) {super.setText(activeText);
-                            getPopupUtility().setBackgroundColor(backgroundColorActive);
-                            getPopupUtility().setForeground(textColorActive);
-                            //super.setOpaque(true);
-                            }
-                break;
-            case Sensor.INACTIVE:
-                //if (isIcon()) updateIcon(inactive);
-                if (isIcon()) super.setIcon(inactive);
-                else if (isText()) {super.setText(inactiveText);
-                            getPopupUtility().setBackgroundColor(backgroundColorInActive);
-                            getPopupUtility().setForeground(textColorInActive);
-                            //super.setOpaque(true);
-                            }
-                break;
-            default:
-                if (isIcon()) super.setIcon(inconsistent);
-                else if (isText()) {super.setText(inconsistentText);
-                            getPopupUtility().setBackgroundColor(backgroundColorInconsistent);
-                            getPopupUtility().setForeground(textColorInconsistent);
-                            //super.setOpaque(true);
-                            }
-                break;
+        if (getNamedSensor() == null) {
+            log.debug("Display state "+state+", disconnected");
+        } else if (isIcon()) {
+            NamedIcon icon = getIcon(state);
+            if (icon!=null) {
+                super.setIcon(icon);
+            }
+        } else if ((isText())) {
+            switch (state) {
+                case Sensor.UNKNOWN:
+                    super.setText(unknownText);
+                    getPopupUtility().setBackgroundColor(backgroundColorUnknown);
+                    getPopupUtility().setForeground(textColorUnknown);
+                    break;
+                case Sensor.ACTIVE:
+                    super.setText(activeText);
+                    getPopupUtility().setBackgroundColor(backgroundColorActive);
+                    getPopupUtility().setForeground(textColorActive);
+                    break;
+                case Sensor.INACTIVE:
+                    super.setText(inactiveText);
+                    getPopupUtility().setBackgroundColor(backgroundColorInActive);
+                    getPopupUtility().setForeground(textColorInActive);
+                    break;
+                default:
+                    super.setText(inconsistentText);
+                    getPopupUtility().setBackgroundColor(backgroundColorInconsistent);
+                    getPopupUtility().setForeground(textColorInconsistent);
+                    break;
+            }
         }
+
         updateSize();
     }
 
     TableItemPanel _itemPanel;
+
     public boolean setEditItemMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
         popup.add(new AbstractAction(txt) {
@@ -419,31 +441,51 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         makePalettteFrame(java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor")));
         _itemPanel = new TableItemPanel(_paletteFrame, "Sensor", _iconFamily,
                                        PickListModel.sensorPickModelInstance(), _editor);
-        _itemPanel.init( new ActionListener() {
+        ActionListener updateAction = new ActionListener() {
             public void actionPerformed(ActionEvent a) {
                 updateItem();
             }
-        });
+        };
+        // duplicate iconmap with state names rather than int states
+        Hashtable<String, NamedIcon> strMap = new Hashtable<String, NamedIcon>();
+        Iterator<Entry<Integer, NamedIcon>> it = _iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<Integer, NamedIcon> entry = it.next();
+            strMap.put(_state2nameMap.get(entry.getKey()), cloneIcon(entry.getValue(), this));
+        }
+        _itemPanel.init(updateAction, strMap);
         _itemPanel.setSelection(getSensor());
         _paletteFrame.add(_itemPanel);
         _paletteFrame.pack();
+        _paletteFrame.setVisible(true);
     }
 
     void updateItem() {
+        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
         setSensor(_itemPanel.getTableSelection().getSystemName());
         _iconFamily = _itemPanel.getFamilyName();
         Hashtable <String, NamedIcon> iconMap = _itemPanel.getIconMap();
-        setInactiveIcon(iconMap.get("SensorStateInactive"));
-        setActiveIcon(iconMap.get("SensorStateActive"));
-        setInconsistentIcon(iconMap.get("BeanStateInconsistent"));
-        setUnknownIcon(iconMap.get("BeanStateUnknown"));
+        boolean scaleRotate = !_itemPanel.isUpdateWithSameMap();
+        if (iconMap!=null) {
+            Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<String, NamedIcon> entry = it.next();
+                if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+                NamedIcon newIcon = entry.getValue();
+                NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+                if (scaleRotate) {
+                    newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+                    newIcon.setRotation(oldIcon.getRotation(), this);
+                }
+                setIcon(entry.getKey(), newIcon);
+            }
+        }   // otherwise retain current map
         _paletteFrame.dispose();
         _paletteFrame = null;
         _itemPanel.dispose();
         _itemPanel = null;
         invalidate();
     }
-
 
     public boolean setEditIconMenu(JPopupMenu popup) {
         String txt = java.text.MessageFormat.format(rb.getString("EditItem"), rb.getString("Sensor"));
@@ -454,6 +496,47 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             });
         return true;
     }
+    protected void edit() {
+        makeIconEditorFrame(this, "Sensor", true, null);
+        _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
+        Enumeration <Integer> e = _iconMap.keys();
+        int i = 0;
+        while (e.hasMoreElements()) {
+            Integer key = e.nextElement();
+            _iconEditor.setIcon(i++, _state2nameMap.get(key), _iconMap.get(key));
+        }
+        _iconEditor.makeIconPanel();
+
+        // set default icons, then override with this turnout's icons
+        ActionListener addIconAction = new ActionListener() {
+            public void actionPerformed(ActionEvent a) {
+                updateSensor();
+            }
+        };
+        _iconEditor.complete(addIconAction, true, true, true);
+        _iconEditor.setSelection(getSensor());
+    }
+    void updateSensor() {
+        Hashtable<Integer, NamedIcon> oldMap = cloneMap(_iconMap, this);
+        setSensor(_iconEditor.getTableSelection().getDisplayName());
+        Hashtable <String, NamedIcon> iconMap = _iconEditor.getIconMap();
+
+        Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
+        while (it.hasNext()) {
+            Entry<String, NamedIcon> entry = it.next();
+            if (log.isDebugEnabled()) log.debug("key= "+entry.getKey());
+            NamedIcon newIcon = entry.getValue();
+            NamedIcon oldIcon = oldMap.get(_name2stateMap.get(entry.getKey()));
+            newIcon.setLoad(oldIcon.getDegrees(), oldIcon.getScale(), this);
+            newIcon.setRotation(oldIcon.getRotation(), this);
+            setIcon(entry.getKey(), newIcon);
+        }
+        _iconEditorFrame.dispose();
+        _iconEditorFrame = null;
+        _iconEditor = null;
+        invalidate();
+    }
+/*
     protected void edit() {
         makeIconEditorFrame(this, "Sensor", true, null);
         _iconEditor.setPickList(jmri.jmrit.picker.PickListModel.sensorPickModelInstance());
@@ -482,7 +565,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         _iconEditor = null;
         invalidate();
     }
-
+*/
     // Original text is used when changing between icon and text, this allows for a undo when reverting back. 
     String originalText;
     public void setOriginalText(String s) {
@@ -555,13 +638,27 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
             getSensor().removePropertyChangeListener(this);
         }
         namedSensor = null;
-
-        active = null;
-        inactive = null;
-        inconsistent = null;
-        unknown = null;
+        _iconMap = null;
+        _name2stateMap = null;
+        _state2nameMap = null;
 
         super.dispose();
+    }
+
+    protected Hashtable<Integer, NamedIcon> cloneMap(Hashtable<Integer, NamedIcon> map,
+                                                             SensorIcon pos) {
+        Hashtable<Integer, NamedIcon> clone = new Hashtable<Integer, NamedIcon>();
+        if (map!=null) {
+            Iterator<Entry<Integer, NamedIcon>> it = map.entrySet().iterator();
+            while (it.hasNext()) {
+                Entry<Integer, NamedIcon> entry = it.next();
+                clone.put(entry.getKey(), cloneIcon(entry.getValue(), pos));
+                if (pos!=null) {
+                    pos.setIcon(_state2nameMap.get(entry.getKey()), _iconMap.get(entry.getKey()));
+                }
+            }
+        }
+        return clone;
     }
 
     // The code below here is from the layoutsensoricon.
@@ -725,7 +822,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
         }
         setSensor(handle);
     }
-
+/*
     public int maxHeight() {
         //We use the super class method to get the greatest value for the text
             return Math.max(super.maxHeight(), Math.max(
@@ -743,7 +840,7 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
                     (inconsistent!=null) ? inconsistent.getIconWidth() : 0)
         ));
     }
-
+*/
     class SensorPopupUtil extends PositionablePopupUtil {
 
         SensorPopupUtil(Positionable parent, javax.swing.JComponent textComp) {

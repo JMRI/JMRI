@@ -67,7 +67,10 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     * Init for update of existing track block
     * _bottom3Panel has "Update Panel" button put into _bottom1Panel
     */
-    public void init(ActionListener doneAction) {
+    public void init(ActionListener doneAction, Hashtable<String, NamedIcon> iconMap) {
+        if (iconMap!=null) {
+            checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
+        }
         _update = true;
         _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
@@ -168,12 +171,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         }
         log.error("Item type \""+_itemType+"\", family \""+_family+"\"");
     }
-/*
-    protected void openEditDialog() {
-        if (log.isDebugEnabled()) log.debug("openEditDialog for family \""+_family+"\"");
-        new IconDialog(_itemType, _family, this);
-    }
-*/
+    
     protected void setFamily(String family) {
         super.setFamily(family);
         remove(_dndIconPanel);
@@ -220,9 +218,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
     }
 
     /*******************************************************/
-
+/*
     public Hashtable<String, NamedIcon> getIconMap() {
-
         Hashtable<String, NamedIcon> iconMap = ItemPalette.getIconMap(_itemType, _family);
         if (iconMap==null) {
             JOptionPane.showMessageDialog(_paletteFrame, 
@@ -233,7 +230,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         }
         return iconMap;
     }
-
+*/
     public class IndicatorDragJLabel extends DragJLabel {
 
         public IndicatorDragJLabel(DataFlavor flavor) {
