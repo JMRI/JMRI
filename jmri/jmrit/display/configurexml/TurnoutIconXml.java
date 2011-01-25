@@ -12,7 +12,7 @@ import java.util.HashMap;
  * Handle configuration for display.TurnoutIcon objects.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.39 $
+ * @version $Revision: 1.40 $
  */
 public class TurnoutIconXml extends PositionableLabelXml {
 
@@ -128,22 +128,18 @@ public class TurnoutIconXml extends PositionableLabelXml {
             } catch (org.jdom.DataConversionException e) {
             } catch ( NullPointerException e) {  // considered normal if the attributes are not present
             }
-            NamedIcon icon = loadTurnoutIcon("thrown", rotation, l, element, name, p);
-            if (icon!=null) {
-                l.setIcon(_nameMap.get("thrown"), icon);
-            } else { return; }
-            icon = loadTurnoutIcon("closed", rotation, l, element, name, p);
-            if (icon!=null) {
-                l.setIcon(_nameMap.get("closed"), icon);
-            } else { return; }
-            icon = loadTurnoutIcon("unknown", rotation, l,element, name, p);
-            if (icon!=null) {
-                l.setIcon(_nameMap.get("unknown"), icon);
-            } else { return; }
-            icon = loadTurnoutIcon("inconsistent", rotation, l,element, name, p);
-            if (icon!=null) {
-                l.setIcon(_nameMap.get("inconsistent"), icon);
-            } else { return; }
+            if (loadTurnoutIcon("thrown", rotation, l, element, name, p)==null) {
+                return;
+            }
+            if (loadTurnoutIcon("closed", rotation, l, element, name, p)==null) {
+                return;
+            }
+            if (loadTurnoutIcon("unknown", rotation, l,element, name, p)==null) {
+                return;
+            }
+            if (loadTurnoutIcon("inconsistent", rotation, l,element, name, p)==null) {
+                return;
+            }
         }
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
@@ -177,6 +173,8 @@ public class TurnoutIconXml extends PositionableLabelXml {
         else log.warn("did not locate " + state + " icon file for Turnout "+name);
         if (icon==null) {
             log.info("Turnout Icon \""+name+"\": icon \""+state+"\" removed");
+        } else {
+            l.setIcon(_nameMap.get(state), icon);
         }
         return icon;
     }

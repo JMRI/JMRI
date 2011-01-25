@@ -8,16 +8,24 @@ import org.jdom.Attribute;
 import org.jdom.Element;
 import java.awt.Color;
 import java.util.List;
+import java.util.HashMap;
 
 /**
  * Handle configuration for display.SensorIcon objects
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
- * @version $Revision: 1.55 $
+ * @version $Revision: 1.56 $
  */
 public class SensorIconXml extends PositionableLabelXml {
 
+    static final HashMap<String,String> _nameMap = new HashMap<String,String>();
+
     public SensorIconXml() {
+        // map previous store names to actual localized names
+        _nameMap.put("active", "SensorStateActive");
+        _nameMap.put("inactive", "SensorStateInactive");
+        _nameMap.put("unknown", "BeanStateUnknown");
+        _nameMap.put("inconsistent", "BeanStateInconsistent");
     }
 
     /**
@@ -119,10 +127,10 @@ public class SensorIconXml extends PositionableLabelXml {
     }
     
     protected void storeIconInfo(SensorIcon p, Element element) {
-        element.addContent(storeIcon("active", p.getActiveIcon()));
-        element.addContent(storeIcon("inactive", p.getInactiveIcon()));
-        element.addContent(storeIcon("unknown", p.getUnknownIcon()));
-        element.addContent(storeIcon("inconsistent", p.getInconsistentIcon()));
+        element.addContent(storeIcon("active", p.getIcon("SensorStateActive")));
+        element.addContent(storeIcon("inactive", p.getIcon("SensorStateInactive")));
+        element.addContent(storeIcon("unknown", p.getIcon("BeanStateUnknown")));
+        element.addContent(storeIcon("inconsistent", p.getIcon("BeanStateInconsistent")));
         Element elem = new Element("iconmaps");
         String family = p.getFamily();
         if (family!=null) {
@@ -177,23 +185,18 @@ public class SensorIconXml extends PositionableLabelXml {
         } catch ( NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        NamedIcon icon = loadSensorIcon("active", rotation, l, element, name, ed);
-        if (icon!=null) {
-            l.setActiveIcon(icon);
-        } else { return; }
-        icon = loadSensorIcon("inactive", rotation, l, element, name, ed);
-        if (icon!=null) {
-            l.setInactiveIcon(icon);
-        } else { return; }
-        icon = loadSensorIcon("unknown", rotation, l,element, name, ed);
-        if (icon!=null) {
-            l.setUnknownIcon(icon);
-        } else { return; }
-        icon = loadSensorIcon("inconsistent", rotation, l,element, name, ed);
-        if (icon!=null) {
-            l.setInconsistentIcon(icon);
-        } else { return; }
-        
+        if (loadSensorIcon("active", rotation, l, element, name, ed)==null) {
+            return;
+        }
+        if (loadSensorIcon("inactive", rotation, l, element, name, ed)==null) {
+            return;
+        }
+        if (loadSensorIcon("unknown", rotation, l,element, name, ed)==null) {
+            return;
+        }
+        if (loadSensorIcon("inconsistent", rotation, l,element, name, ed)==null) {
+            return;
+        }        
         Element elem = element.getChild("iconmaps");
         if (elem!=null) {
             attr = elem.getAttribute("family");
@@ -241,6 +244,8 @@ public class SensorIconXml extends PositionableLabelXml {
         }
         if (icon==null) {
             log.info(msg+" removed");
+        } else {
+            l.setIcon(_nameMap.get(state), icon);
         }
         return icon;
     }
