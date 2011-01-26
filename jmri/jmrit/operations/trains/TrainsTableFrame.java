@@ -33,7 +33,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.52 $
+ * @version             $Revision: 1.53 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -311,7 +311,10 @@ public class TrainsTableFrame extends OperationsFrame {
 			List<String> trains = trainsModel.getSelectedTrainList();
 			for (int i=0; i<trains.size(); i++){
 				Train train = trainManager.getTrainById(trains.get(i));
-				if (train.isBuildEnabled() && train.isBuilt() && !train.getPrinted()){
+				if (train.isBuildEnabled() && train.isBuilt() && train.getPrinted()){
+					train.terminate();
+				}
+				else if (train.isBuildEnabled() && train.isBuilt() && !train.getPrinted()){
 					int status = JOptionPane.showConfirmDialog(null,
 							"Warning, train manifest hasn't been printed!",
 							"Terminate Train ("+train.getName()+")?", JOptionPane.YES_NO_OPTION);
