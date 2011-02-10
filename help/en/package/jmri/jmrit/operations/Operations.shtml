@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: Operations.shtml,v 1.93 2011-01-24 04:41:06 dan_boudreau Exp $ -->
+<!-- $Id: Operations.shtml,v 1.94 2011-02-10 22:20:33 dan_boudreau Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>Operations</TITLE>
@@ -593,13 +593,13 @@ Note only car types and roads that are accepted by this siding
 are available. If a car type or road isn't available, check the car
 types and roads for this siding and location.
 </P>
-<P>If you want a specific <A HREF="#CarLoad">load</A> for your cars,
+<P>If you want custom <A HREF="#CarLoad">loads</A> for your cars,
 you can create them using the <A HREF="#EditCarLoads">Edit Car
 Attributes</A> for car "Load". Each new load is associated with the car
 type. For example you can have "Screws" for a boxcar, and "Oil" for a
-tank car. The program will deliver cars with a "Schedule" load to a
-siding that has a Schedule that also requests that particular load.
-However, cars with a Schedule load can still be placed at yards,
+tank car. The program will deliver cars with a custom load to a
+siding that has a schedule that also requests that particular load.
+However, cars with a custom load can still be placed at yards,
 staging, and interchanges.</P>
 
 <P>You can if you wish, specify the next destination for a car
@@ -759,17 +759,30 @@ terminated into staging.</P>
 Staging tracks can optionally swap the default car loads from empty to
 loaded, and loaded to empty. Select the "Swap default Loads and Empties"
 if you want your cars loads to change when arriving at the staging
-track. If you're using "Scheduled" loads, you can optionally remove the
-load when the cars arrive at the staging track. Select the "Empty cars
-with Scheduled loads" box if you want to change your cars with
-"Schedule" load to the default load empty.
+track. You can also empty the cars as they enter staging. Select the
+"Empty cars with default loads" to change a car's load status to empty.
+If you're using custom loads, you can optionally remove the load when
+the cars arrive at the staging track. Select the "Empty cars with
+custom loads" box if you want the program to remove your custom loads
+from your cars when the train arrives at the staging track.
 
-<P>You can also generate "Schedule" loads on demand. Select the
-"Generate scheduled loads if necessary" to create schedule loads for
-your sidings that are requesting a schedule loads. The program will
-create a schedule load for an empty car that is the correct type for the
-siding that is demanding a load. For a load to be created, the siding
-must be directly serviced by the route that departs the staging track. </P>
+<P>You can also have the program place custom loads in your cars as
+they leave staging. Select the "Generate custom loads for trains
+departing this track" to add custom loads to your cars. The program will
+create a custom load for an empty car that is the correct type for a
+siding that is demanding a custom load. To demand a custom load, the
+siding must have a <A HREF="#Schedules">schedule</A>. For a custom load
+to be created, the siding must be directly serviced by the route that
+departs the staging track.</P>
+
+<P>If you want the program to create a custom load for a siding that
+is not directly served by the departing train, select the "Create custom
+loads for any siding". To restrict which loads the program will
+generate, you can use the staging tracks load service control feature.
+See "Select loads service by this track" when editing the staging track.
+You can also restrict which types of loads the program will generate by
+restricting the types of loads the departing train from staging is
+allowed to service. 
 
 <A NAME="ModifyLocationsByCarType"></A>
 <H3>Modify Locations by Car Type</H3>
@@ -945,9 +958,9 @@ set the location to none (blank space).
 <H3>Car Load</H3>
 
 You can optionally set the load state of the car. Select E for empty or
-L for loaded. You can also create your own <A HREF="#EditCarLoads">car loads</A>,
+L for loaded. You can also create your own custom <A HREF="#EditCarLoads">car loads</A>,
 but there are restrictions. Only sidings with <A HREF="#Schedules">Schedules</A> can
-load or unload cars with loads that you've created. It is also suggested
+load or unload cars with custom loads that you've created. It is also suggested
 that you use a format similar to L(commodity) to describe your loads.
 For example a load of tools could be entered as L(Tools).
 
@@ -1103,6 +1116,7 @@ types are electric, diesel, gas turbine, and steam.
 <img src="images/Engines.png">
 </P>
 
+<A NAME="ImportEngines"></A>
 <H3>Import Engines</H3>
 
 If you already have a list of engines in your JMRI roster or in a
