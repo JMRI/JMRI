@@ -1,5 +1,5 @@
 <!-- Defines XML documenting a train roster -->
-<!-- $Id: operations-trains.dtd,v 1.18 2011-01-24 00:50:05 dan_boudreau Exp $ -->
+<!-- $Id: operations-trains.dtd,v 1.19 2011-02-10 22:28:12 dan_boudreau Exp $ -->
 
 <!-- This DTD is part of JMRI. Copyright 2001, 2003, 2007, 2008.                  -->
 <!--                                                                        -->
@@ -19,7 +19,7 @@
 <!ELEMENT trainOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
-<!ELEMENT scripts (startUp | shutDown | move | terminate)*>
+<!ELEMENT scripts (startUp | shutDown | build | move | terminate)*>
 
 <!ATTLIST trainOptions buildReport		(true | false) "false">
 <!ATTLIST trainOptions printPreview 	(true | false) "false">
@@ -46,6 +46,7 @@
 
 <!ELEMENT startUp EMPTY>
 <!ELEMENT shutDown EMPTY>
+<!ELEMENT build EMPTY>
 <!ELEMENT move EMPTY>
 <!ELEMENT terminate EMPTY>
 
@@ -90,10 +91,11 @@
 <!ATTLIST train skip				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
 
+<!ATTLIST build name				CDATA #IMPLIED>
 <!ATTLIST move name					CDATA #IMPLIED>
 <!ATTLIST terminate name			CDATA #IMPLIED>
-<!ATTLIST startUp name					CDATA #IMPLIED>
-<!ATTLIST shutDown name					CDATA #IMPLIED>
+<!ATTLIST startUp name				CDATA #IMPLIED>
+<!ATTLIST shutDown name				CDATA #IMPLIED>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>
