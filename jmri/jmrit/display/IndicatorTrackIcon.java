@@ -31,7 +31,7 @@ import java.util.Map.Entry;
  * A click on the icon does not change any of the above conditions..
  *<P>
  * @author Pete Cressman  Copyright (c) 2010
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class IndicatorTrackIcon extends PositionableLabel 
@@ -338,7 +338,13 @@ public class IndicatorTrackIcon extends PositionableLabel
 	}
 
     public String getNameString() {
-        return "ITrack";
+        String str = "";
+        if (namedOccBlock!=null) {
+            str = "in "+namedOccBlock.getBean().getDisplayName();
+        } else if (namedOccSensor!=null) {
+            str = "on "+namedOccSensor.getBean().getDisplayName();
+        }
+        return "ITrack "+str;
     }
 
     /**

@@ -30,7 +30,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.78 $
+ * @version $Revision: 1.79 $
  */
 
 public class SensorIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -281,8 +281,12 @@ public class SensorIcon extends PositionableLabel implements java.beans.Property
     }
 
     public String getNameString() {
-        String name = rb.getString("NotConnected");
-        if (namedSensor!=null) name = namedSensor.getName();
+        String name;
+        if (namedSensor == null) name = rb.getString("NotConnected");
+        else if (getSensor().getUserName()==null)
+            name = getSensor().getSystemName();
+        else
+            name = getSensor().getUserName()+" ("+getSensor().getSystemName()+")";
         return name;
     }
 

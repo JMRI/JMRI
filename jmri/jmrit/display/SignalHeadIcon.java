@@ -31,7 +31,7 @@ import jmri.util.NamedBeanHandle;
  * @see jmri.SignalHeadManager
  * @see jmri.InstanceManager
  * @author Bob Jacobsen Copyright (C) 2001, 2002
- * @version $Revision: 1.79 $
+ * @version $Revision: 1.80 $
  */
 
 public class SignalHeadIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -203,8 +203,10 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
     public String getNameString() {
         String name;
         if (namedHead == null) name = rb.getString("NotConnected");
+        else if (getSignalHead().getUserName()!=null)
+            name = getSignalHead().getUserName()+" ("+getSignalHead().getSystemName()+")";
         else
-            name = namedHead.getName();
+            name = getSignalHead().getSystemName();
         return name;
     }
 
@@ -280,11 +282,7 @@ public class SignalHeadIcon extends PositionableLabel implements java.beans.Prop
             popup.add(new AbstractAction(rb.getString("EditLogic")) {
                 public void actionPerformed(ActionEvent e) {
                     jmri.jmrit.blockboss.BlockBossFrame f = new jmri.jmrit.blockboss.BlockBossFrame();
-                    String name;
-                    /*if (mHead.getUserName()==null || mHead.getUserName().equals(""))
-                        name = mHead.getSystemName();
-                    else*/
-                        name = getNameString();
+                    String name = getNameString();
                     f.setTitle(java.text.MessageFormat.format(rb.getString("SignalLogic"), name));
                     f.setSignal(name);
                     f.setVisible(true);

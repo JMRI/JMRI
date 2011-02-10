@@ -29,7 +29,7 @@ import java.util.Map.Entry;
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
  * @author PeteCressman Copyright (C) 2010, 2011
- * @version $Revision: 1.65 $
+ * @version $Revision: 1.66 $
  */
 
 public class TurnoutIcon extends PositionableLabel implements java.beans.PropertyChangeListener {
@@ -198,11 +198,10 @@ public class TurnoutIcon extends PositionableLabel implements java.beans.Propert
     public String getNameString() {
         String name;
         if (namedTurnout == null) name = rb.getString("NotConnected");
-        else name = namedTurnout.getName();
-        /*else if (getTurnout().getUserName()!=null)
+        else if (getTurnout().getUserName()!=null)
             name = getTurnout().getUserName()+" ("+getTurnout().getSystemName()+")";
         else
-            name = getTurnout().getSystemName();*/
+            name = getTurnout().getSystemName();
         return name;
     }
 

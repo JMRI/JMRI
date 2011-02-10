@@ -66,7 +66,7 @@ import jmri.util.JmriJFrame;
  * @author  Dennis Miller 2004
  * @author  Howard G. Penny Copyright: Copyright (c) 2005
  * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010
+ * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  * @version			$Revision 1.0 $
  * 
  */
@@ -96,6 +96,10 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     static final public ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
+
+    public static final String POSITIONABLE_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
+               ";class=jmri.jmrit.display.Positionable";
+
     private boolean _debug = false;
     private boolean _loadFailed = false;
 
@@ -488,11 +492,13 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                 g2d.setStroke(new java.awt.BasicStroke(2.0f));
                 if (_selectionGroup!=null){
                     for(int i=0; i<_selectionGroup.size();i++){
-                        g.drawRect(_selectionGroup.get(i).getX(), _selectionGroup.get(i).getY(), _selectionGroup.get(i).maxWidth(), _selectionGroup.get(i).maxHeight());
+                        g.drawRect(_selectionGroup.get(i).getX(), _selectionGroup.get(i).getY(), 
+                                   _selectionGroup.get(i).maxWidth(), _selectionGroup.get(i).maxHeight());
                     }
                 }
                 if (_highlightcomponent!=null)
-                    g.drawRect(_highlightcomponent.x, _highlightcomponent.y, _highlightcomponent.width, _highlightcomponent.height);
+                    g.drawRect(_highlightcomponent.x, _highlightcomponent.y, 
+                               _highlightcomponent.width, _highlightcomponent.height);
                 //Draws a border around the highlighted component
                 g2d.setColor(color);
                 g2d.setStroke(stroke);
@@ -558,7 +564,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (!_editable) {
             _highlightcomponent = null;
             _selectionGroup = null;
-//            _pastePending = false;
         }
     }
     
@@ -995,9 +1000,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         popup.add(new AbstractAction(rb.getString("Remove")) {
             Positionable comp;
             public void actionPerformed(ActionEvent e) { 
-            /*    if (_selectionGroup!=null && _selectionGroup.contains(comp)) {
-                    _selectionGroup.remove(comp);
-                }  */
                 comp.remove();
                 removeSelections(comp);
             }
@@ -2001,7 +2003,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     /********************* cleanup *************************/
 
-    private void removeFromTarget(Positionable l) {
+    protected void removeFromTarget(Positionable l) {
         _targetPanel.remove((Component)l);
         _highlightcomponent = null;
     }
@@ -2178,7 +2180,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         if (_selectionGroup.size() < 1) {
             _selectRect = null;
             _selectionGroup = null;
-//            _pastePending = false;
         }
     }
 
@@ -2416,11 +2417,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     public void keyReleased(KeyEvent e) {
     }
     
-    /**************************** DnD **************************************/
-
-    public static final String POSITIONABLE_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
-               ";class=jmri.jmrit.display.Positionable";
-
     /*********************** Abstract Methods ************************/
 
     abstract public void mousePressed(MouseEvent event);

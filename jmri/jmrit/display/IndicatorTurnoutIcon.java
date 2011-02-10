@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.13 $
+ * @version $Revision: 1.14 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -397,8 +397,6 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
                 NamedIcon icon = getIcon(_status, state);
                 if (icon!=null) {
                     super.setIcon(icon);
-                } else {
-                    log.warn("No icon for state "+_state2nameMap.get(state)+", status= "+_status);
                 }
             }
         }
@@ -407,7 +405,13 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     }
 
     public String getNameString() {
-        return "ITrack "+super.getNameString();
+        String str = "";
+        if (namedOccBlock!=null) {
+            str = "in "+namedOccBlock.getBean().getDisplayName();
+        } else if (namedOccSensor!=null) {
+            str = "on "+namedOccSensor.getBean().getDisplayName();
+        }
+        return "ITrack "+super.getNameString()+str;
     }
 
     // update icon as state of turnout changes and status of track changes
@@ -515,7 +519,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
             Iterator<Entry<Integer, NamedIcon>> iter = entry.getValue().entrySet().iterator();
             while (iter.hasNext()) {
                 Entry<Integer, NamedIcon> ent = iter.next();
-                clone.put(_state2nameMap.get(entry.getKey()), cloneIcon(ent.getValue(), this));
+                clone.put(_state2nameMap.get(ent.getKey()), cloneIcon(ent.getValue(), this));
             }
         }
         _TOPanel.initUpdate(updateAction, iconMaps);
