@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: ControlPanelEditor.shtml,v 1.3 2010-11-12 15:42:01 pete_cressman Exp $ -->
+<!-- $Id: ControlPanelEditor.shtml,v 1.4 2011-02-10 23:46:51 pete_cressman Exp $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Control Panel Editor Help</TITLE>
@@ -25,8 +25,8 @@
 
 <H1>The Control Panel Editor</H1>
 
-Control Panel Editor is simply an alternative view and controller of <b>exactly the
-same content data</b> as Panel Editor.  You may change the view and control of your 
+<b>Control Panel Editor</b> is simply an alternative view and controller with exactly the
+same content data as <b>Panel Editor</b>.  You may change the view and control of your 
 panel whenever and as often as you please.  Storage and loading can be done from either
 editor.  The editor used to store the panel will be the editor used at the next load.
 
@@ -75,6 +75,13 @@ available in Panel Editor, where checking these options will permanently set all
 item to those set by the Panel Editor.</p>
 <p>Setting scroll bar preferences is also found in this menu.</p>
 
+<H3>Edit Menu</H3>
+This menu supports Cut, Copy and Paste with the system clipboard.  Cut and Copy will 
+place a copy of a selection item or group into the clipboard.  This feature allows 
+copying selections from one panel to another panel.
+<p>It also has a menu item to Select All panel items.
+</p>
+
 <H3>Zoom Menu</H3>
 The <b>Zoom(percentage)...</b> item will enlarge or reduce the panel size.
 <p>The <b>Zoom to Fit</b> item will enlarge or reduce the display of all panel items 
@@ -88,9 +95,11 @@ to resize the display to fit the new panel window dimensions.
 
 <H3>AddItems Menu</H3>
 This menu will open a tabbed window which allows you to add items to the panel.  This
-tabbed window, <b>Item Palette</b>, extends the functions found in the drop down 
-ComboBox of the Panel Editor.  The methods for adding items done by drag and drop.
-Details may be found at !!!ItemPaletteHelp - to do!!!. 
+tabbed window, <b>Item Palette</b>, is used to add items to the panel.  Adding items 
+is done by drag and drop.  Iconic items may have multiple sets of icons to choose from.
+Icon sets may be customized and added or deleted to suit the user.
+Details may be found at !!!ItemPaletteHelp - to do!!!.  Note that the Item Palette
+can also be openned with the accelerator key, Control P.<\p> 
 
 <H2>Mouse operation in Control Panel Editor</H2>
 Control Panel Editor does not implement the rollover highlighting found in Panel Editor.
@@ -112,7 +121,7 @@ Dragging a selection or selection group may be done with either mouse button in 
 <p>A background icon (i.e. an icon at level 1) can be moved by dragging it with the control
 key held down.</p>
 
-<H2>Copy in Control Panel Editor</H2>
+<H2>Duplicating Selections Within Control Panel Editor</H2>
 Copying an item or selection group is done by bringing up the popup for one of the
 selected items.  When the <b>Copy</b> popup menu item is clicked, a Copy of the 
 selection group is made on top of the original selections.  Drag this copy to whereever
