@@ -81,14 +81,23 @@ public abstract class FamilyItemPanel extends ItemPanel {
 
         Hashtable <String, Hashtable<String, NamedIcon>> families = ItemPalette.getFamilyMaps(_itemType);
         if (families!=null && families.size()>0) {
+            JPanel familyPanel = new JPanel();
+            familyPanel.setLayout(new BoxLayout(familyPanel, BoxLayout.Y_AXIS));
+            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamiliesLabel"),
+                                                        ItemPalette.rbp.getString(_itemType));
+            JPanel p = new JPanel();
+            p.add(new JLabel(txt));
+            familyPanel.add(p);
             ButtonGroup group = new ButtonGroup();
-            Iterator <String> it = families.keySet().iterator();
             JPanel buttonPanel = new JPanel();
             buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
             String family = null;
             JRadioButton button = null;
+            int count = 0;
+            Iterator <String> it = families.keySet().iterator();
             while (it.hasNext()) {
                 family = it.next();
+                count++;
                 button = new JRadioButton(ItemPalette.convertText(family));
                 button.addActionListener(new ActionListener() {
                         String family;
@@ -104,9 +113,16 @@ public abstract class FamilyItemPanel extends ItemPanel {
                 if (family.equals(_family)) {
                     button.setSelected(true);
                 }
+                if (count>4) {
+                    count = 0;
+                    familyPanel.add(buttonPanel);
+                    buttonPanel = new JPanel();
+                    buttonPanel.setLayout(new FlowLayout());  //new BoxLayout(p, BoxLayout.Y_AXIS)
+                }
                 buttonPanel.add(button);
                 group.add(button);
             }
+            familyPanel.add(buttonPanel);
             if (_family==null && _currentIconMap==null) {
                 _family = family;       // let last familiy be the selected one
                 button.setSelected(true);
@@ -126,15 +142,7 @@ public abstract class FamilyItemPanel extends ItemPanel {
             }
             _iconFamilyPanel.add(_iconPanel);
             _iconPanel.setVisible(false);
-            JPanel panel = new JPanel();
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            String txt = java.text.MessageFormat.format(ItemPalette.rbp.getString("IconFamiliesLabel"),
-                                                        ItemPalette.rbp.getString(_itemType));
-            JPanel p = new JPanel();
-            p.add(new JLabel(txt));
-            panel.add(p);
-            panel.add(buttonPanel);
-            _iconFamilyPanel.add(panel);
+            _iconFamilyPanel.add(familyPanel);
             _bottom1Panel.setVisible(true);
             _bottom2Panel.setVisible(false);
         } else {

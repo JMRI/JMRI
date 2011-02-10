@@ -84,7 +84,8 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
         }
         int result = JOptionPane.showConfirmDialog(_paletteFrame,ItemPalette.rbp.getString("NoFamilyName"),
-                ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
+                ItemPalette.rb.getString("questionTitle"), JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
         if (result==JOptionPane.NO_OPTION) {
             _updateWithSameMap = true;
             return;
@@ -95,10 +96,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
         }
         do {
-            _family = JOptionPane.showInputDialog(_paletteFrame, 
-                    java.text.MessageFormat.format(ItemPalette.rbp.getString("AddFamily"),
-                                                   ItemPalette.rbp.getString(_itemType)),
-                    //new Object[]{_family}, _family,
+            _family = JOptionPane.showInputDialog(_paletteFrame, ItemPalette.rbp.getString("EnterFamilyName"),
                     ItemPalette.rb.getString("questionTitle"), JOptionPane.QUESTION_MESSAGE);
             if (_family==null || _family.trim().length()==0) {
                 // bail out
@@ -169,7 +167,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             }
             if (_family==null && _updateGroupsMap==null) {
                 _family = family;              // let last familiy be the selected one
-                if (button != null) button.setSelected(true);
+                button.setSelected(true);
             }
             _iconFamilyPanel.add(_detectPanel);
 
@@ -511,6 +509,7 @@ public class IndicatorTOItemPanel extends TableItemPanel {
             t.setErrSensor(_detectPanel.getErrSensor());                
             t.setShowTrain(_showTrainName.isSelected());
             t.setTurnout(bean.getSystemName());
+            t.setFamily(_family);
 
             Iterator<Entry<String, Hashtable<String, NamedIcon>>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {

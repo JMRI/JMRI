@@ -219,6 +219,7 @@ public class SignalHeadItemPanel extends TableItemPanel implements ListSelection
                 String key = e.nextElement();
                 sh.setIcon(ItemPalette.rbean.getString(key), iconMap.get(key));
             }
+            sh.setFamily(_family);
             sh.setLevel(Editor.SIGNALS);
             return new PositionableDnD(sh, bean.getDisplayName());
         }

@@ -78,9 +78,8 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (iconMap!=null) {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
         }
-        _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
-        _bottom1Panel = makeBottom3Panel(doneAction);
+        _bottom1Panel = makeBottom3Panel(doneAction, makeBottom1Panel());
         add(initTablePanel(_model, _editor));      // NORTH Panel
         initIconFamiliesPanel();
         _table.setTransferHandler(null);        // no DnD
@@ -91,10 +90,11 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
         if (log.isDebugEnabled()) log.debug("init done for update family "+_family);
     }
 
-    protected JPanel makeBottom3Panel(ActionListener doneAction) {
+    // add update buttons to  bottom1Panel
+    protected JPanel makeBottom3Panel(ActionListener doneAction, JPanel bottom1Panel) {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.add(_bottom1Panel);
+        bottomPanel.add(bottom1Panel);
         JPanel updatePanel = new JPanel();
         _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
         _updateButton.addActionListener(doneAction);
@@ -308,6 +308,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                     String key = e.nextElement();
                     t.setIcon(key, iconMap.get(key));
                 }
+                t.setFamily(_family);
                 t.setLevel(Editor.TURNOUTS);
                 return new PositionableDnD(t, bean.getDisplayName());
             } else if (_itemType.equals("Sensor")) {
@@ -319,6 +320,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                     s.setIcon(key, iconMap.get(key));
                 }
                 s.setSensor(bean.getDisplayName());
+                s.setFamily(_family);
                 s.setLevel(Editor.SENSORS);
                 return new PositionableDnD(s, bean.getDisplayName());
             } else if (_itemType.equals("Light")) {
@@ -329,6 +331,7 @@ public class TableItemPanel extends FamilyItemPanel implements ListSelectionList
                 l.setUnknownIcon(iconMap.get("BeanStateUnknown"));
                 l.setLight((jmri.Light)bean);
                 l.setLevel(Editor.LIGHTS);
+//                l.setFamily(_family);
                 return new PositionableDnD(l, bean.getDisplayName());
            }
             return null;

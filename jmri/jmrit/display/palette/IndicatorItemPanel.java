@@ -72,9 +72,8 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             checkCurrentMap(iconMap);   // is map in families?, does user want to add it? etc
         }
         _update = true;
-        _bottom1Panel = makeBottom1Panel();
         _bottom2Panel = makeBottom2Panel();
-        _bottom1Panel = makeBottom3Panel(doneAction);
+        _bottom1Panel = makeBottom3Panel(doneAction, makeBottom1Panel());
         _detectPanel= new DetectionPanel(this);
         add(_detectPanel);
         initIconFamiliesPanel();
@@ -87,10 +86,11 @@ public class IndicatorItemPanel extends FamilyItemPanel {
         if (log.isDebugEnabled()) log.debug("init done for family "+_family);
     }
 
-    protected JPanel makeBottom3Panel(ActionListener doneAction) {
+    // add update buttons to  bottom1Panel
+    protected JPanel makeBottom3Panel(ActionListener doneAction, JPanel bottom1Panel) {
         JPanel bottomPanel = new JPanel();
         bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
-        bottomPanel.add(_bottom1Panel);
+        bottomPanel.add(bottom1Panel);
         JPanel updatePanel = new JPanel();
         _updateButton = new JButton(ItemPalette.rbp.getString("updateButton"));
         _updateButton.addActionListener(doneAction);
@@ -258,6 +258,7 @@ public class IndicatorItemPanel extends FamilyItemPanel {
             t.setOccSensor(_detectPanel.getOccSensor());
             t.setErrSensor(_detectPanel.getErrSensor());                
             t.setShowTrain(_showTrainName.isSelected());
+            t.setFamily(_family);
 
             Iterator<Entry<String, NamedIcon>> it = iconMap.entrySet().iterator();
             while (it.hasNext()) {
