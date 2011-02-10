@@ -6,14 +6,15 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.display.*;
 
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
+//import java.awt.event.KeyEvent;
+//import java.awt.event.MouseEvent;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import java.awt.geom.Rectangle2D;
 
-import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
+import java.awt.datatransfer.*;
 import java.awt.dnd.*;
 import java.io.IOException;
 
@@ -43,30 +44,19 @@ import jmri.jmrit.catalog.NamedIcon;
  * <P>
  * The "contents" List keeps track of all the objects added to the target
  * frame for later manipulation.
+ * Extends the behavior it shares with PanelPro
+ * DnD implemented at JDK 1.2 for backward compatibility
  * <P>
- * If you close the Editor window, the target is left alone and
- * the editor window is just hidden, not disposed.
- * If you close the target, the editor and target are removed,
- * and dispose is run. To make this logic work, the ControlPanelEditor
- * is descended from a JFrame, not a JPanel.  That way it
- * can control its own visibility.
- * <P>
- * The title of the target and the editor panel are kept
- * consistent via the {#setTitle} method.
- *
- * @author  Bob Jacobsen  Copyright: Copyright (c) 2002, 2003, 2007
- * @author  Dennis Miller 2004
- * @author  Howard G. Penny Copyright: Copyright (c) 2005
- * @author  Matthew Harris Copyright: Copyright (c) 2009
- * @author  Pete Cressman Copyright: Copyright (c) 2009
+ * @author  Pete Cressman Copyright: Copyright (c) 2009, 2010, 2011
  * 
  */
 
-public class ControlPanelEditor extends Editor implements DropTargetListener {
+public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
 
     public boolean _debug;
 	private boolean delayedPopupTrigger = false;
     private JMenuBar _menuBar;
+    private JMenu _editorMenu;
     private JMenu _editMenu;
     private JMenu _fileMenu;
     private JMenu _optionMenu;
@@ -88,6 +78,13 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     private JRadioButtonMenuItem scrollHorizontal = new JRadioButtonMenuItem(rb.getString("ScrollHorizontal"));
     private JRadioButtonMenuItem scrollVertical = new JRadioButtonMenuItem(rb.getString("ScrollVertical"));
 
+    /**************************** DnD **************************************/
+
+//    public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
+//               ";class=java.util.ArrayList";
+    public static final String POSITIONABLE_LIST_FLAVOR = java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType +
+               ";class=jmri.jmrit.display.controlPanelEditor.ControlPanelEditor";
+
     public ControlPanelEditor() {
     }
 
@@ -97,6 +94,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     }
 
     protected void init(String name) {
+        setVisible(false);
         _debug = log.isDebugEnabled();
         java.awt.Container contentPane = this.getContentPane();
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
@@ -108,6 +106,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         makeIconMenu();
         makeZoomMenu();
         makeOptionMenu();
+        makeEditMenu();
         makeFileMenu();
 
         // add menus used for both edit mode and user mode
@@ -137,6 +136,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
         makeDataFlavors();
+
+//        setMappings();
+//        _targetPanel.setTransferHandler(new PositionableListHandler(this));
+
         // set scrollbar initial state
         setScroll(SCROLL_BOTH);
         scrollBoth.setSelected(true);
@@ -162,7 +165,8 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                     _itemPalette.setVisible(true);
                 }
             });
-
+        mi.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
         _iconMenu.add(mi);                                                  
     }
 
@@ -174,15 +178,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         addItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     zoomRestore();
-                }
-            });
-
-        addItem = new JMenuItem(rb.getString("SelectAll"));
-        _zoomMenu.add(addItem);
-        addItem.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent event) {
-                    _selectionGroup = _contents;
-                    _targetPanel.repaint();
                 }
             });
 
@@ -271,7 +266,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         scrollBoth.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_BOTH);
-                    repaint();
+//                    repaint();
                 }
             });
         scrollGroup.add(scrollNone);
@@ -279,7 +274,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         scrollNone.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_NONE);
-                    repaint();
+//                    repaint();
                 }
             });
         scrollGroup.add(scrollHorizontal);
@@ -287,7 +282,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         scrollHorizontal.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_HORIZONTAL);
-                    repaint();
+//                    repaint();
                 }
             });
         scrollGroup.add(scrollVertical);
@@ -295,7 +290,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         scrollVertical.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
                     setScroll(SCROLL_VERTICAL);
-                    repaint();
+//                    repaint();
                 }
             });
     }
@@ -367,11 +362,211 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 }
             });
     }
+
+    /**
+     * Create an Edit menu to support cut/copy/paste.
+     * An incredible hack to get some semblance of CCP between panels.  The hack works for
+     * one of two problems.
+     * 1. Invoking a copy to the system clipboard causes a delayed repaint placed on the
+     *    EventQueue whenever ScrollBars are invoked.  This repaint ends with a null
+     *    pointer exception at 
+     *    javax.swing.plaf.basic.BasicScrollPaneUI.paint(BasicScrollPaneUI.java:90)
+     *    This error occurs regardless of the method used to put the copy in the 
+     *    clipboard - JDK 1.2 style or 1.4 TransferHandler
+     *    Fixed! Get the plaf glue (BasicScrollPaneUI) and call installUI(_panelScrollPane)
+     *    See copyToClipboard() below, line 527 (something the Java code should have done)
+     *    No scrollbars - no problem.  Hack does not fix this problem.
+     * 2. The clipboard provides a shallow copy of what was placed there.  For things that
+     *    have an icon Map (ArrayLists) the Tranferable data is shallow.  The Hack to 
+     *    work around this is:  Place a reference to the panel copying to the clipboad
+     *    in the clipboard and let the pasting panel callback to the copying panel 
+     *    to get the data.
+     *    See public ArrayList<Positionable> getClipGroup() {} below.
+     */
+    private void makeEditMenu() {
+        _editMenu = new JMenu("Edit");
+        _menuBar.add(_editMenu, 0);
+        _editMenu.setMnemonic(KeyEvent.VK_E);
+/*
+    Tutorial recommended method not satisfactory.
+        TransferActionListener actionListener = new TransferActionListener();
+        JMenuItem menuItem = new JMenuItem("Cut");
+        menuItem.setActionCommand((String)TransferHandler.getCutAction().getValue(Action.NAME));
+        menuItem.addActionListener(actionListener);
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_T);
+        _editMenu.add(menuItem);
+        
+        menuItem = new JMenuItem("Copy");
+        menuItem.setActionCommand((String)TransferHandler.getCopyAction().getValue(Action.NAME));
+        menuItem.addActionListener(actionListener);
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_C);
+        _editMenu.add(menuItem);
+        
+        menuItem = new JMenuItem("Paste");
+        menuItem.setActionCommand((String)TransferHandler.getPasteAction().getValue(Action.NAME));
+        menuItem.addActionListener(actionListener);
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_P);
+        _editMenu.add(menuItem);
+        */
+
+        JMenuItem menuItem = new JMenuItem(rb.getString("MenuItemCut"));
+        menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    copyToClipboard();
+                    removeSelections(null);
+                }
+            });
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_T);
+        _editMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(rb.getString("MenuItemCopy"));
+        menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    copyToClipboard();
+                }
+            });
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_C, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_C);
+        _editMenu.add(menuItem);
+        
+        menuItem = new JMenuItem(rb.getString("MenuItemPaste"));
+        menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    pasteFromClipboard();
+                }
+            });
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_V, ActionEvent.CTRL_MASK));
+        menuItem.setMnemonic(KeyEvent.VK_P);
+        _editMenu.add(menuItem);
+
+        menuItem = new JMenuItem(rb.getString("SelectAll"));
+        menuItem.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent event) {
+                    _selectionGroup = _contents;
+                    _targetPanel.repaint();
+                }
+            });
+        menuItem.setAccelerator(
+          KeyStroke.getKeyStroke(KeyEvent.VK_A, ActionEvent.CTRL_MASK));
+        _editMenu.add(menuItem);
+    }
+
+    private void pasteFromClipboard() {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        DataFlavor[] flavors = clipboard.getAvailableDataFlavors();
+        for (int k=0; k<flavors.length; k++) {
+            if (_positionableListDataFlavor.equals(flavors[k])) {
+                Point pt = _targetPanel.getMousePosition(true);
+                try{
+//                    ArrayList clipGroup = (ArrayList)clipboard.getData(_positionableListDataFlavor);
+                    ControlPanelEditor ed = 
+                        (ControlPanelEditor)clipboard.getData(_positionableListDataFlavor);
+                    ArrayList<Positionable> clipGroup = ed.getClipGroup();
+                    if (clipGroup!=null && clipGroup.size()>0) {
+                        Positionable pos = clipGroup.get(0);
+                        int minX = pos.getLocation().x;
+                        int minY = pos.getLocation().y;
+                        // locate group at mouse point
+                        for (int i=1; i<clipGroup.size(); i++) {
+                            pos = clipGroup.get(i);
+                            minX = Math.min(minX, pos.getLocation().x);
+                            minY = Math.min(minY, pos.getLocation().y);
+                        }
+                        if (_pastePending) {
+                            abortPasteItems();
+                        }
+                        _selectionGroup = new ArrayList<Positionable>();
+                        for (int i=0; i<clipGroup.size(); i++) {
+                            //pos = clipGroup.get(i).deepClone();
+                            pos = clipGroup.get(i);
+                            pos.setLocation(pos.getLocation().x+pt.x-minX, pos.getLocation().y+pt.y-minY);
+                            // now set display level in the pane.
+                            pos.setDisplayLevel(pos.getDisplayLevel());
+                            putItem(pos);
+                            pos.updateSize();
+                            pos.setVisible(true);
+                            _selectionGroup.add(pos);
+                            if (_debug) log.debug("Paste Add "+pos.getNameString());
+                        }
+                    }
+                    return;
+                } catch(IOException ioe) {
+                    log.warn("Editor Paste caught IOException", ioe);
+                } catch(UnsupportedFlavorException ufe) {
+                    log.warn("Editor Paste caught UnsupportedFlavorException",ufe);
+                }
+            }
+        }
+    }
+
+    private void copyToClipboard() {
+        if (_selectionGroup!=null) {
+            ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
+
+            for (int i=0; i<_selectionGroup.size(); i++) {
+                Positionable pos = _selectionGroup.get(i).deepClone();
+                dragGroup.add(pos);
+                removeFromTarget(pos);   // cloned item gets added to _targetPane during cloning
+            }
+            if (_debug) log.debug("copyToClipboard: cloned _selectionGroup, size= "+_selectionGroup.size());
+//            abortPasteItems(dragGroup);
+            _clipGroup = dragGroup;
+
+            Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+            clipboard.setContents(new PositionableListDnD(this), this);
+            getPanelScrollPane().getUI().installUI(getPanelScrollPane());
+//            clipboard.setContents(new PositionableListDnD(dragGroup), null);
+            if (_debug) log.debug("copyToClipboard: setContents _selectionGroup, size= "+_selectionGroup.size());
+
+        } else {
+            _clipGroup = null;
+        }
+    }
+
+    ArrayList <Positionable> _clipGroup;
+    public ArrayList <Positionable> getClipGroup() {
+        if (_debug) log.debug("getClipGroup: _clipGroup"+(_clipGroup==null?"=null":", size= "+_clipGroup.size()));
+        ArrayList<Positionable> clipGrp = new ArrayList<Positionable>();
+        for (int i=0; i<_clipGroup.size(); i++) {
+            Positionable pos = _clipGroup.get(i).deepClone();
+            clipGrp.add(pos);
+            removeFromTarget(pos);   // cloned item gets added to _targetPane during cloning
+        }
+        return clipGrp;
+    }
+/*
+    private void setMappings() {
+        ActionMap map = _targetPanel.getActionMap();
+        map.put(TransferHandler.getCutAction().getValue(Action.NAME),
+                TransferHandler.getCutAction());
+        map.put(TransferHandler.getCopyAction().getValue(Action.NAME),
+                TransferHandler.getCopyAction());
+        map.put(TransferHandler.getPasteAction().getValue(Action.NAME),
+                TransferHandler.getPasteAction());
+
+    }
+*/
+    ///// implementation of ClipboardOwner
+    public void lostOwnership(Clipboard clipboard, Transferable contents) {
+           /* don't care */
+        if (_debug) log.debug("lostOwnership: content flavor[0] = "+contents.getTransferDataFlavors()[0]);
+    }
+
     // override
     public void setAllEditable(boolean edit) {
         if (edit) {
-            if (_editMenu!=null) {
-                _menuBar.remove(_editMenu);
+            if (_editorMenu!=null) {
+                _menuBar.remove(_editorMenu);
             }
             if (_iconMenu==null) {
                 makeIconMenu();
@@ -388,6 +583,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             } else {
                 _menuBar.add(_optionMenu, 0);
             }
+            if (_editMenu==null) {
+                makeEditMenu();
+            } else {
+                _menuBar.add(_editMenu, 0);
+            }
             if (_fileMenu==null) {
                 makeFileMenu();
             } else {
@@ -395,18 +595,19 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             }
         } else {
             _menuBar.remove(_fileMenu);
+            _menuBar.remove(_editMenu);
             _menuBar.remove(_optionMenu);
             _menuBar.remove(_zoomMenu);
             _menuBar.remove(_iconMenu);
-            if (_editMenu==null) {
-                _editMenu = new JMenu(rb.getString("MenuEdit"));
-                _editMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
+            if (_editorMenu==null) {
+                _editorMenu = new JMenu(rb.getString("MenuEdit"));
+                _editorMenu.add(new AbstractAction(rb.getString("OpenEditor")) {
                         public void actionPerformed(ActionEvent e) {
                             setAllEditable(true);
                         }
                 });
             }
-            _menuBar.add(_editMenu, 0);
+            _menuBar.add(_editorMenu, 0);
         }
         super.setAllEditable(edit);
         setTitle();
@@ -551,7 +752,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         }
     }
 
-    /***************** Overrided methods of Editor *******************/
+    /***************** Overriden methods of Editor *******************/
     
     protected Positionable getCurrentSelection(MouseEvent event) {
         if (_pastePending) {
@@ -564,12 +765,11 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 selection = selections.get(1); 
             } else {
                 selection = selections.get(0); 
-            }
-            if (selection.getDisplayLevel()<=BKG) {
-                selection = null;
-            }
+            }            
             if (event.isControlDown()) {
                 selection = selections.get(selections.size()-1); 
+            } else if (selection.getDisplayLevel()<=BKG) {
+                selection = null;
             }
         }
         return selection;
@@ -820,7 +1020,10 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     }    
 
     /**
-    * Set up selections for a paste
+    * Set up selections for a paste.  Note a copy of _selectionGroup is made that is
+    * NOT in the _contents.  This disconnected ArrayList is added to the _contents
+    * when (if) a paste is made.  The disconnected _selectionGroup can be dragged to
+    * a new location.
     */
     protected void copyItem(Positionable p) {
         if (_debug) log.debug("Enter copyItem: _selectionGroup "+(_selectionGroup!=null ?
@@ -836,12 +1039,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             _selectionGroup = new ArrayList <Positionable>();
             _selectionGroup.add(p);
         }
-        ArrayList <Positionable> selectionGroup = new ArrayList <Positionable>();
+        ArrayList<Positionable> selectionGroup = new ArrayList<Positionable>();
         for (int i=0; i<_selectionGroup.size(); i++) {
             Positionable pos = _selectionGroup.get(i).deepClone();
             selectionGroup.add(pos);
         }
-        _selectionGroup = selectionGroup;
+        _selectionGroup = selectionGroup;  // group is now disconnected
         _pastePending = true;
 //        if (_debug) log.debug("Exit copyItem: _selectionGroup.size()= "+_selectionGroup.size());
     }
@@ -862,9 +1065,12 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     * the image will persist.  Thus set these transitory object invisible.
     */
     void abortPasteItems() {
+        if (_debug) log.debug("abortPasteItems: _selectionGroup"+
+                              (_selectionGroup==null?"=null":(".size="+_selectionGroup.size())));
         if (_selectionGroup!=null) {
             for (int i=0; i<_selectionGroup.size(); i++) {
                 _selectionGroup.get(i).setVisible(false);
+                _selectionGroup.get(i).remove();
             }
         }
         _selectionGroup = null;
@@ -875,7 +1081,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     * Add an action to copy the Positionable item and the group to which is may belong.
     */
     public void setCopyMenu(Positionable p, JPopupMenu popup) {
-        JMenuItem edit = new JMenuItem("Copy");
+        JMenuItem edit = new JMenuItem(rb.getString("MenuItemDuplicate"));
         edit.addActionListener(new ActionListener() {
             Positionable comp;
             public void actionPerformed(ActionEvent e) {
@@ -962,6 +1168,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         try {
             _positionableDataFlavor = new DataFlavor(POSITIONABLE_FLAVOR);
             _namedIconDataFlavor = new DataFlavor(ImageIndexEditor.IconDataFlavorMime);
+            _positionableListDataFlavor = new DataFlavor(POSITIONABLE_LIST_FLAVOR);
         } catch (ClassNotFoundException cnfe) {
             cnfe.printStackTrace();
         }
@@ -969,21 +1176,22 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
     }
 
     DataFlavor _positionableDataFlavor;
+    DataFlavor _positionableListDataFlavor;
     DataFlavor _namedIconDataFlavor;
 
     /*************************** DropTargetListener ************************/
 
     public void dragExit(DropTargetEvent evt) {
-        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dragExit ");
+        if (_debug) log.debug("Editor DropTargetListener dragExit ");
         //evt.getDropTargetContext().acceptDrag(DnDConstants.ACTION_COPY);
     }
     public void dragEnter(DropTargetDragEvent evt) {
-        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dragEnter ");
+        if (_debug) log.debug("Editor DropTargetListener dragEnter ");
     }
     public void dragOver(DropTargetDragEvent evt) {
     }
     public void dropActionChanged(DropTargetDragEvent evt) {
-        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener dropActionChanged ");
+        if (_debug) log.debug("Editor DropTargetListener dropActionChanged ");
     }
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SBSC_USE_STRINGBUFFER_CONCATENATION") 
@@ -994,7 +1202,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
             //Point pt = evt.getLocation(); coords relative to entire window
             Point pt = _targetPanel.getMousePosition(true);
             Transferable tr = evt.getTransferable();
-            if (log.isDebugEnabled()) {
+            if (_debug) {
                 DataFlavor[] flavors = tr.getTransferDataFlavors();
                 String flavor = "";
                 for (int i=0; i<flavors.length; i++) {
@@ -1009,7 +1217,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 item.setDisplayLevel(item.getDisplayLevel());
                 putItem(item);
                 item.updateSize();
-                //if (log.isDebugEnabled()) log.debug("Drop positionable "+item.getNameString()+
+                //if (_debug) log.debug("Drop positionable "+item.getNameString()+
                 //                                    " as "+item.getClass().getName()+
                 //                                    ", w= "+item.maxWidth()+", h= "+item.maxHeight());
                 evt.dropComplete(true);
@@ -1039,6 +1247,15 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
                 l.setLocation(pt.x, pt.y);
                 putItem(l);
                 evt.dropComplete(true);
+            } else if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
+                ArrayList dragGroup = 
+                        (ArrayList)tr.getTransferData(_positionableListDataFlavor);
+                for (int i=0; i<dragGroup.size(); i++) {
+                    Positionable pos = (Positionable)dragGroup.get(i);
+                    putItem(pos);
+                    pos.updateSize();
+                    if (_debug) log.debug("DnD Add "+pos.getNameString());
+                }
             } else {  
                 log.warn("Editor DropTargetListener  supported DataFlavors not avaialable at drop from "
                          +tr.getClass().getName());
@@ -1048,8 +1265,150 @@ public class ControlPanelEditor extends Editor implements DropTargetListener {
         } catch(UnsupportedFlavorException ufe) {
             log.warn("Editor DropTarget caught UnsupportedFlavorException",ufe);
         }
-        if (log.isDebugEnabled()) log.debug("Editor DropTargetListener drop REJECTED!");
+        if (_debug) log.debug("Editor DropTargetListener drop REJECTED!");
         evt.rejectDrop();
+    }
+
+    /**
+    * Export a Positionable ArrayList of items from panel 
+    *
+    protected class PositionableListHandler extends TransferHandler {
+
+        protected Editor _editor;
+
+        PositionableListHandler(Editor editor) {
+            if (_debug) log.debug("PositionableListHandler.ctor:");
+            _editor = editor;
+        }
+
+        public int getSourceActions(JComponent c) {
+            return COPY;
+        }
+
+        public Transferable createTransferable(JComponent c) {
+            if (_debug) log.debug("PositionableListHandler.createTransferable:");
+            if (c instanceof JLayeredPane && _selectionGroup!=null) {
+                ArrayList <Positionable> dragGroup = new ArrayList <Positionable>();
+                if (_pastePending) {
+                    dragGroup = _selectionGroup;
+                } else {
+                    for (int i=0; i<_selectionGroup.size(); i++) {
+                        Positionable pos = _selectionGroup.get(i).deepClone();
+                        dragGroup.add(pos);
+                    }
+                }
+                abortPasteItems(dragGroup);
+                return new PositionableListDnD(dragGroup);
+            }
+            return null;
+        }
+
+        /////////////////////import
+        public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
+//            if (_debug) log.debug("PositionableListHandler.canImport ");
+            for (int k=0; k<transferFlavors.length; k++){
+                if (transferFlavors[k].equals(_positionableListDataFlavor)) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public boolean importData(JComponent comp, Transferable tr) {
+            if (_debug) log.debug("PositionableListHandler.importData ");
+            DataFlavor[] flavors = new DataFlavor[] {_positionableListDataFlavor};
+
+            if (!canImport(comp, flavors)) {
+                return false;
+            }
+
+            try {
+                if (tr.isDataFlavorSupported(_positionableListDataFlavor)) {
+                    ArrayList dragGroup = 
+                            (ArrayList)tr.getTransferData(_positionableListDataFlavor);
+                    for (int i=0; i<dragGroup.size(); i++) {
+                        Positionable pos = (Positionable)dragGroup.get(i);
+                        putItem(pos);
+                        pos.updateSize();
+                        if (_debug) log.debug("DnD Add "+pos.getNameString());
+                    }
+                }
+            }
+            catch (UnsupportedFlavorException ufe) { 
+                log.warn("DnDHandler.importData: at table e= "+ufe);
+            }
+            catch (IOException ioe) { 
+                log.warn("DnDHandler.importData: at table e= "+ioe);
+            }
+            return false;
+        }
+    }
+
+    public class TransferActionListener implements ActionListener,
+                                              PropertyChangeListener {
+        private JComponent focusOwner = null;
+
+        public TransferActionListener() {
+            KeyboardFocusManager manager = KeyboardFocusManager.
+               getCurrentKeyboardFocusManager();
+            manager.addPropertyChangeListener("permanentFocusOwner", this);
+        }
+
+        public void propertyChange(PropertyChangeEvent e) {
+            Object o = e.getNewValue();
+            if (o instanceof JComponent) {
+                focusOwner = (JComponent)o;
+            } else {
+                focusOwner = null;
+            }
+        }
+
+        public void actionPerformed(ActionEvent e) {
+            if (focusOwner == null)
+                return;
+            String action = e.getActionCommand();
+            Action a = focusOwner.getActionMap().get(action);
+            if (a != null) {
+                a.actionPerformed(new ActionEvent(focusOwner,
+                                                  ActionEvent.ACTION_PERFORMED,
+                                                  null));
+            }
+        }
+    }
+*/
+    protected class PositionableListDnD implements Transferable {
+//        ArrayList<Positionable> _dragGroup;
+        ControlPanelEditor _dragGroup;
+        DataFlavor _dataFlavor;
+
+//        PositionableListDnD(ArrayList<Positionable> dragGroup) {
+        PositionableListDnD(ControlPanelEditor dragGroup) {
+            _dragGroup = dragGroup;
+            try {
+                _dataFlavor = new DataFlavor(POSITIONABLE_LIST_FLAVOR);
+            } catch (ClassNotFoundException cnfe) {
+                cnfe.printStackTrace();
+            }
+        }
+
+        public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException,IOException {
+            if (log.isDebugEnabled()) log.debug("PositionableListDnD.getTransferData:");
+            if (flavor.equals(_dataFlavor)) {
+                return _dragGroup;
+            }
+            throw new UnsupportedFlavorException(flavor);
+        }
+
+        public DataFlavor[] getTransferDataFlavors() {
+            return new DataFlavor[] { _dataFlavor };
+        }
+
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            if (flavor.equals(_dataFlavor)) {
+                return true;
+            }
+            return false;
+        }
     }
 
     static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ControlPanelEditor.class.getName());
