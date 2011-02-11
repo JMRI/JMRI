@@ -51,7 +51,7 @@ import java.awt.event.KeyEvent;
  * DO_NOTHING_ON_CLOSE or HIDE_ON_CLOSE depending on what you're looking for.
  *
  * @author Bob Jacobsen  Copyright 2003, 2008
- * @version $Revision: 1.33 $
+ * @version $Revision: 1.34 $
  * GT 28-AUG-2008 Added window menu
  */
 
@@ -76,14 +76,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         if (!windowFrameRef.equals(JmriJFrame.class.getName())){
             if ((p != null) && (p.isWindowPositionSaved(windowFrameRef))) {
                 Dimension screen = getToolkit().getScreenSize();
-                if (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
-                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight()))){
+                if ((reuseFrameSavedPosition) && (!((p.getWindowLocation(windowFrameRef).getX()>=screen.getWidth()) ||
+                    (p.getWindowLocation(windowFrameRef).getY()>=screen.getHeight())))){
                     this.setLocation(p.getWindowLocation(windowFrameRef));
                 }
                 /* Simple case that if either height or width are zero, then we should
                 not set them */
-                if (!((p.getWindowSize(windowFrameRef).getWidth()==0.0) || 
-                    (p.getWindowSize(windowFrameRef).getHeight()==0.0))){
+                if ((reuseFrameSavedSized) &&(!((p.getWindowSize(windowFrameRef).getWidth()==0.0) ||
+                    (p.getWindowSize(windowFrameRef).getHeight()==0.0)))){
                     this.setPreferredSize(p.getWindowSize(windowFrameRef));
                 }
             }
@@ -362,14 +362,14 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     
     public void componentMoved(java.awt.event.ComponentEvent e) {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (p != null) {
+        if ((p != null) && (reuseFrameSavedPosition)) {
             p.setWindowLocation(windowFrameRef, this.getLocation());
         }
     }
     
     public void componentResized(java.awt.event.ComponentEvent e) {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        if (p != null) {
+        if ((p != null) && (reuseFrameSavedSized)) {
             p.setWindowSize(windowFrameRef, this.getSize());
         }
     }
@@ -390,7 +390,20 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
             jmri.InstanceManager.shutDownManagerInstance().register(task);
         }
     }
-    
+
+    /**
+     * Specifies if we should be setting the location of the frame to the last
+     * known position.
+     */
+    public void setSaveFramePosition(boolean boo) { reuseFrameSavedPosition = boo; }
+    protected boolean reuseFrameSavedPosition = true;
+
+    /**
+     *  Specifies if we should be resizing the frame to what was last set.
+     */
+    public void setSaveFrameSize(boolean boo) { reuseFrameSavedSized = boo; }
+    protected boolean reuseFrameSavedSized = true;
+
     /**
      * When window is finally destroyed, remove it from the 
      * list of windows.
@@ -401,8 +414,10 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     public void dispose() {
         jmri.UserPreferencesManager p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
         if (p != null) {
-            p.setWindowLocation(windowFrameRef, this.getLocation());
-            p.setWindowSize(windowFrameRef, this.getSize());
+            if (reuseFrameSavedPosition)
+                p.setWindowLocation(windowFrameRef, this.getLocation());
+            if (reuseFrameSavedSized)
+                p.setWindowSize(windowFrameRef, this.getSize());
         }
         log.debug("dispose "+getTitle());
         if (task != null) {
