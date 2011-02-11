@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.10 2011-01-23 21:21:25 kevin-dickerson Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.11 2011-02-11 17:48:21 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -134,6 +134,12 @@ New operations features:
 <li>Modify all cars in kernel when creating schedule loads from staging.
 <li>Users can now preview or print out the car loads for the various car types.  This feature can be found in the Edit Car Loads->&gt;Tools
 <li>Users can now control which staging track a train will use.
+<li>Provided a new operations sample script to deselect the train build button when a train terminates: OperationsDeselectBuild.py 
+<li>Users can now run scripts after operation files have been loaded.  And users can run scripts when the Trains window is closed. 
+<li>Check car and engine length field during file imports.
+<li>Users can now select where to place the backup operations files.  See Settings / Tools / Backups.
+<li>Send car from staging with a custom load directly to a siding / schedule demanding that car type and load.
+<li>Fix trains terminate button, it should have terminated all trains that have been printed.
 </ul>
 
 <p>
@@ -282,6 +288,10 @@ Note: once the keyboard driver is running, all keyboard inputs will be considere
 <li>A "None" device was introduced in the device list accessible on right click, 
     avoids to have all key inputs redirected to the Throttle.
 </ul>
+
+<p>
+James LeFevre improved TMCC throttle support.
+
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
