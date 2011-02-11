@@ -26,7 +26,7 @@ import jmri.jmrit.operations.OperationsFrame;
  * 
  * @author Bob Jacobsen Copyright (C) 2004
  * @author Dan Boudreau Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 
 public class TrainsScriptFrame extends OperationsFrame {
@@ -47,6 +47,8 @@ public class TrainsScriptFrame extends OperationsFrame {
 	// major buttons
 	JButton addStartUpScriptButton = new JButton(rb.getString("AddScript"));
 	JButton addShutDownScriptButton = new JButton(rb.getString("AddScript"));
+	JButton runStartUpScriptButton = new JButton(rb.getString("RunScripts"));
+	JButton runShutDownScriptButton = new JButton(rb.getString("RunScripts"));
 	JButton saveButton = new JButton(rb.getString("Save"));
 
 	public TrainsScriptFrame() {
@@ -93,6 +95,8 @@ public class TrainsScriptFrame extends OperationsFrame {
 		// setup buttons
       	addButtonAction(addStartUpScriptButton);
 		addButtonAction(addShutDownScriptButton);
+     	addButtonAction(runStartUpScriptButton);
+		addButtonAction(runShutDownScriptButton);
 		addButtonAction(saveButton);
 		
 		enableButtons(true);
@@ -108,6 +112,8 @@ public class TrainsScriptFrame extends OperationsFrame {
 
 		// load any existing startup scripts
 		List<String> scripts = manager.getStartUpScripts();
+		if (scripts.size()>0)
+			addItem(pStartUpScript, runStartUpScriptButton, 1, 0);
 		for (int i=0; i<scripts.size(); i++){
 			JButton removeStartUpScripts = new JButton(rb.getString("RemoveScript"));
 			removeStartUpScripts.setName(scripts.get(i));
@@ -130,6 +136,8 @@ public class TrainsScriptFrame extends OperationsFrame {
 
 		// load any existing shutdown scripts
 		List<String> scripts = manager.getShutDownScripts();
+ 		if (scripts.size()>0)
+			addItem(pShutDownScript, runShutDownScriptButton, 1, 0);
 		for (int i=0; i<scripts.size(); i++){
 			JButton removeShutDownScripts = new JButton(rb.getString("RemoveScript"));
 			removeShutDownScripts.setName(scripts.get(i));
@@ -163,6 +171,12 @@ public class TrainsScriptFrame extends OperationsFrame {
 				updateShutDownScriptPanel();
 				packFrame();
 			}
+		}
+		if (ae.getSource() == runStartUpScriptButton){
+			runScripts(manager.getStartUpScripts());				
+		}
+		if (ae.getSource() == runShutDownScriptButton){
+			runScripts(manager.getShutDownScripts());				
 		}
 		if (ae.getSource() == saveButton){
 			log.debug("train save button actived");
@@ -217,10 +231,16 @@ public class TrainsScriptFrame extends OperationsFrame {
 		saveButton.setEnabled(enabled);
 	}
 	
+	private void runScripts(List<String> scripts){
+		for (int i=0; i<scripts.size(); i++){
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scripts.get(i)));
+		}
+	}
+	
     private void packFrame(){
  		pack();
- 		if(getWidth()<400)
- 			setSize(450, getHeight()+50);
+		if(getWidth()<500)
+ 			setSize(550, getHeight()+50);
  		if (getHeight()<250)
  			setSize(getWidth(), 300);
 		setVisible(true);

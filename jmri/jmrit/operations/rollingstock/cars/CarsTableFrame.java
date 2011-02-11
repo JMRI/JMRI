@@ -28,15 +28,18 @@ import javax.swing.ScrollPaneConstants;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.locations.ModifyLocationsAction;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainsByCarTypeAction;
 
 /**
  * Frame for adding and editing the car roster for operations.
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.22 $
+ * @version             $Revision: 1.23 $
  */
 public class CarsTableFrame extends OperationsFrame implements TableModelListener{
 	
@@ -200,6 +203,8 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(rb.getString("Tools"));
 		toolMenu.add(new CarRosterMenu("Roster", CarRosterMenu.MAINMENU, this));
+		toolMenu.add(new ModifyLocationsAction());
+		toolMenu.add(new TrainsByCarTypeAction());
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
     	addHelpMenu("package.jmri.jmrit.operations.Operations_Cars", true);
@@ -208,6 +213,9 @@ public class CarsTableFrame extends OperationsFrame implements TableModelListene
     	setSize(carManager.getCarsFrameSize());
     	setLocation(carManager.getCarsFramePosition());
 		setVisible(true);
+		
+    	// also load the engines
+    	EngineManagerXml.instance();
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

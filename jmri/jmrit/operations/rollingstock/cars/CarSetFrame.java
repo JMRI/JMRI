@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.Train;
  * Frame for user to place car on the layout
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.27 $
+ * @version $Revision: 1.28 $
  */
 
 public class CarSetFrame extends RollingStockSetFrame implements java.beans.PropertyChangeListener {
@@ -86,6 +86,13 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			if (finalDestTrackBox.getSelectedItem() != null 
 					&& !finalDestTrackBox.getSelectedItem().equals(""))
 				finalDestTrack = (Track)finalDestTrackBox.getSelectedItem();
+			String status = _car.testDestination((Location) finalDestinationBox.getSelectedItem(), finalDestTrack);
+			if (!status.equals(Car.OKAY)){
+				JOptionPane.showMessageDialog(this,
+						getRb().getString("rsCanNotFinalMsg")+ status,
+						getRb().getString("rsCanNotFinal"),
+						JOptionPane.WARNING_MESSAGE);
+			}
 			_car.setNextDestination((Location) finalDestinationBox.getSelectedItem());
 			_car.setNextDestTrack(finalDestTrack);
 		}
@@ -97,7 +104,14 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 			_car.setReturnWhenEmptyDestTrack(null);
 		} else {
 			if (trackReturnWhenEmptyBox.getSelectedItem() != null 
-					&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){
+					&& !trackReturnWhenEmptyBox.getSelectedItem().equals("")){	
+				String status = _car.testDestination((Location) destReturnWhenEmptyBox.getSelectedItem(), (Track)trackReturnWhenEmptyBox.getSelectedItem());
+				if (!status.equals(Car.OKAY)){
+					JOptionPane.showMessageDialog(this,
+							getRb().getString("rsCanNotRWEMsg")+ status,
+							getRb().getString("rsCanNotRWE"),
+							JOptionPane.WARNING_MESSAGE);
+				}
 				_car.setReturnWhenEmptyDestTrack((Track)trackReturnWhenEmptyBox.getSelectedItem());
 			} else {
 				_car.setReturnWhenEmptyDestTrack(null);
@@ -134,6 +148,20 @@ public class CarSetFrame extends RollingStockSetFrame implements java.beans.Prop
 		}
 		managerXml.writeOperationsFile();
 		return true;
+	}
+	
+	protected boolean updateGroup(List<RollingStock> list){
+		for(int i=0; i<list.size(); i++){
+			Car car = (Car)list.get(i);
+			if (car == _car)
+				continue;
+			// make all cars in kernel the same
+			car.setReturnWhenEmptyDestination(_car.getReturnWhenEmptyDestination());
+			car.setReturnWhenEmptyDestTrack(_car.getReturnWhenEmptyDestTrack());
+			car.setNextDestination(_car.getNextDestination());
+			car.setNextDestTrack(_car.getNextDestTrack());
+		}
+		return super.updateGroup(list);
 	}
 	
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {

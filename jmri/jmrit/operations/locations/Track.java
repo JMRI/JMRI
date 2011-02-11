@@ -20,7 +20,7 @@ import jmri.jmrit.operations.setup.Setup;
  * Can be a siding, yard, staging, or interchange track.
  * 
  * @author Daniel Boudreau
- * @version             $Revision: 1.48 $
+ * @version             $Revision: 1.49 $
  */
 public class Track {
 	
@@ -39,6 +39,9 @@ public class Track {
 	protected int _dropRS = 0;						// number of drops by trains
 	protected int _length = 0;						// length of track
 	protected int _reserved = 0;					// length of track reserved by trains
+	protected int _numberCarsInRoute = 0;			// number of cars in route to this track
+	protected int _reservedInRoute = 0;				// length of cars in route to this track
+	protected int _reservationFactor = 100;			// percentage of track space for cars in route
 	protected int _usedLength = 0;					// length of track filled by cars and engines 
 	protected int _moves = 0;						// count of the drops since creation
 	protected String _comment = "";
@@ -63,6 +66,14 @@ public class Track {
 	private static final int SWAP_GENERIC_LOADS = 1;
 	private static final int EMPTY_SCHEDULE_LOADS = 2;
 	private static final int GENERATE_SCHEDULE_LOADS = 4;
+	private static final int GENERATE_SCHEDULE_LOADS_ANY_SIDING = 8;
+	private static final int EMPTY_GENERIC_LOADS = 16;
+	
+	// order cars are serviced
+	protected String _order = NORMAL;
+	public static final String NORMAL = rb.getString("Normal");
+	public static final String FIFO = rb.getString("FIFO");
+	public static final String LIFO = rb.getString("LIFO");
 	
 	// the four types of tracks
 	public static final String STAGING = "Staging";			
@@ -166,6 +177,48 @@ public class Track {
 
 	public int getReserved() {
 		return _reserved;
+	}
+	
+	public void addReservedInRoute(Car car) {
+		int old = _reservedInRoute;
+		_numberCarsInRoute++;
+		_reservedInRoute = old + Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
+		if (old != _reservedInRoute)
+			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
+	}
+	
+	public void deleteReservedInRoute(Car car) {
+		int old = _reservedInRoute;
+		_numberCarsInRoute--;
+		_reservedInRoute = old - (Integer.parseInt(car.getLength())+ RollingStock.COUPLER);
+		if (old != _reservedInRoute)
+			firePropertyChange("reservedInRoute", Integer.toString(old), Integer.toString(_reservedInRoute));
+	}
+
+	public int getReservedInRoute() {
+		return _reservedInRoute;
+	}
+	
+	public int getNumberOfCarsInRoute(){
+		return _numberCarsInRoute;
+	}
+	
+	public void setReservationFactor(int factor){
+		_reservationFactor = factor;
+	}
+	
+	public int getReservationFactor(){
+		return _reservationFactor;
+	}
+	
+	public boolean isSpaceAvailable(Car car){
+			int length = Integer.parseInt(car.getLength())+ RollingStock.COUPLER;
+		if (car.getKernel() != null)
+			length = car.getKernel().getLength();
+		if (getLength()*getReservationFactor()/100 - (getReservedInRoute() + length) > 0)
+			return true;
+		else
+			return false;
 	}
 	
 	public void setUsedLength(int length) {
@@ -683,6 +736,14 @@ public class Track {
     	LocationManagerXml.instance().setDirty(true);
     }
     
+    public String getServiceOrder(){
+    	return _order;
+    }
+    
+    public void setServiceOrder(String order){
+    	_order = order;
+    }
+    
     /**
      * Returns the name of the schedule.  Note that this returns the schedule
      * name based on the schedule's id.  A schedule's name can be modified by
@@ -770,6 +831,9 @@ public class Track {
     		log.warn("Can not find schedule ("+getScheduleId()+") assigned to track ("+getName()+")");
     		return;
     	}
+    	// bump the track move count
+    	setMoves(getMoves()+1);
+    	// bump the schedule count
     	setScheduleCount(getScheduleCount()+1);
     	if (getScheduleCount() < getCurrentScheduleItem().getCount())
     		return;
@@ -857,6 +921,24 @@ public class Track {
 	}
 	
 	/**
+	 * Enable setting the car generic load state to empty when car arrives at
+	 * this track.
+	 * 
+	 * @param enable
+	 *            when true, set generic car load to empty
+	 */
+	public void enableSetLoadEmpty(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | EMPTY_GENERIC_LOADS;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-EMPTY_GENERIC_LOADS;
+	}
+	
+	public boolean isSetLoadEmptyEnabled(){
+		return (0 < (_loadOptions & EMPTY_GENERIC_LOADS));
+	}
+	
+	/**
 	 * When enabled, remove Scheduled car loads.
 	 * @param enable when true, remove Scheduled loads from cars
 	 */
@@ -884,6 +966,21 @@ public class Track {
 	
 	public boolean isAddLoadsEnabled(){
 		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS));
+	}
+	
+	/**
+	 * When enabled, add Scheduled car loads if there's a demand.
+	 * @param enable when true, add Scheduled loads from cars
+	 */
+	public void enableAddLoadsAnySiding(boolean enable){
+		if (enable)
+			_loadOptions = _loadOptions | GENERATE_SCHEDULE_LOADS_ANY_SIDING;
+		else
+			_loadOptions = _loadOptions & 0xFFFF-GENERATE_SCHEDULE_LOADS_ANY_SIDING;
+	}
+	
+	public boolean isAddLoadsEnabledAnySiding(){
+		return (0 < (_loadOptions & GENERATE_SCHEDULE_LOADS_ANY_SIDING));
 	}
     
     public void dispose(){
@@ -948,8 +1045,10 @@ public class Track {
         if ((a = e.getAttribute("scheduleId")) != null ) _scheduleId = a.getValue();
         if ((a = e.getAttribute("itemId")) != null ) _scheduleItemId = a.getValue();
         if ((a = e.getAttribute("itemCount")) != null ) _scheduleCount = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("factor")) != null ) _reservationFactor = Integer.parseInt(a.getValue());
         
         if ((a = e.getAttribute("loadOptions")) != null ) _loadOptions = Integer.parseInt(a.getValue());
+        if ((a = e.getAttribute("order")) != null ) _order = a.getValue();
     }
 
     /**
@@ -1013,9 +1112,12 @@ public class Track {
     		e.setAttribute("scheduleId", getScheduleId());
     		e.setAttribute("itemId", getScheduleItemId());
     		e.setAttribute("itemCount", Integer.toString(getScheduleCount()));
+    		e.setAttribute("factor", Integer.toString(getReservationFactor()));
     	}
     	if (_loadOptions != 0)
     		e.setAttribute("loadOptions", Integer.toString(_loadOptions));
+    	if (!getServiceOrder().equals(NORMAL))
+    		e.setAttribute("order", getServiceOrder());
     	e.setAttribute("comment", getComment());
 
     	return e;

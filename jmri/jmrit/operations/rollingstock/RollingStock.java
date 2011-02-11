@@ -6,9 +6,11 @@ import java.util.ResourceBundle;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
@@ -19,7 +21,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * the layout.
  * 
  * @author Daniel Boudreau Copyright (C) 2009, 2010
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 public class RollingStock implements java.beans.PropertyChangeListener{
 
@@ -358,26 +360,26 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		// first determine if rolling stock can be move to the new location
 		if (location != null && !location.acceptsTypeName(getType())){
 			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at location ("+ location.getName() + ") wrong type");
-			return TYPE;
+			return TYPE + " ("+getType()+")";
 		}
 		if (location != null && track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong type");
-			return TYPE;
+			return TYPE + " ("+getType()+")";
 		}
 		if (location != null && track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + toString() + ") road (" +getRoad()+ ") at location ("+ location.getName() + ", " + track.getName() + ") wrong road");
-			return ROAD;
+			return ROAD+ " ("+getRoad()+")";
 		}
 		// now determine if there's enough space for the rolling stock
 		try{
 			Integer.parseInt(getLength());
 		} catch (Exception e){
-			return LENGTH;
+			return LENGTH + " ("+getLength()+")";
 		}
 		if (location != null && track != null && _trackLocation != track &&
 				(track.getUsedLength() + track.getReserved() + Integer.parseInt(getLength()) + COUPLER) > track.getLength()){
 			log.debug("Can't set (" + toString() + ") at location ("+ location.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH;	
+			return LENGTH + " ("+getLength()+")";	
 		}
 		if (location != null && !location.isTrackAtLocation(track))
 			return ERROR_TRACK;
@@ -477,11 +479,11 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		}
 		if (destination != null && track != null && !track.acceptsTypeName(getType())){
 			log.debug("Can't set (" + toString() + ") type (" +getType()+ ") at destination ("+ destination.getName() + ", " +track.getName() + ") wrong type");
-			return TYPE+ " ("+getType()+")";
+			return TYPE + " ("+getType()+")";
 		}
 		if (destination != null && track != null && !track.acceptsRoadName(getRoad())){
 			log.debug("Can't set (" + toString() + ") road (" +getRoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong road");
-			return ROAD+ " ("+getRoad()+")";
+			return ROAD + " ("+getRoad()+")";
 		}
 		// does rolling stock already have this destination?
 		if (destination == getDestination() && track == getDestinationTrack())
@@ -494,12 +496,26 @@ public class RollingStock implements java.beans.PropertyChangeListener{
 		try {
 			length = Integer.parseInt(getLength())+ COUPLER;
 		} catch (Exception e){
-			return LENGTH+ " ("+getLength()+")";
-		}	
+			return LENGTH + " ("+getLength()+")";
+		}
+		// check for car in kernel
+		if (this.getClass().equals(Car.class)){
+			Car car = (Car)this;
+			if (car.getKernel() != null){
+				length = car.getKernel().getLength();
+			}
+		}
+		// check for engine in consist
+		if (this.getClass().equals(Engine.class)){
+			Engine eng = (Engine)this;
+			if (eng.getConsist() != null){
+				length = eng.getConsist().getLength();
+			}
+		}
 		if (destination != null && track != null &&
 				track.getUsedLength() + track.getReserved()+ length > track.getLength()){
-			log.debug("Can't set (" + toString() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH+ " ("+getLength()+")";	
+			log.debug("Can't set (" + toString() + ") length ("+length+") at destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
+			return LENGTH+ " ("+length+")";	
 		}
 		if (destination != null && !destination.isTrackAtLocation(track))
 			return ERROR_TRACK;

@@ -24,6 +24,7 @@ import javax.swing.table.TableColumnModel;
 
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
@@ -32,7 +33,7 @@ import jmri.jmrit.operations.setup.Setup;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.18 $
+ * @version             $Revision: 1.19 $
  */
 public class EnginesTableFrame extends OperationsFrame implements PropertyChangeListener{
 	
@@ -177,6 +178,9 @@ public class EnginesTableFrame extends OperationsFrame implements PropertyChange
        	setSize(engineManager.getEnginesFrameSize());
     	setLocation(engineManager.getEnginesFramePosition());
     	setVisible(true);
+    	
+    	// also load the cars
+    	CarManagerXml.instance();
     }
     
 	public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

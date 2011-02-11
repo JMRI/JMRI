@@ -10,7 +10,7 @@ import jmri.jmrit.operations.rollingstock.RollingStock;
  * Represents an engine on the layout
  * 
  * @author Daniel Boudreau (C) Copyright 2008
- * @version $Revision: 1.18 $
+ * @version $Revision: 1.19 $
  */
 public class Engine extends RollingStock {
 	
@@ -164,16 +164,7 @@ public class Engine extends RollingStock {
 	 * @return status, see RollingStock.java
 	 */
 	public String testDestination(Location destination, Track track) {
-		String status = super.testDestination(destination, track);
-		if (!status.equals(OKAY))
-			return status;
-		// now check to see if engine is in a consist and can fit 
-		if (getConsist() != null && track != null &&
-				track.getUsedLength() + track.getReserved()+ getConsist().getLength() > track.getLength()){
-			log.debug("Can't set engine (" + getId() + ") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH;	
-		}
-		return OKAY;
+		return super.testDestination(destination, track);
 	}
 	
 	public void dispose(){

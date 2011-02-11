@@ -40,7 +40,7 @@ import jmri.jmrit.display.Editor;
  * Represents a train on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version $Revision: 1.105 $
+ * @version $Revision: 1.106 $
  */
 public class Train implements java.beans.PropertyChangeListener {
 	/*
@@ -74,8 +74,9 @@ public class Train implements java.beans.PropertyChangeListener {
 	protected String _builtEndYear = "";	// built end year
 	protected String _loadOption = ALLLOADS;// train load restrictions
 	protected String _ownerOption = ALLOWNERS;// train owner name restrictions
-	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
+	protected List<String> _buildScripts = new ArrayList<String>(); // list of script pathnames to run before train is built
 	protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is moved
+	protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train is terminated
 	protected String _railroadName ="";		// optional railroad name for this train
 	protected String _logoURL ="";			// optional manifest logo for this train
 	protected Engine _leadEngine = null; 	// lead engine for icon
@@ -935,6 +936,8 @@ public class Train implements java.beans.PropertyChangeListener {
     private boolean debugFlag = false;
     /**
      * Determines if this train will service this car.
+     * Note this code doesn't check the location or tracks
+     * that needs to be do separately.  See Router.java.
      * @param car The car to be tested.
      * @return true if this train can service the car.
      */
@@ -952,7 +955,7 @@ public class Train implements java.beans.PropertyChangeListener {
     						&& rLoc.getMaxCarMoves()>0
     						&& !skipsLocation(rLoc.getId())
     						&& rLoc.getName().equals(car.getDestinationName())
-    						&& rLoc.canDrop() ){
+    						&& rLoc.canDrop()){
     					if (car.getTrack() != null && !car.getTrack().acceptsPickupTrain(this)){
     						return false;
     					}
@@ -1112,6 +1115,26 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Add a script to run before a train is built
+	 * @param pathname The script's pathname
+	 */
+	public void addBuildScript(String pathname){
+		_buildScripts.add(pathname);
+	}
+	
+	public void deleteBuildScript(String pathname){
+		_buildScripts.remove(pathname);
+	}
+	
+	/**
+	 * Gets a list of pathnames (scripts) to run before this train is built
+	 * @return A list of pathnames to run before this train is built
+	 */
+	public List<String> getBuildScripts(){
+		return _buildScripts;
+	}
+	
+	/**
 	 * Add a script to run when train is moved
 	 * @param pathname The script's pathname
 	 */
@@ -1124,7 +1147,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Gets a list of pathnames to run when this train moved
+	 * Gets a list of pathnames (scripts) to run when this train moved
 	 * @return A list of pathnames to run when this train moved
 	 */
 	public List<String> getMoveScripts(){
@@ -1144,7 +1167,7 @@ public class Train implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
-	 * Gets a list of pathnames to run when this train terminates
+	 * Gets a list of pathnames (scripts) to run when this train terminates
 	 * @return A list of pathnames to run when this train terminates
 	 */
 	public List<String> getTerminationScripts(){
@@ -1261,6 +1284,10 @@ public class Train implements java.beans.PropertyChangeListener {
 	 */
 	public void build(){
 		reset();
+		// run any build scripts
+		for (int i=0; i<getBuildScripts().size(); i++){
+			jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getBuildScripts().get(i)));
+		}
 		TrainBuilder tb = new TrainBuilder();
 		tb.build(this);
 		setPrinted(false);
@@ -1678,6 +1705,14 @@ public class Train implements java.beans.PropertyChangeListener {
     	// check for scripts
     	if (e.getChild("scripts") != null){
     		@SuppressWarnings("unchecked")
+    		List<Element> lb = e.getChild("scripts").getChildren("build");
+    		for (int i=0; i<lb.size(); i++){
+    			Element es = lb.get(i);
+    			if ((a = es.getAttribute("name")) != null ){
+    				addBuildScript(a.getValue());
+    			}
+    		}
+    		@SuppressWarnings("unchecked")
     		List<Element> lm = e.getChild("scripts").getChildren("move");
     		for (int i=0; i<lm.size(); i++){
     			Element es = lm.get(i);
@@ -1795,9 +1830,16 @@ public class Train implements java.beans.PropertyChangeListener {
         	}
         	e.setAttribute("carOwners", buf.toString());
         }
-        // save list of move scripts for this train
-        if (getMoveScripts().size()>0 || getTerminationScripts().size()>0){
+        // save list of scripts for this train
+        if (getBuildScripts().size()>0 || getMoveScripts().size()>0 || getTerminationScripts().size()>0){
         	Element es = new Element("scripts");
+        	if (getBuildScripts().size()>0){ 
+        		for (int i=0; i<getBuildScripts().size(); i++){
+        			Element em = new Element("build");
+        			em.setAttribute("name", getBuildScripts().get(i));
+        			es.addContent(em);
+        		}
+        	}
         	if (getMoveScripts().size()>0){ 
         		for (int i=0; i<getMoveScripts().size(); i++){
         			Element em = new Element("move");

@@ -12,13 +12,17 @@ import javax.swing.AbstractAction;
  * Swing action to create and register a TrainsByCarTypeFrame object.
  * 
  * @author Daniel Boudreau Copyright (C) 2009
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class TrainsByCarTypeAction extends AbstractAction {
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 
     public TrainsByCarTypeAction(String s) {
     	super(s);
+    }
+    
+    public TrainsByCarTypeAction(){
+    	super(rb.getString("TitleModifyTrains"));
     }
 
     TrainsByCarTypeFrame f = null;

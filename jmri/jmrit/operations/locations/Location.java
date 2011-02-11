@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.swing.JComboBox;
 
@@ -20,9 +21,11 @@ import org.jdom.Element;
  * Represents a location on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.35 $
+ * @version $Revision: 1.36 $
  */
 public class Location implements java.beans.PropertyChangeListener {
+	
+	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.locations.JmritOperationsLocationsBundle");
 
 	protected String _id = "";
 	protected String _name = "";
@@ -37,19 +40,25 @@ public class Location implements java.beans.PropertyChangeListener {
 	protected String _comment = "";
 	protected boolean _switchList = true;	//when true print switchlist for this location
 	protected String _defaultPrinter = "";	//the default printer name when printing a switchlist
+	protected String _status = UNKNOWN;		//print switch list status
 	protected Point _trainIconEast = new Point();	//coordinates of east bound train icons
 	protected Point _trainIconWest = new Point();
 	protected Point _trainIconNorth = new Point();
 	protected Point _trainIconSouth = new Point();
 	protected Hashtable<String, Track> _trackHashTable = new Hashtable<String, Track>();
 	
-	public static final int NORMAL = 1;		// ops mode for this location
-	public static final int STAGING = 2;
+	public static final int NORMAL = 1;		// types of track allowed at this location
+	public static final int STAGING = 2;	// staging only
 	
 	public static final int EAST = 1;		// train direction serviced by this location
 	public static final int WEST = 2;
 	public static final int NORTH = 4;
 	public static final int SOUTH = 8;
+	
+	// Switch list status
+	public static final String UNKNOWN = "";
+	public static final String PRINTED = rb.getString("Printed");
+	public static final String MODIFIED = rb.getString("Modified");
 	
 	// For property change
 	public static final String TRACK_LISTLENGTH_CHANGED_PROPERTY = "trackListLength";
@@ -60,6 +69,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public static final String NAME_CHANGED_PROPERTY = "name";
 	public static final String SWITCHLIST_CHANGED_PROPERTY = "switchList";
 	public static final String DISPOSE_CHANGED_PROPERTY = "dispose";
+	public static final String STATUS_CHANGED_PROPERTY = "locationStatus";
 
 	public Location(String id, String name) {
 		log.debug("New location " + name + " " + id);
@@ -182,6 +192,10 @@ public class Location implements java.beans.PropertyChangeListener {
 			firePropertyChange(SWITCHLIST_CHANGED_PROPERTY, old?"true":"false", switchList?"true":"false");
 	}
 	
+	/**
+	 * Used to determine if switch list is needed for this location
+	 * @return true if switch list needed
+	 */
 	public boolean getSwitchList() {
 		return _switchList;
 	}
@@ -195,6 +209,30 @@ public class Location implements java.beans.PropertyChangeListener {
 	
 	public String getDefaultPrinterName(){
 		return _defaultPrinter;
+	}
+	
+	/**
+	 * Automatically sets the print status for this location's switch list
+	 * 
+	 */
+	public void setStatus(){
+		if (getStatus().equals(PRINTED))
+			setStatus(MODIFIED);
+	}
+	
+	/**
+	 * Sets the print status for this location's switch list
+	 * @param status UNKNOWN PRINTED MODIFIED
+	 */
+	public void setStatus(String status){
+		String old = _status;
+		_status = status;
+		if (!old.equals(status))
+			firePropertyChange(STATUS_CHANGED_PROPERTY, old, status);
+	}
+	
+	public String getStatus(){
+		return _status;
 	}
 	
 	public void setTrainIconEast(Point point){
@@ -235,16 +273,12 @@ public class Location implements java.beans.PropertyChangeListener {
 	 * @param rs
 	 */	
 	public void addRS (RollingStock rs){
-   		int numberOfRS = getNumberRS();
-		numberOfRS++;
-		setNumberRS(numberOfRS);
+		setNumberRS(getNumberRS()+1);
 		setUsedLength(getUsedLength() + Integer.parseInt(rs.getLength())+ RollingStock.COUPLER);
 	}
 	
 	public void deleteRS (RollingStock rs){
-   		int numberOfRS = getNumberRS();
-		numberOfRS--;
-		setNumberRS(numberOfRS);
+		setNumberRS(getNumberRS()-1);
 		setUsedLength(getUsedLength() - (Integer.parseInt(rs.getLength())+ RollingStock.COUPLER));
 	}
 
@@ -285,7 +319,7 @@ public class Location implements java.beans.PropertyChangeListener {
 	public void deleteDropRS() {
 		int old = _dropRS;
 		_dropRS--;
-	   	// set dirty
+			// set dirty
     	LocationManagerXml.instance().setDirty(true);
 		firePropertyChange("dropRS", Integer.toString(old), Integer.toString(_dropRS));
 	}
@@ -602,6 +636,11 @@ public class Location implements java.beans.PropertyChangeListener {
     }
   	    
     public void dispose(){
+    	List<String> tracks = getTracksByIdList();
+    	for (int i=0; i<tracks.size(); i++){
+    		Track track = getTrackById(tracks.get(i));
+    		deleteTrack(track);
+    	}
     	firePropertyChange (DISPOSE_CHANGED_PROPERTY, null, "Dispose");
     }
  	

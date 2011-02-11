@@ -25,6 +25,7 @@ import javax.swing.table.TableColumnModel;
 import jmri.implementation.swing.SwingShutDownTask;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.setup.OptionAction;
 import jmri.jmrit.operations.setup.PrintOptionAction;
 
@@ -33,7 +34,7 @@ import jmri.jmrit.operations.setup.PrintOptionAction;
  *
  * @author		Bob Jacobsen   Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2008
- * @version             $Revision: 1.53 $
+ * @version             $Revision: 1.54 $
  */
 public class TrainsTableFrame extends OperationsFrame {
 	
@@ -53,7 +54,8 @@ public class TrainsTableFrame extends OperationsFrame {
 	public static final String MOVE = rb.getString("Move");
 	public static final String TERMINATE =rb.getString("Terminate");
 
-	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars		
+	CarManagerXml carManagerXml = CarManagerXml.instance();	// load cars
+	EngineManagerXml engineManagerXml = EngineManagerXml.instance(); // load engines
 	TrainManager trainManager = TrainManager.instance();
 	TrainManagerXml trainManagerXml = TrainManagerXml.instance();
 

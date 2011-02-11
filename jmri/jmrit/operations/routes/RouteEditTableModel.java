@@ -15,13 +15,14 @@ import java.util.ResourceBundle;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 
 /**
  * Table Model for edit of route locations used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2008
- * @version   $Revision: 1.5 $
+ * @version   $Revision: 1.6 $
  */
 public class RouteEditTableModel extends javax.swing.table.AbstractTableModel implements PropertyChangeListener {
 
@@ -502,7 +503,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
 
     // this table listens for changes to a route and it's locations
     public void propertyChange(PropertyChangeEvent e) {
-    	if (log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+
+    	if (Control.showProperty && log.isDebugEnabled()) log.debug("Property change " +e.getPropertyName()+
     			" old: "+e.getOldValue()+ " new: "+e.getNewValue());
     	if (e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
     		updateList();
@@ -512,7 +513,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
     	if (e.getSource().getClass().equals(RouteLocation.class)){
     			String id = ((RouteLocation) e.getSource()).getId();
     			int row = list.indexOf(id);
-    			if (log.isDebugEnabled()) log.debug("Update route table row: "+ row + " id: " + id);
+    			if (Control.showProperty && log.isDebugEnabled()) log.debug("Update route table row: "+ row + " id: " + id);
     			if (row >= 0)
     				fireTableRowsUpdated(row, row);
 

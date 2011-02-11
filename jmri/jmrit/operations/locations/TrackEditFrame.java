@@ -25,7 +25,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of tracks
  * 
  * @author Dan Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class TrackEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -50,6 +50,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	JScrollPane paneRoadNames = new JScrollPane(panelRoadNames);
 	JPanel panelLoadNames = new JPanel();
 	JScrollPane paneLoadNames = new JScrollPane(panelLoadNames);
+	JPanel panelOrder = new JPanel();
 	
 	// major buttons
 	JButton clearButton = new JButton(rb.getString("Clear"));
@@ -74,12 +75,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JRadioButton roadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton roadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton roadNameExclude = new JRadioButton(rb.getString("Exclude"));
+    ButtonGroup roadGroup = new ButtonGroup();
+    
     JRadioButton loadNameAll = new JRadioButton(rb.getString("AcceptAll"));
     JRadioButton loadNameInclude = new JRadioButton(rb.getString("AcceptOnly"));
     JRadioButton loadNameExclude = new JRadioButton(rb.getString("Exclude"));
-    
-    ButtonGroup roadGroup = new ButtonGroup();
     ButtonGroup loadGroup = new ButtonGroup();
+    
+	// car pickup order controls
+	JRadioButton orderNormal = new JRadioButton(rb.getString("Normal"));
+	JRadioButton orderFIFO = new JRadioButton(rb.getString("DescriptiveFIFO"));
+	JRadioButton orderLIFO = new JRadioButton(rb.getString("DescriptiveLIFO"));
+	ButtonGroup orderGroup = new ButtonGroup();   
     
 	// text field
 	JTextField trackNameTextField = new JTextField(20);
@@ -103,7 +110,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 	// optional panel for sidings, staging, and interchanges
 	JPanel panelOpt1 = new JPanel();
 	JPanel panelOpt2 = new JPanel();
-	JPanel panelOpt3 = new JPanel();
+	JPanel panelOpt3 = new JPanel();		// not currently used
+	JPanel panelOpt4 = new JPanel();
 
 	public static final String DISPOSE = "dispose" ;
 	public static final int MAX_NAME_LENGTH = Control.MAX_LEN_STRING_TRACK_NAME;
@@ -171,6 +179,18 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		loadGroup.add(loadNameInclude);
 		loadGroup.add(loadNameExclude);
 		
+		// row 10
+		// order panel
+		panelOrder.setLayout(new GridBagLayout());
+		panelOrder.setBorder(BorderFactory.createTitledBorder(rb.getString("PickupOrder")));
+		panelOrder.add(orderNormal);
+		panelOrder.add(orderFIFO);
+		panelOrder.add(orderLIFO);
+		
+		orderGroup.add(orderNormal);
+		orderGroup.add(orderFIFO);
+		orderGroup.add(orderLIFO);
+		
 		// row 11
     	JPanel panelComment = new JPanel();
     	panelComment.setLayout(new GridBagLayout());
@@ -194,11 +214,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		getContentPane().add(paneCheckBoxes);
 		getContentPane().add(paneRoadNames);
 		getContentPane().add(paneLoadNames);
+		getContentPane().add(paneLoadNames);
+		getContentPane().add(panelOrder);
 		
 		// add optional panels
 		getContentPane().add(panelOpt1);
 		getContentPane().add(panelOpt2);
 		getContentPane().add(panelOpt3);
+		getContentPane().add(panelOpt4);
 		
        	getContentPane().add(panelComment);
        	getContentPane().add(panelButtons);
@@ -206,10 +229,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		// setup buttons
 		addButtonAction(setButton);
 		addButtonAction(clearButton);
+		
 		addButtonAction(deleteTrackButton);
 		addButtonAction(addTrackButton);
 		addButtonAction(saveTrackButton);
 		addButtonAction(deleteRoadButton);
+		
 		addButtonAction(addRoadButton);
 		addButtonAction(deleteLoadButton);
 		addButtonAction(deleteAllLoadsButton);
@@ -218,9 +243,14 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		addRadioButtonAction(roadNameAll);
 		addRadioButtonAction(roadNameInclude);
 		addRadioButtonAction(roadNameExclude);
+		
 		addRadioButtonAction(loadNameAll);
 		addRadioButtonAction(loadNameInclude);
 		addRadioButtonAction(loadNameExclude);
+		
+		addRadioButtonAction(orderNormal);
+		addRadioButtonAction(orderFIFO);
+		addRadioButtonAction(orderLIFO);
 		
 		addComboBoxAction(comboBoxTypes);
 		
@@ -253,9 +283,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		updateLoadComboBoxes();
 		updateLoadNames();
 		updateTrainDir();
-		
-		// set frame location for display
-		// setLocation(Control.panelX, Control.panelY);	
+		updateCarOrder();
 	}
 	
 	// Save, Delete, Add 
@@ -533,6 +561,15 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 			_track.setLoadOption(Track.EXCLUDELOADS);
 			updateLoadNames();
 		}
+		if (ae.getSource() == orderNormal){
+			_track.setServiceOrder(Track.NORMAL);			
+		}
+		if (ae.getSource() == orderFIFO){
+			_track.setServiceOrder(Track.FIFO);			
+		}
+		if (ae.getSource() == orderLIFO){
+			_track.setServiceOrder(Track.LIFO);			
+		}
 	}
 	
 	// Car type combo box has been changed, show loads associated with this car type
@@ -789,6 +826,17 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 				e.getPropertyName().equals(CarLoads.LOAD_CHANGED_PROPERTY)){
 			updateLoadComboBoxes();
 			updateLoadNames();
+		}
+	}
+	
+	// set the service order
+	private void updateCarOrder(){	
+		orderNormal.setSelected(true);
+		if (_track != null){
+			if (_track.getServiceOrder().equals(Track.FIFO))
+				orderFIFO.setSelected(true);
+			if (_track.getServiceOrder().equals(Track.LIFO))
+				orderLIFO.setSelected(true);
 		}
 	}
 	

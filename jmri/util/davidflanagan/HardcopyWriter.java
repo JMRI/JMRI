@@ -27,7 +27,7 @@ import jmri.util.JmriJFrame;
  * David Flanagan with the alligator on the front.
  *
  * @author		David Flanagan
- * @version             $Revision: 1.23 $
+ * @version             $Revision: 1.24 $
  */
 public class HardcopyWriter extends Writer {
 
@@ -410,7 +410,12 @@ public class HardcopyWriter extends Writer {
     }
 
     /** End the current page. Subsequent output will be on a new page */
-    public void pageBreak() { synchronized(this.lock) { newpage(); } }
+    public void pageBreak() { synchronized(this.lock) {
+        if (isPreview) pageImages.addElement(previewImage);
+        page.dispose();
+        page = null;
+    	newpage(); } 
+    }
 
     /** Return the number of columns of characters that fit on a page */
     public int getCharactersPerLine() { return this.chars_per_line; }

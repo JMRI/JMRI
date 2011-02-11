@@ -8,7 +8,6 @@ import java.text.MessageFormat;
 import java.util.ResourceBundle;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -29,7 +28,7 @@ import jmri.jmrit.operations.trains.TrainManager;
  * to TrackEditFram for train/route car drops and pickups.
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.23 $
+ * @version $Revision: 1.24 $
  */
 
 public class InterchangeEditFrame extends TrackEditFrame implements java.beans.PropertyChangeListener {
@@ -52,12 +51,12 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 	JRadioButton anyDrops = new JRadioButton(rb.getString("Any"));
 	JRadioButton trainDrop = new JRadioButton(rb.getString("Trains"));
 	JRadioButton routeDrop = new JRadioButton(rb.getString("Routes"));
-	ButtonGroup dropGroup = new ButtonGroup();
+	//ButtonGroup dropGroup = new ButtonGroup();
 	
 	JRadioButton anyPickups = new JRadioButton(rb.getString("Any"));
 	JRadioButton trainPickup = new JRadioButton(rb.getString("Trains"));
 	JRadioButton routePickup = new JRadioButton(rb.getString("Routes"));
-	ButtonGroup pickupGroup = new ButtonGroup();
+	//ButtonGroup pickupGroup = new ButtonGroup();
 	
 	JComboBox comboBoxDropTrains = trainManager.getComboBox();
 	JComboBox comboBoxDropRoutes = routeManager.getComboBox();
@@ -81,7 +80,6 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		dropPanel.add(anyDrops);
 		dropPanel.add(trainDrop);
 		dropPanel.add(routeDrop);
-
 		
 		// pickup panel
 		pickupPanel.setLayout(new GridBagLayout());
@@ -89,7 +87,6 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		pickupPanel.add(anyPickups);
 		pickupPanel.add(trainPickup);
 		pickupPanel.add(routePickup);
-
 		
 		super.initComponents(location, track);
 		
@@ -116,6 +113,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		addRadioButtonAction(anyDrops);
 		addRadioButtonAction(trainDrop);
 		addRadioButtonAction(routeDrop);
+		
 		addRadioButtonAction(anyPickups);
 		addRadioButtonAction(trainPickup);
 		addRadioButtonAction(routePickup);
@@ -136,6 +134,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
 		anyPickups.setEnabled(enabled);
 		trainPickup.setEnabled(enabled);
 		routePickup.setEnabled(enabled);
+		orderNormal.setEnabled(enabled);
+		orderFIFO.setEnabled(enabled);
+		orderLIFO.setEnabled(enabled);
 		super.enableButtons(enabled);
 	}
 	

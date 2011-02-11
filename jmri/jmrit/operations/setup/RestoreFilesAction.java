@@ -18,7 +18,7 @@ import apps.Apps;
  * directory selected by the user.
  * 
  * @author Daniel Boudreau Copyright (C) 2011
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class RestoreFilesAction extends AbstractAction {
 
@@ -33,25 +33,27 @@ public class RestoreFilesAction extends AbstractAction {
     private void restore(){
 		// first backup the users data in case they forgot
 	   	Backup backup = new Backup();
-    	String backupName = backup.createBackupDirectoryName();
-    	// now backup files
-    	boolean success = backup.backupFiles(backupName);
-    	if(!success){
-    		log.error("Could not backup files");
-    		return;
-    	}
+ 
 		// get file to write to
 		JFileChooser fc = new JFileChooser(backup.getBackupDirectoryName());
 		fc.addChoosableFileFilter(new fileFilter());
+		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		
 		int retVal = fc.showOpenDialog(null);
 		if (retVal != JFileChooser.APPROVE_OPTION)
 			return; // Canceled
 		if (fc.getSelectedFile() == null)
 			return; // Canceled
+		
+    	// now backup files
+	   	String backupName = backup.createBackupDirectoryName();
+    	boolean success = backup.backupFiles(backupName);
+    	if(!success){
+    		log.error("Could not backup files");
+    		return;
+    	}
 
-		File file = fc.getSelectedFile();
-		File directory = new File(file.getParent());
+		File directory = fc.getSelectedFile();
 		success = backup.restore(directory);
 		
 		if (success){

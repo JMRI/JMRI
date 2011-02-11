@@ -17,7 +17,7 @@ import java.util.ResourceBundle;
  * Frame for user edit of a schedule
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class ScheduleEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -148,10 +148,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
 		loadTypeComboBox();
 
 		// build menu
-//		JMenuBar menuBar = new JMenuBar();
-//		JMenu toolMenu = new JMenu("Tools");
-//		menuBar.add(toolMenu);
-//		setJMenuBar(menuBar);
+		JMenuBar menuBar = new JMenuBar();
+		JMenu toolMenu = new JMenu("Tools");
+		menuBar.add(toolMenu);
+		toolMenu.add(new ScheduleOptionsAction(this));
+		setJMenuBar(menuBar);
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Schedules", true);
 
 		//	 get notified if car types or roads are changed

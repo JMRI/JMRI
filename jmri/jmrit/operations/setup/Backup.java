@@ -20,7 +20,7 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
  * with backup files in the operations directory.
  * 
  * @author Daniel Boudreau Copyright (C) 2008
- * @version $Revision: 1.16 $
+ * @version $Revision: 1.17 $
  */
 public class Backup extends XmlFile {
 
@@ -123,6 +123,7 @@ public class Backup extends XmlFile {
 	 * @return true if successful, false if not.
 	 */
 	public boolean restore(File directory) {
+		log.debug("restore file from directory "+directory.getAbsolutePath());
 		try {
 			if (!directory.exists())
 				return false;
@@ -133,12 +134,14 @@ public class Backup extends XmlFile {
 				return false;
 			}
 			// TODO check for the correct operation file names
+			int fileCount = 0;
 			for (int i = 0; i < operationFileNames.length; i++) {
 			    // skip non-xml files
-			    if ( ! operationFileNames[i].toUpperCase().endsWith(".XML") )
+			    if (!operationFileNames[i].toUpperCase().endsWith(".XML"))
 			         continue;
 			    //
 				log.debug("found file: " + operationFileNames[i]);
+				fileCount++;
 				File filein = new File(directory.getAbsolutePath() + File.separator + operationFileNames[i]);
 				File fileout = new File(operationsDirectory + File.separator + operationFileNames[i]);
 
@@ -152,6 +155,8 @@ public class Backup extends XmlFile {
 				in.close();
 				out.close();
 			}
+			if (fileCount < 6)
+				return false;
 			return true;
 		} catch (Exception e) {
 			log.error("Exception while restoring operations files, may not be complete: "

@@ -17,7 +17,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.border.Border;
 import javax.swing.ScrollPaneConstants;
 
@@ -34,14 +33,14 @@ import java.beans.PropertyChangeEvent;
  * Frame for user selection of switch lists
  * 
  * @author Dan Boudreau Copyright (C) 2008
- * @version $Revision: 1.17 $
+ * @version $Revision: 1.18 $
  */
 
 public class TrainSwitchListEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
 	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
 	
-	JScrollPane trainsPane;
+	JScrollPane switchPane;
 	
 	// load managers
 	LocationManager manager = LocationManager.instance(); 
@@ -50,31 +49,23 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	JPanel locationPanelCheckBoxes = new JPanel();
 
 	// labels
-	JLabel textName = new JLabel();
+	JLabel textName = new JLabel(rb.getString("Location"));
+	JLabel textStatus = new JLabel(rb.getString("Status"));
+	JLabel textPrinter = new JLabel(rb.getString("Printer"));
+	JLabel space1 = new JLabel("        ");
+	JLabel space2 = new JLabel("        ");
 
 	// major buttons
-	JButton clearButton = new JButton();
-	JButton setButton = new JButton();
-	JButton printButton = new JButton();
-	JButton previewButton = new JButton();
-	JButton saveButton = new JButton();
+	JButton clearButton = new JButton(rb.getString("Clear"));
+	JButton setButton = new JButton(rb.getString("Select"));
+	JButton printButton = new JButton(rb.getString("PrintSwitchLists"));
+	JButton previewButton = new JButton(rb.getString("PreviewSwitchLists"));
+	JButton changeButton = new JButton(rb.getString("PrintChanges"));
+	JButton saveButton = new JButton(rb.getString("Save"));
 
 	// text field
-	JTextField trainNameTextField = new JTextField(18);
-	JTextField trainDescriptionTextField = new JTextField(30);
-	JTextField commentTextField = new JTextField(35);
-
-	// for padding out panel
-	JLabel space0 = new JLabel();
-	JLabel space1 = new JLabel();
-	JLabel space2 = new JLabel();
-	JLabel space3 = new JLabel();
-	JLabel space4 = new JLabel();
-	JLabel space5 = new JLabel();
 	
 	// combo boxes
-
-	public static final String DISPOSE = "dispose" ;
 
 	public TrainSwitchListEditFrame() {
 		super();
@@ -87,28 +78,27 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		
 		// the following code sets the frame's initial state
 	    getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
-    	trainsPane = new JScrollPane(locationPanelCheckBoxes);
-    	trainsPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    	getContentPane().add(trainsPane);
+	    
+    	switchPane = new JScrollPane(locationPanelCheckBoxes);
+    	switchPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    	getContentPane().add(switchPane);
 		
 	    // Layout the panel by rows
 	   	locationPanelCheckBoxes.setLayout(new GridBagLayout());
 		updateLocationCheckboxes();
 		
-		// row 1
+		// row 2
     	JPanel controlpanel = new JPanel();
     	controlpanel.setLayout(new GridBagLayout());
-    	clearButton.setText(rb.getString("Clear"));
-    	setButton.setText(rb.getString("Select"));
-    	previewButton.setText(rb.getString("PreviewSwitchLists"));
-    	printButton.setText(rb.getString("PrintSwitchLists"));
-    	saveButton.setText(rb.getString("Save"));
+ 
     	addItem(controlpanel, clearButton, 0, 1);
     	addItem(controlpanel, setButton, 1, 1);
-    	// row 2
+    	addItem(controlpanel, saveButton, 2, 1);
+    	
+    	// row 3
     	addItem(controlpanel, previewButton, 0, 2);
     	addItem(controlpanel, printButton, 1, 2);
-    	addItem(controlpanel, saveButton, 2, 2);
+    	addItem(controlpanel, changeButton, 2, 2);
 
 		getContentPane().add(controlpanel);
 		
@@ -117,6 +107,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		addButtonAction(setButton);
        	addButtonAction(printButton);
 		addButtonAction(previewButton);
+		addButtonAction(changeButton);
 		addButtonAction(saveButton);
 		
         // add help menu to window
@@ -136,10 +127,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			selectCheckboxes(true);
 		}
 		if (ae.getSource() == previewButton){
-			buildSwitchList(true);
+			buildSwitchList(true, false);
 		}
 		if (ae.getSource() == printButton){
-			buildSwitchList(false);
+			buildSwitchList(false, false);
+		}
+		if (ae.getSource() == changeButton){
+			buildSwitchList(false, true);
 		}
 		if (ae.getSource() == saveButton){
 			save();
@@ -164,14 +158,17 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		}		
 	}
 	
-	private void buildSwitchList(boolean isPreview){
+	private void buildSwitchList(boolean isPreview, boolean isChanged){
 		TrainSwitchLists ts = new TrainSwitchLists();
 		for (int i =0; i<locationCheckBoxes.size(); i++){
 			String locationName = locationCheckBoxes.get(i).getName();
 			Location location = manager.getLocationByName(locationName);
-			if (location.getSwitchList()){
+			if (location.getSwitchList() 
+					&& (location.getStatus().equals(Location.MODIFIED) || !isChanged)){
 				ts.buildSwitchList(location);
 				ts.printSwitchList(location, isPreview);
+				if (!isPreview)
+					location.setStatus(Location.PRINTED);
 			}
 		}
 	}
@@ -186,6 +183,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 	
 	// name change or number of locations has changed
 	private void updateLocationCheckboxes(){
+		changeButton.setEnabled(false);
 		List<String> locations = manager.getLocationsByNameList();		
 		synchronized (this) {
 			for (int i =0; i<locations.size(); i++){
@@ -198,7 +196,13 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		locationComboBoxes.clear();		// remove printer selection
 		locationPanelCheckBoxes.removeAll();
 		
-		int y = 0;		// vertical position in panel
+	    addItem(locationPanelCheckBoxes, textName, 0, 0);
+	    addItem(locationPanelCheckBoxes, space1, 1, 0);
+	    addItem(locationPanelCheckBoxes, textStatus, 2, 0);
+	    addItem(locationPanelCheckBoxes, space2, 3, 0);
+	    addItem(locationPanelCheckBoxes, textPrinter, 4, 0);
+		
+		int y = 1;		// vertical position in panel
 
 		String previousName = "";
 		
@@ -208,6 +212,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			if (name.equals(previousName))
 				continue;
 			previousName = name;
+			
 			JCheckBox checkBox = new JCheckBox();
 			locationCheckBoxes.add(checkBox);
 			checkBox.setSelected(l.getSwitchList());
@@ -216,15 +221,18 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 			addLocationCheckBoxAction(checkBox);
 			addItemLeft(locationPanelCheckBoxes, checkBox, 0, y);
 			
+			JLabel status = new JLabel(l.getStatus());
+			if (l.getStatus().equals(Location.MODIFIED))
+				changeButton.setEnabled(true);
+			addItem(locationPanelCheckBoxes, status, 2, y);
+			
 			JComboBox comboBox = TrainPrintUtilities.getPrinterJComboBox();
 			locationComboBoxes.add(comboBox);
 			comboBox.setSelectedItem(l.getDefaultPrinterName());
-			addItem(locationPanelCheckBoxes, comboBox, 1, y++);
+			addItem(locationPanelCheckBoxes, comboBox, 4, y++);
 			
-			l.addPropertyChangeListener(this);
-					
+			l.addPropertyChangeListener(this);					
 		}
-
 
 		Border border = BorderFactory.createEtchedBorder();
 		locationPanelCheckBoxes.setBorder(border);
@@ -275,7 +283,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		if(e.getPropertyName().equals(Location.SWITCHLIST_CHANGED_PROPERTY)) 
 			changeLocationCheckboxes(e);
 		if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY) ||
-				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY))
+				e.getPropertyName().equals(Location.NAME_CHANGED_PROPERTY) ||
+				e.getPropertyName().equals(Location.STATUS_CHANGED_PROPERTY))
 			updateLocationCheckboxes();
 	}
 

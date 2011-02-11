@@ -29,7 +29,7 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
  * Manages trains.
  * @author      Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version	$Revision: 1.52 $
+ * @version	$Revision: 1.53 $
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 	
@@ -84,8 +84,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 			if (log.isDebugEnabled()) log.debug("TrainManager creating instance");
 			// create and load
 			_instance = new TrainManager();
-			OperationsSetupXml.instance();				// load setup
+			OperationsSetupXml.instance();			// load setup
 			TrainManagerXml.instance();				// load trains
+			log.debug("Trains have been loaded!");
 		}
 		if (Control.showInstance && log.isDebugEnabled()) log.debug("TrainManager returns instance "+_instance);
 		return _instance;

@@ -127,29 +127,28 @@ public class OperationsRollingStockTest extends TestCase {
 
 		testtrack1.deleteTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Location", "type", testresult);
+		Assert.assertEquals("RollingStock null Set Location", "type (TESTTYPE)", testresult);
 
 		/* type needs to be valid for Track */
 		testtrack1.addTypeName("TESTTYPE");
 		testlocation1.deleteTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Location Track type", "type", testresult);
+		Assert.assertEquals("RollingStock null Set Location Track type", "type (TESTTYPE)", testresult);
 
 		/* type needs to be valid for Location */
 		testlocation1.addTypeName("TESTTYPE");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Location type", "length", testresult);
+		Assert.assertEquals("RollingStock null Set Location type", "length ()", testresult);
 
 		/* track needs to have a defined length */
 		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length null", "length", testresult);
+		Assert.assertEquals("RollingStock null Set Length null", "length (41)", testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(40);
-		rs1.setLength("41");
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set Length short", "length", testresult);
+		Assert.assertEquals("RollingStock null Set Length short", "length (41)", testresult);
 
 		/* track needs to be long enough */
 		testtrack1.setLength(44);  // rs length + Coupler == 4
@@ -160,7 +159,7 @@ public class OperationsRollingStockTest extends TestCase {
 		/* track needs to accept road */
 		testtrack1.setRoadOption(Track.INCLUDEROADS);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock null Set includeroads", "road", testresult);
+		Assert.assertEquals("RollingStock null Set includeroads", "road (TESTROAD)", testresult);
 
 		/* track needs to accept road */
 		testtrack1.setRoadOption(Track.INCLUDEROADS);
@@ -171,7 +170,7 @@ public class OperationsRollingStockTest extends TestCase {
 		/* track needs to accept road */
 		testtrack1.setRoadOption(Track.EXCLUDEROADS);
 		testresult = rs1.setLocation(testlocation1, testtrack1);
-		Assert.assertEquals("RollingStock Set excluderoads", "road", testresult);
+		Assert.assertEquals("RollingStock Set excluderoads", "road (TESTROAD)", testresult);
 
 		/* track needs to accept road */
 		testtrack1.setRoadOption(Track.ALLROADS);

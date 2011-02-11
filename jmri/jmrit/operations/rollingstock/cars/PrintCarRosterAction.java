@@ -24,7 +24,7 @@ import jmri.jmrit.operations.setup.Control;
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version     $Revision: 1.13 $
+ * @version     $Revision: 1.14 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -55,6 +55,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		cpof = new CarPrintOptionFrame(this);
     	else
     		cpof.setVisible(true);
+    	cpof.initComponents();
     }
     
     private void printCars(){
@@ -69,7 +70,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         }
         
         // Loop through the Roster, printing as needed
-        String newLine = "\n";
+
         String location;
         String number;
         String road;
@@ -88,6 +89,8 @@ public class PrintCarRosterAction  extends AbstractAction {
         boolean printOwner = printCarOwner.isSelected();
         boolean printBuilt = printCarBuilt.isSelected();
         boolean printLoad = printCarLoad.isSelected();
+        boolean space = printSpace.isSelected();
+        boolean page = printPage.isSelected();
         
 		int locMaxLen = 15;
 		int ownerMaxLen = 4;
@@ -114,17 +117,8 @@ public class PrintCarRosterAction  extends AbstractAction {
         
         List<String> cars = panel.getSortByList();
         try {
-        	String s = rb.getString("Number") + "\t" + rb.getString("Road")
-        	+ "\t" + rb.getString("Type") + "\t  "
-        	+ (printLength?rb.getString("Length")+ " ":"  ") 
-        	+ (printWeight?rb.getString("Weight")+ " ":" ")
-        	+ (printColor?rb.getString("Color")+ "       ":"")
-        	+ (printLoad?rb.getString("Load")+ "        ":"")
-        	+ (printOwner?rb.getString("Owner")+" ":"")
-        	+ (printBuilt?rb.getString("Built"):"")
-        	+ " " + rb.getString("Location")
-        	+ newLine;
-        	writer.write(s, 0, s.length());
+        	printTitleLine(writer);
+        	String previousLocation = "";
         	for (int i=0; i<cars.size(); i++){
         		Car car = manager.getById(cars.get(i));
 
@@ -134,8 +128,19 @@ public class PrintCarRosterAction  extends AbstractAction {
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
         			if (location.length() > locMaxLen)
         				location = location.substring(0, locMaxLen);
-        		}else if (printOnly)
+        		} else if (printOnly)
         			continue;	// car doesn't have a location skip
+        		
+        		// Page break between locations?
+        		if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && page){
+        			writer.pageBreak();
+        			printTitleLine(writer);
+        		}
+           		// Add a line between locations?
+        		else if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation) && space){
+        			writer.write(newLine);
+        		}
+        		previousLocation = car.getLocationName().trim();
         		
         		// car number
         		number = car.getNumber().trim();
@@ -220,10 +225,10 @@ public class PrintCarRosterAction  extends AbstractAction {
         			built = buf.toString();
         		}
 
-        		s = number + " " + road + " " + type
+        		String s = number + " " + road + " " + type
         		+ length + weight + color + load + owner + built
         		+ location + newLine;
-        		writer.write(s, 0, s.length());
+        		writer.write(s);
         	}
 
         	// and force completion of the printing
@@ -233,6 +238,20 @@ public class PrintCarRosterAction  extends AbstractAction {
         }
     }
     
+    private void printTitleLine(HardcopyWriter writer) throws IOException{
+       	String s = rb.getString("Number") + "\t" + rb.getString("Road")
+    	+ "\t" + rb.getString("Type") + "\t  "
+    	+ (printCarLength.isSelected()?rb.getString("Length")+ " ":"  ") 
+    	+ (printCarWeight.isSelected()?rb.getString("Weight")+ " ":" ")
+    	+ (printCarColor.isSelected()?rb.getString("Color")+ "       ":"")
+    	+ (printCarLoad.isSelected()?rb.getString("Load")+ "        ":"")
+    	+ (printCarOwner.isSelected()?rb.getString("Owner")+" ":"")
+    	+ (printCarBuilt.isSelected()?rb.getString("Built"):"")
+    	+ " " + rb.getString("Location")
+    	+ newLine;
+    	writer.write(s);
+    }
+    
     JCheckBox printCarsWithLocation = new JCheckBox(rb.getString("PrintCarsWithLocation"));
     JCheckBox printCarLength = new JCheckBox(rb.getString("PrintCarLength"));
     JCheckBox printCarWeight = new JCheckBox(rb.getString("PrintCarWeight"));
@@ -240,8 +259,12 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarOwner = new JCheckBox(rb.getString("PrintCarOwner"));
     JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
     JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
+    JCheckBox printSpace = new JCheckBox(rb.getString("PrintSpace"));
+    JCheckBox printPage = new JCheckBox(rb.getString("PrintPage"));
     
     JButton okayButton = new JButton(rb.getString("ButtonOkay"));
+    
+    String newLine = "\n";
     
     public class CarPrintOptionFrame extends OperationsFrame{
     	 PrintCarRosterAction pcr;
@@ -260,7 +283,9 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pPanel.add(printCarLoad);
     		pPanel.add(printCarOwner);
     		pPanel.add(printCarBuilt);
-    		
+			pPanel.add(printSpace);
+			pPanel.add(printPage);
+    		    		
     		// set defaults
     		printCarsWithLocation.setSelected(false);
     		printCarLength.setSelected(true);
@@ -269,6 +294,8 @@ public class PrintCarRosterAction  extends AbstractAction {
     		printCarOwner.setSelected(false);
     		printCarBuilt.setSelected(false);
     		printCarLoad.setSelected(false);
+    		printSpace.setSelected(false);
+    		printPage.setSelected(false);
     		
     		JPanel pButtons = new JPanel();  
     		pButtons.setLayout(new GridBagLayout());
@@ -278,8 +305,18 @@ public class PrintCarRosterAction  extends AbstractAction {
     		getContentPane().setLayout(new BoxLayout(getContentPane(),BoxLayout.Y_AXIS));
     		getContentPane().add(pPanel);
     		getContentPane().add(pButtons);
+    		setPreferredSize(null);
     		pack();
     		setVisible(true);
+    	}
+    	
+    	public void initComponents() {
+    		printSpace.setEnabled(panel.sortByLocation.isSelected());
+    		printPage.setEnabled(panel.sortByLocation.isSelected());
+    		if (!panel.sortByLocation.isSelected()){
+    			printSpace.setSelected(false);
+    			printPage.setSelected(false);
+    		}
     	}
     	
     	public void buttonActionPerformed(java.awt.event.ActionEvent ae) { 		

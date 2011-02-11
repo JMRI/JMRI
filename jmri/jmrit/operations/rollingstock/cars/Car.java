@@ -16,7 +16,7 @@ import jmri.jmrit.operations.router.Router;
  * Represents a car on the layout
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010
- * @version             $Revision: 1.65 $
+ * @version             $Revision: 1.66 $
  */
 public class Car extends RollingStock {
 	
@@ -29,6 +29,7 @@ public class Car extends RollingStock {
 	protected Kernel _kernel = null;
 	protected String _load = carLoads.getDefaultEmptyName();
 	protected int _wait = 0;
+	protected int _order = 0;					// interchange service ordering
 	
 	protected Location _rweDestination = null;	// return when empty destination
 	protected Track _rweDestTrack = null;		// return when empty track
@@ -140,6 +141,17 @@ public class Car extends RollingStock {
 		return _wait;
 	}
 	
+	public void setOrder(int number){
+		int old = _order;
+		_order = number;
+		if (old != number)
+			firePropertyChange("carOrder", old, number);
+	}
+	
+	public int getOrder(){
+		return _order;
+	}
+	
 	public void setNextWait(int count){
 		int old = _nextWait;
 		_nextWait = count;
@@ -175,11 +187,15 @@ public class Car extends RollingStock {
 	
 	public void setNextDestTrack(Track track){
 		Track old = _nextDestTrack;
-		if (old != null)
+		if (old != null){
 			old.removePropertyChangeListener(this);
+			old.deleteReservedInRoute(this);
+		}
 		_nextDestTrack = track;
-		if (_nextDestTrack != null)
+		if (_nextDestTrack != null){
+			_nextDestTrack.addReservedInRoute(this);
 			_nextDestTrack.addPropertyChangeListener(this);
+		}
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old)))
 			firePropertyChange(NEXT_DESTINATION_TRACK_CHANGED_PROPERTY, old, track);
 	}
@@ -289,23 +305,14 @@ public class Car extends RollingStock {
 			log.debug("Can't set (" + toString() + ") load (" +getLoad()+ ") at destination ("+ destination.getName() + ", " + track.getName() + ") wrong load");
 			return LOAD+ " ("+getLoad()+")";
 		}
-		// does car already have this destination?
-		if (destination == getDestination() && track == getDestinationTrack())
-			return OKAY;
-		// is car returning to same track?
-		if (track == getTrack())
-			return OKAY;
-		// now check to see if car is in a kernel and can fit 
-		if (getKernel() != null && destination != null && track != null &&
-				track.getUsedLength() + track.getReserved()+ getKernel().getLength() > track.getLength()){
-			log.debug("Can't set car (" + getId() + ") in kernel ("+getKernel().getName()+") at track destination ("+ destination.getName() + ", " + track.getName() + ") no room!");
-			return LENGTH+ " kernel ("+getKernel().getLength()+")";	
-		}
 		// now check to see if the track has a schedule
 		return testSchedule(track);
 	}
 	
 	private String testSchedule(Track track){
+		// does car already have this destination?
+		if (track == getDestinationTrack())
+			return OKAY;
 		if (track == null)
 			return SCHEDULE +" track is null";
 		if (track.getScheduleId().equals("")){
@@ -379,6 +386,9 @@ public class Car extends RollingStock {
 	 * Also changes the car load status when the car reaches its destination.
 	 */
 	public String setDestination(Location destination, Track track, boolean force) {
+		// String status = checkKernelLength(destination, track);
+		//if (!status.equals(OKAY))
+		//	return status;
 		// save destination name and track in case car has reached its destination
 		String destinationName = getDestinationName();
 		Track oldDestTrack = getDestinationTrack();
@@ -392,15 +402,17 @@ public class Car extends RollingStock {
 		// update next destination and load only when car reaches destination and was in train
 		if (destinationName.equals("") || (destination != null) || getTrain() == null)
 			return status;
+		// set service order
+		if (oldDestTrack != null)
+			setOrder(oldDestTrack.getMoves());
 		// update load when car reaches a siding
 		loadNext(oldDestTrack);
 		// set destination and destination track if available
-		if (!Router.instance().setDestination(this))
+		if (!Router.instance().setDestination(this, null))
 			super.setDestination(null, null);	// couldn't route car, maybe next time
 		return status;
 	}
 	
-
 	
 	/**
 	 * Check to see if track has schedule and if it does will schedule the next
@@ -433,18 +445,8 @@ public class Car extends RollingStock {
 			setNextWait(currentSi.getWait());
 
 			log.debug("Car ("+toString()+") type ("+getType()+") next load ("+getNextLoad()+") next destination ("+getNextDestinationName()+", "+getNextDestTrackName()+") next wait: "+getWait());
-
 			// set all cars in kernel to the next load
-			if (getKernel() != null){
-				List<Car> cars = getKernel().getCars();
-				for (int i=0; i<cars.size(); i++){
-					Car c = cars.get(i);
-					if (c.getType().equals(getType())
-							|| getNextLoad().equals(CarLoads.instance().getDefaultEmptyName())
-							|| getNextLoad().equals(CarLoads.instance().getDefaultLoadName()))
-						c.setNextLoad(currentSi.getShip());
-				}
-			}		
+			updateKernel();
 			// bump schedule
 			track.bumpSchedule();
 		} else {
@@ -452,8 +454,27 @@ public class Car extends RollingStock {
 		}
 	}
 	
+	public void updateKernel(){
+		if (getKernel() != null && getKernel().isLead(this)){
+			List<Car> cars = getKernel().getCars();
+			for (int i=0; i<cars.size(); i++){
+				Car c = cars.get(i);
+				c.setNextDestination(getNextDestination());
+				c.setNextDestTrack(getNextDestTrack());
+				if (c.getType().equals(getType())
+						|| getLoad().equals(CarLoads.instance().getDefaultEmptyName())
+						|| getLoad().equals(CarLoads.instance().getDefaultLoadName()))
+					c.setLoad(getLoad());
+				if (c.getType().equals(getType())
+						|| getNextLoad().equals(CarLoads.instance().getDefaultEmptyName())
+						|| getNextLoad().equals(CarLoads.instance().getDefaultLoadName()))
+					c.setNextLoad(getNextLoad());
+			}
+		}		
+	}
+	
 	private void loadNext(Track destTrack){
-		if (destTrack.getLocType().equals(Track.SIDING)){
+		if (destTrack != null && destTrack.getLocType().equals(Track.SIDING)){
 			// update wait count
 			setWait(getNextWait());
 			setNextWait(0);
@@ -472,13 +493,16 @@ public class Car extends RollingStock {
 				setLoadEmpty();
 		}
 		// update load optionally when car reaches staging
-		if (destTrack.getLocType().equals(Track.STAGING)){
+		if (destTrack != null && destTrack.getLocType().equals(Track.STAGING)){
 			if (destTrack.isLoadSwapEnabled()){
 				if (getLoad().equals(carLoads.getDefaultEmptyName())){
 					setLoad(carLoads.getDefaultLoadName());
 				} else if (getLoad().equals(carLoads.getDefaultLoadName())){
 					setLoadEmpty();
 				}
+			}
+			if (destTrack.isSetLoadEmptyEnabled() && getLoad().equals(carLoads.getDefaultLoadName())){
+				setLoadEmpty();
 			}
 			// empty car if it has a schedule load
 			if (destTrack.isRemoveLoadsEnabled() 
@@ -569,6 +593,9 @@ public class Car extends RollingStock {
 		if (_rweDestination != null && (a = e.getAttribute("rweDestTrackId")) != null){
 			_rweDestTrack = _rweDestination.getTrackById(a.getValue());
 		}
+		if ((a = e.getAttribute("order")) != null){
+			_order = Integer.parseInt(a.getValue());
+		}
 		addPropertyChangeListeners();
 	}
 	
@@ -601,6 +628,7 @@ public class Car extends RollingStock {
 		if (getWait() != 0){
 			e.setAttribute("wait", Integer.toString(getWait()));
 		}
+
 		if (!getNextLoad().equals("")){
 			e.setAttribute("nextLoad", getNextLoad());
 		}
@@ -618,6 +646,9 @@ public class Car extends RollingStock {
 			if (getReturnWhenEmptyDestTrack() != null)
 				e.setAttribute("rweDestTrackId", getReturnWhenEmptyDestTrack().getId());
 		}
+		
+		e.setAttribute("order", Integer.toString(getOrder()));
+
 		return e;
 	}
 	
@@ -639,6 +670,18 @@ public class Car extends RollingStock {
     			if (log.isDebugEnabled()) log.debug("Car (" +toString()+") sees length name change old: "+e.getOldValue()+" new: "+e.getNewValue());
     			setLength((String)e.getNewValue());
     		}
+    	}
+    	if (e.getPropertyName().equals(Location.DISPOSE_CHANGED_PROPERTY)){
+     	    if (e.getSource() == _nextDestination){
+        	   	if (log.isDebugEnabled()) log.debug("delete next destination for car: " + toString());
+    	    	setNextDestination(null);
+    	    }
+     	}
+    	if (e.getPropertyName().equals(Track.DISPOSE_CHANGED_PROPERTY)){
+    	    if (e.getSource() == _nextDestTrack){
+        	   	if (log.isDebugEnabled()) log.debug("delete next destination for car: " + toString());
+    	    	setNextDestTrack(null);
+    	    }  	    	
     	}
     }
 
