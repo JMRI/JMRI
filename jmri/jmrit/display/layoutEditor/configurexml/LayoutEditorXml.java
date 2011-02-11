@@ -8,6 +8,9 @@ import jmri.jmrit.display.Positionable;
 import java.awt.Color;
 
 import java.util.List;
+import java.util.ResourceBundle;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import org.jdom.*;
 
 /**
@@ -16,11 +19,13 @@ import org.jdom.*;
  * Based in part on PanelEditorXml.java
  *
  * @author Dave Duchamp    Copyright (c) 2007
- * @version $Revision: 1.12 $
+ * @version $Revision: 1.13 $
  */
 public class LayoutEditorXml extends AbstractXmlAdapter {
 
     public LayoutEditorXml() {}
+
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
 
     /**
      * Default implementation for storing the contents of a
@@ -252,6 +257,19 @@ public class LayoutEditorXml extends AbstractXmlAdapter {
         String name = "";
         if (element.getAttribute("name")!=null)
             name = element.getAttribute("name").getValue();
+        if(jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)){
+            JFrame frame = new JFrame("DialogDemo");
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            log.warn("File contains a panel with the same name (" + name + ") as an existing panel");
+            int n = JOptionPane.showConfirmDialog(frame,
+                java.text.MessageFormat.format(rb.getString("DuplicatePanel"),
+						new Object[]{name}),
+                rb.getString("DuplicatePanelTitle"),
+                JOptionPane.YES_NO_OPTION);
+        	if (n==JOptionPane.NO_OPTION){
+                return false;
+            }
+        }
         String defaultColor = "black";
         String defaultTextColor = "black";
         if (element.getAttribute("defaulttrackcolor")!=null)
