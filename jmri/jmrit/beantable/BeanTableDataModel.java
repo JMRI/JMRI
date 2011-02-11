@@ -24,7 +24,7 @@ import jmri.util.com.sun.TableSorter;
  * Table data model for display of NamedBean manager contents
  * @author		Bob Jacobsen   Copyright (C) 2003
  * @author      Dennis Miller   Copyright (C) 2006
- * @version		$Revision: 1.41 $
+ * @version		$Revision: 1.42 $
  */
 abstract public class BeanTableDataModel extends javax.swing.table.AbstractTableModel
             implements PropertyChangeListener  {
@@ -98,10 +98,10 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
 
     public String getColumnName(int col) {
         switch (col) {
-        case SYSNAMECOL: return "System Name";
-        case USERNAMECOL: return "User Name";
-        case VALUECOL: return "State";
-        case COMMENTCOL: return "Comment";
+        case SYSNAMECOL: return AbstractTableAction.rb.getString("ColumnSystemName"); //"System Name";
+        case USERNAMECOL: return AbstractTableAction.rb.getString("ColumnUserName"); //"User Name";
+        case VALUECOL: return AbstractTableAction.rb.getString("ColumnState"); //"State";
+        case COMMENTCOL: return AbstractTableAction.rb.getString("ColumnComment"); //"Comment";
         case DELETECOL: return "";
 
         default: return "unknown";
