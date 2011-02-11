@@ -2,6 +2,10 @@
 
 package jmri.jmrit.operations.trains;
 
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontMetrics;
+import java.awt.Frame;
 import java.io.PrintWriter;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -27,7 +31,6 @@ import jmri.jmrit.operations.setup.Setup;
 public class TrainCommon {
 	
 	static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.operations.trains.JmritOperationsTrainsBundle");
-	private static final int NEW_LINE_LENGTH = 87;
 	private static final String LENGTHABV = Setup.LENGTHABV;
 	protected static final String BOX = " [ ] ";
 	protected static final String TAB = "    ";
@@ -55,7 +58,7 @@ public class TrainCommon {
 		String[] format = Setup.getPickupCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], true);
-			if (buf.length()+s.length()>calculateNewLine()){
+			if (buf.length()+s.length()>lineLength()){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -69,7 +72,7 @@ public class TrainCommon {
 		String[] format = Setup.getDropCarMessageFormat();
 		for (int i=0; i<format.length; i++){
 			String s = getCarAttribute(car, format[i], false);
-			if (buf.length()+s.length()>calculateNewLine()){
+			if (buf.length()+s.length()>lineLength()){
 				addLine(file, buf.toString());
 				buf = new StringBuffer(TAB);
 			}
@@ -188,6 +191,9 @@ public class TrainCommon {
 		}
 		else if (attribute.equals(Setup.DESTINATION) && !pickup)
 			return " "+rb.getString("to")+ " "+splitString(rs.getDestinationTrackName());
+		else if (attribute.equals(Setup.DEST_TRACK))
+			return " "+rb.getString("dest")+ " "+splitString(rs.getDestinationName())
+					+ ", "+splitString(rs.getDestinationTrackName());
 		else if (attribute.equals(Setup.COMMENT))
 			return " "+rs.getComment();
 		else if (attribute.equals(Setup.NONE))
@@ -239,10 +245,23 @@ public class TrainCommon {
 		return buf.toString();
 	}
 	
-	private int calculateNewLine(){
-		int fontSize = Setup.getFontSize();
-		// font size is between 7 and 12
-		return NEW_LINE_LENGTH*10/fontSize;	
+	int chars_per_line = 0;
+	private int lineLength(){
+		if (chars_per_line == 0){
+			// page size has been adjusted to account for margins of .5
+			// Dimension pagesize = new Dimension(612,792);
+			Dimension pagesize = new Dimension(540,792);
+			// Metrics don't always work for the various font names, so use Monospaced
+			Font font = new Font("Monospaced", Font.PLAIN, Setup.getFontSize());
+			Frame frame = new Frame();
+			FontMetrics metrics = frame.getFontMetrics(font);
+
+			int charwidth = metrics.charWidth('m');
+
+			// compute lines and columns within margins
+			chars_per_line = pagesize.width / charwidth;
+		}
+		return chars_per_line;
 	}
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger

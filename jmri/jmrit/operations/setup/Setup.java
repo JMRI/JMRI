@@ -4,7 +4,7 @@ package jmri.jmrit.operations.setup;
  * Operations settings. 
  * 
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version $Revision: 1.49 $
+ * @version $Revision: 1.50 $
  */
 import java.awt.Dimension;
 import java.awt.Point;
@@ -117,6 +117,7 @@ public class Setup {
 	public static final String LOAD = rb.getString("Load");
 	public static final String COLOR = rb.getString("Color");
 	public static final String DESTINATION = rb.getString("Destination");
+	public static final String DEST_TRACK = rb.getString("DestAndTrack");
 	public static final String LOCATION = rb.getString("Location");
 	public static final String COMMENT = rb.getString("Comment");
 	public static final String DROP_COMMENT = rb.getString("DropComment");
@@ -754,6 +755,7 @@ public class Setup {
 		box.addItem(COLOR);
 		box.addItem(LOCATION);
 		box.addItem(DESTINATION);
+		box.addItem(DEST_TRACK);
 		box.addItem(COMMENT);
 		box.addItem(DROP_COMMENT);
 		box.addItem(PICKUP_COMMENT);
