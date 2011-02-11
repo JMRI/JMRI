@@ -19,11 +19,12 @@ import jmri.jmrix.can.CanMessage;
  * <dt>Full hex string preceeded by "x"<dd>Needs to be pairs of digits:  0123, not 123
  * <dt>+/-ddd<dd>ddd is node*100,000 (a.k.a NODEFACTOR) + event
  * <dt>+/-nNNNeEEE<dd>where NNN is a node number and EEE is an event number
+ * <dt>Full 8 byte ID as pairs separated by "."
  * </dl>
  *
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2008, 2010
- * @version     $Revision: 1.3 $
+ * @version     $Revision: 1.4 $
  */
 public class OlcbAddress {
 
@@ -36,7 +37,8 @@ public class OlcbAddress {
     // 7: optional "N"
     // 8: node number
     // 9: event number
-    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))";
+    //10: dotted hex form
+    static final String singleAddressPattern = "((\\+|-)?\\d++)|(x(\\p{XDigit}\\p{XDigit}){1,8})|((\\+|-)?([Nn])?(\\d++)[Ee](\\d++))|((\\p{XDigit}?\\p{XDigit}.){7}\\p{XDigit}?\\p{XDigit})";
     
 	private Matcher hCode = Pattern.compile("^"+singleAddressPattern+"$").matcher("");
 
@@ -106,6 +108,14 @@ public class OlcbAddress {
                     aFrame[0] = OlcbConstants.CBUS_ACOF;
                 else // default
                     aFrame[0] = OlcbConstants.CBUS_ACON;
+            } else if (hCode.group(10)!=null) {
+                // dotted form, 7 dots
+                String[] terms = s.split("\\.");
+                if (terms.length != 8) log.error("unexpected number of terms: "+terms.length);
+                aFrame = new int[terms.length];
+                for (int i = 0; i<terms.length; i++) {
+                    aFrame[i] = Integer.parseInt(terms[i],16);
+                }
             }
         } else {
             // no match, leave match false and aFrame null

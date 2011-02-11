@@ -14,7 +14,7 @@ import jmri.jmrix.can.TrafficController;
  * Extend jmri.AbstractSensor for OpenLCB controls.
  * <P>
  * @author			Bob Jacobsen Copyright (C) 2008, 2010
- * @version         $Revision: 1.1 $
+ * @version         $Revision: 1.2 $
  */
 public class OlcbSensor extends AbstractSensor implements CanListener {
 
@@ -63,7 +63,7 @@ public class OlcbSensor extends AbstractSensor implements CanListener {
                 addrInactive = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: "+systemName);
+                log.error("Can't parse OpenLCB Sensor system name: "+systemName);
                 return;
         }
         // connect

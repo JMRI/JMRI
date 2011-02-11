@@ -13,7 +13,7 @@ import junit.framework.TestSuite;
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
  *
  * @author	Bob Jacobsen Copyright 2008, 2010
- * @version     $Revision: 1.1 $
+ * @version     $Revision: 1.2 $
  */
 public class OlcbAddressTest extends TestCase {
 
@@ -27,6 +27,8 @@ public class OlcbAddressTest extends TestCase {
         assertTrue(new OlcbAddress("x0abc").check());
         assertTrue(new OlcbAddress("xa1b2c3").check());
         assertTrue(new OlcbAddress("x123456789ABCDEF0").check());
+        assertTrue(new OlcbAddress("12.34.56.78.00.BC.DE.F0").check());
+        assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").check());
         
         // n0e0 form
         assertTrue(new OlcbAddress("+n1e2").check());
@@ -89,6 +91,11 @@ public class OlcbAddressTest extends TestCase {
                 new CanMessage(
                     new int[]{0x12,0x34,0x56,0x78,
                               0x9A,0xBC,0xDE,0xF0}
+        )));
+        assertTrue(new OlcbAddress("1.34.5.0.9A.B.E.0").match(
+                new CanMessage(
+                    new int[]{0x01,0x34,0x05,0x00,
+                              0x9A,0x0B,0x0E,0x00}
         )));
     }
     

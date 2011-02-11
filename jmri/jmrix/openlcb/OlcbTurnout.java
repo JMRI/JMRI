@@ -10,7 +10,7 @@ import jmri.jmrix.can.*;
  * Turnout for OpenLCB connections.
  * 
  * @author Bob Jacobsen Copyright (C) 2001, 2008, 2010
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class OlcbTurnout extends jmri.implementation.AbstractTurnout 
                     implements CanListener {
@@ -60,7 +60,7 @@ public class OlcbTurnout extends jmri.implementation.AbstractTurnout
                 addrClosed = v[1];
                 break;
             default:
-                log.error("Can't parse CbusSensor system name: "+systemName);
+                log.error("Can't parse OpenLCB Turnout system name: "+systemName);
                 return;
         }
         // connect
