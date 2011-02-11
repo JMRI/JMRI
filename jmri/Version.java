@@ -4,7 +4,7 @@ package jmri;
 /**
  * Defines a simple place to get the JMRI version string.
  *<P>
- * These JavaDocs are for Version 2.11.2 of JMRI.
+ * These JavaDocs are for Version 2.11.3 of JMRI.
  *
  * <hr>
  * This file is part of JMRI.
@@ -19,8 +19,8 @@ package jmri;
  * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
  * for more details.
  * <P>
- * @author  Bob Jacobsen   Copyright 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010
- * @version $Revision: 1.150 $
+ * @author  Bob Jacobsen   Copyright 2000 - 2011
+ * @version $Revision: 1.151 $
  */
 
 public class Version {
