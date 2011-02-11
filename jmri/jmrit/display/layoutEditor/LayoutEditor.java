@@ -51,7 +51,7 @@ import java.util.ResourceBundle;
  *		editor, as well as some of the control design.
  *
  * @author Dave Duchamp  Copyright: (c) 2004-2007
- * @version $Revision: 1.48 $
+ * @version $Revision: 1.49 $
  */
 
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
@@ -325,7 +325,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor {
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (deletePanel()) {
-                        dispose();
+                        dispose(true);
                     }
                 }
             });

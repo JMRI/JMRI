@@ -349,7 +349,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         deleteItem.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent event) {
 					if (deletePanel() ) {
-                        dispose();
+                        dispose(true);
                     }
                 }
             });
