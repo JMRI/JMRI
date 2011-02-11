@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: CVsummary.xsl,v 1.7 2010-01-06 22:03:34 jacobsen Exp $ -->
+<!-- $Id: CVsummary.xsl,v 1.8 2011-02-11 17:54:15 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert JMRI decoder definitions to -->
 <!-- a huge HTML table of CV values -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2010.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2011.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -39,7 +39,7 @@
 
 <HR/>
 This page was produced by <a href="http://jmri.org">JMRI</a>.
-<P/>Copyright &#169; 1997 - 2010 JMRI Community. 
+<P/>Copyright &#169; 1997 - 2011 JMRI Community. 
 <P/>JMRI, DecoderPro, PanelPro, DispatcherPro and associated logos are our trademarks.
 <P/><A href="http://jmri.org/Copyright.html">Additional information on copyright, trademarks and licenses is linked here.</A>
 <P/>Site hosted by: <BR/>

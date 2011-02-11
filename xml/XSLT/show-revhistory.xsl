@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: show-revhistory.xsl,v 1.2 2010-01-06 22:03:35 jacobsen Exp $ -->
+<!-- $Id: show-revhistory.xsl,v 1.3 2011-02-11 17:54:15 jacobsen Exp $ -->
 
 <!-- Stylesheet fragment to display a docbook:revhistory element            -->
 
 
-<!-- This file is part of JMRI.  Copyright 2009-2010.                            -->
+<!-- This file is part of JMRI.  Copyright 2009-2011.                            -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->

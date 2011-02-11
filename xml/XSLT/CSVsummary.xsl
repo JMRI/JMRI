@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<!-- $Id: CSVsummary.xsl,v 1.8 2010-01-06 22:03:34 jacobsen Exp $ -->
+<!-- $Id: CSVsummary.xsl,v 1.9 2011-02-11 17:54:15 jacobsen Exp $ -->
 
 <!-- Stylesheet to convert a JMRI decoder definition to -->
 <!-- one line of a CSV file  per decoder -->
 
-<!-- This file is part of JMRI.  Copyright 2007-2010.                       -->
+<!-- This file is part of JMRI.  Copyright 2007-2011.                       -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
