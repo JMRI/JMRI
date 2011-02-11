@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.13 2011-02-11 19:14:27 dan_boudreau Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.14 2011-02-11 23:13:49 pbender Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -299,6 +299,9 @@ Matthew Harris corrected a bug where Layout Editor and Control Panel Editor Pane
 
 <p>
 Matthew Harris changed the BeanTableDataModel to use internationalised strings for column names rather than hard-coded strings.
+
+<p>
+Paul Bender added a script showing how to add and remove a consist.
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
