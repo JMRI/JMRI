@@ -24,7 +24,7 @@ import jmri.jmrix.can.TrafficController;
  * d0 - d7 are the (up to) 8 data bytes
  *
  * @author                      Andrew Crosland Copyright (C) 2008
- * @version			$Revision: 1.10 $
+ * @version			$Revision: 1.11 $
  */
 public class GcTrafficController extends TrafficController {
     
@@ -108,7 +108,7 @@ public class GcTrafficController extends TrafficController {
      * Make a CanReply from a GridConnect reply
      */
     public CanReply decodeFromHardware(AbstractMRReply m) {
-        log.warn("Decoding from hardware");
+        log.debug("Decoding from hardware");
 	    GridConnectReply gc = (GridConnectReply)m;
         CanReply ret = gc.createReply();
         return ret;
