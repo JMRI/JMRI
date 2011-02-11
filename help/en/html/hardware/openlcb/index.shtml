@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: index.shtml,v 1.1 2010-09-19 03:25:25 jacobsen Exp $ -->
+<!-- $Id: index.shtml,v 1.2 2011-02-11 17:57:34 jacobsen Exp $ -->
 <title>JMRI: OpenLCB Support</title>
 
 <!-- Style -->
@@ -46,9 +46,9 @@ of JMRI's OpenLCB support.
 <h2>Naming</h2>
 
 The <a href="../../../doc/Technical/Names.shtml">system letter</a> 
-for OpenLCB connections is "M". Details of OpenLCB 
+for OpenLCB connections is "M". OpenLCB 
 event and object names are 
-described below, with technical details on a
+introduced below, with additional details and formats on a
 <a href="Names.shtml">separate page</a>.
 
 <p>
@@ -59,6 +59,11 @@ JMRI system names.  A system name like
 defines a Sensor that follows the "1.2.3.4.5.6.7.8"
 and "1.2.3.4.5.6.7.9" OpenLCB events
 to change state. 
+<p>
+Another format for event IDs is a
+continuous hexadecimal string, such as
+"x0102030405060709".
+<p>
 These system names can get very long, in which
 case the "user names" become much more useful. 
 

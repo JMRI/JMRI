@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <!-- Copyright ($Author: jacobsen $) 2008 -->
-<!-- $Id: Names.shtml,v 1.1 2010-09-19 03:25:25 jacobsen Exp $ -->
+<!-- $Id: Names.shtml,v 1.2 2011-02-11 17:57:34 jacobsen Exp $ -->
 <title>JMRI: OpenLCB Naming</title>
 
 <!-- Style -->
@@ -66,11 +66,13 @@ on a "C"/MRI system, with bit address "034" on node "12".
 
 <a href="http://openlcb.org">OpenLCB</a>
 communicates events via messages with a fixed format: eight bytes of
-content.  We convert this to a 16 hexadecimal digit code, e.g. "1234567890ABCDEF".
+content.  We convert this to a 16 hexadecimal digit code with a 
+leading "x" character, e.g. "x1234567890ABCDEF".
 We recommend you use upper case for the A-F letters.
 
 You can also enter it with periods separating the bytes: "12.34.56.78.90.AB.CD.EF". 
-In tihs case only, one leading zero per byte can be omitted when typing the event; JMRI will
+In this case only, one leading zero per byte can be omitted when typing the event; 
+JMRI will
 insert them automatically in names. For example, "00.01.02.03.04.05.06.07" can be 
 typed as "0.1.2.3.4.5.6.7".
 
