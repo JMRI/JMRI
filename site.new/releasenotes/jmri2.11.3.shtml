@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.12 2011-02-11 17:52:45 matthewharris Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.13 2011-02-11 19:14:27 dan_boudreau Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -104,7 +104,7 @@ from one system to another.
 Paul Bender fixed a bug in Lenz XPressNet throttle implementation.
 
 <p>
-New operations features:
+New operations features and bug fixes:
 <ul>
 <li>Users can now modify the train timetable.
 <li>Change switch list valid date to 24 hour clock
@@ -140,6 +140,8 @@ New operations features:
 <li>Users can now select where to place the backup operations files.  See Settings / Tools / Backups.
 <li>Send car from staging with a custom load directly to a siding / schedule demanding that car type and load.
 <li>Fix trains terminate button, it should have terminated all trains that have been printed.
+<li>When printing car locations you can now optionally have a space or page break after each set of locations.</li>
+<li>New manifest print option, you can now show destination and track when picking up a car.</li>
 </ul>
 
 <p>
