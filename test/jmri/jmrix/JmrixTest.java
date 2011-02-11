@@ -9,7 +9,7 @@ import junit.framework.TestSuite;
 /**
  * Set of tests for the jmri.jmrix package
  * @author	Bob Jacobsen  Copyright 2003, 2007
- * @version         $Revision: 1.27 $
+ * @version         $Revision: 1.28 $
  */
 public class JmrixTest extends TestCase {
 
@@ -29,9 +29,9 @@ public class JmrixTest extends TestCase {
 	public static Test suite() {
 		TestSuite suite = new TestSuite("jmri.jmrix.JmrixTest");
 
-		suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
-		suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
-		suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
+        suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
+        suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
+        suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
 
         suite.addTest(jmri.jmrix.acela.AcelaTest.suite());
         suite.addTest(jmri.jmrix.can.CanTest.suite());		
@@ -53,9 +53,6 @@ public class JmrixTest extends TestCase {
         suite.addTest(jmri.jmrix.tmcc.SerialTest.suite());
         suite.addTest(jmri.jmrix.xpa.XpaTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-        }
-        
 		return suite;
 
 	}
