@@ -50,7 +50,7 @@ import javax.swing.JSeparator;
  *
  * @author	Bob Jacobsen    Copyright (C) 2003,2006,2007, 2008, 2009
  * @author	Petr Koud'a     Copyright (C) 2007
- * @version     $Revision: 1.63 $
+ * @version     $Revision: 1.64 $
  */
 
 public class SignalHeadTableAction extends AbstractTableAction {
@@ -401,6 +401,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
     protected void addPressed(ActionEvent e) {
         if (addFrame==null) {
             addFrame = new JmriJFrame(rb.getString("TitleAddSignal"));
+            addFrame.setSaveFrameSize(false);
             addFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
             addFrame.getContentPane().setLayout(new BoxLayout(addFrame.getContentPane(), BoxLayout.Y_AXIS));
             addFrame.getContentPane().add(typeBox = new JComboBox(new String[]{
@@ -1332,6 +1333,7 @@ public class SignalHeadTableAction extends AbstractTableAction {
 		editingHead = true;
 		curS = InstanceManager.signalHeadManagerInstance().getBySystemName(editSysName);
 		if (editFrame == null) {
+            editFrame.setSaveFrameSize(false);
 			// set up a new edit window
             editFrame = new JmriJFrame(rb.getString("TitleEditSignal"));
             editFrame.addHelpMenu("package.jmri.jmrit.beantable.SignalAddEdit", true);
