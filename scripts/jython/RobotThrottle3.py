@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 1.2 $
+# $Revision: 1.3 $
 #
 # The start button is inactive until data has been entered.
 #
@@ -114,7 +114,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     # initialize variables
     locoAddress = None
     currentBlock = None
-    currentDir = jmri.Path.NONE
+    currentDirection = jmri.Path.NONE
     currentBlocks = []
     currentNextBlocks = []
     next1Block = None
@@ -386,7 +386,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         giveUpTimer = 0
         while (giveUpTimer < 10) :
             giveUpTimer = giveUpTimer + 1
-            newCurrent = self.findNewCurrentBlock(tryBlock, newCurrentBlocks, self.currentDir)
+            newCurrent = self.findNewCurrentBlock(tryBlock, newCurrentBlocks, self.currentDirection)
             if (newCurrent == None) :
                 newBlockText = "None"
             else :
@@ -637,13 +637,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
     # return new current block at edge of current blocks
     def findNewCurrentBlock(self, cBlock, cList, cDir) :
         nBlock = None
-        dMask = jmri.Path.EAST or jmri.Path.WEST
-        cDir = cDir and dMask  # only looking for east/west
+        dMask = jmri.Path.EAST | jmri.Path.WEST
+        self.msgText("dmask: " + dMask.toString() + " orig cDir: " + cDir.toString())
+        cDir = cDir & dMask  # only looking for east/west
+        self.msgText(" filtered cDir: " + cDir.toString() + " currentDirection: " + self.currentDirection.toString() + "\n")
         if (cDir == jmri.Path.NONE) :
             if (self.blockDirection.isSelected() == True) :
-                cDir = cDir or jmri.Path.EAST
+                cDir = jmri.Path.EAST
             else :
-                cDir = cDir or jmri.Path.WEST
+                cDir = jmri.Path.WEST
         if (cBlock == None) :
             self.msgText("findNewCurrentBlock: bad current block passed!\n")
             return None
@@ -654,7 +656,7 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
             for p in pList :
                 pB = p.getBlock()
                 if (p.checkPathSet()) :
-                    dirTest = p.getToBlockDirection() and dMask
+                    dirTest = p.getToBlockDirection() & dMask
                     if (self.debugLevel >= MediumDebug) :
                         self.msgText("findNewCurrentBlock: testing for " + jmri.Path.decodeDirection(cDir) + " from " + self.giveBlockName(cBlock) + " to " + self.giveBlockName(pB) + " pointing " + jmri.Path.decodeDirection(dirTest) + "\n")
                     if ((cDir & dirTest) == cDir) :
@@ -1231,6 +1233,10 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
                 b = blocks.getBySystemName(x)
                 if (b != blocks.getBlock(self.blockStart.text) and b.getValue() == self.locoAddress.text) :
                     b.setValue("")
+            if (self.blockDirection.isSelected()) :
+            	self.currentDirection = jmri.Path.EAST
+            else :
+            	self.currentDirecion = jmri.Path.WEST
             self.startButton.setEnabled(True)
             self.haltButton.setEnabled(True)
             self.testAddBlockListener(blocks.getBlock(self.blockStart.text))
@@ -1388,6 +1394,16 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.whenLocoChanged(event)
         return
     
+    def whenLocoDirectionButtonClicked(self, event) :
+        self.msgText("Button Loco Direction clicked\n")
+        self.methodLocoDirection = self.locoForward.isSelected()
+        return
+        
+    def whenBlockDirectionButtonClicked(self, event) :
+        self.msgText("Button Block Direction clicked\n")
+        self.methodBlockDirection = self.blockDirection.isSelected()
+        return
+        
     def whenShrinkButtonClicked(self, event):   
         if (self.shrinkGrow == True) :
             if (self.debugLevel >= HighDebug) :
@@ -1459,10 +1475,15 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         nB = None
         dirFlag = cB.getDirection()
         if (dirFlag == jmri.Path.NONE) :
-            if (self.blockDirection.isSelected() == True) :
-                dirFlag = dirFlag or jmri.Path.EAST
+            if (self.currentDirection == None) :
+                if (self.blockDirection.isSelected() == True) :
+                    dirFlag = jmri.Path.EAST
+                    self.currentDirection = jmri.Path.EAST
+                else :
+                    dirFlag = jmri.Path.WEST
+                    self.currentDirection = jmri.Path.WEST
             else :
-                dirFlag = dirFlag or jmri.Path.WEST
+                dirFlag = self.currentDirection
         pathList = cB.getPaths()
         if (self.debugLevel >= HighDebug) :
             self.msgText("searching " + len(pathList).toString() + " paths from " + self.giveBlockName(cB) + "\n")
@@ -1647,8 +1668,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         self.locoForward = javax.swing.JCheckBox()
         self.locoForward.setToolTipText("Sets forward loco direction")
         self.locoForward.setSelected(True)
-        self.locoForward.actionPerformed = self.whenLocoChanged
-        self.locoForward.focusLost = self.whenLocoChanged
+        self.locoForward.actionPerformed = self.whenLocoDirectionButtonClicked
+        self.locoForward.focusLost = self.whenLocoDirectionButtonClicked
         
         # loco headlight flag
         self.locoHeadlight = javax.swing.JCheckBox()
@@ -1832,8 +1853,8 @@ class LocoThrot(jmri.jmrit.automat.AbstractAutomaton) :
         # create the starting block direction
         self.blockDirection = javax.swing.JCheckBox()
         self.blockDirection.setToolTipText("Starting Block Direction")
-        self.blockDirection.actionPerformed = self.whenLocoChanged
-        self.blockDirection.focusLost = self.whenLocoChanged
+        self.blockDirection.actionPerformed = self.whenBlockDirectionButtonClicked
+        self.blockDirection.focusLost = self.whenBlockDirectionButtonClicked
         self.blockDirection.setSelected(True)
         
         # create flag for looking any extra block ahead
