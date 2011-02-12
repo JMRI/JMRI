@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.15 2011-02-12 02:20:10 jacobsen Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.16 2011-02-12 03:39:17 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -306,6 +306,22 @@ Paul Bender added a script showing how to add and remove a consist.
 <p>
 Fixed a problem with OpenLCB turnout and sensor device addresses in "dot" form: 12.34.56.7.8.AB.C.DE
 
+<p>
+Leo Bicknell improved the LocoNet monitor:
+<ul>
+<li>Adds symbolic names for the 0xD7 and 0xDF opcodes.
+<li>Tweaks a number of messages so they are easier to read, provide more useful information.
+<li>Reformats the fast clock query and response commands to make them clearer and take up less space.
+<li>Reworked the sensor reporting code to allow it to properly convert sensor numbers to DS-64 inputs and be much easier to understand.
+<li>Reworked the sensor probe decode to report which sensors are being probed, rather than the esoteric "bits a/c/b" information.
+<li>Added in a decode for what I call the PANEL QUERY (0xDF opcode).
+<li>Added in a decode for what I call the PANEL RESPONSE (0xD7 opcode). [Tested against UR-91 and UR-92, but not UR-90.]
+<li>I found the slot read/write stuff totally unclear, so I modified some of the terms and how it prints out and got what I think is a much clearer output.
+<li>Added decodes for the Duplex Group Name query and response.
+<li>Added decodes for the Duplex Group Channel query and response.
+<li>Added decodes for the Duplex Group Password query and response.
+<li>Added logic in the SEND IMMEDIATE decode to decode F-keys F13..F28 and print something nice.
+</ol>
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
   </div> <!-- closes #mBody-->
