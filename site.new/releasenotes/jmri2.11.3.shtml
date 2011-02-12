@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: jmri2.11.3.shtml,v 1.14 2011-02-11 23:13:49 pbender Exp $ -->
+<!-- $Id: jmri2.11.3.shtml,v 1.15 2011-02-12 02:20:10 jacobsen Exp $ -->
 <html lang="en">
 <head>
  <title>
@@ -302,6 +302,9 @@ Matthew Harris changed the BeanTableDataModel to use internationalised strings f
 
 <p>
 Paul Bender added a script showing how to add and remove a consist.
+
+<p>
+Fixed a problem with OpenLCB turnout and sensor device addresses in "dot" form: 12.34.56.7.8.AB.C.DE
 
 <!--#include virtual="/Footer" -->
 </div><!-- closes #mainContent-->
