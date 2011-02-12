@@ -6,6 +6,8 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 import jmri.*;
+import jmri.jmrix.powerline.SerialInterfaceScaffold;
+import jmri.jmrix.powerline.SerialTurnoutManager;
 
 /**
  * SerialTurnoutManagerTest.java
@@ -14,24 +16,17 @@ import jmri.*;
  * @author			Bob Jacobsen Copyright 2004, 2008
  * Converted to multiple connection
  * @author kcameron Copyright (C) 2011
- * @version  $Revision: 1.8 $
+ * @version  $Revision: 1.9 $
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
 
+	private SerialInterfaceScaffold nis = null;
+	
 	public void setUp() {
-	    apps.tests.Log4JFixture.setUp();
-	    
-	    // replace the SerialTrafficController
-	    SerialTrafficController t = new jmri.jmrix.powerline.SerialTrafficController() {
-	        SerialTrafficController test() {
-	            setInstance();
-	            return this;
-	        }
-	    }.test();
-	    t.status();	// well it uses t
-//		t.registerSerialNode(new SerialNode(0, SerialNode.DAUGHTER));
+		// prepare an interface, register
+		nis = new SerialInterfaceScaffold();
 		// create and register the manager object
-		l = new SerialTurnoutManager(t);
+		l = new SerialTurnoutManager(nis);
 		jmri.InstanceManager.setTurnoutManager(l);
 	}
 
