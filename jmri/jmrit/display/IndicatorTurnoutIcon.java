@@ -37,7 +37,7 @@ import java.util.Map.Entry;
  * The default icons are for a left-handed turnout, facing point
  * for east-bound traffic.
  * @author Bob Jacobsen  Copyright (c) 2002
- * @version $Revision: 1.14 $
+ * @version $Revision: 1.15 $
  */
 
 public class IndicatorTurnoutIcon extends TurnoutIcon {
@@ -270,8 +270,8 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     * @param icon - icon corresponding to status and state
     */
     public void setIcon(String status, String stateName, NamedIcon icon) {
-        if (log.isDebugEnabled()) log.debug("setIcon for status \""+status+"\", stateName= \""+stateName+
-                                            " icom= "+icon);
+        if (log.isDebugEnabled()) log.debug("setIcon for status \""+status+"\", stateName= \""
+                                +stateName+" icom= "+icon.getURL());
 //                                            ") state= "+_name2stateMap.get(stateName)+
 //                                            " icon: w= "+icon.getIconWidth()+" h= "+icon.getIconHeight());
         _iconMaps.get(status).put(_name2stateMap.get(stateName), icon);
@@ -407,9 +407,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     public String getNameString() {
         String str = "";
         if (namedOccBlock!=null) {
-            str = "in "+namedOccBlock.getBean().getDisplayName();
+            str = " in "+namedOccBlock.getBean().getDisplayName();
         } else if (namedOccSensor!=null) {
-            str = "on "+namedOccSensor.getBean().getDisplayName();
+            str = " on "+namedOccSensor.getBean().getDisplayName();
         }
         return "ITrack "+super.getNameString()+str;
     }
@@ -541,6 +541,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon {
     }
 
     void updateItem() {
+		if (log.isDebugEnabled()) log.debug("updateItem: "+getNameString()+" family= "+_TOPanel.getFamilyName());
         setTurnout(_TOPanel.getTableSelection().getSystemName());
         setErrSensor(_TOPanel.getErrSensor());
         setOccSensor(_TOPanel.getOccSensor());
