@@ -19,12 +19,12 @@ import jmri.jmrit.operations.setup.Control;
  * Action to print a summary of the Roster contents
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
- * Macintosh MRJ
+ * MacIntosh MRJ
  *
  * @author	Bob Jacobsen   Copyright (C) 2003
  * @author  Dennis Miller  Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008, 2010
- * @version     $Revision: 1.14 $
+ * @version     $Revision: 1.15 $
  */
 public class PrintCarRosterAction  extends AbstractAction {
 	
@@ -58,6 +58,9 @@ public class PrintCarRosterAction  extends AbstractAction {
     	cpof.initComponents();
     }
     
+    private static final int numberCharPerLine = 90;
+    int ownerMaxLen = 5;
+    
     private void printCars(){
  
         // obtain a HardcopyWriter to do this
@@ -81,6 +84,7 @@ public class PrintCarRosterAction  extends AbstractAction {
         String owner = "";
         String built = "";
         String load = "";
+        String kernel = "";
         
         boolean printOnly = printCarsWithLocation.isSelected();
         boolean printLength = printCarLength.isSelected();
@@ -89,31 +93,14 @@ public class PrintCarRosterAction  extends AbstractAction {
         boolean printOwner = printCarOwner.isSelected();
         boolean printBuilt = printCarBuilt.isSelected();
         boolean printLoad = printCarLoad.isSelected();
+        boolean printKernel = printCarKernel.isSelected();
         boolean space = printSpace.isSelected();
         boolean page = printPage.isSelected();
         
-		int locMaxLen = 15;
-		int ownerMaxLen = 4;
-		// adjust the max length for the location and track field
-		if (!printLength)
-			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_LENGTH_NAME+1;
-		if (!printWeight)
-			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_WEIGHT_NAME+1;
-		if (!printColor)
-			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_ATTRIBUTE;
-   		if (!printOwner)
-			locMaxLen = locMaxLen +5;
-  		if (!printBuilt)
-			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_BUILT_NAME+1;
- 		if (!printLoad)
-			locMaxLen = locMaxLen + Control.MAX_LEN_STRING_ATTRIBUTE;
-  		
-  		// now adjust the owner name field if there is space available
-  		if (locMaxLen > Control.MAX_LEN_STRING_LOCATION_NAME + Control.MAX_LEN_STRING_TRACK_NAME + ownerMaxLen){
-  			ownerMaxLen = locMaxLen - (Control.MAX_LEN_STRING_LOCATION_NAME + Control.MAX_LEN_STRING_TRACK_NAME);
-  			if (ownerMaxLen > Control.MAX_LEN_STRING_ATTRIBUTE)
-  				ownerMaxLen = Control.MAX_LEN_STRING_ATTRIBUTE;
-  		}
+
+		ownerMaxLen = 5;
+		if (!printLoad && !printKernel && !printColor)
+			ownerMaxLen = Control.MAX_LEN_STRING_ATTRIBUTE;
         
         List<String> cars = panel.getSortByList();
         try {
@@ -122,12 +109,9 @@ public class PrintCarRosterAction  extends AbstractAction {
         	for (int i=0; i<cars.size(); i++){
         		Car car = manager.getById(cars.get(i));
 
-        		location = "";
-        		
+        		location = "";     		
         		if (!car.getLocationName().equals("")){
         			location = car.getLocationName().trim() + " - " + car.getTrackName().trim();
-        			if (location.length() > locMaxLen)
-        				location = location.substring(0, locMaxLen);
         		} else if (printOnly)
         			continue;	// car doesn't have a location skip
         		
@@ -143,92 +127,34 @@ public class PrintCarRosterAction  extends AbstractAction {
         		previousLocation = car.getLocationName().trim();
         		
         		// car number
-        		number = car.getNumber().trim();
-        		StringBuffer buf = new StringBuffer(number);
-        		for (int j=number.length(); j<7; j++)
-        			buf.append(" ");
-        		number = buf.toString();
-        		
+        		number = padAttribute(car.getNumber().trim(), 7);     		
         		// car road
-        		road = car.getRoad().trim();
-        		if (road.length() > 7)
-        			road = road.substring(0, 7);
-        		buf = new StringBuffer(road);
-        		for (int j=road.length(); j<7; j++)
-        			buf.append(" ");
-        		road = buf.toString();
-        		
+        		road = padAttribute(car.getRoad().trim(), 7);       		
         		// car type
-        		type = car.getType().trim();
-        		if (type.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-        			type = type.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-           		buf = new StringBuffer(type);
-        		for (int j=type.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        			buf.append(" ");
-        		type = buf.toString();
+        		type = padAttribute(car.getType().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
  
-        		if (printLength){
-        			length = car.getLength().trim();
-        			buf = new StringBuffer(length);
-        			for (int j=length.length(); j<Control.MAX_LEN_STRING_LENGTH_NAME+1; j++)
-        				buf.append(" ");
-        			length = buf.toString();
-        		}
+        		if (printLength)
+        			length = padAttribute(car.getLength().trim(), Control.MAX_LEN_STRING_LENGTH_NAME);
+        		if (printWeight)
+        			weight = padAttribute(car.getWeight().trim(), Control.MAX_LEN_STRING_WEIGHT_NAME);
+        		if (printColor)
+        			color = padAttribute(car.getColor().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);        		
+           		if (printLoad)
+           			load = padAttribute(car.getLoad().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);          		
+           		if (printKernel)
+           			kernel = padAttribute(car.getKernelName().trim(), Control.MAX_LEN_STRING_ATTRIBUTE);
+        		if (printOwner)
+        			owner = padAttribute(car.getOwner().trim(), ownerMaxLen);
+        		if (printBuilt)
+        			built = padAttribute(car.getBuilt().trim(), Control.MAX_LEN_STRING_BUILT_NAME);
 
-        		if (printWeight){
-        			weight = car.getWeight().trim();
-        			if (weight.length() > 4)
-        				weight = weight.substring(0, 4);
-        			buf = new StringBuffer(weight);
-        			for (int j=weight.length(); j<Control.MAX_LEN_STRING_WEIGHT_NAME+1; j++)
-        				buf.append(" ");
-        			weight = buf.toString();
-        		}
-
-        		if (printColor){
-        			color = car.getColor().trim();
-        			if (color.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-        				color = color.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-        			buf = new StringBuffer(color);
-        			for (int j=color.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-        				buf.append(" ");
-        			color = buf.toString();
-        		}
-        		
-           		if (printLoad){
-        			load = car.getLoad().trim();
-        			if (load.length() > Control.MAX_LEN_STRING_ATTRIBUTE)
-        				load = load.substring(0, Control.MAX_LEN_STRING_ATTRIBUTE);
-        			buf = new StringBuffer(load);
-        			for (int j=load.length(); j<Control.MAX_LEN_STRING_ATTRIBUTE+1; j++)
-           				buf.append(" ");
-        			load = buf.toString();
-        		}
-
-        		if (printOwner){
-        			owner = car.getOwner().trim();
-        			if (owner.length() > ownerMaxLen)
-        				owner = owner.substring(0, ownerMaxLen);
-        			buf = new StringBuffer(owner);
-        			for (int j=owner.length(); j<ownerMaxLen+1; j++)
-           				buf.append(" ");
-        			owner = buf.toString();
-        		}
-
-        		if (printBuilt){
-        			built = car.getBuilt().trim();
-        			if (built.length() > 4)
-        				built = built.substring(0, 4);
-        			buf = new StringBuffer(built);
-        			for (int j=built.length(); j<Control.MAX_LEN_STRING_BUILT_NAME+1; j++)
-         				buf.append(" ");
-        			built = buf.toString();
-        		}
-
-        		String s = number + " " + road + " " + type
-        		+ length + weight + color + load + owner + built
-        		+ location + newLine;
-        		writer.write(s);
+        		String s = number + road + type
+        		+ length + weight + color + load + kernel
+        		+ owner + built
+        		+ location;
+    			if (s.length() > numberCharPerLine)
+    				s = s.substring(0, numberCharPerLine);
+        		writer.write(s+newLine);
         	}
 
         	// and force completion of the printing
@@ -242,14 +168,24 @@ public class PrintCarRosterAction  extends AbstractAction {
        	String s = rb.getString("Number") + "\t" + rb.getString("Road")
     	+ "\t" + rb.getString("Type") + "\t  "
     	+ (printCarLength.isSelected()?rb.getString("Length")+ " ":"  ") 
-    	+ (printCarWeight.isSelected()?rb.getString("Weight")+ " ":" ")
-    	+ (printCarColor.isSelected()?rb.getString("Color")+ "       ":"")
-    	+ (printCarLoad.isSelected()?rb.getString("Load")+ "        ":"")
-    	+ (printCarOwner.isSelected()?rb.getString("Owner")+" ":"")
-    	+ (printCarBuilt.isSelected()?rb.getString("Built"):"")
-    	+ " " + rb.getString("Location")
+    	+ (printCarWeight.isSelected()?"      ":" ")
+    	+ (printCarColor.isSelected()?rb.getString("Color")+ "        ":"")
+    	+ (printCarLoad.isSelected()?rb.getString("Load")+ "         ":"")
+    	+ (printCarKernel.isSelected()?rb.getString("Kernel")+ "       ":"")
+    	+ (printCarOwner.isSelected()?padAttribute(rb.getString("Owner"),ownerMaxLen):"")
+    	+ (printCarBuilt.isSelected()?rb.getString("Built")+" ":"")
+    	+ rb.getString("Location")
     	+ newLine;
     	writer.write(s);
+    }
+    
+    private String padAttribute(String attribute, int length){
+			if (attribute.length() > length)
+				attribute = attribute.substring(0, length);
+			StringBuffer buf = new StringBuffer(attribute);
+			for (int i=attribute.length(); i<length+1; i++)
+   				buf.append(" ");
+			return buf.toString(); 	
     }
     
     JCheckBox printCarsWithLocation = new JCheckBox(rb.getString("PrintCarsWithLocation"));
@@ -259,6 +195,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     JCheckBox printCarOwner = new JCheckBox(rb.getString("PrintCarOwner"));
     JCheckBox printCarBuilt = new JCheckBox(rb.getString("PrintCarBuilt"));
     JCheckBox printCarLoad = new JCheckBox(rb.getString("PrintCarLoad"));
+    JCheckBox printCarKernel = new JCheckBox(rb.getString("PrintKernel"));
     JCheckBox printSpace = new JCheckBox(rb.getString("PrintSpace"));
     JCheckBox printPage = new JCheckBox(rb.getString("PrintPage"));
     
@@ -281,6 +218,7 @@ public class PrintCarRosterAction  extends AbstractAction {
     		pPanel.add(printCarWeight);
     		pPanel.add(printCarColor);
     		pPanel.add(printCarLoad);
+    		pPanel.add(printCarKernel);
     		pPanel.add(printCarOwner);
     		pPanel.add(printCarBuilt);
 			pPanel.add(printSpace);
@@ -291,11 +229,16 @@ public class PrintCarRosterAction  extends AbstractAction {
     		printCarLength.setSelected(true);
     		printCarWeight.setSelected(false);
     		printCarColor.setSelected(true);
-    		printCarOwner.setSelected(false);
-    		printCarBuilt.setSelected(false);
     		printCarLoad.setSelected(false);
+    		printCarKernel.setSelected(false);
+       		printCarOwner.setSelected(false);
+    		printCarBuilt.setSelected(false);
     		printSpace.setSelected(false);
     		printPage.setSelected(false);
+    		
+    		//add tool tips
+    		printSpace.setToolTipText(rb.getString("TipSelectSortByLoc"));
+    		printPage.setToolTipText(rb.getString("TipSelectSortByLoc"));
     		
     		JPanel pButtons = new JPanel();  
     		pButtons.setLayout(new GridBagLayout());
